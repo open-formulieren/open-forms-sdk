@@ -1,5 +1,5 @@
 const fetchDefaults = {
-  credentials: 'same-origin', // required for Firefox 60, which is used in werkplekken
+  credentials: 'include', // required for Firefox 60, which is used in werkplekken
 };
 
 const apiCall = (url, opts) => {
