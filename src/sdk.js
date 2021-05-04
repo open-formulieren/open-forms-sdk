@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { get } from './api';
+import { ConfigContext } from './Context';
 import { Form } from './Form';
 
 class OpenForm {
@@ -24,7 +25,11 @@ class OpenForm {
 
         // render the wrapping React component
         ReactDOM.render(
-          <React.StrictMode> <Form form={this.formObject} /> </React.StrictMode>,
+          <React.StrictMode>
+            <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
+              <Form form={this.formObject} />
+            </ConfigContext.Provider>
+          </React.StrictMode>,
           this.targetNode,
         );
     }

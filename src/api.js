@@ -1,5 +1,3 @@
-import { parse, serialize } from "uri-js";
-
 const fetchDefaults = {
   credentials: 'same-origin', // required for Firefox 60, which is used in werkplekken
 };
