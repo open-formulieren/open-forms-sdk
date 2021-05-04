@@ -149,7 +149,12 @@ const reducer = (draft, action) => {
           {
             (!loading && state.stepConfiguration) ? (
               <form onSubmit={onReactSubmit}>
-                <FormIOWrapper ref={formRef} form={state.stepConfiguration} onSubmit={onFormIOSubmit} />
+                <FormIOWrapper
+                  ref={formRef}
+                  form={state.stepConfiguration}
+                  onSubmit={onFormIOSubmit}
+                  options={{noAlerts: true}}
+                />
                 <button type="submit">Submit</button>
               </form>
             ) : null
