@@ -10,6 +10,30 @@ Useful links:
 
 * [Open Forms](https://github.com/maykinmedia/open-forms)
 
+## Quickstart
+
+Ensure you have the backend project running, on the branch `feature/sdk-poc`. Otherwise
+you will get CORS errors.
+
+Clone this repository, and create/edit `.env` for your needs:
+
+```
+REACT_APP_BASE_API_URL=http://localhost:8000/api/v1/
+REACT_APP_FORM_ID=93c09209-5fb9-4105-b6bb-9d9f0aa6782c
+```
+
+You get the form ID from the django admin.
+
+Install dependencies & start the dev server for the SPA:
+
+```
+yarn install
+yarn start
+```
+
+Note that this project is only a SPA for ease of development, it will become an NPM
+package later.
+
 ## Dependencies
 
 Ensure you have [Yarn](https://yarnpkg.com/) on your system.
