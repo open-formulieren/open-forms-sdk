@@ -3,9 +3,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Formio, Templates } from 'react-formio';
+
+import OpenFormsModule from './formio/module';
+import OFLibrary from './formio/templates';
+
 import { get } from './api';
 import { ConfigContext } from './Context';
 import { Form } from './Form';
+
+// use custom component overrides
+Formio.use(OpenFormsModule);
+// use our own template library
+Templates.current = OFLibrary;
+
 
 class OpenForm {
 
