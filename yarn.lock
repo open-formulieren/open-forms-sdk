@@ -7469,6 +7469,11 @@ micromatch@^4.0.2:
     braces "^3.0.1"
     picomatch "^2.0.5"
 
+microscope-sass@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/microscope-sass/-/microscope-sass-1.0.4.tgz#8bcb6343704643ac4f33ef6381ec6ad5a929412a"
+  integrity sha512-0G0VnYcd+1XHnlIVOXeXRI2tYdcRULUijQvwaPCNj4rgGK6FwuNhgHmYvhwooFehOOQ37yQ2c+pQURQ+sHoH3A==
+
 miller-rabin@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.1.tgz#f080351c865b0dc562a8462966daa53543c78a4d"
