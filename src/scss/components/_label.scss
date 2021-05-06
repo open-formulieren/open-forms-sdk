@@ -1,0 +1,17 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix(label)} {
+  @include body;
+  @include body--big;
+  display: block;
+}
+
+.#{prefix(char-count)},
+.#{prefix(word-count)},
+.#{prefix(prefix)},
+.#{prefix(suffix)} {
+  @include body;
+  color: $color-gray-darker;
+}
