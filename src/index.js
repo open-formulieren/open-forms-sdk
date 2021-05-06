@@ -1,4 +1,5 @@
 import { OpenForm } from './sdk';
+import './index.scss';
 
 const {REACT_APP_BASE_API_URL, REACT_APP_FORM_ID} = process.env;
 

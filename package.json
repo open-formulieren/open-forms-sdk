@@ -13,6 +13,7 @@
     "react-formio": "^4.3.0",
     "react-scripts": "4.0.3",
     "react-use": "^17.2.3",
+    "sass": "^1.32.12",
     "uri-js": "^4.4.1",
     "use-immer": "^0.5.1",
     "web-vitals": "^1.0.1"

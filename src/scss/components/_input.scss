@@ -1,0 +1,10 @@
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(input)} {
+  appearance: none;
+  border-radius: 0;
+  font-weight: bold;
+  // padding: $grid-margin-2;
+  width: 100%;
+}

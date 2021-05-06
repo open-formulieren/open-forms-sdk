@@ -8,6 +8,8 @@ import { Formio, Templates } from 'react-formio';
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
 
+import './styles.scss';
+
 import { get } from './api';
 import { ConfigContext } from './Context';
 import { Form } from './Form';

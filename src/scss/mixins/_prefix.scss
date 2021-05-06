@@ -1,0 +1,6 @@
+$openforms-prefix: openforms !default;
+
+
+@function prefix($val, $prefix: $openforms-prefix) {
+  @return "#{$prefix}-#{$val}";
+}
