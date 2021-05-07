@@ -11,6 +11,7 @@ import FormStepsSidebar from './FormStepsSidebar';
 import { get, post, put } from './api';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
+import Summary from './Summary';
 
 /**
  * Create a submission instance from a given form instance
@@ -35,6 +36,7 @@ const initialState = {
   step: {url: ''},
   stepConfiguration: {},
   submission: null,
+  showSummary: false,
 };
 
 
@@ -48,6 +50,16 @@ const reducer = (draft, action) => {
     case 'SUBMISSION_CREATED': {
       draft.submission = action.payload;
       break;
+    }
+    case 'SHOW_SUMMARY': {
+      draft.showSummary = true;
+      break;
+    }
+    case 'SUBMITTED': {
+      return {
+        ...initialState,
+        config: draft.config,
+      };
     }
     default: {
       throw new Error(`Unknown action ${action.type}`);
@@ -134,12 +146,23 @@ const reducer = (draft, action) => {
     // index of the form step
     const submissionStep = submission.steps[form.steps.indexOf(step)];
     await submitStepData(submissionStep.url, data);
+
+    const isLastStep = form.steps.reverse()[0] === step;
+    if (isLastStep) {
+      dispatch({type: 'SHOW_SUMMARY'});
+    }
   };
 
   const onFormSave = async (event) => {
     event.preventDefault();
     console.log('save form button clicked');
   };
+
+  if (state.showSummary) {
+    return (
+      <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } />
+    );
+  }
 
   return (
     <div className="card">
