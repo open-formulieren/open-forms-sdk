@@ -1,0 +1,64 @@
+@import '~microscope-sass/lib/responsive';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(toolbar)} {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+
+  &--start {
+    justify-content: flex-start;
+  }
+
+  @media print {
+    display: none;
+  }
+
+  @include element('list') {
+    @include responsive(flex-direction, column, column, row);
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &--start &__list {
+    @include margin($properties: margin-right);
+  }
+
+  @include element('list-item') {
+    @include rows(1);
+    display: flex;
+    align-items: center;
+
+    @include laptop {
+      @include margin($properties: margin-right);
+    }
+  }
+
+  @include breakpoint($max: $breakpoint-laptop) {
+    &__list:last-child &__list-item:last-child {
+      padding-bottom: $typography-margin-base;
+    }
+
+    &__list:last-child &__list-item:last-child > .button--primary {
+      @include margin(true, $properties: margin-top);
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  .image {
+    @include margin($properties: margin-right);
+    float: left;
+    height: 34px;
+  }
+}

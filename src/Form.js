@@ -9,7 +9,8 @@ import FormIOWrapper from './FormIOWrapper';
 import { ConfigContext } from './Context';
 import FormStepsSidebar from './FormStepsSidebar';
 import { get, post, put } from './api';
-
+import { Toolbar, ToolbarList } from './Toolbar';
+import Button from './Button';
 
 /**
  * Create a submission instance from a given form instance
@@ -135,6 +136,11 @@ const reducer = (draft, action) => {
     await submitStepData(submissionStep.url, data);
   };
 
+  const onFormSave = async (event) => {
+    event.preventDefault();
+    console.log('save form button clicked');
+  };
+
   return (
     <div className="card">
       <header className="card__header">
@@ -155,10 +161,19 @@ const reducer = (draft, action) => {
                   onSubmit={onFormIOSubmit}
                   options={{noAlerts: true}}
                 />
-                <button type="submit">Submit</button>
+                <Toolbar>
+                  <ToolbarList>
+                    <Button variant="anchor" component="a">Vorige pagina</Button>
+                  </ToolbarList>
+                  <ToolbarList>
+                    <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>Tussentijds opslaan</Button>
+                    <Button type="submit" variant="primary" name="next">Volgende</Button>
+                  </ToolbarList>
+                </Toolbar>
               </form>
             ) : null
           }
+
         </div>
 
         <FormStepsSidebar steps={steps} />
