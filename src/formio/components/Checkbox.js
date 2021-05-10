@@ -4,9 +4,9 @@ import { applyPrefix } from '../utils';
 
 
 /**
- * Extend the default text field to modify it to our needs.
+ * Extend the default checkbox field to modify it to our needs.
  */
-class Checkbox extends Formio.Components.components.textarea {
+class Checkbox extends Formio.Components.components.checkbox {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
