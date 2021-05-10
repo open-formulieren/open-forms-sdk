@@ -12,8 +12,8 @@ Useful links:
 
 ## Quickstart
 
-Ensure you have the backend project running, on the branch `feature/sdk-poc`. Otherwise
-you will get CORS errors.
+Ensure you have the backend project running and add `CORS_ALLOWED_ORIGINS=http://localhost:3000` to your `.env` file
+otherwise you will get CORS errors.
 
 Clone this repository, and create/edit `.env` for your needs:
 
