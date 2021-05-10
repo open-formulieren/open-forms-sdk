@@ -1,6 +1,6 @@
 const TEMPLATE = `
 <select
-  ref="{{ctx.input.ref ? ctx.input.ref : 'select'}}"
+  ref="{{ctx.input.ref ? ctx.input.ref : 'selectContainer'}}"
   {{ ctx.input.multiple ? 'multiple' : '' }}
 
   {% for (var attr in ctx.input.attr) { %}
@@ -11,9 +11,7 @@ const TEMPLATE = `
     id="{{ctx.instance.id}}-{{ctx.component.key}}"
   {% } %}
 >
-    {% for (var attr of ctx.input.component.data.values) { %}
-        <option value="{{attr.value}}">{{attr.label}}</option>
-    {% } %}
+    {{ctx.selectOptions}}
 </select>
 `;
 
