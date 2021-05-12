@@ -4,6 +4,8 @@
 @import '~microscope-sass/lib/typography';
 @import '~microscope-sass/lib/util';
 
+@import '../mixins/bem';
+@import '../mixins/prefix';
 
 $checkbox-checkmark-size: 1em * strip_unit($typography-line-height-text-big) !default;
 $checkbox-label-padding-v: calc((#{$grid-row-height} - #{1em * strip_unit($typography-line-height-text-big)}) / 2)!default;
@@ -11,7 +13,7 @@ $checkbox-label-padding-h: $grid-margin-2!default;
 $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2})!default;
 
 
-.checkbox {
+.#{prefix(checkbox)} {
   @include body;
   @include body--big;
   @include rows(1, min-height);

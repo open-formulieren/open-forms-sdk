@@ -1,6 +1,9 @@
 @import '~microscope-sass/lib/color';
 
-.errors {
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(errors)} {
   @include body;
   @include body--big;
   @include color-danger;

@@ -4,7 +4,10 @@
 @import '~microscope-sass/lib/typography';
 @import '~microscope-sass/lib/util';
 
-.tooltip {
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(tooltip)} {
   &-inner {
     @include border(all);
     @include body;

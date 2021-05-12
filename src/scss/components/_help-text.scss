@@ -1,7 +1,9 @@
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/typography';
 
-.help-text {
+@import '../mixins/prefix';
+
+.#{prefix(help-text)} {
   @include body;
   @include border(left, $color-info, 4px);
   background-color: scale_color($color-info, $lightness: 80%, $saturation: -60%);

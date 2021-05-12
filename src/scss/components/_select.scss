@@ -1,7 +1,9 @@
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
-.select {
+@import '../mixins/prefix';
+
+.#{prefix(select)} {
   @include body;
   @include border(all, $size: 1px);
   @include rows(1);
