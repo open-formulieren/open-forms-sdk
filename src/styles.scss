@@ -1,9 +1,17 @@
 // Open Forms SDK styles
+
+
 @import "./scss/settings";
 
 @import "./scss/components/button";
-@import "./scss/components/label";
-@import "./scss/components/toolbar";
-
+@import "./scss/components/checkbox";
+@import "./scss/components/errors";
+@import "./scss/components/form";
+@import "./scss/components/form-choices";
+@import "./scss/components/help-text";
 @import "./scss/components/input";
+@import "./scss/components/label";
+@import "./scss/components/select";
 @import "./scss/components/textarea";
+@import "./scss/components/toolbar";
+@import "./scss/components/tooltip";
