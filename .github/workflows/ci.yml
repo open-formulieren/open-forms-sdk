@@ -1,0 +1,43 @@
+name: Run CI
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  pull_request:
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: openformulieren/open-forms-sdk
+
+jobs:
+  tests:
+    name: Run Javascript tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+
+      - name: Install OS dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+
+      - name: Build Javascript
+        run: |
+          yarn install
+          yarn build
+        working-directory: ./src
+
+      - name: Run tests
+        run: |
+          yarn test
+
+      # - name: Publish coverage report
+      #   uses: codecov/codecov-action@v1
