@@ -1,8 +1,10 @@
+import { applyPrefix } from '../utils';
+
 const TEMPLATE = `
-<div class="form-choices">
+<div class="${applyPrefix('form-choices')}">
   {% ctx.values.forEach(function(item) { %}
-    <div class="form-choices__choice">
-        <div class="checkbox">
+    <div class="${applyPrefix('form-choices__choice')}">
+        <div class="${applyPrefix('checkbox')}">
               <{{ctx.input.type}}
                 ref="input"
 
@@ -25,10 +27,10 @@ const TEMPLATE = `
                 {{ctx.input.content}}
             </{{ctx.input.type}}>
 
-            <div class="checkbox__checkmark"></div>
+            <div class="${applyPrefix('checkbox__checkmark')}"></div>
 
             {% if (!ctx.component.optionsLabelPosition || ctx.component.optionsLabelPosition === 'right' || ctx.component.optionsLabelPosition === 'bottom') { %}
-                <label class="checkbox__label" for="{{ctx.id}}{{ctx.row}}-{{item.value}}">{{ctx.t(item.label)}}</label>
+                <label class="${applyPrefix('checkbox__label')}" for="{{ctx.id}}{{ctx.row}}-{{item.value}}">{{ctx.t(item.label)}}</label>
             {% } %}
         </div>
     </div>
