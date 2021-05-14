@@ -1,0 +1,36 @@
+name: Run CI
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: Run Javascript tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '14'
+
+      - name: Build Javascript
+        run: |
+          yarn install
+          yarn build
+
+      - name: Run tests
+        run: |
+          yarn test
+        env:
+          CI: 'true'
+
+      # - name: Publish coverage report
+      #   uses: codecov/codecov-action@v1
