@@ -1,6 +1,6 @@
 # Open Forms Javascript SDK
 
-The Open Forms Javascript SDK enables uses to embed, render and submit forms defined
+The Open Forms Javascript SDK enables users to embed, render and submit forms defined
 in Open Forms.
 
 The SDK leverages the Open Forms API, and is built on top of the
