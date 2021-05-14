@@ -1,0 +1,27 @@
+The Open Forms SDK was not part of the original Open Forms project but was set 
+up to meet the demands from Dimpact. Not only should Open Forms be able to 
+show forms by itself, it should also be available as a "snippet" that can be
+integrated in a CMS to show forms as part of a website.
+
+Here is an inevitably incomplete list of MUCH-APPRECIATED CONTRIBUTORS --
+people who laid the groundwork, have submitted patches, reported bugs, added
+translations, helped answer questions, and generally made Open Forms that much 
+better:
+
+    Joeri Bekker <joeri@maykinmedia.nl>
+    Sven van de Scheur <sven@maykinmedia.nl>
+    Sergei Maertens <sergei@maykinmedia.nl>
+    Shea Meyers <shea@maykinmedia.nl>
+    Bart van der Schoor <bart@maykinmedia.nl>
+    Steven Bal <steven@maykinmedia.nl>
+    Silvia Amabilino <silvia@maykinmedia.nl>
+
+A big THANK YOU goes to:
+
+    Dimpact for their trust in us, their leadership and their financial 
+    support.
+
+    The Form.io team for making such a great open source library that speed up
+    the development of Open Forms.
+
+    All people behind Common Ground for their enthusiasm and vision.
