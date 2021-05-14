@@ -1,5 +1,7 @@
 // Open Forms SDK styles
-@import "~formiojs/dist/formio.full.min.css";
+// TODO: we should see if we can re-use even smaller bits to shed dead weight and
+// reduce the bundle size
+@import "~formiojs/dist/formio.form.css";
 
 @import "./scss/settings";
 
