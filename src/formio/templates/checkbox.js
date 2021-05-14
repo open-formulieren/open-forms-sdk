@@ -1,5 +1,7 @@
+import { applyPrefix } from '../utils';
+
 const TEMPLATE = `
-<div class="checkbox">
+<div class="${applyPrefix('checkbox')}">
     <{{ctx.input.type}}
       ref="input"
       {% for (var attr in ctx.input.attr) { %}
@@ -12,8 +14,8 @@ const TEMPLATE = `
         {{ctx.input.content}}
     </{{ctx.input.type}}>
 
-    <div class="checkbox__checkmark"></div>
-    <label class="checkbox__label {{ctx.input.labelClass}}" for="{{ctx.instance.id}}-{{ctx.component.key}}">
+    <div class="${applyPrefix('checkbox__checkmark')}"></div>
+    <label class="${applyPrefix('checkbox__label')} {{ctx.input.labelClass}}" for="{{ctx.instance.id}}-{{ctx.component.key}}">
         {{ctx.input.label}}&nbsp;
         {% if (ctx.component.tooltip) { %}
             <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
