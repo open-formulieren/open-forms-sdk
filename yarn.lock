@@ -5869,6 +5869,11 @@ i18next@^19.8.4:
   dependencies:
     "@babel/runtime" "^7.12.0"
 
+ibantools@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/ibantools/-/ibantools-3.3.0.tgz#f772fe74e61c30a81c2580c9220815a386f79cbb"
+  integrity sha512-iGe4wa76r/M0l/5D1v4RyL158KX1kfxTUVbbxhehrP4DCNenM9vmOmqEq0IY6oZHvip3SUZyo0DScPNWIYsHhg==
+
 iconv-lite@0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
