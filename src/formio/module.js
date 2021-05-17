@@ -10,6 +10,7 @@ import Email from "./components/Email";
 import Currency from './components/Currency';
 import Number from './components/Number';
 import FieldSet from './components/FieldSet';
+import Content from './components/Content';
 
 const FormIOModule = {
   components: {
@@ -25,6 +26,7 @@ const FormIOModule = {
     currency: Currency,
     number: Number,
     fieldset: FieldSet,
+    content: Content,
   },
 };
 
