@@ -6,6 +6,11 @@
   @include body;
   @include body--big;
   display: block;
+
+  &.field-required:after {
+    content: '*';
+    color: $color-red;
+  }
 }
 
 .#{prefix(char-count)},
