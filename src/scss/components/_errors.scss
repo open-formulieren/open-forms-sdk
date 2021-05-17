@@ -1,0 +1,11 @@
+@import '~microscope-sass/lib/color';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(errors)} {
+  @include body;
+  @include body--big;
+  @include color-danger;
+  font-weight: bold;
+}

@@ -1,0 +1,14 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(form-choices)} {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  &__choice {
+    @include margin($value-mobile: $typography-margin-list);
+  }
+}

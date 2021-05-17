@@ -1,9 +1,19 @@
 // Open Forms SDK styles
+// TODO: we should see if we can re-use even smaller bits to shed dead weight and
+// reduce the bundle size
+@import "~formiojs/dist/formio.form.css";
+
 @import "./scss/settings";
 
 @import "./scss/components/button";
-@import "./scss/components/label";
-@import "./scss/components/toolbar";
-
+@import "./scss/components/checkbox";
+@import "./scss/components/errors";
+@import "./scss/components/form";
+@import "./scss/components/form-choices";
+@import "./scss/components/help-text";
 @import "./scss/components/input";
+@import "./scss/components/label";
+@import "./scss/components/select";
 @import "./scss/components/textarea";
+@import "./scss/components/toolbar";
+@import "./scss/components/tooltip";
