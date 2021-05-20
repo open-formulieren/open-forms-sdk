@@ -1,0 +1,47 @@
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(form-control)} {
+  position: relative;
+
+  &--hidden {
+    display: none;
+  }
+
+  &[class*="error"] {
+    @include border(left, $color-danger, 4px);
+    padding-left: $grid-margin-3;
+  }
+
+  .#{prefix(errors)},
+  .#{prefix(label)} {
+    @include margin($value-mobile: $typography-margin-list);
+    @include ellipsis;
+  }
+
+  // Reverse errors and label
+  .#{prefix(errors)}:not(:empty) {
+    transform: translateY(31px);
+  }
+
+  .#{prefix(errors)}:not(:empty) + .#{prefix(label)} {
+    transform: translateY(-31px);
+  }
+
+  .#{prefix(prefix)} {
+    @include margin($value-mobile: $typography-margin-list);
+  }
+
+  .#{prefix(body)},
+  .#{prefix(help-text)},
+  .#{prefix(suffix)} {
+    @include margin(true, margin-top, $value-mobile: $typography-margin-list);
+  }
+
+  .#{prefix(body)} {
+    display: block;
+  }
+}
