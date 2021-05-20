@@ -7,7 +7,7 @@
 .#{prefix(form-control)} {
   position: relative;
 
-  &--hidden {
+  @include modifier('hidden') {
     display: none;
   }
 
