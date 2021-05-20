@@ -6,6 +6,7 @@ import Select from './components/Select';
 import TextField from './components/TextField';
 import TextArea from './components/TextArea';
 import IBANField from "./components/IBANField";
+import Email from "./components/Email";
 
 const FormIOModule = {
   components: {
@@ -17,6 +18,7 @@ const FormIOModule = {
     textfield: TextField,
     textarea: TextArea,
     iban: IBANField,
+    email: Email
   },
 };
 
