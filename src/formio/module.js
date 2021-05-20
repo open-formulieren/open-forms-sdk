@@ -1,4 +1,5 @@
 import Button from './components/Button';
+import Component from './components/Component';
 import Checkbox from './components/Checkbox';
 import Radio from './components/Radio';
 import Select from './components/Select';
@@ -9,6 +10,7 @@ import IBANField from "./components/IBANField";
 const FormIOModule = {
   components: {
     button: Button,
+    component: Component,
     checkbox: Checkbox,
     radio: Radio,
     select: Select,

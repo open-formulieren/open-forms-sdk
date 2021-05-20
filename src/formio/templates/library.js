@@ -1,3 +1,4 @@
+import { default as ComponentTemplate } from './component';
 import { default as FieldTemplate } from './field';
 import { default as MessageTemplate } from './message';
 
@@ -9,6 +10,7 @@ import { default as SelectTemplate } from './select';
 import { default as TextTemplate } from './text';
 
 const OFLibrary = {
+  component: {form: ComponentTemplate},
   field: {form: FieldTemplate}, // wrapper around the individual field types
   message: {form: MessageTemplate},
 
