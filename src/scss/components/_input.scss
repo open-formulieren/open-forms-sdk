@@ -15,3 +15,13 @@
   padding: $grid-margin-2;
   width: 100%;
 }
+
+// aliases that are also text inputs, but have their own class names:
+
+$aliases: email, iban;
+
+@each $alias in $aliases {
+  .#{prefix($alias)} {
+    @extend .#{prefix(input)};
+  }
+}
