@@ -1,0 +1,19 @@
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+// the html div doesn't get it's own class name, but it is part of the form-control--content
+// component
+
+.#{prefix(form-control)} {
+
+  @include modifier('content') {
+    [ref="html"] {
+      @include body;
+      @include body--big;
+      width: 100%;
+    }
+  }
+}
