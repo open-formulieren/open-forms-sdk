@@ -193,7 +193,7 @@ module.exports = function (webpackEnv) {
             // initialization, it doesn't blow up the WebpackDevServer client, and
             // changing JS code would still trigger a refresh.
           ]
-        : paths.appIndexJs,
+        : paths.sdk,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -204,6 +204,15 @@ module.exports = function (webpackEnv) {
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
         : isEnvDevelopment && 'static/js/bundle.js',
+      // output to a library
+      library: 'OpenForms',
+      libraryTarget: 'umd',
+      // Webpack 5
+      // library: {
+      //   name: 'OpenForms',
+      //   type: 'umd',
+      //   libraryTarget: 'umd',
+      // },
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
@@ -227,7 +236,7 @@ module.exports = function (webpackEnv) {
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
       // this defaults to 'window', but by setting it to 'this' then
       // module chunks which are built will work in web workers as well.
-      globalObject: 'this',
+      globalObject: 'window',
     },
     optimization: {
       minimize: isEnvProduction,
@@ -407,7 +416,7 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                 ],
-                
+
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -452,7 +461,7 @@ module.exports = function (webpackEnv) {
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
-                
+
                 // Babel sourcemaps are needed for debugging into node_modules
                 // code.  Without the options below, debuggers like VSCode
                 // show incorrect code and set breakpoints on the wrong lines.
