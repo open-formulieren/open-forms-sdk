@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import {Formio} from "react-formio";
-import {iban} from './fixtures/iban';
+import {iban, twoComponentForm} from './fixtures/iban';
 import OpenFormsModule from "../../../formio/module";
 
 // Use our custom components
@@ -55,5 +55,27 @@ describe('IBAN Component', () => {
 
     testValidity(validValues, true);
     testValidity(invalidValues, false);
+  });
+
+  test("IBAN validation not triggered by other components", (done) => {
+    const formJSON = _.cloneDeep(twoComponentForm);
+
+    const testValidity = () => {
+      const element = document.createElement('div');
+
+      Formio.createForm(element, formJSON).then(form => {
+        form.setPristine(false);
+        const component = form.getComponent('name');
+        const changed = component.setValue('John');
+        expect(changed).toBeTruthy();
+
+        setTimeout(() => {
+            expect(!!component.error).toBeFalsy();
+            done();
+        }, 300);
+      }).catch(done);
+    };
+
+    testValidity();
   });
 });
