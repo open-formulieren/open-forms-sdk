@@ -14,7 +14,7 @@ const IbanValidator = {
     });
   },
   check(component, setting, value) {
-    if (!value) {
+    if (!value || component.type !== "iban") {
       return true;
     }
     const iban = electronicFormatIBAN(value);
