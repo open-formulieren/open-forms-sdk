@@ -9,6 +9,7 @@ import IBANField from "./components/IBANField";
 import Email from "./components/Email";
 import Currency from './components/Currency';
 import {default as NumberComponent} from './components/Number';
+import ContentComponent from './components/Content';
 
 const FormIOModule = {
   components: {
@@ -23,6 +24,7 @@ const FormIOModule = {
     email: Email,
     currency: Currency,
     number: NumberComponent,
+    content: ContentComponent,
   },
 };
 
