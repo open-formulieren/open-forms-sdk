@@ -181,7 +181,9 @@ module.exports = function (webpackEnv) {
         // initialization, it doesn't blow up the WebpackDevServer client, and
         // changing JS code would still trigger a refresh.
       ]
-    : paths.sdk;
+    : isEnvProduction
+      ? {'open-forms-sdk': paths.sdk}
+      : paths.appIndexJs;
 
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
@@ -194,9 +196,7 @@ module.exports = function (webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: {
-      'open-forms-sdk': entry,
-    },
+    entry: entry,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -208,8 +208,8 @@ module.exports = function (webpackEnv) {
         ? '[name].js'  // no cache-busting, since we want predictable version numbers
         : isEnvDevelopment && 'static/js/bundle.js',
       // output to a library
-      library: 'OpenForms',
-      libraryTarget: 'umd',
+      library: isEnvProduction ? 'OpenForms' : undefined,
+      libraryTarget: isEnvProduction ? 'umd' : undefined,
       // Webpack 5
       // library: {
       //   name: 'OpenForms',
