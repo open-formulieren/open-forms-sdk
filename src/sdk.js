@@ -1,5 +1,3 @@
-// TODO: figure out how to build/export this as UMD?
-// find inspiration in https://github.com/formio/formio.js/tree/master/config
 import React from 'react';
 import ReactDOM from 'react-dom';
 
