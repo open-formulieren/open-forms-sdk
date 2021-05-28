@@ -1,0 +1,10 @@
+.dockerignore
+Dockerfile
+/.github/
+
+# local dependencies
+/node_modules/
+
+# local build results
+/build/
+/dist/
