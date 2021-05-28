@@ -8,6 +8,7 @@ import { default as LabelTemplate } from './label';
 import { default as RadioTemplate } from './radio';
 import { default as SelectTemplate } from './select';
 import { default as TextTemplate } from './text';
+import { default as FieldSetTemplate } from './fieldset';
 
 const OFLibrary = {
   component: {form: ComponentTemplate},
@@ -20,6 +21,7 @@ const OFLibrary = {
   radio: {form: RadioTemplate},
   select: {form: SelectTemplate},
   input: {form: TextTemplate},
+  fieldset: {form: FieldSetTemplate},
 };
 
 
