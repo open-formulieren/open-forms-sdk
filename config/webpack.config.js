@@ -242,8 +242,7 @@ module.exports = function (webpackEnv) {
       globalObject: 'window',
     },
     optimization: {
-      // TODO: enable again after debugging!
-      // minimize: isEnvProduction,
+      minimize: isEnvProduction,
       minimizer: [
         // This is only used in production mode
         new TerserPlugin({
@@ -560,7 +559,7 @@ module.exports = function (webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: 'static/[name].[hash:8].[ext]',
               },
             },
             // ** STOP ** Are you adding a new loader?
