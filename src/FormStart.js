@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {applyPrefix} from './formio/utils';
 import digidImg from './img/digid.png';
 import Card from './Card';
 import { Toolbar, ToolbarList } from './Toolbar';
@@ -24,7 +23,9 @@ const FormStart = ({ form }) => (
     <Toolbar modifiers={['start']}>
       <ToolbarList>
         <Button variant="primary" component="a" href="#">Formulier starten</Button>
-        <Button variant="primary" component="a" href="#">Inloggen met DigiD</Button>
+        <Button variant="primary" component="a" href="#" onClick={e => e.preventDefault() || alert('TODO')}>
+          Inloggen met DigiD
+        </Button>
       </ToolbarList>
 
       <ToolbarList>
