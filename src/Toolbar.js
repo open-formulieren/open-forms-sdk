@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { applyPrefix } from './formio/utils';
 
@@ -24,16 +25,23 @@ ToolbarList.propTypes = {
 };
 
 
-const Toolbar = ({ children }) => {
-    return (
-      <div className={applyPrefix('toolbar')}>
-        {children}
-      </div>
-    );
+const Toolbar = ({ children, modifiers=[] }) => {
+
+  const className = classNames(
+    applyPrefix('toolbar'),
+    ...modifiers.map(mod => applyPrefix(`toolbar--${mod}`)),
+  );
+
+  return (
+    <div className={className}>
+      {children}
+    </div>
+  );
 };
 
 Toolbar.propTypes = {
     children: PropTypes.node,
+    modifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
 

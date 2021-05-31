@@ -12,6 +12,7 @@ import { get, post, put } from './api';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
 import Summary from './Summary';
+import FormStart from './FormStart';
 
 /**
  * Create a submission instance from a given form instance
@@ -157,6 +158,13 @@ const reducer = (draft, action) => {
     event.preventDefault();
     console.log('save form button clicked');
   };
+
+  if (state.submission == null) {
+    return (
+      <FormStart form={form} />
+    );
+  }
+
 
   if (state.showSummary) {
     return (
