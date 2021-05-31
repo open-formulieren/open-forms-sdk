@@ -33,11 +33,11 @@
 .#{prefix(subtitle)},
 .#{prefix(caption)},
 .#{prefix(body)} {
-  @include modifier(emphasized) {
+  &--emphasized {
     font-style: italic;
   }
 
-  @include modifier(muted) {
+  &--muted {
     color: $color-gray-darker;
   }
 }
