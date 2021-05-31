@@ -1,3 +1,6 @@
+// polyfill
+import 'cookie-store';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
