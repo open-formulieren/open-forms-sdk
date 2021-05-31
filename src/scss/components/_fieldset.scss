@@ -1,0 +1,17 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix(fieldset)} {
+  border-width: 2px 0px 0px 0px;
+  border-style: solid;
+  border-color: black;
+  padding: 0px;
+
+  .#{prefix(legend)} {
+    @include body;
+    @include body--big;
+    margin-left: 1em;
+    padding: 0px 5px 0px 5px;
+  }
+}
