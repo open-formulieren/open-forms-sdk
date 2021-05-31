@@ -3536,6 +3536,11 @@ cookie-signature@1.0.6:
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
   integrity sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
 
+cookie-store@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/cookie-store/-/cookie-store-3.0.0.tgz#121ecacd7aa3c363a02d1d2555bdf21383c8390f"
+  integrity sha512-9tPVv15oPqXnf+MbxlMYZDcOL9jkBs6N192xQ1ITq5dQn6qeOAoFmDGnW8pRL/U/Djkap1LfoVt2H5sRweBvSQ==
+
 cookie@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
