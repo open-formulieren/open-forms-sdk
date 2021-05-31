@@ -108,7 +108,12 @@ const reducer = (draft, action) => {
 
   // render the form step if there's an active submission (and no summary)
   return (
-    <FormStep form={form} step={state.step} submission={state.submission} />
+    <FormStep
+      form={form}
+      step={state.step}
+      submission={state.submission}
+      onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
+    />
   );
 };
 

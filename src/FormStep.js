@@ -16,7 +16,6 @@ import FormIOWrapper from './FormIOWrapper';
 import FormStepsSidebar from './FormStepsSidebar';
 import { Toolbar, ToolbarList } from './Toolbar';
 
-
 const initialState = {
   configuration: null,
   data: null,
@@ -36,14 +35,12 @@ const reducer = (draft, action) => {
   }
 };
 
-
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
   return stepDataResponse.data;
 };
 
-
-const FormStep = ({ form, step, submission }) => {
+const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
   const formRef = useRef(null);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
 
@@ -67,10 +64,13 @@ const FormStep = ({ form, step, submission }) => {
     // submit the step data
     await submitStepData(step.url, data);
 
-    // const isLastStep = form.steps.reverse()[0] === step;
-    // if (isLastStep) {
-    //   dispatch({type: 'SHOW_SUMMARY'});
-    // }
+    // check if we need to invoke the logic for the last step
+    // TODO: there *may* be optional steps, so completion/summary can already get
+    // triggered earlier, potentially. This will need to be incorporated later.
+    const isLastStep = submission.steps.reverse()[0] === step;
+    if (isLastStep) {
+      onLastStepSubmitted();
+    }
   };
 
   // we wrap the submit so that we control our own submit button, as the form builder
@@ -116,6 +116,7 @@ const FormStep = ({ form, step, submission }) => {
                 <FormIOWrapper
                   ref={formRef}
                   form={configuration}
+                  submission={data}
                   onSubmit={onFormIOSubmit}
                   options={{noAlerts: true}}
                 />
@@ -167,6 +168,7 @@ FormStep.propTypes = {
     formStep: PropTypes.string.isRequired,
   }).isRequired,
   submission: PropTypes.object.isRequired,
+  onLastStepSubmitted: PropTypes.func.isRequired,
 };
 
 
