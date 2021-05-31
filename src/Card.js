@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {applyPrefix} from './formio/utils';
+
 
 const Card = ({ title, children, titleComponent='h2' }) => {
   const Title = `${titleComponent}`;
@@ -8,7 +10,7 @@ const Card = ({ title, children, titleComponent='h2' }) => {
   return (
     <div className="card">
       <header className="card__header">
-        <Title className="title">{title}</Title>
+        <Title className={applyPrefix('title')}>{title}</Title>
       </header>
 
       <div className="card__body">

@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {applyPrefix} from './formio/utils';
 import digidImg from './img/digid.png';
-
 import Card from './Card';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
+import Body from './Body';
+
 
 /**
  * Form start screen.
@@ -17,7 +19,7 @@ import Button from './Button';
 const FormStart = ({ form }) => (
   <Card title={form.name}>
 
-    <p className="body body--compact">Log in or start the form anonymously.</p>
+    <Body modifiers={['compact']}>Log in or start the form anonymously.</Body>
 
     <Toolbar modifiers={['start']}>
       <ToolbarList>
