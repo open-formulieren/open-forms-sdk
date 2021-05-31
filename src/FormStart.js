@@ -15,14 +15,14 @@ import Body from './Body';
  * action to start the form, or (in the future) present the login button (DigiD,
  * eHerkenning...)
  */
-const FormStart = ({ form }) => (
+const FormStart = ({ form, onFormStart }) => (
   <Card title={form.name}>
 
     <Body modifiers={['compact']}>Log in or start the form anonymously.</Body>
 
     <Toolbar modifiers={['start']}>
       <ToolbarList>
-        <Button variant="primary" component="a" href="#">Formulier starten</Button>
+        <Button variant="primary" component="a" href="#" onClick={onFormStart}>Formulier starten</Button>
         <Button variant="primary" component="a" href="#" onClick={e => e.preventDefault() || alert('TODO')}>
           Inloggen met DigiD
         </Button>
@@ -51,6 +51,7 @@ FormStart.propTypes = {
       url: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
+  onFormStart: PropTypes.func.isRequired,
 };
 
 
