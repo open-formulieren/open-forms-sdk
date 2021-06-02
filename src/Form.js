@@ -1,17 +1,15 @@
-import React, { useContext, useRef } from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 
-// import { Errors as FormioErrors } from 'react-formio';
-import useAsync from 'react-use/esm/useAsync';
 import { useImmerReducer } from "use-immer";
 
-import FormIOWrapper from './FormIOWrapper';
+
 import { ConfigContext } from './Context';
-import FormStepsSidebar from './FormStepsSidebar';
-import { get, post, put } from './api';
-import { Toolbar, ToolbarList } from './Toolbar';
-import Button from './Button';
+
+import { post } from './api';
 import Summary from './Summary';
+import FormStart from './FormStart';
+import FormStep from './FormStep';
 
 /**
  * Create a submission instance from a given form instance
@@ -25,16 +23,9 @@ const createSubmission = async (config, form) => {
 };
 
 
-const submitStepData = async (stepUrl, data) => {
-  const stepDataResponse = await put(stepUrl, {data});
-  return stepDataResponse.data;
-};
-
-
 const initialState = {
   config: {baseUrl: ''},
-  step: {url: ''},
-  stepConfiguration: {},
+  step: null,
   submission: null,
   showSummary: false,
 };
@@ -42,13 +33,12 @@ const initialState = {
 
 const reducer = (draft, action) => {
   switch (action.type) {
-    case 'STEP_LOADED': {
-      const { configuration } = action.payload;
-      draft.stepConfiguration = configuration;
-      break;
-    }
     case 'SUBMISSION_CREATED': {
-      draft.submission = action.payload;
+      // keep the submission instance in the state and set the current step to the
+      // first step of the form.
+      const submission = action.payload;
+      draft.submission = submission;
+      draft.step = submission.steps[0];
       break;
     }
     case 'SHOW_SUMMARY': {
@@ -70,93 +60,45 @@ const reducer = (draft, action) => {
 /**
  * An OpenForms form.
  *
- * TODO: this is currently working on raw form step definitions, without integration in
- * specific submissions (i.e. we can't do anything cool yet with custom hooks and
- * custom field types in FormIO.js)
  *
  * OpenForms forms consist of some metadata and individual steps.
  * @param  {Object} options.form The form definition from the Open Forms API
  * @return {JSX}
  */
- const Form = ({ form, titleComponent='h2' }) => {
+ const Form = ({ form }) => {
   // extract the declared properties and configuration
-  const { name, steps } = form;
-  const Title = `${titleComponent}`;
+  const {steps} = form;
   const config = useContext(ConfigContext);
 
   // load the state management/reducer
   const initialStateFromProps = {...initialState, config, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
 
-  // fetch the form step configuration
-  const {loading} = useAsync(
-    async () => {
-      if (!state.step || !state.step.url) return;
-      const stepDetail = await get(state.step.url);
-      dispatch({
-        type: 'STEP_LOADED',
-        payload: stepDetail,
-      });
-    },
-    [state.step]
-  );
-
-  const formRef = useRef(null);
-
-  // we wrap the submit so that we control our own submit button, as the form builder
-  // does NOT include submit buttons. We need this to navigate between our own steps
-  // and navigate flow.
-  //
-  // The handler of this submit event essentially calls the underlying formio.js
-  // instance submit method, which leads to the submit event being emitted, and we tap
-  // into that to handle the actual submission.
-  const onReactSubmit = (event) => {
+  /**
+   * When the form is started, create a submission and add it to the state.
+   *
+   * @param  {Event} event The DOM event, could be a button click or a custom event.
+   * @return {Void}
+   */
+  const onFormStart = async (event) => {
     event.preventDefault();
-
-    // current is the component, current.instance is the component instance, and that
-    // object has an instance property pointing to the WebForm...
-    const formInstance = formRef.current.instance.instance;
-    if (!formInstance) {
-      console.warn("Form was not rendered (yet), aborting submission.");
-      return;
+    if (state.submission != null) {
+      throw new Error("There already is an active form submission.");
     }
 
-    // submit the Formio.js form instance, which causes the submit event to be emitted.
-    formInstance.submit();
+    const {config} = state;
+    const submission = await createSubmission(config, form);
+    dispatch({
+      type: 'SUBMISSION_CREATED',
+      payload: submission,
+    });
   };
 
-  const onFormIOSubmit = async ({ data }) => {
-    const { step, config } = state;
-    let { submission } = state;
-
-    // if there's currently no submission active, start one
-    if (step === form.steps[0] && !submission) {
-      submission = await createSubmission(config, form);
-      dispatch({
-        type: 'SUBMISSION_CREATED',
-        payload: submission,
-      });
-    }
-
-    if (!submission) {
-      throw new Error("There is no active submission!");
-    }
-
-    // submit the step data as well - grab the correct submission step based on the
-    // index of the form step
-    const submissionStep = submission.steps[form.steps.indexOf(step)];
-    await submitStepData(submissionStep.url, data);
-
-    const isLastStep = form.steps.reverse()[0] === step;
-    if (isLastStep) {
-      dispatch({type: 'SHOW_SUMMARY'});
-    }
-  };
-
-  const onFormSave = async (event) => {
-    event.preventDefault();
-    console.log('save form button clicked');
-  };
+  if (state.submission == null) {
+    return (
+      <FormStart form={form} onFormStart={onFormStart} />
+    );
+  }
 
   if (state.showSummary) {
     return (
@@ -164,50 +106,18 @@ const reducer = (draft, action) => {
     );
   }
 
+  // render the form step if there's an active submission (and no summary)
   return (
-    <div className="card">
-      <header className="card__header">
-        <Title className="title">{name}</Title>
-      </header>
-
-      <div className="card__body" style={{display: 'flex'}}>
-
-        { loading ? 'Loading...' : null }
-
-        <div style={{width: '75%'}}>
-          {
-            (!loading && state.stepConfiguration) ? (
-              <form onSubmit={onReactSubmit}>
-                <FormIOWrapper
-                  ref={formRef}
-                  form={state.stepConfiguration}
-                  onSubmit={onFormIOSubmit}
-                  options={{noAlerts: true}}
-                />
-                <Toolbar>
-                  <ToolbarList>
-                    <Button variant="anchor" component="a">Vorige pagina</Button>
-                  </ToolbarList>
-                  <ToolbarList>
-                    <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>Tussentijds opslaan</Button>
-                    <Button type="submit" variant="primary" name="next">Volgende</Button>
-                  </ToolbarList>
-                </Toolbar>
-              </form>
-            ) : null
-          }
-
-        </div>
-
-        <FormStepsSidebar steps={steps} />
-
-      </div>
-    </div>
-    );
+    <FormStep
+      form={form}
+      step={state.step}
+      submission={state.submission}
+      onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
+    />
+  );
 };
 
 Form.propTypes = {
-  titleComponent: PropTypes.string,
   form: PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

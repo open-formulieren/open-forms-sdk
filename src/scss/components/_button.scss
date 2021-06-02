@@ -68,7 +68,7 @@ $button-padding-h: $grid-margin-2;
     cursor: pointer;
   }
 
-  @modifier('image') {
+  @include modifier('image') {
     @include rows(1);
     border: none;
     padding: 0;

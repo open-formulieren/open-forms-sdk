@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { applyPrefix } from './formio/utils';
+import {getBEMClassName} from './utils';
 
 
 const ToolbarList = ({ children }) => {
   return (
-    <ul className={applyPrefix('toolbar__list')}>
+    <ul className={getBEMClassName('toolbar__list')}>
       { React.Children.map(children, child => (
-        <li className={applyPrefix('toolbar__list-item')}>
+        <li className={getBEMClassName('toolbar__list-item')}>
           {child}
         </li>
       )) }
@@ -24,16 +24,18 @@ ToolbarList.propTypes = {
 };
 
 
-const Toolbar = ({ children }) => {
-    return (
-      <div className={applyPrefix('toolbar')}>
-        {children}
-      </div>
-    );
+const Toolbar = ({ children, modifiers=[] }) => {
+  const className = getBEMClassName('toolbar', modifiers);
+  return (
+    <div className={className}>
+      {children}
+    </div>
+  );
 };
 
 Toolbar.propTypes = {
     children: PropTypes.node,
+    modifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
 

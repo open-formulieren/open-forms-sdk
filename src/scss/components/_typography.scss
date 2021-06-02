@@ -1,0 +1,43 @@
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(title)} {
+  @include h1(auto);
+}
+
+.#{prefix(subtitle)} {
+  @include h2(auto);
+}
+
+.#{prefix(caption)} {
+  @include h3(auto);
+}
+
+.#{prefix(body)} {
+  @include body(auto);
+  clear: both;
+
+  @include modifier(small) {
+    @include body--small
+  }
+
+  @include modifier(big) {
+    @include body--big
+  }
+}
+
+.#{prefix(title)},
+.#{prefix(subtitle)},
+.#{prefix(caption)},
+.#{prefix(body)} {
+  &--emphasized {
+    font-style: italic;
+  }
+
+  &--muted {
+    color: $color-gray-darker;
+  }
+}
