@@ -67,7 +67,8 @@ const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
     // check if we need to invoke the logic for the last step
     // TODO: there *may* be optional steps, so completion/summary can already get
     // triggered earlier, potentially. This will need to be incorporated later.
-    const isLastStep = submission.steps.reverse()[0] === step;
+    const lastStep = [...submission.steps].reverse()[0]; // create a copy to prevent mutating the state object
+    const isLastStep = lastStep === step;
     if (isLastStep) {
       onLastStepSubmitted();
     }
