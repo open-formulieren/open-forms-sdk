@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import useAsync from 'react-use/esm/useAsync';
 
@@ -8,12 +8,23 @@ import { get, post } from './api';
 import FormIOWrapper from "./FormIOWrapper";
 
 
-const loadStepData = async (submission) => {
-  const promises = submission.steps.map(step => get(step.url));
-  const stepDetails = await Promise.all(promises);
+const loadStepsData = async (submission) => {
+  // const promises = submission.steps.map(step => get(step.url));
+  // const formStepPromises = submission.steps.map(step => get(step.formStep));
+  // const stepDetails = await Promise.all(promises);
+  // const stepsInfo = [];
+  // for (let stepDetail of stepDetails) {
+  //   stepsInfo.push({data: {data: stepDetail.data}, configuration: stepDetail.formStep.configuration});
+  // }
+  // debugger;
   const stepsInfo = [];
-  for (let stepDetail of stepDetails) {
-    stepsInfo.push({data: {data: stepDetail.data}, configuration: stepDetail.formStep.configuration});
+  for (let submissionStep of submission.steps) {
+    const stepDetail = await get(submissionStep.url);
+    const formStepDetail = await get(submissionStep.formStep);
+    const formDefinitionDetail = await get(formStepDetail.formDefinition);
+    stepsInfo.push({title: formDefinitionDetail.name,
+                    data: {data: stepDetail.data},
+                    configuration: stepDetail.formStep.configuration});
   }
   return stepsInfo;
 };
@@ -26,7 +37,7 @@ const completeSubmission = async (submission) => {
 
 const Summary = ({ submission, onConfirm }) => {
   const {loading, value, error} = useAsync(
-    async () => loadStepData(submission),
+    async () => loadStepsData(submission),
     [submission]
   );
 
@@ -42,15 +53,18 @@ const Summary = ({ submission, onConfirm }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h2>Summary</h2>
+      <h2>Controleer en bevestig</h2>
 
       {value && value.map((step, index) => (
-        <FormIOWrapper
-          key={index}
-          form={step.configuration}
-          submission={step.data}
-          options={{noAlerts: true, readOnly: true, renderMode: 'html'}}
-        />
+        <Fragment>
+          <h3>{step.title}</h3>
+          <FormIOWrapper
+            key={index}
+            form={step.configuration}
+            submission={step.data}
+            options={{noAlerts: true, readOnly: true, renderMode: 'html'}}
+          />
+        </Fragment>
       ))}
 
       <Toolbar>
