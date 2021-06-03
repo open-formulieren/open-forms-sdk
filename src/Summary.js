@@ -49,7 +49,7 @@ const Summary = ({ submission, onConfirm }) => {
           key={index}
           form={step.configuration}
           submission={step.data}
-          options={{noAlerts: true, readOnly: true}}
+          options={{noAlerts: true, readOnly: true, renderMode: 'html'}}
         />
       ))}
 
