@@ -10,11 +10,18 @@ import { get, post } from './api';
 const loadStepData = async (submission) => {
   const promises = submission.steps.map(step => get(step.url));
   const stepDetails = await Promise.all(promises);
-  const stepData = stepDetails.reduce( (accumulator, stepData) => ({
-    ...accumulator,
-    ...stepData.data,
-  }), {});
-  return stepData;
+  const stepsInfo = [];
+  for (let stepDetail of stepDetails) {
+    stepsInfo.push({data: stepDetail.data, configuration: stepDetail.formStep.configuration});
+  }
+  // Each step in stepDetails has a configuration
+  // in stepData.formStep.configuration
+  // const stepData = stepDetails.reduce( (accumulator, stepData) => ({
+  //   ...accumulator,
+  //   ...stepData.data,
+  // }), {});
+  debugger;
+  return stepsInfo;
 };
 
 
