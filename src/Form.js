@@ -41,6 +41,11 @@ const reducer = (draft, action) => {
       draft.step = submission.steps[0];
       break;
     }
+    case 'SHOW_STEP': {
+      draft.step = action.payload;
+      draft.showSummary = false;
+      break;
+    }
     case 'SHOW_SUMMARY': {
       draft.showSummary = true;
       break;
@@ -102,7 +107,7 @@ const reducer = (draft, action) => {
 
   if (state.showSummary) {
     return (
-      <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } />
+      <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } onShowStep={(step) => dispatch({type: 'SHOW_STEP', payload: step})}/>
     );
   }
 

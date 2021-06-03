@@ -35,7 +35,7 @@ const completeSubmission = async (submission) => {
 };
 
 
-const Summary = ({ submission, onConfirm }) => {
+const Summary = ({ submission, onConfirm, onShowStep }) => {
   const {loading, value, error} = useAsync(
     async () => loadStepsData(submission),
     [submission]
@@ -57,7 +57,12 @@ const Summary = ({ submission, onConfirm }) => {
 
       {value && value.map((step, index) => (
         <Fragment>
-          <h3>{step.title}</h3>
+          <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
+            <h3>{step.title}</h3>
+            <Button variant="anchor" component="a" onClick={e => onShowStep(submission.steps[0])}>
+              Wijzig {step.title.toLocaleLowerCase()}
+            </Button>
+          </div>
           <FormIOWrapper
             key={index}
             form={step.configuration}
@@ -81,6 +86,7 @@ const Summary = ({ submission, onConfirm }) => {
 Summary.propTypes = {
     submission: PropTypes.object.isRequired,
     onConfirm: PropTypes.func.isRequired,
+    onShowStep: PropTypes.func.isRequired,
 };
 
 
