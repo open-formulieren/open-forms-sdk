@@ -75,6 +75,9 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
 
       <Toolbar>
         <ToolbarList>
+          <Button variant="anchor" component="a" onClick={_ => onShowStep(submission.steps[submission.steps.length-1])}>Vorige pagina</Button>
+        </ToolbarList>
+        <ToolbarList>
           <Button type="submit" variant="primary" name="confirm" disabled={loading}>
             Bevestigen
           </Button>
