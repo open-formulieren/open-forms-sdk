@@ -22,7 +22,8 @@ const loadStepsData = async (submission) => {
     const stepDetail = await get(submissionStep.url);
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
-    stepsInfo.push({title: formDefinitionDetail.name,
+    stepsInfo.push({submissionStep,
+                    title: formDefinitionDetail.name,
                     data: {data: stepDetail.data},
                     configuration: stepDetail.formStep.configuration});
   }
@@ -59,7 +60,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
         <Fragment>
           <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
             <h3>{step.title}</h3>
-            <Button variant="anchor" component="a" onClick={e => onShowStep(submission.steps[0])}>
+            <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
               Wijzig {step.title.toLocaleLowerCase()}
             </Button>
           </div>
