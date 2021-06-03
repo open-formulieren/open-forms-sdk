@@ -5,6 +5,7 @@ import useAsync from 'react-use/esm/useAsync';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
 import { get, post } from './api';
+import FormIOWrapper from "./FormIOWrapper";
 
 
 const loadStepData = async (submission) => {
@@ -12,15 +13,8 @@ const loadStepData = async (submission) => {
   const stepDetails = await Promise.all(promises);
   const stepsInfo = [];
   for (let stepDetail of stepDetails) {
-    stepsInfo.push({data: stepDetail.data, configuration: stepDetail.formStep.configuration});
+    stepsInfo.push({data: {data: stepDetail.data}, configuration: stepDetail.formStep.configuration});
   }
-  // Each step in stepDetails has a configuration
-  // in stepData.formStep.configuration
-  // const stepData = stepDetails.reduce( (accumulator, stepData) => ({
-  //   ...accumulator,
-  //   ...stepData.data,
-  // }), {});
-  debugger;
   return stepsInfo;
 };
 
@@ -44,15 +38,20 @@ const Summary = ({ submission, onConfirm }) => {
     event.preventDefault();
     await completeSubmission(submission);
     onConfirm();
-  }
+  };
 
   return (
     <form onSubmit={onSubmit}>
       <h2>Summary</h2>
 
-      <code>
-        <pre>{loading ? '...' : JSON.stringify(value, null, 4)}</pre>
-      </code>
+      {value && value.map((step, index) => (
+        <FormIOWrapper
+          key={index}
+          form={step.configuration}
+          submission={step.data}
+          options={{noAlerts: true, readOnly: true}}
+        />
+      ))}
 
       <Toolbar>
         <ToolbarList>
