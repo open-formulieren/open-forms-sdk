@@ -12,7 +12,7 @@ import {Templates} from "react-formio";
 Templates.addTemplate('overview', {
   component: {
     form: `
-      <div id="{{ctx.id}}" class="{{ctx.classes}}" style="display: table;width: 100%; table-layout: fixed;" ref="component">
+      <div id="{{ctx.id}}" class="{{ctx.classes}}" style="display: table;width: 100%; table-layout: fixed; margin-bottom: 1vh;" ref="component">
           <div style="display: table-row">
               {{ctx.children}}
           </div>
@@ -33,14 +33,6 @@ Templates.addTemplate('overview', {
 
 
 const loadStepsData = async (submission) => {
-  // const promises = submission.steps.map(step => get(step.url));
-  // const formStepPromises = submission.steps.map(step => get(step.formStep));
-  // const stepDetails = await Promise.all(promises);
-  // const stepsInfo = [];
-  // for (let stepDetail of stepDetails) {
-  //   stepsInfo.push({data: {data: stepDetail.data}, configuration: stepDetail.formStep.configuration});
-  // }
-  // debugger;
   const stepsInfo = [];
   for (let submissionStep of submission.steps) {
     const stepDetail = await get(submissionStep.url);
@@ -93,7 +85,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             form={step.configuration}
             submission={step.data}
             // Pass template in here. Still pass renderMode and flatten
-            options={{noAlerts: true, readOnly: true, renderMode: 'html', template: 'overview'}}
+            options={{noAlerts: true, readOnly: true, renderMode: 'html', template: 'overview', flatten: true}}
           />
         </Fragment>
       ))}
