@@ -8,7 +8,7 @@ import { get, post } from './api';
 import FormIOWrapper from "./FormIOWrapper";
 import {Templates} from "react-formio";
 
-// use our own template library
+// use our own template for this component
 Templates.addTemplate('overview', {
   component: {
     form: `
@@ -34,13 +34,17 @@ Templates.addTemplate('overview', {
 
 const loadStepsData = async (submission) => {
   return await Promise.all(submission.steps.map(async (submissionStep) => {
-    const stepDetail = await get(submissionStep.url);
+    const submissionStepDetail = await get(submissionStep.url);
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
-    return {submissionStep,
-                    title: formDefinitionDetail.name,
-                    data: {data: stepDetail.data},
-                    configuration: stepDetail.formStep.configuration};
+    return {
+      submissionStep,
+      title: formDefinitionDetail.name,
+      data: {
+        data: submissionStepDetail.data
+      },
+      configuration: submissionStepDetail.formStep.configuration
+    };
   }));
 };
 
@@ -71,7 +75,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
       <h2>Controleer en bevestig</h2>
 
       {value && value.map((step, index) => (
-        <Fragment>
+        <Fragment key={index}>
           <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
             <h3>{step.title}</h3>
             <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
@@ -79,10 +83,9 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             </Button>
           </div>
           <FormIOWrapper
-            key={index}
             form={step.configuration}
             submission={step.data}
-            options={{noAlerts: true, readOnly: true, renderMode: 'html', template: 'overview'}}
+            options={{renderMode: 'html', template: 'overview'}}
           />
         </Fragment>
       ))}
