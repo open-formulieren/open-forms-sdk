@@ -107,6 +107,7 @@ const reducer = (draft, action) => {
     history.push(firstStepRoute);
   };
 
+
   const onStepSubmitted = async (formStep) => {
     const stepIndex = form.steps.indexOf(formStep);
     // TODO: there *may* be optional steps, so completion/summary can already get
@@ -124,6 +125,11 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
+  const onLoginStart = async (option) => {
+    const url = `${option.url}?next=${encodeURIComponent(window.location.href)}`;
+    window.location = url;
+  };
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -134,7 +140,11 @@ const reducer = (draft, action) => {
           <Switch>
 
             <Route exact path="/">
-              <FormStart form={form} onFormStart={onFormStart} />
+              <FormStart
+                form={form}
+                onFormStart={onFormStart}
+                onLoginStart={onLoginStart}
+              />
             </Route>
 
             <Route exact path="/overzicht">
