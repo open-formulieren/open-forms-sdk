@@ -33,17 +33,15 @@ Templates.addTemplate('overview', {
 
 
 const loadStepsData = async (submission) => {
-  const stepsInfo = [];
-  for (let submissionStep of submission.steps) {
+  return await Promise.all(submission.steps.map(async (submissionStep) => {
     const stepDetail = await get(submissionStep.url);
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
-    stepsInfo.push({submissionStep,
+    return {submissionStep,
                     title: formDefinitionDetail.name,
                     data: {data: stepDetail.data},
-                    configuration: stepDetail.formStep.configuration});
-  }
-  return stepsInfo;
+                    configuration: stepDetail.formStep.configuration};
+  }));
 };
 
 
@@ -84,8 +82,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             key={index}
             form={step.configuration}
             submission={step.data}
-            // Pass template in here. Still pass renderMode and flatten
-            options={{noAlerts: true, readOnly: true, renderMode: 'html', template: 'overview', flatten: true}}
+            options={{noAlerts: true, readOnly: true, renderMode: 'html', template: 'overview'}}
           />
         </Fragment>
       ))}
