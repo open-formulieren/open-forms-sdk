@@ -6,6 +6,55 @@ import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
 import { get, post } from './api';
 import FormIOWrapper from "./FormIOWrapper";
+import {Templates} from "react-formio";
+import {default as LabelTemplate} from "./formio/templates/label";
+import {default as TextTemplate} from "./formio/templates/text";
+import {default as ComponentTemplate} from "./formio/templates/component";
+
+// use our own template library
+// Templates.current = {
+  // component: {form: `
+  //   <p>-------------------------------------</p>
+  //   <p>This needs to be a table</p>
+  //   <div id="{{ctx.id}}" class="{{ctx.classes}}"{% if (ctx.styles) { %} styles="{{ctx.styles}}"{% } %} ref="component">
+  //     <div ref="messageContainer"></div>
+  //     {% if (ctx.visible) { %}
+  //     {{ctx.children}}
+  //     {% } %}
+  //   </div>
+  //   <p>-------------------------------------</p>
+  //   `
+  // },
+
+//   component: {form: `
+//     <p>-----</p>
+//     <table class="table">
+//     <tbody class="table__body">
+//     <tr class="table__row">
+//         <th class="table__head">
+//             <p class="body">Put label here</p>
+//         </th>
+//         <td class="table__cell">
+//             <p class="body">
+//                 Put content here
+//             </p>
+//         </td>
+//     </tr>
+//     </tbody>
+// </table>
+//     `
+//   },
+//
+//   label: {form: `
+//       <label class="openforms-label {{ctx.label.className}}" for="{{ctx.instance.id}}-{{ctx.component.key}}">
+//         {{ ctx.t(ctx.component.label) }}
+//         {% if (ctx.component.tooltip) { %}
+//           <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
+//         {% } %}
+//       </label>
+//       `
+//   }
+// };
 
 
 const loadStepsData = async (submission) => {
@@ -68,6 +117,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             key={index}
             form={step.configuration}
             submission={step.data}
+            // Pass template in here. Still pass renderMode and flatten
             options={{noAlerts: true, readOnly: true, renderMode: 'html'}}
           />
         </Fragment>
