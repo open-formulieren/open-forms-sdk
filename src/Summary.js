@@ -45,6 +45,17 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
     onConfirm();
   };
 
+  const renderLabel = (components, key) => {
+    const component = components.find(component => component.key === key);
+    return component ? component.label : '';
+  };
+
+  const renderValue = (data, key) => {
+    return typeof (data[key]) !== "object" ?
+      JSON.stringify(data[key]).replaceAll('"', '') :
+      Object.keys(data[key]).filter(inner_key => data[key][inner_key] === true).toString();
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <h1 className="openforms-title">Controleer en bevestig</h1>
@@ -65,15 +76,15 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
                   <td className="table__head">
                     <p className="openforms-body">
                       {
-                        step.configuration["components"].find(component => component.key === key).label
+                        renderLabel(step.configuration.components, key)
                       }
                     </p>
                   </td>
                   <td className="table__cell">
-                    <p className="openforms-body">{
-                      typeof(step.data[key]) !== "object" ?
-                        JSON.stringify(step.data[key]).replaceAll('"', '') :
-                        Object.keys(step.data[key]).filter(inner_key => step.data[key][inner_key] === true).toString()}
+                    <p className="openforms-body">
+                      {
+                        renderValue(step.data, key)
+                      }
                     </p>
                   </td>
                 </tr>
