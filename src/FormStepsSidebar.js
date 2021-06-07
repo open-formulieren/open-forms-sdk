@@ -1,27 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Anchor from './Anchor';
+import Card from './Card';
+import List from './List';
 
-const FormStepsSidebar = ({ steps }) => {
+
+const FormStepsSidebar = ({ title, steps }) => {
   return (
-    <ul className="list">
-      {steps.map( step => (
-        <li className="list__item" key={step.uuid}>
-          {step.formDefinition}
-        </li>
-      ))}
-    </ul>
+    <Card caption={title}>
+      <List ordered>
+        {
+          steps.map( step => (
+            <Anchor href="#" modifiers={['inherit',/* 'active',*/ 'hover', 'muted', 'indent']} key={step.uuid}>
+              {step.formDefinition}
+            </Anchor>
+          ) )
+        }
+      </List>
+    </Card>
   );
 };
 
 
 FormStepsSidebar.propTypes = {
-    steps: PropTypes.arrayOf(PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      uuid: PropTypes.string.isRequired,
-      index: PropTypes.number.isRequired,
-      formDefinition: PropTypes.string.isRequired,
-    })).isRequired,
+  title: PropTypes.string,
+  steps: PropTypes.arrayOf(PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    uuid: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+    formDefinition: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 

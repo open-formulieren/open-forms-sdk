@@ -1,0 +1,37 @@
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix('anchor')} {
+  @include text;
+
+  &:not(#{&}--hover) {
+    @include anchor;
+  }
+  @include modifier('hover') {
+    @include anchor(true);
+  }
+
+  @include modifier('active') {
+    font-weight: bold;
+  }
+
+  @include modifier('inherit') {
+    color: inherit!important;
+  }
+
+  @include modifier('muted') {
+    color: $color-gray-darker!important;
+  }
+
+  &--active#{&}--muted,
+  &--muted:hover {
+    color: $typography-color-text!important;
+  }
+
+  @include modifier('indent') {
+    padding-left: 0.6em;
+  }
+}

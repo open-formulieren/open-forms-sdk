@@ -122,7 +122,7 @@ const reducer = (draft, action) => {
         </LayoutColumn>
 
         <LayoutColumn modifiers={['secondary']}>
-          <FormStepsSidebar steps={form.steps} />
+          <FormStepsSidebar title={form.name} steps={form.steps} />
         </LayoutColumn>
 
       </LayoutRow>
