@@ -8,12 +8,12 @@ const Card = ({ title, children, titleComponent='h2' }) => {
   const Title = `${titleComponent}`;
 
   return (
-    <div className="card">
-      <header className="card__header">
+    <div className={applyPrefix('card')}>
+      <header className={applyPrefix('card__header')}>
         <Title className={applyPrefix('title')}>{title}</Title>
       </header>
 
-      <div className="card__body">
+      <div className={applyPrefix('card__body')}>
         {children}
       </div>
     </div>
