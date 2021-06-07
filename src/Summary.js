@@ -28,6 +28,17 @@ Templates.addTemplate('overview', {
         {% } %}
       </label>
       `
+  },
+  checkbox: {
+    form: `
+      <label class="openforms-label {{ctx.label.className}}" style="display: table-cell" for="{{ctx.instance.id}}-{{ctx.component.key}}">
+        {{ ctx.t(ctx.component.label) }}
+        {% if (ctx.component.tooltip) { %}
+          <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
+        {% } %}
+      </label>
+      <div ref="value">{{ ctx.checked }}</div>
+      `
   }
 });
 
@@ -86,6 +97,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             form={step.configuration}
             submission={step.data}
             options={{renderMode: 'html', template: 'overview'}}
+            // options={{renderMode: 'html'}}
           />
         </Fragment>
       ))}
