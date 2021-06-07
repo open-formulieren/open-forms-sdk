@@ -5,58 +5,22 @@ import useAsync from 'react-use/esm/useAsync';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
 import { get, post } from './api';
-import FormIOWrapper from "./FormIOWrapper";
-import {Templates} from "react-formio";
-
-// use our own template for this component
-Templates.addTemplate('overview', {
-  component: {
-    form: `
-      <div id="{{ctx.id}}" class="{{ctx.classes}}" style="display: table;width: 100%; table-layout: fixed; margin-bottom: 1vh;" ref="component">
-          <div style="display: table-row">
-              {{ctx.children}}
-          </div>
-      </div>
-      `
-  },
-  label: {
-    form: `
-      <label class="openforms-label {{ctx.label.className}}" style="display: table-cell" for="{{ctx.instance.id}}-{{ctx.component.key}}">
-        {{ ctx.t(ctx.component.label) }}
-        {% if (ctx.component.tooltip) { %}
-          <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
-        {% } %}
-      </label>
-      `
-  },
-  checkbox: {
-    form: `
-      <label class="openforms-label {{ctx.label.className}}" style="display: table-cell" for="{{ctx.instance.id}}-{{ctx.component.key}}">
-        {{ ctx.t(ctx.component.label) }}
-        {% if (ctx.component.tooltip) { %}
-          <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
-        {% } %}
-      </label>
-      <div ref="value">{{ ctx.checked }}</div>
-      `
-  }
-});
 
 
 const loadStepsData = async (submission) => {
-  return await Promise.all(submission.steps.map(async (submissionStep) => {
+  const stepData = await Promise.all(submission.steps.map(async (submissionStep) => {
     const submissionStepDetail = await get(submissionStep.url);
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
     return {
       submissionStep,
       title: formDefinitionDetail.name,
-      data: {
-        data: submissionStepDetail.data
-      },
+      data: submissionStepDetail.data,
       configuration: submissionStepDetail.formStep.configuration
     };
   }));
+  // debugger;
+  return stepData;
 };
 
 
@@ -93,17 +57,36 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
               Wijzig {step.title.toLocaleLowerCase()}
             </Button>
           </div>
-          <FormIOWrapper
-            form={step.configuration}
-            submission={step.data}
-            options={{renderMode: 'html', template: 'overview'}}
-          />
+          <table className="table" style={{width: '100%'}}>
+            <tbody>
+            {
+              Object.keys(step.data).map((key, i) => (
+                <tr key={i} className="table__row">
+                  <td className="table__head">
+                    <p className="openforms-body">
+                      {
+                        step.configuration["components"].find(component => component.key === key).label
+                      }
+                    </p>
+                  </td>
+                  <td className="table__cell">
+                    <p className="openforms-body">{
+                      typeof(step.data[key]) !== "object" ?
+                        JSON.stringify(step.data[key]).replaceAll('"', '') :
+                        Object.keys(step.data[key]).filter(inner_key => step.data[key][inner_key] === true).toString()}
+                    </p>
+                  </td>
+                </tr>
+              ))
+            }
+            </tbody>
+          </table>
         </Fragment>
       ))}
 
       <Toolbar>
         <ToolbarList>
-          <Button variant="anchor" component="a" onClick={_ => onShowStep(submission.steps[submission.steps.length-1])}>Vorige pagina</Button>
+          <Button variant="anchor" component="a" style={{ 'paddingLeft': 0 }} onClick={_ => onShowStep(submission.steps[submission.steps.length-1])}>Vorige pagina</Button>
         </ToolbarList>
         <ToolbarList>
           <Button type="submit" variant="primary" name="confirm" disabled={loading}>
