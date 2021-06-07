@@ -25,13 +25,18 @@ const get = async (url, params = {}, multiParams = []) => {
 };
 
 const _unsafe = async (method = 'POST', url, data) => {
-  const csrfTokenCookie = await window.cookieStore.get('csrftoken');
-  const csrftoken = csrfTokenCookie.value;
+  // we do not include the X-Csrftoken header, since the SDK is primarily meant to run
+  // in both cross-domain and same-site origins. In cross-domain contexts, the CSRF
+  // cookie is not available to be read (or sent).
+  //
+  // This isn't really relevant anyway, since we have explicit CORS settings in the
+  // backend on which origins to trust (protecting against CSRF attacks) and the
+  // endpoints don't have actual authenticated user sessions - only "generic" sessions
+  // that do not map to an (admin) user.
   const opts = {
       method,
       headers: {
           'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken,
       },
   };
   if (data) {
