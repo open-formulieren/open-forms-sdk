@@ -60,7 +60,6 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
     <form onSubmit={onSubmit}>
       <h1 className="openforms-title">Controleer en bevestig</h1>
       {value && value.map((step, index) => (
-
         <Fragment key={index}>
           <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
             <h3 className="openforms-caption">{step.title}</h3>
@@ -74,18 +73,10 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
               Object.keys(step.data).map((key, i) => (
                 <tr key={i} className="table__row">
                   <td className="table__head">
-                    <p className="openforms-body">
-                      {
-                        renderLabel(step.configuration.components, key)
-                      }
-                    </p>
+                    <p className="openforms-body">{renderLabel(step.configuration.components, key)}</p>
                   </td>
                   <td className="table__cell">
-                    <p className="openforms-body">
-                      {
-                        renderValue(step.data, key)
-                      }
-                    </p>
+                    <p className="openforms-body">{renderValue(step.data, key)}</p>
                   </td>
                 </tr>
               ))
@@ -94,10 +85,16 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
           </table>
         </Fragment>
       ))}
-
       <Toolbar>
         <ToolbarList>
-          <Button variant="anchor" component="a" style={{ 'paddingLeft': 0 }} onClick={_ => onShowStep(submission.steps[submission.steps.length-1])}>Vorige pagina</Button>
+          <Button
+            variant="anchor"
+            component="a"
+            style={{ 'paddingLeft': 0 }}
+            onClick={_ => onShowStep(submission.steps[submission.steps.length-1])}
+          >
+            Vorige pagina
+          </Button>
         </ToolbarList>
         <ToolbarList>
           <Button type="submit" variant="primary" name="confirm" disabled={loading}>
