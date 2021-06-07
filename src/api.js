@@ -67,13 +67,8 @@ const put = async (url, data = {}) => {
 };
 
 const destroy = async (url) => {
-  const csrfTokenCookie = await window.cookieStore.get('csrftoken');
-  const csrftoken = csrfTokenCookie.value;
   const opts = {
       method: 'DELETE',
-      headers: {
-          'X-CSRFToken': csrftoken,
-      },
   };
   const response = await apiCall(url, opts);
   if (!response.ok) {
