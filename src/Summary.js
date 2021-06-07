@@ -83,12 +83,12 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h2>Controleer en bevestig</h2>
-
+      <h1 className="openforms-title">Controleer en bevestig</h1>
       {value && value.map((step, index) => (
+
         <Fragment key={index}>
           <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
-            <h3>{step.title}</h3>
+            <h3 className="openforms-caption">{step.title}</h3>
             <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
               Wijzig {step.title.toLocaleLowerCase()}
             </Button>
@@ -97,7 +97,6 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             form={step.configuration}
             submission={step.data}
             options={{renderMode: 'html', template: 'overview'}}
-            // options={{renderMode: 'html'}}
           />
         </Fragment>
       ))}
