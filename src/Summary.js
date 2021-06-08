@@ -48,20 +48,25 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
     return component ? component.label : '';
   };
 
-  const renderValue = (value, components, key) => {
-    if (typeof (value) === "boolean") {
-        return value.toString();
-    } else if (typeof (value) === "object") {
-        const component = components.find(component => component.key === key);
-        if (component.type === 'selectboxes'){
-          return Object.keys(value).filter(key => value[key] === true).toString();
-        } else {
-          // Return an empty string to prevent an exception
-          return '';
-        }
+  const renderValue = (inputValue, components, key) => {
+    const component = components.find(component => component.key === key);
+
+    if (component.type === "checkbox") {
+      return inputValue.toString().charAt(0).toUpperCase() + inputValue.toString().slice(1);
+    } else if (component.type === "select") {
+      const obj = component.data.values.find(obj => obj.value === inputValue);
+      return obj ? obj.label : '';
+    } else if (component.type === "radio") {
+      const obj = component.values.find(obj => obj.value === inputValue);
+      return obj ? obj.label : '';
+    } else if (component.type === "selectboxes") {
+      const selectedBoxes = Object.keys(inputValue).filter(key => inputValue[key] === true);
+      const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
+      const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
+      return selectedLabels.toString();
     }
 
-    return value;
+    return inputValue;
   };
 
   return (
