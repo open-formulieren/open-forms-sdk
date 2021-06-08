@@ -8,7 +8,7 @@ import { get, post } from './api';
 
 
 const loadStepsData = async (submission) => {
-  const stepData = await Promise.all(submission.steps.map(async (submissionStep) => {
+  return await Promise.all(submission.steps.map(async (submissionStep) => {
     const submissionStepDetail = await get(submissionStep.url);
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
@@ -19,8 +19,6 @@ const loadStepsData = async (submission) => {
       configuration: submissionStepDetail.formStep.configuration
     };
   }));
-  // debugger;
-  return stepData;
 };
 
 
@@ -51,9 +49,16 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
   };
 
   const renderValue = (data, key) => {
-    return typeof (data[key]) !== "object" ?
-      JSON.stringify(data[key]).replaceAll('"', '') :
-      Object.keys(data[key]).filter(inner_key => data[key][inner_key] === true).toString();
+    let value = data[key];
+
+    if (typeof (data[key]) === "boolean") {
+      value = value.toString();
+    } else if (typeof (data[key]) === "object") {
+      // TODO Refine this  Handels selectBox case where values are like {'a': true, 'b': true, 'c': false
+      value = Object.keys(value).filter(key => value[key] === true).toString();
+    }
+
+    return value;
   };
 
   return (
