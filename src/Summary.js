@@ -48,14 +48,17 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
     return component ? component.label : '';
   };
 
-  const renderValue = (data, key) => {
-    let value = data[key];
-
-    if (typeof (data[key]) === "boolean") {
-      value = value.toString();
-    } else if (typeof (data[key]) === "object") {
-      // TODO Refine this  Handels selectBox case where values are like {'a': true, 'b': true, 'c': false
-      value = Object.keys(value).filter(key => value[key] === true).toString();
+  const renderValue = (value, components, key) => {
+    if (typeof (value) === "boolean") {
+        return value.toString();
+    } else if (typeof (value) === "object") {
+        const component = components.find(component => component.key === key);
+        if (component.type === 'selectboxes'){
+          return Object.keys(value).filter(key => value[key] === true).toString();
+        } else {
+          // Return an empty string to prevent an exception
+          return '';
+        }
     }
 
     return value;
@@ -81,7 +84,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
                     <p className="openforms-body">{renderLabel(step.configuration.components, key)}</p>
                   </td>
                   <td className="table__cell">
-                    <p className="openforms-body">{renderValue(step.data, key)}</p>
+                    <p className="openforms-body">{renderValue(step.data[key], step.configuration.components, key)}</p>
                   </td>
                 </tr>
               ))
