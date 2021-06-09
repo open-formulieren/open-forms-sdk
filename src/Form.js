@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
-
 import { useImmerReducer } from "use-immer";
+import { useHistory } from 'react-router-dom';
 
 
 import { ConfigContext } from './Context';
@@ -72,8 +72,9 @@ const reducer = (draft, action) => {
  * @param  {Object} options.form The form definition from the Open Forms API
  * @return {JSX}
  */
- const Form = ({ base, form }) => {
-  console.log(base);
+ const Form = ({ form }) => {
+  const history = useHistory();
+  console.log(history);
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -148,7 +149,6 @@ const reducer = (draft, action) => {
 };
 
 Form.propTypes = {
-  base: PropTypes.string.isRequired,
   form: PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
