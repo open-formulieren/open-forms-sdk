@@ -2,13 +2,14 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import useAsync from 'react-use/esm/useAsync';
 
-import { applyPrefix } from './formio/utils';
-import { Toolbar, ToolbarList } from './Toolbar';
+
 import Body from './Body';
 import Button from './Button';
 import Caption from './Caption';
 import { get, post } from './api';
 import Card from "./Card";
+import { Table, TableBody, TableRow, TableData } from "./Table";
+import { Toolbar, ToolbarList } from './Toolbar';
 
 
 const loadStepsData = async (submission) => {
@@ -88,22 +89,22 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
                 </Button>
               </ToolbarList>
             </Toolbar>
-            <table style={{width: '100%'}}>
-              <tbody>
+            <Table>
+              <TableBody>
               {
                 Object.keys(step.data).map((key, i) => (
-                  <tr key={i}>
-                    <td>
+                  <TableRow key={i}>
+                    <TableData>
                       <Body>{renderLabel(step.configuration.components, key)}</Body>
-                    </td>
-                    <td>
+                    </TableData>
+                    <TableData>
                       <Body>{renderValue(step.data[key], step.configuration.components, key)}</Body>
-                    </td>
-                  </tr>
+                    </TableData>
+                  </TableRow>
                 ))
               }
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </Fragment>
         ))}
         <Toolbar>
