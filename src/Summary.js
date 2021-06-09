@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import useAsync from 'react-use/esm/useAsync';
 
+import { applyPrefix } from './formio/utils';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Body from './Body';
 import Button from './Button';
@@ -77,12 +78,16 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
       <form onSubmit={onSubmit}>
         {value && value.map((step, index) => (
           <Fragment key={index}>
-            <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
-              <Caption>{step.title}</Caption>
-              <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
-                Wijzig {step.title.toLocaleLowerCase()}
-              </Button>
-            </div>
+            <Toolbar>
+              <ToolbarList>
+                <Caption>{step.title}</Caption>
+              </ToolbarList>
+              <ToolbarList>
+                <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
+                  Wijzig {step.title.toLocaleLowerCase()}
+                </Button>
+              </ToolbarList>
+            </Toolbar>
             <table style={{width: '100%'}}>
               <tbody>
               {
@@ -106,7 +111,6 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             <Button
               variant="anchor"
               component="a"
-              style={{'paddingLeft': 0}}
               onClick={_ => onShowStep(submission.steps[submission.steps.length - 1])}
             >
               Vorige pagina
