@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
-import Body from './Body';
 import Button from './Button';
 import Caption from './Caption';
 import { Table, TableRow, TableHead, TableCell } from "./Table";
@@ -49,18 +48,14 @@ const FormStepSummary = ({step, onShowStep}) => {
         </ToolbarList>
       </Toolbar>
       <Table>
-          {
-            Object.keys(step.data).map((key, i) => (
-              <TableRow key={i}>
-                <TableHead>
-                  <Body>{renderLabel(step.configuration.components, key)}</Body>
-                </TableHead>
-                <TableCell>
-                  <Body>{renderValue(step.data[key], step.configuration.components, key)}</Body>
-                </TableCell>
-              </TableRow>
-            ))
-          }
+        {
+          Object.keys(step.data).map((key, i) => (
+            <TableRow key={i}>
+              <TableHead>{renderLabel(step.configuration.components, key)}</TableHead>
+              <TableCell>{renderValue(step.data[key], step.configuration.components, key)}</TableCell>
+            </TableRow>
+          ))
+        }
       </Table>
     </Fragment>
   );

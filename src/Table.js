@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getBEMClassName} from './utils';
+import Body from './Body';
 
 
-const TableCell = ({ children }) => {
+const TableCell = ({ children, component=Body }) => {
+  const Component = component;
   const className = getBEMClassName('table__cell');
   return (
     <td className={className}>
-      {children}
+      <Component>{children}</Component>
     </td>
   );
 };
@@ -17,11 +19,12 @@ TableCell.propTypes = {
     children: PropTypes.node,
 };
 
-const TableHead = ({ children, }) => {
+const TableHead = ({ children, component=Body }) => {
+  const Component = component;
   const className = getBEMClassName('table__head');
   return (
     <th className={className}>
-      {children}
+      <Component>{children}</Component>
     </th>
   );
 };
