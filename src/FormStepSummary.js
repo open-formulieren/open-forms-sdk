@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from './Button';
@@ -36,7 +36,7 @@ const FormStepSummary = ({step, onShowStep}) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Toolbar>
         <ToolbarList>
           <Caption>{step.title}</Caption>
@@ -57,7 +57,7 @@ const FormStepSummary = ({step, onShowStep}) => {
           ))
         }
       </Table>
-    </Fragment>
+    </>
   );
 };
 
