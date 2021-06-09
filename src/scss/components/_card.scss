@@ -1,0 +1,19 @@
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix('card')} {
+  @include color-background;
+  padding: $grid-margin-8;
+  box-sizing: border-box;
+
+  @include mobile-only {
+    @include container-margin($properties: (padding-left, padding-right));
+  }
+
+  @include element('body') {
+    @include rows(1, margin-top);
+  }
+}

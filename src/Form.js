@@ -10,6 +10,8 @@ import { post } from './api';
 import Summary from './Summary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
+import FormStepsSidebar from './FormStepsSidebar';
+import { Layout, LayoutRow, LayoutColumn } from './Layout';
 
 /**
  * Create a submission instance from a given form instance
@@ -94,12 +96,6 @@ const reducer = (draft, action) => {
     });
   };
 
-  if (state.submission == null) {
-    return (
-      <FormStart form={form} onFormStart={onFormStart} />
-    );
-  }
-
   if (state.showSummary) {
     return (
       <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } />
@@ -108,12 +104,29 @@ const reducer = (draft, action) => {
 
   // render the form step if there's an active submission (and no summary)
   return (
-    <FormStep
-      form={form}
-      step={state.step}
-      submission={state.submission}
-      onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
-    />
+    <Layout>
+      <LayoutRow>
+        <LayoutColumn>
+
+          {
+            state.submission == null
+            ? <FormStart form={form} onFormStart={onFormStart} />
+            : (<FormStep
+              form={form}
+              step={state.step}
+              submission={state.submission}
+              onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
+            />)
+          }
+
+        </LayoutColumn>
+
+        <LayoutColumn modifiers={['secondary']}>
+          <FormStepsSidebar title={form.name} steps={form.steps} />
+        </LayoutColumn>
+
+      </LayoutRow>
+    </Layout>
   );
 };
 

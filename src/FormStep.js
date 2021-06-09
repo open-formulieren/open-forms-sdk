@@ -13,7 +13,6 @@ import { get, put } from './api';
 import Button from './Button';
 import Card from './Card';
 import FormIOWrapper from './FormIOWrapper';
-import FormStepsSidebar from './FormStepsSidebar';
 import { Toolbar, ToolbarList } from './Toolbar';
 
 const initialState = {
@@ -105,41 +104,30 @@ const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
 
   return (
     <Card title={form.name}>
+      { loading ? 'Loading...' : null }
 
-      <div style={{display: 'flex'}}>
-
-        { loading ? 'Loading...' : null }
-
-        <div style={{width: '75%'}}>
-          {
-            (!loading && configuration) ? (
-              <form onSubmit={onReactSubmit}>
-                <FormIOWrapper
-                  ref={formRef}
-                  form={configuration}
-                  submission={data}
-                  onSubmit={onFormIOSubmit}
-                  options={{noAlerts: true}}
-                />
-                <Toolbar>
-                  <ToolbarList>
-                    <Button variant="anchor" component="a">Vorige pagina</Button>
-                  </ToolbarList>
-                  <ToolbarList>
-                    <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>Tussentijds opslaan</Button>
-                    <Button type="submit" variant="primary" name="next">Volgende</Button>
-                  </ToolbarList>
-                </Toolbar>
-              </form>
-            ) : null
-          }
-
-        </div>
-
-        <FormStepsSidebar steps={form.steps} />
-
-      </div>
-
+      {
+        (!loading && configuration) ? (
+          <form onSubmit={onReactSubmit}>
+            <FormIOWrapper
+              ref={formRef}
+              form={configuration}
+              submission={data}
+              onSubmit={onFormIOSubmit}
+              options={{noAlerts: true}}
+            />
+            <Toolbar>
+              <ToolbarList>
+                <Button variant="anchor" component="a">Vorige pagina</Button>
+              </ToolbarList>
+              <ToolbarList>
+                <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>Tussentijds opslaan</Button>
+                <Button type="submit" variant="primary" name="next">Volgende</Button>
+              </ToolbarList>
+            </Toolbar>
+          </form>
+        ) : null
+      }
     </Card>
   );
 };

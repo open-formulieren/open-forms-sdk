@@ -1,0 +1,33 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix('list')} {
+
+  .#{prefix('caption')} + & {
+    @include margin(true, $properties: margin-top);
+  }
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include element('item') {
+    @include body;
+    @include body--big;
+  }
+
+  &:not(#{&}--compact) &__item {
+    @include margin;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  @include modifier('compact') {
+    @include element('item') {
+      @include margin($value-mobile: $grid-margin-1);
+    }
+  }
+}
