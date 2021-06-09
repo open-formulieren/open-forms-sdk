@@ -4,7 +4,7 @@
 
 import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import useAsync from 'react-use/esm/useAsync';
 import { useImmerReducer } from "use-immer";
@@ -40,10 +40,18 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse.data;
 };
 
-const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
+const FormStep = ({ form, submission, onLastStepSubmitted }) => {
+  // component state
   const formRef = useRef(null);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
+
+  // react router hooks
   const history = useHistory();
+  const { step: slug } = useParams();
+
+  // look up the form step via slug so that we can obtain the submission step
+  const formStep = form.steps.find(s => s.slug === slug);
+  const step = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
   const {loading} = useAsync(
@@ -152,15 +160,6 @@ FormStep.propTypes = {
       index: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
     })).isRequired,
-  }).isRequired,
-  step: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    optional: PropTypes.bool.isRequired,
-    available: PropTypes.bool.isRequired,
-    completed: PropTypes.bool.isRequired,
-    formStep: PropTypes.string.isRequired,
   }).isRequired,
   submission: PropTypes.object.isRequired,
   onLastStepSubmitted: PropTypes.func.isRequired,

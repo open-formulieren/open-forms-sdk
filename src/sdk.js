@@ -21,14 +21,14 @@ Templates.current = OFLibrary;
 
 class OpenForm {
 
-  constructor( targetNode, { baseUrl, formId } ) {
+  constructor( targetNode, { baseUrl, formId, basePath } ) {
     this.targetNode = targetNode;
     this.baseUrl = baseUrl;
     this.formId = formId;
     this.formObject = null;
 
     // ensure that the basename has no trailing slash (for react router)
-    let pathname = window.location.pathname;
+    let pathname = basePath || window.location.pathname;
     if (pathname.endsWith('/')) {
       pathname = pathname.slice(0, pathname.length - 1);
     }
