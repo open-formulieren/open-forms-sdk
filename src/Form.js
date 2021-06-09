@@ -91,8 +91,14 @@ const reducer = (draft, action) => {
    */
   const onFormStart = async (event) => {
     event.preventDefault();
+    const firstStepRoute = `/stap/${form.steps[0].slug}`;
+
     if (state.submission != null) {
-      throw new Error("There already is an active form submission.");
+      // TODO: how should we handle this? when there's already a submission started
+      // and the user navigates back to the start page?
+      console.error("There already is an active form submission.");
+      history.push(firstStepRoute);
+      return;
     }
 
     const {config} = state;
@@ -103,7 +109,7 @@ const reducer = (draft, action) => {
     });
 
     // navigate to the first step
-    history.push(`/stap/${form.steps[0].slug}`);
+    history.push(firstStepRoute);
   };
 
   // render the form step if there's an active submission (and no summary)
