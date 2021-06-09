@@ -1,5 +1,6 @@
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
+@import '../mixins/prefix';
 
 .#{prefix(table)} {
   @include margin;

@@ -44,25 +44,13 @@ TableRow.propTypes = {
     children: PropTypes.node,
 };
 
-
-const TableBody = ({ children, }) => {
-  return (
-    <tbody>
-      {children}
-    </tbody>
-  );
-};
-
-TableBody.propTypes = {
-    children: PropTypes.node,
-};
-
-
 const Table = ({ children, }) => {
   const className = getBEMClassName('table');
   return (
     <table className={className}>
-      {children}
+      <tbody>
+        {children}
+      </tbody>
     </table>
   );
 };
@@ -72,4 +60,4 @@ Table.propTypes = {
 };
 
 
-export {Table, TableBody, TableRow, TableHead, TableCell};
+export {Table, TableRow, TableHead, TableCell};
