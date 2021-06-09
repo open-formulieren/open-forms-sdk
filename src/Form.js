@@ -103,7 +103,13 @@ const reducer = (draft, action) => {
 
   if (state.showSummary) {
     return (
-      <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } onShowStep={(step) => dispatch({type: 'SHOW_STEP', payload: step})}/>
+      <Layout>
+        <LayoutRow>
+          <LayoutColumn>
+            <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } onShowStep={(step) => dispatch({type: 'SHOW_STEP', payload: step})}/>
+          </LayoutColumn>
+        </LayoutRow>
+      </Layout>
     );
   }
 
