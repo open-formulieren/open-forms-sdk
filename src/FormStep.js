@@ -4,6 +4,7 @@
 
 import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import useAsync from 'react-use/esm/useAsync';
 import { useImmerReducer } from "use-immer";
@@ -42,6 +43,7 @@ const submitStepData = async (stepUrl, data) => {
 const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
   const formRef = useRef(null);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
+  const history = useHistory();
 
   // fetch the form step configuration
   const {loading} = useAsync(
@@ -118,7 +120,11 @@ const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
             />
             <Toolbar>
               <ToolbarList>
-                <Button variant="anchor" component="a">Vorige pagina</Button>
+                <Button
+                  variant="anchor"
+                  component="a"
+                  onClick={ () => history.goBack() }
+                >Vorige pagina</Button>
               </ToolbarList>
               <ToolbarList>
                 <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>Tussentijds opslaan</Button>
