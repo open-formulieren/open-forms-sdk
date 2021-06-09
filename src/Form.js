@@ -72,7 +72,9 @@ const reducer = (draft, action) => {
  * @param  {Object} options.form The form definition from the Open Forms API
  * @return {JSX}
  */
- const Form = ({ form }) => {
+ const Form = ({ base, form }) => {
+  console.log(base);
+
   // extract the declared properties and configuration
   const {steps} = form;
   const config = useContext(ConfigContext);
@@ -146,6 +148,7 @@ const reducer = (draft, action) => {
 };
 
 Form.propTypes = {
+  base: PropTypes.string.isRequired,
   form: PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
