@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {getBEMClassName} from './utils';
 
 
-const TableCell = ({ children, }) => {
+const TableCell = ({ children }) => {
   const className = getBEMClassName('table__cell');
   return (
     <td className={className}>
