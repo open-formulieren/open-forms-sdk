@@ -19,14 +19,14 @@ CardTitle.propTypes = {
   component: PropTypes.string,
 };
 
-const Card = ({ children, title, titleComponent, caption }) => {
+const Card = ({ children, title, titleComponent, caption, captionComponent }) => {
   return (
     <div className={applyPrefix('card')}>
       {/* Emit header/title only if there is one */}
       { title ? <CardTitle title={title} component={titleComponent} /> : null }
 
       {/* Emit the caption if provided */}
-      { caption ? <Caption component="h3">{caption}</Caption> : null }
+      { caption ? <Caption component={captionComponent}>{caption}</Caption> : null }
 
       { title
         ? <div className={applyPrefix('card__body')}> {children} </div>
@@ -41,6 +41,7 @@ Card.propTypes = {
   caption: PropTypes.string,
   children: PropTypes.node,
   titleComponent: PropTypes.string,
+  captionComponent: PropTypes.string,
 };
 
 

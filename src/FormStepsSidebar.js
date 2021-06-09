@@ -8,7 +8,7 @@ import List from './List';
 
 const FormStepsSidebar = ({ title, steps }) => {
   return (
-    <Card caption={title}>
+    <Card caption={title} captionComponent="h3">
       <List ordered>
         {
           steps.map( step => (
