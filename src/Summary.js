@@ -8,7 +8,7 @@ import Button from './Button';
 import Caption from './Caption';
 import { get, post } from './api';
 import Card from "./Card";
-import { Table, TableBody, TableRow, TableData } from "./Table";
+import { Table, TableBody, TableRow, TableHead, TableCell } from "./Table";
 import { Toolbar, ToolbarList } from './Toolbar';
 
 
@@ -94,12 +94,12 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
               {
                 Object.keys(step.data).map((key, i) => (
                   <TableRow key={i}>
-                    <TableData>
+                    <TableHead>
                       <Body>{renderLabel(step.configuration.components, key)}</Body>
-                    </TableData>
-                    <TableData>
+                    </TableHead>
+                    <TableCell>
                       <Body>{renderValue(step.data[key], step.configuration.components, key)}</Body>
-                    </TableData>
+                    </TableCell>
                   </TableRow>
                 ))
               }

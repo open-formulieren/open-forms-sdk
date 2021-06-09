@@ -4,22 +4,37 @@ import PropTypes from 'prop-types';
 import {getBEMClassName} from './utils';
 
 
-const TableData = ({ children, }) => {
+const TableCell = ({ children, }) => {
+  const className = getBEMClassName('table__cell');
   return (
-    <td>
+    <td className={className}>
       {children}
     </td>
   );
 };
 
-TableData.propTypes = {
+TableCell.propTypes = {
+    children: PropTypes.node,
+};
+
+const TableHead = ({ children, }) => {
+  const className = getBEMClassName('table__head');
+  return (
+    <th className={className}>
+      {children}
+    </th>
+  );
+};
+
+TableHead.propTypes = {
     children: PropTypes.node,
 };
 
 
 const TableRow = ({ children, }) => {
+  const className = getBEMClassName('table__row');
   return (
-    <tr>
+    <tr className={className}>
       {children}
     </tr>
   );
@@ -57,4 +72,4 @@ Table.propTypes = {
 };
 
 
-export {Table, TableBody, TableRow, TableData};
+export {Table, TableBody, TableRow, TableHead, TableCell};
