@@ -8,6 +8,7 @@ window.onload = () => {
     const form = new OpenForm(targetNode, {
         baseUrl: REACT_APP_BASE_API_URL,
         formId: REACT_APP_FORM_ID,
+        basePath: '/',
     });
     form.init();
 };

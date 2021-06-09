@@ -32,7 +32,6 @@ const createSubmission = async (config, form) => {
 
 const initialState = {
   config: {baseUrl: ''},
-  step: null,
   submission: null,
   showSummary: false,
 };
@@ -45,7 +44,6 @@ const reducer = (draft, action) => {
       // first step of the form.
       const submission = action.payload;
       draft.submission = submission;
-      draft.step = submission.steps[0];
       break;
     }
     case 'SHOW_SUMMARY': {
@@ -133,7 +131,6 @@ const reducer = (draft, action) => {
               <RequireSubmission submission={state.submission}>
                 <FormStep
                   form={form}
-                  step={state.step}
                   submission={state.submission}
                   onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
                 />
