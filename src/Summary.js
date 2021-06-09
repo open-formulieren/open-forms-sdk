@@ -5,6 +5,7 @@ import useAsync from 'react-use/esm/useAsync';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
 import { get, post } from './api';
+import {applyPrefix} from './formio/utils';
 
 
 const loadStepsData = async (submission) => {
@@ -71,11 +72,11 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1 className="openforms-title">Controleer en bevestig</h1>
+      <h1 className={applyPrefix('title')}>Controleer en bevestig</h1>
       {value && value.map((step, index) => (
         <Fragment key={index}>
           <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
-            <h3 className="openforms-caption">{step.title}</h3>
+            <h3 className={applyPrefix('caption')}>{step.title}</h3>
             <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
               Wijzig {step.title.toLocaleLowerCase()}
             </Button>
@@ -86,10 +87,10 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
               Object.keys(step.data).map((key, i) => (
                 <tr key={i}>
                   <td>
-                    <p className="openforms-body">{renderLabel(step.configuration.components, key)}</p>
+                    <p className={applyPrefix('body')}>{renderLabel(step.configuration.components, key)}</p>
                   </td>
                   <td>
-                    <p className="openforms-body">{renderValue(step.data[key], step.configuration.components, key)}</p>
+                    <p className={applyPrefix('body')}>{renderValue(step.data[key], step.configuration.components, key)}</p>
                   </td>
                 </tr>
               ))
