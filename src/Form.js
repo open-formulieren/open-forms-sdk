@@ -133,13 +133,12 @@ const reducer = (draft, action) => {
             </Route>
 
             <Route path="/stap/:step" render={() => (
-              <RequireSubmission submission={state.submission}>
-                <FormStep
-                  form={form}
-                  submission={state.submission}
-                  onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
-                />
-              </RequireSubmission>
+              <RequireSubmission
+                submission={state.submission}
+                form={form}
+                onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
+                component={FormStep}
+              />
             )} />
 
           </Switch>

@@ -9,19 +9,18 @@ import { Redirect } from 'react-router-dom';
  *
  * If there is no submission, the user is forcibly redirected to the start of the form.
  */
-const RequireSubmission = ({ submission, children }) => {
+const RequireSubmission = ({ submission, component: Component, ...props }) => {
   if (!submission || !Object.keys(submission).length) {
     return (<Redirect to="/" />);
   }
-  return (<>{children}</>);
+  return (
+    <Component submission={submission} {...props} />
+  );
 };
 
 RequireSubmission.propTypes = {
   submission: PropTypes.object,
-  children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-  ]),
+  component: PropTypes.elementType.isRequired,
 };
 
 
