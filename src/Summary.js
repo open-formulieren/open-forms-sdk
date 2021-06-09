@@ -80,15 +80,15 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
               Wijzig {step.title.toLocaleLowerCase()}
             </Button>
           </div>
-          <table className="table" style={{width: '100%'}}>
+          <table style={{width: '100%'}}>
             <tbody>
             {
               Object.keys(step.data).map((key, i) => (
-                <tr key={i} className="table__row">
-                  <td className="table__head">
+                <tr key={i}>
+                  <td>
                     <p className="openforms-body">{renderLabel(step.configuration.components, key)}</p>
                   </td>
-                  <td className="table__cell">
+                  <td>
                     <p className="openforms-body">{renderValue(step.data[key], step.configuration.components, key)}</p>
                   </td>
                 </tr>
