@@ -1,7 +1,11 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import { useImmerReducer } from "use-immer";
-import { useHistory } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  useHistory,
+} from 'react-router-dom';
 
 
 import { ConfigContext } from './Context';
@@ -12,6 +16,7 @@ import FormStart from './FormStart';
 import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
+import RequireSubmission from './RequireSubmission';
 
 /**
  * Create a submission instance from a given form instance
@@ -69,7 +74,6 @@ const reducer = (draft, action) => {
  */
  const Form = ({ form }) => {
   const history = useHistory();
-  console.log(history);
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -97,13 +101,10 @@ const reducer = (draft, action) => {
       type: 'SUBMISSION_CREATED',
       payload: submission,
     });
-  };
 
-  if (state.showSummary) {
-    return (
-      <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } />
-    );
-  }
+    // navigate to the first step
+    history.push(`/stap/${form.steps[0].slug}`);
+  };
 
   // render the form step if there's an active submission (and no summary)
   return (
@@ -111,16 +112,29 @@ const reducer = (draft, action) => {
       <LayoutRow>
         <LayoutColumn>
 
-          {
-            state.submission == null
-            ? <FormStart form={form} onFormStart={onFormStart} />
-            : (<FormStep
-              form={form}
-              step={state.step}
-              submission={state.submission}
-              onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
-            />)
-          }
+          {/* Route the correct page based on URL */}
+          <Switch>
+
+            <Route exact path="/">
+              <FormStart form={form} onFormStart={onFormStart} />
+            </Route>
+
+            <Route exact path="/overzicht">
+              { state.showSummary && <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } /> }
+            </Route>
+
+            <Route path="/stap/:step" render={() => (
+              <RequireSubmission submission={state.submission}>
+                <FormStep
+                  form={form}
+                  step={state.step}
+                  submission={state.submission}
+                  onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
+                />
+              </RequireSubmission>
+            )} />
+
+          </Switch>
 
         </LayoutColumn>
 
