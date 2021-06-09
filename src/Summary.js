@@ -52,7 +52,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
     const component = components.find(component => component.key === key);
 
     if (component.type === "checkbox") {
-      return inputValue.toString().charAt(0).toUpperCase() + inputValue.toString().slice(1);
+      return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);
       return obj ? obj.label : '';
