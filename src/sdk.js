@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Formio, Templates } from 'react-formio';
 
@@ -45,7 +46,9 @@ class OpenForm {
     ReactDOM.render(
       <React.StrictMode>
         <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
-          <Form form={this.formObject} base={this.basePath} />
+          <Router basename={this.basePath}>
+            <Form form={this.formObject} />
+          </Router>
         </ConfigContext.Provider>
       </React.StrictMode>,
       this.targetNode,
