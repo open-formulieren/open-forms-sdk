@@ -55,8 +55,11 @@ export const getComponentValue = (inputValue, components, key) => {
       const selectedBoxes = Object.keys(inputValue).filter(key => inputValue[key] === true);
       const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
       const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
-      // TODO Make this into an unordered list
-      return selectedLabels.toString();
+      return (
+        <ul>
+           {selectedLabels.map(label => <li>{label}</li>)}
+        </ul>
+      )
     }
 
     return inputValue;
