@@ -6,34 +6,10 @@ import Caption from './Caption';
 import { Table, TableRow, TableHead, TableCell } from "./Table";
 import { Toolbar, ToolbarList } from './Toolbar';
 
+import { getComponentLabel, getComponentValue } from "./utils";
 
-const renderLabel = (components, key) => {
-  const component = components.find(component => component.key === key);
-  return component ? component.label : '';
-};
 
 const FormStepSummary = ({step, onShowStep}) => {
-
-  const renderValue = (inputValue, components, key) => {
-    const component = components.find(component => component.key === key);
-
-    if (component.type === "checkbox") {
-      return inputValue ? 'Ja' : 'Nee';
-    } else if (component.type === "select") {
-      const obj = component.data.values.find(obj => obj.value === inputValue);
-      return obj ? obj.label : '';
-    } else if (component.type === "radio") {
-      const obj = component.values.find(obj => obj.value === inputValue);
-      return obj ? obj.label : '';
-    } else if (component.type === "selectboxes") {
-      const selectedBoxes = Object.keys(inputValue).filter(key => inputValue[key] === true);
-      const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
-      const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
-      return selectedLabels.toString();
-    }
-
-    return inputValue;
-  };
 
   return (
     <>
@@ -51,8 +27,8 @@ const FormStepSummary = ({step, onShowStep}) => {
         {
           Object.keys(step.data).map((key, index) => (
             <TableRow key={index}>
-              <TableHead>{renderLabel(step.configuration.components, key)}</TableHead>
-              <TableCell>{renderValue(step.data[key], step.configuration.components, key)}</TableCell>
+              <TableHead>{getComponentLabel(step.configuration.components, key)}</TableHead>
+              <TableCell>{getComponentValue(step.data[key], step.configuration.components, key)}</TableCell>
             </TableRow>
           ))
         }
