@@ -15,7 +15,7 @@ const FormStepSummary = ({step, onShowStep}) => {
     <>
       <Toolbar>
         <ToolbarList>
-          <Caption>{step.title}</Caption>
+          <Caption component={'span'}>{step.title}</Caption>
         </ToolbarList>
         <ToolbarList>
           <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
