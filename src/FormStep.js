@@ -114,7 +114,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
             <FormIOWrapper
               ref={formRef}
               form={configuration}
-              submission={data}
+              submission={{data: data}}
               onSubmit={onFormIOSubmit}
               options={{noAlerts: true}}
             />
