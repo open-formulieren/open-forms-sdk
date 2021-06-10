@@ -10,7 +10,7 @@ import {
 
 import { ConfigContext } from './Context';
 
-import { post } from './api';
+import { get, post } from './api';
 import Summary from './Summary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
@@ -38,7 +38,7 @@ const initialState = {
 
 const reducer = (draft, action) => {
   switch (action.type) {
-    case 'SUBMISSION_CREATED': {
+    case 'SUBMISSION_LOADED': {
       // keep the submission instance in the state and set the current step to the
       // first step of the form.
       const submission = action.payload;
@@ -97,7 +97,7 @@ const reducer = (draft, action) => {
     const {config} = state;
     const submission = await createSubmission(config, form);
     dispatch({
-      type: 'SUBMISSION_CREATED',
+      type: 'SUBMISSION_LOADED',
       payload: submission,
     });
 
@@ -105,11 +105,18 @@ const reducer = (draft, action) => {
     history.push(firstStepRoute);
   };
 
-  const onStepSubmitted = (formStep) => {
+  const onStepSubmitted = async (formStep) => {
     const stepIndex = form.steps.indexOf(formStep);
     // TODO: there *may* be optional steps, so completion/summary can already get
     // triggered earlier, potentially. This will need to be incorporated later.
     const nextStep = form.steps[stepIndex + 1]; // will be undefined if it's the last step
+
+    // refresh the submission from the backend
+    const submission = await get(state.submission.url);
+    dispatch({
+      type: 'SUBMISSION_LOADED',
+      payload: submission,
+    });
 
     const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
     history.push(nextUrl);
@@ -129,7 +136,10 @@ const reducer = (draft, action) => {
             </Route>
 
             <Route exact path="/overzicht">
-              { state.submission && <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } /> }
+              <RequireSubmission
+                submission={state.submission}
+                onConfirm={() => dispatch({type: 'SUBMITTED'})}
+                component={Summary} />
             </Route>
 
             <Route path="/stap/:step" render={() => (
@@ -146,7 +156,11 @@ const reducer = (draft, action) => {
         </LayoutColumn>
 
         <LayoutColumn modifiers={['secondary']}>
-          <FormStepsSidebar title={form.name} steps={form.steps} />
+          <FormStepsSidebar
+            title={form.name}
+            steps={form.steps}
+            submission={state.submission}
+          />
         </LayoutColumn>
 
       </LayoutRow>
