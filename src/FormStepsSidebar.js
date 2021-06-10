@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, Link } from 'react-router-dom';
 
 import Anchor from './Anchor';
 import Card from './Card';
@@ -8,22 +8,35 @@ import List from './List';
 import FAIcon from './FAIcon';
 
 
-const getModifiers = (active, completed) => {
+const getLinkModifiers = (active, available, completed) => {
   return [
     'inherit',
     'hover',
-    active ? 'active' : 'muted',
+    active ? 'active' : undefined,
+    available ? undefined : 'muted',
     completed ? undefined : 'indent',
   ].filter( mod => mod !== undefined );
 };
 
 
 
-const SidebarStepStatus = ({isCurrent, step, completed=false}) => {
+const SidebarStepStatus = ({isCurrent, step, available=false, completed=false}) => {
+  const icon = completed ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null;
+  const linkText = ` ${step.formDefinition}`; // space required between icon and text
+  const modifiers = getLinkModifiers(isCurrent, available, completed);
+
+  if (available) {
+    return (
+      <Link modifiers={modifiers} component={Anchor} to={`/stap/${step.slug}`}>
+        {icon}
+        {linkText}
+      </Link>
+    );
+  }
   return (
-    <Anchor href="#" modifiers={getModifiers(isCurrent, completed)}>
-      { completed ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null }
-      {step.formDefinition}
+    <Anchor modifiers={modifiers} component="span">
+      {icon}
+      {linkText}
     </Anchor>
   );
 };
@@ -32,6 +45,7 @@ const SidebarStepStatus = ({isCurrent, step, completed=false}) => {
 SidebarStepStatus.propTypes = {
   isCurrent: PropTypes.bool.isRequired,
   completed: PropTypes.bool,
+  available: PropTypes.bool,
   step: PropTypes.shape({
     url: PropTypes.string.isRequired,
     uuid: PropTypes.string.isRequired,
@@ -53,9 +67,9 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
   return (
     <Card caption={title} captionComponent="h3">
       <List ordered>
-        <Anchor href="#" modifiers={getModifiers(isStartPage, hasSubmission)}>
+        <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true, hasSubmission)}>
           { hasSubmission ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null }
-          Inloggen
+          {' Inloggen'}
         </Anchor>
         {
           steps.map( (step, index) => (
@@ -63,12 +77,13 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
               key={step.uuid}
               step={step}
               completed={submission && submission.steps[index].completed}
+              available={submission && submission.steps[index].available}
               isCurrent={step.slug === stepSlug}
               slug={step.slug}
             />
           ) )
         }
-        <Anchor href="#" modifiers={getModifiers(!!summaryMatch)}>Overzicht</Anchor>
+        <Anchor href="#" modifiers={getLinkModifiers(!!summaryMatch, false, false)}>{' Overzicht'}</Anchor>
       </List>
     </Card>
   );
