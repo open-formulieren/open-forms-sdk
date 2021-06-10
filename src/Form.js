@@ -33,7 +33,6 @@ const createSubmission = async (config, form) => {
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
-  showSummary: false,
 };
 
 
@@ -44,15 +43,6 @@ const reducer = (draft, action) => {
       // first step of the form.
       const submission = action.payload;
       draft.submission = submission;
-      break;
-    }
-    case 'SHOW_STEP': {
-      draft.step = action.payload;
-      draft.showSummary = false;
-      break;
-    }
-    case 'SHOW_SUMMARY': {
-      draft.showSummary = true;
       break;
     }
     case 'SUBMITTED': {
@@ -115,6 +105,16 @@ const reducer = (draft, action) => {
     history.push(firstStepRoute);
   };
 
+  const onStepSubmitted = (formStep) => {
+    const stepIndex = form.steps.indexOf(formStep);
+    // TODO: there *may* be optional steps, so completion/summary can already get
+    // triggered earlier, potentially. This will need to be incorporated later.
+    const nextStep = form.steps[stepIndex + 1]; // will be undefined if it's the last step
+
+    const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
+    history.push(nextUrl);
+  };
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -129,14 +129,14 @@ const reducer = (draft, action) => {
             </Route>
 
             <Route exact path="/overzicht">
-              { state.showSummary && <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } onShowStep={(step) => dispatch({type: 'SHOW_STEP', payload: step})}/> }
+              { state.submission && <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } /> }
             </Route>
 
             <Route path="/stap/:step" render={() => (
               <RequireSubmission
                 submission={state.submission}
                 form={form}
-                onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
+                onStepSubmitted={onStepSubmitted}
                 component={FormStep}
               />
             )} />

@@ -32,7 +32,7 @@ const completeSubmission = async (submission) => {
 };
 
 
-const Summary = ({ submission, onConfirm, onShowStep }) => {
+const Summary = ({ submission, onConfirm }) => {
   const {loading, value, error} = useAsync(
     async () => loadStepsData(submission),
     [submission]
@@ -52,10 +52,11 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
     <Card title="Controleer en bevestig">
       <form onSubmit={onSubmit}>
         {value && value.map(stepData => (
-          <FormStepSummary key={stepData.submissionStep.id} stepData={stepData} onShowStep={onShowStep}/>
+          <FormStepSummary key={stepData.submissionStep.id} stepData={stepData} />
         ))}
         <Toolbar>
           <ToolbarList>
+            {/*
             <Button
               variant="anchor"
               component="a"
@@ -63,6 +64,7 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
             >
               Vorige pagina
             </Button>
+            */}
           </ToolbarList>
           <ToolbarList>
             <Button type="submit" variant="primary" name="confirm" disabled={loading}>
@@ -78,7 +80,6 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
 Summary.propTypes = {
     submission: PropTypes.object.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    onShowStep: PropTypes.func.isRequired,
 };
 
 

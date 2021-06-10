@@ -40,7 +40,7 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse.data;
 };
 
-const FormStep = ({ form, submission, onLastStepSubmitted }) => {
+const FormStep = ({ form, submission, onStepSubmitted }) => {
   // component state
   const formRef = useRef(null);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
@@ -72,15 +72,7 @@ const FormStep = ({ form, submission, onLastStepSubmitted }) => {
 
     // submit the step data
     await submitStepData(step.url, data);
-
-    // check if we need to invoke the logic for the last step
-    // TODO: there *may* be optional steps, so completion/summary can already get
-    // triggered earlier, potentially. This will need to be incorporated later.
-    const lastStep = [...submission.steps].reverse()[0]; // create a copy to prevent mutating the state object
-    const isLastStep = lastStep === step;
-    if (isLastStep) {
-      onLastStepSubmitted();
-    }
+    onStepSubmitted(formStep);
   };
 
   // we wrap the submit so that we control our own submit button, as the form builder
@@ -162,7 +154,7 @@ FormStep.propTypes = {
     })).isRequired,
   }).isRequired,
   submission: PropTypes.object.isRequired,
-  onLastStepSubmitted: PropTypes.func.isRequired,
+  onStepSubmitted: PropTypes.func.isRequired,
 };
 
 
