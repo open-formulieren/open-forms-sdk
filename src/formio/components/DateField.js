@@ -20,6 +20,12 @@ class DateField extends DateTimeField {
       return info;
     }
 
+    beforeSubmit() {
+      // Strip time off the datetime
+      this._data[this.component.key] = this._data[this.component.key].split('T')[0];
+      super.beforeSubmit();
+    }
+
 }
 
 
