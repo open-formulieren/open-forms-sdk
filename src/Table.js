@@ -17,6 +17,7 @@ const TableCell = ({ children, component=Body }) => {
 
 TableCell.propTypes = {
     children: PropTypes.node,
+    component: PropTypes.element,
 };
 
 const TableHead = ({ children, component=Body }) => {
@@ -31,10 +32,11 @@ const TableHead = ({ children, component=Body }) => {
 
 TableHead.propTypes = {
     children: PropTypes.node,
+    component: PropTypes.element,
 };
 
 
-const TableRow = ({ children, }) => {
+const TableRow = ({ children }) => {
   const className = getBEMClassName('table__row');
   return (
     <tr className={className}>

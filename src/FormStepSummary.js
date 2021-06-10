@@ -7,12 +7,12 @@ import { Table, TableRow, TableHead, TableCell } from "./Table";
 import { Toolbar, ToolbarList } from './Toolbar';
 
 
-const FormStepSummary = ({step, onShowStep}) => {
+const renderLabel = (components, key) => {
+  const component = components.find(component => component.key === key);
+  return component ? component.label : '';
+};
 
-  const renderLabel = (components, key) => {
-    const component = components.find(component => component.key === key);
-    return component ? component.label : '';
-  };
+const FormStepSummary = ({step, onShowStep}) => {
 
   const renderValue = (inputValue, components, key) => {
     const component = components.find(component => component.key === key);
@@ -49,8 +49,8 @@ const FormStepSummary = ({step, onShowStep}) => {
       </Toolbar>
       <Table>
         {
-          Object.keys(step.data).map((key, i) => (
-            <TableRow key={i}>
+          Object.keys(step.data).map((key, index) => (
+            <TableRow key={index}>
               <TableHead>{renderLabel(step.configuration.components, key)}</TableHead>
               <TableCell>{renderValue(step.data[key], step.configuration.components, key)}</TableCell>
             </TableRow>
