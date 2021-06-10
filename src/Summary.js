@@ -10,7 +10,7 @@ import { Toolbar, ToolbarList } from './Toolbar';
 
 
 const loadStepsData = async (submission) => {
-  const stepsData = await Promise.all(submission.steps.map(async (submissionStep) => {
+  return await Promise.all(submission.steps.map(async (submissionStep) => {
     const submissionStepDetail = await get(submissionStep.url);
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
@@ -21,7 +21,6 @@ const loadStepsData = async (submission) => {
       configuration: submissionStepDetail.formStep.configuration
     };
   }));
-  return stepsData;
 };
 
 
@@ -49,8 +48,8 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
   return (
     <Card title="Controleer en bevestig">
       <form onSubmit={onSubmit}>
-        {value && value.map((step, index) => (
-          <FormStepSummary key={index} step={step} onShowStep={onShowStep}/>
+        {value && value.map((stepData, index) => (
+          <FormStepSummary key={index} stepData={stepData} onShowStep={onShowStep}/>
         ))}
         <Toolbar>
           <ToolbarList>
