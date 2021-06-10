@@ -21,8 +21,10 @@ class DateField extends DateTimeField {
     }
 
     beforeSubmit() {
-      // Strip time off the datetime
-      this._data[this.component.key] = this._data[this.component.key].split('T')[0];
+      if (this._data[this.component.key]) {
+        // Strip time off the datetime
+        this._data[this.component.key] = new Date(this._data[this.component.key]).toISOString().substring(0, 10);
+      }
       super.beforeSubmit();
     }
 
