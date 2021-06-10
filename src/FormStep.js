@@ -102,6 +102,14 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
     console.log('save form button clicked');
   };
 
+  const onPrevPage = (event) => {
+    event.preventDefault();
+    const indexPreviousStep = form.steps.indexOf(formStep) - 1;
+    const prevStepSlug = form.steps[indexPreviousStep]?.slug;
+    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+    history.push(navigateTo);
+  };
+
   const {data, configuration} = state;
 
   return (
@@ -123,7 +131,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
                 <Button
                   variant="anchor"
                   component="a"
-                  onClick={ () => history.goBack() }
+                  onClick={onPrevPage}
                 >Vorige pagina</Button>
               </ToolbarList>
               <ToolbarList>
