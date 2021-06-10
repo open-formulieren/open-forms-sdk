@@ -9,26 +9,26 @@ import { Toolbar, ToolbarList } from './Toolbar';
 import { getComponentLabel, getComponentValue } from "./utils";
 
 
-const FormStepSummary = ({step, onShowStep}) => {
+const FormStepSummary = ({stepData, onShowStep}) => {
 
   return (
     <>
       <Toolbar>
         <ToolbarList>
-          <Caption component={'span'}>{step.title}</Caption>
+          <Caption component={'span'}>{stepData.title}</Caption>
         </ToolbarList>
         <ToolbarList>
-          <Button variant="anchor" component="a" onClick={_ => onShowStep(step.submissionStep)}>
-            Wijzig {step.title.toLocaleLowerCase()}
+          <Button variant="anchor" component="a" onClick={_ => onShowStep(stepData.submissionStep)}>
+            Wijzig {stepData.title.toLocaleLowerCase()}
           </Button>
         </ToolbarList>
       </Toolbar>
       <Table>
         {
-          Object.keys(step.data).map((key, index) => (
+          Object.keys(stepData.data).map((key, index) => (
             <TableRow key={index}>
-              <TableHead>{getComponentLabel(step.configuration.components, key)}</TableHead>
-              <TableCell>{getComponentValue(step.data[key], step.configuration.components, key)}</TableCell>
+              <TableHead>{getComponentLabel(stepData.configuration.components, key)}</TableHead>
+              <TableCell>{getComponentValue(stepData.data[key], stepData.configuration.components, key)}</TableCell>
             </TableRow>
           ))
         }
@@ -38,7 +38,7 @@ const FormStepSummary = ({step, onShowStep}) => {
 };
 
 FormStepSummary.propTypes = {
-  step: PropTypes.object.isRequired,
+  stepData: PropTypes.object.isRequired,
   onShowStep: PropTypes.func.isRequired,
 };
 
