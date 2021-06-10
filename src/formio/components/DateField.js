@@ -21,8 +21,11 @@ class DateField extends DateTimeField {
     }
 
     beforeSubmit() {
+      // The field itself should prevent any invalid dates from being passed in
+      // so we are not checking that here
       if (this._data[this.component.key]) {
         // Strip time off the datetime
+        // This value should also be in iso format but we are casting to a Date just to be sure
         this._data[this.component.key] = new Date(this._data[this.component.key]).toISOString().substring(0, 10);
       }
       super.beforeSubmit();
