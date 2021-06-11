@@ -17,7 +17,7 @@ const TableCell = ({ children, component=Body }) => {
 
 TableCell.propTypes = {
     children: PropTypes.node,
-    component: PropTypes.element,
+    component: PropTypes.elementType,
 };
 
 const TableHead = ({ children, component=Body }) => {
@@ -32,7 +32,7 @@ const TableHead = ({ children, component=Body }) => {
 
 TableHead.propTypes = {
     children: PropTypes.node,
-    component: PropTypes.element,
+    component: PropTypes.elementType,
 };
 
 
