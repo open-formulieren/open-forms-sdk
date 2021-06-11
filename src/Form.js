@@ -11,6 +11,7 @@ import {
 import { ConfigContext } from './Context';
 
 import { get, post } from './api';
+import usePageViews from './hooks/usePageViews';
 import Summary from './Summary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
@@ -67,6 +68,7 @@ const reducer = (draft, action) => {
  */
  const Form = ({ form }) => {
   const history = useHistory();
+  usePageViews();
 
   // extract the declared properties and configuration
   const {steps} = form;
