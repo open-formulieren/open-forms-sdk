@@ -56,6 +56,7 @@ const Summary = ({ form, submission, onConfirm }) => {
   return (
     <Card title="Controleer en bevestig">
       <form onSubmit={onSubmit}>
+        { loading ? 'Loading...' : null }
         {submissionSteps && submissionSteps.map((stepData, i) => (
           <FormStepSummary
             key={stepData.submissionStep.id}

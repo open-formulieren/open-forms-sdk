@@ -19,25 +19,28 @@ const getLinkModifiers = (active, available, completed) => {
 };
 
 
+const LinkOrDisabledAnchor = ({ to, useLink, children, ...props }) => {
+  if (useLink) {
+    return <Link to={to} component={Anchor} {...props}>{children}</Link>
+  }
+  return <Anchor component="span" {...props}>{children}</Anchor>
+};
+
+LinkOrDisabledAnchor.propTypes = {
+  to: PropTypes.string.isRequired,
+  useLink: PropTypes.bool.isRequired,
+};
+
 
 const SidebarStepStatus = ({isCurrent, step, available=false, completed=false}) => {
   const icon = completed ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null;
   const linkText = ` ${step.formDefinition}`; // space required between icon and text
   const modifiers = getLinkModifiers(isCurrent, available, completed);
-
-  if (available) {
-    return (
-      <Link modifiers={modifiers} component={Anchor} to={`/stap/${step.slug}`}>
-        {icon}
-        {linkText}
-      </Link>
-    );
-  }
   return (
-    <Anchor modifiers={modifiers} component="span">
+    <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={available} modifiers={modifiers}>
       {icon}
       {linkText}
-    </Anchor>
+    </LinkOrDisabledAnchor>
   );
 };
 
@@ -64,6 +67,9 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
   const stepSlug = stepMatch ? stepMatch.params.step : '';
   const hasSubmission = !!submission;
 
+  // all steps are completed if we cannot find a single step that isn't completed
+  const allCompleted = submission.steps.find(step => !step.completed) === undefined;
+
   return (
     <Card caption={title} captionComponent="h3">
       <List ordered>
@@ -83,7 +89,11 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
             />
           ) )
         }
-        <Anchor href="#" modifiers={getLinkModifiers(!!summaryMatch, false, false)}>{' Overzicht'}</Anchor>
+        <LinkOrDisabledAnchor
+          to={'/overzicht'}
+          useLink={allCompleted}
+          modifiers={getLinkModifiers(!!summaryMatch, allCompleted, false)}
+        >{' Overzicht'}</LinkOrDisabledAnchor>
       </List>
     </Card>
   );
