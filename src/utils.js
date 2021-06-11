@@ -58,7 +58,7 @@ export const getComponentValue = (inputValue, components, key) => {
       const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
       return (
         <ul>
-           {selectedLabels.map(label => <li>{label}</li>)}
+           {selectedLabels.map((label, index) => <li key={index}>{label}</li>)}
         </ul>
       )
     }

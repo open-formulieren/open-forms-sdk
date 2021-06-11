@@ -10,7 +10,7 @@ const TableCell = ({ children, component=Body }) => {
   const className = getBEMClassName('table__cell');
   return (
     <td className={className}>
-      <Component>{children}</Component>
+      <Component component={'div'}>{children}</Component>
     </td>
   );
 };
