@@ -46,7 +46,7 @@ export const getComponentValue = (inputValue, components, key) => {
     }
 
     if (component.type === "signature") {
-      return <Image src={inputValue} alt={key} />;
+      return inputValue ? <Image src={inputValue} alt={key} /> : '';
     } else if (component.type === "checkbox") {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
