@@ -18,7 +18,7 @@
     @include body--big;
   }
 
-  &:not(#{&}--compact) &__item {
+  &:not(#{&}--compact, #{&}--extra-compact) &__item {
     @include margin;
     display: flex;
     align-items: center;
@@ -28,6 +28,22 @@
   @include modifier('compact') {
     @include element('item') {
       @include margin($value-mobile: $grid-margin-1);
+    }
+  }
+
+  @include modifier('extra-compact') {
+    @include element('item') {
+      @include margin(false);
+    }
+  }
+
+  @include modifier('dash') {
+    @include element('item') {
+      &:before {
+        @include body;
+        @include margin($grid-margin-0, $properties: margin-right);
+        content: '\2013';
+      }
     }
   }
 }

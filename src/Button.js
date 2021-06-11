@@ -31,7 +31,7 @@ Button.propTypes = {
     component: PropTypes.string,
     type: PropTypes.string,
     variant: PropTypes.string,
-    children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
 };
 
 

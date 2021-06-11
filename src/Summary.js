@@ -2,19 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useAsync from 'react-use/esm/useAsync';
 
-import { Toolbar, ToolbarList } from './Toolbar';
-import Button from './Button';
 import { get, post } from './api';
+import Button from './Button';
+import Card from "./Card";
+import FormStepSummary from "./FormStepSummary";
+import { Toolbar, ToolbarList } from './Toolbar';
+import { flattenComponents } from './utils';
 
 
-const loadStepData = async (submission) => {
-  const promises = submission.steps.map(step => get(step.url));
-  const stepDetails = await Promise.all(promises);
-  const stepData = stepDetails.reduce( (accumulator, stepData) => ({
-    ...accumulator,
-    ...stepData.data,
-  }), {});
-  return stepData;
+const loadStepsData = async (submission) => {
+  const stepsData = await Promise.all(submission.steps.map(async (submissionStep) => {
+    const submissionStepDetail = await get(submissionStep.url);
+    const formStepDetail = await get(submissionStep.formStep);
+    const formDefinitionDetail = await get(formStepDetail.formDefinition);
+    return {
+      submissionStep,
+      title: formDefinitionDetail.name,
+      data: submissionStepDetail.data,
+      configuration: submissionStepDetail.formStep.configuration
+    };
+  }));
+  stepsData.map(stepData => stepData.configuration.components = flattenComponents(stepData.configuration.components));
+  return stepsData;
 };
 
 
@@ -23,9 +32,9 @@ const completeSubmission = async (submission) => {
 };
 
 
-const Summary = ({ submission, onConfirm }) => {
+const Summary = ({ submission, onConfirm, onShowStep }) => {
   const {loading, value, error} = useAsync(
-    async () => loadStepData(submission),
+    async () => loadStepsData(submission),
     [submission]
   );
 
@@ -37,30 +46,39 @@ const Summary = ({ submission, onConfirm }) => {
     event.preventDefault();
     await completeSubmission(submission);
     onConfirm();
-  }
+  };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2>Summary</h2>
-
-      <code>
-        <pre>{loading ? '...' : JSON.stringify(value, null, 4)}</pre>
-      </code>
-
-      <Toolbar>
-        <ToolbarList>
-          <Button type="submit" variant="primary" name="confirm" disabled={loading}>
-            Bevestigen
-          </Button>
-        </ToolbarList>
-      </Toolbar>
-    </form>
+    <Card title="Controleer en bevestig">
+      <form onSubmit={onSubmit}>
+        {value && value.map(stepData => (
+          <FormStepSummary key={stepData.submissionStep.id} stepData={stepData} onShowStep={onShowStep}/>
+        ))}
+        <Toolbar>
+          <ToolbarList>
+            <Button
+              variant="anchor"
+              component="a"
+              onClick={() => onShowStep(submission.steps[submission.steps.length - 1])}
+            >
+              Vorige pagina
+            </Button>
+          </ToolbarList>
+          <ToolbarList>
+            <Button type="submit" variant="primary" name="confirm" disabled={loading}>
+              Bevestigen
+            </Button>
+          </ToolbarList>
+        </Toolbar>
+      </form>
+    </Card>
   );
 };
 
 Summary.propTypes = {
     submission: PropTypes.object.isRequired,
     onConfirm: PropTypes.func.isRequired,
+    onShowStep: PropTypes.func.isRequired,
 };
 
 
