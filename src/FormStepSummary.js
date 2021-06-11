@@ -25,6 +25,9 @@ const FormStepSummary = ({stepData, onShowStep}) => {
       </Toolbar>
       <Table>
         {
+          // Loop through each field in the step
+          // stepData contains 4 things.
+          // title (string), submissionStep (object), data (object), configuration (object)
           Object.keys(stepData.data).map((key, index) => (
             <TableRow key={index}>
               <TableHead>{getComponentLabel(stepData.configuration.components, key)}</TableHead>

@@ -21,8 +21,8 @@ const getComponentWithinFieldset = (components, key) => {
 export const getComponentLabel = (components, key) => {
   let component = components.find(component => component.key === key);
 
-  // Need to look through fieldsets here
   if (component === undefined) {
+    // If component is not found see if it is within a fieldset
     component = getComponentWithinFieldset(components, key);
   }
 
@@ -33,13 +33,14 @@ export const getComponentLabel = (components, key) => {
 export const getComponentValue = (inputValue, components, key) => {
     let component = components.find(component => component.key === key);
 
-    // Need to look through fieldsets here
     if (component === undefined) {
+      // If component is not found see if it is within a fieldset
       component = getComponentWithinFieldset(components, key);
     }
 
     if (component === undefined) {
-      // If no component is found then just return an empty string to prevent a crash
+      // If no component is found then just return an empty string
+      // This should not happen but is here to prevent a crash
       return '';
     }
 
