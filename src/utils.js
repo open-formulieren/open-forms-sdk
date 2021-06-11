@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 
 import {applyPrefix} from './formio/utils';
+import Body from './Body';
+import List from './List';
 
 
 export const getBEMClassName = (base, modifiers=[]) => {
@@ -55,9 +57,9 @@ export const getComponentValue = (inputValue, components, key) => {
       const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
       const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
       return (
-        <ul style={{paddingInlineStart: "20px", margin: 0}}>
-           {selectedLabels.map((label, index) => <li key={index}>{label}</li>)}
-        </ul>
+        <List modifiers={['extra-compact', 'dash']}>
+          {selectedLabels.map( (label, i) => <Body key={i} component="span">{label}</Body>)}
+        </List>
       )
     }
 
