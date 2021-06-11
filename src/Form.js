@@ -140,6 +140,7 @@ const reducer = (draft, action) => {
             <Route exact path="/overzicht">
               <RequireSubmission
                 submission={state.submission}
+                form={form}
                 onConfirm={() => dispatch({type: 'SUBMITTED'})}
                 component={Summary} />
             </Route>
