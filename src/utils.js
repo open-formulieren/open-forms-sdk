@@ -10,33 +10,31 @@ export const getBEMClassName = (base, modifiers=[]) => {
 };
 
 
-const getComponentWithinFieldset = (components, key) => {
-  const fieldsetComponents = components.filter(component => component.type === 'fieldset');
-  const interiorFieldsetComponents = fieldsetComponents.map(fieldsetComponent => fieldsetComponent.components);
-  const flattenedInteriorFielsetComponents = [].concat.apply([], interiorFieldsetComponents);
-  return flattenedInteriorFielsetComponents.find(component => component.key === key);
+export const flattenComponents = (components) => {
+  const componentsWithNestedComponents = components.map(component => {
+    if(component.components) {
+      return [component].concat(flattenComponents(component.components));
+    } else {
+      return [component];
+    }
+  });
+
+  // Convert an array of arrays to a single array
+  return [].concat.apply([], componentsWithNestedComponents);
 };
 
 
 export const getComponentLabel = (components, key) => {
   let component = components.find(component => component.key === key);
 
-  if (component === undefined) {
-    // If component is not found see if it is within a fieldset
-    component = getComponentWithinFieldset(components, key);
-  }
-
+  // If no component is found then just return an empty string
+  // This should not happen but is here to prevent a crash
   return component ? component.label : '';
 };
 
 
 export const getComponentValue = (inputValue, components, key) => {
     let component = components.find(component => component.key === key);
-
-    if (component === undefined) {
-      // If component is not found see if it is within a fieldset
-      component = getComponentWithinFieldset(components, key);
-    }
 
     if (component === undefined) {
       // If no component is found then just return an empty string

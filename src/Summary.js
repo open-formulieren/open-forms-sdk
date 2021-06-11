@@ -7,10 +7,11 @@ import Button from './Button';
 import Card from "./Card";
 import FormStepSummary from "./FormStepSummary";
 import { Toolbar, ToolbarList } from './Toolbar';
+import { flattenComponents } from './utils';
 
 
 const loadStepsData = async (submission) => {
-  return await Promise.all(submission.steps.map(async (submissionStep) => {
+  const stepsData = await Promise.all(submission.steps.map(async (submissionStep) => {
     const submissionStepDetail = await get(submissionStep.url);
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
@@ -21,6 +22,8 @@ const loadStepsData = async (submission) => {
       configuration: submissionStepDetail.formStep.configuration
     };
   }));
+  stepsData.map(stepData => stepData.configuration.components = flattenComponents(stepData.configuration.components));
+  return stepsData;
 };
 
 
