@@ -47,6 +47,9 @@ export const getComponentValue = (inputValue, components, key) => {
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);
       return obj ? obj.label : '';
+    } else if (component.type === "date") {
+      const [year, month, day] = inputValue.split('-');
+      return `${day}-${month}-${year}`;
     } else if (component.type === "selectboxes") {
       const selectedBoxes = Object.keys(inputValue).filter(key => inputValue[key] === true);
       const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
