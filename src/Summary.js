@@ -48,8 +48,8 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
   return (
     <Card title="Controleer en bevestig">
       <form onSubmit={onSubmit}>
-        {value && value.map((stepData, index) => (
-          <FormStepSummary key={index} stepData={stepData} onShowStep={onShowStep}/>
+        {value && value.map(stepData => (
+          <FormStepSummary key={stepData.submissionStep.id} stepData={stepData} onShowStep={onShowStep}/>
         ))}
         <Toolbar>
           <ToolbarList>
