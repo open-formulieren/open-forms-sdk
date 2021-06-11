@@ -25,7 +25,11 @@ List.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  modifiers: PropTypes.arrayOf(PropTypes.string),
+  modifiers: PropTypes.arrayOf(PropTypes.oneOf([
+    'compact',
+    'extra-compact',
+    'dash',
+  ])),
   ordered: PropTypes.bool,
   component: PropTypes.string,
 };
