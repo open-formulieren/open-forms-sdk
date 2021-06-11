@@ -44,7 +44,9 @@ export const getComponentValue = (inputValue, components, key) => {
       return '';
     }
 
-    if (component.type === "checkbox") {
+    if (component.type === "signature") {
+      return <img src={inputValue} alt={key} />;
+    } else if (component.type === "checkbox") {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);
