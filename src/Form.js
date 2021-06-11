@@ -108,6 +108,10 @@ const reducer = (draft, action) => {
           <LayoutColumn>
             <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } onShowStep={(step) => dispatch({type: 'SHOW_STEP', payload: step})}/>
           </LayoutColumn>
+
+          <LayoutColumn modifiers={['secondary']}>
+            <FormStepsSidebar title={form.name} steps={form.steps} />
+          </LayoutColumn>
         </LayoutRow>
       </Layout>
     );
