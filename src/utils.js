@@ -52,7 +52,7 @@ export const getComponentValue = (inputValue, components, key) => {
       const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
       const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
       return (
-        <ul style={{paddingInlineStart: "20px"}}>
+        <ul style={{paddingInlineStart: "20px", margin: 0}}>
            {selectedLabels.map((label, index) => <li key={index}>{label}</li>)}
         </ul>
       )
