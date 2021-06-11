@@ -11,7 +11,7 @@ export const getBEMClassName = (base, modifiers=[]) => {
 
 
 export const flattenComponents = (components) => {
-  const componentsWithNestedComponents = components.map(component => {
+  const flattenedComponents = components.map(component => {
     if(component.components) {
       return [component].concat(flattenComponents(component.components));
     } else {
@@ -20,7 +20,7 @@ export const flattenComponents = (components) => {
   });
 
   // Convert an array of arrays to a single array
-  return [].concat.apply([], componentsWithNestedComponents);
+  return [].concat.apply([], flattenedComponents);
 };
 
 
