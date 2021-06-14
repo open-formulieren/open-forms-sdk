@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import {applyPrefix} from './formio/utils';
 import Body from './Body';
 import List from './List';
+import Image from './Image';
 
 
 export const getBEMClassName = (base, modifiers=[]) => {
@@ -44,7 +45,9 @@ export const getComponentValue = (inputValue, components, key) => {
       return '';
     }
 
-    if (component.type === "checkbox") {
+    if (component.type === "signature") {
+      return inputValue ? <Image src={inputValue} alt={key} /> : '';
+    } else if (component.type === "checkbox") {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);

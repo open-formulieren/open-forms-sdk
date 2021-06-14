@@ -1,0 +1,5 @@
+@import '../mixins/prefix';
+
+.#{prefix('image')} {
+  max-width: 350px;
+}
