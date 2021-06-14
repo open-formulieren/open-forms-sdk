@@ -1,17 +1,23 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
-
 import { useImmerReducer } from "use-immer";
+import {
+  Switch,
+  Route,
+  useHistory,
+} from 'react-router-dom';
 
 
 import { ConfigContext } from './Context';
 
-import { post } from './api';
+import { get, post } from './api';
+import usePageViews from './hooks/usePageViews';
 import Summary from './Summary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
+import RequireSubmission from './RequireSubmission';
 
 /**
  * Create a submission instance from a given form instance
@@ -27,29 +33,17 @@ const createSubmission = async (config, form) => {
 
 const initialState = {
   config: {baseUrl: ''},
-  step: null,
   submission: null,
-  showSummary: false,
 };
 
 
 const reducer = (draft, action) => {
   switch (action.type) {
-    case 'SUBMISSION_CREATED': {
+    case 'SUBMISSION_LOADED': {
       // keep the submission instance in the state and set the current step to the
       // first step of the form.
       const submission = action.payload;
       draft.submission = submission;
-      draft.step = submission.steps[0];
-      break;
-    }
-    case 'SHOW_STEP': {
-      draft.step = action.payload;
-      draft.showSummary = false;
-      break;
-    }
-    case 'SHOW_SUMMARY': {
-      draft.showSummary = true;
       break;
     }
     case 'SUBMITTED': {
@@ -73,6 +67,9 @@ const reducer = (draft, action) => {
  * @return {JSX}
  */
  const Form = ({ form }) => {
+  const history = useHistory();
+  usePageViews();
+
   // extract the declared properties and configuration
   const {steps} = form;
   const config = useContext(ConfigContext);
@@ -89,33 +86,43 @@ const reducer = (draft, action) => {
    */
   const onFormStart = async (event) => {
     event.preventDefault();
+    const firstStepRoute = `/stap/${form.steps[0].slug}`;
+
     if (state.submission != null) {
-      throw new Error("There already is an active form submission.");
+      // TODO: how should we handle this? when there's already a submission started
+      // and the user navigates back to the start page?
+      console.error("There already is an active form submission.");
+      history.push(firstStepRoute);
+      return;
     }
 
     const {config} = state;
     const submission = await createSubmission(config, form);
     dispatch({
-      type: 'SUBMISSION_CREATED',
+      type: 'SUBMISSION_LOADED',
       payload: submission,
     });
+
+    // navigate to the first step
+    history.push(firstStepRoute);
   };
 
-  if (state.showSummary) {
-    return (
-      <Layout>
-        <LayoutRow>
-          <LayoutColumn>
-            <Summary submission={state.submission} onConfirm={ () => dispatch({type: 'SUBMITTED'}) } onShowStep={(step) => dispatch({type: 'SHOW_STEP', payload: step})}/>
-          </LayoutColumn>
+  const onStepSubmitted = async (formStep) => {
+    const stepIndex = form.steps.indexOf(formStep);
+    // TODO: there *may* be optional steps, so completion/summary can already get
+    // triggered earlier, potentially. This will need to be incorporated later.
+    const nextStep = form.steps[stepIndex + 1]; // will be undefined if it's the last step
 
-          <LayoutColumn modifiers={['secondary']}>
-            <FormStepsSidebar title={form.name} steps={form.steps} />
-          </LayoutColumn>
-        </LayoutRow>
-      </Layout>
-    );
-  }
+    // refresh the submission from the backend
+    const submission = await get(state.submission.url);
+    dispatch({
+      type: 'SUBMISSION_LOADED',
+      payload: submission,
+    });
+
+    const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
+    history.push(nextUrl);
+  };
 
   // render the form step if there's an active submission (and no summary)
   return (
@@ -123,21 +130,40 @@ const reducer = (draft, action) => {
       <LayoutRow>
         <LayoutColumn>
 
-          {
-            state.submission == null
-            ? <FormStart form={form} onFormStart={onFormStart} />
-            : (<FormStep
-              form={form}
-              step={state.step}
-              submission={state.submission}
-              onLastStepSubmitted={() => dispatch({type: 'SHOW_SUMMARY'})}
-            />)
-          }
+          {/* Route the correct page based on URL */}
+          <Switch>
+
+            <Route exact path="/">
+              <FormStart form={form} onFormStart={onFormStart} />
+            </Route>
+
+            <Route exact path="/overzicht">
+              <RequireSubmission
+                submission={state.submission}
+                form={form}
+                onConfirm={() => dispatch({type: 'SUBMITTED'})}
+                component={Summary} />
+            </Route>
+
+            <Route path="/stap/:step" render={() => (
+              <RequireSubmission
+                submission={state.submission}
+                form={form}
+                onStepSubmitted={onStepSubmitted}
+                component={FormStep}
+              />
+            )} />
+
+          </Switch>
 
         </LayoutColumn>
 
         <LayoutColumn modifiers={['secondary']}>
-          <FormStepsSidebar title={form.name} steps={form.steps} />
+          <FormStepsSidebar
+            title={form.name}
+            steps={form.steps}
+            submission={state.submission}
+          />
         </LayoutColumn>
 
       </LayoutRow>

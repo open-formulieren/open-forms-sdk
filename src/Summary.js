@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useAsync from 'react-use/esm/useAsync';
+import { useHistory } from 'react-router-dom';
 
 import { get, post } from './api';
 import Button from './Button';
@@ -32,11 +33,15 @@ const completeSubmission = async (submission) => {
 };
 
 
-const Summary = ({ submission, onConfirm, onShowStep }) => {
-  const {loading, value, error} = useAsync(
+const Summary = ({ form, submission, onConfirm }) => {
+  const history = useHistory();
+  const {loading, value: submissionSteps, error} = useAsync(
     async () => loadStepsData(submission),
     [submission]
   );
+
+  const lastStep = form.steps[form.steps.length - 1];
+  const prevPageUrl = `/stap/${lastStep.slug}`;
 
   if (error) {
     console.error(error);
@@ -51,18 +56,25 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
   return (
     <Card title="Controleer en bevestig">
       <form onSubmit={onSubmit}>
-        {value && value.map(stepData => (
-          <FormStepSummary key={stepData.submissionStep.id} stepData={stepData} onShowStep={onShowStep}/>
+        { loading ? 'Loading...' : null }
+        {submissionSteps && submissionSteps.map((stepData, i) => (
+          <FormStepSummary
+            key={stepData.submissionStep.id}
+            stepData={stepData}
+            editStepUrl={`/stap/${form.steps[i].slug}`}
+          />
         ))}
         <Toolbar>
           <ToolbarList>
             <Button
               variant="anchor"
               component="a"
-              onClick={() => onShowStep(submission.steps[submission.steps.length - 1])}
-            >
-              Vorige pagina
-            </Button>
+              href={prevPageUrl}
+              onClick={event => {
+                event.preventDefault();
+                history.push(prevPageUrl);
+              }}
+            >Vorige pagina</Button>
           </ToolbarList>
           <ToolbarList>
             <Button type="submit" variant="primary" name="confirm" disabled={loading}>
@@ -76,9 +88,23 @@ const Summary = ({ submission, onConfirm, onShowStep }) => {
 };
 
 Summary.propTypes = {
-    submission: PropTypes.object.isRequired,
-    onConfirm: PropTypes.func.isRequired,
-    onShowStep: PropTypes.func.isRequired,
+  form: PropTypes.shape({
+    uuid: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    loginRequired: PropTypes.bool.isRequired,
+    product: PropTypes.object,
+    slug: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    steps: PropTypes.arrayOf(PropTypes.shape({
+      uuid: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
+      formDefinition: PropTypes.string.isRequired,
+      index: PropTypes.number.isRequired,
+      url: PropTypes.string.isRequired,
+    })).isRequired,
+  }).isRequired,
+  submission: PropTypes.object.isRequired,
+  onConfirm: PropTypes.func.isRequired,
 };
 
 

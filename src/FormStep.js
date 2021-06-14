@@ -4,6 +4,7 @@
 
 import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
+import { useHistory, useParams } from 'react-router-dom';
 
 import useAsync from 'react-use/esm/useAsync';
 import { useImmerReducer } from "use-immer";
@@ -39,9 +40,18 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse.data;
 };
 
-const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
+const FormStep = ({ form, submission, onStepSubmitted }) => {
+  // component state
   const formRef = useRef(null);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
+
+  // react router hooks
+  const history = useHistory();
+  const { step: slug } = useParams();
+
+  // look up the form step via slug so that we can obtain the submission step
+  const formStep = form.steps.find(s => s.slug === slug);
+  const step = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
   const {loading} = useAsync(
@@ -62,15 +72,7 @@ const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
 
     // submit the step data
     await submitStepData(step.url, data);
-
-    // check if we need to invoke the logic for the last step
-    // TODO: there *may* be optional steps, so completion/summary can already get
-    // triggered earlier, potentially. This will need to be incorporated later.
-    const lastStep = [...submission.steps].reverse()[0]; // create a copy to prevent mutating the state object
-    const isLastStep = lastStep === step;
-    if (isLastStep) {
-      onLastStepSubmitted();
-    }
+    onStepSubmitted(formStep);
   };
 
   // we wrap the submit so that we control our own submit button, as the form builder
@@ -100,6 +102,14 @@ const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
     console.log('save form button clicked');
   };
 
+  const onPrevPage = (event) => {
+    event.preventDefault();
+    const indexPreviousStep = form.steps.indexOf(formStep) - 1;
+    const prevStepSlug = form.steps[indexPreviousStep]?.slug;
+    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+    history.push(navigateTo);
+  };
+
   const {data, configuration} = state;
 
   return (
@@ -112,13 +122,17 @@ const FormStep = ({ form, step, submission, onLastStepSubmitted }) => {
             <FormIOWrapper
               ref={formRef}
               form={configuration}
-              submission={data}
+              submission={{data: data}}
               onSubmit={onFormIOSubmit}
               options={{noAlerts: true}}
             />
             <Toolbar>
               <ToolbarList>
-                <Button variant="anchor" component="a">Vorige pagina</Button>
+                <Button
+                  variant="anchor"
+                  component="a"
+                  onClick={onPrevPage}
+                >Vorige pagina</Button>
               </ToolbarList>
               <ToolbarList>
                 <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>Tussentijds opslaan</Button>
@@ -145,19 +159,11 @@ FormStep.propTypes = {
       formDefinition: PropTypes.string.isRequired,
       index: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
-  step: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    optional: PropTypes.bool.isRequired,
-    available: PropTypes.bool.isRequired,
-    completed: PropTypes.bool.isRequired,
-    formStep: PropTypes.string.isRequired,
-  }).isRequired,
   submission: PropTypes.object.isRequired,
-  onLastStepSubmitted: PropTypes.func.isRequired,
+  onStepSubmitted: PropTypes.func.isRequired,
 };
 
 

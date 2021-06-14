@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import Button from './Button';
 import Caption from './Caption';
@@ -9,8 +10,8 @@ import { Toolbar, ToolbarList } from './Toolbar';
 import { getComponentLabel, getComponentValue } from "./utils";
 
 
-const FormStepSummary = ({stepData, onShowStep}) => {
-
+const FormStepSummary = ({stepData, editStepUrl}) => {
+  const history = useHistory();
   return (
     <>
       <Toolbar>
@@ -18,7 +19,15 @@ const FormStepSummary = ({stepData, onShowStep}) => {
           <Caption component={'span'}>{stepData.title}</Caption>
         </ToolbarList>
         <ToolbarList>
-          <Button variant="anchor" component="a" onClick={_ => onShowStep(stepData.submissionStep)}>
+          <Button
+            variant="anchor"
+            component="a"
+            href={editStepUrl}
+            onClick={(event) => {
+              event.preventDefault();
+              history.push(editStepUrl);
+            }}
+          >
             Wijzig {stepData.title.toLocaleLowerCase()}
           </Button>
         </ToolbarList>
@@ -42,7 +51,7 @@ const FormStepSummary = ({stepData, onShowStep}) => {
 
 FormStepSummary.propTypes = {
   stepData: PropTypes.object.isRequired,
-  onShowStep: PropTypes.func.isRequired,
+  editStepUrl: PropTypes.string.isRequired,
 };
 
 export default FormStepSummary;
