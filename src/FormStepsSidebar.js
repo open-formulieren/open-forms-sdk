@@ -84,8 +84,8 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
             <SidebarStepStatus
               key={step.uuid}
               step={step}
-              completed={submission && submission.steps[index].completed}
-              available={submission && submission.steps[index].available}
+              completed={submission ? submission.steps[index].completed : false}
+              available={submission ? submission.steps[index].available : false}
               isCurrent={step.slug === stepSlug}
               slug={step.slug}
             />
