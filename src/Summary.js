@@ -97,6 +97,7 @@ Summary.propTypes = {
     url: PropTypes.string.isRequired,
     steps: PropTypes.arrayOf(PropTypes.shape({
       uuid: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
       formDefinition: PropTypes.string.isRequired,
       index: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,

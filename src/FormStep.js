@@ -159,6 +159,7 @@ FormStep.propTypes = {
       formDefinition: PropTypes.string.isRequired,
       index: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
   submission: PropTypes.object.isRequired,
