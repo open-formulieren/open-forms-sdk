@@ -5,7 +5,7 @@ import { applyPrefix } from './formio/utils';
 
 
 const Image = ({ src, alt='' }) => {
-    return <img class={applyPrefix('image')} src={src} alt={alt} />;
+    return <img className={applyPrefix('image')} src={src} alt={alt} />;
 };
 
 Image.propTypes = {
