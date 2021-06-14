@@ -16,6 +16,7 @@ import Summary from './Summary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
+import MaintenanceMode from './MaintenanceMode';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
 import RequireSubmission from './RequireSubmission';
 
@@ -125,6 +126,10 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
+  if (form.maintenanceMode) {
+    return <MaintenanceMode title={form.name} />;
+  }
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -180,6 +185,7 @@ Form.propTypes = {
     product: PropTypes.object,
     slug: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    maintenanceMode: PropTypes.bool.isRequired,
     steps: PropTypes.arrayOf(PropTypes.shape({
       uuid: PropTypes.string.isRequired,
       formDefinition: PropTypes.string.isRequired,
