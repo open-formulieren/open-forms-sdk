@@ -68,7 +68,9 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
   const hasSubmission = !!submission;
 
   // all steps are completed if we cannot find a single step that isn't completed
-  const allCompleted = submission.steps.find(step => !step.completed) === undefined;
+  const allCompleted = submission
+    ? submission.steps.find(step => !step.completed) === undefined
+    : false;
 
   return (
     <Card caption={title} captionComponent="h3">
