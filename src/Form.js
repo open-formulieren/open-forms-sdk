@@ -85,7 +85,7 @@ const reducer = (draft, action) => {
    * @return {Void}
    */
   const onFormStart = async (event) => {
-    event.preventDefault();
+    event && event.preventDefault();
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
 
     if (state.submission != null) {
@@ -125,11 +125,6 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
-  const onLoginStart = async (option) => {
-    const url = `${option.url}?next=${encodeURIComponent(window.location.href)}`;
-    window.location = url;
-  };
-
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -140,11 +135,7 @@ const reducer = (draft, action) => {
           <Switch>
 
             <Route exact path="/">
-              <FormStart
-                form={form}
-                onFormStart={onFormStart}
-                onLoginStart={onLoginStart}
-              />
+              <FormStart form={form} onFormStart={onFormStart} />
             </Route>
 
             <Route exact path="/overzicht">

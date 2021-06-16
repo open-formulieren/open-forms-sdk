@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Card from './Card';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
 import Body from './Body';
+import useQuery from './hooks/useQuery';
 
+const START_FORM_QUERY_PARAM = '_start';
 
 const getLoginUrl = (loginOption) => {
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
   const loginUrl = new URL(loginOption.url);
-  loginUrl.searchParams.set("next", window.location.href);
+  loginUrl.searchParams.set("next", nextUrl.toString());
   return loginUrl.toString();
 };
 
@@ -63,6 +67,16 @@ LoginButtonIcons.propTypes = {
 };
 
 
+const useStartSubmission = (onFormStart) => {
+  const query = useQuery();
+  const doStart = !!query.get(START_FORM_QUERY_PARAM);
+
+  useEffect(() => {
+    if (doStart) onFormStart();
+  }, [doStart, onFormStart]);
+};
+
+
 /**
  * Form start screen.
  *
@@ -70,7 +84,8 @@ LoginButtonIcons.propTypes = {
  * action to start the form, or (in the future) present the login button (DigiD,
  * eHerkenning...)
  */
-const FormStart = ({ form, onFormStart, onLoginStart }) => {
+const FormStart = ({ form, onFormStart }) => {
+  useStartSubmission(onFormStart);
   return (
     <Card title={form.name}>
 
