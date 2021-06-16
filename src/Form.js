@@ -85,7 +85,7 @@ const reducer = (draft, action) => {
    * @return {Void}
    */
   const onFormStart = async (event) => {
-    event.preventDefault();
+    event && event.preventDefault();
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
 
     if (state.submission != null) {
@@ -106,6 +106,7 @@ const reducer = (draft, action) => {
     // navigate to the first step
     history.push(firstStepRoute);
   };
+
 
   const onStepSubmitted = async (formStep) => {
     const stepIndex = form.steps.indexOf(formStep);
