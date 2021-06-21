@@ -18,6 +18,7 @@ import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
 import RequireSubmission from './RequireSubmission';
+import {SubmissionConfirmation} from "./SubmissionConfirmation";
 
 /**
  * Create a submission instance from a given form instance
@@ -50,6 +51,8 @@ const reducer = (draft, action) => {
       return {
         ...initialState,
         config: draft.config,
+        submissionReportUrl: action.payload.downloadUrl,
+        confirmationPageContent: action.payload.confirmationPageContent,
       };
     }
     default: {
@@ -125,6 +128,18 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
+
+  const onSubmitForm = (downloadUrl, confirmationPageContent) => {
+    dispatch({
+      type: 'SUBMITTED',
+      payload: {
+        downloadUrl: downloadUrl,
+        confirmationPageContent: confirmationPageContent
+      }
+    });
+    history.push('/bevestiging');
+  }
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -142,8 +157,15 @@ const reducer = (draft, action) => {
               <RequireSubmission
                 submission={state.submission}
                 form={form}
-                onConfirm={() => dispatch({type: 'SUBMITTED'})}
+                onConfirm={onSubmitForm}
                 component={Summary} />
+            </Route>
+
+            <Route exact path="/bevestiging">
+              <SubmissionConfirmation
+                  submissionReportUrl={state.submissionReportUrl ? state.submissionReportUrl : ''}
+                  confirmationPageContent={state.confirmationPageContent ? state.confirmationPageContent : ''}
+              />
             </Route>
 
             <Route path="/stap/:step" render={() => (
