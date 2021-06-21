@@ -7,6 +7,7 @@ import Button from './Button';
 import Body from './Body';
 import MaintenanceMode from './MaintenanceMode';
 import useQuery from './hooks/useQuery';
+import AuthenticationOutage, { useDetectAuthenticationOutage } from './AuthenticationOutage';
 
 const START_FORM_QUERY_PARAM = '_start';
 
@@ -88,8 +89,20 @@ const useStartSubmission = (onFormStart) => {
 const FormStart = ({ form, onFormStart }) => {
   useStartSubmission(onFormStart);
 
+  const outagePluginId = useDetectAuthenticationOutage();
+
   if (form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;
+  }
+
+  if (outagePluginId) {
+    const loginOption = form.loginOptions.find(option => option.identifier === outagePluginId);
+    if (!loginOption) throw new Error('Unknown login plugin identifier');
+    return (
+      <Card title={`Probleem - ${form.name}`}>
+        <AuthenticationOutage loginOption={loginOption} />
+      </Card>
+    );
   }
 
   return (

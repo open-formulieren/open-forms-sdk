@@ -12,13 +12,14 @@ import { ConfigContext } from './Context';
 
 import { get, post } from './api';
 import usePageViews from './hooks/usePageViews';
-import Summary from './Summary';
+import ErrorBoundary from './ErrorBoundary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
 import RequireSubmission from './RequireSubmission';
 import SubmissionConfirmation from "./SubmissionConfirmation";
+import Summary from './Summary';
 
 /**
  * Create a submission instance from a given form instance
@@ -136,7 +137,6 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
-
   const onSubmitForm = (downloadUrl, reportStatusUrl, confirmationPageContent) => {
     dispatch({
       type: 'SUBMITTED',
@@ -159,7 +159,9 @@ const reducer = (draft, action) => {
           <Switch>
 
             <Route exact path="/">
-              <FormStart form={form} onFormStart={onFormStart} />
+              <ErrorBoundary>
+                <FormStart form={form} onFormStart={onFormStart} />
+              </ErrorBoundary>
             </Route>
 
             <Route exact path="/overzicht">
@@ -209,6 +211,16 @@ Form.propTypes = {
     uuid: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     loginRequired: PropTypes.bool.isRequired,
+    loginOptions: PropTypes.arrayOf(PropTypes.shape({
+      identifier: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      logo: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        imageSrc: PropTypes.string.isRequired,
+        href: PropTypes.string,
+      }),
+    })).isRequired,
     product: PropTypes.object,
     slug: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,

@@ -65,8 +65,8 @@
 
   // we grab the _first_ selector list item - & can refer to multiple, but that's very
   // un-bem like and unsupported here.
-  $target: list.nth(list.nth(&, 1), 1);
-  $bits: str-split(string.quote($target), " ");
+  $target: list.nth(&, 1);
+  $bits: str-split(string.quote(#{$target}), " ");
 
   @if ( length($bits) == 1 ) {
     // block
