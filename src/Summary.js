@@ -95,6 +95,7 @@ Summary.propTypes = {
     product: PropTypes.object,
     slug: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    maintenanceMode: PropTypes.bool.isRequired,
     steps: PropTypes.arrayOf(PropTypes.shape({
       uuid: PropTypes.string.isRequired,
       slug: PropTypes.string.isRequired,
