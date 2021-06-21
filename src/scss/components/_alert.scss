@@ -1,0 +1,18 @@
+@import '../mixins/prefix';
+@import '../settings';
+
+.#{prefix('alert')} {
+  @include margin(true, $properties: padding);
+  display: flex;
+  justify-content: flex-start;
+
+  @include modifier('info') {
+    // @include color-info('background-color');
+    background-color: #d9ebf7;
+  }
+
+  @include element('icon') {
+    display: block;
+    width: 1em;
+  }
+}
