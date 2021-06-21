@@ -16,7 +16,6 @@ import Summary from './Summary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
-import MaintenanceMode from './MaintenanceMode';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
 import RequireSubmission from './RequireSubmission';
 
@@ -125,10 +124,6 @@ const reducer = (draft, action) => {
     const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
     history.push(nextUrl);
   };
-
-  if (form.maintenanceMode) {
-    return <MaintenanceMode title={form.name} />;
-  }
 
   // render the form step if there's an active submission (and no summary)
   return (

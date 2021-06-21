@@ -5,6 +5,7 @@ import Card from './Card';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Button from './Button';
 import Body from './Body';
+import MaintenanceMode from './MaintenanceMode';
 import useQuery from './hooks/useQuery';
 
 const START_FORM_QUERY_PARAM = '_start';
@@ -86,6 +87,11 @@ const useStartSubmission = (onFormStart) => {
  */
 const FormStart = ({ form, onFormStart }) => {
   useStartSubmission(onFormStart);
+
+  if (form.maintenanceMode) {
+    return <MaintenanceMode title={form.name} />;
+  }
+
   return (
     <Card title={form.name}>
 
