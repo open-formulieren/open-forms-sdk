@@ -44,4 +44,9 @@
   .#{prefix(body)} {
     display: block;
   }
+
+  .group {
+    display: flex;
+    align-items: center;
+  }
 }
