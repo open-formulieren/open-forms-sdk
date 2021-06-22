@@ -35,6 +35,7 @@ const createSubmission = async (config, form) => {
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
+  submissionReportReady: false
 };
 
 
@@ -55,6 +56,10 @@ const reducer = (draft, action) => {
         reportStatusUrl: action.payload.reportStatusUrl,
         confirmationPageContent: action.payload.confirmationPageContent,
       };
+    }
+    case 'SUBMISSION_REPORT_READY': {
+      draft.submissionReportReady = true;
+      break;
     }
     default: {
       throw new Error(`Unknown action ${action.type}`);
@@ -142,6 +147,10 @@ const reducer = (draft, action) => {
     history.push('/bevestiging');
   }
 
+  const onSubmissionReportReady = () => {
+    dispatch({type: 'SUBMISSION_REPORT_READY'});
+  }
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -168,6 +177,8 @@ const reducer = (draft, action) => {
                   submissionReportUrl={state.submissionReportUrl ? state.submissionReportUrl : ''}
                   reportStatusUrl={state.reportStatusUrl ? state.reportStatusUrl : ''}
                   confirmationPageContent={state.confirmationPageContent ? state.confirmationPageContent : ''}
+                  onSubmissionReportReady={onSubmissionReportReady}
+                  submissionReportReady={state.submissionReportReady}
               />
             </Route>
 
