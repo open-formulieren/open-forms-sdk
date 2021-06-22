@@ -52,6 +52,7 @@ const reducer = (draft, action) => {
         ...initialState,
         config: draft.config,
         submissionReportUrl: action.payload.downloadUrl,
+        reportStatusUrl: action.payload.reportStatusUrl,
         confirmationPageContent: action.payload.confirmationPageContent,
       };
     }
@@ -129,11 +130,12 @@ const reducer = (draft, action) => {
   };
 
 
-  const onSubmitForm = (downloadUrl, confirmationPageContent) => {
+  const onSubmitForm = (downloadUrl, reportStatusUrl, confirmationPageContent) => {
     dispatch({
       type: 'SUBMITTED',
       payload: {
         downloadUrl: downloadUrl,
+        reportStatusUrl: reportStatusUrl,
         confirmationPageContent: confirmationPageContent
       }
     });
@@ -164,6 +166,7 @@ const reducer = (draft, action) => {
             <Route exact path="/bevestiging">
               <SubmissionConfirmation
                   submissionReportUrl={state.submissionReportUrl ? state.submissionReportUrl : ''}
+                  reportStatusUrl={state.reportStatusUrl ? state.reportStatusUrl : ''}
                   confirmationPageContent={state.confirmationPageContent ? state.confirmationPageContent : ''}
               />
             </Route>

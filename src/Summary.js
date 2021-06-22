@@ -54,8 +54,8 @@ const Summary = ({ form, submission, onConfirm }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const {downloadUrl, confirmationPageContent} = await completeSubmission(submission);
-    onConfirm(downloadUrl, confirmationPageContent);
+    const {downloadUrl, reportStatusUrl, confirmationPageContent} = await completeSubmission(submission);
+    onConfirm(downloadUrl, reportStatusUrl, confirmationPageContent);
   };
 
   return (
