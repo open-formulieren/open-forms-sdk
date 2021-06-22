@@ -14,11 +14,15 @@
   font-weight: bold;
   padding: $grid-margin-2;
   width: 100%;
+
+  @include modifier('time') {
+    width: 4em;
+  }
 }
 
 // aliases that are also text inputs, but have their own class names:
 
-$aliases: email, iban, time24h;
+$aliases: email, iban;
 
 @each $alias in $aliases {
   .#{prefix($alias)} {

@@ -1,52 +1,29 @@
 import {Formio} from "react-formio";
-import {applyPrefix} from "../utils";
+import {getBEMClassName} from '../../utils';
 
-const DateTime = Formio.Components.components.datetime;
+const Time = Formio.Components.components.time;
 
 
-export default class Time24hField extends DateTime {
+class TimeField extends Time {
   static schema(...extend) {
-    return DateTime.schema({
-      type: 'time24h',
-      label: 'Time',
-      key: 'time24h',
+    return Time.schema({
+      inputType: 'text',
       format: 'HH:mm',
-      useLocaleSettings: false,
-      allowInput: true,
-      enableDate: false,
-      enableTime: true,
-      defaultValue: '',
-      defaultDate: '',
-      displayInTimezone: 'viewer',
-      timezone: '',
-      datepickerMode: 'day',
-      datePicker: {
-        showWeeks: true,
-        startingDay: 0,
-        initDate: '',
-        minMode: 'day',
-        maxMode: 'year',
-        yearRows: 4,
-        yearColumns: 5,
-        minDate: null,
-        maxDate: null
-      },
-      timePicker: {
-        hourStep: 1,
-        minuteStep: 1,
-        showMeridian: false,
-        readonlyInput: false,
-        mousewheel: true,
-        arrowkeys: true
-      },
-    customOptions: {},
     }, ...extend);
+  }
+
+  get suffix() {
+    // Don't show an icon
+    return null;
   }
 
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('time24h');
+    info.attr.class = getBEMClassName('input', ['time']);
     return info;
   }
 }
+
+
+export default TimeField;

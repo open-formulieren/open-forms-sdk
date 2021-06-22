@@ -11,7 +11,7 @@ import Currency from './components/Currency';
 import {default as NumberComponent} from './components/Number';
 import ContentComponent from './components/Content';
 import DateField from './components/DateField';
-import Time24hField from "./components/TimeField";
+import TimeField from "./components/TimeField";
 
 const FormIOModule = {
   components: {
@@ -28,7 +28,7 @@ const FormIOModule = {
     number: NumberComponent,
     content: ContentComponent,
     date: DateField,
-    time24h: Time24hField,
+    time: TimeField,
   },
 };
 

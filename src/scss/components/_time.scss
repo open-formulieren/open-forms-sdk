@@ -1,8 +1,0 @@
-@import '../mixins/prefix';
-@import '~microscope-sass/lib/grid';
-
-.#{prefix(time24h)} {
-  @include rows(0.75);
-  width: auto;
-  margin-right: 0.5em;
-}
