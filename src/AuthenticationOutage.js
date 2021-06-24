@@ -7,7 +7,7 @@ import FAIcon from "./FAIcon";
 
 import {getBEMClassName} from './utils';
 
-const AUTHENTICATION_OUTAGE_QUERY_PARAM = 'openforms-authentication-outage';
+const AUTHENTICATION_OUTAGE_QUERY_PARAM = 'of-auth-problem';
 
 export const useDetectAuthenticationOutage = () => {
   const query = useQuery();
