@@ -18,7 +18,7 @@ import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
 import RequireSubmission from './RequireSubmission';
-import {SubmissionConfirmation} from "./SubmissionConfirmation";
+import SubmissionConfirmation from "./SubmissionConfirmation";
 
 /**
  * Create a submission instance from a given form instance
@@ -35,7 +35,11 @@ const createSubmission = async (config, form) => {
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
-  submissionReportReady: false
+  submissionReport: {
+    url: '',
+    statusUrl: '',
+  },
+  confirmationPageContent: 'Your submission was received.',
 };
 
 
@@ -52,14 +56,12 @@ const reducer = (draft, action) => {
       return {
         ...initialState,
         config: draft.config,
-        submissionReportUrl: action.payload.downloadUrl,
-        reportStatusUrl: action.payload.reportStatusUrl,
+        submissionReport: {
+          url: action.payload.downloadUrl,
+          statusUrl: action.payload.reportStatusUrl,
+        },
         confirmationPageContent: action.payload.confirmationPageContent,
       };
-    }
-    case 'SUBMISSION_REPORT_READY': {
-      draft.submissionReportReady = true;
-      break;
     }
     default: {
       throw new Error(`Unknown action ${action.type}`);
@@ -141,14 +143,10 @@ const reducer = (draft, action) => {
       payload: {
         downloadUrl: downloadUrl,
         reportStatusUrl: reportStatusUrl,
-        confirmationPageContent: confirmationPageContent
+        confirmationPageContent: confirmationPageContent,
       }
     });
     history.push('/bevestiging');
-  }
-
-  const onSubmissionReportReady = () => {
-    dispatch({type: 'SUBMISSION_REPORT_READY'});
   }
 
   // render the form step if there's an active submission (and no summary)
@@ -174,11 +172,9 @@ const reducer = (draft, action) => {
 
             <Route exact path="/bevestiging">
               <SubmissionConfirmation
-                  submissionReportUrl={state.submissionReportUrl ? state.submissionReportUrl : ''}
-                  reportStatusUrl={state.reportStatusUrl ? state.reportStatusUrl : ''}
-                  confirmationPageContent={state.confirmationPageContent ? state.confirmationPageContent : ''}
-                  onSubmissionReportReady={onSubmissionReportReady}
-                  submissionReportReady={state.submissionReportReady}
+                  reportDownloadUrl={state.submissionReport.url}
+                  reportStatusUrl={state.submissionReport.statusUrl}
+                  content={state.confirmationPageContent}
               />
             </Route>
 
