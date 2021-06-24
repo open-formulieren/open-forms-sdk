@@ -11,8 +11,20 @@
     background-color: #d9ebf7;
   }
 
+  @include modifier('error') {
+    background-color: #f8d7da; // from formio.form.css .formio-error
+
+    .fa-icon {
+      @include color-danger;
+    }
+  }
+
   @include element('icon') {
     display: block;
     width: 1em;
+
+    @include modifier('wide') {
+      width: 2em;
+    }
   }
 }
