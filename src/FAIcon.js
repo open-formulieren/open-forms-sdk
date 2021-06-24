@@ -16,7 +16,11 @@ const FAIcon = ({ icon, component: Component='span', modifiers=[], ...props }) =
 
 FAIcon.propTypes = {
   icon: PropTypes.string.isRequired,
-  modifiers: PropTypes.arrayOf(PropTypes.string),
+  modifiers: PropTypes.arrayOf(PropTypes.oneOf([
+    'small',
+    'normal',
+    'inline',
+  ])),
   component: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.elementType,

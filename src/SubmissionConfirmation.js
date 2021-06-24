@@ -56,7 +56,7 @@ const SubmissionConfirmation = ({
             )
             : (
               <>
-                <FAIcon icon="download" aria-hidden="true" />
+                <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
                 <Anchor href={reportDownloadUrl}>PDF downloaden</Anchor>
               </>
             )
