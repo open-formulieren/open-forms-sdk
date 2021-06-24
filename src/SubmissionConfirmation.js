@@ -1,10 +1,14 @@
+import React from 'react';
+import PropTypes from "prop-types";
+import useAsync from "react-use/esm/useAsync";
+
 import Body from "./Body";
 import Card from "./Card";
-import PropTypes from "prop-types";
 import FAIcon from "./FAIcon";
 import Anchor from "./Anchor";
-import useAsync from "react-use/esm/useAsync";
 import {get} from "./api";
+import Loader from './Loader';
+
 
 
 /**
@@ -51,17 +55,17 @@ const SubmissionConfirmation = ({
         return (<Body>Something went wrong while generating the submission summary.</Body>);
     } else if (!submissionReportReady) {
       return (
-        <div className="loading">
-          <span className="loading__spinner" />
-          <Body>A PDF of your submission summary is being generated...</Body>
-        </div>
+        <>
+          <Loader modifiers={['centered']}/>
+          <Body>Even geduld terwijl we uw bevestiging in PDF-formaat genereren...</Body>
+        </>
       );
     }
   }
 
   return (
-    <Card title="Confirmation">
-        <Body>{confirmationPageContent}</Body>
+    <Card title="Bevestiging">
+        <Body component="div" dangerouslySetInnerHTML={{__html: confirmationPageContent}} />
         {downloadReport()}
     </Card>
   );

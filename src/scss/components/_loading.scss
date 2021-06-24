@@ -1,16 +1,22 @@
 @import "../settings";
+@import '../mixins/bem';
+@import '../mixins/prefix';
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-.loading {
+.#{prefix('loading')} {
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  @include margin(true, $properties: margin-bottom);
 
-  .loading__spinner {
+  @include modifier('centered') {
+    justify-content: center;
+  }
+
+  @include element('spinner') {
     margin-right: 20px;
     border: 6px solid $color-secondary;
     border-top: 6px solid $color-primary;
@@ -18,7 +24,6 @@
     width: 20px;
     height: 20px;
     animation: spin 1s linear infinite;
-    z-index: 10000;
   }
 }
 
