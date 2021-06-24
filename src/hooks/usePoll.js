@@ -23,6 +23,7 @@ const usePoll = (url, timeout, callback) => {
         if (!done) {
           reset();
         } else {
+          cancel();
           setState({
             loading: false,
             error: undefined,
