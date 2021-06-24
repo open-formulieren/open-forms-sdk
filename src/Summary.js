@@ -29,7 +29,12 @@ const loadStepsData = async (submission) => {
 
 
 const completeSubmission = async (submission) => {
-    await post(`${submission.url}/_complete`);
+    const response = await post(`${submission.url}/_complete`);
+    if (!response.ok) {
+        console.error(response.data);
+    } else {
+      return response.data;
+    }
 };
 
 
@@ -49,8 +54,8 @@ const Summary = ({ form, submission, onConfirm }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await completeSubmission(submission);
-    onConfirm();
+    const {downloadUrl, reportStatusUrl, confirmationPageContent} = await completeSubmission(submission);
+    onConfirm(downloadUrl, reportStatusUrl, confirmationPageContent);
   };
 
   return (

@@ -62,7 +62,8 @@ SidebarStepStatus.propTypes = {
 const FormStepsSidebar = ({ title, submission, steps }) => {
   const summaryMatch = useRouteMatch("/overzicht");
   const stepMatch = useRouteMatch("/stap/:step");
-  const isStartPage = summaryMatch == null && stepMatch == null;
+  const confirmationMatch = useRouteMatch("/bevestiging");
+  const isStartPage = summaryMatch == null && stepMatch == null && confirmationMatch == null;
   // figure out the slug from the currently active step IF we're looking at a step
   const stepSlug = stepMatch ? stepMatch.params.step : '';
   const hasSubmission = !!submission;
@@ -94,8 +95,12 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
         <LinkOrDisabledAnchor
           to={'/overzicht'}
           useLink={allCompleted}
-          modifiers={getLinkModifiers(!!summaryMatch, allCompleted, false)}
+          modifiers={getLinkModifiers(!!summaryMatch, allCompleted && !hasSubmission, false)}
         >{' Overzicht'}</LinkOrDisabledAnchor>
+        <Anchor
+          component="span"
+          modifiers={getLinkModifiers(!!confirmationMatch, allCompleted, false)}
+        >{' Bevestiging'}</Anchor>
       </List>
     </Card>
   );

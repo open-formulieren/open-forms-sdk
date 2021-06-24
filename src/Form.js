@@ -18,6 +18,7 @@ import FormStep from './FormStep';
 import FormStepsSidebar from './FormStepsSidebar';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
 import RequireSubmission from './RequireSubmission';
+import SubmissionConfirmation from "./SubmissionConfirmation";
 
 /**
  * Create a submission instance from a given form instance
@@ -34,6 +35,11 @@ const createSubmission = async (config, form) => {
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
+  submissionReport: {
+    url: '',
+    statusUrl: '',
+  },
+  confirmationPageContent: 'Your submission was received.',
 };
 
 
@@ -50,6 +56,11 @@ const reducer = (draft, action) => {
       return {
         ...initialState,
         config: draft.config,
+        submissionReport: {
+          url: action.payload.downloadUrl,
+          statusUrl: action.payload.reportStatusUrl,
+        },
+        confirmationPageContent: action.payload.confirmationPageContent,
       };
     }
     default: {
@@ -125,6 +136,19 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
+
+  const onSubmitForm = (downloadUrl, reportStatusUrl, confirmationPageContent) => {
+    dispatch({
+      type: 'SUBMITTED',
+      payload: {
+        downloadUrl: downloadUrl,
+        reportStatusUrl: reportStatusUrl,
+        confirmationPageContent: confirmationPageContent,
+      }
+    });
+    history.push('/bevestiging');
+  }
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -142,8 +166,16 @@ const reducer = (draft, action) => {
               <RequireSubmission
                 submission={state.submission}
                 form={form}
-                onConfirm={() => dispatch({type: 'SUBMITTED'})}
+                onConfirm={onSubmitForm}
                 component={Summary} />
+            </Route>
+
+            <Route exact path="/bevestiging">
+              <SubmissionConfirmation
+                  reportDownloadUrl={state.submissionReport.url}
+                  reportStatusUrl={state.submissionReport.statusUrl}
+                  content={state.confirmationPageContent}
+              />
             </Route>
 
             <Route path="/stap/:step" render={() => (

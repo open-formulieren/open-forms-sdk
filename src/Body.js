@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import {getBEMClassName} from './utils';
 
-const Body = ({ modifiers=[], component='p', children }) => {
+const Body = ({ modifiers=[], component='p', children, ...props }) => {
   const Component = `${component}`;
   const className = getBEMClassName('body', modifiers);
   return (
-    <Component className={className}>{children}</Component>
+    <Component className={className} {...props}>{children}</Component>
   );
 };
 
