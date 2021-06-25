@@ -71,11 +71,7 @@ LoginButtonIcons.propTypes = {
 
 const useStartSubmission = (onFormStart) => {
   const query = useQuery();
-  const doStart = !!query.get(START_FORM_QUERY_PARAM);
-
-  useEffect(() => {
-    if (doStart) onFormStart();
-  }, [doStart, onFormStart]);
+  return !!query.get(START_FORM_QUERY_PARAM);
 };
 
 
@@ -87,9 +83,12 @@ const useStartSubmission = (onFormStart) => {
  * eHerkenning...)
  */
 const FormStart = ({ form, onFormStart }) => {
-  useStartSubmission(onFormStart);
-
+  const doStart = useStartSubmission(onFormStart);
   const outagePluginId = useDetectAuthenticationOutage();
+
+  useEffect(() => {
+    if (doStart && !outagePluginId) onFormStart();
+  }, [doStart, outagePluginId, onFormStart]);
 
   if (form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;
