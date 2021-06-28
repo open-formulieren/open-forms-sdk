@@ -14,10 +14,10 @@ const PhoneNumberValidator = {
     });
   },
   check(component, setting, value) {
-    if (!value || value === '+') {
+    if (!value) {
       return true;
     }
-    let regex = /^\+{0,1}[- 0-9]{1,}$/;
+    let regex = /^\+{0,1}[- 0-9]{0,}$/;
     return regex.test(value);
   }
 };
