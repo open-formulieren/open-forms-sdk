@@ -8,8 +8,7 @@ const PhoneNumberValidator = {
   key: "validate.phoneNumber",
   hasLabel: true,
   message(component) {
-    return component.t(component.errorMessage('Invalid Phone Number.  ' +
-      'Only numbers, dashes, spaces and optionally a + sign as first character are allowed.'), {
+    return component.t(component.errorMessage('Invalid Phone Number.'), {
       field: component.errorLabel,
       data: component.data
     });
@@ -18,7 +17,7 @@ const PhoneNumberValidator = {
     if (!value || value === '+') {
       return true;
     }
-    let regex = /^\+{0,1}[0-9]{1,}[- 0-9]{0,}$/;
+    let regex = /^\+{0,1}[- 0-9]{1,}$/;
     return regex.test(value);
   }
 };
