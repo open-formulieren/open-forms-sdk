@@ -3,20 +3,6 @@ import {applyPrefix} from "../utils";
 
 const TextField = Formio.Components.components.textfield;
 
-const MaskValidator = {
-  key: "inputMask",
-  hasLabel: true,
-  message(component) {
-    return component.t(component.errorMessage(''), {
-      field: component.errorLabel,
-      data: component.data
-    });
-  },
-  check(component, setting, value) {
-    return true;
-  }
-};
-
 const BsnValidator = {
   key: "validate.bsn",
   hasLabel: true,
@@ -53,7 +39,9 @@ class BsnField extends TextField {
 
   init() {
         super.init();
-        this.validator.validators.mask = MaskValidator;
+        // Override mask validator check since we want to do
+        // the validation in our own custom validator
+        this.validator.validators.mask.check = () => true;
         this.validator.validators.custom = BsnValidator;
     }
 }
