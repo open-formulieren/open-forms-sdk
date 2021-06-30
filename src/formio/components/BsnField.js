@@ -1,5 +1,5 @@
 import {Formio} from "react-formio";
-import {applyPrefix} from "../utils";
+import {applyPrefix, isValidBsn} from "../utils";
 
 const TextField = Formio.Components.components.textfield;
 
@@ -14,7 +14,7 @@ const BsnValidator = {
   },
   check(component, setting, value) {
     if (value.replaceAll('_', '').length === 9) {
-      return false;
+      return isValidBsn(value);
     }
     return true;
   }
