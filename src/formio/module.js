@@ -14,6 +14,7 @@ import DateField from './components/DateField';
 import TimeField from "./components/TimeField";
 import PostcodeField from "./components/PostcodeField";
 import PhoneNumberField from "./components/PhoneNumberField";
+import BsnField from "./components/BsnField";
 
 const FormIOModule = {
   components: {
@@ -32,7 +33,8 @@ const FormIOModule = {
     date: DateField,
     time: TimeField,
     postcode: PostcodeField,
-    phoneNumber: PhoneNumberField
+    phoneNumber: PhoneNumberField,
+    bsn: BsnField,
   },
 };
 
