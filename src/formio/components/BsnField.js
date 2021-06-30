@@ -33,7 +33,7 @@ class BsnField extends TextField {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('iban');
+    info.attr.class = applyPrefix('input');
     return info;
   }
 
