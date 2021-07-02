@@ -16,9 +16,6 @@ const PhoneNumberValidator = {
     });
   },
   check(component, setting, value) {
-    if (component.type !== "phoneNumber") {
-      return true;
-    }
     return PHONE_NUMBER_REGEX.test(value);
   }
 };
