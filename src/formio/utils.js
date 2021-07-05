@@ -7,5 +7,4 @@ const applyPrefix = (name) => {
   return `${PREFIX}-${name}`;
 };
 
-
 export { applyPrefix };
