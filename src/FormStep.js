@@ -133,11 +133,11 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
                   variant="anchor"
                   component="a"
                   onClick={onPrevPage}
-                >Vorige pagina</Button>
+                >{formStep.previousText}</Button>
               </ToolbarList>
               <ToolbarList>
-                <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>Tussentijds opslaan</Button>
-                <Button type="submit" variant="primary" name="next">Volgende</Button>
+                <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>{formStep.saveText}</Button>
+                <Button type="submit" variant="primary" name="next">{formStep.nextText}</Button>
               </ToolbarList>
             </Toolbar>
           </form>
