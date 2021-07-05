@@ -112,7 +112,7 @@ const FormStart = ({ form, onFormStart }) => {
 
       <Toolbar modifiers={['start']}>
         <ToolbarList>
-          <Button variant="primary" component="a" href="#" onClick={onFormStart}>Formulier starten</Button>
+          <Button variant="primary" component="a" href="#" onClick={onFormStart}>{form.beginText}</Button>
           {
             form.loginOptions.map((option) => <LoginButton option={option} key={option.identifier} />)
           }
