@@ -12,6 +12,7 @@ import {default as NumberComponent} from './components/Number';
 import ContentComponent from './components/Content';
 import DateField from './components/DateField';
 import TimeField from "./components/TimeField";
+import PhoneNumberField from "./components/PhoneNumberField";
 
 const FormIOModule = {
   components: {
@@ -29,6 +30,7 @@ const FormIOModule = {
     content: ContentComponent,
     date: DateField,
     time: TimeField,
+    phoneNumber: PhoneNumberField
   },
 };
 
