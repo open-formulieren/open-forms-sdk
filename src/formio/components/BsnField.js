@@ -1,7 +1,5 @@
-import {Formio} from "react-formio";
-import {applyPrefix, isValidBsn} from "../utils";
-
-const TextField = Formio.Components.components.textfield;
+import isValidBsn from "../validators/bsn";
+import TextField from "./TextField";
 
 const BsnValidator = {
   key: "validate.bsn",
@@ -37,13 +35,6 @@ class BsnField extends TextField {
         key: 'bsn',
         inputMask: '999999999',
     }, ...extend);
-  }
-
-  get inputInfo() {
-    const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = applyPrefix('input');
-    return info;
   }
 }
 

@@ -1,4 +1,4 @@
-import {isValidBsn} from "../../formio/utils";
+import isValidBsn from "../../../../src/formio/validators/bsn";
 
 describe('Test isValidBsn function', () => {
   test('Test isValidBsn returns true for valid BSNs', () => {
