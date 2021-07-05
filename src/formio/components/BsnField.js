@@ -5,7 +5,6 @@ const TextField = Formio.Components.components.textfield;
 
 const BsnValidator = {
   key: "validate.bsn",
-  hasLabel: true,
   message(component) {
     return component.t(component.errorMessage('Invalid BSN'), {
       field: component.errorLabel,
@@ -21,6 +20,16 @@ const BsnValidator = {
 };
 
 class BsnField extends TextField {
+
+  constructor(component, options, data) {
+    super(component, options, data);
+    // Override mask validator check since we want to do
+    // the validation in our own custom validator
+    this.validator.validators.mask.check = () => true;
+    this.validator.validators.bsn = BsnValidator;
+    this.validators.push("bsn");
+  }
+
   static schema(...extend) {
     return TextField.schema({
         type: 'bsn',
@@ -36,14 +45,6 @@ class BsnField extends TextField {
     info.attr.class = applyPrefix('input');
     return info;
   }
-
-  init() {
-        super.init();
-        // Override mask validator check since we want to do
-        // the validation in our own custom validator
-        this.validator.validators.mask.check = () => true;
-        this.validator.validators.custom = BsnValidator;
-    }
 }
 
 export default BsnField;
