@@ -124,6 +124,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
           <form onSubmit={onReactSubmit}>
             <FormIOWrapper
               ref={formRef}
+              url="http://localhost:3000/bla"
               form={configuration}
               submission={{data: data}}
               onSubmit={onFormIOSubmit}

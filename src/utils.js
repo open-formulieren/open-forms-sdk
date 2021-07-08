@@ -52,6 +52,28 @@ export const getComponentValue = (inputValue, components, key) => {
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);
       return obj ? obj.label : '';
+    } else if (component.type === "file") {
+      /* [
+          {
+              "url": "http://server/api/v1/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
+              "data": {
+                  "url": "http://server/api/v1/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
+                  "form": "",
+                  "name": "my-image.jpg",
+                  "size": 46114,
+                  "baseUrl": "http://server",
+                  "project": "",
+              },
+              "name": "my-image-12305610-2da4-4694-a341-ccb919c3d543.jpg",
+              "size": 46114,
+              "type": "image/jpg",
+              "storage": "url",
+              "originalName": "my-image.jpg",
+          }
+      ] */
+      return inputValue.map(v => {
+        return `${v.originalName} (${v.size} bytes)`;
+      }).join(", ")
     } else if (component.type === "date") {
       const [year, month, day] = inputValue.split('-');
       return `${day}-${month}-${year}`;
