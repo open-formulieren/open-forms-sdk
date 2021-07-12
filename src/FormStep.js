@@ -133,11 +133,11 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
                   variant="anchor"
                   component="a"
                   onClick={onPrevPage}
-                >{formStep.previousText}</Button>
+                >{formStep.literals.previousText.resolved}</Button>
               </ToolbarList>
               <ToolbarList>
-                <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>{formStep.saveText}</Button>
-                <Button type="submit" variant="primary" name="next">{formStep.nextText}</Button>
+                <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>{formStep.literals.saveText.resolved}</Button>
+                <Button type="submit" variant="primary" name="next">{formStep.literals.nextText.resolved}</Button>
               </ToolbarList>
             </Toolbar>
           </form>
