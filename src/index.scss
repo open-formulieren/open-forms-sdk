@@ -1,10 +1,17 @@
 @import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/responsive';
 @import 'scss/settings';
 
 body {
   padding: 0;
   margin-top: $grid-margin-4;
-  background-color: $color-gray;;
+  background-color: $color-gray;
+
+  @include mobile-only {
+    margin: 0;
+    margin-top: 0;
+    padding: 0;
+  }
 }
 
 #root {

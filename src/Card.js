@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 
 import {applyPrefix} from './formio/utils';
 import Caption from './Caption';
+import { getBEMClassName } from './utils';
 
 
-const CardTitle = ({ title, component='h2' }) => {
+const CardTitle = ({ title, component='h2', blockClassName='card' }) => {
   const Title = `${component}`;
   return (
-    <header className={applyPrefix('card__header')}>
+    <header className={applyPrefix(`${blockClassName}__header`)}>
       <Title className={applyPrefix('title')}>{title}</Title>
     </header>
   );
@@ -19,9 +20,13 @@ CardTitle.propTypes = {
   component: PropTypes.string,
 };
 
-const Card = ({ children, title, titleComponent, caption, captionComponent }) => {
+const Card = ({ children, title, titleComponent, caption, captionComponent, blockClassName='card', modifiers=[] }) => {
+  const className = getBEMClassName(
+    blockClassName,
+    modifiers,
+  );
   return (
-    <div className={applyPrefix('card')}>
+    <div className={className}>
       {/* Emit header/title only if there is one */}
       { title ? <CardTitle title={title} component={titleComponent} /> : null }
 
@@ -29,7 +34,7 @@ const Card = ({ children, title, titleComponent, caption, captionComponent }) =>
       { caption ? <Caption component={captionComponent}>{caption}</Caption> : null }
 
       { title
-        ? <div className={applyPrefix('card__body')}> {children} </div>
+        ? <div className={applyPrefix(`${blockClassName}__body`)}> {children} </div>
         : children }
 
     </div>
@@ -42,6 +47,8 @@ Card.propTypes = {
   children: PropTypes.node,
   titleComponent: PropTypes.string,
   captionComponent: PropTypes.string,
+  blockClassName: PropTypes.string,
+  modifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
 

@@ -15,5 +15,9 @@
 
   @include element('body') {
     @include rows(1, margin-top);
+
+    @include mobile-only {
+      @include rows(0, margin-top);
+    }
   }
 }

@@ -114,7 +114,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
   const {data, configuration} = state;
 
   return (
-    <Card title={form.name}>
+    <Card title={step.name}>
       { loading ? 'Loading...' : null }
 
       {

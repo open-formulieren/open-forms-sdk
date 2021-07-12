@@ -14,7 +14,7 @@ import usePageViews from './hooks/usePageViews';
 import ErrorBoundary from './ErrorBoundary';
 import FormStart from './FormStart';
 import FormStep from './FormStep';
-import FormStepsSidebar from './FormStepsSidebar';
+import ProgressIndicator from './ProgressIndicator';
 import { Layout, LayoutRow, LayoutColumn } from './Layout';
 import RequireSubmission from './RequireSubmission';
 import SubmissionConfirmation from "./SubmissionConfirmation";
@@ -153,7 +153,7 @@ const reducer = (draft, action) => {
   return (
     <Layout>
       <LayoutRow>
-        <LayoutColumn>
+        <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>
 
           {/* Route the correct page based on URL */}
           <Switch>
@@ -196,8 +196,8 @@ const reducer = (draft, action) => {
         {
           form.showProgressIndicator
           ? (
-            <LayoutColumn modifiers={['secondary']}>
-              <FormStepsSidebar
+            <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
+              <ProgressIndicator
                 title={form.name}
                 steps={form.steps}
                 submission={state.submission}
