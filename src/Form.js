@@ -193,13 +193,19 @@ const reducer = (draft, action) => {
 
         </LayoutColumn>
 
-        <LayoutColumn modifiers={['secondary']}>
-          <FormStepsSidebar
-            title={form.name}
-            steps={form.steps}
-            submission={state.submission}
-          />
-        </LayoutColumn>
+        {
+          form.showProgressIndicator
+          ? (
+            <LayoutColumn modifiers={['secondary']}>
+              <FormStepsSidebar
+                title={form.name}
+                steps={form.steps}
+                submission={state.submission}
+              />
+            </LayoutColumn>
+          )
+          : null
+        }
 
       </LayoutRow>
     </Layout>
