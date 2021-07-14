@@ -102,8 +102,8 @@ const ProgressIndicator = ({ title, submission, steps }) => {
   return (
     <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
 
-      <div className={getBEMClassName('progress-indicator__mobile-header')}>
-        <FAIcon icon={expanded ? 'chevron-up' : 'chevron-down' } onClick={ () => setExpanded(!expanded) } modifiers={['normal']} />
+      <div className={getBEMClassName('progress-indicator__mobile-header')} onClick={() => setExpanded(!expanded)}>
+        <FAIcon icon={expanded ? 'chevron-up' : 'chevron-down' } modifiers={['normal']} />
         <span className={getBEMClassName('progress-indicator__active-step')}>
           {activeStepTitle}
         </span>
