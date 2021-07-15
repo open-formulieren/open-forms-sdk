@@ -32,7 +32,7 @@
   }
 
   @include element('list-item') {
-    @include rows(1);
+    @include rows(1, 'min-height');
     display: flex;
     align-items: center;
 

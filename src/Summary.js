@@ -68,6 +68,7 @@ const Summary = ({ form, submission, onConfirm }) => {
             key={stepData.submissionStep.id}
             stepData={stepData}
             editStepUrl={`/stap/${form.steps[i].slug}`}
+            editStepText={form.literals.changeText.resolved}
           />
         ))}
         <Toolbar>
@@ -80,11 +81,11 @@ const Summary = ({ form, submission, onConfirm }) => {
                 event.preventDefault();
                 history.push(prevPageUrl);
               }}
-            >Vorige pagina</Button>
+            >{form.literals.previousText.resolved}</Button>
           </ToolbarList>
           <ToolbarList>
             <Button type="submit" variant="primary" name="confirm" disabled={loading}>
-              Bevestigen
+              {form.literals.confirmText.resolved}
             </Button>
           </ToolbarList>
         </Toolbar>

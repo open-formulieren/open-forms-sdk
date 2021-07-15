@@ -10,7 +10,7 @@ import { Toolbar, ToolbarList } from './Toolbar';
 import { getComponentLabel, getComponentValue } from "./utils";
 
 
-const FormStepSummary = ({stepData, editStepUrl}) => {
+const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
   const history = useHistory();
   return (
     <>
@@ -28,7 +28,7 @@ const FormStepSummary = ({stepData, editStepUrl}) => {
               history.push(editStepUrl);
             }}
           >
-            Wijzig {stepData.title.toLocaleLowerCase()}
+            {editStepText} {stepData.title.toLocaleLowerCase()}
           </Button>
         </ToolbarList>
       </Toolbar>
@@ -52,6 +52,7 @@ const FormStepSummary = ({stepData, editStepUrl}) => {
 FormStepSummary.propTypes = {
   stepData: PropTypes.object.isRequired,
   editStepUrl: PropTypes.string.isRequired,
+  editStepText: PropTypes.string.isRequired,
 };
 
 export default FormStepSummary;

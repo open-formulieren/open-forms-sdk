@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+import ButtonTextLiteral from './ButtonTextLiteral';
+
 
 const Form = PropTypes.shape({
   uuid: PropTypes.string.isRequired,
@@ -20,11 +22,22 @@ const Form = PropTypes.shape({
   url: PropTypes.string.isRequired,
   maintenanceMode: PropTypes.bool.isRequired,
   showProgressIndicator: PropTypes.bool.isRequired,
+  literals: PropTypes.shape({
+    beginText: ButtonTextLiteral.isRequired,
+    changeText: ButtonTextLiteral.isRequired,
+    confirmText: ButtonTextLiteral.isRequired,
+    previousText: ButtonTextLiteral.isRequired,
+  }).isRequired,
   steps: PropTypes.arrayOf(PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     formDefinition: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
     url: PropTypes.string.isRequired,
+    literals: PropTypes.shape({
+      previousText: ButtonTextLiteral.isRequired,
+      saveText: ButtonTextLiteral.isRequired,
+      nextText: ButtonTextLiteral.isRequired,
+    }).isRequired,
   })).isRequired,
 });
 
