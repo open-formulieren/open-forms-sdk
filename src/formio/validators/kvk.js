@@ -3,7 +3,7 @@ import {post} from "../../api";
 const {REACT_APP_BASE_API_URL} = process.env;
 
 const KvkNumberValidator = {
-  key: "validate.kvkNumber",
+  key: "validate.kvk-kvkNumber",
   message(component) {
     return component.t(component.errorMessage('Invalid Kvk Number'), {
       field: component.errorLabel,
@@ -15,17 +15,14 @@ const KvkNumberValidator = {
       return true;
     }
     post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-kvkNumber`, {value: value})
-      .then(response => {
-        console.log('response.data.isValid: ' + response.data.isValid);
-        return response.data.isValid;
-      })
+      .then(response => response.data.isValid)
       .catch(error => console.log(error));
   }
 };
 
 
 const RsinValidator = {
-  key: "validate.rsin",
+  key: "validate.kvk-rsin",
   message(component) {
     return component.t(component.errorMessage('Invalid RSIN'), {
       field: component.errorLabel,
@@ -37,17 +34,14 @@ const RsinValidator = {
       return true;
     }
     post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-rsin`, {value: value})
-      .then(response => {
-        console.log('response.data.isValid: ' + response.data.isValid);
-        return response.data.isValid;
-      })
+      .then(response => response.data.isValid)
       .catch(error => console.log(error));
   }
 };
 
 
 const BranchNumberValidator = {
-  key: "validate.branchNumber",
+  key: "validate.kvk-branchNumber",
   message(component) {
     return component.t(component.errorMessage('Invalid Branch Number'), {
       field: component.errorLabel,
@@ -59,12 +53,15 @@ const BranchNumberValidator = {
       return true;
     }
     post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-branchNumber`, {value: value})
-      .then(response => {
-        console.log('response.data.isValid: ' + response.data.isValid);
-        return response.data.isValid;
-      })
+      .then(response => response.data.isValid)
       .catch(error => console.log(error));
   }
 };
 
-export { KvkNumberValidator, RsinValidator, BranchNumberValidator };
+const KvkValidatorMapping =  {
+  'kvk-kvkNumber': KvkNumberValidator,
+  'kvk-rsin': RsinValidator,
+  'kvk-branchNumber': BranchNumberValidator
+};
+
+export default KvkValidatorMapping;
