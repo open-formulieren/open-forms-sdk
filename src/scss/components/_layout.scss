@@ -61,6 +61,7 @@
 
       @include modifier('mobile-sticky') {
         position: sticky;
+        z-index: 1;
         top: $grid-container-margin;
 
         > * {
