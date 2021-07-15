@@ -18,6 +18,7 @@ const CardTitle = ({ title, component='h2', blockClassName='card' }) => {
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
   component: PropTypes.string,
+  blockClassName: PropTypes.string,
 };
 
 const Card = ({ children, title, titleComponent, caption, captionComponent, blockClassName='card', modifiers=[] }) => {
@@ -28,7 +29,7 @@ const Card = ({ children, title, titleComponent, caption, captionComponent, bloc
   return (
     <div className={className}>
       {/* Emit header/title only if there is one */}
-      { title ? <CardTitle title={title} component={titleComponent} /> : null }
+      { title ? <CardTitle title={title} component={titleComponent} blockClassName={blockClassName} /> : null }
 
       {/* Emit the caption if provided */}
       { caption ? <Caption component={captionComponent}>{caption}</Caption> : null }
