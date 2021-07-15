@@ -47,10 +47,34 @@
     }
 
     @include modifier('secondary') {
-      @include hide-on-mobile(flex);
-
       @media print {
         display: none;
+      }
+    }
+
+    @include mobile-only {
+      @each $i in (1, 2, 3, 4) {
+        @include modifier(mobile-order-#{$i}) {
+          order: #{$i};
+        }
+      }
+
+      @include modifier('mobile-sticky') {
+        position: sticky;
+        z-index: 1;
+        top: $grid-container-margin;
+
+        > * {
+          @include margin(-$grid-container-margin, $properties: margin-top);
+        }
+
+        // force the maximum height, so that when it's expanded, the content overflows and
+        // overlays the actual form
+        max-height: calc(#{2 * $grid-container-margin} + #{$typography-line-height-text-big-mobile * $typography-font-size-text-big-mobile});
+      }
+
+      @include modifier('mobile-padding-top') {
+        @include margin($grid-container-margin, $properties: padding-top);
       }
     }
   }

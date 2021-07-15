@@ -1,0 +1,65 @@
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+@mixin nested($classname) {
+  .#{prefix($classname)} {
+    @content;
+  }
+}
+
+.#{prefix('progress-indicator')} {
+  @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
+
+  @include element('mobile-header') {
+    @include body;
+    @include body--big;
+    @include margin(-$grid-container-margin, $properties: margin-left);
+
+    @include show-on-mobile(flex);
+    align-items: center;
+
+    .fa-icon {
+      display: block;
+      width: $grid-container-margin * 2;
+      text-align: center;
+    }
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  // mobile styling for the progress indicator
+  @include mobile-only {
+    @include margin($grid-container-margin, $properties: (padding-top, padding-bottom));
+    box-shadow: 0px 0px 2px 0px rgba($color-black, 0.2);
+
+    // style layout
+    @at-root .#{prefix('layout__row')} & {
+      @include margin(-$grid-container-margin, $properties: (margin-left, margin-right));
+    }
+
+    @include nested('caption') {
+      @include margin(true, $properties: margin-top);
+      @include margin($grid-container-margin, $properties: margin-left);
+    }
+
+    @include nested('list') {
+      @include margin($grid-container-margin, $properties: margin-left);
+    }
+
+    @include modifier('mobile-collapsed') {
+
+      @include nested('caption') {
+        display: none;
+      }
+
+      @include nested('list') {
+        display: none;
+      }
+    }
+  }
+}

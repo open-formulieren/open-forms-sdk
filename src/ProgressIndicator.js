@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouteMatch, Link } from 'react-router-dom';
 
 import Anchor from './Anchor';
 import Card from './Card';
+import Caption from './Caption';
 import List from './List';
 import FAIcon from './FAIcon';
+import { getBEMClassName } from './utils';
 
 
 const getLinkModifiers = (active, available, completed) => {
@@ -59,11 +61,22 @@ SidebarStepStatus.propTypes = {
 };
 
 
-const FormStepsSidebar = ({ title, submission, steps }) => {
+
+const stepLabels = {
+  login: 'Inloggen',
+  overview: 'Overzicht',
+  confirmation: 'Bevestiging',
+};
+
+
+const ProgressIndicator = ({ title, submission, steps }) => {
   const summaryMatch = useRouteMatch("/overzicht");
   const stepMatch = useRouteMatch("/stap/:step");
   const confirmationMatch = useRouteMatch("/bevestiging");
   const isStartPage = summaryMatch == null && stepMatch == null && confirmationMatch == null;
+
+  const [expanded, setExpanded] = useState(false);
+
   // figure out the slug from the currently active step IF we're looking at a step
   const stepSlug = stepMatch ? stepMatch.params.step : '';
   const hasSubmission = !!submission;
@@ -73,12 +86,35 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
     ? submission.steps.find(step => !step.completed) === undefined
     : false;
 
+  // figure out the title for the mobile menu based on the state
+  let activeStepTitle;
+  if (isStartPage) {
+    activeStepTitle = stepLabels.login;
+  } else if (!!summaryMatch) {
+    activeStepTitle = stepLabels.overview;
+  } else if (!!confirmationMatch) {
+    activeStepTitle = stepLabels.configuration;
+  } else {
+    const step = steps.find( step => step.slug === stepSlug);
+    activeStepTitle = step.formDefinition;
+  }
+
   return (
-    <Card caption={title} captionComponent="h3">
+    <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
+
+      <div className={getBEMClassName('progress-indicator__mobile-header')} onClick={() => setExpanded(!expanded)}>
+        <FAIcon icon={expanded ? 'chevron-up' : 'chevron-down' } modifiers={['normal']} />
+        <span className={getBEMClassName('progress-indicator__active-step')}>
+          {activeStepTitle}
+        </span>
+      </div>
+
+      <Caption component="h3">{title}</Caption>
+
       <List ordered>
         <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true, hasSubmission)}>
           { hasSubmission ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null }
-          {' Inloggen'}
+          {` ${stepLabels.login}`}
         </Anchor>
         {
           steps.map( (step, index) => (
@@ -96,18 +132,18 @@ const FormStepsSidebar = ({ title, submission, steps }) => {
           to={'/overzicht'}
           useLink={allCompleted}
           modifiers={getLinkModifiers(!!summaryMatch, allCompleted && !hasSubmission, false)}
-        >{' Overzicht'}</LinkOrDisabledAnchor>
+        >{` ${stepLabels.overview}`}</LinkOrDisabledAnchor>
         <Anchor
           component="span"
           modifiers={getLinkModifiers(!!confirmationMatch, allCompleted, false)}
-        >{' Bevestiging'}</Anchor>
+        >{` ${stepLabels.confirmation}`}</Anchor>
       </List>
     </Card>
   );
 };
 
 
-FormStepsSidebar.propTypes = {
+ProgressIndicator.propTypes = {
   title: PropTypes.string,
   submission: PropTypes.shape({
     steps: PropTypes.arrayOf(PropTypes.shape({
@@ -126,4 +162,4 @@ FormStepsSidebar.propTypes = {
 };
 
 
-export default FormStepsSidebar;
+export default ProgressIndicator;

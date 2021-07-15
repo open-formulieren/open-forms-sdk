@@ -8,6 +8,7 @@ import Button from './Button';
 import Card from "./Card";
 import FormStepSummary from "./FormStepSummary";
 import { Toolbar, ToolbarList } from './Toolbar';
+import Types from './types';
 import { flattenComponents } from './utils';
 
 
@@ -93,22 +94,7 @@ const Summary = ({ form, submission, onConfirm }) => {
 };
 
 Summary.propTypes = {
-  form: PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    loginRequired: PropTypes.bool.isRequired,
-    product: PropTypes.object,
-    slug: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    maintenanceMode: PropTypes.bool.isRequired,
-    steps: PropTypes.arrayOf(PropTypes.shape({
-      uuid: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
-      formDefinition: PropTypes.string.isRequired,
-      index: PropTypes.number.isRequired,
-      url: PropTypes.string.isRequired,
-    })).isRequired,
-  }).isRequired,
+  form: Types.Form.isRequired,
   submission: PropTypes.object.isRequired,
   onConfirm: PropTypes.func.isRequired,
 };

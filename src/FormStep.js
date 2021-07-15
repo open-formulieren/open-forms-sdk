@@ -15,6 +15,7 @@ import Button from './Button';
 import Card from './Card';
 import FormIOWrapper from './FormIOWrapper';
 import { Toolbar, ToolbarList } from './Toolbar';
+import Types from './types';
 
 const initialState = {
   configuration: null,
@@ -113,7 +114,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
   const {data, configuration} = state;
 
   return (
-    <Card title={form.name}>
+    <Card title={step.name}>
       { loading ? 'Loading...' : null }
 
       {
@@ -147,22 +148,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
 };
 
 FormStep.propTypes = {
-  form: PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    loginRequired: PropTypes.bool.isRequired,
-    product: PropTypes.object,
-    slug: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    maintenanceMode: PropTypes.bool.isRequired,
-    steps: PropTypes.arrayOf(PropTypes.shape({
-      uuid: PropTypes.string.isRequired,
-      formDefinition: PropTypes.string.isRequired,
-      index: PropTypes.number.isRequired,
-      url: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
-    })).isRequired,
-  }).isRequired,
+  form: Types.Form,
   submission: PropTypes.object.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
 };
