@@ -31,6 +31,10 @@ class Number extends Formio.Components.components.number {
     info.attr.class = applyPrefix('input');
     return info;
   }
+
+  checkComponentValidity(data, dirty, row, options = {}){
+    return super.checkComponentValidity(data, dirty, row, {...options, async: true});
+  }
 }
 
 

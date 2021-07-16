@@ -15,9 +15,10 @@ const KvkNumberValidator = {
     if (!value) {
       return true;
     }
-    post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-kvkNumber`, {value: value})
+
+    return post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-kvkNumber`, {value})
       .then(response => response.data.isValid)
-      .catch(error => console.log(error));
+      .catch(() => false);
   }
 };
 
@@ -34,9 +35,9 @@ const KvkRsinValidator = {
     if (!value) {
       return true;
     }
-    post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-rsin`, {value: value})
+    return post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-rsin`, {value})
       .then(response => response.data.isValid)
-      .catch(error => console.log(error));
+      .catch(() => false);
   }
 };
 
@@ -53,9 +54,9 @@ const KvkBranchNumberValidator = {
     if (!value) {
       return true;
     }
-    post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-branchNumber`, {value: value})
+    return post(`${REACT_APP_BASE_API_URL}validation/plugins/kvk-branchNumber`, {value})
       .then(response => response.data.isValid)
-      .catch(error => console.log(error));
+      .catch(() => false);
   }
 };
 
