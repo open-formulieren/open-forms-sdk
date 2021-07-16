@@ -12,9 +12,11 @@ class TextField extends Formio.Components.components.textfield {
 
   constructor(component, options, data) {
     super(component, options, data);
-    for (let plugin of this.component.validate.plugins) {
-      this.validator.validators[plugin] = KvkValidatorMapping[plugin];
-      this.validators.push(plugin);
+    if (this.component.validate.plugins && this.component.validate.plugins.isArray()) {
+      for (let plugin of this.component.validate.plugins) {
+        this.validator.validators[plugin] = KvkValidatorMapping[plugin];
+        this.validators.push(plugin);
+      }
     }
   }
 
