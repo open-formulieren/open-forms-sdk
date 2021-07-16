@@ -14,8 +14,13 @@ class TextField extends Formio.Components.components.textfield {
     super(component, options, data);
     if (this.component.validate.plugins && this.component.validate.plugins.isArray()) {
       for (let plugin of this.component.validate.plugins) {
-        this.validator.validators[plugin] = KvkValidatorMapping[plugin];
-        this.validators.push(plugin);
+        const validator = KvkValidatorMapping[plugin];
+        if (validator !== undefined) {
+          this.validator.validators[plugin] = validator;
+          this.validators.push(plugin);
+        } else {
+          console.warn(`Could not find validator for plugin ${plugin}. Validation not added`);
+        }
       }
     }
   }
