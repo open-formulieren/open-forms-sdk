@@ -12,7 +12,7 @@ Snel en eenvoudig formulieren uit Open Formulieren integreren in uw eigen
 website
 (`English version`_)
 
-Ontwikkeld door `Maykin Media B.V.`_ in opdracht van Dimpact.
+Ontwikkeld door `Maykin Media B.V.`_ in opdracht van `Dimpact`_.
 
 
 Introductie
@@ -54,13 +54,14 @@ Links
 Licentie
 ========
 
-Copyright © `Maykin Media B.V.`_, 2021
+Copyright © `Dimpact`_, 2021
 
-NO PUBLIC LICENSE AVAILABLE YET.
+Licensed under the `EUPL`_.
 
 .. _`English version`: README.rst
 .. _`Maykin Media B.V.`: https://www.maykinmedia.nl
-
+.. _`Dimpact`: https://www.dimpact.nl
+.. _`EUPL`: LICENSE.md
 
 .. |build-status| image:: https://github.com/open-formulieren/open-forms-sdk/actions/workflows/ci.yml/badge.svg
     :alt: Build status
