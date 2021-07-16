@@ -2,7 +2,7 @@ import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
 
-import KvkValidatorMapping from "../validators/kvk";
+import PluginValidatorMapping from "../validators/plugins";
 
 
 /**
@@ -14,12 +14,12 @@ class TextField extends Formio.Components.components.textfield {
     super(component, options, data);
     if (this.component.validate.plugins && this.component.validate.plugins.isArray()) {
       for (let plugin of this.component.validate.plugins) {
-        const validator = KvkValidatorMapping[plugin];
+        const validator = PluginValidatorMapping[plugin];
         if (validator !== undefined) {
           this.validator.validators[plugin] = validator;
           this.validators.push(plugin);
         } else {
-          console.warn(`Could not find validator for plugin ${plugin}. Validation not added`);
+          console.warn(`Could not find validator for plugin: ${plugin}. Validation not added.`);
         }
       }
     }

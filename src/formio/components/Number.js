@@ -1,7 +1,8 @@
 import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
-import KvkValidatorMapping from "../validators/kvk";
+
+import PluginValidatorMapping from "../validators/plugins";
 
 /**
  * Extend the default text field to modify it to our needs.
@@ -12,12 +13,12 @@ class Number extends Formio.Components.components.number {
     super(component, options, data);
     if (this.component.validate.plugins && this.component.validate.plugins.isArray()) {
       for (let plugin of this.component.validate.plugins) {
-        const validator = KvkValidatorMapping[plugin];
+        const validator = PluginValidatorMapping[plugin];
         if (validator !== undefined) {
           this.validator.validators[plugin] = validator;
           this.validators.push(plugin);
         } else {
-          console.warn(`Could not find validator for plugin ${plugin}. Validation not added`);
+          console.warn(`Could not find validator for plugin: ${plugin}. Validation not added.`);
         }
       }
     }
