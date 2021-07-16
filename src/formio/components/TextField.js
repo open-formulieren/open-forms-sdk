@@ -12,10 +12,11 @@ class TextField extends Formio.Components.components.textfield {
 
   constructor(component, options, data) {
     super(component, options, data);
-    if (this.component.validate.plugins && this.component.validate.plugins.isArray()) {
+    if (Array.isArray(this.component.validate.plugins)) {
       for (let plugin of this.component.validate.plugins) {
         const validator = PluginValidatorMapping[plugin];
         if (validator !== undefined) {
+          this.component.validateOn = 'blur';
           this.validator.validators[plugin] = validator;
           this.validators.push(plugin);
         } else {
