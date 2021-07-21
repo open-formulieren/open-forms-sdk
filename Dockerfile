@@ -23,7 +23,7 @@ FROM nginx:${NGINX_VERSION}
 WORKDIR /sdk
 
 RUN useradd -M -u 1000 maykin
-RUN chown -R maykin /app
+RUN chown -R maykin /sdk
 
 # drop privileges
 USER maykin
