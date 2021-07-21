@@ -14,6 +14,12 @@ RUN yarn install
 # copy source code & config
 COPY . ./
 
+RUN useradd -M -u 1000 maykin
+RUN chown -R maykin /app
+
+# drop privileges
+USER maykin
+
 # build SDK bundle
 RUN yarn run build
 
