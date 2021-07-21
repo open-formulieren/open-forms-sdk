@@ -41,9 +41,12 @@ class TextField extends Formio.Components.components.textfield {
   }
 
   fieldLogic(data, row) {
-    if (data.postcode && data.houseNumber) {
-      if (this.component.key === 'streetName' || this.component.key === 'city') {
-        this.setLocationData(data.postcode, data.houseNumber, this.component.key);
+    if (data[this.component.derivePostcode] && data[this.component.deriveHouseNumber]) {
+      if (this.component.deriveStreetName) {
+        this.setLocationData(data[this.component.derivePostcode], data[this.component.deriveHouseNumber], 'streetName');
+      }
+      if (this.component.deriveCity) {
+        this.setLocationData(data[this.component.derivePostcode], data[this.component.deriveHouseNumber], 'city');
       }
     }
   }
