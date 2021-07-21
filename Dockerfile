@@ -14,12 +14,6 @@ RUN yarn install
 # copy source code & config
 COPY . ./
 
-RUN useradd -M -u 1000 maykin
-RUN chown -R maykin /app
-
-# drop privileges
-USER maykin
-
 # build SDK bundle
 RUN yarn run build
 
@@ -27,6 +21,12 @@ RUN yarn run build
 FROM nginx:${NGINX_VERSION}
 
 WORKDIR /sdk
+
+RUN useradd -M -u 1000 maykin
+RUN chown -R maykin /app
+
+# drop privileges
+USER maykin
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/ .
