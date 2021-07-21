@@ -32,7 +32,8 @@ class TextField extends Formio.Components.components.textfield {
   }
 
   setLocationData(postcode, house_number, key) {
-    get(`${REACT_APP_BASE_API_URL}location/get-street-name-and-city`, {postcode, house_number})
+    get(`${REACT_APP_BASE_API_URL}location/get-street-name-and-city`,
+      {postcode, house_number})
       .then(result => {
         this.setValue(result[key] || '');
       })
@@ -40,15 +41,29 @@ class TextField extends Formio.Components.components.textfield {
 
   }
 
-  fieldLogic(data, row) {
+  handleSettingLocationData(data) {
     if (data[this.component.derivePostcode] && data[this.component.deriveHouseNumber]) {
       if (this.component.deriveStreetName) {
-        this.setLocationData(data[this.component.derivePostcode], data[this.component.deriveHouseNumber], 'streetName');
+        this.setLocationData(
+          data[this.component.derivePostcode],
+          data[this.component.deriveHouseNumber],
+          'streetName'
+        );
       }
       if (this.component.deriveCity) {
-        this.setLocationData(data[this.component.derivePostcode], data[this.component.deriveHouseNumber], 'city');
+        this.setLocationData(
+          data[this.component.derivePostcode],
+          data[this.component.deriveHouseNumber],
+          'city'
+        );
       }
     }
+  }
+
+  fieldLogic(data, row) {
+    const changed = super.fieldLogic(data, row);
+    this.handleSettingLocationData(data);
+    return changed;
   }
 }
 
