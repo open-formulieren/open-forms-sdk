@@ -106,4 +106,15 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
     }
   }
 
+  button[ref="takePictureButton"],
+  button[ref="toggleCameraMode"] {
+    @extend .#{prefix('button')};
+    @extend .#{prefix('button--primary')};
+    display: inline-block;
+    float: none;
+    @include mobile-only {
+      font-size: 90%;
+      @include margin($grid-margin-0, $properties: padding);
+    }
+  }
 }
