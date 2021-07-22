@@ -2,7 +2,7 @@
  * Render a single form step, as part of a started submission for a form.
  */
 
-import React, {useRef} from 'react';
+import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ import { get, put } from './api';
 
 import Button from './Button';
 import Card from './Card';
+import { ConfigContext } from './Context';
 import FormIOWrapper from './FormIOWrapper';
 import { Toolbar, ToolbarList } from './Toolbar';
 
@@ -41,6 +42,7 @@ const submitStepData = async (stepUrl, data) => {
 };
 
 const FormStep = ({ form, submission, onStepSubmitted }) => {
+  const config = useContext(ConfigContext);
   // component state
   const formRef = useRef(null);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
@@ -124,7 +126,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
               form={configuration}
               submission={{data: data}}
               onSubmit={onFormIOSubmit}
-              options={{noAlerts: true}}
+              options={{noAlerts: true, baseUrl: config.baseUrl}}
             />
             <Toolbar>
               <ToolbarList>

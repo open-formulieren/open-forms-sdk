@@ -1,10 +1,5 @@
 import {post} from "../../api";
 
-const {REACT_APP_BASE_API_URL} = process.env;
-
-
-const VALIDATE_ENDPOINT = `${REACT_APP_BASE_API_URL}validation/plugins/`;
-
 const errorMessageMap = {
   'kvk-kvkNumber': 'Invalid Kvk Number',
   'kvk-rsin': 'Invalid RSIN',
@@ -28,7 +23,8 @@ const pluginAPIValidator = (plugin) => {
     check(component, setting, value) {
       if (!value) return true;
 
-      const url = `${VALIDATE_ENDPOINT}${plugin}`;
+      const {baseUrl} = component.currentForm.options;
+      const url = `${baseUrl}validation/plugins/${plugin}`;
       return (
         post(url, {value})
           .then(response => {
@@ -42,4 +38,24 @@ const pluginAPIValidator = (plugin) => {
 };
 
 
-export default pluginAPIValidator;
+/**
+ * Utility function to register the plugins from component configuration with the
+ * component
+ * @param  {Object} component The Formio.js component instance
+ * @return {Void}             Configures the validators on the component instance.
+ */
+const enableValidationPlugins = (component) => {
+  if (Array.isArray(component.component.validate.plugins)) {
+
+    for (let plugin of component.component.validate.plugins) {
+      const validator = pluginAPIValidator(plugin);
+      if (validator == null) continue;
+      component.component.validateOn = 'blur';
+      component.validator.validators[plugin] = validator;
+      component.validators.push(plugin);
+    }
+  }
+};
+
+
+export default enableValidationPlugins;
