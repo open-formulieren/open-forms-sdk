@@ -42,7 +42,10 @@ class TextField extends Formio.Components.components.textfield {
   }
 
   handleSettingLocationData(data) {
-    if (data[this.component.derivePostcode] && data[this.component.deriveHouseNumber]) {
+    if (data[this.component.deriveHouseNumber] &&
+        !isNaN(data[this.component.deriveHouseNumber]) &&
+        data[this.component.derivePostcode] &&
+        data[this.component.derivePostcode].replaceAll('_', '').replaceAll(' ', '').length === 6) {
       if (this.component.deriveStreetName) {
         this.setLocationData(
           data[this.component.derivePostcode],
