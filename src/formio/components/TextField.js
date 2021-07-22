@@ -9,6 +9,8 @@ import {get} from "../../api";
 
 const {REACT_APP_BASE_API_URL} = process.env;
 
+const POSTCODE_REGEX = /^[0-9]{4} [a-zA-Z]{2}$/;
+const HOUSE_NUMBER_REGEX = /^\d+$/;
 
 /**
  * Extend the default text field to modify it to our needs.
@@ -42,10 +44,8 @@ class TextField extends Formio.Components.components.textfield {
   }
 
   handleSettingLocationData(data) {
-    const isValidHouseNumber = data[this.component.deriveHouseNumber] &&
-      !isNaN(data[this.component.deriveHouseNumber]);
-    const isValidPostcode = data[this.component.derivePostcode] &&
-      data[this.component.derivePostcode].replaceAll('_', '').replaceAll(' ', '').length === 6;
+    const isValidHouseNumber = HOUSE_NUMBER_REGEX.test(data[this.component.deriveHouseNumber]);
+    const isValidPostcode = POSTCODE_REGEX.test(data[this.component.derivePostcode]);
 
     if (isValidHouseNumber && isValidPostcode) {
       if (this.component.deriveStreetName) {
