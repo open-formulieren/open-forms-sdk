@@ -9,7 +9,7 @@ import {get} from "../../api";
 
 const {REACT_APP_BASE_API_URL} = process.env;
 
-const POSTCODE_REGEX = /^[0-9]{4} [a-zA-Z]{2}$/;
+const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
 const HOUSE_NUMBER_REGEX = /^\d+$/;
 
 /**
