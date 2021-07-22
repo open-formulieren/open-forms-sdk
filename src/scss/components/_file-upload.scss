@@ -1,0 +1,109 @@
+/*
+The markup uses bootstrap templates by default and is pretty complex. For that reason
+we don't have strict BEM naming here.
+ */
+@use "sass:math";
+
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+@import '~microscope-sass/lib/responsive';
+
+@import '../mixins/prefix';
+
+$bootstrap-ratio-mobile: 12 / $grid-columns-mobile;
+$bootstrap-ratio-tablet: 12 / $grid-columns-tablet;
+$bootstrap-ratio-laptop: 12 / $grid-columns-laptop;
+$bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
+
+@mixin bootstrap-span($cols) {
+  $bs-span: $cols / 12 * 100%;
+  @include responsive(
+    width,
+    100%,
+    $bs-span / $bootstrap-ratio-tablet,
+    $bs-span / $bootstrap-ratio-laptop,
+    $bs-span / $bootstrap-ratio-desktop,
+  );
+}
+
+.#{prefix(form-control--file)} {
+  @include body;
+
+  a {
+    @extend .#{prefix('anchor')};
+  }
+
+  .list-group {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    @include margin(auto);
+
+    .list-group-header {
+      @include hide-on-mobile(block);
+
+      .row {
+        border-bottom: solid 1px $color-gray;
+      }
+    }
+
+    .list-group-item {
+      @include responsive(padding, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
+    }
+  }
+
+  .row {
+    display: flex;
+
+    .col-md-1 {
+      @include bootstrap-span(1);
+    }
+    .col-md-2 {
+      @include bootstrap-span(2);
+    }
+    .col-md-7 {
+      @include bootstrap-span(7);
+      @include mobile-only {
+        flex-grow: 1;
+      }
+    }
+    .col-md-9 {
+      @include bootstrap-span(9);
+      @include mobile-only {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .fileSelector {
+    position: relative;
+    @include margin($grid-container-margin-small, $properties: padding);
+    border: 2px dashed $color-gray-darker;
+    text-align: center;
+
+    &.fileDragOver {
+      border-color: $color-primary;
+    }
+  }
+
+  [ref="removeLink"] {
+    cursor: pointer;
+    color: $color-danger;
+  }
+}
+
+.#{prefix(form-control--image)} {
+
+  > div:nth-child(3) > div {
+
+    @include responsive(padding, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
+
+    > span {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+    }
+  }
+
+}
