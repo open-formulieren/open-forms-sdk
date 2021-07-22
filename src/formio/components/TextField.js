@@ -1,16 +1,13 @@
 import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
-
+import {get} from "../../api";
 import enableValidationPlugins from "../validators/plugins";
 
 
-import {get} from "../../api";
-
-const {REACT_APP_BASE_API_URL} = process.env;
-
 const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
 const HOUSE_NUMBER_REGEX = /^\d+$/;
+
 
 /**
  * Extend the default text field to modify it to our needs.
@@ -34,7 +31,7 @@ class TextField extends Formio.Components.components.textfield {
   }
 
   setLocationData(postcode, house_number, key) {
-    get(`${REACT_APP_BASE_API_URL}location/get-street-name-and-city`, {postcode, house_number})
+    get(`${this.options.baseUrl}location/get-street-name-and-city`, {postcode, house_number})
       .then(result => this.setValue(result[key] || ''))
       .catch(error => console.log(error));
 
