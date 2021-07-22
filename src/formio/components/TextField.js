@@ -32,9 +32,8 @@ class TextField extends Formio.Components.components.textfield {
 
   setLocationData(postcode, house_number, key) {
     get(`${this.options.baseUrl}location/get-street-name-and-city`, {postcode, house_number})
-      .then(result => this.setValue(result[key] || ''))
+      .then(result => this.setValue(result[key]))
       .catch(error => console.log(error));
-
   }
 
   handleSettingLocationData(data) {
