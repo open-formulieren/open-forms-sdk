@@ -71,7 +71,7 @@ const Summary = ({ form, submission, onConfirm }) => {
             editStepText={form.literals.changeText.resolved}
           />
         ))}
-        <Toolbar>
+        <Toolbar modifiers={['mobile-reverse-order']}>
           <ToolbarList>
             <Button
               variant="anchor"
