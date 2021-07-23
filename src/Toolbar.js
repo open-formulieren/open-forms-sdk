@@ -7,7 +7,7 @@ import {getBEMClassName} from './utils';
 const ToolbarList = ({ children }) => {
   return (
     <ul className={getBEMClassName('toolbar__list')}>
-      { React.Children.map(children, child => (
+      { React.Children.map(children, child => child && (
         <li className={getBEMClassName('toolbar__list-item')}>
           {child}
         </li>

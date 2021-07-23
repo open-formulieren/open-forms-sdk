@@ -10,12 +10,29 @@
   justify-content: space-between;
   position: relative;
 
-  &--start {
+  @media print {
+    display: none;
+  }
+
+  @include modifier('start') {
     justify-content: flex-start;
   }
 
-  @media print {
-    display: none;
+  @include mobile-only {
+    display: block;
+
+    @include element('list') {
+      @include margin(auto, $properties: margin-bottom);
+    }
+
+    @include element('list-item') {
+      @include margin(auto, $properties: margin-bottom, $value-mobile: $typography-margin-list);
+
+      .#{prefix('button--primary')} {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   }
 
   @include element('list') {
@@ -28,7 +45,9 @@
   }
 
   &--start &__list {
-    @include margin($properties: margin-right);
+    @include breakpoint($min: $breakpoint-tablet) {
+      @include margin($properties: margin-right);
+    }
   }
 
   @include element('list-item') {
@@ -46,7 +65,7 @@
       padding-bottom: $typography-margin-base;
     }
 
-    &__list:last-child &__list-item:last-child > .button--primary {
+    &__list:last-child &__list-item:last-child > .#{prefix(button--primary)} {
       @include margin(true, $properties: margin-top);
       position: absolute;
       right: 0;
