@@ -10,12 +10,72 @@
   justify-content: space-between;
   position: relative;
 
-  &--start {
+  @media print {
+    display: none;
+  }
+
+  @include modifier('start') {
     justify-content: flex-start;
   }
 
-  @media print {
-    display: none;
+  @include modifier('bottom') {
+    @include margin(true, $properties: margin-top);
+  }
+
+  @include mobile-only {
+    display: block;
+
+    @include modifier('compact') {
+      @include element('list') {
+        @include margin(auto, $properties: margin-bottom, $value-mobile: $typography-margin-list);
+      }
+      @include element('list-item') {
+        min-height: auto;
+
+        .#{prefix('button')}.#{prefix('button--anchor')} {
+          padding: 0;
+          justify-content: flex-start;
+        }
+      }
+    }
+
+    @include modifier('mobile-reverse-order') {
+      display: flex;
+      flex-direction: column-reverse;
+      margin-top: $typography-margin-text;
+
+      > * {
+        width: 100%;
+      }
+
+      @include element('list') {
+        flex-direction: column-reverse;
+        &:not(:last-child) {
+          margin: $typography-margin-text 0 0 0;
+        }
+      }
+
+      @include element('list-item') {
+        @include margin(auto, $properties: margin-bottom, $value-mobile: 0);
+        @include margin(auto, $properties: margin-top, $value-mobile: $typography-margin-list);
+        &:last-child {
+          padding-bottom: 0 !important;
+        }
+      }
+    }
+
+    @include element('list') {
+      @include margin(auto, $properties: margin-bottom);
+    }
+
+    @include element('list-item') {
+      @include margin(auto, $properties: margin-bottom, $value-mobile: $typography-margin-list);
+
+      .#{prefix('button')}:not(.#{prefix('button--image')}) {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   }
 
   @include element('list') {
@@ -28,7 +88,9 @@
   }
 
   &--start &__list {
-    @include margin($properties: margin-right);
+    @include breakpoint($min: $breakpoint-tablet) {
+      @include margin($properties: margin-right);
+    }
   }
 
   @include element('list-item') {
@@ -44,15 +106,6 @@
   @include breakpoint($max: $breakpoint-laptop) {
     &__list:last-child &__list-item:last-child {
       padding-bottom: $typography-margin-base;
-    }
-
-    &__list:last-child &__list-item:last-child > .button--primary {
-      @include margin(true, $properties: margin-top);
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      justify-content: center;
-      width: 100%;
     }
   }
 

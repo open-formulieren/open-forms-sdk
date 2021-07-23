@@ -14,7 +14,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
   const history = useHistory();
   return (
     <>
-      <Toolbar>
+      <Toolbar modifiers={['compact']}>
         <ToolbarList>
           <Caption component={'span'}>{stepData.title}</Caption>
         </ToolbarList>
@@ -28,7 +28,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
               history.push(editStepUrl);
             }}
           >
-            {editStepText} {stepData.title.toLocaleLowerCase()}
+            {editStepText}
           </Button>
         </ToolbarList>
       </Toolbar>
