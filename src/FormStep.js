@@ -17,6 +17,7 @@ import { ConfigContext } from './Context';
 import FormIOWrapper from './FormIOWrapper';
 import { Toolbar, ToolbarList } from './Toolbar';
 import Types from './types';
+import Loader from './Loader';
 
 const initialState = {
   configuration: null,
@@ -117,7 +118,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
 
   return (
     <Card title={step.name}>
-      { loading ? 'Loading...' : null }
+      { loading ? <Loader modifiers={['centered']} /> : null }
 
       {
         (!loading && configuration) ? (

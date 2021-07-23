@@ -10,6 +10,7 @@ import FormStepSummary from "./FormStepSummary";
 import { Toolbar, ToolbarList } from './Toolbar';
 import Types from './types';
 import { flattenComponents } from './utils';
+import Loader from './Loader';
 
 
 const loadStepsData = async (submission) => {
@@ -62,7 +63,7 @@ const Summary = ({ form, submission, onConfirm }) => {
   return (
     <Card title="Controleer en bevestig">
       <form onSubmit={onSubmit}>
-        { loading ? 'Loading...' : null }
+        { loading ? <Loader modifiers={['centered']} /> : null }
         {submissionSteps && submissionSteps.map((stepData, i) => (
           <FormStepSummary
             key={stepData.submissionStep.id}

@@ -1,9 +1,11 @@
 import classNames from 'classnames';
+import {FormattedNumber} from 'react-intl';
 
 import {applyPrefix} from './formio/utils';
 import Body from './Body';
 import List from './List';
 import Image from './Image';
+import Anchor from './Anchor';
 
 
 export const getBEMClassName = (base, modifiers=[]) => {
@@ -74,12 +76,19 @@ export const getComponentValue = (inputValue, components, key) => {
           }
       ] */
       if (!inputValue) {
-        return "";
+        return "-";
       }
       else {
         return inputValue.map(v => {
-          return <a href={v.url}>{v.originalName} ({v.size} bytes)</a>;
-        });
+          const {size, unit} = humanFileSize(v.size);
+          return (
+            <Anchor key={v.url} href={v.url}>
+              {v.originalName}{' '}
+              {/* eslint-disable-next-line react/style-prop-object */}
+              (<FormattedNumber value={size} style="unit" unit={unit} />)
+            </Anchor>
+          )}
+        );
       }
     } else if (component.type === "date") {
       const [year, month, day] = inputValue.split('-');
@@ -97,3 +106,21 @@ export const getComponentValue = (inputValue, components, key) => {
 
     return inputValue;
   };
+
+
+
+/**
+ * Takes a file size in bytes and returns the appropriate human readable value + unit
+ * to use.
+ * @param  {Number} size File size in bytes
+ * @return {Object}      Object with the human readable number and unit.
+ */
+const humanFileSize = (size) => {
+  if (size === 0) {
+    return {size: 0, unit: 'byte'};
+  }
+  const index = Math.floor( Math.log(size) / Math.log(1024) );
+  const newSize = (size / Math.pow(1024, index)).toFixed(2) * 1;
+  const unit = ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'][index];
+  return {size: newSize, unit};
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
 
 import { Formio, Templates } from 'react-formio';
 
@@ -12,6 +13,7 @@ import './styles.scss';
 import { get } from './api';
 import { ConfigContext } from './Context';
 import { Form } from './Form';
+import messagesNL from './i18n';
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
@@ -45,11 +47,13 @@ class OpenForm {
     // render the wrapping React component
     ReactDOM.render(
       <React.StrictMode>
-        <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
-          <Router basename={this.basePath}>
-            <Form form={this.formObject} />
-          </Router>
-        </ConfigContext.Provider>
+        <IntlProvider messages={messagesNL} locale="nl" defaultLocale="nl">
+          <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
+            <Router basename={this.basePath}>
+              <Form form={this.formObject} />
+            </Router>
+          </ConfigContext.Provider>
+        </IntlProvider>
       </React.StrictMode>,
       this.targetNode,
     );
