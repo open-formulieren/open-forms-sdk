@@ -1,8 +1,12 @@
 import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
-
+import { get } from '../../api';
 import enableValidationPlugins from "../validators/plugins";
+
+
+const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
+const HOUSE_NUMBER_REGEX = /^\d+$/;
 
 
 /**
@@ -24,6 +28,40 @@ class TextField extends Formio.Components.components.textfield {
 
   checkComponentValidity(data, dirty, row, options = {}){
     return super.checkComponentValidity(data, dirty, row, {...options, async: true});
+  }
+
+  setLocationData(postcode, house_number, key) {
+    get(`${this.options.baseUrl}location/get-street-name-and-city`, {postcode, house_number})
+      .then(result => this.setValue(result[key]))
+      .catch(error => console.log(error));
+  }
+
+  handleSettingLocationData(data) {
+    const isValidHouseNumber = HOUSE_NUMBER_REGEX.test(data[this.component.deriveHouseNumber]);
+    const isValidPostcode = POSTCODE_REGEX.test(data[this.component.derivePostcode]);
+
+    if (isValidHouseNumber && isValidPostcode) {
+      if (this.component.deriveStreetName) {
+        this.setLocationData(
+          data[this.component.derivePostcode],
+          data[this.component.deriveHouseNumber],
+          'streetName'
+        );
+      }
+      if (this.component.deriveCity) {
+        this.setLocationData(
+          data[this.component.derivePostcode],
+          data[this.component.deriveHouseNumber],
+          'city'
+        );
+      }
+    }
+  }
+
+  fieldLogic(data, row) {
+    const changed = super.fieldLogic(data, row);
+    this.handleSettingLocationData(data);
+    return changed;
   }
 }
 
