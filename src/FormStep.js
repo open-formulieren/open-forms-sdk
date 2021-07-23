@@ -130,7 +130,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
               onSubmit={onFormIOSubmit}
               options={{noAlerts: true, baseUrl: config.baseUrl}}
             />
-            <Toolbar modifiers={['mobile-reverse-order']}>
+            <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
               <ToolbarList>
                 <Button
                   variant="anchor"
