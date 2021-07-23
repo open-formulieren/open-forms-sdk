@@ -7,6 +7,8 @@ import { Formio, Templates } from 'react-formio';
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
 
+import IdleTimer from 'react-idle-timer';
+
 import './styles.scss';
 
 import { get } from './api';
@@ -33,6 +35,14 @@ class OpenForm {
       pathname = pathname.slice(0, pathname.length - 1);
     }
     this.basePath = pathname;
+
+    // Set up idle timer
+    this.idleTimer = null;
+    this.handleOnAction = this.handleOnAction.bind(this);
+  }
+
+  handleOnAction () {
+    console.log('In handleOnAction');
   }
 
   async init() {
@@ -47,6 +57,11 @@ class OpenForm {
       <React.StrictMode>
         <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
           <Router basename={this.basePath}>
+            <IdleTimer
+              ref={ref => { this.idleTimer = ref }}
+              timeout={1000 * this.formObject.sessionTimeout}
+              onAction={this.handleOnAction}
+            />
             <Form form={this.formObject} />
           </Router>
         </ConfigContext.Provider>
