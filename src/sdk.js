@@ -42,7 +42,10 @@ class OpenForm {
   }
 
   handleOnAction () {
-    console.log('In handleOnAction');
+    if (this.idleTimer.getRemainingTime() === 0) {
+      // Redirect user back to initial screen
+      window.location.href = this.basePath;
+    }
   }
 
   async init() {
