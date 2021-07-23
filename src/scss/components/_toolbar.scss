@@ -18,6 +18,22 @@
     justify-content: flex-start;
   }
 
+  @include modifier('compact') {
+    @include mobile-only {
+      @include element('list') {
+        @include margin(auto, $properties: margin-bottom, $value-mobile: $typography-margin-list);
+      }
+      @include element('list-item') {
+        min-height: auto;
+
+        .#{prefix('button')}.#{prefix('button--anchor')} {
+          padding: 0;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+
   @include mobile-only {
     display: block;
 
