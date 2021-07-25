@@ -21,11 +21,8 @@ other developers to give tips even before you start coding.
 
 To keep the code clean and readable, this project uses:
 
-- [`isort`](https://github.com/timothycrosley/isort) to order the imports
-- [`black`](https://github.com/psf/black) to format the code and keep diffs for 
-  pull requests small
-- [`flake8`](https://github.com/PyCQA/flake8) to clean up code (removing unused
-  imports, etc.)
+- [`eslint`](https://www.npmjs.com/package/eslint) to format the code and keep 
+  diffs for pull requests small
 
 Whenever a branch is pushed or a pull request is made, the code will be checked 
 in CI by the tools mentioned above, so make sure to install these tools and run 
@@ -59,7 +56,7 @@ tests to the existing Django testsuite.
 ### Making a pull request
 
 If all changes have been committed, you can push the branch to your fork of the 
-repository and create a pull request to the `master` branch of this project's 
+repository and create a pull request to the `main` branch of this project's 
 repository. Your pull request will be reviewed, if applicable, feedback will be 
 given and if everything is approved, it will be merged.
 
