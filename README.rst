@@ -11,7 +11,7 @@ Open Forms SDK
 Easily integrate forms from Open Forms in your own website
 (`Nederlandse versie`_)
 
-Developed by `Maykin Media B.V.`_, commissioned by Dimpact.
+Developed by `Maykin Media B.V.`_, commissioned by `Dimpact`_.
 
 
 Introduction
@@ -53,13 +53,14 @@ References
 Licence
 =======
 
-Copyright © `Maykin Media B.V.`_, 2021
+Copyright © `Dimpact`_, 2021
 
-NO PUBLIC LICENSE AVAILABLE YET.
+Licensed under the `EUPL`_.
 
 .. _`Nederlandse versie`: README.NL.rst
 .. _`Maykin Media B.V.`: https://www.maykinmedia.nl
-
+.. _`Dimpact`: https://www.dimpact.nl
+.. _`EUPL`: LICENSE.md
 
 .. |build-status| image:: https://github.com/open-formulieren/open-forms-sdk/actions/workflows/ci.yml/badge.svg
     :alt: Build status
