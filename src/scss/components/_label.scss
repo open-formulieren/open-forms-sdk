@@ -10,6 +10,7 @@
   &.field-required:after {
     content: '*';
     color: $color-red;
+    z-index: 1;  // otherwise this is above the progress indicator
   }
 }
 
