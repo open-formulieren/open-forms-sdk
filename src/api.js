@@ -2,9 +2,15 @@ const fetchDefaults = {
   credentials: 'include', // required for Firefox 60, which is used in werkplekken
 };
 
-const apiCall = (url, opts) => {
+const apiCall = async (url, opts) => {
   const options = { ...fetchDefaults, ...opts };
-  return window.fetch(url, options);
+  const response = await window.fetch(url, options);
+  if (response.status === 403) {
+    const data = await response.json();
+    alert(data.detail);
+    window.location.href = '/';
+  }
+  return response;
 };
 
 const get = async (url, params = {}, multiParams = []) => {
