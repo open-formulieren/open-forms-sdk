@@ -19,6 +19,10 @@
     }
   }
 
+  @include modifier('with-margin') {
+    margin: 1rem 0;
+  }
+
   @include element('icon') {
     display: block;
     width: 1em;

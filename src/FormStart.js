@@ -9,6 +9,7 @@ import MaintenanceMode from './MaintenanceMode';
 import useQuery from './hooks/useQuery';
 import AuthenticationOutage, { useDetectAuthenticationOutage } from './AuthenticationOutage';
 import Types from './types';
+import {useDetectDigidErrorMessages, DigidAuthenticationErrors} from "./DigidAuthenticationErrors";
 
 const START_FORM_QUERY_PARAM = '_start';
 
@@ -86,10 +87,12 @@ const useStartSubmission = (onFormStart) => {
 const FormStart = ({ form, onFormStart }) => {
   const doStart = useStartSubmission(onFormStart);
   const outagePluginId = useDetectAuthenticationOutage();
+  const digidError = useDetectDigidErrorMessages();
 
   useEffect(() => {
-    if (doStart && !outagePluginId) onFormStart();
-  }, [doStart, outagePluginId, onFormStart]);
+    const authErrors = !!outagePluginId || !!digidError;
+    if (doStart && !authErrors) onFormStart();
+  }, [doStart, outagePluginId, digidError, onFormStart]);
 
   if (form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;
@@ -107,6 +110,8 @@ const FormStart = ({ form, onFormStart }) => {
 
   return (
     <Card title={form.name}>
+
+      { digidError ? <DigidAuthenticationErrors digidMessage={digidError} /> : null }
 
       <Body modifiers={['compact']}>Log in or start the form anonymously.</Body>
 
