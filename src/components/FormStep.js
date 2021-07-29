@@ -11,13 +11,13 @@ import { useImmerReducer } from 'use-immer';
 
 import { get, put } from 'api';
 
-import Button from 'Button';
-import Card from 'Card';
+import Button from 'components/Button';
+import Card from 'components/Card';
+import FormIOWrapper from 'components/FormIOWrapper';
+import { Toolbar, ToolbarList } from 'components/Toolbar';
+import Loader from 'components/Loader';
 import { ConfigContext } from 'Context';
-import FormIOWrapper from 'FormIOWrapper';
-import { Toolbar, ToolbarList } from 'Toolbar';
 import Types from 'types';
-import Loader from 'Loader';
 
 const initialState = {
   configuration: null,

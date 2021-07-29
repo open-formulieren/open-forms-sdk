@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Caption from 'Caption';
+import Caption from 'components/Caption';
 import { getBEMClassName } from 'utils';
 
 

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-import Button from 'Button';
-import Caption from 'Caption';
-import { Table, TableRow, TableHead, TableCell } from 'Table';
-import { Toolbar, ToolbarList } from 'Toolbar';
+import Button from 'components/Button';
+import Caption from 'components/Caption';
+import { Table, TableRow, TableHead, TableCell } from 'components/Table';
+import { Toolbar, ToolbarList } from 'components/Toolbar';
 
 import { getComponentLabel, getComponentValue } from 'utils';
 

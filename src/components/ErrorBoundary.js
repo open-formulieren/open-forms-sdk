@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Body from 'Body';
-import FAIcon from 'FAIcon';
+import Body from 'components/Body';
+import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
 
 

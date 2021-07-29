@@ -11,14 +11,14 @@ import { ConfigContext } from 'Context';
 
 import { get, post } from 'api';
 import usePageViews from 'hooks/usePageViews';
-import ErrorBoundary from 'ErrorBoundary';
-import FormStart from 'FormStart';
-import FormStep from 'FormStep';
-import ProgressIndicator from 'ProgressIndicator';
-import { Layout, LayoutRow, LayoutColumn } from 'Layout';
-import RequireSubmission from 'RequireSubmission';
-import SubmissionConfirmation from 'SubmissionConfirmation';
-import Summary from 'Summary';
+import ErrorBoundary from 'components/ErrorBoundary';
+import FormStart from 'components/FormStart';
+import FormStep from 'components/FormStep';
+import ProgressIndicator from 'components/ProgressIndicator';
+import { Layout, LayoutRow, LayoutColumn } from 'components/Layout';
+import RequireSubmission from 'components/RequireSubmission';
+import SubmissionConfirmation from 'components/SubmissionConfirmation';
+import Summary from 'components/Summary';
 import Types from 'types';
 
 /**

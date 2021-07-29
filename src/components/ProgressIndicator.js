@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouteMatch, Link } from 'react-router-dom';
 
-import Anchor from 'Anchor';
-import Card from 'Card';
-import Caption from 'Caption';
-import List from 'List';
-import FAIcon from 'FAIcon';
+import Anchor from 'components/Anchor';
+import Card from 'components/Card';
+import Caption from 'components/Caption';
+import List from 'components/List';
+import FAIcon from 'components/FAIcon';
 import { getBEMClassName } from 'utils';
 
 

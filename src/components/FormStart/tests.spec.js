@@ -2,12 +2,12 @@ import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import useQuery from '../hooks/useQuery';
+import useQuery from 'hooks/useQuery';
 import FormStart from '.';
 
 import {testForm} from './fixtures';
 
-jest.mock('../hooks/useQuery');
+jest.mock('hooks/useQuery');
 
 let container = null;
 

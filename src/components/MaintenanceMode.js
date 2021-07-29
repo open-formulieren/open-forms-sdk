@@ -1,7 +1,6 @@
-import Body from 'Body';
-import Card from 'Card';
-import FAIcon from 'FAIcon';
-
+import Body from 'components/Body';
+import Card from 'components/Card';
+import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
 
 const MaintenanceMode = ({ title }) => {

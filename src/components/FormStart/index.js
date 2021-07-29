@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import Card from 'Card';
-import { Toolbar, ToolbarList } from 'Toolbar';
-import Button from 'Button';
-import Body from 'Body';
-import MaintenanceMode from 'MaintenanceMode';
+import AuthenticationOutage, { useDetectAuthenticationOutage } from 'components/auth/AuthenticationOutage';
+import {useDetectDigidErrorMessages, DigidAuthenticationErrors} from 'components/auth/DigidAuthenticationErrors';
+import Body from 'components/Body';
+import Button from 'components/Button';
+import Card from 'components/Card';
+import MaintenanceMode from 'components/MaintenanceMode';
+import { Toolbar, ToolbarList } from 'components/Toolbar';
 import useQuery from 'hooks/useQuery';
-import AuthenticationOutage, { useDetectAuthenticationOutage } from 'auth/AuthenticationOutage';
 import Types from 'types';
-import {useDetectDigidErrorMessages, DigidAuthenticationErrors} from 'auth/DigidAuthenticationErrors';
 
 const START_FORM_QUERY_PARAM = '_start';
 

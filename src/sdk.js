@@ -12,7 +12,7 @@ import './styles.scss';
 
 import { get } from 'api';
 import { ConfigContext } from 'Context';
-import { Form } from 'Form';
+import { Form } from 'components/Form';
 import messagesNL from 'i18n';
 
 // use custom component overrides
