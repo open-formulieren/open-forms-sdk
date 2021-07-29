@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getBEMClassName} from "./utils";
-import FAIcon from "./FAIcon";
-import Body from "./Body";
-import useQuery from "./hooks/useQuery";
+import {getBEMClassName} from '../../utils';
+import FAIcon from '../../FAIcon';
+import Body from '../../Body';
+import useQuery from '../../hooks/useQuery';
 
 const DIGID_AUTH_PARAM = '_digid-message';
 const DIGID_CANCEL_LOGIN_PARAM = 'login-cancelled';

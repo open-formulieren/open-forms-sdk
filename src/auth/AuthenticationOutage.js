@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import useQuery from './hooks/useQuery';
-import Body from "./Body";
-import FAIcon from "./FAIcon";
+import useQuery from '../hooks/useQuery';
+import Body from '../Body';
+import FAIcon from '../FAIcon';
 
-import {getBEMClassName} from './utils';
+import {getBEMClassName} from '../utils';
 
 const AUTHENTICATION_OUTAGE_QUERY_PARAM = 'of-auth-problem';
 
