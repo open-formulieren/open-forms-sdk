@@ -10,10 +10,10 @@ import OFLibrary from './formio/templates';
 
 import './styles.scss';
 
-import { get } from './api';
-import { ConfigContext } from './Context';
-import { Form } from './Form';
-import messagesNL from './i18n';
+import { get } from 'api';
+import { ConfigContext } from 'Context';
+import { Form } from 'components/Form';
+import messagesNL from 'i18n';
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
@@ -62,5 +62,5 @@ class OpenForm {
 
 
 export default OpenForm;
-export { ANALYTICS_PROVIDERS } from './hooks/usePageViews';
+export { ANALYTICS_PROVIDERS } from 'hooks/usePageViews';
 export { OpenForm };

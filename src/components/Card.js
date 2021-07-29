@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {applyPrefix} from './formio/utils';
-import Caption from './Caption';
-import { getBEMClassName } from './utils';
+import Caption from 'components/Caption';
+import { getBEMClassName } from 'utils';
 
 
 const CardTitle = ({ title, component='h2', blockClassName='card' }) => {
   const Title = `${component}`;
   return (
-    <header className={applyPrefix(`${blockClassName}__header`)}>
-      <Title className={applyPrefix('title')}>{title}</Title>
+    <header className={getBEMClassName(`${blockClassName}__header`)}>
+      <Title className={getBEMClassName('title')}>{title}</Title>
     </header>
   );
 }
@@ -35,7 +34,7 @@ const Card = ({ children, title, titleComponent, caption, captionComponent, bloc
       { caption ? <Caption component={captionComponent}>{caption}</Caption> : null }
 
       { title
-        ? <div className={applyPrefix(`${blockClassName}__body`)}> {children} </div>
+        ? <div className={getBEMClassName(`${blockClassName}__body`)}> {children} </div>
         : children }
 
     </div>

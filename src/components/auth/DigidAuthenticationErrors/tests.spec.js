@@ -1,12 +1,13 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
-import {DigidAuthenticationErrors} from "../../../DigidAuthenticationErrors";
+import { render, unmountComponentAtNode } from 'react-dom';
+import { act } from 'react-dom/test-utils';
+
+import {DigidAuthenticationErrors} from '.';
 
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
-  container = document.createElement("div");
+  container = document.createElement('div');
   document.body.appendChild(container);
 });
 
@@ -17,7 +18,7 @@ afterEach(() => {
   container = null;
 });
 
-it("Renders DigiD default error", () => {
+it('Renders DigiD default error', () => {
   act(() => {
     render(<DigidAuthenticationErrors digidMessage="error"/>, container);
   });
@@ -26,7 +27,7 @@ it("Renders DigiD default error", () => {
 });
 
 
-it("Renders DigiD cancel login error", () => {
+it('Renders DigiD cancel login error', () => {
   act(() => {
     render(<DigidAuthenticationErrors digidMessage="login-cancelled"/>, container);
   });

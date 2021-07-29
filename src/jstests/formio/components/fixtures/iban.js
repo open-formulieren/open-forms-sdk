@@ -2,7 +2,7 @@
 export const iban = {
     type: 'form',
     components: [
-      {label: 'IBAN', key: 'iban', type: 'iban', validate: {custom: true}},
+      {label: 'IBAN', key: 'iban', type: 'iban'},
     ],
     	title: 'testIBANForm',
 	display: 'Test IBAN form',
@@ -13,7 +13,7 @@ export const iban = {
 export const twoComponentForm = {
     type: 'form',
     components: [
-      {label: 'IBAN', key: 'iban', type: 'iban', validate: {custom: true}},
+      {label: 'IBAN', key: 'iban', type: 'iban'},
       {label: 'Name', key: 'name', type: 'textfield'},
     ],
     title: 'testTwoComponentForm',

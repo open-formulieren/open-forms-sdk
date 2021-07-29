@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { applyPrefix } from './formio/utils';
+import {getBEMClassName} from 'utils';
 
 
 const Image = ({ src, alt='' }) => {
-    return <img className={applyPrefix('image')} src={src} alt={alt} />;
+    return <img className={getBEMClassName('image')} src={src} alt={alt} />;
 };
 
 Image.propTypes = {
