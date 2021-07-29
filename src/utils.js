@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import {FormattedNumber} from 'react-intl';
 
 import {applyPrefix} from './formio/utils';
-import Body from './Body';
-import List from './List';
-import Image from './Image';
-import Anchor from './Anchor';
+import Body from 'Body';
+import List from 'List';
+import Image from 'Image';
+import Anchor from 'Anchor';
 
 
 export const getBEMClassName = (base, modifiers=[]) => {

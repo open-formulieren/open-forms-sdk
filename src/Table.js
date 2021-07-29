@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getBEMClassName} from './utils';
-import Body from './Body';
+import {getBEMClassName} from 'utils';
+import Body from 'Body';
 
 
 const TableCell = ({ children, component=Body }) => {

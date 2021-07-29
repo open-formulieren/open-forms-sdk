@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import Body from "./Body";
-import Card from "./Card";
-import FAIcon from "./FAIcon";
-import Anchor from "./Anchor";
-import Loader from './Loader';
-import usePoll from './hooks/usePoll';
+import Body from 'Body';
+import Card from 'Card';
+import FAIcon from 'FAIcon';
+import Anchor from 'Anchor';
+import Loader from 'Loader';
+import usePoll from 'hooks/usePoll';
 
 
 /**

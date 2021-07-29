@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouteMatch, Link } from 'react-router-dom';
 
-import Anchor from './Anchor';
-import Card from './Card';
-import Caption from './Caption';
-import List from './List';
-import FAIcon from './FAIcon';
-import { getBEMClassName } from './utils';
+import Anchor from 'Anchor';
+import Card from 'Card';
+import Caption from 'Caption';
+import List from 'List';
+import FAIcon from 'FAIcon';
+import { getBEMClassName } from 'utils';
 
 
 const getLinkModifiers = (active, available, completed) => {

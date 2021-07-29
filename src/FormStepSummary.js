@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-import Button from './Button';
-import Caption from './Caption';
-import { Table, TableRow, TableHead, TableCell } from "./Table";
-import { Toolbar, ToolbarList } from './Toolbar';
+import Button from 'Button';
+import Caption from 'Caption';
+import { Table, TableRow, TableHead, TableCell } from 'Table';
+import { Toolbar, ToolbarList } from 'Toolbar';
 
-import { getComponentLabel, getComponentValue } from "./utils";
+import { getComponentLabel, getComponentValue } from 'utils';
 
 
 const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {

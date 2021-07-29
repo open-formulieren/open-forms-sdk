@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import useAsync from 'react-use/esm/useAsync';
 import { useHistory } from 'react-router-dom';
 
-import { get, post } from './api';
-import Button from './Button';
-import Card from "./Card";
-import FormStepSummary from "./FormStepSummary";
-import { Toolbar, ToolbarList } from './Toolbar';
-import Types from './types';
-import { flattenComponents } from './utils';
-import Loader from './Loader';
+import { get, post } from 'api';
+import Button from 'Button';
+import Card from 'Card';
+import FormStepSummary from 'FormStepSummary';
+import { Toolbar, ToolbarList } from 'Toolbar';
+import Types from 'types';
+import { flattenComponents } from 'utils';
+import Loader from 'Loader';
 
 
 const loadStepsData = async (submission) => {

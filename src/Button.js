@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { applyPrefix } from './formio/utils';
+import {getBEMClassName} from 'utils';
 
 
 const Button = ({ type="", component="button", variant="", children, ...extra }) => {
     const Component = `${component}`;
-
-    const classNameBits = ['button'];
-    if (variant) {
-      classNameBits.push(`button--${variant}`);
-    }
-    const className = classNameBits.map(bit => applyPrefix(bit)).join(' ');
+    const className = getBEMClassName('button', [variant]);
 
     const props = {
       className,
@@ -22,7 +17,7 @@ const Button = ({ type="", component="button", variant="", children, ...extra })
     }
     return (
       <Component {...props}>
-        { children ? <span className={applyPrefix('button__label')}>{children}</span> : null }
+        { children ? <span className={getBEMClassName('button__label')}>{children}</span> : null }
       </Component>
     );
 };

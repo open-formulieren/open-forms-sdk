@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { useImmerReducer } from "use-immer";
+import { useImmerReducer } from 'use-immer';
 import {
   Switch,
   Route,
@@ -7,19 +7,19 @@ import {
 } from 'react-router-dom';
 
 
-import { ConfigContext } from './Context';
+import { ConfigContext } from 'Context';
 
-import { get, post } from './api';
-import usePageViews from './hooks/usePageViews';
-import ErrorBoundary from './ErrorBoundary';
-import FormStart from './FormStart';
-import FormStep from './FormStep';
-import ProgressIndicator from './ProgressIndicator';
-import { Layout, LayoutRow, LayoutColumn } from './Layout';
-import RequireSubmission from './RequireSubmission';
-import SubmissionConfirmation from "./SubmissionConfirmation";
-import Summary from './Summary';
-import Types from './types';
+import { get, post } from 'api';
+import usePageViews from 'hooks/usePageViews';
+import ErrorBoundary from 'ErrorBoundary';
+import FormStart from 'FormStart';
+import FormStep from 'FormStep';
+import ProgressIndicator from 'ProgressIndicator';
+import { Layout, LayoutRow, LayoutColumn } from 'Layout';
+import RequireSubmission from 'RequireSubmission';
+import SubmissionConfirmation from 'SubmissionConfirmation';
+import Summary from 'Summary';
+import Types from 'types';
 
 /**
  * Create a submission instance from a given form instance

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Body from "./Body";
-import FAIcon from "./FAIcon";
-import {getBEMClassName} from './utils';
+import Body from 'Body';
+import FAIcon from 'FAIcon';
+import {getBEMClassName} from 'utils';
 
 
 const logError = (error, errorInfo) => {

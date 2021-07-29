@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getBEMClassName} from './utils';
+import {getBEMClassName} from 'utils';
 
 const Loader = ({modifiers=[]}) => {
   const className = getBEMClassName('loading', modifiers);

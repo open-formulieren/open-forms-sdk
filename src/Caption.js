@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {applyPrefix} from './formio/utils';
+import {getBEMClassName} from 'utils';
 
 
 const Caption = ({ children, component='caption' }) => {
   const Component = `${component}`;
   return (
-    <Component className={applyPrefix('caption')}>{children}</Component>
+    <Component className={getBEMClassName('caption')}>{children}</Component>
   );
 };
 

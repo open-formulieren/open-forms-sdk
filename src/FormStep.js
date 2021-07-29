@@ -7,17 +7,17 @@ import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 
 import useAsync from 'react-use/esm/useAsync';
-import { useImmerReducer } from "use-immer";
+import { useImmerReducer } from 'use-immer';
 
-import { get, put } from './api';
+import { get, put } from 'api';
 
-import Button from './Button';
-import Card from './Card';
-import { ConfigContext } from './Context';
-import FormIOWrapper from './FormIOWrapper';
-import { Toolbar, ToolbarList } from './Toolbar';
-import Types from './types';
-import Loader from './Loader';
+import Button from 'Button';
+import Card from 'Card';
+import { ConfigContext } from 'Context';
+import FormIOWrapper from 'FormIOWrapper';
+import { Toolbar, ToolbarList } from 'Toolbar';
+import Types from 'types';
+import Loader from 'Loader';
 
 const initialState = {
   configuration: null,
