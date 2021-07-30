@@ -52,6 +52,7 @@ $button-padding-h: $grid-margin-2;
   @include button-theme('primary', $color-background, scale_color($color-primary, $lightness: 10%, $saturation: 0%), $color-primary);
   @include button-theme('', $typography-color-text, $color-background, $color-border);
   @include button-theme('anchor', $typography-color-link, transparent, transparent, true);
+  @include button-theme('danger', scale_color($color-danger, $lightness: 90%), $color-danger, scale_color($color-danger, $lightness: -20%));
   appearance: none;
   border-radius: 0;
   display: flex;
