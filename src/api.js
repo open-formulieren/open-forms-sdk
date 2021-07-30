@@ -8,7 +8,6 @@ const apiCall = async (url, opts) => {
   if (response.status === 403) {
     const data = await response.json();
     alert(data.detail);
-    window.location.href = '/';
   }
   return response;
 };
