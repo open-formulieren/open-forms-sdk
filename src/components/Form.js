@@ -9,7 +9,7 @@ import {
 
 import { ConfigContext } from 'Context';
 
-import { get, post } from 'api';
+import {destroy, get, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
@@ -20,6 +20,7 @@ import RequireSubmission from 'components/RequireSubmission';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
 import Types from 'types';
+import {useIntl} from 'react-intl';
 
 /**
  * Create a submission instance from a given form instance
@@ -81,6 +82,7 @@ const reducer = (draft, action) => {
  const Form = ({ form }) => {
   const history = useHistory();
   usePageViews();
+  const intl = useIntl();
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -147,7 +149,21 @@ const reducer = (draft, action) => {
       }
     });
     history.push('/bevestiging');
-  }
+  };
+
+  const onLogout = async (event) => {
+    event.preventDefault();
+
+    const confirmationQuestion = intl.formatMessage(
+      {id: 'confirmLogout', defaultMessage: 'Are you sure that you want to logout?'}
+    );
+    if (!window.confirm(confirmationQuestion)) {
+      return;
+    }
+    await destroy(`${config.baseUrl}authentication/session`);
+    history.push('/');
+    window.location.reload();
+  };
 
   // render the form step if there's an active submission (and no summary)
   return (
@@ -169,6 +185,7 @@ const reducer = (draft, action) => {
                 submission={state.submission}
                 form={form}
                 onConfirm={onSubmitForm}
+                onLogout={onLogout}
                 component={Summary} />
             </Route>
 
@@ -185,6 +202,7 @@ const reducer = (draft, action) => {
                 submission={state.submission}
                 form={form}
                 onStepSubmitted={onStepSubmitted}
+                onLogout={onLogout}
                 component={FormStep}
               />
             )} />

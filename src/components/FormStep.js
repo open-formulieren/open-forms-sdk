@@ -18,6 +18,7 @@ import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Loader from 'components/Loader';
 import { ConfigContext } from 'Context';
 import Types from 'types';
+import LogoutButton from 'components/LogoutButton';
 
 const initialState = {
   configuration: null,
@@ -43,7 +44,7 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse.data;
 };
 
-const FormStep = ({ form, submission, onStepSubmitted }) => {
+const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
   const config = useContext(ConfigContext);
   // component state
   const formRef = useRef(null);
@@ -143,6 +144,7 @@ const FormStep = ({ form, submission, onStepSubmitted }) => {
                 <Button type="submit" variant="primary" name="next">{formStep.literals.nextText.resolved}</Button>
               </ToolbarList>
             </Toolbar>
+            {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
           </form>
         ) : null
       }
@@ -154,6 +156,7 @@ FormStep.propTypes = {
   form: Types.Form,
   submission: PropTypes.object.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
 };
 
 
