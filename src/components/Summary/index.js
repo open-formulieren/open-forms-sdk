@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useAsync from 'react-use/esm/useAsync';
+import {useAsync} from 'react-use';
 import { useHistory } from 'react-router-dom';
 
 import { get, post } from 'api';
