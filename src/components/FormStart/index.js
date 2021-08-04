@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import AuthenticationOutage, { useDetectAuthenticationOutage } from 'components/auth/AuthenticationOutage';
-import {useDetectDigidErrorMessages, DigidAuthenticationErrors} from 'components/auth/DigidAuthenticationErrors';
+import {useDetectAuthErrorMessages, AuthenticationErrors} from 'components/auth/AuthenticationErrors';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -87,12 +87,12 @@ const useStartSubmission = (onFormStart) => {
 const FormStart = ({ form, onFormStart }) => {
   const doStart = useStartSubmission(onFormStart);
   const outagePluginId = useDetectAuthenticationOutage();
-  const digidError = useDetectDigidErrorMessages();
+  const authErrors = useDetectAuthErrorMessages();
+  const hasAuthErrors = !!outagePluginId || !!authErrors;
 
   useEffect(() => {
-    const authErrors = !!outagePluginId || !!digidError;
-    if (doStart && !authErrors) onFormStart();
-  }, [doStart, outagePluginId, digidError, onFormStart]);
+    if (doStart && !hasAuthErrors) onFormStart();
+  }, [doStart, outagePluginId, hasAuthErrors, onFormStart]);
 
   if (form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;
@@ -111,7 +111,7 @@ const FormStart = ({ form, onFormStart }) => {
   return (
     <Card title={form.name}>
 
-      { digidError ? <DigidAuthenticationErrors digidMessage={digidError} /> : null }
+      { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
 
       <Body modifiers={['compact']}>Log in or start the form anonymously.</Body>
 
