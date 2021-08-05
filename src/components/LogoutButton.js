@@ -10,6 +10,8 @@ const LogoutButton = ({onLogout}) => {
     <Toolbar modifiers={['bottom','reverse']}>
       <ToolbarList>
         <Button variant="danger" onClick={onLogout}>
+          {/*TODO using id in the formatMessage is discouraged. However, since the translation pipeline */}
+          {/*is not fully setup yet, using the description instead of the ids causes errors.*/}
           <FormattedMessage id="logOut" defaultMessage="Log out" />
         </Button>
       </ToolbarList>

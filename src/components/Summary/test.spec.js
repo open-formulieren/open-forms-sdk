@@ -57,7 +57,7 @@ it('Summary displays logout button if loginRequired is true', () => {
   expect(container.textContent).toContain('Uitloggen');
 });
 
-it('Summary displays logout button if loginRequired is false', () => {
+it('Summary does not display logout button if loginRequired is false', () => {
   const formLoginRequired = {
     ...testForm,
     loginRequired: false,
