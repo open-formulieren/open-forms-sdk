@@ -10,7 +10,7 @@ import useAsync from 'react-use/esm/useAsync';
 import useDebounce from 'react-use/esm/useDebounce';
 import { useImmerReducer } from 'use-immer';
 
-import { get, put } from 'api';
+import { get, post, put } from 'api';
 
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -51,6 +51,15 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse.data;
 };
 
+const doLogicCheck = async (stepUrl, data) => {
+  const url = `${stepUrl}/_check_logic`;
+  const stepDetailData = await post(url, {data});
+  if (!stepDetailData.ok) {
+    throw new Error('Invalid response'); // TODO -> proper error & use ErrorBoundary
+  }
+  return stepDetailData.data;
+};
+
 const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
   const config = useContext(ConfigContext);
   // component state
@@ -81,9 +90,17 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
     async () => {
       const data = state.data;
       if (!data) return;
-      console.group('debounced check');
-      console.log(data);
-      console.groupEnd();
+
+      const stepDetail = await doLogicCheck(step.url, data);
+
+      // TODO: check custom attributes for submission button control
+      const formInstance = formRef.current.instance.instance;
+
+      // we can't just dispatch this, because Formio keeps references to DOM nodes
+      // which expire when the component re-renders, and that gives React
+      // unstable_flushDiscreteUpdates warnings. However, we can update the form
+      // definition by using the ref to the underlying Formio instance.
+      formInstance.setForm(stepDetail.formStep.configuration);
     },
     STEP_LOGIC_DEBOUNCE_MS,
     [state.data]
