@@ -26,18 +26,24 @@ const STEP_LOGIC_DEBOUNCE_MS = 300;
 const initialState = {
   configuration: null,
   data: null,
+  canSubmit: true,
 };
 
 const reducer = (draft, action) => {
   switch (action.type) {
     case 'STEP_LOADED': {
-      const {data, formStep: {configuration}} = action.payload;
+      const {data, formStep: {configuration}, canSubmit} = action.payload;
       draft.configuration = configuration;
       draft.data = data;
+      draft.canSubmit = canSubmit;
       break;
     }
     case 'FORM_CHANGED': {
       draft.data = action.payload;
+      break;
+    }
+    case 'BLOCK_SUBMIT': {
+      draft.canSubmit = false;
       break;
     }
     default: {
@@ -86,11 +92,12 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
     [step.url]
   );
 
-  const [isCheckingLogic, cancelLogicCheck] = useDebounce(
+  const [isLogicCheckReady, cancelLogicCheck] = useDebounce(
     async () => {
       const data = state.data;
       if (!data) return;
 
+      dispatch({type: 'BLOCK_SUBMIT'});
       const stepDetail = await doLogicCheck(step.url, data);
 
       // TODO: check custom attributes for submission button control
@@ -111,8 +118,10 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
       throw new Error("There is no active submission!");
     }
 
-    // if any logic checks are scheduled, cancel them since we're submitting
-    cancelLogicCheck();
+    // if any logic checks are pending, cancel them since we're submitting
+    if (isLogicCheckReady() === false) {
+      cancelLogicCheck();
+    }
 
     // submit the step data
     await submitStepData(step.url, data);
@@ -163,7 +172,7 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
     dispatch({type: 'FORM_CHANGED', payload: data});
   };
 
-  const {data, configuration} = state;
+  const {data, configuration, canSubmit} = state;
 
   return (
     <Card title={step.name}>
@@ -197,7 +206,7 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
                   type="submit"
                   variant="primary"
                   name="next"
-                  disabled={!!isCheckingLogic}
+                  disabled={!canSubmit}
                 >{formStep.literals.nextText.resolved}</Button>
               </ToolbarList>
             </Toolbar>
