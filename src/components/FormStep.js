@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 
 import useAsync from 'react-use/esm/useAsync';
+import useDebounce from 'react-use/esm/useDebounce';
 import { useImmerReducer } from 'use-immer';
 
 import { get, put } from 'api';
@@ -20,6 +21,8 @@ import { ConfigContext } from 'Context';
 import Types from 'types';
 import LogoutButton from 'components/LogoutButton';
 
+const STEP_LOGIC_DEBOUNCE_MS = 300;
+
 const initialState = {
   configuration: null,
   data: null,
@@ -31,6 +34,10 @@ const reducer = (draft, action) => {
       const {data, formStep: {configuration}} = action.payload;
       draft.configuration = configuration;
       draft.data = data;
+      break;
+    }
+    case 'FORM_CHANGED': {
+      draft.data = action.payload;
       break;
     }
     default: {
@@ -70,10 +77,25 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
     [step.url]
   );
 
+  const [isCheckingLogic, cancelLogicCheck] = useDebounce(
+    async () => {
+      const data = state.data;
+      if (!data) return;
+      console.group('debounced check');
+      console.log(data);
+      console.groupEnd();
+    },
+    STEP_LOGIC_DEBOUNCE_MS,
+    [state.data]
+  );
+
   const onFormIOSubmit = async ({ data }) => {
     if (!submission) {
       throw new Error("There is no active submission!");
     }
+
+    // if any logic checks are scheduled, cancel them since we're submitting
+    cancelLogicCheck();
 
     // submit the step data
     await submitStepData(step.url, data);
@@ -115,6 +137,15 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
     history.push(navigateTo);
   };
 
+  // See https://help.form.io/developers/form-renderer#form-events
+  const onFormIOChange = (changed, flags, modifiedByHuman) => {
+    // if there are no changes, do nothing
+    if ( !(flags && flags.changes && flags.changes.length) ) return;
+    if ( !modifiedByHuman ) return;
+    const data = {...changed.data};
+    dispatch({type: 'FORM_CHANGED', payload: data});
+  };
+
   const {data, configuration} = state;
 
   return (
@@ -128,6 +159,7 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
               ref={formRef}
               form={configuration}
               submission={{data: data}}
+              onChange={onFormIOChange}
               onSubmit={onFormIOSubmit}
               options={{noAlerts: true, baseUrl: config.baseUrl}}
             />
@@ -140,8 +172,16 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
                 >{formStep.literals.previousText.resolved}</Button>
               </ToolbarList>
               <ToolbarList>
-                <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>{formStep.literals.saveText.resolved}</Button>
-                <Button type="submit" variant="primary" name="next">{formStep.literals.nextText.resolved}</Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  name="save" onClick={onFormSave} disabled>{formStep.literals.saveText.resolved}</Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  name="next"
+                  disabled={!!isCheckingLogic}
+                >{formStep.literals.nextText.resolved}</Button>
               </ToolbarList>
             </Toolbar>
             {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
