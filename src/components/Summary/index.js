@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useAsync from 'react-use/esm/useAsync';
+import {useAsync} from 'react-use';
 import { useHistory } from 'react-router-dom';
 
 import { get, post } from 'api';
@@ -11,6 +11,7 @@ import FormStepSummary from 'components/FormStepSummary';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import { flattenComponents } from 'utils';
+import LogoutButton from 'components/LogoutButton';
 
 
 const loadStepsData = async (submission) => {
@@ -40,7 +41,7 @@ const completeSubmission = async (submission) => {
 };
 
 
-const Summary = ({ form, submission, onConfirm }) => {
+const Summary = ({ form, submission, onConfirm, onLogout }) => {
   const history = useHistory();
   const {loading, value: submissionSteps, error} = useAsync(
     async () => loadStepsData(submission),
@@ -90,6 +91,7 @@ const Summary = ({ form, submission, onConfirm }) => {
             </Button>
           </ToolbarList>
         </Toolbar>
+        {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
       </form>
     </Card>
   );
@@ -99,6 +101,7 @@ Summary.propTypes = {
   form: Types.Form.isRequired,
   submission: PropTypes.object.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
 };
 
 

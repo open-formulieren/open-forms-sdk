@@ -22,6 +22,10 @@
     @include margin(true, $properties: margin-top);
   }
 
+  @include modifier('reverse') {
+    justify-content: flex-end;
+  }
+
   @include mobile-only {
     display: block;
 

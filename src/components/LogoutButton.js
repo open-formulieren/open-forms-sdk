@@ -1,0 +1,27 @@
+import React from 'react';
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+
+import {Toolbar, ToolbarList} from 'components/Toolbar';
+import Button from 'components/Button';
+
+const LogoutButton = ({onLogout}) => {
+  return (
+    <Toolbar modifiers={['bottom','reverse']}>
+      <ToolbarList>
+        <Button variant="danger" onClick={onLogout}>
+          {/*TODO using id in the formatMessage is discouraged. However, since the translation pipeline */}
+          {/*is not fully setup yet, using the description instead of the ids causes errors.*/}
+          <FormattedMessage id="logOut" defaultMessage="Log out" />
+        </Button>
+      </ToolbarList>
+    </Toolbar>
+  )
+};
+
+LogoutButton.propTypes = {
+  onLogout: PropTypes.func.isRequired,
+};
+
+
+export default LogoutButton;
