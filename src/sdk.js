@@ -63,4 +63,4 @@ class OpenForm {
 
 export default OpenForm;
 export { ANALYTICS_PROVIDERS } from 'hooks/usePageViews';
-export { OpenForm };
+export { OpenForm, Formio, Templates, OFLibrary, OpenFormsModule };
