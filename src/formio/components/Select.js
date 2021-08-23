@@ -15,7 +15,6 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
-    this.data = data;
   }
 
   setItems(items, fromSearch) {
@@ -36,12 +35,24 @@ class Select extends Formio.Components.components.select {
     return info;
   }
 
-  handleSettingProductLocations() {
-    if (this.component.showLocations && this.data[this.component.productForLocations]) {
+  handleSettingProductLocations(data) {
+    if (this.component.showLocations && data[this.component.productForLocations]) {
       get(`${this.options.baseUrl}appointment/locations`,
-        {'product_id': this.data[this.component.productForLocations]})
+        {'product_id': data[this.component.productForLocations]})
         .then(results => {
             results.map(result => this.addOption(result.identifier, result.name));
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
+  handleSettingProductLocationDates(data) {
+    if (this.component.showDates && data[this.component.productForDates] && data[this.component.locationForDates]) {
+      get(`${this.options.baseUrl}appointment/dates`,
+        {'product_id': data[this.component.productForDates],
+                 'location_id': data[this.component.locationForDates]})
+        .then(results => {
+            results.map(result => this.addOption(result, result));
         })
         .catch(error => console.log(error));
     }
@@ -50,6 +61,7 @@ class Select extends Formio.Components.components.select {
   fieldLogic(data, row) {
     const changed = super.fieldLogic(data, row);
     this.handleSettingProductLocations(data);
+    this.handleSettingProductLocationDates(data);
     return changed;
   }
 }
