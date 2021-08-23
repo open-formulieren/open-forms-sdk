@@ -58,10 +58,26 @@ class Select extends Formio.Components.components.select {
     }
   }
 
+  handleSettingProductLocationDateTimes(data) {
+    if (this.component.showTimes && data[this.component.productForTimes] &&
+        data[this.component.locationForTimes] && data[this.component.dateForTimes]) {
+      get(`${this.options.baseUrl}appointment/times`,
+        {'product_id': data[this.component.productForTimes],
+                 'location_id': data[this.component.locationForTimes],
+                  'date': data[this.component.dateForTimes],
+        })
+        .then(results => {
+            results.map(result => this.addOption(result, result.split("T")[1]));
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
   fieldLogic(data, row) {
     const changed = super.fieldLogic(data, row);
     this.handleSettingProductLocations(data);
     this.handleSettingProductLocationDates(data);
+    this.handleSettingProductLocationDateTimes(data);
     return changed;
   }
 }
