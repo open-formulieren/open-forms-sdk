@@ -15,11 +15,12 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
+    this.data = data;
   }
 
   setItems(items, fromSearch) {
     super.setItems(items, fromSearch);
-    if (this.component.showAppointments) {
+    if (this.component.showProducts) {
       get(`${this.options.baseUrl}appointment/products`)
           .then(results => {
             results.map(result => this.addOption(result.identifier, result.name));
@@ -33,6 +34,23 @@ class Select extends Formio.Components.components.select {
     // change the default CSS classes
     info.attr.class = applyPrefix('select');
     return info;
+  }
+
+  handleSettingProductLocations() {
+    if (this.component.showLocations && this.data[this.component.productForLocations]) {
+      get(`${this.options.baseUrl}appointment/locations`,
+        {'product_id': this.data[this.component.productForLocations]})
+        .then(results => {
+            results.map(result => this.addOption(result.identifier, result.name));
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
+  fieldLogic(data, row) {
+    const changed = super.fieldLogic(data, row);
+    this.handleSettingProductLocations(data);
+    return changed;
   }
 }
 
