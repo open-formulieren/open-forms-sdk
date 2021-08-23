@@ -1,6 +1,7 @@
 import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
+import {get} from "../../api";
 
 
 /**
@@ -14,6 +15,17 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
+  }
+
+  setItems(items, fromSearch) {
+    super.setItems(items, fromSearch);
+    if (this.component.showAppointments) {
+      get(`${this.options.baseUrl}appointment/products`)
+          .then(results => {
+            results.map(result => this.addOption(result.identifier, result.name));
+          })
+          .catch(error => console.log(error));
+    }
   }
 
   get inputInfo() {
