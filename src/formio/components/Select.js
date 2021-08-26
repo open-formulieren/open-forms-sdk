@@ -17,8 +17,14 @@ class Select extends Formio.Components.components.select {
     this.component.widget = 'html5';
   }
 
-  setItems(items, fromSearch) {
-    super.setItems(items, fromSearch);
+  get inputInfo() {
+    const info = super.inputInfo;
+    // change the default CSS classes
+    info.attr.class = applyPrefix('select');
+    return info;
+  }
+
+  handleSettingProducts() {
     if (this.component.showProducts) {
       get(`${this.options.baseUrl}appointment/products`)
           .then(results => {
@@ -28,14 +34,8 @@ class Select extends Formio.Components.components.select {
     }
   }
 
-  get inputInfo() {
-    const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = applyPrefix('select');
-    return info;
-  }
-
   handleSettingProductLocations(data) {
+    // TODO If this changes need to clear dates and times
     if (this.component.showLocations && data[this.component.productForLocations]) {
       get(`${this.options.baseUrl}appointment/locations`,
         {'product_id': data[this.component.productForLocations]})
@@ -47,6 +47,7 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingProductLocationDates(data) {
+    // TODO If this changes need to clear times
     if (this.component.showDates && data[this.component.productForDates] && data[this.component.locationForDates]) {
       get(`${this.options.baseUrl}appointment/dates`,
         {'product_id': data[this.component.productForDates],
@@ -75,6 +76,7 @@ class Select extends Formio.Components.components.select {
 
   fieldLogic(data, row) {
     const changed = super.fieldLogic(data, row);
+    this.handleSettingProducts(data);
     this.handleSettingProductLocations(data);
     this.handleSettingProductLocationDates(data);
     this.handleSettingProductLocationDateTimes(data);

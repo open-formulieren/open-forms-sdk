@@ -106,7 +106,6 @@ export const getComponentValue = (inputValue, components, key) => {
       )
     }
 
-    debugger;
     return inputValue;
   };
 
