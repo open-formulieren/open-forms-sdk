@@ -24,8 +24,9 @@ class Select extends Formio.Components.components.select {
     return info;
   }
 
-  handleSettingProducts() {
-    if (this.component.showProducts) {
+  handleSettingProducts(data) {
+    // TODO If this changes need to clear locations dates and times
+    if (this.component.showProducts && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/products`)
           .then(results => {
             results.map(result => this.addOption(result.identifier, result.name));
@@ -36,7 +37,7 @@ class Select extends Formio.Components.components.select {
 
   handleSettingProductLocations(data) {
     // TODO If this changes need to clear dates and times
-    if (this.component.showLocations && data[this.component.productForLocations]) {
+    if (this.component.showLocations && data[this.component.productForLocations] && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/locations`,
         {'product_id': data[this.component.productForLocations]})
         .then(results => {
@@ -48,7 +49,8 @@ class Select extends Formio.Components.components.select {
 
   handleSettingProductLocationDates(data) {
     // TODO If this changes need to clear times
-    if (this.component.showDates && data[this.component.productForDates] && data[this.component.locationForDates]) {
+    if (this.component.showDates && data[this.component.productForDates]
+        && data[this.component.locationForDates] && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/dates`,
         {'product_id': data[this.component.productForDates],
                  'location_id': data[this.component.locationForDates]})
@@ -61,7 +63,7 @@ class Select extends Formio.Components.components.select {
 
   handleSettingProductLocationDateTimes(data) {
     if (this.component.showTimes && data[this.component.productForTimes] &&
-        data[this.component.locationForTimes] && data[this.component.dateForTimes]) {
+        data[this.component.locationForTimes] && data[this.component.dateForTimes] && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/times`,
         {'product_id': data[this.component.productForTimes],
                  'location_id': data[this.component.locationForTimes],
