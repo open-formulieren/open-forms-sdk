@@ -15,11 +15,6 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
-
-    if (this.component.showProducts) {
-      // Done to trigger loadItems
-      this.component.dataSrc = 'url';
-    }
   }
 
   get inputInfo() {
@@ -30,7 +25,6 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingProducts() {
-    // TODO If this changes need to clear locations dates and times
     if (this.component.showProducts) {
       get(`${this.options.baseUrl}appointment/products`)
           .then(results => {
@@ -42,7 +36,6 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingProductLocations(data) {
-    // TODO If this changes need to clear dates and times
     if (this.component.showLocations && typeof data[this.component.productForLocations] === "number" && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/locations`,
         {'product_id': data[this.component.productForLocations]})
@@ -55,7 +48,6 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingProductLocationDates(data) {
-    // TODO If this changes need to clear times
     if (this.component.showDates && data[this.component.productForDates]
         && data[this.component.locationForDates] && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/dates`,
@@ -85,10 +77,15 @@ class Select extends Formio.Components.components.select {
     }
   }
 
-  loadItems(url, search, headers, options, method, body) {
+  activate() {
+    super.activate();
     if (this.component.showProducts) {
       this.handleSettingProducts();
     }
+  }
+
+  onChange() {
+    // TODO May need to clear some data with this
   }
 
   fieldLogic(data, row) {
