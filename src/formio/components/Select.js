@@ -15,6 +15,11 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
+
+    if (this.component.showProducts) {
+      // Done to trigger loadItems
+      this.component.dataSrc = 'url';
+    }
   }
 
   get inputInfo() {
@@ -24,11 +29,12 @@ class Select extends Formio.Components.components.select {
     return info;
   }
 
-  handleSettingProducts(data) {
+  handleSettingProducts() {
     // TODO If this changes need to clear locations dates and times
-    if (this.component.showProducts && !data[this.component.key]) {
+    if (this.component.showProducts) {
       get(`${this.options.baseUrl}appointment/products`)
           .then(results => {
+            this.setItems([]);
             results.map(result => this.addOption(result.identifier, result.name));
           })
           .catch(error => console.log(error));
@@ -37,10 +43,11 @@ class Select extends Formio.Components.components.select {
 
   handleSettingProductLocations(data) {
     // TODO If this changes need to clear dates and times
-    if (this.component.showLocations && data[this.component.productForLocations] && !data[this.component.key]) {
+    if (this.component.showLocations && typeof data[this.component.productForLocations] === "number" && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/locations`,
         {'product_id': data[this.component.productForLocations]})
         .then(results => {
+            this.setItems([]);
             results.map(result => this.addOption(result.identifier, result.name));
         })
         .catch(error => console.log(error));
@@ -55,6 +62,7 @@ class Select extends Formio.Components.components.select {
         {'product_id': data[this.component.productForDates],
                  'location_id': data[this.component.locationForDates]})
         .then(results => {
+            this.setItems([]);
             results.map(result => this.addOption(result, result));
         })
         .catch(error => console.log(error));
@@ -70,15 +78,21 @@ class Select extends Formio.Components.components.select {
                   'date': data[this.component.dateForTimes],
         })
         .then(results => {
+            this.setItems([]);
             results.map(result => this.addOption(result, result.split("T")[1]));
         })
         .catch(error => console.log(error));
     }
   }
 
+  loadItems(url, search, headers, options, method, body) {
+    if (this.component.showProducts) {
+      this.handleSettingProducts();
+    }
+  }
+
   fieldLogic(data, row) {
     const changed = super.fieldLogic(data, row);
-    this.handleSettingProducts(data);
     this.handleSettingProductLocations(data);
     this.handleSettingProductLocationDates(data);
     this.handleSettingProductLocationDateTimes(data);
