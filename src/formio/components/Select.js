@@ -77,19 +77,43 @@ class Select extends Formio.Components.components.select {
     }
   }
 
+  handleClearingData(data) {
+    // Product is empty so clear locations
+    if (this.component.showLocations &&
+        !data[this.component.productForLocations] &&
+        data[this.component.key]) {
+      this.setValue(this.emptyValue);
+    }
+    // Product or location is empty so clear dates
+    if (this.component.showDates &&
+        (!data[this.component.productForDates]||
+         !data[this.component.locationForDates]) &&
+        data[this.component.key]) {
+      this.setValue(this.emptyValue);
+    }
+    // Product or location or date is empty so clear times
+    if (this.component.showTimes &&
+        (!data[this.component.productForTimes] ||
+         !data[this.component.locationForTimes] ||
+         !data[this.component.dateForTimes]) &&
+        data[this.component.key]) {
+      this.setValue(this.emptyValue);
+    }
+  }
+
   activate() {
     super.activate();
+    if (this.component.showProducts || this.component.showLocations || this.component.showDates) {
+      this.setValue(this.emptyValue);
+    }
     if (this.component.showProducts) {
       this.handleSettingProducts();
     }
   }
 
-  onChange() {
-    // TODO May need to clear some data with this
-  }
-
   fieldLogic(data, row) {
     const changed = super.fieldLogic(data, row);
+    this.handleClearingData(data);
     this.handleSettingProductLocations(data);
     this.handleSettingProductLocationDates(data);
     this.handleSettingProductLocationDateTimes(data);
