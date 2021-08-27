@@ -36,7 +36,7 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingProductLocations(data) {
-    if (this.component.showLocations && typeof data[this.component.productForLocations] === "number" && !data[this.component.key]) {
+    if (this.component.showLocations && data[this.component.productForLocations] && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointment/locations`,
         {'product_id': data[this.component.productForLocations]})
         .then(results => {
