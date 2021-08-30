@@ -53,8 +53,6 @@ export const getComponentValue = (inputValue, components, key) => {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);
-      // TODO inputValue is for dynamically loaded components
-      //   Need to find a way to save/get the human readable value of these
       return obj ? obj.label : inputValue;
     } else if (component.type === "file") {
       /*
