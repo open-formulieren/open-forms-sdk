@@ -3,7 +3,7 @@ import { useImmerReducer } from 'use-immer';
 import {
   Switch,
   Route,
-  useHistory,
+  useHistory, useLocation,
 } from 'react-router-dom';
 
 import { ConfigContext } from 'Context';
@@ -11,6 +11,8 @@ import { ConfigContext } from 'Context';
 import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
+import CancelAppointment from 'components/CancelAppointment';
+import CancelAppointmentSuccess from 'components/CancelAppointmentSuccess';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
@@ -84,6 +86,12 @@ const reducer = (draft, action) => {
   const history = useHistory();
   usePageViews();
   const intl = useIntl();
+  const location = useLocation();
+
+  const hideProgressIndicator = [
+    '/afspraak-annuleren',
+    '/afspraak-annuleren/success'
+  ].includes(location.pathname);
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -231,12 +239,20 @@ const reducer = (draft, action) => {
               />
             )} />
 
+            <Route exact path="/afspraak-annuleren">
+              <CancelAppointment baseUrl={config.baseUrl} />
+            </Route>
+
+            <Route exact path="/afspraak-annuleren/success">
+              <CancelAppointmentSuccess />
+            </Route>
+
           </Switch>
 
         </LayoutColumn>
 
         {
-          form.showProgressIndicator
+          form.showProgressIndicator && !hideProgressIndicator
           ? (
             <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
               <ProgressIndicator

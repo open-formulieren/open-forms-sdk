@@ -23,8 +23,8 @@ const ErrorMessage = ({ children }) => {
 };
 
 ErrorMessage.propTypes = {
+
   children: PropTypes.node,
 };
-
 
 export default ErrorMessage;
