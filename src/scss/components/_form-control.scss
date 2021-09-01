@@ -19,7 +19,7 @@
   .#{prefix(errors)},
   .#{prefix(label)} {
     @include margin($value-mobile: $typography-margin-list);
-    @include ellipsis;
+    overflow-wrap: break-word;
   }
 
   // Reverse errors and label
