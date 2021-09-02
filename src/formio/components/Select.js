@@ -25,7 +25,7 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingAppointmentProducts() {
-    if (this.component.appointments.showProducts) {
+    if (this.component.appointmentsShowProducts) {
       get(`${this.options.baseUrl}appointments/products`)
           .then(results => {
             this.setItems([]);
@@ -36,11 +36,11 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingAppointmentLocations(data) {
-    if (this.component.appointments.showLocations &&
-        data[this.component.appointments.productForLocations] &&
+    if (this.component.appointmentsShowLocations &&
+        data[this.component.appointmentsProductForLocations] &&
         !data[this.component.key]) {
       get(`${this.options.baseUrl}appointments/locations`,
-        {'product_id': data[this.component.appointments.productForLocations]})
+        {'product_id': data[this.component.appointmentsProductForLocations]})
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.identifier, result.name));
@@ -50,11 +50,11 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingAppointmentDates(data) {
-    if (this.component.appointments.showDates && data[this.component.appointments.productForDates]
-        && data[this.component.appointments.locationForDates] && !data[this.component.key]) {
+    if (this.component.appointmentsShowDates && data[this.component.appointmentsProductForDates]
+        && data[this.component.appointmentsLocationForDates] && !data[this.component.key]) {
       get(`${this.options.baseUrl}appointments/dates`,
-        {'product_id': data[this.component.appointments.productForDates],
-         'location_id': data[this.component.appointments.locationForDates]})
+        {'product_id': data[this.component.appointmentsProductForDates],
+         'location_id': data[this.component.appointmentsLocationForDates]})
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.date, result.date));
@@ -65,13 +65,13 @@ class Select extends Formio.Components.components.select {
 
   handleSettingAppointmentTimes(data) {
 
-    if (this.component.appointments.showTimes && data[this.component.appointments.productForTimes] &&
-        data[this.component.appointments.locationForTimes] && data[this.component.appointments.dateForTimes] &&
+    if (this.component.appointmentsShowTimes && data[this.component.appointmentsProductForDates] &&
+        data[this.component.appointmentsLocationForDates] && data[this.component.appointmentsDateForTimes] &&
         !data[this.component.key]) {
       get(`${this.options.baseUrl}appointments/times`,
-        {'product_id': data[this.component.appointments.productForTimes],
-         'location_id': data[this.component.appointments.locationForTimes],
-         'date': data[this.component.appointments.dateForTimes]})
+        {'product_id': data[this.component.appointmentsProductForDates],
+         'location_id': data[this.component.appointmentsLocationForDates],
+         'date': data[this.component.dateForTimes]})
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.time, result.time.split("T")[1].split('+')[0]));
@@ -82,23 +82,23 @@ class Select extends Formio.Components.components.select {
 
   handleClearingAppointmentData(data) {
     // Product is empty so clear locations
-    if (this.component.appointments.showLocations &&
-        !data[this.component.appointments.productForLocations] &&
+    if (this.component.appointmentsShowLocations &&
+        !data[this.component.appointmentsProductForLocations] &&
         data[this.component.key]) {
       this.setValue(this.emptyValue);
     }
     // Product or location is empty so clear dates
-    if (this.component.appointments.showDates &&
-        (!data[this.component.appointments.productForDates]||
-         !data[this.component.appointments.locationForDates]) &&
+    if (this.component.appointmentsShowDates &&
+        (!data[this.component.appointmentsProductForDates]||
+         !data[this.component.appointmentsLocationForDates]) &&
         data[this.component.key]) {
       this.setValue(this.emptyValue);
     }
     // Product or location or date is empty so clear times
-    if (this.component.appointments.showTimes &&
-        (!data[this.component.appointments.productForTimes] ||
-         !data[this.component.appointments.locationForTimes] ||
-         !data[this.component.appointments.dateForTimes]) &&
+    if (this.component.appointmentsShowTimes &&
+        (!data[this.component.appointmentsProductForTimes] ||
+         !data[this.component.appointmentsLocationForTimes] ||
+         !data[this.component.appointmentsDateForTimes]) &&
         data[this.component.key]) {
       this.setValue(this.emptyValue);
     }
@@ -106,11 +106,11 @@ class Select extends Formio.Components.components.select {
 
   activate() {
     super.activate();
-    if (this.component.appointments.showProducts || this.component.appointments.showLocations ||
-        this.component.appointments.showDates || this.component.appointments.showTimes) {
+    if (this.component.appointmentsShowProducts || this.component.appointmentsShowLocations ||
+        this.component.appointmentsShowDates || this.component.appointmentsShowTimes) {
       this.setValue(this.emptyValue);
     }
-    if (this.component.appointments.showProducts) {
+    if (this.component.appointmentsShowProducts) {
       this.handleSettingAppointmentProducts();
     }
   }
