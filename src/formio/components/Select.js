@@ -65,13 +65,13 @@ class Select extends Formio.Components.components.select {
 
   handleSettingAppointmentTimes(data) {
 
-    if (this.component.appointmentsShowTimes && data[this.component.appointmentsProductForDates] &&
-        data[this.component.appointmentsLocationForDates] && data[this.component.appointmentsDateForTimes] &&
+    if (this.component.appointmentsShowTimes && data[this.component.appointmentsProductForTimes] &&
+        data[this.component.appointmentsLocationForTimes] && data[this.component.appointmentsDateForTimes] &&
         !data[this.component.key]) {
       get(`${this.options.baseUrl}appointments/times`,
-        {'product_id': data[this.component.appointmentsProductForDates],
-         'location_id': data[this.component.appointmentsLocationForDates],
-         'date': data[this.component.dateForTimes]})
+        {'product_id': data[this.component.appointmentsProductForTimes],
+         'location_id': data[this.component.appointmentsLocationForTimes],
+         'date': data[this.component.appointmentsDateForTimes]})
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.time, result.time.split("T")[1].split('+')[0]));
