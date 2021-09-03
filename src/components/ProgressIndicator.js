@@ -10,12 +10,12 @@ import FAIcon from 'components/FAIcon';
 import { getBEMClassName } from 'utils';
 
 
-const getLinkModifiers = (active, available, completed) => {
+const getLinkModifiers = (active, isApplicable, completed) => {
   return [
     'inherit',
     'hover',
     active ? 'active' : undefined,
-    available ? undefined : 'muted',
+    isApplicable ? undefined : 'muted',
     completed ? undefined : 'indent',
   ].filter( mod => mod !== undefined );
 };
@@ -34,12 +34,12 @@ LinkOrDisabledAnchor.propTypes = {
 };
 
 
-const SidebarStepStatus = ({isCurrent, step, available=false, completed=false}) => {
+const SidebarStepStatus = ({isCurrent, step, isApplicable=false, completed=false}) => {
   const icon = completed ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null;
-  const linkText = ` ${step.formDefinition}`; // space required between icon and text
-  const modifiers = getLinkModifiers(isCurrent, available, completed);
+  const modifiers = getLinkModifiers(isCurrent, isApplicable, completed);
+  const linkText = ` ${step.formDefinition} ${!isApplicable ? ' (n.v.t)' : ''}`; // space required between icon and text
   return (
-    <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={available} modifiers={modifiers}>
+    <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable} modifiers={modifiers}>
       {icon}
       {linkText}
     </LinkOrDisabledAnchor>
@@ -50,7 +50,7 @@ const SidebarStepStatus = ({isCurrent, step, available=false, completed=false}) 
 SidebarStepStatus.propTypes = {
   isCurrent: PropTypes.bool.isRequired,
   completed: PropTypes.bool,
-  available: PropTypes.bool,
+  isApplicable: PropTypes.bool,
   step: PropTypes.shape({
     url: PropTypes.string.isRequired,
     uuid: PropTypes.string.isRequired,
@@ -122,7 +122,7 @@ const ProgressIndicator = ({ title, submission, steps }) => {
               key={step.uuid}
               step={step}
               completed={submission ? submission.steps[index].completed : false}
-              available={submission ? submission.steps[index].available : false}
+              isApplicable={submission ? submission.steps[index].isApplicable : true}
               isCurrent={step.slug === stepSlug}
               slug={step.slug}
             />
@@ -148,7 +148,7 @@ ProgressIndicator.propTypes = {
   submission: PropTypes.shape({
     steps: PropTypes.arrayOf(PropTypes.shape({
       completed: PropTypes.bool.isRequired,
-      available: PropTypes.bool.isRequired,
+      isApplicable: PropTypes.bool.isRequired,
       // and more...
     })),
   }),

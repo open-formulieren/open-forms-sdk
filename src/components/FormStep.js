@@ -46,6 +46,10 @@ const reducer = (draft, action) => {
       draft.canSubmit = false;
       break;
     }
+    case 'ENABLE_SUBMIT': {
+      draft.canSubmit = true;
+      break;
+    }
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -66,7 +70,7 @@ const doLogicCheck = async (stepUrl, data) => {
   return stepDetailData.data;
 };
 
-const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
+const FormStep = ({ form, submission, onStepSubmitted, onLogout, onReloadSubmission }) => {
   const config = useContext(ConfigContext);
   // component state
   const formRef = useRef(null);
@@ -92,13 +96,14 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
     [step.url]
   );
 
-  const [isLogicCheckReady, cancelLogicCheck] = useDebounce(
+  useDebounce(
     async () => {
       const data = state.data;
       if (!data) return;
 
       dispatch({type: 'BLOCK_SUBMIT'});
-      const stepDetail = await doLogicCheck(step.url, data);
+      const submissionData = await doLogicCheck(step.url, data);
+      onReloadSubmission(submissionData.submission);
 
       // TODO: check custom attributes for submission button control
       const formInstance = formRef.current.instance.instance;
@@ -107,7 +112,8 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
       // which expire when the component re-renders, and that gives React
       // unstable_flushDiscreteUpdates warnings. However, we can update the form
       // definition by using the ref to the underlying Formio instance.
-      formInstance.setForm(stepDetail.formStep.configuration);
+      formInstance.setForm(submissionData.step.formStep.configuration);
+      dispatch({type: 'ENABLE_SUBMIT'});
     },
     STEP_LOGIC_DEBOUNCE_MS,
     [state.data]
@@ -118,13 +124,10 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
       throw new Error("There is no active submission!");
     }
 
-    // if any logic checks are pending, cancel them since we're submitting
-    if (isLogicCheckReady() === false) {
-      cancelLogicCheck();
-    }
-
     // submit the step data
     await submitStepData(step.url, data);
+    // This will reload the submission
+    await doLogicCheck(step.url, data);
     onStepSubmitted(formStep);
   };
 
@@ -152,7 +155,6 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    console.log('save form button clicked');
   };
 
   const onPrevPage = (event) => {

@@ -9,7 +9,7 @@ import {
 
 import { ConfigContext } from 'Context';
 
-import {destroy, get, post} from 'api';
+import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
@@ -121,19 +121,11 @@ const reducer = (draft, action) => {
     history.push(firstStepRoute);
   };
 
-
   const onStepSubmitted = async (formStep) => {
     const stepIndex = form.steps.indexOf(formStep);
     // TODO: there *may* be optional steps, so completion/summary can already get
     // triggered earlier, potentially. This will need to be incorporated later.
     const nextStep = form.steps[stepIndex + 1]; // will be undefined if it's the last step
-
-    // refresh the submission from the backend
-    const submission = await get(state.submission.url);
-    dispatch({
-      type: 'SUBMISSION_LOADED',
-      payload: submission,
-    });
 
     const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
     history.push(nextUrl);
@@ -166,6 +158,13 @@ const reducer = (draft, action) => {
     history.push('/');
     // TODO: replace with a proper reset of the state instead of a page reload.
     window.location.reload();
+  };
+
+  const onReloadSubmission = (submission) => {
+    dispatch({
+      type: 'SUBMISSION_LOADED',
+      payload: submission,
+    });
   };
 
   // render the form step if there's an active submission (and no summary)
@@ -206,6 +205,7 @@ const reducer = (draft, action) => {
                 form={form}
                 onStepSubmitted={onStepSubmitted}
                 onLogout={onLogout}
+                onReloadSubmission={onReloadSubmission}
                 component={FormStep}
               />
             )} />
