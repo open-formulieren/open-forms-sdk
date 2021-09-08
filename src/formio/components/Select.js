@@ -105,10 +105,9 @@ class Select extends Formio.Components.components.select {
   }
 
   activate() {
-    super.activate();
-    if (this.component.appointmentsShowProducts || this.component.appointmentsShowLocations ||
-        this.component.appointmentsShowDates || this.component.appointmentsShowTimes) {
-      this.setValue(this.emptyValue);
+    if (!(this.component.appointmentsShowProducts || this.component.appointmentsShowLocations ||
+        this.component.appointmentsShowDates || this.component.appointmentsShowTimes)) {
+      super.activate();
     }
     if (this.component.appointmentsShowProducts) {
       this.handleSettingAppointmentProducts();
