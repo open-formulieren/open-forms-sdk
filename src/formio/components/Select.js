@@ -15,6 +15,9 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
+    if (this.component.appointmentsShowProducts) {
+      this.handleSettingAppointmentProducts();
+    }
   }
 
   get inputInfo() {
@@ -64,7 +67,6 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingAppointmentTimes(data) {
-
     if (this.component.appointmentsShowTimes && data[this.component.appointmentsProductForTimes] &&
         data[this.component.appointmentsLocationForTimes] && data[this.component.appointmentsDateForTimes] &&
         !data[this.component.key]) {
@@ -106,11 +108,8 @@ class Select extends Formio.Components.components.select {
 
   activate() {
     if (!(this.component.appointmentsShowProducts || this.component.appointmentsShowLocations ||
-        this.component.appointmentsShowDates || this.component.appointmentsShowTimes)) {
+          this.component.appointmentsShowDates || this.component.appointmentsShowTimes)) {
       super.activate();
-    }
-    if (this.component.appointmentsShowProducts) {
-      this.handleSettingAppointmentProducts();
     }
   }
 
