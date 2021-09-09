@@ -92,28 +92,24 @@ class Select extends Formio.Components.components.select {
 
   handleClearingAppointmentData(data) {
     // Product is empty so clear locations
-    if (this.component.appointmentsShowLocations &&
-        !data[this.component.appointmentsProductForLocations] &&
-        data[this.component.key]) {
-      this.setValue(this.emptyValue);
-      this.setItems([]);
-      this.element.lastElementChild.setAttribute('disabled', 'disabled');
-    }
+    const shouldClearLocations = this.component.appointmentsShowLocations &&
+                                 !data[this.component.appointmentsProductForLocations] &&
+                                 data[this.component.key];
+
     // Product or location is empty so clear dates
-    if (this.component.appointmentsShowDates &&
-        (!data[this.component.appointmentsProductForDates]||
-         !data[this.component.appointmentsLocationForDates]) &&
-        data[this.component.key]) {
-      this.setValue(this.emptyValue);
-      this.setItems([]);
-      this.element.lastElementChild.setAttribute('disabled', 'disabled');
-    }
+    const shouldClearDates = this.component.appointmentsShowDates &&
+                             (!data[this.component.appointmentsProductForDates]||
+                              !data[this.component.appointmentsLocationForDates]) &&
+                             data[this.component.key];
+
     // Product or location or date is empty so clear times
-    if (this.component.appointmentsShowTimes &&
-        (!data[this.component.appointmentsProductForTimes] ||
-         !data[this.component.appointmentsLocationForTimes] ||
-         !data[this.component.appointmentsDateForTimes]) &&
-        data[this.component.key]) {
+    const shouldClearTimes = this.component.appointmentsShowTimes &&
+                             (!data[this.component.appointmentsProductForTimes] ||
+                              !data[this.component.appointmentsLocationForTimes] ||
+                              !data[this.component.appointmentsDateForTimes]) &&
+                             data[this.component.key];
+
+    if (shouldClearLocations || shouldClearDates || shouldClearTimes) {
       this.setValue(this.emptyValue);
       this.setItems([]);
       this.element.lastElementChild.setAttribute('disabled', 'disabled');
