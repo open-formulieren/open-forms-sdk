@@ -90,24 +90,22 @@ class Select extends Formio.Components.components.select {
     }
   }
 
-  handleClearingAppointmentData(data) {
-    // Product is empty so clear locations
+  handleClearingAppointmentData(data, changedKey) {
+
+    // Product is changed so clear locations
     const shouldClearLocations = this.component.appointmentsShowLocations &&
-                                 !data[this.component.appointmentsProductForLocations] &&
-                                 data[this.component.key];
+                                 this.component.appointmentsProductForLocations === changedKey;
 
-    // Product or location is empty so clear dates
+    // Product or location is changed so clear dates
     const shouldClearDates = this.component.appointmentsShowDates &&
-                             (!data[this.component.appointmentsProductForDates]||
-                              !data[this.component.appointmentsLocationForDates]) &&
-                             data[this.component.key];
+                             (this.component.appointmentsProductForDates === changedKey||
+                              this.component.appointmentsLocationForDates === changedKey);
 
-    // Product or location or date is empty so clear times
+    // Product or location or date is changed so clear times
     const shouldClearTimes = this.component.appointmentsShowTimes &&
-                             (!data[this.component.appointmentsProductForTimes] ||
-                              !data[this.component.appointmentsLocationForTimes] ||
-                              !data[this.component.appointmentsDateForTimes]) &&
-                             data[this.component.key];
+                             (this.component.appointmentsProductForTimes === changedKey ||
+                              this.component.appointmentsLocationForTimes === changedKey ||
+                              this.component.appointmentsDateForTimes === changedKey);
 
     if (shouldClearLocations || shouldClearDates || shouldClearTimes) {
       this.setValue(this.emptyValue);
@@ -123,13 +121,14 @@ class Select extends Formio.Components.components.select {
     }
   }
 
-  fieldLogic(data, row) {
-    const changed = super.fieldLogic(data, row);
-    this.handleClearingAppointmentData(data);
+  checkData(data, flags, row) {
+    if (flags.changed) {
+      this.handleClearingAppointmentData(data, flags.changed.instance.key);
+    }
     this.handleSettingAppointmentLocations(data);
     this.handleSettingAppointmentDates(data);
     this.handleSettingAppointmentTimes(data);
-    return changed;
+    return super.checkData(data, flags, row);
   }
 }
 
