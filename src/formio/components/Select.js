@@ -90,7 +90,7 @@ class Select extends Formio.Components.components.select {
     }
   }
 
-  handleClearingAppointmentData(data, changedKey) {
+  handleClearingAppointmentData(changedKey) {
 
     // Product is changed so clear locations
     const shouldClearLocations = this.component.appointmentsShowLocations &&
@@ -123,7 +123,7 @@ class Select extends Formio.Components.components.select {
 
   checkData(data, flags, row) {
     if (flags.changed) {
-      this.handleClearingAppointmentData(data, flags.changed.instance.key);
+      this.handleClearingAppointmentData(flags.changed.instance.key);
     }
     this.handleSettingAppointmentLocations(data);
     this.handleSettingAppointmentDates(data);
