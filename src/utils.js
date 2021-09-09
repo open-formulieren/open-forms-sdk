@@ -8,6 +8,16 @@ import Image from 'components/Image';
 import Anchor from 'components/Anchor';
 
 
+export const getFormattedDateString = (dateString) => {
+  return new Date(dateString).toLocaleDateString();
+};
+
+
+export const getFormattedTimeString = (dateTimeString) => {
+  return new Date(dateTimeString).toLocaleTimeString(undefined,  {hour: '2-digit', minute:'2-digit'});
+};
+
+
 export const getBEMClassName = (base, modifiers=[]) => {
   const prefixedBase = applyPrefix(base);
   const prefixedModifiers = modifiers.map(mod => applyPrefix(`${base}--${mod}`));
@@ -53,7 +63,15 @@ export const getComponentValue = (inputValue, components, key) => {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);
-      return obj ? obj.label : inputValue;
+      if (component.appointmentsShowProducts || component.appointmentsShowLocations) {
+        return inputValue.name;
+      } else if (component.appointmentsShowDates) {
+        return getFormattedDateString(inputValue);
+      } else if (component.appointmentsShowTimes) {
+        return getFormattedTimeString(inputValue);
+      } else {
+        return obj ? obj.label : '';
+      }
     } else if (component.type === "file") {
       /*
        NOTE the structure of the data set by FormIO's file component
