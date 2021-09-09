@@ -15,6 +15,10 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
+    if (this.component.appointmentsShowProducts || this.component.appointmentsShowLocations ||
+        this.component.appointmentsShowDates || this.component.appointmentsShowTimes) {
+      this.component.disabled = true;
+    }
     if (this.component.appointmentsShowProducts) {
       this.handleSettingAppointmentProducts();
     }
@@ -33,6 +37,7 @@ class Select extends Formio.Components.components.select {
           .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.identifier, result.name));
+            this.element.lastElementChild.removeAttribute("disabled");
           })
           .catch(error => console.log(error));
     }
@@ -47,6 +52,7 @@ class Select extends Formio.Components.components.select {
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.identifier, result.name));
+            this.element.lastElementChild.removeAttribute("disabled");
         })
         .catch(error => console.log(error));
     }
@@ -61,6 +67,7 @@ class Select extends Formio.Components.components.select {
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.date, result.date));
+            this.element.lastElementChild.removeAttribute("disabled");
         })
         .catch(error => console.log(error));
     }
@@ -77,6 +84,7 @@ class Select extends Formio.Components.components.select {
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.time, result.time.split("T")[1].split('+')[0]));
+            this.element.lastElementChild.removeAttribute("disabled");
         })
         .catch(error => console.log(error));
     }
