@@ -45,8 +45,8 @@ class Select extends Formio.Components.components.select {
 
   handleSettingAppointmentLocations(data) {
     if (this.component.appointmentsShowLocations &&
-        data[this.component.appointmentsProductForLocations] &&
-        !data[this.component.key]) {
+        this.selectOptions.length === 0 &&
+        data[this.component.appointmentsProductForLocations]) {
       get(`${this.options.baseUrl}appointments/locations`,
         {'product_id': data[this.component.appointmentsProductForLocations]})
         .then(results => {
@@ -59,8 +59,10 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingAppointmentDates(data) {
-    if (this.component.appointmentsShowDates && data[this.component.appointmentsProductForDates]
-        && data[this.component.appointmentsLocationForDates] && !data[this.component.key]) {
+    if (this.component.appointmentsShowDates &&
+        this.selectOptions.length === 0 &&
+        [this.component.appointmentsProductForDates] &&
+        data[this.component.appointmentsLocationForDates]) {
       get(`${this.options.baseUrl}appointments/dates`,
         {'product_id': data[this.component.appointmentsProductForDates],
          'location_id': data[this.component.appointmentsLocationForDates]})
@@ -74,9 +76,11 @@ class Select extends Formio.Components.components.select {
   }
 
   handleSettingAppointmentTimes(data) {
-    if (this.component.appointmentsShowTimes && data[this.component.appointmentsProductForTimes] &&
-        data[this.component.appointmentsLocationForTimes] && data[this.component.appointmentsDateForTimes] &&
-        !data[this.component.key]) {
+    if (this.component.appointmentsShowTimes &&
+        this.selectOptions.length === 0 &&
+        data[this.component.appointmentsProductForTimes] &&
+        data[this.component.appointmentsLocationForTimes] &&
+        data[this.component.appointmentsDateForTimes]) {
       get(`${this.options.baseUrl}appointments/times`,
         {'product_id': data[this.component.appointmentsProductForTimes],
          'location_id': data[this.component.appointmentsLocationForTimes],
