@@ -61,7 +61,7 @@ class Select extends Formio.Components.components.select {
   handleSettingAppointmentDates(data) {
     if (this.component.appointmentsShowDates &&
         this.selectOptions.length === 0 &&
-        [this.component.appointmentsProductForDates] &&
+        data[this.component.appointmentsProductForDates] &&
         data[this.component.appointmentsLocationForDates]) {
       get(`${this.options.baseUrl}appointments/dates`,
         {'product_id': data[this.component.appointmentsProductForDates],
