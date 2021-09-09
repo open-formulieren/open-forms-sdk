@@ -96,6 +96,8 @@ class Select extends Formio.Components.components.select {
         !data[this.component.appointmentsProductForLocations] &&
         data[this.component.key]) {
       this.setValue(this.emptyValue);
+      this.setItems([]);
+      this.element.lastElementChild.setAttribute('disabled', 'disabled');
     }
     // Product or location is empty so clear dates
     if (this.component.appointmentsShowDates &&
@@ -103,6 +105,8 @@ class Select extends Formio.Components.components.select {
          !data[this.component.appointmentsLocationForDates]) &&
         data[this.component.key]) {
       this.setValue(this.emptyValue);
+      this.setItems([]);
+      this.element.lastElementChild.setAttribute('disabled', 'disabled');
     }
     // Product or location or date is empty so clear times
     if (this.component.appointmentsShowTimes &&
@@ -111,6 +115,8 @@ class Select extends Formio.Components.components.select {
          !data[this.component.appointmentsDateForTimes]) &&
         data[this.component.key]) {
       this.setValue(this.emptyValue);
+      this.setItems([]);
+      this.element.lastElementChild.setAttribute('disabled', 'disabled');
     }
   }
 
