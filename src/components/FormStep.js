@@ -8,9 +8,8 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import useAsync from 'react-use/esm/useAsync';
 import useDebounce from 'react-use/esm/useDebounce';
-import { useImmerReducer } from 'use-immer';
 
-import { get, post, put } from 'api';
+import { post, put } from 'api';
 
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -23,38 +22,6 @@ import LogoutButton from 'components/LogoutButton';
 
 const STEP_LOGIC_DEBOUNCE_MS = 300;
 
-const initialState = {
-  configuration: null,
-  data: null,
-  canSubmit: true,
-};
-
-const reducer = (draft, action) => {
-  switch (action.type) {
-    case 'STEP_LOADED': {
-      const {data, formStep: {configuration}, canSubmit} = action.payload;
-      draft.configuration = configuration;
-      draft.data = data;
-      draft.canSubmit = canSubmit;
-      break;
-    }
-    case 'FORM_CHANGED': {
-      draft.data = action.payload;
-      break;
-    }
-    case 'BLOCK_SUBMIT': {
-      draft.canSubmit = false;
-      break;
-    }
-    case 'ENABLE_SUBMIT': {
-      draft.canSubmit = true;
-      break;
-    }
-    default: {
-      throw new Error(`Unknown action ${action.type}`);
-    }
-  }
-};
 
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
@@ -70,11 +37,19 @@ const doLogicCheck = async (stepUrl, data) => {
   return stepDetailData.data;
 };
 
-const FormStep = ({ form, submission, onStepSubmitted, onLogout, onReloadSubmission }) => {
+const FormStep = ({
+    form,
+    submission,
+    submissionStepData,
+    onLoadFormStep,
+    onLogicCheck,
+    onStepSubmitted,
+    onLogout,
+    onSubmissionDataChanged,
+}) => {
   const config = useContext(ConfigContext);
   // component state
   const formRef = useRef(null);
-  const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   // react router hooks
   const history = useHistory();
@@ -82,41 +57,15 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout, onReloadSubmiss
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
-  const step = submission.steps.find(s => s.formStep === formStep.url);
+  const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
-  const {loading} = useAsync(
-    async () => {
-      const stepDetail = await get(step.url);
-      dispatch({
-        type: 'STEP_LOADED',
-        payload: stepDetail,
-      });
-    },
-    [step.url]
-  );
+  const {loading} = useAsync(() => onLoadFormStep(submissionStep.url), [submissionStep.url]);
 
   useDebounce(
-    async () => {
-      const data = state.data;
-      if (!data) return;
-
-      dispatch({type: 'BLOCK_SUBMIT'});
-      const submissionData = await doLogicCheck(step.url, data);
-      onReloadSubmission(submissionData.submission);
-
-      // TODO: check custom attributes for submission button control
-      const formInstance = formRef.current.instance.instance;
-
-      // we can't just dispatch this, because Formio keeps references to DOM nodes
-      // which expire when the component re-renders, and that gives React
-      // unstable_flushDiscreteUpdates warnings. However, we can update the form
-      // definition by using the ref to the underlying Formio instance.
-      formInstance.setForm(submissionData.step.formStep.configuration);
-      dispatch({type: 'ENABLE_SUBMIT'});
-    },
+    async () => onLogicCheck(formRef, submissionStep.url, submissionStepData.data),
     STEP_LOGIC_DEBOUNCE_MS,
-    [state.data]
+    [submissionStepData.data]
   );
 
   const onFormIOSubmit = async ({ data }) => {
@@ -124,10 +73,9 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout, onReloadSubmiss
       throw new Error("There is no active submission!");
     }
 
-    // submit the step data
-    await submitStepData(step.url, data);
+    await submitStepData(submissionStep.url, data);
     // This will reload the submission
-    await doLogicCheck(step.url, data);
+    await doLogicCheck(submissionStep.url, data);
     onStepSubmitted(formStep);
   };
 
@@ -171,13 +119,13 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout, onReloadSubmiss
     if ( !(flags && flags.changes && flags.changes.length) ) return;
     if ( !modifiedByHuman ) return;
     const data = {...changed.data};
-    dispatch({type: 'FORM_CHANGED', payload: data});
+    onSubmissionDataChanged(data);
   };
 
-  const {data, configuration, canSubmit} = state;
+  const {data, configuration, canSubmit} = submissionStepData;
 
   return (
-    <Card title={step.name}>
+    <Card title={submissionStep.name}>
       { loading ? <Loader modifiers={['centered']} /> : null }
 
       {
@@ -228,4 +176,4 @@ FormStep.propTypes = {
 };
 
 
-export default FormStep;
+export { FormStep, doLogicCheck };
