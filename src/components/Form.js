@@ -78,13 +78,6 @@ const reducer = (draft, action) => {
       draft.submissionStep.canSubmit = canSubmit;
       break;
     }
-    case 'UPDATE_SUBMISSION_STEP': {
-      const {formStep: {configuration}, canSubmit} = action.payload;
-      // This is the context aware configuration
-      draft.submissionStep.configuration = configuration;
-      draft.submissionStep.canSubmit = canSubmit;
-      break;
-    }
     case 'BLOCK_CURRENT_STEP_SUBMIT': {
       draft.submissionStep.canSubmit = false;
       break;
@@ -219,9 +212,8 @@ const reducer = (draft, action) => {
       });
 
       // Update the current submission step. This updates things like 'canSubmit'.
-      // Note: the step data returned from the logic check is empty.
       dispatch({
-        type: 'UPDATE_SUBMISSION_STEP',
+        type: 'SUBMISSION_STEP_LOADED',
         payload: checkedSubmission.step,
       });
   };

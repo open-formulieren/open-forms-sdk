@@ -5,6 +5,8 @@
 import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
+import usePrevious from 'react-use/esm/usePrevious';
+import isEqual from 'lodash/isEqual';
 
 import useAsync from 'react-use/esm/useAsync';
 import useDebounce from 'react-use/esm/useDebounce';
@@ -19,6 +21,7 @@ import Loader from 'components/Loader';
 import { ConfigContext } from 'Context';
 import Types from 'types';
 import LogoutButton from 'components/LogoutButton';
+
 
 const STEP_LOGIC_DEBOUNCE_MS = 300;
 
@@ -62,8 +65,16 @@ const FormStep = ({
   // fetch the form step configuration
   const {loading} = useAsync(() => onLoadFormStep(submissionStep.url), [submissionStep.url]);
 
+  const checkLogic = async (previousData) => {
+    if (previousData && isEqual(previousData, submissionStepData.data)) return;
+
+    await onLogicCheck(formRef, submissionStep.url, submissionStepData.data);
+  }
+
+  const previousData = usePrevious(submissionStepData.data);
+
   useDebounce(
-    async () => onLogicCheck(formRef, submissionStep.url, submissionStepData.data),
+    () => checkLogic(previousData),
     STEP_LOGIC_DEBOUNCE_MS,
     [submissionStepData.data]
   );
