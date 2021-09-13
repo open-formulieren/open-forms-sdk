@@ -118,7 +118,7 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
   const {data, configuration} = state;
 
   return (
-    <Card title={step.name}>
+    <Card title={step.publicName}>
       { loading ? <Loader modifiers={['centered']} /> : null }
 
       {

@@ -219,7 +219,7 @@ const reducer = (draft, action) => {
           ? (
             <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
               <ProgressIndicator
-                title={form.name}
+                title={form.publicName}
                 steps={form.steps}
                 submission={state.submission}
               />

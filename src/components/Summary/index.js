@@ -21,7 +21,7 @@ const loadStepsData = async (submission) => {
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
     return {
       submissionStep,
-      title: formDefinitionDetail.name,
+      title: formDefinitionDetail.publicName,
       data: submissionStepDetail.data,
       configuration: submissionStepDetail.formStep.configuration
     };

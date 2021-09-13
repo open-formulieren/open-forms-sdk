@@ -95,21 +95,21 @@ const FormStart = ({ form, onFormStart }) => {
   }, [doStart, outagePluginId, hasAuthErrors, onFormStart]);
 
   if (form.maintenanceMode) {
-    return <MaintenanceMode title={form.name} />;
+    return <MaintenanceMode title={form.publicName} />;
   }
 
   if (outagePluginId) {
     const loginOption = form.loginOptions.find(option => option.identifier === outagePluginId);
     if (!loginOption) throw new Error('Unknown login plugin identifier');
     return (
-      <Card title={`Probleem - ${form.name}`}>
+      <Card title={`Probleem - ${form.publicName}`}>
         <AuthenticationOutage loginOption={loginOption} />
       </Card>
     );
   }
 
   return (
-    <Card title={form.name}>
+    <Card title={form.publicName}>
 
       { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
 
