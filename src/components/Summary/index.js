@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
 import { useHistory } from 'react-router-dom';
+import {useImmerReducer} from 'use-immer';
 
 import { get, post } from 'api';
 import Button from 'components/Button';
@@ -12,6 +13,33 @@ import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import { flattenComponents } from 'utils';
 import LogoutButton from 'components/LogoutButton';
+import Checkbox from '../Checkbox';
+
+const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info/';
+
+const initialState = {
+  privacy: {
+    requiresPrivacyConsent: true,
+    privacyLabel: '',
+    policyAccepted: false,
+  },
+};
+
+const reducer = (draft, action) => {
+  switch (action.type) {
+    case 'PRIVACY_POLICY_LOADED': {
+      draft.privacy = {...draft.privacy, ...action.payload};
+      break;
+    }
+    case 'PRIVACY_POLICY_TOGGLE': {
+      draft.privacy.policyAccepted = !draft.privacy.policyAccepted;
+      break;
+    }
+    default: {
+      throw new Error(`Unknown action ${action.type}`);
+    }
+  }
+};
 
 
 const loadStepsData = async (submission) => {
@@ -30,7 +58,6 @@ const loadStepsData = async (submission) => {
   return stepsData;
 };
 
-
 const completeSubmission = async (submission) => {
     const response = await post(`${submission.url}/_complete`);
     if (!response.ok) {
@@ -40,11 +67,30 @@ const completeSubmission = async (submission) => {
     }
 };
 
+const getPrivacyPolicyInfo = async (origin) => {
+  const privacyPolicyUrl = new URL(PRIVACY_POLICY_ENDPOINT, origin);
+  return await get(privacyPolicyUrl);
+};
+
 
 const Summary = ({ form, submission, onConfirm, onLogout }) => {
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
+
   const history = useHistory();
   const {loading, value: submissionSteps, error} = useAsync(
-    async () => loadStepsData(submission),
+    async () => {
+      const submissionUrl = new URL(submission.url);
+
+      const promises = [
+        loadStepsData(submission),
+        getPrivacyPolicyInfo(submissionUrl.origin),
+      ];
+
+      const [submissionSteps, privacyInfo] = await Promise.all(promises);
+      dispatch({type: 'PRIVACY_POLICY_LOADED', payload: privacyInfo});
+
+      return submissionSteps;
+    },
     [submission]
   );
 
@@ -54,6 +100,8 @@ const Summary = ({ form, submission, onConfirm, onLogout }) => {
   if (error) {
     console.error(error);
   }
+
+  const submitDisabled = loading || (state.privacy.requiresPrivacyConsent && !state.privacy.policyAccepted);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -73,6 +121,15 @@ const Summary = ({ form, submission, onConfirm, onLogout }) => {
             editStepText={form.literals.changeText.resolved}
           />
         ))}
+        {
+          !loading && state.privacy.requiresPrivacyConsent ?
+            <Checkbox
+              value={state.privacy.policyAccepted}
+              label={state.privacy.privacyLabel}
+              onChange={(e) => dispatch({type: 'PRIVACY_POLICY_TOGGLE'})}
+            />
+          : null
+        }
         <Toolbar modifiers={['mobile-reverse-order']}>
           <ToolbarList>
             <Button
@@ -86,7 +143,7 @@ const Summary = ({ form, submission, onConfirm, onLogout }) => {
             >{form.literals.previousText.resolved}</Button>
           </ToolbarList>
           <ToolbarList>
-            <Button type="submit" variant="primary" name="confirm" disabled={loading}>
+            <Button type="submit" variant="primary" name="confirm" disabled={submitDisabled}>
               {form.literals.confirmText.resolved}
             </Button>
           </ToolbarList>
