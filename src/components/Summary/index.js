@@ -13,7 +13,7 @@ import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import { flattenComponents } from 'utils';
 import LogoutButton from 'components/LogoutButton';
-import Checkbox from '../Checkbox';
+import PrivacyCheckbox from '../PrivacyCheckbox';
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info/';
 
@@ -123,7 +123,7 @@ const Summary = ({ form, submission, onConfirm, onLogout }) => {
         ))}
         {
           !loading && state.privacy.requiresPrivacyConsent ?
-            <Checkbox
+            <PrivacyCheckbox
               value={state.privacy.policyAccepted}
               label={state.privacy.privacyLabel}
               onChange={(e) => dispatch({type: 'PRIVACY_POLICY_TOGGLE'})}
