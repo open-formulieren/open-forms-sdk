@@ -8,13 +8,13 @@ import Image from 'components/Image';
 import Anchor from 'components/Anchor';
 
 
-export const getFormattedDateString = (dateString) => {
-  return new Date(dateString).toLocaleDateString();
+export const getFormattedDateString = (intl, dateString) => {
+  return intl.formatDate(new Date(dateString));
 };
 
 
-export const getFormattedTimeString = (dateTimeString) => {
-  return new Date(dateTimeString).toLocaleTimeString(undefined,  {hour: '2-digit', minute:'2-digit'});
+export const getFormattedTimeString = (intl, dateTimeString) => {
+  return intl.formatTime(new Date(dateTimeString));
 };
 
 
@@ -48,7 +48,7 @@ export const getComponentLabel = (components, key) => {
 };
 
 
-export const getComponentValue = (inputValue, components, key) => {
+export const getComponentValue = (inputValue, components, key, intl) => {
     let component = components.find(component => component.key === key);
 
     if (component === undefined) {
@@ -66,9 +66,9 @@ export const getComponentValue = (inputValue, components, key) => {
       if (component.appointmentsShowProducts || component.appointmentsShowLocations) {
         return inputValue.name;
       } else if (component.appointmentsShowDates) {
-        return getFormattedDateString(inputValue);
+        return getFormattedDateString(intl, inputValue);
       } else if (component.appointmentsShowTimes) {
-        return getFormattedTimeString(inputValue);
+        return getFormattedTimeString(intl, inputValue);
       } else {
         return obj ? obj.label : '';
       }

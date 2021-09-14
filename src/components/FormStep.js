@@ -4,6 +4,7 @@
 
 import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
+import {useIntl} from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
 import usePrevious from 'react-use/esm/usePrevious';
 import isEqual from 'lodash/isEqual';
@@ -57,6 +58,8 @@ const FormStep = ({
   // react router hooks
   const history = useHistory();
   const { step: slug } = useParams();
+
+  const intl = useIntl();
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
@@ -148,7 +151,7 @@ const FormStep = ({
               submission={{data: data}}
               onChange={onFormIOChange}
               onSubmit={onFormIOSubmit}
-              options={{noAlerts: true, baseUrl: config.baseUrl}}
+              options={{noAlerts: true, baseUrl: config.baseUrl, intl}}
             />
             <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
               <ToolbarList>

@@ -69,7 +69,7 @@ class Select extends Formio.Components.components.select {
          'location_id': data[this.component.appointmentsLocationForDates]})
         .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.date, getFormattedDateString(result.date)));
+            results.map(result => this.addOption(result.date, getFormattedDateString(this.options.intl, result.date)));
             this.element.lastElementChild.removeAttribute("disabled");
         })
         .catch(error => console.log(error));
@@ -88,7 +88,7 @@ class Select extends Formio.Components.components.select {
          'date': data[this.component.appointmentsDateForTimes]})
         .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.time, getFormattedTimeString(result.time)));
+            results.map(result => this.addOption(result.time, getFormattedTimeString(this.options.intl, result.time)));
             this.element.lastElementChild.removeAttribute("disabled");
         })
         .catch(error => console.log(error));
