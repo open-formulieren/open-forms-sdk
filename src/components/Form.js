@@ -9,11 +9,11 @@ import {
 
 import { ConfigContext } from 'Context';
 
-import {destroy, get, post} from 'api';
+import {destroy, post, get} from 'api';
 import usePageViews from 'hooks/usePageViews';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
-import FormStep from 'components/FormStep';
+import {FormStep, doLogicCheck} from 'components/FormStep';
 import ProgressIndicator from 'components/ProgressIndicator';
 import { Layout, LayoutRow, LayoutColumn } from 'components/Layout';
 import RequireSubmission from 'components/RequireSubmission';
@@ -42,6 +42,11 @@ const initialState = {
     statusUrl: '',
   },
   confirmationPageContent: 'Your submission was received.',
+  submissionStep: {
+    configuration: null,
+    data: null,
+    canSubmit: true,
+  },
 };
 
 
@@ -64,6 +69,22 @@ const reducer = (draft, action) => {
         },
         confirmationPageContent: action.payload.confirmationPageContent,
       };
+    }
+    case 'SUBMISSION_STEP_LOADED': {
+      const {data, formStep: {configuration}, canSubmit} = action.payload;
+      // This is the context aware configuration
+      draft.submissionStep.configuration = configuration;
+      draft.submissionStep.data = data;
+      draft.submissionStep.canSubmit = canSubmit;
+      break;
+    }
+    case 'BLOCK_CURRENT_STEP_SUBMIT': {
+      draft.submissionStep.canSubmit = false;
+      break;
+    }
+    case 'SUBMISSION_DATA_CHANGED': {
+      draft.submissionStep.data = action.payload;
+      break;
     }
     default: {
       throw new Error(`Unknown action ${action.type}`);
@@ -121,19 +142,11 @@ const reducer = (draft, action) => {
     history.push(firstStepRoute);
   };
 
-
   const onStepSubmitted = async (formStep) => {
     const stepIndex = form.steps.indexOf(formStep);
     // TODO: there *may* be optional steps, so completion/summary can already get
     // triggered earlier, potentially. This will need to be incorporated later.
     const nextStep = form.steps[stepIndex + 1]; // will be undefined if it's the last step
-
-    // refresh the submission from the backend
-    const submission = await get(state.submission.url);
-    dispatch({
-      type: 'SUBMISSION_LOADED',
-      payload: submission,
-    });
 
     const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
     history.push(nextUrl);
@@ -166,6 +179,47 @@ const reducer = (draft, action) => {
     history.push('/');
     // TODO: replace with a proper reset of the state instead of a page reload.
     window.location.reload();
+  };
+
+  const onLoadFormStep = async (submissionStepUrl) => {
+    const stepDetail = await get(submissionStepUrl);
+    dispatch({
+      type: 'SUBMISSION_STEP_LOADED',
+      payload: stepDetail,
+    });
+  };
+
+  const onLogicCheck = async (formRef, submissionStepUrl, submissionData) => {
+    if (!submissionData) return;
+
+      dispatch({type: 'BLOCK_CURRENT_STEP_SUBMIT'});
+      const checkedSubmission = await doLogicCheck(submissionStepUrl, submissionData);
+
+      // TODO: check custom attributes for submission button control
+      const formInstance = formRef.current.instance.instance;
+
+      // we can't just dispatch this, because Formio keeps references to DOM nodes
+      // which expire when the component re-renders, and that gives React
+      // unstable_flushDiscreteUpdates warnings. However, we can update the form
+      // definition by using the ref to the underlying Formio instance.
+      formInstance.setForm(checkedSubmission.step.formStep.configuration);
+
+      // Reload the submission. This should update other steps (for example if they
+      // are not applicable.
+      dispatch({
+        type: 'SUBMISSION_LOADED',
+        payload: checkedSubmission.submission,
+      });
+
+      // Update the current submission step. This updates things like 'canSubmit'.
+      dispatch({
+        type: 'SUBMISSION_STEP_LOADED',
+        payload: checkedSubmission.step,
+      });
+  };
+
+  const onSubmissionDataChanged = (data) => {
+    dispatch({type: 'SUBMISSION_DATA_CHANGED', payload: data});
   };
 
   // render the form step if there's an active submission (and no summary)
@@ -204,8 +258,12 @@ const reducer = (draft, action) => {
               <RequireSubmission
                 submission={state.submission}
                 form={form}
+                submissionStepData={state.submissionStep}
                 onStepSubmitted={onStepSubmitted}
                 onLogout={onLogout}
+                onLoadFormStep={onLoadFormStep}
+                onLogicCheck={onLogicCheck}
+                onSubmissionDataChanged={onSubmissionDataChanged}
                 component={FormStep}
               />
             )} />

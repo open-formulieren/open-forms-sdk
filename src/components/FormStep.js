@@ -5,11 +5,13 @@
 import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
+import usePrevious from 'react-use/esm/usePrevious';
+import isEqual from 'lodash/isEqual';
 
 import useAsync from 'react-use/esm/useAsync';
-import { useImmerReducer } from 'use-immer';
+import useDebounce from 'react-use/esm/useDebounce';
 
-import { get, put } from 'api';
+import { post, put } from 'api';
 
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -20,35 +22,37 @@ import { ConfigContext } from 'Context';
 import Types from 'types';
 import LogoutButton from 'components/LogoutButton';
 
-const initialState = {
-  configuration: null,
-  data: null,
-};
 
-const reducer = (draft, action) => {
-  switch (action.type) {
-    case 'STEP_LOADED': {
-      const {data, formStep: {configuration}} = action.payload;
-      draft.configuration = configuration;
-      draft.data = data;
-      break;
-    }
-    default: {
-      throw new Error(`Unknown action ${action.type}`);
-    }
-  }
-};
+const STEP_LOGIC_DEBOUNCE_MS = 300;
+
 
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
   return stepDataResponse.data;
 };
 
-const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
+const doLogicCheck = async (stepUrl, data) => {
+  const url = `${stepUrl}/_check_logic`;
+  const stepDetailData = await post(url, {data});
+  if (!stepDetailData.ok) {
+    throw new Error('Invalid response'); // TODO -> proper error & use ErrorBoundary
+  }
+  return stepDetailData.data;
+};
+
+const FormStep = ({
+    form,
+    submission,
+    submissionStepData,
+    onLoadFormStep,
+    onLogicCheck,
+    onStepSubmitted,
+    onLogout,
+    onSubmissionDataChanged,
+}) => {
   const config = useContext(ConfigContext);
   // component state
   const formRef = useRef(null);
-  const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   // react router hooks
   const history = useHistory();
@@ -56,18 +60,23 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
-  const step = submission.steps.find(s => s.formStep === formStep.url);
+  const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
-  const {loading} = useAsync(
-    async () => {
-      const stepDetail = await get(step.url);
-      dispatch({
-        type: 'STEP_LOADED',
-        payload: stepDetail,
-      });
-    },
-    [step.url]
+  const {loading} = useAsync(() => onLoadFormStep(submissionStep.url), [submissionStep.url]);
+
+  const checkLogic = async (previousData) => {
+    if (previousData && isEqual(previousData, submissionStepData.data)) return;
+
+    await onLogicCheck(formRef, submissionStep.url, submissionStepData.data);
+  }
+
+  const previousData = usePrevious(submissionStepData.data);
+
+  useDebounce(
+    () => checkLogic(previousData),
+    STEP_LOGIC_DEBOUNCE_MS,
+    [submissionStepData.data]
   );
 
   const onFormIOSubmit = async ({ data }) => {
@@ -75,8 +84,9 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
       throw new Error("There is no active submission!");
     }
 
-    // submit the step data
-    await submitStepData(step.url, data);
+    await submitStepData(submissionStep.url, data);
+    // This will reload the submission
+    await doLogicCheck(submissionStep.url, data);
     onStepSubmitted(formStep);
   };
 
@@ -104,7 +114,6 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    console.log('save form button clicked');
   };
 
   const onPrevPage = (event) => {
@@ -115,10 +124,19 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
     history.push(navigateTo);
   };
 
-  const {data, configuration} = state;
+  // See https://help.form.io/developers/form-renderer#form-events
+  const onFormIOChange = (changed, flags, modifiedByHuman) => {
+    // if there are no changes, do nothing
+    if ( !(flags && flags.changes && flags.changes.length) ) return;
+    if ( !modifiedByHuman ) return;
+    const data = {...changed.data};
+    onSubmissionDataChanged(data);
+  };
+
+  const {data, configuration, canSubmit} = submissionStepData;
 
   return (
-    <Card title={step.name}>
+    <Card title={submissionStep.name}>
       { loading ? <Loader modifiers={['centered']} /> : null }
 
       {
@@ -128,6 +146,7 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
               ref={formRef}
               form={configuration}
               submission={{data: data}}
+              onChange={onFormIOChange}
               onSubmit={onFormIOSubmit}
               options={{noAlerts: true, baseUrl: config.baseUrl}}
             />
@@ -140,8 +159,16 @@ const FormStep = ({ form, submission, onStepSubmitted, onLogout }) => {
                 >{formStep.literals.previousText.resolved}</Button>
               </ToolbarList>
               <ToolbarList>
-                <Button type="button" variant="secondary" name="save" onClick={onFormSave} disabled>{formStep.literals.saveText.resolved}</Button>
-                <Button type="submit" variant="primary" name="next">{formStep.literals.nextText.resolved}</Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  name="save" onClick={onFormSave} disabled>{formStep.literals.saveText.resolved}</Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  name="next"
+                  disabled={!canSubmit}
+                >{formStep.literals.nextText.resolved}</Button>
               </ToolbarList>
             </Toolbar>
             {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
@@ -160,4 +187,4 @@ FormStep.propTypes = {
 };
 
 
-export default FormStep;
+export { FormStep, doLogicCheck };
