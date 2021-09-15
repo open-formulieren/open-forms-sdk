@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
@@ -11,25 +12,19 @@ import usePoll from 'hooks/usePoll';
 
 /**
  * Renders the confirmation page displayed after submitting a form.
- * @param reportDownloadUrl - The URL where the PDF of the submission report can be downloaded
- * @param reportStatusUrl - The URL where to check if the generation of the report is complete
- * @param content - Content to display in the confirmation page
+ * @param statusUrl - The URL where to check if the processing of the submission is complete
  */
-const SubmissionConfirmation = ({
-  reportDownloadUrl,
-  reportStatusUrl,
-  content,
-}) => {
+const SubmissionConfirmation = ({statusUrl}) => {
+  const [statusResponse, setStatusResponse] = useState(null);
+
   const {loading, error} = usePoll(
-    reportStatusUrl,
-    5000,
-    response => {
+    statusUrl,
+    1000,
+    (response) => {
+      setStatusResponse(response);
       switch (response.status) {
-        case 'SUCCESS': {
+        case 'done': {
           return true;
-        }
-        case 'FAILURE': {
-          throw new Error('Failure while generating the submission report');
         }
         default: {
           // nothing, it's pending/started or retrying
@@ -38,6 +33,34 @@ const SubmissionConfirmation = ({
     }
   );
 
+  if (error) {
+    console.error(error);
+  }
+
+  if (loading) {
+    return (
+      <Card title={<FormattedMessage
+                    id="SubmissionConfirmation.pending.title"
+                    description="Checking background processing status title"
+                    defaultMessage="Processing..." />}>
+
+        <Loader modifiers={['centered']} />
+        <Body>
+          <FormattedMessage
+            id="SubmissionConfirmation.pending.body"
+            description="Checking background processing status body"
+            defaultMessage="Please hold on while we're processing your submission."
+          />
+        </Body>
+
+      </Card>
+    );
+  }
+
+  console.log(statusResponse);
+
+  return null;
+  /*
   return (
     <Card title="Bevestiging">
         <Body component="div" dangerouslySetInnerHTML={{__html: content}} />
@@ -64,12 +87,11 @@ const SubmissionConfirmation = ({
         }
     </Card>
   );
+  */
 }
 
 SubmissionConfirmation.propTypes = {
-  reportDownloadUrl: PropTypes.string.isRequired,
-  reportStatusUrl: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  statusUrl: PropTypes.string.isRequired,
 }
 
 export default SubmissionConfirmation;

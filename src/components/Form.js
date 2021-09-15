@@ -37,16 +37,13 @@ const createSubmission = async (config, form) => {
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
-  submissionReport: {
-    url: '',
-    statusUrl: '',
-  },
-  confirmationPageContent: 'Your submission was received.',
   submissionStep: {
     configuration: null,
     data: null,
     canSubmit: true,
   },
+  submittedSubmission: null,
+  processingStatusUrl: '',
 };
 
 
@@ -63,11 +60,8 @@ const reducer = (draft, action) => {
       return {
         ...initialState,
         config: draft.config,
-        submissionReport: {
-          url: action.payload.downloadUrl,
-          statusUrl: action.payload.reportStatusUrl,
-        },
-        confirmationPageContent: action.payload.confirmationPageContent,
+        submittedSubmission: action.payload.submission,
+        processingStatusUrl: action.payload.processingStatusUrl,
       };
     }
     case 'SUBMISSION_STEP_LOADED': {
@@ -152,13 +146,12 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
-  const onSubmitForm = (downloadUrl, reportStatusUrl, confirmationPageContent) => {
+  const onSubmitForm = (processingStatusUrl) => {
     dispatch({
       type: 'SUBMITTED',
       payload: {
-        downloadUrl: downloadUrl,
-        reportStatusUrl: reportStatusUrl,
-        confirmationPageContent: confirmationPageContent,
+        submission: state.submission,
+        processingStatusUrl,
       }
     });
     history.push('/bevestiging');
@@ -247,11 +240,10 @@ const reducer = (draft, action) => {
             </Route>
 
             <Route exact path="/bevestiging">
-              <SubmissionConfirmation
-                  reportDownloadUrl={state.submissionReport.url}
-                  reportStatusUrl={state.submissionReport.statusUrl}
-                  content={state.confirmationPageContent}
-              />
+              <RequireSubmission
+                submission={state.submittedSubmission}
+                statusUrl={state.processingStatusUrl}
+                component={SubmissionConfirmation} />
             </Route>
 
             <Route path="/stap/:step" render={() => (
