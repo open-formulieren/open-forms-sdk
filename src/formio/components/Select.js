@@ -47,9 +47,9 @@ class Select extends Formio.Components.components.select {
   handleSettingAppointmentLocations(data) {
     if (this.component.appointmentsShowLocations &&
         this.selectOptions.length === 0 &&
-        data[this.component.appointmentsProductForLocations]) {
+        data[this.component.appointmentsProductComponent]) {
       get(`${this.options.baseUrl}appointments/locations`,
-        {'product_id': data[this.component.appointmentsProductForLocations]})
+        {'product_id': data[this.component.appointmentsProductComponent]})
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.identifier, result.name));
@@ -62,11 +62,11 @@ class Select extends Formio.Components.components.select {
   handleSettingAppointmentDates(data) {
     if (this.component.appointmentsShowDates &&
         this.selectOptions.length === 0 &&
-        data[this.component.appointmentsProductForDates] &&
-        data[this.component.appointmentsLocationForDates]) {
+        data[this.component.appointmentsProductComponent] &&
+        data[this.component.appointmentsLocationComponent]) {
       get(`${this.options.baseUrl}appointments/dates`,
-        {'product_id': data[this.component.appointmentsProductForDates],
-         'location_id': data[this.component.appointmentsLocationForDates]})
+        {'product_id': data[this.component.appointmentsProductComponent],
+         'location_id': data[this.component.appointmentsLocationComponent]})
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.date, getFormattedDateString(this.options.intl, result.date)));
@@ -79,13 +79,13 @@ class Select extends Formio.Components.components.select {
   handleSettingAppointmentTimes(data) {
     if (this.component.appointmentsShowTimes &&
         this.selectOptions.length === 0 &&
-        data[this.component.appointmentsProductForTimes] &&
-        data[this.component.appointmentsLocationForTimes] &&
-        data[this.component.appointmentsDateForTimes]) {
+        data[this.component.appointmentsProductComponent] &&
+        data[this.component.appointmentsLocationComponent] &&
+        data[this.component.appointmentsDateComponent]) {
       get(`${this.options.baseUrl}appointments/times`,
-        {'product_id': data[this.component.appointmentsProductForTimes],
-         'location_id': data[this.component.appointmentsLocationForTimes],
-         'date': data[this.component.appointmentsDateForTimes]})
+        {'product_id': data[this.component.appointmentsProductComponent],
+         'location_id': data[this.component.appointmentsLocationComponent],
+         'date': data[this.component.appointmentsDateComponent]})
         .then(results => {
             this.setItems([]);
             results.map(result => this.addOption(result.time, getFormattedTimeString(this.options.intl, result.time)));
