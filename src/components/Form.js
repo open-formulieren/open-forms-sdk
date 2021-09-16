@@ -44,6 +44,7 @@ const initialState = {
   },
   submittedSubmission: null,
   processingStatusUrl: '',
+  processingError: '',
 };
 
 
@@ -78,6 +79,13 @@ const reducer = (draft, action) => {
     }
     case 'SUBMISSION_DATA_CHANGED': {
       draft.submissionStep.data = action.payload;
+      break;
+    }
+    case 'PROCESSING_FAILED': {
+      // set the error message in the state
+      draft.processingError = action.payload;
+      // put the submission back in the state as well, so we can re-submit
+      draft.submission = draft.submittedSubmission;
       break;
     }
     default: {
@@ -215,6 +223,11 @@ const reducer = (draft, action) => {
     dispatch({type: 'SUBMISSION_DATA_CHANGED', payload: data});
   };
 
+  const onProcessingFailure = (errorMessage) => {
+    dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
+    history.push('/overzicht');
+  };
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -234,6 +247,7 @@ const reducer = (draft, action) => {
               <RequireSubmission
                 submission={state.submission}
                 form={form}
+                processingError={state.processingError}
                 onConfirm={onSubmitForm}
                 onLogout={onLogout}
                 component={Summary} />
@@ -243,6 +257,7 @@ const reducer = (draft, action) => {
               <RequireSubmission
                 submission={state.submittedSubmission}
                 statusUrl={state.processingStatusUrl}
+                onFailure={onProcessingFailure}
                 component={SubmissionConfirmation} />
             </Route>
 
