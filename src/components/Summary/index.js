@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
 import { useHistory } from 'react-router-dom';
@@ -15,14 +15,19 @@ import PrivacyCheckbox from 'components/PrivacyCheckbox';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import { flattenComponents } from 'utils';
+import {CAPTCHA_ASSESSMENT_ENDPOINT, PRIVACY_POLICY_ENDPOINT} from '../../constants';
+import {ConfigContext} from '../../Context';
 
-const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
 
 const initialState = {
   privacy: {
     requiresPrivacyConsent: true,
     privacyLabel: '',
     policyAccepted: false,
+  },
+  reCaptcha: {
+    isReady: false,
+    errors: ''
   },
 };
 
@@ -34,6 +39,14 @@ const reducer = (draft, action) => {
     }
     case 'PRIVACY_POLICY_TOGGLE': {
       draft.privacy.policyAccepted = !draft.privacy.policyAccepted;
+      break;
+    }
+    case 'RECAPTCHA_READY': {
+      draft.reCaptcha.isReady = true;
+      break;
+    }
+    case 'RECAPTCHA_ERROR': {
+      draft.reCaptcha.error = action.payload;
       break;
     }
     default: {
@@ -77,13 +90,18 @@ const getPrivacyPolicyInfo = async (origin) => {
 const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const history = useHistory();
+  const config = useContext(ConfigContext);
+  const baseApiUrl = new URL(config.baseUrl);
+
   const {loading, value: submissionSteps, error} = useAsync(
     async () => {
-      const submissionUrl = new URL(submission.url);
+      if (window.grecaptcha) {
+        window.grecaptcha.enterprise.ready(() => dispatch({type: 'RECAPTCHA_READY'}));
+      }
 
       const promises = [
         loadStepsData(submission),
-        getPrivacyPolicyInfo(submissionUrl.origin),
+        getPrivacyPolicyInfo(baseApiUrl.origin),
       ];
 
       const [submissionSteps, privacyInfo] = await Promise.all(promises);
@@ -101,14 +119,45 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
     console.error(error);
   }
 
-  const submitDisabled = loading || (state.privacy.requiresPrivacyConsent && !state.privacy.policyAccepted);
+  const executeCaptcha = async () => {
+    if (!state.reCaptcha.isReady) {
+      throw new Error('Something went wrong. The ReCAPTCHA client is not ready.');
+    }
+
+    // This makes a call to a google API and returns a token for
+    // this user interaction
+    return await window.grecaptcha.enterprise.execute(
+      config.reCaptchaSiteKey,
+      {action: 'formSubmission'}
+    );
+  };
+
+  const getCaptchaAssessment = async (token) => {
+    const captchaBackendUrl = new URL(CAPTCHA_ASSESSMENT_ENDPOINT, baseApiUrl.origin);
+    const assessmentResponse = await post(captchaBackendUrl, {token: token, action: 'formSubmission'});
+    if (!assessmentResponse.ok) {
+      throw new Error('Something went wrong. Could not get a reCAPTCHA assessment.');
+    } else if (!assessmentResponse.data.allowSubmission) {
+      throw new Error('You did not pass the reCAPTCHA test.');
+    }
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
+
+    try {
+      const token = await executeCaptcha();
+      await getCaptchaAssessment(token);
+    } catch (e) {
+      dispatch({type: 'RECAPTCHA_ERROR', payload: e.message});
+      return null;
+    }
+
     const {statusUrl} = await completeSubmission(submission);
     onConfirm(statusUrl);
   };
 
+  const submitDisabled = loading || (state.privacy.requiresPrivacyConsent && !state.privacy.policyAccepted);
   return (
     <Card title="Controleer en bevestig">
 
@@ -133,6 +182,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
             />
           : null
         }
+        { state.reCaptcha.error ? <ErrorMessage>{state.reCaptcha.error}</ErrorMessage> : null}
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
             <Button
