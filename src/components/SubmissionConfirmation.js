@@ -6,6 +6,7 @@ import useAsync from 'react-use/esm/useAsync';
 import { post } from 'api';
 import Body from 'components/Body';
 import Card from 'components/Card';
+import ErrorBoundary from 'components/ErrorBoundary';
 import FAIcon from 'components/FAIcon';
 import Anchor from 'components/Anchor';
 import Loader from 'components/Loader';
@@ -49,7 +50,7 @@ const StartPayment = ({startUrl}) => {
       </Body>
       { loading
         ? (<Loader modifiers={['centered']} />)
-        : (<PaymentForm method={value.type} url={value.url} data={value.data} autoSubmit={false} />)
+        : (value ? <PaymentForm method={value.type} url={value.url} data={value.data} autoSubmit={false} /> : null)
       }
     </Card>
   );
@@ -148,7 +149,9 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
 
       </Card>
 
-      { paymentUrl ? <StartPayment startUrl={paymentUrl} /> : null }
+      <ErrorBoundary>
+        { paymentUrl ? <StartPayment startUrl={paymentUrl} /> : null }
+      </ErrorBoundary>
     </>
   );
 }
