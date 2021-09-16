@@ -8,14 +8,13 @@ import { get, post } from 'api';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import FormStepSummary from 'components/FormStepSummary';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
-import FormStepSummary from 'components/FormStepSummary';
+import PrivacyCheckbox from 'components/PrivacyCheckbox';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import { flattenComponents } from 'utils';
-import LogoutButton from 'components/LogoutButton';
-import PrivacyCheckbox from 'components/PrivacyCheckbox';
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info/';
 
