@@ -17,7 +17,7 @@ const Form = PropTypes.shape({
       href: PropTypes.string,
     }),
   })).isRequired,
-  product: PropTypes.object,
+  product: PropTypes.string,
   slug: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   maintenanceMode: PropTypes.bool.isRequired,
