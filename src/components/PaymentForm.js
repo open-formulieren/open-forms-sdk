@@ -9,7 +9,11 @@ const AUTOSUBMIT_AFTER = 5000;
 
 /**
  * Renders a plain old HTML form to submit/start the payment.
- * @param  {String} options.method The HTTP method to use (get or post)
+ * @param  {String} method The HTTP method to use (get or post)
+ * @param  {String} url The form submit URL
+ * @param  {String} data The form data as an object of key-value pairs
+ * @param  {Boolean} autoSubmit Whether to submit the form when it's rendered, after
+     a static timeout.
  * @return {JSX}
  */
 const PaymentForm = ({ method, url, data, autoSubmit=true }) => {

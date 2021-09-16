@@ -62,7 +62,8 @@ StartPayment.propTypes = {
 
 /**
  * Renders the confirmation page displayed after submitting a form.
- * @param statusUrl - The URL where to check if the processing of the submission is complete
+ * @param {String} statusUrl The URL where to check if the processing of the submission is complete
+ * @param {Function} onFailure Callback to invoke if the background processing result is failure.
  */
 const SubmissionConfirmation = ({statusUrl, onFailure}) => {
   const [statusResponse, setStatusResponse] = useState(null);

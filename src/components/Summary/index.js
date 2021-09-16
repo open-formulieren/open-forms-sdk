@@ -16,7 +16,7 @@ import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import { flattenComponents } from 'utils';
 
-const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info/';
+const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
 
 const initialState = {
   privacy: {
