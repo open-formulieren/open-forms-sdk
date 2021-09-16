@@ -7,15 +7,16 @@ import {useImmerReducer} from 'use-immer';
 import { get, post } from 'api';
 import Button from 'components/Button';
 import Card from 'components/Card';
-import Loader from 'components/Loader';
+import ErrorMessage from 'components/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
+import Loader from 'components/Loader';
+import LogoutButton from 'components/LogoutButton';
+import PrivacyCheckbox from 'components/PrivacyCheckbox';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import { flattenComponents } from 'utils';
-import LogoutButton from 'components/LogoutButton';
-import PrivacyCheckbox from '../PrivacyCheckbox';
 
-const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info/';
+const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
 
 const initialState = {
   privacy: {
@@ -73,9 +74,8 @@ const getPrivacyPolicyInfo = async (origin) => {
 };
 
 
-const Summary = ({ form, submission, onConfirm, onLogout }) => {
+const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
-
   const history = useHistory();
   const {loading, value: submissionSteps, error} = useAsync(
     async () => {
@@ -105,12 +105,15 @@ const Summary = ({ form, submission, onConfirm, onLogout }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const {downloadUrl, reportStatusUrl, confirmationPageContent} = await completeSubmission(submission);
-    onConfirm(downloadUrl, reportStatusUrl, confirmationPageContent);
+    const {statusUrl} = await completeSubmission(submission);
+    onConfirm(statusUrl);
   };
 
   return (
     <Card title="Controleer en bevestig">
+
+      { processingError ? <ErrorMessage>{processingError}</ErrorMessage> : null }
+
       <form onSubmit={onSubmit}>
         { loading ? <Loader modifiers={['centered']} /> : null }
         {submissionSteps && submissionSteps.map((stepData, i) => (
@@ -157,6 +160,7 @@ const Summary = ({ form, submission, onConfirm, onLogout }) => {
 Summary.propTypes = {
   form: Types.Form.isRequired,
   submission: PropTypes.object.isRequired,
+  processingError: PropTypes.string,
   onConfirm: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };

@@ -15,7 +15,7 @@ const CardTitle = ({ title, component='h2', blockClassName='card' }) => {
 }
 
 CardTitle.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   component: PropTypes.string,
   blockClassName: PropTypes.string,
 };
@@ -42,7 +42,7 @@ const Card = ({ children, title, titleComponent, caption, captionComponent, bloc
 };
 
 Card.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.node,
   caption: PropTypes.string,
   children: PropTypes.node,
   titleComponent: PropTypes.string,

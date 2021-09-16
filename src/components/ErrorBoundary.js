@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Body from 'components/Body';
-import FAIcon from 'components/FAIcon';
-import {getBEMClassName} from 'utils';
+import ErrorMessage from 'components/ErrorMessage';
 
 
 const logError = (error, errorInfo) => {
@@ -28,16 +26,8 @@ class ErrorBoundary extends React.Component {
     if (!this.state.hasError) {
       return this.props.children;
     }
-
     return (
-      <div className={getBEMClassName('alert', ['error'])}>
-        <span className={getBEMClassName('alert__icon', ['wide'])}>
-          <FAIcon icon="exclamation-circle" />
-        </span>
-        <Body>
-          Er ging helaas iets fout!
-        </Body>
-      </div>
+      <ErrorMessage>Er ging helaas iets fout!</ErrorMessage>
     );
   }
 }

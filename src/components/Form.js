@@ -37,16 +37,14 @@ const createSubmission = async (config, form) => {
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
-  submissionReport: {
-    url: '',
-    statusUrl: '',
-  },
-  confirmationPageContent: 'Your submission was received.',
   submissionStep: {
     configuration: null,
     data: null,
     canSubmit: true,
   },
+  submittedSubmission: null,
+  processingStatusUrl: '',
+  processingError: '',
 };
 
 
@@ -63,11 +61,8 @@ const reducer = (draft, action) => {
       return {
         ...initialState,
         config: draft.config,
-        submissionReport: {
-          url: action.payload.downloadUrl,
-          statusUrl: action.payload.reportStatusUrl,
-        },
-        confirmationPageContent: action.payload.confirmationPageContent,
+        submittedSubmission: action.payload.submission,
+        processingStatusUrl: action.payload.processingStatusUrl,
       };
     }
     case 'SUBMISSION_STEP_LOADED': {
@@ -84,6 +79,13 @@ const reducer = (draft, action) => {
     }
     case 'SUBMISSION_DATA_CHANGED': {
       draft.submissionStep.data = action.payload;
+      break;
+    }
+    case 'PROCESSING_FAILED': {
+      // set the error message in the state
+      draft.processingError = action.payload;
+      // put the submission back in the state as well, so we can re-submit
+      draft.submission = draft.submittedSubmission;
       break;
     }
     default: {
@@ -152,13 +154,12 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
-  const onSubmitForm = (downloadUrl, reportStatusUrl, confirmationPageContent) => {
+  const onSubmitForm = (processingStatusUrl) => {
     dispatch({
       type: 'SUBMITTED',
       payload: {
-        downloadUrl: downloadUrl,
-        reportStatusUrl: reportStatusUrl,
-        confirmationPageContent: confirmationPageContent,
+        submission: state.submission,
+        processingStatusUrl,
       }
     });
     history.push('/bevestiging');
@@ -222,6 +223,11 @@ const reducer = (draft, action) => {
     dispatch({type: 'SUBMISSION_DATA_CHANGED', payload: data});
   };
 
+  const onProcessingFailure = (errorMessage) => {
+    dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
+    history.push('/overzicht');
+  };
+
   // render the form step if there's an active submission (and no summary)
   return (
     <Layout>
@@ -241,17 +247,18 @@ const reducer = (draft, action) => {
               <RequireSubmission
                 submission={state.submission}
                 form={form}
+                processingError={state.processingError}
                 onConfirm={onSubmitForm}
                 onLogout={onLogout}
                 component={Summary} />
             </Route>
 
             <Route exact path="/bevestiging">
-              <SubmissionConfirmation
-                  reportDownloadUrl={state.submissionReport.url}
-                  reportStatusUrl={state.submissionReport.statusUrl}
-                  content={state.confirmationPageContent}
-              />
+              <RequireSubmission
+                submission={state.submittedSubmission}
+                statusUrl={state.processingStatusUrl}
+                onFailure={onProcessingFailure}
+                component={SubmissionConfirmation} />
             </Route>
 
             <Route path="/stap/:step" render={() => (
