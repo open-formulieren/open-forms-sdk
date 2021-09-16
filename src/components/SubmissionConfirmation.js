@@ -1,16 +1,25 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
+import useAsync from 'react-use/esm/useAsync';
 
+import { post } from 'api';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import Anchor from 'components/Anchor';
 import Loader from 'components/Loader';
+import PaymentForm from 'components/PaymentForm';
 import usePoll from 'hooks/usePoll';
 
 const RESULT_FAILED = 'failed';
 
+const getStartPaymentUrl = (apiUrl) => {
+  const nextUrl = new URL(window.location.href);
+  const startPaymentUrl = new URL(apiUrl);
+  startPaymentUrl.searchParams.set("next", nextUrl.toString());
+  return startPaymentUrl.toString();
+};
 
 /**
  * Given a start URL, fetches the payment start information and renders the UI controls
@@ -19,7 +28,31 @@ const RESULT_FAILED = 'failed';
  * @return {JSX}
  */
 const StartPayment = ({startUrl}) => {
-  return null;
+  const fullUrl = getStartPaymentUrl(startUrl);
+  const {loading, value} = useAsync(
+    async () => {
+      const resp = await post(fullUrl);
+      if (!resp.ok) throw new Error('Could not start payment');
+      return resp.data;
+    },
+    [fullUrl]
+  );
+
+  return (
+    <Card>
+      <Body modifiers={['big']}>
+        <FormattedMessage
+          id="StartPayment.paymentRequired"
+          description="Payment required info text"
+          defaultMessage="Payment is required for this product"
+        />
+      </Body>
+      { loading
+        ? (<Loader modifiers={['centered']} />)
+        : (<PaymentForm method={value.type} url={value.url} data={value.data} autoSubmit={false} />)
+      }
+    </Card>
+  );
 };
 
 StartPayment.propTypes = {
@@ -91,29 +124,31 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
   }
 
   return (
-    <Card title={<FormattedMessage
-                   id="SubmissionConfirmation.done.title"
-                   description="On succesful completion title"
-                   defaultMessage="Bevestiging: {reference}"
-                   values={{reference: publicReference}}
-                 />}>
+    <>
+      <Card title={<FormattedMessage
+                     id="SubmissionConfirmation.done.title"
+                     description="On succesful completion title"
+                     defaultMessage="Bevestiging: {reference}"
+                     values={{reference: publicReference}}
+                   />}>
 
-      <Body component="div" dangerouslySetInnerHTML={{__html: confirmationPageContent}} />
+        <Body component="div" dangerouslySetInnerHTML={{__html: confirmationPageContent}} />
 
-      <>
-        <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
-        <Anchor href={reportDownloadUrl}>
-          <FormattedMessage
-            id="SubmissionConfirmation.pdfLink.title"
-            description="Download report PDF link title"
-            defaultMessage="Download PDF"
-          />
-        </Anchor>
-      </>
+        <>
+          <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
+          <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
+            <FormattedMessage
+              id="SubmissionConfirmation.pdfLink.title"
+              description="Download report PDF link title"
+              defaultMessage="Download PDF"
+            />
+          </Anchor>
+        </>
+
+      </Card>
 
       { paymentUrl ? <StartPayment startUrl={paymentUrl} /> : null }
-
-    </Card>
+    </>
   );
 }
 
