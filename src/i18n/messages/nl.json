@@ -1,0 +1,41 @@
+{
+  "0j8tMq": {
+    "defaultMessage": "Log out",
+    "description": "Log out button text",
+    "originalDefault": "Log out"
+  },
+  "6sTcEM": {
+    "defaultMessage": "Pay now",
+    "description": "Start payment button",
+    "originalDefault": "Pay now"
+  },
+  "E4h5vK": {
+    "defaultMessage": "Download PDF",
+    "description": "Download report PDF link title",
+    "originalDefault": "Download PDF"
+  },
+  "PCFPnE": {
+    "defaultMessage": "Payment is required for this product",
+    "description": "Payment required info text",
+    "originalDefault": "Payment is required for this product"
+  },
+  "c3jsXU": {
+    "defaultMessage": "Bevestiging: {reference}",
+    "description": "On succesful completion title",
+    "originalDefault": "Bevestiging: {reference}"
+  },
+  "confirmLogout": {
+    "defaultMessage": "Are you sure that you want to logout?",
+    "originalDefault": "Are you sure that you want to logout?"
+  },
+  "ertoXR": {
+    "defaultMessage": "Processing...",
+    "description": "Checking background processing status title",
+    "originalDefault": "Processing..."
+  },
+  "fWjfVm": {
+    "defaultMessage": "Please hold on while we're processing your submission.",
+    "description": "Checking background processing status body",
+    "originalDefault": "Please hold on while we're processing your submission."
+  }
+}
