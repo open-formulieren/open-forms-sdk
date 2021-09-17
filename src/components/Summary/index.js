@@ -133,7 +133,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
             />
           : null
         }
-        <Toolbar modifiers={['mobile-reverse-order']}>
+        <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
             <Button
               variant="anchor"
