@@ -1,4 +1,5 @@
 @import '~microscope-sass/lib/typography';
+@import '~microscope-sass/lib/color';
 
 @import '../mixins/prefix';
 
@@ -12,6 +13,8 @@
     @include body;
     @include body--big;
     margin-left: 1em;
-    padding: 0px 5px 0px 5px;
+    padding: 1em 5px;
+    color: $color-blue;
+    font-size: $typography-font-size-h5;
   }
 }
