@@ -12,7 +12,7 @@ const LogoutButton = ({onLogout}) => {
         <Button variant="danger" onClick={onLogout}>
           {/*TODO using id in the formatMessage is discouraged. However, since the translation pipeline */}
           {/*is not fully setup yet, using the description instead of the ids causes errors.*/}
-          <FormattedMessage id="logOut" defaultMessage="Log out" />
+          <FormattedMessage description="Log out button text" defaultMessage="Log out" />
         </Button>
       </ToolbarList>
     </Toolbar>
