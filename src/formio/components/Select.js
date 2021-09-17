@@ -16,12 +16,23 @@ class Select extends Formio.Components.components.select {
     // instead of the whole wrapper that replaces the <select> element (and messes with styling).
     // We're deliberately forcing this, as we have dysfunctional styles for anything else.
     this.component.widget = 'html5';
-    if (this.component['appointments.showProducts'] || this.component['appointments.showLocations'] ||
-        this.component['appointments.showDates'] || this.component['appointments.showTimes']) {
+
+    const appointmentsOptions = this.component.appointments || {};
+    this._appointmentsOptions = appointmentsOptions;
+    const knownOptions = [
+      appointmentsOptions.showProducts,
+      appointmentsOptions.showLocations,
+      appointmentsOptions.showDates,
+      appointmentsOptions.showTimes,
+    ];
+    const isAppointmentDropdown = knownOptions.some(opt => !!opt);
+    this._isAppointmentDropdown = isAppointmentDropdown;
+    if (isAppointmentDropdown) {
       this.component.disabled = true;
     }
-    if (this.component['appointments.showProducts']) {
-      this.handleSettingAppointmentProducts();
+
+    if (appointmentsOptions.showProducts) {
+      this.setAppointmentProductOptions();
     }
   }
 
@@ -32,85 +43,115 @@ class Select extends Formio.Components.components.select {
     return info;
   }
 
-  handleSettingAppointmentProducts() {
-    if (this.component['appointments.showProducts']) {
+  _reEnable() {
+    this.element.lastElementChild.removeAttribute("disabled");
+  }
+
+  setAppointmentProductOptions() {
+    if (this._appointmentsOptions.showProducts) {
       get(`${this.options.baseUrl}appointments/products`)
           .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.identifier, result.name));
-            this.element.lastElementChild.removeAttribute("disabled");
+            results.forEach(result => this.addOption(result.identifier, result.name));
+            this._reEnable();
           })
-          .catch(error => console.log(error));
+          .catch(console.error);
     }
   }
 
-  handleSettingAppointmentLocations(data) {
-    if (this.component['appointments.showLocations'] &&
-        this.selectOptions.length === 0 &&
-        data[this.component['appointments.productComponent']]) {
-      get(`${this.options.baseUrl}appointments/locations`,
-        {'product_id': data[this.component['appointments.productComponent']]})
+  setAppointmentLocationOptions(data) {
+    const isEmptyLocationDropdown = this._appointmentsOptions.showLocations && this.selectOptions.length === 0;
+    if (!isEmptyLocationDropdown) return;
+
+    const productComponentKey = this._appointmentsOptions.productComponent;
+    const productId = data[productComponentKey];
+    const url = `${this.options.baseUrl}appointments/locations`;
+
+    if (productId) {
+      get(url, {'product_id': productId})
         .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.identifier, result.name));
-            this.element.lastElementChild.removeAttribute("disabled");
+            results.forEach(result => this.addOption(result.identifier, result.name));
+            this._reEnable();
         })
-        .catch(error => console.log(error));
+        .catch(console.error);
     }
   }
 
-  handleSettingAppointmentDates(data) {
-    if (this.component['appointments.showDates'] &&
-        this.selectOptions.length === 0 &&
-        data[this.component['appointments.productComponent']] &&
-        data[this.component['appointments.locationComponent']]) {
-      get(`${this.options.baseUrl}appointments/dates`,
-        {'product_id': data[this.component['appointments.productComponent']],
-         'location_id': data[this.component['appointments.locationComponent']]})
+  setAppointmentDateOptions(data) {
+    const isEmptyDateDropdown = this._appointmentsOptions.showDates && this.selectOptions.length === 0;
+    if (!isEmptyDateDropdown) return;
+
+    const productComponentKey = this._appointmentsOptions.productComponent;
+    const locationComponentKey = this._appointmentsOptions.locationComponent;
+    const productId = data[productComponentKey];
+    const locationId = data[locationComponentKey];
+    const url = `${this.options.baseUrl}appointments/dates`;
+
+    if (data[productComponentKey] && data[locationComponentKey]) {
+      get(url, {'product_id': productId, 'location_id': locationId})
         .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.date, getFormattedDateString(this.options.intl, result.date)));
-            this.element.lastElementChild.removeAttribute("disabled");
+            results.forEach(result => this.addOption(result.date, getFormattedDateString(this.options.intl, result.date)));
+            this._reEnable();
         })
-        .catch(error => console.log(error));
+        .catch(console.error);
     }
   }
 
-  handleSettingAppointmentTimes(data) {
-    if (this.component['appointments.showTimes'] &&
-        this.selectOptions.length === 0 &&
-        data[this.component['appointments.productComponent']] &&
-        data[this.component['appointments.locationComponent']] &&
-        data[this.component['appointments.dateComponent']]) {
-      get(`${this.options.baseUrl}appointments/times`,
-        {'product_id': data[this.component['appointments.productComponent']],
-         'location_id': data[this.component['appointments.locationComponent']],
-         'date': data[this.component['appointments.dateComponent']]})
+  setAppointmentTimeOptions(data) {
+    const isEmptyTimeDropdown = this._appointmentsOptions.showTimes && this.selectOptions.length === 0;
+    if (!isEmptyTimeDropdown) return;
+
+    const productComponentKey = this._appointmentsOptions.productComponent;
+    const locationComponentKey = this._appointmentsOptions.locationComponent;
+    const dateComponentKey = this._appointmentsOptions.dateComponent;
+    const productId = data[productComponentKey];
+    const locationId = data[locationComponentKey];
+    const date = data[dateComponentKey];
+    const url = `${this.options.baseUrl}appointments/times`;
+
+    if (productId && locationId && date) {
+      const query = {
+        'product_id': productId,
+        'location_id': locationId,
+        'date': date,
+      };
+      get(url, query)
         .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.time, getFormattedTimeString(this.options.intl, result.time)));
-            this.element.lastElementChild.removeAttribute("disabled");
+            results.forEach(result => this.addOption(result.time, getFormattedTimeString(this.options.intl, result.time)));
+            this._reEnable();
         })
-        .catch(error => console.log(error));
+        .catch(console.error);
     }
   }
 
-  handleClearingAppointmentData(changedKey) {
-
+  clearAppointmentData(changedKey) {
     // Product is changed so clear locations
-    const shouldClearLocations = this.component['appointments.showLocations'] &&
-                                 this.component['appointments.productComponent'] === changedKey;
+    const shouldClearLocations = (
+      this._appointmentsOptions.showLocations
+      && this._appointmentsOptions.productComponent === changedKey
+    );
 
     // Product or location is changed so clear dates
-    const shouldClearDates = this.component['appointments.showDates'] &&
-                             (this.component['appointments.productComponent'] === changedKey||
-                              this.component['appointments.locationComponent'] === changedKey);
+    const shouldClearDates = (
+      this._appointmentsOptions.showDates
+      && [
+        this._appointmentsOptions.productComponent,
+        this._appointmentsOptions.locationComponent,
+      ].includes(changedKey)
+    );
 
     // Product or location or date is changed so clear times
-    const shouldClearTimes = this.component['appointments.showTimes'] &&
-                             (this.component['appointments.productComponent'] === changedKey ||
-                              this.component['appointments.locationComponent'] === changedKey ||
-                              this.component['appointments.dateComponent'] === changedKey);
+    const shouldClearTimes = (
+      this._appointmentsOptions.showTimes
+      && [
+        this._appointmentsOptions.productComponent,
+        this._appointmentsOptions.locationComponent,
+        this._appointmentsOptions.dateComponent,
+      ].includes(changedKey)
+    );
 
     if (shouldClearLocations || shouldClearDates || shouldClearTimes) {
       this.setValue(this.emptyValue);
@@ -120,13 +161,15 @@ class Select extends Formio.Components.components.select {
   }
 
   activate() {
-    if (!(this.component['appointments.showProducts'] || this.component['appointments.showLocations'] ||
-          this.component['appointments.showDates'] || this.component['appointments.showTimes'])) {
-      super.activate();
-    }
+    if (this._isAppointmentDropdown) return;
+    super.activate();
   }
 
   beforeSubmit() {
+    // TODO: check if we can solve this via getOptionValue method instead of monkey-patching
+    // state. See also https://github.com/open-formulieren/open-forms/issues/682 which
+    // might help put the options in the React state, giving easy access to display logic
+    // in the summary page.
     if (this.component.appointmentsShowProducts || this.component.appointmentsShowLocations) {
       // For these two types of components we need to send both the identifier and name to the backend
       const value = this._data[this.component.key].toString();
@@ -138,11 +181,11 @@ class Select extends Formio.Components.components.select {
 
   checkData(data, flags, row) {
     if (flags.changed) {
-      this.handleClearingAppointmentData(flags.changed.instance.key);
+      this.clearAppointmentData(flags.changed.instance.key);
     }
-    this.handleSettingAppointmentLocations(data);
-    this.handleSettingAppointmentDates(data);
-    this.handleSettingAppointmentTimes(data);
+    this.setAppointmentLocationOptions(data);
+    this.setAppointmentDateOptions(data);
+    this.setAppointmentTimeOptions(data);
     return super.checkData(data, flags, row);
   }
 }
