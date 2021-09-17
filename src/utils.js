@@ -8,6 +8,16 @@ import Image from 'components/Image';
 import Anchor from 'components/Anchor';
 
 
+export const getFormattedDateString = (intl, dateString) => {
+  return intl.formatDate(new Date(dateString));
+};
+
+
+export const getFormattedTimeString = (intl, dateTimeString) => {
+  return intl.formatTime(new Date(dateTimeString));
+};
+
+
 export const getBEMClassName = (base, modifiers=[]) => {
   const prefixedBase = applyPrefix(base);
   const prefixedModifiers = modifiers.map(mod => applyPrefix(`${base}--${mod}`));
@@ -38,7 +48,7 @@ export const getComponentLabel = (components, key) => {
 };
 
 
-export const getComponentValue = (inputValue, components, key) => {
+export const getComponentValue = (inputValue, components, key, intl) => {
     let component = components.find(component => component.key === key);
 
     if (component === undefined) {
@@ -53,7 +63,15 @@ export const getComponentValue = (inputValue, components, key) => {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
       const obj = component.data.values.find(obj => obj.value === inputValue);
-      return obj ? obj.label : inputValue;
+      if (component.appointmentsShowProducts || component.appointmentsShowLocations) {
+        return inputValue.name;
+      } else if (component.appointmentsShowDates) {
+        return getFormattedDateString(intl, inputValue);
+      } else if (component.appointmentsShowTimes) {
+        return getFormattedTimeString(intl, inputValue);
+      } else {
+        return obj ? obj.label : '';
+      }
     } else if (component.type === "file") {
       /*
        NOTE the structure of the data set by FormIO's file component

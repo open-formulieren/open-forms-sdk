@@ -2,6 +2,7 @@ import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
 import { get } from '../../api';
+import {getFormattedDateString, getFormattedTimeString} from '../../utils';
 
 
 /**
@@ -68,7 +69,7 @@ class Select extends Formio.Components.components.select {
          'location_id': data[this.component.appointmentsLocationForDates]})
         .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.date, result.date));
+            results.map(result => this.addOption(result.date, getFormattedDateString(this.options.intl, result.date)));
             this.element.lastElementChild.removeAttribute("disabled");
         })
         .catch(error => console.log(error));
@@ -87,7 +88,7 @@ class Select extends Formio.Components.components.select {
          'date': data[this.component.appointmentsDateForTimes]})
         .then(results => {
             this.setItems([]);
-            results.map(result => this.addOption(result.time, result.time.split("T")[1].split('+')[0]));
+            results.map(result => this.addOption(result.time, getFormattedTimeString(this.options.intl, result.time)));
             this.element.lastElementChild.removeAttribute("disabled");
         })
         .catch(error => console.log(error));
@@ -123,6 +124,16 @@ class Select extends Formio.Components.components.select {
           this.component.appointmentsShowDates || this.component.appointmentsShowTimes)) {
       super.activate();
     }
+  }
+
+  beforeSubmit() {
+    if (this.component.appointmentsShowProducts || this.component.appointmentsShowLocations) {
+      // For these two types of components we need to send both the identifier and name to the backend
+      const value = this._data[this.component.key].toString();
+      const selectedOption = this.selectOptions.filter(option => option.value === value)[0];
+      this._data[this.component.key] = {identifier: selectedOption.value, name: selectedOption.label};
+    }
+    super.beforeSubmit();
   }
 
   checkData(data, flags, row) {
