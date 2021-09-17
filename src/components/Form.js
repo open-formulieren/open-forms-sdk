@@ -148,9 +148,10 @@ const reducer = (draft, action) => {
     event.preventDefault();
 
     const confirmationQuestion = intl.formatMessage(
-      // TODO using id in the formatMessage is discouraged. However, since the translation pipeline
-      // is not fully setup yet, using the description instead of the ids causes errors.
-      {id: 'confirmLogout', defaultMessage: 'Are you sure that you want to logout?'}
+      {
+        description: 'log out confirmation prompt',
+        defaultMessage: 'Are you sure that you want to logout?'
+      }
     );
     if (!window.confirm(confirmationQuestion)) {
       return;

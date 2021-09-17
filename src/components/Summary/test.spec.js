@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 import {useAsync} from 'react-use';
 
 import Summary from 'components/Summary';
-import messagesNL from 'i18n';
+import messagesNL from 'i18n/compiled/nl.json';
 import {testForm} from 'components/FormStart/fixtures';
 
 

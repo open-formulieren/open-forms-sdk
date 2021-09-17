@@ -2,13 +2,19 @@
   "0j8tMq": [
     {
       "type": 0,
-      "value": "Log out"
+      "value": "Uitloggen"
     }
   ],
   "6sTcEM": [
     {
       "type": 0,
       "value": "Pay now"
+    }
+  ],
+  "DvlDIB": [
+    {
+      "type": 0,
+      "value": "Are you sure that you want to logout?"
     }
   ],
   "E4h5vK": [
@@ -31,12 +37,6 @@
     {
       "type": 1,
       "value": "reference"
-    }
-  ],
-  "confirmLogout": [
-    {
-      "type": 0,
-      "value": "Are you sure that you want to logout?"
     }
   ],
   "ertoXR": [

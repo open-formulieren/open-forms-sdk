@@ -11,6 +11,12 @@
       "value": "Pay now"
     }
   ],
+  "DvlDIB": [
+    {
+      "type": 0,
+      "value": "Are you sure that you want to logout?"
+    }
+  ],
   "E4h5vK": [
     {
       "type": 0,
@@ -31,12 +37,6 @@
     {
       "type": 1,
       "value": "reference"
-    }
-  ],
-  "confirmLogout": [
-    {
-      "type": 0,
-      "value": "Are you sure that you want to logout?"
     }
   ],
   "ertoXR": [

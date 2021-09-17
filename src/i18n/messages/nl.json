@@ -1,6 +1,6 @@
 {
   "0j8tMq": {
-    "defaultMessage": "Log out",
+    "defaultMessage": "Uitloggen",
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
@@ -8,6 +8,11 @@
     "defaultMessage": "Pay now",
     "description": "Start payment button",
     "originalDefault": "Pay now"
+  },
+  "DvlDIB": {
+    "defaultMessage": "Are you sure that you want to logout?",
+    "description": "log out confirmation prompt",
+    "originalDefault": "Are you sure that you want to logout?"
   },
   "E4h5vK": {
     "defaultMessage": "Download PDF",
@@ -23,10 +28,6 @@
     "defaultMessage": "Bevestiging: {reference}",
     "description": "On succesful completion title",
     "originalDefault": "Bevestiging: {reference}"
-  },
-  "confirmLogout": {
-    "defaultMessage": "Are you sure that you want to logout?",
-    "originalDefault": "Are you sure that you want to logout?"
   },
   "ertoXR": {
     "defaultMessage": "Processing...",
