@@ -13,8 +13,8 @@ import './styles.scss';
 import { get } from 'api';
 import { ConfigContext } from 'Context';
 import { Form } from 'components/Form';
-import messagesNL from 'i18n';
 import { AddFetchAuth } from 'formio/plugins';
+import loadLocaleData from 'i18n';
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
@@ -26,11 +26,12 @@ Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 
 class OpenForm {
 
-  constructor( targetNode, { baseUrl, formId, basePath } ) {
+  constructor( targetNode, { baseUrl, formId, basePath, lang } ) {
     this.targetNode = targetNode;
     this.baseUrl = baseUrl;
     this.formId = formId;
     this.formObject = null;
+    this.lang = lang;
 
     // ensure that the basename has no trailing slash (for react router)
     let pathname = basePath || window.location.pathname;
@@ -41,16 +42,26 @@ class OpenForm {
   }
 
   async init() {
+    // use explicitly forced language, or look up the browser html lang attribute value
+    const lang = this.lang || document.querySelector('html').getAttribute("lang");
+
     const url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
 
-    // fetch the form object from the API
-    this.formObject = await get(url);
+    const promises = [
+      // load the message catalog for i18n
+      loadLocaleData(lang),
+      // fetch the form object from the API
+      get(url),
+    ];
+    const [messages, formObject] = await Promise.all(promises);
+
+    this.formObject = formObject
 
     // render the wrapping React component
     ReactDOM.render(
       <React.StrictMode>
-        <IntlProvider messages={messagesNL} locale="nl" defaultLocale="nl">
+        <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
           <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
             <Router basename={this.basePath}>
               <Form form={this.formObject} />
