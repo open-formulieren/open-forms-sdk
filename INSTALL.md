@@ -20,9 +20,11 @@ Clone this repository, and create/edit `.env` for your needs:
 ```
 REACT_APP_BASE_API_URL=http://localhost:8000/api/v1/
 REACT_APP_FORM_ID=93c09209-5fb9-4105-b6bb-9d9f0aa6782c
+REACT_APP_RECAPTCHA_SITE_KEY=testKey
 ```
 
-You get the form ID from the django admin.
+You get the form ID from the django admin. You can find the reCAPTCHA `site key <https://cloud.google.com/recaptcha-enterprise/docs/create-key#creating_a_site_key>`_
+in the Google Cloud project for the website. This key is needed to be able to submit a form with a reCAPTCHA assessment.
 
 Install dependencies & start the dev server for the SPA:
 
