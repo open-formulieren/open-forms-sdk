@@ -20,6 +20,8 @@ Formio.use(OpenFormsModule);
 // use our own template library
 Templates.current = OFLibrary;
 
+const {REACT_APP_RECAPTCHA_SITE_KEY} = process.env;
+
 
 class OpenForm {
 
@@ -48,7 +50,7 @@ class OpenForm {
     ReactDOM.render(
       <React.StrictMode>
         <IntlProvider messages={messagesNL} locale="nl" defaultLocale="nl">
-          <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
+          <ConfigContext.Provider value={{baseUrl: this.baseUrl, reCaptchaSiteKey: REACT_APP_RECAPTCHA_SITE_KEY}}>
             <Router basename={this.basePath}>
               <Form form={this.formObject} />
             </Router>

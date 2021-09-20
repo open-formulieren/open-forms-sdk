@@ -88,6 +88,13 @@ const reducer = (draft, action) => {
       draft.submission = draft.submittedSubmission;
       break;
     }
+    case 'LOAD_RECAPTCHA': {
+      const siteKey = action.payload;
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/enterprise.js?render=${siteKey}`;
+      document.body.appendChild(script);
+      break;
+    }
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -138,6 +145,12 @@ const reducer = (draft, action) => {
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
+    });
+
+    // Load the google script that makes ReCAPTCHA work
+    dispatch({
+      type: 'LOAD_RECAPTCHA',
+      payload: config.reCaptchaSiteKey
     });
 
     // navigate to the first step

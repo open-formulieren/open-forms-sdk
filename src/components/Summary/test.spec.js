@@ -7,6 +7,7 @@ import {useAsync} from 'react-use';
 import Summary from 'components/Summary';
 import messagesNL from 'i18n';
 import {testForm} from 'components/FormStart/fixtures';
+import {ConfigContext} from '../../Context';
 
 
 jest.mock('react-use');
@@ -43,12 +44,14 @@ it('Summary displays logout button if loginRequired is true', () => {
         locale="nl"
         messages={messagesNL}
       >
-        <Summary
-          form={formLoginRequired}
-          submission={{steps: [{formStep: 'http://testserver/api/v1/forms/33af5a1c-552e-4e8f-8b19-287cf35b9edd/steps/0c2a1816-a7d7-4193-b431-918956744038'}]}}
-          onConfirm={onConfirm}
-          onLogout={onLogout}
-        />
+        <ConfigContext.Provider value={{baseUrl: 'http://test.nl'}}>
+          <Summary
+            form={formLoginRequired}
+            submission={{steps: [{formStep: 'http://testserver/api/v1/forms/33af5a1c-552e-4e8f-8b19-287cf35b9edd/steps/0c2a1816-a7d7-4193-b431-918956744038'}]}}
+            onConfirm={onConfirm}
+            onLogout={onLogout}
+          />
+        </ConfigContext.Provider>
       </IntlProvider>,
       container
     );
@@ -73,12 +76,14 @@ it('Summary does not display logout button if loginRequired is false', () => {
         locale="nl"
         messages={messagesNL}
       >
-        <Summary
-          form={formLoginRequired}
-          submission={{steps: [{formStep: 'http://testserver/api/v1/forms/33af5a1c-552e-4e8f-8b19-287cf35b9edd/steps/0c2a1816-a7d7-4193-b431-918956744038'}]}}
-          onConfirm={onConfirm}
-          onLogout={onLogout}
-        />
+        <ConfigContext.Provider value={{baseUrl: 'http://test.nl'}}>
+          <Summary
+            form={formLoginRequired}
+            submission={{steps: [{formStep: 'http://testserver/api/v1/forms/33af5a1c-552e-4e8f-8b19-287cf35b9edd/steps/0c2a1816-a7d7-4193-b431-918956744038'}]}}
+            onConfirm={onConfirm}
+            onLogout={onLogout}
+          />
+        </ConfigContext.Provider>
       </IntlProvider>,
       container
     );

@@ -4,12 +4,7 @@ const fetchDefaults = {
 
 const apiCall = async (url, opts) => {
   const options = { ...fetchDefaults, ...opts };
-  const response = await window.fetch(url, options);
-  if (response.status === 403) {
-    const data = await response.json();
-    alert(data.detail);
-  }
-  return response;
+  return await window.fetch(url, options);
 };
 
 const get = async (url, params = {}, multiParams = []) => {
@@ -49,6 +44,9 @@ const _unsafe = async (method = 'POST', url, data) => {
   }
   const response = await apiCall(url, opts);
   const responseData = (response.status === 204) ? null : (await response.json());
+  if (response.status === 403) {
+    alert(responseData);
+  }
   return {
       ok: response.ok,
       status: response.status,
