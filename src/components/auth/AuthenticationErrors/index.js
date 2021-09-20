@@ -38,7 +38,16 @@ const AuthenticationErrors = ({parameters}) => {
           break;
         }
         default:
-          messagesToDisplay.push(`Er is een fout opgetreden bij het inloggen met ${MAPPING_PARAMS_SERVICE[parameter]}. Probeer het later opnieuw.`);
+          let errorMessage;
+          switch (parameter) {
+            case '_digid-message': {
+              errorMessage = 'Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.';
+              break;
+            }
+            default:
+              errorMessage = `Er is een fout opgetreden bij het inloggen met ${MAPPING_PARAMS_SERVICE[parameter]}. Probeer het later opnieuw.`;
+          }
+          messagesToDisplay.push(errorMessage);
           break;
     }
   }
