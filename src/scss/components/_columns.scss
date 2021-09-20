@@ -7,20 +7,16 @@
 .#{prefix(form-control)} {
 
   @include modifier('columns') {
-    position: relative;
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -30px 0 -15px;
 
     & > div:not(.openforms-errors) {
-      max-width: 45%;
+      max-width: 49%;
       width: 100%;
-      position: relative;
-      margin: 0 15px;
     }
 
-    & > div:last-child {
-      margin: 0 0 0 15px;
+    & > div:nth-child(even) {
+      margin-right: 10px;
     }
   }
 }
