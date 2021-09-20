@@ -11,12 +11,12 @@
     flex-wrap: wrap;
 
     & > div:not(.openforms-errors) {
-      max-width: 49%;
+      max-width: 50%;
       width: 100%;
-    }
 
-    & > div:nth-child(even) {
-      margin-right: 10px;
+      & > div {
+        padding: 0 5px;
+      }
     }
   }
 }
