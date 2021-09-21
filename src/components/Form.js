@@ -5,11 +5,11 @@ import {
   Route,
   useHistory,
 } from 'react-router-dom';
-
+import {useLocalStorage} from 'react-use';
 
 import { ConfigContext } from 'Context';
 
-import {destroy, post} from 'api';
+import {destroy, post, apiCall} from 'api';
 import usePageViews from 'hooks/usePageViews';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
@@ -34,6 +34,24 @@ const createSubmission = async (config, form) => {
 };
 
 
+const retrieveExistingSubmission = async (config, form, submissionId, setSubmissionId, removeSubmissionId) => {
+  let submission;
+  const response = await apiCall(`${config.baseUrl}submissions/${submissionId}`);
+  if (!response.ok) {
+    if (response.status === 404) {
+      // If the session has expired, the user won't be able to retrieve their submission and the API will return 404.
+      // So remove the submissionId from the localStorage and start a new one.
+      removeSubmissionId();
+      submission = await createSubmission(config, form);
+      setSubmissionId(submission.id);
+    }
+  } else {
+    submission = await response.json();
+  }
+
+  return submission;
+};
+
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
@@ -48,8 +66,7 @@ const reducer = (draft, action) => {
     case 'SUBMISSION_LOADED': {
       // keep the submission instance in the state and set the current step to the
       // first step of the form.
-      const submission = action.payload;
-      draft.submission = submission;
+      draft.submission = action.payload;
       break;
     }
     case 'SUBMITTED': {
@@ -89,6 +106,7 @@ const reducer = (draft, action) => {
   // extract the declared properties and configuration
   const {steps} = form;
   const config = useContext(ConfigContext);
+  const [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
 
   // load the state management/reducer
   const initialStateFromProps = {...initialState, config, step: steps[0]};
@@ -103,17 +121,16 @@ const reducer = (draft, action) => {
   const onFormStart = async (event) => {
     event && event.preventDefault();
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
+    const {config} = state;
 
-    if (state.submission != null) {
-      // TODO: how should we handle this? when there's already a submission started
-      // and the user navigates back to the start page?
-      console.error("There already is an active form submission.");
-      history.push(firstStepRoute);
-      return;
+    let submission;
+    if (submissionId) {
+      submission = await retrieveExistingSubmission(config, form, submissionId, setSubmissionId, removeSubmissionId);
+    } else {
+      submission = await createSubmission(config, form);
+      setSubmissionId(submission.id);
     }
 
-    const {config} = state;
-    const submission = await createSubmission(config, form);
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
@@ -141,6 +158,7 @@ const reducer = (draft, action) => {
         processingStatusUrl,
       }
     });
+    removeSubmissionId();
     history.push('/bevestiging');
   };
 
