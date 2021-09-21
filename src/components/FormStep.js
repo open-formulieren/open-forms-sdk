@@ -22,6 +22,7 @@ import Loader from 'components/Loader';
 import { ConfigContext } from 'Context';
 import Types from 'types';
 import LogoutButton from 'components/LogoutButton';
+import hooks from '../formio/hooks';
 
 
 const STEP_LOGIC_DEBOUNCE_MS = 300;
@@ -61,23 +62,19 @@ const reducer = (draft, action) => {
       break;
     }
     case 'BLOCK_SUBMISSION': {
-      console.log('blocking submission');
       draft.canSubmit = false;
       break;
     }
     // a separate action type because we should _not_ touch the configuration in the state
     case 'LOGIC_CHECK_DONE': {
       const {step: {data, canSubmit}} = action.payload;
-      console.log(data);
       // update the altered values but only if relevant (we don't want to unnecesary break
       // references that trigger re-rendering).
       if (!isEqual(draft.data, data)) {
         // we _merge_ the data from the client with the logic check, where the last one
         // overrules the former. This accounts for extra data that may have been filled
         // out while the logic check was processing in the backend.
-        const newData = {...draft.data, ...data};
-        console.log('New data:', newData);
-        draft.data = newData;
+        draft.data = {...draft.data, ...data};
       }
       draft.canSubmit = canSubmit;
       break;
@@ -130,14 +127,9 @@ const FormStep = ({
   const previousData = previouslyCheckedDataRef.current;
   useDebounce(
     async () => {
-      console.group('Check if logic check is required');
-      console.log('Previous data: ', previousData);
-      console.log('Current data: ', data);
-      console.groupEnd();
       if (previousData && isEqual(previousData, data)) return;
       if (isEmpty(data)) return;
       previouslyCheckedDataRef.current = data;
-      console.group('Doing logic check now.');
       dispatch({type: 'BLOCK_SUBMISSION'});
       // call the backend to do the check
       const {submission, step} = await doLogicCheck(submissionStep.url, data);
@@ -158,7 +150,6 @@ const FormStep = ({
           step,
         },
       });
-      console.groupEnd();
     },
     STEP_LOGIC_DEBOUNCE_MS,
     [previousData, data, submissionStep.url]
@@ -170,6 +161,7 @@ const FormStep = ({
     }
 
     await submitStepData(submissionStep.url, data);
+    // TODO: is this needed? and shouldn't we just update the state?
     // This will reload the submission
     const {submission: updatedSubmission, step} = await doLogicCheck(submissionStep.url, data);
     onLogicChecked(updatedSubmission, step); // report back to parent component
@@ -234,7 +226,12 @@ const FormStep = ({
               submission={{data: data}}
               onChange={onFormIOChange}
               onSubmit={onFormIOSubmit}
-              options={{noAlerts: true, baseUrl: config.baseUrl, intl}}
+              options={{
+                noAlerts: true,
+                baseUrl: config.baseUrl,
+                hooks,
+                intl,
+              }}
             />
             <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
               <ToolbarList>
