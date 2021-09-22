@@ -19,6 +19,11 @@
     "description": "Download report PDF link title",
     "originalDefault": "Download PDF"
   },
+  "LwpSC/": {
+    "defaultMessage": "Total",
+    "description": "Label for the total price to pay",
+    "originalDefault": "Total"
+  },
   "PCFPnE": {
     "defaultMessage": "Payment is required for this product",
     "description": "Payment required info text",
