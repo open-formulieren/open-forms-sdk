@@ -1,0 +1,30 @@
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(form-control)} {
+
+  @include modifier('columns') {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > div:not(.openforms-errors) {
+      max-width: 50%;
+      width: 100%;
+
+      &:nth-child(even) {
+        & > div {
+          padding-right: 5px;
+        }
+      }
+
+      &:nth-child(odd) {
+        & > div {
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+}
