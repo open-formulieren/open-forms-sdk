@@ -1,7 +1,11 @@
-// TODO: set up translations
-const messagesNL = {
-  logOut: 'Uitloggen',
-  confirmLogout: 'Weet je zeker dat je wilt uitloggen?',
+const loadLocaleData = (locale) => {
+    switch (locale) {
+        case 'nl':
+            return import('./i18n/compiled/nl.json');
+        default:
+            return import('./i18n/compiled/en.json');
+    }
 };
 
-export default messagesNL;
+
+export default loadLocaleData;

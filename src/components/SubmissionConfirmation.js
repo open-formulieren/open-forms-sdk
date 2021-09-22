@@ -42,11 +42,7 @@ const StartPayment = ({startUrl}) => {
   return (
     <Card>
       <Body modifiers={['big']}>
-        <FormattedMessage
-          id="StartPayment.paymentRequired"
-          description="Payment required info text"
-          defaultMessage="Payment is required for this product"
-        />
+        <FormattedMessage description="Payment required info text" defaultMessage="Payment is required for this product" />
       </Body>
       { loading
         ? (<Loader modifiers={['centered']} />)
@@ -95,14 +91,12 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
   if (loading) {
     return (
       <Card title={<FormattedMessage
-                    id="SubmissionConfirmation.pending.title"
                     description="Checking background processing status title"
                     defaultMessage="Processing..." />}>
 
         <Loader modifiers={['centered']} />
         <Body>
           <FormattedMessage
-            id="SubmissionConfirmation.pending.body"
             description="Checking background processing status body"
             defaultMessage="Please hold on while we're processing your submission."
           />
@@ -128,7 +122,6 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
   return (
     <>
       <Card title={<FormattedMessage
-                     id="SubmissionConfirmation.done.title"
                      description="On succesful completion title"
                      defaultMessage="Bevestiging: {reference}"
                      values={{reference: publicReference}}
@@ -140,7 +133,6 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
           <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
           <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
             <FormattedMessage
-              id="SubmissionConfirmation.pdfLink.title"
               description="Download report PDF link title"
               defaultMessage="Download PDF"
             />

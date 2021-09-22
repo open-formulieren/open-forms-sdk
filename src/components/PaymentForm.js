@@ -39,11 +39,7 @@ const PaymentForm = ({ method, url, data, autoSubmit=true }) => {
     <form ref={formRef} method={method} action={url}>
       {dataFields}
       <Button type="submit" variant="primary">
-        <FormattedMessage
-          id="PaymentForm.button.startPayment"
-          description="Start payment button"
-          defaultMessage="Pay now"
-        />
+        <FormattedMessage description="Start payment button" defaultMessage="Pay now" />
       </Button>
     </form>
   );

@@ -1,0 +1,54 @@
+{
+  "0j8tMq": [
+    {
+      "type": 0,
+      "value": "Log out"
+    }
+  ],
+  "6sTcEM": [
+    {
+      "type": 0,
+      "value": "Pay now"
+    }
+  ],
+  "DvlDIB": [
+    {
+      "type": 0,
+      "value": "Are you sure that you want to logout?"
+    }
+  ],
+  "E4h5vK": [
+    {
+      "type": 0,
+      "value": "Download PDF"
+    }
+  ],
+  "PCFPnE": [
+    {
+      "type": 0,
+      "value": "Payment is required for this product"
+    }
+  ],
+  "c3jsXU": [
+    {
+      "type": 0,
+      "value": "Bevestiging: "
+    },
+    {
+      "type": 1,
+      "value": "reference"
+    }
+  ],
+  "ertoXR": [
+    {
+      "type": 0,
+      "value": "Processing..."
+    }
+  ],
+  "fWjfVm": [
+    {
+      "type": 0,
+      "value": "Please hold on while we're processing your submission."
+    }
+  ]
+}

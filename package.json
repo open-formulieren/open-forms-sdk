@@ -85,7 +85,11 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --modulePaths=src",
-    "clean": "rm -rf dist/*"
+    "clean": "rm -rf dist/*",
+    "makemessages-en": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
+    "makemessages-nl": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/nl.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
+    "makemessages": "npm run makemessages-nl && npm run makemessages-en",
+    "compilemessages": "formatjs compile-folder --ast src/i18n/messages src/i18n/compiled"
   },
   "eslintConfig": {
     "extends": [
@@ -106,7 +110,11 @@
     ]
   },
   "devDependencies": {
-    "react-test-renderer": "^17.0.2"
+    "@formatjs/cli": "^4.2.33",
+    "babel-plugin-formatjs": "^10.3.8",
+    "react-test-renderer": "^17.0.2",
+    "typescript": "^4.4.3",
+    "yargs": "^17.1.1"
   },
   "jest": {
     "roots": [
@@ -163,6 +171,15 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "formatjs",
+        {
+          "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+          "ast": true
+        }
+      ]
     ]
   }
 }
