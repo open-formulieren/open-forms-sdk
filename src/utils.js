@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 import {FormattedNumber} from 'react-intl';
-import * as Sentry from "@sentry/react";
-import { Integrations } from "@sentry/tracing";
 
 import {applyPrefix} from './formio/utils';
 import Body from 'components/Body';
@@ -146,16 +144,4 @@ const humanFileSize = (size) => {
   const newSize = (size / Math.pow(1024, index)).toFixed(2) * 1;
   const unit = ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'][index];
   return {size: newSize, unit};
-};
-
-
-export const initialiseSentry = (sentryDSN, baseUrl) => {
-  if (sentryDSN) {
-    Sentry.init({
-      dsn: sentryDSN,
-      integrations: [new Integrations.BrowserTracing()],
-      environment: baseUrl,
-      tracesSampleRate: 1.0,
-    });
-  }
 };
