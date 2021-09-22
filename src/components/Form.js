@@ -36,11 +36,11 @@ const createSubmission = async (config, form) => {
 
 const retrieveExistingSubmission = async (config, form, submissionId, setSubmissionId, removeSubmissionId) => {
   let submission;
-  const response = await apiCall(`${config.baseUrl}submissions/${submissionId}`);
+  const response = await apiCall(`${config.baseUrl}submissions/${submissionId}`, {},false);
   if (!response.ok) {
-    if (response.status === 404) {
-      // If the session has expired, the user won't be able to retrieve their submission and the API will return 404.
-      // So remove the submissionId from the localStorage and start a new one.
+    if (response.status === 403) {
+      // If the session has expired, the user won't have the permission to retrieve their submission.
+      // So remove the submissionId from the localStorage and start a new session.
       removeSubmissionId();
       submission = await createSubmission(config, form);
       setSubmissionId(submission.id);
