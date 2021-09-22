@@ -29,7 +29,7 @@ const configureProductOptions = (component) => {
     dataSrc: 'url',
     data: {url, method: 'GET'},
     valueProperty: 'identifier',
-    template: '<span>{{ item.name }}</span>',
+    template: '{{ item.name }}',
     lazyLoad: false,
   });
 };
@@ -47,7 +47,7 @@ const configureLocationOptions = (component) => {
     dataSrc: 'url',
     data: {url, method: 'GET'},
     valueProperty: 'identifier',
-    template: '<span>{{ item.name }}</span>',
+    template: '{{ item.name }}',
     refreshOn: productComponentKey,
     refreshOnBlur: productComponentKey,
     clearOnRefresh: true,
