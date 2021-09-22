@@ -149,11 +149,12 @@ const humanFileSize = (size) => {
 };
 
 
-export const initialiseSentry = (sentryDns) => {
-  if (sentryDns) {
+export const initialiseSentry = (sentryDSN, baseUrl) => {
+  if (sentryDSN) {
     Sentry.init({
-      dsn: sentryDns,
+      dsn: sentryDSN,
       integrations: [new Integrations.BrowserTracing()],
+      environment: baseUrl,
       tracesSampleRate: 1.0,
     });
   }

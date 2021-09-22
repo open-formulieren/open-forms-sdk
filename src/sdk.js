@@ -27,14 +27,14 @@ Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 
 class OpenForm {
 
-  constructor( targetNode, { baseUrl, formId, basePath, lang, sentryDns } ) {
+  constructor( targetNode, { baseUrl, formId, basePath, lang, sentryDSN } ) {
     this.targetNode = targetNode;
     this.baseUrl = baseUrl;
     this.formId = formId;
     this.formObject = null;
     this.lang = lang;
 
-    initialiseSentry(sentryDns);
+    initialiseSentry(sentryDSN, baseUrl);
 
     // ensure that the basename has no trailing slash (for react router)
     let pathname = basePath || window.location.pathname;
