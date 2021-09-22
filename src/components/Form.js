@@ -9,11 +9,11 @@ import {
 
 import { ConfigContext } from 'Context';
 
-import {destroy, post, get} from 'api';
+import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
-import {FormStep, doLogicCheck} from 'components/FormStep';
+import FormStep from 'components/FormStep';
 import ProgressIndicator from 'components/ProgressIndicator';
 import { Layout, LayoutRow, LayoutColumn } from 'components/Layout';
 import RequireSubmission from 'components/RequireSubmission';
@@ -37,11 +37,6 @@ const createSubmission = async (config, form) => {
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
-  submissionStep: {
-    configuration: null,
-    data: null,
-    canSubmit: true,
-  },
   submittedSubmission: null,
   processingStatusUrl: '',
   processingError: '',
@@ -64,22 +59,6 @@ const reducer = (draft, action) => {
         submittedSubmission: action.payload.submission,
         processingStatusUrl: action.payload.processingStatusUrl,
       };
-    }
-    case 'SUBMISSION_STEP_LOADED': {
-      const {data, formStep: {configuration}, canSubmit} = action.payload;
-      // This is the context aware configuration
-      draft.submissionStep.configuration = configuration;
-      draft.submissionStep.data = data;
-      draft.submissionStep.canSubmit = canSubmit;
-      break;
-    }
-    case 'BLOCK_CURRENT_STEP_SUBMIT': {
-      draft.submissionStep.canSubmit = false;
-      break;
-    }
-    case 'SUBMISSION_DATA_CHANGED': {
-      draft.submissionStep.data = action.payload;
-      break;
     }
     case 'PROCESSING_FAILED': {
       // set the error message in the state
@@ -182,47 +161,6 @@ const reducer = (draft, action) => {
     window.location.reload();
   };
 
-  const onLoadFormStep = async (submissionStepUrl) => {
-    const stepDetail = await get(submissionStepUrl);
-    dispatch({
-      type: 'SUBMISSION_STEP_LOADED',
-      payload: stepDetail,
-    });
-  };
-
-  const onLogicCheck = async (formRef, submissionStepUrl, submissionData) => {
-    if (!submissionData) return;
-
-      dispatch({type: 'BLOCK_CURRENT_STEP_SUBMIT'});
-      const checkedSubmission = await doLogicCheck(submissionStepUrl, submissionData);
-
-      // TODO: check custom attributes for submission button control
-      const formInstance = formRef.current.instance.instance;
-
-      // we can't just dispatch this, because Formio keeps references to DOM nodes
-      // which expire when the component re-renders, and that gives React
-      // unstable_flushDiscreteUpdates warnings. However, we can update the form
-      // definition by using the ref to the underlying Formio instance.
-      formInstance.setForm(checkedSubmission.step.formStep.configuration);
-
-      // Reload the submission. This should update other steps (for example if they
-      // are not applicable.
-      dispatch({
-        type: 'SUBMISSION_LOADED',
-        payload: checkedSubmission.submission,
-      });
-
-      // Update the current submission step. This updates things like 'canSubmit'.
-      dispatch({
-        type: 'SUBMISSION_STEP_LOADED',
-        payload: checkedSubmission.step,
-      });
-  };
-
-  const onSubmissionDataChanged = (data) => {
-    dispatch({type: 'SUBMISSION_DATA_CHANGED', payload: data});
-  };
-
   const onProcessingFailure = (errorMessage) => {
     dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
     history.push('/overzicht');
@@ -263,14 +201,11 @@ const reducer = (draft, action) => {
 
             <Route path="/stap/:step" render={() => (
               <RequireSubmission
-                submission={state.submission}
                 form={form}
-                submissionStepData={state.submissionStep}
+                submission={state.submission}
+                onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
                 onStepSubmitted={onStepSubmitted}
                 onLogout={onLogout}
-                onLoadFormStep={onLoadFormStep}
-                onLogicCheck={onLogicCheck}
-                onSubmissionDataChanged={onSubmissionDataChanged}
                 component={FormStep}
               />
             )} />

@@ -62,14 +62,15 @@ export const getComponentValue = (inputValue, components, key, intl) => {
     } else if (component.type === "checkbox") {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
-      const obj = component.data.values.find(obj => obj.value === inputValue);
-      if (component.appointmentsShowProducts || component.appointmentsShowLocations) {
+      console.log(component.data);
+      if (component.appointments?.showProducts || component.appointments?.showLocations) {
         return inputValue.name;
-      } else if (component.appointmentsShowDates) {
+      } else if (component.appointments?.showDates) {
         return getFormattedDateString(intl, inputValue);
-      } else if (component.appointmentsShowTimes) {
+      } else if (component.appointments?.showTimes) {
         return getFormattedTimeString(intl, inputValue);
       } else {
+        const obj = component.data.values.find(obj => obj.value === inputValue);
         return obj ? obj.label : '';
       }
     } else if (component.type === "file") {

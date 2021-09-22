@@ -14,11 +14,14 @@ import { get } from 'api';
 import { ConfigContext } from 'Context';
 import { Form } from 'components/Form';
 import messagesNL from 'i18n';
+import { AddFetchAuth } from 'formio/plugins';
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
 // use our own template library
 Templates.current = OFLibrary;
+
+Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 
 
 class OpenForm {
