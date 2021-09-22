@@ -6,6 +6,8 @@
     "@babel/core": "7.12.3",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+    "@sentry/react": "^6.13.2",
+    "@sentry/tracing": "^6.13.2",
     "@svgr/webpack": "5.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

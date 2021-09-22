@@ -15,6 +15,7 @@ import { ConfigContext } from 'Context';
 import { Form } from 'components/Form';
 import { AddFetchAuth } from 'formio/plugins';
 import loadLocaleData from 'i18n';
+import initialiseSentry from 'sentry';
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
@@ -26,12 +27,22 @@ Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 
 class OpenForm {
 
-  constructor( targetNode, { baseUrl, formId, basePath, lang } ) {
+  constructor( targetNode, opts ) {
+    const {
+      baseUrl, formId,
+      basePath,
+      lang,
+      sentryDSN,
+      sentryEnv='',
+    } = opts;
+
     this.targetNode = targetNode;
     this.baseUrl = baseUrl;
     this.formId = formId;
     this.formObject = null;
     this.lang = lang;
+
+    initialiseSentry(sentryDSN, sentryEnv);
 
     // ensure that the basename has no trailing slash (for react router)
     let pathname = basePath || window.location.pathname;
