@@ -1,0 +1,34 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
+
+import {getBEMClassName} from 'utils';
+
+
+const Price = ({price}) => {
+  return (
+    <div className={getBEMClassName('price')}>
+      <div className={getBEMClassName('price__label')}>
+        <FormattedMessage
+          description="Label for the total price to pay"
+          defaultMessage="Total"
+        />:
+      </div>
+      <div className={getBEMClassName('price__amount')}>
+        <FormattedNumber
+          value={price}
+          style={`currency`}  // In this format because of https://github.com/formatjs/formatjs/issues/785
+          currency="EUR"
+          minimumFractionDigits={2}
+          maximumFractionDigits={2}
+        />
+      </div>
+    </div>
+  );
+};
+
+Price.propTypes = {
+  price: PropTypes.number.isRequired
+};
+
+export default Price;
