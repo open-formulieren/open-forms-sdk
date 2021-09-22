@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import AuthenticationOutage, { useDetectAuthenticationOutage } from 'components/auth/AuthenticationOutage';
@@ -71,7 +71,7 @@ LoginButtonIcons.propTypes = {
 };
 
 
-const useStartSubmission = (onFormStart) => {
+const useStartSubmission = () => {
   const query = useQuery();
   return !!query.get(START_FORM_QUERY_PARAM);
 };
@@ -85,7 +85,7 @@ const useStartSubmission = (onFormStart) => {
  * eHerkenning...)
  */
 const FormStart = ({ form, onFormStart }) => {
-  const doStart = useStartSubmission(onFormStart);
+  const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
   const hasAuthErrors = !!outagePluginId || !!authErrors;

@@ -32,10 +32,12 @@ class Select extends Formio.Components.components.select {
     if (this.component?.appointments?.showProducts || this.component?.appointments?.showLocations) {
       // For these two types of components we need to send both the identifier and name to the backend
       const value = this.getValue();
-      const selectedOption = this.selectOptions.filter(option => option.value === value)[0];
-      const formattedValue = {identifier: selectedOption.value, name: selectedOption.label};
-      // bypass events etc. (which this.setValue(...) calls!)
-      this.dataValue = formattedValue;
+      const selectedOption = this.selectOptions.find(option => option.value === value);
+      if (selectedOption) {
+        const formattedValue = {identifier: selectedOption.value, name: selectedOption.label};
+        // bypass events etc. (which this.setValue(...) calls!)
+        this.dataValue = formattedValue;
+      }
     }
     super.beforeSubmit();
   }

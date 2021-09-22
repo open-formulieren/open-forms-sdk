@@ -6,14 +6,15 @@ import {
   useHistory,
 } from 'react-router-dom';
 
-
 import { ConfigContext } from 'Context';
 
 import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
+import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
+import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
 import { Layout, LayoutRow, LayoutColumn } from 'components/Layout';
 import RequireSubmission from 'components/RequireSubmission';
@@ -33,7 +34,6 @@ const createSubmission = async (config, form) => {
   return submissionResponse.data;
 };
 
-
 const initialState = {
   config: {baseUrl: ''},
   submission: null,
@@ -48,8 +48,7 @@ const reducer = (draft, action) => {
     case 'SUBMISSION_LOADED': {
       // keep the submission instance in the state and set the current step to the
       // first step of the form.
-      const submission = action.payload;
-      draft.submission = submission;
+      draft.submission = action.payload;
       break;
     }
     case 'SUBMITTED': {
@@ -94,6 +93,23 @@ const reducer = (draft, action) => {
   const initialStateFromProps = {...initialState, config, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
 
+  const onSubmissionLoaded = (submission, next='') => {
+    dispatch({
+      type: 'SUBMISSION_LOADED',
+      payload: submission,
+    });
+    // navigate to the first step
+    const firstStepRoute = `/stap/${form.steps[0].slug}`;
+    history.push(next ? next : firstStepRoute);
+  }
+
+  // if there is an active submission still, re-load that (relevant for hard-refreshes)
+  const [
+    loading,
+    setSubmissionId,
+    removeSubmissionId
+  ] = useRecycleSubmission(form, state.submission, onSubmissionLoaded);
+
   /**
    * When the form is started, create a submission and add it to the state.
    *
@@ -102,13 +118,9 @@ const reducer = (draft, action) => {
    */
   const onFormStart = async (event) => {
     event && event.preventDefault();
-    const firstStepRoute = `/stap/${form.steps[0].slug}`;
 
     if (state.submission != null) {
-      // TODO: how should we handle this? when there's already a submission started
-      // and the user navigates back to the start page?
-      console.error("There already is an active form submission.");
-      history.push(firstStepRoute);
+      onSubmissionLoaded(state.submission);
       return;
     }
 
@@ -118,8 +130,9 @@ const reducer = (draft, action) => {
       type: 'SUBMISSION_LOADED',
       payload: submission,
     });
-
+    setSubmissionId(submission.id);
     // navigate to the first step
+    const firstStepRoute = `/stap/${form.steps[0].slug}`;
     history.push(firstStepRoute);
   };
 
@@ -141,6 +154,7 @@ const reducer = (draft, action) => {
         processingStatusUrl,
       }
     });
+    removeSubmissionId();
     history.push('/bevestiging');
   };
 
@@ -166,6 +180,12 @@ const reducer = (draft, action) => {
     dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
     history.push('/overzicht');
   };
+
+  if (loading) {
+    return (
+      <Loader modifiers={['centered']} />
+    );
+  }
 
   // render the form step if there's an active submission (and no summary)
   return (
