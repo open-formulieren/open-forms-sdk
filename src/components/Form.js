@@ -5,15 +5,16 @@ import {
   Route,
   useHistory,
 } from 'react-router-dom';
-import {useLocalStorage} from 'react-use';
 
 import { ConfigContext } from 'Context';
 
-import {destroy, post, apiCall} from 'api';
+import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
+import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
+import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
 import { Layout, LayoutRow, LayoutColumn } from 'components/Layout';
 import RequireSubmission from 'components/RequireSubmission';
@@ -31,25 +32,6 @@ import {useIntl} from 'react-intl';
 const createSubmission = async (config, form) => {
   const submissionResponse = await post(`${config.baseUrl}submissions`, {form: form.url});
   return submissionResponse.data;
-};
-
-
-const retrieveExistingSubmission = async (config, form, submissionId, setSubmissionId, removeSubmissionId) => {
-  let submission;
-  const response = await apiCall(`${config.baseUrl}submissions/${submissionId}`, {},false);
-  if (!response.ok) {
-    if (response.status === 403) {
-      // If the session has expired, the user won't have the permission to retrieve their submission.
-      // So remove the submissionId from the localStorage and start a new session.
-      removeSubmissionId();
-      submission = await createSubmission(config, form);
-      setSubmissionId(submission.id);
-    }
-  } else {
-    submission = await response.json();
-  }
-
-  return submission;
 };
 
 const initialState = {
@@ -106,11 +88,27 @@ const reducer = (draft, action) => {
   // extract the declared properties and configuration
   const {steps} = form;
   const config = useContext(ConfigContext);
-  const [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
 
   // load the state management/reducer
   const initialStateFromProps = {...initialState, config, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
+
+  const onSubmissionLoaded = (submission, next='') => {
+    dispatch({
+      type: 'SUBMISSION_LOADED',
+      payload: submission,
+    });
+    // navigate to the first step
+    const firstStepRoute = `/stap/${form.steps[0].slug}`;
+    history.push(next ? next : firstStepRoute);
+  }
+
+  // if there is an active submission still, re-load that (relevant for hard-refreshes)
+  const [
+    loading,
+    setSubmissionId,
+    removeSubmissionId
+  ] = useRecycleSubmission(form, state.submission, onSubmissionLoaded);
 
   /**
    * When the form is started, create a submission and add it to the state.
@@ -120,23 +118,21 @@ const reducer = (draft, action) => {
    */
   const onFormStart = async (event) => {
     event && event.preventDefault();
-    const firstStepRoute = `/stap/${form.steps[0].slug}`;
-    const {config} = state;
 
-    let submission;
-    if (submissionId) {
-      submission = await retrieveExistingSubmission(config, form, submissionId, setSubmissionId, removeSubmissionId);
-    } else {
-      submission = await createSubmission(config, form);
-      setSubmissionId(submission.id);
+    if (state.submission != null) {
+      onSubmissionLoaded(state.submission);
+      return;
     }
 
+    const {config} = state;
+    const submission = await createSubmission(config, form);
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
     });
-
+    setSubmissionId(submission.id);
     // navigate to the first step
+    const firstStepRoute = `/stap/${form.steps[0].slug}`;
     history.push(firstStepRoute);
   };
 
@@ -184,6 +180,12 @@ const reducer = (draft, action) => {
     dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
     history.push('/overzicht');
   };
+
+  if (loading) {
+    return (
+      <Loader modifiers={['centered']} />
+    );
+  }
 
   // render the form step if there's an active submission (and no summary)
   return (
