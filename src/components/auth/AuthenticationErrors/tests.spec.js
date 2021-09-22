@@ -23,7 +23,7 @@ it('Renders DigiD default error', () => {
     render(<AuthenticationErrors parameters={{'_digid-message': 'error'}} />, container);
   });
 
-  expect(container.textContent).toBe('Er is een fout opgetreden bij het inloggen met DigiD. Probeer het later opnieuw.');
+  expect(container.textContent).toBe('Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.');
 });
 
 

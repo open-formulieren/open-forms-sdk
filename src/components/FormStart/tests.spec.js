@@ -47,7 +47,7 @@ it('Form start does not start if there are auth errors', () => {
   const onFormStart = jest.fn();
 
   const testQueries = {
-    '_digid-message=error': 'Er is een fout opgetreden bij het inloggen met DigiD. Probeer het later opnieuw.',
+    '_digid-message=error': 'Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.',
     '_digid-message=login-cancelled': 'Je hebt het inloggen met DigiD geannuleerd.',
     '_eherkenning-message=error': 'Er is een fout opgetreden bij het inloggen met EHerkenning. Probeer het later opnieuw.',
     '_eherkenning-message=login-cancelled': 'Je hebt het inloggen met EHerkenning geannuleerd.',
