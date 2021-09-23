@@ -17,6 +17,12 @@
       "value": "Pay now"
     }
   ],
+  "9R/+1J": [
+    {
+      "type": 0,
+      "value": "Appointment cancelled"
+    }
+  ],
   "DvlDIB": [
     {
       "type": 0,
@@ -59,12 +65,6 @@
       "value": "Your email address"
     }
   ],
-  "appointmentCancelledSuccess": [
-    {
-      "type": 0,
-      "value": "Uw afspraak is geannuleerd"
-    }
-  ],
   "c3jsXU": [
     {
       "type": 0,
@@ -85,6 +85,12 @@
     {
       "type": 0,
       "value": "Please hold on while we're processing your submission."
+    }
+  ],
+  "jYh8Nr": [
+    {
+      "type": 0,
+      "value": "Your appointment has been cancelled"
     }
   ],
   "senRv3": [

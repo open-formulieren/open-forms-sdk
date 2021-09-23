@@ -14,6 +14,11 @@
     "description": "Start payment button",
     "originalDefault": "Pay now"
   },
+  "9R/+1J": {
+    "defaultMessage": "Appointment cancelled",
+    "description": "Appointment cancelled title",
+    "originalDefault": "Appointment cancelled"
+  },
   "DvlDIB": {
     "defaultMessage": "Are you sure that you want to logout?",
     "description": "log out confirmation prompt",
@@ -49,10 +54,6 @@
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
   },
-  "appointmentCancelledSuccess": {
-    "defaultMessage": "Uw afspraak is geannuleerd",
-    "originalDefault": "Uw afspraak is geannuleerd"
-  },
   "c3jsXU": {
     "defaultMessage": "Bevestiging: {reference}",
     "description": "On succesful completion title",
@@ -67,6 +68,11 @@
     "defaultMessage": "Please hold on while we're processing your submission.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
+  },
+  "jYh8Nr": {
+    "defaultMessage": "Your appointment has been cancelled",
+    "description": "Appointment cancellated body",
+    "originalDefault": "Your appointment has been cancelled"
   },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
