@@ -17,7 +17,7 @@ const Price = ({price}) => {
       <div className={getBEMClassName('price__amount')}>
         <FormattedNumber
           value={price}
-          style={`currency`}  // In this format because of https://github.com/formatjs/formatjs/issues/785
+          style="currency"
           currency="EUR"
           minimumFractionDigits={2}
           maximumFractionDigits={2}
