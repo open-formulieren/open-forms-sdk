@@ -14,6 +14,7 @@ import LogoutButton from 'components/LogoutButton';
 import PrivacyCheckbox from 'components/PrivacyCheckbox';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Price from 'components/Price';
+import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import { flattenComponents } from 'utils';
 
@@ -25,12 +26,6 @@ const initialState = {
     privacyLabel: '',
     policyAccepted: false,
   },
-  product: {
-    uuid: '',
-    url: '',
-    name: '',
-    price: '',
-  }
 };
 
 const reducer = (draft, action) => {
@@ -41,10 +36,6 @@ const reducer = (draft, action) => {
     }
     case 'PRIVACY_POLICY_TOGGLE': {
       draft.privacy.policyAccepted = !draft.privacy.policyAccepted;
-      break;
-    }
-    case 'PRODUCT_LOADED': {
-      draft.product = {...action.payload, price: parseFloat(action.payload.price)};
       break;
     }
     default: {
@@ -84,34 +75,28 @@ const getPrivacyPolicyInfo = async (origin) => {
   return await get(privacyPolicyUrl);
 };
 
-const getProductInfo = async (url) => {
-  if (!url) return;
-
-  return await get(url);
-};
-
-
 const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const history = useHistory();
+
+  const refreshedSubmission = useRefreshSubmission(submission);
+
   const {loading, value: submissionSteps, error} = useAsync(
     async () => {
-      const submissionUrl = new URL(submission.url);
+      const submissionUrl = new URL(refreshedSubmission.url);
 
       let promises = [
-        loadStepsData(submission),
+        loadStepsData(refreshedSubmission),
         getPrivacyPolicyInfo(submissionUrl.origin),
-        getProductInfo(form.product),
       ];
 
-      const [submissionSteps, privacyInfo, productInfo] = await Promise.all(promises);
+      const [submissionSteps, privacyInfo] = await Promise.all(promises);
 
       dispatch({type: 'PRIVACY_POLICY_LOADED', payload: privacyInfo});
-      if (productInfo) dispatch({type: 'PRODUCT_LOADED', payload: productInfo});
 
       return submissionSteps;
     },
-    [submission]
+    [refreshedSubmission]
   );
 
   const lastStep = form.steps[form.steps.length - 1];
@@ -144,7 +129,11 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
             editStepText={form.literals.changeText.resolved}
           />
         ))}
-        { state.product.price ? <Price price={state.product.price} /> : null }
+        {
+          refreshedSubmission.payment.isRequired
+          ? <Price price={refreshedSubmission.payment.amount} />
+          : null
+        }
         {
           !loading && state.privacy.requiresPrivacyConsent ?
             <PrivacyCheckbox

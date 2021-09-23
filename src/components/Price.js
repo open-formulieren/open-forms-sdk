@@ -28,7 +28,7 @@ const Price = ({price}) => {
 };
 
 Price.propTypes = {
-  price: PropTypes.number.isRequired
+  price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default Price;

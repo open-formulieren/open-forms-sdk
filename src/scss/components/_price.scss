@@ -5,11 +5,14 @@
 
 .#{prefix(price)} {
   @include body;
-	display: flex;
+  @include margin(true, $properties: (padding-top, padding-bottom));
+
+  display: flex;
+  justify-content: flex-end;
 	border-top-color: $color-gray-darker;
 	border-top-style: solid;
 	border-top-width: thin;
-	padding: 1.5em 0;
+
 
   &__amount {
     padding-left: 0.5em;
