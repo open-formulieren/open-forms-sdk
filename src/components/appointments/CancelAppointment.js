@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FormattedDate, FormattedMessage } from 'react-intl';
-import { post } from 'api';
+import classNames from 'classnames';
 
+import { post } from 'api';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -11,6 +12,7 @@ import Label from 'components/Label';
 import HelpText from 'components/HelpText';
 import Input from 'components/Input';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
+import ValidationErrors from 'components/ValidationErrors';
 import {ConfigContext} from 'Context';
 import useQuery from 'hooks/useQuery';
 import {getBEMClassName} from 'utils';
@@ -21,6 +23,7 @@ const CancelAppointment = () => {
   const queryParams = useQuery();
 
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState([]);
   const [failed, setFailed] = useState(false);
 
   // validate the necessary information to know which submission we are dealing with
@@ -57,19 +60,45 @@ const CancelAppointment = () => {
   const onSubmit = async (event) => {
     event && event.preventDefault();
 
+    setErrors([]);
+
     const endpoint = `${baseUrl}appointments/${submissionId}/cancel`;
     const response = await post(endpoint, {email});
-    // TODO: properly show validation errors!
+
     if (!response.ok) {
-      setFailed(true);
+      if (response.status === 400) {
+        const invalidParams = response.data.invalidParams || [];
+        const errors = invalidParams.map(invalidParam => invalidParam.reason);
+        setErrors(errors);
+      } else {
+        setFailed(true);
+      }
       return;
     }
     history.push("/afspraak-annuleren/succes");
   };
 
+  const componentClassName = classNames(
+    getBEMClassName('form-control'),
+    {'formio-error-wrapper': errors.length > 0},
+  );
+
   return (
     <Card title={<FormattedMessage description="Cancel appointment title" defaultMessage="Cancel appointment" />}>
         <Body component="form" onSubmit={onSubmit}>
+
+          {
+            failed
+            ? (
+              <ErrorMessage>
+                <FormattedMessage
+                  description="Appointment cancellation error message"
+                  defaultMessage="Appointment cancellation failed"
+                />
+              </ErrorMessage>
+            )
+            : null
+          }
 
           <Body modifiers={['big']}>
             <FormattedMessage
@@ -85,7 +114,9 @@ out your email address for verification purposes.`}
             />
           </Body>
 
-          <div className={getBEMClassName('form-control')}>
+          <div className={componentClassName}>
+
+            <ValidationErrors errors={errors} />
 
             <Label isRequired >
               <FormattedMessage
@@ -93,7 +124,10 @@ out your email address for verification purposes.`}
                 defaultMessage="Your email address" />
             </Label>
 
-            <Input type="email" value={email} onChange={event => setEmail(event.target.value)} />
+            <Input type="email" value={email} onChange={event => {
+              setEmail(event.target.value);
+              setErrors([]);
+            }} />
 
             <HelpText>
               <FormattedMessage
@@ -103,19 +137,6 @@ out your email address for verification purposes.`}
             </HelpText>
 
           </div>
-
-          {
-            failed
-            ? (
-              <ErrorMessage>
-                <FormattedMessage
-                  description="Appointment cancellation error message"
-                  defaultMessage="Appointment cancellation failed"
-                />
-              </ErrorMessage>
-            )
-            : null
-          }
 
           <Toolbar modifiers={['bottom', 'reverse']}>
             <ToolbarList>

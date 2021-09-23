@@ -3,6 +3,7 @@
 
 .#{prefix('alert')} {
   @include margin(true, $properties: padding);
+  @include margin('auto', $properties: margin-bottom);
   display: flex;
   justify-content: flex-start;
 
