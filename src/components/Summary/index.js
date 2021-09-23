@@ -13,6 +13,8 @@ import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
 import PrivacyCheckbox from 'components/PrivacyCheckbox';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
+import Price from 'components/Price';
+import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import { flattenComponents } from 'utils';
 
@@ -73,25 +75,28 @@ const getPrivacyPolicyInfo = async (origin) => {
   return await get(privacyPolicyUrl);
 };
 
-
 const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const history = useHistory();
+
+  const refreshedSubmission = useRefreshSubmission(submission);
+
   const {loading, value: submissionSteps, error} = useAsync(
     async () => {
-      const submissionUrl = new URL(submission.url);
+      const submissionUrl = new URL(refreshedSubmission.url);
 
-      const promises = [
-        loadStepsData(submission),
+      let promises = [
+        loadStepsData(refreshedSubmission),
         getPrivacyPolicyInfo(submissionUrl.origin),
       ];
 
       const [submissionSteps, privacyInfo] = await Promise.all(promises);
+
       dispatch({type: 'PRIVACY_POLICY_LOADED', payload: privacyInfo});
 
       return submissionSteps;
     },
-    [submission]
+    [refreshedSubmission]
   );
 
   const lastStep = form.steps[form.steps.length - 1];
@@ -124,6 +129,11 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
             editStepText={form.literals.changeText.resolved}
           />
         ))}
+        {
+          refreshedSubmission.payment.isRequired
+          ? <Price price={refreshedSubmission.payment.amount} />
+          : null
+        }
         {
           !loading && state.privacy.requiresPrivacyConsent ?
             <PrivacyCheckbox

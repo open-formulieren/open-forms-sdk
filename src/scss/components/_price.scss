@@ -1,0 +1,20 @@
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix(price)} {
+  @include body;
+  @include margin(true, $properties: (padding-top, padding-bottom));
+
+  display: flex;
+  justify-content: flex-end;
+	border-top-color: $color-gray-darker;
+	border-top-style: solid;
+	border-top-width: thin;
+
+
+  &__amount {
+    padding-left: 0.5em;
+  }
+}

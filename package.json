@@ -97,7 +97,19 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "react/style-prop-object": [
+        "error",
+        {
+          "allow": [
+            "FormattedNumber",
+            "FormattedDateParts",
+            "FormattedRelativeTime"
+          ]
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
