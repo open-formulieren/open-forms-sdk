@@ -17,6 +17,7 @@ import Price from 'components/Price';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import { flattenComponents } from 'utils';
+import {findPreviousApplicableStep} from 'components/utils';
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
 
@@ -26,6 +27,7 @@ const initialState = {
     privacyLabel: '',
     policyAccepted: false,
   },
+  error: ''
 };
 
 const reducer = (draft, action) => {
@@ -36,6 +38,10 @@ const reducer = (draft, action) => {
     }
     case 'PRIVACY_POLICY_TOGGLE': {
       draft.privacy.policyAccepted = !draft.privacy.policyAccepted;
+      break;
+    }
+    case 'ERROR': {
+      draft.error = action.payload;
       break;
     }
     default: {
@@ -64,7 +70,8 @@ const loadStepsData = async (submission) => {
 const completeSubmission = async (submission) => {
     const response = await post(`${submission.url}/_complete`);
     if (!response.ok) {
-        console.error(response.data);
+      console.error(response.data);
+      throw new Error(response.data.title);
     } else {
       return response.data;
     }
@@ -99,9 +106,6 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
     [refreshedSubmission]
   );
 
-  const lastStep = form.steps[form.steps.length - 1];
-  const prevPageUrl = `/stap/${lastStep.slug}`;
-
   if (error) {
     console.error(error);
   }
@@ -110,14 +114,27 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const {statusUrl} = await completeSubmission(submission);
-    onConfirm(statusUrl);
+    try {
+      const {statusUrl} = await completeSubmission(submission);
+      onConfirm(statusUrl);
+    } catch (e) {
+      dispatch({type: 'ERROR', payload: e.message});
+    }
+  };
+
+  const onPrevPage = (event) => {
+    event.preventDefault();
+    const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
+    const prevStepSlug = form.steps[previousStepIndex]?.slug;
+    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+    history.push(navigateTo);
   };
 
   return (
     <Card title="Controleer en bevestig">
 
       { processingError ? <ErrorMessage>{processingError}</ErrorMessage> : null }
+      { state.error ? <ErrorMessage>{state.error}</ErrorMessage> : null }
 
       <form onSubmit={onSubmit}>
         { loading ? <Loader modifiers={['centered']} /> : null }
@@ -148,11 +165,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
             <Button
               variant="anchor"
               component="a"
-              href={prevPageUrl}
-              onClick={event => {
-                event.preventDefault();
-                history.push(prevPageUrl);
-              }}
+              onClick={onPrevPage}
             >{form.literals.previousText.resolved}</Button>
           </ToolbarList>
           <ToolbarList>

@@ -22,6 +22,7 @@ import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
 import Types from 'types';
 import {useIntl} from 'react-intl';
+import {findNextApplicableStep} from 'components/utils';
 
 /**
  * Create a submission instance from a given form instance
@@ -137,10 +138,10 @@ const reducer = (draft, action) => {
   };
 
   const onStepSubmitted = async (formStep) => {
-    const stepIndex = form.steps.indexOf(formStep);
-    // TODO: there *may* be optional steps, so completion/summary can already get
-    // triggered earlier, potentially. This will need to be incorporated later.
-    const nextStep = form.steps[stepIndex + 1]; // will be undefined if it's the last step
+    const currentStepIndex = form.steps.indexOf(formStep);
+
+    const nextStepIndex = findNextApplicableStep(currentStepIndex, state.submission);
+    const nextStep = form.steps[nextStepIndex]; // will be undefined if it's the last step
 
     const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
     history.push(nextUrl);
