@@ -16,7 +16,7 @@ import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
-import { Layout, LayoutRow, LayoutColumn } from 'components/Layout';
+import { LayoutColumn } from 'components/Layout';
 import RequireSubmission from 'components/RequireSubmission';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
@@ -183,74 +183,73 @@ const reducer = (draft, action) => {
 
   if (loading) {
     return (
-      <Loader modifiers={['centered']} />
+      <LayoutColumn>
+        <Loader modifiers={['centered']} />
+      </LayoutColumn>
     );
   }
 
   // render the form step if there's an active submission (and no summary)
   return (
-    <Layout>
-      <LayoutRow>
-        <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>
+    <>
+      <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>
 
-          {/* Route the correct page based on URL */}
-          <Switch>
+        {/* Route the correct page based on URL */}
+        <Switch>
 
-            <Route exact path="/">
-              <ErrorBoundary>
-                <FormStart form={form} onFormStart={onFormStart} />
-              </ErrorBoundary>
-            </Route>
+          <Route exact path="/">
+            <ErrorBoundary>
+              <FormStart form={form} onFormStart={onFormStart} />
+            </ErrorBoundary>
+          </Route>
 
-            <Route exact path="/overzicht">
-              <RequireSubmission
-                submission={state.submission}
-                form={form}
-                processingError={state.processingError}
-                onConfirm={onSubmitForm}
-                onLogout={onLogout}
-                component={Summary} />
-            </Route>
+          <Route exact path="/overzicht">
+            <RequireSubmission
+              submission={state.submission}
+              form={form}
+              processingError={state.processingError}
+              onConfirm={onSubmitForm}
+              onLogout={onLogout}
+              component={Summary} />
+          </Route>
 
-            <Route exact path="/bevestiging">
-              <RequireSubmission
-                submission={state.submittedSubmission}
-                statusUrl={state.processingStatusUrl}
-                onFailure={onProcessingFailure}
-                component={SubmissionConfirmation} />
-            </Route>
+          <Route exact path="/bevestiging">
+            <RequireSubmission
+              submission={state.submittedSubmission}
+              statusUrl={state.processingStatusUrl}
+              onFailure={onProcessingFailure}
+              component={SubmissionConfirmation} />
+          </Route>
 
-            <Route path="/stap/:step" render={() => (
-              <RequireSubmission
-                form={form}
-                submission={state.submission}
-                onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
-                onStepSubmitted={onStepSubmitted}
-                onLogout={onLogout}
-                component={FormStep}
-              />
-            )} />
+          <Route path="/stap/:step" render={() => (
+            <RequireSubmission
+              form={form}
+              submission={state.submission}
+              onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
+              onStepSubmitted={onStepSubmitted}
+              onLogout={onLogout}
+              component={FormStep}
+            />
+          )} />
 
-          </Switch>
+        </Switch>
 
-        </LayoutColumn>
+      </LayoutColumn>
 
-        {
-          form.showProgressIndicator
-          ? (
-            <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
-              <ProgressIndicator
-                title={form.name}
-                steps={form.steps}
-                submission={state.submission}
-              />
-            </LayoutColumn>
-          )
-          : null
-        }
-
-      </LayoutRow>
-    </Layout>
+      {
+        form.showProgressIndicator
+        ? (
+          <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
+            <ProgressIndicator
+              title={form.name}
+              steps={form.steps}
+              submission={state.submission}
+            />
+          </LayoutColumn>
+        )
+        : null
+      }
+    </>
   );
 };
 
@@ -258,4 +257,4 @@ Form.propTypes = {
   form: Types.Form.isRequired,
 };
 
-export { Form };
+export default Form;

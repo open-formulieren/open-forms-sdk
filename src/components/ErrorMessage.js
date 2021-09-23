@@ -15,7 +15,7 @@ const ErrorMessage = ({ children }) => {
       <span className={getBEMClassName('alert__icon', ['wide'])}>
         <FAIcon icon="exclamation-circle" />
       </span>
-      <Body>
+      <Body component="div">
         {children}
       </Body>
     </div>
@@ -25,6 +25,5 @@ const ErrorMessage = ({ children }) => {
 ErrorMessage.propTypes = {
   children: PropTypes.node,
 };
-
 
 export default ErrorMessage;

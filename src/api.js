@@ -8,6 +8,7 @@ const apiCall = async (url, opts, alertOnPermissionDenied=true) => {
   if (response.status === 403 && alertOnPermissionDenied) {
     const data = await response.json();
     alert(data.detail);
+    response.json = () => Promise.resolve(data);
   }
   return response;
 };
