@@ -4,15 +4,18 @@ import PropTypes from 'prop-types';
 import {getBEMClassName} from 'utils';
 
 
-const HelpText = ({ text }) => {
-
-  return (
-    <p className={getBEMClassName('help-text')}>{text}</p>
-  )
-};
+const HelpText = ({ children, component: Component='div' }) => (
+  <Component className={getBEMClassName('help-text')}>
+    {children}
+  </Component>
+);
 
 HelpText.propTypes = {
-  text: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  children: PropTypes.node,
+  component: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.elementType,
+  ]),
 };
 
 export default HelpText;

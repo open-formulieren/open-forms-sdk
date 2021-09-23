@@ -12,7 +12,7 @@ import './styles.scss';
 
 import { get } from 'api';
 import { ConfigContext } from 'Context';
-import { Form } from 'components/Form';
+import App from 'components/App';
 import { AddFetchAuth } from 'formio/plugins';
 import loadLocaleData from 'i18n';
 import initialiseSentry from 'sentry';
@@ -75,7 +75,7 @@ class OpenForm {
         <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
           <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
             <Router basename={this.basePath}>
-              <Form form={this.formObject} />
+              <App form={this.formObject} />
             </Router>
           </ConfigContext.Provider>
         </IntlProvider>

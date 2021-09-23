@@ -4,6 +4,11 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
+  "5uh2hS": {
+    "defaultMessage": "Appointment cancellation failed",
+    "description": "Appointment cancellation error message",
+    "originalDefault": "Appointment cancellation failed"
+  },
   "6sTcEM": {
     "defaultMessage": "Pay now",
     "description": "Start payment button",
@@ -19,6 +24,11 @@
     "description": "Download report PDF link title",
     "originalDefault": "Download PDF"
   },
+  "HGx1ny": {
+    "defaultMessage": "Cancel appointment",
+    "description": "Cancel appointment title",
+    "originalDefault": "Cancel appointment"
+  },
   "LwpSC/": {
     "defaultMessage": "Total",
     "description": "Label for the total price to pay",
@@ -28,6 +38,20 @@
     "defaultMessage": "Payment is required for this product",
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
+  },
+  "VaNtPf": {
+    "defaultMessage": "Cancel appointment",
+    "description": "Cancel appointment submit button",
+    "originalDefault": "Cancel appointment"
+  },
+  "a8QRYP": {
+    "defaultMessage": "Your email address",
+    "description": "Appointment cancellation email field label",
+    "originalDefault": "Your email address"
+  },
+  "appointmentCancelledSuccess": {
+    "defaultMessage": "Uw afspraak is geannuleerd",
+    "originalDefault": "Uw afspraak is geannuleerd"
   },
   "c3jsXU": {
     "defaultMessage": "Bevestiging: {reference}",
@@ -43,5 +67,25 @@
     "defaultMessage": "Please hold on while we're processing your submission.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
+  },
+  "senRv3": {
+    "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
+    "description": "Appointment cancellation body text",
+    "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
+  },
+  "tohkCS": {
+    "defaultMessage": "The email address where you received the appointment confirmation email.",
+    "description": "Cancel appointment email field help text",
+    "originalDefault": "The email address where you received the appointment confirmation email."
+  },
+  "v2UpAF": {
+    "defaultMessage": "Failed to determine the appointment",
+    "description": "Appointment cancellation missing submission ID query string parameter",
+    "originalDefault": "Failed to determine the appointment"
+  },
+  "vIfXbq": {
+    "defaultMessage": "Failed to determine the appointment time",
+    "description": "Appointment cancellation missing time query string parameter",
+    "originalDefault": "Failed to determine the appointment time"
   }
 }

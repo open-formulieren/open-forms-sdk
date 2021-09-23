@@ -5,6 +5,12 @@
       "value": "Uitloggen"
     }
   ],
+  "5uh2hS": [
+    {
+      "type": 0,
+      "value": "Appointment cancellation failed"
+    }
+  ],
   "6sTcEM": [
     {
       "type": 0,
@@ -23,6 +29,12 @@
       "value": "Download PDF"
     }
   ],
+  "HGx1ny": [
+    {
+      "type": 0,
+      "value": "Cancel appointment"
+    }
+  ],
   "LwpSC/": [
     {
       "type": 0,
@@ -33,6 +45,24 @@
     {
       "type": 0,
       "value": "Payment is required for this product"
+    }
+  ],
+  "VaNtPf": [
+    {
+      "type": 0,
+      "value": "Cancel appointment"
+    }
+  ],
+  "a8QRYP": [
+    {
+      "type": 0,
+      "value": "Your email address"
+    }
+  ],
+  "appointmentCancelledSuccess": [
+    {
+      "type": 0,
+      "value": "Uw afspraak is geannuleerd"
     }
   ],
   "c3jsXU": [
@@ -55,6 +85,58 @@
     {
       "type": 0,
       "value": "Please hold on while we're processing your submission."
+    }
+  ],
+  "senRv3": [
+    {
+      "type": 0,
+      "value": "You're about to cancel your appointment on "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "date"
+        }
+      ],
+      "type": 8,
+      "value": "b"
+    },
+    {
+      "type": 0,
+      "value": " at "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "time"
+        }
+      ],
+      "type": 8,
+      "value": "b"
+    },
+    {
+      "type": 0,
+      "value": ". Please fill out your email address for verification purposes."
+    }
+  ],
+  "tohkCS": [
+    {
+      "type": 0,
+      "value": "The email address where you received the appointment confirmation email."
+    }
+  ],
+  "v2UpAF": [
+    {
+      "type": 0,
+      "value": "Failed to determine the appointment"
+    }
+  ],
+  "vIfXbq": [
+    {
+      "type": 0,
+      "value": "Failed to determine the appointment time"
     }
   ]
 }

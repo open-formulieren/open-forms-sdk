@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import {getBEMClassName} from 'utils';
 
 
-const Label = ({ text, isRequired=false }) => {
+const Label = ({ children, isRequired=false }) => {
 
-  let className = getBEMClassName('label');
-  if (isRequired) {
-    className = className + ' field-required';
-  }
+  const className = classNames(
+    getBEMClassName('label'),
+    {'field-required': isRequired},
+  );
 
   return (
-    <label className={className}>{text}</label>
+    <label className={className}>
+      {children}
+    </label>
   )
 };
 
 Label.propTypes = {
-  text: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  children: PropTypes.node,
   isRequired: PropTypes.bool,
 };
 

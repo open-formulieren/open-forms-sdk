@@ -3,11 +3,10 @@ import React from 'react';
 import {getBEMClassName} from 'utils';
 
 
-const Input = ({ ...extra }) => {
-
-  return (
-    <input className={getBEMClassName("input")} {...extra}/>
-  )
-};
+const Input = ({ ...extra }) => (
+  <div>
+    <input className={getBEMClassName("input")} {...extra} />
+  </div>
+);
 
 export default Input;
