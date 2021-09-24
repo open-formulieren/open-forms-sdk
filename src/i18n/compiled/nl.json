@@ -8,64 +8,64 @@
   "5uh2hS": [
     {
       "type": 0,
-      "value": "Appointment cancellation failed"
+      "value": "Afspraak annuleren mislukt"
     }
   ],
   "6sTcEM": [
     {
       "type": 0,
-      "value": "Pay now"
+      "value": "Nu betalen"
     }
   ],
   "9R/+1J": [
     {
       "type": 0,
-      "value": "Appointment cancelled"
+      "value": "Afspraak geannuleerd"
     }
   ],
   "DvlDIB": [
     {
       "type": 0,
-      "value": "Are you sure that you want to logout?"
+      "value": "Weet u zeker dat u wilt uitloggen?"
     }
   ],
   "E4h5vK": [
     {
       "type": 0,
-      "value": "Download PDF"
+      "value": "Download uw inzending als PDF document"
     }
   ],
   "HGx1ny": [
     {
       "type": 0,
-      "value": "Cancel appointment"
+      "value": "Afspraak annuleren"
     }
   ],
   "LwpSC/": [
     {
       "type": 0,
-      "value": "Total"
+      "value": "Totaal"
     }
   ],
   "PCFPnE": [
     {
       "type": 0,
-      "value": "Payment is required for this product"
+      "value": "Voor dit product is betaling vereist"
     }
   ],
   "VaNtPf": [
     {
       "type": 0,
-      "value": "Cancel appointment"
+      "value": "Afspraak annuleren"
     }
   ],
   "a8QRYP": [
     {
       "type": 0,
-      "value": "Your email address"
+      "value": "Uw e-mailadres"
     }
   ],
-  "c3jsXU": [
+  "bCGJi9": [
     {
       "type": 0,
       "value": "Bevestiging: "
@@ -78,25 +78,25 @@
   "ertoXR": [
     {
       "type": 0,
-      "value": "Processing..."
+      "value": "Bezig..."
     }
   ],
   "fWjfVm": [
     {
       "type": 0,
-      "value": "Please hold on while we're processing your submission."
+      "value": "Een moment geduld alstublieft terwijl wij uw inzending verwerken."
     }
   ],
   "jYh8Nr": [
     {
       "type": 0,
-      "value": "Your appointment has been cancelled"
+      "value": "Uw afspraak is geannuleerd"
     }
   ],
   "senRv3": [
     {
       "type": 0,
-      "value": "You're about to cancel your appointment on "
+      "value": "U staat op het punt uw afspraak op "
     },
     {
       "children": [
@@ -110,7 +110,7 @@
     },
     {
       "type": 0,
-      "value": " at "
+      "value": " om "
     },
     {
       "children": [
@@ -124,25 +124,25 @@
     },
     {
       "type": 0,
-      "value": ". Please fill out your email address for verification purposes."
+      "value": " te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden."
     }
   ],
   "tohkCS": [
     {
       "type": 0,
-      "value": "The email address where you received the appointment confirmation email."
+      "value": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen."
     }
   ],
   "v2UpAF": [
     {
       "type": 0,
-      "value": "Failed to determine the appointment"
+      "value": "Het systeem kon de afspraak niet vinden"
     }
   ],
   "vIfXbq": [
     {
       "type": 0,
-      "value": "Failed to determine the appointment time"
+      "value": "Het systeem kon de afspraak niet vinden"
     }
   ]
 }

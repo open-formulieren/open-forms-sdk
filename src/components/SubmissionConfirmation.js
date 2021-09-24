@@ -123,7 +123,7 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
     <>
       <Card title={<FormattedMessage
                      description="On succesful completion title"
-                     defaultMessage="Bevestiging: {reference}"
+                     defaultMessage="Confirmation: {reference}"
                      values={{reference: publicReference}}
                    />}>
 

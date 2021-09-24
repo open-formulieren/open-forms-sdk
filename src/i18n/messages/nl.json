@@ -5,92 +5,92 @@
     "originalDefault": "Log out"
   },
   "5uh2hS": {
-    "defaultMessage": "Appointment cancellation failed",
+    "defaultMessage": "Afspraak annuleren mislukt",
     "description": "Appointment cancellation error message",
     "originalDefault": "Appointment cancellation failed"
   },
   "6sTcEM": {
-    "defaultMessage": "Pay now",
+    "defaultMessage": "Nu betalen",
     "description": "Start payment button",
     "originalDefault": "Pay now"
   },
   "9R/+1J": {
-    "defaultMessage": "Appointment cancelled",
+    "defaultMessage": "Afspraak geannuleerd",
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
   "DvlDIB": {
-    "defaultMessage": "Are you sure that you want to logout?",
+    "defaultMessage": "Weet u zeker dat u wilt uitloggen?",
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
   },
   "E4h5vK": {
-    "defaultMessage": "Download PDF",
+    "defaultMessage": "Download uw inzending als PDF document",
     "description": "Download report PDF link title",
     "originalDefault": "Download PDF"
   },
   "HGx1ny": {
-    "defaultMessage": "Cancel appointment",
+    "defaultMessage": "Afspraak annuleren",
     "description": "Cancel appointment title",
     "originalDefault": "Cancel appointment"
   },
   "LwpSC/": {
-    "defaultMessage": "Total",
+    "defaultMessage": "Totaal",
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
   },
   "PCFPnE": {
-    "defaultMessage": "Payment is required for this product",
+    "defaultMessage": "Voor dit product is betaling vereist",
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
   },
   "VaNtPf": {
-    "defaultMessage": "Cancel appointment",
+    "defaultMessage": "Afspraak annuleren",
     "description": "Cancel appointment submit button",
     "originalDefault": "Cancel appointment"
   },
   "a8QRYP": {
-    "defaultMessage": "Your email address",
+    "defaultMessage": "Uw e-mailadres",
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
   },
-  "c3jsXU": {
+  "bCGJi9": {
     "defaultMessage": "Bevestiging: {reference}",
     "description": "On succesful completion title",
-    "originalDefault": "Bevestiging: {reference}"
+    "originalDefault": "Confirmation: {reference}"
   },
   "ertoXR": {
-    "defaultMessage": "Processing...",
+    "defaultMessage": "Bezig...",
     "description": "Checking background processing status title",
     "originalDefault": "Processing..."
   },
   "fWjfVm": {
-    "defaultMessage": "Please hold on while we're processing your submission.",
+    "defaultMessage": "Een moment geduld alstublieft terwijl wij uw inzending verwerken.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
   },
   "jYh8Nr": {
-    "defaultMessage": "Your appointment has been cancelled",
+    "defaultMessage": "Uw afspraak is geannuleerd",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
   },
   "senRv3": {
-    "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
+    "defaultMessage": "U staat op het punt uw afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden.",
     "description": "Appointment cancellation body text",
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
   },
   "tohkCS": {
-    "defaultMessage": "The email address where you received the appointment confirmation email.",
+    "defaultMessage": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen.",
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
   },
   "v2UpAF": {
-    "defaultMessage": "Failed to determine the appointment",
+    "defaultMessage": "Het systeem kon de afspraak niet vinden",
     "description": "Appointment cancellation missing submission ID query string parameter",
     "originalDefault": "Failed to determine the appointment"
   },
   "vIfXbq": {
-    "defaultMessage": "Failed to determine the appointment time",
+    "defaultMessage": "Het systeem kon de afspraak niet vinden",
     "description": "Appointment cancellation missing time query string parameter",
     "originalDefault": "Failed to determine the appointment time"
   }
