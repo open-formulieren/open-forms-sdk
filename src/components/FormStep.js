@@ -245,10 +245,12 @@ const FormStep = ({
                 >{formStep.literals.previousText.resolved}</Button>
               </ToolbarList>
               <ToolbarList>
+                {/* Hiding the Save button until the functionality is implemented */}
                 <Button
                   type="button"
                   variant="secondary"
-                  name="save" onClick={onFormSave} disabled>{formStep.literals.saveText.resolved}</Button>
+                  name="save" onClick={onFormSave} disabled style={{display: "none"}}
+                >{formStep.literals.saveText.resolved}</Button>
                 <Button
                   type="submit"
                   variant="primary"
