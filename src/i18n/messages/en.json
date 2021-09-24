@@ -54,10 +54,10 @@
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
   },
-  "c3jsXU": {
-    "defaultMessage": "Bevestiging: {reference}",
+  "bCGJi9": {
+    "defaultMessage": "Confirmation: {reference}",
     "description": "On succesful completion title",
-    "originalDefault": "Bevestiging: {reference}"
+    "originalDefault": "Confirmation: {reference}"
   },
   "ertoXR": {
     "defaultMessage": "Processing...",
