@@ -23,6 +23,7 @@ import { ConfigContext } from 'Context';
 import Types from 'types';
 import LogoutButton from 'components/LogoutButton';
 import hooks from '../formio/hooks';
+import {findPreviousApplicableStep} from 'components/utils';
 
 
 const STEP_LOGIC_DEBOUNCE_MS = 300;
@@ -196,8 +197,10 @@ const FormStep = ({
 
   const onPrevPage = (event) => {
     event.preventDefault();
-    const indexPreviousStep = form.steps.indexOf(formStep) - 1;
-    const prevStepSlug = form.steps[indexPreviousStep]?.slug;
+    const currentStepIndex = form.steps.indexOf(formStep);
+    const previousStepIndex = findPreviousApplicableStep(currentStepIndex, submission);
+
+    const prevStepSlug = form.steps[previousStepIndex]?.slug;
     const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
     history.push(navigateTo);
   };
