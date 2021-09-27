@@ -64,7 +64,6 @@ export const getComponentValue = (inputValue, components, key, intl) => {
     } else if (component.type === "checkbox") {
       return inputValue ? 'Ja' : 'Nee';
     } else if (component.type === "select") {
-      console.log(component.data);
       if (component.appointments?.showProducts || component.appointments?.showLocations) {
         return inputValue.name;
       } else if (component.appointments?.showDates) {
