@@ -26,7 +26,7 @@ import hooks from '../formio/hooks';
 import {findPreviousApplicableStep} from 'components/utils';
 
 
-const STEP_LOGIC_DEBOUNCE_MS = 300;
+const STEP_LOGIC_DEBOUNCE_MS = 500;
 
 
 const submitStepData = async (stepUrl, data) => {
