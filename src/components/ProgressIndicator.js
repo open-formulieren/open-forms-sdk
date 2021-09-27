@@ -34,13 +34,22 @@ LinkOrDisabledAnchor.propTypes = {
 };
 
 
+const CompletionMark = ({completed=false}) => {
+  if (!completed) return null;
+  return (<FAIcon icon="check" modifiers={['small']} aria-hidden="true" />);
+};
+
+CompletionMark.propTypes = {
+  completed: PropTypes.bool,
+};
+
+
 const SidebarStepStatus = ({isCurrent, step, isApplicable=false, completed=false}) => {
-  const icon = completed ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null;
   const modifiers = getLinkModifiers(isCurrent, isApplicable, completed);
   const linkText = ` ${step.formDefinition} ${!isApplicable ? ' (n.v.t)' : ''}`; // space required between icon and text
   return (
     <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable} modifiers={modifiers}>
-      {icon}
+      <CompletionMark completed={completed} />
       {linkText}
     </LinkOrDisabledAnchor>
   );
@@ -70,10 +79,10 @@ const stepLabels = {
 
 
 const ProgressIndicator = ({ title, submission, steps }) => {
-  const summaryMatch = useRouteMatch("/overzicht");
+  const summaryMatch = !!useRouteMatch("/overzicht");
   const stepMatch = useRouteMatch("/stap/:step");
-  const confirmationMatch = useRouteMatch("/bevestiging");
-  const isStartPage = summaryMatch == null && stepMatch == null && confirmationMatch == null;
+  const confirmationMatch = !!useRouteMatch("/bevestiging");
+  const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -81,18 +90,17 @@ const ProgressIndicator = ({ title, submission, steps }) => {
   const stepSlug = stepMatch ? stepMatch.params.step : '';
   const hasSubmission = !!submission;
 
-  // all steps are completed if we cannot find a single step that isn't completed
-  const allCompleted = submission
-    ? submission.steps.find(step => !step.completed) === undefined
-    : false;
+  const applicableSteps = hasSubmission ? submission.steps.filter(step => step.isApplicable) : [];
+  const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
+  const applicableCompleted = applicableSteps.length === applicableAndCompletedSteps.length;
 
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
   if (isStartPage) {
     activeStepTitle = stepLabels.login;
-  } else if (!!summaryMatch) {
+  } else if (summaryMatch) {
     activeStepTitle = stepLabels.overview;
-  } else if (!!confirmationMatch) {
+  } else if (confirmationMatch) {
     activeStepTitle = stepLabels.configuration;
   } else {
     const step = steps.find( step => step.slug === stepSlug);
@@ -113,7 +121,7 @@ const ProgressIndicator = ({ title, submission, steps }) => {
 
       <List ordered>
         <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true, hasSubmission)}>
-          { hasSubmission ? <FAIcon icon="check" modifiers={['small']} aria-hidden="true" /> : null }
+          <CompletionMark completed={hasSubmission} />
           {` ${stepLabels.login}`}
         </Anchor>
         {
@@ -130,12 +138,15 @@ const ProgressIndicator = ({ title, submission, steps }) => {
         }
         <LinkOrDisabledAnchor
           to={'/overzicht'}
-          useLink={allCompleted}
-          modifiers={getLinkModifiers(!!summaryMatch, allCompleted && !hasSubmission, false)}
-        >{` ${stepLabels.overview}`}</LinkOrDisabledAnchor>
+          useLink={applicableCompleted}
+          modifiers={getLinkModifiers(summaryMatch, applicableCompleted, confirmationMatch)}
+        >
+          <CompletionMark completed={confirmationMatch} />
+          {` ${stepLabels.overview}`}
+        </LinkOrDisabledAnchor>
         <Anchor
           component="span"
-          modifiers={getLinkModifiers(!!confirmationMatch, allCompleted, false)}
+          modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted, false)}
         >{` ${stepLabels.confirmation}`}</Anchor>
       </List>
     </Card>
