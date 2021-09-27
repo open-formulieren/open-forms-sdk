@@ -1,9 +1,13 @@
+import messagesNL from './i18n/compiled/nl.json';
+import messagesEN from './i18n/compiled/en.json';
+
+
 const loadLocaleData = (locale) => {
     switch (locale) {
         case 'nl':
-            return import('./i18n/compiled/nl.json');
+            return messagesNL;
         default:
-            return import('./i18n/compiled/en.json');
+            return messagesEN;
     }
 };
 
