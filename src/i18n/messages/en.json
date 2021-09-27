@@ -4,6 +4,11 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
+  "5sFDwa": {
+    "defaultMessage": "Please authenticate to start the form.",
+    "description": "Form start login required body text",
+    "originalDefault": "Please authenticate to start the form."
+  },
   "5uh2hS": {
     "defaultMessage": "Appointment cancellation failed",
     "description": "Appointment cancellation error message",
@@ -14,15 +19,35 @@
     "description": "Start payment button",
     "originalDefault": "Pay now"
   },
+  "8Zfsd+": {
+    "defaultMessage": "Please click the button below to start the form.",
+    "description": "Form start (no login available) body text",
+    "originalDefault": "Please click the button below to start the form."
+  },
   "9R/+1J": {
     "defaultMessage": "Appointment cancelled",
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
+  "AxDC+M": {
+    "defaultMessage": "Login with {provider}",
+    "description": "Login button label",
+    "originalDefault": "Login with {provider}"
+  },
+  "CvRUHm": {
+    "defaultMessage": "This form is currently undergoing maintenance and can not be accessed at the moment.",
+    "description": "Maintenance mode message",
+    "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
+  },
   "DvlDIB": {
     "defaultMessage": "Are you sure that you want to logout?",
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
+  },
+  "DxbUkA": {
+    "defaultMessage": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
+    "description": "Auth error message",
+    "originalDefault": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw."
   },
   "E4h5vK": {
     "defaultMessage": "Download PDF",
@@ -34,6 +59,11 @@
     "description": "Cancel appointment title",
     "originalDefault": "Cancel appointment"
   },
+  "LEeGSv": {
+    "defaultMessage": "{isApplicable, select, false {{label} (n/a)} other {{label}} }",
+    "description": "Step label in progress indicator",
+    "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
+  },
   "LwpSC/": {
     "defaultMessage": "Total",
     "description": "Label for the total price to pay",
@@ -44,15 +74,35 @@
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
   },
+  "Rf8Sot": {
+    "defaultMessage": "Problem - {formName}",
+    "description": "Form start outage title",
+    "originalDefault": "Problem - {formName}"
+  },
+  "UWylpR": {
+    "defaultMessage": "This form is temporarily unavailable because of an outage with the {label} authentication service. Please try again later.",
+    "description": "Authentication outage message",
+    "originalDefault": "This form is temporarily unavailable because of an outage with the {label} authentication service. Please try again later."
+  },
   "VaNtPf": {
     "defaultMessage": "Cancel appointment",
     "description": "Cancel appointment submit button",
     "originalDefault": "Cancel appointment"
   },
+  "ZehFnX": {
+    "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
+    "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
+    "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
+  },
   "a8QRYP": {
     "defaultMessage": "Your email address",
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
+  },
+  "aatERi": {
+    "defaultMessage": "Please authenticate or start the form anonymously.",
+    "description": "Form start anonymous or login body text",
+    "originalDefault": "Please authenticate or start the form anonymously."
   },
   "bCGJi9": {
     "defaultMessage": "Confirmation: {reference}",
@@ -68,6 +118,11 @@
     "defaultMessage": "Please hold on while we're processing your submission.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
+  },
+  "hQRQCS": {
+    "defaultMessage": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
+    "description": "DigiD error message. MUST BE THIS EXACT STRING!",
+    "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
   "jYh8Nr": {
     "defaultMessage": "Your appointment has been cancelled",

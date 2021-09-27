@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import AuthenticationOutage, { useDetectAuthenticationOutage } from 'components/auth/AuthenticationOutage';
 import {useDetectAuthErrorMessages, AuthenticationErrors} from 'components/auth/AuthenticationErrors';
@@ -22,7 +23,13 @@ const getLoginUrl = (loginOption) => {
 };
 
 const LoginButton = ({option}) => (
-  <Button variant="primary" component="a" href={getLoginUrl(option)}>Inloggen met {option.label}</Button>
+  <Button variant="primary" component="a" href={getLoginUrl(option)}>
+    <FormattedMessage
+      description="Login button label"
+      defaultMessage="Login with {provider}"
+      values={{provider: option.label}}
+    />
+  </Button>
 );
 
 LoginButton.propTypes = {
@@ -85,6 +92,7 @@ const useStartSubmission = () => {
  * eHerkenning...)
  */
 const FormStart = ({ form, onFormStart }) => {
+  const intl = useIntl();
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
@@ -102,24 +110,48 @@ const FormStart = ({ form, onFormStart }) => {
     const loginOption = form.loginOptions.find(option => option.identifier === outagePluginId);
     if (!loginOption) throw new Error('Unknown login plugin identifier');
     return (
-      <Card title={`Probleem - ${form.name}`}>
+      <Card title={
+        <FormattedMessage description="Form start outage title" defaultMessage="Problem - {formName}" values={{formName: form.name}} />
+      }>
         <AuthenticationOutage loginOption={loginOption} />
       </Card>
     );
   }
 
+  const canLogin = form.loginOptions.length > 0;
+  const startLoginMessage = form.loginRequired
+    ? intl.formatMessage({
+        description: 'Form start login required body text',
+        defaultMessage: 'Please authenticate to start the form.'
+    })
+    : canLogin
+      ? intl.formatMessage({
+          description: 'Form start anonymous or login body text',
+          defaultMessage: 'Please authenticate or start the form anonymously.'
+      })
+      : intl.formatMessage({
+         description: 'Form start (no login available) body text',
+         defaultMessage: 'Please click the button below to start the form.'
+      })
+  ;
   return (
     <Card title={form.name}>
 
       { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
 
-      <Body modifiers={['compact']}>Log in or start the form anonymously.</Body>
+      <Body modifiers={['compact']}>
+        {startLoginMessage}
+      </Body>
 
       <Toolbar modifiers={['start']}>
         <ToolbarList>
           { form.loginRequired
             ? null
-            : (<Button variant="primary" component="a" href="#" onClick={onFormStart}>{form.literals.beginText.resolved}</Button>)
+            : (
+                <Button variant="primary" component="a" href="#" onClick={onFormStart}>
+                  {form.literals.beginText.resolved}
+                </Button>
+            )
           }
           {
             form.loginOptions.map((option) => <LoginButton option={option} key={option.identifier} />)

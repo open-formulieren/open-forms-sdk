@@ -5,6 +5,12 @@
       "value": "Uitloggen"
     }
   ],
+  "5sFDwa": [
+    {
+      "type": 0,
+      "value": "Log in om het formulier te starten."
+    }
+  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -17,16 +23,52 @@
       "value": "Nu betalen"
     }
   ],
+  "8Zfsd+": [
+    {
+      "type": 0,
+      "value": "Klik op de startknop om te beginnen."
+    }
+  ],
   "9R/+1J": [
     {
       "type": 0,
       "value": "Afspraak geannuleerd"
     }
   ],
+  "AxDC+M": [
+    {
+      "type": 0,
+      "value": "Inloggen met "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
+  "CvRUHm": [
+    {
+      "type": 0,
+      "value": "Dit fofmulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar."
+    }
+  ],
   "DvlDIB": [
     {
       "type": 0,
       "value": "Weet u zeker dat u wilt uitloggen?"
+    }
+  ],
+  "DxbUkA": [
+    {
+      "type": 0,
+      "value": "Er is een fout opgetreden bij het inloggen met "
+    },
+    {
+      "type": 1,
+      "value": "service"
+    },
+    {
+      "type": 0,
+      "value": ". Probeer het later opnieuw."
     }
   ],
   "E4h5vK": [
@@ -41,6 +83,34 @@
       "value": "Afspraak annuleren"
     }
   ],
+  "LEeGSv": [
+    {
+      "options": {
+        "false": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (n.v.t.)"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "isApplicable"
+    }
+  ],
   "LwpSC/": [
     {
       "type": 0,
@@ -53,16 +123,60 @@
       "value": "Voor dit product is betaling vereist"
     }
   ],
+  "Rf8Sot": [
+    {
+      "type": 0,
+      "value": "Probleem - "
+    },
+    {
+      "type": 1,
+      "value": "formName"
+    }
+  ],
+  "UWylpR": [
+    {
+      "type": 0,
+      "value": "Dit formulier is tijdelijk niet beschikbaar wegens een storing bij de "
+    },
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " authenticatieservice. Gelieve later opnieuw te proberen."
+    }
+  ],
   "VaNtPf": [
     {
       "type": 0,
       "value": "Afspraak annuleren"
     }
   ],
+  "ZehFnX": [
+    {
+      "type": 0,
+      "value": "Je hebt het inloggen met "
+    },
+    {
+      "type": 1,
+      "value": "service"
+    },
+    {
+      "type": 0,
+      "value": " geannuleerd."
+    }
+  ],
   "a8QRYP": [
     {
       "type": 0,
       "value": "Uw e-mailadres"
+    }
+  ],
+  "aatERi": [
+    {
+      "type": 0,
+      "value": "Log in of start het formulier anoniem."
     }
   ],
   "bCGJi9": [
@@ -85,6 +199,12 @@
     {
       "type": 0,
       "value": "Een moment geduld alstublieft terwijl wij uw inzending verwerken."
+    }
+  ],
+  "hQRQCS": [
+    {
+      "type": 0,
+      "value": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
     }
   ],
   "jYh8Nr": [

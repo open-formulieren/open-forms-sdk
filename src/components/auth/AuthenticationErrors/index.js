@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {useIntl} from 'react-intl';
 
-import FAIcon from 'components/FAIcon';
-import Body from 'components/Body';
+import ErrorMessage from 'components/ErrorMessage';
 import useQuery from 'hooks/useQuery';
-import {getBEMClassName} from 'utils';
 
 const MAPPING_PARAMS_SERVICE = {
   '_digid-message': 'DigiD',
@@ -29,23 +28,45 @@ const useDetectAuthErrorMessages = () => {
 
 
 const AuthenticationErrors = ({parameters}) => {
+  const intl = useIntl();
 
   let messagesToDisplay = [];
+
   for (const [parameter, message] of Object.entries(parameters)) {
+      const service = MAPPING_PARAMS_SERVICE[parameter];
       switch (message) {
         case CANCEL_LOGIN_PARAM: {
-          messagesToDisplay.push(`Je hebt het inloggen met ${MAPPING_PARAMS_SERVICE[parameter]} geannuleerd.`);
+          messagesToDisplay.push(intl.formatMessage(
+            {
+              description: 'DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!',
+              defaultMessage: 'Je hebt het inloggen met {service} geannuleerd.',
+            },
+            {service: service}
+          ));
           break;
         }
         default:
           let errorMessage;
           switch (parameter) {
             case '_digid-message': {
-              errorMessage = 'Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.';
+              errorMessage = intl.formatMessage({
+                description: 'DigiD error message. MUST BE THIS EXACT STRING!',
+                defaultMessage: `
+                  Er is een fout opgetreden in de communicatie met DigiD.
+                  Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk
+                  dan op de website https://www.digid.nl voor de laatste informatie.
+                `,
+              });
               break;
             }
             default:
-              errorMessage = `Er is een fout opgetreden bij het inloggen met ${MAPPING_PARAMS_SERVICE[parameter]}. Probeer het later opnieuw.`;
+              errorMessage = intl.formatMessage(
+                {
+                  description: 'Auth error message',
+                  defaultMessage: 'Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.',
+                },
+                {service: service}
+              );
           }
           messagesToDisplay.push(errorMessage);
           break;
@@ -53,14 +74,9 @@ const AuthenticationErrors = ({parameters}) => {
   }
 
   return (
-    <div className={getBEMClassName('alert', ['error', 'with-margin'])}>
-      <span className={getBEMClassName('alert__icon', ['wide'])}>
-        <FAIcon icon="exclamation-circle" />
-      </span>
-      <Body>
-        {messagesToDisplay[0]}
-      </Body>
-    </div>
+    <ErrorMessage modifiers={['error', 'with-margin']}>
+      {messagesToDisplay[0]}
+    </ErrorMessage>
   );
 };
 

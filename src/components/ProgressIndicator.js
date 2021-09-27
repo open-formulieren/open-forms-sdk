@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouteMatch, Link } from 'react-router-dom';
+import {FormattedMessage} from 'react-intl';
 
 import Anchor from 'components/Anchor';
 import Card from 'components/Card';
@@ -46,11 +47,22 @@ CompletionMark.propTypes = {
 
 const SidebarStepStatus = ({isCurrent, step, isApplicable=false, completed=false}) => {
   const modifiers = getLinkModifiers(isCurrent, isApplicable, completed);
-  const linkText = ` ${step.formDefinition} ${!isApplicable ? ' (n.v.t)' : ''}`; // space required between icon and text
   return (
     <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable} modifiers={modifiers}>
       <CompletionMark completed={completed} />
-      {linkText}
+
+        <FormattedMessage
+          description="Step label in progress indicator"
+          defaultMessage={`
+            {isApplicable, select,
+              false {{label} (n/a)}
+              other {{label}}
+            }`}
+          values={{
+            label: step.formDefinition,
+            isApplicable: isApplicable,
+          }}
+        />
     </LinkOrDisabledAnchor>
   );
 };

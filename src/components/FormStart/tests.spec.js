@@ -1,13 +1,17 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
+import { IntlProvider } from 'react-intl';
 
 import useQuery from 'hooks/useQuery';
-import FormStart from '.';
+import messagesNL from 'i18n/compiled/nl.json';
 
+import FormStart from '.';
 import {testForm} from './fixtures';
 
 jest.mock('hooks/useQuery');
+let scrollIntoViewMock = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 let container = null;
 
@@ -32,10 +36,12 @@ it('Form start page start if _start parameter is present', () => {
 
   act(() => {
     render(
-      <FormStart
-        form={testForm}
-        onFormStart={onFormStart}
-      />,
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <FormStart
+          form={testForm}
+          onFormStart={onFormStart}
+        />
+      </IntlProvider>,
       container
     );
   });
@@ -59,10 +65,12 @@ it('Form start does not start if there are auth errors', () => {
 
     act(() => {
       render(
-        <FormStart
-          form={testForm}
-          onFormStart={onFormStart}
-        />,
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <FormStart
+            form={testForm}
+            onFormStart={onFormStart}
+          />
+        </IntlProvider>,
         container
       );
     });
