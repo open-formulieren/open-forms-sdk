@@ -1,8 +1,14 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
+import messagesNL from 'i18n/compiled/nl.json';
+
 import {AuthenticationErrors} from '.';
+
+let scrollIntoViewMock = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 let container = null;
 beforeEach(() => {
@@ -20,7 +26,12 @@ afterEach(() => {
 
 it('Renders DigiD default error', () => {
   act(() => {
-    render(<AuthenticationErrors parameters={{'_digid-message': 'error'}} />, container);
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <AuthenticationErrors parameters={{'_digid-message': 'error'}} />
+      </IntlProvider>,
+      container
+    );
   });
 
   expect(container.textContent).toBe('Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.');
@@ -29,7 +40,12 @@ it('Renders DigiD default error', () => {
 
 it('Renders DigiD cancel login error', () => {
   act(() => {
-    render(<AuthenticationErrors parameters={{'_digid-message': 'login-cancelled'}}/>, container);
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <AuthenticationErrors parameters={{'_digid-message': 'login-cancelled'}}/>
+      </IntlProvider>,
+      container
+    );
   });
 
   expect(container.textContent).toBe('Je hebt het inloggen met DigiD geannuleerd.');
@@ -38,7 +54,12 @@ it('Renders DigiD cancel login error', () => {
 
 it('Renders EHerkenning default error', () => {
   act(() => {
-    render(<AuthenticationErrors parameters={{'_eherkenning-message': 'error'}} />, container);
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <AuthenticationErrors parameters={{'_eherkenning-message': 'error'}} />
+      </IntlProvider>,
+      container
+    );
   });
 
   expect(container.textContent).toBe('Er is een fout opgetreden bij het inloggen met EHerkenning. Probeer het later opnieuw.');
@@ -47,7 +68,12 @@ it('Renders EHerkenning default error', () => {
 
 it('Renders EHerkenning cancel login error', () => {
   act(() => {
-    render(<AuthenticationErrors parameters={{'_eherkenning-message': 'login-cancelled'}}/>, container);
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <AuthenticationErrors parameters={{'_eherkenning-message': 'login-cancelled'}}/>
+      </IntlProvider>,
+      container
+    );
   });
 
   expect(container.textContent).toBe('Je hebt het inloggen met EHerkenning geannuleerd.');

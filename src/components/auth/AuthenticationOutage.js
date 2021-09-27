@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
 import FAIcon from 'components/FAIcon';
@@ -19,8 +20,13 @@ const AuthenticationOutage = ({ loginOption }) => (
       <FAIcon icon="exclamation-circle" />
     </span>
     <Body>
-      {`Dit formulier is tijdelijk niet beschikbaar wegens een storing bij de
-        ${loginOption.label} authenticatieservice. Gelieve later opnieuw te proberen.`}
+      <FormattedMessage
+        description="Authentication outage message"
+        defaultMessage={`
+          This form is temporarily unavailable because of an outage with the {label}
+          authentication service. Please try again later.`}
+        values={{label: loginOption.label}}
+      />
     </Body>
   </div>
 );

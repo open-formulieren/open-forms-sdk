@@ -5,6 +5,12 @@
       "value": "Log out"
     }
   ],
+  "5sFDwa": [
+    {
+      "type": 0,
+      "value": "Please authenticate to start the form."
+    }
+  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -17,16 +23,52 @@
       "value": "Pay now"
     }
   ],
+  "8Zfsd+": [
+    {
+      "type": 0,
+      "value": "Please click the button below to start the form."
+    }
+  ],
   "9R/+1J": [
     {
       "type": 0,
       "value": "Appointment cancelled"
     }
   ],
+  "AxDC+M": [
+    {
+      "type": 0,
+      "value": "Login with "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    }
+  ],
+  "CvRUHm": [
+    {
+      "type": 0,
+      "value": "This form is currently undergoing maintenance and can not be accessed at the moment."
+    }
+  ],
   "DvlDIB": [
     {
       "type": 0,
       "value": "Are you sure that you want to logout?"
+    }
+  ],
+  "DxbUkA": [
+    {
+      "type": 0,
+      "value": "Er is een fout opgetreden bij het inloggen met "
+    },
+    {
+      "type": 1,
+      "value": "service"
+    },
+    {
+      "type": 0,
+      "value": ". Probeer het later opnieuw."
     }
   ],
   "E4h5vK": [
@@ -41,6 +83,34 @@
       "value": "Cancel appointment"
     }
   ],
+  "LEeGSv": [
+    {
+      "options": {
+        "false": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (n/a)"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "isApplicable"
+    }
+  ],
   "LwpSC/": [
     {
       "type": 0,
@@ -53,16 +123,60 @@
       "value": "Payment is required for this product"
     }
   ],
+  "Rf8Sot": [
+    {
+      "type": 0,
+      "value": "Problem - "
+    },
+    {
+      "type": 1,
+      "value": "formName"
+    }
+  ],
+  "UWylpR": [
+    {
+      "type": 0,
+      "value": "This form is temporarily unavailable because of an outage with the "
+    },
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " authentication service. Please try again later."
+    }
+  ],
   "VaNtPf": [
     {
       "type": 0,
       "value": "Cancel appointment"
     }
   ],
+  "ZehFnX": [
+    {
+      "type": 0,
+      "value": "Je hebt het inloggen met "
+    },
+    {
+      "type": 1,
+      "value": "service"
+    },
+    {
+      "type": 0,
+      "value": " geannuleerd."
+    }
+  ],
   "a8QRYP": [
     {
       "type": 0,
       "value": "Your email address"
+    }
+  ],
+  "aatERi": [
+    {
+      "type": 0,
+      "value": "Please authenticate or start the form anonymously."
     }
   ],
   "bCGJi9": [
@@ -85,6 +199,12 @@
     {
       "type": 0,
       "value": "Please hold on while we're processing your submission."
+    }
+  ],
+  "hQRQCS": [
+    {
+      "type": 0,
+      "value": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
     }
   ],
   "jYh8Nr": [

@@ -244,7 +244,7 @@ const reducer = (draft, action) => {
             <ProgressIndicator
               title={form.name}
               steps={form.steps}
-              submission={state.submission}
+              submission={state.submission || state.submittedSubmission}
             />
           </LayoutColumn>
         )
