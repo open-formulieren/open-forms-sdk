@@ -59,72 +59,77 @@ export const getComponentValue = (inputValue, components, key, intl) => {
       return '';
     }
 
-    if (component.type === "signature") {
-      return inputValue ? <Image src={inputValue} alt={key} /> : '';
-    } else if (component.type === "checkbox") {
-      return inputValue ? 'Ja' : 'Nee';
-    } else if (component.type === "select") {
-      if (component.appointments?.showProducts || component.appointments?.showLocations) {
-        return inputValue.name;
-      } else if (component.appointments?.showDates) {
-        return getFormattedDateString(intl, inputValue);
-      } else if (component.appointments?.showTimes) {
-        return getFormattedTimeString(intl, inputValue);
-      } else {
-        const obj = component.data.values.find(obj => obj.value === inputValue);
-        return obj ? obj.label : '';
+    if (!inputValue) return '';
+
+    switch (component.type) {
+      case 'signature' : {
+        return <Image src={inputValue} alt={key}/>;
       }
-    } else if (component.type === "file") {
-      /*
+      case 'checkbox': {
+        return inputValue ? 'Ja' : 'Nee';
+      }
+      case 'select': {
+        if (component.appointments?.showProducts || component.appointments?.showLocations) {
+          return inputValue.name;
+        } else if (component.appointments?.showDates) {
+          return getFormattedDateString(intl, inputValue);
+        } else if (component.appointments?.showTimes) {
+          return getFormattedTimeString(intl, inputValue);
+        } else {
+          const obj = component.data.values.find(obj => obj.value === inputValue);
+          return obj ? obj.label : '';
+        }
+      }
+      case 'file': {
+        /*
        NOTE the structure of the data set by FormIO's file component
-       [
-          {
-              "url": "http://server/api/v1/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
-              "data": {
-                  "url": "http://server/api/v1/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
-                  "form": "",
-                  "name": "my-image.jpg",
-                  "size": 46114,
-                  "baseUrl": "http://server",
-                  "project": "",
-              },
-              "name": "my-image-12305610-2da4-4694-a341-ccb919c3d543.jpg",
-              "size": 46114,
-              "type": "image/jpg",
-              "storage": "url",
-              "originalName": "my-image.jpg",
-          }
-      ] */
-      if (!inputValue) {
-        return "-";
-      }
-      else {
+         [
+            {
+                "url": "http://server/api/v1/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
+                "data": {
+                    "url": "http://server/api/v1/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
+                    "form": "",
+                    "name": "my-image.jpg",
+                    "size": 46114,
+                    "baseUrl": "http://server",
+                    "project": "",
+                },
+                "name": "my-image-12305610-2da4-4694-a341-ccb919c3d543.jpg",
+                "size": 46114,
+                "type": "image/jpg",
+                "storage": "url",
+                "originalName": "my-image.jpg",
+            }
+        ] */
         return inputValue.map(v => {
-          const {size, unit} = humanFileSize(v.size);
-          return (
-            <Anchor key={v.url} href={v.url}>
-              {v.originalName}{' '}
-              {/* eslint-disable-next-line react/style-prop-object */}
-              (<FormattedNumber value={size} style="unit" unit={unit} />)
-            </Anchor>
-          )}
+            const {size, unit} = humanFileSize(v.size);
+            return (
+              <Anchor key={v.url} href={v.url}>
+                {v.originalName}{' '}
+                {/* eslint-disable-next-line react/style-prop-object */}
+                (<FormattedNumber value={size} style="unit" unit={unit}/>)
+              </Anchor>
+            )
+          }
         );
       }
-    } else if (component.type === "date") {
-      const [year, month, day] = inputValue.split('-');
-      return `${day}-${month}-${year}`;
-    } else if (component.type === "selectboxes") {
-      const selectedBoxes = Object.keys(inputValue).filter(key => inputValue[key] === true);
-      const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
-      const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
-      return (
-        <List modifiers={['extra-compact', 'dash']}>
-          {selectedLabels.map( (label, i) => <Body key={i} component="span">{label}</Body>)}
-        </List>
-      )
+      case 'date': {
+        const [year, month, day] = inputValue.split('-');
+        return `${day}-${month}-${year}`;
+      }
+      case 'selectboxes': {
+        const selectedBoxes = Object.keys(inputValue).filter(key => inputValue[key] === true);
+        const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
+        const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
+        return (
+          <List modifiers={['extra-compact', 'dash']}>
+            {selectedLabels.map((label, i) => <Body key={i} component="span">{label}</Body>)}
+          </List>
+        );
+      }
+      default:
+        return inputValue;
     }
-
-    return inputValue;
   };
 
 
