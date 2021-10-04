@@ -41,6 +41,17 @@ export const flattenComponents = (components) => {
 };
 
 
+export const iterComponentKeyValues = (components, data) => {
+  // Iterate over (pre-flattened) components and return key/values
+  // Often used in combination with flattenComponents and getComponentLabel/getComponentValue
+  return components.filter(component => {
+    return component.key in data;
+  }).map(component => {
+    return {key: component.key, value: data[component.key]};
+  })
+};
+
+
 export const getComponentLabel = (components, key) => {
   let component = components.find(component => component.key === key);
 
