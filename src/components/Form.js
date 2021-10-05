@@ -67,6 +67,10 @@ const reducer = (draft, action) => {
       draft.submission = draft.submittedSubmission;
       break;
     }
+    case 'CLEAR_PROCESSING_ERROR': {
+      draft.processingError = '';
+      break;
+    }
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -182,6 +186,10 @@ const reducer = (draft, action) => {
     history.push('/overzicht');
   };
 
+  const clearProcessingErrors = () => {
+    dispatch({type: 'CLEAR_PROCESSING_ERROR'});
+  };
+
   if (loading) {
     return (
       <LayoutColumn>
@@ -211,7 +219,9 @@ const reducer = (draft, action) => {
               processingError={state.processingError}
               onConfirm={onSubmitForm}
               onLogout={onLogout}
-              component={Summary} />
+              component={Summary}
+              onClearProcessingErrors={clearProcessingErrors}
+            />
           </Route>
 
           <Route exact path="/bevestiging">

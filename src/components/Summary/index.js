@@ -82,7 +82,7 @@ const getPrivacyPolicyInfo = async (origin) => {
   return await get(privacyPolicyUrl);
 };
 
-const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) => {
+const Summary = ({ form, submission, processingError='', onConfirm, onLogout, onClearProcessingErrors }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const history = useHistory();
 
@@ -124,6 +124,8 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout }) 
 
   const onPrevPage = (event) => {
     event.preventDefault();
+    onClearProcessingErrors()
+
     const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
     const prevStepSlug = form.steps[previousStepIndex]?.slug;
     const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
