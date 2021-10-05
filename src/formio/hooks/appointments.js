@@ -41,7 +41,7 @@ const configureLocationOptions = (component) => {
   // TODO: account for possible nesting!
   const productComponentKey = appointmentsOptions.productComponent;
   // can't use URLSearchParams because the template markers are escaped
-  const query = `product_id={{ row.${productComponentKey} }}`;
+  const query = `product_id={{ row.${productComponentKey}.identifier || row.${productComponentKey} }}`;
   const url = `${component.options.baseUrl}appointments/locations?${query}`;
   Object.assign(component.component, {
     dataSrc: 'url',
@@ -68,8 +68,8 @@ const configureDateOptions = (component) => {
 
   // can't use URLSearchParams because the template markers are escaped
   const query = [
-    `product_id={{ row.${productComponentKey} }}`,
-    `location_id={{ row.${locationComponentKey} }}`
+    `product_id={{ row.${productComponentKey}.identifier || row.${productComponentKey} }}`,
+    `location_id={{ row.${locationComponentKey}.identifier || row.${locationComponentKey} }}`
   ].join('&');
   const url = `${component.options.baseUrl}appointments/dates?${query}`;
 
@@ -108,8 +108,8 @@ const configureTimeOptions = (component) => {
 
   // can't use URLSearchParams because the template markers are escaped
   const query = [
-    `product_id={{ row.${productComponentKey} }}`,
-    `location_id={{ row.${locationComponentKey} }}`,
+    `product_id={{ row.${productComponentKey}.identifier || row.${productComponentKey} }}`,
+    `location_id={{ row.${locationComponentKey}.identifier || row.${locationComponentKey} }}`,
     `date={{ row.${dateComponentKey} }}`,
   ].join('&');
   const url = `${component.options.baseUrl}appointments/times?${query}`;
