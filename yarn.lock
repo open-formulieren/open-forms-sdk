@@ -2483,6 +2483,11 @@
     "@typescript-eslint/types" "4.15.2"
     eslint-visitor-keys "^2.0.0"
 
+"@utrecht/component-library-css@^1.0.0-alpha.104":
+  version "1.0.0-alpha.104"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.104.tgz#0dff694994bfcc6f345cf270c3c81c1b3de10c51"
+  integrity sha512-FsciX/cxVPBBHWuaGGtvFxEivkfx4WAjTfWawB4EqwWkDiw4BEOFutmSENceHMggbispwNYTDeELgyB+nYATgw==
+
 "@vue/compiler-core@3.2.12", "@vue/compiler-core@^3.0.5":
   version "3.2.12"
   resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.2.12.tgz#23998d6986a45e1ab0424130cc0ad00e33da1101"
