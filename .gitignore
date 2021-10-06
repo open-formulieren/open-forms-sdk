@@ -2,6 +2,7 @@
 
 # developers
 .vscode/
+.idea/
 
 # dependencies
 /node_modules
