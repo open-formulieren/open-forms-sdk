@@ -10,6 +10,7 @@ import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
 
 import './styles.scss';
+import '@utrecht/component-library-css/dist/bem.css';
 
 import { get } from 'api';
 import { ConfigContext, FormioTranslations } from 'Context';
