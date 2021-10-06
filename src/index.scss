@@ -4,9 +4,11 @@
 @import 'scss/settings';
 
 body {
+  --theme-switcher-box-size: 50px;
+
   padding: 0;
-  margin-top: $grid-margin-4;
   background-color: $color-gray;
+  padding-block-start: var(--theme-switcher-box-size);
 
   @include mobile-only {
     margin: 0;
@@ -16,4 +18,23 @@ body {
 
 #root {
   margin: 0 auto;
+}
+body {
+}
+
+.theme-switcher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--theme-switcher-box-size);
+  background: white;
+  border-bottom: 1px solid black;
+  display: flex;
+  column-gap: .5rem;
+  align-items: center;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
+  font-family: system-ui;
+  z-index: 1000;
+  padding-left: 1rem;
 }
