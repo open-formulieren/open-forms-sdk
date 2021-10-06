@@ -3,6 +3,7 @@
 # developers
 .vscode/
 /env/
+.idea/
 
 # dependencies
 /node_modules
