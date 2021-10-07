@@ -78,3 +78,30 @@ it('Renders EHerkenning cancel login error', () => {
 
   expect(container.textContent).toBe('Je hebt het inloggen met EHerkenning geannuleerd.');
 });
+
+it('Renders eIDAS default error', () => {
+  act(() => {
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <AuthenticationErrors parameters={{'_eidas-message': 'error'}} />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  expect(container.textContent).toBe('Er is een fout opgetreden bij het inloggen met eIDAS. Probeer het later opnieuw.');
+});
+
+
+it('Renders eIDAS cancel login error', () => {
+  act(() => {
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <AuthenticationErrors parameters={{'_eidas-message': 'login-cancelled'}}/>
+      </IntlProvider>,
+      container
+    );
+  });
+
+  expect(container.textContent).toBe('Je hebt het inloggen met eIDAS geannuleerd.');
+});
