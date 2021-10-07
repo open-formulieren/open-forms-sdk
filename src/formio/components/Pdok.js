@@ -5,6 +5,15 @@ import {Formio} from 'react-formio';
 import * as L from 'leaflet';
 import {RD_CRS} from './rd';
 
+// fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "http://localhost:8000/static/bundles/images/marker-icon-2x.png",
+  iconUrl: "http://localhost:8000/static/bundles/images/marker-icon.png",
+  shadowUrl: "http://localhost:8000/static/bundles/images/marker-shadow.png",
+});
+
 const TextFieldComponent = Formio.Components.components.textfield;
 
 const TILES = 'https://geodata.nationaalgeoregister.nl/tiles/service';

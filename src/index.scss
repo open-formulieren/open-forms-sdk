@@ -1,3 +1,4 @@
+@import '~leaflet/dist/leaflet';
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/responsive';
 @import 'scss/settings';
@@ -9,7 +10,6 @@ body {
 
   @include mobile-only {
     margin: 0;
-    margin-top: 0;
     padding: 0;
   }
 }
