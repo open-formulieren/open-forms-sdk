@@ -65,9 +65,7 @@ export default class Pdok extends HiddenComponent {
     renderElement(value, index) {
         return super.renderElement(value, index) + `<div id="the-pdok-map-${this.id}" style="height: 400px; position: relative;"/>`;
     }
-    //
-    // TODO Add attach, setValue functions
-    //
+
     attachElement(element, index) {
         super.attachElement(element, index);
 
@@ -88,6 +86,12 @@ export default class Pdok extends HiddenComponent {
 
         map.addLayer(tiles);
 
-        L.marker([52.1326332, 5.291266]).addTo(map);
+        // Set inital marker at center
+        let marker = L.marker([52.1326332, 5.291266]).addTo(map);
+
+        map.on('click', (e) => {
+          map.removeLayer(marker);
+          marker = L.marker(e.latlng).addTo(map);
+        });
     }
 }
