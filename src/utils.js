@@ -142,6 +142,8 @@ export const getComponentValue = (inputValue, components, key, intl) => {
           </List>
         );
       }
+      case 'pdok':
+        return `${inputValue[0]}, ${inputValue[1]}`;
       default:
         return inputValue;
     }

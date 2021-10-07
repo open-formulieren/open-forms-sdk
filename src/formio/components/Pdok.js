@@ -26,11 +26,15 @@ const TILE_LAYERS = {
 };
 
 
+// Roughly the center of the Netherlands
+const DEFAULT_LAT_LON = [52.1326332, 5.291266];
+
+
 const MAP_DEFAULTS = {
     continuousWorld: true,
     crs: RD_CRS,
     attributionControl: true,
-    center: [52.1326332, 5.291266],
+    center: DEFAULT_LAT_LON,
     zoom: 3,
 };
 
@@ -87,11 +91,14 @@ export default class Pdok extends HiddenComponent {
         map.addLayer(tiles);
 
         // Set inital marker at center
-        let marker = L.marker([52.1326332, 5.291266]).addTo(map);
+        let marker = L.marker(DEFAULT_LAT_LON).addTo(map);
+        this.setValue(DEFAULT_LAT_LON);
 
         map.on('click', (e) => {
           map.removeLayer(marker);
-          marker = L.marker(e.latlng).addTo(map);
+          const newLatLng = [e.latlng.lat, e.latlng.lng];
+          marker = L.marker(newLatLng).addTo(map);
+          this.setValue(newLatLng);
         });
     }
 }
