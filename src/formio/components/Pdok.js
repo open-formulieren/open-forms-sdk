@@ -58,11 +58,6 @@ export default class Pdok extends HiddenComponent {
     };
   }
 
-  init() {
-    super.init();
-    this.currentLatLng = DEFAULT_LAT_LON;
-  }
-
   get defaultSchema() {
     return Pdok.schema();
   }
@@ -78,42 +73,37 @@ export default class Pdok extends HiddenComponent {
   attachElement(element, index) {
     super.attachElement(element, index);
 
-    // var mymap = L.map('the-pdok-map').setView([51.505, -0.09], 13);
-
-    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //     maxZoom: 18,
-    //     id: 'mapbox/streets-v11',
-    //     tileSize: 512,
-    //     zoomOffset: -1,
-    //     accessToken: 'pk.eyJ1Ijoic2hlYW1leWVycyIsImEiOiJja3VncTZpc3gwYnNzMnFteTZjeXp2M3E0In0.v5LSs4Hd4xfrRqInXVy3dw'
-    // }).addTo(mymap);
-
     let map = L.map(`the-pdok-map-${this.id}`, MAP_DEFAULTS);
 
     const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
 
     map.addLayer(tiles);
 
-    // Set inital marker at center
-    let marker = L.marker(this.currentLatLng).addTo(map);
-    this.setValue(this.currentLatLng);
+    this.setValue(DEFAULT_LAT_LON);
+
+    let marker;
+
+    // Attempt to get the user's current location and set the marker to that
+    // If not possible get to the default lat lng
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const newLatLng = [position.coords.latitude, position.coords.longitude];
+        marker = L.marker(newLatLng).addTo(map);
+        this.setValue(newLatLng);
+      }, (error) => {
+        marker = L.marker(DEFAULT_LAT_LON).addTo(map);
+        this.setValue(DEFAULT_LAT_LON);
+      });
+    } else {
+      marker = L.marker(DEFAULT_LAT_LON).addTo(map);
+      this.setValue(DEFAULT_LAT_LON);
+    }
 
     map.on('click', (e) => {
       map.removeLayer(marker);
-      this.currentLatLng = [e.latlng.lat, e.latlng.lng];
-      marker = L.marker(this.currentLatLng).addTo(map);
-      this.setValue(this.currentLatLng);
+      const newLatLng = [e.latlng.lat, e.latlng.lng];
+      marker = L.marker(newLatLng).addTo(map);
+      this.setValue(newLatLng);
     });
-
-    // Attempt to get the user's current location and set the marker to that
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        map.removeLayer(marker);
-        this.currentLatLng = [position.coords.latitude, position.coords.longitude];
-        marker = L.marker(this.currentLatLng).addTo(map);
-        this.setValue(this.currentLatLng);
-      });
-    }
   }
 }
