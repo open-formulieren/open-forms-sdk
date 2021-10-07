@@ -3,7 +3,7 @@
  */
 import {Formio} from 'react-formio';
 import * as L from 'leaflet';
-import { RD_CRS } from './rd';
+import {RD_CRS} from './rd';
 
 // Using Hidden Component so we don't get anything 'extra' with our map
 const HiddenComponent = Formio.Components.components.hidden;
@@ -17,12 +17,12 @@ const ATTRIBUTION = `
 `;
 
 const TILE_LAYERS = {
-    url: `${TILES}/wmts/brtachtergrondkaart/EPSG:28992/{z}/{x}/{y}.png`,
-    options: {
-        minZoom: 1,
-        maxZoom: 13,
-        attribution: ATTRIBUTION,
-    },
+  url: `${TILES}/wmts/brtachtergrondkaart/EPSG:28992/{z}/{x}/{y}.png`,
+  options: {
+    minZoom: 1,
+    maxZoom: 13,
+    attribution: ATTRIBUTION,
+  },
 };
 
 
@@ -31,74 +31,89 @@ const DEFAULT_LAT_LON = [52.1326332, 5.291266];
 
 
 const MAP_DEFAULTS = {
-    continuousWorld: true,
-    crs: RD_CRS,
-    attributionControl: true,
-    center: DEFAULT_LAT_LON,
-    zoom: 3,
+  continuousWorld: true,
+  crs: RD_CRS,
+  attributionControl: true,
+  center: DEFAULT_LAT_LON,
+  zoom: 3,
 };
 
 
 export default class Pdok extends HiddenComponent {
-    static schema(...extend) {
-        return HiddenComponent.schema({
-            type: 'pdok',
-            label: 'PDOK kaart',
-            key: 'pdokMap',
-        }, ...extend);
+  static schema(...extend) {
+    return HiddenComponent.schema({
+      type: 'pdok',
+      label: 'PDOK kaart',
+      key: 'pdokMap',
+    }, ...extend);
+  }
+
+  static get builderInfo() {
+    return {
+      title: 'Pdok Map',
+      group: 'advanced',
+      icon: 'map',
+      weight: 500,
+      schema: Pdok.schema()
+    };
+  }
+
+  init() {
+    super.init();
+    this.currentLatLng = DEFAULT_LAT_LON;
+  }
+
+  get defaultSchema() {
+    return Pdok.schema();
+  }
+
+  get emptyValue() {
+    return '';
+  }
+
+  renderElement(value, index) {
+    return super.renderElement(value, index) + `<div id="the-pdok-map-${this.id}" style="height: 400px; position: relative;"/>`;
+  }
+
+  attachElement(element, index) {
+    super.attachElement(element, index);
+
+    // var mymap = L.map('the-pdok-map').setView([51.505, -0.09], 13);
+
+    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    //     maxZoom: 18,
+    //     id: 'mapbox/streets-v11',
+    //     tileSize: 512,
+    //     zoomOffset: -1,
+    //     accessToken: 'pk.eyJ1Ijoic2hlYW1leWVycyIsImEiOiJja3VncTZpc3gwYnNzMnFteTZjeXp2M3E0In0.v5LSs4Hd4xfrRqInXVy3dw'
+    // }).addTo(mymap);
+
+    let map = L.map(`the-pdok-map-${this.id}`, MAP_DEFAULTS);
+
+    const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
+
+    map.addLayer(tiles);
+
+    // Set inital marker at center
+    let marker = L.marker(this.currentLatLng).addTo(map);
+    this.setValue(this.currentLatLng);
+
+    map.on('click', (e) => {
+      map.removeLayer(marker);
+      this.currentLatLng = [e.latlng.lat, e.latlng.lng];
+      marker = L.marker(this.currentLatLng).addTo(map);
+      this.setValue(this.currentLatLng);
+    });
+
+    // Attempt to get the user's current location and set the marker to that
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        map.removeLayer(marker);
+        this.currentLatLng = [position.coords.latitude, position.coords.longitude];
+        marker = L.marker(this.currentLatLng).addTo(map);
+        this.setValue(this.currentLatLng);
+      });
     }
-
-    static get builderInfo() {
-        return {
-            title: 'Pdok Map',
-            group: 'advanced',
-            icon: 'map',
-            weight: 500,
-            schema: Pdok.schema()
-        };
-    }
-
-    get defaultSchema() {
-        return Pdok.schema();
-    }
-
-    get emptyValue() {
-        return '';
-    }
-
-    renderElement(value, index) {
-        return super.renderElement(value, index) + `<div id="the-pdok-map-${this.id}" style="height: 400px; position: relative;"/>`;
-    }
-
-    attachElement(element, index) {
-        super.attachElement(element, index);
-
-        // var mymap = L.map('the-pdok-map').setView([51.505, -0.09], 13);
-
-        // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        //     maxZoom: 18,
-        //     id: 'mapbox/streets-v11',
-        //     tileSize: 512,
-        //     zoomOffset: -1,
-        //     accessToken: 'pk.eyJ1Ijoic2hlYW1leWVycyIsImEiOiJja3VncTZpc3gwYnNzMnFteTZjeXp2M3E0In0.v5LSs4Hd4xfrRqInXVy3dw'
-        // }).addTo(mymap);
-
-        let map = L.map(`the-pdok-map-${this.id}`, MAP_DEFAULTS);
-
-        const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
-
-        map.addLayer(tiles);
-
-        // Set inital marker at center
-        let marker = L.marker(DEFAULT_LAT_LON).addTo(map);
-        this.setValue(DEFAULT_LAT_LON);
-
-        map.on('click', (e) => {
-          map.removeLayer(marker);
-          const newLatLng = [e.latlng.lat, e.latlng.lng];
-          marker = L.marker(newLatLng).addTo(map);
-          this.setValue(newLatLng);
-        });
-    }
+  }
 }
