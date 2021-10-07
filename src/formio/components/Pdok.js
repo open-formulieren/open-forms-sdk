@@ -5,8 +5,7 @@ import {Formio} from 'react-formio';
 import * as L from 'leaflet';
 import {RD_CRS} from './rd';
 
-// Using Hidden Component so we don't get anything 'extra' with our map
-const HiddenComponent = Formio.Components.components.hidden;
+const TextFieldComponent = Formio.Components.components.textfield;
 
 const TILES = 'https://geodata.nationaalgeoregister.nl/tiles/service';
 
@@ -39,9 +38,9 @@ const MAP_DEFAULTS = {
 };
 
 
-export default class Pdok extends HiddenComponent {
+export default class Pdok extends TextFieldComponent {
   static schema(...extend) {
-    return HiddenComponent.schema({
+    return TextFieldComponent.schema({
       type: 'pdok',
       label: 'PDOK kaart',
       key: 'pdokMap',
@@ -56,6 +55,13 @@ export default class Pdok extends HiddenComponent {
       weight: 500,
       schema: Pdok.schema()
     };
+  }
+
+  get inputInfo() {
+    const info = super.elementInfo();
+    // Hide the input element
+    info.attr.type = 'hidden';
+    return info;
   }
 
   get defaultSchema() {
