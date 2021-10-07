@@ -38,22 +38,21 @@ const MAP_DEFAULTS = {
 };
 
 
-export default class Pdok extends TextFieldComponent {
+export default class Map extends TextFieldComponent {
   static schema(...extend) {
     return TextFieldComponent.schema({
-      type: 'pdok',
-      label: 'PDOK kaart',
-      key: 'pdokMap',
+      type: 'map',
+      label: 'Map',
+      key: 'map',
     }, ...extend);
   }
 
   static get builderInfo() {
     return {
-      title: 'Pdok Map',
-      group: 'advanced',
+      title: 'Map',
       icon: 'map',
       weight: 500,
-      schema: Pdok.schema()
+      schema: Map.schema()
     };
   }
 
@@ -80,7 +79,7 @@ export default class Pdok extends TextFieldComponent {
   }
 
   get defaultSchema() {
-    return Pdok.schema();
+    return Map.schema();
   }
 
   get emptyValue() {
