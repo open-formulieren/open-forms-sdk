@@ -5,15 +5,6 @@ import {Formio} from 'react-formio';
 import * as L from 'leaflet';
 import {RD_CRS} from './rd';
 
-// fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "http://localhost:8000/static/bundles/images/marker-icon-2x.png",
-  iconUrl: "http://localhost:8000/static/bundles/images/marker-icon.png",
-  shadowUrl: "http://localhost:8000/static/bundles/images/marker-shadow.png",
-});
-
 const TextFieldComponent = Formio.Components.components.textfield;
 
 const TILES = 'https://geodata.nationaalgeoregister.nl/tiles/service';
@@ -64,6 +55,21 @@ export default class Pdok extends TextFieldComponent {
       weight: 500,
       schema: Pdok.schema()
     };
+  }
+
+  constructor(component, options, data) {
+    super(component, options, data);
+
+    // fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
+    delete L.Icon.Default.prototype._getIconUrl;
+
+    const baseUrl = this.options.baseUrl.replaceAll("/api/v1/", "");
+
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: `${baseUrl}/static/bundles/images/marker-icon-2x.png`,
+      iconUrl: `${baseUrl}/static/bundles/images/marker-icon.png`,
+      shadowUrl: `${baseUrl}/static/bundles/images/marker-shadow.png`,
+    });
   }
 
   get inputInfo() {
