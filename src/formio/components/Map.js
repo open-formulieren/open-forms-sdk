@@ -2,7 +2,7 @@
  * A form widget to select a location on a Leaflet map.
  */
 import {Formio} from 'react-formio';
-import * as L from 'leaflet';
+import * as leaflet from 'leaflet';
 import {RD_CRS} from './rd';
 
 const TextFieldComponent = Formio.Components.components.textfield;
@@ -59,12 +59,15 @@ export default class Map extends TextFieldComponent {
   constructor(component, options, data) {
     super(component, options, data);
 
+    // Update this check since we set the value to an array
+    this.validator.validators.multiple.check = (component, setting, value) => Array.isArray(value);
+
     // fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
-    delete L.Icon.Default.prototype._getIconUrl;
+    delete leaflet.Icon.Default.prototype._getIconUrl;
 
     const baseUrl = this.options.baseUrl.replaceAll("/api/v1/", "");
 
-    L.Icon.Default.mergeOptions({
+    leaflet.Icon.Default.mergeOptions({
       iconRetinaUrl: `${baseUrl}/static/bundles/images/marker-icon-2x.png`,
       iconUrl: `${baseUrl}/static/bundles/images/marker-icon.png`,
       shadowUrl: `${baseUrl}/static/bundles/images/marker-shadow.png`,
@@ -87,42 +90,35 @@ export default class Map extends TextFieldComponent {
   }
 
   renderElement(value, index) {
-    return super.renderElement(value, index) + `<div id="the-pdok-map-${this.id}" style="height: 400px; position: relative;"/>`;
+    return super.renderElement(value, index) + `<div id="map-${this.id}" style="height: 400px; position: relative;"/>`;
   }
 
   attachElement(element, index) {
     super.attachElement(element, index);
 
-    let map = L.map(`the-pdok-map-${this.id}`, MAP_DEFAULTS);
+    let map = leaflet.map(`map-${this.id}`, MAP_DEFAULTS);
 
-    const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
+    const tiles = leaflet.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
 
     map.addLayer(tiles);
 
+    let marker = leaflet.marker(DEFAULT_LAT_LON).addTo(map);
     this.setValue(DEFAULT_LAT_LON);
 
-    let marker;
-
     // Attempt to get the user's current location and set the marker to that
-    // If not possible get to the default lat lng
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+        map.removeLayer(marker);
         const newLatLng = [position.coords.latitude, position.coords.longitude];
-        marker = L.marker(newLatLng).addTo(map);
+        marker = leaflet.marker(newLatLng).addTo(map);
         this.setValue(newLatLng);
-      }, (error) => {
-        marker = L.marker(DEFAULT_LAT_LON).addTo(map);
-        this.setValue(DEFAULT_LAT_LON);
       });
-    } else {
-      marker = L.marker(DEFAULT_LAT_LON).addTo(map);
-      this.setValue(DEFAULT_LAT_LON);
     }
 
     map.on('click', (e) => {
       map.removeLayer(marker);
       const newLatLng = [e.latlng.lat, e.latlng.lng];
-      marker = L.marker(newLatLng).addTo(map);
+      marker = leaflet.marker(newLatLng).addTo(map);
       this.setValue(newLatLng);
     });
   }
