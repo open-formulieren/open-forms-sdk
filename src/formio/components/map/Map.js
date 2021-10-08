@@ -2,7 +2,7 @@
  * A form widget to select a location on a Leaflet map.
  */
 import {Formio} from 'react-formio';
-import * as leaflet from 'leaflet';
+import * as L from 'leaflet';
 import {RD_CRS} from './rd';
 
 const TextFieldComponent = Formio.Components.components.textfield;
@@ -64,11 +64,11 @@ export default class Map extends TextFieldComponent {
     this.validator.validators.multiple.check = (component, setting, value) => Array.isArray(value);
 
     // fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
-    delete leaflet.Icon.Default.prototype._getIconUrl;
+    delete L.Icon.Default.prototype._getIconUrl;
 
     const baseUrl = this.options.baseUrl.replaceAll("/api/v1/", "");
 
-    leaflet.Icon.Default.mergeOptions({
+    L.Icon.Default.mergeOptions({
       iconRetinaUrl: `${baseUrl}/static/bundles/images/marker-icon-2x.png`,
       iconUrl: `${baseUrl}/static/bundles/images/marker-icon.png`,
       shadowUrl: `${baseUrl}/static/bundles/images/marker-shadow.png`,
@@ -97,13 +97,19 @@ export default class Map extends TextFieldComponent {
   attachElement(element, index) {
     super.attachElement(element, index);
 
-    let map = leaflet.map(`map-${this.id}`, MAP_DEFAULTS);
+    // Prevent exception if container is already initialized
+    const container = L.DomUtil.get(`map-${this.id}`);
+    if (container !== null) {
+      container._leaflet_id = null;
+    }
 
-    const tiles = leaflet.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
+    let map = L.map(`map-${this.id}`, MAP_DEFAULTS);
+
+    const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
 
     map.addLayer(tiles);
 
-    let marker = leaflet.marker(DEFAULT_LAT_LON).addTo(map);
+    let marker = L.marker(DEFAULT_LAT_LON).addTo(map);
     this.setValue(DEFAULT_LAT_LON);
 
     // Attempt to get the user's current location and set the marker to that
@@ -111,7 +117,7 @@ export default class Map extends TextFieldComponent {
       navigator.geolocation.getCurrentPosition((position) => {
         map.removeLayer(marker);
         const newLatLng = [position.coords.latitude, position.coords.longitude];
-        marker = leaflet.marker(newLatLng).addTo(map);
+        marker = L.marker(newLatLng).addTo(map);
         map.setView(newLatLng, DEFAULT_ZOOM);
         this.setValue(newLatLng);
       });
@@ -120,7 +126,7 @@ export default class Map extends TextFieldComponent {
     map.on('click', (e) => {
       map.removeLayer(marker);
       const newLatLng = [e.latlng.lat, e.latlng.lng];
-      marker = leaflet.marker(newLatLng).addTo(map);
+      marker = L.marker(newLatLng).addTo(map);
       this.setValue(newLatLng);
     });
   }
