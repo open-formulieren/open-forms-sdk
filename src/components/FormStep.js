@@ -267,8 +267,9 @@ const FormStep = ({
     formInstance.submit();
   };
 
-  const onFormSave = async (event) => {
+  const onFormSave = (event) => {
     event.preventDefault();
+    console.log('In onFormSave');
   };
 
   const onPrevPage = (event) => {
@@ -358,7 +359,8 @@ const FormStep = ({
                   <Button
                     type="button"
                     variant="secondary"
-                    name="save" onClick={onFormSave} disabled style={{display: "none"}}
+                    name="save"
+                    onClick={onFormSave}
                   ><Literal name="saveText"/></Button>
                   <Button
                     type="submit"
