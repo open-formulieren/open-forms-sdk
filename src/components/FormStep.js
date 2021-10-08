@@ -269,7 +269,8 @@ const FormStep = ({
 
   const onFormSave = (event) => {
     event.preventDefault();
-    console.log('In onFormSave');
+    const emailAdddress = prompt("Please enter your email address:");
+    console.log('User entered: ', emailAdddress);
   };
 
   const onPrevPage = (event) => {
