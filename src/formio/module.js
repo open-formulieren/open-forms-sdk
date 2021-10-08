@@ -16,7 +16,7 @@ import PostcodeField from "./components/PostcodeField";
 import PhoneNumberField from "./components/PhoneNumberField";
 import BsnField from "./components/BsnField";
 import FileField from "./components/FileField";
-import Map from "./components/Map";
+import Map from "./components/map/Map";
 
 const FormIOModule = {
   components: {

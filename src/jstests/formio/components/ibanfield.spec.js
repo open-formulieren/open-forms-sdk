@@ -6,7 +6,7 @@ import OpenFormsModule from "../../../formio/module";
 
 // Mock importing this file due to issues between Jest and Leaflet
 //   Eg. https://github.com/Leaflet/Leaflet/issues/6297#issuecomment-416875449
-jest.mock("../../../formio/components/rd", () => jest.fn());
+jest.mock("../../../formio/components/map/rd", () => jest.fn());
 
 // Use our custom components
 Formio.use(OpenFormsModule);
