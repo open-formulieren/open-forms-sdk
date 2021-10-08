@@ -27,6 +27,7 @@ const TILE_LAYERS = {
 
 // Roughly the center of the Netherlands
 const DEFAULT_LAT_LON = [52.1326332, 5.291266];
+const DEFAULT_ZOOM = 13;
 
 
 const MAP_DEFAULTS = {
@@ -34,7 +35,7 @@ const MAP_DEFAULTS = {
   crs: RD_CRS,
   attributionControl: true,
   center: DEFAULT_LAT_LON,
-  zoom: 3,
+  zoom: DEFAULT_ZOOM,
 };
 
 
@@ -111,6 +112,7 @@ export default class Map extends TextFieldComponent {
         map.removeLayer(marker);
         const newLatLng = [position.coords.latitude, position.coords.longitude];
         marker = leaflet.marker(newLatLng).addTo(map);
+        map.setView(newLatLng, DEFAULT_ZOOM);
         this.setValue(newLatLng);
       });
     }
