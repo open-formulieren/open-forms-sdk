@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import {FormattedNumber} from 'react-intl';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
 
 import {applyPrefix} from './formio/utils';
 import Body from 'components/Body';
@@ -143,7 +143,15 @@ export const getComponentValue = (inputValue, components, key, intl) => {
         );
       }
       case 'map':
-        return `${inputValue[0]}, ${inputValue[1]}`;
+        return <FormattedMessage
+          description="getComponentValue map case"
+          defaultMessage={`Latitude: {latitude}, Longitude: {longitude}`}
+          values={{
+            // 5 decimals places gives an accuracy of about 1 meter
+            latitude: inputValue[0].toFixed(5),
+            longitude: inputValue[1].toFixed(5),
+          }}
+        />;
       default:
         return inputValue;
     }
