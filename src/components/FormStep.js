@@ -271,6 +271,7 @@ const FormStep = ({
     event.preventDefault();
     const emailAdddress = prompt("Please enter your email address:");
     console.log('User entered: ', emailAdddress);
+    onLogout(event);
   };
 
   const onPrevPage = (event) => {
