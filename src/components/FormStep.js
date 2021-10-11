@@ -269,11 +269,9 @@ const FormStep = ({
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    const emailAdddress = prompt("Please enter your email address:");
-    console.log('User entered: ', emailAdddress);
-
+    const email = prompt("Please enter your email address:");
     await submitStepData(submissionStep.url, data);
-    // TODO Need to make a call to send the email here
+    await post(`${submission.url}/_suspend`, {email});
     onLogout(event);
   };
 
