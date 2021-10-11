@@ -1,6 +1,6 @@
 import messagesNL from './i18n/compiled/nl.json';
 import messagesEN from './i18n/compiled/en.json';
-
+import { get } from 'api';
 
 const loadLocaleData = (locale) => {
     switch (locale) {
@@ -11,5 +11,9 @@ const loadLocaleData = (locale) => {
     }
 };
 
+const loadFormioTranslations = async (baseUrl) => {
+  return get(`${baseUrl}translations/formio`);
+};
 
-export default loadLocaleData;
+
+export {loadLocaleData, loadFormioTranslations};

@@ -11,11 +11,11 @@ import OFLibrary from './formio/templates';
 import './styles.scss';
 
 import { get } from 'api';
-import { ConfigContext } from 'Context';
+import { ConfigContext, FormioTranslations } from 'Context';
 import App from 'components/App';
 import { AddFetchAuth } from 'formio/plugins';
-import loadLocaleData from 'i18n';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
+import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
 
 // use custom component overrides
@@ -56,7 +56,7 @@ class OpenForm {
 
   async init() {
     // use explicitly forced language, or look up the browser html lang attribute value
-    const lang = this.lang || document.querySelector('html').getAttribute("lang");
+    const lang = this.lang || document.querySelector('html').getAttribute('lang');
 
     const url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
@@ -64,21 +64,24 @@ class OpenForm {
     const promises = [
       // load the message catalog for i18n
       loadLocaleData(lang),
+      loadFormioTranslations(this.baseUrl),
       // fetch the form object from the API
       get(url),
     ];
-    const [messages, formObject] = await Promise.all(promises);
+    const [messages, translations, formObject] = await Promise.all(promises);
 
-    this.formObject = formObject
+    this.formObject = formObject;
 
     // render the wrapping React component
     ReactDOM.render(
       <React.StrictMode>
         <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
           <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
-            <Router basename={this.basePath}>
-              <App form={this.formObject} />
-            </Router>
+            <FormioTranslations.Provider value={{i18n: translations, language: lang}}>
+              <Router basename={this.basePath}>
+                <App form={this.formObject} />
+              </Router>
+            </FormioTranslations.Provider>
           </ConfigContext.Provider>
         </IntlProvider>
       </React.StrictMode>,
