@@ -267,10 +267,13 @@ const FormStep = ({
     formInstance.submit();
   };
 
-  const onFormSave = (event) => {
+  const onFormSave = async (event) => {
     event.preventDefault();
     const emailAdddress = prompt("Please enter your email address:");
     console.log('User entered: ', emailAdddress);
+
+    await submitStepData(submissionStep.url, data);
+    // TODO Need to make a call to send the email here
     onLogout(event);
   };
 
