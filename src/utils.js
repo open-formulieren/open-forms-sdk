@@ -144,17 +144,10 @@ export const getComponentValue = (inputValue, components, key, intl) => {
         );
       }
       case 'map':
-        return <Map/>;
-
-        // return <FormattedMessage
-        //   description="getComponentValue map case"
-        //   defaultMessage={`Latitude: {latitude}, Longitude: {longitude}`}
-        //   values={{
-        //     // 5 decimals places gives an accuracy of about 1 meter
-        //     latitude: inputValue[0].toFixed(5),
-        //     longitude: inputValue[1].toFixed(5),
-        //   }}
-        // />;
+        return <Map
+          disabled={true}
+          initialCoordinates={inputValue}
+        />;
       default:
         return inputValue;
     }

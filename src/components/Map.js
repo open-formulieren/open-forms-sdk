@@ -7,7 +7,7 @@ import * as L from 'leaflet';
 import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../formio/components/map/constants';
 
 
-const Map = () => {
+const Map = ({ disabled=true, initialCoordinates=DEFAULT_LAT_LON}) => {
 
   const id = _uniqueId();
   let {baseUrl} = useContext(ConfigContext);
@@ -34,29 +34,48 @@ const Map = () => {
     const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
 
     map.addLayer(tiles);
+    map.setView(initialCoordinates, DEFAULT_ZOOM);
 
-    let marker = L.marker(DEFAULT_LAT_LON).addTo(map);
+    let marker = L.marker(initialCoordinates).addTo(map);
 
-    // Attempt to get the user's current location and set the marker to that
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+    if (disabled) {
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.scrollWheelZoom.disable();
+      map.boxZoom.disable();
+      map.keyboard.disable();
+      if (map.tap) map.tap.disable();
+      document.getElementById(`map-${id}`).style.cursor = 'default';
+    } else {
+      // Attempt to get the user's current location and set the marker to that
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          map.removeLayer(marker);
+          const newLatLng = [position.coords.latitude, position.coords.longitude];
+          marker = L.marker(newLatLng).addTo(map);
+          map.setView(newLatLng, DEFAULT_ZOOM);
+        });
+      }
+
+      map.on('click', (e) => {
         map.removeLayer(marker);
-        const newLatLng = [position.coords.latitude, position.coords.longitude];
+        const newLatLng = [e.latlng.lat, e.latlng.lng];
         marker = L.marker(newLatLng).addTo(map);
-        map.setView(newLatLng, DEFAULT_ZOOM);
       });
     }
-
-    map.on('click', (e) => {
-      map.removeLayer(marker);
-      const newLatLng = [e.latlng.lat, e.latlng.lng];
-      marker = L.marker(newLatLng).addTo(map);
-    });
   });
 
   return (
     <div id={"map-" + id} style={{ height: "400px", position: "relative" }}/>
   );
 };
+
+
+Map.propTypes = {
+  disabled: PropTypes.bool,
+  initialCoordinates: PropTypes.array,
+};
+
 
 export default Map;
