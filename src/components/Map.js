@@ -7,13 +7,12 @@ import * as L from 'leaflet';
 import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../map/constants';
 
 
-const Map = ({ disabled=false, initialCoordinates=DEFAULT_LAT_LON}) => {
+const Map = ({ disabled=false, initialCoordinates=DEFAULT_LAT_LON }) => {
 
   const mapId = _uniqueId('map-');
-  let {baseUrl} = useContext(ConfigContext);
-  baseUrl = baseUrl.replaceAll("/api/v1/", "");
+  const {baseUrl} = useContext(ConfigContext);
 
-  const initializeInterableMap = (map, marker) => {
+  const initializeInteractableMap = (map, marker) => {
       // Attempt to get the user's current location and set the marker to that
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -47,9 +46,9 @@ const Map = ({ disabled=false, initialCoordinates=DEFAULT_LAT_LON}) => {
     delete L.Icon.Default.prototype._getIconUrl;
 
     L.Icon.Default.mergeOptions({
-      iconRetinaUrl: `${baseUrl}/static/bundles/images/marker-icon-2x.png`,
-      iconUrl: `${baseUrl}/static/bundles/images/marker-icon.png`,
-      shadowUrl: `${baseUrl}/static/bundles/images/marker-shadow.png`,
+      iconRetinaUrl: `${baseUrl.replaceAll("/api/v1/", "")}/static/bundles/images/marker-icon-2x.png`,
+      iconUrl: `${baseUrl.replaceAll("/api/v1/", "")}/static/bundles/images/marker-icon.png`,
+      shadowUrl: `${baseUrl.replaceAll("/api/v1/", "")}/static/bundles/images/marker-shadow.png`,
     });
 
     // Prevent exception if container is already initialized
@@ -70,7 +69,7 @@ const Map = ({ disabled=false, initialCoordinates=DEFAULT_LAT_LON}) => {
     if (disabled) {
       disableMap(map);
     } else {
-      initializeInterableMap(map, marker);
+      initializeInteractableMap(map, marker);
     }
   });
 
