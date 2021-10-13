@@ -2,7 +2,7 @@
  * Render a single form step, as part of a started submission for a form.
  */
 
-import React, {useRef, useContext} from 'react';
+import React, {useRef, useContext, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
@@ -11,12 +11,12 @@ import isEmpty from 'lodash/isEmpty';
 import { useImmerReducer } from 'use-immer';
 import useAsync from 'react-use/esm/useAsync';
 import useDebounce from 'react-use/esm/useDebounce';
+import {Form} from '@formio/react';
 
 import { get, post, put } from 'api';
 
 import Button from 'components/Button';
 import Card from 'components/Card';
-import FormIOWrapper from 'components/FormIOWrapper';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Loader from 'components/Loader';
 import { ConfigContext } from 'Context';
@@ -97,6 +97,10 @@ const FormStep = ({
   const config = useContext(ConfigContext);
   /* component state */
   const formRef = useRef(null);
+  // Documentation: https://docs.form.io/developers/frameworks#react-renderer
+  const onFormReady = useCallback((formInstance) => {
+    formRef.current = formInstance;
+  }, []);
   // can't use usePrevious, because the data changed event fires often, and we need to
   // track data changes since the last logic check rather.
   const previouslyCheckedDataRef = useRef(null);
@@ -135,7 +139,7 @@ const FormStep = ({
       // call the backend to do the check
       const {submission, step} = await doLogicCheck(submissionStep.url, data);
       onLogicChecked(submission, step); // report back to parent component
-      const formInstance = formRef.current.instance.instance;
+      const formInstance = formRef.current;
       // we can't just dispatch this, because Formio keeps references to DOM nodes
       // which expire when the component re-renders, and that gives React
       // unstable_flushDiscreteUpdates warnings. However, we can update the form
@@ -179,9 +183,8 @@ const FormStep = ({
   const onReactSubmit = (event) => {
     event.preventDefault();
 
-    // current is the component, current.instance is the component instance, and that
-    // object has an instance property pointing to the WebForm...
-    const formInstance = formRef.current.instance.instance;
+    // current is the form instance
+    const formInstance = formRef.current;
     if (!formInstance) {
       console.warn("Form was not rendered (yet), aborting submission.");
       return;
@@ -223,8 +226,8 @@ const FormStep = ({
       {
         (!loading && configuration) ? (
           <form onSubmit={onReactSubmit}>
-            <FormIOWrapper
-              ref={formRef}
+            <Form
+              formReady={onFormReady}
               form={configuration}
               submission={{data: data}}
               onChange={onFormIOChange}
