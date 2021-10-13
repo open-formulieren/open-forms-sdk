@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {ConfigContext} from 'Context';
 
 import * as L from 'leaflet';
-import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../formio/components/map/constants';
+import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../map/constants';
 
 
 const Map = ({ disabled=true, initialCoordinates=DEFAULT_LAT_LON}) => {

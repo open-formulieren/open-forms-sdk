@@ -3,7 +3,7 @@
  */
 import {Formio} from 'react-formio';
 import * as L from 'leaflet';
-import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from './constants';
+import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../../map/constants';
 
 const TextFieldComponent = Formio.Components.components.textfield;
 
