@@ -269,7 +269,13 @@ const FormStep = ({
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    const email = prompt("Please enter your email address:");
+    const emailPromptMessage = intl.formatMessage(
+      {
+        description: 'email prompt message',
+        defaultMessage: 'Please enter your email address:'
+      }
+    );
+    const email = prompt(emailPromptMessage);
     await submitStepData(submissionStep.url, data);
     await post(`${submission.url}/_suspend`, {email});
     onLogout(event);
