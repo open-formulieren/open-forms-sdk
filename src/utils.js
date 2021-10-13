@@ -1,11 +1,12 @@
 import classNames from 'classnames';
-import {FormattedMessage, FormattedNumber} from 'react-intl';
+import {FormattedNumber} from 'react-intl';
 
 import {applyPrefix} from './formio/utils';
 import Body from 'components/Body';
 import List from 'components/List';
 import Image from 'components/Image';
 import Anchor from 'components/Anchor';
+import Map from 'components/Map';
 
 
 export const getFormattedDateString = (intl, dateString) => {
@@ -143,15 +144,17 @@ export const getComponentValue = (inputValue, components, key, intl) => {
         );
       }
       case 'map':
-        return <FormattedMessage
-          description="getComponentValue map case"
-          defaultMessage={`Latitude: {latitude}, Longitude: {longitude}`}
-          values={{
-            // 5 decimals places gives an accuracy of about 1 meter
-            latitude: inputValue[0].toFixed(5),
-            longitude: inputValue[1].toFixed(5),
-          }}
-        />;
+        return <Map/>;
+
+        // return <FormattedMessage
+        //   description="getComponentValue map case"
+        //   defaultMessage={`Latitude: {latitude}, Longitude: {longitude}`}
+        //   values={{
+        //     // 5 decimals places gives an accuracy of about 1 meter
+        //     latitude: inputValue[0].toFixed(5),
+        //     longitude: inputValue[1].toFixed(5),
+        //   }}
+        // />;
       default:
         return inputValue;
     }
