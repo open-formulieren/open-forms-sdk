@@ -1,4 +1,4 @@
-import {Formio} from "react-formio";
+import {Formio} from "@formio/react";
 import {getBEMClassName} from '../../utils';
 
 const Time = Formio.Components.components.time;
