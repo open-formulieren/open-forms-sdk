@@ -7,7 +7,7 @@ import * as L from 'leaflet';
 import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../map/constants';
 
 
-const Map = ({ disabled=true, initialCoordinates=DEFAULT_LAT_LON}) => {
+const Map = ({ disabled=false, initialCoordinates=DEFAULT_LAT_LON}) => {
 
   const id = _uniqueId();
   let {baseUrl} = useContext(ConfigContext);
