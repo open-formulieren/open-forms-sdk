@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 
-import { Formio, Templates } from 'react-formio';
+import { Formio, Templates } from '@formio/react';
 
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';

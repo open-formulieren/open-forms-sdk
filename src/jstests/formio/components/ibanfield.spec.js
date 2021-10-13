@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import {Formio} from "react-formio";
+import {Formio} from "@formio/react";
 import {iban, twoComponentForm} from './fixtures/iban';
 import OpenFormsModule from "../../../formio/module";
 

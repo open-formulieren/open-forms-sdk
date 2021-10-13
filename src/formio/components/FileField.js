@@ -1,4 +1,4 @@
-import { Formio } from 'react-formio';
+import { Formio } from '@formio/react';
 
 /**
  * Extend the default file field to modify it to our needs.
