@@ -225,7 +225,8 @@ const FormStep = ({
             <FormIOWrapper
               ref={formRef}
               form={configuration}
-              submission={{data: data}}
+              // Filter blank values so FormIO does not run validation on them
+              submission={{data: Object.fromEntries(Object.entries(data).filter(([_, value]) => !!value ))}}
               onChange={onFormIOChange}
               onBlur={onFormIOBlur}
               onSubmit={onFormIOSubmit}
