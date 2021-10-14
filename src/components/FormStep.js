@@ -10,7 +10,6 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import { useImmerReducer } from 'use-immer';
 import useAsync from 'react-use/esm/useAsync';
-import useDebounce from 'react-use/esm/useDebounce';
 
 import { get, post, put } from 'api';
 
@@ -24,10 +23,6 @@ import Types from 'types';
 import LogoutButton from 'components/LogoutButton';
 import hooks from '../formio/hooks';
 import {findPreviousApplicableStep} from 'components/utils';
-
-
-const STEP_LOGIC_DEBOUNCE_MS = 500;
-
 
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
@@ -126,35 +121,32 @@ const FormStep = ({
   );
 
   const previousData = previouslyCheckedDataRef.current;
-  useDebounce(
-    async () => {
-      if (previousData && isEqual(previousData, data)) return;
-      if (isEmpty(data)) return;
-      previouslyCheckedDataRef.current = data;
-      dispatch({type: 'BLOCK_SUBMISSION'});
-      // call the backend to do the check
-      const {submission, step} = await doLogicCheck(submissionStep.url, data);
-      onLogicChecked(submission, step); // report back to parent component
-      const formInstance = formRef.current.instance.instance;
-      // we can't just dispatch this, because Formio keeps references to DOM nodes
-      // which expire when the component re-renders, and that gives React
-      // unstable_flushDiscreteUpdates warnings. However, we can update the form
-      // definition by using the ref to the underlying Formio instance.
-      // NOTE that this does effectively bring our state.configuration out of sync
-      // with the actual form configuration (!).
-      formInstance.setForm(step.formStep.configuration);
-      // the reminder of the state updates we let the reducer handle
-      dispatch({
-        type: 'LOGIC_CHECK_DONE',
-        payload: {
-          submission,
-          step,
-        },
-      });
-    },
-    STEP_LOGIC_DEBOUNCE_MS,
-    [previousData, data, submissionStep.url]
-  );
+
+  const performLogicCheck = async () => {
+    if (previousData && isEqual(previousData, data)) return;
+    if (isEmpty(data)) return;
+    previouslyCheckedDataRef.current = data;
+    dispatch({type: 'BLOCK_SUBMISSION'});
+    // call the backend to do the check
+    const {submission, step} = await doLogicCheck(submissionStep.url, data);
+    onLogicChecked(submission, step); // report back to parent component
+    const formInstance = formRef.current.instance.instance;
+    // we can't just dispatch this, because Formio keeps references to DOM nodes
+    // which expire when the component re-renders, and that gives React
+    // unstable_flushDiscreteUpdates warnings. However, we can update the form
+    // definition by using the ref to the underlying Formio instance.
+    // NOTE that this does effectively bring our state.configuration out of sync
+    // with the actual form configuration (!).
+    formInstance.setForm(step.formStep.configuration);
+    // the reminder of the state updates we let the reducer handle
+    dispatch({
+      type: 'LOGIC_CHECK_DONE',
+      payload: {
+        submission,
+        step,
+      },
+    });
+  };
 
   const onFormIOSubmit = async ({ data }) => {
     if (!submission) {
@@ -205,7 +197,7 @@ const FormStep = ({
     history.push(navigateTo);
   };
 
-  // See https://help.form.io/developers/form-renderer#form-events
+  // See 'change' event https://help.form.io/developers/form-renderer#form-events
   const onFormIOChange = (changed, flags, modifiedByHuman) => {
     // if there are no changes, do nothing
     if ( !(flags && flags.changes && flags.changes.length) ) return;
@@ -215,6 +207,13 @@ const FormStep = ({
       payload: {...changed.data},
     });
   };
+
+  // See 'blur' event https://help.form.io/developers/form-renderer#form-events
+  const onFormIOBlur = (instance) => {
+    // Note that we do not need to handle the response
+    performLogicCheck();
+  };
+
 
   return (
     <Card title={submissionStep.name}>
@@ -228,6 +227,7 @@ const FormStep = ({
               form={configuration}
               submission={{data: data}}
               onChange={onFormIOChange}
+              onBlur={onFormIOBlur}
               onSubmit={onFormIOSubmit}
               options={{
                 noAlerts: true,
