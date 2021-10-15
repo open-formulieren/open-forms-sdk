@@ -142,7 +142,13 @@ const FormStep = ({
       // definition by using the ref to the underlying Formio instance.
       // NOTE that this does effectively bring our state.configuration out of sync
       // with the actual form configuration (!).
-      formInstance.setForm(step.formStep.configuration);
+
+      // Only re-render the form when it's valid. This prevents error messages from
+      // being removed.
+      if (formInstance.isValid()) {
+        formInstance.setForm(step.formStep.configuration);
+      }
+
       // the reminder of the state updates we let the reducer handle
       dispatch({
         type: 'LOGIC_CHECK_DONE',

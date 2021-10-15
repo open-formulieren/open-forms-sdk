@@ -11,6 +11,7 @@ class Email extends Formio.Components.components.email {
     const info = super.inputInfo;
     // change the default CSS classes
     info.attr.class = applyPrefix('email');
+    info.changeEvent = 'blur';
     return info;
   }
 

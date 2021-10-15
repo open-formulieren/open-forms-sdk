@@ -42,6 +42,7 @@ export default class IBANField extends TextField {
     const info = super.inputInfo;
     // change the default CSS classes
     info.attr.class = applyPrefix('iban');
+    info.changeEvent = 'blur';
     return info;
   }
 }

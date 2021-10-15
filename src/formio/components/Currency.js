@@ -10,6 +10,7 @@ class Currency extends Formio.Components.components.currency {
     const info = super.inputInfo;
     // change the default CSS classes
     info.attr.class = applyPrefix('input');
+    info.changeEvent = 'blur';
     return info;
   }
 }

@@ -11,6 +11,7 @@ class TextArea extends Formio.Components.components.textarea {
     const info = super.inputInfo;
     // change the default CSS classes
     info.attr.class = applyPrefix('textarea');
+    info.changeEvent = 'blur';
     return info;
   }
 }

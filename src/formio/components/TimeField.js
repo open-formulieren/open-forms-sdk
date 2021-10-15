@@ -21,6 +21,7 @@ class TimeField extends Time {
     const info = super.inputInfo;
     // change the default CSS classes
     info.attr.class = getBEMClassName('input', ['time']);
+    info.changeEvent = 'blur';
     return info;
   }
 }

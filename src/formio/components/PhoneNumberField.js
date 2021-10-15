@@ -33,6 +33,7 @@ class PhoneNumberField extends PhoneNumber {
       const info = super.inputInfo;
       // change the default CSS classes
       info.attr.class = applyPrefix('input');
+      info.changeEvent = 'blur';
       return info;
     }
 }
