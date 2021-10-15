@@ -9,12 +9,7 @@
     content="Playground for SDK development"
   />
   <title>Open Forms SDK</title>
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@utrecht/design-tokens/dist/theme/index.css"/>
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://unpkg.com/@gemeente-haarlem/design-tokens/dist/index.css"
-  />
+  <script async src="https://unpkg.com/@nl-design-system-unstable/theme-switcher"></script>
   <link
     rel="stylesheet"
     type="text/css"
@@ -23,12 +18,7 @@
 </head>
 <body>
 <div class="theme-switcher">
-  <label for="">Theme:</label>
-  <select onchange="document.documentElement.className = this.value">
-    <option value="denhaag-theme" selected>Gemeente Den Haag</option>
-    <option value="haarlem-theme">Gemeente Haarlem</option>
-    <option value="utrecht-theme">Gemeente Utrecht</option>
-  </select>
+  <nl-theme-switcher></nl-theme-switcher>
 </div>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
