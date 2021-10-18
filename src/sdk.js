@@ -15,6 +15,7 @@ import { ConfigContext } from 'Context';
 import App from 'components/App';
 import { AddFetchAuth } from 'formio/plugins';
 import loadLocaleData from 'i18n';
+import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import initialiseSentry from 'sentry';
 
 // use custom component overrides
@@ -24,6 +25,7 @@ Templates.current = OFLibrary;
 
 Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 
+fixLeafletIconUrls();
 
 class OpenForm {
 

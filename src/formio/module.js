@@ -16,6 +16,7 @@ import PostcodeField from "./components/PostcodeField";
 import PhoneNumberField from "./components/PhoneNumberField";
 import BsnField from "./components/BsnField";
 import FileField from "./components/FileField";
+import Map from "./components/Map";
 
 const FormIOModule = {
   components: {
@@ -37,6 +38,7 @@ const FormIOModule = {
     phoneNumber: PhoneNumberField,
     bsn: BsnField,
     file: FileField,
+    map: Map,
   },
 };
 

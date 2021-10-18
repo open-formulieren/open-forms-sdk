@@ -6,6 +6,7 @@ import Body from 'components/Body';
 import List from 'components/List';
 import Image from 'components/Image';
 import Anchor from 'components/Anchor';
+import Map from 'components/Map';
 
 
 export const getFormattedDateString = (intl, dateString) => {
@@ -142,6 +143,8 @@ export const getComponentValue = (inputValue, components, key, intl) => {
           </List>
         );
       }
+      case 'map':
+        return <Map markerCoordinates={inputValue} disabled />;
       default:
         return inputValue;
     }

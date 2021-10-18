@@ -7,6 +7,8 @@ import messagesNL from 'i18n/compiled/nl.json';
 
 import {AuthenticationErrors} from '.';
 
+jest.mock("../../../map/rd", () => jest.fn());
+
 let scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 

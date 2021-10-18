@@ -9,6 +9,7 @@ import messagesNL from 'i18n/compiled/nl.json';
 import FormStart from '.';
 import {testForm} from './fixtures';
 
+jest.mock("../../map/rd", () => jest.fn());
 jest.mock('hooks/useQuery');
 let scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;

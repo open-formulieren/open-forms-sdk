@@ -4,6 +4,8 @@ import {Formio} from "react-formio";
 import {iban, twoComponentForm} from './fixtures/iban';
 import OpenFormsModule from "../../../formio/module";
 
+jest.mock("../../../map/rd", () => jest.fn());
+
 // Use our custom components
 Formio.use(OpenFormsModule);
 
