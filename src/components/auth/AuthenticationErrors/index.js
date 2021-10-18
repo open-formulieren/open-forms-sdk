@@ -8,6 +8,7 @@ import useQuery from 'hooks/useQuery';
 const MAPPING_PARAMS_SERVICE = {
   '_digid-message': 'DigiD',
   '_eherkenning-message': 'EHerkenning',
+  '_eidas-message': 'eIDAS',
 };
 
 const CANCEL_LOGIN_PARAM = 'login-cancelled';
