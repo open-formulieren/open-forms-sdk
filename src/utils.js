@@ -144,10 +144,7 @@ export const getComponentValue = (inputValue, components, key, intl) => {
         );
       }
       case 'map':
-        return <Map
-          disabled={true}
-          initialCoordinates={inputValue}
-        />;
+        return <Map markerCoordinates={inputValue} disabled />;
       default:
         return inputValue;
     }

@@ -1,16 +1,19 @@
 /**
  * A form widget to select a location on a Leaflet map.
  */
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import {Formio} from 'react-formio';
-import * as L from 'leaflet';
-import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../../map/constants';
 
-const TextFieldComponent = Formio.Components.components.textfield;
+import LeafletMap from 'components/Map';
+
+const Field = Formio.Components.components.field;
 
 
-export default class Map extends TextFieldComponent {
+export default class Map extends Field {
   static schema(...extend) {
-    return TextFieldComponent.schema({
+    return Field.schema({
       type: 'map',
       label: 'Map',
       key: 'map',
@@ -24,24 +27,6 @@ export default class Map extends TextFieldComponent {
       weight: 500,
       schema: Map.schema()
     };
-  }
-
-  constructor(component, options, data) {
-    super(component, options, data);
-
-    // Update this check since we set the value to an array
-    this.validator.validators.multiple.check = (component, setting, value) => Array.isArray(value);
-
-    // fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
-    delete L.Icon.Default.prototype._getIconUrl;
-
-    const baseUrl = this.options.baseUrl.replaceAll("/api/v1/", "");
-
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: `${baseUrl}/static/bundles/images/marker-icon-2x.png`,
-      iconUrl: `${baseUrl}/static/bundles/images/marker-icon.png`,
-      shadowUrl: `${baseUrl}/static/bundles/images/marker-shadow.png`,
-    });
   }
 
   get inputInfo() {
@@ -59,44 +44,55 @@ export default class Map extends TextFieldComponent {
     return '';
   }
 
-  renderElement(value, index) {
-    return super.renderElement(value, index) + `<div id="map-${this.id}" style="height: 400px; position: relative;"/>`;
+  /**
+   * Check if a component is eligible for multiple validation.
+   *
+   * Overridden to not perform this, since values are arrays of [lat, long] which *looks*
+   * like multi-value but isn't.
+   *
+   * @return {boolean}
+   */
+  validateMultiple() {
+    return false;
   }
 
-  attachElement(element, index) {
-    super.attachElement(element, index);
+  render() {
+    return super.render(
+      `<div ref="element">
+        ${this.renderTemplate('map')}
+      </div>`
+    );
+  }
 
-    // Prevent exception if container is already initialized
-    const container = L.DomUtil.get(`map-${this.id}`);
-    if (container !== null) {
-      container._leaflet_id = null;
-    }
-
-    const map = L.map(`map-${this.id}`, MAP_DEFAULTS);
-
-    const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
-
-    map.addLayer(tiles);
-
-    let marker = L.marker(DEFAULT_LAT_LON).addTo(map);
-    this.setValue(DEFAULT_LAT_LON);
-
-    // Attempt to get the user's current location and set the marker to that
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        map.removeLayer(marker);
-        const newLatLng = [position.coords.latitude, position.coords.longitude];
-        marker = L.marker(newLatLng).addTo(map);
-        map.setView(newLatLng, DEFAULT_ZOOM);
-        this.setValue(newLatLng);
-      });
-    }
-
-    map.on('click', (e) => {
-      map.removeLayer(marker);
-      const newLatLng = [e.latlng.lat, e.latlng.lng];
-      marker = L.marker(newLatLng).addTo(map);
-      this.setValue(newLatLng);
+  /**
+   * Defer to React to actually render things - this keeps components DRY.
+   * @param  {[type]} element [description]
+   * @return {[type]}     [description]
+   */
+  attach(element) {
+    this.loadRefs(element, {
+      mapContainer: 'single',
     });
+    this.renderReact();
+    return super.attach(element);
+  }
+
+  renderReact() {
+    const markerCoordinates = this.getValue();
+    ReactDOM.render(
+      <LeafletMap
+        markerCoordinates={markerCoordinates || null}
+        onMarkerSet={newLatLng => this.setValue(newLatLng)}
+      />,
+      this.refs.mapContainer,
+    );
+  }
+
+  setValue(value, flags = {}) {
+    const changed = super.setValue(value, flags);
+    if (changed) {
+      this.renderReact();
+    }
+    return changed;
   }
 }

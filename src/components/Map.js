@@ -1,36 +1,48 @@
-import {useContext, useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import _uniqueId from 'lodash/uniqueId';
 import PropTypes from 'prop-types';
-import {ConfigContext} from 'Context';
+import {useGeolocation} from 'react-use';
 
-import * as L from 'leaflet';
+
+import L from 'leaflet';
 import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../map/constants';
 
 
-const Map = ({ disabled=false, initialCoordinates=DEFAULT_LAT_LON }) => {
+const useDefaultCoordinates = () => {
+  // FIXME: can't call hooks conditionally
+  const { loading, latitude, longitude } = useGeolocation();
+  if (!navigator.geolocation) return [false, DEFAULT_LAT_LON];
+  return [loading, [latitude, longitude]];
+};
 
-  const mapId = _uniqueId('map-');
-  const {baseUrl} = useContext(ConfigContext);
 
-  const initializeInteractableMap = (map, marker) => {
-      // Attempt to get the user's current location and set the marker to that
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          map.removeLayer(marker);
-          const newLatLng = [position.coords.latitude, position.coords.longitude];
-          marker = L.marker(newLatLng).addTo(map);
-          map.setView(newLatLng, DEFAULT_ZOOM);
-        });
-      }
+const LeaftletMap = ({
+  markerCoordinates,
+  onMarkerSet,
+  disabled=false,
+}) => {
+  const containerRef = useRef();
+  const mapRef = useRef();
+  const markerRef = useRef();
 
-      map.on('click', (e) => {
-        map.removeLayer(marker);
-        const newLatLng = [e.latlng.lat, e.latlng.lng];
-        marker = L.marker(newLatLng).addTo(map);
-      });
+  const [geoLoading, defaultCoordinates] = useDefaultCoordinates();
+  const coordinates = markerCoordinates || defaultCoordinates;
+
+  const initializeInteractiveMap = () => {
+    const map = mapRef.current;
+    let marker = markerRef.current;
+
+    map.on('click', (e) => {
+      map.removeLayer(marker);
+      const newLatLng = [e.latlng.lat, e.latlng.lng];
+      onMarkerSet(newLatLng);
+      marker = L.marker(newLatLng).addTo(map);
+      markerRef.current = marker;
+    });
   };
 
-  const disableMap = (map) => {
+  const disableMap = () => {
+      const map = mapRef.current;
       map.dragging.disable();
       map.touchZoom.disable();
       map.doubleClickZoom.disable();
@@ -38,51 +50,76 @@ const Map = ({ disabled=false, initialCoordinates=DEFAULT_LAT_LON }) => {
       map.boxZoom.disable();
       map.keyboard.disable();
       if (map.tap) map.tap.disable();
-      document.getElementById(mapId).style.cursor = 'default';
+      containerRef.current.style.cursor = 'default';
+  };
+
+  const destroyMap = () => {
+    const map = mapRef.current;
+    markerRef.current = null;
+    // containerRef.current = null;
+    if (!map) return;
+    map.remove();
+    mapRef.current = null;
   };
 
   useEffect(() => {
-    // fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
-    delete L.Icon.Default.prototype._getIconUrl;
+    const container = containerRef.current;
 
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: `${baseUrl.replaceAll("/api/v1/", "")}/static/bundles/images/marker-icon-2x.png`,
-      iconUrl: `${baseUrl.replaceAll("/api/v1/", "")}/static/bundles/images/marker-icon.png`,
-      shadowUrl: `${baseUrl.replaceAll("/api/v1/", "")}/static/bundles/images/marker-shadow.png`,
-    });
-
-    // Prevent exception if container is already initialized
-    const container = L.DomUtil.get(mapId);
-    if (container !== null) {
-      container._leaflet_id = null;
+    // no container div rendered yet, we can't initialize the map yet.
+    if (!container) {
+      return;
     }
 
-    const map = L.map(mapId, MAP_DEFAULTS);
+    let map = mapRef.current;
+    let marker = markerRef.current;
 
-    const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
+    // if no map instance exists yet, create it and set the ref.
+    if (!map) {
+      map = L.map(container, MAP_DEFAULTS);
+      mapRef.current = map;
 
-    map.addLayer(tiles);
-    map.setView(initialCoordinates, DEFAULT_ZOOM);
+      // set the base layers that are always present for any map whatever the value is
+      const tiles = L.tileLayer(TILE_LAYERS.url, TILE_LAYERS.options);
+      map.addLayer(tiles);
+    }
 
-    let marker = L.marker(initialCoordinates).addTo(map);
+    // okay, now ensure that the coordinates are in view - this happens for initial and
+    // re-renders (so if an instance already exists!)
+    if (markerCoordinates || !geoLoading) {
+      map.setView(coordinates, DEFAULT_ZOOM);
+
+      // ensure a marker is rendered
+      if (!marker) {
+        marker = L.marker(coordinates).addTo(map);
+        markerRef.current = marker;
+      }
+    }
 
     if (disabled) {
-      disableMap(map);
+      disableMap();
     } else {
-      initializeInteractableMap(map, marker);
+      initializeInteractiveMap();
     }
+
+    // destroy the map on un-mount/cleanup cycle.
+    return destroyMap;
   });
 
   return (
-    <div id={mapId} style={{ height: "400px", position: "relative" }}/>
+    <div
+      ref={containerRef}
+      id={_uniqueId('map-')}
+      style={{ height: "400px", position: "relative" }}
+    />
   );
 };
 
 
-Map.propTypes = {
+LeaftletMap.propTypes = {
+  markerCoordinates: PropTypes.arrayOf(PropTypes.number),
+  onMarkerSet: PropTypes.func,
   disabled: PropTypes.bool,
-  initialCoordinates: PropTypes.array,
 };
 
 
-export default Map;
+export default LeaftletMap;
