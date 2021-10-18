@@ -22,15 +22,6 @@
     overflow-wrap: break-word;
   }
 
-  // Reverse errors and label
-  .#{prefix(errors)}:not(:empty) {
-    transform: translateY(31px);
-  }
-
-  .#{prefix(errors)}:not(:empty) + .#{prefix(label)} {
-    transform: translateY(-31px);
-  }
-
   .#{prefix(prefix)} {
     @include margin($value-mobile: $typography-margin-list);
   }
