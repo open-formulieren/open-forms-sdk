@@ -154,7 +154,6 @@ const FormStep = ({
     }
 
     await submitStepData(submissionStep.url, data);
-    // TODO: is this needed? and shouldn't we just update the state?
     // This will reload the submission
     const {submission: updatedSubmission, step} = await doLogicCheck(submissionStep.url, data);
     onLogicChecked(updatedSubmission, step); // report back to parent component
@@ -226,7 +225,7 @@ const FormStep = ({
               ref={formRef}
               form={configuration}
               // Filter blank values so FormIO does not run validation on them
-              submission={{data: Object.fromEntries(Object.entries(data).filter(([_, value]) => !!value ))}}
+              submission={{data: filterBlankValues(data)}}
               onChange={onFormIOChange}
               onBlur={onFormIOBlur}
               onSubmit={onFormIOSubmit}
@@ -274,6 +273,14 @@ FormStep.propTypes = {
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+};
+
+const filterBlankValues = (data) => {
+  // ensure that '0' as a value is retained, only keep empty values that essentially
+  // have 'zero length' in the input.
+  const BLANK = [null, undefined, ''];
+  const notBlank = Object.entries(data).filter( ([_, value]) => !BLANK.includes(value) );
+  return Object.fromEntries(notBlank);
 };
 
 export default FormStep;
