@@ -79,6 +79,10 @@ export const getComponentValue = (inputValue, components, key, intl) => {
       case 'checkbox': {
         return inputValue ? 'Ja' : 'Nee';
       }
+      case 'radio': {
+        const obj = component.values.find(obj => obj.value === inputValue);
+        return obj ? obj.label : '';
+      }
       case 'select': {
         if (component.appointments?.showProducts || component.appointments?.showLocations) {
           return inputValue.name;
