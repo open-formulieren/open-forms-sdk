@@ -31,9 +31,9 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse.data;
 };
 
-const doLogicCheck = async (stepUrl, data) => {
+const doLogicCheck = async (stepUrl, data, signal) => {
   const url = `${stepUrl}/_check_logic`;
-  const stepDetailData = await post(url, {data});
+  const stepDetailData = await post(url, {data}, signal);
   if (!stepDetailData.ok) {
     throw new Error('Invalid response'); // TODO -> proper error & use ErrorBoundary
   }
@@ -108,7 +108,7 @@ const FormStep = ({
   // can't use usePrevious, because the data changed event fires often, and we need to
   // track data changes since the last logic check rather.
   const previouslyCheckedData = useRef(null); // to compare with the data to check and possibly skip the check at all
-
+  const controller = useRef(new AbortController());
 
 
 
@@ -135,19 +135,18 @@ const FormStep = ({
 
 
 
-  const signalAbortLogicCheck = () => {
+  const signalAbortLogicCheck = (controller) => {
     console.log(`Aborting logic check ${logicChecks.current}`);
+    controller.abort();
     const currentLogicCheck = logicChecks.current;
     shouldAbortLogicCheck.current[currentLogicCheck] = true;
   };
 
-  const checkAbortedLogicCheck = (currentCheck) => {
-    const shouldAbortCurrentCheck = !!shouldAbortLogicCheck.current[currentCheck];
+  const checkAbortedLogicCheck = (signal) => {
+    const shouldAbortCurrentCheck = signal.aborted;
     if (!shouldAbortCurrentCheck) return;
     // throw exception to exit current callback forcibly
     console.log('Throwing!');
-    // clean up to avoid ever-growing memory usage
-    delete shouldAbortLogicCheck.current[currentCheck];
     throw new Error('Aborted logic check');
   };
 
@@ -156,7 +155,7 @@ const FormStep = ({
 
 
 
-  const performLogicCheck = async () => {
+  const performLogicCheck = async (controller) => {
     // 'clone' the object so that we're not checking against mutable references
     const data = {...formData.current};
     const previousData = previouslyCheckedData.current;
@@ -182,12 +181,12 @@ const FormStep = ({
 
       try {
         // call the backend to do the check
-        checkAbortedLogicCheck(currentCheck);
-        const {submission, step} = await doLogicCheck(submissionStep.url, data);
+        checkAbortedLogicCheck(controller.signal);
+        const {submission, step} = await doLogicCheck(submissionStep.url, data, controller.signal);
         console.log(`Logic check ${currentCheck} done in backend`);
 
         // now process the result of the logic check.
-        checkAbortedLogicCheck(currentCheck);
+        checkAbortedLogicCheck(controller.signal);
 
         // we did perform a logic check, so now track which data we checked. Next logic
         // checks can then exit early if there are no changes.
@@ -222,6 +221,7 @@ const FormStep = ({
           },
         });
       } catch (e) {
+        console.log(`Exception: ${e.name}`);
         console.error(e);
       }
 
@@ -293,7 +293,9 @@ const FormStep = ({
 
     console.group('Formio change');
 
-    signalAbortLogicCheck();
+    signalAbortLogicCheck(controller.current);
+    const abortController = new AbortController();
+    controller.current = abortController;
 
     const data = changed.data;
     formData.current = data;
@@ -308,7 +310,7 @@ const FormStep = ({
     logicCheckTimeout.current = setTimeout(
       async () => {
         console.log('performLogicCheck');
-        await performLogicCheck();
+        await performLogicCheck(abortController);
       },
       LOGIC_CHECK_DEBOUNCE,
     );
