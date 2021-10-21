@@ -114,6 +114,7 @@ const FormStep = ({
   // track data changes since the last logic check rather.
   const previouslyCheckedData = useRef(null); // to compare with the data to check and possibly skip the check at all
   const controller = useRef(new AbortController());
+  const configurationRef = useRef(configuration);
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
@@ -128,8 +129,7 @@ const FormStep = ({
         payload: stepDetail,
       });
       formData.current = stepDetail.data;
-      const formInstance = formRef.current.formio;
-      formInstance.submission = {data: formData.current};
+      configurationRef.current = stepDetail.formStep.configuration;
     },
     [submissionStep.url]
   );
@@ -141,7 +141,7 @@ const FormStep = ({
     throw new AbortedLogicCheck('Aborted logic check');
   };
 
-  const performLogicCheck = async (controller) => {
+  const evaluateFormLogic = async (controller) => {
     // 'clone' the object so that we're not checking against mutable references
     const data = {...formData.current};
     const previousData = previouslyCheckedData.current;
@@ -157,7 +157,7 @@ const FormStep = ({
     // data if not specified explicitly.
     const isValid = formInstance.isValid();
 
-    // form does not validate client-side, don't bother with checking client-side yet.
+    // form does not validate client-side, don't bother with checking server-side yet.
     if (!isValid) return;
 
     // now the actual checking *can* be aborted, which results in an exception being thrown.
@@ -183,7 +183,13 @@ const FormStep = ({
       // definition by using the ref to the underlying Formio instance.
       // NOTE that this does effectively bring our state.configuration out of sync
       // with the actual form configuration (!).
-      formInstance.setForm(step.formStep.configuration);
+      const newConfiguration = step.formStep.configuration;
+      const previousConfiguration = configurationRef.current;
+      const configurationChanged = previousConfiguration && !isEqual(previousConfiguration, newConfiguration);
+      if (configurationChanged) {
+        formInstance.setForm(newConfiguration);
+        configurationRef.current = newConfiguration;
+      }
 
       // update the form data both in our internal state and the formio submission data
       const updatedData = {...data, ...step.data};
@@ -281,7 +287,7 @@ const FormStep = ({
     // schedule a new logic check to run in LOGIC_CHECK_DEBOUNCE ms
     logicCheckTimeout.current = setTimeout(
       async () => {
-        await performLogicCheck(abortController);
+        await evaluateFormLogic(abortController);
       },
       LOGIC_CHECK_DEBOUNCE,
     );
