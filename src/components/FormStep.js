@@ -24,7 +24,7 @@ import LogoutButton from 'components/LogoutButton';
 import hooks from '../formio/hooks';
 import {findPreviousApplicableStep} from 'components/utils';
 
-const LOGIC_CHECK_DEBOUNCE = 800; // in ms - once the user stops
+const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
@@ -39,6 +39,13 @@ const doLogicCheck = async (stepUrl, data, signal) => {
   }
   return stepDetailData.data;
 };
+
+class AbortedLogicCheck extends Error {
+  constructor(message='', ...args) {
+    super(message, ...args);
+    this.name = 'AbortError';  // aligns with fetch Error.name that's thrown on abort
+  }
+}
 
 const initialState = {
   configuration: null,
@@ -103,15 +110,10 @@ const FormStep = ({
   // logic check refs
   const formData = useRef(null);
   const logicCheckTimeout = useRef();
-  const shouldAbortLogicCheck = useRef({});
-  const logicChecks = useRef(0); // keep track of the number for debug purposes
   // can't use usePrevious, because the data changed event fires often, and we need to
   // track data changes since the last logic check rather.
   const previouslyCheckedData = useRef(null); // to compare with the data to check and possibly skip the check at all
   const controller = useRef(new AbortController());
-
-
-
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
@@ -132,28 +134,12 @@ const FormStep = ({
     [submissionStep.url]
   );
 
-
-
-
-  const signalAbortLogicCheck = (controller) => {
-    console.log(`Aborting logic check ${logicChecks.current}`);
-    controller.abort();
-    const currentLogicCheck = logicChecks.current;
-    shouldAbortLogicCheck.current[currentLogicCheck] = true;
-  };
-
   const checkAbortedLogicCheck = (signal) => {
     const shouldAbortCurrentCheck = signal.aborted;
     if (!shouldAbortCurrentCheck) return;
-    // throw exception to exit current callback forcibly
-    console.log('Throwing!');
-    throw new Error('Aborted logic check');
+    // throw custom error object to exit current callback forcibly
+    throw new AbortedLogicCheck('Aborted logic check');
   };
-
-
-
-
-
 
   const performLogicCheck = async (controller) => {
     // 'clone' the object so that we're not checking against mutable references
@@ -162,76 +148,63 @@ const FormStep = ({
     if (previousData && isEqual(previousData, data)) return;
     if (isEmpty(data)) return;
 
-    logicChecks.current += 1;
-
-    const currentCheck = logicChecks.current;
-
-    console.group(`Logic check ${currentCheck}`);
-
     dispatch({type: 'BLOCK_SUBMISSION'});
 
     const formInstance = formRef.current.formio;
+
     // we cannot use checkValidity, as that relies on formInstance.submitted to be true.
     // However, `isValid` runs the validation for every component with the currently-bound
     // data if not specified explicitly.
-    if (formInstance.isValid()) {
+    const isValid = formInstance.isValid();
 
-      console.log('Invoking logic check...');
-      console.log('Checking data: ', data);
+    // form does not validate client-side, don't bother with checking client-side yet.
+    if (!isValid) return;
 
-      try {
-        // call the backend to do the check
-        checkAbortedLogicCheck(controller.signal);
-        const {submission, step} = await doLogicCheck(submissionStep.url, data, controller.signal);
-        console.log(`Logic check ${currentCheck} done in backend`);
+    // now the actual checking *can* be aborted, which results in an exception being thrown.
+    try {
+      // call the backend to do the check
+      checkAbortedLogicCheck(controller.signal);
+      const {submission, step} = await doLogicCheck(submissionStep.url, data, controller.signal);
+      // now process the result of the logic check.
 
-        // now process the result of the logic check.
-        checkAbortedLogicCheck(controller.signal);
+      // first, check if we still have to process the results or not
+      checkAbortedLogicCheck(controller.signal);
 
-        // we did perform a logic check, so now track which data we checked. Next logic
-        // checks can then exit early if there are no changes.
-        previouslyCheckedData.current = data;
+      // we did perform a logic check, so now track which data we checked. Next logic
+      // checks can then exit early if there are no changes.
+      previouslyCheckedData.current = data;
 
-        // report back to parent component
-        onLogicChecked(submission, step);
+      // report back to parent component
+      onLogicChecked(submission, step);
 
-        console.log(`Handling response from logic check ${currentCheck}.`);
+      // we can't just dispatch this, because Formio keeps references to DOM nodes
+      // which expire when the component re-renders, and that gives React
+      // unstable_flushDiscreteUpdates warnings. However, we can update the form
+      // definition by using the ref to the underlying Formio instance.
+      // NOTE that this does effectively bring our state.configuration out of sync
+      // with the actual form configuration (!).
+      formInstance.setForm(step.formStep.configuration);
 
-        // we can't just dispatch this, because Formio keeps references to DOM nodes
-        // which expire when the component re-renders, and that gives React
-        // unstable_flushDiscreteUpdates warnings. However, we can update the form
-        // definition by using the ref to the underlying Formio instance.
-        // NOTE that this does effectively bring our state.configuration out of sync
-        // with the actual form configuration (!).
-        formInstance.setForm(step.formStep.configuration);
-
-        // update the form data both in our internal state and the formio submission data
-        const updatedData = {...data, ...step.data};
-        formData.current = updatedData;
-        if (!isEqual(formInstance.submission.data, updatedData)) {
-          formInstance.submission = {data: updatedData};
-        }
-
-        // the reminder of the state updates we let the reducer handle
-        dispatch({
-          type: 'LOGIC_CHECK_DONE',
-          payload: {
-            submission,
-            step: {...step, data: formData.current},
-          },
-        });
-      } catch (e) {
-        console.log(`Exception: ${e.name}`);
-        console.error(e);
+      // update the form data both in our internal state and the formio submission data
+      const updatedData = {...data, ...step.data};
+      formData.current = updatedData;
+      if (!isEqual(formInstance.submission.data, updatedData)) {
+        formInstance.submission = {data: updatedData};
       }
 
-      console.log(`Done logic checking. Counter: ${currentCheck}`);
-    } else {
-      console.log('Skipping - form is not valid on client-side');
+      // the reminder of the state updates we let the reducer handle
+      dispatch({
+        type: 'LOGIC_CHECK_DONE',
+        payload: {
+          submission,
+          step: {...step, data: formData.current},
+        },
+      });
+    } catch (e) {
+      if (e.name !== 'AbortError') {
+        throw (e) // re-throw on unexpected errors
+      }
     }
-
-    console.groupEnd();
-
   };
 
   const onFormIOSubmit = async ({ data }) => {
@@ -291,9 +264,8 @@ const FormStep = ({
     if ( !(flags && flags.changes && flags.changes.length) ) return;
     if ( !modifiedByHuman ) return;
 
-    console.group('Formio change');
-
-    signalAbortLogicCheck(controller.current);
+    // signal abortion, and set a new controller for the newly scheduled check.
+    controller.current.abort()
     const abortController = new AbortController();
     controller.current = abortController;
 
@@ -309,7 +281,6 @@ const FormStep = ({
     // schedule a new logic check to run in LOGIC_CHECK_DEBOUNCE ms
     logicCheckTimeout.current = setTimeout(
       async () => {
-        console.log('performLogicCheck');
         await performLogicCheck(abortController);
       },
       LOGIC_CHECK_DEBOUNCE,
@@ -319,8 +290,6 @@ const FormStep = ({
       type: 'STEP_DATA_UPDATED',
       payload: {...data},
     });
-
-    console.groupEnd();
   };
 
   return (
@@ -336,8 +305,6 @@ const FormStep = ({
               // Filter blank values so FormIO does not run validation on them
               submission={{data: filterBlankValues(data)}}
               onChange={onFormIOChange}
-              // onRender={ (element) => console.log('Form rendered at:', element)}
-              // onBlur={onFormIOBlur}
               onSubmit={onFormIOSubmit}
               options={{
                 noAlerts: true,
