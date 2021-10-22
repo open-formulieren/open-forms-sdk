@@ -11,18 +11,19 @@ import isEmpty from 'lodash/isEmpty';
 import { useImmerReducer } from 'use-immer';
 import useAsync from 'react-use/esm/useAsync';
 
-import { get, post, put } from 'api';
+import hooks from '../formio/hooks';
 
+import { get, post, put } from 'api';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import FormIOWrapper from 'components/FormIOWrapper';
-import { Toolbar, ToolbarList } from 'components/Toolbar';
+import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
+import LogoutButton from 'components/LogoutButton';
+import { Toolbar, ToolbarList } from 'components/Toolbar';
+import {findPreviousApplicableStep} from 'components/utils';
 import { ConfigContext } from 'Context';
 import Types from 'types';
-import LogoutButton from 'components/LogoutButton';
-import hooks from '../formio/hooks';
-import {findPreviousApplicableStep} from 'components/utils';
 
 const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 
@@ -319,29 +320,31 @@ const FormStep = ({
                 intl,
               }}
             />
-            <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
-              <ToolbarList>
-                <Button
-                  variant="anchor"
-                  component="a"
-                  onClick={onPrevPage}
-                >{formStep.literals.previousText.resolved}</Button>
-              </ToolbarList>
-              <ToolbarList>
-                {/* Hiding the Save button until the functionality is implemented */}
-                <Button
-                  type="button"
-                  variant="secondary"
-                  name="save" onClick={onFormSave} disabled style={{display: "none"}}
-                >{formStep.literals.saveText.resolved}</Button>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  name="next"
-                  disabled={!canSubmit}
-                >{formStep.literals.nextText.resolved}</Button>
-              </ToolbarList>
-            </Toolbar>
+            <LiteralsProvider literals={formStep.literals}>
+              <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
+                <ToolbarList>
+                  <Button
+                    variant="anchor"
+                    component="a"
+                    onClick={onPrevPage}
+                  ><Literal name="previousText"/></Button>
+                </ToolbarList>
+                <ToolbarList>
+                  {/* Hiding the Save button until the functionality is implemented */}
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    name="save" onClick={onFormSave} disabled style={{display: "none"}}
+                  ><Literal name="saveText"/></Button>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    name="next"
+                    disabled={!canSubmit}
+                  ><Literal name="nextText"/></Button>
+                </ToolbarList>
+              </Toolbar>
+            </LiteralsProvider>
             {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
           </form>
         ) : null
