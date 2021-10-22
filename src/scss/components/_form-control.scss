@@ -6,6 +6,7 @@
 
 .#{prefix(form-control)} {
   position: relative;
+  @include margin($properties: padding-top, $value-mobile: $typography-margin-list);
 
   @include modifier('hidden') {
     display: none;
