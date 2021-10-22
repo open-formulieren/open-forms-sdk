@@ -30,7 +30,7 @@ const get = async (url, params = {}, multiParams = []) => {
   return data;
 };
 
-const _unsafe = async (method = 'POST', url, data) => {
+const _unsafe = async (method = 'POST', url, data, signal) => {
   // we do not include the X-Csrftoken header, since the SDK is primarily meant to run
   // in both cross-domain and same-site origins. In cross-domain contexts, the CSRF
   // cookie is not available to be read (or sent).
@@ -48,6 +48,9 @@ const _unsafe = async (method = 'POST', url, data) => {
   if (data) {
     opts.body = JSON.stringify(data);
   }
+  if (signal) {
+    opts.signal = signal;
+  }
   const response = await apiCall(url, opts);
   const responseData = (response.status === 204) ? null : (await response.json());
   return {
@@ -57,8 +60,8 @@ const _unsafe = async (method = 'POST', url, data) => {
   };
 };
 
-const post = async (url, data) => {
-  const resp = await _unsafe('POST', url, data);
+const post = async (url, data, signal) => {
+  const resp = await _unsafe('POST', url, data, signal);
   return resp;
 };
 

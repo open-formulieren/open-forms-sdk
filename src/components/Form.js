@@ -182,6 +182,8 @@ const reducer = (draft, action) => {
   };
 
   const onProcessingFailure = (errorMessage) => {
+    // TODO: provide generic fallback message in case no explicit
+    // message is shown
     dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
     history.push('/overzicht');
   };
