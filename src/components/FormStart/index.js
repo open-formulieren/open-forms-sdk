@@ -7,6 +7,7 @@ import {useDetectAuthErrorMessages, AuthenticationErrors} from 'components/auth/
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
+import {Literal, LiteralsProvider} from 'components/Literal';
 import MaintenanceMode from 'components/MaintenanceMode';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import useQuery from 'hooks/useQuery';
@@ -135,35 +136,37 @@ const FormStart = ({ form, onFormStart }) => {
       })
   ;
   return (
-    <Card title={form.name}>
+    <LiteralsProvider literals={form.literals}>
+      <Card title={form.name}>
 
-      { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
+        { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
 
-      <Body modifiers={['compact']}>
-        {startLoginMessage}
-      </Body>
+        <Body modifiers={['compact']}>
+          {startLoginMessage}
+        </Body>
 
-      <Toolbar modifiers={['start']}>
-        <ToolbarList>
-          { form.loginRequired
-            ? null
-            : (
-                <Button variant="primary" component="a" href="#" onClick={onFormStart}>
-                  {form.literals.beginText.resolved}
-                </Button>
-            )
-          }
-          {
-            form.loginOptions.map((option) => <LoginButton option={option} key={option.identifier} />)
-          }
-        </ToolbarList>
+        <Toolbar modifiers={['start']}>
+          <ToolbarList>
+            { form.loginRequired
+              ? null
+              : (
+                  <Button variant="primary" component="a" href="#" onClick={onFormStart}>
+                    <Literal name="beginText" />
+                  </Button>
+              )
+            }
+            {
+              form.loginOptions.map((option) => <LoginButton option={option} key={option.identifier} />)
+            }
+          </ToolbarList>
 
-        <ToolbarList>
-          <LoginButtonIcons loginOptions={form.loginOptions} />
-        </ToolbarList>
-      </Toolbar>
+          <ToolbarList>
+            <LoginButtonIcons loginOptions={form.loginOptions} />
+          </ToolbarList>
+        </Toolbar>
 
-    </Card>
+      </Card>
+    </LiteralsProvider>
   );
 };
 
