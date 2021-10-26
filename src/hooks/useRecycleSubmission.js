@@ -26,7 +26,7 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded) => {
       const response = await apiCall(url, {}, false);
       if (response.ok) {
         const submission = await response.json();
-        onSubmissionLoaded(submission, location.pathname);
+        onSubmissionLoaded(submission, location);
         setSubmissionId(submission.id);
         return;
       }
