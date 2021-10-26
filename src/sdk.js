@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
+import flatpickr from 'flatpickr';
 
 import { Formio, Templates } from 'react-formio';
 
@@ -57,6 +58,14 @@ class OpenForm {
   async init() {
     // use explicitly forced language, or look up the browser html lang attribute value
     const lang = this.lang || document.querySelector('html').getAttribute('lang');
+
+    // Use the language to set the locale for flatpickr, which is used for translating widgets like the date picker.
+    try {
+      const flatpickrLocale = require(`flatpickr/dist/l10n/${lang}.js`)?.default[lang];
+      if (flatpickrLocale) flatpickr.localize(flatpickrLocale);
+    } catch (e) {
+      console.error('Language module not available in flatpickr.');
+    }
 
     const url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
