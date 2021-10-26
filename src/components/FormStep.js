@@ -19,10 +19,10 @@ import Card from 'components/Card';
 import FormIOWrapper from 'components/FormIOWrapper';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
+import {ConfigContext, FormioTranslations} from 'Context';
 import LogoutButton from 'components/LogoutButton';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {findPreviousApplicableStep} from 'components/utils';
-import { ConfigContext } from 'Context';
 import Types from 'types';
 
 const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
@@ -97,6 +97,8 @@ const FormStep = ({
 }) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
+  const formioTranslations = useContext(FormioTranslations);
+
   /* component state */
   const formRef = useRef(null);
   const [
@@ -316,8 +318,10 @@ const FormStep = ({
               options={{
                 noAlerts: true,
                 baseUrl: config.baseUrl,
+                language: formioTranslations.language,
+                i18n: formioTranslations.i18n,
                 hooks,
-                intl,
+                intl
               }}
             />
             <LiteralsProvider literals={formStep.literals}>
