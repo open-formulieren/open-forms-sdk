@@ -7,6 +7,10 @@ export const START_FORM_QUERY_PARAM = '_start';
 
 const getLoginUrl = (loginOption) => {
   const nextUrl = new URL(window.location.href);
+  
+  const queryParams = Array.from(nextUrl.searchParams.keys());
+  queryParams.map(param => nextUrl.searchParams.delete(param));
+
   nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
   const loginUrl = new URL(loginOption.url);
   loginUrl.searchParams.set("next", nextUrl.toString());
