@@ -4,10 +4,9 @@
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
-$button-line-height: var(--typography-line-height-text-big, $typography-line-height-text-big) * var(--typography-font-size-text-big, $typography-font-size-text-big);
+$button-line-height: $typography-line-height-text-big * $typography-font-size-text-big;
+// Cannot move this to a CSS variable, since the unit cannot be removed in CSS
 $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16px;
-$button-padding-v: (var(--grid-row-height, $grid-row-height) - $button-line-height-px) / 2 - var(--typography-size-border, $typography-size-border);
-$button-padding-h: var(--grid-margin-2, $grid-margin-2);
 
 @mixin button-theme($name, $color, var(--color-background, $color-background), var(--color-border, $color-border): var(--color-background, $color-background), $decorate-on-hover: false) {
   @if $name == '' {
@@ -57,7 +56,11 @@ $button-padding-h: var(--grid-margin-2, $grid-margin-2);
   border-radius: 0;
   display: flex;
   align-items: center;
-  padding: $button-padding-v $button-padding-h;
+
+  --button-padding-v: calc((var(--grid-row-height, #{$grid-row-height}) - #{$button-line-height-px}) / 2 - var(--typography-size-border, #{$typography-size-border}));
+  --button-padding-h: var(--grid-margin-2, #{$grid-margin-2});
+  padding: var(--button-padding-v) var(--button-padding-h);
+
   text-decoration: none;
   float: left;
 
@@ -76,6 +79,6 @@ $button-padding-h: var(--grid-margin-2, $grid-margin-2);
   }
 
   .fa-icon:not(:last-child) {
-    margin-right: $button-padding-h;
+    margin-right: var(--grid-margin-2, #{$grid-margin-2});
   }
 }
