@@ -16,6 +16,6 @@
   }
 
   &--inline {
-    @include margin($typography-margin-text / 2, $properties: margin-right);
+    @include margin(var(--typography-margin-text, $typography-margin-text) / 2, $properties: margin-right);
   };
 }

@@ -14,7 +14,7 @@
     @include body--big;
     margin-left: 1em;
     padding: 1em 5px;
-    color: $color-blue;
-    font-size: $typography-font-size-h5;
+    color: var(--color-blue, $color-blue);
+    font-size: var(--typography-font-size-h5, $typography-font-size-h5);
   }
 }

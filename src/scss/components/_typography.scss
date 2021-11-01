@@ -38,6 +38,6 @@
   }
 
   &--muted {
-    color: $color-gray-darker;
+    color: var(--color-gray-darker, $color-gray-darker);
   }
 }

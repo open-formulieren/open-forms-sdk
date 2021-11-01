@@ -9,6 +9,6 @@
   padding: 0;
 
   &__choice {
-    @include margin($value-mobile: $typography-margin-list);
+    @include margin($value-mobile: var(--typography-margin-list, $typography-margin-list));
   }
 }

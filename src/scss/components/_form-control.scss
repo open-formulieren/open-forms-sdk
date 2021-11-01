@@ -6,31 +6,31 @@
 
 .#{prefix(form-control)} {
   position: relative;
-  @include margin($properties: padding-top, $value-mobile: $typography-margin-list);
+  @include margin($properties: padding-top, $value-mobile: var(--typography-margin-list, $typography-margin-list));
 
   @include modifier('hidden') {
     display: none;
   }
 
   &[class*="error"] {
-    @include border(left, $color-danger, 4px);
-    padding-left: $grid-margin-3;
+    @include border(left, var(--color-danger, $color-danger), 4px);
+    padding-left: var(--grid-margin-3, $grid-margin-3);
   }
 
   .#{prefix(errors)},
   .#{prefix(label)} {
-    @include margin($value-mobile: $typography-margin-list);
+    @include margin($value-mobile: var(--typography-margin-list, $typography-margin-list));
     overflow-wrap: break-word;
   }
 
   .#{prefix(prefix)} {
-    @include margin($value-mobile: $typography-margin-list);
+    @include margin($value-mobile: var(--typography-margin-list, $typography-margin-list));
   }
 
   .#{prefix(body)},
   .#{prefix(help-text)},
   .#{prefix(suffix)} {
-    @include margin(true, margin-top, $value-mobile: $typography-margin-list);
+    @include margin(true, margin-top, $value-mobile: var(--typography-margin-list, $typography-margin-list));
   }
 
   .#{prefix(body)} {

@@ -5,9 +5,9 @@
 
 .#{prefix(help-text)} {
   @include body;
-  @include border(left, $color-info, 4px);
-  background-color: scale_color($color-info, $lightness: 80%, $saturation: -60%);
-  $help-text-line-height: $typography-line-height-text * $typography-font-size-text;
-  padding: calc((#{$grid-row-height} - #{$help-text-line-height}) / 2)  $grid-margin-3;
-  padding-left: $grid-margin-3 - 4px;
+  @include border(left, var(--color-info, $color-info), 4px);
+  background-color: scale_color(var(--color-info, $color-info), $lightness: 80%, $saturation: -60%);
+  $help-text-line-height: var(--typography-line-height-text, $typography-line-height-text) * var(--typography-font-size-text, $typography-font-size-text);
+  padding: calc((#{var(--grid-row-height, $grid-row-height)} - #{$help-text-line-height}) / 2)  var(--grid-margin-3, $grid-margin-3);
+  padding-left: var(--grid-margin-3, $grid-margin-3) - 4px;
 }

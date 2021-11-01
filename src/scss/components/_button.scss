@@ -4,31 +4,31 @@
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
-$button-line-height: $typography-line-height-text-big * $typography-font-size-text-big;
+$button-line-height: var(--typography-line-height-text-big, $typography-line-height-text-big) * var(--typography-font-size-text-big, $typography-font-size-text-big);
 $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16px;
-$button-padding-v: ($grid-row-height - $button-line-height-px) / 2 - $typography-size-border;
-$button-padding-h: $grid-margin-2;
+$button-padding-v: (var(--grid-row-height, $grid-row-height) - $button-line-height-px) / 2 - var(--typography-size-border, $typography-size-border);
+$button-padding-h: var(--grid-margin-2, $grid-margin-2);
 
-@mixin button-theme($name, $color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
+@mixin button-theme($name, $color, var(--color-background, $color-background), var(--color-border, $color-border): var(--color-background, $color-background), $decorate-on-hover: false) {
   @if $name == '' {
-    @include button-style($color, $color-background, $color-border, $decorate-on-hover);
+    @include button-style($color, var(--color-background, $color-background), var(--color-border, $color-border), $decorate-on-hover);
   } @else {
     &--#{$name} {
-      @include button-style($color, $color-background, $color-border, $decorate-on-hover);
+      @include button-style($color, var(--color-background, $color-background), var(--color-border, $color-border), $decorate-on-hover);
     }
   }
 }
 
-@mixin button-style($color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
+@mixin button-style($color, var(--color-background, $color-background), var(--color-border, $color-border): var(--color-background, $color-background), $decorate-on-hover: false) {
   color: $color;
-  background-color: $color-background;
-  border-right-color: $color-border;
-  border-bottom-color: $color-border;
+  background-color: var(--color-background, $color-background);
+  border-right-color: var(--color-border, $color-border);
+  border-bottom-color: var(--color-border, $color-border);
 
   &:hover {
-    background-color: scale_color($color-background, $lightness: -20%);
-    border-right-color: scale_color($color-border, $lightness: -20%);
-    border-bottom-color: scale_color($color-border, $lightness: -20%);
+    background-color: scale_color(var(--color-background, $color-background), $lightness: -20%);
+    border-right-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
+    border-bottom-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
 
     @if $decorate-on-hover {
       @include anchor(true);
@@ -37,10 +37,10 @@ $button-padding-h: $grid-margin-2;
 
   &:active {
     color: scale_color($color, $lightness: -25%);
-    background-color: scale_color($color-background, $lightness: -25%);
-    border-top-color: scale_color($color-border, $lightness: -20%);
+    background-color: scale_color(var(--color-background, $color-background), $lightness: -25%);
+    border-top-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
     border-right-color: transparent;
-    border-left-color: scale_color($color-border, $lightness: -20%);
+    border-left-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
     border-bottom-color: transparent;
   }
 }
@@ -49,10 +49,10 @@ $button-padding-h: $grid-margin-2;
   @include body;
   @include body--big;
   @include border(all, $color: transparent, $size: 2px);
-  @include button-theme('primary', $color-background, scale_color($color-primary, $lightness: 10%, $saturation: 0%), $color-primary);
-  @include button-theme('', $typography-color-text, $color-background, $color-border);
-  @include button-theme('anchor', $typography-color-link, transparent, transparent, true);
-  @include button-theme('danger', scale_color($color-danger, $lightness: 90%), $color-danger, scale_color($color-danger, $lightness: -20%));
+  @include button-theme('primary', var(--color-background, $color-background), scale_color(var(--color-primary, $color-primary), $lightness: 10%, $saturation: 0%), var(--color-primary, $color-primary));
+  @include button-theme('', var(--typography-color-text, $typography-color-text), var(--color-background, $color-background), var(--color-border, $color-border));
+  @include button-theme('anchor', var(--typography-color-link, $typography-color-link), transparent, transparent, true);
+  @include button-theme('danger', scale_color(var(--color-danger, $color-danger), $lightness: 90%), var(--color-danger, $color-danger), scale_color(var(--color-danger, $color-danger), $lightness: -20%));
   appearance: none;
   border-radius: 0;
   display: flex;

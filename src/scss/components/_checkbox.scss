@@ -7,10 +7,10 @@
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
-$checkbox-checkmark-size: 1em * strip_unit($typography-line-height-text-big) !default;
-$checkbox-label-padding-v: calc((#{$grid-row-height} - #{1em * strip_unit($typography-line-height-text-big)}) / 2)!default;
-$checkbox-label-padding-h: $grid-margin-2!default;
-$checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2})!default;
+$checkbox-checkmark-size: 1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big)) !default;
+$checkbox-label-padding-v: calc((#{var(--grid-row-height, $grid-row-height)} - #{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))}) / 2)!default;
+$checkbox-label-padding-h: var(--grid-margin-2, $grid-margin-2)!default;
+$checkbox-label-padding-left: calc(#{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))} + #{var(--grid-margin-2, $grid-margin-2) * 2})!default;
 
 
 .#{prefix(checkbox)} {
@@ -33,7 +33,7 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   [type=checkbox],
   [type=radio] {
     @include absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
-    margin-top: calc((#{1em * strip_unit($typography-line-height-text-big)} - #{$checkbox-checkmark-size}) / 2);
+    margin-top: calc((#{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))} - #{$checkbox-checkmark-size}) / 2);
     opacity: 0;
     z-index: 100;
   }
@@ -43,7 +43,7 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
     @include absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
     @include color-background;
     content: '';
-    margin-top: calc((#{1em * strip_unit($typography-line-height-text-big)} - #{$checkbox-checkmark-size}) / 2);
+    margin-top: calc((#{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))} - #{$checkbox-checkmark-size}) / 2);
     display: block;
     z-index: 20;
   }
@@ -54,7 +54,7 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   }
 
   & &__checkmark:before {
-    @include border(all, $color: $color-gray-darkest);
+    @include border(all, $color: var(--color-gray-darkest, $color-gray-darkest));
   }
 
   & :checked ~ &__checkmark:before {
@@ -93,16 +93,16 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   &__label:after {
     @include overlay;
     content: "";
-    background-color: $color-gray-lighter;
+    background-color: var(--color-gray-lighter, $color-gray-lighter);
     z-index: -1;
   }
 
   & :focus ~ &__label:after {
-    @include outline($color-info);
+    @include outline(var(--color-info, $color-info));
   }
 
   & :checked ~ &__label:after {
-    @include border(all, $color-primary, 1px);
+    @include border(all, var(--color-primary, $color-primary), 1px);
     @include color-background;
   }
 

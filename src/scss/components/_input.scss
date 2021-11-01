@@ -12,7 +12,7 @@
   appearance: none;
   border-radius: 0;
   font-weight: bold;
-  padding: $grid-margin-2;
+  padding: var(--grid-margin-2, $grid-margin-2);
   width: 100%;
 
   @include modifier('time') {

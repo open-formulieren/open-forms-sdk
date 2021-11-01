@@ -5,8 +5,8 @@
 
 body {
   padding: 0;
-  margin-top: $grid-margin-4;
-  background-color: $color-gray;
+  margin-top: var(--grid-margin-4, $grid-margin-4);
+  background-color: var(--color-gray, $color-gray);
 
   @include mobile-only {
     margin: 0;

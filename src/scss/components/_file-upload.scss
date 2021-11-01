@@ -10,10 +10,10 @@ we don't have strict BEM naming here.
 
 @import '../mixins/prefix';
 
-$bootstrap-ratio-mobile: 12 / $grid-columns-mobile;
-$bootstrap-ratio-tablet: 12 / $grid-columns-tablet;
-$bootstrap-ratio-laptop: 12 / $grid-columns-laptop;
-$bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
+$bootstrap-ratio-mobile: 12 / var(--grid-columns-mobile, $grid-columns-mobile);
+$bootstrap-ratio-tablet: 12 / var(--grid-columns-tablet, $grid-columns-tablet);
+$bootstrap-ratio-laptop: 12 / var(--grid-columns-laptop, $grid-columns-laptop);
+$bootstrap-ratio-desktop: 12 / var(--grid-columns-desktop, $grid-columns-desktop);
 
 @mixin bootstrap-span($cols) {
   $bs-span: $cols / 12 * 100%;
@@ -43,12 +43,12 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
       @include hide-on-mobile(block);
 
       .row {
-        border-bottom: solid 1px $color-gray;
+        border-bottom: solid 1px var(--color-gray, $color-gray);
       }
     }
 
     .list-group-item {
-      @include responsive(padding, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
+      @include responsive(padding, var(--grid-margin-1, $grid-margin-1), var(--grid-margin-1, $grid-margin-1), var(--grid-margin-1, $grid-margin-1), var(--grid-margin-1, $grid-margin-1));
     }
   }
 
@@ -77,18 +77,18 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
 
   .fileSelector {
     position: relative;
-    @include margin($grid-container-margin-small, $properties: padding);
-    border: 2px dashed $color-gray-darker;
+    @include margin(var(--grid-container-margin-small, $grid-container-margin-small), $properties: padding);
+    border: 2px dashed var(--color-gray-darker, $color-gray-darker);
     text-align: center;
 
     &.fileDragOver {
-      border-color: $color-primary;
+      border-color: var(--color-primary, $color-primary);
     }
   }
 
   [ref="removeLink"] {
     cursor: pointer;
-    color: $color-danger;
+    color: var(--color-danger, $color-danger);
   }
 }
 
@@ -96,7 +96,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
 
   > div:nth-child(3) > div {
 
-    @include responsive(padding, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
+    @include responsive(padding, var(--grid-margin-1, $grid-margin-1), var(--grid-margin-1, $grid-margin-1), var(--grid-margin-1, $grid-margin-1), var(--grid-margin-1, $grid-margin-1));
 
     > span {
       display: flex;
@@ -114,7 +114,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
     float: none;
     @include mobile-only {
       font-size: 90%;
-      @include margin($grid-margin-0, $properties: padding);
+      @include margin(var(--grid-margin-0, $grid-margin-0), $properties: padding);
     }
   }
 }

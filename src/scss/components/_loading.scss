@@ -18,8 +18,8 @@
 
   @include element('spinner') {
     margin-right: 20px;
-    border: 6px solid $color-secondary;
-    border-top: 6px solid $color-primary;
+    border: 6px solid var(--color-secondary, $color-secondary);
+    border-top: 6px solid var(--color-primary, $color-primary);
     border-radius: 50%;
     width: 20px;
     height: 20px;
