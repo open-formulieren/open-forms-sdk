@@ -6,8 +6,18 @@
 .#{prefix(help-text)} {
   @include body;
   @include border(left, var(--color-info, $color-info), 4px);
-  background-color: scale_color(var(--color-info, $color-info), $lightness: 80%, $saturation: -60%);
-  $help-text-line-height: var(--typography-line-height-text, $typography-line-height-text) * var(--typography-font-size-text, $typography-font-size-text);
-  padding: calc((#{var(--grid-row-height, $grid-row-height)} - #{$help-text-line-height}) / 2)  var(--grid-margin-3, $grid-margin-3);
-  padding-left: var(--grid-margin-3, $grid-margin-3) - 4px;
+  padding: calc((var(--grid-row-height, #{$grid-row-height}) - var(--typography-line-height-text, #{$typography-line-height-text}) * var(--typography-font-size-text, #{$typography-font-size-text})) / 2)  var(--grid-margin-3, #{$grid-margin-3});
+  padding-left: calc(var(--grid-margin-3, #{$grid-margin-3}) - 4px);
+  position: relative;
+}
+
+.#{prefix(help-text)}::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: calc(100% + 4px);
+  background-color: var(--color-info, $color-info);
+  filter: brightness(80%) opacity(15%);
+  margin: calc(-1 * (var(--grid-row-height, #{$grid-row-height}) - var(--typography-line-height-text, #{$typography-line-height-text}) * var(--typography-font-size-text, #{$typography-font-size-text})) / 2)  var(--grid-margin-3, #{$grid-margin-3});
+  margin-left: calc(-1 * var(--grid-margin-3, #{$grid-margin-3}));
 }
