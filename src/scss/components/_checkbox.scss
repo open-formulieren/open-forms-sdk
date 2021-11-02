@@ -7,11 +7,6 @@
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
-$checkbox-checkmark-size: 1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big)) !default;
-$checkbox-label-padding-v: calc((#{var(--grid-row-height, $grid-row-height)} - #{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))}) / 2)!default;
-$checkbox-label-padding-h: var(--grid-margin-2, $grid-margin-2)!default;
-$checkbox-label-padding-left: calc(#{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))} + #{var(--grid-margin-2, $grid-margin-2) * 2})!default;
-
 
 .#{prefix(checkbox)} {
   @include body;
@@ -20,30 +15,34 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit(var(--typography-line-heig
   display: flex;
   align-items: center;
   position: relative;
+  --checkbox-checkmark-size: calc(1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}));
+  --checkbox-label-padding-v: calc((var(--grid-row-height, #{$grid-row-height}) - 1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big})) / 2);
+  --checkbox-label-padding-h: var(--grid-margin-2, #{$grid-margin-2});
+  --checkbox-label-padding-left: calc(1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}) + var(--grid-margin-2, #{$grid-margin-2}) * 2);
 
   [type=checkbox],
   [type=radio],
   &__checkmark:before,
   [type=radio] ~ &__checkmark:after {
     cursor: pointer;
-    width: $checkbox-checkmark-size;
-    height: $checkbox-checkmark-size;
+    width: var(--checkbox-checkmark-size);
+    height: var(--checkbox-checkmark-size);
   }
 
   [type=checkbox],
   [type=radio] {
-    @include absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
-    margin-top: calc((#{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))} - #{$checkbox-checkmark-size}) / 2);
+    @include absolute(var(--checkbox-label-padding-v), var(--checkbox-label-padding-h));
+    margin-top: calc((1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}) - var(--checkbox-checkmark-size)) / 2);
     opacity: 0;
     z-index: 100;
   }
 
   &__checkmark:before,
   [type=radio] ~ &__checkmark:after {
-    @include absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
+    @include absolute(var(--checkbox-label-padding-v), var(--checkbox-label-padding-h));
     @include color-background;
     content: '';
-    margin-top: calc((#{1em * strip_unit(var(--typography-line-height-text-big, $typography-line-height-text-big))} - #{$checkbox-checkmark-size}) / 2);
+    margin-top: calc((1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}) - var(--checkbox-checkmark-size)) / 2);
     display: block;
     z-index: 20;
   }
@@ -80,8 +79,8 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit(var(--typography-line-heig
 
   &__label {
     @include border(all, transparent, 1px);
-    padding: $checkbox-label-padding-v $checkbox-label-padding-h;
-    padding-left: $checkbox-label-padding-left;
+    padding: var(--checkbox-label-padding-v) var(--checkbox-label-padding-h);
+    padding-left: var(--checkbox-label-padding-left);
     display: flex;
     align-items: center;
     cursor: pointer;
