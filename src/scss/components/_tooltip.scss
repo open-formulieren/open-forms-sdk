@@ -15,7 +15,7 @@
     @include color-background;
     @include shadow;
     bottom: 100%;
-    padding: var(--grid-margin-0, $grid-margin-0);
+    padding: var(--of-grid-margin-0, $grid-margin-0);
     box-sizing: border-box;
     display: flex;
   }

@@ -9,7 +9,7 @@
 
   &.field-required:after {
     content: '*';
-    color: var(--color-red, $color-red);
+    color: var(--of-color-red, $color-red);
     z-index: 1;  // otherwise this is above the progress indicator
   }
 }
@@ -19,5 +19,5 @@
 .#{prefix(prefix)},
 .#{prefix(suffix)} {
   @include body;
-  color: var(--color-gray-darker, $color-gray-darker);
+  color: var(--of-color-gray-darker, $color-gray-darker);
 }

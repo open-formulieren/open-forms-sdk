@@ -15,34 +15,34 @@
   display: flex;
   align-items: center;
   position: relative;
-  --checkbox-checkmark-size: calc(1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}));
-  --checkbox-label-padding-v: calc((var(--grid-row-height, #{$grid-row-height}) - 1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big})) / 2);
-  --checkbox-label-padding-h: var(--grid-margin-2, #{$grid-margin-2});
-  --checkbox-label-padding-left: calc(1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}) + var(--grid-margin-2, #{$grid-margin-2}) * 2);
+  --of-checkbox-checkmark-size: calc(1em * var(--of-typography-line-height-text-big, #{$typography-line-height-text-big}));
+  --of-checkbox-label-padding-v: calc((var(--of-grid-row-height, #{$grid-row-height}) - 1em * var(--of-typography-line-height-text-big, #{$typography-line-height-text-big})) / 2);
+  --of-checkbox-label-padding-h: var(--of-grid-margin-2, #{$grid-margin-2});
+  --of-checkbox-label-padding-left: calc(1em * var(--of-typography-line-height-text-big, #{$typography-line-height-text-big}) + var(--of-grid-margin-2, #{$grid-margin-2}) * 2);
 
   [type=checkbox],
   [type=radio],
   &__checkmark:before,
   [type=radio] ~ &__checkmark:after {
     cursor: pointer;
-    width: var(--checkbox-checkmark-size);
-    height: var(--checkbox-checkmark-size);
+    width: var(--of-checkbox-checkmark-size);
+    height: var(--of-checkbox-checkmark-size);
   }
 
   [type=checkbox],
   [type=radio] {
-    @include absolute(var(--checkbox-label-padding-v), var(--checkbox-label-padding-h));
-    margin-top: calc((1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}) - var(--checkbox-checkmark-size)) / 2);
+    @include absolute(var(--of-checkbox-label-padding-v), var(--of-checkbox-label-padding-h));
+    margin-top: calc((1em * var(--of-typography-line-height-text-big, #{$typography-line-height-text-big}) - var(--of-checkbox-checkmark-size)) / 2);
     opacity: 0;
     z-index: 100;
   }
 
   &__checkmark:before,
   [type=radio] ~ &__checkmark:after {
-    @include absolute(var(--checkbox-label-padding-v), var(--checkbox-label-padding-h));
+    @include absolute(var(--of-checkbox-label-padding-v), var(--of-checkbox-label-padding-h));
     @include color-background;
     content: '';
-    margin-top: calc((1em * var(--typography-line-height-text-big, #{$typography-line-height-text-big}) - var(--checkbox-checkmark-size)) / 2);
+    margin-top: calc((1em * var(--of-typography-line-height-text-big, #{$typography-line-height-text-big}) - var(--of-checkbox-checkmark-size)) / 2);
     display: block;
     z-index: 20;
   }
@@ -53,7 +53,7 @@
   }
 
   & &__checkmark:before {
-    @include border(all, $color: var(--color-gray-darkest, $color-gray-darkest));
+    @include border(all, $color: var(--of-color-gray-darkest, $color-gray-darkest));
   }
 
   & :checked ~ &__checkmark:before {
@@ -79,8 +79,8 @@
 
   &__label {
     @include border(all, transparent, 1px);
-    padding: var(--checkbox-label-padding-v) var(--checkbox-label-padding-h);
-    padding-left: var(--checkbox-label-padding-left);
+    padding: var(--of-checkbox-label-padding-v) var(--of-checkbox-label-padding-h);
+    padding-left: var(--of-checkbox-label-padding-left);
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -92,16 +92,16 @@
   &__label:after {
     @include overlay;
     content: "";
-    background-color: var(--color-gray-lighter, $color-gray-lighter);
+    background-color: var(--of-color-gray-lighter, $color-gray-lighter);
     z-index: -1;
   }
 
   & :focus ~ &__label:after {
-    @include outline(var(--color-info, $color-info));
+    @include outline(var(--of-color-info, $color-info));
   }
 
   & :checked ~ &__label:after {
-    @include border(all, var(--color-primary, $color-primary), 1px);
+    @include border(all, var(--of-color-primary, $color-primary), 1px);
     @include color-background;
   }
 

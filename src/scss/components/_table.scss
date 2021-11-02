@@ -18,7 +18,7 @@
 
   &__row:not(:last-child) &__head,
   &__row:not(:last-child) &__cell {
-    @include margin(true, $properties: padding-bottoms, $value-mobile: var(--typography-margin-list, $typography-margin-list));
+    @include margin(true, $properties: padding-bottoms, $value-mobile: var(--of-typography-margin-list, $typography-margin-list));
   }
 
   &__head {

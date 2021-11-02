@@ -7,7 +7,7 @@
 @import '../mixins/prefix';
 
 .#{prefix('layout')} {
-  background-color: var(--color-gray, $color-gray);
+  background-color: var(--of-color-gray, $color-gray);
   display: flex;
   flex-direction: column;
 
@@ -62,19 +62,19 @@
       @include modifier('mobile-sticky') {
         position: sticky;
         z-index: 1;
-        top: var(--grid-container-margin, $grid-container-margin);
+        top: var(--of-grid-container-margin, $grid-container-margin);
 
         > * {
-          @include margin(-var(--grid-container-margin, $grid-container-margin), $properties: margin-top);
+          @include margin(-var(--of-grid-container-margin, $grid-container-margin), $properties: margin-top);
         }
 
         // force the maximum height, so that when it's expanded, the content overflows and
         // overlays the actual form
-        max-height: calc(2 * var(--grid-container-margin, $grid-container-margin) + var(--typography-line-height-text-big-mobile, $typography-line-height-text-big-mobile) * var(--typography-font-size-text-big-mobile, $typography-font-size-text-big-mobile));
+        max-height: calc(2 * var(--of-grid-container-margin, $grid-container-margin) + var(--of-typography-line-height-text-big-mobile, $typography-line-height-text-big-mobile) * var(--of-typography-font-size-text-big-mobile, $typography-font-size-text-big-mobile));
       }
 
       @include modifier('mobile-padding-top') {
-        @include margin(var(--grid-container-margin, $grid-container-margin), $properties: padding-top);
+        @include margin(var(--of-grid-container-margin, $grid-container-margin), $properties: padding-top);
       }
     }
   }

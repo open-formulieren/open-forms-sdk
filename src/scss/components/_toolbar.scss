@@ -31,7 +31,7 @@
 
     @include modifier('compact') {
       @include element('list') {
-        @include margin(auto, $properties: margin-bottom, $value-mobile: var(--typography-margin-list, $typography-margin-list));
+        @include margin(auto, $properties: margin-bottom, $value-mobile: var(--of-typography-margin-list, $typography-margin-list));
       }
       @include element('list-item') {
         min-height: auto;
@@ -46,7 +46,7 @@
     @include modifier('mobile-reverse-order') {
       display: flex;
       flex-direction: column-reverse;
-      margin-top: var(--typography-margin-text, $typography-margin-text);
+      margin-top: var(--of-typography-margin-text, $typography-margin-text);
 
       > * {
         width: 100%;
@@ -55,13 +55,13 @@
       @include element('list') {
         flex-direction: column-reverse;
         &:not(:last-child) {
-          margin: var(--typography-margin-text, $typography-margin-text) 0 0 0;
+          margin: var(--of-typography-margin-text, $typography-margin-text) 0 0 0;
         }
       }
 
       @include element('list-item') {
         @include margin(auto, $properties: margin-bottom, $value-mobile: 0);
-        @include margin(auto, $properties: margin-top, $value-mobile: var(--typography-margin-list, $typography-margin-list));
+        @include margin(auto, $properties: margin-top, $value-mobile: var(--of-typography-margin-list, $typography-margin-list));
         &:last-child {
           padding-bottom: 0 !important;
         }
@@ -73,7 +73,7 @@
     }
 
     @include element('list-item') {
-      @include margin(auto, $properties: margin-bottom, $value-mobile: var(--typography-margin-list, $typography-margin-list));
+      @include margin(auto, $properties: margin-bottom, $value-mobile: var(--of-typography-margin-list, $typography-margin-list));
 
       .#{prefix('button')}:not(.#{prefix('button--image')}) {
         width: 100%;
@@ -92,7 +92,7 @@
   }
 
   &--start &__list {
-    @include breakpoint($min: var(--breakpoint-tablet, $breakpoint-tablet)) {
+    @include breakpoint($min: var(--of-breakpoint-tablet, $breakpoint-tablet)) {
       @include margin($properties: margin-right);
     }
   }
@@ -107,9 +107,9 @@
     }
   }
 
-  @include breakpoint($max: var(--breakpoint-laptop, $breakpoint-laptop)) {
+  @include breakpoint($max: var(--of-breakpoint-laptop, $breakpoint-laptop)) {
     &__list:last-child &__list-item:last-child {
-      padding-bottom: var(--typography-margin-base, $typography-margin-base);
+      padding-bottom: var(--of-typography-margin-base, $typography-margin-base);
     }
   }
 

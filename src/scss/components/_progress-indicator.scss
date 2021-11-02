@@ -16,14 +16,14 @@
   @include element('mobile-header') {
     @include body;
     @include body--big;
-    @include margin(-var(--grid-container-margin, $grid-container-margin), $properties: margin-left);
+    @include margin(-var(--of-grid-container-margin, $grid-container-margin), $properties: margin-left);
 
     @include show-on-mobile(flex);
     align-items: center;
 
     .fa-icon {
       display: block;
-      width: calc(var(--grid-container-margin, $grid-container-margin) * 2);
+      width: calc(var(--of-grid-container-margin, $grid-container-margin) * 2);
       text-align: center;
     }
 
@@ -34,21 +34,21 @@
 
   // mobile styling for the progress indicator
   @include mobile-only {
-    @include margin(var(--grid-container-margin, $grid-container-margin), $properties: (padding-top, padding-bottom));
-    box-shadow: 0px 0px 2px 0px rgba(var(--color-black, $color-black), 0.2);
+    @include margin(var(--of-grid-container-margin, $grid-container-margin), $properties: (padding-top, padding-bottom));
+    box-shadow: 0px 0px 2px 0px rgba(var(--of-color-black, $color-black), 0.2);
 
     // style layout
     @at-root .#{prefix('layout__row')} & {
-      @include margin(-var(--grid-container-margin, $grid-container-margin), $properties: (margin-left, margin-right));
+      @include margin(-var(--of-grid-container-margin, $grid-container-margin), $properties: (margin-left, margin-right));
     }
 
     @include nested('caption') {
       @include margin(true, $properties: margin-top);
-      @include margin(var(--grid-container-margin, $grid-container-margin), $properties: margin-left);
+      @include margin(var(--of-grid-container-margin, $grid-container-margin), $properties: margin-left);
     }
 
     @include nested('list') {
-      @include margin(var(--grid-container-margin, $grid-container-margin), $properties: margin-left);
+      @include margin(var(--of-grid-container-margin, $grid-container-margin), $properties: margin-left);
     }
 
     @include modifier('mobile-collapsed') {

@@ -23,12 +23,12 @@
   }
 
   @include modifier('muted') {
-    color: var(--color-gray-darker, $color-gray-darker)!important;
+    color: var(--of-color-gray-darker, $color-gray-darker)!important;
   }
 
   &--active#{&}--muted,
   &--muted:hover {
-    color: var(--typography-color-text, $typography-color-text)!important;
+    color: var(--of-typography-color-text, $typography-color-text)!important;
   }
 
   @include modifier('indent') {

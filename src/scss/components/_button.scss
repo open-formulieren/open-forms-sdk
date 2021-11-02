@@ -8,26 +8,26 @@ $button-line-height: $typography-line-height-text-big * $typography-font-size-te
 // Cannot move this to a CSS variable, since the unit cannot be removed in CSS
 $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16px;
 
-@mixin button-theme($name, $color, var(--color-background, $color-background), var(--color-border, $color-border): var(--color-background, $color-background), $decorate-on-hover: false) {
+@mixin button-theme($name, $color, var(--of-color-background, $color-background), var(--of-color-border, $color-border): var(--of-color-background, $color-background), $decorate-on-hover: false) {
   @if $name == '' {
-    @include button-style($color, var(--color-background, $color-background), var(--color-border, $color-border), $decorate-on-hover);
+    @include button-style($color, var(--of-color-background, $color-background), var(--of-color-border, $color-border), $decorate-on-hover);
   } @else {
     &--#{$name} {
-      @include button-style($color, var(--color-background, $color-background), var(--color-border, $color-border), $decorate-on-hover);
+      @include button-style($color, var(--of-color-background, $color-background), var(--of-color-border, $color-border), $decorate-on-hover);
     }
   }
 }
 
-@mixin button-style($color, var(--color-background, $color-background), var(--color-border, $color-border): var(--color-background, $color-background), $decorate-on-hover: false) {
+@mixin button-style($color, var(--of-color-background, $color-background), var(--of-color-border, $color-border): var(--of-color-background, $color-background), $decorate-on-hover: false) {
   color: $color;
-  background-color: var(--color-background, $color-background);
-  border-right-color: var(--color-border, $color-border);
-  border-bottom-color: var(--color-border, $color-border);
+  background-color: var(--of-color-background, $color-background);
+  border-right-color: var(--of-color-border, $color-border);
+  border-bottom-color: var(--of-color-border, $color-border);
 
   &:hover {
-    background-color: scale_color(var(--color-background, $color-background), $lightness: -20%);
-    border-right-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
-    border-bottom-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
+    background-color: scale_color(var(--of-color-background, $color-background), $lightness: -20%);
+    border-right-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    border-bottom-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
 
     @if $decorate-on-hover {
       @include anchor(true);
@@ -36,10 +36,10 @@ $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16
 
   &:active {
     color: scale_color($color, $lightness: -25%);
-    background-color: scale_color(var(--color-background, $color-background), $lightness: -25%);
-    border-top-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
+    background-color: scale_color(var(--of-color-background, $color-background), $lightness: -25%);
+    border-top-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
     border-right-color: transparent;
-    border-left-color: scale_color(var(--color-border, $color-border), $lightness: -20%);
+    border-left-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
     border-bottom-color: transparent;
   }
 }
@@ -48,18 +48,18 @@ $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16
   @include body;
   @include body--big;
   @include border(all, $color: transparent, $size: 2px);
-  @include button-theme('primary', var(--color-background, $color-background), scale_color(var(--color-primary, $color-primary), $lightness: 10%, $saturation: 0%), var(--color-primary, $color-primary));
-  @include button-theme('', var(--typography-color-text, $typography-color-text), var(--color-background, $color-background), var(--color-border, $color-border));
-  @include button-theme('anchor', var(--typography-color-link, $typography-color-link), transparent, transparent, true);
-  @include button-theme('danger', scale_color(var(--color-danger, $color-danger), $lightness: 90%), var(--color-danger, $color-danger), scale_color(var(--color-danger, $color-danger), $lightness: -20%));
+  @include button-theme('primary', var(--of-color-background, $color-background), scale_color(var(--of-color-primary, $color-primary), $lightness: 10%, $saturation: 0%), var(--of-color-primary, $color-primary));
+  @include button-theme('', var(--of-typography-color-text, $typography-color-text), var(--of-color-background, $color-background), var(--of-color-border, $color-border));
+  @include button-theme('anchor', var(--of-typography-color-link, $typography-color-link), transparent, transparent, true);
+  @include button-theme('danger', scale_color(var(--of-color-danger, $color-danger), $lightness: 90%), var(--of-color-danger, $color-danger), scale_color(var(--of-color-danger, $color-danger), $lightness: -20%));
   appearance: none;
   border-radius: 0;
   display: flex;
   align-items: center;
 
-  --button-padding-v: calc((var(--grid-row-height, #{$grid-row-height}) - #{$button-line-height-px}) / 2 - var(--typography-size-border, #{$typography-size-border}));
-  --button-padding-h: var(--grid-margin-2, #{$grid-margin-2});
-  padding: var(--button-padding-v) var(--button-padding-h);
+  --of-button-padding-v: calc((var(--of-grid-row-height, #{$grid-row-height}) - #{$button-line-height-px}) / 2 - var(--of-typography-size-border, #{$typography-size-border}));
+  --of-button-padding-h: var(--of-grid-margin-2, #{$grid-margin-2});
+  padding: var(--of-button-padding-v) var(--of-button-padding-h);
 
   text-decoration: none;
   float: left;
@@ -79,6 +79,6 @@ $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16
   }
 
   .fa-icon:not(:last-child) {
-    margin-right: var(--grid-margin-2, #{$grid-margin-2});
+    margin-right: var(--of-grid-margin-2, #{$grid-margin-2});
   }
 }
