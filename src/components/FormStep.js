@@ -1,7 +1,6 @@
 /**
  * Render a single form step, as part of a started submission for a form.
  */
-
 import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
@@ -17,6 +16,7 @@ import { get, post, put } from 'api';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import FormIOWrapper from 'components/FormIOWrapper';
+import FormStepDebug from 'components/FormStepDebug';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import {ConfigContext, FormioTranslations} from 'Context';
@@ -24,6 +24,8 @@ import LogoutButton from 'components/LogoutButton';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {findPreviousApplicableStep} from 'components/utils';
 import Types from 'types';
+
+const DEBUG = process.env.NODE_ENV === 'development';
 
 const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 
@@ -324,6 +326,7 @@ const FormStep = ({
                 intl
               }}
             />
+            { DEBUG ? <FormStepDebug data={data} /> : null }
             <LiteralsProvider literals={formStep.literals}>
               <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
                 <ToolbarList>
