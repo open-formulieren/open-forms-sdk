@@ -1,9 +1,12 @@
 import React, {useContext} from 'react';
+import {useIntl} from 'react-intl';
 import { useImmerReducer } from 'use-immer';
 import {
-  Switch,
+  Redirect,
   Route,
+  Switch,
   useHistory,
+  useRouteMatch,
 } from 'react-router-dom';
 
 import { ConfigContext } from 'Context';
@@ -14,15 +17,16 @@ import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
+import { LayoutColumn } from 'components/Layout';
 import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
-import { LayoutColumn } from 'components/Layout';
+import PaymentOverview from 'components/PaymentOverview';
 import RequireSubmission from 'components/RequireSubmission';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
-import Types from 'types';
-import {useIntl} from 'react-intl';
 import {findNextApplicableStep} from 'components/utils';
+import useQuery from 'hooks/useQuery';
+import Types from 'types';
 
 /**
  * Create a submission instance from a given form instance
@@ -87,6 +91,7 @@ const reducer = (draft, action) => {
  */
  const Form = ({ form }) => {
   const history = useHistory();
+  const queryParams = useQuery();
   usePageViews();
   const intl = useIntl();
 
@@ -114,6 +119,8 @@ const reducer = (draft, action) => {
     setSubmissionId,
     removeSubmissionId
   ] = useRecycleSubmission(form, state.submission, onSubmissionLoaded);
+
+  const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
 
   /**
    * When the form is started, create a submission and add it to the state.
@@ -192,6 +199,20 @@ const reducer = (draft, action) => {
     dispatch({type: 'CLEAR_PROCESSING_ERROR'});
   };
 
+  // handle redirect from payment provider to render appropriate page and include the
+  // params as state for the next component.
+  if (queryParams.get('of_payment_status')) {
+    return (
+      <Redirect to={{
+        pathname: '/betaaloverzicht',
+        state: {
+          status: queryParams.get('of_payment_status'),
+          userAction: queryParams.get('of_payment_action'),
+        },
+      }} />
+    );
+  }
+
   if (loading) {
     return (
       <LayoutColumn>
@@ -234,6 +255,12 @@ const reducer = (draft, action) => {
               component={SubmissionConfirmation} />
           </Route>
 
+          <Route exact path="/betaaloverzicht">
+            <ErrorBoundary>
+              <PaymentOverview />
+            </ErrorBoundary>
+          </Route>
+
           <Route path="/stap/:step" render={() => (
             <RequireSubmission
               form={form}
@@ -250,7 +277,7 @@ const reducer = (draft, action) => {
       </LayoutColumn>
 
       {
-        form.showProgressIndicator
+        form.showProgressIndicator && !paymentOverviewMatch
         ? (
           <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
             <ProgressIndicator
