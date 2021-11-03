@@ -1,5 +1,6 @@
-import React, {useEffect, useRef} from 'react';
 import _uniqueId from 'lodash/uniqueId';
+import isEqual from 'lodash/isEqual';
+import React, {useCallback, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {useGeolocation} from 'react-use';
 
@@ -12,6 +13,9 @@ const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
   const { loading, latitude, longitude } = useGeolocation();
   if (!navigator.geolocation) return [false, DEFAULT_LAT_LON];
+  if (latitude == null || longitude == null) {
+    return [loading, null];
+  }
   return [loading, [latitude, longitude]];
 };
 
@@ -22,13 +26,13 @@ const LeaftletMap = ({
   disabled=false,
 }) => {
   const containerRef = useRef();
-  const mapRef = useRef();
+  const mapRef = useRef(null);
   const markerRef = useRef();
 
   const [geoLoading, defaultCoordinates] = useDefaultCoordinates();
   const coordinates = markerCoordinates || defaultCoordinates;
 
-  const initializeInteractiveMap = () => {
+  const initializeInteractiveMap = useCallback(() => {
     const map = mapRef.current;
     let marker = markerRef.current;
 
@@ -39,7 +43,7 @@ const LeaftletMap = ({
       marker = L.marker(newLatLng).addTo(map);
       markerRef.current = marker;
     });
-  };
+  }, [mapRef, onMarkerSet]);
 
   const disableMap = () => {
       const map = mapRef.current;
@@ -56,7 +60,6 @@ const LeaftletMap = ({
   const destroyMap = () => {
     const map = mapRef.current;
     markerRef.current = null;
-    // containerRef.current = null;
     if (!map) return;
     map.remove();
     mapRef.current = null;
@@ -85,13 +88,16 @@ const LeaftletMap = ({
 
     // okay, now ensure that the coordinates are in view - this happens for initial and
     // re-renders (so if an instance already exists!)
-    if (markerCoordinates || !geoLoading) {
+    if (coordinates || !geoLoading) {
       map.setView(coordinates, DEFAULT_ZOOM);
 
       // ensure a marker is rendered
       if (!marker) {
         marker = L.marker(coordinates).addTo(map);
         markerRef.current = marker;
+        if (!disabled && !isEqual(markerCoordinates, coordinates)) {
+          onMarkerSet(coordinates);
+        }
       }
     }
 
@@ -103,7 +109,15 @@ const LeaftletMap = ({
 
     // destroy the map on un-mount/cleanup cycle.
     return destroyMap;
-  });
+  }, [
+    markerCoordinates,
+    coordinates,
+    geoLoading,
+    containerRef,
+    disabled,
+    onMarkerSet,
+    initializeInteractiveMap
+  ]);
 
   return (
     <div
