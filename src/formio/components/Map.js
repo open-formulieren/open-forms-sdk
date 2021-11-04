@@ -78,6 +78,12 @@ export default class Map extends Field {
       .then(() => this.renderReact());
   }
 
+  destroy() {
+    const container = this.refs.mapContainer;
+    container && ReactDOM.unmountComponentAtNode(container);
+    super.destroy();
+  }
+
   onMarkerSet(newLatLng) {
     this.setValue(newLatLng, {modified: true});
   }
@@ -99,11 +105,8 @@ export default class Map extends Field {
 
   setValue(value, flags={}) {
     const changed = super.setValue(value, flags);
-    if (this._cancelRenderReact) {
-      this._cancelRenderReact();
-    }
     // re-render if the value is set, which may be because of existing submission data
-    this.renderReact();
+    changed && this.renderReact();
     return changed;
   }
 }
