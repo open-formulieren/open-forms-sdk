@@ -1,0 +1,9 @@
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix(multi-value-table)} {
+  @include body;
+
+}

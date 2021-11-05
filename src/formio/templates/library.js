@@ -10,6 +10,8 @@ import { default as SelectTemplate } from './select';
 import { default as TextTemplate } from './text';
 import { default as FieldSetTemplate } from './fieldset';
 import { default as MapTemplate } from './map';
+import { default as MultiValueRowTemplate } from './multiValueRow';
+import { default as MultiValueTableTemplate } from './multiValueTable';
 
 const OFLibrary = {
   component: {form: ComponentTemplate},
@@ -24,6 +26,8 @@ const OFLibrary = {
   input: {form: TextTemplate},
   fieldset: {form: FieldSetTemplate},
   map: {form: MapTemplate},
+  multiValueRow: {form: MultiValueRowTemplate},
+  multiValueTable: {form: MultiValueTableTemplate},
 };
 
 
