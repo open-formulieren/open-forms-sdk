@@ -7,8 +7,9 @@ const TEMPLATE = `
   {% if (!ctx.disabled) {%}
     <tr>
       <td colspan="2">
-        <button class="btn btn-primary formio-button-add-another" ref="addButton">
-          <i class="{{ctx.iconClass('plus')}}"></i> {{ctx.t(ctx.addAnother, {_userInput: true})}}
+        <button class="${applyPrefix('button')}" ref="addButton">
+          <i class="{{ctx.iconClass('plus')}}"></i>
+          <div class="${applyPrefix('multi-value-table')}__button-label">{{ctx.t(ctx.addAnother, {_userInput: true})}}</div>
         </button>
       </td>
     </tr>

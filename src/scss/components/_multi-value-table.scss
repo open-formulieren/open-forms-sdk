@@ -6,4 +6,9 @@
 .#{prefix(multi-value-table)} {
   @include body;
 
+  width: 100%;
+
+  &__button-label {
+    padding-left: $grid-margin-2;
+  }
 }
