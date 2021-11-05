@@ -1,8 +1,5 @@
 import { Formio } from 'react-formio';
 
-import { applyPrefix } from '../utils';
-
-
 const DateTimeField = Formio.Components.components.datetime;
 
 
@@ -16,7 +13,7 @@ class DateField extends DateTimeField {
     get inputInfo() {
       const info = super.inputInfo;
       // change the default CSS classes
-      info.attr.class = applyPrefix('input');
+      info.attr.class = 'utrecht-textbox';
       return info;
     }
 
