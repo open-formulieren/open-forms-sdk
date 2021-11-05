@@ -1,0 +1,23 @@
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix(multi-value-row)} {
+  @include body;
+
+  display: flex;
+  align-items: center;
+
+  &__input {
+    width: 100%;
+  }
+
+  &__remove {
+    [ref="removeRow"] {
+      cursor: pointer;
+      color: $color-danger;
+      padding-left: $grid-margin-2;
+    }
+  }
+}
