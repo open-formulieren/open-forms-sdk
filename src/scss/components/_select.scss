@@ -3,6 +3,7 @@
 
 @import '../mixins/prefix';
 
+// Styling for the html5 widget for the select component
 .#{prefix(select)} {
   @include body;
   @include border(all, $size: 1px);
@@ -15,4 +16,36 @@
   font-weight: bold;
   padding: $grid-margin-2;
   width: 100%;
+}
+
+// Styling for the choicejs widget for the select component
+// Overwriting styles found here: https://github.com/Choices-js/Choices/blob/master/src/styles/choices.scss
+.#{prefix(form-control--select)} {
+  width: 100%;
+
+  .choices {
+    @include body;
+    @include border(all, $size: 1px);
+    @include rows(1);
+    appearance: none;
+    border-radius: 0;
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .selection {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .choices__list--single {
+    display: flex;
+  }
+
+  .choices__item--selectable {
+    padding: $grid-margin-2;
+  }
 }
