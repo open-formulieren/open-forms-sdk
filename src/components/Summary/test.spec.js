@@ -22,7 +22,6 @@ const SUBMISSION = {
   }
 }
 
-jest.mock("../../map/rd", () => jest.fn());
 jest.mock('react-use');
 jest.mock('hooks/useRefreshSubmission');
 

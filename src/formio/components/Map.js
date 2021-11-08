@@ -73,26 +73,40 @@ export default class Map extends Field {
     this.loadRefs(element, {
       mapContainer: 'single',
     });
-    this.renderReact();
-    return super.attach(element);
+    return super
+      .attach(element)
+      .then(() => this.renderReact());
+  }
+
+  destroy() {
+    const container = this.refs.mapContainer;
+    container && ReactDOM.unmountComponentAtNode(container);
+    super.destroy();
+  }
+
+  onMarkerSet(newLatLng) {
+    this.setValue(newLatLng, {modified: true});
   }
 
   renderReact() {
     const markerCoordinates = this.getValue();
+    const container = this.refs.mapContainer;
+    // no container node ready (yet), defer to next render cycle
+    if (!container) return;
+
     ReactDOM.render(
       <LeafletMap
         markerCoordinates={markerCoordinates || null}
-        onMarkerSet={newLatLng => this.setValue(newLatLng)}
+        onMarkerSet={this.onMarkerSet.bind(this)}
       />,
-      this.refs.mapContainer,
+      container,
     );
   }
 
-  setValue(value, flags = {}) {
+  setValue(value, flags={}) {
     const changed = super.setValue(value, flags);
-    if (changed) {
-      this.renderReact();
-    }
+    // re-render if the value is set, which may be because of existing submission data
+    changed && this.renderReact();
     return changed;
   }
 }

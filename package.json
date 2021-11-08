@@ -66,6 +66,7 @@
     "react-dom": "^17.0.2",
     "react-formio": "^4.3.0",
     "react-intl": "^5.20.5",
+    "react-leaflet": "^3.2.2",
     "react-refresh": "^0.8.3",
     "react-router-dom": "^5.2.0",
     "react-use": "^17.2.4",
@@ -114,18 +115,11 @@
       ]
     }
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@formatjs/cli": "^4.2.33",
     "babel-plugin-formatjs": "^10.3.8",

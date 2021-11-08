@@ -10,8 +10,6 @@ import {testStepDataEmptyDate} from './fixtures';
 
 let container = null;
 
-jest.mock("../../map/rd", () => jest.fn());
-
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
