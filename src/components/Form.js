@@ -31,7 +31,11 @@ import {findNextApplicableStep} from 'components/utils';
  * @return {Object}        The Submission instance.
  */
 const createSubmission = async (config, form) => {
-  const submissionResponse = await post(`${config.baseUrl}submissions`, {form: form.url});
+  const createData = {
+    form: form.url,
+    formUrl: window.location.toString(),
+  };
+  const submissionResponse = await post(`${config.baseUrl}submissions`, createData);
   return submissionResponse.data;
 };
 
