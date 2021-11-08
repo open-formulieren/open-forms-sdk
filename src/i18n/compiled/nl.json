@@ -83,6 +83,12 @@
       "value": "Afspraak annuleren"
     }
   ],
+  "JB/IBw": [
+    {
+      "type": 0,
+      "value": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
+    }
+  ],
   "LEeGSv": [
     {
       "options": {
@@ -153,6 +159,24 @@
       "value": "Afspraak annuleren"
     }
   ],
+  "VrbdRk": [
+    {
+      "type": 0,
+      "value": "Your payment has been received."
+    }
+  ],
+  "WVmmME": [
+    {
+      "type": 0,
+      "value": "Payment overview"
+    }
+  ],
+  "YdeY1f": [
+    {
+      "type": 0,
+      "value": "Back to form start"
+    }
+  ],
   "ZehFnX": [
     {
       "type": 0,
@@ -187,6 +211,24 @@
     {
       "type": 1,
       "value": "reference"
+    }
+  ],
+  "bgfiRG": [
+    {
+      "type": 0,
+      "value": "You've started the payment process."
+    }
+  ],
+  "bu0CcW": [
+    {
+      "type": 0,
+      "value": "Your payment is received and processed."
+    }
+  ],
+  "eO6Ysb": [
+    {
+      "type": 0,
+      "value": "Your payment is currently processing."
     }
   ],
   "ertoXR": [
@@ -245,6 +287,12 @@
     {
       "type": 0,
       "value": " te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden."
+    }
+  ],
+  "tIN0Is": [
+    {
+      "type": 0,
+      "value": "We can't display any payment information - did you maybe get here by accident?"
     }
   ],
   "tohkCS": [
