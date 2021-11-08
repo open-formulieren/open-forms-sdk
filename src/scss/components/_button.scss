@@ -8,26 +8,45 @@ $button-line-height: $typography-line-height-text-big * $typography-font-size-te
 // Cannot move this to a CSS variable, since the unit cannot be removed in CSS
 $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16px;
 
-@mixin button-theme($name, $color, var(--of-color-background, $color-background), var(--of-color-border, $color-border): var(--of-color-background, $color-background), $decorate-on-hover: false) {
+@mixin button-theme($name, $color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
   @if $name == '' {
-    @include button-style($color, var(--of-color-background, $color-background), var(--of-color-border, $color-border), $decorate-on-hover);
+    @include button-style($color, $color-background, $color-border, $decorate-on-hover);
   } @else {
     &--#{$name} {
-      @include button-style($color, var(--of-color-background, $color-background), var(--of-color-border, $color-border), $decorate-on-hover);
+      @include button-style($color, $color-background, $color-border, $decorate-on-hover);
     }
   }
 }
 
-@mixin button-style($color, var(--of-color-background, $color-background), var(--of-color-border, $color-border): var(--of-color-background, $color-background), $decorate-on-hover: false) {
+@mixin button-style($color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
   color: $color;
-  background-color: var(--of-color-background, $color-background);
-  border-right-color: var(--of-color-border, $color-border);
-  border-bottom-color: var(--of-color-border, $color-border);
+  background-color: $color-background;
+
+  // position: relative;
+
+  // &::before {
+  //   position: absolute;
+  //   content: "";
+  //   width: 100%;
+  //   height: 100%;
+  //   border-right: 2px solid;
+  //   border-bottom: 2px solid;
+  //   border-right-color: inherit;
+  //   border-bottom-color: inherit;
+
+  //   // Doesnt work with inherit? https://stackoverflow.com/questions/21844935/css-filter-inherit-issue-solution-without-pseudo-element-for-dynamic-sized-divs
+  //   filter: brightness(90%);
+  //   top: 0;
+  //   left: 0;
+  // }
 
   &:hover {
-    background-color: scale_color(var(--of-color-background, $color-background), $lightness: -20%);
-    border-right-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
-    border-bottom-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    // background-color: scale_color(var(--of-color-background, $color-background), $lightness: -20%);
+    // border-right-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    // border-bottom-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    background-color: var(--of-color-background, $color-background);
+    border-right-color: var(--of-color-border, $color-border);
+    border-bottom-color: var(--of-color-border, $color-border);
 
     @if $decorate-on-hover {
       @include anchor(true);
@@ -35,11 +54,17 @@ $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16
   }
 
   &:active {
-    color: scale_color($color, $lightness: -25%);
-    background-color: scale_color(var(--of-color-background, $color-background), $lightness: -25%);
-    border-top-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    // color: scale_color($color, $lightness: -25%);
+    // background-color: scale_color(var(--of-color-background, $color-background), $lightness: -25%);
+    // border-top-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    // border-right-color: transparent;
+    // border-left-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    // border-bottom-color: transparent;
+    color: $color;
+    background-color: var(--of-color-background, $color-background);
+    border-top-color: var(--of-color-border, $color-border);
     border-right-color: transparent;
-    border-left-color: scale_color(var(--of-color-border, $color-border), $lightness: -20%);
+    border-left-color: var(--of-color-border, $color-border);
     border-bottom-color: transparent;
   }
 }
@@ -48,10 +73,10 @@ $button-line-height-px: $button-line-height / ($button-line-height * 0 + 1) * 16
   @include body;
   @include body--big;
   @include border(all, $color: transparent, $size: 2px);
-  @include button-theme('primary', var(--of-color-background, $color-background), scale_color(var(--of-color-primary, $color-primary), $lightness: 10%, $saturation: 0%), var(--of-color-primary, $color-primary));
+  @include button-theme('primary', var(--of-color-background, $color-background), var(--of-color-primary, $color-primary), var(--of-color-primary, $color-primary));
   @include button-theme('', var(--of-typography-color-text, $typography-color-text), var(--of-color-background, $color-background), var(--of-color-border, $color-border));
   @include button-theme('anchor', var(--of-typography-color-link, $typography-color-link), transparent, transparent, true);
-  @include button-theme('danger', scale_color(var(--of-color-danger, $color-danger), $lightness: 90%), var(--of-color-danger, $color-danger), scale_color(var(--of-color-danger, $color-danger), $lightness: -20%));
+  @include button-theme('danger', scale_color($color-danger, $lightness: 90%), var(--of-color-danger, $color-danger), scale_color($color-danger, $lightness: -20%));
   appearance: none;
   border-radius: 0;
   display: flex;
