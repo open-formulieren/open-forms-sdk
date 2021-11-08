@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 /**
  * Debug component to visualize Form Step developer information.
- * @param  {Object} options.data The form step form user-supplied data, current field values.
+ * @param  {Object} props.data The form step form user-supplied data, current field values.
  * @return {JSX}
  */
 const FormStepDebug = ({ data={} }) => {

@@ -3,9 +3,9 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useGeolocation} from 'react-use';
 
-import { MapContainer, TileLayer, Marker, useMap, useMapEvent } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, useMap, useMapEvent } from 'react-leaflet';
 
-import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from '../map/constants';
+import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from 'map/constants';
 
 const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
@@ -104,6 +104,7 @@ const MarkerWrapper = ({ position, onMarkerSet, ...props }) => {
 };
 
 MarkerWrapper.propTypes = {
+  position: PropTypes.arrayOf(PropTypes.number),
   onMarkerSet: PropTypes.func,
 };
 
