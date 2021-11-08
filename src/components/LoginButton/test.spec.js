@@ -6,8 +6,6 @@ import { IntlProvider } from 'react-intl';
 import LoginButton from './index';
 import messagesNL from 'i18n/compiled/nl.json';
 
-jest.mock('../../map/rd', () => jest.fn());
-
 let container = null;
 
 beforeEach(() => {
