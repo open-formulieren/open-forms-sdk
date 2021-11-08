@@ -59,6 +59,11 @@
     "description": "Cancel appointment title",
     "originalDefault": "Cancel appointment"
   },
+  "JB/IBw": {
+    "defaultMessage": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email.",
+    "description": "payment failed status",
+    "originalDefault": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
+  },
   "LEeGSv": {
     "defaultMessage": "{isApplicable, select, false {{label} (n/a)} other {{label}} }",
     "description": "Step label in progress indicator",
@@ -89,6 +94,21 @@
     "description": "Cancel appointment submit button",
     "originalDefault": "Cancel appointment"
   },
+  "VrbdRk": {
+    "defaultMessage": "Your payment has been received.",
+    "description": "payment completed status",
+    "originalDefault": "Your payment has been received."
+  },
+  "WVmmME": {
+    "defaultMessage": "Payment overview",
+    "description": "Payment overview title",
+    "originalDefault": "Payment overview"
+  },
+  "YdeY1f": {
+    "defaultMessage": "Back to form start",
+    "description": "return to form start button",
+    "originalDefault": "Back to form start"
+  },
   "ZehFnX": {
     "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
@@ -108,6 +128,21 @@
     "defaultMessage": "Confirmation: {reference}",
     "description": "On succesful completion title",
     "originalDefault": "Confirmation: {reference}"
+  },
+  "bgfiRG": {
+    "defaultMessage": "You've started the payment process.",
+    "description": "payment started status",
+    "originalDefault": "You've started the payment process."
+  },
+  "bu0CcW": {
+    "defaultMessage": "Your payment is received and processed.",
+    "description": "payment registered status",
+    "originalDefault": "Your payment is received and processed."
+  },
+  "eO6Ysb": {
+    "defaultMessage": "Your payment is currently processing.",
+    "description": "payment processing status",
+    "originalDefault": "Your payment is currently processing."
   },
   "ertoXR": {
     "defaultMessage": "Processing...",
@@ -133,6 +168,11 @@
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
     "description": "Appointment cancellation body text",
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
+  },
+  "tIN0Is": {
+    "defaultMessage": "We can't display any payment information - did you maybe get here by accident?",
+    "description": "Payment overview missing state error message",
+    "originalDefault": "We can't display any payment information - did you maybe get here by accident?"
   },
   "tohkCS": {
     "defaultMessage": "The email address where you received the appointment confirmation email.",
