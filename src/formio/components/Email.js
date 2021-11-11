@@ -1,8 +1,5 @@
 import { Formio } from 'react-formio';
 
-import { applyPrefix } from '../utils';
-
-
 /**
  * Extend the default email field to modify it to our needs.
  */
@@ -10,7 +7,7 @@ class Email extends Formio.Components.components.email {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('email');
+    info.attr.class = "utrecht-textbox";
     return info;
   }
 
