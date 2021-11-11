@@ -15,20 +15,35 @@ import {Toolbar, ToolbarList} from "../Toolbar";
 import Button from "../Button";
 import classNames from "classnames";
 import {getBEMClassName} from "../../utils";
+import {put, post, destroy} from "../../api";
+import {useHistory} from "react-router-dom";
 
 const FormSaveModal = ({
     isOpen,
-    closeModal
+    closeModal,
+    stepData,
+    saveStepDataUrl,
+    suspendFormUrl,
+    destroySessionUrl,
 }) => {
-
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
   const [failed, setFailed] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log('onSubmit called');
-    setFailed(true);
+    let response = await put(saveStepDataUrl, {stepData});
+    if (!response.ok) return setFailed(true);
+    response = await post(suspendFormUrl, {email});
+    if (!response.ok) return setFailed(true);
+    try {
+      // Destroy throws an exception if the API is not successful
+      await destroy(destroySessionUrl);
+    } catch (e) {
+      return setFailed(true);
+    }
+    history.push('/');
   };
 
   const componentClassName = classNames(
@@ -90,7 +105,7 @@ const FormSaveModal = ({
           <Toolbar modifiers={['bottom', 'reverse']}>
             <ToolbarList>
               <Button type="submit" variant="primary">
-                <FormattedMessage description="Form save modal submit button" defaultMessage="Save Form" />
+                <FormattedMessage description="Form save modal submit button" defaultMessage="Save Form & Logout" />
               </Button>
             </ToolbarList>
           </Toolbar>
