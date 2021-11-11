@@ -20,12 +20,12 @@ import FormIOWrapper from 'components/FormIOWrapper';
 import FormStepDebug from 'components/FormStepDebug';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
-import Modal from 'components/Modal';
 import {ConfigContext, FormioTranslations} from 'Context';
 import LogoutButton from 'components/LogoutButton';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {findPreviousApplicableStep} from 'components/utils';
 import Types from 'types';
+import FormSaveModal from './modals/FormSaveModal';
 
 const DEBUG = process.env.NODE_ENV === 'development';
 
@@ -390,13 +390,10 @@ const FormStep = ({
           ) : null
         }
       </Card>
-
-      <Modal
+      <FormSaveModal
         isOpen={shouldFormSaveModalBeOpen}
         closeModal={closeFormSaveModal}
-      >
-        <p>I am in the modal</p>
-      </Modal>
+      />
     </>
   );
 };
