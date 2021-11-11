@@ -15,6 +15,10 @@
     background-color: rgba(255, 255, 255, 0.75);
   }
 
+  &__header {
+    margin-bottom: 10px;
+  }
+
   &__content {
     position: absolute;
     width: 50vw;

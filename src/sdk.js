@@ -18,6 +18,7 @@ import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
+import ReactModal from "react-modal";
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
@@ -66,6 +67,8 @@ class OpenForm {
     } catch (e) {
       console.error('Language module not available in flatpickr.');
     }
+
+    ReactModal.setAppElement(this.targetNode);
 
     const url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;

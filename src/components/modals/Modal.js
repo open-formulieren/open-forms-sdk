@@ -17,7 +17,7 @@ const Modal = ({ isOpen=false, title='', closeModal, children, contentModifiers=
         <ReactModal isOpen={isOpen} onRequestClose={closeModal} className={className} overlayClassName="react-modal__overlay">
             <header className="react-modal__header">
                 { title ? <h2 className="react-modal__title">{title}</h2> : null }
-                <FAIcon icon="close" extraClassname="fa-lg react-modal__close" title="Sluiten" onClick={closeModal} />
+                <FAIcon icon="close" modifiers={["lg"]} extraClassname="react-modal__close" title="Sluiten" onClick={closeModal} />
             </header>
             {children}
         </ReactModal>
