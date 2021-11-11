@@ -1,7 +1,7 @@
 /**
  * Render a single form step, as part of a started submission for a form.
  */
-import React, {useRef, useContext} from 'react';
+import React, {useRef, useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
@@ -20,6 +20,7 @@ import FormIOWrapper from 'components/FormIOWrapper';
 import FormStepDebug from 'components/FormStepDebug';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
+import Modal from 'components/Modal';
 import {ConfigContext, FormioTranslations} from 'Context';
 import LogoutButton from 'components/LogoutButton';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
@@ -127,6 +128,9 @@ const FormStep = ({
   const previouslyCheckedData = useRef(null); // to compare with the data to check and possibly skip the check at all
   const controller = useRef(new AbortController());
   const configurationRef = useRef(configuration);
+
+  const [shouldFormSaveModalBeOpen, setShouldFormSaveModalBeOpen] = useState(false);
+  const closeFormSaveModal = () => setShouldFormSaveModalBeOpen(false);
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
@@ -269,16 +273,10 @@ const FormStep = ({
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    const emailPromptMessage = intl.formatMessage(
-      {
-        description: 'email prompt message',
-        defaultMessage: 'Please enter your email address:'
-      }
-    );
-    const email = prompt(emailPromptMessage);
-    await submitStepData(submissionStep.url, data);
-    await post(`${submission.url}/_suspend`, {email});
-    onLogout(event);
+    setShouldFormSaveModalBeOpen(true);
+    // await submitStepData(submissionStep.url, data);
+    // await post(`${submission.url}/_suspend`, {email});
+    // onLogout(event);
   };
 
   const onPrevPage = (event) => {
@@ -331,66 +329,75 @@ const FormStep = ({
   };
 
   return (
-    <Card title={submissionStep.name}>
-      { loading ? <Loader modifiers={['centered']} /> : null }
+    <>
+      <Card title={submissionStep.name}>
+        { loading ? <Loader modifiers={['centered']} /> : null }
 
-      {
-        (!loading && configuration) ? (
-          <form onSubmit={onReactSubmit}>
-            <FormIOWrapper
-              ref={formRef}
-              form={configuration}
-              // Filter blank values so FormIO does not run validation on them
-              submission={{data: filterBlankValues(data)}}
-              onChange={onFormIOChange}
-              onSubmit={onFormIOSubmit}
-              options={{
-                noAlerts: true,
-                baseUrl: config.baseUrl,
-                language: formioTranslations.language,
-                i18n: formioTranslations.i18n,
-                hooks,
-                intl
-              }}
-            />
-            { DEBUG ? <FormStepDebug data={data} /> : null }
-            <LiteralsProvider literals={formStep.literals}>
-              <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
-                <ToolbarList>
-                  <Button
-                    variant="anchor"
-                    component="a"
-                    onClick={onPrevPage}
-                  ><Literal name="previousText"/></Button>
-                </ToolbarList>
-                <ToolbarList>
-                  {/* Hiding the Save button until the functionality is implemented */}
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    name="save"
-                    onClick={onFormSave}
-                  ><Literal name="saveText"/></Button>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    name="next"
-                    disabled={!canSubmit}
-                  >
-                    {
-                      logicChecking
-                      ? (<Loader modifiers={['centered', 'only-child', 'small']} />)
-                      : (<Literal name="nextText"/>)
-                    }
-                  </Button>
-                </ToolbarList>
-              </Toolbar>
-            </LiteralsProvider>
-            {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
-          </form>
-        ) : null
-      }
-    </Card>
+        {
+          (!loading && configuration) ? (
+            <form onSubmit={onReactSubmit}>
+              <FormIOWrapper
+                ref={formRef}
+                form={configuration}
+                // Filter blank values so FormIO does not run validation on them
+                submission={{data: filterBlankValues(data)}}
+                onChange={onFormIOChange}
+                onSubmit={onFormIOSubmit}
+                options={{
+                  noAlerts: true,
+                  baseUrl: config.baseUrl,
+                  language: formioTranslations.language,
+                  i18n: formioTranslations.i18n,
+                  hooks,
+                  intl
+                }}
+              />
+              { DEBUG ? <FormStepDebug data={data} /> : null }
+              <LiteralsProvider literals={formStep.literals}>
+                <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
+                  <ToolbarList>
+                    <Button
+                      variant="anchor"
+                      component="a"
+                      onClick={onPrevPage}
+                    ><Literal name="previousText"/></Button>
+                  </ToolbarList>
+                  <ToolbarList>
+                    {/* Hiding the Save button until the functionality is implemented */}
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      name="save"
+                      onClick={onFormSave}
+                    ><Literal name="saveText"/></Button>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      name="next"
+                      disabled={!canSubmit}
+                    >
+                      {
+                        logicChecking
+                        ? (<Loader modifiers={['centered', 'only-child', 'small']} />)
+                        : (<Literal name="nextText"/>)
+                      }
+                    </Button>
+                  </ToolbarList>
+                </Toolbar>
+              </LiteralsProvider>
+              {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
+            </form>
+          ) : null
+        }
+      </Card>
+
+      <Modal
+        isOpen={shouldFormSaveModalBeOpen}
+        closeModal={closeFormSaveModal}
+      >
+        <p>I am in the modal</p>
+      </Modal>
+    </>
   );
 };
 
