@@ -9,6 +9,7 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import { useImmerReducer } from 'use-immer';
 import useAsync from 'react-use/esm/useAsync';
+import _ from 'lodash';
 
 import hooks from '../formio/hooks';
 
@@ -299,7 +300,7 @@ const FormStep = ({
 
     dispatch({
       type: 'STEP_DATA_UPDATED',
-      payload: {...data},
+      payload: _.cloneDeep(data),
     });
   };
 
