@@ -24,7 +24,6 @@ FAIcon.propTypes = {
   modifiers: PropTypes.arrayOf(PropTypes.oneOf([
     'small',
     'normal',
-    'lg',
     'inline',
   ])),
   component: PropTypes.oneOfType([

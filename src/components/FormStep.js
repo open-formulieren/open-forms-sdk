@@ -25,7 +25,7 @@ import LogoutButton from 'components/LogoutButton';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {findPreviousApplicableStep} from 'components/utils';
 import Types from 'types';
-import FormSaveModal from './modals/FormSaveModal';
+import FormStepSaveModal from './modals/FormStepSaveModal';
 
 const DEBUG = process.env.NODE_ENV === 'development';
 
@@ -129,8 +129,8 @@ const FormStep = ({
   const controller = useRef(new AbortController());
   const configurationRef = useRef(configuration);
 
-  const [shouldFormSaveModalBeOpen, setShouldFormSaveModalBeOpen] = useState(false);
-  const closeFormSaveModal = () => setShouldFormSaveModalBeOpen(false);
+  const [shouldFormStepSaveModalBeOpen, setShouldFormStepSaveModalBeOpen] = useState(false);
+  const closeFormStepSaveModal = () => setShouldFormStepSaveModalBeOpen(false);
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
@@ -273,10 +273,7 @@ const FormStep = ({
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    setShouldFormSaveModalBeOpen(true);
-    // await submitStepData(submissionStep.url, data);
-    // await post(`${submission.url}/_suspend`, {email});
-    // onLogout(event);
+    setShouldFormStepSaveModalBeOpen(true);
   };
 
   const onPrevPage = (event) => {
@@ -390,9 +387,9 @@ const FormStep = ({
           ) : null
         }
       </Card>
-      <FormSaveModal
-        isOpen={shouldFormSaveModalBeOpen}
-        closeModal={closeFormSaveModal}
+      <FormStepSaveModal
+        isOpen={shouldFormStepSaveModalBeOpen}
+        closeModal={closeFormStepSaveModal}
         stepData={{...formData.current}}
         saveStepDataUrl={submissionStep.url}
         suspendFormUrl={`${submission.url}/_suspend`}

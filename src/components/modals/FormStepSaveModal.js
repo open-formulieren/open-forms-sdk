@@ -1,24 +1,23 @@
 /**
- * Render a single form step, as part of a started submission for a form.
+ * Display a modal to allow the user to save the form step in it's current state.
  */
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {useHistory} from 'react-router-dom';
+import {FormattedMessage} from 'react-intl';
+import {put, post, destroy} from 'api';
+import {getBEMClassName} from 'utils';
 import Modal from 'components/modals/Modal';
-import ErrorMessage from "../ErrorMessage";
-import {FormattedMessage} from "react-intl";
-import Body from "../Body";
-import ValidationErrors from "../ValidationErrors";
-import Label from "../Label";
-import Input from "../Input";
-import HelpText from "../HelpText";
-import {Toolbar, ToolbarList} from "../Toolbar";
-import Button from "../Button";
-import classNames from "classnames";
-import {getBEMClassName} from "../../utils";
-import {put, post, destroy} from "../../api";
-import {useHistory} from "react-router-dom";
+import ErrorMessage from 'components/ErrorMessage';
+import Body from 'components/Body';
+import Label from 'components/Label';
+import Input from 'components/Input';
+import HelpText from 'components/HelpText';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
+import Button from 'components/Button';
 
-const FormSaveModal = ({
+
+const FormStepSaveModal = ({
     isOpen,
     closeModal,
     stepData,
@@ -28,7 +27,6 @@ const FormSaveModal = ({
 }) => {
   const history = useHistory();
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState([]);
   const [failed, setFailed] = useState(false);
 
   const onSubmit = async (event) => {
@@ -45,11 +43,6 @@ const FormSaveModal = ({
     }
     history.push('/');
   };
-
-  const componentClassName = classNames(
-    getBEMClassName('form-control'),
-    {'formio-error-wrapper': errors.length > 0},
-  );
 
   return (
       <Modal
@@ -78,9 +71,7 @@ const FormSaveModal = ({
             />
           </Body>
 
-          <div className={componentClassName}>
-
-            <ValidationErrors errors={errors} />
+          <div className={getBEMClassName('form-control')}>
 
             <Label isRequired >
               <FormattedMessage
@@ -88,10 +79,7 @@ const FormSaveModal = ({
                 defaultMessage="Your email address" />
             </Label>
 
-            <Input type="email" value={email} onChange={event => {
-              setEmail(event.target.value);
-              setErrors([]);
-            }} />
+            <Input type="email" value={email} onChange={event => setEmail(event.target.value)} />
 
             <HelpText>
               <FormattedMessage
@@ -115,9 +103,13 @@ const FormSaveModal = ({
   );
 };
 
-FormSaveModal.propTypes = {
+FormStepSaveModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
+  stepData: PropTypes.object.isRequired,
+  saveStepDataUrl: PropTypes.string.isRequired,
+  suspendFormUrl: PropTypes.string.isRequired,
+  destroySessionUrl: PropTypes.string.isRequired,
 };
 
-export default FormSaveModal;
+export default FormStepSaveModal;
