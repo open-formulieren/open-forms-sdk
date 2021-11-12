@@ -1,8 +1,5 @@
 import { Formio } from 'react-formio';
 
-import { applyPrefix } from '../utils';
-
-
 /**
  * Extend the default button field to modify it to our needs.
  */

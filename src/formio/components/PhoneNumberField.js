@@ -1,5 +1,4 @@
 import {Formio} from "formiojs";
-import {applyPrefix} from "../utils";
 import enableValidationPlugins from "../validators/plugins";
 
 const PhoneNumber = Formio.Components.components.phoneNumber;

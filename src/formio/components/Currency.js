@@ -1,8 +1,6 @@
 import { Formio } from 'react-formio';
 import _ from 'lodash';
 
-import { applyPrefix } from '../utils';
-
 /**
  * Extend the default text field to modify it to our needs.
  */
