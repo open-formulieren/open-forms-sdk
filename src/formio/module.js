@@ -17,6 +17,7 @@ import PhoneNumberField from "./components/PhoneNumberField";
 import BsnField from "./components/BsnField";
 import FileField from "./components/FileField";
 import Map from "./components/Map";
+import PasswordField from "./components/Password";
 
 const FormIOModule = {
   components: {
@@ -39,6 +40,7 @@ const FormIOModule = {
     bsn: BsnField,
     file: FileField,
     map: Map,
+    password: PasswordField,
   },
 };
 

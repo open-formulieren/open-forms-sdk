@@ -145,6 +145,8 @@ export const getComponentValue = (inputValue, components, key, intl) => {
       }
       case 'map':
         return <Map markerCoordinates={inputValue} disabled />;
+      case 'password':
+        return Array.from(inputValue).map(() => '*').join('');
       default:
         return inputValue;
     }
