@@ -1,7 +1,5 @@
 import { Formio } from 'react-formio';
 
-import { applyPrefix } from '../utils';
-
 /**
  * Extend the default text field to modify it to our needs.
  */

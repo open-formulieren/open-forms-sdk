@@ -1,7 +1,5 @@
 import { Formio } from 'react-formio';
 
-import { applyPrefix } from '../utils';
-
 import enableValidationPlugins from "../validators/plugins";
 
 /**

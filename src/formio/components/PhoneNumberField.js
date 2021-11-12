@@ -1,5 +1,4 @@
 import {Formio} from "formiojs";
-import {applyPrefix} from "../utils";
 
 const PhoneNumber = Formio.Components.components.phoneNumber;
 

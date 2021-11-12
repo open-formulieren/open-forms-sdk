@@ -1,5 +1,4 @@
 import {Formio} from "react-formio";
-import {applyPrefix} from "../utils";
 import {electronicFormatIBAN, isValidIBAN} from "ibantools";
 
 const TextField = Formio.Components.components.textfield;
