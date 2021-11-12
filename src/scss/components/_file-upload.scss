@@ -148,9 +148,7 @@ we don't have strict BEM naming here.
 
   button[ref="takePictureButton"],
   button[ref="toggleCameraMode"] {
-    @extend .#{prefix('button')};
-    @extend .#{prefix('button--primary')};
-    display: inline-block;
+    @extend .utrecht-button;
     float: none;
     @include mobile-only {
       font-size: 90%;

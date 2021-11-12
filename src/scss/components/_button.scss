@@ -11,57 +11,12 @@ $button-line-height-px: math.div($button-line-height, ($button-line-height * 0 +
 $button-padding-v: math.div(($grid-row-height - $button-line-height-px), 2) - $typography-size-border;
 $button-padding-h: $grid-margin-2;
 
-@mixin button-theme($name, $color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
-  @if $name == '' {
-    @include button-style($color, $color-background, $color-border, $decorate-on-hover);
-  } @else {
-    &--#{$name} {
-      @include button-style($color, $color-background, $color-border, $decorate-on-hover);
-    }
-  }
-}
-
-@mixin button-style($color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
-  color: $color;
-  background-color: $color-background;
-  border-right-color: $color-border;
-  border-bottom-color: $color-border;
-
-  &:not([aria-disabled="true"]):hover {
-    background-color: scale_color($color-background, $lightness: -20%);
-    border-right-color: scale_color($color-border, $lightness: -20%);
-    border-bottom-color: scale_color($color-border, $lightness: -20%);
-
-    @if $decorate-on-hover {
-      @include anchor(true);
-    }
-  }
-
-  &:active {
-    color: scale_color($color, $lightness: -25%);
-    background-color: scale_color($color-background, $lightness: -25%);
-    border-top-color: scale_color($color-border, $lightness: -20%);
-    border-right-color: transparent;
-    border-left-color: scale_color($color-border, $lightness: -20%);
-    border-bottom-color: transparent;
-  }
-}
-
 .#{prefix(button)} {
-  @include body;
-  @include body--big;
-  @include border(all, $color: transparent, $size: 2px);
-  @include button-theme('', $typography-color-text, $color-background, $color-border);
-  @include button-theme('primary', $color-background, scale_color($color-primary, $lightness: 10%, $saturation: 0%), $color-primary);
-  @include button-theme('anchor', $typography-color-link, transparent, transparent, true);
-  @include button-theme('danger', scale_color($color-danger, $lightness: 90%), $color-danger, scale_color($color-danger, $lightness: -20%));
+  @extend .utrecht-button;
   appearance: none;
-  border-radius: 0;
   display: flex;
   align-items: center;
-  padding: $button-padding-v $button-padding-h;
   text-decoration: none;
-  float: left;
 
   @media print {
     display: none;
@@ -88,3 +43,4 @@ $button-padding-h: $grid-margin-2;
     margin-right: $button-padding-h;
   }
 }
+
