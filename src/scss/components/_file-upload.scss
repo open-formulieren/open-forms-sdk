@@ -108,9 +108,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
 
   button[ref="takePictureButton"],
   button[ref="toggleCameraMode"] {
-    @extend .#{prefix('button')};
-    @extend .#{prefix('button--primary')};
-    display: inline-block;
+    @extend .utrecht-button;
     float: none;
     @include mobile-only {
       font-size: 90%;
