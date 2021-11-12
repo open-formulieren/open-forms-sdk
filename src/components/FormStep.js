@@ -393,7 +393,7 @@ const FormStep = ({
       <FormSaveModal
         isOpen={shouldFormSaveModalBeOpen}
         closeModal={closeFormSaveModal}
-        stepData={data}
+        stepData={{...formData.current}}
         saveStepDataUrl={submissionStep.url}
         suspendFormUrl={`${submission.url}/_suspend`}
         destroySessionUrl={`${config.baseUrl}authentication/session`}

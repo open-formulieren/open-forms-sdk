@@ -33,7 +33,7 @@ const FormSaveModal = ({
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    let response = await put(saveStepDataUrl, {stepData});
+    let response = await put(saveStepDataUrl, {data: stepData});
     if (!response.ok) return setFailed(true);
     response = await post(suspendFormUrl, {email});
     if (!response.ok) return setFailed(true);
@@ -64,7 +64,7 @@ const FormSaveModal = ({
               <ErrorMessage>
                 <FormattedMessage
                   description="Form save modal error message"
-                  defaultMessage="Saving form failed"
+                  defaultMessage="Saving form failed.  Please try again."
                 />
               </ErrorMessage>
             )
@@ -74,7 +74,7 @@ const FormSaveModal = ({
           <Body modifiers={['big']}>
             <FormattedMessage
               description="Form save modal body text"
-              defaultMessage={"Enter your email address to get a email to resume the form at a later date"}
+              defaultMessage={"Enter your email address to get an email to resume the form at a later date"}
             />
           </Body>
 
