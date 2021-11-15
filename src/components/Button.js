@@ -21,6 +21,8 @@ const Button = ({ type="", component="button", variant="", children, ...extra })
 
     if (disabled) {
       props['aria-disabled'] = 'true';
+      // force the onClick handler to do nothing so we can't submit
+      props.onClick = (event) => event.preventDefault();
     }
 
     return (
@@ -37,5 +39,9 @@ Button.propTypes = {
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
 };
 
+// Example for disabled button:
+//
+// <Button type="submit" disabled={true} variant="primary">Disabled</Button>
+//
 
 export default Button;

@@ -16,8 +16,20 @@
     justify-content: center;
   }
 
+  @include modifier('only-child') {
+    margin-bottom: 0;
+  }
+
+  @include modifier('small') {
+    @include element('spinner') {
+      width: 15px;
+      height: 15px;
+      border-width: 4px;
+      border-top-width: 4px;
+    }
+  }
+
   @include element('spinner') {
-    margin-right: 20px;
     border: 6px solid $color-secondary;
     border-top: 6px solid $color-primary;
     border-radius: 50%;
