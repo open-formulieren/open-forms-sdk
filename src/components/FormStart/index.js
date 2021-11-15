@@ -115,6 +115,7 @@ const FormStart = ({ form, onFormStart }) => {
 
         <Toolbar modifiers={['start']}>
           <ToolbarList>
+            <Button type="submit" variant="primary" disabled>Test</Button>
             { form.loginRequired
               ? null
               : (
