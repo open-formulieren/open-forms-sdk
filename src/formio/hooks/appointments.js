@@ -25,12 +25,18 @@ const configureProductOptions = (component) => {
   if (!component.component.appointments.showProducts) return;
   // update the schema to add the data source to an API endpoint
   const url = `${component.options.baseUrl}appointments/products`;
+
+  // Set default value if one is present in query params
+  const urlParams = new URLSearchParams(window.location.search);
+  const defaultValue = urlParams.get('product');
+
   Object.assign(component.component, {
     dataSrc: 'url',
     data: {url, method: 'GET'},
     valueProperty: 'identifier',
     template: '{{ item.name }}',
     lazyLoad: false,
+    defaultValue,
   });
 };
 
