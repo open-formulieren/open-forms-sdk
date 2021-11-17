@@ -16,7 +16,7 @@ const TEMPLATE = `
 {% } %}
 
 {% if (ctx.component.description) { %}
-  <div class="${applyPrefix('help-text')}">{{ctx.t(ctx.component.description)}}</div>
+  <div class="utrecht-form-field-description utrecht-form-field-description--distanced ${applyPrefix('help-text')}">{{ctx.t(ctx.component.description)}}</div>
 {% } %}
 `;
 
