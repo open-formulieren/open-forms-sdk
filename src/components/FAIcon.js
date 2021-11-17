@@ -3,18 +3,15 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 
-const FAIcon = ({ icon, component: Component='span', extraClassname='', modifiers=[], ...props }) => {
+const FAIcon = ({ icon, component: Component='span', extraClassName='', modifiers=[], ...props }) => {
   let className = classNames(
     'fa',
     'fas',
     'fa-icon',
     `fa-${icon}`,
     ...modifiers.map(mod => `fa-icon--${mod}`),
+    extraClassName
   );
-
-  if (extraClassname) {
-    className += ` ${extraClassname}`;
-  }
 
   return (<Component className={className} {...props} />);
 };
@@ -30,7 +27,7 @@ FAIcon.propTypes = {
     PropTypes.string,
     PropTypes.elementType,
   ]),
-  extraClassname: PropTypes.string,
+  extraClassName: PropTypes.string,
 };
 
 

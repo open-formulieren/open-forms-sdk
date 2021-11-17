@@ -5,16 +5,17 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useHistory} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
+
 import {put, post, destroy} from 'api';
-import {getBEMClassName} from 'utils';
-import Modal from 'components/modals/Modal';
-import ErrorMessage from 'components/ErrorMessage';
 import Body from 'components/Body';
-import Label from 'components/Label';
-import Input from 'components/Input';
+import ErrorMessage from 'components/ErrorMessage';
 import HelpText from 'components/HelpText';
+import Label from 'components/Label';
+import Modal from 'components/modals/Modal';
+import Input from 'components/Input';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Button from 'components/Button';
+import {getBEMClassName} from 'utils';
 
 
 const FormStepSaveModal = ({
@@ -46,6 +47,10 @@ const FormStepSaveModal = ({
 
   return (
       <Modal
+        title={<FormattedMessage
+                  description="Form Save Modal Title"
+                  defaultMessage="Form Save"
+                />}
         isOpen={isOpen}
         closeModal={closeModal}
       >
@@ -67,7 +72,7 @@ const FormStepSaveModal = ({
           <Body modifiers={['big']}>
             <FormattedMessage
               description="Form save modal body text"
-              defaultMessage={"Enter your email address to get an email to resume the form at a later date"}
+              defaultMessage="Enter your email address to get an email to resume the form at a later date"
             />
           </Body>
 

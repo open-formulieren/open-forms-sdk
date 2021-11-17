@@ -18,7 +18,7 @@ import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
-import ReactModal from "react-modal";
+import ReactModal from 'react-modal';
 
 // use custom component overrides
 Formio.use(OpenFormsModule);

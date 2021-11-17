@@ -1,7 +1,7 @@
 /**
  * Render a single form step, as part of a started submission for a form.
  */
-import React, {useRef, useContext, useState} from 'react';
+import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
@@ -57,6 +57,7 @@ const initialState = {
   data: null,
   canSubmit: false,
   logicChecking: false,
+  isFormSaveModalOpen: false,
 };
 
 const reducer = (draft, action) => {
@@ -92,6 +93,12 @@ const reducer = (draft, action) => {
       draft.logicChecking = false;
       break;
     }
+    case 'OPEN_FORM_SAVE_MODAL':
+      draft.isFormSaveModalOpen = true;
+      break;
+    case 'CLOSE_FORM_SAVE_MODAL':
+      draft.isFormSaveModalOpen = false;
+      break;
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -112,7 +119,7 @@ const FormStep = ({
   /* component state */
   const formRef = useRef(null);
   const [
-    {configuration, data, canSubmit, logicChecking},
+    {configuration, data, canSubmit, logicChecking, isFormSaveModalOpen},
     dispatch
   ] = useImmerReducer(reducer, initialState);
 
@@ -129,8 +136,7 @@ const FormStep = ({
   const controller = useRef(new AbortController());
   const configurationRef = useRef(configuration);
 
-  const [shouldFormStepSaveModalBeOpen, setShouldFormStepSaveModalBeOpen] = useState(false);
-  const closeFormStepSaveModal = () => setShouldFormStepSaveModalBeOpen(false);
+  const closeFormStepSaveModal = () => dispatch({type: 'CLOSE_FORM_SAVE_MODAL'})
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
@@ -273,7 +279,7 @@ const FormStep = ({
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    setShouldFormStepSaveModalBeOpen(true);
+    dispatch({type: 'OPEN_FORM_SAVE_MODAL'});
   };
 
   const onPrevPage = (event) => {
@@ -388,7 +394,7 @@ const FormStep = ({
         }
       </Card>
       <FormStepSaveModal
-        isOpen={shouldFormStepSaveModalBeOpen}
+        isOpen={isFormSaveModalOpen}
         closeModal={closeFormStepSaveModal}
         stepData={{...formData.current}}
         saveStepDataUrl={submissionStep.url}

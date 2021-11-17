@@ -4,6 +4,7 @@ import ReactModal from 'react-modal';
 import classNames from 'classnames';
 
 import FAIcon from 'components/FAIcon';
+import {FormattedMessage} from "react-intl";
 
 const CONTENT_CLASS_NAME = 'react-modal__content';
 
@@ -17,7 +18,15 @@ const Modal = ({ isOpen=false, title='', closeModal, children, contentModifiers=
         <ReactModal isOpen={isOpen} onRequestClose={closeModal} className={className} overlayClassName="react-modal__overlay">
             <header className="react-modal__header">
                 { title ? <h2 className="react-modal__title">{title}</h2> : null }
-                <FAIcon icon="close" extraClassname="react-modal__close" title="Sluiten" onClick={closeModal} />
+              <FAIcon
+                icon="close"
+                extraClassName="react-modal__close"
+                title={<FormattedMessage
+                  description="Modal close icon title"
+                  defaultMessage="Close"
+                />}
+                onClick={closeModal}
+              />
             </header>
             {children}
         </ReactModal>
