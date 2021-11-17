@@ -399,7 +399,6 @@ const FormStep = ({
         stepData={{...formData.current}}
         saveStepDataUrl={submissionStep.url}
         suspendFormUrl={`${submission.url}/_suspend`}
-        destroySessionUrl={`${config.baseUrl}authentication/session`}
       />
     </>
   );
