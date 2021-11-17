@@ -5,9 +5,6 @@
 @import '~@utrecht/component-library-css/dist/bem';
 
 .#{prefix(help-text)} {
-  @extend .utrecht-form-field-description ;
-  @extend .utrecht-form-field-description--distanced;
-
   border: var(--openforms-input-description-border);
   background-color: var(--openforms-input-description-background-color);
   padding: var(--openforms-input-description-padding, 0 0 0 1rem);
