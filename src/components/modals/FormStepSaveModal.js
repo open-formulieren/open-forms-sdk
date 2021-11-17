@@ -1,12 +1,13 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useHistory} from 'react-router-dom';
-import {FormattedMessage} from 'react-intl';
+import {useIntl, FormattedMessage} from 'react-intl';
 
 import {put, post, destroy} from 'api';
+import { ConfigContext } from 'Context';
 import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
 import HelpText from 'components/HelpText';
@@ -16,6 +17,39 @@ import Input from 'components/Input';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Button from 'components/Button';
 import {getBEMClassName} from 'utils';
+import {useImmerReducer} from "use-immer";
+import Loader from "../Loader";
+
+
+const initialState = {
+  email: "",
+  errorMessage: "",
+  isSaving: false,
+};
+
+const reducer = (draft, action) => {
+  switch(action.type) {
+    case 'SET_EMAIL': {
+      draft.email = action.payload;
+      break;
+    }
+    case 'SET_ERROR_MESSAGE': {
+      draft.errorMessage = action.payload;
+      break;
+    }
+    case 'SET_IS_SAVING_TRUE': {
+      draft.isSaving = true;
+      break;
+    }
+    case 'SET_IS_SAVING_FALSE': {
+      draft.isSaving = false;
+      break;
+    }
+    default: {
+      throw new Error(`Unknown action ${action.type}`);
+    }
+  }
+};
 
 
 const FormStepSaveModal = ({
@@ -24,24 +58,62 @@ const FormStepSaveModal = ({
     stepData,
     saveStepDataUrl,
     suspendFormUrl,
-    destroySessionUrl,
 }) => {
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [failed, setFailed] = useState(false);
+  const intl = useIntl();
+  const config = useContext(ConfigContext);
+
+  // const [email, setEmail] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
+
+  const [
+    {email, errorMessage, isSaving},
+    dispatch
+  ] = useImmerReducer(reducer, initialState);
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    dispatch({type: 'SET_IS_SAVING_TRUE'});
+    dispatch({type: 'SET_ERROR_MESSAGE', payload: ''});
     let response = await put(saveStepDataUrl, {data: stepData});
-    if (!response.ok) return setFailed(true);
+    if (!response.ok) {
+      dispatch({
+        type: 'SET_ERROR_MESSAGE',
+        payload: intl.formatMessage({
+          description: "Modal saving data failed message",
+          defaultMessage: "Saving the data failed, please try again later"
+        })
+      });
+      dispatch({type: 'SET_IS_SAVING_FALSE'});
+      return;
+    }
     response = await post(suspendFormUrl, {email});
-    if (!response.ok) return setFailed(true);
+    if (!response.ok){
+      dispatch({
+        type: 'SET_ERROR_MESSAGE',
+        payload: intl.formatMessage({
+          description: "Modal suspending form failed message",
+          defaultMessage: "Suspending the form failed, please try again later"
+        })
+      });
+      dispatch({type: 'SET_IS_SAVING_FALSE'});
+      return;
+    }
     try {
       // Destroy throws an exception if the API is not successful
-      await destroy(destroySessionUrl);
+      await destroy(`${config.baseUrl}authentication/session`);
     } catch (e) {
-      return setFailed(true);
+      dispatch({
+        type: 'SET_ERROR_MESSAGE',
+        payload: intl.formatMessage({
+          description: "Modal logging out failed message",
+          defaultMessage: "Logging out failed, please try again later"
+        })
+      });
+      dispatch({type: 'SET_IS_SAVING_FALSE'});
+      return;
     }
+    dispatch({type: 'SET_IS_SAVING_FALSE'});
     history.push('/');
   };
 
@@ -56,18 +128,9 @@ const FormStepSaveModal = ({
       >
         <Body component="form" onSubmit={onSubmit}>
 
-          {
-            failed
-            ? (
-              <ErrorMessage>
-                <FormattedMessage
-                  description="Form save modal error message"
-                  defaultMessage="Saving form failed.  Please try again."
-                />
-              </ErrorMessage>
-            )
-            : null
-          }
+          {isSaving ? <Loader modifiers={['centered']} /> : null}
+
+          {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 
           <Body modifiers={['big']}>
             <FormattedMessage
@@ -84,7 +147,12 @@ const FormStepSaveModal = ({
                 defaultMessage="Your email address" />
             </Label>
 
-            <Input type="email" value={email} onChange={event => setEmail(event.target.value)} />
+            <Input type="email" value={email} onChange={event => {
+              dispatch({
+                type: 'SET_EMAIL',
+                payload: event.target.value
+              });
+            }} />
 
             <HelpText>
               <FormattedMessage
@@ -97,7 +165,7 @@ const FormStepSaveModal = ({
 
           <Toolbar modifiers={['bottom', 'reverse']}>
             <ToolbarList>
-              <Button type="submit" variant="primary">
+              <Button type="submit" variant="primary" disabled={isSaving}>
                 <FormattedMessage description="Form save modal submit button" defaultMessage="Save Form & Logout" />
               </Button>
             </ToolbarList>
@@ -114,7 +182,6 @@ FormStepSaveModal.propTypes = {
   stepData: PropTypes.object.isRequired,
   saveStepDataUrl: PropTypes.string.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
-  destroySessionUrl: PropTypes.string.isRequired,
 };
 
 export default FormStepSaveModal;
