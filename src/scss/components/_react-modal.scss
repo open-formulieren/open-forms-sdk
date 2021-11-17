@@ -1,4 +1,6 @@
-.react-modal {
+@import '../mixins/prefix';
+
+.#{prefix(react-modal)} {
 
   &__overlay {
     display: flex;

@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
-import classNames from 'classnames';
 
 import FAIcon from 'components/FAIcon';
 import {FormattedMessage} from "react-intl";
-
-const CONTENT_CLASS_NAME = 'react-modal__content';
+import {getBEMClassName} from "../../utils";
 
 const Modal = ({ isOpen=false, title='', closeModal, children, contentModifiers=[] }) => {
-    const modifiedClassNames = contentModifiers.map(modifier => `${CONTENT_CLASS_NAME}--${modifier}`);
-    const className = classNames(
-        CONTENT_CLASS_NAME,
-        ...modifiedClassNames
-    );
     return (
-        <ReactModal isOpen={isOpen} onRequestClose={closeModal} className={className} overlayClassName="react-modal__overlay">
-            <header className="react-modal__header">
-                { title ? <h2 className="react-modal__title">{title}</h2> : null }
+        <ReactModal
+          isOpen={isOpen}
+          onRequestClose={closeModal}
+          className={getBEMClassName('react-modal__content', contentModifiers)}
+          overlayClassName={getBEMClassName("react-modal__overlay")}
+        >
+            <header className={getBEMClassName("react-modal__header")}>
+                { title ? <h2 className={getBEMClassName("react-modal__title")}>{title}</h2> : null }
               <FAIcon
                 icon="close"
-                extraClassName="react-modal__close"
+                extraClassName={getBEMClassName("react-modal__close")}
                 title={<FormattedMessage
                   description="Modal close icon title"
                   defaultMessage="Close"
