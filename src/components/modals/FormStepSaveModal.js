@@ -7,7 +7,7 @@ import {useHistory} from 'react-router-dom';
 import {useIntl, FormattedMessage} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
 
-import {put, post, destroy} from 'api';
+import {post, destroy} from 'api';
 import { ConfigContext } from 'Context';
 import Body from 'components/Body';
 import Button from 'components/Button';
@@ -57,8 +57,7 @@ const reducer = (draft, action) => {
 const FormStepSaveModal = ({
     isOpen,
     closeModal,
-    stepData,
-    saveStepDataUrl,
+    onSaveConfirm,
     suspendFormUrl,
 }) => {
   const history = useHistory();
@@ -75,8 +74,8 @@ const FormStepSaveModal = ({
 
     dispatch({type: 'START_SAVE'});
 
-    let response = await put(saveStepDataUrl, {data: stepData});
-    if (!response.ok) {
+    const saveResponse = await onSaveConfirm();
+    if (!saveResponse.ok) {
       dispatch({
         type: 'API_ERROR',
         payload: {
@@ -88,8 +87,8 @@ const FormStepSaveModal = ({
       });
       return;
     }
-    response = await post(suspendFormUrl, {email});
-    if (!response.ok){
+    const suspendResponse = await post(suspendFormUrl, {email});
+    if (!suspendResponse.ok){
       dispatch({
         type: 'API_ERROR',
         payload: {
@@ -184,8 +183,7 @@ const FormStepSaveModal = ({
 FormStepSaveModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  stepData: PropTypes.object.isRequired,
-  saveStepDataUrl: PropTypes.string.isRequired,
+  onSaveConfirm: PropTypes.func.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
 };
 

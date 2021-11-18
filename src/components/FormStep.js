@@ -33,7 +33,7 @@ const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
-  return stepDataResponse.data;
+  return stepDataResponse;
 };
 
 const doLogicCheck = async (stepUrl, data, signal) => {
@@ -276,6 +276,11 @@ const FormStep = ({
     formInstance.submit();
   };
 
+  const onSaveConfirm = async () => {
+    const response = await submitStepData(submissionStep.url, {...formData.current});
+    return response;
+  };
+
   const onFormSave = async (event) => {
     event.preventDefault();
     dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: true}});
@@ -394,8 +399,7 @@ const FormStep = ({
       <FormStepSaveModal
         isOpen={isFormSaveModalOpen}
         closeModal={closeFormStepSaveModal}
-        stepData={{...formData.current}}
-        saveStepDataUrl={submissionStep.url}
+        onSaveConfirm={onSaveConfirm}
         suspendFormUrl={`${submission.url}/_suspend`}
       />
     </>
