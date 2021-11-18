@@ -1,6 +1,7 @@
 import {Formio} from 'react-formio';
-import {getBEMClassName} from '../../utils';
+
 import MinMaxTimeValidator from 'formio/validators/MinMaxTimeValidator';
+import {getBEMClassName} from 'utils';
 
 const Time = Formio.Components.components.time;
 

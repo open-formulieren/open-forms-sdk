@@ -1,10 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
-import {Formio} from "react-formio";
-import {iban, twoComponentForm} from './fixtures/iban';
-import OpenFormsModule from "../../../formio/module";
+import {Formio} from 'react-formio';
 
-jest.mock("../../../map/rd", () => jest.fn());
+import OpenFormsModule from 'formio/module';
+import {iban, twoComponentForm} from './fixtures/iban';
+
 
 // Use our custom components
 Formio.use(OpenFormsModule);

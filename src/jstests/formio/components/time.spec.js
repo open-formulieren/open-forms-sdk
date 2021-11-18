@@ -1,10 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import {Formio} from 'react-formio';
-import {timeForm} from './fixtures/time';
-import OpenFormsModule from '../../../formio/module';
 
-jest.mock('../../../map/rd', () => jest.fn());
+import OpenFormsModule from 'formio/module';
+import {timeForm} from './fixtures/time';
 
 // Use our custom components
 Formio.use(OpenFormsModule);
