@@ -93,12 +93,11 @@ const reducer = (draft, action) => {
       draft.logicChecking = false;
       break;
     }
-    case 'OPEN_FORM_SAVE_MODAL':
-      draft.isFormSaveModalOpen = true;
+    case 'TOGGLE_FORM_SAVE_MODAL': {
+      const {open} = action.payload;
+      draft.isFormSaveModalOpen = open;
       break;
-    case 'CLOSE_FORM_SAVE_MODAL':
-      draft.isFormSaveModalOpen = false;
-      break;
+    }
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -136,7 +135,7 @@ const FormStep = ({
   const controller = useRef(new AbortController());
   const configurationRef = useRef(configuration);
 
-  const closeFormStepSaveModal = () => dispatch({type: 'CLOSE_FORM_SAVE_MODAL'})
+  const closeFormStepSaveModal = () => dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: false}});
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
@@ -279,7 +278,7 @@ const FormStep = ({
 
   const onFormSave = async (event) => {
     event.preventDefault();
-    dispatch({type: 'OPEN_FORM_SAVE_MODAL'});
+    dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: true}});
   };
 
   const onPrevPage = (event) => {

@@ -33,17 +33,19 @@ const reducer = (draft, action) => {
       draft.email = action.payload;
       break;
     }
-    case 'SET_ERROR_MESSAGE': {
-      draft.errorMessage = action.payload;
-      break;
-    }
-    case 'SET_IS_SAVING_TRUE': {
+    case 'START_SAVE': {
+      draft.errorMessage = '';
       draft.isSaving = true;
       break;
     }
-    case 'SET_IS_SAVING_FALSE': {
+    case 'API_ERROR': {
+      const {feedback} = action.payload;
+      draft.errorMessage = feedback;
       draft.isSaving = false;
       break;
+    }
+    case 'SAVE_SUCCEEDED': {
+      return initialState;
     }
     default: {
       throw new Error(`Unknown action ${action.type}`);
@@ -70,30 +72,33 @@ const FormStepSaveModal = ({
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    dispatch({type: 'SET_IS_SAVING_TRUE'});
-    dispatch({type: 'SET_ERROR_MESSAGE', payload: ''});
+
+    dispatch({type: 'START_SAVE'});
+
     let response = await put(saveStepDataUrl, {data: stepData});
     if (!response.ok) {
       dispatch({
-        type: 'SET_ERROR_MESSAGE',
-        payload: intl.formatMessage({
-          description: "Modal saving data failed message",
-          defaultMessage: "Saving the data failed, please try again later"
-        })
+        type: 'API_ERROR',
+        payload: {
+          feedback: intl.formatMessage({
+            description: "Modal saving data failed message",
+            defaultMessage: "Saving the data failed, please try again later"
+          }),
+        },
       });
-      dispatch({type: 'SET_IS_SAVING_FALSE'});
       return;
     }
     response = await post(suspendFormUrl, {email});
     if (!response.ok){
       dispatch({
-        type: 'SET_ERROR_MESSAGE',
-        payload: intl.formatMessage({
-          description: "Modal suspending form failed message",
-          defaultMessage: "Suspending the form failed, please try again later"
-        })
+        type: 'API_ERROR',
+        payload: {
+          feedback: intl.formatMessage({
+            description: "Modal suspending form failed message",
+            defaultMessage: "Suspending the form failed, please try again later"
+          }),
+        },
       });
-      dispatch({type: 'SET_IS_SAVING_FALSE'});
       return;
     }
     try {
@@ -101,16 +106,19 @@ const FormStepSaveModal = ({
       await destroy(`${config.baseUrl}authentication/session`);
     } catch (e) {
       dispatch({
-        type: 'SET_ERROR_MESSAGE',
-        payload: intl.formatMessage({
-          description: "Modal logging out failed message",
-          defaultMessage: "Logging out failed, please try again later"
-        })
+        type: 'API_ERROR',
+        payload: {
+          feedback: intl.formatMessage({
+            description: "Modal logging out failed message",
+            defaultMessage: "Logging out failed, please try again later"
+          }),
+        },
       });
-      dispatch({type: 'SET_IS_SAVING_FALSE'});
       return;
     }
-    dispatch({type: 'SET_IS_SAVING_FALSE'});
+
+    // redirect back to start page
+    dispatch({type: 'SAVE_SUCCEEDED'});
     history.push('/');
   };
 
