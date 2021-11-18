@@ -1,15 +1,17 @@
-import {Formio} from "react-formio";
+import {Formio} from 'react-formio';
 import {getBEMClassName} from '../../utils';
+import MinMaxTimeValidator from 'formio/validators/MinMaxTimeValidator';
 
 const Time = Formio.Components.components.time;
 
 
 class TimeField extends Time {
-  static schema(...extend) {
-    return Time.schema({
-      inputType: 'text',
-      format: 'HH:mm',
-    }, ...extend);
+  constructor(component, options, data) {
+    super(component, options, data);
+
+    this.validator.validators['timeMinMax'] = MinMaxTimeValidator;
+    this.validators.push('time');
+    this.validators.push('timeMinMax');
   }
 
   get suffix() {
