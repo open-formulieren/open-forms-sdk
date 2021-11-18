@@ -29,10 +29,20 @@
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
+  "9uYT9K": {
+    "defaultMessage": "Save and logout",
+    "description": "Form save modal submit button",
+    "originalDefault": "Save and logout"
+  },
   "AxDC+M": {
     "defaultMessage": "Login with {provider}",
     "description": "Login button label",
     "originalDefault": "Login with {provider}"
+  },
+  "Cd5WGC": {
+    "defaultMessage": "Enter your email address to get an email to resume the form at a later date",
+    "description": "Form save modal body text",
+    "originalDefault": "Enter your email address to get an email to resume the form at a later date"
   },
   "CvRUHm": {
     "defaultMessage": "This form is currently undergoing maintenance and can not be accessed at the moment.",
@@ -54,15 +64,35 @@
     "description": "Download report PDF link title",
     "originalDefault": "Download PDF"
   },
+  "GpGYMo": {
+    "defaultMessage": "Saving the data failed, please try again later",
+    "description": "Modal saving data failed message",
+    "originalDefault": "Saving the data failed, please try again later"
+  },
   "HGx1ny": {
     "defaultMessage": "Cancel appointment",
     "description": "Cancel appointment title",
     "originalDefault": "Cancel appointment"
   },
+  "HhcSoc": {
+    "defaultMessage": "Save and resume later",
+    "description": "Form save modal title",
+    "originalDefault": "Save and resume later"
+  },
+  "J9svUq": {
+    "defaultMessage": "Close",
+    "description": "Modal close icon title",
+    "originalDefault": "Close"
+  },
   "JB/IBw": {
     "defaultMessage": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email.",
     "description": "payment failed status",
     "originalDefault": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
+  },
+  "Jrb2Iv": {
+    "defaultMessage": "Your email address",
+    "description": "Form save modal email field label",
+    "originalDefault": "Your email address"
   },
   "LEeGSv": {
     "defaultMessage": "{isApplicable, select, false {{label} (n/a)} other {{label}} }",
@@ -159,10 +189,20 @@
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
+  "iubnaw": {
+    "defaultMessage": "The email address where you will receive the resume link.",
+    "description": "Form save modal email field help text",
+    "originalDefault": "The email address where you will receive the resume link."
+  },
   "jYh8Nr": {
     "defaultMessage": "Your appointment has been cancelled",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
+  },
+  "r1L6Zj": {
+    "defaultMessage": "Suspending the form failed, please try again later",
+    "description": "Modal suspending form failed message",
+    "originalDefault": "Suspending the form failed, please try again later"
   },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
@@ -173,6 +213,11 @@
     "defaultMessage": "We can't display any payment information - did you maybe get here by accident?",
     "description": "Payment overview missing state error message",
     "originalDefault": "We can't display any payment information - did you maybe get here by accident?"
+  },
+  "tUgRfj": {
+    "defaultMessage": "Logging out failed, please try again later",
+    "description": "Modal logging out failed message",
+    "originalDefault": "Logging out failed, please try again later"
   },
   "tohkCS": {
     "defaultMessage": "The email address where you received the appointment confirmation email.",

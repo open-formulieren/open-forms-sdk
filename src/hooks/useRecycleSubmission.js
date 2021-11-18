@@ -6,11 +6,18 @@ import useAsync from 'react-use/esm/useAsync';
 
 import {apiCall} from 'api';
 import {ConfigContext} from 'Context';
+import useQuery from 'hooks/useQuery';
 
 const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded) => {
   const location = useLocation();
   const config = useContext(ConfigContext);
-  const [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
+  const queryParams = useQuery();
+  let [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
+
+  // If no submissionID is in the localStorage see if one can be retrieved from the query param
+  if (!submissionId) {
+      submissionId = queryParams.get('submission_uuid');
+  }
 
   const url = submissionId ? `${config.baseUrl}submissions/${submissionId}` : null;
 

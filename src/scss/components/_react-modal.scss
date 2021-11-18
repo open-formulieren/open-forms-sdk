@@ -1,0 +1,77 @@
+@use "sass:math" as math;
+
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+@import '~microscope-sass/lib/responsive';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+$modal-z-index: var(--of-modal-zindex, 1000) !default;
+$modal-overlay-background: var(--of-modal-overlay-background, rgba(255, 255, 255, 0.75)) !default;
+$modal-background: var(--of-modal-background, white);
+$modal-padding: $grid-margin-8 !default;
+$modal-close-icon-offset: math.div($modal-padding, 2) !default;
+
+// We can't use the `element` and `modifier` mixins since react-modal does not apply
+// the strict classnames
+
+.#{prefix(react-modal)} {
+
+  &__overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &, * {
+      box-sizing: border-box;
+    }
+
+    position: fixed;
+    z-index: $modal-z-index;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-color: $modal-overlay-background;
+  }
+
+  &__header {
+    @include margin(auto, $properties: margin-bottom);
+  }
+
+  &__content {
+    @include margin($modal-padding, $properties: padding);
+    position: absolute;
+    background: $modal-background;
+    border: solid 1px #eee;
+    outline: none;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%),
+                0 6px 20px 0 rgb(0 0 0 / 20%);
+
+    @include responsive(width, $value-mobile: 90vw, $value-tablet: null, $value-laptop: 50vw);
+    @include responsive(min-height, $value-mobile: 20vh, $value-tablet: null, $value-laptop: 30vh);
+    @include responsive(max-height, $value-mobile: 90vh, $value-tablet: null, $value-laptop: 50vw);
+    height: auto;
+    overflow: auto;
+  }
+
+  &__close {
+    position: absolute;
+    top: $modal-close-icon-offset;
+    right: $modal-close-icon-offset;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 150%;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__title {
+    // extend generic title component
+    @extend .#{prefix(title)};
+  }
+}

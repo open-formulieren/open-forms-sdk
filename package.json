@@ -67,6 +67,7 @@
     "react-formio": "^4.3.0",
     "react-intl": "^5.20.5",
     "react-leaflet": "^3.2.2",
+    "react-modal": "3.14.3",
     "react-refresh": "^0.8.3",
     "react-router-dom": "^5.2.0",
     "react-use": "^17.2.4",
