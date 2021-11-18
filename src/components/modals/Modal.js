@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import {FormattedMessage} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
+
+const usePreventScroll = (open) => {
+  useEffect(() => {
+      if (open) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'unset';
+      }
+      return () => {
+        document.body.style.overflow = 'unset';
+      }
+    }, [open]);
+};
 
 const Modal = ({
   isOpen=false,
@@ -14,6 +27,7 @@ const Modal = ({
   contentModifiers=[],
   children,
 }) => {
+    usePreventScroll(isOpen);
     return (
         <ReactModal
           isOpen={isOpen}

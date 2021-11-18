@@ -2,6 +2,7 @@
 
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
+@import '~microscope-sass/lib/responsive';
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
@@ -21,6 +22,10 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &, * {
+      box-sizing: border-box;
+    }
 
     position: fixed;
     z-index: $modal-z-index;
@@ -45,8 +50,10 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%),
                 0 6px 20px 0 rgb(0 0 0 / 20%);
 
-    width: 50vw;
-    height: 50vh;
+    @include responsive(width, $value-mobile: 90vw, $value-tablet: null, $value-laptop: 50vw);
+    @include responsive(min-height, $value-mobile: 20vh, $value-tablet: null, $value-laptop: 30vh);
+    @include responsive(max-height, $value-mobile: 90vh, $value-tablet: null, $value-laptop: 50vw);
+    height: auto;
     overflow: auto;
   }
 
