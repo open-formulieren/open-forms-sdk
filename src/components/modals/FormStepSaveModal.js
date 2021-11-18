@@ -124,8 +124,8 @@ const FormStepSaveModal = ({
   return (
       <Modal
         title={<FormattedMessage
-                  description="Form Save Modal Title"
-                  defaultMessage="Form Save"
+                  description="Form save modal title"
+                  defaultMessage="Save and resume later"
                 />}
         isOpen={isOpen}
         closeModal={closeModal}
@@ -161,7 +161,7 @@ const FormStepSaveModal = ({
             <HelpText>
               <FormattedMessage
                 description="Form save modal email field help text"
-                defaultMessage="The email address where you will received the email about resuming the form."
+                defaultMessage="The email address where you will receive the resume link."
               />
             </HelpText>
 
@@ -170,7 +170,7 @@ const FormStepSaveModal = ({
           <Toolbar modifiers={['bottom', 'reverse']}>
             <ToolbarList>
               <Button type="submit" variant="primary" disabled={isSaving}>
-                <FormattedMessage description="Form save modal submit button" defaultMessage="Save Form & Logout" />
+                <FormattedMessage description="Form save modal submit button" defaultMessage="Save and logout" />
               </Button>
             </ToolbarList>
           </Toolbar>

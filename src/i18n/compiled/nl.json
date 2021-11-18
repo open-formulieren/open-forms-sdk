@@ -35,6 +35,12 @@
       "value": "Afspraak geannuleerd"
     }
   ],
+  "9uYT9K": [
+    {
+      "type": 0,
+      "value": "Save and logout"
+    }
+  ],
   "AxDC+M": [
     {
       "type": 0,
@@ -43,6 +49,12 @@
     {
       "type": 1,
       "value": "provider"
+    }
+  ],
+  "Cd5WGC": [
+    {
+      "type": 0,
+      "value": "Enter your email address to get an email to resume the form at a later date"
     }
   ],
   "CvRUHm": [
@@ -77,16 +89,40 @@
       "value": "Download uw inzending als PDF document"
     }
   ],
+  "GpGYMo": [
+    {
+      "type": 0,
+      "value": "Saving the data failed, please try again later"
+    }
+  ],
   "HGx1ny": [
     {
       "type": 0,
       "value": "Afspraak annuleren"
     }
   ],
+  "HhcSoc": [
+    {
+      "type": 0,
+      "value": "Save and resume later"
+    }
+  ],
+  "J9svUq": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
   "JB/IBw": [
     {
       "type": 0,
       "value": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
+    }
+  ],
+  "Jrb2Iv": [
+    {
+      "type": 0,
+      "value": "Your email address"
     }
   ],
   "LEeGSv": [
@@ -249,10 +285,22 @@
       "value": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
     }
   ],
+  "iubnaw": [
+    {
+      "type": 0,
+      "value": "The email address where you will receive the resume link."
+    }
+  ],
   "jYh8Nr": [
     {
       "type": 0,
       "value": "Uw afspraak is geannuleerd"
+    }
+  ],
+  "r1L6Zj": [
+    {
+      "type": 0,
+      "value": "Suspending the form failed, please try again later"
     }
   ],
   "senRv3": [
@@ -293,6 +341,12 @@
     {
       "type": 0,
       "value": "We can't display any payment information - did you maybe get here by accident?"
+    }
+  ],
+  "tUgRfj": [
+    {
+      "type": 0,
+      "value": "Logging out failed, please try again later"
     }
   ],
   "tohkCS": [
