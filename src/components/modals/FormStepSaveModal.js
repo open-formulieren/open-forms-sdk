@@ -71,6 +71,7 @@ const FormStepSaveModal = ({
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    if (isSaving) return;
 
     dispatch({type: 'START_SAVE'});
 
@@ -170,7 +171,7 @@ const FormStepSaveModal = ({
           <Toolbar modifiers={['bottom', 'reverse']}>
             <ToolbarList>
               <Button type="submit" variant="primary" disabled={isSaving}>
-                <FormattedMessage description="Form save modal submit button" defaultMessage="Save and logout" />
+                <FormattedMessage description="Form save modal submit button" defaultMessage="Confirm" />
               </Button>
             </ToolbarList>
           </Toolbar>

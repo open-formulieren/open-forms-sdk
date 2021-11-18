@@ -6,7 +6,14 @@ import {FormattedMessage} from 'react-intl';
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
 
-const Modal = ({ isOpen=false, title='', closeModal, children, contentModifiers=[] }) => {
+const Modal = ({
+  isOpen=false,
+  title='',
+  titleComponent: Title = 'h2',
+  closeModal,
+  contentModifiers=[],
+  children,
+}) => {
     return (
         <ReactModal
           isOpen={isOpen}
@@ -15,7 +22,7 @@ const Modal = ({ isOpen=false, title='', closeModal, children, contentModifiers=
           overlayClassName={getBEMClassName("react-modal__overlay")}
         >
             <header className={getBEMClassName("react-modal__header")}>
-                { title ? <h2 className={getBEMClassName("react-modal__title")}>{title}</h2> : null }
+                { title ? <Title className={getBEMClassName("react-modal__title")}>{title}</Title> : null }
               <FAIcon
                 icon="close"
                 extraClassName={getBEMClassName("react-modal__close")}
@@ -35,6 +42,7 @@ const Modal = ({ isOpen=false, title='', closeModal, children, contentModifiers=
 Modal.propTypes = {
     isOpen: PropTypes.bool,
     title: PropTypes.node,
+    titleComponent: PropTypes.string,
     closeModal: PropTypes.func.isRequired,
     children: PropTypes.node,
     contentModifiers: PropTypes.arrayOf(PropTypes.string),
