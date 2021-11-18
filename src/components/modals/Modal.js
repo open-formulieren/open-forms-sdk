@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
+import {FormattedMessage} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
-import {FormattedMessage} from "react-intl";
-import {getBEMClassName} from "../../utils";
+import {getBEMClassName} from 'utils';
 
 const Modal = ({ isOpen=false, title='', closeModal, children, contentModifiers=[] }) => {
     return (

@@ -5,25 +5,25 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useHistory} from 'react-router-dom';
 import {useIntl, FormattedMessage} from 'react-intl';
+import {useImmerReducer} from 'use-immer';
 
 import {put, post, destroy} from 'api';
 import { ConfigContext } from 'Context';
 import Body from 'components/Body';
+import Button from 'components/Button';
 import ErrorMessage from 'components/ErrorMessage';
 import HelpText from 'components/HelpText';
-import Label from 'components/Label';
-import Modal from 'components/modals/Modal';
 import Input from 'components/Input';
+import Label from 'components/Label';
+import Loader from 'components/Loader';
+import Modal from 'components/modals/Modal';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import Button from 'components/Button';
 import {getBEMClassName} from 'utils';
-import {useImmerReducer} from "use-immer";
-import Loader from "../Loader";
 
 
 const initialState = {
-  email: "",
-  errorMessage: "",
+  email: '',
+  errorMessage: '',
   isSaving: false,
 };
 
@@ -62,9 +62,6 @@ const FormStepSaveModal = ({
   const history = useHistory();
   const intl = useIntl();
   const config = useContext(ConfigContext);
-
-  // const [email, setEmail] = useState("");
-  // const [errorMessage, setErrorMessage] = useState("");
 
   const [
     {email, errorMessage, isSaving},

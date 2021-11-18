@@ -20,12 +20,12 @@ import FormIOWrapper from 'components/FormIOWrapper';
 import FormStepDebug from 'components/FormStepDebug';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
-import {ConfigContext, FormioTranslations} from 'Context';
 import LogoutButton from 'components/LogoutButton';
+import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {findPreviousApplicableStep} from 'components/utils';
+import {ConfigContext, FormioTranslations} from 'Context';
 import Types from 'types';
-import FormStepSaveModal from './modals/FormStepSaveModal';
 
 const DEBUG = process.env.NODE_ENV === 'development';
 
@@ -366,7 +366,6 @@ const FormStep = ({
                     ><Literal name="previousText"/></Button>
                   </ToolbarList>
                   <ToolbarList>
-                    {/* Hiding the Save button until the functionality is implemented */}
                     <Button
                       type="button"
                       variant="secondary"
