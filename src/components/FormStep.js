@@ -55,6 +55,7 @@ const initialState = {
   configuration: null,
   data: null,
   canSubmit: false,
+  logicChecking: false,
 };
 
 const reducer = (draft, action) => {
@@ -64,14 +65,18 @@ const reducer = (draft, action) => {
       draft.configuration = configuration;
       draft.data = data;
       draft.canSubmit = canSubmit;
+      draft.logicChecking = false;
       break;
     }
     case 'STEP_DATA_UPDATED': {
       draft.data = action.payload;
+      draft.logicChecking = false;
       break;
     }
     case 'BLOCK_SUBMISSION': {
+      const { logicChecking=false } = action.payload || {};
       draft.canSubmit = false;
+      draft.logicChecking = logicChecking;
       break;
     }
     // a separate action type because we should _not_ touch the configuration in the state
@@ -83,6 +88,7 @@ const reducer = (draft, action) => {
         draft.data = data;
       }
       draft.canSubmit = canSubmit;
+      draft.logicChecking = false;
       break;
     }
     default: {
@@ -105,7 +111,7 @@ const FormStep = ({
   /* component state */
   const formRef = useRef(null);
   const [
-    {configuration, data, canSubmit},
+    {configuration, data, canSubmit, logicChecking},
     dispatch
   ] = useImmerReducer(reducer, initialState);
 
@@ -154,7 +160,10 @@ const FormStep = ({
     if (previousData && isEqual(previousData, data)) return;
     if (isEmpty(data)) return;
 
-    dispatch({type: 'BLOCK_SUBMISSION'});
+    dispatch({
+      type: 'BLOCK_SUBMISSION',
+      payload: {logicChecking: true},
+    });
 
     const formInstance = formRef.current.formio;
 
@@ -240,12 +249,17 @@ const FormStep = ({
   // into that to handle the actual submission.
   const onReactSubmit = (event) => {
     event.preventDefault();
+    if (!canSubmit) return;
 
     // current is the component, current.instance is the component instance, and that
     // object has an instance property pointing to the WebForm...
     const formInstance = formRef.current.formio;
     if (!formInstance) {
       console.warn("Form was not rendered (yet), aborting submission.");
+      return;
+    }
+
+    if (!formInstance.isValid()) {
       return;
     }
 
@@ -275,6 +289,8 @@ const FormStep = ({
     // if there are no changes, do nothing
     if ( !(flags && flags.changes && flags.changes.length) ) return;
     if ( !modifiedByHuman ) return;
+
+    dispatch({type: 'BLOCK_SUBMISSION'});
 
     // signal abortion, and set a new controller for the newly scheduled check.
     controller.current.abort()
@@ -349,7 +365,13 @@ const FormStep = ({
                     variant="primary"
                     name="next"
                     disabled={!canSubmit}
-                  ><Literal name="nextText"/></Button>
+                  >
+                    {
+                      logicChecking
+                      ? (<Loader modifiers={['centered', 'only-child', 'small']} />)
+                      : (<Literal name="nextText"/>)
+                    }
+                  </Button>
                 </ToolbarList>
               </Toolbar>
             </LiteralsProvider>

@@ -13,7 +13,7 @@ const Loader = ({modifiers=[]}) => {
 };
 
 Loader.propTypes = {
-  modifiers: PropTypes.arrayOf(PropTypes.oneOf(['centered'])),
+  modifiers: PropTypes.arrayOf(PropTypes.oneOf(['centered', 'only-child', 'small'])),
 };
 
 

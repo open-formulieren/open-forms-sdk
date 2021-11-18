@@ -25,7 +25,7 @@ $button-padding-h: $grid-margin-2;
   border-right-color: $color-border;
   border-bottom-color: $color-border;
 
-  &:hover {
+  &:not([aria-disabled="true"]):hover {
     background-color: scale_color($color-background, $lightness: -20%);
     border-right-color: scale_color($color-border, $lightness: -20%);
     border-bottom-color: scale_color($color-border, $lightness: -20%);
@@ -65,8 +65,15 @@ $button-padding-h: $grid-margin-2;
     display: none;
   }
 
-  &:not([disabled]) {
+  &:not([aria-disabled="true"]) {
     cursor: pointer;
+  }
+
+  // styling for disabled button
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    filter: saturate(0);
+    opacity: 50%;
   }
 
   @include modifier('image') {
