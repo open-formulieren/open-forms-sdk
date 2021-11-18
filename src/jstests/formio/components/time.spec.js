@@ -1,0 +1,91 @@
+import React from 'react';
+import _ from 'lodash';
+import {Formio} from 'react-formio';
+import {timeForm} from './fixtures/time';
+import OpenFormsModule from '../../../formio/module';
+
+jest.mock('../../../map/rd', () => jest.fn());
+
+// Use our custom components
+Formio.use(OpenFormsModule);
+
+describe('Time Component', () => {
+  test('Time component with min/max time validation', (done) => {
+    let formJSON = _.cloneDeep(timeForm);
+    formJSON.components[0]['minTime'] = '09:00:00';
+    formJSON.components[0]['maxTime'] = '17:00:00';
+
+    const validValues = [
+      '09:00:00',
+      '10:30:00',
+      '11:11:11',
+    ];
+
+    const invalidValues = [
+      '17:00:00',
+      '17:30:00',
+      '08:30:00',
+    ];
+
+    const testValidity = (values, valid) => {
+      values.forEach((value) => {
+        const element = document.createElement('div');
+
+        Formio.createForm(element, formJSON).then(form => {
+          form.setPristine(false);
+          const component = form.getComponent('time');
+          const changed = component.setValue(value);
+          expect(changed).toBeTruthy();
+
+          setTimeout(() => {
+            if (valid) {
+              expect(!!component.error).toBeFalsy();
+            } else {
+              expect(!!component.error).toBeTruthy();
+            }
+
+            if (value === invalidValues[2]) {
+              done();
+            }
+          }, 300);
+        }).catch(done);
+      });
+    };
+
+    testValidity(validValues, true);
+    testValidity(invalidValues, false);
+  });
+
+  test('Time component without min/max time validation', (done) => {
+    let formJSON = _.cloneDeep(timeForm);
+
+    const validValues = [
+      '00:00:00',
+      '23:59:59',
+      '11:11:11',
+    ];
+
+    const testValidity = (values) => {
+      values.forEach((value) => {
+        const element = document.createElement('div');
+
+        Formio.createForm(element, formJSON).then(form => {
+          form.setPristine(false);
+          const component = form.getComponent('time');
+          const changed = component.setValue(value);
+          expect(changed).toBeTruthy();
+
+          setTimeout(() => {
+            expect(!!component.error).toBeFalsy();
+
+            if (value === validValues[2]) {
+              done();
+            }
+          }, 300);
+        }).catch(done);
+      });
+    };
+
+    testValidity(validValues);
+  });
+});
