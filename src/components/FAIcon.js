@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 
 const FAIcon = ({ icon, component: Component='span', extraClassName='', modifiers=[], ...props }) => {
-  let className = classNames(
+  const className = classNames(
     'fa',
     'fas',
     'fa-icon',
