@@ -45,20 +45,33 @@ export const flattenComponents = (components) => {
 export const iterComponentKeyValues = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values
   // Often used in combination with flattenComponents and getComponentLabel/getComponentValue
+
+  const noDataComponentsToInclude = ['fieldset'];
+
   return components.filter(component => {
-    return component.key in data;
+    return component.key in data || noDataComponentsToInclude.includes(component.type);
   }).map(component => {
     return {key: component.key, value: data[component.key]};
-  })
+  });
 };
 
 
 export const getComponentLabel = (components, key) => {
   let component = components.find(component => component.key === key);
 
-  // If no component is found then just return an empty string
-  // This should not happen but is here to prevent a crash
-  return component ? component.label : '';
+  if (component === undefined) {
+    // If no component is found then just return an empty string
+    // This should not happen but is here to prevent a crash
+    return '';
+  }
+
+  switch (component.type) {
+    case 'fieldset' : {
+      return <b>{component.label}</b>
+    }
+    default:
+      return component.label;
+  }
 };
 
 
