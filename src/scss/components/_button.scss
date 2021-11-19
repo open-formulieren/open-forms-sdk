@@ -73,7 +73,7 @@ $button-padding-h: $grid-margin-2;
   &[aria-disabled="true"] {
     cursor: not-allowed;
     filter: saturate(0);
-    opacity: 50%;
+    opacity: 0.5;
   }
 
   @include modifier('image') {
