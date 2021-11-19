@@ -16,11 +16,11 @@
     @include margin($properties: padding-right);
 
     &--fieldset {
-      padding-top: 10px;
+      @include margin($properties: padding-top);
     }
 
     &--last-fieldset-component {
-      padding-bottom: 10px;
+      @include margin($properties: padding-bottom);
     }
   }
 

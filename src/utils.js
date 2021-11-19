@@ -55,13 +55,29 @@ export const iterComponentKeyValues = (components, data) => {
   });
 };
 
+const getFieldSetRelatedComponentModifiers = (currentComponent, allComponents) => {
+  let modifiers = [];
+  let fieldsetComponents = allComponents.filter(component => component.type === 'fieldset');
+
+  if (currentComponent.type === 'fieldset') {
+    modifiers.push('fieldset');
+  }
+
+  let lastComponentsInFieldsets = [];
+  fieldsetComponents.forEach(fieldsetComponent => {
+    lastComponentsInFieldsets.push(flattenComponents(fieldsetComponent['components']).at(-1));
+  });
+
+  if (lastComponentsInFieldsets.map(component => component.key).includes(currentComponent.key)) {
+    modifiers.push('last-fieldset-component');
+  }
+
+  return modifiers;
+};
+
+
 export const getComponentModifiers = (components, key) => {
   let component = components.find(component => component.key === key);
-  let fieldsetComponents = components.filter(component => component.type === 'fieldset');
-  let lastComponentsInFieldsets = [];
-  for (let fieldsetComponent of fieldsetComponents) {
-    lastComponentsInFieldsets.push(flattenComponents(fieldsetComponent['components']).at(-1));
-  }
 
   let modifiers = [];
 
@@ -70,13 +86,7 @@ export const getComponentModifiers = (components, key) => {
     return modifiers;
   }
 
-  if (component.type === 'fieldset') {
-    modifiers.push('fieldset');
-  }
-
-  if (lastComponentsInFieldsets.map(component => component.key).includes(component.key)) {
-    modifiers.push('last-fieldset-component');
-  }
+  modifiers = modifiers.concat(getFieldSetRelatedComponentModifiers(component, components));
 
   return modifiers;
 };
