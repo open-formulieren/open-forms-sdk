@@ -57,19 +57,18 @@ export const iterComponentKeyValues = (components, data) => {
 
 const getFieldSetRelatedComponentModifiers = (currentComponent, allComponents) => {
   let modifiers = [];
-  let fieldsetComponents = allComponents.filter(component => component.type === 'fieldset');
 
   if (currentComponent.type === 'fieldset') {
     modifiers.push('fieldset');
   }
 
-  let lastComponentsInFieldsets = [];
-  fieldsetComponents.forEach(fieldsetComponent => {
-    lastComponentsInFieldsets.push(flattenComponents(fieldsetComponent['components']).at(-1));
-  });
-
-  if (lastComponentsInFieldsets.map(component => component.key).includes(currentComponent.key)) {
-    modifiers.push('last-fieldset-component');
+  const fieldsetComponents = allComponents.filter(component => component.type === 'fieldset');
+  for (let fieldsetComponent of fieldsetComponents) {
+    const lastComponent = flattenComponents(fieldsetComponent['components']).at(-1);
+    if (lastComponent.key === currentComponent.key) {
+      modifiers.push('last-fieldset-component');
+      break;
+    }
   }
 
   return modifiers;
