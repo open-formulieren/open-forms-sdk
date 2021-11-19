@@ -55,6 +55,32 @@ export const iterComponentKeyValues = (components, data) => {
   });
 };
 
+export const getComponentModifiers = (components, key) => {
+  let component = components.find(component => component.key === key);
+  let fieldsetComponents = components.filter(component => component.type === 'fieldset');
+  let lastComponentsInFieldsets = [];
+  for (let fieldsetComponent of fieldsetComponents) {
+    lastComponentsInFieldsets.push(flattenComponents(fieldsetComponent['components']).at(-1));
+  }
+
+  let modifiers = [];
+
+  if (component === undefined) {
+    // If no component is found then just return an empty array
+    return modifiers;
+  }
+
+  if (component.type === 'fieldset') {
+    modifiers.push('fieldset');
+  }
+
+  if (lastComponentsInFieldsets.map(component => component.key).includes(component.key)) {
+    modifiers.push('last-fieldset-component');
+  }
+
+  return modifiers;
+};
+
 
 export const getComponentLabel = (components, key) => {
   let component = components.find(component => component.key === key);

@@ -5,9 +5,9 @@ import Body from 'components/Body';
 import {getBEMClassName} from 'utils';
 
 
-const TableCell = ({ children, component=Body }) => {
+const TableCell = ({ children, component=Body, modifiers=[] }) => {
   const Component = component;
-  const className = getBEMClassName('table__cell');
+  const className = getBEMClassName('table__cell', modifiers);
   return (
     <td className={className}>
       <Component component={'div'}>{children}</Component>
@@ -18,11 +18,12 @@ const TableCell = ({ children, component=Body }) => {
 TableCell.propTypes = {
     children: PropTypes.node,
     component: PropTypes.elementType,
+    modifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
-const TableHead = ({ children, component=Body }) => {
+const TableHead = ({ children, component=Body, modifiers=[] }) => {
   const Component = component;
-  const className = getBEMClassName('table__head');
+  const className = getBEMClassName('table__head', modifiers);
   return (
     <th className={className}>
       <Component>{children}</Component>
@@ -33,6 +34,7 @@ const TableHead = ({ children, component=Body }) => {
 TableHead.propTypes = {
     children: PropTypes.node,
     component: PropTypes.elementType,
+    modifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
 
