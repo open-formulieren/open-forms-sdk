@@ -21,6 +21,7 @@
 
     &--last-fieldset-component {
       @include margin($properties: padding-bottom);
+      vertical-align: top;
     }
   }
 
