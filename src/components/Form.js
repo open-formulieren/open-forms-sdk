@@ -163,6 +163,7 @@ const reducer = (draft, action) => {
   };
 
   const onSubmitForm = (processingStatusUrl) => {
+    removeSubmissionId();
     dispatch({
       type: 'SUBMITTED',
       payload: {
@@ -170,7 +171,6 @@ const reducer = (draft, action) => {
         processingStatusUrl,
       }
     });
-    removeSubmissionId();
     history.push('/bevestiging');
   };
 
