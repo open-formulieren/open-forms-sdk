@@ -30,7 +30,7 @@
     "originalDefault": "Appointment cancelled"
   },
   "9uYT9K": {
-    "defaultMessage": "Save and logout",
+    "defaultMessage": "Bevestigen",
     "description": "Form save modal submit button",
     "originalDefault": "Save and logout"
   },
@@ -40,12 +40,12 @@
     "originalDefault": "Login with {provider}"
   },
   "Cd5WGC": {
-    "defaultMessage": "Enter your email address to get an email to resume the form at a later date",
+    "defaultMessage": "U ontvangt een e-mail met een unieke link om het invullen later te hernemen. Dit kan vanaf elk toestel waar u de link opent.",
     "description": "Form save modal body text",
     "originalDefault": "Enter your email address to get an email to resume the form at a later date"
   },
   "CvRUHm": {
-    "defaultMessage": "Dit fofmulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar.",
+    "defaultMessage": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar.",
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
   },
@@ -65,7 +65,7 @@
     "originalDefault": "Download PDF"
   },
   "GpGYMo": {
-    "defaultMessage": "Saving the data failed, please try again later",
+    "defaultMessage": "Er ging iets fout bij het bewaren van de gegevens. Probeert u alstublieft later opnieuw.",
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
   },
@@ -75,22 +75,22 @@
     "originalDefault": "Cancel appointment"
   },
   "HhcSoc": {
-    "defaultMessage": "Save and resume later",
+    "defaultMessage": "Formulier bewaren en later hernemen",
     "description": "Form save modal title",
     "originalDefault": "Save and resume later"
   },
   "J9svUq": {
-    "defaultMessage": "Close",
+    "defaultMessage": "Sluiten",
     "description": "Modal close icon title",
     "originalDefault": "Close"
   },
   "JB/IBw": {
-    "defaultMessage": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email.",
+    "defaultMessage": "De betaling is mislukt. Indien u de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien.",
     "description": "payment failed status",
     "originalDefault": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
   },
   "Jrb2Iv": {
-    "defaultMessage": "Your email address",
+    "defaultMessage": "Uw e-mailadres",
     "description": "Form save modal email field label",
     "originalDefault": "Your email address"
   },
@@ -125,17 +125,17 @@
     "originalDefault": "Cancel appointment"
   },
   "VrbdRk": {
-    "defaultMessage": "Your payment has been received.",
+    "defaultMessage": "Uw betaling is ontvangen.",
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
   },
   "WVmmME": {
-    "defaultMessage": "Payment overview",
+    "defaultMessage": "Betaaloverzicht",
     "description": "Payment overview title",
     "originalDefault": "Payment overview"
   },
   "YdeY1f": {
-    "defaultMessage": "Back to form start",
+    "defaultMessage": "Afsluiten",
     "description": "return to form start button",
     "originalDefault": "Back to form start"
   },
@@ -160,17 +160,17 @@
     "originalDefault": "Confirmation: {reference}"
   },
   "bgfiRG": {
-    "defaultMessage": "You've started the payment process.",
+    "defaultMessage": "U hebt de betaling gestart.",
     "description": "payment started status",
     "originalDefault": "You've started the payment process."
   },
   "bu0CcW": {
-    "defaultMessage": "Your payment is received and processed.",
+    "defaultMessage": "Uw betaling is ontvangen en verwerkt.",
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
   "eO6Ysb": {
-    "defaultMessage": "Your payment is currently processing.",
+    "defaultMessage": "Uw betaling wordt momenteel verwerkt.",
     "description": "payment processing status",
     "originalDefault": "Your payment is currently processing."
   },
@@ -190,7 +190,7 @@
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
   "iubnaw": {
-    "defaultMessage": "The email address where you will receive the resume link.",
+    "defaultMessage": "Het e-mailadres waarop u de herneemlink ontvangt.",
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
@@ -200,7 +200,7 @@
     "originalDefault": "Your appointment has been cancelled"
   },
   "r1L6Zj": {
-    "defaultMessage": "Suspending the form failed, please try again later",
+    "defaultMessage": "Het pauzeren van het formulier is mislukt. Gelieve later opnieuw te proberen.",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
   },
@@ -210,12 +210,12 @@
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
   },
   "tIN0Is": {
-    "defaultMessage": "We can't display any payment information - did you maybe get here by accident?",
+    "defaultMessage": "We kunnen geen betaalinformatie tonen - bent u per ongeluk op deze pagina gekomen?",
     "description": "Payment overview missing state error message",
     "originalDefault": "We can't display any payment information - did you maybe get here by accident?"
   },
   "tUgRfj": {
-    "defaultMessage": "Logging out failed, please try again later",
+    "defaultMessage": "Het uitloggen is mislukt, gelieve later opnieuw te proberen.",
     "description": "Modal logging out failed message",
     "originalDefault": "Logging out failed, please try again later"
   },
