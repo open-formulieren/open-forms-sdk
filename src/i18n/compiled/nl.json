@@ -38,7 +38,7 @@
   "9uYT9K": [
     {
       "type": 0,
-      "value": "Save and logout"
+      "value": "Bevestigen"
     }
   ],
   "AxDC+M": [
@@ -54,13 +54,13 @@
   "Cd5WGC": [
     {
       "type": 0,
-      "value": "Enter your email address to get an email to resume the form at a later date"
+      "value": "U ontvangt een e-mail met een unieke link om het invullen later te hernemen. Dit kan vanaf elk toestel waar u de link opent."
     }
   ],
   "CvRUHm": [
     {
       "type": 0,
-      "value": "Dit fofmulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar."
+      "value": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar."
     }
   ],
   "DvlDIB": [
@@ -92,7 +92,7 @@
   "GpGYMo": [
     {
       "type": 0,
-      "value": "Saving the data failed, please try again later"
+      "value": "Er ging iets fout bij het bewaren van de gegevens. Probeert u alstublieft later opnieuw."
     }
   ],
   "HGx1ny": [
@@ -104,25 +104,25 @@
   "HhcSoc": [
     {
       "type": 0,
-      "value": "Save and resume later"
+      "value": "Formulier bewaren en later hernemen"
     }
   ],
   "J9svUq": [
     {
       "type": 0,
-      "value": "Close"
+      "value": "Sluiten"
     }
   ],
   "JB/IBw": [
     {
       "type": 0,
-      "value": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
+      "value": "De betaling is mislukt. Indien u de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien."
     }
   ],
   "Jrb2Iv": [
     {
       "type": 0,
-      "value": "Your email address"
+      "value": "Uw e-mailadres"
     }
   ],
   "LEeGSv": [
@@ -198,19 +198,19 @@
   "VrbdRk": [
     {
       "type": 0,
-      "value": "Your payment has been received."
+      "value": "Uw betaling is ontvangen."
     }
   ],
   "WVmmME": [
     {
       "type": 0,
-      "value": "Payment overview"
+      "value": "Betaaloverzicht"
     }
   ],
   "YdeY1f": [
     {
       "type": 0,
-      "value": "Back to form start"
+      "value": "Afsluiten"
     }
   ],
   "ZehFnX": [
@@ -252,19 +252,19 @@
   "bgfiRG": [
     {
       "type": 0,
-      "value": "You've started the payment process."
+      "value": "U hebt de betaling gestart."
     }
   ],
   "bu0CcW": [
     {
       "type": 0,
-      "value": "Your payment is received and processed."
+      "value": "Uw betaling is ontvangen en verwerkt."
     }
   ],
   "eO6Ysb": [
     {
       "type": 0,
-      "value": "Your payment is currently processing."
+      "value": "Uw betaling wordt momenteel verwerkt."
     }
   ],
   "ertoXR": [
@@ -288,7 +288,7 @@
   "iubnaw": [
     {
       "type": 0,
-      "value": "The email address where you will receive the resume link."
+      "value": "Het e-mailadres waarop u de herneemlink ontvangt."
     }
   ],
   "jYh8Nr": [
@@ -300,7 +300,7 @@
   "r1L6Zj": [
     {
       "type": 0,
-      "value": "Suspending the form failed, please try again later"
+      "value": "Het pauzeren van het formulier is mislukt. Gelieve later opnieuw te proberen."
     }
   ],
   "senRv3": [
@@ -340,13 +340,13 @@
   "tIN0Is": [
     {
       "type": 0,
-      "value": "We can't display any payment information - did you maybe get here by accident?"
+      "value": "We kunnen geen betaalinformatie tonen - bent u per ongeluk op deze pagina gekomen?"
     }
   ],
   "tUgRfj": [
     {
       "type": 0,
-      "value": "Logging out failed, please try again later"
+      "value": "Het uitloggen is mislukt, gelieve later opnieuw te proberen."
     }
   ],
   "tohkCS": [
