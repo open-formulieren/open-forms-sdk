@@ -8,8 +8,8 @@ import Caption from 'components/Caption';
 import { Table, TableRow, TableHead, TableCell } from 'components/Table';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 
-import {getComponentLabel, getComponentValue,
-  iterComponentKeyValues, getComponentModifiers, displayValue} from 'components/FormStepSummary/utils';
+import {getComponentLabel, getComponentValue, iterComponentKeyValues,
+  getComponentModifiers, displayValue} from 'components/FormStepSummary/utils';
 
 
 const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
