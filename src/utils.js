@@ -169,3 +169,12 @@ const humanFileSize = (size) => {
   const unit = ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'][index];
   return {size: newSize, unit};
 };
+
+
+export const displayValue = (value) => {
+  if (Array.isArray(value)) {
+    return value.join(', ');
+  }
+
+  return value;
+};
