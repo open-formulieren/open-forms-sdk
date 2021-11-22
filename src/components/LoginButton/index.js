@@ -6,9 +6,9 @@ import Button from 'components/Button';
 
 export const START_FORM_QUERY_PARAM = '_start';
 
-const getLoginUrl = (loginOption) => {
+export const getLoginUrl = (loginOption) => {
   const nextUrl = new URL(window.location.href);
-  
+
   const queryParams = Array.from(nextUrl.searchParams.keys());
   queryParams.map(param => nextUrl.searchParams.delete(param));
 
