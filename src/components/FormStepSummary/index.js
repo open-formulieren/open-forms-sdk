@@ -8,7 +8,7 @@ import Caption from 'components/Caption';
 import { Table, TableRow, TableHead, TableCell } from 'components/Table';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 
-import {getComponentLabel, getComponentValue, iterComponentKeyValues} from 'utils';
+import {getComponentLabel, getComponentValue, iterComponentKeyValues, displayValue} from 'utils';
 
 
 const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
@@ -42,7 +42,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           iterComponentKeyValues(stepData.configuration.components, stepData.data).map(({key, value}) => (
             <TableRow key={key}>
               <TableHead>{getComponentLabel(stepData.configuration.components, key)}</TableHead>
-              <TableCell>{getComponentValue(value, stepData.configuration.components, key, intl)}</TableCell>
+              <TableCell>{getComponentValue(displayValue(value), stepData.configuration.components, key, intl)}</TableCell>
             </TableRow>
           ))
         }
