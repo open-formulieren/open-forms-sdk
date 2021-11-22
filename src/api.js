@@ -2,7 +2,7 @@ const fetchDefaults = {
   credentials: 'include', // required for Firefox 60, which is used in werkplekken
 };
 
-const apiCall = async (url, opts, alertOnPermissionDenied=true) => {
+const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
   const options = { ...fetchDefaults, ...opts };
   const response = await window.fetch(url, options);
   if (response.status === 403 && alertOnPermissionDenied) {
