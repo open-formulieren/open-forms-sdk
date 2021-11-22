@@ -9,12 +9,7 @@ import Map from 'components/Map';
 export const iterComponentKeyValues = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values
   // Often used in combination with flattenComponents and getComponentLabel/getComponentValue
-
-  const noDataComponentsToInclude = ['fieldset'];
-
-  return components.filter(component => {
-    return component.key in data || noDataComponentsToInclude.includes(component.type);
-  }).map(component => {
+  return components.map(component => {
     return {key: component.key, value: data[component.key]};
   });
 };

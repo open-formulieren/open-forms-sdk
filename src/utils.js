@@ -26,7 +26,14 @@ export const flattenComponents = (components) => {
   const flattenedComponents = components.map(component => {
     if(component.components) {
       return [component].concat(flattenComponents(component.components));
-    } else {
+    } else if (component.columns) {
+      const flattenedColumnComponents =  component.columns.map(column => {
+        return [].concat(flattenComponents(column.components));
+      });
+      // Convert an array of arrays (one array per column) to a single array
+      return [].concat.apply([], flattenedColumnComponents);
+    }
+    else {
       return [component];
     }
   });
