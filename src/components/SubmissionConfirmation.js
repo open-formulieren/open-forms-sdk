@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import useAsync from 'react-use/esm/useAsync';
 
 import { post } from 'api';
@@ -64,6 +64,11 @@ StartPayment.propTypes = {
  */
 const SubmissionConfirmation = ({statusUrl, onFailure}) => {
   const [statusResponse, setStatusResponse] = useState(null);
+  const intl = useIntl();
+  const genericErrorMessage = intl.formatMessage({
+      description: 'Generic submission error',
+      defaultMessage: 'Something went wrong while submitting the form.'
+  });
 
   const {loading, error} = usePoll(
     statusUrl,
@@ -73,7 +78,8 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
       switch (response.status) {
         case 'done': {
           if (response.result === RESULT_FAILED) {
-            onFailure && onFailure(response.errorMessage);
+            const errorMessage = response.errorMessage || genericErrorMessage;
+            onFailure && onFailure(errorMessage);
           }
           return true;
         }
