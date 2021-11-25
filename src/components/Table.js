@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Body from 'components/Body';
 import {getBEMClassName} from 'utils';
@@ -38,8 +39,11 @@ TableHead.propTypes = {
 };
 
 
-const TableRow = ({ children }) => {
-  const className = getBEMClassName('table__row');
+const TableRow = ({ children, className='' }) => {
+  className = classNames(
+    getBEMClassName('table__row'),
+    className,
+  );
   return (
     <tr className={className}>
       {children}
@@ -49,6 +53,7 @@ const TableRow = ({ children }) => {
 
 TableRow.propTypes = {
     children: PropTypes.node,
+    className: PropTypes.string,
 };
 
 const Table = ({ children, }) => {
