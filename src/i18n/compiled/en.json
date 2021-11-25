@@ -35,12 +35,6 @@
       "value": "Appointment cancelled"
     }
   ],
-  "9uYT9K": [
-    {
-      "type": 0,
-      "value": "Save and logout"
-    }
-  ],
   "AxDC+M": [
     {
       "type": 0,
@@ -165,6 +159,12 @@
       "value": "Payment is required for this product"
     }
   ],
+  "R5NUuU": [
+    {
+      "type": 0,
+      "value": "Confirm"
+    }
+  ],
   "Rf8Sot": [
     {
       "type": 0,
@@ -277,6 +277,12 @@
     {
       "type": 0,
       "value": "Please hold on while we're processing your submission."
+    }
+  ],
+  "hHS5vj": [
+    {
+      "type": 0,
+      "value": "Something went wrong while submitting the form."
     }
   ],
   "hQRQCS": [

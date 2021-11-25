@@ -35,12 +35,6 @@
       "value": "Afspraak geannuleerd"
     }
   ],
-  "9uYT9K": [
-    {
-      "type": 0,
-      "value": "Bevestigen"
-    }
-  ],
   "AxDC+M": [
     {
       "type": 0,
@@ -165,6 +159,12 @@
       "value": "Voor dit product is betaling vereist"
     }
   ],
+  "R5NUuU": [
+    {
+      "type": 0,
+      "value": "Confirm"
+    }
+  ],
   "Rf8Sot": [
     {
       "type": 0,
@@ -277,6 +277,12 @@
     {
       "type": 0,
       "value": "Een moment geduld alstublieft terwijl wij uw inzending verwerken."
+    }
+  ],
+  "hHS5vj": [
+    {
+      "type": 0,
+      "value": "Something went wrong while submitting the form."
     }
   ],
   "hQRQCS": [

@@ -29,11 +29,6 @@
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
-  "9uYT9K": {
-    "defaultMessage": "Save and logout",
-    "description": "Form save modal submit button",
-    "originalDefault": "Save and logout"
-  },
   "AxDC+M": {
     "defaultMessage": "Login with {provider}",
     "description": "Login button label",
@@ -109,6 +104,11 @@
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
   },
+  "R5NUuU": {
+    "defaultMessage": "Confirm",
+    "description": "Form save modal submit button",
+    "originalDefault": "Confirm"
+  },
   "Rf8Sot": {
     "defaultMessage": "Problem - {formName}",
     "description": "Form start outage title",
@@ -183,6 +183,11 @@
     "defaultMessage": "Please hold on while we're processing your submission.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
+  },
+  "hHS5vj": {
+    "defaultMessage": "Something went wrong while submitting the form.",
+    "description": "Generic submission error",
+    "originalDefault": "Something went wrong while submitting the form."
   },
   "hQRQCS": {
     "defaultMessage": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
