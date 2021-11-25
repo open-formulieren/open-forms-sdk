@@ -5,11 +5,11 @@ import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
+import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import { useImmerReducer } from 'use-immer';
 import useAsync from 'react-use/esm/useAsync';
-import _ from 'lodash';
 
 import hooks from '../formio/hooks';
 
@@ -54,7 +54,7 @@ class AbortedLogicCheck extends Error {
 
 const initialState = {
   configuration: null,
-  data: null,
+  backendData: {},
   canSubmit: false,
   logicChecking: false,
   isFormSaveModalOpen: false,
@@ -65,13 +65,12 @@ const reducer = (draft, action) => {
     case 'STEP_LOADED': {
       const {data, formStep: {configuration}, canSubmit} = action.payload;
       draft.configuration = configuration;
-      draft.data = data;
+      draft.backendData = data;
       draft.canSubmit = canSubmit;
       draft.logicChecking = false;
       break;
     }
     case 'STEP_DATA_UPDATED': {
-      draft.data = action.payload;
       draft.logicChecking = false;
       break;
     }
@@ -86,8 +85,8 @@ const reducer = (draft, action) => {
       const {step: {data, canSubmit}} = action.payload;
       // update the altered values but only if relevant (we don't want to unnecesary break
       // references that trigger re-rendering).
-      if (!isEqual(draft.data, data)) {
-        draft.data = data;
+      if (!isEqual(draft.backendData, data)) {
+        draft.backendData = data;
       }
       draft.canSubmit = canSubmit;
       draft.logicChecking = false;
@@ -118,7 +117,7 @@ const FormStep = ({
   /* component state */
   const formRef = useRef(null);
   const [
-    {configuration, data, canSubmit, logicChecking, isFormSaveModalOpen},
+    {configuration, backendData, canSubmit, logicChecking, isFormSaveModalOpen},
     dispatch
   ] = useImmerReducer(reducer, initialState);
 
@@ -216,7 +215,7 @@ const FormStep = ({
       }
 
       // update the form data both in our internal state and the formio submission data
-      const updatedData = {...data, ...step.data};
+      const updatedData = {...filterBlankValues(data), ...step.data};
       formData.current = updatedData;
       if (!isEqual(formInstance.submission.data, updatedData)) {
         formInstance.submission = {data: updatedData};
@@ -296,6 +295,25 @@ const FormStep = ({
     history.push(navigateTo);
   };
 
+  const onFormIOInitialized = () => {
+    const formInstance = formRef.current?.instance?.instance;
+
+    if (!formInstance) {
+      console.warn('No form instance available!');
+      return;
+    }
+
+    // Filter blank values as to not trip formio validation
+    const backendDataWithoutBlank = filterBlankValues(backendData);
+    const submissionDataWithoutBlank = filterBlankValues(formInstance.submission.data);
+    const shouldSetData = !isEmpty(backendDataWithoutBlank) && !isEqual(submissionDataWithoutBlank, backendDataWithoutBlank);
+    if (shouldSetData) {
+      // the cloneDeep is needed since we deliberately make the immer state mutable
+      // for FormIO (multivalue input is one example why that's needed).
+      formInstance.submission = {data: cloneDeep(backendDataWithoutBlank)};
+    }
+  };
+
   // See 'change' event https://help.form.io/developers/form-renderer#form-events
   const onFormIOChange = async (changed, flags, modifiedByHuman) => {
     // formio form not mounted -> nothing to do
@@ -329,10 +347,7 @@ const FormStep = ({
       LOGIC_CHECK_DEBOUNCE,
     );
 
-    dispatch({
-      type: 'STEP_DATA_UPDATED',
-      payload: _.cloneDeep(data),
-    });
+    dispatch({type: 'STEP_DATA_UPDATED'});
   };
 
   return (
@@ -346,10 +361,9 @@ const FormStep = ({
               <FormIOWrapper
                 ref={formRef}
                 form={configuration}
-                // Filter blank values so FormIO does not run validation on them
-                submission={{data: filterBlankValues(data)}}
                 onChange={onFormIOChange}
                 onSubmit={onFormIOSubmit}
+                onInitialized={onFormIOInitialized}
                 options={{
                   noAlerts: true,
                   baseUrl: config.baseUrl,
@@ -359,7 +373,7 @@ const FormStep = ({
                   intl
                 }}
               />
-              { DEBUG ? <FormStepDebug data={data} /> : null }
+              { DEBUG ? <FormStepDebug data={formData.current} /> : null }
               <LiteralsProvider literals={formStep.literals}>
                 <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
                   <ToolbarList>
