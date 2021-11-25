@@ -14,15 +14,6 @@
   &__cell {
     padding: 0;
     @include margin($properties: padding-right);
-
-    &--fieldset {
-      @include margin($properties: padding-top);
-    }
-
-    &--last-fieldset-component {
-      @include margin($properties: padding-bottom);
-      vertical-align: top;
-    }
   }
 
   &__row:not(:last-child) &__head,
