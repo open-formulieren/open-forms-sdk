@@ -1,0 +1,24 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+@import '../mixins/bem';
+
+$block: '.#{prefix('summary-row')}';
+
+#{$block} {
+
+  @include modifier('fieldset') {
+
+    &:not(:first-child) {
+      td, th {
+        @include margin($properties: padding-top);
+      }
+    }
+
+    & + & {
+      td, th {
+        @include margin(0px, $properties: padding-top);
+      }
+    }
+  }
+}

@@ -7,8 +7,14 @@ import Button from 'components/Button';
 import Caption from 'components/Caption';
 import { Table, TableRow, TableHead, TableCell } from 'components/Table';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
+import {getBEMClassName} from 'utils';
 
-import {getComponentLabel, getComponentValue, iterComponentKeyValues, displayValue} from 'utils';
+import {
+  getComponentLabel,
+  getComponentValue,
+  iterComponentsWithData,
+  displayValue
+} from 'components/FormStepSummary/utils';
 
 
 const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
@@ -34,19 +40,32 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           </Button>
         </ToolbarList>
       </Toolbar>
+
       <Table>
         {
-          // Loop through each field in the step
-          // stepData contains 4 things.
-          // title (string), submissionStep (object), data (object), configuration (object)
-          iterComponentKeyValues(stepData.configuration.components, stepData.data).map(({key, value}) => (
-            <TableRow key={key}>
-              <TableHead>{getComponentLabel(stepData.configuration.components, key)}</TableHead>
-              <TableCell>{getComponentValue(displayValue(value), stepData.configuration.components, key, intl)}</TableCell>
-            </TableRow>
-          ))
+          /*
+          * Loop through each field in the step
+          * stepData contains 4 things.
+          * title (string), submissionStep (object), data (object), configuration (object)
+          * Note that the `components` should already be flattened!
+          */
+          iterComponentsWithData(stepData.configuration.components, stepData.data).map((component) => {
+            const {key, type, value} = component;
+            const className = getBEMClassName('summary-row', [type]);
+            return (
+              <TableRow key={key} className={className}>
+                <TableHead>
+                  {getComponentLabel(component)}
+                </TableHead>
+                <TableCell>
+                  {getComponentValue(displayValue(value), intl)}
+                </TableCell>
+              </TableRow>
+            );
+          })
         }
       </Table>
+
     </>
   );
 };
