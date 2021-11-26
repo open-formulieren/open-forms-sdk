@@ -1,4 +1,6 @@
+@import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/transform';
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
@@ -21,31 +23,83 @@
 // Styling for the choicejs widget for the select component
 // Overwriting styles found here: https://github.com/Choices-js/Choices/blob/master/src/styles/choices.scss
 .#{prefix(form-control--select)} {
+  $control-height: $grid-row-height;
+  $list-hpadding: $grid-margin-2;
+  $list-vpadding: $grid-margin-1;
+  $list-vpaddings:  $list-vpadding * 2;
+  $item-margin: $grid-margin-0/2;
+  $item-margins: $item-margin * 2;
+  $item-hpadding: $grid-margin-1;
+  $vborders: $typography-size-border;
+
   width: 100%;
 
+  // The wrapper div.
+  // Style as a regular input.
   .choices {
     @include body;
     @include border(all, $size: 1px);
-    @include rows(1);
-    appearance: none;
-    border-radius: 0;
-    font-weight: bold;
-    width: 100%;
-    display: flex;
+    @include rows(1, min-height);
     align-items: center;
-  }
-
-  .selection {
+    border-radius: 0;
     display: flex;
-    justify-content: center;
+    font-weight: bold;
+    padding: 0 $list-hpadding;
+    position: relative;
     width: 100%;
   }
 
-  .choices__list--single {
+  // The wrapper containing the select, results, and input.
+  .selection {
+    @include rows(1);
+    align-items: center;
     display: flex;
+    flex-wrap: wrap; // Allow flex to wrap.
   }
 
-  .choices__item--selectable {
-    padding: $grid-margin-2;
+  // Selected choices.
+  .selection .choices__list {
+    display: contents;  // Might not work in legacy browsers.
   }
+
+  // Items within the current selection.
+  .selection .choices__item {
+    $item-height: $control-height - $list-vpaddings - $item-margins - $vborders;
+    @include body;
+    @include body--small;
+    @include color-background(color);
+    @include color-primary((background-color, border-color));
+    display: inline-flex;
+    align-items: center;
+    height: $item-height;
+    font-size: $item-height * 0.6;
+    margin: $item-margin;
+    padding: 0 $item-hpadding!important;
+  }
+
+  .selection .choices__item .choices_button {
+    @include color-secondary((border-color, color));
+  }
+
+  // The filter/search input.
+  .choices__input {
+    @include body;
+    @include body--small;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+  }
+
+  // Available choices.
+  .selection + .choices__list {
+    left: 0;
+  }
+
+  // Items within the available choices.
+  .selection + .choices__list .choices__item {
+    padding-left: $list-hpadding;
+    padding-right: $list-hpadding;
+  }
+
+
 }
