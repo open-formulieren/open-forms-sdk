@@ -5,19 +5,8 @@ import React from "react";
 
 export const START_FORM_QUERY_PARAM = '_start';
 
-const getLoginUrl = (loginOption) => {
-  const nextUrl = new URL(window.location.href);
-  
-  const queryParams = Array.from(nextUrl.searchParams.keys());
-  queryParams.map(param => nextUrl.searchParams.delete(param));
 
-  nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
-  const loginUrl = new URL(loginOption.url);
-  loginUrl.searchParams.set("next", nextUrl.toString());
-  return loginUrl.toString();
-};
-
-const LoginButton = ({option}) => (
+const LoginButton = ({option, getLoginUrl}) => (
   <Button variant="primary" component="a" href={getLoginUrl(option)}>
     <FormattedMessage
       description="Login button label"
@@ -26,6 +15,7 @@ const LoginButton = ({option}) => (
     />
   </Button>
 );
+
 
 LoginButton.propTypes = {
   option: PropTypes.shape({
@@ -38,6 +28,7 @@ LoginButton.propTypes = {
       href: PropTypes.string,
     }),
   }),
+  getLoginUrl: PropTypes.func.isRequired,
 };
 
 export default LoginButton;
