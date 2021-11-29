@@ -1,61 +1,52 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
+import {useHistory, useLocation} from 'react-router-dom';
 
 import Types from 'types';
-import LoginButtonIcons from 'components/LoginButtonIcons';
-import {LiteralsProvider} from 'components/Literal';
-import Card from 'components/Card';
-import Body from 'components/Body';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
-import LoginButton from 'components/LoginButton';
+import FormLanding from 'components/FormLanding';
+import {START_FORM_QUERY_PARAM} from 'components/LoginButton';
 
 
 export const getLoginUrl = (loginOption) => {
-  const currentUrl = new URL(window.location.href);
-  const nextUrl = currentUrl.searchParams.get('next');
+  const redirectUrl = new URL(window.location.href);
+  redirectUrl.searchParams.set(START_FORM_QUERY_PARAM, 1);
 
   const loginUrl = new URL(loginOption.url);
-  loginUrl.searchParams.set('next', nextUrl);
+  loginUrl.searchParams.set('next', redirectUrl);
   return loginUrl.toString();
 };
 
 
 const ResumeLogin = ({form}) => {
   const intl = useIntl();
+  const history = useHistory();
+  const currentUrl = useLocation();
 
   const resumeLoginMessage = intl.formatMessage({
     description: 'Form resume login body text',
     defaultMessage: 'Please authenticate to resume the form.'
   });
 
+  const onStart = () => {
+    const currentSearchParams = new URLSearchParams(currentUrl.search);
+
+    const redirectUrl = currentSearchParams.get('next');
+    if (redirectUrl) {
+      let lastEditedStepRoute = new URL(redirectUrl);
+      history.push(lastEditedStepRoute.pathname);
+    } else {
+      const firstStepRoute = `/stap/${form.steps[0].slug}`;
+      history.push(firstStepRoute);
+    }
+  };
+
   return (
-    <LiteralsProvider literals={form.literals}>
-      <Card title={form.name}>
-
-        <Body modifiers={['compact']}>
-          {resumeLoginMessage}
-        </Body>
-
-        <Toolbar modifiers={['start']}>
-          <ToolbarList>
-            {
-              form.loginOptions.map((option) => (
-                <LoginButton
-                  key={option.identifier}
-                  option={option}
-                  getLoginUrl={getLoginUrl}
-                />
-              ))
-            }
-          </ToolbarList>
-
-          <ToolbarList>
-            <LoginButtonIcons loginOptions={form.loginOptions} />
-          </ToolbarList>
-        </Toolbar>
-
-      </Card>
-    </LiteralsProvider>
+    <FormLanding
+      form={form}
+      onFormStart={onStart}
+      getLoginUrl={getLoginUrl}
+      startLoginMessage={resumeLoginMessage}
+    />
   );
 };
 

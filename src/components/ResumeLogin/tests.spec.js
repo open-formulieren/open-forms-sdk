@@ -34,11 +34,9 @@ it('Generate next URL for ResumeLogin', () => {
   const { location } = window;
   delete window.location;
 
-  const currentUrl = new URL('https://open-forms.nl/resume');
-  currentUrl.searchParams.set(
-    'next',
-    'https://open-forms.nl/digid-form/?_start=1&submission_uuid=54713201-1a69-46c9-be9e-d26129e1ca14'
-  );
+  const firstFormStepUrl = new URL('https://open-forms.nl/digid-form/step1/');
+  const currentUrl = new URL('https://open-forms.nl/digid-form/resume');
+  currentUrl.searchParams.set('next', firstFormStepUrl.href);
   window.location = { href: currentUrl.href };
 
   act(() => {
@@ -53,11 +51,9 @@ it('Generate next URL for ResumeLogin', () => {
     );
   });
 
+  currentUrl.searchParams.set('_start', 1);
   const expectedUrl = new URL(option.url);
-  expectedUrl.searchParams.set(
-    'next',
-    'https://open-forms.nl/digid-form/?_start=1&submission_uuid=54713201-1a69-46c9-be9e-d26129e1ca14'
-  );
+  expectedUrl.searchParams.set('next', currentUrl.href);
 
   const actualUrl = container.getElementsByClassName('openforms-button')[0].href;
 
