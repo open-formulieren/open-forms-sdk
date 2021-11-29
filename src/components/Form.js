@@ -27,7 +27,7 @@ import Summary from 'components/Summary';
 import {findNextApplicableStep} from 'components/utils';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';
-import ResumeLogin from "./ResumeLogin";
+import ResumeLogin from 'components/ResumeLogin';
 
 /**
  * Create a submission instance from a given form instance

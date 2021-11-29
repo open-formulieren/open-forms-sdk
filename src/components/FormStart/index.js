@@ -22,7 +22,7 @@ const useStartSubmission = () => {
 };
 
 
-const getLoginUrl = (loginOption) => {
+export const getLoginUrl = (loginOption) => {
   const nextUrl = new URL(window.location.href);
 
   const queryParams = Array.from(nextUrl.searchParams.keys());

@@ -6,8 +6,9 @@ import { IntlProvider } from 'react-intl';
 import useQuery from 'hooks/useQuery';
 import messagesNL from 'i18n/compiled/nl.json';
 
-import FormStart from '.';
+import FormStart, {getLoginUrl} from '.';
 import {testForm} from './fixtures';
+import LoginButton from 'components/LoginButton';
 
 jest.mock('hooks/useQuery');
 let scrollIntoViewMock = jest.fn();
@@ -78,4 +79,36 @@ it('Form start does not start if there are auth errors', () => {
     expect(container.textContent).toContain(expectedMessage);
     expect(onFormStart).toHaveBeenCalledTimes(0);
   }
+});
+
+it('Generate next URL for FormStart', () => {
+  const option = {
+    identifier: 'digid',
+    label: 'DigiD',
+    url: 'https://open-forms.nl/auth/digid-form/digid/start',
+  };
+
+  const { location } = window;
+  delete window.location;
+  window.location = { href: 'https://open-forms.nl/digid-form/?_start=1&_digid-message=login-cancelled' };
+
+  act(() => {
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <LoginButton
+          option={option}
+          getLoginUrl={getLoginUrl}
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const expectedUrl = new URL(option.url);
+  expectedUrl.searchParams.set('next', 'https://open-forms.nl/digid-form/?_start=1');
+
+  const actualUrl = container.getElementsByClassName('openforms-button')[0].href;
+
+  expect(actualUrl).toEqual(expectedUrl.toString());
+  window.location = location;
 });
