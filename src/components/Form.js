@@ -27,6 +27,7 @@ import Summary from 'components/Summary';
 import {findNextApplicableStep} from 'components/utils';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';
+import ResumeLogin from "./ResumeLogin";
 
 /**
  * Create a submission instance from a given form instance
@@ -273,6 +274,12 @@ const reducer = (draft, action) => {
               onStepSubmitted={onStepSubmitted}
               onLogout={onLogout}
               component={FormStep}
+            />
+          )} />
+
+          <Route path="/resume" render={() => (
+            <ResumeLogin
+              form={form}
             />
           )} />
 
