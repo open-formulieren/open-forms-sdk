@@ -39,7 +39,7 @@ $select-background-color: var(--of-select-background-color, $color-white);
   $list-hpadding: $grid-margin-2;
   $list-vpadding: $grid-margin-1;
   $list-vpaddings:  $list-vpadding * 2;
-  $item-margin: $grid-margin-0/2;
+  $item-margin: math.div($grid-margin-0, 2);
   $item-margins: $item-margin * 2;
   $item-hpadding: $grid-margin-1;
   $vborders: $typography-size-border;
@@ -52,20 +52,20 @@ $select-background-color: var(--of-select-background-color, $color-white);
     @include body;
     @include border(all, $size: 1px);
     @include rows(1, min-height);
+    position: relative;
+    display: flex;
     align-items: center;
     border-radius: 0;
-    display: flex;
     font-weight: bold;
     padding: 0 $list-hpadding;
-    position: relative;
     width: 100%;
   }
 
   // The wrapper containing the select, results, and input.
   .selection {
     @include rows(1);
-    align-items: center;
     display: flex;
+    align-items: center;
     flex-wrap: wrap; // Allow flex to wrap.
   }
 
