@@ -5,7 +5,7 @@ import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {getBEMClassName} from 'utils';
 
 
-const Price = ({price}) => {
+const Price = ({price=''}) => {
   return (
     <div className={getBEMClassName('price')}>
       <div className={getBEMClassName('price__label')}>
@@ -28,7 +28,7 @@ const Price = ({price}) => {
 };
 
 Price.propTypes = {
-  price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default Price;

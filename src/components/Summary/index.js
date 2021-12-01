@@ -84,14 +84,14 @@ const getPrivacyPolicyInfo = async (origin) => {
   return await get(privacyPolicyUrl);
 };
 
-const PaymentInformation = ({isRequired, amount}) => {
+const PaymentInformation = ({isRequired, amount=''}) => {
   if (!isRequired) return null;
   return (<Price price={amount} />);
 };
 
 PaymentInformation.propTypes = {
   isRequired: PropTypes.bool.isRequired,
-  amount: PropTypes.string.isRequired,
+  amount: PropTypes.string,
 };
 
 
