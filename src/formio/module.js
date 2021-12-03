@@ -18,6 +18,7 @@ import BsnField from "./components/BsnField";
 import FileField from "./components/FileField";
 import Map from "./components/Map";
 import PasswordField from "./components/Password";
+import LicensePlateField from "./components/LicensePlateField";
 
 const FormIOModule = {
   components: {
@@ -41,6 +42,7 @@ const FormIOModule = {
     file: FileField,
     map: Map,
     password: PasswordField,
+    licenseplate: LicensePlateField,
   },
 };
 
