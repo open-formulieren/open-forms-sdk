@@ -9,7 +9,7 @@ const Submission = PropTypes.shape({
   canSubmit: PropTypes.bool.isRequired,
   payment: PropTypes.shape({
     isRequired: PropTypes.bool.isRequired,
-    amount: PropTypes.string.isRequired,
+    amount: PropTypes.string,
     hasPaid: PropTypes.bool.isRequired,
   }).isRequired,
 });
