@@ -25,8 +25,8 @@ A default style is included but rendered form elements can be styled in line
 with your own website.
 
 Open Forms is developed in line with the `Common Ground`_ principles,
-specificly for municipalities and with a strong focus on usability for both
-the civilian users and the administrator.
+with many plugins for government usage and with a strong focus on usability for 
+both end users and administrators.
 
 .. _`formio.js`: https://github.com/formio/formio.js/
 .. _`Common Ground`: https://commonground.nl/
@@ -38,7 +38,7 @@ Component
 
 |build-status|
 
-This component is a Jascript SDK.
+This component is a Javascript SDK.
 
 
 References
@@ -46,9 +46,9 @@ References
 
 * `Documentation <https://open-forms.readthedocs.io/>`_
 * `Community <https://commonground.nl/groups/view/0c79b387-4567-4522-bc35-7d3583978c9f/open-forms>`_
-* `Open Forms <https://github.com/open-formulieren/open-forms>`_
 * `Issues <https://github.com/open-formulieren/open-forms-sdk/issues>`_
 * `Code <https://github.com/open-formulieren/open-forms-sdk>`_
+* `Open Forms component <https://github.com/open-formulieren/open-forms>`_
 
 Licence
 =======

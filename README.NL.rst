@@ -26,8 +26,9 @@ is gebouwd op de `formio.js`_ SDK.
 Een standaard stijl is bijgeleverd maar formulier elementen kunnen zo opgemaakt
 worden dat ze passen bij uw eigen website.
 
-Open Formulieren is ontwikkeld volgens de `Common Ground`_ principes, specifiek 
-voor gemeenten en met focus op gebruiksgemak voor zowel burger als beheerder.
+Open Formulieren is ontwikkeld volgens de `Common Ground`_ principes, met veel
+plugins voor overheidsgebruik en met focus op gebruiksgemak voor zowel 
+eindgebruikers als beheerders.
 
 .. _`formio.js`: https://github.com/formio/formio.js/
 .. _`Common Ground`: https://commonground.nl/
@@ -39,7 +40,7 @@ Component
 
 |build-status|
 
-Dit component is een Jascript SDK.
+Dit component is een Javascript SDK.
 
 
 Links
@@ -47,9 +48,9 @@ Links
 
 * `Documentatie <https://open-forms.readthedocs.io/>`_
 * `Community <https://commonground.nl/groups/view/0c79b387-4567-4522-bc35-7d3583978c9f/open-forms>`_
-* `Open Formulieren <https://github.com/open-formulieren/open-forms>`_
 * `Issues <https://github.com/open-formulieren/open-forms-sdk/issues>`_
 * `Code <https://github.com/open-formulieren/open-forms-sdk>`_
+* `Open Formulieren component <https://github.com/open-formulieren/open-forms>`_
 
 Licentie
 ========
