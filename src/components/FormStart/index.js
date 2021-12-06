@@ -72,7 +72,7 @@ const FormStartMessage = ({form}) => {
       })
   ;
   return (
-    <Body modifiers={['compact']}>
+    <Body modifiers={['compact']} component="div">
       <div className="start-message__explanation" dangerouslySetInnerHTML={{__html: form.explanationTemplate}}/>
       <div className="start-message__login">{startLoginMessage}</div>
     </Body>
