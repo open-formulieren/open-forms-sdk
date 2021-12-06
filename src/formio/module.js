@@ -19,6 +19,7 @@ import FileField from './components/FileField';
 import Map from './components/Map';
 import PasswordField from './components/Password';
 import LicensePlateField from './components/LicensePlateField';
+import CoSign from './components/CoSign';
 
 const FormIOModule = {
   components: {
@@ -43,6 +44,7 @@ const FormIOModule = {
     map: Map,
     password: PasswordField,
     licenseplate: LicensePlateField,
+    coSign: CoSign,
   },
 };
 

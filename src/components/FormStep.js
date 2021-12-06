@@ -370,7 +370,10 @@ const FormStep = ({
                   language: formioTranslations.language,
                   i18n: formioTranslations.i18n,
                   hooks,
-                  intl
+                  // custom options
+                  intl,
+                  form: form,
+                  submissionUuid: submission.id,
                 }}
               />
               { DEBUG ? <FormStepDebug data={formData.current} /> : null }
