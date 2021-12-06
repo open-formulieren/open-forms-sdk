@@ -52,6 +52,33 @@ const useStartSubmission = () => {
   return !!query.get(START_FORM_QUERY_PARAM);
 };
 
+const FormStartMessage = ({form}) => {
+  const intl = useIntl();
+
+  const canLogin = form.loginOptions.length > 0;
+  const startLoginMessage = form.loginRequired
+    ? intl.formatMessage({
+        description: 'Form start login required body text',
+        defaultMessage: 'Please authenticate to start the form.'
+    })
+    : canLogin
+      ? intl.formatMessage({
+          description: 'Form start anonymous or login body text',
+          defaultMessage: 'Please authenticate or start the form anonymously.'
+      })
+      : intl.formatMessage({
+         description: 'Form start (no login available) body text',
+         defaultMessage: 'Please click the button below to start the form.'
+      })
+  ;
+  return (
+    <Body modifiers={['compact']}>
+      <div className="start-message__explanation" dangerouslySetInnerHTML={{__html: form.explanationTemplate}}/>
+      <div className="start-message__login">{startLoginMessage}</div>
+    </Body>
+  );
+};
+
 
 /**
  * Form start screen.
@@ -61,7 +88,6 @@ const useStartSubmission = () => {
  * eHerkenning...)
  */
 const FormStart = ({ form, onFormStart }) => {
-  const intl = useIntl();
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
@@ -87,31 +113,13 @@ const FormStart = ({ form, onFormStart }) => {
     );
   }
 
-  const canLogin = form.loginOptions.length > 0;
-  const startLoginMessage = form.loginRequired
-    ? intl.formatMessage({
-        description: 'Form start login required body text',
-        defaultMessage: 'Please authenticate to start the form.'
-    })
-    : canLogin
-      ? intl.formatMessage({
-          description: 'Form start anonymous or login body text',
-          defaultMessage: 'Please authenticate or start the form anonymously.'
-      })
-      : intl.formatMessage({
-         description: 'Form start (no login available) body text',
-         defaultMessage: 'Please click the button below to start the form.'
-      })
-  ;
   return (
     <LiteralsProvider literals={form.literals}>
       <Card title={form.name}>
 
         { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
 
-        <Body modifiers={['compact']}>
-          {startLoginMessage}
-        </Body>
+        <FormStartMessage form={form}/>
 
         <Toolbar modifiers={['start']}>
           <ToolbarList>
