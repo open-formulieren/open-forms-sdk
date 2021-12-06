@@ -5,20 +5,20 @@ import Radio from './components/Radio';
 import Select from './components/Select';
 import TextField from './components/TextField';
 import TextArea from './components/TextArea';
-import IBANField from "./components/IBANField";
-import Email from "./components/Email";
+import IBANField from './components/IBANField';
+import Email from './components/Email';
 import Currency from './components/Currency';
 import {default as NumberComponent} from './components/Number';
 import ContentComponent from './components/Content';
 import DateField from './components/DateField';
-import TimeField from "./components/TimeField";
-import PostcodeField from "./components/PostcodeField";
-import PhoneNumberField from "./components/PhoneNumberField";
-import BsnField from "./components/BsnField";
-import FileField from "./components/FileField";
-import Map from "./components/Map";
-import PasswordField from "./components/Password";
-import LicensePlateField from "./components/LicensePlateField";
+import TimeField from './components/TimeField';
+import PostcodeField from './components/PostcodeField';
+import PhoneNumberField from './components/PhoneNumberField';
+import BsnField from './components/BsnField';
+import FileField from './components/FileField';
+import Map from './components/Map';
+import PasswordField from './components/Password';
+import LicensePlateField from './components/LicensePlateField';
 
 const FormIOModule = {
   components: {
