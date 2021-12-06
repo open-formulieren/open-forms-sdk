@@ -39,6 +39,7 @@ const Form = PropTypes.shape({
       nextText: ButtonTextLiteral.isRequired,
     }).isRequired,
   })).isRequired,
+  explanationTemplate:PropTypes.string,
 });
 
 export default Form;
