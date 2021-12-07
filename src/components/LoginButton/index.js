@@ -12,8 +12,10 @@ const getLoginUrl = (loginOption) => {
   const queryParams = Array.from(nextUrl.searchParams.keys());
   queryParams.map(param => nextUrl.searchParams.delete(param));
 
-  nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
   const loginUrl = new URL(loginOption.url);
+  if (!loginUrl.searchParams.coSignSubmission) {
+    nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
+  }
   loginUrl.searchParams.set("next", nextUrl.toString());
   return loginUrl.toString();
 };
