@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
 
 import { get } from 'api';
-import Anchor from 'components/Anchor';
-import Button from 'components/Button';
 import FAIcon from 'components/FAIcon';
 import Loader from 'components/Loader';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
