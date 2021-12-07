@@ -1,7 +1,8 @@
-import Button from "../Button";
 import {FormattedMessage} from "react-intl";
 import PropTypes from "prop-types";
 import React from "react";
+
+import Button from 'components/Button';
 
 export const START_FORM_QUERY_PARAM = '_start';
 
@@ -41,3 +42,4 @@ LoginButton.propTypes = {
 };
 
 export default LoginButton;
+export {default as LoginButtonIcon} from './LoginButtonIcon'
