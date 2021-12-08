@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
 
 import { get } from 'api';
-import FAIcon from 'components/FAIcon';
+import Body from 'components/Body';
 import Loader from 'components/Loader';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
+
+import {getBEMClassName} from 'utils';
 
 const getCosignStatus = async (baseUrl, submissionUuid) => {
   const endpoint = `${baseUrl}submissions/${submissionUuid}/co-sign`;
@@ -27,7 +29,7 @@ const CoSign = ({ baseUrl, form, submissionUuid, saveStepData, authPlugin='digid
   if (loading) {
     return (<Loader modifiers={['small']} />);
   }
-  const {coSigned} = coSignState;
+  const {coSigned, representation} = coSignState;
 
   // TODO: nicer component for when co-signed
   // TODO: remove fallback to first option (this is for dev purposes only)
@@ -38,7 +40,11 @@ const CoSign = ({ baseUrl, form, submissionUuid, saveStepData, authPlugin='digid
   };
 
   if (coSigned) {
-    return (<FAIcon icon="check" />);
+    return (
+      <Body>
+        <div className={getBEMClassName('co-sign__representation')}>{representation}</div>
+      </Body>
+    );
   }
 
   return (

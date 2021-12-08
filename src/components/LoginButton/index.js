@@ -13,7 +13,8 @@ const getLoginUrl = (loginOption) => {
   queryParams.map(param => nextUrl.searchParams.delete(param));
 
   const loginUrl = new URL(loginOption.url);
-  if (!loginUrl.searchParams.coSignSubmission) {
+
+  if (!loginUrl.searchParams.has('coSignSubmission')) {
     nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
   }
   loginUrl.searchParams.set("next", nextUrl.toString());
