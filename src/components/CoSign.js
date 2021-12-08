@@ -15,7 +15,7 @@ const getCosignStatus = async (baseUrl, submissionUuid) => {
   return response;
 };
 
-const CoSign = ({ baseUrl, form, submissionUuid, authPlugin='digid-mock' }) => {
+const CoSign = ({ baseUrl, form, submissionUuid, saveStepData, authPlugin='digid-mock' }) => {
 
   const {loading, value: coSignState, error} = useAsync(
     async () => await getCosignStatus(baseUrl, submissionUuid),
@@ -44,7 +44,7 @@ const CoSign = ({ baseUrl, form, submissionUuid, authPlugin='digid-mock' }) => {
   return (
     <Toolbar modifiers={['start']}>
       <ToolbarList>
-        <LoginButton option={modifiedLoginOption} />
+        <LoginButton option={modifiedLoginOption} onClick={async () => await saveStepData()} />
       </ToolbarList>
 
       {
@@ -65,6 +65,7 @@ CoSign.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   form: Types.Form.isRequired,
   submissionUuid: PropTypes.string.isRequired,
+  saveStepData: PropTypes.func.isRequired,
   authPlugin: PropTypes.string,
 };
 

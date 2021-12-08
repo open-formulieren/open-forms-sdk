@@ -20,8 +20,8 @@ const getLoginUrl = (loginOption) => {
   return loginUrl.toString();
 };
 
-const LoginButton = ({option}) => (
-  <Button variant="primary" component="a" href={getLoginUrl(option)}>
+const LoginButton = ({option, ...extra}) => (
+  <Button variant="primary" component="a" href={getLoginUrl(option)} {...extra}>
     <FormattedMessage
       description="Login button label"
       defaultMessage="Login with {provider}"

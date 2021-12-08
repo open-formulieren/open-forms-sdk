@@ -372,8 +372,11 @@ const FormStep = ({
                   hooks,
                   // custom options
                   intl,
-                  form: form,
-                  submissionUuid: submission.id,
+                  ofContext: {
+                    form: form,
+                    submissionUuid: submission.id,
+                    saveStepData: async () => await submitStepData(submissionStep.url, {...formData.current}),
+                  },
                 }}
               />
               { DEBUG ? <FormStepDebug data={formData.current} /> : null }

@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import {getBEMClassName} from 'utils';
 
 
-const Button = ({ type="", component="button", variant="", children, ...extra }) => {
-    const Component = `${component}`;
+const Button = ({ type='', component: Component='button', variant='', children, ...extra }) => {
     const className = getBEMClassName('button', [variant]);
 
     // https://www.a11y-101.com/development/aria-disabled
