@@ -35,6 +35,12 @@
       "value": "Afspraak geannuleerd"
     }
   ],
+  "Ao+97J": [
+    {
+      "type": 0,
+      "value": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
+    }
+  ],
   "AxDC+M": [
     {
       "type": 0,
@@ -307,6 +313,12 @@
     {
       "type": 0,
       "value": "Het pauzeren van het formulier is mislukt. Gelieve later opnieuw te proberen."
+    }
+  ],
+  "rkS1tt": [
+    {
+      "type": 0,
+      "value": "Something went wrong presenting the login option. Please contact the municipality."
     }
   ],
   "senRv3": [

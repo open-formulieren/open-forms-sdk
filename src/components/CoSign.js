@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
+import {FormattedMessage} from 'react-intl';
 
 import { get } from 'api';
 import Body from 'components/Body';
+import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 
 import {getBEMClassName} from 'utils';
+
+// TODO: tests!
 
 const getCosignStatus = async (baseUrl, submissionUuid) => {
   const endpoint = `${baseUrl}submissions/${submissionUuid}/co-sign`;
@@ -23,17 +27,28 @@ const CoSign = ({ baseUrl, form, submissionUuid, saveStepData, authPlugin='digid
     async () => await getCosignStatus(baseUrl, submissionUuid),
     [baseUrl, submissionUuid]
   );
+
   // log errors to the console if any
   error && console.error(error);
+
   // while loading, display spinner
   if (loading) {
     return (<Loader modifiers={['small']} />);
   }
   const {coSigned, representation} = coSignState;
 
-  // TODO: nicer component for when co-signed
-  // TODO: remove fallback to first option (this is for dev purposes only)
-  const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin) || form.loginOptions[0];
+  const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
+  if (!loginOption) {
+    return (
+      <ErrorMessage>
+        <FormattedMessage
+          description="Co-sign auth option not available on form"
+          defaultMessage="Something went wrong presenting the login option. Please contact the municipality."
+        />
+      </ErrorMessage>
+    );
+  }
+
   const modifiedLoginOption = {
     ...loginOption,
     url: `${loginOption.url}?coSignSubmission=${submissionUuid}`, // TODO: clean up this URL building
@@ -41,8 +56,15 @@ const CoSign = ({ baseUrl, form, submissionUuid, saveStepData, authPlugin='digid
 
   if (coSigned) {
     return (
-      <Body>
-        <div className={getBEMClassName('co-sign__representation')}>{representation}</div>
+      <Body component="div">
+        <div className={getBEMClassName('co-sign__representation')}>
+        {
+          representation ?? (<FormattedMessage
+            description="Co-signed without representation fallback message"
+            defaultMessage="Something went wrong while processing the co-sign authentication. Please contact the municipality."
+          />)
+        }
+        </div>
       </Body>
     );
   }

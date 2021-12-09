@@ -13,4 +13,8 @@ $co-sign-color-bg: $color-gray-lighter !default;
     padding: $grid-margin-2;
   }
 
+  .#{prefix('alert')} .#{prefix('body')} {
+    margin-top: 0;
+  }
+
 }

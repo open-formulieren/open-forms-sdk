@@ -35,6 +35,12 @@
       "value": "Appointment cancelled"
     }
   ],
+  "Ao+97J": [
+    {
+      "type": 0,
+      "value": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
+    }
+  ],
   "AxDC+M": [
     {
       "type": 0,
@@ -307,6 +313,12 @@
     {
       "type": 0,
       "value": "Suspending the form failed, please try again later"
+    }
+  ],
+  "rkS1tt": [
+    {
+      "type": 0,
+      "value": "Something went wrong presenting the login option. Please contact the municipality."
     }
   ],
   "senRv3": [

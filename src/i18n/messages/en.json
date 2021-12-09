@@ -29,6 +29,11 @@
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
+  "Ao+97J": {
+    "defaultMessage": "Something went wrong while processing the co-sign authentication. Please contact the municipality.",
+    "description": "Co-signed without representation fallback message",
+    "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
+  },
   "AxDC+M": {
     "defaultMessage": "Login with {provider}",
     "description": "Login button label",
@@ -208,6 +213,11 @@
     "defaultMessage": "Suspending the form failed, please try again later",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
+  },
+  "rkS1tt": {
+    "defaultMessage": "Something went wrong presenting the login option. Please contact the municipality.",
+    "description": "Co-sign auth option not available on form",
+    "originalDefault": "Something went wrong presenting the login option. Please contact the municipality."
   },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
