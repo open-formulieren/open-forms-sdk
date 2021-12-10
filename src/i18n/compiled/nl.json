@@ -5,6 +5,12 @@
       "value": "Uitloggen"
     }
   ],
+  "1hdvgS": [
+    {
+      "type": 0,
+      "value": "Something went wrong while presenting the login option. Please contact the municipality."
+    }
+  ],
   "5sFDwa": [
     {
       "type": 0,
@@ -315,12 +321,6 @@
       "value": "Het pauzeren van het formulier is mislukt. Gelieve later opnieuw te proberen."
     }
   ],
-  "rkS1tt": [
-    {
-      "type": 0,
-      "value": "Something went wrong presenting the login option. Please contact the municipality."
-    }
-  ],
   "senRv3": [
     {
       "type": 0,
@@ -353,6 +353,12 @@
     {
       "type": 0,
       "value": " te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden."
+    }
+  ],
+  "tBQ8TL": [
+    {
+      "type": 0,
+      "value": "Not co-signed"
     }
   ],
   "tIN0Is": [

@@ -22,7 +22,7 @@ const LoginButtonIcons = ({ loginOptions }) => {
   return (
     <>
       {optionsWithIcons.map(option => (
-        <LoginButtonIcon identifier={option.identifier} logo={option.logo} />
+        <LoginButtonIcon key={option.identifier} identifier={option.identifier} logo={option.logo} />
       ))}
     </>
   );

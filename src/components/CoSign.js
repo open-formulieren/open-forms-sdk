@@ -30,7 +30,7 @@ const CoSignAuthentication = ({ form, submissionUuid, saveStepData, authPlugin }
       <ErrorMessage>
         <FormattedMessage
           description="Co-sign auth option not available on form"
-          defaultMessage="Something went wrong presenting the login option. Please contact the municipality."
+          defaultMessage="Something went wrong while presenting the login option. Please contact the municipality."
         />
       </ErrorMessage>
     );

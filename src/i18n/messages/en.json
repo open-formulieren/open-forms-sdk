@@ -4,6 +4,11 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
+  "1hdvgS": {
+    "defaultMessage": "Something went wrong while presenting the login option. Please contact the municipality.",
+    "description": "Co-sign auth option not available on form",
+    "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
+  },
   "5sFDwa": {
     "defaultMessage": "Please authenticate to start the form.",
     "description": "Form start login required body text",
@@ -214,15 +219,15 @@
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
   },
-  "rkS1tt": {
-    "defaultMessage": "Something went wrong presenting the login option. Please contact the municipality.",
-    "description": "Co-sign auth option not available on form",
-    "originalDefault": "Something went wrong presenting the login option. Please contact the municipality."
-  },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
     "description": "Appointment cancellation body text",
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
+  },
+  "tBQ8TL": {
+    "defaultMessage": "Not co-signed",
+    "description": "Not co-signed (summary) message",
+    "originalDefault": "Not co-signed"
   },
   "tIN0Is": {
     "defaultMessage": "We can't display any payment information - did you maybe get here by accident?",
