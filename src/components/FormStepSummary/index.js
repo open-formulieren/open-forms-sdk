@@ -13,7 +13,6 @@ import {
   getComponentLabel,
   getComponentValue,
   iterComponentsWithData,
-  displayValue
 } from 'components/FormStepSummary/utils';
 
 
@@ -58,7 +57,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
                   {getComponentLabel(component)}
                 </TableHead>
                 <TableCell>
-                  {getComponentValue(displayValue(value), intl)}
+                  {getComponentValue(component, intl)}
                 </TableCell>
               </TableRow>
             );

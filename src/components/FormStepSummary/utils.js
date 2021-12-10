@@ -41,9 +41,9 @@ export const getComponentValue = (component, intl) => {
     return '';
   }
 
-  const {value, key, type} = component;
-  const inputValue = displayValue(value);
-  if (!inputValue) return '';
+  const { type, key, value: rawValue } = component;
+  const inputValue = displayValue(rawValue);
+  if (!inputValue && type !== 'coSign') return '';
 
   switch (type) {
     case 'signature' : {
@@ -119,6 +119,9 @@ export const getComponentValue = (component, intl) => {
       return <Map markerCoordinates={inputValue} disabled />;
     case 'password':
       return Array.from(inputValue).map(() => '*').join('');
+    case 'coSign': {
+      return 'cosign';
+    }
     default:
       return inputValue;
   }
@@ -147,6 +150,5 @@ export const displayValue = (value) => {
   if (Array.isArray(value)) {
     return value.join(', ');
   }
-
   return value;
 };
