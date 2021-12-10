@@ -12,7 +12,9 @@ import MaintenanceMode from 'components/MaintenanceMode';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';
-import LoginButton, {START_FORM_QUERY_PARAM} from 'components/LoginButton';
+import LoginButton, {
+  START_FORM_QUERY_PARAM, LoginButtonIcon
+} from 'components/LoginButton';
 
 
 const LoginButtonIcons = ({ loginOptions }) => {
@@ -20,14 +22,7 @@ const LoginButtonIcons = ({ loginOptions }) => {
   return (
     <>
       {optionsWithIcons.map(option => (
-        <Button
-          variant="image"
-          component="input"
-          type="image"
-          href={option.logo.href}
-          src={option.logo.imageSrc}
-          key={option.identifier}
-        />
+        <LoginButtonIcon key={option.identifier} identifier={option.identifier} logo={option.logo} />
       ))}
     </>
   );

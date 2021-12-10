@@ -5,6 +5,12 @@
       "value": "Log out"
     }
   ],
+  "1hdvgS": [
+    {
+      "type": 0,
+      "value": "Something went wrong while presenting the login option. Please contact the municipality."
+    }
+  ],
   "5sFDwa": [
     {
       "type": 0,
@@ -33,6 +39,12 @@
     {
       "type": 0,
       "value": "Appointment cancelled"
+    }
+  ],
+  "Ao+97J": [
+    {
+      "type": 0,
+      "value": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
     }
   ],
   "AxDC+M": [
@@ -341,6 +353,12 @@
     {
       "type": 0,
       "value": ". Please fill out your email address for verification purposes."
+    }
+  ],
+  "tBQ8TL": [
+    {
+      "type": 0,
+      "value": "Not co-signed"
     }
   ],
   "tIN0Is": [

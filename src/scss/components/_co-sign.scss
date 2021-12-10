@@ -1,0 +1,20 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+$co-sign-color-bg: $color-gray-lighter !default;
+
+.#{prefix('co-sign')} {
+
+  @include element('representation') {
+    @include border(all, $size: 1px);
+    background-color: $co-sign-color-bg;
+    padding: $grid-margin-2;
+  }
+
+  .#{prefix('alert')} .#{prefix('body')} {
+    margin-top: 0;
+  }
+
+}

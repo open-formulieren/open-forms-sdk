@@ -13,7 +13,6 @@ import {
   getComponentLabel,
   getComponentValue,
   iterComponentsWithData,
-  displayValue
 } from 'components/FormStepSummary/utils';
 
 
@@ -50,7 +49,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           * Note that the `components` should already be flattened!
           */
           iterComponentsWithData(stepData.configuration.components, stepData.data).map((component) => {
-            const {key, type, value} = component;
+            const {key, type} = component;
             const className = getBEMClassName('summary-row', [type]);
             return (
               <TableRow key={key} className={className}>
@@ -58,7 +57,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
                   {getComponentLabel(component)}
                 </TableHead>
                 <TableCell>
-                  {getComponentValue(displayValue(value), intl)}
+                  {getComponentValue(component, intl)}
                 </TableCell>
               </TableRow>
             );
@@ -71,7 +70,21 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
 };
 
 FormStepSummary.propTypes = {
-  stepData: PropTypes.object.isRequired,
+  stepData: PropTypes.shape({
+    configuration: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
+    submissionStep: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      formStep: PropTypes.string.isRequired,
+      canSubmit: PropTypes.bool.isRequired,
+      completed: PropTypes.bool.isRequired,
+      isApplicable: PropTypes.bool.isRequired,
+      optional: PropTypes.bool.isRequired,
+    }).isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
   editStepUrl: PropTypes.string.isRequired,
   editStepText: PropTypes.string.isRequired,
 };

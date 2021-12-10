@@ -1,7 +1,8 @@
-import Button from "../Button";
-import {FormattedMessage} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import Button from 'components/Button';
 
 export const START_FORM_QUERY_PARAM = '_start';
 
@@ -11,14 +12,17 @@ const getLoginUrl = (loginOption) => {
   const queryParams = Array.from(nextUrl.searchParams.keys());
   queryParams.map(param => nextUrl.searchParams.delete(param));
 
-  nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
   const loginUrl = new URL(loginOption.url);
-  loginUrl.searchParams.set("next", nextUrl.toString());
+
+  if (!loginUrl.searchParams.has('coSignSubmission')) {
+    nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
+  }
+  loginUrl.searchParams.set('next', nextUrl.toString());
   return loginUrl.toString();
 };
 
-const LoginButton = ({option}) => (
-  <Button variant="primary" component="a" href={getLoginUrl(option)}>
+const LoginButton = ({option, ...extra}) => (
+  <Button variant="primary" component="a" href={getLoginUrl(option)} {...extra}>
     <FormattedMessage
       description="Login button label"
       defaultMessage="Login with {provider}"
@@ -41,3 +45,4 @@ LoginButton.propTypes = {
 };
 
 export default LoginButton;
+export {default as LoginButtonIcon} from './LoginButtonIcon'

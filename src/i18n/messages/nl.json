@@ -4,6 +4,11 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
+  "1hdvgS": {
+    "defaultMessage": "Something went wrong while presenting the login option. Please contact the municipality.",
+    "description": "Co-sign auth option not available on form",
+    "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
+  },
   "5sFDwa": {
     "defaultMessage": "Log in om het formulier te starten.",
     "description": "Form start login required body text",
@@ -28,6 +33,11 @@
     "defaultMessage": "Afspraak geannuleerd",
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
+  },
+  "Ao+97J": {
+    "defaultMessage": "Something went wrong while processing the co-sign authentication. Please contact the municipality.",
+    "description": "Co-signed without representation fallback message",
+    "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
   },
   "AxDC+M": {
     "defaultMessage": "Inloggen met {provider}",
@@ -213,6 +223,11 @@
     "defaultMessage": "U staat op het punt uw afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden.",
     "description": "Appointment cancellation body text",
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
+  },
+  "tBQ8TL": {
+    "defaultMessage": "Not co-signed",
+    "description": "Not co-signed (summary) message",
+    "originalDefault": "Not co-signed"
   },
   "tIN0Is": {
     "defaultMessage": "We kunnen geen betaalinformatie tonen - bent u per ongeluk op deze pagina gekomen?",

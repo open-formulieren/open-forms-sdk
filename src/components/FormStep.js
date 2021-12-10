@@ -370,7 +370,13 @@ const FormStep = ({
                   language: formioTranslations.language,
                   i18n: formioTranslations.i18n,
                   hooks,
-                  intl
+                  // custom options
+                  intl,
+                  ofContext: {
+                    form: form,
+                    submissionUuid: submission.id,
+                    saveStepData: async () => await submitStepData(submissionStep.url, {...formData.current}),
+                  },
                 }}
               />
               { DEBUG ? <FormStepDebug data={formData.current} /> : null }
