@@ -36,10 +36,10 @@ const CoSignAuthentication = ({ form, submissionUuid, saveStepData, authPlugin }
     );
   }
 
-  const modifiedLoginOption = {
-    ...loginOption,
-    url: `${loginOption.url}?coSignSubmission=${submissionUuid}`, // TODO: clean up this URL building
-  };
+  // add the co sign submission parameter to the login URL
+  const loginUrl = new URL(loginOption.url);
+  loginUrl.searchParams.set('coSignSubmission', submissionUuid);
+  const modifiedLoginOption = {...loginOption, url: loginUrl.toString()};
 
   return (
     <Toolbar modifiers={['start']}>

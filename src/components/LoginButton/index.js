@@ -1,6 +1,6 @@
-import {FormattedMessage} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import Button from 'components/Button';
 
@@ -17,7 +17,7 @@ const getLoginUrl = (loginOption) => {
   if (!loginUrl.searchParams.has('coSignSubmission')) {
     nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
   }
-  loginUrl.searchParams.set("next", nextUrl.toString());
+  loginUrl.searchParams.set('next', nextUrl.toString());
   return loginUrl.toString();
 };
 
