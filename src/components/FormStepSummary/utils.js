@@ -2,6 +2,7 @@ import {FormattedNumber} from 'react-intl';
 import {getFormattedDateString, getFormattedTimeString} from 'utils';
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
+import CoSign from 'components/CoSign';
 import Image from 'components/Image';
 import List from 'components/List';
 import Map from 'components/Map';
@@ -120,7 +121,9 @@ export const getComponentValue = (component, intl) => {
     case 'password':
       return Array.from(inputValue).map(() => '*').join('');
     case 'coSign': {
-      return 'cosign';
+      return (
+        <CoSign interactive={false} />
+      );
     }
     default:
       return inputValue;

@@ -5,6 +5,7 @@ import { IntlProvider } from 'react-intl';
 
 import { applyPrefix } from '../utils';
 import CoSignReact from 'components/CoSign';
+import {ConfigContext} from 'Context';
 
 const Field = Formio.Components.components.field;
 
@@ -57,13 +58,14 @@ export default class CoSign extends Field {
 
     ReactDOM.render(
       <IntlProvider {...this.options.intl}>
-        <CoSignReact
-          authPlugin={this.component.authPlugin}
-          baseUrl={this.options.baseUrl}
-          form={form}
-          submissionUuid={submissionUuid}
-          saveStepData={saveStepData}
-        />
+        <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
+          <CoSignReact
+            authPlugin={this.component.authPlugin}
+            form={form}
+            submissionUuid={submissionUuid}
+            saveStepData={saveStepData}
+          />
+        </ConfigContext.Provider>
       </IntlProvider>,
       container,
     );

@@ -16,6 +16,7 @@ import Price from 'components/Price';
 import PrivacyCheckbox from 'components/PrivacyCheckbox';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {findPreviousApplicableStep} from 'components/utils';
+import {SubmissionContext} from 'Context';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import { flattenComponents } from 'utils';
@@ -204,6 +205,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
 
       <LiteralsProvider literals={form.literals}>
         <Wrapper onSubmit={onSubmit}>
+          <SubmissionContext.Provider value={{submission: refreshedSubmission}}>
           { loading
             ? (<Loader modifiers={['centered']} />)
             : (
@@ -230,6 +232,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
               </>
             )
           }
+        </SubmissionContext.Provider>
         </Wrapper>
       </LiteralsProvider>
     </Card>
