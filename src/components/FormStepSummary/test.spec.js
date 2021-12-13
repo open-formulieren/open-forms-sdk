@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 
 import FormStepSummary from './index';
 import messagesNL from 'i18n/compiled/nl.json';
-import {testStepDataEmptyDate} from './fixtures';
+import {testStepDataEmptyDate, testStepDataSelectMultivalue} from './fixtures';
 
 
 let container = null;
@@ -42,6 +42,28 @@ it('Unfilled dates displayed properly', () => {
     );
   });
 
-  const value = container.getElementsByClassName("openforms-table__cell")[0].textContent;
+  const value = container.getElementsByClassName('openforms-table__cell')[0].textContent;
   expect(value).toEqual('');
+});
+
+it('Multi-value select field displayed properly', () => {
+
+  act(() => {
+    render(
+      <IntlProvider
+        locale="nl"
+        messages={messagesNL}
+      >
+        <FormStepSummary
+          stepData={testStepDataSelectMultivalue}
+          editStepUrl="http://test-url.nl"
+          editStepText="Change"
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const value = container.getElementsByClassName("openforms-table__cell")[0].textContent;
+  expect(value).toEqual('Dog, Fish');
 });
