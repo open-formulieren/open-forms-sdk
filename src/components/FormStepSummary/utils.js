@@ -64,6 +64,12 @@ export const getComponentValue = (component, intl) => {
         return getFormattedDateString(intl, inputValue);
       } else if (component.appointments?.showTimes) {
         return getFormattedTimeString(intl, inputValue);
+      } else if (component.multiple) {
+        let displayValues = [];
+        for (const possibleValue of component.data.values) {
+          if (rawValue.includes(possibleValue['value'])) displayValues.push(possibleValue['label']);
+        }
+        return displayValues.join(', ');
       } else {
         const obj = component.data.values.find(obj => obj.value === inputValue);
         return obj ? obj.label : '';
