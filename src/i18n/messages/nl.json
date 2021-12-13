@@ -5,7 +5,7 @@
     "originalDefault": "Log out"
   },
   "1hdvgS": {
-    "defaultMessage": "Something went wrong while presenting the login option. Please contact the municipality.",
+    "defaultMessage": "Er is foutgegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
@@ -35,7 +35,7 @@
     "originalDefault": "Appointment cancelled"
   },
   "Ao+97J": {
-    "defaultMessage": "Something went wrong while processing the co-sign authentication. Please contact the municipality.",
+    "defaultMessage": "Er is iets foutgegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op.",
     "description": "Co-signed without representation fallback message",
     "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
   },
@@ -70,7 +70,7 @@
     "originalDefault": "Download PDF"
   },
   "GpGYMo": {
-    "defaultMessage": "Er ging iets fout bij het bewaren van de gegevens. Probeert u alstublieft later opnieuw.",
+    "defaultMessage": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw.",
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
   },
@@ -80,7 +80,7 @@
     "originalDefault": "Cancel appointment"
   },
   "HhcSoc": {
-    "defaultMessage": "Formulier bewaren en later hernemen",
+    "defaultMessage": "Formulier bewaren en later hervatten",
     "description": "Form save modal title",
     "originalDefault": "Save and resume later"
   },
@@ -115,7 +115,7 @@
     "originalDefault": "Payment is required for this product"
   },
   "R5NUuU": {
-    "defaultMessage": "Confirm",
+    "defaultMessage": "Bevestigen",
     "description": "Form save modal submit button",
     "originalDefault": "Confirm"
   },
@@ -190,12 +190,12 @@
     "originalDefault": "Processing..."
   },
   "fWjfVm": {
-    "defaultMessage": "Een moment geduld alstublieft terwijl wij uw inzending verwerken.",
+    "defaultMessage": "Een moment geduld alstublieft. Uw inzending wordt verwerkt.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
   },
   "hHS5vj": {
-    "defaultMessage": "Something went wrong while submitting the form.",
+    "defaultMessage": "Er is iets foutgegaan bij het verzenden.",
     "description": "Generic submission error",
     "originalDefault": "Something went wrong while submitting the form."
   },
@@ -205,7 +205,7 @@
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
   "iubnaw": {
-    "defaultMessage": "Het e-mailadres waarop u de herneemlink ontvangt.",
+    "defaultMessage": "Het e-mailadres waarop u de link ontvangt om het formulieren te hervatten.",
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
@@ -215,7 +215,7 @@
     "originalDefault": "Your appointment has been cancelled"
   },
   "r1L6Zj": {
-    "defaultMessage": "Het pauzeren van het formulier is mislukt. Gelieve later opnieuw te proberen.",
+    "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
   },
@@ -225,7 +225,7 @@
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
   },
   "tBQ8TL": {
-    "defaultMessage": "Not co-signed",
+    "defaultMessage": "Niet mede-ondertekend",
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
   },
@@ -235,7 +235,7 @@
     "originalDefault": "We can't display any payment information - did you maybe get here by accident?"
   },
   "tUgRfj": {
-    "defaultMessage": "Het uitloggen is mislukt, gelieve later opnieuw te proberen.",
+    "defaultMessage": "Het uitloggen is mislukt. Probeer het later opnieuw.",
     "description": "Modal logging out failed message",
     "originalDefault": "Logging out failed, please try again later"
   },

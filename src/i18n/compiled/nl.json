@@ -8,7 +8,7 @@
   "1hdvgS": [
     {
       "type": 0,
-      "value": "Something went wrong while presenting the login option. Please contact the municipality."
+      "value": "Er is foutgegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
     }
   ],
   "5sFDwa": [
@@ -44,7 +44,7 @@
   "Ao+97J": [
     {
       "type": 0,
-      "value": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
+      "value": "Er is iets foutgegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op."
     }
   ],
   "AxDC+M": [
@@ -98,7 +98,7 @@
   "GpGYMo": [
     {
       "type": 0,
-      "value": "Er ging iets fout bij het bewaren van de gegevens. Probeert u alstublieft later opnieuw."
+      "value": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw."
     }
   ],
   "HGx1ny": [
@@ -110,7 +110,7 @@
   "HhcSoc": [
     {
       "type": 0,
-      "value": "Formulier bewaren en later hernemen"
+      "value": "Formulier bewaren en later hervatten"
     }
   ],
   "J9svUq": [
@@ -174,7 +174,7 @@
   "R5NUuU": [
     {
       "type": 0,
-      "value": "Confirm"
+      "value": "Bevestigen"
     }
   ],
   "Rf8Sot": [
@@ -288,13 +288,13 @@
   "fWjfVm": [
     {
       "type": 0,
-      "value": "Een moment geduld alstublieft terwijl wij uw inzending verwerken."
+      "value": "Een moment geduld alstublieft. Uw inzending wordt verwerkt."
     }
   ],
   "hHS5vj": [
     {
       "type": 0,
-      "value": "Something went wrong while submitting the form."
+      "value": "Er is iets foutgegaan bij het verzenden."
     }
   ],
   "hQRQCS": [
@@ -306,7 +306,7 @@
   "iubnaw": [
     {
       "type": 0,
-      "value": "Het e-mailadres waarop u de herneemlink ontvangt."
+      "value": "Het e-mailadres waarop u de link ontvangt om het formulieren te hervatten."
     }
   ],
   "jYh8Nr": [
@@ -318,7 +318,7 @@
   "r1L6Zj": [
     {
       "type": 0,
-      "value": "Het pauzeren van het formulier is mislukt. Gelieve later opnieuw te proberen."
+      "value": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw."
     }
   ],
   "senRv3": [
@@ -358,7 +358,7 @@
   "tBQ8TL": [
     {
       "type": 0,
-      "value": "Not co-signed"
+      "value": "Niet mede-ondertekend"
     }
   ],
   "tIN0Is": [
@@ -370,7 +370,7 @@
   "tUgRfj": [
     {
       "type": 0,
-      "value": "Het uitloggen is mislukt, gelieve later opnieuw te proberen."
+      "value": "Het uitloggen is mislukt. Probeer het later opnieuw."
     }
   ],
   "tohkCS": [
