@@ -90,10 +90,10 @@ const stepLabels = {
 };
 
 
-const ProgressIndicator = ({ title, submission, steps }) => {
-  const summaryMatch = !!useRouteMatch("/overzicht");
-  const stepMatch = useRouteMatch("/stap/:step");
-  const confirmationMatch = !!useRouteMatch("/bevestiging");
+const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
+  const summaryMatch = !!useRouteMatch('/overzicht');
+  const stepMatch = useRouteMatch('/stap/:step');
+  const confirmationMatch = !!useRouteMatch('/bevestiging');
   const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
 
   const [expanded, setExpanded] = useState(false);
@@ -148,18 +148,28 @@ const ProgressIndicator = ({ title, submission, steps }) => {
             />
           ) )
         }
-        <LinkOrDisabledAnchor
-          to={'/overzicht'}
-          useLink={applicableCompleted}
-          modifiers={getLinkModifiers(summaryMatch, applicableCompleted, confirmationMatch)}
-        >
-          <CompletionMark completed={confirmationMatch} />
-          {` ${stepLabels.overview}`}
-        </LinkOrDisabledAnchor>
-        <Anchor
-          component="span"
-          modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted, false)}
-        >{` ${stepLabels.confirmation}`}</Anchor>
+        {
+          submissionAllowed !== 'no_without_overview'
+          && (
+            <LinkOrDisabledAnchor
+              to={'/overzicht'}
+              useLink={applicableCompleted}
+              modifiers={getLinkModifiers(summaryMatch, applicableCompleted, confirmationMatch)}
+            >
+              <CompletionMark completed={confirmationMatch}/>
+              {` ${stepLabels.overview}`}
+            </LinkOrDisabledAnchor>
+          )
+        }
+        {
+          submissionAllowed === 'yes'
+          && (
+            <Anchor
+              component="span"
+              modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted, false)}
+            >{` ${stepLabels.confirmation}`}</Anchor>
+          )
+        }
       </List>
     </Card>
   );
@@ -182,6 +192,7 @@ ProgressIndicator.propTypes = {
     slug: PropTypes.string.isRequired,
     formDefinition: PropTypes.string.isRequired,
   })).isRequired,
+  submissionAllowed: PropTypes.string.isRequired,
 };
 
 
