@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {Literal, LiteralsProvider} from 'components/Literal';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -6,6 +7,7 @@ import Button from 'components/Button';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+import Types from 'types';
 
 
 const ButtonsToolbar = ({form, literals, canSubmitStep, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
@@ -50,6 +52,18 @@ const ButtonsToolbar = ({form, literals, canSubmitStep, isLastStep, isCheckingLo
       {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
     </>
   );
+};
+
+
+ButtonsToolbar.propTypes = {
+  form: Types.Form.isRequired,
+  literals: PropTypes.object,
+  canSubmitStep: PropTypes.bool.isRequired,
+  isLastStep: PropTypes.bool.isRequired,
+  isCheckingLogic: PropTypes.bool.isRequired,
+  onNavigatePrevPage: PropTypes.func.isRequired,
+  onFormSave: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
 };
 
 
