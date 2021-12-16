@@ -1,3 +1,5 @@
+import {SUBMISSION_ALLOWED} from 'components/constants';
+
 export const testForm = {
   literals:
   {
