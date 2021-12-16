@@ -1,11 +1,9 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import cloneDeep from 'lodash/cloneDeep';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import ButtonsToolbar from './index';
-import {basicForm} from './fixtures';
 
 
 let container = null;
@@ -32,24 +30,17 @@ const LITERALS = {
 
 
 it('Last step of submittable form, button is present', () => {
-
-  let testForm = cloneDeep(basicForm);
-  testForm = {
-    ...testForm,
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
-    loginRequired: false,
-  };
-
   const mockFunction = jest.fn();
 
   act(() => {
     render(
       <ButtonsToolbar
-        form={testForm}
         literals={LITERALS}
         canSubmitStep={true}
+        canSubmitForm={SUBMISSION_ALLOWED.yes}
         isLastStep={true}
         isCheckingLogic={false}
+        loginRequired={false}
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}
@@ -69,23 +60,17 @@ it('Last step of submittable form, button is present', () => {
 
 it('Last step of non-submittable form with overview, button is present', () => {
 
-  let testForm = cloneDeep(basicForm);
-  testForm = {
-    ...testForm,
-    submissionAllowed: SUBMISSION_ALLOWED.noWithOverview,
-    loginRequired: false,
-  };
-
   const mockFunction = jest.fn();
 
   act(() => {
     render(
       <ButtonsToolbar
-        form={testForm}
         literals={LITERALS}
         canSubmitStep={true}
+        canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
         isLastStep={true}
         isCheckingLogic={false}
+        loginRequired={false}
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}
@@ -104,23 +89,17 @@ it('Last step of non-submittable form with overview, button is present', () => {
 
 
 it('Last step of non-submittable form without overview, button is NOT present', () => {
-  let testForm = cloneDeep(basicForm);
-  testForm = {
-    ...testForm,
-    submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview,
-    loginRequired: false,
-  };
-
   const mockFunction = jest.fn();
 
   act(() => {
     render(
       <ButtonsToolbar
-        form={testForm}
         literals={LITERALS}
         canSubmitStep={true}
+        canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
         isLastStep={true}
         isCheckingLogic={false}
+        loginRequired={false}
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}
@@ -138,23 +117,17 @@ it('Last step of non-submittable form without overview, button is NOT present', 
 
 
 it('Non-last step of non-submittable form without overview, button IS present', () => {
-  let testForm = cloneDeep(basicForm);
-  testForm = {
-    ...testForm,
-    submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview,
-    loginRequired: false,
-  };
-
   const mockFunction = jest.fn();
 
   act(() => {
     render(
       <ButtonsToolbar
-        form={testForm}
         literals={LITERALS}
         canSubmitStep={true}
+        canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
         isLastStep={false}
         isCheckingLogic={false}
+        loginRequired={false}
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}

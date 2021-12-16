@@ -7,11 +7,10 @@ import Button from 'components/Button';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import Types from 'types';
 
 
-const ButtonsToolbar = ({form, literals, canSubmitStep, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
-  const showSubmitButton = !(form.submissionAllowed === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
+const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
+  const showSubmitButton = !(canSubmitForm === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
 
   return (
     <>
@@ -49,17 +48,18 @@ const ButtonsToolbar = ({form, literals, canSubmitStep, isLastStep, isCheckingLo
           </ToolbarList>
         </Toolbar>
       </LiteralsProvider>
-      {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
+      {loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
     </>
   );
 };
 
 
 ButtonsToolbar.propTypes = {
-  form: Types.Form.isRequired,
   literals: PropTypes.object,
   canSubmitStep: PropTypes.bool.isRequired,
+  canSubmitForm: PropTypes.string.isRequired,
   isLastStep: PropTypes.bool.isRequired,
+  loginRequired: PropTypes.bool.isRequired,
   isCheckingLogic: PropTypes.bool.isRequired,
   onNavigatePrevPage: PropTypes.func.isRequired,
   onFormSave: PropTypes.func.isRequired,

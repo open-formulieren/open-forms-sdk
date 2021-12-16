@@ -379,11 +379,12 @@ const FormStep = ({
               />
               { DEBUG ? <FormStepDebug data={formData.current} /> : null }
             <ButtonsToolbar
-              form={form}
               literals={formStep.literals}
               canSubmitStep={canSubmit}
+              canSubmitForm={submission.submissionAllowed}
               isLastStep={isLastStep(currentStepIndex, submission)}
               isCheckingLogic={logicChecking}
+              loginRequired={form.loginRequired}
               onFormSave={onFormSave}
               onLogout={onLogout}
               onNavigatePrevPage={onPrevPage}
