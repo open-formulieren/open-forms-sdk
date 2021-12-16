@@ -91,7 +91,7 @@ const stepLabels = {
 };
 
 
-const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
+const ProgressIndicator = ({ title, submission, steps }) => {
   const summaryMatch = !!useRouteMatch('/overzicht');
   const stepMatch = useRouteMatch('/stap/:step');
   const confirmationMatch = !!useRouteMatch('/bevestiging');
@@ -150,7 +150,7 @@ const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
           ) )
         }
         {
-          submissionAllowed !== 'no_without_overview'
+          submission.submissionAllowed !== SUBMISSION_ALLOWED.noWithoutOverview
           && (
             <LinkOrDisabledAnchor
               to={'/overzicht'}
@@ -163,7 +163,7 @@ const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
           )
         }
         {
-          submissionAllowed === SUBMISSION_ALLOWED.yes
+          submission.submissionAllowed === SUBMISSION_ALLOWED.yes
           && (
             <Anchor
               component="span"
@@ -193,7 +193,6 @@ ProgressIndicator.propTypes = {
     slug: PropTypes.string.isRequired,
     formDefinition: PropTypes.string.isRequired,
   })).isRequired,
-  submissionAllowed: PropTypes.string.isRequired,
 };
 
 

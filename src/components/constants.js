@@ -1,7 +1,7 @@
 const SUBMISSION_ALLOWED = {
   yes: 'yes',
-  no_with_overview: 'no_with_overview',
-  no_without_overview: 'no_without_overview'
+  noWithOverview: 'no_with_overview',
+  noWithoutOverview: 'no_without_overview'
 };
 
 export {SUBMISSION_ALLOWED};

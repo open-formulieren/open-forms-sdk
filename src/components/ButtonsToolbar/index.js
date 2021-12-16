@@ -11,7 +11,7 @@ import Types from 'types';
 
 
 const ButtonsToolbar = ({form, literals, canSubmitStep, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
-  const showSubmitButton = !(form.submissionAllowed === SUBMISSION_ALLOWED.no_without_overview && isLastStep);
+  const showSubmitButton = !(form.submissionAllowed === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
 
   return (
     <>

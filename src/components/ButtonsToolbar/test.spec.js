@@ -1,9 +1,11 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import cloneDeep from 'lodash/cloneDeep';
 
-import ButtonsToolbar from './index';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+import ButtonsToolbar from './index';
+import {basicForm} from './fixtures';
 
 
 let container = null;
@@ -31,7 +33,9 @@ const LITERALS = {
 
 it('Last step of submittable form, button is present', () => {
 
-  const testForm = {
+  let testForm = cloneDeep(basicForm);
+  testForm = {
+    ...testForm,
     submissionAllowed: SUBMISSION_ALLOWED.yes,
     loginRequired: false,
   };
@@ -64,8 +68,11 @@ it('Last step of submittable form, button is present', () => {
 
 
 it('Last step of non-submittable form with overview, button is present', () => {
-  const testForm = {
-    submissionAllowed: SUBMISSION_ALLOWED.no_with_overview,
+
+  let testForm = cloneDeep(basicForm);
+  testForm = {
+    ...testForm,
+    submissionAllowed: SUBMISSION_ALLOWED.noWithOverview,
     loginRequired: false,
   };
 
@@ -97,8 +104,10 @@ it('Last step of non-submittable form with overview, button is present', () => {
 
 
 it('Last step of non-submittable form without overview, button is NOT present', () => {
-  const testForm = {
-    submissionAllowed: SUBMISSION_ALLOWED.no_without_overview,
+  let testForm = cloneDeep(basicForm);
+  testForm = {
+    ...testForm,
+    submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview,
     loginRequired: false,
   };
 
@@ -125,4 +134,39 @@ it('Last step of non-submittable form without overview, button is NOT present', 
   expect(buttons.length).toEqual(2);
   expect(buttons[0].textContent).toEqual('Previous step');
   expect(buttons[1].textContent).toEqual('Save step');
+});
+
+
+it('Non-last step of non-submittable form without overview, button IS present', () => {
+  let testForm = cloneDeep(basicForm);
+  testForm = {
+    ...testForm,
+    submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview,
+    loginRequired: false,
+  };
+
+  const mockFunction = jest.fn();
+
+  act(() => {
+    render(
+      <ButtonsToolbar
+        form={testForm}
+        literals={LITERALS}
+        canSubmitStep={true}
+        isLastStep={false}
+        isCheckingLogic={false}
+        onNavigatePrevPage={mockFunction}
+        onFormSave={mockFunction}
+        onLogout={mockFunction}
+      />,
+      container
+    );
+  });
+
+  const buttons = container.getElementsByClassName('openforms-toolbar__list-item');
+
+  expect(buttons.length).toEqual(3);
+  expect(buttons[0].textContent).toEqual('Previous step');
+  expect(buttons[1].textContent).toEqual('Save step');
+  expect(buttons[2].textContent).toEqual('Next step');
 });

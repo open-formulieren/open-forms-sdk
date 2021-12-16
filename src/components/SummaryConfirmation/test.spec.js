@@ -42,7 +42,7 @@ it('Summary of non-submittable form, button is NOT present', () => {
     render(
       <LiteralsProvider literals={LITERALS}>
         <SummaryConfirmation
-          submissionAllowed={SUBMISSION_ALLOWED.no_with_overview}
+          submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
           privacy={PRIVACY}
           onPrivacyCheckboxChange={mockFunction}
           onPrevPage={mockFunction}

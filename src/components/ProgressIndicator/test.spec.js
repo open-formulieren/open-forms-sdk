@@ -1,12 +1,10 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { IntlProvider } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
 
-import messagesNL from 'i18n/compiled/nl.json';
-
 import ProgressIndicator from './index';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 
 let container = null;
@@ -29,19 +27,13 @@ it('Progress Indicator submission allowed', () => {
 
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
-        <MemoryRouter initialEntries={['/']}>
-          <ProgressIndicator
-            title="Test Name"
-            steps={[]}
-            submission={{"steps": []}}
-            submissionAllowed="yes"
-          />
-        </MemoryRouter>
-      </IntlProvider>,
+      <MemoryRouter initialEntries={['/']}>
+        <ProgressIndicator
+          title="Test Name"
+          steps={[]}
+          submission={{steps: [], submissionAllowed: SUBMISSION_ALLOWED.yes}}
+        />
+      </MemoryRouter>,
       container
     );
   });
@@ -56,19 +48,13 @@ it('Progress Indicator submission not allowed, with overview page', () => {
 
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
-        <MemoryRouter initialEntries={['/']}>
-          <ProgressIndicator
-            title="Test Name"
-            steps={[]}
-            submission={{"steps": []}}
-            submissionAllowed="no_with_overview"
-          />
-        </MemoryRouter>
-      </IntlProvider>,
+      <MemoryRouter initialEntries={['/']}>
+        <ProgressIndicator
+          title="Test Name"
+          steps={[]}
+          submission={{steps: [], submissionAllowed: SUBMISSION_ALLOWED.noWithOverview}}
+        />
+      </MemoryRouter>,
       container
     );
   });
@@ -83,19 +69,13 @@ it('Progress Indicator submission not allowed, without overview page', () => {
 
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
-        <MemoryRouter initialEntries={['/']}>
-          <ProgressIndicator
-            title="Test Name"
-            steps={[]}
-            submission={{"steps": []}}
-            submissionAllowed="no_without_overview"
-          />
-        </MemoryRouter>
-      </IntlProvider>,
+      <MemoryRouter initialEntries={['/']}>
+        <ProgressIndicator
+          title="Test Name"
+          steps={[]}
+          submission={{steps: [], submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview}}
+        />
+      </MemoryRouter>,
       container
     );
   });
