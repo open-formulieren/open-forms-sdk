@@ -19,4 +19,8 @@ const findNextApplicableStep = (currentStepIndex, submission) => {
   return candidateStepIndex;
 };
 
-export {findNextApplicableStep, findPreviousApplicableStep};
+const isLastStep = (currentStepIndex, submission) => {
+  return currentStepIndex === submission.steps.length-1;
+};
+
+export {findNextApplicableStep, findPreviousApplicableStep, isLastStep};

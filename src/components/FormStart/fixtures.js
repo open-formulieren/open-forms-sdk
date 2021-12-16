@@ -37,6 +37,6 @@ export const testForm = {
   loginRequired: false,
   name: 'Test Form',
   uuid: '33af5a1c-552e-4e8f-8b19-287cf35b9edd',
-  submissionAllowed: 'yes',
+  submissionAllowed: SUBMISSION_ALLOWED.yes,
 };
 

@@ -19,7 +19,7 @@ import FormIOWrapper from 'components/FormIOWrapper';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-import {findPreviousApplicableStep} from 'components/utils';
+import {findPreviousApplicableStep, isLastStep} from 'components/utils';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import {ConfigContext, FormioTranslations} from 'Context';
 import Types from 'types';
@@ -135,6 +135,7 @@ const FormStep = ({
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
+  const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
@@ -380,11 +381,12 @@ const FormStep = ({
             <ButtonsToolbar
               form={form}
               literals={formStep.literals}
-              onNavigatePrevPage={onPrevPage}
-              onFormSave={onFormSave}
               canSubmitStep={canSubmit}
-              onLogout={onLogout}
+              isLastStep={isLastStep(currentStepIndex, submission)}
               isCheckingLogic={logicChecking}
+              onFormSave={onFormSave}
+              onLogout={onLogout}
+              onNavigatePrevPage={onPrevPage}
             />
             </form>
           ) : null

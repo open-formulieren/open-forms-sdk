@@ -5,9 +5,12 @@ import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Button from 'components/Button';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 
-const ButtonsToolbar = ({form, literals, canSubmitStep, onNavigatePrevPage, onFormSave, onLogout, isCheckingLogic}) => {
+const ButtonsToolbar = ({form, literals, canSubmitStep, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
+  const showSubmitButton = !(form.submissionAllowed === SUBMISSION_ALLOWED.no_without_overview && isLastStep);
+
   return (
     <>
       <LiteralsProvider literals={literals}>
@@ -26,18 +29,21 @@ const ButtonsToolbar = ({form, literals, canSubmitStep, onNavigatePrevPage, onFo
               name="save"
               onClick={onFormSave}
             ><Literal name="saveText"/></Button>
-            <Button
-              type="submit"
-              variant="primary"
-              name="next"
-              disabled={!canSubmitStep}
-            >
-              {
-                isCheckingLogic
-                ? (<Loader modifiers={['centered', 'only-child', 'small']} />)
-                : (<Literal name="nextText"/>)
-              }
-            </Button>
+            {
+              showSubmitButton
+              && (<Button
+                type="submit"
+                variant="primary"
+                name="next"
+                disabled={!canSubmitStep}
+              >
+                {
+                  isCheckingLogic
+                    ? (<Loader modifiers={['centered', 'only-child', 'small']}/>)
+                    : (<Literal name="nextText"/>)
+                }
+              </Button>)
+            }
           </ToolbarList>
         </Toolbar>
       </LiteralsProvider>

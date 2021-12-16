@@ -9,6 +9,7 @@ import Caption from 'components/Caption';
 import List from 'components/List';
 import FAIcon from 'components/FAIcon';
 import { getBEMClassName } from 'utils';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 
 const getLinkModifiers = (active, isApplicable, completed) => {
@@ -162,7 +163,7 @@ const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
           )
         }
         {
-          submissionAllowed === 'yes'
+          submissionAllowed === SUBMISSION_ALLOWED.yes
           && (
             <Anchor
               component="span"

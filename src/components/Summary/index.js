@@ -20,6 +20,7 @@ import {SubmissionContext} from 'Context';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import { flattenComponents } from 'utils';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
@@ -97,11 +98,12 @@ PaymentInformation.propTypes = {
 
 
 const SummaryConfirmation = ({
-  canSubmit,
+  submissionAllowed,
   privacy: { requiresPrivacyConsent, policyAccepted, privacyLabel },
   onPrivacyCheckboxChange,
   onPrevPage,
 }) => {
+  const canSubmit = (submissionAllowed === SUBMISSION_ALLOWED.yes);
 
   const displayPrivacyNotice = canSubmit && requiresPrivacyConsent;
   const submitDisabled = requiresPrivacyConsent && !policyAccepted;
@@ -135,7 +137,7 @@ const SummaryConfirmation = ({
 };
 
 SummaryConfirmation.propTypes = {
-  canSubmit: PropTypes.bool.isRequired,
+  submissionAllowed: PropTypes.string.isRequired,
   privacy: PropTypes.shape({
     requiresPrivacyConsent: PropTypes.bool.isRequired,
     policyAccepted: PropTypes.bool.isRequired,
@@ -222,7 +224,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
                 <PaymentInformation {...refreshedSubmission.payment} />
 
                 <SummaryConfirmation
-                  canSubmit={refreshedSubmission.canSubmit}
+                  submissionAllowed={refreshedSubmission.submissionAllowed}
                   privacy={state.privacy}
                   onPrivacyCheckboxChange={(e) => dispatch({type: 'PRIVACY_POLICY_TOGGLE'})}
                   onPrevPage={onPrevPage}

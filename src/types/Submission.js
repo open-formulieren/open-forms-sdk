@@ -6,7 +6,7 @@ const Submission = PropTypes.shape({
   form: PropTypes.string.isRequired,
   steps: PropTypes.arrayOf(PropTypes.object).isRequired, // TODO: define this as well
   nextStep: PropTypes.string,
-  canSubmit: PropTypes.bool.isRequired,
+  submissionAllowed: PropTypes.string.isRequired,
   payment: PropTypes.shape({
     isRequired: PropTypes.bool.isRequired,
     amount: PropTypes.string,
