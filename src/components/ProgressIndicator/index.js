@@ -9,6 +9,7 @@ import Caption from 'components/Caption';
 import List from 'components/List';
 import FAIcon from 'components/FAIcon';
 import { getBEMClassName } from 'utils';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 
 const getLinkModifiers = (active, isApplicable, completed) => {
@@ -91,9 +92,9 @@ const stepLabels = {
 
 
 const ProgressIndicator = ({ title, submission, steps }) => {
-  const summaryMatch = !!useRouteMatch("/overzicht");
-  const stepMatch = useRouteMatch("/stap/:step");
-  const confirmationMatch = !!useRouteMatch("/bevestiging");
+  const summaryMatch = !!useRouteMatch('/overzicht');
+  const stepMatch = useRouteMatch('/stap/:step');
+  const confirmationMatch = !!useRouteMatch('/bevestiging');
   const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
 
   const [expanded, setExpanded] = useState(false);
@@ -148,18 +149,28 @@ const ProgressIndicator = ({ title, submission, steps }) => {
             />
           ) )
         }
-        <LinkOrDisabledAnchor
-          to={'/overzicht'}
-          useLink={applicableCompleted}
-          modifiers={getLinkModifiers(summaryMatch, applicableCompleted, confirmationMatch)}
-        >
-          <CompletionMark completed={confirmationMatch} />
-          {` ${stepLabels.overview}`}
-        </LinkOrDisabledAnchor>
-        <Anchor
-          component="span"
-          modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted, false)}
-        >{` ${stepLabels.confirmation}`}</Anchor>
+        {
+          submission.submissionAllowed !== SUBMISSION_ALLOWED.noWithoutOverview
+          && (
+            <LinkOrDisabledAnchor
+              to={'/overzicht'}
+              useLink={applicableCompleted}
+              modifiers={getLinkModifiers(summaryMatch, applicableCompleted, confirmationMatch)}
+            >
+              <CompletionMark completed={confirmationMatch}/>
+              {` ${stepLabels.overview}`}
+            </LinkOrDisabledAnchor>
+          )
+        }
+        {
+          submission.submissionAllowed === SUBMISSION_ALLOWED.yes
+          && (
+            <Anchor
+              component="span"
+              modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted, false)}
+            >{` ${stepLabels.confirmation}`}</Anchor>
+          )
+        }
       </List>
     </Card>
   );

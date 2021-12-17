@@ -14,16 +14,13 @@ import useAsync from 'react-use/esm/useAsync';
 import hooks from '../formio/hooks';
 
 import { get, post, put } from 'api';
-import Button from 'components/Button';
 import Card from 'components/Card';
 import FormIOWrapper from 'components/FormIOWrapper';
 import FormStepDebug from 'components/FormStepDebug';
-import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
-import LogoutButton from 'components/LogoutButton';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-import { Toolbar, ToolbarList } from 'components/Toolbar';
-import {findPreviousApplicableStep} from 'components/utils';
+import {findPreviousApplicableStep, isLastStep} from 'components/utils';
+import ButtonsToolbar from 'components/ButtonsToolbar';
 import {ConfigContext, FormioTranslations} from 'Context';
 import Types from 'types';
 
@@ -138,6 +135,7 @@ const FormStep = ({
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
+  const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
@@ -380,38 +378,17 @@ const FormStep = ({
                 }}
               />
               { DEBUG ? <FormStepDebug data={formData.current} /> : null }
-              <LiteralsProvider literals={formStep.literals}>
-                <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
-                  <ToolbarList>
-                    <Button
-                      variant="anchor"
-                      component="a"
-                      onClick={onPrevPage}
-                    ><Literal name="previousText"/></Button>
-                  </ToolbarList>
-                  <ToolbarList>
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      name="save"
-                      onClick={onFormSave}
-                    ><Literal name="saveText"/></Button>
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      name="next"
-                      disabled={!canSubmit}
-                    >
-                      {
-                        logicChecking
-                        ? (<Loader modifiers={['centered', 'only-child', 'small']} />)
-                        : (<Literal name="nextText"/>)
-                      }
-                    </Button>
-                  </ToolbarList>
-                </Toolbar>
-              </LiteralsProvider>
-              {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
+            <ButtonsToolbar
+              literals={formStep.literals}
+              canSubmitStep={canSubmit}
+              canSubmitForm={submission.submissionAllowed}
+              isLastStep={isLastStep(currentStepIndex, submission)}
+              isCheckingLogic={logicChecking}
+              loginRequired={form.loginRequired}
+              onFormSave={onFormSave}
+              onLogout={onLogout}
+              onNavigatePrevPage={onPrevPage}
+            />
             </form>
           ) : null
         }

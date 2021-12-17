@@ -5,21 +5,19 @@ import { useHistory } from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
 
 import { get, post } from 'api';
-import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
-import {Literal, LiteralsProvider} from 'components/Literal';
+import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
 import Price from 'components/Price';
-import PrivacyCheckbox from 'components/PrivacyCheckbox';
-import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {findPreviousApplicableStep} from 'components/utils';
 import {SubmissionContext} from 'Context';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import { flattenComponents } from 'utils';
+import SummaryConfirmation from 'components/SummaryConfirmation';
 
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
@@ -93,56 +91,6 @@ const PaymentInformation = ({isRequired, amount=''}) => {
 PaymentInformation.propTypes = {
   isRequired: PropTypes.bool.isRequired,
   amount: PropTypes.string,
-};
-
-
-const SummaryConfirmation = ({
-  canSubmit,
-  privacy: { requiresPrivacyConsent, policyAccepted, privacyLabel },
-  onPrivacyCheckboxChange,
-  onPrevPage,
-}) => {
-
-  const displayPrivacyNotice = canSubmit && requiresPrivacyConsent;
-  const submitDisabled = requiresPrivacyConsent && !policyAccepted;
-  return (
-    <>
-      {
-        displayPrivacyNotice
-        ? (<PrivacyCheckbox value={policyAccepted} label={privacyLabel} onChange={onPrivacyCheckboxChange} />)
-        : null
-      }
-      <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
-        <ToolbarList>
-          <Button variant="anchor" component="a" onClick={onPrevPage}>
-            <Literal name="previousText" />
-          </Button>
-        </ToolbarList>
-        <ToolbarList>
-          {
-            canSubmit
-            ? (
-              <Button type="submit" variant="primary" name="confirm" disabled={submitDisabled}>
-               <Literal name="confirmText" />
-              </Button>
-            )
-            : null
-          }
-        </ToolbarList>
-      </Toolbar>
-    </>
-  );
-};
-
-SummaryConfirmation.propTypes = {
-  canSubmit: PropTypes.bool.isRequired,
-  privacy: PropTypes.shape({
-    requiresPrivacyConsent: PropTypes.bool.isRequired,
-    policyAccepted: PropTypes.bool.isRequired,
-    privacyLabel: PropTypes.string.isRequired,
-  }).isRequired,
-  onPrivacyCheckboxChange: PropTypes.func.isRequired,
-  onPrevPage: PropTypes.func.isRequired,
 };
 
 
@@ -222,7 +170,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
                 <PaymentInformation {...refreshedSubmission.payment} />
 
                 <SummaryConfirmation
-                  canSubmit={refreshedSubmission.canSubmit}
+                  submissionAllowed={refreshedSubmission.submissionAllowed}
                   privacy={state.privacy}
                   onPrivacyCheckboxChange={(e) => dispatch({type: 'PRIVACY_POLICY_TOGGLE'})}
                   onPrevPage={onPrevPage}

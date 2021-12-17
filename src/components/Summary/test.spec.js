@@ -8,13 +8,14 @@ import Summary from 'components/Summary';
 import messagesNL from 'i18n/compiled/nl.json';
 import {testForm} from 'components/FormStart/fixtures';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const SUBMISSION = {
   id: 'random-id',
   url: 'https://example.com',
   form: 'https://example.com',
   steps: [{formStep: 'http://testserver/api/v1/forms/33af5a1c-552e-4e8f-8b19-287cf35b9edd/steps/0c2a1816-a7d7-4193-b431-918956744038'}],
-  canSubmit: true,
+  submissionAllowed: SUBMISSION_ALLOWED.yes,
   payment: {
     isRequired: false,
     amount: '',

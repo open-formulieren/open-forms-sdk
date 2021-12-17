@@ -22,6 +22,7 @@ const Form = PropTypes.shape({
   url: PropTypes.string.isRequired,
   maintenanceMode: PropTypes.bool.isRequired,
   showProgressIndicator: PropTypes.bool.isRequired,
+  submissionAllowed: PropTypes.string.isRequired,
   literals: PropTypes.shape({
     beginText: ButtonTextLiteral.isRequired,
     changeText: ButtonTextLiteral.isRequired,

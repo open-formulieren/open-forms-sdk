@@ -1,3 +1,5 @@
+import {SUBMISSION_ALLOWED} from 'components/constants';
+
 export const testForm = {
   literals:
   {
@@ -36,6 +38,7 @@ export const testForm = {
   slug: 'test-form',
   loginRequired: false,
   name: 'Test Form',
-  uuid: '33af5a1c-552e-4e8f-8b19-287cf35b9edd'
+  uuid: '33af5a1c-552e-4e8f-8b19-287cf35b9edd',
+  submissionAllowed: SUBMISSION_ALLOWED.yes,
 };
 
