@@ -18,6 +18,7 @@ import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import { flattenComponents } from 'utils';
 import SummaryConfirmation from 'components/SummaryConfirmation';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
@@ -124,7 +125,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (!refreshedSubmission.canSubmit) return;
+    if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
     try {
       const {statusUrl} = await completeSubmission(refreshedSubmission);
       onConfirm(statusUrl);
@@ -143,7 +144,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
     history.push(navigateTo);
   };
 
-  const Wrapper = refreshedSubmission.canSubmit ? 'form' : 'div';
+  const Wrapper = refreshedSubmission.submissionAllowed === SUBMISSION_ALLOWED.yes ? 'form' : 'div';
 
   return (
     <Card title="Controleer en bevestig">
