@@ -91,7 +91,7 @@ const stepLabels = {
 };
 
 
-const ProgressIndicator = ({ title, submission, steps }) => {
+const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
   const summaryMatch = !!useRouteMatch('/overzicht');
   const stepMatch = useRouteMatch('/stap/:step');
   const confirmationMatch = !!useRouteMatch('/bevestiging');
@@ -119,6 +119,17 @@ const ProgressIndicator = ({ title, submission, steps }) => {
     const step = steps.find( step => step.slug === stepSlug);
     activeStepTitle = step.formDefinition;
   }
+
+  const showOverview = (
+    submission
+    ? submission.submissionAllowed !== SUBMISSION_ALLOWED.noWithoutOverview
+    : submissionAllowed !== SUBMISSION_ALLOWED.noWithoutOverview
+  );
+  const showConfirmation = (
+    submission
+    ? submission.submissionAllowed === SUBMISSION_ALLOWED.yes
+    : submissionAllowed === SUBMISSION_ALLOWED.yes
+  );
 
   return (
     <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
@@ -150,7 +161,7 @@ const ProgressIndicator = ({ title, submission, steps }) => {
           ) )
         }
         {
-          submission.submissionAllowed !== SUBMISSION_ALLOWED.noWithoutOverview
+          showOverview
           && (
             <LinkOrDisabledAnchor
               to={'/overzicht'}
@@ -163,7 +174,7 @@ const ProgressIndicator = ({ title, submission, steps }) => {
           )
         }
         {
-          submission.submissionAllowed === SUBMISSION_ALLOWED.yes
+          showConfirmation
           && (
             <Anchor
               component="span"
@@ -193,6 +204,7 @@ ProgressIndicator.propTypes = {
     slug: PropTypes.string.isRequired,
     formDefinition: PropTypes.string.isRequired,
   })).isRequired,
+  submissionAllowed: PropTypes.string.isRequired,
 };
 
 

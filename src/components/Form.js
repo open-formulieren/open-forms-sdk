@@ -288,6 +288,7 @@ const reducer = (draft, action) => {
               title={form.name}
               steps={form.steps}
               submission={state.submission || state.submittedSubmission}
+              submissionAllowed={form.submissionAllowed}
             />
           </LayoutColumn>
         )
