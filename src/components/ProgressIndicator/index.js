@@ -5,20 +5,21 @@ import {FormattedMessage} from 'react-intl';
 
 import Anchor from 'components/Anchor';
 import Card from 'components/Card';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 import Caption from 'components/Caption';
 import List from 'components/List';
 import FAIcon from 'components/FAIcon';
-import { getBEMClassName } from 'utils';
-import {SUBMISSION_ALLOWED} from 'components/constants';
+import {getBEMClassName} from 'utils';
+
+import ProgressItem from './ProgressItem';
 
 
-const getLinkModifiers = (active, isApplicable, completed) => {
+const getLinkModifiers = (active, isApplicable) => {
   return [
     'inherit',
     'hover',
     active ? 'active' : undefined,
     isApplicable ? undefined : 'muted',
-    completed ? undefined : 'indent',
   ].filter( mod => mod !== undefined );
 };
 
@@ -36,22 +37,11 @@ LinkOrDisabledAnchor.propTypes = {
 };
 
 
-const CompletionMark = ({completed=false}) => {
-  if (!completed) return null;
-  return (<FAIcon icon="check" modifiers={['small']} aria-hidden="true" />);
-};
-
-CompletionMark.propTypes = {
-  completed: PropTypes.bool,
-};
-
-
 const SidebarStepStatus = ({isCurrent, step, isApplicable=false, completed=false}) => {
-  const modifiers = getLinkModifiers(isCurrent, isApplicable, completed);
+  const modifiers = getLinkModifiers(isCurrent, isApplicable);
   return (
-    <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable} modifiers={modifiers}>
-      <CompletionMark completed={completed} />
-
+    <ProgressItem completed={completed}>
+      <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable} modifiers={modifiers}>
         <FormattedMessage
           description="Step label in progress indicator"
           defaultMessage={`
@@ -64,10 +54,10 @@ const SidebarStepStatus = ({isCurrent, step, isApplicable=false, completed=false
             isApplicable: isApplicable,
           }}
         />
-    </LinkOrDisabledAnchor>
+      </LinkOrDisabledAnchor>
+    </ProgressItem>
   );
 };
-
 
 SidebarStepStatus.propTypes = {
   isCurrent: PropTypes.bool.isRequired,
@@ -83,7 +73,7 @@ SidebarStepStatus.propTypes = {
 };
 
 
-
+// TODO: translate these
 const stepLabels = {
   login: 'Inloggen',
   overview: 'Overzicht',
@@ -144,10 +134,11 @@ const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
       <Caption component="h3">{title}</Caption>
 
       <List ordered>
-        <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true, hasSubmission)}>
-          <CompletionMark completed={hasSubmission} />
-          {` ${stepLabels.login}`}
-        </Anchor>
+        <ProgressItem completed={hasSubmission}>
+          <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true)}>
+            {stepLabels.login}
+          </Anchor>
+        </ProgressItem>
         {
           steps.map( (step, index) => (
             <SidebarStepStatus
@@ -163,23 +154,26 @@ const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
         {
           showOverview
           && (
-            <LinkOrDisabledAnchor
-              to={'/overzicht'}
-              useLink={applicableCompleted}
-              modifiers={getLinkModifiers(summaryMatch, applicableCompleted, confirmationMatch)}
-            >
-              <CompletionMark completed={confirmationMatch}/>
-              {` ${stepLabels.overview}`}
-            </LinkOrDisabledAnchor>
+            <ProgressItem completed={confirmationMatch}>
+              <LinkOrDisabledAnchor
+                to={'/overzicht'}
+                useLink={applicableCompleted}
+                modifiers={getLinkModifiers(summaryMatch, applicableCompleted)}
+              >
+                {stepLabels.overview}
+              </LinkOrDisabledAnchor>
+            </ProgressItem>
           )
         }
         {
           showConfirmation
           && (
-            <Anchor
-              component="span"
-              modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted, false)}
-            >{` ${stepLabels.confirmation}`}</Anchor>
+            <ProgressItem completed={false}>
+              <Anchor
+                component="span"
+                modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted)}
+              >{stepLabels.confirmation}</Anchor>
+            </ProgressItem>
           )
         }
       </List>

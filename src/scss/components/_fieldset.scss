@@ -4,10 +4,11 @@
 @import '../mixins/prefix';
 
 .#{prefix(fieldset)} {
-  border-width: 2px 0px 0px 0px;
+  border-width: 2px 0 0 0;
   border-style: solid;
   border-color: black;
-  padding: 0px;
+  padding: 0;
+  margin: 0;
 
   .#{prefix(legend)} {
     @include body;

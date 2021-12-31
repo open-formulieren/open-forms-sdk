@@ -63,3 +63,16 @@
     }
   }
 }
+
+.#{prefix('progress-indicator-item')} {
+  display: flex;
+  justify-content: flex-start;
+
+  @include element('marker') {
+    width: 1em;
+  }
+
+  @include element('label') {
+    flex-grow: 1;
+  }
+}
