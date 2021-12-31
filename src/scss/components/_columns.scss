@@ -1,24 +1,31 @@
+@use "sass:math";
+
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
-.#{prefix(form-control)} {
+$column-gap-size: $grid-margin-1;
+$column-half-gap-size: math.div($column-gap-size, 2);
 
-  @include modifier('columns') {
-    display: flex;
-    flex-wrap: wrap;
+.#{prefix(columns)} {
+  display: flex;
+  flex-direction: row;
 
-    & > div:not(.openforms-errors) {
-      max-width: 50%;
-      width: 100%;
+  // ideally, we would use gap, but Opera doesn't support that yet with flexbox :(
+  // Instead, we work around it by setting paddings on the child elements and negative
+  // margins on the parent.
+  // gap: $column-gap-size;
 
-      &:nth-child(even) {
-        & > div {
-          padding-left: 5px;
-        }
-      }
-    }
+  // apply the negative margins to account for the first and last column paddings
+  margin-left: -$column-half-gap-size;
+  margin-right: -$column-half-gap-size;
+
+  > * {
+    flex: 1;
+    padding-left: $column-half-gap-size;
+    padding-right: $column-half-gap-size;
   }
+
 }
