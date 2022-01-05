@@ -2,9 +2,27 @@ const fetchDefaults = {
   credentials: 'include', // required for Firefox 60, which is used in werkplekken
 };
 
+const SessionExpiresInHeader = "X-Session-Expires-In";
+
+export let sessionExpiresAt = null;
+
+const updateSesionExpiry = (seconds) => {
+  const newExpiry = new Date();
+
+  console.log(seconds, newExpiry);
+  newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
+  sessionExpiresAt = newExpiry;
+};
+
 const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
   const options = { ...fetchDefaults, ...opts };
   const response = await window.fetch(url, options);
+
+  const sessionExpiry = response.headers.get(SessionExpiresInHeader);
+  if (sessionExpiry) {
+    updateSesionExpiry(parseInt(sessionExpiry), 10);
+  }
+
   if (response.status === 403 && alertOnPermissionDenied) {
     const data = await response.json();
     alert(data.detail);
