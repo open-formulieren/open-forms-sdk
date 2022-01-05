@@ -152,6 +152,19 @@ const FormStep = ({
     [submissionStep.url]
   );
 
+  // event loops and async programming are fun!
+  // UI inputs are wonky if end-users perform input while evaluating logic checks that
+  // operate on (slightly) stale form data. Evaluating the ref value once before
+  // something doing IO and using that value _after_ the IO event completed can lead
+  // to de-sync. This utility ensures you always have an up-to-date view of the form
+  // data.
+  //
+  // Currently it's a simple wrapper around the form data ref, but we may do more advanced
+  // things using immer.produce to deal with immutable state inside at some point.
+  const getCurrentFormData = () => {
+    return {...formData.current};
+  };
+
   const checkAbortedLogicCheck = (signal) => {
     const shouldAbortCurrentCheck = signal.aborted;
     if (!shouldAbortCurrentCheck) return;
@@ -161,11 +174,13 @@ const FormStep = ({
 
   const evaluateFormLogic = async (controller) => {
     // 'clone' the object so that we're not checking against mutable references
-    const data = {...formData.current};
+    let data = getCurrentFormData();
     const previousData = previouslyCheckedData.current;
     if (previousData && isEqual(previousData, data)) return;
     if (isEmpty(data)) return;
 
+    // TODO: we have a known bug/edge-case where the submission stays in the blocked
+    // state, possibly because some event was aborted.
     dispatch({
       type: 'BLOCK_SUBMISSION',
       payload: {logicChecking: true},
@@ -185,6 +200,8 @@ const FormStep = ({
     try {
       // call the backend to do the check
       checkAbortedLogicCheck(controller.signal);
+      // update our view of the data, which may have been changed by now because of user input
+      data = getCurrentFormData();
       const {submission, step} = await doLogicCheck(submissionStep.url, data, controller.signal);
       // now process the result of the logic check.
 
@@ -212,6 +229,11 @@ const FormStep = ({
         configurationRef.current = newConfiguration;
       }
 
+      // definitely after the IO action (API call for logic check), we must update our
+      // current view of the form data, and do it as close as possible to where we
+      // process it.
+      data = getCurrentFormData();
+
       // update the form data both in our internal state and the formio submission data
       const updatedData = {...filterBlankValues(data), ...step.data};
       formData.current = updatedData;
@@ -224,7 +246,7 @@ const FormStep = ({
         type: 'LOGIC_CHECK_DONE',
         payload: {
           submission,
-          step: {...step, data: formData.current},
+          step: {...step, data: getCurrentFormData()},
         },
       });
     } catch (e) {
