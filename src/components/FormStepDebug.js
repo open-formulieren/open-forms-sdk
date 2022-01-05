@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {FormattedDate} from 'react-intl';
+import {useGlobalState} from 'state-pool';
 
 import {sessionExpiresAt} from 'api';
 
 
 const DisplaySessionExpiry = () => {
-  console.log(sessionExpiresAt);
+  const [expiryDate] = useGlobalState(sessionExpiresAt);
   return (
     <>
       Session expires at: &nbsp;
-      <FormattedDate value={sessionExpiresAt} hour="numeric" minute="numeric" />
+      <FormattedDate value={expiryDate} hour="numeric" minute="numeric" second="numeric" />
     </>
   );
 };
