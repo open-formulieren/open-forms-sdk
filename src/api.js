@@ -8,8 +8,6 @@ export let sessionExpiresAt = null;
 
 const updateSesionExpiry = (seconds) => {
   const newExpiry = new Date();
-
-  console.log(seconds, newExpiry);
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
   sessionExpiresAt = newExpiry;
 };
