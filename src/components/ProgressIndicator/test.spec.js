@@ -23,6 +23,19 @@ afterEach(() => {
 });
 
 
+const submissionDefaults = {
+  id: 'some-id',
+  url: 'https://some-url',
+  form: 'https://some-form',
+  steps: [],
+  payment: {
+    isRequired: false,
+    amount: '',
+    hasPaid: false,
+  },
+};
+
+
 it('Progress Indicator submission allowed', () => {
 
   act(() => {
@@ -31,7 +44,8 @@ it('Progress Indicator submission allowed', () => {
         <ProgressIndicator
           title="Test Name"
           steps={[]}
-          submission={{steps: [], submissionAllowed: SUBMISSION_ALLOWED.yes}}
+          submission={{...submissionDefaults, submissionAllowed: SUBMISSION_ALLOWED.yes}}
+          submissionAllowed={SUBMISSION_ALLOWED.yes}
         />
       </MemoryRouter>,
       container
@@ -52,7 +66,8 @@ it('Progress Indicator submission not allowed, with overview page', () => {
         <ProgressIndicator
           title="Test Name"
           steps={[]}
-          submission={{steps: [], submissionAllowed: SUBMISSION_ALLOWED.noWithOverview}}
+          submission={{...submissionDefaults, submissionAllowed: SUBMISSION_ALLOWED.noWithOverview}}
+          submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
         />
       </MemoryRouter>,
       container
@@ -73,7 +88,8 @@ it('Progress Indicator submission not allowed, without overview page', () => {
         <ProgressIndicator
           title="Test Name"
           steps={[]}
-          submission={{steps: [], submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview}}
+          submission={{...submissionDefaults, submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview}}
+          submissionAllowed={SUBMISSION_ALLOWED.noWithoutOverview}
         />
       </MemoryRouter>,
       container

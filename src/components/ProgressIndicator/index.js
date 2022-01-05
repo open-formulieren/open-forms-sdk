@@ -9,6 +9,7 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 import Caption from 'components/Caption';
 import List from 'components/List';
 import FAIcon from 'components/FAIcon';
+import Types from 'types';
 import {getBEMClassName} from 'utils';
 
 import ProgressItem from './ProgressItem';
@@ -81,7 +82,7 @@ const stepLabels = {
 };
 
 
-const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
+const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed }) => {
   const summaryMatch = !!useRouteMatch('/overzicht');
   const stepMatch = useRouteMatch('/stap/:step');
   const confirmationMatch = !!useRouteMatch('/bevestiging');
@@ -110,16 +111,10 @@ const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
     activeStepTitle = step.formDefinition;
   }
 
-  const showOverview = (
-    submission
-    ? submission.submissionAllowed !== SUBMISSION_ALLOWED.noWithoutOverview
-    : submissionAllowed !== SUBMISSION_ALLOWED.noWithoutOverview
-  );
-  const showConfirmation = (
-    submission
-    ? submission.submissionAllowed === SUBMISSION_ALLOWED.yes
-    : submissionAllowed === SUBMISSION_ALLOWED.yes
-  );
+  // try to get the value from the submission if provided, otherwise
+  const submissionAllowedSpec = submission?.submissionAllowed ?? submissionAllowed;
+  const showOverview = (submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview);
+  const showConfirmation = (submissionAllowedSpec === SUBMISSION_ALLOWED.yes);
 
   return (
     <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
@@ -184,13 +179,7 @@ const ProgressIndicator = ({ title, submission, steps, submissionAllowed }) => {
 
 ProgressIndicator.propTypes = {
   title: PropTypes.string,
-  submission: PropTypes.shape({
-    steps: PropTypes.arrayOf(PropTypes.shape({
-      completed: PropTypes.bool.isRequired,
-      isApplicable: PropTypes.bool.isRequired,
-      // and more...
-    })),
-  }),
+  submission: Types.Submission,
   steps: PropTypes.arrayOf(PropTypes.shape({
     url: PropTypes.string.isRequired,
     uuid: PropTypes.string.isRequired,
@@ -198,7 +187,7 @@ ProgressIndicator.propTypes = {
     slug: PropTypes.string.isRequired,
     formDefinition: PropTypes.string.isRequired,
   })).isRequired,
-  submissionAllowed: PropTypes.string.isRequired,
+  submissionAllowed: PropTypes.oneOf(Object.values(SUBMISSION_ALLOWED)).isRequired,
 };
 
 
