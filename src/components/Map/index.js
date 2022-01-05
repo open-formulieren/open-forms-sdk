@@ -9,7 +9,16 @@ import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from 'map/co
 
 const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
-  const { loading, latitude, longitude } = useGeolocation();
+  const { loading, latitude, longitude, error } = useGeolocation();
+  // it's possible the user declined permissions (error.code === 1) to access the
+  // location, or the location could not be determined. In that case, fall back to the
+  // hardcoded default. See Github issue
+  // https://github.com/open-formulieren/open-forms/issues/864 and the docs on
+  // GeolocationPositionError:
+  // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
+  if (error) {
+    return DEFAULT_LAT_LON;
+  }
   if (!navigator.geolocation) return DEFAULT_LAT_LON;
   if (loading) return null;
   return [latitude, longitude];
