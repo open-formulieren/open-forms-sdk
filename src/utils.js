@@ -41,3 +41,7 @@ export const flattenComponents = (components) => {
   // Convert an array of arrays to a single array
   return [].concat.apply([], flattenedComponents);
 };
+
+
+// usage: await sleep(3000);
+export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
