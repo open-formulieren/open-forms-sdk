@@ -7,10 +7,17 @@ import Anchor from 'components/Anchor';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 
+// import SessionExpiry from './SessionExpiry';
+
 
 const RequireSession = ({ expired=false, children }) => {
   if (!expired) {
-    return children;
+    return (
+      <>
+        {children}
+        {/*<SessionExpiry /> disabled for now until we figure out how to style this */}
+      </>
+    );
   };
 
   return (
