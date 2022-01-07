@@ -10,10 +10,7 @@ const BsnValidator = {
     });
   },
   check(component, setting, value) {
-    if (value.replaceAll('_', '').length === 9) {
-      return isValidBsn(value);
-    }
-    return true;
+    return isValidBsn(value.replaceAll('_', ''));
   }
 };
 
