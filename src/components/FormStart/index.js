@@ -17,31 +17,6 @@ import LoginButton, {
 } from 'components/LoginButton';
 
 
-const LoginButtonIcons = ({ loginOptions }) => {
-  const optionsWithIcons = loginOptions.filter(option => option.logo && option.logo.imageSrc);
-  return (
-    <>
-      {optionsWithIcons.map(option => (
-        <LoginButtonIcon key={option.identifier} identifier={option.identifier} logo={option.logo} />
-      ))}
-    </>
-  );
-};
-
-LoginButtonIcons.propTypes = {
-  loginOptions: PropTypes.arrayOf(PropTypes.shape({
-    identifier: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    logo: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      imageSrc: PropTypes.string.isRequired,
-      href: PropTypes.string,
-    }),
-  })).isRequired,
-};
-
-
 const useStartSubmission = () => {
   const query = useQuery();
   return !!query.get(START_FORM_QUERY_PARAM);
@@ -107,6 +82,7 @@ const FormStart = ({ form, onFormStart }) => {
       </Card>
     );
   }
+  const optionsWithIcons = form.loginOptions.filter(option => option.logo && option.logo.imageSrc);
 
   return (
     <LiteralsProvider literals={form.literals}>
@@ -132,7 +108,11 @@ const FormStart = ({ form, onFormStart }) => {
           </ToolbarList>
 
           <ToolbarList>
-            <LoginButtonIcons loginOptions={form.loginOptions} />
+           {
+             optionsWithIcons.map(option => (
+              <LoginButtonIcon key={option.identifier} identifier={option.identifier} logo={option.logo} />
+             ))
+           }
           </ToolbarList>
         </Toolbar>
 
