@@ -1,10 +1,29 @@
+import {createGlobalstate} from 'state-pool';
+
 const fetchDefaults = {
   credentials: 'include', // required for Firefox 60, which is used in werkplekken
+};
+
+const SessionExpiresInHeader = "X-Session-Expires-In";
+
+let sessionExpiresAt = createGlobalstate(null);
+
+const updateSesionExpiry = (seconds) => {
+  const newExpiry = new Date();
+  newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
+  sessionExpiresAt.setValue(newExpiry);
+  // TODO: we can schedule a message to be set if expiry is getting close
 };
 
 const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
   const options = { ...fetchDefaults, ...opts };
   const response = await window.fetch(url, options);
+
+  const sessionExpiry = response.headers.get(SessionExpiresInHeader);
+  if (sessionExpiry) {
+    updateSesionExpiry(parseInt(sessionExpiry), 10);
+  }
+
   if (response.status === 403 && alertOnPermissionDenied) {
     const data = await response.json();
     alert(data.detail);
@@ -89,4 +108,5 @@ const destroy = async (url) => {
 
 export {
     apiCall, get, post, put, patch, destroy,
+    sessionExpiresAt,
 };

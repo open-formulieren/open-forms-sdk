@@ -14,6 +14,7 @@ import { ConfigContext } from 'Context';
 import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
+import useSessionTimeout from 'hooks/useSessionTimeout';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
@@ -22,6 +23,7 @@ import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
 import PaymentOverview from 'components/PaymentOverview';
 import RequireSubmission from 'components/RequireSubmission';
+import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
 import {findNextApplicableStep} from 'components/utils';
@@ -79,6 +81,12 @@ const reducer = (draft, action) => {
       draft.processingError = '';
       break;
     }
+    case 'SESSION_EXPIRED': {
+      return {
+        ...initialState,
+        config: draft.config,
+      };
+    }
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -108,6 +116,7 @@ const reducer = (draft, action) => {
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
 
   const onSubmissionLoaded = (submission, next='') => {
+    if (sessionExpired) return;
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
@@ -124,6 +133,13 @@ const reducer = (draft, action) => {
     removeSubmissionId
   ] = useRecycleSubmission(form, state.submission, onSubmissionLoaded);
 
+  const [sessionExpired, resetSession] = useSessionTimeout(
+    () => {
+      removeSubmissionId();
+      dispatch({type: 'SESSION_EXPIRED'});
+    }
+  );
+
   const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
 
   /**
@@ -134,6 +150,8 @@ const reducer = (draft, action) => {
    */
   const onFormStart = async (event) => {
     event && event.preventDefault();
+
+    resetSession();
 
     if (state.submission != null) {
       onSubmissionLoaded(state.submission);
@@ -199,10 +217,6 @@ const reducer = (draft, action) => {
     history.push('/overzicht');
   };
 
-  const clearProcessingErrors = () => {
-    dispatch({type: 'CLEAR_PROCESSING_ERROR'});
-  };
-
   // handle redirect from payment provider to render appropriate page and include the
   // params as state for the next component.
   if (queryParams.get('of_payment_status')) {
@@ -229,7 +243,6 @@ const reducer = (draft, action) => {
   return (
     <>
       <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>
-
         {/* Route the correct page based on URL */}
         <Switch>
 
@@ -240,15 +253,17 @@ const reducer = (draft, action) => {
           </Route>
 
           <Route exact path="/overzicht">
-            <RequireSubmission
-              submission={state.submission}
-              form={form}
-              processingError={state.processingError}
-              onConfirm={onSubmitForm}
-              onLogout={onLogout}
-              component={Summary}
-              onClearProcessingErrors={clearProcessingErrors}
-            />
+            <RequireSession expired={sessionExpired}>
+              <RequireSubmission
+                submission={state.submission}
+                form={form}
+                processingError={state.processingError}
+                onConfirm={onSubmitForm}
+                onLogout={onLogout}
+                component={Summary}
+                onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
+              />
+            </RequireSession>
           </Route>
 
           <Route exact path="/bevestiging">
@@ -266,14 +281,16 @@ const reducer = (draft, action) => {
           </Route>
 
           <Route path="/stap/:step" render={() => (
-            <RequireSubmission
-              form={form}
-              submission={state.submission}
-              onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
-              onStepSubmitted={onStepSubmitted}
-              onLogout={onLogout}
-              component={FormStep}
-            />
+            <RequireSession expired={sessionExpired}>
+              <RequireSubmission
+                form={form}
+                submission={state.submission}
+                onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
+                onStepSubmitted={onStepSubmitted}
+                onLogout={onLogout}
+                component={FormStep}
+              />
+            </RequireSession>
           )} />
 
         </Switch>

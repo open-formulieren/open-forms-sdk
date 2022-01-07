@@ -1,5 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {FormattedDate} from 'react-intl';
+import {useGlobalState} from 'state-pool';
+
+import {sessionExpiresAt} from 'api';
+
+
+const DisplaySessionExpiry = () => {
+  const [expiryDate] = useGlobalState(sessionExpiresAt);
+  return (
+    <>
+      Session expires at: &nbsp;
+      <FormattedDate value={expiryDate} hour="numeric" minute="numeric" second="numeric" />
+    </>
+  );
+};
 
 
 /**
@@ -11,6 +26,10 @@ const FormStepDebug = ({ data={} }) => {
   return (
     <div style={{background: '#eeeeee', 'marginTop': '1em'}}>
       <p style={{paddingLeft: '1em'}}><small>(this div is development only)</small></p>
+
+      <div style={{padding: '1em'}}>
+        <DisplaySessionExpiry />
+      </div>
 
       <div style={{padding: '1em'}}>
         <strong>Form data</strong>

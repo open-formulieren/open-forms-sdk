@@ -78,6 +78,7 @@
     "sass": "^1.32.12",
     "sass-loader": "^10.0.5",
     "semver": "7.3.2",
+    "state-pool": "^0.6.0",
     "style-loader": "1.3.0",
     "terser-webpack-plugin": "4.2.3",
     "ts-pnp": "1.2.0",
