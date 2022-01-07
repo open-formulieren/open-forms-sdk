@@ -235,7 +235,9 @@ const FormStep = ({
       data = getCurrentFormData();
 
       // update the form data both in our internal state and the formio submission data
-      const updatedData = {...filterBlankValues(data), ...step.data};
+      // we do not filterBlankValues here, as a default value may have been explicitly
+      // reset to an empty value (see https://github.com/open-formulieren/open-forms/issues/994)
+      const updatedData = {...data, ...step.data};
       formData.current = updatedData;
       if (!isEqual(formInstance.submission.data, updatedData)) {
         formInstance.submission = {data: updatedData};
@@ -323,14 +325,23 @@ const FormStep = ({
       return;
     }
 
-    // Filter blank values as to not trip formio validation
-    const backendDataWithoutBlank = filterBlankValues(backendData);
-    const submissionDataWithoutBlank = filterBlankValues(formInstance.submission.data);
-    const shouldSetData = !isEmpty(backendDataWithoutBlank) && !isEqual(submissionDataWithoutBlank, backendDataWithoutBlank);
+    // We cannot filter 'blank' values to prevent Formio validation from running, as
+    // Formio will use the default values in that case which have been explicitly
+    // unset. In the situation that we have invalid backend data (loading a submission
+    // with a required field with default value that was cleared, for example), we
+    // _need_ to see the validation errors since the data is not valid.
+    // For the initial, empty form load, no validation errors are displayed as there
+    // is no respective backend data.
+    const submissionData = formInstance.submission.data;
+    const shouldSetData = !isEmpty(backendData) && !isEqual(submissionData, backendData);
     if (shouldSetData) {
       // the cloneDeep is needed since we deliberately make the immer state mutable
       // for FormIO (multivalue input is one example why that's needed).
-      formInstance.submission = {data: cloneDeep(backendDataWithoutBlank)};
+      formInstance.setSubmission(
+        {data: cloneDeep(backendData)},
+        {noValidate: true},
+      );
+      console.log('set submission data');
     }
   };
 
@@ -431,14 +442,6 @@ FormStep.propTypes = {
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
-};
-
-const filterBlankValues = (data) => {
-  // ensure that '0' as a value is retained, only keep empty values that essentially
-  // have 'zero length' in the input.
-  const BLANK = [null, undefined, ''];
-  const notBlank = Object.entries(data).filter( ([_, value]) => !BLANK.includes(value) );
-  return Object.fromEntries(notBlank);
 };
 
 export default FormStep;
