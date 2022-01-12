@@ -151,6 +151,8 @@ const reducer = (draft, action) => {
   const onFormStart = async (event) => {
     event && event.preventDefault();
 
+    // required to get rid of the error message saying the session is expired - once
+    // you start a new submission, any previous call history should be discarded.
     resetSession();
 
     if (state.submission != null) {
