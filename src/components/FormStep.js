@@ -341,7 +341,6 @@ const FormStep = ({
         {data: cloneDeep(backendData)},
         {noValidate: true},
       );
-      console.log('set submission data');
     }
   };
 
