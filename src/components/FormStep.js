@@ -240,7 +240,7 @@ const FormStep = ({
       const updatedData = {...data, ...step.data};
       formData.current = updatedData;
       if (!isEqual(formInstance.submission.data, updatedData)) {
-        formInstance.submission = {data: updatedData};
+        formInstance.submission = {data: cloneDeep(updatedData)};
       }
 
       // the reminder of the state updates we let the reducer handle
