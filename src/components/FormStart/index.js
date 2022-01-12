@@ -8,6 +8,7 @@ import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import {Literal, LiteralsProvider} from 'components/Literal';
+import Loader from 'components/Loader';
 import MaintenanceMode from 'components/MaintenanceMode';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import useQuery from 'hooks/useQuery';
@@ -65,7 +66,16 @@ const FormStart = ({ form, onFormStart }) => {
 
   useEffect(() => {
     if (doStart && !hasAuthErrors) onFormStart();
-  }, [doStart, outagePluginId, hasAuthErrors, onFormStart]);
+  }, [doStart, hasAuthErrors, onFormStart]);
+
+  // do not re-render the login options while we're redirecting
+  if (doStart && !hasAuthErrors) {
+    return (
+      <Card>
+        <Loader modifiers={['centered', 'only-child']} />
+      </Card>
+    );
+  }
 
   if (form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;
