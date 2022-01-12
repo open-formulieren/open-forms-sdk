@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -8,6 +8,7 @@ import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import {Literal, LiteralsProvider} from 'components/Literal';
+import Loader from 'components/Loader';
 import MaintenanceMode from 'components/MaintenanceMode';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import useQuery from 'hooks/useQuery';
@@ -63,9 +64,31 @@ const FormStart = ({ form, onFormStart }) => {
   const authErrors = useDetectAuthErrorMessages();
   const hasAuthErrors = !!outagePluginId || !!authErrors;
 
+  const onFormStartCalledRef = useRef(false);
+
   useEffect(() => {
-    if (doStart && !hasAuthErrors) onFormStart();
-  }, [doStart, outagePluginId, hasAuthErrors, onFormStart]);
+    // if it's already called, do not call it again as this creates 'infite' cycles.
+    // This component is re-mounted/re-rendered because of parent component state changes,
+    // while the start marker is still in the querystring. Therefore, once we have called
+    // the callback, we keep track of this call being done so that it's invoked only once.
+    // See https://github.com/open-formulieren/open-forms/issues/1174
+    if (onFormStartCalledRef.current) {
+      return;
+    }
+    if (doStart && !hasAuthErrors) {
+      onFormStart();
+      onFormStartCalledRef.current = true;
+    }
+  }, [doStart, hasAuthErrors, onFormStart]);
+
+  // do not re-render the login options while we're redirecting
+  if (doStart && !hasAuthErrors) {
+    return (
+      <Card>
+        <Loader modifiers={['centered', 'only-child']} />
+      </Card>
+    );
+  }
 
   if (form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;

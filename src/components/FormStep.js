@@ -77,6 +77,13 @@ const reducer = (draft, action) => {
       draft.logicChecking = logicChecking;
       break;
     }
+    // can happen because of a logic check abort
+    case 'LOGIC_CHECK_INTERRUPTED': {
+      const {canSubmit} = action.payload;
+      draft.logicChecking = false;
+      draft.canSubmit = canSubmit;
+      break;
+    };
     // a separate action type because we should _not_ touch the configuration in the state
     case 'LOGIC_CHECK_DONE': {
       const {step: {data, canSubmit}} = action.payload;
@@ -194,7 +201,15 @@ const FormStep = ({
     const isValid = formInstance.isValid();
 
     // form does not validate client-side, don't bother with checking server-side yet.
-    if (!isValid) return;
+    if (!isValid) {
+      dispatch({
+        type: 'LOGIC_CHECK_INTERRUPTED',
+        payload: {
+          canSubmit: false
+        }
+      });
+      return;
+    }
 
     // now the actual checking *can* be aborted, which results in an exception being thrown.
     try {
@@ -237,10 +252,10 @@ const FormStep = ({
       // update the form data both in our internal state and the formio submission data
       // we do not filterBlankValues here, as a default value may have been explicitly
       // reset to an empty value (see https://github.com/open-formulieren/open-forms/issues/994)
-      const updatedData = {...data, ...step.data};
+      const updatedData = cloneDeep({...data, ...step.data});
       formData.current = updatedData;
       if (!isEqual(formInstance.submission.data, updatedData)) {
-        formInstance.submission = {data: cloneDeep(updatedData)};
+        formInstance.submission = {data: updatedData};
       }
 
       // the reminder of the state updates we let the reducer handle
@@ -252,6 +267,7 @@ const FormStep = ({
         },
       });
     } catch (e) {
+      dispatch({type: 'LOGIC_CHECK_INTERRUPTED', payload: {canSubmit}});
       if (e.name !== 'AbortError') {
         throw (e) // re-throw on unexpected errors
       }
@@ -349,9 +365,7 @@ const FormStep = ({
     // formio form not mounted -> nothing to do
     if (!formRef.current) return;
 
-    // if there are no changes, do nothing
-    if ( !(flags && flags.changes && flags.changes.length) ) return;
-    if ( !modifiedByHuman ) return;
+    if (isEqual(changed.data, getCurrentFormData())) return;
 
     dispatch({type: 'BLOCK_SUBMISSION'});
 
@@ -360,11 +374,8 @@ const FormStep = ({
     const abortController = new AbortController();
     controller.current = abortController;
 
-    const data = changed.data;
+    const data = cloneDeep(changed.data);
     formData.current = data;
-
-    // TODO: should we block submission by default to give the logic check time to
-    // complete and re-activate it?
 
     // cancel old timeout if it's set
     logicCheckTimeout.current && clearTimeout(logicCheckTimeout.current);

@@ -96,7 +96,7 @@ export const getComponentValue = (component, intl) => {
               "originalName": "my-image.jpg",
           }
       ] */
-      return inputValue.map(v => {
+      return rawValue.map(v => {
           const {size, unit} = humanFileSize(v.size);
           return (
             <Anchor key={v.url} href={v.url}>
