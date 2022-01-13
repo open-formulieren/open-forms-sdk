@@ -122,6 +122,16 @@ export const getComponentValue = (component, intl) => {
         </List>
       );
     }
+    case 'number':
+      return <FormattedNumber value={rawValue} />
+    case 'currency':
+      return <FormattedNumber
+          value={rawValue}
+          style="currency"
+          currency="EUR"
+          minimumFractionDigits={2}
+          maximumFractionDigits={2}
+        />
     case 'map':
       return <Map markerCoordinates={inputValue} disabled />;
     case 'password':
