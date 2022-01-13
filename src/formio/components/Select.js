@@ -1,3 +1,4 @@
+import isObject from 'lodash/isObject';
 import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
@@ -12,6 +13,35 @@ class Select extends Formio.Components.components.select {
     // change the default CSS classes
     info.attr.class = applyPrefix('select');
     return info;
+  }
+
+  setValue(value, flags = {}) {
+    // check if it's an appointment config field
+    if ( this.component?.appointments != null ) {
+      // beforeSubmit converts the combination (value, label) into an object, which is
+      // stored in the backend as {"identifier": value, "name": label}. So, when data
+      // from the backend is loaded, we convert this back into the original format to
+      // make sure the select understands the value and displays the label instead of
+      // just a blank value.
+      if (isObject(value) && value.identifier) {
+        value = value.identifier;
+      } else {
+        // check if the value is still available, if not -> clear it
+        if (this.component.appointments.showTimes) {
+          // reserved times are no longer available in the option list, and then formio
+          // injects an option with label = value, which is ISO-8601 format. This does
+          // not look good for end-users, so we just drop the value alltogether. The end
+          // user is changing the appointment anyway, so at the least they would be changing
+          // the time, possibly the date or location/product even which all reset the time
+          // field anyway.
+          const option = this.selectOptions.find(opt => opt.value === value);
+          if (option == null) {
+            value = '';
+          }
+        }
+      }
+    }
+    return super.setValue(value, flags);
   }
 
   beforeSubmit() {
