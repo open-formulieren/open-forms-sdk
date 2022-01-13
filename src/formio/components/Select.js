@@ -1,3 +1,4 @@
+import isObject from 'lodash/isObject';
 import { Formio } from 'react-formio';
 
 import { applyPrefix } from '../utils';
@@ -12,6 +13,24 @@ class Select extends Formio.Components.components.select {
     // change the default CSS classes
     info.attr.class = applyPrefix('select');
     return info;
+  }
+
+  setValue(value, flags = {}) {
+    // check if it's an appointment config field
+    if ( this.component?.appointments != null ) {
+      if (isObject(value) && value.identifier) {
+        value = value.identifier;
+      } else {
+        // check if the value is still available, if not -> clear it
+        if (this.component.appointments.showTimes) {
+          const option = this.selectOptions.find(opt => opt.value === value);
+          if (option == null) {
+            value = '';
+          }
+        }
+      }
+    }
+    return super.setValue(value, flags);
   }
 
   beforeSubmit() {
