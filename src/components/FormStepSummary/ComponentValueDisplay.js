@@ -147,6 +147,13 @@ const FileDisplay = ({component, value}) => {
 };
 
 
+const NumberDisplay = ({component, value}) => {
+  return (
+    <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />
+  );
+};
+
+
 const CurrencyDisplay = ({component, value}) => {
   return (
     <FormattedNumber
@@ -221,7 +228,7 @@ const TYPE_TO_COMPONENT = {
   date: DateDisplay,
   time: TimeDisplay,
   selectboxes: SelectboxesDisplay,
-  number: FormattedNumber,
+  number: NumberDisplay,
   currency: CurrencyDisplay,
   map: MapDisplay,
   password: PasswordDisplay,
