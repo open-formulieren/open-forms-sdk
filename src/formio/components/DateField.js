@@ -6,6 +6,9 @@ import { applyPrefix } from '../utils';
 const DateTimeField = Formio.Components.components.datetime;
 
 
+const extractDate = (value) => value.substring(0, 10);
+
+
 class DateField extends DateTimeField {
 
     get suffix() {
@@ -24,8 +27,18 @@ class DateField extends DateTimeField {
       // The field itself should prevent any invalid dates from being passed in
       // so we are not checking that here
       if (this._data[this.component.key]) {
-        // Strip time off the iso datetime string
-        this._data[this.component.key] = this._data[this.component.key].substring(0, 10);
+        let currentValue = this._data[this.component.key];
+        // normalize to list
+        if (!this.component.multiple) currentValue = [currentValue];
+
+        // strip off the time part
+        currentValue = currentValue.map(val => extractDate(val));
+
+        // format back to single/multiple
+        if (!this.component.multiple) currentValue = currentValue[0];
+
+        // assign back to internal data structure
+        this._data[this.component.key] = currentValue;
       }
       super.beforeSubmit();
     }
