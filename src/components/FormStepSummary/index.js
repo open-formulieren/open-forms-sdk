@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import {useIntl} from 'react-intl';
 
 import Button from 'components/Button';
 import Caption from 'components/Caption';
@@ -9,16 +8,12 @@ import { Table, TableRow, TableHead, TableCell } from 'components/Table';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {getBEMClassName} from 'utils';
 
-import {
-  getComponentLabel,
-  getComponentValue,
-  iterComponentsWithData,
-} from 'components/FormStepSummary/utils';
+import ComponentValueDisplay from './ComponentValueDisplay';
+import {getComponentLabel, iterComponentsWithData} from './utils';
 
 
 const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
   const history = useHistory();
-  const intl = useIntl();
   return (
     <>
       <Toolbar modifiers={['compact']}>
@@ -57,7 +52,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
                   {getComponentLabel(component)}
                 </TableHead>
                 <TableCell>
-                  {getComponentValue(component, intl)}
+                  <ComponentValueDisplay component={component} />
                 </TableCell>
               </TableRow>
             );

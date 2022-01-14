@@ -43,7 +43,7 @@ it('Unfilled dates displayed properly', () => {
   });
 
   const value = container.getElementsByClassName('openforms-table__cell')[0].textContent;
-  expect(value).toEqual('');
+  expect(value).toEqual('(leeg)');
 });
 
 it('Multi-value select field displayed properly', () => {
