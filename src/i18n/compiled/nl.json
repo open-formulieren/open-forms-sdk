@@ -177,6 +177,12 @@
       "value": "Bevestigen"
     }
   ],
+  "RMkhVs": [
+    {
+      "type": 0,
+      "value": "ja"
+    }
+  ],
   "Rf8Sot": [
     {
       "type": 0,
@@ -185,6 +191,12 @@
     {
       "type": 1,
       "value": "formName"
+    }
+  ],
+  "SE7xol": [
+    {
+      "type": 0,
+      "value": "nee"
     }
   ],
   "STW5dH": [
