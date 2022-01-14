@@ -124,6 +124,11 @@
     "description": "Form start outage title",
     "originalDefault": "Problem - {formName}"
   },
+  "STW5dH": {
+    "defaultMessage": "Your session will expire {delta}",
+    "description": "Session expiry timer",
+    "originalDefault": "Your session will expire {delta}"
+  },
   "UWylpR": {
     "defaultMessage": "This form is temporarily unavailable because of an outage with the {label} authentication service. Please try again later.",
     "description": "Authentication outage message",
@@ -163,6 +168,11 @@
     "defaultMessage": "Please authenticate or start the form anonymously.",
     "description": "Form start anonymous or login body text",
     "originalDefault": "Please authenticate or start the form anonymously."
+  },
+  "abtbgK": {
+    "defaultMessage": "Your session has expired. Click <link>here</link> to restart.",
+    "description": "Session expired error message",
+    "originalDefault": "Your session has expired. Click <link>here</link> to restart."
   },
   "bCGJi9": {
     "defaultMessage": "Confirmation: {reference}",
@@ -213,6 +223,11 @@
     "defaultMessage": "Your appointment has been cancelled",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
+  },
+  "oMvPQU": {
+    "defaultMessage": "Your session has expired",
+    "description": "Session expired card title",
+    "originalDefault": "Your session has expired"
   },
   "r1L6Zj": {
     "defaultMessage": "Suspending the form failed, please try again later",

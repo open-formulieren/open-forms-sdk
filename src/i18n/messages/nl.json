@@ -124,6 +124,11 @@
     "description": "Form start outage title",
     "originalDefault": "Problem - {formName}"
   },
+  "STW5dH": {
+    "defaultMessage": "Uw sessie vervalt {delta}",
+    "description": "Session expiry timer",
+    "originalDefault": "Your session will expire {delta}"
+  },
   "UWylpR": {
     "defaultMessage": "Dit formulier is tijdelijk niet beschikbaar wegens een storing bij de {label} authenticatieservice. Gelieve later opnieuw te proberen.",
     "description": "Authentication outage message",
@@ -163,6 +168,11 @@
     "defaultMessage": "Log in of start het formulier anoniem.",
     "description": "Form start anonymous or login body text",
     "originalDefault": "Please authenticate or start the form anonymously."
+  },
+  "abtbgK": {
+    "defaultMessage": "Uw sessie is verlopen. Klik <link>hier</link> om opnieuw te beginnen.",
+    "description": "Session expired error message",
+    "originalDefault": "Your session has expired. Click <link>here</link> to restart."
   },
   "bCGJi9": {
     "defaultMessage": "Bevestiging: {reference}",
@@ -213,6 +223,11 @@
     "defaultMessage": "Uw afspraak is geannuleerd",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
+  },
+  "oMvPQU": {
+    "defaultMessage": "Sessie verlopen",
+    "description": "Session expired card title",
+    "originalDefault": "Your session has expired"
   },
   "r1L6Zj": {
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
