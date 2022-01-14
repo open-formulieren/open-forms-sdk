@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage, FormattedNumber, useIntl} from 'react-intl';
+import {
+  FormattedDate,
+  FormattedTime,
+  FormattedMessage,
+  FormattedNumber,
+  useIntl
+} from 'react-intl';
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
@@ -12,7 +18,16 @@ import {getFormattedDateString, getFormattedTimeString} from 'utils';
 import {humanFileSize} from './utils';
 
 
+const EmptyDisplay = () => (
+  <FormattedMessage
+    description="Value display for empty value"
+    defaultMessage="(empty)"
+  />
+);
+
+
 const DefaultDisplay = ({component, value}) => {
+  if (value === '') return <EmptyDisplay />;
   return value.toString();
 };
 
@@ -54,8 +69,26 @@ const SelectDisplay = ({component, value}) => {
 
 
 const DateDisplay = ({component, value}) => {
+  if (!value) return <EmptyDisplay />;
   const [year, month, day] = value.split('-');
-  return `${day}-${month}-${year}`;
+  const date = new Date();
+  date.setFullYear(parseInt(year), parseInt(month) - 1, parseInt(day));
+  return (
+    <FormattedDate value={date} />
+  );
+};
+
+
+const TimeDisplay = ({component, value}) => {
+  if (!value) return <EmptyDisplay />;
+  const [hours, minutes, seconds] = value.split(':');
+  const time = new Date();
+  time.setHours(hours);
+  time.setMinutes(minutes);
+  time.setSeconds(seconds);
+  return (
+    <FormattedTime value={time} />
+  );
 };
 
 
@@ -186,6 +219,7 @@ const TYPE_TO_COMPONENT = {
   select: SelectDisplay,
   file: FileDisplay,
   date: DateDisplay,
+  time: TimeDisplay,
   selectboxes: SelectboxesDisplay,
   number: FormattedNumber,
   currency: CurrencyDisplay,
