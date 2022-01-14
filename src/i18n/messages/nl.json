@@ -209,6 +209,11 @@
     "description": "Checking background processing status title",
     "originalDefault": "Processing..."
   },
+  "fORKm8": {
+    "defaultMessage": "(leeg)",
+    "description": "Value display for empty value",
+    "originalDefault": "(empty)"
+  },
   "fWjfVm": {
     "defaultMessage": "Een moment geduld alstublieft. Uw inzending wordt verwerkt.",
     "description": "Checking background processing status body",

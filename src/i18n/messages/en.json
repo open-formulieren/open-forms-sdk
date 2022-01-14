@@ -209,6 +209,11 @@
     "description": "Checking background processing status title",
     "originalDefault": "Processing..."
   },
+  "fORKm8": {
+    "defaultMessage": "(empty)",
+    "description": "Value display for empty value",
+    "originalDefault": "(empty)"
+  },
   "fWjfVm": {
     "defaultMessage": "Please hold on while we're processing your submission.",
     "description": "Checking background processing status body",
