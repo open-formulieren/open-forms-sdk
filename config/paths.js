@@ -21,7 +21,11 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL
 );
 
-const buildPath = process.env.BUILD_PATH || 'dist';
+let buildPath = process.env.BUILD_PATH || 'dist';
+
+if (process.env.SDK_VERSION && process.env.SDK_VERSION !== 'latest') {
+  buildPath = buildPath + '/' + process.env.SDK_VERSION;
+}
 
 const moduleFileExtensions = [
   'web.mjs',
