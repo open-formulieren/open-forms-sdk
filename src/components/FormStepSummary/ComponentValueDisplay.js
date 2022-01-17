@@ -27,7 +27,7 @@ const EmptyDisplay = () => (
 
 
 const DefaultDisplay = ({component, value}) => {
-  if (value === '') return <EmptyDisplay />;
+  if (value === '' || value == null) return <EmptyDisplay />;
   return value.toString();
 };
 
