@@ -63,7 +63,10 @@ jobs:
       - name: Build the Docker image
         env:
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-        run: docker build . --tag $IMAGE_NAME:$RELEASE_VERSION
+        run: |
+          docker build . \
+          --build-arg SDK_VERSION=${RELEASE_VERSION} \
+          --tag $IMAGE_NAME:$RELEASE_VERSION
 
       - name: Log into registry
         if: github.event_name == 'push'  # Exclude PRs
