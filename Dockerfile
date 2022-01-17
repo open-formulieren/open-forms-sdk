@@ -18,9 +18,13 @@ COPY . ./
 RUN yarn run build
 
 # Stage 2 -- serve static build with nginx
-FROM nginx:${NGINX_VERSION}
+FROM nginxinc/nginx-unprivileged:${NGINX_VERSION}
 
 WORKDIR /sdk
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/ .
+
+USER root
+RUN chown 101:101 -R ./
+USER nginx
