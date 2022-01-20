@@ -129,6 +129,10 @@ const FileDisplay = ({component, value}) => {
        }
     ] */
 
+  // Case where no file was uploaded
+  if (Array.isArray(value) && value.length === 0) {
+    return <EmptyDisplay />;
+  }
 
   // Normalize in case we get an array for a single value
   if (!component.multiple && Array.isArray(value)) {
