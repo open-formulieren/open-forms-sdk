@@ -153,6 +153,8 @@ const FileDisplay = ({component, value}) => {
 
 
 const NumberDisplay = ({component, value}) => {
+  if (!value) return <EmptyDisplay/>;
+
   return (
     <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />
   );
@@ -160,6 +162,8 @@ const NumberDisplay = ({component, value}) => {
 
 
 const CurrencyDisplay = ({component, value}) => {
+  if (!value) return <EmptyDisplay/>;
+
   return (
     <FormattedNumber
       value={value}
