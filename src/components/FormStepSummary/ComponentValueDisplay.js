@@ -130,7 +130,7 @@ const FileDisplay = ({component, value}) => {
     ] */
 
   // Case where no file was uploaded
-  if (Array.isArray(value) && value.length === 0) {
+  if (!value || (Array.isArray(value) && value.length === 0)) {
     return <EmptyDisplay />;
   }
 
@@ -200,6 +200,11 @@ const ComponentValueDisplay = ({ component }) => {
   const rawValues = multiple ? rawValue : [rawValue];
 
   const children = rawValues.map(value => (<Formatter component={component} value={value} />));
+
+  if (!children.length) {
+    return <EmptyDisplay/>;
+  }
+
   if (!multiple) {
     return children[0];
   }
