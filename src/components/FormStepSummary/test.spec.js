@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 
 import FormStepSummary from './index';
 import messagesNL from 'i18n/compiled/nl.json';
-import {testStepDataEmptyDate, testStepDataSelectMultivalue, testStepUploadFile} from './fixtures';
+import {testStepDataEmptyDate, testStepDataSelectMultivalue, testStepUploadFile, testStepUploadMultiFile} from './fixtures';
 
 
 let container = null;
@@ -68,7 +68,6 @@ it('Multi-value select field displayed properly', () => {
   expect(value).toEqual('Dog, Fish');
 });
 
-
 it('Empty file upload field', () => {
 
   act(() => {
@@ -79,6 +78,28 @@ it('Empty file upload field', () => {
       >
         <FormStepSummary
           stepData={testStepUploadFile}
+          editStepUrl="http://test-url.nl"
+          editStepText="Change"
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const value = container.getElementsByClassName("openforms-table__cell")[0].textContent;
+  expect(value).toEqual('(leeg)');
+});
+
+it('Empty file upload field with multivalue', () => {
+
+  act(() => {
+    render(
+      <IntlProvider
+        locale="nl"
+        messages={messagesNL}
+      >
+        <FormStepSummary
+          stepData={testStepUploadMultiFile}
           editStepUrl="http://test-url.nl"
           editStepText="Change"
         />
