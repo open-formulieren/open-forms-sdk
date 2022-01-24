@@ -131,6 +131,17 @@ export const testStepEmptyFields = {
         }
       },
       {
+        "id": "em5xsel",
+        "key": "uploadFileMultiple",
+        "type": "file",
+        "input": true,
+        "multiple": true,
+        "label": "Upload File Multiple",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
         "id": "em3xsul",
         "key": "uploadFile",
         "type": "file",
@@ -139,6 +150,37 @@ export const testStepEmptyFields = {
         "label": "Upload File",
         "data": {
           "value": [undefined],
+        }
+      },
+            {
+        "id": "em4xsul",
+        "key": "selectBoxes",
+        "type": "selectboxes",
+        "input": true,
+        "multiple": false,
+        "label": "Select boxes",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
+        "key": "radioButton",
+        "type": "radio",
+        "input": true,
+        "multiple": false,
+        "label": "Radio button",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
+        "key": "select",
+        "type": "select",
+        "input": true,
+        "multiple": false,
+        "label": "Select field",
+        "data": {
+          "value": undefined,
         }
       }
     ]
