@@ -33,9 +33,12 @@ const DefaultDisplay = ({component, value}) => {
 };
 
 
-const SignatureDisplay = ({component, value}) => (
-  <Image src={value} alt={component.key}/>
-);
+const SignatureDisplay = ({component, value}) => {
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
+  return (<Image src={value} alt={component.key}/>);
+};
 
 
 const CheckboxDisplay = ({component, value}) => {
@@ -47,6 +50,9 @@ const CheckboxDisplay = ({component, value}) => {
 
 
 const RadioDisplay = ({component, value}) => {
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
   const obj = component.values.find(obj => obj.value === value);
   return obj ? obj.label : value;
 };
@@ -54,6 +60,9 @@ const RadioDisplay = ({component, value}) => {
 
 const SelectDisplay = ({component, value}) => {
   const intl = useIntl();
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
 
   // special appointment cases
   if (component.appointments?.showProducts || component.appointments?.showLocations) {
@@ -94,7 +103,15 @@ const TimeDisplay = ({component, value}) => {
 
 
 const SelectboxesDisplay = ({component, value}) => {
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
+
   const selectedBoxes = Object.keys(value).filter(key => value[key] === true);
+  if (!selectedBoxes.length) {
+    return (<EmptyDisplay/>);
+  }
+
   const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
   const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
   return (
@@ -177,6 +194,10 @@ const CurrencyDisplay = ({component, value}) => {
 
 
 const MapDisplay = ({component, value}) => {
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
+
   return (
     <Map markerCoordinates={value} disabled />
   );
@@ -184,11 +205,18 @@ const MapDisplay = ({component, value}) => {
 
 
 const PasswordDisplay = ({component, value}) => {
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
+
   return Array.from(value).map(() => '*').join('');
 };
 
 
 const CoSignDisplay = ({component, value}) => {
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
   return (<CoSign interactive={false} />);
 };
 
@@ -201,7 +229,7 @@ const ComponentValueDisplay = ({ component }) => {
   } = component;
 
   const Formatter = TYPE_TO_COMPONENT[type] || DefaultDisplay;
-  const rawValues = multiple ? rawValue : [rawValue];
+  const rawValues = Array.isArray(rawValue) ? rawValue : [rawValue];
 
   const children = rawValues.map(value => (<Formatter component={component} value={value} />));
 
