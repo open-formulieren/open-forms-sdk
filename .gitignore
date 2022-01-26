@@ -2,6 +2,7 @@
 
 # developers
 .vscode/
+/env/
 
 # dependencies
 /node_modules
