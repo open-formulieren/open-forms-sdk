@@ -80,7 +80,7 @@ export const testStepDataSelectMultivalue = {
 };
 
 
-export const testStepUploadFile = {
+export const testStepEmptyFields = {
   "submissionStep": {
     "id": "31bd9fc8-57b7-4b32-bae7-a0b6d8c076cc",
     "name": "Details",
@@ -99,6 +99,28 @@ export const testStepUploadFile = {
     "components": [
       {
         "id": "em3xsol",
+        "key": "amountToPay",
+        "type": "currency",
+        "input": true,
+        "multiple": false,
+        "label": "Amount to Pay",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
+        "id": "em3xsal",
+        "key": "nPeople",
+        "type": "number",
+        "input": true,
+        "multiple": false,
+        "label": "Number of people",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
+        "id": "em3xsel",
         "key": "uploadFile",
         "type": "file",
         "input": true,
@@ -106,6 +128,59 @@ export const testStepUploadFile = {
         "label": "Upload File",
         "data": {
           "value": [],
+        }
+      },
+      {
+        "id": "em5xsel",
+        "key": "uploadFileMultiple",
+        "type": "file",
+        "input": true,
+        "multiple": true,
+        "label": "Upload File Multiple",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
+        "id": "em3xsul",
+        "key": "uploadFile",
+        "type": "file",
+        "input": true,
+        "multiple": true,
+        "label": "Upload File",
+        "data": {
+          "value": [undefined],
+        }
+      },
+            {
+        "id": "em4xsul",
+        "key": "selectBoxes",
+        "type": "selectboxes",
+        "input": true,
+        "multiple": false,
+        "label": "Select boxes",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
+        "key": "radioButton",
+        "type": "radio",
+        "input": true,
+        "multiple": false,
+        "label": "Radio button",
+        "data": {
+          "value": undefined,
+        }
+      },
+      {
+        "key": "select",
+        "type": "select",
+        "input": true,
+        "multiple": false,
+        "label": "Select field",
+        "data": {
+          "value": undefined,
         }
       }
     ]
