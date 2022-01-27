@@ -6,11 +6,13 @@
   @include body;
   @include body--big;
   display: block;
+  padding-right: 5px;
 
   &.field-required:after {
     content: '*';
     color: $color-red;
     z-index: 1;  // otherwise this is above the progress indicator
+    margin-right: -5px; // With the padding-right of the parent it makes the asterisk stay on the same line
   }
 }
 

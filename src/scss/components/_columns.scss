@@ -12,6 +12,7 @@ $column-half-gap-size: math.div($column-gap-size, 2);
 .#{prefix(columns)} {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 
   // ideally, we would use gap, but Opera doesn't support that yet with flexbox :(
   // Instead, we work around it by setting paddings on the child elements and negative
