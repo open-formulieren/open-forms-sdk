@@ -48,7 +48,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
     }
 
     .list-group-item {
-      @include responsive(padding, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
+      @include responsive(padding-top, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
     }
   }
 
@@ -72,6 +72,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
       @include mobile-only {
         flex-grow: 1;
       }
+      overflow-wrap: break-word;
     }
   }
 
