@@ -2,6 +2,15 @@
 Changelog
 =========
 
+1.0.0-rc.1 (2022-01-28)
+=======================
+
+* [#1226] Handle empty values in file fields.
+* [#1224] Handle empty multi-file fields.
+* [#1152] Handle additional time case validation
+* [#1203] Fix empty file field representation
+
+
 1.0.0-rc.0 (2022-01-17)
 =======================
 
