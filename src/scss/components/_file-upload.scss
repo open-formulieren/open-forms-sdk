@@ -19,7 +19,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
   $bs-span: $cols / 12 * 100%;
   @include responsive(
     width,
-    100%,
+    $bs-span / $bootstrap-ratio-mobile,
     $bs-span / $bootstrap-ratio-tablet,
     $bs-span / $bootstrap-ratio-laptop,
     $bs-span / $bootstrap-ratio-desktop,
@@ -57,9 +57,15 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
 
     .col-md-1 {
       @include bootstrap-span(1);
+      @include mobile-only {
+        flex-grow: 1;
+      }
     }
     .col-md-2 {
       @include bootstrap-span(2);
+      @include mobile-only {
+        flex-grow: 2;
+      }
     }
     .col-md-7 {
       @include bootstrap-span(7);
@@ -70,7 +76,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
     .col-md-9 {
       @include bootstrap-span(9);
       @include mobile-only {
-        flex-grow: 1;
+        flex-grow: 5;
       }
       overflow-wrap: break-word;
     }
