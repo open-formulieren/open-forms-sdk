@@ -1,0 +1,13 @@
+@import '../mixins/bem';
+
+.signature-pad-body {
+  width: 100%;
+  height: 150px;
+  padding: 0;
+  margin: 0;
+
+  @include element('image') {
+    width: 100%;
+    display: none;
+  }
+}

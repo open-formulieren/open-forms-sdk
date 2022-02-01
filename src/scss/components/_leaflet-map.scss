@@ -1,0 +1,11 @@
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.#{prefix(leaflet-map)} {
+  height: 400px;
+  position: relative;
+
+  @include modifier('disabled') {
+    cursor: default;
+  }
+}

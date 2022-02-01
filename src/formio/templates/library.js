@@ -1,18 +1,19 @@
-import { default as ComponentTemplate } from './component';
-import { default as FieldTemplate } from './field';
-import { default as MessageTemplate } from './message';
+import { default as ComponentTemplate } from './component.ejs';
+import { default as FieldTemplate } from './field.ejs';
+import { default as MessageTemplate } from './message.ejs';
 
-import { default as ButtonTemplate } from './button';
-import { default as CheckboxTemplate } from './checkbox';
-import { default as ColumnsTemplate } from './columns';
-import { default as LabelTemplate } from './label';
-import { default as RadioTemplate } from './radio';
-import { default as SelectTemplate } from './select';
-import { default as TextTemplate } from './text';
-import { default as FieldSetTemplate } from './fieldset';
-import { default as MapTemplate } from './map';
-import { default as MultiValueRowTemplate } from './multiValueRow';
-import { default as MultiValueTableTemplate } from './multiValueTable';
+import { default as ButtonTemplate } from './button.ejs';
+import { default as CheckboxTemplate } from './checkbox.ejs';
+import { default as ColumnsTemplate } from './columns.ejs';
+import { default as LabelTemplate } from './label.ejs';
+import { default as RadioTemplate } from './radio.ejs';
+import { default as SelectTemplate } from './select.ejs';
+import { default as SignatureTemplate } from './signature.ejs';
+import { default as TextTemplate } from './text.ejs';
+import { default as FieldSetTemplate } from './fieldset.ejs';
+import { default as MapTemplate } from './map.ejs';
+import { default as MultiValueRowTemplate } from './multiValueRow.ejs';
+import { default as MultiValueTableTemplate } from './multiValueTable.ejs';
 
 const OFLibrary = {
   component: {form: ComponentTemplate},
@@ -25,6 +26,7 @@ const OFLibrary = {
   label: {form: LabelTemplate},
   radio: {form: RadioTemplate},
   select: {form: SelectTemplate},
+  signature: {form: SignatureTemplate},
   input: {form: TextTemplate},
   fieldset: {form: FieldSetTemplate},
   map: {form: MapTemplate},

@@ -5,6 +5,7 @@ import { IntlProvider } from 'react-intl';
 import flatpickr from 'flatpickr';
 
 import { Formio, Templates } from 'react-formio';
+import ProtectedEval from '@formio/protected-eval';
 
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
@@ -14,11 +15,15 @@ import './styles.scss';
 import { get } from 'api';
 import { ConfigContext, FormioTranslations } from 'Context';
 import App from 'components/App';
+import {setCSPNonce} from 'csp';
 import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
+
+// use protected eval to not rely on unsafe-eval (CSP)
+Formio.use(ProtectedEval);
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
@@ -27,14 +32,22 @@ Templates.current = OFLibrary;
 
 Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 
+Formio.libraries = {
+  // The flatpickr css is added as part of our scss build so add empty attribute to
+  //   prevent Formio trying to get this css from a CDN
+  'flatpickr-css': ''
+};
+
 fixLeafletIconUrls();
 
 class OpenForm {
 
   constructor( targetNode, opts ) {
     const {
-      baseUrl, formId,
+      baseUrl,
       basePath,
+      formId,
+      CSPNonce,
       lang,
       sentryDSN,
       sentryEnv='',
@@ -46,6 +59,7 @@ class OpenForm {
     this.formObject = null;
     this.lang = lang;
 
+    setCSPNonce(CSPNonce);
     initialiseSentry(sentryDSN, sentryEnv);
 
     // ensure that the basename has no trailing slash (for react router)

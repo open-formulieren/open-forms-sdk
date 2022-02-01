@@ -1523,6 +1523,14 @@
   dependencies:
     resize-observer-polyfill "^1.5.1"
 
+"@formio/protected-eval@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@formio/protected-eval/-/protected-eval-1.2.1.tgz#dae528f4b27c8f25d582387537c5e168b0abe753"
+  integrity sha512-i0aqYI9CrtqaLCC6+6KfGSFRmj3X7cUlNLugWveTHW9i7GSjkNICRjZqapkzv6b5NXMusL5sE743b8rPPF6BHg==
+  dependencies:
+    js-interpreter "https://github.com/formio/JS-Interpreter#v1.1.0-formio.2"
+    lodash "^4.17.20"
+
 "@formio/semantic@^2.4.5":
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/@formio/semantic/-/semantic-2.5.1.tgz#cff24ba67320c0e11b3a0f0921802867e8dea79d"
@@ -2742,6 +2750,11 @@ acorn@^7.1.0, acorn@^7.1.1, acorn@^7.4.0:
   version "7.4.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
+
+acorn@^8.0.5:
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz#90951fde0f8f09df93549481e5fc141445b791cf"
+  integrity sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==
 
 address@1.1.2, address@^1.0.1:
   version "1.1.2"
@@ -5020,6 +5033,14 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
+
+ejs-loader@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ejs-loader/-/ejs-loader-0.5.0.tgz#ebed0afaedd0a58c07fcc810cf001df3c24d6399"
+  integrity sha512-iirFqlP3tiFoedNZ7dQcjvechunl054VbW6Ki38T/pabgXMAncduSE0ZXLeVGn1NbmcUJF9Z5TC0EvQ4RIpP9Q==
+  dependencies:
+    loader-utils "^2.0.0"
+    lodash "^4.17.15"
 
 ejs@^2.6.1:
   version "2.7.4"
@@ -7729,6 +7750,12 @@ js-cookie@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
   integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
+
+"js-interpreter@https://github.com/formio/JS-Interpreter#v1.1.0-formio.2":
+  version "1.1.0-formio.2"
+  resolved "https://github.com/formio/JS-Interpreter#0ed5007ada500c12d797ab867a15cfab736e9b25"
+  dependencies:
+    acorn "^8.0.5"
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
