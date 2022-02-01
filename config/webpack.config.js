@@ -401,6 +401,18 @@ module.exports = function (webpackEnv) {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
+            // EJS pre-compilation, for config reference see
+            // https://github.com/formio/semantic/blob/master/gulpfile.js
+            {
+              test: /\.ejs$/,
+              loader: 'ejs-loader',
+              options: {
+                variable: 'ctx',
+                evaluate: /\{%([\s\S]+?)%\}/g,
+                interpolate: /\{\{([\s\S]+?)\}\}/g,
+                escape: /\{\{\{([\s\S]+?)\}\}\}/g,
+              },
+            },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
@@ -681,6 +693,9 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      new webpack.ProvidePlugin({
+        _: 'lodash',
+      }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
