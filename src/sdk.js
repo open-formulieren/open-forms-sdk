@@ -5,6 +5,7 @@ import { IntlProvider } from 'react-intl';
 import flatpickr from 'flatpickr';
 
 import { Formio, Templates } from 'react-formio';
+import ProtectedEval from '@formio/protected-eval';
 
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
@@ -19,6 +20,9 @@ import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
+
+// use protected eval to not rely on unsafe-eval (CSP)
+Formio.use(ProtectedEval);
 
 // use custom component overrides
 Formio.use(OpenFormsModule);
