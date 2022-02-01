@@ -5,6 +5,11 @@ FROM node:14-buster-slim AS build
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  git \
+  ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
 ARG SDK_VERSION=latest
 
 # install dependencies
