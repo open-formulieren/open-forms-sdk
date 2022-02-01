@@ -1,0 +1,15 @@
+<table class="{{ctx.ofPrefix}}multi-value-table">
+  <tbody>
+  {{ctx.rows}}
+  {% if (!ctx.disabled) {%}
+    <tr>
+      <td colspan="2">
+        <button class="{{ctx.ofPrefix}}button" ref="addButton">
+          <i class="{{ctx.iconClass('plus')}}"></i>
+          <div class="{{ctx.ofPrefix}}multi-value-table__button-label">{{ctx.t(ctx.addAnother, {_userInput: true})}}</div>
+        </button>
+      </td>
+    </tr>
+  {%} %}
+  </tbody>
+</table>

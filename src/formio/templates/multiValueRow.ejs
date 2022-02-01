@@ -1,0 +1,10 @@
+<tr class="{{ctx.ofPrefix}}multi-value-row" ref="row">
+  <td class="{{ctx.ofPrefix}}multi-value-row__input">
+    {{ctx.element}}
+  </td>
+  {% if (!ctx.disabled) { %}
+  <td class="{{ctx.ofPrefix}}multi-value-row__remove">
+      <i class="{{ctx.iconClass('remove')}}" ref="removeRow"></i>
+  </td>
+  {% } %}
+</tr>

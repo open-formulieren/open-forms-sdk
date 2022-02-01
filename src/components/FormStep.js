@@ -22,6 +22,7 @@ import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {findPreviousApplicableStep, isLastStep} from 'components/utils';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import {ConfigContext, FormioTranslations} from 'Context';
+import {PREFIX}  from 'formio/constants';
 import Types from 'types';
 
 const DEBUG = process.env.NODE_ENV === 'development';
@@ -410,6 +411,9 @@ const FormStep = ({
                   baseUrl: config.baseUrl,
                   language: formioTranslations.language,
                   i18n: formioTranslations.i18n,
+                  evalContext: {
+                    ofPrefix: `${PREFIX}-`,
+                  },
                   hooks,
                   // custom options
                   intl,

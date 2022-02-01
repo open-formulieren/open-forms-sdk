@@ -1,4 +1,3 @@
-const TEMPLATE = `
 <select
   ref="{{ctx.input.ref ? ctx.input.ref : 'selectContainer'}}"
   {{ ctx.input.multiple ? 'multiple' : '' }}
@@ -14,6 +13,3 @@ const TEMPLATE = `
 >
     {{ctx.selectOptions}}
 </select>
-`;
-
-export default TEMPLATE;

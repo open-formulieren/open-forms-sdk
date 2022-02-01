@@ -6,6 +6,7 @@ import {useGeolocation} from 'react-use';
 import { MapContainer, TileLayer, Marker, useMap, useMapEvent } from 'react-leaflet';
 
 import { TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS } from 'map/constants';
+import {getBEMClassName} from 'utils';
 
 const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
@@ -38,14 +39,8 @@ const LeaftletMap = ({
     onMarkerSet(coordinates);
   };
 
-  const mapStyle = {
-    height: '400px',
-    position: 'relative',
-  };
-
-  if (disabled) {
-    mapStyle.cursor = 'default';
-  }
+  const modifiers = disabled ? ['disabled'] : [];
+  const className = getBEMClassName('leaflet-map', modifiers);
 
   return (
     <MapContainer
@@ -54,7 +49,7 @@ const LeaftletMap = ({
       continuousWorld
       crs={MAP_DEFAULTS.crs}
       attributionControl
-      style={mapStyle}
+      className={className}
     >
       <TileLayer url={TILE_LAYERS.url} {...TILE_LAYERS.options} />
       {

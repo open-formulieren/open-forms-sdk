@@ -6,6 +6,7 @@
 @import '~@fortawesome/fontawesome-free/scss/brands';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~flatpickr/dist/flatpickr.min.css';
 @import "~formiojs/dist/formio.form.css";
 
 @import "./scss/settings";
@@ -46,3 +47,5 @@
 @import "./scss/components/react-modal";
 @import "./scss/components/summary-row";
 @import "./scss/components/co-sign";
+@import "./scss/components/leaflet-map";
+@import "./scss/components/signature";
