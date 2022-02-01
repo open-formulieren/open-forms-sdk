@@ -31,6 +31,12 @@ Templates.current = OFLibrary;
 
 Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 
+Formio.libraries = {
+  // The flatpickr css is added as part of our scss build so add empty attribute to
+  //   prevent Formio trying to get this css from a CDN
+  'flatpickr-css': ''
+};
+
 fixLeafletIconUrls();
 
 class OpenForm {
