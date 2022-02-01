@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.12.3",
+    "@formio/protected-eval": "^1.2.1",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@sentry/react": "^6.13.2",
