@@ -19,8 +19,12 @@ const PrivacyCheckbox = ({label, value, onChange}) => {
         <label
           className={getBEMClassName('privacy-checkbox__label')}
           htmlFor="privacy"
-          dangerouslySetInnerHTML={{__html: label}}
-        />
+        >
+          <div
+            className={getBEMClassName('privacy-checkbox__wyswyg-text')}
+            dangerouslySetInnerHTML={{__html: label}}
+          />
+        </label>
       </div>
     </div>
   )
