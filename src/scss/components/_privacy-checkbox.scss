@@ -1,16 +1,19 @@
 @import '../mixins/prefix';
+@import '~microscope-sass/lib/typography';
 
 .#{prefix(privacy-checkbox)} {
   @extend .#{prefix(checkbox)};
 
   &__label {
     @extend .#{prefix(checkbox)}__label;
+  }
 
+  &__wyswyg-text {
     // This is needed because the label is populated with the value coming from a WYSIWYG editor
-    // which adds <p></p> around the label text. This tag gets a margin which looks off.
+    // which adds <p></p> around each paragraph in the text. This tag gets a margin which looks off.
     // So here it is overwritten.
     p {
-      margin: 0;
+      @include body('auto');
     }
   }
 
