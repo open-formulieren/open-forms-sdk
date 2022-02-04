@@ -68,7 +68,7 @@ const reducer = (draft, action) => {
       draft.logicChecking = false;
       break;
     }
-    case 'STEP_DATA_UPDATED': {
+    case 'FORMIO_CHANGE_HANDLED': {
       draft.logicChecking = false;
       break;
     }
@@ -131,7 +131,6 @@ const FormStep = ({
   const { step: slug } = useParams();
 
   // logic check refs
-  const formData = useRef(null);
   const logicCheckTimeout = useRef();
   // can't use usePrevious, because the data changed event fires often, and we need to
   // track data changes since the last logic check rather.
@@ -154,7 +153,6 @@ const FormStep = ({
         type: 'STEP_LOADED',
         payload: stepDetail,
       });
-      formData.current = stepDetail.data;
       configurationRef.current = stepDetail.formStep.configuration;
     },
     [submissionStep.url]
@@ -167,10 +165,11 @@ const FormStep = ({
   // to de-sync. This utility ensures you always have an up-to-date view of the form
   // data.
   //
-  // Currently it's a simple wrapper around the form data ref, but we may do more advanced
+  // Currently it's a simple wrapper around the form ref, but we may do more advanced
   // things using immer.produce to deal with immutable state inside at some point.
   const getCurrentFormData = () => {
-    return {...formData.current};
+    const submissionData = formRef.current?.formio?.submission?.data;
+    return submissionData ? {...submissionData} : null;
   };
 
   const checkAbortedLogicCheck = (signal) => {
@@ -187,8 +186,6 @@ const FormStep = ({
     if (previousData && isEqual(previousData, data)) return;
     if (isEmpty(data)) return;
 
-    // TODO: we have a known bug/edge-case where the submission stays in the blocked
-    // state, possibly because some event was aborted.
     dispatch({
       type: 'BLOCK_SUBMISSION',
       payload: {logicChecking: true},
@@ -226,7 +223,7 @@ const FormStep = ({
 
       // we did perform a logic check, so now track which data we checked. Next logic
       // checks can then exit early if there are no changes.
-      previouslyCheckedData.current = data;
+      previouslyCheckedData.current = cloneDeep(data);
 
       // report back to parent component
       onLogicChecked(submission, step);
@@ -250,12 +247,11 @@ const FormStep = ({
       // process it.
       data = getCurrentFormData();
 
-      // update the form data both in our internal state and the formio submission data
-      // we do not filterBlankValues here, as a default value may have been explicitly
+      // update the form data in the formio submission data. we do not filterBlankValues
+      // here, as a default value may have been explicitly
       // reset to an empty value (see https://github.com/open-formulieren/open-forms/issues/994)
       const updatedData = cloneDeep({...data, ...step.data});
-      formData.current = updatedData;
-      if (!isEqual(formInstance.submission.data, updatedData)) {
+      if (!isEqual(data, updatedData)) {
         formInstance.submission = {data: updatedData};
       }
 
@@ -264,7 +260,7 @@ const FormStep = ({
         type: 'LOGIC_CHECK_DONE',
         payload: {
           submission,
-          step: {...step, data: getCurrentFormData()},
+          step: {...step, data: updatedData},
         },
       });
     } catch (e) {
@@ -315,7 +311,9 @@ const FormStep = ({
   };
 
   const onSaveConfirm = async () => {
-    const response = await submitStepData(submissionStep.url, {...formData.current});
+    const response = await submitStepData(
+      submissionStep.url, {...getCurrentFormData()}
+    );
     return response;
   };
 
@@ -366,20 +364,23 @@ const FormStep = ({
     // formio form not mounted -> nothing to do
     if (!formRef.current) return;
 
-    if (isEqual(changed.data, getCurrentFormData())) return;
-
     dispatch({type: 'BLOCK_SUBMISSION'});
 
     // signal abortion, and set a new controller for the newly scheduled check.
-    controller.current.abort()
+    controller.current.abort();
     const abortController = new AbortController();
     controller.current = abortController;
 
-    const data = cloneDeep(changed.data);
-    formData.current = data;
-
     // cancel old timeout if it's set
-    logicCheckTimeout.current && clearTimeout(logicCheckTimeout.current);
+    if(logicCheckTimeout.current) {
+      clearTimeout(logicCheckTimeout.current);
+      dispatch({
+        type: 'LOGIC_CHECK_INTERRUPTED',
+        payload: {
+          canSubmit: formRef.current?.formio?.isValid() || false,
+        },
+      });
+    }
 
     // schedule a new logic check to run in LOGIC_CHECK_DEBOUNCE ms
     logicCheckTimeout.current = setTimeout(
@@ -389,7 +390,7 @@ const FormStep = ({
       LOGIC_CHECK_DEBOUNCE,
     );
 
-    dispatch({type: 'STEP_DATA_UPDATED'});
+    dispatch({type: 'FORMIO_CHANGE_HANDLED'});
   };
 
   return (
@@ -420,11 +421,13 @@ const FormStep = ({
                   ofContext: {
                     form: form,
                     submissionUuid: submission.id,
-                    saveStepData: async () => await submitStepData(submissionStep.url, {...formData.current}),
+                    saveStepData: async () => await submitStepData(
+                      submissionStep.url, {...getCurrentFormData()}
+                    ),
                   },
                 }}
               />
-              { DEBUG ? <FormStepDebug data={formData.current} /> : null }
+              { DEBUG ? <FormStepDebug data={getCurrentFormData()} /> : null }
             <ButtonsToolbar
               literals={formStep.literals}
               canSubmitStep={canSubmit}
