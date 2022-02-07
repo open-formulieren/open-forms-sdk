@@ -303,7 +303,7 @@ const FormStep = ({
   // The handler of this submit event essentially calls the underlying formio.js
   // instance submit method, which leads to the submit event being emitted, and we tap
   // into that to handle the actual submission.
-  const onReactSubmit = (event) => {
+  const onReactSubmit = async (event) => {
     event.preventDefault();
     if (!canSubmit) return;
 
@@ -315,12 +315,27 @@ const FormStep = ({
       return;
     }
 
-    if (!formInstance.isValid()) {
+    const data = getCurrentFormData();
+    // we set the dirty flag, even if there are changes at all to force validation of
+    // whatever data is in the form before submitting. Untouched form fields are marked
+    // as 'pristine' in Formio (see `Component.invalidMessage` method`) which causes
+    // validation to be skipped.
+    const isValid = await formInstance.checkAsyncValidity(data, true, data);  // sets the validation error messages
+    // invalid forms may not be submitted.
+    if (!isValid) {
+      dispatch({type: 'BLOCK_SUBMISSION'});
       return;
     }
 
     // submit the Formio.js form instance, which causes the submit event to be emitted.
-    formInstance.submit();
+    // FormIO submit() calls executeSubmit() which catches invalid field data (including empty required fields)
+    // and then renders the errors in the form. If this is not caught, the step will be submitted anyway
+    try {
+      await formInstance.submit();
+    } catch (e) {
+      // Submitting the form step failed
+      dispatch({type: 'BLOCK_SUBMISSION'});
+    }
   };
 
   const onSaveConfirm = async () => {
