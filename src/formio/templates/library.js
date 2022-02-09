@@ -11,6 +11,7 @@ import { default as SelectTemplate } from './select.ejs';
 import { default as SignatureTemplate } from './signature.ejs';
 import { default as TextTemplate } from './text.ejs';
 import { default as FieldSetTemplate } from './fieldset.ejs';
+import { default as FileTemplate } from './file.ejs';
 import { default as MapTemplate } from './map.ejs';
 import { default as MultiValueRowTemplate } from './multiValueRow.ejs';
 import { default as MultiValueTableTemplate } from './multiValueTable.ejs';
@@ -29,6 +30,7 @@ const OFLibrary = {
   signature: {form: SignatureTemplate},
   input: {form: TextTemplate},
   fieldset: {form: FieldSetTemplate},
+  file: {form: FileTemplate},
   map: {form: MapTemplate},
   multiValueRow: {form: MultiValueRowTemplate},
   multiValueTable: {form: MultiValueTableTemplate},
