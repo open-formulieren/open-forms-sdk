@@ -83,7 +83,7 @@
   <div class="file {{status.status === 'error' ? ' has-error' : ''}}">
     <div class="row">
       <div class="fileName col-form-label col-sm-10">
-        {{status.originalName}}
+        <span class="fileName__file">{{status.originalName}}</span>
         <i class="{{ctx.iconClass('remove')}}" ref="fileStatusRemove" title="{{ctx.t('remove')}}"></i>
       </div>
       <div class="fileSize col-form-label col-sm-2 text-right">{{ctx.fileSize(status.size)}}</div>

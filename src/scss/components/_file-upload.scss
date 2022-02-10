@@ -119,6 +119,17 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
     }
 
     .fileName {
+      display: flex;
+      align-items: center;
+
+      &__file {
+        display: inline-block;
+        max-width: calc(100% - 2em);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
       [ref="fileStatusRemove"] {
         cursor: pointer;
         margin-left: .4em;
