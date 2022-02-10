@@ -88,21 +88,17 @@
       </div>
       <div class="fileSize col-form-label col-sm-2 text-right">{{ctx.fileSize(status.size)}}</div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        {% if (status.status === 'progress') { %}
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{status.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{status.progress}}%">
-              <span class="sr-only">{{status.progress}}% {{ctx.t('Complete')}}</span>
-            </div>
-          </div>
-        {% } else if (status.status === 'error') { %}
-          <div class="alert alert-danger bg-{{status.status}}">{{ctx.t(status.message)}}</div>
-        {% } else { %}
-          <div class="bg-{{status.status}}">{{ctx.t(status.message)}}</div>
-        {% } %}
+    {% if (status.status === 'progress') { %}
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{status.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{status.progress}}%">
+          <span class="sr-only">{{status.progress}}% {{ctx.t('Complete')}}</span>
+        </div>
       </div>
-    </div>
+    {% } else if (status.status === 'error') { %}
+      <div class="alert alert-danger bg-{{status.status}}">{{ctx.t(status.message)}}</div>
+    {% } else { %}
+      <div class="bg-{{status.status}}">{{ctx.t(status.message)}}</div>
+    {% } %}
   </div>
 {% }) %}
 {% if (!ctx.component.storage || ctx.support.hasWarning) { %}
