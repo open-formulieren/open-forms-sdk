@@ -80,6 +80,13 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
       }
       overflow-wrap: break-word;
     }
+
+    .col-sm-2 {
+      @include bootstrap-span(2);
+    }
+    .col-sm-10 {
+      @include bootstrap-span(10);
+    }
   }
 
   .fileSelector {
@@ -91,11 +98,54 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
     &.fileDragOver {
       border-color: $color-primary;
     }
+
+    & + .file {
+      margin-top: $grid-container-margin-small;
+    }
   }
 
   [ref="removeLink"] {
     cursor: pointer;
     color: $color-danger;
+  }
+
+  .file {
+    @include body;
+    @include body--big;
+
+    &.has-error {
+      @include border(left, $color-danger, 4px);
+      padding-left: $grid-margin-3;
+    }
+
+    .fileName {
+      display: flex;
+      align-items: center;
+
+      &__file {
+        display: inline-block;
+        max-width: calc(100% - 2em);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      [ref="fileStatusRemove"] {
+        cursor: pointer;
+        margin-left: .4em;
+        opacity: 0.6;
+        transition: all 0.4s ease;
+
+        &:hover {
+          opacity: 1;
+          color: $color-danger;
+        }
+      }
+    }
+  }
+
+  .bg-error {
+    @extend .#{prefix(errors)};
   }
 }
 
