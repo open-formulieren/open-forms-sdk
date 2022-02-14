@@ -56,6 +56,7 @@ const initialState = {
   canSubmit: false,
   logicChecking: false,
   isFormSaveModalOpen: false,
+  isNavigating: false,
 };
 
 const reducer = (draft, action) => {
@@ -66,6 +67,7 @@ const reducer = (draft, action) => {
       draft.backendData = data;
       draft.canSubmit = canSubmit;
       draft.logicChecking = false;
+      draft.isNavigating = false;
       break;
     }
     case 'FORMIO_CHANGE_HANDLED': {
@@ -102,6 +104,10 @@ const reducer = (draft, action) => {
       draft.isFormSaveModalOpen = open;
       break;
     }
+    case 'NAVIGATE': {
+      draft.isNavigating = true;
+      break;
+    }
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -122,7 +128,12 @@ const FormStep = ({
   /* component state */
   const formRef = useRef(null);
   const [
-    {configuration, backendData, canSubmit, logicChecking, isFormSaveModalOpen},
+    {
+      configuration, backendData,
+      canSubmit, logicChecking,
+      isFormSaveModalOpen,
+      isNavigating,
+    },
     dispatch
   ] = useImmerReducer(reducer, initialState);
 
@@ -276,6 +287,8 @@ const FormStep = ({
       throw new Error("There is no active submission!");
     }
 
+    dispatch({type: 'NAVIGATE'});
+
     await submitStepData(submissionStep.url, data);
     // This will reload the submission
     const {submission: updatedSubmission, step} = await doLogicCheck(submissionStep.url, data);
@@ -324,6 +337,9 @@ const FormStep = ({
 
   const onPrevPage = (event) => {
     event.preventDefault();
+
+    dispatch({type: 'NAVIGATE'});
+
     const currentStepIndex = form.steps.indexOf(formStep);
     const previousStepIndex = findPreviousApplicableStep(currentStepIndex, submission);
 
@@ -393,13 +409,15 @@ const FormStep = ({
     dispatch({type: 'FORMIO_CHANGE_HANDLED'});
   };
 
+  const isLoadingSomething = (loading || isNavigating);
+
   return (
     <>
       <Card title={submissionStep.name}>
-        { loading ? <Loader modifiers={['centered']} /> : null }
+        { isLoadingSomething ? <Loader modifiers={['centered']} /> : null }
 
         {
-          (!loading && configuration) ? (
+          (!isLoadingSomething && configuration) ? (
             <form onSubmit={onReactSubmit}>
               <FormIOWrapper
                 ref={formRef}
