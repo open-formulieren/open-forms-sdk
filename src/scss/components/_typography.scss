@@ -21,11 +21,15 @@
   clear: both;
 
   @include modifier(small) {
-    @include body--small
+    @include body--small;
   }
 
   @include modifier(big) {
-    @include body--big
+    @include body--big;
+  }
+
+  @include modifier(wysiwyg) {
+    @include wysiwyg;
   }
 }
 

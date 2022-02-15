@@ -16,6 +16,7 @@ import Types from 'types';
 import LoginButton, {
   START_FORM_QUERY_PARAM, LoginButtonIcon
 } from 'components/LoginButton';
+import {getBEMClassName} from 'utils';
 
 
 const useStartSubmission = () => {
@@ -44,8 +45,8 @@ const FormStartMessage = ({form}) => {
   ;
   return (
     <Body modifiers={['compact']} component="div">
-      <div className="start-message__explanation" dangerouslySetInnerHTML={{__html: form.explanationTemplate}}/>
-      <div className="start-message__login">{startLoginMessage}</div>
+      <div className={getBEMClassName('body', ['wysiwyg'])} dangerouslySetInnerHTML={{__html: form.explanationTemplate}}/>
+      <div>{startLoginMessage}</div>
     </Body>
   );
 };
