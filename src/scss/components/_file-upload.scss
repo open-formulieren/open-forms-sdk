@@ -43,7 +43,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
       @include hide-on-mobile(block);
 
       .row {
-        border-bottom: solid 1px $color-gray;
+        border-bottom: solid 1px $color-border;
       }
     }
 
@@ -92,7 +92,7 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
   .fileSelector {
     position: relative;
     @include margin($grid-container-margin-small, $properties: padding);
-    border: 2px dashed $color-gray-darker;
+    border: 3px dashed $color-gray-darkest;
     text-align: center;
 
     &.fileDragOver {
