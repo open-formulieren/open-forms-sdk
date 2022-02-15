@@ -11,6 +11,7 @@
 
   @include modifier('content') {
     [ref="html"] {
+      @include wysiwyg;
       @include body;
       @include body--big;
       width: 100%;

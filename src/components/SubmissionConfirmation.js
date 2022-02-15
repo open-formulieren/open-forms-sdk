@@ -133,7 +133,11 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
                      values={{reference: publicReference}}
                    />}>
 
-        <Body component="div" dangerouslySetInnerHTML={{__html: confirmationPageContent}} />
+        <Body
+          component="div"
+          modifiers={['wysiwyg']}
+          dangerouslySetInnerHTML={{__html: confirmationPageContent}}
+        />
 
         <>
           <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />

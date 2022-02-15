@@ -9,6 +9,11 @@
   display: flex;
   align-items: center;
 
+  // add more vertical spacing between rows
+  &:not(:last-child) > td {
+    margin-bottom: $grid-margin-1;
+  }
+
   &__input {
     width: 100%;
   }
