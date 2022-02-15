@@ -123,11 +123,9 @@ $bootstrap-ratio-desktop: 12 / $grid-columns-desktop;
       align-items: center;
 
       &__file {
+        @include ellipsis;
         display: inline-block;
         max-width: calc(100% - 2em);
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
       }
 
       [ref="fileStatusRemove"] {

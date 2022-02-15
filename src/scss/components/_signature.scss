@@ -1,6 +1,9 @@
+@import '~microscope-sass/lib/typography';
+
 @import '../mixins/bem';
 
 .signature-pad-body {
+  @include margin(auto, $value-mobile: 0.5em);
   width: 100%;
   height: 150px;
   padding: 0;
@@ -10,4 +13,9 @@
     width: 100%;
     display: none;
   }
+}
+
+.signature-pad-footer {
+  @include text;
+  color: $color-gray-darker;
 }
