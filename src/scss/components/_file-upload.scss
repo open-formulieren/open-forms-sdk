@@ -67,10 +67,10 @@ we don't have strict BEM naming here.
     }
 
     .col-sm-2 {
-      @include bootstrap-span(2);
+      @include bootstrap-span(width, 2);
     }
     .col-sm-10 {
-      @include bootstrap-span(10);
+      @include bootstrap-span(width, 10);
     }
   }
 
