@@ -2,6 +2,21 @@
 Changelog
 =========
 
+1.0.0-rc.2 (2022-02-16)
+=======================
+
+Fixed a set of bugs that didn't make it into rc.1
+
+* [#1262] Fixed long filenames overflowing in file upload component
+* [#807] Fixed strict Content Security Policy violations
+* [#1270] Fixed formatting of numbers with decimalLimit=0
+* [#1284] Fixed clearing address prefills
+* [#1261] Fixed privacy-checkbox styling
+* [#1274] Fixed more event/race conditions while typing values
+* [#1193] Fixed styling of file upload validation errors
+* [#942] Improved user experience when navigating between steps
+* [#1018] Implemented various accessibility (a11y) improvements
+
 1.0.0-rc.1 (2022-01-28)
 =======================
 
