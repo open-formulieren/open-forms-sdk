@@ -8,7 +8,7 @@ we don't have strict BEM naming here.
 @import '~microscope-sass/lib/responsive';
 
 @import '../mixins/prefix';
-@import '../mixins/bem';
+@import '../mixins/bootstrap';
 
 
 .#{prefix(form-control--file)} {
