@@ -11,8 +11,7 @@ const BsnValidator = {
   },
   check(component, setting, value) {
     if (!value) {
-      // multiple values has null instead of empty str
-      return false;
+      return true;
     }
     return isValidBsn(value.replaceAll('_', ''));
   }
