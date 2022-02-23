@@ -65,11 +65,28 @@
     </div>
   {% } else if (!ctx.self.cameraMode) { %}
     <div class="fileSelector" ref="fileDrop" {{ctx.fileDropHidden ? 'hidden' : ''}}>
-      <i class="{{ctx.iconClass('cloud-upload')}}"></i> {{ctx.t('Drop files to attach,')}}
+      <i class="{{ctx.iconClass('cloud-upload')}}"></i>
+
+        {% if (ctx.component.multiple) { %}
+          {{ctx.t('Drop files,')}}
+        {% } else { %}
+          {{ctx.t('Drop a file,')}}
+        {% } %}
+
         {% if (ctx.self.imageUpload) { %}
           <a href="#" ref="toggleCameraMode"><i class="fa fa-camera"></i> {{ctx.t('Use Camera,')}}</a>
         {% } %}
-        {{ctx.t('or')}} <a href="#" ref="fileBrowse" class="browse">{{ctx.t('browse')}}</a>
+
+        {{ctx.t('or')}}
+
+        <a href="#" ref="fileBrowse" class="browse">{{ctx.t('browse')}}</a>
+
+        {% if (ctx.component.multiple) { %}
+          {{ctx.t('to attach files.')}}
+        {% } else { %}
+          {{ctx.t('to attach a file.')}}
+        {% } %}
+
     </div>
   {% } else { %}
     <div>
