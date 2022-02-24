@@ -2,6 +2,22 @@
 Changelog
 =========
 
+1.0.0-rc.3 (2022-02-25)
+=======================
+
+Bugfixes for issues still present in rc.2
+
+* [#1368] Updated translations
+* [#1371] Fixed Digid login by upgrading django-digid-eherkenning package
+* [#1340] Fixed misaligned asterisk for required fields
+* [#1301] Fixed validation in component variants with multiple=True:
+
+    - BSN
+    - Date
+    - Phone number
+
+* [#1374] Fixed broken appointment dependent-dropdowns
+
 1.0.0-rc.2 (2022-02-16)
 =======================
 
