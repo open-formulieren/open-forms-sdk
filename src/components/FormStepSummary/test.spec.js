@@ -47,7 +47,7 @@ it('Unfilled dates displayed properly', () => {
   });
 
   const value = container.getElementsByClassName('openforms-table__cell')[0].textContent;
-  expect(value).toEqual('(leeg)');
+  expect(value).toEqual('');
 });
 
 it('Multi-value select field displayed properly', () => {
@@ -69,7 +69,7 @@ it('Multi-value select field displayed properly', () => {
   });
 
   const value = container.getElementsByClassName("openforms-table__cell")[0].textContent;
-  expect(value).toEqual('Dog, Fish');
+  expect(value).toEqual('Dog; Fish');
 });
 
 it('Empty fields', () => {
@@ -93,6 +93,6 @@ it('Empty fields', () => {
   const emptyValues = container.getElementsByClassName("openforms-table__cell");
 
   for (const emptyValue of emptyValues) {
-    expect(emptyValue.textContent).toEqual('(leeg)');
+    expect(emptyValue.textContent).toEqual('');
   }
 });
