@@ -18,13 +18,13 @@ import {getFormattedDateString, getFormattedTimeString} from 'utils';
 import {humanFileSize} from './utils';
 
 
-const EmptyDisplay = () => (
-  <FormattedMessage
-    description="Value display for empty value"
-    defaultMessage="(empty)"
-  />
-);
-
+// const EmptyDisplay = () => (
+//   <FormattedMessage
+//     description="Value display for empty value"
+//     defaultMessage="(empty)"
+//   />
+// );
+const EmptyDisplay = () => '';
 
 const DefaultDisplay = ({component, value}) => {
   if (value == null) return '';
@@ -170,7 +170,7 @@ const FileDisplay = ({component, value}) => {
 
 
 const NumberDisplay = ({component, value}) => {
-  if (!value) return <EmptyDisplay/>;
+  if (!value && value !== 0) return <EmptyDisplay/>;
 
   return (
     <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />
@@ -179,15 +179,15 @@ const NumberDisplay = ({component, value}) => {
 
 
 const CurrencyDisplay = ({component, value}) => {
-  if (!value) return <EmptyDisplay/>;
+  if (!value && value !== 0) return <EmptyDisplay/>;
 
   return (
     <FormattedNumber
       value={value}
       style="currency"
       currency="EUR"
-      minimumFractionDigits={2}
-      maximumFractionDigits={2}
+      minimumFractionDigits={component.decimalLimit || 2}
+      maximumFractionDigits={component.decimalLimit || 2}
     />
   );
 };
@@ -246,7 +246,7 @@ const ComponentValueDisplay = ({ component }) => {
       {
         children.map((child, index) => (
           <React.Fragment key={index}>
-            { !!index && ', ' }
+            { !!index && '; ' }
             {child}
           </React.Fragment>
         ))
