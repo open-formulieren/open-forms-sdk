@@ -6,7 +6,13 @@ import { applyPrefix } from '../utils';
 const DateTimeField = Formio.Components.components.datetime;
 
 
-const extractDate = (value) => value.substring(0, 10);
+const extractDate = (value) => {
+  if (!value) {
+    // multiple values has null instead of empty str
+    return ""
+  }
+  return value.substring(0, 10);
+}
 
 
 class DateField extends DateTimeField {
