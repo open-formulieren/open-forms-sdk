@@ -34,15 +34,37 @@ const configureProductOptions = (component) => {
   });
 };
 
+
+const urlTemplateFactory = (path, getQuery) => {
+  // use a function, as the protected evaluator can't handle the coalesce behaviour.
+  // See Github issue #1374 for more information.
+  // Formio 4.12, 4.13 and current master (at the time of writing) do not seem to be
+  // thinking about deprecating functions as template 'source' at the moment.
+  const url = (context) => {
+    const {row, instance} = context;
+    const query = new URLSearchParams(getQuery(row));
+    return `${instance.options.baseUrl}${path}?${query.toString()}`;
+  };
+  // monkeypatch this stuff, as Formio calls it and expects a string... sigh
+  url.startsWith = (arg) => false;
+  return url;
+};
+
+
 const configureLocationOptions = (component) => {
   const appointmentsOptions = component.component.appointments;
   if (!appointmentsOptions.showLocations) return;
 
   // TODO: account for possible nesting!
   const productComponentKey = appointmentsOptions.productComponent;
-  // can't use URLSearchParams because the template markers are escaped
-  const query = `product_id={{ row.${productComponentKey}.identifier || row.${productComponentKey} }}`;
-  const url = `${component.options.baseUrl}appointments/locations?${query}`;
+
+  const getQuery = (row) => {
+    const currentValue = row[productComponentKey].identifier ?? row[productComponentKey];
+    return {product_id: currentValue};
+  };
+
+  const url = urlTemplateFactory('appointments/locations', getQuery);
+
   Object.assign(component.component, {
     dataSrc: 'url',
     data: {url, method: 'GET'},
@@ -66,12 +88,16 @@ const configureDateOptions = (component) => {
   const productComponentKey = appointmentsOptions.productComponent;
   const locationComponentKey = appointmentsOptions.locationComponent;
 
-  // can't use URLSearchParams because the template markers are escaped
-  const query = [
-    `product_id={{ row.${productComponentKey}.identifier || row.${productComponentKey} }}`,
-    `location_id={{ row.${locationComponentKey}.identifier || row.${locationComponentKey} }}`
-  ].join('&');
-  const url = `${component.options.baseUrl}appointments/dates?${query}`;
+  const getQuery = (row) => {
+    const currentProduct = row[productComponentKey].identifier ?? row[productComponentKey];
+    const currentLocation = row[locationComponentKey].identifier ?? row[ locationComponentKey];
+    return {
+      product_id: currentProduct,
+      location_id: currentLocation,
+    };
+  };
+
+  const url = urlTemplateFactory('appointments/dates', getQuery);
 
   Object.assign(component.component, {
     dataSrc: 'url',
@@ -106,13 +132,17 @@ const configureTimeOptions = (component) => {
   const locationComponentKey = appointmentsOptions.locationComponent;
   const dateComponentKey = appointmentsOptions.dateComponent;
 
-  // can't use URLSearchParams because the template markers are escaped
-  const query = [
-    `product_id={{ row.${productComponentKey}.identifier || row.${productComponentKey} }}`,
-    `location_id={{ row.${locationComponentKey}.identifier || row.${locationComponentKey} }}`,
-    `date={{ row.${dateComponentKey} }}`,
-  ].join('&');
-  const url = `${component.options.baseUrl}appointments/times?${query}`;
+  const getQuery = (row) => {
+    const currentProduct = row[productComponentKey].identifier ?? row[productComponentKey];
+    const currentLocation = row[locationComponentKey].identifier ?? row[ locationComponentKey];
+    return {
+      product_id: currentProduct,
+      location_id: currentLocation,
+      date: row[dateComponentKey],
+    };
+  };
+
+  const url = urlTemplateFactory('appointments/times', getQuery);
 
   Object.assign(component.component, {
     dataSrc: 'url',
