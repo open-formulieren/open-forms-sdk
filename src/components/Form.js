@@ -51,6 +51,7 @@ const initialState = {
   submittedSubmission: null,
   processingStatusUrl: '',
   processingError: '',
+  completed: false,
 };
 
 
@@ -75,6 +76,11 @@ const reducer = (draft, action) => {
       draft.processingError = action.payload;
       // put the submission back in the state as well, so we can re-submit
       draft.submission = draft.submittedSubmission;
+      break;
+    }
+    case 'PROCESSING_SUCCEEDED': {
+      draft.processingError = null;
+      draft.completed = true;
       break;
     }
     case 'CLEAR_PROCESSING_ERROR': {
@@ -273,6 +279,7 @@ const reducer = (draft, action) => {
               submission={state.submittedSubmission}
               statusUrl={state.processingStatusUrl}
               onFailure={onProcessingFailure}
+              onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               component={SubmissionConfirmation} />
           </Route>
 
@@ -308,6 +315,7 @@ const reducer = (draft, action) => {
               steps={form.steps}
               submission={state.submission || state.submittedSubmission}
               submissionAllowed={form.submissionAllowed}
+              completed={state.completed}
             />
           </LayoutColumn>
         )

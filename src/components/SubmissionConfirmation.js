@@ -16,6 +16,7 @@ import {Toolbar, ToolbarList} from 'components/Toolbar';
 import usePoll from 'hooks/usePoll';
 
 const RESULT_FAILED = 'failed';
+const RESULT_SUCCESS = 'success';
 
 const getStartPaymentUrl = (apiUrl) => {
   const nextUrl = new URL(window.location.href);
@@ -63,8 +64,9 @@ StartPayment.propTypes = {
  * Renders the confirmation page displayed after submitting a form.
  * @param {String} statusUrl The URL where to check if the processing of the submission is complete
  * @param {Function} onFailure Callback to invoke if the background processing result is failure.
+ * @param {Function} onConfirmed Callback to invoke if the background processing result is success.
  */
-const SubmissionConfirmation = ({statusUrl, onFailure}) => {
+const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
   const [statusResponse, setStatusResponse] = useState(null);
   const intl = useIntl();
   const genericErrorMessage = intl.formatMessage({
@@ -82,6 +84,8 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
           if (response.result === RESULT_FAILED) {
             const errorMessage = response.errorMessage || genericErrorMessage;
             onFailure && onFailure(errorMessage);
+          } else if (response.result === RESULT_SUCCESS) {
+            onConfirmed && onConfirmed();
           }
           return true;
         }
@@ -184,6 +188,7 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
 SubmissionConfirmation.propTypes = {
   statusUrl: PropTypes.string.isRequired,
   onFailure: PropTypes.func,
+  onConfirmed: PropTypes.func,
 }
 
 export default SubmissionConfirmation;
