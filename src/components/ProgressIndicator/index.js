@@ -82,7 +82,7 @@ const stepLabels = {
 };
 
 
-const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed }) => {
+const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, completed=false }) => {
   const summaryMatch = !!useRouteMatch('/overzicht');
   const stepMatch = useRouteMatch('/stap/:step');
   const confirmationMatch = !!useRouteMatch('/bevestiging');
@@ -163,7 +163,7 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed })
         {
           showConfirmation
           && (
-            <ProgressItem completed={false}>
+            <ProgressItem completed={completed}>
               <Anchor
                 component="span"
                 modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted)}
@@ -188,6 +188,7 @@ ProgressIndicator.propTypes = {
     formDefinition: PropTypes.string.isRequired,
   })).isRequired,
   submissionAllowed: PropTypes.oneOf(Object.values(SUBMISSION_ALLOWED)).isRequired,
+  completed: PropTypes.bool,
 };
 
 

@@ -278,5 +278,10 @@
     "defaultMessage": "Failed to determine the appointment time",
     "description": "Appointment cancellation missing time query string parameter",
     "originalDefault": "Failed to determine the appointment time"
+  },
+  "zkdWYe": {
+    "defaultMessage": "Return to main website",
+    "description": "Back to main website link title",
+    "originalDefault": "Return to main website"
   }
 }

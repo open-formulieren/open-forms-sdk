@@ -5,15 +5,18 @@ import useAsync from 'react-use/esm/useAsync';
 
 import { post } from 'api';
 import Body from 'components/Body';
+import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FAIcon from 'components/FAIcon';
 import Anchor from 'components/Anchor';
 import Loader from 'components/Loader';
 import PaymentForm from 'components/PaymentForm';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import usePoll from 'hooks/usePoll';
 
 const RESULT_FAILED = 'failed';
+const RESULT_SUCCESS = 'success';
 
 const getStartPaymentUrl = (apiUrl) => {
   const nextUrl = new URL(window.location.href);
@@ -61,8 +64,9 @@ StartPayment.propTypes = {
  * Renders the confirmation page displayed after submitting a form.
  * @param {String} statusUrl The URL where to check if the processing of the submission is complete
  * @param {Function} onFailure Callback to invoke if the background processing result is failure.
+ * @param {Function} onConfirmed Callback to invoke if the background processing result is success.
  */
-const SubmissionConfirmation = ({statusUrl, onFailure}) => {
+const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
   const [statusResponse, setStatusResponse] = useState(null);
   const intl = useIntl();
   const genericErrorMessage = intl.formatMessage({
@@ -80,6 +84,8 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
           if (response.result === RESULT_FAILED) {
             const errorMessage = response.errorMessage || genericErrorMessage;
             onFailure && onFailure(errorMessage);
+          } else if (response.result === RESULT_SUCCESS) {
+            onConfirmed && onConfirmed();
           }
           return true;
         }
@@ -119,11 +125,14 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
     publicReference,
     reportDownloadUrl,
     confirmationPageContent,
+    mainWebsiteUrl,
   } = statusResponse;
 
   if (result === RESULT_FAILED) {
     throw new Error('Failure should have been handled in the onFailure prop.');
   }
+
+  const showBackToMainWebsite = mainWebsiteUrl && !paymentUrl;
 
   return (
     <>
@@ -139,7 +148,7 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
           dangerouslySetInnerHTML={{__html: confirmationPageContent}}
         />
 
-        <>
+        <Body>
           <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
           <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
             <FormattedMessage
@@ -147,7 +156,25 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
               defaultMessage="Download PDF"
             />
           </Anchor>
-        </>
+        </Body>
+
+        { showBackToMainWebsite
+          ? (
+            <Toolbar modifiers={['reverse']}>
+              <ToolbarList>
+                <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
+                  <Button type="button" variant="primary">
+                    <FormattedMessage
+                      description="Back to main website link title"
+                      defaultMessage="Return to main website"
+                    />
+                  </Button>
+                </Anchor>
+              </ToolbarList>
+            </Toolbar>
+          )
+          : null
+        }
 
       </Card>
 
@@ -161,6 +188,7 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
 SubmissionConfirmation.propTypes = {
   statusUrl: PropTypes.string.isRequired,
   onFailure: PropTypes.func,
+  onConfirmed: PropTypes.func,
 }
 
 export default SubmissionConfirmation;
