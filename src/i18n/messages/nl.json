@@ -278,5 +278,10 @@
     "defaultMessage": "Het systeem kon de afspraak niet vinden",
     "description": "Appointment cancellation missing time query string parameter",
     "originalDefault": "Failed to determine the appointment time"
+  },
+  "zkdWYe": {
+    "defaultMessage": "Terug naar de website",
+    "description": "Back to main website link title",
+    "originalDefault": "Return to main website"
   }
 }

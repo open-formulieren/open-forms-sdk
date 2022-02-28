@@ -5,12 +5,14 @@ import useAsync from 'react-use/esm/useAsync';
 
 import { post } from 'api';
 import Body from 'components/Body';
+import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FAIcon from 'components/FAIcon';
 import Anchor from 'components/Anchor';
 import Loader from 'components/Loader';
 import PaymentForm from 'components/PaymentForm';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import usePoll from 'hooks/usePoll';
 
 const RESULT_FAILED = 'failed';
@@ -119,11 +121,14 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
     publicReference,
     reportDownloadUrl,
     confirmationPageContent,
+    mainWebsiteUrl,
   } = statusResponse;
 
   if (result === RESULT_FAILED) {
     throw new Error('Failure should have been handled in the onFailure prop.');
   }
+
+  const showBackToMainWebsite = mainWebsiteUrl && !paymentUrl;
 
   return (
     <>
@@ -139,7 +144,7 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
           dangerouslySetInnerHTML={{__html: confirmationPageContent}}
         />
 
-        <>
+        <Body>
           <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
           <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
             <FormattedMessage
@@ -147,7 +152,25 @@ const SubmissionConfirmation = ({statusUrl, onFailure}) => {
               defaultMessage="Download PDF"
             />
           </Anchor>
-        </>
+        </Body>
+
+        { showBackToMainWebsite
+          ? (
+            <Toolbar modifiers={['reverse']}>
+              <ToolbarList>
+                <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
+                  <Button type="button" variant="primary">
+                    <FormattedMessage
+                      description="Back to main website link title"
+                      defaultMessage="Return to main website"
+                    />
+                  </Button>
+                </Anchor>
+              </ToolbarList>
+            </Toolbar>
+          )
+          : null
+        }
 
       </Card>
 
