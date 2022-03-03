@@ -73,7 +73,8 @@ const completeSubmission = async (submission) => {
     const response = await post(`${submission.url}/_complete`);
     if (!response.ok) {
       console.error(response.data);
-      throw new Error(response.data.title);
+      // TODO Specific error for each type of invalid data?
+      throw new Error('InvalidSubmissionData');
     } else {
       return response.data;
     }
