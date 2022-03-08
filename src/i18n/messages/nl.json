@@ -5,7 +5,7 @@
     "originalDefault": "Log out"
   },
   "1hdvgS": {
-    "defaultMessage": "Er is foutgegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
+    "defaultMessage": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
@@ -35,7 +35,7 @@
     "originalDefault": "Appointment cancelled"
   },
   "Ao+97J": {
-    "defaultMessage": "Er is iets foutgegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op.",
+    "defaultMessage": "Er is iets fout gegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op.",
     "description": "Co-signed without representation fallback message",
     "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
   },
@@ -215,7 +215,7 @@
     "originalDefault": "Please hold on while we're processing your submission."
   },
   "hHS5vj": {
-    "defaultMessage": "Er is iets foutgegaan bij het verzenden.",
+    "defaultMessage": "Er is iets fout gegaan bij het verzenden.",
     "description": "Generic submission error",
     "originalDefault": "Something went wrong while submitting the form."
   },
@@ -225,7 +225,7 @@
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
   "iubnaw": {
-    "defaultMessage": "Het e-mailadres waarop u de link ontvangt om het formulieren te hervatten.",
+    "defaultMessage": "Het e-mailadres waarop u de link ontvangt om het formulier te hervatten.",
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
