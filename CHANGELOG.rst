@@ -2,6 +2,17 @@
 Changelog
 =========
 
+1.0.0 (2022-03-10)
+==================
+
+Final fixes/improvements for the 1.0.0 release
+
+* [#940] Fixed some smaller issues on confirmation screen
+* [#1391] Implemented option to hide fieldset headers
+* [#1393] Style and validate disabled fields
+* Fixed some spelling mistakes in the Dutch translations
+* [#1410] Send CSRF Token if provided
+
 1.0.0-rc.3 (2022-02-25)
 =======================
 
