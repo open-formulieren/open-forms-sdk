@@ -42,6 +42,21 @@
     display: block;
   }
 
+  &--no-asterisks {
+    .required-field {
+      // Override the asterisk
+      .#{prefix(label)}:after {
+        content: "" !important;
+      }
+    }
+
+    .optional-field {
+      .#{prefix(label)}:after {
+        content: "(optioneel)";
+      }
+    }
+  }
+
   .group {
     display: flex;
     align-items: center;
