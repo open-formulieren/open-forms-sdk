@@ -16,6 +16,7 @@ import { get } from 'api';
 import { ConfigContext, FormioTranslations } from 'Context';
 import App from 'components/App';
 import {setCSPNonce} from 'csp';
+import {setCSRFToken} from 'csrf';
 import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {loadLocaleData, loadFormioTranslations} from 'i18n';
@@ -120,3 +121,4 @@ class OpenForm {
 export default OpenForm;
 export { ANALYTICS_PROVIDERS } from 'hooks/usePageViews';
 export { OpenForm, Formio, Templates, OFLibrary, OpenFormsModule };
+export { setCSRFToken };
