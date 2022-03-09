@@ -1,6 +1,12 @@
-<div id="{{ctx.id}}" class="{{ctx.classes}}"{% if (ctx.styles) { %} styles="{{ctx.styles}}"{% } %} ref="component">
-  {% if (ctx.visible) { %}
-  {{ctx.children}}
-  {% } %}
+<div
+    id="{{ctx.id}}"
+    class="{{ctx.classes}} {% if (!ctx.requiredFieldsWithAsterisk) { %}{{ctx.ofPrefix}}form-control--no-asterisks{% } %}"
+    {% if (ctx.styles) { %} styles="{{ctx.styles}}"{% } %} ref="component"
+>
+    <div class="{% if (ctx.component.validate.required) { %}required-field{% } else { %}optional-field{% } %}">
+      {% if (ctx.visible) { %}
+      {{ctx.children}}
+      {% } %}
+    </div>
   <div ref="messageContainer" class="{{ctx.ofPrefix}}errors"></div>
 </div>
