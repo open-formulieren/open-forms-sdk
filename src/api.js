@@ -1,6 +1,7 @@
 import {createGlobalstate} from 'state-pool';
 
 import {getCSPNonce} from 'csp';
+import {getCSRFToken} from 'csrf';
 
 const fetchDefaults = {
   credentials: 'include', // required for Firefox 60, which is used in werkplekken
@@ -8,6 +9,7 @@ const fetchDefaults = {
 
 const SessionExpiresInHeader = 'X-Session-Expires-In';
 const CSPNonceHeader = 'X-CSP-Nonce';
+const CSRFTokenHeader = 'X-CSRFToken';
 
 let sessionExpiresAt = createGlobalstate(null);
 
@@ -20,12 +22,17 @@ const updateSesionExpiry = (seconds) => {
 
 const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
   const options = { ...fetchDefaults, ...opts };
+  if (!options.headers) options.headers = {};
 
   // add the CSP nonce request header in case the backend needs to do any post-processing
   const CSPNonce = getCSPNonce();
   if (CSPNonce != null && CSPNonce) {
-    if (!options.headers) options.headers = {};
     options.headers[CSPNonceHeader] = CSPNonce;
+  }
+
+  const csrfToken = getCSRFToken();
+  if (csrfToken != null && csrfToken) {
+    options.headers[CSRFTokenHeader] = csrfToken;
   }
 
   const response = await window.fetch(url, options);
