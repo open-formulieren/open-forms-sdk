@@ -42,16 +42,16 @@ afterEach(() => {
 });
 
 
-it('Summary displays logout button if loginRequired is true', () => {
-  const formLoginRequired = {
-    ...testForm,
-    loginRequired: true,
+it('Summary displays logout button if isAuthenticated is true', () => {
+  const submissionIsAuthenticated = {
+    ...SUBMISSION,
+    isAuthenticated: true,
   };
   const onLogout = jest.fn();
   const onConfirm = jest.fn();
 
   useAsync.mockReturnValue({loading: false});
-  useRefreshSubmission.mockReturnValue(SUBMISSION);
+  useRefreshSubmission.mockReturnValue(submissionIsAuthenticated);
 
   act(() => {
     render(
@@ -60,7 +60,7 @@ it('Summary displays logout button if loginRequired is true', () => {
         messages={messagesNL}
       >
         <Summary
-          form={formLoginRequired}
+          form={testForm}
           submission={SUBMISSION}
           onConfirm={onConfirm}
           onLogout={onLogout}
