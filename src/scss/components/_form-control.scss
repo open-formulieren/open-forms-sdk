@@ -43,17 +43,9 @@
   }
 
   &--no-asterisks {
-    .required-field {
+    .required-field:after {
       // Override the asterisk
-      .#{prefix(label)}:after {
-        content: "" !important;
-      }
-    }
-
-    .optional-field {
-      .#{prefix(label)}:after {
-        content: "(optioneel)";
-      }
+      content: "" !important;
     }
   }
 
