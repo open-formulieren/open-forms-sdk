@@ -42,6 +42,13 @@
     display: block;
   }
 
+  &--no-asterisks {
+    .required-field:after {
+      // Override the asterisk
+      content: "" !important;
+    }
+  }
+
   .group {
     display: flex;
     align-items: center;

@@ -432,6 +432,7 @@ const FormStep = ({
                   i18n: formioTranslations.i18n,
                   evalContext: {
                     ofPrefix: `${PREFIX}-`,
+                    requiredFieldsWithAsterisk: form.requiredFieldsWithAsterisk,
                   },
                   hooks,
                   // custom options

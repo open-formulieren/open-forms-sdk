@@ -41,6 +41,7 @@ const Form = PropTypes.shape({
     }).isRequired,
   })).isRequired,
   explanationTemplate:PropTypes.string,
+  requiredFieldsWithAsterisk: PropTypes.bool,
 });
 
 export default Form;
