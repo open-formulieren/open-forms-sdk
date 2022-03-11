@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 
 import {Literal, LiteralsProvider} from 'components/Literal';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import Button from 'components/Button';
+import {Button as DHButton} from "@gemeente-denhaag/button";
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-
 
 const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, isAuthenticated, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
   const showSubmitButton = !(canSubmitForm === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
@@ -16,23 +15,23 @@ const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, 
     <>
       <LiteralsProvider literals={literals}>
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
-          <ToolbarList>
+          {/*<ToolbarList>
             <Button
               variant="anchor"
               component="a"
               onClick={onNavigatePrevPage}
             ><Literal name="previousText"/></Button>
-          </ToolbarList>
+          </ToolbarList>*/}
           <ToolbarList>
-            <Button
+            <DHButton
               type="button"
-              variant="secondary"
+              variant="secondary-action"
               name="save"
               onClick={onFormSave}
-            ><Literal name="saveText"/></Button>
+            ><Literal name="saveText"/></DHButton>
             {
               showSubmitButton
-              && (<Button
+              && (<DHButton
                 type="submit"
                 variant="primary"
                 name="next"
@@ -43,7 +42,7 @@ const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, 
                     ? (<Loader modifiers={['centered', 'only-child', 'small']}/>)
                     : (<Literal name="nextText"/>)
                 }
-              </Button>)
+              </DHButton>)
             }
           </ToolbarList>
         </Toolbar>
