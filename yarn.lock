@@ -1541,6 +1541,23 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.3.tgz#c36ffa64a2a239bf948541a97b6ae8d729e09a9a"
   integrity sha512-rFnSUN/QOtnOAgqFRooTA3H57JLDm0QEG/jPdk+tLQNL/eWd+Aok8g3qCI+Q1xuDPWpGW/i9JySpJVsq8Q0s9w==
 
+"@gemeente-denhaag/baseprops@0.2.3-alpha.126":
+  version "0.2.3-alpha.126"
+  resolved "https://registry.yarnpkg.com/@gemeente-denhaag/baseprops/-/baseprops-0.2.3-alpha.126.tgz#2b4495d99a8d2dc5f4a422dee7964757b6c3b2c3"
+  integrity sha512-ao7R/2HburtfGJvm0UVWSn+1PCLQBgNFr6UlZxpcPLQ08DhtNkLnEky52JtpyVDzM1zc8g9HMaakwsURfZXkCw==
+
+"@gemeente-denhaag/button@^0.2.3-alpha.126":
+  version "0.2.3-alpha.126"
+  resolved "https://registry.yarnpkg.com/@gemeente-denhaag/button/-/button-0.2.3-alpha.126.tgz#3091828414392761b98b3c3eaff40cf8c8846fae"
+  integrity sha512-gNSS+Uw9lEFH/XaS9TurFJCI9A4X63MooStpht2C3//WigjbPNQNUj9h0Aq3jBvWKR9TX0KprfRrKr0xk1IK2w==
+  dependencies:
+    "@gemeente-denhaag/baseprops" "0.2.3-alpha.126"
+
+"@gemeente-denhaag/components-css@^0.1.1-alpha.72":
+  version "0.1.1-alpha.72"
+  resolved "https://registry.yarnpkg.com/@gemeente-denhaag/components-css/-/components-css-0.1.1-alpha.72.tgz#230153dff162b9dafc135a98f7881df88480ec50"
+  integrity sha512-ZVNxR9SJuRnlw8JsKHoArhR9cupZcvQHue3paZ5IfzFXJ8t/CRTVu1dTtH4UvO0QmyMJ3QmxLUD75FZNYwrh4A==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
