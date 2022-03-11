@@ -20,7 +20,7 @@ import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import { LayoutColumn } from 'components/Layout';
 import Loader from 'components/Loader';
-import ProgressIndicator from 'components/ProgressIndicator';
+// import ProgressIndicator from 'components/ProgressIndicator';
 import PaymentOverview from 'components/PaymentOverview';
 import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
@@ -309,7 +309,7 @@ const reducer = (draft, action) => {
 
       </LayoutColumn>
 
-      {
+      {/*{
         form.showProgressIndicator && !paymentOverviewMatch
         ? (
           <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
@@ -323,7 +323,7 @@ const reducer = (draft, action) => {
           </LayoutColumn>
         )
         : null
-      }
+      }*/}
     </>
   );
 };
