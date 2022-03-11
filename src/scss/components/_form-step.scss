@@ -1,0 +1,8 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/bem';
+@import '../mixins/prefix';
+
+.denhaag-form-step {
+  margin-block: 64px;
+}
