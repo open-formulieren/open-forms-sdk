@@ -24,6 +24,9 @@ import ButtonsToolbar from 'components/ButtonsToolbar';
 import {ConfigContext, FormioTranslations} from 'Context';
 import {PREFIX}  from 'formio/constants';
 import Types from 'types';
+import FormProgress from "@gemeente-denhaag/form-progress";
+import {forms} from "react-formio/lib/modules/forms/reducers";
+import Literal from "./Literal";
 
 const DEBUG = process.env.NODE_ENV === 'development';
 
@@ -425,9 +428,13 @@ const FormStep = ({
   };
 
   const isLoadingSomething = (loading || isNavigating);
+  const currentStep = form.steps.findIndex(s => s.slug == slug) + 1;
+  const totalSteps = form.steps.length;
+  const stepLabel = `Stap ${currentStep} van ${totalSteps}`;
 
   return (
-    <>
+    <div className={"denhaag-form-step"}>
+      <FormProgress value={currentStep} max={totalSteps} label={stepLabel} />
       <Card title={submissionStep.name}>
         { isLoadingSomething ? <Loader modifiers={['centered']} /> : null }
 
@@ -484,7 +491,7 @@ const FormStep = ({
         onSaveConfirm={onSaveConfirm}
         suspendFormUrl={`${submission.url}/_suspend`}
       />
-    </>
+    </div>
   );
 };
 

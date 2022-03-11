@@ -6,7 +6,7 @@
 
 .#{prefix('card')} {
   @include color-background;
-  padding: $grid-margin-8;
+  padding: $grid-margin-8 0;
   box-sizing: border-box;
 
   @include mobile-only {
