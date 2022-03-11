@@ -461,7 +461,7 @@ const FormStep = ({
                   },
                 }}
               />
-              { DEBUG ? <FormStepDebug data={getCurrentFormData()} /> : null }
+              {/* DEBUG ? <FormStepDebug data={getCurrentFormData()} /> : null */}
             <ButtonsToolbar
               literals={formStep.literals}
               canSubmitStep={canSubmit}
