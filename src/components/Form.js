@@ -309,7 +309,7 @@ const reducer = (draft, action) => {
 
       </LayoutColumn>
 
-      {
+      {/*{
         form.showProgressIndicator && !paymentOverviewMatch
         ? (
           <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
@@ -323,7 +323,7 @@ const reducer = (draft, action) => {
           </LayoutColumn>
         )
         : null
-      }
+      }*/}
     </>
   );
 };
