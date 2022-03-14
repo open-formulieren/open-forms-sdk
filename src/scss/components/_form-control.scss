@@ -1,16 +1,15 @@
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/typography';
+@import '~@gemeente-denhaag/components-css/dist/index';
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix(form-control)} {
-  position: relative;
+  @extend .denhaag-form-field;
 
-  // add vertical space/padding on top for elements except the first child in a container
-  // This is sort of the inverse of @include margin(auto) which operates on the last-child.
   &:not(:first-child) {
-    @include responsive($properties: padding-top, $value-mobile: $grid-margin-3, $value-tablet: $grid-margin-4);
+    margin-top: 32px;
   }
 
   @include modifier('hidden') {
@@ -22,36 +21,11 @@
     padding-left: $grid-margin-3;
   }
 
-  .#{prefix(errors)},
-  .#{prefix(label)} {
-    @include margin($value-mobile: $typography-margin-list);
-    overflow-wrap: break-word;
-  }
-
-  .#{prefix(prefix)} {
-    @include margin($value-mobile: $typography-margin-list);
-  }
-
-  .#{prefix(body)},
-  .#{prefix(help-text)},
-  .#{prefix(suffix)} {
-    @include margin(true, margin-top, $value-mobile: $typography-margin-list);
-  }
-
-  .#{prefix(body)} {
-    display: block;
-  }
-
   &--no-asterisks {
     .required-field:after {
       // Override the asterisk
       content: "" !important;
     }
-  }
-
-  .group {
-    display: flex;
-    align-items: center;
   }
 
   // Overwriting Formio style
