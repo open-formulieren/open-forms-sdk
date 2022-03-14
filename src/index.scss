@@ -7,13 +7,9 @@ body {
   --theme-switcher-box-size: 50px;
 
   padding: 0;
+  margin: 0;
   background-color: var(--utrecht-document-background-color);
   padding-block-start: var(--theme-switcher-box-size);
-
-  @include mobile-only {
-    margin: 0;
-    padding: 0;
-  }
 }
 
 #root {
