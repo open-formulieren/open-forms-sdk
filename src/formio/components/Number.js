@@ -15,7 +15,7 @@ class Number extends Formio.Components.components.number {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = 'utrecht-textbox';
+    info.attr.class = 'denhaag-textfield__input';
     return info;
   }
 
