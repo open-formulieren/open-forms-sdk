@@ -1,11 +1,10 @@
 @import '~microscope-sass/lib/typography';
+@import '~@gemeente-denhaag/components-css/dist/index';
 
 @import '../mixins/prefix';
 
 .#{prefix(label)} {
-  @include body;
-  @include body--big;
-  display: block;
+  @extend .denhaag-form-field__label;
 
   &.field-required:after {
     content: '*';
