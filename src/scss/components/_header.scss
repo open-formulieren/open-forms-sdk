@@ -1,0 +1,38 @@
+.denhaag-form-header {
+  height: 120px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.denhaag-form-header__border-image {
+  background-image: url("../../img/header_image_denhaag.svg");
+  background-position-y: center;
+  background-size: cover;
+  height: 7px;
+  flex-grow: 0;
+}
+
+.denhaag-form-header__title {
+  font-family: "TheMixB", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--denhaag-grey-5);
+}
+
+.denhaag-form-header__logo {
+  width: 50px;
+}
+
+.denhaag-form-header .openforms-layout {
+  flex-grow: 1;
+}
+
+.denhaag-form-header .openforms-layout__header {
+  display: flex;
+  flex-direction: row;
+  column-gap: 32px;
+  align-items: center;
+}

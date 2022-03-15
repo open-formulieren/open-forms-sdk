@@ -2,7 +2,8 @@
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/responsive';
 @import 'scss/settings';
-@import '~@gemeente-denhaag/components-css/dist/index';
+@import 'scss/denhaag';
+
 
 body {
   --theme-switcher-box-size: 50px;
