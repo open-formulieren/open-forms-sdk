@@ -7,7 +7,7 @@ const Layout = ({children, component = 'div'}) => {
   const className = getBEMClassName('layout');
   const Component = `${component}`;
   return (
-    <Component className={`${className} utrecht-document`}>
+    <Component className={className}>
       {children}
     </Component>
   );
@@ -35,6 +35,22 @@ LayoutRow.propTypes = {
   component: PropTypes.string,
 };
 
+const LayoutRowHeader = ({children, modifiers = [], component = 'section'}) => {
+  const className = getBEMClassName('layout__header', modifiers);
+  const Component = `${component}`;
+  return (
+    <Component className={className}>
+      {children}
+    </Component>
+  );
+};
+
+LayoutRowHeader.propTypes = {
+  children: PropTypes.node,
+  modifiers: PropTypes.arrayOf(PropTypes.string),
+  component: PropTypes.string,
+};
+
 
 const LayoutColumn = ({children, modifiers = [], component = 'div'}) => {
   const className = getBEMClassName('layout__column', modifiers);
@@ -54,4 +70,4 @@ LayoutColumn.propTypes = {
 
 
 export default Layout;
-export {Layout, LayoutRow, LayoutColumn};
+export {Layout, LayoutRow, LayoutRowHeader, LayoutColumn};

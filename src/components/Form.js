@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {useIntl} from 'react-intl';
-import { useImmerReducer } from 'use-immer';
+import {useImmerReducer} from 'use-immer';
 import {
   Redirect,
   Route,
@@ -9,7 +9,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import { ConfigContext } from 'Context';
+import {ConfigContext} from 'Context';
 
 import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
@@ -18,7 +18,7 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
-import { LayoutColumn } from 'components/Layout';
+import {LayoutColumn} from 'components/Layout';
 import Loader from 'components/Loader';
 // import ProgressIndicator from 'components/ProgressIndicator';
 import PaymentOverview from 'components/PaymentOverview';
@@ -108,7 +108,7 @@ const reducer = (draft, action) => {
  * @param  {Object} options.form The form definition from the Open Forms API
  * @return {JSX}
  */
- const Form = ({ form }) => {
+const Form = ({form}) => {
   const history = useHistory();
   const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
   const queryParams = useQuery();
@@ -123,7 +123,7 @@ const reducer = (draft, action) => {
   const initialStateFromProps = {...initialState, config, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
 
-  const onSubmissionLoaded = (submission, next='') => {
+  const onSubmissionLoaded = (submission, next = '') => {
     if (sessionExpired) return;
     dispatch({
       type: 'SUBMISSION_LOADED',
@@ -238,14 +238,14 @@ const reducer = (draft, action) => {
           status: queryParams.get('of_payment_status'),
           userAction: queryParams.get('of_payment_action'),
         },
-      }} />
+      }}/>
     );
   }
 
   if (loading || shouldAutomaticallyRedirect) {
     return (
       <LayoutColumn>
-        <Loader modifiers={['centered']} />
+        <Loader modifiers={['centered']}/>
       </LayoutColumn>
     );
   }
@@ -259,7 +259,7 @@ const reducer = (draft, action) => {
 
           <Route exact path="/">
             <ErrorBoundary>
-              <FormStart form={form} onFormStart={onFormStart} />
+              <FormStart form={form} onFormStart={onFormStart}/>
             </ErrorBoundary>
           </Route>
 
@@ -283,12 +283,12 @@ const reducer = (draft, action) => {
               statusUrl={state.processingStatusUrl}
               onFailure={onProcessingFailure}
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
-              component={SubmissionConfirmation} />
+              component={SubmissionConfirmation}/>
           </Route>
 
           <Route exact path="/betaaloverzicht">
             <ErrorBoundary>
-              <PaymentOverview />
+              <PaymentOverview/>
             </ErrorBoundary>
           </Route>
 
@@ -303,7 +303,7 @@ const reducer = (draft, action) => {
                 component={FormStep}
               />
             </RequireSession>
-          )} />
+          )}/>
 
         </Switch>
 
