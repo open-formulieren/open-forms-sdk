@@ -1,15 +1,15 @@
-@import '../mixins/bem';
-@import '../mixins/prefix';
-
 .openforms-layout {
-  background-color: var(--utrecht-document-background-color);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-column-gap: 40px;
-  max-width: 1280px;
-  margin-inline: auto;
+  grid-auto-flow: column;
+  margin-inline: 100px;
 }
 
 .openforms-layout__row {
-  grid-area: 1 / 3 / 2 / 11;
+  grid-column: 3 / 11;
+}
+
+.openforms-layout__header {
+  grid-column: 1 / 13;
 }
