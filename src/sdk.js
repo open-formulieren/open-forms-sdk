@@ -22,7 +22,6 @@ import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
-import {getLoginUrl, START_FORM_QUERY_PARAM} from 'components/LoginButton';
 
 
 // use protected eval to not rely on unsafe-eval (CSP)
@@ -101,35 +100,21 @@ class OpenForm {
 
     this.formObject = formObject;
 
-    let doStart = !!new URLSearchParams(window.location.search).get(START_FORM_QUERY_PARAM)
-
-    // Automatically redirect the user to a specific login option (if configured)
-    if(!doStart && formObject.autoLoginAuthenticationBackend) {
-      let loginUrl;
-      formObject.loginOptions.forEach(option => {
-        if(option.identifier === formObject.autoLoginAuthenticationBackend) {
-          loginUrl = getLoginUrl(option)
-          window.location = loginUrl;
-        }
-      });
-    }
-    else {
-      // render the wrapping React component
-      ReactDOM.render(
-        <React.StrictMode>
-          <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
-            <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
-              <FormioTranslations.Provider value={{i18n: translations, language: lang}}>
-                <Router basename={this.basePath}>
-                  <App form={this.formObject} />
-                </Router>
-              </FormioTranslations.Provider>
-            </ConfigContext.Provider>
-          </IntlProvider>
-        </React.StrictMode>,
-        this.targetNode,
-      );
-    }
+    // render the wrapping React component
+    ReactDOM.render(
+      <React.StrictMode>
+        <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
+          <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
+            <FormioTranslations.Provider value={{i18n: translations, language: lang}}>
+              <Router basename={this.basePath}>
+                <App form={this.formObject} />
+              </Router>
+            </FormioTranslations.Provider>
+          </ConfigContext.Provider>
+        </IntlProvider>
+      </React.StrictMode>,
+      this.targetNode,
+    );
   }
 }
 

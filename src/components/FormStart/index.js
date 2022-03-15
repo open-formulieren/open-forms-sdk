@@ -14,7 +14,7 @@ import { Toolbar, ToolbarList } from 'components/Toolbar';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';
 import LoginButton, {
-  START_FORM_QUERY_PARAM, LoginButtonIcon
+  START_FORM_QUERY_PARAM, LoginButtonIcon, getLoginUrl
 } from 'components/LoginButton';
 import {getBEMClassName} from 'utils';
 
@@ -23,6 +23,19 @@ const useStartSubmission = () => {
   const query = useQuery();
   return !!query.get(START_FORM_QUERY_PARAM);
 };
+
+const getLoginRedirectUrl = (form) => {
+  // Automatically redirect the user to a specific login option (if configured)
+  if(form.autoLoginAuthenticationBackend) {
+    let autoLoginOption = form.loginOptions.find(
+      option => option.identifier === form.autoLoginAuthenticationBackend
+    );
+
+    if(autoLoginOption) {
+      return getLoginUrl(autoLoginOption)
+    }
+  }
+}
 
 const FormStartMessage = ({form}) => {
   const intl = useIntl();
@@ -61,11 +74,16 @@ const FormStartMessage = ({form}) => {
  */
 const FormStart = ({ form, onFormStart }) => {
   const doStart = useStartSubmission();
+  const autoRedirectUrl = getLoginRedirectUrl(form);
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
   const hasAuthErrors = !!outagePluginId || !!authErrors;
 
   const onFormStartCalledRef = useRef(false);
+
+  if (!doStart && autoRedirectUrl) {
+    window.location = autoRedirectUrl;
+  }
 
   useEffect(() => {
     // if it's already called, do not call it again as this creates 'infite' cycles.
