@@ -9,7 +9,7 @@ import LogoutButton from 'components/LogoutButton';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 
-const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
+const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, isAuthenticated, isLastStep, isCheckingLogic, onNavigatePrevPage, onFormSave, onLogout}) => {
   const showSubmitButton = !(canSubmitForm === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
 
   return (
@@ -48,7 +48,7 @@ const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, 
           </ToolbarList>
         </Toolbar>
       </LiteralsProvider>
-      {loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
+      {isAuthenticated ? <LogoutButton onLogout={onLogout}/> : null}
     </>
   );
 };
@@ -60,6 +60,7 @@ ButtonsToolbar.propTypes = {
   canSubmitForm: PropTypes.string.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   loginRequired: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   isCheckingLogic: PropTypes.bool.isRequired,
   onNavigatePrevPage: PropTypes.func.isRequired,
   onFormSave: PropTypes.func.isRequired,

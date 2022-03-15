@@ -21,7 +21,6 @@ afterEach(() => {
   container = null;
 });
 
-
 const LITERALS = {
   nextText: {value: '', resolved: 'Next step'},
   saveText: {value: '', resolved: 'Save step'},
@@ -38,6 +37,7 @@ it('Last step of submittable form, button is present', () => {
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
+        isAuthenticated={false}
         isLastStep={true}
         isCheckingLogic={false}
         loginRequired={false}
@@ -68,6 +68,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
+        isAuthenticated={false}
         isLastStep={true}
         isCheckingLogic={false}
         loginRequired={false}
@@ -97,6 +98,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+        isAuthenticated={false}
         isLastStep={true}
         isCheckingLogic={false}
         loginRequired={false}
@@ -125,6 +127,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+        isAuthenticated={false}
         isLastStep={false}
         isCheckingLogic={false}
         loginRequired={false}

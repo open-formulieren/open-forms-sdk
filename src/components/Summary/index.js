@@ -180,7 +180,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
                   onPrevPage={onPrevPage}
                 />
 
-                {form.loginRequired ? <LogoutButton onLogout={onLogout}/> : null}
+                {refreshedSubmission.isAuthenticated ? <LogoutButton onLogout={onLogout}/> : null}
               </>
             )
           }
