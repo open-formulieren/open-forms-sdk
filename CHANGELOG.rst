@@ -2,6 +2,13 @@
 Changelog
 =========
 
+1.0.1 (2022-03-16)
+==================
+
+Bugfix maintenance release
+
+* [1076] Fixed form submission not being blocked if there are still validation errors
+
 1.0.0 (2022-03-10)
 ==================
 
