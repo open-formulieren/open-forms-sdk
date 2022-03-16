@@ -29,6 +29,7 @@ import Summary from 'components/Summary';
 import {findNextApplicableStep} from 'components/utils';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';
+import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 
 /**
  * Create a submission instance from a given form instance
@@ -109,6 +110,7 @@ const reducer = (draft, action) => {
  */
  const Form = ({ form }) => {
   const history = useHistory();
+  const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
   const queryParams = useQuery();
   usePageViews();
   const intl = useIntl();
@@ -239,7 +241,7 @@ const reducer = (draft, action) => {
     );
   }
 
-  if (loading) {
+  if (loading || shouldAutomaticallyRedirect) {
     return (
       <LayoutColumn>
         <Loader modifiers={['centered']} />

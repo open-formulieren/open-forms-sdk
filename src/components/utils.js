@@ -1,3 +1,5 @@
+import {START_FORM_QUERY_PARAM} from './constants';
+
 const findPreviousApplicableStep = (currentStepIndex, submission) => {
   let candidateStepIndex = currentStepIndex - 1;
   while (candidateStepIndex >= 0 && !submission.steps[candidateStepIndex].isApplicable) {
@@ -23,4 +25,34 @@ const isLastStep = (currentStepIndex, submission) => {
   return currentStepIndex === submission.steps.length-1;
 };
 
-export {findNextApplicableStep, findPreviousApplicableStep, isLastStep};
+
+const getLoginUrl = (loginOption) => {
+  const nextUrl = new URL(window.location.href);
+
+  const queryParams = Array.from(nextUrl.searchParams.keys());
+  queryParams.map(param => nextUrl.searchParams.delete(param));
+
+  const loginUrl = new URL(loginOption.url);
+
+  if (!loginUrl.searchParams.has('coSignSubmission')) {
+    nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
+  }
+  loginUrl.searchParams.set('next', nextUrl.toString());
+  return loginUrl.toString();
+};
+
+
+const getLoginRedirectUrl = (form) => {
+  // Automatically redirect the user to a specific login option (if configured)
+  if(form.autoLoginAuthenticationBackend) {
+    let autoLoginOption = form.loginOptions.find(
+      option => option.identifier === form.autoLoginAuthenticationBackend
+    );
+
+    if(autoLoginOption) {
+      return getLoginUrl(autoLoginOption);
+    }
+  }
+}
+
+export {findNextApplicableStep, findPreviousApplicableStep, isLastStep, getLoginRedirectUrl, getLoginUrl};

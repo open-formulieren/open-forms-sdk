@@ -42,6 +42,7 @@ const Form = PropTypes.shape({
   })).isRequired,
   explanationTemplate:PropTypes.string,
   requiredFieldsWithAsterisk: PropTypes.bool,
+  autoLoginAuthenticationBackend: PropTypes.bool,
 });
 
 export default Form;
