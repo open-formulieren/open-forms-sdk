@@ -212,7 +212,7 @@ const reducer = (draft, action) => {
     if (!window.confirm(confirmationQuestion)) {
       return;
     }
-    await destroy(`${config.baseUrl}authentication/session`);
+    await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
     history.push('/');
     // TODO: replace with a proper reset of the state instead of a page reload.
     window.location.reload();
