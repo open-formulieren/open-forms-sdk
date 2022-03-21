@@ -31,6 +31,29 @@ class FileField extends Formio.Components.components.file {
 
     return options;
   }
+
+  upload(files) {
+    if (this.component.multiple && this.component.maxNumberOfFiles) {
+      // this.data.file contains files that may have already been uploaded, while the argument 'files' gives the
+      // files that are being uploaded in this call
+      if (files.length > this.component.maxNumberOfFiles || this.data?.file?.length >= this.component.maxNumberOfFiles) {
+        const messages = [
+          {
+            message: this.t(
+              'Too many files added. The maximum allowed number of files is {{ maxNumber }}.',
+              { maxNumber: this.component.maxNumberOfFiles }
+            ),
+            level: 'error',
+          }
+        ];
+
+        this.setComponentValidity(messages, true, false);
+        return;
+      }
+    }
+
+    super.upload(files);
+  }
 }
 
 
