@@ -1,5 +1,6 @@
 import {Formio} from "formiojs";
 import {applyPrefix} from "../utils";
+import enableValidationPlugins from "../validators/plugins";
 
 const PhoneNumber = Formio.Components.components.phoneNumber;
 
@@ -30,6 +31,7 @@ class PhoneNumberField extends PhoneNumber {
       super(component, options, data);
       this.validator.validators.phoneNumber = PhoneNumberValidator;
       this.validators.push("phoneNumber");
+      enableValidationPlugins(this);
     }
 
     get inputInfo() {
