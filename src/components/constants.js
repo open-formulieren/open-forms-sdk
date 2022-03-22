@@ -4,4 +4,6 @@ const SUBMISSION_ALLOWED = {
   noWithoutOverview: 'no_without_overview'
 };
 
-export {SUBMISSION_ALLOWED};
+const START_FORM_QUERY_PARAM = '_start';
+
+export {SUBMISSION_ALLOWED, START_FORM_QUERY_PARAM};

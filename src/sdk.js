@@ -23,6 +23,7 @@ import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
 
+
 // use protected eval to not rely on unsafe-eval (CSP)
 Formio.use(ProtectedEval);
 

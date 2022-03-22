@@ -11,18 +11,11 @@ import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import MaintenanceMode from 'components/MaintenanceMode';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
-import useQuery from 'hooks/useQuery';
 import Types from 'types';
-import LoginButton, {
-  START_FORM_QUERY_PARAM, LoginButtonIcon
-} from 'components/LoginButton';
+import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import {getBEMClassName} from 'utils';
+import useStartSubmission from 'hooks/useStartSubmission';
 
-
-const useStartSubmission = () => {
-  const query = useQuery();
-  return !!query.get(START_FORM_QUERY_PARAM);
-};
 
 const FormStartMessage = ({form}) => {
   const intl = useIntl();
@@ -76,6 +69,7 @@ const FormStart = ({ form, onFormStart }) => {
     if (onFormStartCalledRef.current) {
       return;
     }
+
     if (doStart && !hasAuthErrors) {
       onFormStart();
       onFormStartCalledRef.current = true;

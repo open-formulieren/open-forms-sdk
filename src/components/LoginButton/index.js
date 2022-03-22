@@ -3,23 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'components/Button';
+import {getLoginUrl} from 'components/utils';
 
-export const START_FORM_QUERY_PARAM = '_start';
-
-const getLoginUrl = (loginOption) => {
-  const nextUrl = new URL(window.location.href);
-  
-  const queryParams = Array.from(nextUrl.searchParams.keys());
-  queryParams.map(param => nextUrl.searchParams.delete(param));
-
-  const loginUrl = new URL(loginOption.url);
-
-  if (!loginUrl.searchParams.has('coSignSubmission')) {
-    nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
-  }
-  loginUrl.searchParams.set('next', nextUrl.toString());
-  return loginUrl.toString();
-};
 
 const LoginButton = ({option, ...extra}) => (
   <Button variant="primary" component="a" href={getLoginUrl(option)} {...extra}>
