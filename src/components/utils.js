@@ -26,8 +26,8 @@ const isLastStep = (currentStepIndex, submission) => {
 };
 
 
-const getLoginUrl = (loginOption) => {
-  const nextUrl = new URL(window.location.href);
+const getLoginUrl = (loginOption, next=null) => {
+  const nextUrl = next || new URL(window.location.href);
 
   const queryParams = Array.from(nextUrl.searchParams.keys());
   queryParams.map(param => nextUrl.searchParams.delete(param));
@@ -42,7 +42,7 @@ const getLoginUrl = (loginOption) => {
 };
 
 
-const getLoginRedirectUrl = (form) => {
+const getLoginRedirectUrl = (form, nextUrl) => {
   // Automatically redirect the user to a specific login option (if configured)
   if(form.autoLoginAuthenticationBackend) {
     let autoLoginOption = form.loginOptions.find(
@@ -50,7 +50,7 @@ const getLoginRedirectUrl = (form) => {
     );
 
     if(autoLoginOption) {
-      return getLoginUrl(autoLoginOption);
+      return getLoginUrl(autoLoginOption, nextUrl);
     }
   }
 }

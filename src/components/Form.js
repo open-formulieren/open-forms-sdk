@@ -110,7 +110,6 @@ const reducer = (draft, action) => {
  */
  const Form = ({ form }) => {
   const history = useHistory();
-  const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
   const queryParams = useQuery();
   usePageViews();
   const intl = useIntl();
@@ -122,6 +121,8 @@ const reducer = (draft, action) => {
   // load the state management/reducer
   const initialStateFromProps = {...initialState, config, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
+
+  const shouldAutomaticallyRedirect = useAutomaticRedirect(form, config.nextUrl, !!state.submission);
 
   const onSubmissionLoaded = (submission, next='') => {
     if (sessionExpired) return;

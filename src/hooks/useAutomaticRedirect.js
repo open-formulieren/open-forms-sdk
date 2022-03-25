@@ -4,11 +4,11 @@ import useStartSubmission from './useStartSubmission';
 import {getLoginRedirectUrl} from 'components/utils';
 
 
-const useAutomaticRedirect = (form) => {
-  const autoRedirectUrl = getLoginRedirectUrl(form);
+const useAutomaticRedirect = (form, nextUrl, submissionExists) => {
+  const autoRedirectUrl = getLoginRedirectUrl(form, nextUrl);
   const doStart = useStartSubmission();
 
-  const shouldAutomaticallyRedirect = !doStart && autoRedirectUrl;
+  const shouldAutomaticallyRedirect = !submissionExists && !doStart && autoRedirectUrl;
 
   useEffect(() => {
     if (shouldAutomaticallyRedirect) {
