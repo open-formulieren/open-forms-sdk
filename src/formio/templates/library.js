@@ -5,6 +5,7 @@ import { default as MessageTemplate } from './message.ejs';
 import { default as ButtonTemplate } from './button.ejs';
 import { default as CheckboxTemplate } from './checkbox.ejs';
 import { default as ColumnsTemplate } from './columns.ejs';
+import { default as DMNTemplate } from './dmn.ejs';
 import { default as LabelTemplate } from './label.ejs';
 import { default as RadioTemplate } from './radio.ejs';
 import { default as SelectTemplate } from './select.ejs';
@@ -24,6 +25,7 @@ const OFLibrary = {
   button: {form: ButtonTemplate},
   checkbox: {form: CheckboxTemplate},
   columns: {form: ColumnsTemplate},
+  dmn: {form: DMNTemplate},
   label: {form: LabelTemplate},
   radio: {form: RadioTemplate},
   select: {form: SelectTemplate},
