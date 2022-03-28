@@ -28,4 +28,17 @@
   .control-label--hidden {
     position: static !important;
   }
+
+  .has-error {
+    @extend .denhaag-form-field--error;
+
+    .denhaag-form-field__description {
+      display: none;
+    }
+
+    .openforms-errors.denhaag-form-field__description {
+      display: block;
+    }
+  }
+
 }
