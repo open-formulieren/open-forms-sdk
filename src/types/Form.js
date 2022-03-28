@@ -42,7 +42,7 @@ const Form = PropTypes.shape({
   })).isRequired,
   explanationTemplate:PropTypes.string,
   requiredFieldsWithAsterisk: PropTypes.bool,
-  autoLoginAuthenticationBackend: PropTypes.bool,
+  autoLoginAuthenticationBackend: PropTypes.string,
 });
 
 export default Form;
