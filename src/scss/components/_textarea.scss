@@ -1,9 +1,0 @@
-@import '~microscope-sass/lib/grid';
-
-@import '../mixins/prefix';
-
-.#{prefix(textarea)} {
-  @extend .#{prefix(input)};
-  @include rows(3, min-height);
-  height: inherit;
-}

@@ -39,6 +39,14 @@
     .openforms-errors.denhaag-form-field__description {
       display: block;
     }
+
+    .denhaag-textfield__input {
+      @extend .denhaag-textfield__input--invalid;
+    }
+
+    .denhaag-textarea__input {
+      @extend .denhaag-textarea__input--invalid;
+    }
   }
 
 }
