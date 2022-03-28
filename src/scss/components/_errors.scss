@@ -4,8 +4,6 @@
 @import '../mixins/prefix';
 
 .#{prefix(errors)} {
-  @include body;
-  @include body--big;
+  @extend .denhaag-form-field__description;
   @include color-danger;
-  font-weight: bold;
 }

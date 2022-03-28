@@ -8,6 +8,7 @@ const FormioComponent = Formio.Components.components.component;
 
 
 function getClassName() {
+  console.log(this);
   return classNames(
     applyPrefix('form-control'),
     applyPrefix(`form-control--${this.component.type}`),
