@@ -428,13 +428,18 @@ const FormStep = ({
   };
 
   const isLoadingSomething = (loading || isNavigating);
-  const currentStep = form.steps.findIndex(s => s.slug == slug) + 1;
+  const currentStep = form.steps.indexOf(formStep) + 1;
   const totalSteps = form.steps.length;
   const stepLabel = `Stap ${currentStep} van ${totalSteps}`;
 
+  const previousStepIndex = findPreviousApplicableStep(currentStepIndex, submission);
+
+  const prevStepSlug = form.steps[previousStepIndex]?.slug;
+  const previousStepHref = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+
   return (
     <div className={"denhaag-form-step"}>
-      <FormProgress value={currentStep} max={totalSteps} label={stepLabel} />
+      <FormProgress value={currentStep} max={totalSteps} label={stepLabel} previousHref={previousStepHref} onClick={onPrevPage} />
       <Card title={submissionStep.name}>
         { isLoadingSomething ? <Loader modifiers={['centered']} /> : null }
 
