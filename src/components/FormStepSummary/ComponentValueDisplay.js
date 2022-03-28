@@ -221,6 +221,14 @@ const CoSignDisplay = ({component, value}) => {
 };
 
 
+const DMNEvaluationDisplay = ({component, value}) => {
+  const renderedTemplate = component.dmn.resultDisplay;
+  return (
+    <div dangerouslySetInnerHTML={{__html: renderedTemplate}} />
+  );
+};
+
+
 const ComponentValueDisplay = ({ component }) => {
   const {
     multiple=false,
@@ -275,6 +283,7 @@ const TYPE_TO_COMPONENT = {
   map: MapDisplay,
   password: PasswordDisplay,
   coSign: CoSignDisplay,
+  dmn: DMNEvaluationDisplay,
 };
 
 
