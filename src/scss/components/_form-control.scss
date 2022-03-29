@@ -1,5 +1,4 @@
 @import '../mixins/bem';
-@import '../mixins/prefix';
 
 .#{prefix(form-control)} {
   @extend .denhaag-form-field;
