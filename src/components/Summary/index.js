@@ -55,9 +55,18 @@ const reducer = (draft, action) => {
 
 const loadStepsData = async (submission) => {
   const stepsData = await Promise.all(submission.steps.map(async (submissionStep) => {
-    const submissionStepDetail = await get(submissionStep.url);
+    let submissionStepDetail = await get(submissionStep.url);
+    if (!submissionStep.isApplicable) {
+      return {submissionStep: submissionStep};
+    }
+
+    submissionStepDetail.formStep.configuration.components = flattenComponents(
+      submissionStepDetail.formStep.configuration.components
+    );
+
     const formStepDetail = await get(submissionStep.formStep);
     const formDefinitionDetail = await get(formStepDetail.formDefinition);
+
     return {
       submissionStep,
       title: formDefinitionDetail.name,
@@ -65,7 +74,7 @@ const loadStepsData = async (submission) => {
       configuration: submissionStepDetail.formStep.configuration
     };
   }));
-  stepsData.map(stepData => stepData.configuration.components = flattenComponents(stepData.configuration.components));
+
   return stepsData;
 };
 
