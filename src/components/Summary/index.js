@@ -162,7 +162,9 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
             ? (<Loader modifiers={['centered']} />)
             : (
               <>
-                {submissionSteps && submissionSteps.map((stepData, i) => (
+                {submissionSteps && submissionSteps.filter(
+                  (stepData) => stepData.submissionStep.isApplicable
+                ).map((stepData, i) => (
                   <FormStepSummary
                     key={stepData.submissionStep.id}
                     stepData={stepData}
