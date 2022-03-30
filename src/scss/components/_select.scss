@@ -119,22 +119,35 @@ $select-background-color: var(--of-select-background-color, $color-white);
 
   // The filter/search input.
   .choices__input {
-    @include body;
-    @include body--small;
     appearance: none;
     border: none;
     background-color: transparent;
+    color: var(--utrecht-form-input-color);
+    font-family: var(--utrecht-form-input-font-family);
+    font-size: var(--utrecht-form-input-font-size);
+    line-height: var(--denhaag-form-input-line-height);
   }
 
   // Available choices.
   .selection + .choices__list {
-    left: 0;
+    width: initial;
+    border: 1px solid var(--denhaag-color-grey-3);
+    padding: 4px 1px;
+    box-sizing: border-box;
+    left: -1px;
+    right: -1px;
   }
 
   // Items within the available choices.
   .selection + .choices__list .choices__item {
-    padding-left: $list-hpadding;
-    padding-right: $list-hpadding;
+    padding-block-start: var(--utrecht-form-input-padding-block-start);
+    padding-block-end: var(--utrecht-form-input-padding-block-end);
+    padding-inline-start: var(--utrecht-form-input-padding-inline-start);
+    padding-inline-end: var(--utrecht-form-input-padding-inline-end);
+    color: var(--utrecht-form-input-color);
+    font-family: var(--utrecht-form-input-font-family);
+    font-size: var(--utrecht-form-input-font-size);
+    line-height: var(--denhaag-form-input-line-height);
   }
 
 
