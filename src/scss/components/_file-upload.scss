@@ -37,48 +37,17 @@ we don't have strict BEM naming here.
     }
   }
 
-  .row {
-    display: flex;
-
-    .col-md-1 {
-      @include bootstrap-span(width, 1);
-      @include mobile-only {
-        flex-grow: 1;
-      }
-    }
-    .col-md-2 {
-      @include bootstrap-span(width, 2);
-      @include mobile-only {
-        flex-grow: 2;
-      }
-    }
-    .col-md-7 {
-      @include bootstrap-span(width, 7);
-      @include mobile-only {
-        flex-grow: 1;
-      }
-    }
-    .col-md-9 {
-      @include bootstrap-span(width, 9);
-      @include mobile-only {
-        flex-grow: 5;
-      }
-      overflow-wrap: break-word;
-    }
-
-    .col-sm-2 {
-      @include bootstrap-span(width, 2);
-    }
-    .col-sm-10 {
-      @include bootstrap-span(width, 10);
-    }
-  }
-
   .fileSelector {
     position: relative;
-    @include margin($grid-container-margin-small, $properties: padding);
-    border: 3px dashed $color-gray-darkest;
+    padding-block: 40px;
+    padding-inline: 8px;
+    border-color: var(--utrecht-form-input-border-color);
+    border-radius: var(--utrecht-form-input-border-radius);
+    border-style: solid;
+    border-width: var(--utrecht-form-input-border-width);
     text-align: center;
+    display: flex;
+    flex-direction: column;
 
     &.fileDragOver {
       border-color: $color-primary;
@@ -87,48 +56,6 @@ we don't have strict BEM naming here.
     & + .file {
       margin-top: $grid-container-margin-small;
     }
-  }
-
-  [ref="removeLink"] {
-    cursor: pointer;
-    color: $color-danger;
-  }
-
-  .file {
-    @include body;
-    @include body--big;
-
-    &.has-error {
-      @include border(left, $color-danger, 4px);
-      padding-left: $grid-margin-3;
-    }
-
-    .fileName {
-      display: flex;
-      align-items: center;
-
-      &__file {
-        @include ellipsis;
-        display: inline-block;
-        max-width: calc(100% - 2em);
-      }
-
-      [ref="fileStatusRemove"] {
-        cursor: pointer;
-        margin-left: .4em;
-        opacity: 0.6;
-        transition: all 0.4s ease;
-
-        &:hover {
-          opacity: 1;
-          color: $color-danger;
-        }
-      }
-    }
-  }
-
-  .bg-error {
-    @extend .#{prefix(errors)};
   }
 }
 
@@ -155,4 +82,56 @@ we don't have strict BEM naming here.
       @include margin($grid-margin-0, $properties: padding);
     }
   }
+}
+
+.openforms-file-upload__file {
+  border-color: var(--utrecht-form-input-border-color);
+  border-style: solid;
+  border-width: var(--utrecht-form-input-border-width);
+  min-height: 77px;
+  padding-inline-end: 16px;
+  display: flex;
+  flex-direction: row;
+}
+
+.openforms-file-upload__file-icon-container {
+  padding-inline: 16px;
+  display: flex;
+  align-items: center;
+  background-color: var(--denhaag-color-warmgrey-1);
+}
+
+.openforms-file-upload__file-icon {
+  content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI0IDI1IiBmaWxsPSJub25lIj4KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMTMgMi41SDZDNS40Njk1NyAyLjUgNC45NjA4NiAyLjcxMDcxIDQuNTg1NzkgMy4wODU3OUM0LjIxMDcxIDMuNDYwODYgNCAzLjk2OTU3IDQgNC41VjIwLjVDNCAyMS4wMzA0IDQuMjEwNzEgMjEuNTM5MSA0LjU4NTc5IDIxLjkxNDJDNC45NjA4NiAyMi4yODkzIDUuNDY5NTcgMjIuNSA2IDIyLjVIMThDMTguNTMwNCAyMi41IDE5LjAzOTEgMjIuMjg5MyAxOS40MTQyIDIxLjkxNDJDMTkuNzg5MyAyMS41MzkxIDIwIDIxLjAzMDQgMjAgMjAuNVY5LjVMMTMgMi41WiIgc3Ryb2tlPSIjNEI0QjRCIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xMyAyLjVWOS41SDIwIiBzdHJva2U9IiM0QjRCNEIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICAgICAgICAgICAgICA8L3N2Zz4=');
+  width: 24px;
+  height: 24px;
+}
+
+.openforms-file-upload__file-label-container {
+  color: var(--utrecht-form-input-color);
+  column-gap: 1ch;
+  display: flex;
+  font-family: var(--utrecht-form-input-font-family);
+  font-size: var(--utrecht-form-input-font-size);
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  line-height: var(--denhaag-form-input-line-height);
+  margin-inline-start: 16px;
+  padding-block: 16px;
+}
+
+.openforms-file-upload__file-error {
+  color: var(--denhaag-form-field-description-error-color);
+  font-family: var(--denhaag-form-field-description-font-family);
+  font-size: var(--denhaag-form-field-description-font-size);
+  font-weight: var(--denhaag-form-field-description-font-weight);
+  line-height: var(--denhaag-form-field-description-line-height);
+}
+
+.openforms-file-upload__file .denhaag-icon-button {
+  align-self: center;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
 }
