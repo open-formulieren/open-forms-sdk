@@ -27,4 +27,16 @@ export default class DMNEvaluation extends Field {
   render() {
     return super.render(this.renderTemplate('dmn'));
   }
+
+  // dirty hack to transform the defaultValue into the actual value so that it's available for
+  // further processing. Technically the end-user can spoof this!
+  get hasInput() {
+    return true;
+  }
+
+  attach(element) {
+    this.setPristine(false);
+    this.updateValue(this.component.defaultValue);
+    return super.attach(element);
+  }
 }
