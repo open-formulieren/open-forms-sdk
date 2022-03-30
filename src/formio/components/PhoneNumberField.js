@@ -40,6 +40,10 @@ class PhoneNumberField extends PhoneNumber {
       info.attr.class = applyPrefix('input');
       return info;
     }
+
+  checkComponentValidity(data, dirty, row, options = {}){
+    return super.checkComponentValidity(data, dirty, row, {...options, async: true});
+  }
 }
 
 export default PhoneNumberField;
