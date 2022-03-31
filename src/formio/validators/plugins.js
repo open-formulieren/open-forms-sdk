@@ -4,13 +4,17 @@ const errorMessageMap = {
   'kvk-kvkNumber': 'Invalid Kvk Number',
   'kvk-rsin': 'Invalid RSIN',
   'kvk-branchNumber': 'Invalid Branch Number',
+  'phonenumber-international': 'Invalid international phonenumber',
+  'phonenumber-nl': 'Invalid Dutch phonenumber',
 };
 
 
 const pluginAPIValidator = (plugin) => {
-  const defaultMsg = errorMessageMap[plugin];
+  let defaultMsg = errorMessageMap[plugin];
   // catches undefined too
-  if (defaultMsg == null) return null;
+  if (defaultMsg == null) {
+    defaultMsg = "Invalid";
+  }
 
   return {
     key: `validate.${plugin}`,
