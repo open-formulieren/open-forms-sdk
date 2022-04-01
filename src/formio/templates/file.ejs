@@ -8,7 +8,7 @@
 {% } else if (!ctx.self.cameraMode) { %}
 <div class="fileSelector" ref="fileDrop" {{ctx.fileDropHidden ? 'hidden' : ''}}>
 <i class="{{ctx.iconClass('cloud-upload')}}"></i>
-<div>
+    <div>
     {% if (ctx.component.multiple) { %}
     {{ctx.t('Drop files,')}}
     {% } else { %}
@@ -27,9 +27,9 @@
     {% } else { %}
     {{ctx.t('to attach a file.')}}
     {% } %}
+    </div>
 </div>
-</div>
-{% } else { %}
+    {% } else { %}
 <div>
     <video class="video" autoplay="true" ref="videoPlayer"></video>
 </div>
@@ -116,7 +116,7 @@
             {% if (ctx.self.hasTypes && ctx.disabled) { %}
             <div class="col-md-2">{{file.fileType}}</div>
             {% } %}
-            <button class="denhaag-icon-button" ref="fileStatusRemove" aria-label="{{ctx.t('remove')}}">
+            <button class="denhaag-icon-button" ref="removeLink" aria-label="{{ctx.t('remove')}}">
                 <span><i class="{{ctx.iconClass('remove')}}" title="{{ctx.t('remove')}}"></i></span>
             </button>
         </div>
