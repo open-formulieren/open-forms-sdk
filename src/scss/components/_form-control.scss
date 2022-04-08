@@ -11,11 +11,6 @@
     display: none;
   }
 
-  &[class*="error"] {
-    @include border(left, $color-danger, 4px);
-    padding-left: $grid-margin-3;
-  }
-
   &--no-asterisks {
     .required-field:after {
       // Override the asterisk
