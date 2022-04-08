@@ -439,7 +439,7 @@ const FormStep = ({
 
   return (
     <div className={"denhaag-form-step"}>
-      <FormProgress value={currentStep} max={totalSteps} label={stepLabel}/>
+      <FormProgress value={currentStep} max={totalSteps} label={stepLabel} previousHref={previousStepHref} onClick={onPrevPage} />
       <Card title={submissionStep.name}>
         { isLoadingSomething ? <Loader modifiers={['centered']} /> : null }
 
