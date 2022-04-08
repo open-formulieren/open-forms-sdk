@@ -1,0 +1,70 @@
+// Because FormIO uses flatpickr, we need to overwrite flatpickr styles to support design tokens
+
+.flatpickr-calendar {
+  @extend .denhaag-datepicker__calendar;
+
+  width: initial;
+  box-shadow: none;
+}
+
+.flatpickr-months {
+  @extend .denhaag-datepicker__calendar-header;
+
+  .flatpickr-current-month input.cur-year,
+  .flatpickr-current-month .flatpickr-monthDropdown-months {
+    @extend .denhaag-datepicker__calendar-month;
+  }
+
+  .flatpickr-prev-month, .flatpickr-next-month {
+    @extend .denhaag-datepicker__calendar-navigation;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &:hover svg {
+      fill: var(--denhaag-icon-button-hover-color);
+    }
+  }
+}
+
+.flatpickr-innerContainer {
+  @extend .denhaag-datepicker__calendar-table;
+}
+
+.flatpickr-weekdays {
+  height: initial;
+  padding-block-start: var(--denhaag-datepicker-calendar-table-border-spacing);
+  padding-block-end: var(--denhaag-datepicker-calendar-table-border-spacing);
+
+  .flatpickr-weekday {
+    @extend .denhaag-datepicker__calendar-heading;
+
+    line-height: var(--denhaag-datepicker-calendar-day-width);
+    display: block;
+  }
+}
+
+.flatpickr-day {
+  @extend .denhaag-datepicker__calendar-day;
+
+  line-height: var(--denhaag-datepicker-calendar-day-width);
+  display: block;
+
+  &:hover {
+    background-color: initial;
+  }
+
+  &.today {
+    @extend .denhaag-datepicker__calendar-day--current;
+
+    &:hover {
+      @extend .denhaag-datepicker__calendar-day--current;
+      color: var(--denhaag-datepicker-calendar-day-hover-color);
+    }
+  }
+
+  &.selected {
+    @extend .denhaag-datepicker__calendar-day--selected;
+  }
+}
