@@ -42,5 +42,14 @@
       @extend .denhaag-textarea__input--invalid;
     }
   }
+}
 
+.openforms-form-control--radio {
+  .denhaag-checkbox {
+    @extend .denhaag-radio;
+
+    .denhaag-checkbox__icon {
+      @extend .denhaag-radio__icon;
+    }
+  }
 }

@@ -8,7 +8,7 @@ class Checkbox extends Formio.Components.components.checkbox {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = 'utrecht-checkbox__input';
+    info.attr.class = "denhaag-checkbox__input";
     return info;
   }
 }
