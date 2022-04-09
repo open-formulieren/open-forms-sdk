@@ -1,37 +1,55 @@
-<div class="{{ctx.ofPrefix}}form-choices">
-  {% ctx.values.forEach(function(item) { %}
-    <div class="${applyPrefix('form-choices__choice')}">
-        <div class="utrecht-form-field utrecht-form-field--checkbox utrecht-form-field--distanced">
-              <{{ctx.input.type}}
-                ref="input"
+<div>
+    {% ctx.values.forEach(function(item) { %}
+    <label class="denhaag-form-control-label">
+        <span class="denhaag-form-control-label__input">
+            <span class="denhaag-checkbox">
+                {{console.log(item)}}
+                <{{ctx.input.type}}
+                    ref="input"
 
-                {% for (var attr in ctx.input.attr) { %}
-                  {{attr}}="{{ctx.input.attr[attr]}}"
-                {% } %}
+                    {% for (var attr in ctx.input.attr) { %}
+                      {{attr}}="{{ctx.input.attr[attr]}}"
+                    {% } %}
 
-                value="{{item.value}}"
+                    value="{{item.value}}"
 
-                {% if (ctx.value && (ctx.value === item.value || (typeof ctx.value === 'object' && ctx.value.hasOwnProperty(item.value) && ctx.value[item.value]))) { %}
-                  checked=true
-                {% } %}
+                    {% if (ctx.value && (ctx.value === item.value || (typeof ctx.value === 'object' && ctx.value.hasOwnProperty(item.value) && ctx.value[item.value]))) { %}
+                      checked=true
+                    {% } %}
 
-                {% if (item.disabled) { %}
-                  disabled=true
-                {% } %}
+                    {% if (item.disabled) { %}
+                      disabled=true
+                    {% } %}
 
-                id="{{ctx.id}}{{ctx.row}}-{{item.value}}"
+                    id="{{ctx.id}}{{ctx.row}}-{{item.value}}"
 
-                class="utrecht-form-field__input utrecht-checkbox"
-              >
-                {{ctx.input.content}}
-            </{{ctx.input.type}}>
-
-<!--            <div class="${applyPrefix('checkbox__checkmark')}"></div>-->
-
-            {% if (!ctx.component.optionsLabelPosition || ctx.component.optionsLabelPosition === 'right' || ctx.component.optionsLabelPosition === 'bottom') { %}
-                <label class="utrecht-form-field__label utrecht-form-field__label--checkbox utrecht-form-label utrecht-form-label--checkbox" for="{{ctx.id}}{{ctx.row}}-{{item.value}}">{{ctx.t(item.label)}}</label>
-            {% } %}
-        </div>
-    </div>
-      {% }) %}
+                    class="denhaag-checkbox__input"
+                >
+                    {{ctx.input.content}}
+                </{{ctx.input.type}}>
+                <span class="denhaag-checkbox__icon">
+                    <svg aria-hidden="true"
+                         class="denhaag-icon"
+                         focusable="false"
+                         height="1em"
+                         shape-rendering="auto"
+                         viewBox="0 0 24 24"
+                         width="1em"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.664 5.253a1 1 0 01.083 1.411l-10.666 12a1 1 0 01-1.495 0l-5.333-6a1 1 0 011.494-1.328l4.586 5.159 9.92-11.16a1 1 0 011.411-.082z"
+                              stroke="currentColor"
+                              stroke-width="1.75"/>
+                    </svg>
+                </span>
+            </span>
+        </span>
+        {% if (!ctx.component.optionsLabelPosition || ctx.component.optionsLabelPosition === 'right' ||
+        ctx.component.optionsLabelPosition === 'bottom') { %}
+        <span class="denhaag-form-control-label__label">
+            {{ctx.t(item.label)}}
+        </span>
+        {% } %}
+    </label>
+</div>
+{% }) %}
 </div>
