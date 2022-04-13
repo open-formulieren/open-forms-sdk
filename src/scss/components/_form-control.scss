@@ -44,17 +44,8 @@
   }
 }
 
-.denhaag-form-control-label input[type=radio].denhaag-checkbox {
-  @extend .denhaag-radio;
-
-  .denhaag-checkbox__icon {
-    @extend .denhaag-radio__icon;
-  }
-}
-
 .denhaag-checkbox__icon .denhaag-icon {
   background-color: currentColor;
   mask-image: url("../../img/checked.svg");
   mask-size: contain;
-
 }
