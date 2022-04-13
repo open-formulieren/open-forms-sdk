@@ -1,9 +1,10 @@
 <div>
-    {% ctx.values.forEach(function(item) { %}
+    {% ctx.values.forEach(function(item) {
+        let inputType = ctx.input.attr['type'];
+    %}
     <label class="denhaag-form-control-label">
         <span class="denhaag-form-control-label__input">
-            <span class="denhaag-checkbox">
-                {{console.log(item)}}
+            <span class="denhaag-{{inputType}}">
                 <{{ctx.input.type}}
                     ref="input"
 
@@ -27,19 +28,12 @@
                 >
                     {{ctx.input.content}}
                 </{{ctx.input.type}}>
-                <span class="denhaag-checkbox__icon">
-                    <svg aria-hidden="true"
-                         class="denhaag-icon"
-                         focusable="false"
-                         height="1em"
-                         shape-rendering="auto"
-                         viewBox="0 0 24 24"
-                         width="1em"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20.664 5.253a1 1 0 01.083 1.411l-10.666 12a1 1 0 01-1.495 0l-5.333-6a1 1 0 011.494-1.328l4.586 5.159 9.92-11.16a1 1 0 011.411-.082z"
-                              stroke="currentColor"
-                              stroke-width="1.75"/>
-                    </svg>
+                <span class="denhaag-{{inputType}}__icon">
+                    {% if (inputType == 'radio') { %}
+                    <span class="denhaag-radio__icon-inner"></span>
+                    {% } else if (inputType == 'checkbox') { %}
+                    <span class="denhaag-icon"></span>
+                    {% } %}
                 </span>
             </span>
         </span>
