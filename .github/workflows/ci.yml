@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: openformulieren/open-forms-sdk
+  IMAGE_NAME: ${{ secrets.OTA_ACR_URL }}/open-forms-sdk
 
 jobs:
   tests:
