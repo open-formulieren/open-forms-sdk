@@ -69,9 +69,13 @@ jobs:
           --build-arg SDK_VERSION=${RELEASE_VERSION} \
           --tag $IMAGE_NAME:$RELEASE_VERSION
 
-      - name: Log into registry
-        if: github.event_name == 'push'  # Exclude PRs
-        run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: 'Login to acr'
+        if: github.event_name == 'push'
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.OTA_ACR_URL }}
+          username: ${{ secrets.OTA_ACR_TOKEN_USERNAME }}
+          password: ${{ secrets.OTA_ACR_TOKEN_PASSWORD }}
 
       - name: Push the Docker image
         if: github.event_name == 'push'  # Exclude PRs
