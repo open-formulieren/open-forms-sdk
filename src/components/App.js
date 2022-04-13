@@ -17,7 +17,7 @@ const App = (props) => {
         <div className={"denhaag-form-header__border-image"}></div>
         <Layout>
           <LayoutRowHeader>
-            <img className={"denhaag-form-header__logo"} src={logo}/>
+            <img className={"denhaag-form-header__logo"} src={logo} alt=""/>
             <h1 className={"denhaag-form-header__title"}>{props.form.name}</h1>
           </LayoutRowHeader>
         </Layout>

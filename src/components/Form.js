@@ -6,7 +6,7 @@ import {
   Route,
   Switch,
   useHistory,
-  useRouteMatch,
+  //useRouteMatch,
 } from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
@@ -148,7 +148,7 @@ const Form = ({form}) => {
     }
   );
 
-  const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
+  //const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
 
   /**
    * When the form is started, create a submission and add it to the state.

@@ -25,8 +25,6 @@ import {ConfigContext, FormioTranslations} from 'Context';
 import {PREFIX}  from 'formio/constants';
 import Types from 'types';
 import FormProgress from "@gemeente-denhaag/form-progress";
-import {forms} from "react-formio/lib/modules/forms/reducers";
-import Literal from "./Literal";
 
 const DEBUG = process.env.NODE_ENV === 'development';
 
