@@ -82,6 +82,7 @@ $button-padding-h: $grid-margin-2;
     @include rows(1);
     border: none;
     padding: 0;
+    cursor: default;
   }
 
   .fa-icon:not(:last-child) {
