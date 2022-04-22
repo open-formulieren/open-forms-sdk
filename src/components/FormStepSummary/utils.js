@@ -1,14 +1,14 @@
-export const iterComponentsWithData = (components, data) => {
+const iterVisibleComponentsWithData = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values
   // Often used in combination with flattenComponents and getComponentLabel/getComponentValue
-  return components.map(component => ({
+  return components.filter(component => !component.hidden).map(component => ({
     ...component,
     value: data[component.key],
   }));
 };
 
 
-export const getComponentLabel = (component) => {
+const getComponentLabel = (component) => {
   if (component === undefined) {
     // If no component is found then just return an empty string
     // This should not happen but is here to prevent a crash
@@ -32,7 +32,7 @@ export const getComponentLabel = (component) => {
  * @param  {Number} size File size in bytes
  * @return {Object}      Object with the human readable number and unit.
  */
-export const humanFileSize = (size) => {
+const humanFileSize = (size) => {
   if (size === 0) {
     return {size: 0, unit: 'byte'};
   }
@@ -41,3 +41,5 @@ export const humanFileSize = (size) => {
   const unit = ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'][index];
   return {size: newSize, unit};
 };
+
+export {iterVisibleComponentsWithData, getComponentLabel, humanFileSize};
