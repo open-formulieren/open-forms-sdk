@@ -1,5 +1,25 @@
 /**
  * Render a single form step, as part of a started submission for a form.
+ *
+ * Functional requirements:
+ *
+ *   - the backend form configuration must be displayed when a new step is loaded
+ *   - users must be able to fill out the form step
+ *   - whenever there is user input, this requires to be validated/checked by both
+ *     frontend and backend
+ *   - the default reaction for (new) user input is blocking the submit button
+ *   - as long as there is any unvalidated/unchecked input, the submit button must remain
+ *     blocked
+ *   - while the submit button is blocked, we run client-side validation. if that fails,
+ *     the submit button remains blocked
+ *   - user input schedules a backend logic check. after this is completed, the submit
+ *     button state is updated with the result from the backend
+ *   - backend logic checks are cancelled/debounced on new user input
+ *   - backend logic checks are skipped if the input data is empty or unchanged from the
+ *     last check that did execute
+ *   - on quick user input changes with a net zero result, the submit button must be
+ *     restored to its original state
+ *
  */
 import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
@@ -190,12 +210,37 @@ const FormStep = ({
     throw new AbortedLogicCheck('Aborted logic check');
   };
 
-  const evaluateFormLogic = async (controller) => {
-    // 'clone' the object so that we're not checking against mutable references
+  /**
+   * Evaluate the server side logic
+   * @param  {AbortController} controller     AbortController used to abort XHR requests and/or result processing
+   *   because of new user input.
+   * @param  {Boolean} canSubmitState The original canSubmit state at the time of scheduling the logic check.
+   * @return {Void}                No return, dispatches reducer actions leading to state updates.
+   */
+  const evaluateFormLogic = async (controller, canSubmitState) => {
+    // the canSubmitState variable essentially captures whether the form was submittable
+    // or not at the time the logic check was scheduled. The logic check itself can modify
+    // this based on backend response data, but one of the first actions when a change
+    // event is received is blocking the submit button to give the logic check time to
+    // complete.
+    //
+    // IF there's no point/change in state to be expected by the logic check, we need
+    // to reinstate the original canSubmitState, which happens in the guard clause below.
     let data = getCurrentFormData();
     const previousData = previouslyCheckedData.current;
-    if (previousData && isEqual(previousData, data)) return;
-    if (isEmpty(data)) return;
+
+    const dataEmpty = isEmpty(data);
+    const dataUnchanged = previousData && isEqual(previousData, data);
+
+    if (dataEmpty || dataUnchanged) {
+      dispatch({
+        type: 'LOGIC_CHECK_INTERRUPTED',
+        payload: {
+          canSubmit: canSubmitState, // restore the original state from before the logic check
+        }
+      });
+      return;
+    }
 
     dispatch({
       type: 'BLOCK_SUBMISSION',
@@ -395,7 +440,15 @@ const FormStep = ({
     // formio form not mounted -> nothing to do
     if (!formRef.current) return;
 
-    dispatch({type: 'BLOCK_SUBMISSION'});
+    // backend logic leads to changes in FormIO configuration, which triggers onFormIOInitialized.
+    // This in turn triggers the onFormIOChange event because the submission data is set
+    // programmatically. Without checking for human interaction, this would block the
+    // submission again for LOGIC_CHECK_DEBOUNCE ms, for the logic check to eventually
+    // be interrupted inside the evaluateFormLogic handler because the data hasn't
+    // changed. We can skip this particular block-unblock cycle by only blocking the
+    // submission because of human input.
+    if (modifiedByHuman) dispatch({type: 'BLOCK_SUBMISSION'});
+    let localCanSubmit = canSubmit;
 
     // signal abortion, and set a new controller for the newly scheduled check.
     controller.current.abort();
@@ -404,28 +457,35 @@ const FormStep = ({
 
     // cancel old timeout if it's set
     if(logicCheckTimeout.current) {
-      clearTimeout(logicCheckTimeout.current);
+      localCanSubmit = logicCheckTimeout.current.canSubmit;
+      clearTimeout(logicCheckTimeout.current.timeoutId);
+
+      const formioFormValid = formRef.current?.formio?.isValid();
       dispatch({
         type: 'LOGIC_CHECK_INTERRUPTED',
         payload: {
-          canSubmit: formRef.current?.formio?.isValid() || false,
+          canSubmit: Boolean(formioFormValid && localCanSubmit),
         },
       });
     }
 
     // schedule a new logic check to run in LOGIC_CHECK_DEBOUNCE ms
-    logicCheckTimeout.current = setTimeout(
+    const timeoutId = setTimeout(
       async () => {
-        await evaluateFormLogic(abortController);
+        // we are executing the scheduled timeout, so for this event-handle cycle,
+        // reset the timeout, otherwise the 'LOGIC_CHECK_INTERRUPTED' always fires on
+        // the next change event which hold an outdated canSubmit state
+        logicCheckTimeout.current = null;
+        await evaluateFormLogic(abortController, localCanSubmit);
       },
       LOGIC_CHECK_DEBOUNCE,
     );
+    logicCheckTimeout.current = {timeoutId, canSubmit: localCanSubmit};
 
     dispatch({type: 'FORMIO_CHANGE_HANDLED'});
   };
 
   const isLoadingSomething = (loading || isNavigating);
-
   return (
     <>
       <Card title={submissionStep.name}>
