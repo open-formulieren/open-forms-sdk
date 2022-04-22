@@ -8,7 +8,7 @@ import messagesNL from 'i18n/compiled/nl.json';
 import {
   testStepDataEmptyDate,
   testStepDataSelectMultivalue,
-  testStepEmptyFields,
+  testStepEmptyFields, testStepHiddenFields,
 } from './fixtures';
 
 
@@ -95,4 +95,27 @@ it('Empty fields', () => {
   for (const emptyValue of emptyValues) {
     expect(emptyValue.textContent).toEqual('');
   }
+});
+
+it('Hidden fields not shown', () => {
+  act(() => {
+    render(
+      <IntlProvider
+        locale="nl"
+        messages={messagesNL}
+      >
+        <FormStepSummary
+          stepData={testStepHiddenFields}
+          editStepUrl="http://test-url.nl"
+          editStepText="Change"
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const fieldsShown = container.getElementsByClassName("openforms-table__head");
+
+  expect(fieldsShown.length).toEqual(1);
+  expect(fieldsShown[0].textContent).toEqual('Visible field');
 });
