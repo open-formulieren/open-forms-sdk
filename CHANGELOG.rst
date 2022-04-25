@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.2 (2022-04-??)
+1.0.2 (2022-04-25)
 ==================
 
 Bugfix maintenance release
