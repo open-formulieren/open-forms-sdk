@@ -2,6 +2,14 @@
 Changelog
 =========
 
+1.0.2 (2022-04-25)
+==================
+
+Bugfix maintenance release
+
+* [#1494] Fixed disabled/enabled state of form step submission button
+* [#1527] Show only visible fields in summary
+
 1.0.1 (2022-03-16)
 ==================
 
