@@ -22,6 +22,21 @@
     padding-left: $grid-margin-3;
   }
 
+  &[class*="warning"] {
+    @include border(left, $color-warning, 4px);
+    padding-left: $grid-margin-3;
+  }
+
+  &[class*="success"] {
+    @include border(left, $color-success, 4px);
+    padding-left: $grid-margin-3;
+  }
+
+  &[class*="info"] {
+    @include border(left, $color-info, 4px);
+    padding-left: $grid-margin-3;
+  }
+
   .#{prefix(errors)},
   .#{prefix(label)} {
     @include margin($value-mobile: $typography-margin-list);
