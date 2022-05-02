@@ -106,10 +106,9 @@
       <div class="fileSize col-form-label col-sm-2 text-right">{{ctx.fileSize(status.size)}}</div>
     </div>
     {% if (status.status === 'progress') { %}
-      <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="{{status.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{status.progress}}%">
-          <span class="sr-only">{{status.progress}}% {{ctx.t('Complete')}}</span>
-        </div>
+      <div class="openforms-loading">
+        <span class="openforms-loading__spinner"></span>
+        <div>{{ctx.t('Uploading file...')}}</div>
       </div>
     {% } else if (status.status === 'error') { %}
       <div class="alert alert-danger bg-{{status.status}}">{{ctx.t(status.message)}}</div>
