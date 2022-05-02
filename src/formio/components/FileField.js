@@ -52,7 +52,35 @@ class FileField extends Formio.Components.components.file {
       }
     }
 
+    this.on('fileUploadingStart', () => {
+      this.loading = true;
+    });
+
+    this.on('fileUploadingEnd', () => {
+      this.loading = false;
+    });
+
     super.upload(files);
+  }
+
+  checkComponentValidity(data, dirty, row, options = {}){
+    if (this.loading) {
+      // This prevents the FormStep from being submitted before the file upload is finished.
+      // Once the upload is finished, the logic check will be performed and will re-enable the submit button
+      const messages = [
+          {
+            message: this.t(
+              'Please wait for the file(s) upload to finish before continuing.',
+            ),
+            level: 'error',
+          }
+        ];
+
+        this.setComponentValidity(messages, true, false);
+        return false;
+    }
+
+    return super.checkComponentValidity(data, dirty, row, options);
   }
 }
 
