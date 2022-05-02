@@ -104,7 +104,7 @@ class OpenForm {
     ReactDOM.render(
       <React.StrictMode>
         <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
-          <ConfigContext.Provider value={{baseUrl: this.baseUrl}}>
+          <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
             <FormioTranslations.Provider value={{i18n: translations, language: lang}}>
               <Router basename={this.basePath}>
                 <App form={this.formObject} />
