@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ConfigContext = React.createContext({baseUrl: ''});
+const ConfigContext = React.createContext({baseUrl: '', basePath: ''});
 ConfigContext.displayName = 'ConfigContext';
 
 const FormioTranslations = React.createContext({i18n: {}, language: ''});
