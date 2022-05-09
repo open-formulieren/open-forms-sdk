@@ -7,7 +7,7 @@ import Caption from 'components/Caption';
 import { Table, TableRow, TableHead, TableCell } from 'components/Table';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {getBEMClassName} from 'utils';
-import {getComponentLabel, iterVisibleComponentsWithData} from 'components/FormStepSummary/utils';
+import {getComponentLabel, iterComponentsWithData} from 'components/FormStepSummary/utils';
 
 import ComponentValueDisplay from './ComponentValueDisplay';
 
@@ -41,9 +41,10 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           * Loop through each (not hidden) field in the step
           * stepData contains 4 things.
           * title (string), submissionStep (object), data (object), configuration (object)
-          * Note that the `components` should already be flattened!
+          * Note that the `components` must already be flattened and non-summary display
+          * components removed.
           */
-          iterVisibleComponentsWithData(stepData.configuration.components, stepData.data).map((component) => {
+          iterComponentsWithData(stepData.configuration.flattenedComponents, stepData.data).map((component) => {
             const {key, type} = component;
             const className = getBEMClassName('summary-row', [type]);
             return (

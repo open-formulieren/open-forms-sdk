@@ -1,7 +1,7 @@
-const iterVisibleComponentsWithData = (components, data) => {
+const iterComponentsWithData = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values
-  // Often used in combination with flattenComponents and getComponentLabel/getComponentValue
-  return components.filter(component => !component.hidden).map(component => ({
+  // Use in combination with getSummaryComponents and getComponentLabel
+  return components.map(component => ({
     ...component,
     value: data[component.key],
   }));
@@ -19,6 +19,9 @@ const getComponentLabel = (component) => {
   switch (type) {
     case 'fieldset' : {
       return (<strong>{label}</strong>);
+    }
+    case 'columns': {
+      return '';
     }
     default:
       return label;
@@ -42,4 +45,4 @@ const humanFileSize = (size) => {
   return {size: newSize, unit};
 };
 
-export {iterVisibleComponentsWithData, getComponentLabel, humanFileSize};
+export {iterComponentsWithData, getComponentLabel, humanFileSize};
