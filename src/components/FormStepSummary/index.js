@@ -12,6 +12,27 @@ import {getComponentLabel, iterComponentsWithData} from 'components/FormStepSumm
 import ComponentValueDisplay from './ComponentValueDisplay';
 
 
+const SummaryTableRow = ({ component }) => {
+  const label = getComponentLabel(component);
+  if (!label && !component.value) return null;
+
+  const {type} = component;
+  const className = getBEMClassName('summary-row', [type]);
+  return (
+    <TableRow className={className}>
+      <TableHead>{label}</TableHead>
+      <TableCell>
+        <ComponentValueDisplay component={component} />
+      </TableCell>
+    </TableRow>
+  );
+};
+
+SummaryTableRow.propTypes = {
+  component: PropTypes.object.isRequired,
+};
+
+
 const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
   const history = useHistory();
   return (
@@ -44,20 +65,9 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           * Note that the `components` must already be flattened and non-summary display
           * components removed.
           */
-          iterComponentsWithData(stepData.configuration.flattenedComponents, stepData.data).map((component) => {
-            const {key, type} = component;
-            const className = getBEMClassName('summary-row', [type]);
-            return (
-              <TableRow key={key} className={className}>
-                <TableHead>
-                  {getComponentLabel(component)}
-                </TableHead>
-                <TableCell>
-                  <ComponentValueDisplay component={component} />
-                </TableCell>
-              </TableRow>
-            );
-          })
+          iterComponentsWithData(stepData.configuration.flattenedComponents, stepData.data).map((component) => (
+            <SummaryTableRow component={component} key={`${component.key}-${component.id}`} />
+          ))
         }
       </Table>
 

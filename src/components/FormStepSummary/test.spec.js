@@ -9,6 +9,7 @@ import {
   testStepDataEmptyDate,
   testStepDataSelectMultivalue,
   testStepEmptyFields,
+  testStepColumns,
 } from './fixtures';
 
 
@@ -95,4 +96,28 @@ it('Empty fields', () => {
   for (const emptyValue of emptyValues) {
     expect(emptyValue.textContent).toEqual('');
   }
+});
+
+it('Columns without labels are not rendered', () => {
+  act(() => {
+    render(
+      <IntlProvider
+        locale="nl"
+        messages={messagesNL}
+      >
+        <FormStepSummary
+          stepData={testStepColumns}
+          editStepUrl="http://test-url.nl"
+          editStepText="Change"
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const tableRows = container.getElementsByClassName('openforms-table__row');
+
+  expect(tableRows.length).toEqual(2);
+  expect(tableRows[0].querySelector('.openforms-table__head').textContent).toEqual('Input 1');
+  expect(tableRows[1].querySelector('.openforms-table__head').textContent).toEqual('Input 2');
 });

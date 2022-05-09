@@ -18,12 +18,6 @@ import {getFormattedDateString, getFormattedTimeString} from 'utils';
 import {humanFileSize} from './utils';
 
 
-// const EmptyDisplay = () => (
-//   <FormattedMessage
-//     description="Value display for empty value"
-//     defaultMessage="(empty)"
-//   />
-// );
 const EmptyDisplay = () => '';
 
 const DefaultDisplay = ({component, value}) => {
