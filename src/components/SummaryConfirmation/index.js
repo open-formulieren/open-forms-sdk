@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -18,11 +18,23 @@ const SummaryConfirmation = ({
 
   const displayPrivacyNotice = canSubmit && requiresPrivacyConsent;
   const submitDisabled = requiresPrivacyConsent && !policyAccepted;
+  const [warningUncheckedPrivacy, setWarningUncheckedPrivacy] = useState(false);
+
   return (
     <>
       {
         displayPrivacyNotice
-        ? (<PrivacyCheckbox value={policyAccepted} label={privacyLabel} onChange={onPrivacyCheckboxChange} />)
+        ? (
+          <PrivacyCheckbox
+            value={policyAccepted}
+            label={privacyLabel}
+            warning={warningUncheckedPrivacy}
+            onChange={(e) => {
+              setWarningUncheckedPrivacy(false);
+              onPrivacyCheckboxChange(e);
+            }}
+          />
+        )
         : null
       }
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
@@ -35,7 +47,13 @@ const SummaryConfirmation = ({
           {
             canSubmit
             ? (
-              <Button type="submit" variant="primary" name="confirm" disabled={submitDisabled}>
+              <Button
+                type="submit"
+                variant="primary"
+                name="confirm"
+                disabled={submitDisabled}
+                onDisabledClick={() => setWarningUncheckedPrivacy(true)}
+              >
                <Literal name="confirmText" />
               </Button>
             )

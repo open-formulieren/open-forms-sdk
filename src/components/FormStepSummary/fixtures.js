@@ -143,7 +143,7 @@ export const testStepEmptyFields = {
       },
       {
         "id": "em3xsul",
-        "key": "uploadFile",
+        "key": "uploadFile1",
         "type": "file",
         "input": true,
         "multiple": true,

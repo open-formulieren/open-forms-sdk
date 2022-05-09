@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {getBEMClassName} from 'utils';
 
 
-const Button = ({ type='', component: Component='button', variant='', children, ...extra }) => {
+const Button = ({ type='', component: Component='button', variant='', onDisabledClick, children, ...extra }) => {
     const className = getBEMClassName('button', [variant]);
 
     // https://www.a11y-101.com/development/aria-disabled
@@ -21,7 +21,10 @@ const Button = ({ type='', component: Component='button', variant='', children, 
     if (disabled) {
       props['aria-disabled'] = 'true';
       // force the onClick handler to do nothing so we can't submit
-      props.onClick = (event) => event.preventDefault();
+      props.onClick = (event) => {
+        if (onDisabledClick) onDisabledClick();
+        event.preventDefault();
+      };
     }
 
     return (
@@ -35,6 +38,7 @@ Button.propTypes = {
     component: PropTypes.string,
     type: PropTypes.string,
     variant: PropTypes.string,
+    onDisabledClick: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
 };
 
