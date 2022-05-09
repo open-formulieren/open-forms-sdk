@@ -2,7 +2,16 @@
 @import '~microscope-sass/lib/typography';
 
 .#{prefix(privacy-checkbox)} {
-  @extend .#{prefix(checkbox)};
+
+  &__input {
+    @extend .#{prefix(checkbox)};
+
+    &--warning {
+      border-color: $color-danger;
+      border-width: thin;
+      border-style: solid;
+    }
+  }
 
   &__label {
     @extend .#{prefix(checkbox)}__label;
