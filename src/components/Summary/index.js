@@ -16,9 +16,10 @@ import {findPreviousApplicableStep} from 'components/utils';
 import {SubmissionContext} from 'Context';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
-import { flattenComponents } from 'utils';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+
+import {getSummaryComponents} from './utils';
 
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
@@ -60,7 +61,7 @@ const loadStepsData = async (submission) => {
       return {submissionStep: submissionStep};
     }
 
-    submissionStepDetail.formStep.configuration.components = flattenComponents(
+    submissionStepDetail.formStep.configuration.flattenedComponents = getSummaryComponents(
       submissionStepDetail.formStep.configuration.components
     );
 

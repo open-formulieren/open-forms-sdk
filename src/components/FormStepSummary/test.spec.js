@@ -8,7 +8,9 @@ import messagesNL from 'i18n/compiled/nl.json';
 import {
   testStepDataEmptyDate,
   testStepDataSelectMultivalue,
-  testStepEmptyFields, testStepHiddenFields,
+  testStepEmptyFields,
+  testStepColumns,
+  testStepHiddenFieldsetHeader,
 } from './fixtures';
 
 
@@ -97,7 +99,7 @@ it('Empty fields', () => {
   }
 });
 
-it('Hidden fields not shown', () => {
+it('Columns without labels are not rendered', () => {
   act(() => {
     render(
       <IntlProvider
@@ -105,7 +107,7 @@ it('Hidden fields not shown', () => {
         messages={messagesNL}
       >
         <FormStepSummary
-          stepData={testStepHiddenFields}
+          stepData={testStepColumns}
           editStepUrl="http://test-url.nl"
           editStepText="Change"
         />
@@ -114,8 +116,33 @@ it('Hidden fields not shown', () => {
     );
   });
 
-  const fieldsShown = container.getElementsByClassName("openforms-table__head");
+  const tableRows = container.getElementsByClassName('openforms-table__row');
 
-  expect(fieldsShown.length).toEqual(1);
-  expect(fieldsShown[0].textContent).toEqual('Visible field');
+  expect(tableRows.length).toEqual(2);
+  expect(tableRows[0].querySelector('.openforms-table__head').textContent).toEqual('Input 1');
+  expect(tableRows[1].querySelector('.openforms-table__head').textContent).toEqual('Input 2');
+});
+
+it('Columns without labels are not rendered', () => {
+  act(() => {
+    render(
+      <IntlProvider
+        locale="nl"
+        messages={messagesNL}
+      >
+        <FormStepSummary
+          stepData={testStepHiddenFieldsetHeader}
+          editStepUrl="http://test-url.nl"
+          editStepText="Change"
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const tableRows = container.getElementsByClassName('openforms-table__row');
+
+  expect(tableRows.length).toEqual(2);
+  expect(tableRows[0].querySelector('.openforms-table__head').textContent).toEqual('Input 1');
+  expect(tableRows[1].querySelector('.openforms-table__head').textContent).toEqual('Input 2');
 });

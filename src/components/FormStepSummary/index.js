@@ -7,9 +7,30 @@ import Caption from 'components/Caption';
 import { Table, TableRow, TableHead, TableCell } from 'components/Table';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {getBEMClassName} from 'utils';
-import {getComponentLabel, iterVisibleComponentsWithData} from 'components/FormStepSummary/utils';
+import {getComponentLabel, iterComponentsWithData} from 'components/FormStepSummary/utils';
 
 import ComponentValueDisplay from './ComponentValueDisplay';
+
+
+const SummaryTableRow = ({ component }) => {
+  const label = getComponentLabel(component);
+  if (!label && !component.value) return null;
+
+  const {type} = component;
+  const className = getBEMClassName('summary-row', [type]);
+  return (
+    <TableRow className={className}>
+      <TableHead>{label}</TableHead>
+      <TableCell>
+        <ComponentValueDisplay component={component} />
+      </TableCell>
+    </TableRow>
+  );
+};
+
+SummaryTableRow.propTypes = {
+  component: PropTypes.object.isRequired,
+};
 
 
 const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
@@ -41,22 +62,12 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           * Loop through each (not hidden) field in the step
           * stepData contains 4 things.
           * title (string), submissionStep (object), data (object), configuration (object)
-          * Note that the `components` should already be flattened!
+          * Note that the `components` must already be flattened and non-summary display
+          * components removed.
           */
-          iterVisibleComponentsWithData(stepData.configuration.components, stepData.data).map((component) => {
-            const {key, type} = component;
-            const className = getBEMClassName('summary-row', [type]);
-            return (
-              <TableRow key={key} className={className}>
-                <TableHead>
-                  {getComponentLabel(component)}
-                </TableHead>
-                <TableCell>
-                  <ComponentValueDisplay component={component} />
-                </TableCell>
-              </TableRow>
-            );
-          })
+          iterComponentsWithData(stepData.configuration.flattenedComponents, stepData.data).map((component) => (
+            <SummaryTableRow component={component} key={`${component.key}-${component.id}`} />
+          ))
         }
       </Table>
 
