@@ -10,6 +10,7 @@ import {
   testStepDataSelectMultivalue,
   testStepEmptyFields,
   testStepColumns,
+  testStepHiddenFieldsetHeader,
 } from './fixtures';
 
 
@@ -107,6 +108,30 @@ it('Columns without labels are not rendered', () => {
       >
         <FormStepSummary
           stepData={testStepColumns}
+          editStepUrl="http://test-url.nl"
+          editStepText="Change"
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const tableRows = container.getElementsByClassName('openforms-table__row');
+
+  expect(tableRows.length).toEqual(2);
+  expect(tableRows[0].querySelector('.openforms-table__head').textContent).toEqual('Input 1');
+  expect(tableRows[1].querySelector('.openforms-table__head').textContent).toEqual('Input 2');
+});
+
+it('Columns without labels are not rendered', () => {
+  act(() => {
+    render(
+      <IntlProvider
+        locale="nl"
+        messages={messagesNL}
+      >
+        <FormStepSummary
+          stepData={testStepHiddenFieldsetHeader}
           editStepUrl="http://test-url.nl"
           editStepText="Change"
         />

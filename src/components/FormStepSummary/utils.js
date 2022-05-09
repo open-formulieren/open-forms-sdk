@@ -1,3 +1,5 @@
+import React from 'react';
+
 const iterComponentsWithData = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values
   // Use in combination with getSummaryComponents and getComponentLabel
@@ -18,6 +20,7 @@ const getComponentLabel = (component) => {
 
   switch (type) {
     case 'fieldset' : {
+      if (component.hideHeader) return '';
       return (<strong>{label}</strong>);
     }
     case 'columns': {
