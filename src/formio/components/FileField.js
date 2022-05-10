@@ -82,6 +82,23 @@ class FileField extends Formio.Components.components.file {
 
     return super.checkComponentValidity(data, dirty, row, options);
   }
+
+  deleteFile(fileInfo) {
+    // Regression #1539 because of 77e99358a625a9f242f09aa6368a8b7b2c816e88 - failing
+    // to pass the `url` prop/option to the Formio WebForm constructor leads to
+    // `webform.setUrl` not being called, which leads to this.root.formio not being
+    // defined. This codepath leaves vanilla Formio clueless about sending the
+    // DELETE request, even though it can just use the global formio object...
+    // Instead of polluting our global configuratio with a non-sense URL (which also
+    // 'enables' saving drafts, for example), we opt to handle the delete call ourselves
+    // in those cases.
+    const formio = this.options.formio || (this.root && this.root.formio);
+    if (formio) {
+      return super.deleteFile(fileInfo);
+    }
+    // manual handling, replicated from the super class deleteFile
+    Formio.makeRequest(null, '', fileInfo.url, 'delete');
+  }
 }
 
 
