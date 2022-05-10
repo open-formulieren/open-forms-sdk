@@ -27,7 +27,7 @@ $color-green: green !default;
 $color-red: #D52B1E;
 $color-orange: #E17000;
 $color-yellow: #FFB612;
-$color-primary: $color-blue;
+$color-primary: var(--of-color-primary);
 $color-background: $color-white !default;
 $color-border: $color-gray-darker;  // WCAG contrast ratio 4.5 / 1 against white background
 $color-danger: $color-red !default;
@@ -70,7 +70,7 @@ $grid-margin-10: 50px; // Yes.
 
 $typography-color-base: $color-black !default;
 $typography-color-text: $typography-color-base !default;
-$typography-color-link: $color-primary;
+$typography-color-link: var(--of-color-link);
 $typography-color-link-hover: $typography-color-link !default;
 $typography-color-h: $typography-color-base !default;
 $typography-default-hover-link: false !default;

@@ -11,39 +11,61 @@ $button-line-height-px: math.div($button-line-height, ($button-line-height * 0 +
 $button-padding-v: math.div(($grid-row-height - $button-line-height-px), 2) - $typography-size-border;
 $button-padding-h: $grid-margin-2;
 
-@mixin button-theme($name, $color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
-  @if $name == '' {
-    @include button-style($color, $color-background, $color-border, $decorate-on-hover);
-  } @else {
-    &--#{$name} {
-      @include button-style($color, $color-background, $color-border, $decorate-on-hover);
-    }
+@mixin button-theme(
+  $name,
+  $color,
+  $color-background,
+  $color-border: var(--of-color-bg),
+  $decorate-on-hover: false,
+  $color-background-hover: null,
+  $color-border-hover: null,
+  $color-active: null,
+  $color-background-active: null,
+  $color-border-active: null,
+) {
+  // build the selector either as just the parent or the parent with modifier,
+  // based on the theme name
+  $sel: #{&};
+  @if $name != '' {
+    $sel: "#{&}--#{$name}";
   }
-}
+  // now output the actual CSS rules
+  @at-root #{$sel} {
+    color: $color;
+    background-color: $color-background;
+    border-right-color: $color-border;
+    border-bottom-color: $color-border;
 
-@mixin button-style($color, $color-background, $color-border: $color-background, $decorate-on-hover: false) {
-  color: $color;
-  background-color: $color-background;
-  border-right-color: $color-border;
-  border-bottom-color: $color-border;
+    &:not([aria-disabled="true"]):hover {
+      @if $color-background-hover {
+        background-color: $color-background-hover;
+      }
 
-  &:not([aria-disabled="true"]):hover {
-    background-color: scale_color($color-background, $lightness: -20%);
-    border-right-color: scale_color($color-border, $lightness: -20%);
-    border-bottom-color: scale_color($color-border, $lightness: -20%);
+      @if $color-border-hover {
+        border-right-color: $color-border-hover;
+        border-bottom-color: $color-border-hover;
+      }
 
-    @if $decorate-on-hover {
-      @include anchor(true);
+      @if $decorate-on-hover {
+        @include anchor(true);
+      }
     }
-  }
 
-  &:active {
-    color: scale_color($color, $lightness: -25%);
-    background-color: scale_color($color-background, $lightness: -25%);
-    border-top-color: scale_color($color-border, $lightness: -20%);
-    border-right-color: transparent;
-    border-left-color: scale_color($color-border, $lightness: -20%);
-    border-bottom-color: transparent;
+    &:active {
+      @if $color-active {
+        color: $color-active;
+      }
+      @if $color-background-active {
+        background-color: $color-background-active;
+      }
+
+      @if $color-border-active {
+        border-top-color: $color-border-active;
+        border-right-color: transparent;
+        border-left-color: $color-border-active;
+        border-bottom-color: transparent;
+      }
+    }
   }
 }
 
@@ -51,10 +73,52 @@ $button-padding-h: $grid-margin-2;
   @include body;
   @include body--big;
   @include border(all, $color: transparent, $size: 2px);
-  @include button-theme('', $typography-color-text, $color-background, $color-border);
-  @include button-theme('primary', $color-background, scale_color($color-primary, $lightness: 10%, $saturation: 0%), $color-primary);
-  @include button-theme('anchor', $typography-color-link, transparent, transparent, true);
-  @include button-theme('danger', scale_color($color-danger, $lightness: 90%), $color-danger, scale_color($color-danger, $lightness: -20%));
+  @include button-theme(
+    '',
+    $typography-color-text,
+    $color-background,
+    $color-border,
+    $color-background-hover: var(--of-button-bg-hover),
+    $color-border-hover: var(--of-button-color-border-hover),
+    $color-active: var(--of-button-fg-active),
+    $color-background-active: var(--of-button-bg-active),
+    $color-border-active: var(--of-button-color-border-active),
+  );
+  @include button-theme(
+    'primary',
+    var(--of-button-primary-fg),
+    var(--of-button-primary-bg),
+    var(--of-button-primary-color-border),
+    $color-background-hover: var(--of-button-primary-bg-hover),
+    $color-border-hover: var(--of-button-primary-color-border-hover),
+    $color-active: var(--of-button-primary-fg-active),
+    $color-background-active: var(--of-button-primary-bg-active),
+    $color-border-active: var(--of-button-primary-color-border-active),
+  );
+  @include button-theme(
+    'anchor',
+    var(--of-button-anchor-fg),
+    var(--of-button-anchor-bg),
+    var(--of-button-anchor-color-border),
+    true,
+    $color-background-hover: var(--of-button-anchor-bg-hover),
+    $color-border-hover: var(--of-button-anchor-color-border-hover),
+    $color-active: var(--of-button-anchor-fg-active),
+    $color-background-active: var(--of-button-anchor-bg-active),
+    $color-border-active: var(--of-button-anchor-color-border-active),
+  );
+  @include button-theme(
+    'danger',
+    var(--of-button-danger-fg),
+    var(--of-button-danger-bg),
+    var(--of-button-danger-color-border),
+    $color-background-hover: var(--of-button-danger-bg-hover),
+    $color-border-hover: var(--of-button-danger-color-border-hover),
+    $color-active: var(--of-button-danger-fg-active),
+    $color-background-active: var(--of-button-danger-bg-active),
+    $color-border-active: var(--of-button-danger-color-border-active),
+  );
+
   appearance: none;
   border-radius: 0;
   display: flex;

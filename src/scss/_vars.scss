@@ -38,4 +38,38 @@
    */
   --of-color-helptext-bg: #d3e3ec;
   --of-color-helptext-fg: var(--of-color-fg);
+
+  /**
+   * Button colors
+   */
+
+  // plain button
+  --of-button-fg: var(--of-color-fg);
+  --of-button-bg: var(--of-color-bg);
+  --of-button-color-border: var(--of-color-border);
+  --of-button-bg-hover: #cccccc;
+  --of-button-color-border-hover: #5e5e5e;
+  --of-button-fg-active: var(--of-color-fg);
+  --of-button-bg-active: #bfbfbf;
+  --of-button-color-border-active: #5e5e5e;
+
+  // primary button
+  --of-button-primary-fg: #ffffff;
+  --of-button-primary-bg: #0180be;
+  --of-button-primary-color-border: var(--of-color-primary);
+  --of-button-primary-bg-hover: #016698;
+  --of-button-primary-color-border-hover: #01537c;
+  --of-button-primary-fg-active: #bfbfbf;
+  --of-button-primary-bg-active: #01608f;
+  --of-button-primary-color-border-active: #01537c;
+
+  // anchor/link style button
+  --of-button-anchor-fg: var(--of-color-link);
+  --of-button-anchor-bg: transparent;
+  --of-button-anchor-color-border: transparent;
+  --of-button-anchor-bg-hover: transparent;
+  --of-button-anchor-color-border-hover: transparent;
+  --of-button-anchor-fg-active: #014e74;
+  --of-button-anchor-bg-active: transparent;
+  --of-button-anchor-color-border-active: transparent;
 }

@@ -81,7 +81,7 @@ we don't have strict BEM naming here.
     text-align: center;
 
     &.fileDragOver {
-      border-color: $color-primary;
+      border-color: var(--of-color-primary);
     }
 
     & + .file {
