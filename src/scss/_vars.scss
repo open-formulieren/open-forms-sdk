@@ -1,0 +1,41 @@
+/**
+ * Defines the CSS variables with their default values as used/supported by Open Forms.
+ *
+ * Note that this is an initial pass at eventually supporting NL DS design tokens.
+ * See https://github.com/open-formulieren/open-forms/issues/1512 for the epic.
+ *
+ * Additionally, having the base variables defined allows us to support dark themes
+ * in the future.
+ *
+ * Note that all variables receive an `--of-` prefix to namespace variables.
+ */
+
+:root {
+  /*
+   * Colors
+   */
+  --of-color-primary: #01689B;
+  --of-color-secondary: #cee0ea;
+
+  // info/log levels
+  --of-color-info: #007bc7;
+  --of-color-success: green;
+  --of-color-warning: #E17000;
+  --of-color-danger: #D52B1E;
+
+  // layout
+  --of-color-bg: #ffffff;
+  --of-color-fg: #000000;
+  --of-color-border: #767676;
+
+  // typography
+  --of-color-fg-heading: var(--of-color-fg);
+  --of-color-link: var(--of-color-primary);
+  --of-color-link-hover: var(--of-color-link);
+
+  /*
+   * Help texts
+   */
+  --of-color-helptext-bg: #d3e3ec;
+  --of-color-helptext-fg: var(--of-color-fg);
+}
