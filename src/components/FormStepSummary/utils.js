@@ -23,6 +23,7 @@ const getComponentLabel = (component) => {
       if (component.hideHeader) return '';
       return (<strong>{label}</strong>);
     }
+    case 'content':
     case 'columns': {
       return '';
     }
