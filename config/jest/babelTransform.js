@@ -1,6 +1,6 @@
 'use strict';
 
-const babelJest = require('babel-jest');
+const babelJest = require('babel-jest').default;
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -23,6 +23,15 @@ module.exports = babelJest.createTransformer({
         runtime: hasJsxRuntime ? 'automatic' : 'classic',
       },
     ],
+  ],
+  "plugins": [
+    [
+      "formatjs",
+      {
+        "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+        "ast": true
+      }
+    ]
   ],
   babelrc: false,
   configFile: false,

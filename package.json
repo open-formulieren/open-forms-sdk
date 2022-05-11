@@ -3,98 +3,88 @@
   "version": "1.0.2",
   "private": true,
   "dependencies": {
-    "@babel/core": "7.12.3",
+    "@babel/core": "^7.16.0",
     "@formio/protected-eval": "^1.2.1",
     "@fortawesome/fontawesome-free": "^5.14.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@sentry/react": "^6.13.2",
     "@sentry/tracing": "^6.13.2",
-    "@svgr/webpack": "5.5.0",
+    "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.6.0",
-    "babel-loader": "8.1.0",
-    "babel-plugin-named-asset-import": "^0.3.7",
-    "babel-preset-react-app": "^10.0.0",
+    "babel-jest": "^27.4.2",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-named-asset-import": "^0.3.8",
+    "babel-preset-react-app": "^10.0.1",
     "bfj": "^7.0.2",
-    "camelcase": "^6.1.0",
-    "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "browserslist": "^4.18.1",
+    "camelcase": "^6.2.1",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "classnames": "^2.3.1",
-    "css-loader": "4.3.0",
-    "dotenv": "8.2.0",
-    "dotenv-expand": "5.1.0",
+    "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.2.0",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
     "ejs-loader": "^0.5.0",
-    "eslint": "^7.11.0",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-flowtype": "^5.2.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.1.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-testing-library": "^3.9.2",
-    "eslint-webpack-plugin": "^2.5.2",
-    "file-loader": "6.1.1",
+    "eslint": "^8.3.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-webpack-plugin": "^3.1.1",
+    "file-loader": "^6.2.0",
     "flatpickr": "^4.6.9",
     "formiojs": "^4.12.7",
-    "fs-extra": "^9.0.1",
-    "html-webpack-plugin": "4.5.0",
+    "fs-extra": "^10.0.0",
+    "html-webpack-plugin": "^5.5.0",
     "ibantools": "^3.3.0",
-    "identity-obj-proxy": "3.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "immer": "^9.0.6",
-    "jest": "26.6.0",
-    "jest-circus": "26.6.0",
-    "jest-resolve": "26.6.0",
-    "jest-watch-typeahead": "0.6.1",
+    "jest": "^27.4.3",
+    "jest-resolve": "^27.4.2",
+    "jest-watch-typeahead": "^1.0.0",
     "leaflet": "^1.7.1",
     "microscope-sass": "^1.0.4",
-    "mini-css-extract-plugin": "0.11.3",
+    "mini-css-extract-plugin": "^2.4.5",
     "moment": "^2.29.1",
-    "optimize-css-assets-webpack-plugin": "5.0.4",
-    "pnp-webpack-plugin": "1.6.4",
-    "postcss-flexbugs-fixes": "4.2.1",
-    "postcss-loader": "3.0.0",
-    "postcss-normalize": "8.0.1",
-    "postcss-preset-env": "6.7.0",
-    "postcss-safe-parser": "5.0.2",
+    "postcss": "^8.4.4",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^6.2.1",
+    "postcss-normalize": "^10.0.1",
+    "postcss-preset-env": "^7.0.1",
     "proj4leaflet": "^1.0.2",
-    "prompts": "2.4.0",
+    "prompts": "^2.4.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
-    "react-app-polyfill": "^2.0.0",
+    "react-app-polyfill": "^3.0.0",
+    "react-dev-utils": "^12.0.1",
     "react-dom": "^17.0.2",
     "react-formio": "^4.3.0",
     "react-intl": "^5.20.5",
     "react-leaflet": "^3.2.2",
     "react-modal": "3.14.3",
-    "react-refresh": "^0.8.3",
+    "react-refresh": "^0.11.0",
     "react-router-dom": "^5.2.0",
     "react-use": "^17.2.4",
-    "resolve": "1.18.1",
-    "resolve-url-loader": "^3.1.2",
+    "resolve": "^1.20.0",
+    "resolve-url-loader": "^4.0.0",
     "sass": "^1.32.12",
-    "sass-loader": "^10.0.5",
-    "semver": "7.3.2",
+    "sass-loader": "^12.3.0",
+    "semver": "^7.3.5",
+    "source-map-loader": "^3.0.0",
     "state-pool": "^0.6.0",
-    "style-loader": "1.3.0",
-    "terser-webpack-plugin": "4.2.3",
-    "ts-pnp": "1.2.0",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.2",
+    "terser-webpack-plugin": "^5.2.5",
     "uri-js": "^4.4.1",
-    "url-loader": "4.1.1",
     "use-immer": "^0.5.1",
-    "web-vitals": "^1.0.1",
-    "webpack": "4.44.2",
-    "webpack-dev-server": "3.11.1",
-    "webpack-manifest-plugin": "2.2.0"
+    "webpack": "^5.64.4",
+    "webpack-dev-server": "^4.6.0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --modulePaths=src",
+    "test": "node scripts/test.js",
     "clean": "rm -rf dist/*",
     "makemessages-en": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages-nl": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/nl.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
@@ -127,10 +117,23 @@
   "devDependencies": {
     "@formatjs/cli": "^4.2.33",
     "babel-plugin-formatjs": "^10.3.8",
-    "react-dev-utils": "^11.0.4",
     "react-test-renderer": "^17.0.2",
     "typescript": "^4.4.3",
     "yargs": "^17.1.1"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "formatjs",
+        {
+          "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+          "ast": true
+        }
+      ]
+    ]
   },
   "jest": {
     "roots": [
@@ -151,7 +154,6 @@
       "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jsdom",
-    "testRunner": "/mnt/c/Users/BBT/code/open-forms-sdk/node_modules/jest-circus/runner.js",
     "transform": {
       "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
@@ -161,7 +163,9 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
-    "modulePaths": [],
+    "modulePaths": [
+      "<rootDir>/src"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
@@ -183,19 +187,5 @@
       "jest-watch-typeahead/testname"
     ],
     "resetMocks": true
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "plugins": [
-      [
-        "formatjs",
-        {
-          "idInterpolationPattern": "[sha512:contenthash:base64:6]",
-          "ast": true
-        }
-      ]
-    ]
   }
 }
