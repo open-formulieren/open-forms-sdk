@@ -85,6 +85,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
+    "clean": "rm -rf dist/*",
     "makemessages-en": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages-nl": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/nl.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages": "yarn run makemessages-nl && yarn run makemessages-en",
@@ -123,6 +124,15 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "formatjs",
+        {
+          "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+          "ast": true
+        }
+      ]
     ]
   },
   "jest": {
@@ -154,7 +164,7 @@
       "^.+\\.module\\.(css|sass|scss)$"
     ],
     "modulePaths": [
-      "/home/bbt/code/open-forms-sdk/src"
+      "<rootDir>/src"
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",

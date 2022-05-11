@@ -110,10 +110,10 @@ module.exports = function (webpackEnv) {
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        // css is located in `static/css`, use '../../' to locate index.html folder
+        // css is located in `.`, do not use '../../' to locate index.html folder
         // in production `paths.publicUrlOrPath` can be a relative path
         options: paths.publicUrlOrPath.startsWith('.')
-          ? { publicPath: '../../' }
+          ? { publicPath: './' }
           : {},
       },
       {
@@ -200,7 +200,9 @@ module.exports = function (webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: paths.appIndexJs,
+    entry: isEnvProduction
+      ? {'open-forms-sdk': paths.sdk}
+      : paths.appIndexJs,
     output: {
       // The build folder.
       path: paths.appBuild,
@@ -209,8 +211,12 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
+        ? '[name].js'  // no cache-busting, since we want predictable version numbers
         : isEnvDevelopment && 'static/js/bundle.js',
+      // output to a library
+      library: isEnvProduction
+        ? {name: 'OpenForms', type: 'umd'}
+        : undefined,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
@@ -228,6 +234,7 @@ module.exports = function (webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+      globalObject: 'window',
     },
     cache: {
       type: 'filesystem',
@@ -335,6 +342,9 @@ module.exports = function (webpackEnv) {
           babelRuntimeRegenerator,
         ]),
       ],
+      fallback: {
+        "vm": false,
+      },
     },
     module: {
       strictExportPresence: true,
@@ -373,6 +383,18 @@ module.exports = function (webpackEnv) {
                 dataUrlCondition: {
                   maxSize: imageInlineSizeLimit,
                 },
+              },
+            },
+            // EJS pre-compilation, for config reference see
+            // https://github.com/formio/semantic/blob/master/gulpfile.js
+            {
+              test: /\.ejs$/,
+              loader: 'ejs-loader',
+              options: {
+                variable: 'ctx',
+                evaluate: /\{%([\s\S]+?)%\}/g,
+                interpolate: /\{\{([\s\S]+?)\}\}/g,
+                escape: /\{\{\{([\s\S]+?)\}\}\}/g,
               },
             },
             {
@@ -564,31 +586,32 @@ module.exports = function (webpackEnv) {
     },
     plugins: [
       // Generates an `index.html` file with the <script> injected.
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            template: paths.appHtml,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
+      isEnvDevelopment &&
+        new HtmlWebpackPlugin(
+          Object.assign(
+            {},
+            {
+              inject: true,
+              template: paths.appHtml,
+            },
+            isEnvProduction
+              ? {
+                  minify: {
+                    removeComments: true,
+                    collapseWhitespace: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeStyleLinkTypeAttributes: true,
+                    keepClosingSlash: true,
+                    minifyJS: true,
+                    minifyCSS: true,
+                    minifyURLs: true,
+                  },
+                }
+              : undefined
+          )
+        ),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
@@ -625,33 +648,8 @@ module.exports = function (webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: 'static/css/[name].[contenthash:8].css',
-          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+          filename: '[name].css',
         }),
-      // Generate an asset manifest file with the following content:
-      // - "files" key: Mapping of all asset filenames to their corresponding
-      //   output file so that tools can pick it up without having to parse
-      //   `index.html`
-      // - "entrypoints" key: Array of files which are included in `index.html`,
-      //   can be used to reconstruct the HTML if necessary
-      new WebpackManifestPlugin({
-        fileName: 'asset-manifest.json',
-        publicPath: paths.publicUrlOrPath,
-        generate: (seed, files, entrypoints) => {
-          const manifestFiles = files.reduce((manifest, file) => {
-            manifest[file.name] = file.path;
-            return manifest;
-          }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            fileName => !fileName.endsWith('.map')
-          );
-
-          return {
-            files: manifestFiles,
-            entrypoints: entrypointFiles,
-          };
-        },
-      }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.
@@ -661,67 +659,6 @@ module.exports = function (webpackEnv) {
         resourceRegExp: /^\.\/locale$/,
         contextRegExp: /moment$/,
       }),
-      // Generate a service worker script that will precache, and keep up to date,
-      // the HTML & assets that are part of the webpack build.
-      isEnvProduction &&
-        fs.existsSync(swSrc) &&
-        new WorkboxWebpackPlugin.InjectManifest({
-          swSrc,
-          dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-          exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
-          // Bump up the default maximum size (2mb) that's precached,
-          // to make lazy-loading failure scenarios less likely.
-          // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-        }),
-      // TypeScript type checking
-      useTypeScript &&
-        new ForkTsCheckerWebpackPlugin({
-          async: isEnvDevelopment,
-          typescript: {
-            typescriptPath: resolve.sync('typescript', {
-              basedir: paths.appNodeModules,
-            }),
-            configOverwrite: {
-              compilerOptions: {
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
-                skipLibCheck: true,
-                inlineSourceMap: false,
-                declarationMap: false,
-                noEmit: true,
-                incremental: true,
-                tsBuildInfoFile: paths.appTsBuildInfoFile,
-              },
-            },
-            context: paths.appPath,
-            diagnosticOptions: {
-              syntactic: true,
-            },
-            mode: 'write-references',
-            // profile: true,
-          },
-          issue: {
-            // This one is specifically to match during CI tests,
-            // as micromatch doesn't match
-            // '../cra-template-typescript/template/src/App.tsx'
-            // otherwise.
-            include: [
-              { file: '../**/src/**/*.{ts,tsx}' },
-              { file: '**/src/**/*.{ts,tsx}' },
-            ],
-            exclude: [
-              { file: '**/src/**/__tests__/**' },
-              { file: '**/src/**/?(*.){spec|test}.*' },
-              { file: '**/src/setupProxy.*' },
-              { file: '**/src/setupTests.*' },
-            ],
-          },
-          logger: {
-            infrastructure: 'silent',
-          },
-        }),
       !disableESLintPlugin &&
         new ESLintPlugin({
           // Plugin options

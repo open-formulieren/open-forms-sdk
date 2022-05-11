@@ -24,6 +24,15 @@ module.exports = babelJest.createTransformer({
       },
     ],
   ],
+  "plugins": [
+    [
+      "formatjs",
+      {
+        "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+        "ast": true
+      }
+    ]
+  ],
   babelrc: false,
   configFile: false,
 });
