@@ -24,6 +24,11 @@
     "description": "Start payment button",
     "originalDefault": "Pay now"
   },
+  "8MZ9TV": {
+    "defaultMessage": "Please accept the privacy policy before submitting",
+    "description": "Warning privacy policy not checked when submitting",
+    "originalDefault": "Please accept the privacy policy before submitting"
+  },
   "8Zfsd+": {
     "defaultMessage": "Please click the button below to start the form.",
     "description": "Form start (no login available) body text",
