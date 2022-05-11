@@ -1,13 +1,12 @@
 // Open Forms SDK styles
 // TODO: we should see if we can re-use even smaller bits to shed dead weight and
 // reduce the bundle size
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
-@import '~@fortawesome/fontawesome-free/scss/brands';
-@import '~@fortawesome/fontawesome-free/scss/regular';
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~flatpickr/dist/flatpickr.min.css';
-@import "~formiojs/dist/formio.form.css";
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/solid';
+@import 'flatpickr/dist/flatpickr.min.css';
+@import "formiojs/dist/formio.form.css";
 
 @import "./scss/vars";
 @import "./scss/settings";
