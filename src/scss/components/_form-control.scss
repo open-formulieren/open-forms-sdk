@@ -1,4 +1,3 @@
-@import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/bem';
@@ -18,22 +17,22 @@
   }
 
   &[class*="error"] {
-    @include border(left, $color-danger, 4px);
+    @include border(left, var(--of-color-danger), 4px);
     padding-left: $grid-margin-3;
   }
 
   &[class*="warning"] {
-    @include border(left, $color-warning, 4px);
+    @include border(left, var(--of-color-warning), 4px);
     padding-left: $grid-margin-3;
   }
 
   &[class*="success"] {
-    @include border(left, $color-success, 4px);
+    @include border(left, var(--of-color-success), 4px);
     padding-left: $grid-margin-3;
   }
 
   &[class*="info"] {
-    @include border(left, $color-info, 4px);
+    @include border(left, var(--of-color-info), 4px);
     padding-left: $grid-margin-3;
   }
 

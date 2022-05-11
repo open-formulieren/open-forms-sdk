@@ -3,13 +3,11 @@
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
-$co-sign-color-bg: $color-gray-lighter !default;
-
 .#{prefix('co-sign')} {
 
   @include element('representation') {
     @include border(all, $size: 1px);
-    background-color: $co-sign-color-bg;
+    background-color: var(--of-cosign-color-bg);
     padding: $grid-margin-2;
   }
 

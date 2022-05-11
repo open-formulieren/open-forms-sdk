@@ -42,6 +42,6 @@
   }
 
   &--muted {
-    color: $color-gray-darker;
+    color: var(--of-color-fg-muted);
   }
 }

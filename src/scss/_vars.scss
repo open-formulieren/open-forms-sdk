@@ -11,7 +11,7 @@
  */
 
 :root {
-  /*
+  /**
    * Colors
    */
   --of-color-primary: #01689B;
@@ -26,18 +26,27 @@
   // layout
   --of-color-bg: #ffffff;
   --of-color-fg: #000000;
-  --of-color-border: #767676;
+  --of-color-border: #767676;  // WCAG contrast ratio 4.5 / 1 against white background
+  --of-layout-color-bg: #E6E6E6;
 
   // typography
   --of-color-fg-heading: var(--of-color-fg);
   --of-color-link: var(--of-color-primary);
   --of-color-link-hover: var(--of-color-link);
+  --of-color-fg-muted: #767676;
 
-  /*
+  /**
    * Help texts
    */
   --of-color-helptext-bg: #d3e3ec;
   --of-color-helptext-fg: var(--of-color-fg);
+
+  /**
+   * Field elements/types
+   */
+  --of-color-field-border: #979797;
+  --of-checkbox-color-bg: #F3F3F3;
+  --of-cosign-color-bg: var(--of-checkbox-color-bg);
 
   /**
    * Button colors
@@ -72,4 +81,9 @@
   --of-button-anchor-fg-active: #014e74;
   --of-button-anchor-bg-active: transparent;
   --of-button-anchor-color-border-active: transparent;
+
+  /**
+   * Progress indicator
+   */
+  --of-progress-indicator-mobile-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
 }

@@ -17,5 +17,5 @@
 
 .signature-pad-footer {
   @include text;
-  color: $color-gray-darker;
+  color: var(--of-color-fg-muted);
 }

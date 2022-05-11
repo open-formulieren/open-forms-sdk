@@ -1,5 +1,4 @@
 @use "sass:math";
-// $fa-font-path:         "../fonts";
 
 $breakpoint-mobile-s: 320px !default;
 $breakpoint-mobile-m: 375px !default;
@@ -15,25 +14,13 @@ $animation-default-duration-slow: 5s !default;
 $animation-default-delay: 0s !default;
 $animation-default-function: ease-in-out !default;
 
-$color-black: black !default;
-$color-white: white !default;
-$color-gray-lighter: #F3F3F3;
-$color-gray: #E6E6E6;
-$color-gray-darker: #767676;
-$color-gray-darkest: #979797;
-$color-blue-lighter: #E5F0F9;
-$color-blue: #01689B;
-$color-green: green !default;
-$color-red: #D52B1E;
-$color-orange: #E17000;
-$color-yellow: #FFB612;
 $color-primary: var(--of-color-primary);
-$color-background: $color-white !default;
-$color-border: $color-gray-darker;  // WCAG contrast ratio 4.5 / 1 against white background
-$color-danger: $color-red !default;
-$color-info: #007bc7;
-$color-success: $color-green !default;
-$color-warning: $color-orange !default;
+$color-background: var(--of-color-bg) !default;
+$color-border: var(--of-color-border) !default;
+$color-danger: var(--of-color-danger) !default;
+$color-info: var(--of-color-info) !default;
+$color-success: var(--of-color-success) !default;
+$color-warning: var(--of-color-warning) !default;
 
 $grid-columns-mobile: 4 !default;
 $grid-columns-tablet: 9 !default;
@@ -68,7 +55,7 @@ $grid-margin-8: 40px;
 $grid-margin-9: 44px;
 $grid-margin-10: 50px; // Yes.
 
-$typography-color-base: $color-black !default;
+$typography-color-base: var(--of-color-fg) !default;
 $typography-color-text: $typography-color-base !default;
 $typography-color-link: var(--of-color-link);
 $typography-color-link-hover: $typography-color-link !default;
@@ -292,12 +279,6 @@ $typography-margin-property-h6: $typography-margin-property-h !default;
 $typography-padding-table: $grid-margin-1 0 !default;
 $typography-size-border: 1px;
 $typography-style-border: solid !default;
-
-$util-shadow-default-color: rgba($color-black, 0.15) !default;
-$util-shadow-default-offset-x: 0 !default;
-$util-shadow-default-offset-y: 0.5rem !default;
-$util-shadow-default-blur: 1rem !default;
-$util-shadow-default-spread: 0 !default;
 
 @font-face {
   font-family: 'Fira Sans';
