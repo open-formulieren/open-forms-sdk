@@ -30,8 +30,8 @@
   }
 
   @include element('spinner') {
-    border: 6px solid $color-secondary;
-    border-top: 6px solid $color-primary;
+    border: 6px solid var(--of-color-secondary);
+    border-top: 6px solid var(--of-color-primary);
     border-radius: 50%;
     width: 20px;
     height: 20px;

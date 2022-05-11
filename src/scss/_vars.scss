@@ -1,0 +1,89 @@
+/**
+ * Defines the CSS variables with their default values as used/supported by Open Forms.
+ *
+ * Note that this is an initial pass at eventually supporting NL DS design tokens.
+ * See https://github.com/open-formulieren/open-forms/issues/1512 for the epic.
+ *
+ * Additionally, having the base variables defined allows us to support dark themes
+ * in the future.
+ *
+ * Note that all variables receive an `--of-` prefix to namespace variables.
+ */
+
+:root {
+  /**
+   * Colors
+   */
+  --of-color-primary: #01689B;
+  --of-color-secondary: #cee0ea;
+
+  // info/log levels
+  --of-color-info: #007bc7;
+  --of-color-success: green;
+  --of-color-warning: #E17000;
+  --of-color-danger: #D52B1E;
+
+  // layout
+  --of-color-bg: #ffffff;
+  --of-color-fg: #000000;
+  --of-color-border: #767676;  // WCAG contrast ratio 4.5 / 1 against white background
+  --of-layout-color-bg: #E6E6E6;
+
+  // typography
+  --of-color-fg-heading: var(--of-color-fg);
+  --of-color-link: var(--of-color-primary);
+  --of-color-link-hover: var(--of-color-link);
+  --of-color-fg-muted: #767676;
+
+  /**
+   * Help texts
+   */
+  --of-color-helptext-bg: #d3e3ec;
+  --of-color-helptext-fg: var(--of-color-fg);
+
+  /**
+   * Field elements/types
+   */
+  --of-color-field-border: #979797;
+  --of-checkbox-color-bg: #F3F3F3;
+  --of-cosign-color-bg: var(--of-checkbox-color-bg);
+
+  /**
+   * Button colors
+   */
+
+  // plain button
+  --of-button-fg: var(--of-color-fg);
+  --of-button-bg: var(--of-color-bg);
+  --of-button-color-border: var(--of-color-border);
+  --of-button-bg-hover: #cccccc;
+  --of-button-color-border-hover: #5e5e5e;
+  --of-button-fg-active: var(--of-color-fg);
+  --of-button-bg-active: #bfbfbf;
+  --of-button-color-border-active: #5e5e5e;
+
+  // primary button
+  --of-button-primary-fg: #ffffff;
+  --of-button-primary-bg: #0180be;
+  --of-button-primary-color-border: var(--of-color-primary);
+  --of-button-primary-bg-hover: #016698;
+  --of-button-primary-color-border-hover: #01537c;
+  --of-button-primary-fg-active: #bfbfbf;
+  --of-button-primary-bg-active: #01608f;
+  --of-button-primary-color-border-active: #01537c;
+
+  // anchor/link style button
+  --of-button-anchor-fg: var(--of-color-link);
+  --of-button-anchor-bg: transparent;
+  --of-button-anchor-color-border: transparent;
+  --of-button-anchor-bg-hover: transparent;
+  --of-button-anchor-color-border-hover: transparent;
+  --of-button-anchor-fg-active: #014e74;
+  --of-button-anchor-bg-active: transparent;
+  --of-button-anchor-color-border-active: transparent;
+
+  /**
+   * Progress indicator
+   */
+  --of-progress-indicator-mobile-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+}

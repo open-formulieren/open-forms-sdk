@@ -80,7 +80,8 @@ $select-background-color: var(--of-select-background-color, $color-white);
     @include body;
     @include body--small;
     @include color-background(color);
-    @include color-primary((background-color, border-color));
+    background-color: var(--of-color-primary);
+    border-color: var(--of-color-primary);
     display: inline-flex;
     align-items: center;
     height: $item-height;
@@ -90,7 +91,8 @@ $select-background-color: var(--of-select-background-color, $color-white);
   }
 
   .selection .choices__item .choices_button {
-    @include color-secondary((border-color, color));
+    border-color: var(--of-color-secondary);
+    color: var(--of-color-secondary);
   }
 
   // The filter/search input.

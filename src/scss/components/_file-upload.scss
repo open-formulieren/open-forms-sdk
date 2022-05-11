@@ -28,7 +28,7 @@ we don't have strict BEM naming here.
       @include hide-on-mobile(block);
 
       .row {
-        border-bottom: solid 1px $color-border;
+        border-bottom: solid 1px var(--of-color-border);
       }
     }
 
@@ -77,11 +77,11 @@ we don't have strict BEM naming here.
   .fileSelector {
     position: relative;
     @include margin($grid-container-margin-small, $properties: padding);
-    border: 3px dashed $color-gray-darkest;
+    border: 3px dashed var(--of-color-field-border);
     text-align: center;
 
     &.fileDragOver {
-      border-color: $color-primary;
+      border-color: var(--of-color-primary);
     }
 
     & + .file {

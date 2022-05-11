@@ -12,6 +12,7 @@ $checkbox-label-padding-v: calc((#{$grid-row-height} - #{1em * strip_unit($typog
 $checkbox-label-padding-h: $grid-margin-2!default;
 $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2})!default;
 
+// TODO: this styling causes a lot of issues with the absolute positioning -> refactor!
 
 .#{prefix(checkbox)} {
   @include body;
@@ -54,11 +55,11 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   }
 
   & &__checkmark:before {
-    @include border(all, $color: $color-gray-darkest);
+    @include border(all, $color: var(--of-color-field-border));
   }
 
   & :checked ~ &__checkmark:before {
-    @include color-primary(background-color);
+    background-color: var(--of-color-primary);
   }
 
   & [type=checkbox]:checked ~ &__checkmark:before {
@@ -93,7 +94,7 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   &__label:after {
     @include overlay;
     content: "";
-    background-color: $color-gray-lighter;
+    background-color: var(--of-checkbox-color-bg);
     z-index: -1;
   }
 
@@ -102,7 +103,7 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   }
 
   & :checked ~ &__label:after {
-    @include border(all, $color-primary, 1px);
+    @include border(all, var(--of-color-primary), 1px);
     @include color-background;
   }
 
