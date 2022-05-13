@@ -2,6 +2,14 @@
 Changelog
 =========
 
+1.0.3 (2022-05-16)
+==================
+
+Bugfix maintenance release
+
+* [#1539] Fixed file upload not deleting temporary file in the backend when the file is
+  removed again
+
 1.0.2 (2022-04-25)
 ==================
 
