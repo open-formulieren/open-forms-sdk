@@ -2,6 +2,57 @@
 Changelog
 =========
 
+1.1.0 Release Candidate (2022-05-16)
+====================================
+
+Feature release
+
+.. note:: Note that this version REQUIRES at least version 1.1.0 of the Open Forms API.
+
+Features
+--------
+
+* [#1404] Fields can now be required by default (without asterisk) and optional fields
+  receive a suffix indicating they are. This behaviour is opt-in and configurable in the
+  backend.
+* [#1418] The logout button is now also displayed for authenticated users where form
+  authentication is optional.
+* [#1313] Forms can now automatically initiate authentication on load.
+* [#1441] Logging out is now scoped to the form submission where the logout button is
+  clicked, other forms in other browser tabs are no longer affected.
+* [#1449] File uploads can now validate a maximum number of files.
+* [#1479] "not-applicable" form steps (as determined by logic) are no longer shown on
+  the summary page.
+* [#1452] Phone number fields can now be validated more strictly (opt-in).
+* [#1523] The login button icon no longer pretends to be a button and the link is now
+  clickable.
+* [#1541] The content component can now receive custom CSS classes, integrating better
+  with NL Design System. Supported are: info, success, warning, error.
+* [#1555] Display a loader while files are uploading.
+* [#1451] Visibility of form elements can in the summary page can now be configured. The
+  default behaviour (if unspecified) is to display visible fields. WYSIWYG content
+  labels are no longer displayed, unless explicitly configured.
+* [#1580] Show warning to accept privacy policy when users try to submit the form
+  without accepting it.
+
+Bugfixes
+--------
+
+This release also contains all the bugfixes from the ``1.0.x`` versions.
+
+Project maintenance
+-------------------
+
+* Build CI for the ``stable/`` prefixed branches
+* Ensure that for local dev we get CSRF tokens
+* Node 16 is now the minimum required version
+* Updated build toolchain to react-scripts 5.0.1 with webpack 5
+* [#1514] Refactor color variables to use CSS variables for NL Design System integration
+* Fixed our own usage of slash for math.div in the sass
+* Upgrade to font-awesome 6
+* Upgraded the sass version
+* Removed unused font assets
+
 1.0.3 (2022-05-16)
 ==================
 

@@ -1,6 +1,6 @@
 {
   "name": "open-forms-sdk",
-  "version": "1.0.3",
+  "version": "1.1.0-rc.0",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
