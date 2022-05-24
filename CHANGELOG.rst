@@ -2,6 +2,14 @@
 Changelog
 =========
 
+1.1.0 (2022-05-24)
+==================
+
+Feature release 1.1.0 of the SDK
+
+Nothing has changed since the release candidate, so please review those changes for
+a complete overview.
+
 1.1.0 Release Candidate (2022-05-16)
 ====================================
 
@@ -38,7 +46,7 @@ Features
 Bugfixes
 --------
 
-This release also contains all the bugfixes from the ``1.0.x`` versions.
+This release also contains all the bugfixes up until the ``1.0.3`` version.
 
 Project maintenance
 -------------------
