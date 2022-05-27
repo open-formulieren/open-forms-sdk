@@ -9,6 +9,8 @@
 @import "formiojs/dist/formio.form.css";
 
 @import "./scss/vars";
+@import "@open-formulieren/design-tokens/dist/root.css";  // output the design tokens in :root
+
 @import "./scss/settings";
 
 @import "./scss/components/typography";

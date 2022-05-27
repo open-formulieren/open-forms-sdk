@@ -11,27 +11,15 @@
  */
 
 :root {
-  /**
-   * Colors
-   */
-  --of-color-primary: #01689B;
-  --of-color-secondary: #cee0ea;
+  // /**
+  //  * Colors
+  //  */
 
-  // info/log levels
-  --of-color-info: #007bc7;
-  --of-color-success: green;
-  --of-color-warning: #E17000;
-  --of-color-danger: #D52B1E;
-
-  // layout
-  --of-color-bg: #ffffff;
-  --of-color-fg: #000000;
-  --of-color-border: #767676;  // WCAG contrast ratio 4.5 / 1 against white background
+  // // layout
   --of-layout-color-bg: #E6E6E6;
 
   // typography
   --of-color-fg-heading: var(--of-color-fg);
-  --of-color-link: var(--of-color-primary);
   --of-color-link-hover: var(--of-color-link);
   --of-color-fg-muted: #767676;
 
@@ -53,9 +41,6 @@
    */
 
   // plain button
-  --of-button-fg: var(--of-color-fg);
-  --of-button-bg: var(--of-color-bg);
-  --of-button-color-border: var(--of-color-border);
   --of-button-bg-hover: #cccccc;
   --of-button-color-border-hover: #5e5e5e;
   --of-button-fg-active: var(--of-color-fg);

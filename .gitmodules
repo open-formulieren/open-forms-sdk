@@ -1,0 +1,3 @@
+[submodule "design-tokens"]
+	path = design-tokens
+	url = git@github.com:open-formulieren/design-tokens

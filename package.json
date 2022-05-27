@@ -82,15 +82,19 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "yarn build:design-tokens && node scripts/start.js",
+    "build": "yarn build:design-tokens && node scripts/build.js",
     "test": "node scripts/test.js",
     "clean": "rm -rf dist/*",
     "makemessages-en": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages-nl": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/nl.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages": "yarn run makemessages-nl && yarn run makemessages-en",
-    "compilemessages": "formatjs compile-folder --ast src/i18n/messages src/i18n/compiled"
+    "compilemessages": "formatjs compile-folder --ast src/i18n/messages src/i18n/compiled",
+    "build:design-tokens": "yarn workspace @open-formulieren/design-tokens run build"
   },
+  "workspaces": [
+    "design-tokens"
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",

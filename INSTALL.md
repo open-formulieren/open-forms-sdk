@@ -15,11 +15,17 @@ Useful links:
 Ensure you have the backend project running and add `CORS_ALLOWED_ORIGINS=http://localhost:3000` to your `.env` file
 otherwise you will get CORS errors.
 
-Clone this repository, and create/edit `.env` for your needs:
+Clone this repository, and create/edit `.env.local` for your needs:
 
 ```
 REACT_APP_BASE_API_URL=http://localhost:8000/api/v1/
 REACT_APP_FORM_ID=93c09209-5fb9-4105-b6bb-9d9f0aa6782c
+```
+
+Initialize or update the submodules:
+
+```bash
+git submodule update --init
 ```
 
 You get the form ID from the django admin.
@@ -37,6 +43,20 @@ package later.
 ## Dependencies
 
 Ensure you have [Yarn](https://yarnpkg.com/) on your system.
+
+## Working with design tokens
+
+The Open Forms design tokens are tracked in a git submodule `design-tokens`. If you are
+actively modifying design tokens, it's advised to run the watcher to build for changes
+in a separate shell (or tab):
+
+```bash
+cd design-tokens
+npm start
+```
+
+Build artifacts are emitted into the `dist/` folder, which is watched by the SDK
+build chain, so changes in `design-tokens` result in recompiled SDK builds.
 
 ## Available Scripts
 
