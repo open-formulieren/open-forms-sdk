@@ -12,10 +12,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ARG SDK_VERSION=latest
 
-# set up the design token workspace (temporarily, this will become a proper npm
-# package later)
-COPY design-tokens ./design-tokens
-
 # install dependencies
 COPY yarn.lock package.json ./
 RUN yarn install

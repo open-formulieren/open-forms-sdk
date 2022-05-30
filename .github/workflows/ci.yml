@@ -21,9 +21,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Checkout submodules
-        run: git submodule update --init
-      - uses: actions/setup-node@v2-beta
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
 
@@ -48,8 +46,6 @@ jobs:
     steps:
       # This will include the updated OAS (if updated) from the update-oas job.
       - uses: actions/checkout@v2
-      - name: Checkout submodules
-        run: git submodule update --init
 
       - name: Set tag
         id: vars

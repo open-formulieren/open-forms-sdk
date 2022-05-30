@@ -6,6 +6,7 @@
     "@babel/core": "^7.16.0",
     "@formio/protected-eval": "^1.2.1",
     "@fortawesome/fontawesome-free": "^6.1.1",
+    "@open-formulieren/design-tokens": "^0.1.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@sentry/react": "^6.13.2",
     "@sentry/tracing": "^6.13.2",
@@ -83,7 +84,7 @@
   },
   "scripts": {
     "start": "yarn build:design-tokens && node scripts/start.js",
-    "build": "yarn build:design-tokens && node scripts/build.js",
+    "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "clean": "rm -rf dist/*",
     "makemessages-en": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
