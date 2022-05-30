@@ -77,7 +77,7 @@ we don't have strict BEM naming here.
   .fileSelector {
     position: relative;
     @include margin($grid-container-margin-small, $properties: padding);
-    border: 3px dashed var(--of-color-field-border);
+    border: 3px dashed var(--of-field-border-color);
     text-align: center;
 
     &.fileDragOver {

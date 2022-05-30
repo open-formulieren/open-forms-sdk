@@ -55,7 +55,7 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   }
 
   & &__checkmark:before {
-    @include border(all, $color: var(--of-color-field-border));
+    @include border(all, $color: var(--of-field-border-color));
   }
 
   & :checked ~ &__checkmark:before {
@@ -94,7 +94,7 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   &__label:after {
     @include overlay;
     content: "";
-    background-color: var(--of-checkbox-color-bg);
+    background-color: var(--of-checkbox-bg);
     z-index: -1;
   }
 

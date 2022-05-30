@@ -7,7 +7,7 @@
 
   @include element('representation') {
     @include border(all, $size: 1px);
-    background-color: var(--of-cosign-color-bg);
+    background-color: var(--of-cosign-bg);
     padding: $grid-margin-2;
   }
 
