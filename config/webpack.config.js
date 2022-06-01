@@ -345,6 +345,7 @@ module.exports = function (webpackEnv) {
       fallback: {
         "vm": false,
       },
+      symlinks: false, // changed from the default to make workspaces work properly
     },
     module: {
       strictExportPresence: true,
