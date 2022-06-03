@@ -1,130 +1,13 @@
 @use "sass:math";
 
 @import '~microscope-sass/lib/grid';
-@import '~microscope-sass/lib/typography';
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
-$button-line-height: $typography-line-height-text-big * $typography-font-size-text-big;
-$button-line-height-px: math.div($button-line-height, ($button-line-height * 0 + 1)) * 16px;
-$button-padding-v: math.div(($grid-row-height - $button-line-height-px), 2) - $typography-size-border;
-$button-padding-h: $grid-margin-2;
-
-@mixin button-theme(
-  $name,
-  $color,
-  $color-background,
-  $color-border: var(--of-color-bg),
-  $decorate-on-hover: false,
-  $color-background-hover: null,
-  $color-border-hover: null,
-  $color-active: null,
-  $color-background-active: null,
-  $color-border-active: null,
-) {
-  // build the selector either as just the parent or the parent with modifier,
-  // based on the theme name
-  $sel: #{&};
-  @if $name != '' {
-    $sel: "#{&}--#{$name}";
-  }
-  // now output the actual CSS rules
-  @at-root #{$sel} {
-    color: $color;
-    background-color: $color-background;
-    border-right-color: $color-border;
-    border-bottom-color: $color-border;
-
-    &:not([aria-disabled="true"]):hover {
-      @if $color-background-hover {
-        background-color: $color-background-hover;
-      }
-
-      @if $color-border-hover {
-        border-right-color: $color-border-hover;
-        border-bottom-color: $color-border-hover;
-      }
-
-      @if $decorate-on-hover {
-        @include anchor(true);
-      }
-    }
-
-    &:active {
-      @if $color-active {
-        color: $color-active;
-      }
-      @if $color-background-active {
-        background-color: $color-background-active;
-      }
-
-      @if $color-border-active {
-        border-top-color: $color-border-active;
-        border-right-color: transparent;
-        border-left-color: $color-border-active;
-        border-bottom-color: transparent;
-      }
-    }
-  }
-}
-
 .#{prefix(button)} {
-  @include body;
-  @include body--big;
-  @include border(all, $color: transparent, $size: 2px);
-  @include button-theme(
-    '',
-    $typography-color-text,
-    $color-background,
-    $color-border,
-    $color-background-hover: var(--of-button-hover-bg),
-    $color-border-hover: var(--of-button-hover-color-border),
-    $color-active: var(--of-button-active-fg),
-    $color-background-active: var(--of-button-active-bg),
-    $color-border-active: var(--of-button-active-color-border),
-  );
-  @include button-theme(
-    'primary',
-    var(--of-button-primary-fg),
-    var(--of-button-primary-bg),
-    var(--of-button-primary-color-border),
-    $color-background-hover: var(--of-button-primary-hover-bg),
-    $color-border-hover: var(--of-button-primary-hover-color-border),
-    $color-active: var(--of-button-primary-active-fg),
-    $color-background-active: var(--of-button-primary-active-bg),
-    $color-border-active: var(--of-button-primary-active-color-border),
-  );
-  @include button-theme(
-    'anchor',
-    var(--of-button-anchor-fg),
-    var(--of-button-anchor-bg),
-    var(--of-button-anchor-color-border),
-    true,
-    $color-background-hover: var(--of-button-anchor-hover-bg),
-    $color-border-hover: var(--of-button-anchor-hover-color-border),
-    $color-active: var(--of-button-anchor-active-fg),
-    $color-background-active: var(--of-button-anchor-active-bg),
-    $color-border-active: var(--of-button-anchor-active-color-border),
-  );
-  @include button-theme(
-    'danger',
-    var(--of-button-danger-fg),
-    var(--of-button-danger-bg),
-    var(--of-button-danger-color-border),
-    $color-background-hover: var(--of-button-danger-hover-bg),
-    $color-border-hover: var(--of-button-danger-hover-color-border),
-    $color-active: var(--of-button-danger-active-fg),
-    $color-background-active: var(--of-button-danger-active-bg),
-    $color-border-active: var(--of-button-danger-active-color-border),
-  );
+  @extend .denhaag-button;
 
-  appearance: none;
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  padding: $button-padding-v $button-padding-h;
-  text-decoration: none;
   float: left;
 
   @media print {
@@ -138,18 +21,17 @@ $button-padding-h: $grid-margin-2;
   // styling for disabled button
   &[aria-disabled="true"] {
     cursor: not-allowed;
-    filter: saturate(0);
     opacity: 0.5;
+    filter: saturate(0);
   }
 
   @include modifier('image') {
     @include rows(1);
-    border: none;
     padding: 0;
     cursor: default;
+    border: none;
   }
 
-  .fa-icon:not(:last-child) {
-    margin-right: $button-padding-h;
+  @include modifier('primary') {
   }
 }
