@@ -28,6 +28,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import { useImmerReducer } from 'use-immer';
 import useAsync from 'react-use/esm/useAsync';
 
@@ -54,8 +55,13 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse;
 };
 
-const doLogicCheck = async (stepUrl, data, signal) => {
+const doLogicCheck = async (stepUrl, data, invalidKeys=[], signal) => {
   const url = `${stepUrl}/_check_logic`;
+  // filter out the invalid keys so we only send valid (client-side) input data to the
+  // backend to evaluate logic.
+  if (invalidKeys.length) {
+    data = omit(data, invalidKeys);
+  }
   const stepDetailData = await post(url, {data}, signal);
   if (!stepDetailData.ok) {
     throw new Error('Invalid response'); // TODO -> proper error & use ErrorBoundary
@@ -254,16 +260,12 @@ const FormStep = ({
     // data if not specified explicitly.
     const isValid = formInstance.isValid();
 
-    // form does not validate client-side, don't bother with checking server-side yet.
-    if (!isValid) {
-      dispatch({
-        type: 'LOGIC_CHECK_INTERRUPTED',
-        payload: {
-          canSubmit: false
-        }
-      });
-      return;
-    }
+    // when the form does not validate client-side: instead of skipping the backend check,
+    // we record the data keys that are invalid and exclude those from being sent to the
+    // server. It's possible that an invalid form state is resolved by logic by changing
+    // something in an earlier step, but that requires the backend call to go through.
+    // See #1526 for an example of such a case.
+    const invalidKeys = !isValid ? formInstance.errors.map(err => err.component.key) : [];
 
     // now the actual checking *can* be aborted, which results in an exception being thrown.
     try {
@@ -271,7 +273,7 @@ const FormStep = ({
       checkAbortedLogicCheck(controller.signal);
       // update our view of the data, which may have been changed by now because of user input
       data = getCurrentFormData();
-      const {submission, step} = await doLogicCheck(submissionStep.url, data, controller.signal);
+      const {submission, step} = await doLogicCheck(submissionStep.url, data, invalidKeys, controller.signal);
       // now process the result of the logic check.
 
       // first, check if we still have to process the results or not
@@ -459,14 +461,6 @@ const FormStep = ({
     if(logicCheckTimeout.current) {
       localCanSubmit = logicCheckTimeout.current.canSubmit;
       clearTimeout(logicCheckTimeout.current.timeoutId);
-
-      const formioFormValid = formRef.current?.formio?.isValid();
-      dispatch({
-        type: 'LOGIC_CHECK_INTERRUPTED',
-        payload: {
-          canSubmit: Boolean(formioFormValid && localCanSubmit),
-        },
-      });
     }
 
     // schedule a new logic check to run in LOGIC_CHECK_DEBOUNCE ms
