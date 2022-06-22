@@ -43,6 +43,7 @@ import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {findPreviousApplicableStep, isLastStep} from 'components/utils';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import {ConfigContext, FormioTranslations} from 'Context';
+import { ValidationError } from 'errors';
 import {PREFIX}  from 'formio/constants';
 import Types from 'types';
 
@@ -52,7 +53,45 @@ const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
+  if (!stepDataResponse.ok) {
+    if (stepDataResponse.status === 400) {
+      throw new ValidationError(
+        'Backend did not validate the data',
+        stepDataResponse.data,
+      );
+    } else {
+      throw new Error(`Backend responded with HTTP ${stepDataResponse.status}`);
+    }
+  }
   return stepDataResponse;
+};
+
+const getCustomValidationHook = (stepUrl) => {
+  const customValidation = async (data, next) => {
+    const PREFIX = 'data';
+
+    const validateUrl = `${stepUrl}/validate`;
+    const validateResponse = await post(validateUrl, data);
+
+    // process the errors
+    if (validateResponse.status === 400) {
+      const invalidParams = validateResponse.data.invalidParams.filter(
+        param => param.name.startsWith(`${PREFIX}.`)
+      );
+      const errors = invalidParams.map(({name, code, reason}) => ({
+        path: name.replace(`${PREFIX}.`, '', 1),
+        message: reason,
+        code: code,
+      }));
+      next(errors);
+      return;
+    }
+    if (!validateResponse.ok) {
+      console.warn(`Unexpected HTTP ${validateResponse.status}`)
+    }
+    next();
+  };
+  return customValidation;
 };
 
 const doLogicCheck = async (stepUrl, data, invalidKeys=[], signal) => {
@@ -503,7 +542,10 @@ const FormStep = ({
                     ofPrefix: `${PREFIX}-`,
                     requiredFieldsWithAsterisk: form.requiredFieldsWithAsterisk,
                   },
-                  hooks,
+                  hooks: {
+                    ...hooks,
+                    customValidation: getCustomValidationHook(submissionStep.url),
+                  },
                   // custom options
                   intl,
                   ofContext: {
