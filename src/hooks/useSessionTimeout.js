@@ -54,7 +54,7 @@ const useSessionTimeout = (onTimeout) => {
     setExpiryDate(null);
   }
 
-  return [expired, reset];
+  return [expired, expiryDate, reset];
 };
 
 export default useSessionTimeout;

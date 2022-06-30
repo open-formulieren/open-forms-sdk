@@ -20,6 +20,14 @@
     }
   }
 
+  @include modifier('warning') {
+    background-color: #fff3cd;
+
+    .fa-icon {
+      @include color-warning;
+    }
+  }
+
   @include modifier('with-margin') {
     margin: 1rem 0;
   }
