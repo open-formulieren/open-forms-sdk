@@ -2,7 +2,9 @@
 
 # developers
 .vscode/
+.idea/
 /env/
+/venv/
 
 # dependencies
 /node_modules
