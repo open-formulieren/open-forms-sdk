@@ -17,6 +17,11 @@ const ANALYTICS_PROVIDERS = {
   // from: https://developer.matomo.org/guides/spa-tracking
   // alternatively: https://www.npmjs.com/package/@datapunt/matomo-tracker-react (from Amsterdam)
   matomoOrPiwik: async (location, previousLocation) => {
+    /* Matomo, Piwik and Piwik PRO are all supported
+    Matomo: https://matomo.org/docs/guides/spa-tracking/
+    Piwik: https://piwik.org/docs/tracking-javascript-guide/
+    Piwik PRO: https://developers.piwik.pro/en/latest/data_collection/web/guides.html
+     */
     if (!window._paq) return;
     window._paq.push(['setCustomUrl', location.pathname]);
     window._paq.push(['setDocumentTitle', document.title]);
