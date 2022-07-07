@@ -474,6 +474,18 @@ const FormStep = ({
         {noValidate: true},
       );
     }
+
+    // Monkeypatch checkData
+    // note: hopefully there is a better way to do this
+    // TODO: check deeper into checkComponentValidity, it may be clearing out the errors
+    // TODO: options.readOnly attribute missing?
+    for (let component of formInstance.components) {
+      const func = component.checkData;
+      component.checkData = function checkData(data, flags, row) {
+        if (this.error) return;
+        func.apply(component, [data, flags, row]);
+      }
+    }
   };
 
   // See 'change' event https://help.form.io/developers/form-renderer#form-events
@@ -536,6 +548,7 @@ const FormStep = ({
                 options={{
                   noAlerts: true,
                   baseUrl: config.baseUrl,
+                  readOnly: false,
                   language: formioTranslations.language,
                   i18n: formioTranslations.i18n,
                   evalContext: {
