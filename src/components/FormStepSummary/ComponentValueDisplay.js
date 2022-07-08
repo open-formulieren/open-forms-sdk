@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {
   FormattedDate,
@@ -14,8 +15,11 @@ import CoSign from 'components/CoSign';
 import Image from 'components/Image';
 import List from 'components/List';
 import Map from 'components/Map';
-import {getFormattedDateString, getFormattedTimeString} from 'utils';
+import {getBEMClassName, getFormattedDateString, getFormattedTimeString} from 'utils';
+import {getComponentLabel} from 'components/FormStepSummary/utils';
 import {humanFileSize} from './utils';
+import {TableCell, TableHead, TableRow} from "../Table";
+import {Utils as FormioUtils} from "formiojs";
 
 
 const EmptyDisplay = () => '';
@@ -49,6 +53,47 @@ const RadioDisplay = ({component, value}) => {
   }
   const obj = component.values.find(obj => obj.value === value);
   return obj ? obj.label : value;
+};
+
+
+const EditGridDisplay = ({component, value}) => {
+  const repeatingGroupConfig = component.components;
+  const className = getBEMClassName('summary-row', [component.type]);
+
+  const renderGroup = (componentKey, componentValue) => {
+    const childComponent = FormioUtils.getComponent(repeatingGroupConfig, componentKey, true);
+    const label = getComponentLabel(childComponent);
+    if (!label && !componentValue) return null;
+
+    let componentWithValue = _.cloneDeep(childComponent);
+    componentWithValue.value = componentValue;
+
+    return (
+      <TableRow className={className}>
+        <TableHead>{label}</TableHead>
+        <TableCell>
+          <ComponentValueDisplay component={componentWithValue} />
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  // Use component.value instead of value because value only contains the data for the first group
+  const repeatingGroups = component.value.map((childValues, index) => {
+    const group = Object.entries(childValues).map(([key, value]) => renderGroup(key, value))
+
+    return (
+      <TableRow className={className} key={index}>
+        <TableCell>
+          {group}
+        </TableCell>
+      </TableRow>
+    );
+  });
+
+  return (
+    <>{repeatingGroups}</>
+  );
 };
 
 
@@ -269,6 +314,7 @@ const TYPE_TO_COMPONENT = {
   map: MapDisplay,
   password: PasswordDisplay,
   coSign: CoSignDisplay,
+  editgrid: EditGridDisplay,
 };
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Utils as FormioUtils} from "formiojs";
 
 const iterComponentsWithData = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values
@@ -49,4 +50,21 @@ const humanFileSize = (size) => {
   return {size: newSize, unit};
 };
 
-export {iterComponentsWithData, getComponentLabel, humanFileSize};
+// Duplicate code from Open Forms Admin
+const isChildOfEditGrid = (component, configuration) => {
+  // Get all edit grids in the configuration
+  let editGrids = [];
+  FormioUtils.eachComponent(configuration.components, configComponent => {
+    if (configComponent.type === 'editgrid') editGrids.push(configComponent);
+  });
+
+  // Check if our component is in the editgrid
+  for (const editGrid of editGrids) {
+    const foundComponent = FormioUtils.getComponent(editGrid.components, component.key, true);
+    if (foundComponent) return true;
+  }
+
+  return false;
+};
+
+export {iterComponentsWithData, getComponentLabel, humanFileSize, isChildOfEditGrid};
