@@ -1,35 +1,44 @@
-<ul class="{{ctx.ofPrefix}}editgrid-listgroup list-group
-    {{ ctx.component.striped ? 'table-striped' : ''}}
-    {{ ctx.component.bordered ? 'table-bordered' : ''}}
-    {{ ctx.component.hover ? 'table-hover' : ''}}
-    {{ ctx.component.condensed ? 'table-sm' : ''}}
-    ">
-  {% ctx.rows.forEach(function(row, rowIndex) { %}
-  <li class="list-group-item" ref="{{ctx.ref.row}}">
-    {{row}}
-    {% if (ctx.openRows[rowIndex] && !ctx.readOnly) { %}
-    <div class="editgrid-actions">
-      <button class="btn btn-primary" ref="{{ctx.ref.saveRow}}">{{ctx.t(ctx.component.saveRow || 'Save', { _userInput: true })}}</button>
-      {% if (ctx.component.removeRow) { %}
-      <button class="btn btn-danger" ref="{{ctx.ref.cancelRow}}">{{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}</button>
-      {% } %}
-    </div>
-    {% } %}
-    <div class="has-error">
-      <div class="editgrid-row-error help-block">
-        {{ctx.errors[rowIndex]}}
+<div class="{{ctx.ofPrefix}}editgrid">
+  <div class="{{ctx.ofPrefix}}editgrid__label">{{ ctx.component.label }}</div>
+
+  <div class="{{ctx.ofPrefix}}editgrid__groups">
+    <ul>
+      {% ctx.rows.forEach(function(row, rowIndex) { %}
+      <div class="{{ctx.ofPrefix}}editgrid__group">
+        <li class="{{ctx.ofPrefix}}editgrid__list" ref="{{ctx.ref.row}}">
+          {{row}}
+
+          {% if (ctx.openRows[rowIndex] && !ctx.readOnly) { %}
+          <div class="{{ctx.ofPrefix}}editgrid__group-actions {{ctx.ofPrefix}}toolbar {{ctx.ofPrefix}}toolbar--reverse">
+              <ul class="{{ctx.ofPrefix}}toolbar__list">
+              <li class="{{ctx.ofPrefix}}toolbar__list-item">
+                <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--primary" ref="{{ctx.ref.saveRow}}">{{ctx.t(ctx.component.saveRow || 'Save', { _userInput: true })}}</button>
+              </li>
+              {% if (ctx.component.removeRow) { %}
+                  <li class="{{ctx.ofPrefix}}toolbar__list-item">
+              <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--danger" ref="{{ctx.ref.cancelRow}}">{{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}</button>
+                  </li>
+              {% } %}
+              </ul>
+          </div>
+          {% } %}
+
+          <div class="has-error">
+            <div class="editgrid-row-error help-block">
+              {{ctx.errors[rowIndex]}}
+            </div>
+          </div>
+        </li>
       </div>
-    </div>
-  </li>
-  {% }) %}
-  {% if (ctx.footer) { %}
-  <li class="list-group-item list-group-footer">
-    {{ctx.footer}}
-  </li>
+      {% }) %}
+    </ul>
+  </div>
+
+  {% if (!ctx.readOnly && ctx.hasAddButton) { %}
+  <div class="{{ctx.ofPrefix}}editgrid__add-button">
+    <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--primary" ref="{{ctx.ref.addRow}}">
+      <i class="{{ctx.iconClass('plus')}}"></i> {{ctx.t(ctx.component.addAnother || 'Add Another', { _userInput: true })}}
+    </button>
+  </div>
   {% } %}
-</ul>
-{% if (!ctx.readOnly && ctx.hasAddButton) { %}
-<button class="btn btn-primary" ref="{{ctx.ref.addRow}}">
-  <i class="{{ctx.iconClass('plus')}}"></i> {{ctx.t(ctx.component.addAnother || 'Add Another', { _userInput: true })}}
-</button>
-{% } %}
+</div>
