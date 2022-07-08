@@ -27,7 +27,7 @@ const pluginAPIValidator = (plugin) => {
     check(component, setting, value) {
       if (!value) return true;
 
-      const {baseUrl} = component.currentForm.options;
+      const {baseUrl} = component.currentForm?.options || component.options;
       const url = `${baseUrl}validation/plugins/${plugin}`;
       return (
         post(url, {value})

@@ -15,6 +15,7 @@ import { default as FileTemplate } from './file.ejs';
 import { default as MapTemplate } from './map.ejs';
 import { default as MultiValueRowTemplate } from './multiValueRow.ejs';
 import { default as MultiValueTableTemplate } from './multiValueTable.ejs';
+import { default as EditGridTemplate } from './editGrid.ejs';
 
 const OFLibrary = {
   component: {form: ComponentTemplate},
@@ -34,6 +35,7 @@ const OFLibrary = {
   map: {form: MapTemplate},
   multiValueRow: {form: MultiValueRowTemplate},
   multiValueTable: {form: MultiValueTableTemplate},
+  editgrid: {form: EditGridTemplate}
 };
 
 

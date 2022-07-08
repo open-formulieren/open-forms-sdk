@@ -30,6 +30,20 @@ class TextField extends Formio.Components.components.textfield {
     return super.checkComponentValidity(data, dirty, row, {...options, async: true});
   }
 
+  checkValidity(data, dirty, row, silentCheck) {
+    // Overwrites the Component checkValidity function, which does not wait for the promise to resolve since
+    // we set async=true in our checkComponentValidity (so the parent checkValidity can't know that it's going to be async)
+    data = data || this.rootValue;
+    row = row || this.data;
+
+    let isValid = true;
+    new Promise(
+      () => this.checkComponentValidity(data, dirty, row, { silentCheck }),
+    ).then(result => isValid = result);
+
+    return isValid;
+  }
+
   setLocationData(postcode, house_number, key) {
     get(`${this.options.baseUrl}location/get-street-name-and-city`, {postcode, house_number})
       .then(result => {
