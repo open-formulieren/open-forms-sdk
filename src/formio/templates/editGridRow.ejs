@@ -1,9 +1,8 @@
 <div class="{{ctx.ofPrefix}}editgrid__row">
-  {% ctx.util.eachComponent(ctx.components, function(component) { %}
-    {% if (!component.hasOwnProperty('tableView') || component.tableView) { %}
-    <div>{{component.label}}: {{ ctx.getView(component, ctx.row[component.key]) }}</div>
+    {% for (const key in ctx.flattenedComponents) { %}
+        <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
     {% } %}
-  {% }) %}
+
   {% if (!ctx.self.options.readOnly) { %}
     <div class="{{ctx.ofPrefix}}toolbar {{ctx.ofPrefix}}toolbar--reverse">
         <ul class="{{ctx.ofPrefix}}toolbar__list">

@@ -7,7 +7,7 @@
   @include body;
 
   ul {
-    padding-left: $grid-margin-4;
+    padding: 0;
   }
 
   &__label {
@@ -15,7 +15,14 @@
   }
 
   &__group {
-    width: 100%;
+    padding: $grid-margin-4;
+    border-style: solid;
+    border-width: thin;
+    border-color: $color-border;
+
+    &:not(:first-child) {
+      border-top-style: none;
+    }
   }
 
   &__list {
@@ -23,7 +30,7 @@
   }
 
   &__group-actions {
-    padding: $grid-margin-2 0;
+    padding-top: $grid-margin-2;
   }
 
   &__add-button {
