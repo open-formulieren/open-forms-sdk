@@ -79,7 +79,8 @@ const EditGridDisplay = ({component, value}) => {
   }
 
   // Use component.value instead of value because value only contains the data for the first group
-  const repeatingGroups = component.value.map((childValues, index) => {
+  const componentValues = component.value || [];
+  const repeatingGroups = componentValues.map((childValues, index) => {
     const group = Object.entries(childValues).map(([key, value]) => renderGroup(key, value))
 
     return (
