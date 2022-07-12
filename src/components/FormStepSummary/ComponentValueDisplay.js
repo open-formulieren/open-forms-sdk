@@ -8,6 +8,7 @@ import {
   FormattedNumber,
   useIntl
 } from 'react-intl';
+import {Utils as FormioUtils} from 'formiojs';
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
@@ -18,8 +19,7 @@ import Map from 'components/Map';
 import {getBEMClassName, getFormattedDateString, getFormattedTimeString} from 'utils';
 import {getComponentLabel} from 'components/FormStepSummary/utils';
 import {humanFileSize} from './utils';
-import {TableCell, TableHead, TableRow} from "../Table";
-import {Utils as FormioUtils} from "formiojs";
+import {TableCell, TableHead, TableRow} from '../Table';
 
 
 const EmptyDisplay = () => '';
@@ -81,7 +81,7 @@ const EditGridDisplay = ({component, value}) => {
   // Use component.value instead of value because value only contains the data for the first group
   const componentValues = component.value || [];
   const repeatingGroups = componentValues.map((childValues, index) => {
-    const group = Object.entries(childValues).map(([key, value]) => renderGroup(key, value))
+    const group = Object.entries(childValues).map(([key, value]) => renderGroup(key, value));
 
     return (
       <TableRow className={className} key={index}>

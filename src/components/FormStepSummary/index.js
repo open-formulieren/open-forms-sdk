@@ -64,7 +64,7 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           * title (string), submissionStep (object), data (object), configuration (object)
           * Note that the `components` must already be flattened and non-summary display
           * components removed.
-          * Any component within an editgrid component are rendered as part of the edit grid and
+          * Any component within an editgrid component is rendered as part of the editgrid and
           * should not be rendered independently
           */
           iterComponentsWithData(stepData.configuration.flattenedComponents, stepData.data).filter(

@@ -1,6 +1,7 @@
-@import '../mixins/prefix';
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
 
 
 .#{prefix(editgrid)} {

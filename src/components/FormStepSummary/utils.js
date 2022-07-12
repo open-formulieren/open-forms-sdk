@@ -1,5 +1,5 @@
 import React from 'react';
-import {Utils as FormioUtils} from "formiojs";
+import {Utils as FormioUtils} from 'formiojs';
 
 const iterComponentsWithData = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values

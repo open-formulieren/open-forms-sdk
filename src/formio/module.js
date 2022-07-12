@@ -20,7 +20,7 @@ import Map from './components/Map';
 import PasswordField from './components/Password';
 import LicensePlateField from './components/LicensePlateField';
 import CoSign from './components/CoSign';
-import EditGrid from "./components/EditGrid";
+import EditGrid from './components/EditGrid';
 
 const FormIOModule = {
   components: {
