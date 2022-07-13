@@ -60,7 +60,7 @@ const EditGridDisplay = ({component, value}) => {
   const repeatingGroupConfig = component.components;
   const className = getBEMClassName('summary-row', [component.type]);
 
-  const renderGroup = (componentKey, componentValue) => {
+  const renderItemInGroup = (componentKey, componentValue) => {
     const childComponent = FormioUtils.getComponent(repeatingGroupConfig, componentKey, true);
     const label = getComponentLabel(childComponent);
     if (!label && !componentValue) return null;
@@ -79,16 +79,10 @@ const EditGridDisplay = ({component, value}) => {
   }
 
   // Use component.value instead of value because value only contains the data for the first group
-  const componentValues = component.value || [];
-  const repeatingGroups = componentValues.map((childValues, index) => {
-    const group = Object.entries(childValues).map(([key, value]) => renderGroup(key, value));
-
+  const groupsValues = component.value || [];
+  const repeatingGroups = groupsValues.map((groupValues, index) => {
     return (
-      <TableRow className={className} key={index}>
-        <TableCell>
-          {group}
-        </TableCell>
-      </TableRow>
+      <>{Object.entries(groupValues).map(([itemKey, itemValue]) => renderItemInGroup(itemKey, itemValue))}<br/></>
     );
   });
 

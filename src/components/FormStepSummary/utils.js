@@ -20,7 +20,8 @@ const getComponentLabel = (component) => {
   const {label, type} = component;
 
   switch (type) {
-    case 'fieldset' : {
+    case 'fieldset' :
+    case 'editgrid' : {
       if (component.hideHeader) return '';
       return (<strong>{label}</strong>);
     }
