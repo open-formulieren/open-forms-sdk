@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
-import {FormattedMessage} from 'react-intl';
+import {useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
@@ -28,6 +28,7 @@ const Modal = ({
   children,
 }) => {
     usePreventScroll(isOpen);
+    const intl = useIntl();
     return (
         <ReactModal
           isOpen={isOpen}
@@ -40,10 +41,10 @@ const Modal = ({
               <FAIcon
                 icon="close"
                 extraClassName={getBEMClassName("react-modal__close")}
-                title={<FormattedMessage
-                  description="Modal close icon title"
-                  defaultMessage="Close"
-                />}
+                title={intl.formatMessage({
+                  description: 'Modal close icon title',
+                  defaultMessage: 'Close',
+                })}
                 onClick={closeModal}
               />
             </header>

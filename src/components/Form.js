@@ -141,7 +141,7 @@ const reducer = (draft, action) => {
     removeSubmissionId
   ] = useRecycleSubmission(form, state.submission, onSubmissionLoaded);
 
-  const [sessionExpired, resetSession] = useSessionTimeout(
+  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(
     () => {
       removeSubmissionId();
       dispatch({type: 'SESSION_EXPIRED'});
@@ -264,7 +264,7 @@ const reducer = (draft, action) => {
           </Route>
 
           <Route exact path="/overzicht">
-            <RequireSession expired={sessionExpired}>
+            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
               <RequireSubmission
                 submission={state.submission}
                 form={form}
@@ -293,7 +293,7 @@ const reducer = (draft, action) => {
           </Route>
 
           <Route path="/stap/:step" render={() => (
-            <RequireSession expired={sessionExpired}>
+            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
               <RequireSubmission
                 form={form}
                 submission={state.submission}

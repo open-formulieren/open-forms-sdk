@@ -8,15 +8,22 @@
   justify-content: flex-start;
 
   @include modifier('info') {
-    // @include color-info('background-color');
-    background-color: #d9ebf7;
+    background-color: var(--of-alert-info-bg);
   }
 
   @include modifier('error') {
-    background-color: #f8d7da; // from formio.form.css .formio-error
+    background-color: var(--of-alert-error-bg);
 
     .fa-icon {
-      @include color-danger;
+      color: var(--of-color-danger);
+    }
+  }
+
+  @include modifier('warning') {
+    background-color: var(--of-alert-warning-bg);
+
+    .fa-icon {
+      color: var(--of-color-warning);
     }
   }
 
