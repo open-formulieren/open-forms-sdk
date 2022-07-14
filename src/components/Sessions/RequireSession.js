@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
+import useTimeout from 'react-use/esm/useTimeout';
+import useTimeoutFn from 'react-use/esm/useTimeoutFn';
 
 import Anchor from 'components/Anchor';
 import Card from 'components/Card';
@@ -14,50 +16,63 @@ import {ConfigContext} from "../../Context";
 
 const WARN_SESSION_TIMEOUT_FACTOR = 0.9; // once 90% of the session expiry time has passed, show a warning
 
-const RelativeTimeToExpiry = ({numSeconds, raw = false}) => {
+const RelativeTimeToExpiry = ({numSeconds}) => {
   // more than 24 hours -> don't bother
   if (numSeconds >= 3600 * 24) return null;
-  const component = (
+  return (
     <FormattedRelativeTime value={numSeconds} numeric="auto" updateIntervalInSeconds={1} />
   );
-  if (raw) return component;
-  return <>&nbsp;({component})</>;
 };
 
-const untilWarningMilliseconds = (expiryDate) => {
-  /*
-  Calculate the time until the session expiry warning time should be displayed.
-   */
-  return (expiryDate - new Date()) * WARN_SESSION_TIMEOUT_FACTOR;
+RelativeTimeToExpiry.propTypes = {
+  numSeconds: PropTypes.number.isRequired,
+};
+
+const useTriggerWarning = (numSeconds) => {
+  let timeout;
+
+  const [showWarning, setShowWarning] = useState(false);
+
+  // no time available
+  if (numSeconds == null) {
+    timeout = 10 * 3600 * 1000; // 10 hours as a fallback
+  } else {
+    // re-render WARN_SESSION_TIMEOUT_FACTOR before the session expires to show a warning
+    timeout = WARN_SESSION_TIMEOUT_FACTOR * numSeconds * 1000;
+  }
+  const reset = useTimeoutFn(() => setShowWarning(true), timeout)[2];
+  return [
+    showWarning,
+    () => {
+      setShowWarning(false);
+      reset();
+    },
+  ];
 };
 
 const RequireSession = ({expired = false, expiryDate = null, children}) => {
   const {baseUrl} = useContext(ConfigContext);
-  const [secondsToExpiry, setSecondsToExpiry] = useState(0);
-  const [warningAccepted, setWarningAccepted] = useState(false);
-  const [warningVisible, setWarningVisible] = useState(false);
+  const [warningDismissed, setWarningDismissed] = useState(false);
 
+  // re-render when the session is expired to show the error message
+  const now = new Date();
+  const timeToExpiryInMS = expiryDate ? Math.max(expiryDate - now, 0) : 1000 * 3600 * 10; // 10 hour fallback in case there's no date
+  const [, cancelExpiryTimeout, resetExpiryTimeout] = useTimeout(timeToExpiryInMS);
+  const [warningTriggered, resetWarningTriggered] = useTriggerWarning(timeToExpiryInMS / 1000);
+
+  // reset if a new timeout date is received
   useEffect(() => {
-    /*
-    Show the warning if the session has expired.
-     */
-    if (expiryDate) {
-      const ms = untilWarningMilliseconds(expiryDate);
-      const timeout = setTimeout(() => {
-        setWarningVisible(true);
-      }, ms);
-      return () => clearTimeout(timeout);
+    if (!expiryDate) {
+      cancelExpiryTimeout();
+      return;
     }
-  }, [expiryDate]);
-
-  useEffect(() => {
-    /*
-    Count down to the session expiry time.
-     */
-    const interval = setInterval(() => {
-      setSecondsToExpiry(Math.floor((expiryDate - new Date()) / 1000));
-    }, 1000);
-    return () => clearInterval(interval);
+    resetExpiryTimeout();
+    resetWarningTriggered();
+    setWarningDismissed(false);
+    return () => {
+      cancelExpiryTimeout();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiryDate]);
 
   if (expired) {
@@ -77,11 +92,11 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
     );
   }
 
-  const onExtendClick = async () => {
-    setWarningAccepted(true);
-    await apiCall(`${baseUrl}ping`);
-  };
+  // if we don't have any expiry date information, we can't show anything -> abort early.
+  if (expiryDate == null) return children;
 
+  const showWarning = !warningDismissed && warningTriggered;
+  const secondsToExpiry = parseInt((expiryDate - now) / 1000);
   return (
     <>
       <Modal
@@ -90,9 +105,9 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
             description="Session expiry warning title (in modal)"
             defaultMessage="Your session will expire soon."
           />}
-        isOpen={warningVisible && !warningAccepted}
+        isOpen={showWarning}
         closeModal={() => {
-          setWarningAccepted(true);
+          setWarningDismissed(true);
         }}
       >
         <ErrorMessage modifiers={['warning']}>
@@ -100,12 +115,15 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
             description="Session expiry warning message (in modal)"
             defaultMessage="Your session is about to expire {delta}. Extend your session if you wish to continue."
             values={{
-              delta: <RelativeTimeToExpiry numSeconds={secondsToExpiry} raw />,
+              delta: <RelativeTimeToExpiry numSeconds={secondsToExpiry} />,
             }}/>
         </ErrorMessage>
         <Toolbar modifiers={['bottom', 'reverse']}>
           <ToolbarList>
-            <Button type="submit" variant="primary" onClick={onExtendClick}>
+            <Button type="submit" variant="primary" onClick={async (event) => {
+              event.preventDefault();
+              await apiCall(`${baseUrl}ping`);
+            }}>
               <FormattedMessage description="Extend session button (in modal)" defaultMessage="Extend" />
             </Button>
           </ToolbarList>
