@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {
   FormattedDate,
@@ -8,7 +7,6 @@ import {
   FormattedNumber,
   useIntl
 } from 'react-intl';
-import {Utils as FormioUtils} from 'formiojs';
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
@@ -16,10 +14,8 @@ import CoSign from 'components/CoSign';
 import Image from 'components/Image';
 import List from 'components/List';
 import Map from 'components/Map';
-import {getBEMClassName, getFormattedDateString, getFormattedTimeString} from 'utils';
-import {getComponentLabel} from 'components/FormStepSummary/utils';
+import {getFormattedDateString, getFormattedTimeString} from 'utils';
 import {humanFileSize} from './utils';
-import {TableCell, TableHead, TableRow} from '../Table';
 
 
 const EmptyDisplay = () => '';
@@ -53,42 +49,6 @@ const RadioDisplay = ({component, value}) => {
   }
   const obj = component.values.find(obj => obj.value === value);
   return obj ? obj.label : value;
-};
-
-
-const EditGridDisplay = ({component, value}) => {
-  const repeatingGroupConfig = component.components;
-  const className = getBEMClassName('summary-row', [component.type]);
-
-  const renderItemInGroup = (componentKey, componentValue) => {
-    const childComponent = FormioUtils.getComponent(repeatingGroupConfig, componentKey, true);
-    const label = getComponentLabel(childComponent);
-    if (!label && !componentValue) return null;
-
-    let componentWithValue = _.cloneDeep(childComponent);
-    componentWithValue.value = componentValue;
-
-    return (
-      <TableRow className={className}>
-        <TableHead>{label}</TableHead>
-        <TableCell>
-          <ComponentValueDisplay component={componentWithValue} />
-        </TableCell>
-      </TableRow>
-    );
-  }
-
-  // Use component.value instead of value because value only contains the data for the first group
-  const groupsValues = component.value || [];
-  const repeatingGroups = groupsValues.map((groupValues, index) => {
-    return (
-      <>{Object.entries(groupValues).map(([itemKey, itemValue]) => renderItemInGroup(itemKey, itemValue))}<br/></>
-    );
-  });
-
-  return (
-    <>{repeatingGroups}</>
-  );
 };
 
 
@@ -309,7 +269,6 @@ const TYPE_TO_COMPONENT = {
   map: MapDisplay,
   password: PasswordDisplay,
   coSign: CoSignDisplay,
-  editgrid: EditGridDisplay,
 };
 
 
