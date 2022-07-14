@@ -7414,9 +7414,9 @@ micromatch@^4.0.4:
     picomatch "^2.2.3"
 
 microscope-sass@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/microscope-sass/-/microscope-sass-1.0.4.tgz#8bcb6343704643ac4f33ef6381ec6ad5a929412a"
-  integrity sha512-0G0VnYcd+1XHnlIVOXeXRI2tYdcRULUijQvwaPCNj4rgGK6FwuNhgHmYvhwooFehOOQ37yQ2c+pQURQ+sHoH3A==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/microscope-sass/-/microscope-sass-1.1.0.tgz#12ae10a6438457f51d41925c775689864a322110"
+  integrity sha512-eM4lwsJJSWPGiLboRxI/nWj3g2QObPCmkdozu8or5SMWiTeVLVkkSnSEbM695VYgEfCez+HBDv0KicejLoseLQ==
 
 mime-db@1.52.0, "mime-db@>= 1.43.0 < 2":
   version "1.52.0"
