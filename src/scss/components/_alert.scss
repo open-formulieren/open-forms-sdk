@@ -16,7 +16,7 @@
     background-color: #f8d7da; // from formio.form.css .formio-error
 
     .fa-icon {
-      @include color-danger;
+      color: var(--of-color-danger);
     }
   }
 
@@ -24,7 +24,7 @@
     background-color: #fff3cd;
 
     .fa-icon {
-      @include color-warning;
+      color: var(--of-color-warning);
     }
   }
 
