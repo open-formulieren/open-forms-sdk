@@ -32,8 +32,10 @@ describe('TextField Component', () => {
     }).catch(done);
   });
 
-  test('TextField with address prefill refreshes city on invalid data', (done) => {
+  test('TextField (readonly) with address prefill refreshes city on invalid data', (done) => {
     let formJSON = _.cloneDeep(addressPrefillForm);
+    formJSON.components[2].disabled = true;
+    formJSON.components[3].disabled = true;
     apiModule.get.mockResolvedValue({});
 
     const element = document.createElement('div');
@@ -47,6 +49,27 @@ describe('TextField Component', () => {
 
       setTimeout(() => {
         expect(componentCity.getValue()).toEqual('');
+        done();
+      }, 300);
+
+    }).catch(done);
+  });
+
+  test('TextField (editable) with address prefill does not modify city if already filled', (done) => {
+    let formJSON = _.cloneDeep(addressPrefillForm);
+    apiModule.get.mockResolvedValue({});
+
+    const element = document.createElement('div');
+
+    Formio.createForm(element, formJSON).then(form => {
+      form.setPristine(false);
+      const componentCity = form.getComponent('city');
+      componentCity.setValue('Amsterdam');
+
+      componentCity.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+
+      setTimeout(() => {
+        expect(componentCity.getValue()).toEqual('Amsterdam');
         done();
       }, 300);
 
@@ -72,8 +95,10 @@ describe('TextField Component', () => {
     }).catch(done);
   });
 
-  test('TextField with address prefill refreshes street on invalid data', (done) => {
+  test('TextField (readonly) with address prefill refreshes street on invalid data', (done) => {
     let formJSON = _.cloneDeep(addressPrefillForm);
+    formJSON.components[2].disabled = true;
+    formJSON.components[3].disabled = true;
     apiModule.get.mockResolvedValue({});
 
     const element = document.createElement('div');
@@ -92,4 +117,26 @@ describe('TextField Component', () => {
 
     }).catch(done);
   });
+
+  test('TextField (editable) with address prefill (invalid data) does not modify street if already filled', (done) => {
+    let formJSON = _.cloneDeep(addressPrefillForm);
+    apiModule.get.mockResolvedValue({});
+
+    const element = document.createElement('div');
+
+    Formio.createForm(element, formJSON).then(form => {
+      form.setPristine(false);
+      const componentStreet = form.getComponent('streetName');
+      componentStreet.setValue('Beautiful Street');
+
+      componentStreet.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+
+      setTimeout(() => {
+        expect(componentStreet.getValue()).toEqual('Beautiful Street');
+        done();
+      }, 300);
+
+    }).catch(done);
+  });
+
 });
