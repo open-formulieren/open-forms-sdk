@@ -67,7 +67,14 @@ const SummaryEditGrid = ({ component }) => {
       </TableRow>
       {
         groupsValues.map((groupValues, index) => (
-          <RepeatingGroup configuration={repeatingGroupConfig} values={groupValues} key={index}/>
+          <>
+            <TableRow className={getBEMClassName('summary-row', ['editgrid-group'])}>
+              <TableHead><strong>{`${component.groupLabel} ${index+1}`}</strong></TableHead>
+              <TableCell />
+            </TableRow>
+            <RepeatingGroup configuration={repeatingGroupConfig} values={groupValues} key={index}/>
+          </>
+
         ))
       }
     </>
