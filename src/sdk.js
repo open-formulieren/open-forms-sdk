@@ -101,6 +101,7 @@ class OpenForm {
     this.formObject = formObject;
 
     // render the wrapping React component
+    // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
         <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
