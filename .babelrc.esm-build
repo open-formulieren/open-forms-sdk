@@ -1,0 +1,29 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false
+            }
+        ],
+        "@babel/react"
+    ],
+    "plugins": [
+        [
+          "formatjs",
+          {
+            "idInterpolationPattern": "[sha512:contenthash:base64:6]",
+            "ast": true
+          }
+        ],
+        [
+          "module-resolver",
+          {
+            "root": ["./src"],
+            "alias": {
+              "": "./src"
+            }
+          }
+        ]
+    ]
+}
