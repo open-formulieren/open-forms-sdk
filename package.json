@@ -5,7 +5,12 @@
   "main": "dist/open-forms-sdk.js",
   "exports": {
     ".": "./dist/open-forms-sdk.js",
-    "./esm/": "./dist/esm/"
+    "./components/*": "./dist/esm/components/*",
+    "./hooks/*": "./dist/esm/hooks/*",
+    "./types/*": "./dist/esm/types/*",
+    "./map/*": "./dist/esm/map/*",
+    "./sdk": "./dist/esm/sdk.js",
+    "./utils": "./dist/esm/utils.js"
   },
   "files": [
     "dist/",
