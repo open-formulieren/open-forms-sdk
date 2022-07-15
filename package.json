@@ -3,6 +3,15 @@
   "version": "1.1.0-rc.0",
   "private": true,
   "main": "dist/open-forms-sdk.js",
+  "exports": {
+    ".": "./dist/open-forms-sdk.js",
+    "./components/*": "./dist/esm/components/*",
+    "./hooks/*": "./dist/esm/hooks/*",
+    "./types/*": "./dist/esm/types/*",
+    "./map/*": "./dist/esm/map/*",
+    "./sdk": "./dist/esm/sdk.js",
+    "./utils": "./dist/esm/utils.js"
+  },
   "files": [
     "dist/",
     "src/",
