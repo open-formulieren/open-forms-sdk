@@ -5,6 +5,7 @@
   "main": "dist/open-forms-sdk.js",
   "exports": {
     ".": "./dist/open-forms-sdk.js",
+    "./styles.css": "./dist/open-forms-sdk.css",
     "./components/*": "./dist/esm/components/*",
     "./hooks/*": "./dist/esm/hooks/*",
     "./types/*": "./dist/esm/types/*",
@@ -50,7 +51,7 @@
   },
   "scripts": {
     "start": "yarn build:design-tokens && node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && yarn build:esm",
     "build:esm": "rm -rf dist/esm && NODE_ENV=production babel --no-babelrc --config-file ./.babelrc.esm-build --ignore 'src/**/*.spec.js','src/**/fixtures/**','src/setupTests.js','src/reportWebVitals.js' src --out-dir dist/esm",
     "test": "node scripts/test.js",
     "clean": "rm -rf dist/*",
