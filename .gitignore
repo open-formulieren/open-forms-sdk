@@ -17,6 +17,9 @@
 # production
 /build
 /dist
+/lib
+/esm
+*.tgz
 
 # misc
 .DS_Store
