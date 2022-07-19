@@ -91,7 +91,11 @@ jobs:
         run: |
           mv README.npm.md README.md
           yarn prepare-package
-          yarn publish --access public
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          yarn publish --access public --new-version=$VERSION
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
