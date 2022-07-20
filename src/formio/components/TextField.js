@@ -27,7 +27,11 @@ class TextField extends Formio.Components.components.textfield {
   }
 
   checkComponentValidity(data, dirty, row, options = {}){
-    return super.checkComponentValidity(data, dirty, row, {...options, async: true});
+    let updatedOptions = {...options};
+    if (this.component.validate.plugins && this.component.validate.plugins.length) {
+      updatedOptions.async = true;
+    }
+    return super.checkComponentValidity(data, dirty, row, updatedOptions);
   }
 
   setLocationData(postcode, house_number, key) {

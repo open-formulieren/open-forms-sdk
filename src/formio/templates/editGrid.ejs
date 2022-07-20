@@ -1,0 +1,43 @@
+<div class="{{ctx.ofPrefix}}editgrid">
+  <div class="{{ctx.ofPrefix}}editgrid__label">{{ ctx.component.label }}</div>
+
+  <div class="{{ctx.ofPrefix}}editgrid__groups">
+    <ul>
+      {% ctx.rows.forEach(function(row, rowIndex) { %}
+      <div class="{{ctx.ofPrefix}}editgrid__group">
+        <li class="{{ctx.ofPrefix}}editgrid__list" ref="{{ctx.ref.row}}">
+          {{row}}
+
+          {% if (ctx.openRows[rowIndex] && !ctx.readOnly) { %}
+          <div class="{{ctx.ofPrefix}}editgrid__group-actions {{ctx.ofPrefix}}toolbar {{ctx.ofPrefix}}toolbar--reverse">
+              <ul class="{{ctx.ofPrefix}}toolbar__list">
+              <li class="{{ctx.ofPrefix}}toolbar__list-item">
+                <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--primary" ref="{{ctx.ref.saveRow}}">{{ctx.t(ctx.component.saveRow || 'Save', { _userInput: true })}}</button>
+              </li>
+              {% if (ctx.component.removeRow) { %}
+                  <li class="{{ctx.ofPrefix}}toolbar__list-item">
+              <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--danger" ref="{{ctx.ref.cancelRow}}">{{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}</button>
+                  </li>
+              {% } %}
+              </ul>
+          </div>
+          {% } %}
+
+          <!-- Formio needs a div with class="has-error" with inside a div with class="editgrid-row-error" -->
+          <div class="{{ctx.ofPrefix}}editgrid__errors has-error">
+              <div class="editgrid-row-error">{{ctx.errors[rowIndex]}}</div>
+          </div>
+        </li>
+      </div>
+      {% }) %}
+    </ul>
+  </div>
+
+  {% if (!ctx.readOnly && ctx.hasAddButton) { %}
+  <div class="{{ctx.ofPrefix}}editgrid__add-button">
+    <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--primary" ref="{{ctx.ref.addRow}}">
+      <i class="{{ctx.iconClass('plus')}}"></i> {{ctx.t(ctx.component.addAnother || 'Add Another', { _userInput: true })}}
+    </button>
+  </div>
+  {% } %}
+</div>

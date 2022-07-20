@@ -1,0 +1,18 @@
+<div class="{{ctx.ofPrefix}}editgrid__row">
+    {% for (const key in ctx.flattenedComponents) { %}
+        <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
+    {% } %}
+
+  {% if (!ctx.self.options.readOnly) { %}
+    <div class="{{ctx.ofPrefix}}toolbar {{ctx.ofPrefix}}toolbar--reverse">
+        <ul class="{{ctx.ofPrefix}}toolbar__list">
+            <li class="{{ctx.ofPrefix}}toolbar__list-item">
+                <button class="{{ctx.ofPrefix}}button editRow"><i class="{{ ctx.iconClass('edit') }}"></i></button>
+            </li>
+            <li class="{{ctx.ofPrefix}}toolbar__list-item">
+                <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--danger removeRow"><i class="{{ ctx.iconClass('trash') }}"></i></button>
+            </li>
+        </ul>
+    </div>
+  {% } %}
+</div>

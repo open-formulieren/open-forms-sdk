@@ -7,7 +7,7 @@ $block: '.#{prefix('summary-row')}';
 
 #{$block} {
 
-  @include modifier('fieldset') {
+  &--fieldset, &--editgrid {
 
     &:not(:first-child) {
       td, th {
@@ -19,6 +19,12 @@ $block: '.#{prefix('summary-row')}';
       td, th {
         @include margin(0px, $properties: padding-top);
       }
+    }
+  }
+
+  @include modifier('last') {
+    td, th {
+      @include margin(true, $properties: padding-bottom);
     }
   }
 }

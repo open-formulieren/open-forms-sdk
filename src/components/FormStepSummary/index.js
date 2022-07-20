@@ -7,9 +7,10 @@ import Caption from 'components/Caption';
 import { Table, TableRow, TableHead, TableCell } from 'components/Table';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import {getBEMClassName} from 'utils';
-import {getComponentLabel, iterComponentsWithData} from 'components/FormStepSummary/utils';
+import {getComponentLabel, iterComponentsWithData, isChildOfEditGrid} from 'components/FormStepSummary/utils';
 
 import ComponentValueDisplay from './ComponentValueDisplay';
+import SummaryEditGrid from './SummaryEditGrid';
 
 
 const SummaryTableRow = ({ component }) => {
@@ -64,10 +65,15 @@ const FormStepSummary = ({stepData, editStepUrl, editStepText}) => {
           * title (string), submissionStep (object), data (object), configuration (object)
           * Note that the `components` must already be flattened and non-summary display
           * components removed.
+          * Any component within an editgrid component is rendered as part of the editgrid and
+          * should not be rendered independently
           */
-          iterComponentsWithData(stepData.configuration.flattenedComponents, stepData.data).map((component) => (
-            <SummaryTableRow component={component} key={`${component.key}-${component.id}`} />
-          ))
+          iterComponentsWithData(stepData.configuration.flattenedComponents, stepData.data).filter(
+            (component) => !isChildOfEditGrid(component, stepData.configuration)
+          ).map((component) => {
+            let SummaryComponent = component.type === 'editgrid' ? SummaryEditGrid : SummaryTableRow;
+            return <SummaryComponent component={component} key={`${component.key}-${component.id}`} />;
+          })
         }
       </Table>
 

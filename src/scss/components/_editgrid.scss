@@ -1,0 +1,42 @@
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+
+.#{prefix(editgrid)} {
+  @include body;
+
+  ul {
+    padding: 0;
+  }
+
+  &__label {
+    @include h3;
+  }
+
+  &__group {
+    padding: $grid-margin-4;
+    border-style: solid;
+    border-width: thin;
+    border-color: $color-border;
+
+    &:not(:first-child) {
+      border-top-style: none;
+    }
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__group-actions {
+    padding-top: $grid-margin-2;
+  }
+
+  &__add-button {
+    display: flex;
+    width: 100%;
+    padding: $grid-margin-2 0;
+  }
+}
