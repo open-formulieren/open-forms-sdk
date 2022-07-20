@@ -15,7 +15,7 @@ of the SDK without forking the repository.
 
 Open Forms is developed as a white-label application, including the SDK. While the
 UI components are fairly generic, there are more organization/theme-specific layouts
-possible, requiring significat markup changes.
+possible, requiring significant markup changes.
 
 Rather than exposing and maintaining complex options for UI-component
 customization, we decided to publish the SDK as a library so that (experienced)

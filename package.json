@@ -20,6 +20,11 @@
     "README.NL.rst",
     "LICENSE.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-formulieren/open-forms-sdk.git"
+  },
+  "license": "EUPL-1.2",
   "dependencies": {
     "@formio/protected-eval": "^1.2.1",
     "@fortawesome/fontawesome-free": "^6.1.1",
