@@ -4,8 +4,8 @@ import {Utils as FormioUtils} from 'formiojs';
 import _ from 'lodash';
 
 import {getComponentLabel} from './utils';
-import {getBEMClassName} from '../../utils';
-import {TableCell, TableHead, TableRow} from '../Table';
+import {getBEMClassName} from 'utils';
+import {TableCell, TableHead, TableRow} from 'components/Table';
 import ComponentValueDisplay from './ComponentValueDisplay';
 
 const ItemInGroup = ({component, value, isLast=false}) => {
