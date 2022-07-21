@@ -20,7 +20,7 @@ const updateSesionExpiry = (seconds) => {
   // TODO: we can schedule a message to be set if expiry is getting close
 };
 
-const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
+const apiCall = async (url, opts) => {
   const options = { ...fetchDefaults, ...opts };
   if (!options.headers) options.headers = {};
 
@@ -40,12 +40,6 @@ const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
   const sessionExpiry = response.headers.get(SessionExpiresInHeader);
   if (sessionExpiry) {
     updateSesionExpiry(parseInt(sessionExpiry), 10);
-  }
-
-  if (response.status === 403 && alertOnPermissionDenied) {
-    const data = await response.json();
-    alert(data.detail);
-    response.json = () => Promise.resolve(data);
   }
   return response;
 };
