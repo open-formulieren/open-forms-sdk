@@ -23,6 +23,12 @@
       "value": "Afspraak annuleren mislukt"
     }
   ],
+  "6GNK65": [
+    {
+      "type": 0,
+      "value": "U moet ingelogd zijn voor deze actie."
+    }
+  ],
   "6sTcEM": [
     {
       "type": 0,
@@ -73,6 +79,12 @@
     {
       "type": 0,
       "value": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar."
+    }
+  ],
+  "DK2ewv": [
+    {
+      "type": 0,
+      "value": "Inlogprobleem"
     }
   ],
   "DvlDIB": [
@@ -135,6 +147,18 @@
     {
       "type": 0,
       "value": "Uw e-mailadres"
+    }
+  ],
+  "KMs17v": [
+    {
+      "type": 0,
+      "value": "Er ging helaas iets fout!"
+    }
+  ],
+  "KvSkZT": [
+    {
+      "type": 0,
+      "value": "Oeps!"
     }
   ],
   "LEeGSv": [
@@ -203,16 +227,6 @@
     {
       "type": 0,
       "value": "nee"
-    }
-  ],
-  "STW5dH": [
-    {
-      "type": 0,
-      "value": "Uw sessie vervalt "
-    },
-    {
-      "type": 1,
-      "value": "delta"
     }
   ],
   "UWylpR": [
@@ -319,6 +333,12 @@
     {
       "type": 0,
       "value": "Uw betaling is ontvangen en verwerkt."
+    }
+  ],
+  "dFTtOX": [
+    {
+      "type": 0,
+      "value": "Terug naar begin"
     }
   ],
   "eO6Ysb": [

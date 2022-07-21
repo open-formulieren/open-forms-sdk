@@ -19,6 +19,11 @@
     "description": "Appointment cancellation error message",
     "originalDefault": "Appointment cancellation failed"
   },
+  "6GNK65": {
+    "defaultMessage": "There was an authentication and/or permission problem.",
+    "description": "Authentication error message",
+    "originalDefault": "There was an authentication and/or permission problem."
+  },
   "6sTcEM": {
     "defaultMessage": "Pay now",
     "description": "Start payment button",
@@ -58,6 +63,11 @@
     "defaultMessage": "This form is currently undergoing maintenance and can not be accessed at the moment.",
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
+  },
+  "DK2ewv": {
+    "defaultMessage": "Authentication problem",
+    "description": "'Permission denied' error title",
+    "originalDefault": "Authentication problem"
   },
   "DvlDIB": {
     "defaultMessage": "Are you sure that you want to logout?",
@@ -104,6 +114,16 @@
     "description": "Form save modal email field label",
     "originalDefault": "Your email address"
   },
+  "KMs17v": {
+    "defaultMessage": "Unfortunately something went wrong!",
+    "description": "Generic error message",
+    "originalDefault": "Unfortunately something went wrong!"
+  },
+  "KvSkZT": {
+    "defaultMessage": "Oops!",
+    "description": "Error boundary title",
+    "originalDefault": "Oops!"
+  },
   "LEeGSv": {
     "defaultMessage": "{isApplicable, select, false {{label} (n/a)} other {{label}} }",
     "description": "Step label in progress indicator",
@@ -118,6 +138,11 @@
     "defaultMessage": "Payment is required for this product",
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
+  },
+  "Qu8SM1": {
+    "defaultMessage": "Extend",
+    "description": "Extend session button (in modal)",
+    "originalDefault": "Extend"
   },
   "R5NUuU": {
     "defaultMessage": "Confirm",
@@ -138,11 +163,6 @@
     "defaultMessage": "no",
     "description": "'False' display",
     "originalDefault": "no"
-  },
-  "STW5dH": {
-    "defaultMessage": "Your session will expire {delta}",
-    "description": "Session expiry timer",
-    "originalDefault": "Your session will expire {delta}"
   },
   "UWylpR": {
     "defaultMessage": "This form is temporarily unavailable because of an outage with the {label} authentication service. Please try again later.",
@@ -204,6 +224,11 @@
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
+  "dFTtOX": {
+    "defaultMessage": "Back to form start",
+    "description": "return to form start link after 403",
+    "originalDefault": "Back to form start"
+  },
   "eO6Ysb": {
     "defaultMessage": "Your payment is currently processing.",
     "description": "payment processing status",
@@ -238,6 +263,16 @@
     "defaultMessage": "Your appointment has been cancelled",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
+  },
+  "mMYAWl": {
+    "defaultMessage": "Your session is about to expire {delta}. Extend your session if you wish to continue.",
+    "description": "Session expiry warning message (in modal)",
+    "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
+  },
+  "nwQjsz": {
+    "defaultMessage": "Your session will expire soon.",
+    "description": "Session expiry warning title (in modal)",
+    "originalDefault": "Your session will expire soon."
   },
   "oMvPQU": {
     "defaultMessage": "Your session has expired",

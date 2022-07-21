@@ -19,6 +19,11 @@
     "description": "Appointment cancellation error message",
     "originalDefault": "Appointment cancellation failed"
   },
+  "6GNK65": {
+    "defaultMessage": "U moet ingelogd zijn voor deze actie.",
+    "description": "Authentication error message",
+    "originalDefault": "There was an authentication and/or permission problem."
+  },
   "6sTcEM": {
     "defaultMessage": "Nu betalen",
     "description": "Start payment button",
@@ -58,6 +63,11 @@
     "defaultMessage": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar.",
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
+  },
+  "DK2ewv": {
+    "defaultMessage": "Inlogprobleem",
+    "description": "'Permission denied' error title",
+    "originalDefault": "Authentication problem"
   },
   "DvlDIB": {
     "defaultMessage": "Weet u zeker dat u wilt uitloggen?",
@@ -104,6 +114,16 @@
     "description": "Form save modal email field label",
     "originalDefault": "Your email address"
   },
+  "KMs17v": {
+    "defaultMessage": "Er ging helaas iets fout!",
+    "description": "Generic error message",
+    "originalDefault": "Unfortunately something went wrong!"
+  },
+  "KvSkZT": {
+    "defaultMessage": "Oeps!",
+    "description": "Error boundary title",
+    "originalDefault": "Oops!"
+  },
   "LEeGSv": {
     "defaultMessage": "{isApplicable, select, false {{label} (n.v.t.)} other {{label}} }",
     "description": "Step label in progress indicator",
@@ -138,11 +158,6 @@
     "defaultMessage": "nee",
     "description": "'False' display",
     "originalDefault": "no"
-  },
-  "STW5dH": {
-    "defaultMessage": "Uw sessie vervalt {delta}",
-    "description": "Session expiry timer",
-    "originalDefault": "Your session will expire {delta}"
   },
   "UWylpR": {
     "defaultMessage": "Dit formulier is tijdelijk niet beschikbaar wegens een storing bij de {label} authenticatieservice. Gelieve later opnieuw te proberen.",
@@ -203,6 +218,11 @@
     "defaultMessage": "Uw betaling is ontvangen en verwerkt.",
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
+  },
+  "dFTtOX": {
+    "defaultMessage": "Terug naar begin",
+    "description": "return to form start link after 403",
+    "originalDefault": "Back to form start"
   },
   "eO6Ysb": {
     "defaultMessage": "Uw betaling wordt momenteel verwerkt.",
