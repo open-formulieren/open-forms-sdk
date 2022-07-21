@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -56,6 +56,7 @@ const FormStart = ({ form, onFormStart }) => {
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
+  const [error, setError] = useState(null);
   const hasAuthErrors = !!outagePluginId || !!authErrors;
 
   const onFormStartCalledRef = useRef(false);
@@ -70,11 +71,24 @@ const FormStart = ({ form, onFormStart }) => {
       return;
     }
 
+    const startForm = async () => {
+      try {
+        await onFormStart();
+      } catch (e) {
+        setError(e);
+      }
+    }
+
     if (doStart && !hasAuthErrors) {
-      onFormStart();
+      startForm();
       onFormStartCalledRef.current = true;
     }
   }, [doStart, hasAuthErrors, onFormStart]);
+
+  // let errors bubble up to the error boundaries
+  if (error) {
+    throw error;
+  }
 
   // do not re-render the login options while we're redirecting
   if (doStart && !hasAuthErrors) {

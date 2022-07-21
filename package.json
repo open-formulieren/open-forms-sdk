@@ -10,6 +10,7 @@
     "./hooks/*": "./dist/esm/hooks/*",
     "./types/*": "./dist/esm/types/*",
     "./map/*": "./dist/esm/map/*",
+    "./errors": "./dist/esm/errors.js",
     "./sdk": "./dist/esm/sdk.js",
     "./utils": "./dist/esm/utils.js"
   },

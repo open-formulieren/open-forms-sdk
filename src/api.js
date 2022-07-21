@@ -3,6 +3,14 @@ import {createGlobalstate} from 'state-pool';
 import {getCSPNonce} from 'csp';
 import {getCSRFToken} from 'csrf';
 
+import {
+  APIError,
+  ValidationError,
+  NotAuthenticated,
+  PermissionDenied,
+  NotFound,
+} from './errors';
+
 const fetchDefaults = {
   credentials: 'include', // required for Firefox 60, which is used in werkplekken
 };
@@ -20,7 +28,46 @@ const updateSesionExpiry = (seconds) => {
   // TODO: we can schedule a message to be set if expiry is getting close
 };
 
-const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
+const throwForStatus = async (response) => {
+  if (response.ok) return;
+
+  let responseData = null;
+  // Check if the response contains json data
+  const contentType = response.headers.get('content-type');
+  if (contentType && contentType.indexOf('application/json') !== -1) {
+    responseData = await response.json();
+  }
+
+  let ErrorClass = APIError;
+  let errorMessage = 'An API error occurred.';
+  switch (response.status) {
+    case 400: {
+      throw new ValidationError('Call did not validate on the backend', responseData || {});
+    }
+    case 401: {
+      ErrorClass = NotAuthenticated;
+      errorMessage = 'User not or no longer authenticated';
+      break;
+    }
+    case 403: {
+      ErrorClass = PermissionDenied;
+      errorMessage = 'User has insufficient permissions.';
+      break;
+    }
+    case 404: {
+      ErrorClass = NotFound;
+      errorMessage = 'Resource not found.';
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+
+  throw new ErrorClass(errorMessage, response.status, responseData.detail);
+};
+
+const apiCall = async (url, opts) => {
   const options = { ...fetchDefaults, ...opts };
   if (!options.headers) options.headers = {};
 
@@ -36,16 +83,11 @@ const apiCall = async (url, opts, alertOnPermissionDenied=false) => {
   }
 
   const response = await window.fetch(url, options);
+  await throwForStatus(response);
 
   const sessionExpiry = response.headers.get(SessionExpiresInHeader);
   if (sessionExpiry) {
     updateSesionExpiry(parseInt(sessionExpiry), 10);
-  }
-
-  if (response.status === 403 && alertOnPermissionDenied) {
-    const data = await response.json();
-    alert(data.detail);
-    response.json = () => Promise.resolve(data);
   }
   return response;
 };
