@@ -258,51 +258,57 @@ const reducer = (draft, action) => {
         <Switch>
 
           <Route exact path="/">
-            <ErrorBoundary>
+            <ErrorBoundary useCard>
               <FormStart form={form} onFormStart={onFormStart} />
             </ErrorBoundary>
           </Route>
 
           <Route exact path="/overzicht">
-            <RequireSession expired={sessionExpired}>
-              <RequireSubmission
-                submission={state.submission}
-                form={form}
-                processingError={state.processingError}
-                onConfirm={onSubmitForm}
-                onLogout={onLogout}
-                component={Summary}
-                onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
-              />
-            </RequireSession>
+            <ErrorBoundary useCard>
+              <RequireSession expired={sessionExpired}>
+                <RequireSubmission
+                  submission={state.submission}
+                  form={form}
+                  processingError={state.processingError}
+                  onConfirm={onSubmitForm}
+                  onLogout={onLogout}
+                  component={Summary}
+                  onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
+                />
+              </RequireSession>
+            </ErrorBoundary>
           </Route>
 
           <Route exact path="/bevestiging">
-            <RequireSubmission
-              submission={state.submittedSubmission}
-              statusUrl={state.processingStatusUrl}
-              onFailure={onProcessingFailure}
-              onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
-              component={SubmissionConfirmation} />
+            <ErrorBoundary useCard>
+              <RequireSubmission
+                submission={state.submittedSubmission}
+                statusUrl={state.processingStatusUrl}
+                onFailure={onProcessingFailure}
+                onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
+                component={SubmissionConfirmation} />
+              </ErrorBoundary>
           </Route>
 
           <Route exact path="/betaaloverzicht">
-            <ErrorBoundary>
+            <ErrorBoundary useCard>
               <PaymentOverview />
             </ErrorBoundary>
           </Route>
 
           <Route path="/stap/:step" render={() => (
-            <RequireSession expired={sessionExpired}>
-              <RequireSubmission
-                form={form}
-                submission={state.submission}
-                onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
-                onStepSubmitted={onStepSubmitted}
-                onLogout={onLogout}
-                component={FormStep}
-              />
-            </RequireSession>
+            <ErrorBoundary useCard>
+              <RequireSession expired={sessionExpired}>
+                <RequireSubmission
+                  form={form}
+                  submission={state.submission}
+                  onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
+                  onStepSubmitted={onStepSubmitted}
+                  onLogout={onLogout}
+                  component={FormStep}
+                />
+              </RequireSession>
+            </ErrorBoundary>
           )} />
 
         </Switch>

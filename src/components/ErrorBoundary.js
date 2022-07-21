@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ErrorMessage from 'components/ErrorMessage';
 
@@ -31,5 +32,9 @@ class ErrorBoundary extends React.Component {
     );
   }
 }
+
+ErrorBoundary.propTypes = {
+  useCard: PropTypes.bool,
+};
 
 export default ErrorBoundary;
