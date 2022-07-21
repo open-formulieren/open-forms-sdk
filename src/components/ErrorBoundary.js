@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
 
 import ErrorMessage from 'components/ErrorMessage';
+import Card from 'components/Card';
 
 
 const logError = (error, errorInfo) => {
@@ -27,8 +29,13 @@ class ErrorBoundary extends React.Component {
     if (!this.state.hasError) {
       return this.props.children;
     }
+
+    const Wrapper = this.props.useCard ? Card : React.Fragment;
+
     return (
-      <ErrorMessage>Er ging helaas iets fout!</ErrorMessage>
+      <Wrapper title={<FormattedMessage description="Error boundary title" defaultMessage="Oops!" />}>
+        <ErrorMessage>Er ging helaas iets fout!</ErrorMessage>
+      </Wrapper>
     );
   }
 }
