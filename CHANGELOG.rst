@@ -2,6 +2,28 @@
 Changelog
 =========
 
+1.1.1 (2022-07-25)
+==================
+
+Fixed a number of bugs
+
+* [#1526] Fixed a situation where users could get "stuck" on a form step - backend logic
+  checks are now always performed, using the input data that validates client-side.
+* [#1687] Fixed the SDK progressing to the next step even if the backend has validation
+  errors on step submission.
+* Fixed displaying (generic) backend errors in a user-friendly way
+
+1.0.4 (2022-07-25)
+==================
+
+Fixed a number of bugs
+
+* [#1526] Fixed a situation where users could get "stuck" on a form step - backend logic
+  checks are now always performed, using the input data that validates client-side.
+* [#1687] Fixed the SDK progressing to the next step even if the backend has validation
+  errors on step submission.
+* Fixed displaying (generic) backend errors in a user-friendly way
+
 1.1.0 (2022-05-24)
 ==================
 
