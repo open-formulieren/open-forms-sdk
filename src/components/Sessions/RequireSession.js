@@ -5,14 +5,14 @@ import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
 import useTimeout from 'react-use/esm/useTimeout';
 import useTimeoutFn from 'react-use/esm/useTimeoutFn';
 
+import {apiCall} from 'api';
 import Anchor from 'components/Anchor';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
-import Modal from "components/modals/Modal";
-import {Toolbar, ToolbarList} from "../Toolbar";
-import Button from "../Button";
-import {apiCall} from "../../api";
-import {ConfigContext} from "../../Context";
+import Modal from 'components/modals/Modal';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
+import Button from 'components/Button';
+import {ConfigContext} from 'Context';
 
 const WARN_SESSION_TIMEOUT_FACTOR = 0.9; // once 90% of the session expiry time has passed, show a warning
 
