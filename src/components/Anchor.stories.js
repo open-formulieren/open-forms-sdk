@@ -1,14 +1,58 @@
 import React from 'react';
 
-import Anchor from './Anchor';
+import Anchor, {ANCHOR_MODIFIERS} from './Anchor';
+
+console.log(Anchor.propTypes.modifiers);
 
 export default {
   title: 'SDK/Base components/Anchor',
   component: Anchor,
+  argTypes: {
+    modifiers: {
+      control: {
+        type: 'check',
+        options: ANCHOR_MODIFIERS,
+      }
+    },
+    children: {control: false},
+    onClick: {control: false},
+  },
+  parameters: {controls: {sort: 'requiredFirst'}},
 };
 
-export const Hover = () => <Anchor modifiers={['hover']}>Anchor with hover</Anchor>
-export const Active = () => <Anchor modifiers={['active']}>Active</Anchor>
-export const Muted = () => <Anchor modifiers={['muted']}>Muted</Anchor>
-export const Indent = () => <Anchor modifiers={['indent']}>Indent</Anchor>
-export const Span = () => <Anchor component="span">Span instead of 'a' tag</Anchor>
+const Template = ({label, ...args}) => <Anchor href="https://example.com" {...args}>{label}</Anchor>;
+
+export const Default = Template.bind({});
+Default.args = {
+  label: 'Anchor/link',
+};
+
+export const Hover = Template.bind({});
+Hover.args = {
+  modifiers: ['hover'],
+  label: 'Hover modifier',
+};
+
+export const Active = Template.bind({});
+Active.args = {
+  modifiers: ['active'],
+  label: 'Active modifier',
+};
+
+export const Muted = Template.bind({});
+Muted.args = {
+  modifiers: ['muted'],
+  label: 'Muted modifier',
+};
+
+export const Indent = Template.bind({});
+Indent.args = {
+  modifiers: ['indent'],
+  label: 'Indent modifier',
+};
+
+export const CustomComponent = Template.bind({});
+CustomComponent.args = {
+  component: 'span',
+  label: 'Replace the a tag with a component of choice',
+};

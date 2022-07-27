@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 
 import {getBEMClassName} from 'utils';
 
+export const ANCHOR_MODIFIERS = [
+  'hover',
+  'active',
+  'inherit',
+  'muted',
+  'indent',
+];
+
 
 function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
@@ -49,12 +57,13 @@ const Anchor = ({ children, href, modifiers=[], component: Component='a', ...ext
 
 Anchor.propTypes = {
     href: PropTypes.string,
-    modifiers: PropTypes.arrayOf(PropTypes.string),
+    modifiers: PropTypes.arrayOf(PropTypes.oneOf(ANCHOR_MODIFIERS)),
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
     ]),
     component: PropTypes.string,
+    onClick: PropTypes.func,
 };
 
 
