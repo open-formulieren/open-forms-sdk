@@ -9,8 +9,7 @@ function isModifiedEvent(event) {
 }
 
 
-const Anchor = ({ children, href, modifiers=[], component='a', ...extra }) => {
-  const Component = `${component}`;
+const Anchor = ({ children, href, modifiers=[], component: Component='a', ...extra }) => {
   const className = getBEMClassName('anchor', modifiers);
   const {navigate, ...rest} = extra; // workaround for https://github.com/ReactTraining/react-router/issues/6962
   const extraProps = {...rest};
