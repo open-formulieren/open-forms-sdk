@@ -7,9 +7,9 @@ export default {
   component: Anchor,
   argTypes: {
     modifiers: {
+      options: ANCHOR_MODIFIERS,
       control: {
         type: 'check',
-        options: ANCHOR_MODIFIERS,
       }
     },
     children: {control: false},
