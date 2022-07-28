@@ -68,7 +68,7 @@
     "compilemessages": "formatjs compile-folder --ast src/i18n/messages src/i18n/compiled",
     "build:design-tokens": "yarn workspace @open-formulieren/design-tokens run build",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build:storybook": "build-storybook"
   },
   "workspaces": [
     "design-tokens"

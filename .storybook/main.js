@@ -1,4 +1,6 @@
 const _ = require('lodash');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const configFactory = require('../config/webpack.config');
 
 // from ../config/webpack.config
@@ -42,13 +44,27 @@ module.exports = {
     const oneOfRule = craConfig.module.rules.find(rule => rule.oneOf != null);
     const sassRule = oneOfRule.oneOf.find(rule => String(rule.test) === String(sassRegex));
     const mergedRules = [sassRule, ...sbConfig.module.rules];
+
+    const mergedPlugins = [...sbConfig.plugins];
+    if (configType === "PRODUCTION") {
+      // from ../config/webpack.config
+      mergedPlugins.push(
+        new MiniCssExtractPlugin({
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          filename: '[name].css',
+        }),
+      );
+    }
+
     return {
       ...sbConfig,
       resolve: mergedResolve,
       module: {
         ...sbConfig.module,
         rules: mergedRules,
-      }
+      },
+      plugins: mergedPlugins,
     };
   }
 }
