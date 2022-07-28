@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 
 import {getBEMClassName} from 'utils';
 
+export const VARIANTS = [
+  '',
+  'primary',
+  'anchor',
+  'danger',
+  'image',
+];
+
 
 const Button = ({ type='', component: Component='button', variant='', onDisabledClick, children, ...extra }) => {
     const className = getBEMClassName('button', [variant]);
@@ -37,14 +45,9 @@ const Button = ({ type='', component: Component='button', variant='', onDisabled
 Button.propTypes = {
     component: PropTypes.string,
     type: PropTypes.string,
-    variant: PropTypes.string,
+    variant: PropTypes.oneOf(VARIANTS),
     onDisabledClick: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
 };
-
-// Example for disabled button:
-//
-// <Button type="submit" disabled={true} variant="primary">Disabled</Button>
-//
 
 export default Button;
