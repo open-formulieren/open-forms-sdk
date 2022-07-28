@@ -1,0 +1,91 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+
+import Anchor, {ANCHOR_MODIFIERS} from './Anchor';
+
+<Meta
+  title="SDK/Base components/Anchor"
+  component={Anchor}
+  argTypes={{
+    modifiers: {
+      options: ANCHOR_MODIFIERS,
+      control: {
+        type: 'check',
+      }
+    },
+    children: {control: false},
+    onClick: {control: false},
+  }}
+  parameters={{
+    controls: {sort: 'requiredFirst'}
+  }}
+/>
+
+# Anchors
+
+Anchors are used for clickable links. Optionally, you can hook into the `click` event
+with the `onClick` prop, which will fire in addition to the default click handler.
+
+This component can and should be used whenever using `react-router` `LinkAnchor`
+components.
+
+export const Template = ({label, ...args}) => <Anchor href="https://example.com" {...args}>{label}</Anchor>;
+
+## Anchor without modifiers
+
+The standard look of the anchor component without modifiers.
+
+<Canvas>
+  <Story name="Default" args={{label: 'Anchor/link'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Variants by modifier
+
+<Canvas>
+  <Story name="Hover" args={{
+    modifiers: ['hover'],
+    label: 'Hover',
+  }}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Active" args={{
+    modifiers: ['active'],
+    label: 'Active',
+  }}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Muted" args={{
+    modifiers: ['muted'],
+    label: 'Muted',
+  }}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Indent" args={{
+    modifiers: ['indent'],
+    label: 'Indent',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Replacing the HTML element
+
+You can pass an alternative `component` to render instead of the default `a` tag. This
+may be either:
+
+* built in HTML tags, passing a string (e.g. `span`)
+* custom React components (e.g. `component={MyComponent}`)
+
+<Canvas>
+  <Story name="CustomComponent" args={{
+    component: 'span',
+    label: 'span tag',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<Props of={Anchor} />
