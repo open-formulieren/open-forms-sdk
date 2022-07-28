@@ -2,8 +2,6 @@ import React from 'react';
 
 import Anchor, {ANCHOR_MODIFIERS} from './Anchor';
 
-console.log(Anchor.propTypes.modifiers);
-
 export default {
   title: 'SDK/Base components/Anchor',
   component: Anchor,

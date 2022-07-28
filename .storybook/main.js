@@ -1,6 +1,9 @@
 const _ = require('lodash');
 const configFactory = require('../config/webpack.config');
 
+// from ../config/webpack.config
+const sassRegex = /\.(scss|sass)$/;
+
 module.exports = {
   "stories": [
     "../src/**/*.stories.mdx",
@@ -35,9 +38,17 @@ module.exports = {
       symlinks: craConfig.resolve.symlinks,
     };
 
+    // add sass-loader etc.
+    const oneOfRule = craConfig.module.rules.find(rule => rule.oneOf != null);
+    const sassRule = oneOfRule.oneOf.find(rule => String(rule.test) === String(sassRegex));
+    const mergedRules = [sassRule, ...sbConfig.module.rules];
     return {
       ...sbConfig,
-      resolve: mergedResolve
+      resolve: mergedResolve,
+      module: {
+        ...sbConfig.module,
+        rules: mergedRules,
+      }
     };
   }
 }
