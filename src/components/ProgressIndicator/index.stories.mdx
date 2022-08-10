@@ -1,0 +1,142 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { MemoryRouter } from 'react-router-dom';
+
+import ProgressIndicator from '.';
+import {SUBMISSION_ALLOWED} from 'components/constants';
+
+<Meta
+  title="Pure React components/ProgressIndicator"
+  component={ProgressIndicator}
+  argTypes={{
+    submissionAllowed: {
+      options: Object.values(SUBMISSION_ALLOWED),
+      control: {type: 'radio'},
+    },
+    dynamicSubmissionAllowed: {
+      options: [null, ...Object.values(SUBMISSION_ALLOWED)],
+      control: {type: 'radio'},
+    },
+    submission: {table: {disable: true}},
+  }}
+/>
+
+# ProgressIndicator
+
+The progress indicator displays the progression through a particular form's steps.
+
+The current step is detected through the URL route match, based on the `slug` of an individual
+step. The complete collection of available form steps is loaded when the form is initially loaded,
+and passed as prop through the component.
+
+Note that a particular step may become not-applicable while filling out the form because of
+certain logic rules. The details of each step's status are available in `submission.steps[@index]`.
+
+export const Template = ({
+  steps,
+  completedSteps,
+  applicableSteps,
+  dynamicSubmissionAllowed,
+  ...args
+}) => {
+  const submission = {
+    id: 'ddfede40-99af-424c-97d1-d2c64e744a09',
+    url: 'https://backend/api/v1/submissions/ddfede40-99af-424c-97d1-d2c64e744a09',
+    form: 'https://backend/api/v1/forms/9d49e773',
+    submissionAllowed: dynamicSubmissionAllowed,
+    steps: steps.map((formStep, index) => ({
+      isApplicable: applicableSteps.includes(index),
+      completed: completedSteps.includes(index),
+    })),
+    payment: {
+      isRequired: false,
+      hasPaid: false,
+    },
+  };
+  let currentUrl = '/';
+  if (completedSteps.length) {
+    const index = completedSteps[completedSteps.length - 1];
+    currentUrl = `/stap/${steps[index].slug}`;
+  }
+  return (
+    <MemoryRouter initialEntries={[currentUrl]}>
+      <ProgressIndicator 
+        submission={submission}
+        steps={steps}
+        {...args} 
+      />
+    </MemoryRouter>
+  );
+};
+
+<Canvas>
+  <Story name="Active submission" args={{
+    // story args
+    steps: [
+      {
+        url: 'https://backend/api/v1/form/9d49e773/steps/d6cab0dd',
+        uuid: 'd6cab0dd',
+        index: 0,
+        slug: 'first-step',
+        formDefinition: 'Stap 1'
+      },
+      {
+        url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
+        uuid: '8e62d7cf',
+        index: 1,
+        slug: 'second-step',
+        formDefinition: 'Stap 2'
+      },
+    ],
+    completedSteps: [0],
+    applicableSteps: [0],
+    dynamicSubmissionAllowed: null,
+    
+    // component props
+    title: 'Storybookformulier',
+    submissionAllowed: 'yes',
+    completed: false,
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Form start
+
+On initial load, no submission is available yet.
+
+<Canvas>
+  <Story name="Initial form load" args={{
+    // story args
+    steps: [
+      {
+        url: 'https://backend/api/v1/form/9d49e773/steps/d6cab0dd',
+        uuid: 'd6cab0dd',
+        index: 0,
+        slug: 'first-step',
+        formDefinition: 'Stap 1'
+      },
+      {
+        url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
+        uuid: '8e62d7cf',
+        index: 1,
+        slug: 'second-step',
+        formDefinition: 'Stap 2'
+      },
+    ],
+    completedSteps: [],
+    applicableSteps: [0, 1],
+    dynamicSubmissionAllowed: null,
+    
+    // component props
+    title: 'Initial load',
+    submissionAllowed: 'yes',
+    completed: false,
+    submission: null,
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<Props of={ProgressIndicator} />
