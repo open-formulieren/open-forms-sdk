@@ -1,0 +1,101 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Introduction" />
+
+# Introduction
+
+You are looking at the technical documentation for the Open Forms SDK.
+
+We document the public API (React and Formio components) here for developers intending to
+override or modify their own SDK build.
+
+## Goals
+
+The end-goal of the SDK is that it can adapt itself to the theme of your organization through
+the use of "design tokens", following the principles of [NL Design System](https://www.nldesignsystem.nl/).
+
+For more complex layout changes that cannot be achieved purely through design tokens, we want
+to provide sufficient controls to replace our default components with your own custom components.
+
+## Useful links
+
+* [Main documentation](https://open-forms.readthedocs.io/)
+* [NL Design System](https://www.nldesignsystem.nl/)
+* [SDK npm package (WIP)](https://www.npmjs.com/package/@open-formulieren/sdk)
+* [design tokens package](https://www.npmjs.com/package/@open-formulieren/design-tokens)
+
+## SDK Development
+
+* We use the `yarn` package manager
+* The compatible NodeJS version is specified in `.nvmrc`
+
+To start the development server (note: you need to have the backend server up and running):
+
+```bash
+yarn start
+```
+
+It is recommended to configure your local environment through `.env.local`, example content:
+
+```
+REACT_APP_BASE_API_URL=http://localhost:8000/api/v1/
+REACT_APP_FORM_ID=dev
+```
+
+### Design tokens
+
+Design tokens are defined in the [`design-tokens`](https://github.com/open-formulieren/design-tokens/) 
+repository and shared between the SDK and backend project.
+
+If the current design tokens are sufficient, installing the project dependencies will pull them in.
+However, if design tokens need to be added or modified, it's recommended to check out the git submodule:
+
+```bash
+git submodule update --init
+```
+
+Please avoid using sass-variables for design-tokens. The preferred approach is to use the CSS variables
+resulting from the design tokens build.
+
+### Translations/localization
+
+We use `react-intl` to manage translations. All literals in the codebase should be defined as 
+`FormattedMessage` preferable, or an equivalent construct otherwise. Please extract and compile
+the messages for every PR to avoid console errors about missing translations.
+
+The actual translations are managed right before a new version is released.
+
+Commands:
+
+```bash
+yarn makemessages
+yarn compilemessages
+```
+
+### Code-style
+
+Please follow the existing code style. This project was initialized with Create-React-App, and that's
+what we're following. There are plans to add `prettier` in the future for automated code formatting.
+
+The project has been configured to be able to use 'absolute' imports, which means:
+
+**Do**
+
+```jsx
+import SomeComponent from 'components/SomeComponent';
+```
+
+**Don't**
+
+```jsx
+import SomeComponent from '../../SomeComponent';
+```
+
+### Build targets
+
+The source code is built to multiple targets for different audiences:
+
+* UMD bundle with single JS/CSS files, for drop-in embedding and plain JS usage.
+* NPM package containing the UMD bundle **and** ES-modules of the main components.
+* Storybook static build (you're reading this now!)
+* Docker image containing the UMD build for easy deployment, embedded in the backend build.
