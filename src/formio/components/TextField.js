@@ -46,6 +46,15 @@ class TextField extends Formio.Components.components.textfield {
     const isValidHouseNumber = HOUSE_NUMBER_REGEX.test(data[this.component.deriveHouseNumber]);
     const isValidPostcode = POSTCODE_REGEX.test(data[this.component.derivePostcode]);
 
+    // Fill data if it is not set yet or if the field is readonly (i.e. Formio's disabled).
+    // Unrelated to the HTML 'disabled' attribute.
+    // See #1717 and #1832 - we only want to make API calls if there is useful work to
+    // be done.
+    const mayAutofillValue = !this.getValue() || this.component.disabled;
+    if (!mayAutofillValue) {
+      return;
+    }
+
     if (isValidHouseNumber && isValidPostcode) {
       if (this.component.deriveStreetName) {
         this.setLocationData(
