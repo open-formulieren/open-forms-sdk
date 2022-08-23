@@ -23,6 +23,7 @@ describe('TextField Component', () => {
       form.setPristine(false);
       const componentCity = form.getComponent('city');
       componentCity.handleSettingLocationData({postcode: '1111AA', houseNumber: '1'});
+      componentCity._debouncedSetLocationData.flush();
 
       setTimeout(() => {
         expect(componentCity.getValue()).toEqual('Amsterdam');
@@ -46,6 +47,7 @@ describe('TextField Component', () => {
       componentCity.setValue('Amsterdam');
 
       componentCity.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+      componentCity._debouncedSetLocationData.flush();
 
       setTimeout(() => {
         expect(componentCity.getValue()).toEqual('');
@@ -67,6 +69,8 @@ describe('TextField Component', () => {
       componentCity.setValue('Amsterdam');
 
       componentCity.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+      componentCity.setLocationData; // access the getter so the debounced method is created
+      componentCity._debouncedSetLocationData.flush();
 
       setTimeout(() => {
         expect(componentCity.getValue()).toEqual('Amsterdam');
@@ -86,6 +90,7 @@ describe('TextField Component', () => {
       form.setPristine(false);
       const componentStreet = form.getComponent('streetName');
       componentStreet.handleSettingLocationData({postcode: '1111AA', houseNumber: '1'});
+      componentStreet._debouncedSetLocationData.flush();
 
       setTimeout(() => {
         expect(componentStreet.getValue()).toEqual('Beautiful Street');
@@ -109,6 +114,7 @@ describe('TextField Component', () => {
       componentStreet.setValue('Beautiful Street');
 
       componentStreet.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+      componentStreet._debouncedSetLocationData.flush();
 
       setTimeout(() => {
         expect(componentStreet.getValue()).toEqual('');
@@ -130,6 +136,8 @@ describe('TextField Component', () => {
       componentStreet.setValue('Beautiful Street');
 
       componentStreet.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+componentStreet.setLocationData; // access the getter so the debounced method is created
+      componentStreet._debouncedSetLocationData.flush();
 
       setTimeout(() => {
         expect(componentStreet.getValue()).toEqual('Beautiful Street');
