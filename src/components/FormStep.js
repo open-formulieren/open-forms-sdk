@@ -98,13 +98,15 @@ const doLogicCheck = async (stepUrl, data, invalidKeys=[], signal) => {
   const url = `${stepUrl}/_check_logic`;
   // filter out the invalid keys so we only send valid (client-side) input data to the
   // backend to evaluate logic.
-  if (invalidKeys.length) {
-    data = omit(data, invalidKeys);
-  }
-  const stepDetailData = await post(url, {data}, signal);
+  let dataForLogicCheck = invalidKeys.length ? omit(data, invalidKeys) : data;
+  const stepDetailData = await post(url, {data: dataForLogicCheck}, signal);
   if (!stepDetailData.ok) {
     throw new Error('Invalid response'); // TODO -> proper error & use ErrorBoundary
   }
+
+  // Re-add any invalid data to the step data that was not sent for the logic check. Otherwise, any previously saved
+  // data in the step will overwrite the user input
+  Object.assign(stepDetailData.data.step.data, data);
   return stepDetailData.data;
 };
 
