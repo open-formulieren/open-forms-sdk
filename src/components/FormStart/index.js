@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 
 import AuthenticationOutage, { useDetectAuthenticationOutage } from 'components/auth/AuthenticationOutage';
 import {useDetectAuthErrorMessages, AuthenticationErrors} from 'components/auth/AuthenticationErrors';
@@ -18,28 +18,9 @@ import useStartSubmission from 'hooks/useStartSubmission';
 
 
 const FormStartMessage = ({form}) => {
-  const intl = useIntl();
-
-  const canLogin = form.loginOptions.length > 0;
-  const startLoginMessage = form.loginRequired
-    ? intl.formatMessage({
-        description: 'Form start login required body text',
-        defaultMessage: 'Please authenticate to start the form.'
-    })
-    : canLogin
-      ? intl.formatMessage({
-          description: 'Form start anonymous or login body text',
-          defaultMessage: 'Please authenticate or start the form anonymously.'
-      })
-      : intl.formatMessage({
-         description: 'Form start (no login available) body text',
-         defaultMessage: 'Please click the button below to start the form.'
-      })
-  ;
   return (
     <Body modifiers={['compact']} component="div">
       <div className={getBEMClassName('body', ['wysiwyg'])} dangerouslySetInnerHTML={{__html: form.explanationTemplate}}/>
-      <div>{startLoginMessage}</div>
     </Body>
   );
 };
