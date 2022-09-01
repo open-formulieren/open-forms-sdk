@@ -1,7 +1,7 @@
 import {createGlobalstate} from 'state-pool';
 
 import {getCSPNonce} from 'csp';
-import {getCSRFToken} from 'csrf';
+import {getCSRFToken, setCSRFToken} from 'csrf';
 
 import {
   APIError,
@@ -89,6 +89,10 @@ const apiCall = async (url, opts) => {
   if (sessionExpiry) {
     updateSesionExpiry(parseInt(sessionExpiry), 10);
   }
+  const CSRFToken = response.headers.get(CSRFTokenHeader);
+  if (CSRFToken) {
+    setCSRFToken(CSRFToken);
+  }
   return response;
 };
 
@@ -110,18 +114,11 @@ const get = async (url, params = {}, multiParams = []) => {
 };
 
 const _unsafe = async (method = 'POST', url, data, signal) => {
-  // we do not include the X-Csrftoken header, since the SDK is primarily meant to run
-  // in both cross-domain and same-site origins. In cross-domain contexts, the CSRF
-  // cookie is not available to be read (or sent).
-  //
-  // This isn't really relevant anyway, since we have explicit CORS settings in the
-  // backend on which origins to trust (protecting against CSRF attacks) and the
-  // endpoints don't have actual authenticated user sessions - only "generic" sessions
-  // that do not map to an (admin) user.
   const opts = {
       method,
       headers: {
           'Content-Type': 'application/json',
+          [CSRFTokenHeader]: getCSRFToken(),
       },
   };
   if (data) {
