@@ -10,6 +10,9 @@
 .#{prefix(form-control)} {
 
   @include modifier('content') {
+    @include responsive($properties: margin-top, $value-mobile: $grid-margin-3, $value-tablet: $grid-margin-4);
+    padding-top: 0 !important;
+
     [ref="html"] {
       @include wysiwyg;
       @include body;
