@@ -1,0 +1,38 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { FormioComponent, FormDecorator } from './story-util';
+
+<Meta
+  title="Form.io components/Number"
+  argTypes={{
+    id: {
+      type: { name: 'string' },
+    },
+    label: {
+      type: { name: 'string', required: false },
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: { sort: 'requiredFirst' }
+  }}
+/>
+
+# Number
+
+## Default
+
+export const Template = ({ id = '', label = '', ...args}) => (
+  <FormioComponent component={{
+      key: id,
+      type: 'number',
+      input: true,
+      label,
+}}/>);
+
+<Canvas>
+  <Story name="Default" args={{ id: 'amount', label: 'Aantal' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Default" />
