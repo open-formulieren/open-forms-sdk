@@ -1,4 +1,4 @@
-<div class="{{ctx.ofPrefix}}checkbox">
+<div class="{{ctx.ofPrefix}}checkbox utrecht-form-field utrecht-form-field--checkbox">
     <{{ctx.input.type}}
       ref="input"
       {% for (var attr in ctx.input.attr) { %}
@@ -12,7 +12,7 @@
     </{{ctx.input.type}}>
 
     <div class="{{ctx.ofPrefix}}checkbox__checkmark"></div>
-    <label class="{{ctx.ofPrefix}}checkbox__label {{ctx.input.labelClass}}" for="{{ctx.instance.id}}-{{ctx.component.key}}">
+    <label class="{{ctx.ofPrefix}}checkbox__label utrecht-form-label utrecht-form-label--checkbox {% if (item.disabled) { %}utrecht-form-label--disabled{% } %} {{ctx.input.labelClass}}" for="{{ctx.instance.id}}-{{ctx.component.key}}">
         {{ctx.input.label}}&nbsp;
         {% if (ctx.component.tooltip) { %}
             <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>

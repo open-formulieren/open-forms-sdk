@@ -10,7 +10,12 @@ class Email extends Formio.Components.components.email {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('email');
+    info.attr.class = [
+      applyPrefix('email'),
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+      'utrecht-textbox--email',
+    ].join(' ');
     return info;
   }
 }

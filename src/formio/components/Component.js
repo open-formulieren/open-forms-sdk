@@ -17,6 +17,7 @@ function getClassName() {
     {[applyPrefix('form-control--required')]: this.hasInput && this.component.validate && JSON.parse(this.component.validate.required)}, // apparently, the string "true" can be present too
     {[applyPrefix('form-control--label-hidden')]: this.labelIsHidden()},
     {[applyPrefix('form-control--hidden')]: !this.visible},
+    'utrecht-form-field',
   );
 };
 
