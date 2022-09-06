@@ -10,7 +10,11 @@ class Radio extends Formio.Components.components.radio {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('checkbox__input');
+    info.attr.class = [
+      applyPrefix('checkbox__input'),
+      'utrecht-radio-button',
+      'utrecht-radio-button--html-input',
+    ].join(' ');
     return info;
   }
 }

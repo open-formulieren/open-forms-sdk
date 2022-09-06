@@ -69,7 +69,11 @@ class Currency extends Formio.Components.components.currency {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('input');
+    info.attr.class = [
+      applyPrefix('input'),
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+    ].join(' ');
     return info;
   }
 }

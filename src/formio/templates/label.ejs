@@ -1,5 +1,5 @@
 <label
-  class="{{ctx.ofPrefix}}label {{ctx.label.className}} {% if (ctx.component.validate.required) { %}required-field{% } %}"
+  class="utrecht-form-label {{ctx.ofPrefix}}label {{ctx.label.className}} {% if (ctx.component.validate.required) { %}required-field utrecht-form-label--required{% } %}"
   for="{{ctx.instance.id}}-{{ctx.component.key}}"
 >
   {{ ctx.t(ctx.component.label) }}

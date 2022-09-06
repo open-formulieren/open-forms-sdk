@@ -23,7 +23,11 @@ class TimeField extends Time {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = getBEMClassName('input', ['time']);
+    info.attr.class = [
+      getBEMClassName('input', ['time']),
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+    ].join(' ');
     return info;
   }
 }

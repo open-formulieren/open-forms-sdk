@@ -1,6 +1,6 @@
 <div class="{{ctx.ofPrefix}}form-choices">
   {% ctx.values.forEach(function(item) { %}
-    <div class="{{ctx.ofPrefix}}form-choices__choice">
+    <div class="{{ctx.ofPrefix}}form-choices__choice utrecht-form-field utrecht-form-field--radio">
         <div class="{{ctx.ofPrefix}}checkbox">
               <{{ctx.input.type}}
                 ref="input"
@@ -27,7 +27,7 @@
             <div class="{{ctx.ofPrefix}}checkbox__checkmark"></div>
 
             {% if (!ctx.component.optionsLabelPosition || ctx.component.optionsLabelPosition === 'right' || ctx.component.optionsLabelPosition === 'bottom') { %}
-                <label class="{{ctx.ofPrefix}}checkbox__label" for="{{ctx.id}}{{ctx.row}}-{{item.value}}">{{ctx.t(item.label)}}</label>
+                <label class="{{ctx.ofPrefix}}checkbox__label utrecht-form-label utrecht-form-label--radio {% if (item.disabled) { %}utrecht-form-label--disabled{% } %}" for="{{ctx.id}}{{ctx.row}}-{{item.value}}">{{ctx.t(item.label)}}</label>
             {% } %}
         </div>
     </div>
