@@ -1,7 +1,6 @@
 import {createGlobalstate} from 'state-pool';
 
-import {getCSPNonce} from 'csp';
-import {getCSRFToken, setCSRFToken} from 'csrf';
+import {CSPNonceHeader, CSRFTokenHeader, IsFormDesignerHeader} from './headers';
 
 import {
   APIError,
@@ -16,8 +15,6 @@ const fetchDefaults = {
 };
 
 const SessionExpiresInHeader = 'X-Session-Expires-In';
-const CSPNonceHeader = 'X-CSP-Nonce';
-const CSRFTokenHeader = 'X-CSRFToken';
 
 let sessionExpiresAt = createGlobalstate(null);
 
@@ -67,32 +64,45 @@ const throwForStatus = async (response) => {
   throw new ErrorClass(errorMessage, response.status, responseData.detail);
 };
 
-const apiCall = async (url, opts) => {
-  const options = { ...fetchDefaults, ...opts };
-  if (!options.headers) options.headers = {};
+const addHeaders = (headers) => {
+  if (!headers) headers = {};
 
   // add the CSP nonce request header in case the backend needs to do any post-processing
-  const CSPNonce = getCSPNonce();
+  const CSPNonce = CSPNonceHeader.getValue();
   if (CSPNonce != null && CSPNonce) {
-    options.headers[CSPNonceHeader] = CSPNonce;
+    headers[CSPNonceHeader.name] = CSPNonce;
   }
 
-  const csrfToken = getCSRFToken();
+  const csrfToken = CSRFTokenHeader.getValue();
   if (csrfToken != null && csrfToken) {
-    options.headers[CSRFTokenHeader] = csrfToken;
+    headers[CSRFTokenHeader.name] = csrfToken;
   }
+
+  return headers;
+};
+
+const updateStoredHeadersValues = (headers) => {
+  const sessionExpiry = headers.get(SessionExpiresInHeader);
+  if (sessionExpiry) {
+    updateSesionExpiry(parseInt(sessionExpiry), 10);
+  }
+  const CSRFToken = headers.get(CSRFTokenHeader.name);
+  if (CSRFToken) {
+    CSRFTokenHeader.setValue(CSRFToken);
+  }
+
+  const IsFormDesigner = headers.get(IsFormDesignerHeader.name);
+  IsFormDesignerHeader.setValue(IsFormDesigner === 'true');
+};
+
+const apiCall = async (url, opts) => {
+  const options = { ...fetchDefaults, ...opts };
+  options.headers = addHeaders(options.headers);
 
   const response = await window.fetch(url, options);
   await throwForStatus(response);
 
-  const sessionExpiry = response.headers.get(SessionExpiresInHeader);
-  if (sessionExpiry) {
-    updateSesionExpiry(parseInt(sessionExpiry), 10);
-  }
-  const CSRFToken = response.headers.get(CSRFTokenHeader);
-  if (CSRFToken) {
-    setCSRFToken(CSRFToken);
-  }
+  updateStoredHeadersValues(response.headers);
   return response;
 };
 
@@ -118,7 +128,7 @@ const _unsafe = async (method = 'POST', url, data, signal) => {
       method,
       headers: {
           'Content-Type': 'application/json',
-          [CSRFTokenHeader]: getCSRFToken(),
+          [CSRFTokenHeader.name]: CSRFTokenHeader.getValue(),
       },
   };
   if (data) {
