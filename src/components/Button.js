@@ -6,6 +6,7 @@ import {getBEMClassName} from 'utils';
 export const VARIANTS = [
   '',
   'primary',
+  'secondary',
   'anchor',
   'danger',
   'image',
