@@ -3,6 +3,9 @@ import classNames from 'classnames';
 import {applyPrefix} from './formio/utils';
 
 
+export const DEBUG = process.env.NODE_ENV === 'development';
+
+
 export const getFormattedDateString = (intl, dateString) => {
   if (!dateString) return '';
   return intl.formatDate(new Date(dateString));

@@ -7,10 +7,12 @@ import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import MaintenanceMode from 'components/MaintenanceMode';
+import { DEBUG } from 'utils';
 
 
 const logError = (error, errorInfo) => {
-  console.error(error, errorInfo);
+  DEBUG && console.error(error, errorInfo);
 };
 
 
@@ -120,10 +122,26 @@ const UnprocessableEntityError = ({ wrapper: Wrapper, error }) => {
 UnprocessableEntityError.propTypes = GenericError.propTypes;
 
 
+const ServiceUnavailableError = ({ wrapper: Wrapper, error }) => {
+  if (error.code !== 'form-maintenance') {
+    return <GenericError wrapper={Wrapper} error={error} />;
+  }
+
+  // handle maintenance mode forms
+  return (
+    <MaintenanceMode title={<FormattedMessage
+      description="'Maintenance mode form' error title"
+      defaultMessage="Form temporarily unavailable" />}
+    />
+  );
+};
+
+
 // map the type of error to the component to render
 const ERROR_TYPE_MAP = {
   'PermissionDenied': PermissionDeniedError,
   'UnprocessableEntity': UnprocessableEntityError,
+  'ServiceUnavailable': ServiceUnavailableError,
 };
 
 export default ErrorBoundary;

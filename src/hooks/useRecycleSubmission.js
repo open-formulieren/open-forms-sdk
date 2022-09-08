@@ -30,7 +30,6 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded) => {
       if (currentSubmission?.id === submissionId) return;
 
       // fetch the submission from the API
-      console.log('before call');
       let response;
       try {
         response = await apiCall(url, {});

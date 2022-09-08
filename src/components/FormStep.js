@@ -46,8 +46,7 @@ import {ConfigContext, FormioTranslations} from 'Context';
 import { ValidationError } from 'errors';
 import {PREFIX}  from 'formio/constants';
 import Types from 'types';
-
-const DEBUG = process.env.NODE_ENV === 'development';
+import {DEBUG} from 'utils';
 
 const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 
@@ -237,6 +236,8 @@ const FormStep = ({
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
+  // TODO: something is causing the FormStep.js to render multiple times, leading to
+  // state updates on unmounted components.
   const {loading} = useAsync(
     async () => {
       const stepDetail = await get(submissionStep.url);

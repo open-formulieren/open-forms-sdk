@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 
-import AuthenticationOutage, { useDetectAuthenticationOutage } from 'components/auth/AuthenticationOutage';
+import AuthenticationOutage, {useDetectAuthenticationOutage} from 'components/auth/AuthenticationOutage';
 import {useDetectAuthErrorMessages, AuthenticationErrors} from 'components/auth/AuthenticationErrors';
 import Body from 'components/Body';
 import Button from 'components/Button';
@@ -10,12 +10,13 @@ import Card from 'components/Card';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import MaintenanceMode from 'components/MaintenanceMode';
-import { Toolbar, ToolbarList } from 'components/Toolbar';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Types from 'types';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import {UnprocessableEntity} from 'errors';
-import {getBEMClassName} from 'utils';
+import {IsFormDesignerHeader} from 'headers';
 import useStartSubmission from 'hooks/useStartSubmission';
+import {getBEMClassName} from 'utils';
 
 
 const FormStartMessage = ({form}) => {
@@ -85,7 +86,8 @@ const FormStart = ({ form, onFormStart }) => {
     throw new UnprocessableEntity('Unprocessable Entity', 422, 'Form not active', 'form-inactive');
   }
 
-  if (form.maintenanceMode) {
+  const isFormDesigner = IsFormDesignerHeader.getValue();
+  if (!isFormDesigner && form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;
   }
 
@@ -105,6 +107,8 @@ const FormStart = ({ form, onFormStart }) => {
   return (
     <LiteralsProvider literals={form.literals}>
       <Card title={form.name}>
+
+        {isFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
         { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
 
