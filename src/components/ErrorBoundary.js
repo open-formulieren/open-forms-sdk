@@ -95,15 +95,35 @@ const PermissionDeniedError = ({ wrapper: Wrapper, error }) => {
   );
 };
 
-PermissionDeniedError.propTypes = {
-  wrapper: PropTypes.elementType.isRequired,
-  error: PropTypes.object, // exception instance
+PermissionDeniedError.propTypes = GenericError.propTypes;
+
+
+const UnprocessableEntityError = ({ wrapper: Wrapper, error }) => {
+  if (error.code !== 'form-inactive') {
+    return <GenericError wrapper={Wrapper} error={error} />;
+  }
+  // handle deactivated forms
+  return (
+    <Wrapper title={<FormattedMessage
+        description="'Deactivated form' error title"
+        defaultMessage="Sorry - this form is no longer available" />}>
+      <ErrorMessage>
+        <FormattedMessage
+          description="Deactivated form error message"
+          defaultMessage="Unfortunately, this form is no longer in use. We apologise for any inconveniences."
+        />
+      </ErrorMessage>
+    </Wrapper>
+  )
 };
+
+UnprocessableEntityError.propTypes = GenericError.propTypes;
 
 
 // map the type of error to the component to render
 const ERROR_TYPE_MAP = {
   'PermissionDenied': PermissionDeniedError,
+  'UnprocessableEntity': UnprocessableEntityError,
 };
 
 export default ErrorBoundary;

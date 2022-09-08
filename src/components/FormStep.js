@@ -66,12 +66,19 @@ const submitStepData = async (stepUrl, data) => {
   return stepDataResponse;
 };
 
-const getCustomValidationHook = (stepUrl) => {
+const getCustomValidationHook = (stepUrl, onBackendError) => {
   const customValidation = async (data, next) => {
     const PREFIX = 'data';
 
     const validateUrl = `${stepUrl}/validate`;
-    const validateResponse = await post(validateUrl, data);
+    let validateResponse;
+    try {
+      validateResponse = await post(validateUrl, data);
+    } catch(error) {
+      onBackendError(error);
+      next([{path: '', message: error.detail, code: error.code}]);
+      return;
+    }
 
     // process the errors
     if (validateResponse.status === 400) {
@@ -527,7 +534,11 @@ const FormStep = ({
         // reset the timeout, otherwise the 'LOGIC_CHECK_INTERRUPTED' always fires on
         // the next change event which hold an outdated canSubmit state
         logicCheckTimeout.current = null;
-        await evaluateFormLogic(abortController, localCanSubmit);
+        try {
+          await evaluateFormLogic(abortController, localCanSubmit);
+        } catch (e) {
+          dispatch({type: 'ERROR', payload: e});
+        }
       },
       LOGIC_CHECK_DEBOUNCE,
     );
@@ -562,7 +573,10 @@ const FormStep = ({
                   },
                   hooks: {
                     ...hooks,
-                    customValidation: getCustomValidationHook(submissionStep.url),
+                    customValidation: getCustomValidationHook(
+                      submissionStep.url,
+                      error => dispatch({type: 'ERROR', payload: error}),
+                    ),
                   },
                   // custom options
                   intl,

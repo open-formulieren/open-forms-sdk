@@ -13,6 +13,7 @@ import MaintenanceMode from 'components/MaintenanceMode';
 import { Toolbar, ToolbarList } from 'components/Toolbar';
 import Types from 'types';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
+import {UnprocessableEntity} from 'errors';
 import {getBEMClassName} from 'utils';
 import useStartSubmission from 'hooks/useStartSubmission';
 
@@ -78,6 +79,10 @@ const FormStart = ({ form, onFormStart }) => {
         <Loader modifiers={['centered', 'only-child']} />
       </Card>
     );
+  }
+
+  if (!form.active) {
+    throw new UnprocessableEntity('Unprocessable Entity', 422, 'Form not active', 'form-inactive');
   }
 
   if (form.maintenanceMode) {
