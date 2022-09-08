@@ -11,6 +11,7 @@ import List from 'components/List';
 import FAIcon from 'components/FAIcon';
 import Types from 'types';
 import {getBEMClassName} from 'utils';
+import {IsFormDesignerHeader} from 'headers';
 
 import ProgressItem from './ProgressItem';
 
@@ -38,11 +39,11 @@ LinkOrDisabledAnchor.propTypes = {
 };
 
 
-const SidebarStepStatus = ({isCurrent, step, isApplicable=false, completed=false}) => {
+const SidebarStepStatus = ({isCurrent, step, canNavigate, isApplicable=false, completed=false}) => {
   const modifiers = getLinkModifiers(isCurrent, isApplicable);
   return (
     <ProgressItem completed={completed}>
-      <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable} modifiers={modifiers}>
+      <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable && canNavigate} modifiers={modifiers}>
         <FormattedMessage
           description="Step label in progress indicator"
           defaultMessage={`
@@ -63,6 +64,7 @@ const SidebarStepStatus = ({isCurrent, step, isApplicable=false, completed=false
 SidebarStepStatus.propTypes = {
   isCurrent: PropTypes.bool.isRequired,
   completed: PropTypes.bool,
+  canNavigate: PropTypes.bool,
   isApplicable: PropTypes.bool,
   step: PropTypes.shape({
     url: PropTypes.string.isRequired,
@@ -111,6 +113,22 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
     activeStepTitle = step.formDefinition;
   }
 
+    const canNavigateToStep = (index) => {
+      // The user can navigate to a step when:
+      // 1. All previous steps have been completed
+      // 2. The user is a form designer
+      if (IsFormDesignerHeader.getValue()) return true;
+
+      if (!submission) return false;
+
+      const previousSteps = submission.steps.slice(0, index);
+      const previousApplicableButNotCompletedSteps = previousSteps.filter(
+        step => step.isApplicable && !step.completed
+      )
+
+      return !previousApplicableButNotCompletedSteps.length
+    };
+
   // try to get the value from the submission if provided, otherwise
   const submissionAllowedSpec = submission?.submissionAllowed ?? submissionAllowed;
   const showOverview = (submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview);
@@ -141,6 +159,7 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
               step={step}
               completed={submission ? submission.steps[index].completed : false}
               isApplicable={submission ? submission.steps[index].isApplicable : true}
+              canNavigate={canNavigateToStep(index)}
               isCurrent={step.slug === stepSlug}
               slug={step.slug}
             />
