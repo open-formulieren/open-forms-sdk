@@ -1,5 +1,6 @@
 const CSPNonceHeaderName = 'X-CSP-Nonce';
 const CSRFTokenHeaderName = 'X-CSRFToken';
+const IsFormDesignerHeaderName = 'X-Is-Form-Designer';
 
 
 const factoryHeader = (headerName, headerValue) => {
@@ -41,4 +42,12 @@ let CSPNonceHeader = factoryHeader(CSPNonceHeaderName, null);
 let CSRFTokenHeader = factoryHeader(CSRFTokenHeaderName, null);
 
 
-export {CSPNonceHeader, CSRFTokenHeader};
+/**
+ * Global module-scoped variable to track whether the user is a Form Designer.
+ *
+ * Form designers are allowed to navigate between submission steps even if these are not completed.
+ *
+ */
+let IsFormDesignerHeader = factoryHeader(IsFormDesignerHeaderName, false);
+
+export {CSPNonceHeader, CSRFTokenHeader, IsFormDesignerHeader};

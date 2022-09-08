@@ -1,6 +1,6 @@
 import {createGlobalstate} from 'state-pool';
 
-import {CSPNonceHeader, CSRFTokenHeader} from './headers';
+import {CSPNonceHeader, CSRFTokenHeader, IsFormDesignerHeader} from './headers';
 
 import {
   APIError,
@@ -90,6 +90,9 @@ const updateStoredHeadersValues = (headers) => {
   if (CSRFToken) {
     CSRFTokenHeader.setValue(CSRFToken);
   }
+
+  const IsFormDesigner = headers.get(IsFormDesignerHeader.name);
+  IsFormDesignerHeader.setValue(IsFormDesigner === 'true');
 };
 
 const apiCall = async (url, opts) => {
