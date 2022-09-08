@@ -11,12 +11,6 @@
       "value": "Something went wrong while presenting the login option. Please contact the municipality."
     }
   ],
-  "5sFDwa": [
-    {
-      "type": 0,
-      "value": "Please authenticate to start the form."
-    }
-  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -35,16 +29,22 @@
       "value": "Pay now"
     }
   ],
+  "7kd6yw": [
+    {
+      "type": 0,
+      "value": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
+    }
+  ],
   "8MZ9TV": [
     {
       "type": 0,
       "value": "Please accept the privacy policy before submitting"
     }
   ],
-  "8Zfsd+": [
+  "9AU8U0": [
     {
       "type": 0,
-      "value": "Please click the button below to start the form."
+      "value": "Unfortunately, this form is no longer in use. We apologise for any inconveniences."
     }
   ],
   "9R/+1J": [
@@ -273,6 +273,12 @@
       "value": "Back to form start"
     }
   ],
+  "ZL5313": [
+    {
+      "type": 0,
+      "value": "Form temporarily unavailable"
+    }
+  ],
   "ZehFnX": [
     {
       "type": 0,
@@ -291,12 +297,6 @@
     {
       "type": 0,
       "value": "Your email address"
-    }
-  ],
-  "aatERi": [
-    {
-      "type": 0,
-      "value": "Please authenticate or start the form anonymously."
     }
   ],
   "abtbgK": [
@@ -381,6 +381,12 @@
     {
       "type": 0,
       "value": "The email address where you will receive the resume link."
+    }
+  ],
+  "jAZped": [
+    {
+      "type": 0,
+      "value": "Sorry - this form is no longer available"
     }
   ],
   "jYh8Nr": [
