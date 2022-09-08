@@ -15,8 +15,7 @@ import './styles.scss';
 import { get } from 'api';
 import { ConfigContext, FormioTranslations } from 'Context';
 import App from 'components/App';
-import {setCSPNonce} from 'csp';
-import {setCSRFToken} from 'csrf';
+import {CSPNonceHeader} from 'headers';
 import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {loadLocaleData, loadFormioTranslations} from 'i18n';
@@ -61,7 +60,7 @@ class OpenForm {
     this.formObject = null;
     this.lang = lang;
 
-    setCSPNonce(CSPNonce);
+    CSPNonceHeader.setValue(CSPNonce);
     initialiseSentry(sentryDSN, sentryEnv);
 
     // ensure that the basename has no trailing slash (for react router)
@@ -123,4 +122,3 @@ class OpenForm {
 export default OpenForm;
 export { ANALYTICS_PROVIDERS } from 'hooks/usePageViews';
 export { OpenForm, Formio, Templates, OFLibrary, OpenFormsModule };
-export { setCSRFToken };
