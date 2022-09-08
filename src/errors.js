@@ -36,13 +36,16 @@ export class ValidationError extends ExtendableError {
 };
 
 export class APIError extends ExtendableError {
-  constructor(message, statusCode, detail) {
+  constructor(message, statusCode, detail, code) {
     super(message);
     this.statusCode = statusCode;
     this.detail = detail;
+    this.code = code;
   }
 }
 
 export class NotAuthenticated extends APIError {}
 export class PermissionDenied extends APIError {}
 export class NotFound extends APIError {}
+export class UnprocessableEntity extends APIError {}
+export class ServiceUnavailable extends APIError {}

@@ -8,6 +8,8 @@ import {
   NotAuthenticated,
   PermissionDenied,
   NotFound,
+  UnprocessableEntity,
+  ServiceUnavailable,
 } from './errors';
 
 const fetchDefaults = {
@@ -56,12 +58,27 @@ const throwForStatus = async (response) => {
       errorMessage = 'Resource not found.';
       break;
     }
+    case 422: {
+      ErrorClass = UnprocessableEntity;
+      errorMessage = 'Unprocessable Entity';
+      break;
+    }
+    case 503: {
+      ErrorClass = ServiceUnavailable;
+      errorMessage = 'Service Unavailable';
+      break;
+    }
     default: {
       break;
     }
   }
 
-  throw new ErrorClass(errorMessage, response.status, responseData.detail);
+  throw new ErrorClass(
+    errorMessage,
+    response.status,
+    responseData.detail,
+    responseData.code,
+  );
 };
 
 const addHeaders = (headers) => {
