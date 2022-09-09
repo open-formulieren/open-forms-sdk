@@ -11,7 +11,7 @@ import List from 'components/List';
 import FAIcon from 'components/FAIcon';
 import Types from 'types';
 import {getBEMClassName} from 'utils';
-import {IsFormDesignerHeader} from 'headers';
+import {IsFormDesigner} from 'headers';
 
 import ProgressItem from './ProgressItem';
 
@@ -117,7 +117,7 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
       // The user can navigate to a step when:
       // 1. All previous steps have been completed
       // 2. The user is a form designer
-      if (IsFormDesignerHeader.getValue()) return true;
+      if (IsFormDesigner.getValue()) return true;
 
       if (!submission) return false;
 

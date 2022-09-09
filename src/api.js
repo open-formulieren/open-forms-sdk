@@ -1,6 +1,6 @@
 import {createGlobalstate} from 'state-pool';
 
-import {CSPNonceHeader, CSRFTokenHeader, IsFormDesignerHeader} from './headers';
+import {CSPNonce, CSRFToken, IsFormDesigner} from './headers';
 
 import {
   APIError,
@@ -84,15 +84,15 @@ const addHeaders = (headers, method) => {
   if (!headers) headers = {};
 
   // add the CSP nonce request header in case the backend needs to do any post-processing
-  const CSPNonce = CSPNonceHeader.getValue();
-  if (CSPNonce != null && CSPNonce) {
-    headers[CSPNonceHeader.name] = CSPNonce;
+  const CSPNonceValue = CSPNonce.getValue();
+  if (CSPNonceValue != null && CSPNonceValue) {
+    headers[CSPNonce.headerName] = CSPNonceValue;
   }
 
   if (method !== 'GET') {
-    const csrfToken = CSRFTokenHeader.getValue();
-    if (csrfToken != null && csrfToken) {
-      headers[CSRFTokenHeader.name] = csrfToken;
+    const csrfTokenValue = CSRFToken.getValue();
+    if (csrfTokenValue != null && csrfTokenValue) {
+      headers[CSRFToken.headerName] = csrfTokenValue;
     }
   }
 
@@ -105,14 +105,14 @@ const updateStoredHeadersValues = (headers) => {
     updateSesionExpiry(parseInt(sessionExpiry), 10);
   }
 
-  const CSRFToken = headers.get(CSRFTokenHeader.name);
-  if (CSRFToken) {
-    CSRFTokenHeader.setValue(CSRFToken);
+  const CSRFTokenValue = headers.get(CSRFToken.headerName);
+  if (CSRFTokenValue) {
+    CSRFToken.setValue(CSRFTokenValue);
   }
 
-  const isFormDesigner = headers.get(IsFormDesignerHeader.name);
-  if (isFormDesigner) {
-    IsFormDesignerHeader.setValue(isFormDesigner === 'true');
+  const isFormDesignerValue = headers.get(IsFormDesigner.headerName);
+  if (isFormDesignerValue) {
+    IsFormDesigner.setValue(isFormDesignerValue === 'true');
   }
 };
 
@@ -150,7 +150,7 @@ const _unsafe = async (method = 'POST', url, data, signal) => {
       method,
       headers: {
           'Content-Type': 'application/json',
-          [CSRFTokenHeader.name]: CSRFTokenHeader.getValue(),
+          [CSRFToken.headerName]: CSRFToken.getValue(),
       },
   };
   if (data) {

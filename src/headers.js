@@ -5,7 +5,7 @@ const IsFormDesignerHeaderName = 'X-Is-Form-Designer';
 
 const factoryHeader = (headerName, headerValue) => {
   return {
-    name: headerName,
+    headerName: headerName,
     value: headerValue,
     getValue() {
       return headerValue;
@@ -27,7 +27,7 @@ const factoryHeader = (headerName, headerValue) => {
  * The Open Forms SDK includes the value of the cspNonce as a header in fetch api calls
  * so that any HTML can be post-processed to add the correct nonce.
  */
-let CSPNonceHeader = factoryHeader(CSPNonceHeaderName, null);
+let CSPNonce = factoryHeader(CSPNonceHeaderName, null);
 
 
 /**
@@ -39,7 +39,7 @@ let CSPNonceHeader = factoryHeader(CSPNonceHeaderName, null);
  * The Open Forms SDK includes the value of the CSRF Token as a header in fetch api
  * calls if it's set.
  */
-let CSRFTokenHeader = factoryHeader(CSRFTokenHeaderName, null);
+let CSRFToken = factoryHeader(CSRFTokenHeaderName, null);
 
 
 /**
@@ -48,6 +48,6 @@ let CSRFTokenHeader = factoryHeader(CSRFTokenHeaderName, null);
  * Form designers are allowed to navigate between submission steps even if these are not completed.
  *
  */
-let IsFormDesignerHeader = factoryHeader(IsFormDesignerHeaderName, false);
+let IsFormDesigner = factoryHeader(IsFormDesignerHeaderName, false);
 
-export {CSPNonceHeader, CSRFTokenHeader, IsFormDesignerHeader};
+export {CSPNonce, CSRFToken, IsFormDesigner};
