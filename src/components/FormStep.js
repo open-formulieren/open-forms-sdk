@@ -30,13 +30,13 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import { useImmerReducer } from 'use-immer';
+import { Form } from 'react-formio';
 import useAsync from 'react-use/esm/useAsync';
 
 import hooks from '../formio/hooks';
 
 import { get, post, put } from 'api';
 import Card from 'components/Card';
-import FormIOWrapper from 'components/FormIOWrapper';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
@@ -558,7 +558,7 @@ const FormStep = ({
         {
           (!isLoadingSomething && configuration) ? (
             <form onSubmit={onReactSubmit}>
-              <FormIOWrapper
+              <Form
                 ref={formRef}
                 form={configuration}
                 onChange={onFormIOChange}
