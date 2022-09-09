@@ -30,19 +30,21 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded) => {
       if (currentSubmission?.id === submissionId) return;
 
       // fetch the submission from the API
-      const response = await apiCall(url, {});
+      let response;
+      try {
+        response = await apiCall(url, {});
+      } catch (e) {
+        if ([403, 404, 422].includes(e.statusCode)) {
+          removeSubmissionId();
+          return;
+        }
+      }
       if (response.ok) {
         const submission = await response.json();
         onSubmissionLoaded(submission, location);
         setSubmissionId(submission.id);
         return;
       }
-
-      // error handling
-      if (response.status === 403 || response.status === 404) {
-        removeSubmissionId();
-      }
-      return;
     },
     [url, submissionId, currentSubmission?.id],
   );

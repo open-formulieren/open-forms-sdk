@@ -8,6 +8,8 @@ import {
   NotAuthenticated,
   PermissionDenied,
   NotFound,
+  UnprocessableEntity,
+  ServiceUnavailable,
 } from './errors';
 
 const fetchDefaults = {
@@ -22,7 +24,6 @@ const updateSesionExpiry = (seconds) => {
   const newExpiry = new Date();
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
   sessionExpiresAt.setValue(newExpiry);
-  // TODO: we can schedule a message to be set if expiry is getting close
 };
 
 const throwForStatus = async (response) => {
@@ -56,15 +57,30 @@ const throwForStatus = async (response) => {
       errorMessage = 'Resource not found.';
       break;
     }
+    case 422: {
+      ErrorClass = UnprocessableEntity;
+      errorMessage = 'Unprocessable Entity';
+      break;
+    }
+    case 503: {
+      ErrorClass = ServiceUnavailable;
+      errorMessage = 'Service Unavailable';
+      break;
+    }
     default: {
       break;
     }
   }
 
-  throw new ErrorClass(errorMessage, response.status, responseData.detail);
+  throw new ErrorClass(
+    errorMessage,
+    response.status,
+    responseData.detail,
+    responseData.code,
+  );
 };
 
-const addHeaders = (headers) => {
+const addHeaders = (headers, method) => {
   if (!headers) headers = {};
 
   // add the CSP nonce request header in case the backend needs to do any post-processing
@@ -73,9 +89,11 @@ const addHeaders = (headers) => {
     headers[CSPNonceHeader.name] = CSPNonce;
   }
 
-  const csrfToken = CSRFTokenHeader.getValue();
-  if (csrfToken != null && csrfToken) {
-    headers[CSRFTokenHeader.name] = csrfToken;
+  if (method !== 'GET') {
+    const csrfToken = CSRFTokenHeader.getValue();
+    if (csrfToken != null && csrfToken) {
+      headers[CSRFTokenHeader.name] = csrfToken;
+    }
   }
 
   return headers;
@@ -86,18 +104,22 @@ const updateStoredHeadersValues = (headers) => {
   if (sessionExpiry) {
     updateSesionExpiry(parseInt(sessionExpiry), 10);
   }
+
   const CSRFToken = headers.get(CSRFTokenHeader.name);
   if (CSRFToken) {
     CSRFTokenHeader.setValue(CSRFToken);
   }
 
-  const IsFormDesigner = headers.get(IsFormDesignerHeader.name);
-  IsFormDesignerHeader.setValue(IsFormDesigner === 'true');
+  const isFormDesigner = headers.get(IsFormDesignerHeader.name);
+  if (isFormDesigner) {
+    IsFormDesignerHeader.setValue(isFormDesigner === 'true');
+  }
 };
 
-const apiCall = async (url, opts) => {
+const apiCall = async (url, opts={}) => {
+  const method = opts.method || 'GET';
   const options = { ...fetchDefaults, ...opts };
-  options.headers = addHeaders(options.headers);
+  options.headers = addHeaders(options.headers, method);
 
   const response = await window.fetch(url, options);
   await throwForStatus(response);

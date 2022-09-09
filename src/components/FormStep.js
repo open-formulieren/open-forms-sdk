@@ -46,45 +46,44 @@ import {ConfigContext, FormioTranslations} from 'Context';
 import { ValidationError } from 'errors';
 import {PREFIX}  from 'formio/constants';
 import Types from 'types';
-
-const DEBUG = process.env.NODE_ENV === 'development';
+import {DEBUG} from 'utils';
 
 const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
   if (!stepDataResponse.ok) {
-    if (stepDataResponse.status === 400) {
-      throw new ValidationError(
-        'Backend did not validate the data',
-        stepDataResponse.data,
-      );
-    } else {
-      throw new Error(`Backend responded with HTTP ${stepDataResponse.status}`);
-    }
+    throw new Error(`Backend responded with HTTP ${stepDataResponse.status}`);
   }
   return stepDataResponse;
 };
 
-const getCustomValidationHook = (stepUrl) => {
+const getCustomValidationHook = (stepUrl, onBackendError) => {
   const customValidation = async (data, next) => {
     const PREFIX = 'data';
 
     const validateUrl = `${stepUrl}/validate`;
-    const validateResponse = await post(validateUrl, data);
-
-    // process the errors
-    if (validateResponse.status === 400) {
-      const invalidParams = validateResponse.data.invalidParams.filter(
-        param => param.name.startsWith(`${PREFIX}.`)
-      );
-      const errors = invalidParams.map(({name, code, reason}) => ({
-        path: name.replace(`${PREFIX}.`, '', 1),
-        message: reason,
-        code: code,
-      }));
-      next(errors);
-      return;
+    let validateResponse;
+    try {
+      validateResponse = await post(validateUrl, data);
+    } catch(error) {
+      if (error instanceof ValidationError) {
+        // process the errors
+        const invalidParams = error.invalidParams.filter(
+          param => param.name.startsWith(`${PREFIX}.`)
+        );
+        const errors = invalidParams.map(({name, code, reason}) => ({
+          path: name.replace(`${PREFIX}.`, '', 1),
+          message: reason,
+          code: code,
+        }));
+        next(errors);
+        return;
+      } else {
+        onBackendError(error);
+        next([{path: '', message: error.detail, code: error.code}]);
+        return;
+      }
     }
     if (!validateResponse.ok) {
       console.warn(`Unexpected HTTP ${validateResponse.status}`)
@@ -230,6 +229,8 @@ const FormStep = ({
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
+  // TODO: something is causing the FormStep.js to render multiple times, leading to
+  // state updates on unmounted components.
   const {loading} = useAsync(
     async () => {
       const stepDetail = await get(submissionStep.url);
@@ -527,7 +528,11 @@ const FormStep = ({
         // reset the timeout, otherwise the 'LOGIC_CHECK_INTERRUPTED' always fires on
         // the next change event which hold an outdated canSubmit state
         logicCheckTimeout.current = null;
-        await evaluateFormLogic(abortController, localCanSubmit);
+        try {
+          await evaluateFormLogic(abortController, localCanSubmit);
+        } catch (e) {
+          dispatch({type: 'ERROR', payload: e});
+        }
       },
       LOGIC_CHECK_DEBOUNCE,
     );
@@ -562,7 +567,10 @@ const FormStep = ({
                   },
                   hooks: {
                     ...hooks,
-                    customValidation: getCustomValidationHook(submissionStep.url),
+                    customValidation: getCustomValidationHook(
+                      submissionStep.url,
+                      error => dispatch({type: 'ERROR', payload: error}),
+                    ),
                   },
                   // custom options
                   intl,

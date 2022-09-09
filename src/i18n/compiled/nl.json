@@ -11,12 +11,6 @@
       "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
     }
   ],
-  "5sFDwa": [
-    {
-      "type": 0,
-      "value": "Log in om het formulier te starten."
-    }
-  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -35,16 +29,22 @@
       "value": "Nu betalen"
     }
   ],
+  "7kd6yw": [
+    {
+      "type": 0,
+      "value": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
+    }
+  ],
   "8MZ9TV": [
     {
       "type": 0,
       "value": "U moet akkoord gaan met het privacybeleid om door te gaan"
     }
   ],
-  "8Zfsd+": [
+  "9AU8U0": [
     {
       "type": 0,
-      "value": "Klik op de startknop om te beginnen."
+      "value": "Unfortunately, this form is no longer in use. We apologise for any inconveniences."
     }
   ],
   "9R/+1J": [
@@ -201,6 +201,12 @@
       "value": "Voor dit product is betaling vereist"
     }
   ],
+  "Qu8SM1": [
+    {
+      "type": 0,
+      "value": "Extend"
+    }
+  ],
   "R5NUuU": [
     {
       "type": 0,
@@ -267,6 +273,12 @@
       "value": "Afsluiten"
     }
   ],
+  "ZL5313": [
+    {
+      "type": 0,
+      "value": "Form temporarily unavailable"
+    }
+  ],
   "ZehFnX": [
     {
       "type": 0,
@@ -285,12 +297,6 @@
     {
       "type": 0,
       "value": "Uw e-mailadres"
-    }
-  ],
-  "aatERi": [
-    {
-      "type": 0,
-      "value": "Log in of start het formulier anoniem."
     }
   ],
   "abtbgK": [
@@ -377,10 +383,36 @@
       "value": "Het e-mailadres waarop u de link ontvangt om het formulier te hervatten."
     }
   ],
+  "jAZped": [
+    {
+      "type": 0,
+      "value": "Sorry - this form is no longer available"
+    }
+  ],
   "jYh8Nr": [
     {
       "type": 0,
       "value": "Uw afspraak is geannuleerd"
+    }
+  ],
+  "mMYAWl": [
+    {
+      "type": 0,
+      "value": "Your session is about to expire "
+    },
+    {
+      "type": 1,
+      "value": "delta"
+    },
+    {
+      "type": 0,
+      "value": ". Extend your session if you wish to continue."
+    }
+  ],
+  "nwQjsz": [
+    {
+      "type": 0,
+      "value": "Your session will expire soon."
     }
   ],
   "oMvPQU": [

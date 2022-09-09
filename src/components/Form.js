@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {useIntl} from 'react-intl';
-import { useImmerReducer } from 'use-immer';
+import {useImmerReducer} from 'use-immer';
 import {
   Redirect,
   Route,
@@ -9,7 +9,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import { ConfigContext } from 'Context';
+import {ConfigContext} from 'Context';
 
 import {destroy, post} from 'api';
 import usePageViews from 'hooks/usePageViews';
@@ -18,7 +18,7 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
-import { LayoutColumn } from 'components/Layout';
+import {LayoutColumn} from 'components/Layout';
 import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
 import PaymentOverview from 'components/PaymentOverview';

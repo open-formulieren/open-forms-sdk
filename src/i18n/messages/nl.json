@@ -9,11 +9,6 @@
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
-  "5sFDwa": {
-    "defaultMessage": "Log in om het formulier te starten.",
-    "description": "Form start login required body text",
-    "originalDefault": "Please authenticate to start the form."
-  },
   "5uh2hS": {
     "defaultMessage": "Afspraak annuleren mislukt",
     "description": "Appointment cancellation error message",
@@ -29,15 +24,20 @@
     "description": "Start payment button",
     "originalDefault": "Pay now"
   },
+  "7kd6yw": {
+    "defaultMessage": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual.",
+    "description": "Maintenance mode message (for form designer)",
+    "originalDefault": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
+  },
   "8MZ9TV": {
     "defaultMessage": "U moet akkoord gaan met het privacybeleid om door te gaan",
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
   },
-  "8Zfsd+": {
-    "defaultMessage": "Klik op de startknop om te beginnen.",
-    "description": "Form start (no login available) body text",
-    "originalDefault": "Please click the button below to start the form."
+  "9AU8U0": {
+    "defaultMessage": "Unfortunately, this form is no longer in use. We apologise for any inconveniences.",
+    "description": "Deactivated form error message",
+    "originalDefault": "Unfortunately, this form is no longer in use. We apologise for any inconveniences."
   },
   "9R/+1J": {
     "defaultMessage": "Afspraak geannuleerd",
@@ -139,6 +139,11 @@
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
   },
+  "Qu8SM1": {
+    "defaultMessage": "Extend",
+    "description": "Extend session button (in modal)",
+    "originalDefault": "Extend"
+  },
   "R5NUuU": {
     "defaultMessage": "Bevestigen",
     "description": "Form save modal submit button",
@@ -184,6 +189,11 @@
     "description": "return to form start button",
     "originalDefault": "Back to form start"
   },
+  "ZL5313": {
+    "defaultMessage": "Form temporarily unavailable",
+    "description": "'Maintenance mode form' error title",
+    "originalDefault": "Form temporarily unavailable"
+  },
   "ZehFnX": {
     "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
@@ -193,11 +203,6 @@
     "defaultMessage": "Uw e-mailadres",
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
-  },
-  "aatERi": {
-    "defaultMessage": "Log in of start het formulier anoniem.",
-    "description": "Form start anonymous or login body text",
-    "originalDefault": "Please authenticate or start the form anonymously."
   },
   "abtbgK": {
     "defaultMessage": "Uw sessie is verlopen. Klik <link>hier</link> om opnieuw te beginnen.",
@@ -254,10 +259,25 @@
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
+  "jAZped": {
+    "defaultMessage": "Sorry - this form is no longer available",
+    "description": "'Deactivated form' error title",
+    "originalDefault": "Sorry - this form is no longer available"
+  },
   "jYh8Nr": {
     "defaultMessage": "Uw afspraak is geannuleerd",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
+  },
+  "mMYAWl": {
+    "defaultMessage": "Your session is about to expire {delta}. Extend your session if you wish to continue.",
+    "description": "Session expiry warning message (in modal)",
+    "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
+  },
+  "nwQjsz": {
+    "defaultMessage": "Your session will expire soon.",
+    "description": "Session expiry warning title (in modal)",
+    "originalDefault": "Your session will expire soon."
   },
   "oMvPQU": {
     "defaultMessage": "Sessie verlopen",

@@ -7,10 +7,12 @@ import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import MaintenanceMode from 'components/MaintenanceMode';
+import { DEBUG } from 'utils';
 
 
 const logError = (error, errorInfo) => {
-  console.error(error, errorInfo);
+  DEBUG && console.error(error, errorInfo);
 };
 
 
@@ -95,15 +97,51 @@ const PermissionDeniedError = ({ wrapper: Wrapper, error }) => {
   );
 };
 
-PermissionDeniedError.propTypes = {
-  wrapper: PropTypes.elementType.isRequired,
-  error: PropTypes.object, // exception instance
+PermissionDeniedError.propTypes = GenericError.propTypes;
+
+
+const UnprocessableEntityError = ({ wrapper: Wrapper, error }) => {
+  if (error.code !== 'form-inactive') {
+    return <GenericError wrapper={Wrapper} error={error} />;
+  }
+  // handle deactivated forms
+  return (
+    <Wrapper title={<FormattedMessage
+        description="'Deactivated form' error title"
+        defaultMessage="Sorry - this form is no longer available" />}>
+      <ErrorMessage>
+        <FormattedMessage
+          description="Deactivated form error message"
+          defaultMessage="Unfortunately, this form is no longer in use. We apologise for any inconveniences."
+        />
+      </ErrorMessage>
+    </Wrapper>
+  )
+};
+
+UnprocessableEntityError.propTypes = GenericError.propTypes;
+
+
+const ServiceUnavailableError = ({ wrapper: Wrapper, error }) => {
+  if (error.code !== 'form-maintenance') {
+    return <GenericError wrapper={Wrapper} error={error} />;
+  }
+
+  // handle maintenance mode forms
+  return (
+    <MaintenanceMode title={<FormattedMessage
+      description="'Maintenance mode form' error title"
+      defaultMessage="Form temporarily unavailable" />}
+    />
+  );
 };
 
 
 // map the type of error to the component to render
 const ERROR_TYPE_MAP = {
   'PermissionDenied': PermissionDeniedError,
+  'UnprocessableEntity': UnprocessableEntityError,
+  'ServiceUnavailable': ServiceUnavailableError,
 };
 
 export default ErrorBoundary;
