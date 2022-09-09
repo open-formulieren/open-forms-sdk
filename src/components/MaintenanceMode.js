@@ -5,15 +5,15 @@ import {FormattedMessage} from 'react-intl';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
-import {IsFormDesignerHeader} from 'headers';
+import {IsFormDesigner} from 'headers';
 import {getBEMClassName} from 'utils';
 
 const MaintenanceModeAlert = () => {
   const alertClassName = getBEMClassName('alert', ['info']);
-  const isFormDesigner = IsFormDesignerHeader.getValue();
+  const userIsFormDesigner = IsFormDesigner.getValue();
 
   let message;
-  if (!isFormDesigner) {
+  if (!userIsFormDesigner) {
     message = (<FormattedMessage
       description="Maintenance mode message"
       defaultMessage="This form is currently undergoing maintenance and can not be accessed at the moment."

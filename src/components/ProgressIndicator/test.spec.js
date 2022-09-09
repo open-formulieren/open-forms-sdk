@@ -7,7 +7,7 @@ import { IntlProvider } from 'react-intl';
 import ProgressIndicator from './index';
 import { SUBMISSION_ALLOWED } from 'components/constants';
 import messagesNL from 'i18n/compiled/nl.json';
-import { IsFormDesignerHeader } from 'headers';
+import { IsFormDesigner } from 'headers';
 
 jest.mock('headers');
 
@@ -160,7 +160,7 @@ it('Progress indicator does NOT let you navigate between steps if you are NOT a 
     },
   ];
 
-  IsFormDesignerHeader.getValue.mockReturnValue(false);
+  IsFormDesigner.getValue.mockReturnValue(false);
 
   act(() => {
     render(
@@ -226,7 +226,7 @@ it('Progress indicator DOES let you navigate between steps if you ARE a form des
     },
   ];
 
-  IsFormDesignerHeader.getValue.mockReturnValue(true);
+  IsFormDesigner.getValue.mockReturnValue(true);
 
   act(() => {
     render(
@@ -292,7 +292,7 @@ it('Progress indicator DOES let you navigate between steps if you are NOT a form
     },
   ];
 
-  IsFormDesignerHeader.getValue.mockReturnValue(false);
+  IsFormDesigner.getValue.mockReturnValue(false);
 
   act(() => {
     render(

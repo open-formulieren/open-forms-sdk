@@ -14,7 +14,7 @@ import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Types from 'types';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import {UnprocessableEntity} from 'errors';
-import {IsFormDesignerHeader} from 'headers';
+import {IsFormDesigner} from 'headers';
 import useStartSubmission from 'hooks/useStartSubmission';
 import {getBEMClassName} from 'utils';
 
@@ -86,8 +86,8 @@ const FormStart = ({ form, onFormStart }) => {
     throw new UnprocessableEntity('Unprocessable Entity', 422, 'Form not active', 'form-inactive');
   }
 
-  const isFormDesigner = IsFormDesignerHeader.getValue();
-  if (!isFormDesigner && form.maintenanceMode) {
+  const userIsFormDesigner = IsFormDesigner.getValue();
+  if (!userIsFormDesigner && form.maintenanceMode) {
     return <MaintenanceMode title={form.name} />;
   }
 
@@ -108,7 +108,7 @@ const FormStart = ({ form, onFormStart }) => {
     <LiteralsProvider literals={form.literals}>
       <Card title={form.name}>
 
-        {isFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
+        {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
         { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
 

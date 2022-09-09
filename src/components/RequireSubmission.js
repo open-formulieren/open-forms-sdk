@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 
 import MaintenanceMode from 'components/MaintenanceMode';
 import {ServiceUnavailable} from 'errors';
-import {IsFormDesignerHeader} from 'headers';
+import {IsFormDesigner} from 'headers';
 
 
 /**
@@ -14,11 +14,11 @@ import {IsFormDesignerHeader} from 'headers';
  */
 const RequireSubmission = ({ submission, component: Component, ...props }) => {
   const maintenanceMode = props?.form?.maintenanceMode;
-  const isFormDesigner = IsFormDesignerHeader.getValue();
+  const userIsFormDesigner = IsFormDesigner.getValue();
   let maintenanceModeAlert = null;
-  if (!isFormDesigner && maintenanceMode) {
+  if (!userIsFormDesigner && maintenanceMode) {
     throw new ServiceUnavailable('Service Unavailable', 503, 'Form in maintenance', 'form-maintenance');
-  } else if (isFormDesigner && maintenanceMode) {
+  } else if (userIsFormDesigner && maintenanceMode) {
     maintenanceModeAlert = <MaintenanceMode />;
   }
 
