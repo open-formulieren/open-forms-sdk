@@ -53,14 +53,7 @@ const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
   if (!stepDataResponse.ok) {
-    if (stepDataResponse.status === 400) {
-      throw new ValidationError(
-        'Backend did not validate the data',
-        stepDataResponse.data,
-      );
-    } else {
-      throw new Error(`Backend responded with HTTP ${stepDataResponse.status}`);
-    }
+    throw new Error(`Backend responded with HTTP ${stepDataResponse.status}`);
   }
   return stepDataResponse;
 };
@@ -74,23 +67,23 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
     try {
       validateResponse = await post(validateUrl, data);
     } catch(error) {
-      onBackendError(error);
-      next([{path: '', message: error.detail, code: error.code}]);
-      return;
-    }
-
-    // process the errors
-    if (validateResponse.status === 400) {
-      const invalidParams = validateResponse.data.invalidParams.filter(
-        param => param.name.startsWith(`${PREFIX}.`)
-      );
-      const errors = invalidParams.map(({name, code, reason}) => ({
-        path: name.replace(`${PREFIX}.`, '', 1),
-        message: reason,
-        code: code,
-      }));
-      next(errors);
-      return;
+      if (error instanceof ValidationError) {
+        // process the errors
+        const invalidParams = error.invalidParams.filter(
+          param => param.name.startsWith(`${PREFIX}.`)
+        );
+        const errors = invalidParams.map(({name, code, reason}) => ({
+          path: name.replace(`${PREFIX}.`, '', 1),
+          message: reason,
+          code: code,
+        }));
+        next(errors);
+        return;
+      } else {
+        onBackendError(error);
+        next([{path: '', message: error.detail, code: error.code}]);
+        return;
+      }
     }
     if (!validateResponse.ok) {
       console.warn(`Unexpected HTTP ${validateResponse.status}`)
