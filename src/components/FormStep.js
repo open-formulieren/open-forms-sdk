@@ -233,7 +233,15 @@ const FormStep = ({
   // state updates on unmounted components.
   const {loading} = useAsync(
     async () => {
-      const stepDetail = await get(submissionStep.url);
+      let stepDetail;
+
+      try {
+        stepDetail = await get(submissionStep.url);
+      } catch (e) {
+        dispatch({type: 'ERROR', payload: e});
+        return;
+      }
+
       dispatch({
         type: 'STEP_LOADED',
         payload: stepDetail,
