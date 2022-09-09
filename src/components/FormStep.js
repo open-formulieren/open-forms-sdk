@@ -30,13 +30,13 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import { useImmerReducer } from 'use-immer';
+import { Form } from 'react-formio';
 import useAsync from 'react-use/esm/useAsync';
 
 import hooks from '../formio/hooks';
 
 import { get, post, put } from 'api';
 import Card from 'components/Card';
-import FormIOWrapper from 'components/FormIOWrapper';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
@@ -429,7 +429,12 @@ const FormStep = ({
     }
 
     const data = getCurrentFormData();
-    // we set the dirty flag, even if there are changes at all to force validation of
+    // set internal state, which implies a submit attempt was done (whether succesful
+    // or with (validation) errors is irrelevant, see formio.js/src/WebForm.js). This
+    // ensures that validation errors are only cleared for the field being changed.
+    formInstance.submitted = true;
+    formInstance.setPristine(false);
+    // we set the dirty flag, even if there are no changes at all to force validation of
     // whatever data is in the form before submitting. Untouched form fields are marked
     // as 'pristine' in Formio (see `Component.invalidMessage` method`) which causes
     // validation to be skipped.
@@ -558,7 +563,7 @@ const FormStep = ({
         {
           (!isLoadingSomething && configuration) ? (
             <form onSubmit={onReactSubmit}>
-              <FormIOWrapper
+              <Form
                 ref={formRef}
                 form={configuration}
                 onChange={onFormIOChange}
