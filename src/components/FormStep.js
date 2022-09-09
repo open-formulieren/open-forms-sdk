@@ -429,7 +429,12 @@ const FormStep = ({
     }
 
     const data = getCurrentFormData();
-    // we set the dirty flag, even if there are changes at all to force validation of
+    // set internal state, which implies a submit attempt was done (whether succesful
+    // or with (validation) errors is irrelevant, see formio.js/src/WebForm.js). This
+    // ensures that validation errors are only cleared for the field being changed.
+    formInstance.submitted = true;
+    formInstance.setPristine(false);
+    // we set the dirty flag, even if there are no changes at all to force validation of
     // whatever data is in the form before submitting. Untouched form fields are marked
     // as 'pristine' in Formio (see `Component.invalidMessage` method`) which causes
     // validation to be skipped.
