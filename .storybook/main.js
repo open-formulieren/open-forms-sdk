@@ -15,6 +15,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "storybook-addon-themes",
     "storybook-react-intl"
   ],
   "framework": "@storybook/react",

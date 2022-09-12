@@ -10,7 +10,7 @@ export const FormioComponent = ({ component }) => (
 
 export const FormDecorator = (Story) => (
   <div
-    className="utrecht-theme utrecht-document"
+    className="utrecht-document"
     style={{'--utrecht-space-around': 1 }}
   >{Story()}</div>
 );
