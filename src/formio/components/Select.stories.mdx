@@ -1,0 +1,54 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { FormioComponent, FormDecorator } from './story-util';
+
+<Meta
+  title="Form.io components/Select"
+  argTypes={{
+    id: {
+      type: { name: 'string' },
+    },
+    label: {
+      type: { name: 'string', required: false },
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: { sort: 'requiredFirst' }
+  }}
+/>
+
+# Select
+
+## Default
+
+export const Template = ({ id = '', label = '', ...args}) => (
+  <FormioComponent component={{
+      key: id,
+      type: 'select',
+      input: true,
+      label,
+      data: {
+        "values": [
+            {
+                "label": "Optie A",
+                "value": "radioA"
+            },
+            {
+                "label": "Optie B",
+                "value": "radioB"
+            },
+            {
+                "label": "Optie C",
+                "value": "radioC"
+            }
+        ],
+    }
+}}/>);
+
+<Canvas>
+  <Story name="Default" args={{ id: 'option', label: 'Welke optie is het meest onduidelijk?'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Default" />

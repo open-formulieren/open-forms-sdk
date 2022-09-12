@@ -1,0 +1,38 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { FormioComponent, FormDecorator } from './story-util';
+
+<Meta
+  title="Form.io components/DateField"
+  argTypes={{
+    id: {
+      type: { name: 'string' },
+    },
+    label: {
+      type: { name: 'string', required: false },
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: { sort: 'requiredFirst' }
+  }}
+/>
+
+# DateField
+
+## Default
+
+export const Template = ({ id = '', label = '', ...args}) => (
+  <FormioComponent component={{
+      key: id,
+      type: 'date',
+      input: true,
+      label,
+}}/>);
+
+<Canvas>
+  <Story name="Default" args={{ id: 'date', label: 'Datum'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Default" />

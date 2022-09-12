@@ -15,6 +15,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "storybook-addon-themes",
     "storybook-react-intl"
   ],
   "framework": "@storybook/react",
@@ -44,7 +45,14 @@ module.exports = {
     // add sass-loader etc.
     const oneOfRule = craConfig.module.rules.find(rule => rule.oneOf != null);
     const sassRule = oneOfRule.oneOf.find(rule => String(rule.test) === String(sassRegex));
-    const mergedRules = [sassRule, ...sbConfig.module.rules];
+    const ejsLoader = oneOfRule.oneOf.find(rule => rule.loader === 'ejs-loader');
+    const mergedRules = [sassRule, 
+    {
+      ...ejsLoader,
+      // Exclude Storybook internal .ejs templates
+      test: /formio.*\.ejs$/,
+    },
+    ...sbConfig.module.rules];
 
     const mergedPlugins = [...sbConfig.plugins];
     if (configType === "PRODUCTION") {

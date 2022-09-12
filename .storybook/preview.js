@@ -1,3 +1,9 @@
+import { Formio, Templates } from 'react-formio';
+import OpenFormsModule from 'formio/module';
+import OFLibrary from 'formio/templates';
+
+import '@gemeente-denhaag/design-tokens-components/dist/theme/index.css';
+import '@utrecht/design-tokens/dist/index.css';
 import 'styles.scss';
 
 import {reactIntl} from './reactIntl.js';
@@ -16,4 +22,17 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  themes: {
+    default: "Open Forms",
+    list: [
+      { name: 'Open Forms', class: 'openforms-theme', color: '#01689B' },
+      { name: 'Gemeente Den Haag', class: 'denhaag-theme', color: 'hsl(138 58% 33%)' },
+      { name: 'Gemeente Utrecht', class: 'utrecht-theme', color: '#cc0000' }
+    ],
+  },
 }
+
+// Use our custom Form.io components
+Formio.use(OpenFormsModule);
+// use our own template library
+Templates.current = OFLibrary;
