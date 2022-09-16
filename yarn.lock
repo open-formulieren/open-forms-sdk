@@ -5128,6 +5128,26 @@
     "@typescript-eslint/types" "5.23.0"
     eslint-visitor-keys "^3.0.0"
 
+"@utrecht/component-library-css@^1.0.0-alpha.343":
+  version "1.0.0-alpha.343"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.343.tgz#87fdb158b63804dc6f0f1e03875fc0bb6531c9db"
+  integrity sha512-a2+b5ewCN/kbVQYHuSORB3vYwaa6o0Oj8zNd17z+9IJ9tQE2VTOeElaVXBQ6Y1EnkT+8i3rTVn3H2ckHifceaw==
+
+"@utrecht/component-library-react@^1.0.0-alpha.152":
+  version "1.0.0-alpha.152"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.152.tgz#cce9355d9cf2150cbb51a255923bb273d81fb920"
+  integrity sha512-opj2Bl0hFmfGn3ttif5Hb7Y1h2vPLFv5r1As4c22/cABFkrkria6sGEzRToCeJ8rpH6TbOstPEB/XRQs8BLxHA==
+  dependencies:
+    clsx "1.2.1"
+    date-fns "2.29.3"
+
+"@utrecht/components@^1.0.0-alpha.304":
+  version "1.0.0-alpha.304"
+  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.304.tgz#48019b1902750933b2de40e24998beb6ec54fbc1"
+  integrity sha512-m0gVE19Q1dOy7J+YsFej+k+zrpyA8PI44I9BKjptmmyYfB0Hl84oP5QdTA/Q9AnAL1YfKoLWA4Us3A7PlyuB1w==
+  dependencies:
+    clsx "1.2.1"
+
 "@utrecht/design-tokens@^1.0.0-alpha.319":
   version "1.0.0-alpha.319"
   resolved "https://registry.yarnpkg.com/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.319.tgz#76a9175ed40d7cee761bf9ac7cc7d433c5465470"
@@ -7025,7 +7045,7 @@ clsx@1.1.0:
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.0.tgz#62937c6adfea771247c34b54d320fb99624f5702"
   integrity sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==
 
-clsx@^1.0.4:
+clsx@1.2.1, clsx@^1.0.4:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
@@ -7800,6 +7820,11 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+date-fns@2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
+  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"
