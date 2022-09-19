@@ -25,7 +25,7 @@
     "originalDefault": "Pay now"
   },
   "7kd6yw": {
-    "defaultMessage": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual.",
+    "defaultMessage": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen.",
     "description": "Maintenance mode message (for form designer)",
     "originalDefault": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
   },
@@ -35,7 +35,7 @@
     "originalDefault": "Please accept the privacy policy before submitting"
   },
   "9AU8U0": {
-    "defaultMessage": "Unfortunately, this form is no longer in use. We apologise for any inconveniences.",
+    "defaultMessage": "Helaas is dit formulier niet langer in gebruik. Onze excuses voor eventuele ongemakken.",
     "description": "Deactivated form error message",
     "originalDefault": "Unfortunately, this form is no longer in use. We apologise for any inconveniences."
   },
@@ -140,7 +140,7 @@
     "originalDefault": "Payment is required for this product"
   },
   "Qu8SM1": {
-    "defaultMessage": "Extend",
+    "defaultMessage": "Verlengen",
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
   },
@@ -190,7 +190,7 @@
     "originalDefault": "Back to form start"
   },
   "ZL5313": {
-    "defaultMessage": "Form temporarily unavailable",
+    "defaultMessage": "Formulier tijdelijk onbeschikbaar",
     "description": "'Maintenance mode form' error title",
     "originalDefault": "Form temporarily unavailable"
   },
@@ -260,7 +260,7 @@
     "originalDefault": "The email address where you will receive the resume link."
   },
   "jAZped": {
-    "defaultMessage": "Sorry - this form is no longer available",
+    "defaultMessage": "Onze excuses - dit formulier is niet langer beschikbaar",
     "description": "'Deactivated form' error title",
     "originalDefault": "Sorry - this form is no longer available"
   },
@@ -270,12 +270,12 @@
     "originalDefault": "Your appointment has been cancelled"
   },
   "mMYAWl": {
-    "defaultMessage": "Your session is about to expire {delta}. Extend your session if you wish to continue.",
+    "defaultMessage": "Uw sessie staat op het punt om te vervallen {delta}. Verleng uw sessie indien u door wenst te gaan.",
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
   "nwQjsz": {
-    "defaultMessage": "Your session will expire soon.",
+    "defaultMessage": "Uw sessie vervalt binnenkort.",
     "description": "Session expiry warning title (in modal)",
     "originalDefault": "Your session will expire soon."
   },
