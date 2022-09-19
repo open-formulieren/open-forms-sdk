@@ -8,7 +8,6 @@ export const testStepDataEmptyDate = {
     "formStep": "http://testserver.nl/api/v1/forms/3ef4c822-c6c7-496d-99d6-897c1d1c1219/steps/31bd9fc8-57b7-4b32-bae7-a0b6d8c076cc",
     "isApplicable": true,
     "completed": true,
-    "optional": false,
     "canSubmit": true
   },
   "title": "Test Details",
@@ -39,7 +38,6 @@ export const testStepDataSelectMultivalue = {
     "formStep": "http://testserver.nl/api/v1/forms/3ef4c822-c6c7-496d-99d6-897c1d1c1219/steps/31bd9fc8-57b7-4b32-bae7-a0b6d8c076cc",
     "isApplicable": true,
     "completed": true,
-    "optional": false,
     "canSubmit": true
   },
   "title": "Test Multi-value select field",
@@ -90,7 +88,6 @@ export const testStepEmptyFields = {
     "formStep": "http://testserver.nl/api/v1/forms/3ef4c822-c6c7-496d-99d6-897c1d1c1219/steps/31bd9fc8-57b7-4b32-bae7-a0b6d8c076cc",
     "isApplicable": true,
     "completed": true,
-    "optional": false,
     "canSubmit": true
   },
   "title": "Test empty upload file field",
@@ -198,7 +195,6 @@ export const testStepColumns = {
     "formStep": "http://testserver.nl/api/v1/forms/3ef4c822-c6c7-496d-99d6-897c1d1c1219/steps/31bd9fc8-57b7-4b32-bae7-a0b6d8c076cc",
     "isApplicable": true,
     "completed": true,
-    "optional": false,
     "canSubmit": true
   },
   "title": "Test empty upload file field",
@@ -249,7 +245,6 @@ export const testStepHiddenFieldsetHeader = {
     "formStep": "http://testserver.nl/api/v1/forms/3ef4c822-c6c7-496d-99d6-897c1d1c1219/steps/31bd9fc8-57b7-4b32-bae7-a0b6d8c076cc",
     "isApplicable": true,
     "completed": true,
-    "optional": false,
     "canSubmit": true
   },
   "title": "Test empty upload file field",

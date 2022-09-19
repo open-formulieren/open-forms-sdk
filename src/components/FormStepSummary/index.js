@@ -93,7 +93,6 @@ FormStepSummary.propTypes = {
       canSubmit: PropTypes.bool.isRequired,
       completed: PropTypes.bool.isRequired,
       isApplicable: PropTypes.bool.isRequired,
-      optional: PropTypes.bool.isRequired,
     }).isRequired,
     title: PropTypes.string.isRequired,
   }).isRequired,

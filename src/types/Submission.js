@@ -8,7 +8,6 @@ const Submission = PropTypes.shape({
   url: PropTypes.string.isRequired,
   form: PropTypes.string.isRequired,
   steps: PropTypes.arrayOf(PropTypes.object).isRequired, // TODO: define this as well
-  nextStep: PropTypes.string,
   submissionAllowed: PropTypes.oneOf(Object.values(SUBMISSION_ALLOWED)).isRequired,
   payment: PropTypes.shape({
     isRequired: PropTypes.bool.isRequired,
