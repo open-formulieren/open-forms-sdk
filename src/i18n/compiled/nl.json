@@ -32,7 +32,7 @@
   "7kd6yw": [
     {
       "type": 0,
-      "value": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
+      "value": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen."
     }
   ],
   "8MZ9TV": [
@@ -44,7 +44,7 @@
   "9AU8U0": [
     {
       "type": 0,
-      "value": "Unfortunately, this form is no longer in use. We apologise for any inconveniences."
+      "value": "Helaas is dit formulier niet langer in gebruik. Onze excuses voor eventuele ongemakken."
     }
   ],
   "9R/+1J": [
@@ -204,7 +204,7 @@
   "Qu8SM1": [
     {
       "type": 0,
-      "value": "Extend"
+      "value": "Verlengen"
     }
   ],
   "R5NUuU": [
@@ -276,7 +276,7 @@
   "ZL5313": [
     {
       "type": 0,
-      "value": "Form temporarily unavailable"
+      "value": "Formulier tijdelijk onbeschikbaar"
     }
   ],
   "ZehFnX": [
@@ -386,7 +386,7 @@
   "jAZped": [
     {
       "type": 0,
-      "value": "Sorry - this form is no longer available"
+      "value": "Onze excuses - dit formulier is niet langer beschikbaar"
     }
   ],
   "jYh8Nr": [
@@ -398,7 +398,7 @@
   "mMYAWl": [
     {
       "type": 0,
-      "value": "Your session is about to expire "
+      "value": "Uw sessie staat op het punt om te vervallen "
     },
     {
       "type": 1,
@@ -406,13 +406,13 @@
     },
     {
       "type": 0,
-      "value": ". Extend your session if you wish to continue."
+      "value": ". Verleng uw sessie indien u door wenst te gaan."
     }
   ],
   "nwQjsz": [
     {
       "type": 0,
-      "value": "Your session will expire soon."
+      "value": "Uw sessie vervalt binnenkort."
     }
   ],
   "oMvPQU": [
