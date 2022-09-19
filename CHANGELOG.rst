@@ -2,6 +2,58 @@
 Changelog
 =========
 
+1.2.0 (2022-09-19)
+==================
+
+Feature release
+
+.. note:: Note that this version REQUIRES at least version 2.0.0 of the Open Forms API.
+
+Features
+--------
+
+* [#1687] We now run an explicit validation call during submission so that step
+  submission validation errors from the backend can be displayed.
+* [#1710] Added repeating groups component
+* [#1717] Reworked handling of autofill fields (street/city) to not overwrite
+  user-submitted data
+* [#509] Users now get a warning when their session is about to expire with the option
+  to extend it.
+* The codebase now mostly uses design tokens for colors, improving the theming options
+* [#1832] Debounce the location autofill API calls
+* [#1933] Removed hardcoded authentication explanation message, instead you should
+  define the relevant text/message in the form start explanation message.
+* [#1944] Blocked step navigation without completed steps, except for staff-users
+* [#1967] Deactivated and maintenance mode forms are now properly reported to end-users.
+  Staff users can still continue in maintenance mode forms.
+
+Bugfixes
+--------
+
+* [#1526] SDK now always calls the backend to evaluate form logic, even if the form is
+  invalid on the client-side. Only valid data is passed to the backend.
+* [#1868] Ensure that invalid data is still kept in the client-side data state (fix for
+  new bug in #1526)
+* [#1964] Adjusted padding on content components with CSS class
+* Added missing button variant
+* [#1738] Fixed sometimes *all* validation errors dissapearing when changing one field
+
+Project maintenance
+-------------------
+
+* [#1603] Set up yarn workspaces and design tokens integration
+* [#1516] Set up publishing the SDK as package to NPM
+* Reworked internal API Error handling to be exception-based
+* Wrap more errors in error boundaries and display appropriate UI components for the
+  type of error
+* [#1521] Added Storybook for component documentation and publish to Github pages
+* Removed obsolete Formio wrapper component
+* Added Formio components to Storybook docs
+* Added theme switcher to Storybook docs
+* Updated ``PropTypes`` for removed functionality in 2.0.0 backend
+* Updated translations
+
+
 1.1.1 (2022-07-25)
 ==================
 
