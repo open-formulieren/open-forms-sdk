@@ -153,14 +153,14 @@ const reducer = (draft, action) => {
       draft.logicChecking = false;
       draft.canSubmit = canSubmit;
       break;
-    };
+    }
     // a separate action type because we should _not_ touch the configuration in the state
     case 'LOGIC_CHECK_DONE': {
       const {step: {data, canSubmit}} = action.payload;
       // update the altered values but only if relevant (we don't want to unnecesary break
       // references that trigger re-rendering).
       if (!isEqual(draft.backendData, data)) {
-        draft.backendData = data;
+        draft.backendData = cloneDeep(data);
       }
       draft.canSubmit = canSubmit;
       draft.logicChecking = false;
