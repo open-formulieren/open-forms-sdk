@@ -105,7 +105,7 @@ const doLogicCheck = async (stepUrl, data, invalidKeys=[], signal) => {
 
   // Re-add any invalid data to the step data that was not sent for the logic check. Otherwise, any previously saved
   // data in the step will overwrite the user input
-  Object.assign(stepDetailData.data.step.data, data);
+  if (invalidKeys.length) Object.assign(stepDetailData.data.step.data, data);
   return stepDetailData.data;
 };
 
