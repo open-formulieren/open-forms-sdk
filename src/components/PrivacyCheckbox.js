@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 
 import {getBEMClassName} from '../utils';
+import {Checkbox, FormField, FormLabel} from '@utrecht/component-library-react';
 import ErrorMessage from './ErrorMessage';
 
 
@@ -13,10 +14,9 @@ const PrivacyCheckbox = ({label, value, warning=false, onChange}) => {
   );
 
   return (
-    <div className={getBEMClassName('privacy-checkbox')}>
+    <FormField className={getBEMClassName('privacy-checkbox')}>
       <div className={inputClassname}>
-        <input
-          type="checkbox"
+        <Checkbox
           name="privacy"
           id="privacy"
           required={true}
@@ -24,7 +24,8 @@ const PrivacyCheckbox = ({label, value, warning=false, onChange}) => {
           onChange={onChange}
         />
         <div className={getBEMClassName('privacy-checkbox__checkmark')} />
-        <label
+        <FormLabel
+          type="checkbox"
           className={getBEMClassName('privacy-checkbox__label')}
           htmlFor="privacy"
         >
@@ -32,7 +33,7 @@ const PrivacyCheckbox = ({label, value, warning=false, onChange}) => {
             className={getBEMClassName('privacy-checkbox__wyswyg-text')}
             dangerouslySetInnerHTML={{__html: label}}
           />
-        </label>
+        </FormLabel>
       </div>
       {
         warning && (
@@ -44,7 +45,7 @@ const PrivacyCheckbox = ({label, value, warning=false, onChange}) => {
           </ErrorMessage>
         )
       }
-    </div>
+    </FormField>
   )
 };
 

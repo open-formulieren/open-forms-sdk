@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getBEMClassName} from 'utils';
+import { Link as UtrechtLink } from '@utrecht/component-library-react';
 
 export const ANCHOR_MODIFIERS = [
   'hover',
@@ -17,7 +18,7 @@ function isModifiedEvent(event) {
 }
 
 
-const Anchor = ({ children, href, modifiers=[], component: Component='a', ...extra }) => {
+const Anchor = ({ children, href, modifiers=[], component: Component=UtrechtLink, ...extra }) => {
   const className = getBEMClassName('anchor', modifiers);
   const {navigate, ...rest} = extra; // workaround for https://github.com/ReactTraining/react-router/issues/6962
   const extraProps = {...rest};
@@ -50,9 +51,7 @@ const Anchor = ({ children, href, modifiers=[], component: Component='a', ...ext
     extraProps.onClick = onClick;
   }
 
-  return (
-    <Component className={className} {...extraProps}>{children}</Component>
-  );
+  return <Component className={className} {...extraProps}>{children}</Component>
 };
 
 Anchor.propTypes = {

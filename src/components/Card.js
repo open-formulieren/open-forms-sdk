@@ -3,13 +3,22 @@ import PropTypes from 'prop-types';
 
 import Caption from 'components/Caption';
 import { getBEMClassName } from 'utils';
+import { Heading } from '@utrecht/component-library-react';
 
 
 const CardTitle = ({ title, component='h2', blockClassName='card' }) => {
-  const Title = `${component}`;
+  const headingLevel = {
+    'h1': 1,
+    'h2': 2,
+    'h3': 3,
+    'h4': 4,
+    'h5': 5,
+    'h6': 6,
+  };
+
   return (
     <header className={getBEMClassName(`${blockClassName}__header`)}>
-      <Title className={getBEMClassName('title')}>{title}</Title>
+      <Heading level={headingLevel[component] || 1} className={getBEMClassName('title')}>{title}</Heading>
     </header>
   );
 }
