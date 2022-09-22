@@ -4,15 +4,22 @@ import classNames from 'classnames';
 
 import Body from 'components/Body';
 import {getBEMClassName} from 'utils';
-
+import {
+  Table as UtrechtTable,
+  TableBody as UtrechtTableBody,
+  TableCaption as UtrechtTableCaption,
+  TableRow as UtrechtTableRow,
+  TableCell as UtrechtTableCell,
+  TableHeaderCell as UtrechtTableHeaderCell,
+} from '@utrecht/component-library-react';
 
 const TableCell = ({ children, component=Body, modifiers=[] }) => {
   const Component = component;
   const className = getBEMClassName('table__cell', modifiers);
   return (
-    <td className={className}>
+    <UtrechtTableCell className={className}>
       <Component component={'div'}>{children}</Component>
-    </td>
+    </UtrechtTableCell>
   );
 };
 
@@ -26,9 +33,9 @@ const TableHead = ({ children, component=Body, modifiers=[] }) => {
   const Component = component;
   const className = getBEMClassName('table__head', modifiers);
   return (
-    <th className={className}>
+    <UtrechtTableHeaderCell className={className}>
       <Component>{children}</Component>
-    </th>
+    </UtrechtTableHeaderCell>
   );
 };
 
@@ -38,16 +45,15 @@ TableHead.propTypes = {
     modifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
-
 const TableRow = ({ children, className='' }) => {
   className = classNames(
     getBEMClassName('table__row'),
     className,
   );
   return (
-    <tr className={className}>
+    <UtrechtTableRow className={className}>
       {children}
-    </tr>
+    </UtrechtTableRow>
   );
 };
 
@@ -59,11 +65,9 @@ TableRow.propTypes = {
 const Table = ({ children, }) => {
   const className = getBEMClassName('table');
   return (
-    <table className={className}>
-      <tbody>
+    <UtrechtTable className={className}>
         {children}
-      </tbody>
-    </table>
+    </UtrechtTable>
   );
 };
 
@@ -71,5 +75,35 @@ Table.propTypes = {
     children: PropTypes.node,
 };
 
+const TableBody = ({ children, }) => {
+  return (
+    <UtrechtTableBody>
+      {children}
+    </UtrechtTableBody>
+  );
+};
 
-export {Table, TableRow, TableHead, TableCell};
+TableBody.propTypes = {
+    children: PropTypes.node,
+};
+
+const TableCaption = ({ children, }) => {
+  return (
+    <UtrechtTableCaption className={getBEMClassName('caption')}>
+      {children}
+    </UtrechtTableCaption>
+  );
+};
+
+TableCaption.propTypes = {
+    children: PropTypes.node,
+};
+
+export {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableRow,
+};

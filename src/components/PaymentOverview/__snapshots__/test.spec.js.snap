@@ -8,7 +8,7 @@ exports[`navigation without context displays a generic error message 1`] = `
     className="openforms-card__header"
   >
     <h2
-      className="openforms-title"
+      className="utrecht-heading-2 openforms-title"
     >
       Payment overview
     </h2>
@@ -46,7 +46,7 @@ exports[`on valid redirect renders an error message on failure 1`] = `
     className="openforms-card__header"
   >
     <h2
-      className="openforms-title"
+      className="utrecht-heading-2 openforms-title"
     >
       Payment overview
     </h2>
@@ -91,7 +91,7 @@ exports[`on valid redirect renders the status information 1`] = `
     className="openforms-card__header"
   >
     <h2
-      className="openforms-title"
+      className="utrecht-heading-2 openforms-title"
     >
       Payment overview
     </h2>
