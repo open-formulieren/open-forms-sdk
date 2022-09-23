@@ -7,7 +7,6 @@ import {useImmerReducer} from 'use-immer';
 import { get, post } from 'api';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
-import FormStepSummary from 'components/FormStepSummary';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
@@ -18,8 +17,7 @@ import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import Types from 'types';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-
-import {getSummaryComponents} from './utils';
+import FormStepSummary from 'components/FormStepSummary';
 
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
@@ -53,30 +51,8 @@ const reducer = (draft, action) => {
   }
 };
 
-
-const loadStepsData = async (submission) => {
-  const stepsData = await Promise.all(submission.steps.map(async (submissionStep) => {
-    let submissionStepDetail = await get(submissionStep.url);
-    if (!submissionStep.isApplicable) {
-      return {submissionStep: submissionStep};
-    }
-
-    submissionStepDetail.formStep.configuration.flattenedComponents = getSummaryComponents(
-      submissionStepDetail.formStep.configuration.components
-    );
-
-    const formStepDetail = await get(submissionStep.formStep);
-    const formDefinitionDetail = await get(formStepDetail.formDefinition);
-
-    return {
-      submissionStep,
-      title: formDefinitionDetail.name,
-      data: submissionStepDetail.data,
-      configuration: submissionStepDetail.formStep.configuration
-    };
-  }));
-
-  return stepsData;
+const loadSummaryData = async (submissionUrl) => {
+  return await get(`${submissionUrl.href}/summary`);
 };
 
 const completeSubmission = async (submission) => {
@@ -114,20 +90,20 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
 
   const refreshedSubmission = useRefreshSubmission(submission);
 
-  const {loading, value: submissionSteps, error} = useAsync(
+  const {loading, value: summaryData, error} = useAsync(
     async () => {
       const submissionUrl = new URL(refreshedSubmission.url);
 
       let promises = [
-        loadStepsData(refreshedSubmission),
+        loadSummaryData(submissionUrl),
         getPrivacyPolicyInfo(submissionUrl.origin),
       ];
 
-      const [submissionSteps, privacyInfo] = await Promise.all(promises);
+      const [summaryData, privacyInfo] = await Promise.all(promises);
 
       dispatch({type: 'PRIVACY_POLICY_LOADED', payload: privacyInfo});
 
-      return submissionSteps;
+      return summaryData;
     },
     [refreshedSubmission]
   );
@@ -172,16 +148,17 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
             ? (<Loader modifiers={['centered']} />)
             : (
               <>
-                {submissionSteps && submissionSteps.filter(
-                  (stepData) => stepData.submissionStep.isApplicable
-                ).map((stepData, i) => (
-                  <FormStepSummary
-                    key={stepData.submissionStep.id}
-                    stepData={stepData}
-                    editStepUrl={`/stap/${form.steps[i].slug}`}
-                    editStepText={form.literals.changeText.resolved}
-                  />
-                ))}
+                {
+                  summaryData.map((step, index) => (
+                    <FormStepSummary
+                      key={index}
+                      slug={step.slug}
+                      name={step.name}
+                      data={step.data}
+                      editStepText={form.literals.changeText.resolved}
+                    />
+                  ))
+                }
 
                 <PaymentInformation {...refreshedSubmission.payment} />
 

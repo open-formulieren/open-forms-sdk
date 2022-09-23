@@ -215,38 +215,41 @@ const CoSignDisplay = ({component, value}) => {
 };
 
 
-const ComponentValueDisplay = ({ component }) => {
+const ComponentValueDisplay = ({ value, component }) => {
   const {
     multiple=false,
     type,
-    value: rawValue
   } = component;
 
-  const Formatter = TYPE_TO_COMPONENT[type] || DefaultDisplay;
-  const rawValues = Array.isArray(rawValue) ? rawValue : [rawValue];
-
-  const children = rawValues.map(value => (<Formatter component={component} value={value} />));
-
-  if (!children.length) {
+  if (!value) {
     return <EmptyDisplay/>;
   }
 
-  if (!multiple) {
-    return children[0];
+  const Formatter = TYPE_TO_COMPONENT[type] || DefaultDisplay;
+
+  if (multiple) {
+    const values = Array.isArray(value) ? value : [value];
+    const renderedValues = values.map(
+      componentValue => (<Formatter component={component} value={componentValue} />)
+    );
+
+    return (
+      <>
+        {
+          renderedValues.map((renderedValue, index) => (
+            <React.Fragment key={index}>
+              { !!index && '; ' }
+              {renderedValue}
+            </React.Fragment>
+          ))
+        }
+      </>
+    );
   }
 
   return (
-    <>
-      {
-        children.map((child, index) => (
-          <React.Fragment key={index}>
-            { !!index && '; ' }
-            {child}
-          </React.Fragment>
-        ))
-      }
-    </>
-  );
+    <Formatter component={component} value={value} />
+  )
 };
 
 ComponentValueDisplay.propTypes = {
