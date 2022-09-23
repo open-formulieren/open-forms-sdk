@@ -6,8 +6,12 @@
 $block: '.#{prefix('summary-row')}';
 
 #{$block} {
-
-  &--fieldset, &--editgrid {
+  &--editgrid, &--fieldset {
+    th {
+      p {
+        font-weight: bold !important;
+      }
+    }
 
     &:not(:first-child) {
       td, th {
