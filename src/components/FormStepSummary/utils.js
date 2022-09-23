@@ -3,7 +3,7 @@ import {Utils as FormioUtils} from 'formiojs';
 
 const iterComponentsWithData = (components, data) => {
   // Iterate over (pre-flattened) components and return key/values
-  // Use in combination with getSummaryComponents and getComponentLabel
+  // Use in combination with getComponentLabel
   return components.map(component => ({
     ...component,
     value: data[component.key],

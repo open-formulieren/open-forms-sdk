@@ -48,19 +48,3 @@ const getComponentChildren = (component) => {
   return children;
 };
 
-
-export const getSummaryComponents = (components) => {
-  let flattenedComponents = [];
-
-  FormioUtils.eachComponent(components, (component) => {
-    // if it's not a layout component, add it directly to the list
-    if (!shouldDisplayComponent(component)) return;
-
-    flattenedComponents.push(component);
-    const children = getComponentChildren(component);
-    flattenedComponents = flattenedComponents.concat(getSummaryComponents(children));
-    return true; // no recursing, we do that ourselves
-  }, true);
-
-  return flattenedComponents;
-};
