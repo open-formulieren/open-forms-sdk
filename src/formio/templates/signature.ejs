@@ -4,9 +4,9 @@
   tabindex="{{ctx.component.tabindex || 0}}"
   ref="padBody"
 >
-  <a class="btn btn-sm btn-light signature-pad-refresh utrecht-button utrecht-button--html-button utrecht-button--subtle" ref="refresh">
+  <button type="button" class="btn btn-sm btn-light signature-pad-refresh utrecht-button utrecht-button--html-button utrecht-button--subtle" ref="refresh">
     <i class="{{ctx.iconClass('refresh')}}"></i>
-  </a>
+  </button>
   <canvas class="signature-pad-canvas" height="{{ctx.component.height}}" ref="canvas"></canvas>
   {% if (ctx.required) { %}
   <span class="form-control-feedback field-required-inline text-danger">
