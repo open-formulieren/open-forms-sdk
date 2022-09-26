@@ -19,7 +19,6 @@ const ButtonsToolbar = ({literals, canSubmitStep, canSubmitForm, loginRequired, 
           <ToolbarList>
             <Button
               variant="anchor"
-              component="a"
               onClick={onNavigatePrevPage}
             ><Literal name="previousText"/></Button>
           </ToolbarList>
