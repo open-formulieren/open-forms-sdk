@@ -22,6 +22,7 @@ module.exports = {
   "core": {
     "builder": "@storybook/builder-webpack5"
   },
+  staticDirs: ['../src/img/'],
   "webpackFinal": async (sbConfig, { configType }) => {
     // configType is DEVELOPMENT or PRODUCTION
     const craConfig = configFactory(configType.toLowerCase());
