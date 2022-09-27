@@ -126,6 +126,52 @@ class EditGrid extends FormioEditGrid {
 
     return !!valid;
   }
+
+  // TODO Remove when we upgrade Formio
+  // Copied from Formio 4.13.13. In version 4.12.x the errors are not wrapped in the translation function
+  checkComponentValidity(data, dirty, row, options) {
+    const superValid = super.checkComponentValidity(data, dirty, row, options);
+
+    if (superValid) return superValid;
+
+    let rowsValid = true;
+    let rowsEditing = false;
+
+    this.editRows.forEach((editRow, index) => {
+      // Trigger all errors on the row.
+      const rowValid = this.validateRow(editRow, editRow.alerts || dirty);
+
+      rowsValid &= rowValid;
+
+      if (this.rowRefs) {
+        const rowContainer = this.rowRefs[index];
+
+        if (rowContainer) {
+          const errorContainer = rowContainer.querySelector('.editgrid-row-error');
+
+          if (!rowValid && errorContainer) {
+            errorContainer.textContent = this.t('invalidRowError');
+          }
+        }
+      }
+      // If this is a dirty check, and any rows are still editing, we need to throw validation error.
+      rowsEditing |= (dirty && this.isOpen(editRow));
+    });
+
+    if (!rowsValid) {
+      this.setCustomValidity(this.t('invalidRowsError'), dirty);
+      return false;
+    }
+    else if (rowsEditing && this.saveEditMode) {
+      this.setCustomValidity(this.t('unsavedRowsError'), dirty);
+      return false;
+    }
+
+    const message = this.invalid || this.invalidMessage(data, dirty);
+    this.setCustomValidity(message, dirty);
+
+    return superValid;
+  }
 }
 
 
