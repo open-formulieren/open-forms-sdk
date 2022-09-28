@@ -35,11 +35,15 @@ it('Unfilled dates displayed properly', () => {
 
   act(() => {
     render(
-      <SummaryTableRow
-        name="Date of birth"
-        value=""
-        component={dateComponent}
-      />,
+      <table>
+        <tbody>
+          <SummaryTableRow
+            name="Date of birth"
+            value=""
+            component={dateComponent}
+          />
+        </tbody>
+      </table>,
       container
     );
   });
@@ -77,11 +81,15 @@ it('Multi-value select field displayed properly', () => {
         locale="nl"
         messages={messagesNL}
       >
-        <SummaryTableRow
-          name="Select Pets"
-          value={["dog", "fish"]}
-          component={selectBoxesComponent}
-        />
+        <table>
+          <tbody>
+            <SummaryTableRow
+              name="Select Pets"
+              value={["dog", "fish"]}
+              component={selectBoxesComponent}
+            />
+          </tbody>
+        </table>
       </IntlProvider>,
       container
     );

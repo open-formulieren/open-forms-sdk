@@ -1,16 +1,6 @@
 import React from 'react';
 import {Utils as FormioUtils} from 'formiojs';
 
-const iterComponentsWithData = (components, data) => {
-  // Iterate over (pre-flattened) components and return key/values
-  // Use in combination with getComponentLabel
-  return components.map(component => ({
-    ...component,
-    value: data[component.key],
-  }));
-};
-
-
 const getComponentLabel = (component) => {
   if (component === undefined) {
     // If no component is found then just return an empty string
@@ -68,4 +58,4 @@ const isChildOfEditGrid = (component, configuration) => {
   return false;
 };
 
-export {iterComponentsWithData, getComponentLabel, humanFileSize, isChildOfEditGrid};
+export {getComponentLabel, humanFileSize, isChildOfEditGrid};
