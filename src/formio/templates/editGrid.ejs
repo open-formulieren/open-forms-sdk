@@ -24,7 +24,7 @@
           {% } %}
 
           <!-- Formio needs a div with class="has-error" with inside a div with class="editgrid-row-error" -->
-          <div class="openforms-errors has-error">
+          <div class="{{ctx.ofPrefix}}errors has-error">
             <div class="editgrid-row-error">{{ctx.errors[rowIndex]}}</div>
           </div>
         </li>

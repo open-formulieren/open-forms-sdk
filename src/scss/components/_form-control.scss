@@ -16,28 +16,28 @@
     display: none;
   }
 
-  .error {
+  &.error {
     @include border(left, var(--of-color-danger), 4px);
     padding-left: $grid-margin-3;
   }
 
-  .warning {
+  &.warning {
     @include border(left, var(--of-color-warning), 4px);
     padding-left: $grid-margin-3;
   }
 
-  .success {
+  &.success {
     @include border(left, var(--of-color-success), 4px);
     padding-left: $grid-margin-3;
   }
 
-  .info {
+  &.info {
     @include border(left, var(--of-color-info), 4px);
     padding-left: $grid-margin-3;
   }
 
-  .formio-error-wrapper,
-  .has-error {
+  &.formio-error-wrapper,
+  &.has-error {
     @include border(left, var(--of-color-danger), 4px);
     padding: $grid-margin-3;
     background-color: var(--of-alert-error-bg);
