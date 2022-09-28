@@ -16,24 +16,31 @@
     display: none;
   }
 
-  &[class*="error"] {
+  &.error {
     @include border(left, var(--of-color-danger), 4px);
     padding-left: $grid-margin-3;
   }
 
-  &[class*="warning"] {
+  &.warning {
     @include border(left, var(--of-color-warning), 4px);
     padding-left: $grid-margin-3;
   }
 
-  &[class*="success"] {
+  &.success {
     @include border(left, var(--of-color-success), 4px);
     padding-left: $grid-margin-3;
   }
 
-  &[class*="info"] {
+  &.info {
     @include border(left, var(--of-color-info), 4px);
     padding-left: $grid-margin-3;
+  }
+
+  &.formio-error-wrapper,
+  &.has-error {
+    @include border(left, var(--of-color-danger), 4px);
+    padding: $grid-margin-3;
+    background-color: var(--of-alert-error-bg);
   }
 
   .#{prefix(errors)},
