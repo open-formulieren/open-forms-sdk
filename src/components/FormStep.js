@@ -495,6 +495,13 @@ const FormStep = ({
       return;
     }
 
+    formInstance.on('componentError', (error) => {
+      let firstComponentWithError = formInstance.getComponent(error.component.key);
+      if (firstComponentWithError && firstComponentWithError.element) {
+        firstComponentWithError.element.scrollIntoView();
+      }
+    });
+
     // We cannot filter 'blank' values to prevent Formio validation from running, as
     // Formio will use the default values in that case which have been explicitly
     // unset. In the situation that we have invalid backend data (loading a submission
