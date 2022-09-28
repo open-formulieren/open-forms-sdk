@@ -40,7 +40,7 @@ import Card from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-import {findPreviousApplicableStep, isLastStep} from 'components/utils';
+import {eventTriggeredBySubmitButton, findPreviousApplicableStep, isLastStep} from 'components/utils';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import {ConfigContext, FormioTranslations} from 'Context';
 import { ValidationError } from 'errors';
@@ -418,6 +418,12 @@ const FormStep = ({
   // into that to handle the actual submission.
   const onReactSubmit = async (event) => {
     event.preventDefault();
+
+    // Issue #2084 - The button to save a row of an editgrid triggers a submit if there are validation errors
+    if(!eventTriggeredBySubmitButton(event)) {
+      return;
+    }
+
     if (!canSubmit) return;
 
     // current is the component, current.instance is the component instance, and that

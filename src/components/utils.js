@@ -55,4 +55,21 @@ const getLoginRedirectUrl = (form) => {
   }
 }
 
-export {findNextApplicableStep, findPreviousApplicableStep, isLastStep, getLoginRedirectUrl, getLoginUrl};
+const eventTriggeredBySubmitButton = (event) => {
+  const submitterAttributes = event.nativeEvent.submitter.attributes;
+
+  for (const attribute of submitterAttributes) {
+    if (attribute.name === 'type' && attribute.value === 'submit') return true;
+  }
+
+  return false;
+};
+
+export {
+  findNextApplicableStep,
+  findPreviousApplicableStep,
+  isLastStep,
+  getLoginRedirectUrl,
+  getLoginUrl,
+  eventTriggeredBySubmitButton,
+};
