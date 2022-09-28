@@ -3,14 +3,10 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from 'react-intl';
 
-import FormStepSummary from './index';
+import FormStepSummary, {SummaryTableRow} from './index';
 import messagesNL from 'i18n/compiled/nl.json';
 import {
-  testStepDataEmptyDate,
-  testStepDataSelectMultivalue,
-  testStepEmptyFields,
-  testStepColumns,
-  testStepHiddenFieldsetHeader,
+  testEmptyFields,
 } from './fixtures';
 
 
@@ -31,19 +27,23 @@ afterEach(() => {
 
 
 it('Unfilled dates displayed properly', () => {
+  const dateComponent = {
+    "key": "dateOfBirth",
+    "type": "date",
+    "format": "dd-MM-yyyy",
+  };
 
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
-        <FormStepSummary
-          stepData={testStepDataEmptyDate}
-          editStepUrl="http://test-url.nl"
-          editStepText="Change"
-        />
-      </IntlProvider>,
+      <table>
+        <tbody>
+          <SummaryTableRow
+            name="Date of birth"
+            value=""
+            component={dateComponent}
+          />
+        </tbody>
+      </table>,
       container
     );
   });
@@ -53,6 +53,27 @@ it('Unfilled dates displayed properly', () => {
 });
 
 it('Multi-value select field displayed properly', () => {
+  const selectBoxesComponent = {
+    "key": "selectPets",
+    "type": "select",
+    "multiple": true,
+    "data": {
+      "values": [
+        {
+          "label": "Cat",
+          "value": "cat"
+        },
+        {
+          "label": "Dog",
+          "value": "dog"
+        },
+        {
+          "label": "Fish",
+          "value": "fish"
+        }
+      ]
+    }
+  };
 
   act(() => {
     render(
@@ -60,11 +81,15 @@ it('Multi-value select field displayed properly', () => {
         locale="nl"
         messages={messagesNL}
       >
-        <FormStepSummary
-          stepData={testStepDataSelectMultivalue}
-          editStepUrl="http://test-url.nl"
-          editStepText="Change"
-        />
+        <table>
+          <tbody>
+            <SummaryTableRow
+              name="Select Pets"
+              value={["dog", "fish"]}
+              component={selectBoxesComponent}
+            />
+          </tbody>
+        </table>
       </IntlProvider>,
       container
     );
@@ -75,19 +100,14 @@ it('Multi-value select field displayed properly', () => {
 });
 
 it('Empty fields', () => {
-
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
-        <FormStepSummary
-          stepData={testStepEmptyFields}
-          editStepUrl="http://test-url.nl"
-          editStepText="Change"
-        />
-      </IntlProvider>,
+      <FormStepSummary
+        name="Form Step 1"
+        slug="fs-1"
+        editStepText="Change"
+        data={testEmptyFields}
+      />,
       container
     );
   });
@@ -100,49 +120,25 @@ it('Empty fields', () => {
 });
 
 it('Columns without labels are not rendered', () => {
+  const columnComponent = {
+    key: 'columns',
+    type: 'columns',
+    columns: []
+  };
+
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
-        <FormStepSummary
-          stepData={testStepColumns}
-          editStepUrl="http://test-url.nl"
-          editStepText="Change"
-        />
-      </IntlProvider>,
+      <SummaryTableRow
+        name=""
+        value={null}
+        component={columnComponent}
+      />,
       container
     );
   });
 
   const tableRows = container.getElementsByClassName('openforms-table__row');
 
-  expect(tableRows.length).toEqual(2);
-  expect(tableRows[0].querySelector('.openforms-table__head').textContent).toEqual('Input 1');
-  expect(tableRows[1].querySelector('.openforms-table__head').textContent).toEqual('Input 2');
+  expect(tableRows.length).toEqual(0);
 });
 
-it('Columns without labels are not rendered', () => {
-  act(() => {
-    render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
-        <FormStepSummary
-          stepData={testStepHiddenFieldsetHeader}
-          editStepUrl="http://test-url.nl"
-          editStepText="Change"
-        />
-      </IntlProvider>,
-      container
-    );
-  });
-
-  const tableRows = container.getElementsByClassName('openforms-table__row');
-
-  expect(tableRows.length).toEqual(2);
-  expect(tableRows[0].querySelector('.openforms-table__head').textContent).toEqual('Input 1');
-  expect(tableRows[1].querySelector('.openforms-table__head').textContent).toEqual('Input 2');
-});

@@ -50,7 +50,7 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   const onLogout = jest.fn();
   const onConfirm = jest.fn();
 
-  useAsync.mockReturnValue({loading: false});
+  useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue(submissionIsAuthenticated);
 
   act(() => {
@@ -81,7 +81,7 @@ it('Summary does not display logout button if loginRequired is false', () => {
   const onLogout = jest.fn();
   const onConfirm = jest.fn();
 
-  useAsync.mockReturnValue({loading: false});
+  useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue(SUBMISSION);
 
   act(() => {
