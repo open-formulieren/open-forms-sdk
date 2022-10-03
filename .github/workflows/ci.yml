@@ -55,6 +55,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: sdk-build
+          path: dist/
 
       - name: Run tests
         run: |
@@ -86,6 +87,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: sdk-build
+          path: dist/
 
       - name: Publish package to NPM
         run: |
