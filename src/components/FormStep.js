@@ -247,6 +247,7 @@ const FormStep = ({
         payload: stepDetail,
       });
       configurationRef.current = stepDetail.formStep.configuration;
+      window.scrollTo(0, 0, {behavior: 'smooth'})
     },
     [submissionStep.url]
   );
