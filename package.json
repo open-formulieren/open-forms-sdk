@@ -34,7 +34,7 @@
     "@sentry/tracing": "^6.13.2",
     "classnames": "^2.3.1",
     "flatpickr": "^4.6.9",
-    "formiojs": "^4.12.7",
+    "formiojs": "4.13.12",
     "ibantools": "^3.3.0",
     "immer": "^9.0.6",
     "leaflet": "^1.7.1",
