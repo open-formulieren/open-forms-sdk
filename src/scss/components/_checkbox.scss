@@ -65,11 +65,17 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   // Style specific for radio
   & [type=radio] ~ &__checkmark {
     @include rounded;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   & [type=radio]:checked ~ &__checkmark:after {
-    content: "\2022";
-    font-weight: bold;
-    color: var(--of-color-bg);
+    @include rounded;
+    display: block;
+    content: "";
+    background-color: var(--of-color-bg);
+    width: 0.4em;
+    height: 0.4em;
   }
 }
