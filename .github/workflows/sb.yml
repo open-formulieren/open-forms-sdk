@@ -57,3 +57,26 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+
+  chromatic:
+    name: Visual regression test with Chromatic
+    runs-on: ubuntu-latest
+    needs:
+      - storybook
+
+    if: "${{ secrets.CHROMATIC_PROJECT_TOKEN }}" != ""
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: github-pages
+          path: ./storybook-static
+
+      - name: Publish to Chromatic for visual regression tests
+        uses: chromaui/action@v1
+        if: github.event.pull_request.draft == false
+        with:
+          autoAcceptChanges: main
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          storybookBuildDir: ./storybook-static
