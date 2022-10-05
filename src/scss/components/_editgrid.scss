@@ -26,6 +26,11 @@
     }
   }
 
+  &__group-label {
+    @include h4;
+    padding-bottom: $grid-margin-4;
+  }
+
   &__list {
     list-style: none;
   }
