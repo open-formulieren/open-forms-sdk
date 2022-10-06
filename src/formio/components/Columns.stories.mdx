@@ -1,0 +1,123 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { FormioComponent, FormDecorator } from './story-util';
+
+<Meta
+  title="Form.io components/Columns"
+  argTypes={{
+    components: {
+      type: { name: 'array' },
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: { sort: 'requiredFirst' }
+  }}
+/>
+
+# Columns
+
+Columns are intended for simple grouping of components on a single line, e.g. a
+postal code + house number combination.
+
+Complex nested structures are out of scope, as aligning all the labels, inputs, help texts
+and error messages is not trivial due to the possible absence of these components.
+
+## Default
+
+export const Template = ({ components = [], ...args}) => (
+  <FormioComponent components={components}/>
+);
+
+<Canvas>
+  <Story name="Default" args={{ 
+      components: [
+        {
+          key: 'cols1', 
+          type: 'columns',
+          label: 'Columns 1',
+          columns: [
+            {
+              size: 4,
+              components: [
+                {
+                  key: 'howManyDroidsDidYouDestroy',
+                  type: 'textfield',
+                  label: '# droids destroyed?',
+                }
+              ],
+            },
+            {
+              size: 4,
+              components: [
+                {
+                  key: 'whatAboutDroidekas',
+                  type: 'textfield',
+                  label: 'What about Droideka\'s?',
+                },
+              ],
+            },
+            {
+              size: 4,
+              components: [
+                {
+                  key: 'doYouTrustYourClones',
+                  type: 'textfield',
+                  label: 'Do you trust your clones?',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          key: 'isTheForceTrulyWithYou',
+          type: 'textfield',
+          label: 'Is the force truly with you?',
+          description: 'Harum provident earum quod perferendis dolor tempora. Est ipsum molestiae dolor repellendus id omnis vel.',
+        }
+      ]
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Default" />
+
+## Address
+
+<Canvas>
+  <Story name="Address" args={{ 
+      components: [
+        {
+          key: 'address',
+          type: 'columns',
+          label: 'Address columns',
+          columns: [
+            {
+              size: 3,
+              components: [
+                {
+                  key: 'postalCode',
+                  type: 'postcode',
+                  label: 'Postal code',
+                }
+              ],
+            },
+            {
+              size: 3,
+              components: [
+                {
+                  key: 'number',
+                  type: 'textfield',
+                  label: 'House number',
+                },
+              ],
+            },
+          ]
+        }
+      ]
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Address" />

@@ -4,11 +4,11 @@ import {PREFIX}  from 'formio/constants';
 
 export const FormioForm = ({ form }) => (<Form form={form} />);
 
-export const FormioComponent = ({ component }) => (
+export const FormioComponent = ({ component, components=[] }) => (
   <Form
     form={{
       type: 'form',
-      components: [component],
+      components: components.length ? components : [component],
     }}
     options={{
       noAlerts: true,
