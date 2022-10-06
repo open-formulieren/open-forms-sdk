@@ -27,8 +27,8 @@ and error messages is not trivial due to the possible absence of these component
 The column width is dictated by the `size` key, which should be an integer value between
 `1` and `12` since we're using a 12-column grid.
 
-On mobile, the default width is 100%, but you can tweak this using the optional `sizeMobile`
-key, again ranging between `1` and `12`.
+On mobile, the default width is 100%, but you can tweak this using the optional
+`sizeMobile` key, ranging between `1` and `4`.
 
 ## Default
 
@@ -117,18 +117,22 @@ export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSiz
     name="Column sizes"
     argTypes={{
       col1Size: { 
+        name: 'Size column 1',
         type: { required: true },
         control: { type: 'range', min: 1, max: 12, step: 1 }
       },
       col2Size: { 
+        name: 'Size column 2',
         type: { required: true },
         control: { type: 'range', min: 1, max: 12, step: 1 }
       },
       col1MobileSize: { 
-        control: { type: 'range', min: 0, max: 12, step: 1 }
+        name: 'Size on mobile column 1',
+        control: { type: 'range', min: 0, max: 4, step: 1 }
       },
       col2MobileSize: { 
-        control: { type: 'range', min: 0, max: 12, step: 1 }
+        name: 'Size on mobile column 2',
+        control: { type: 'range', min: 0, max: 4, step: 1 }
       },
       components: {
         table: {
