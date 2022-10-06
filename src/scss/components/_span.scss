@@ -1,0 +1,21 @@
+@import '~microscope-sass/lib/bem';
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix('span')} {
+  @include text;
+
+  @include modifier('muted') {
+    color: var(--of-color-fg-muted) !important;
+  }
+
+  @include modifier('indent') {
+    padding-left: 0.6em;
+  }
+
+  @include modifier('inherit') {
+    color: inherit!important;
+  }
+}
