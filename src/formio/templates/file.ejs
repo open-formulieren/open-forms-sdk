@@ -87,6 +87,9 @@
           {{ctx.t('to attach a file.')}}
         {% } %}
 
+        {% if (ctx.component.fileMaxSize) { %}
+          {{ctx.t('maxFileSizeMessage', {maxFileSize: ctx.component.fileMaxSize})}}
+        {% } %}
     </div>
   {% } else { %}
     <div>
