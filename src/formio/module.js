@@ -15,7 +15,7 @@ import TimeField from './components/TimeField';
 import PostcodeField from './components/PostcodeField';
 import PhoneNumberField from './components/PhoneNumberField';
 import BsnField from './components/BsnField';
-import FileField from './components/FileField';
+import FileField, {CSRFEnabledUrl} from './components/FileField';
 import Map from './components/Map';
 import PasswordField from './components/Password';
 import LicensePlateField from './components/LicensePlateField';
@@ -47,6 +47,9 @@ const FormIOModule = {
     licenseplate: LicensePlateField,
     coSign: CoSign,
     editgrid: EditGrid,
+  },
+  providers: {
+    storage: {url: CSRFEnabledUrl},
   },
 };
 
