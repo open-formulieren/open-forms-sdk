@@ -632,6 +632,7 @@ const FormStep = ({
         closeModal={closeFormStepSaveModal}
         onSaveConfirm={onSaveConfirm}
         suspendFormUrl={`${submission.url}/_suspend`}
+        submissionId={submission.id}
       />
     </>
   );
