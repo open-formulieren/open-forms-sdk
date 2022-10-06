@@ -16,6 +16,15 @@ $column-half-gap-size: math.div($column-gap-size, 2);
 
   @include mobile-only {
     flex-wrap: wrap;
+
+    .column {
+      width: 100%;
+      flex-basis: 100%;
+
+      &:not(:first-child) {
+        padding-top: $grid-margin-3;
+      }
+    }
   }
 
   @include desktop {
