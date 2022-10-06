@@ -22,6 +22,14 @@ postal code + house number combination.
 Complex nested structures are out of scope, as aligning all the labels, inputs, help texts
 and error messages is not trivial due to the possible absence of these components.
 
+**Column width**
+
+The column width is dictated by the `size` key, which should be an integer value between
+`1` and `12` since we're using a 12-column grid.
+
+On mobile, the default width is 100%, but you can tweak this using the optional `sizeMobile`
+key, again ranging between `1` and `12`.
+
 ## Default
 
 export const Template = ({ components = [], ...args}) => (
@@ -82,6 +90,68 @@ export const Template = ({ components = [], ...args}) => (
 
 <Props story="Default" />
 
+## Size control
+
+export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSize, ...args }) => (
+  <FormioComponent component={{
+    id: 'columnsSize',
+    type: 'columns',
+    label: 'Column sizes',
+    columns: [
+      {
+        size: col1Size,
+        sizeMobile: col1MobileSize,
+        components: [{type: 'content', html: `Size: ${col1Size}, mobile size: ${col1MobileSize || 'unset'}`}],
+      },
+      {
+        size: col2Size,
+        sizeMobile: col2MobileSize,
+        components: [{type: 'content', html: `Size: ${col2Size}, mobile size: ${col2MobileSize || 'unset'}`}],
+      }
+    ]
+  }}/>
+);
+
+<Canvas>
+  <Story 
+    name="Column sizes"
+    argTypes={{
+      col1Size: { 
+        type: { required: true },
+        control: { type: 'range', min: 1, max: 12, step: 1 }
+      },
+      col2Size: { 
+        type: { required: true },
+        control: { type: 'range', min: 1, max: 12, step: 1 }
+      },
+      col1MobileSize: { 
+        control: { type: 'range', min: 0, max: 12, step: 1 }
+      },
+      col2MobileSize: { 
+        control: { type: 'range', min: 0, max: 12, step: 1 }
+      },
+      components: {
+        table: {
+          disable: true,
+        }
+      }
+    }}
+    parameters={{
+      controls: {sort: 'requiredFirst'}
+    }}
+    args={{
+      col1Size: 8,
+      col2Size: 4,
+      col1MobileSize: 0,
+      col2MobileSize: 0,
+    }}
+  >
+    {SizeTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Column sizes" />
+
 ## Address
 
 <Canvas>
@@ -94,6 +164,7 @@ export const Template = ({ components = [], ...args}) => (
           columns: [
             {
               size: 3,
+              sizeMobile: 6,
               components: [
                 {
                   key: 'postalCode',
@@ -104,6 +175,7 @@ export const Template = ({ components = [], ...args}) => (
             },
             {
               size: 3,
+              sizeMobile: 6,
               components: [
                 {
                   key: 'number',
