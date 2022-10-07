@@ -2,6 +2,33 @@
 Changelog
 =========
 
+1.2.1 (2022-10-07)
+==================
+
+First 1.2.x series bugfixes
+
+* [#2053] Fixed styling of a number of components to not overlay other page elements
+* [#2056] Fixed broken file upload
+* [#2058] Refactored summary page display to evaluate logic on backend instead of (badly)
+  replicating this on the frontend
+* [#2075] Fixed missing translations for (validation) errors in repeating groups
+* [#2077] Make 'previous page' and privacy checkbox accessible with tab-navigate
+* [#2073] Fixed accidental styling of content due to specific key names
+* [#2067] Applied consistent error message style
+* [#2084] Fixed "repeating group" row validation triggering complete form validation
+* [#2082] Scroll first component with error into view if there are validation errors
+* 📦️ restore build artifact correctly so dist/ ends up in npm
+* [#2035] Scroll to top on step load
+* [#551] Upgrade Formio.js to 4.13.12
+* Fixed alignment Radio button circle/dot
+* [#2101] Add label to repeating group
+* Ensured that CSRF token is sent in file upload/delete calls
+* Fixed Formio options for proper formio.js component rendering in Storybook
+* [#2113] Added support for mobile styling of columns
+* [#2124] Display max file size in file upload widget
+* [#2127] Fixed UI state on hover for non-clickable nav "links"
+* [#2114] replaced removed session delete endpoint
+
 1.2.0 (2022-09-19)
 ==================
 
