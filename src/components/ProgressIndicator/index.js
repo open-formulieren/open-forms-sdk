@@ -12,6 +12,7 @@ import FAIcon from 'components/FAIcon';
 import Types from 'types';
 import {getBEMClassName} from 'utils';
 import {IsFormDesigner} from 'headers';
+import Body from 'components/Body';
 
 import ProgressItem from './ProgressItem';
 
@@ -26,24 +27,31 @@ const getLinkModifiers = (active, isApplicable) => {
 };
 
 
-const LinkOrDisabledAnchor = ({ to, useLink, children, ...props }) => {
+const LinkOrSpan = ({isActive, isApplicable, to, useLink, children, ...props}) => {
   if (useLink) {
-    return <Link to={to} component={Anchor} {...props}>{children}</Link>
+    return <Link to={to} component={Anchor} modifiers={ getLinkModifiers(isActive, isApplicable) } {...props}>{children}</Link>
   }
-  return <Anchor component="span" {...props}>{children}</Anchor>
+
+  return <Body component="span" modifiers={['muted']} {...props}>{children}</Body>
 };
 
-LinkOrDisabledAnchor.propTypes = {
+LinkOrSpan.propTypes = {
   to: PropTypes.string.isRequired,
   useLink: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  isApplicable: PropTypes.bool.isRequired,
 };
 
 
 const SidebarStepStatus = ({isCurrent, step, canNavigate, isApplicable=false, completed=false}) => {
-  const modifiers = getLinkModifiers(isCurrent, isApplicable);
   return (
     <ProgressItem completed={completed}>
-      <LinkOrDisabledAnchor to={`/stap/${step.slug}`} useLink={isApplicable && canNavigate} modifiers={modifiers}>
+      <LinkOrSpan
+        to={`/stap/${step.slug}`}
+        useLink={isApplicable && canNavigate}
+        isActive={isCurrent}
+        isApplicable={isApplicable}
+      >
         <FormattedMessage
           description="Step label in progress indicator"
           defaultMessage={`
@@ -56,7 +64,7 @@ const SidebarStepStatus = ({isCurrent, step, canNavigate, isApplicable=false, co
             isApplicable: isApplicable,
           }}
         />
-      </LinkOrDisabledAnchor>
+      </LinkOrSpan>
     </ProgressItem>
   );
 };
@@ -98,7 +106,7 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
 
   const applicableSteps = hasSubmission ? submission.steps.filter(step => step.isApplicable) : [];
   const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
-  const applicableCompleted = applicableSteps.length === applicableAndCompletedSteps.length;
+  const applicableCompleted = hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
@@ -169,13 +177,14 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
           showOverview
           && (
             <ProgressItem completed={confirmationMatch}>
-              <LinkOrDisabledAnchor
+              <LinkOrSpan
                 to={'/overzicht'}
                 useLink={applicableCompleted}
-                modifiers={getLinkModifiers(summaryMatch, applicableCompleted)}
+                isActive={summaryMatch}
+                isApplicable={applicableCompleted}
               >
                 {stepLabels.overview}
-              </LinkOrDisabledAnchor>
+              </LinkOrSpan>
             </ProgressItem>
           )
         }
@@ -183,10 +192,10 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
           showConfirmation
           && (
             <ProgressItem completed={completed}>
-              <Anchor
+              <Body
                 component="span"
-                modifiers={getLinkModifiers(confirmationMatch, confirmationMatch && applicableCompleted)}
-              >{stepLabels.confirmation}</Anchor>
+                modifiers={completed ? [] : ['muted']}
+              >{stepLabels.confirmation}</Body>
             </ProgressItem>
           )
         }
