@@ -39,7 +39,7 @@ const FormStepSummary = ({slug, name, data, editStepText}) => {
 
     return (
       <>
-        <Toolbar modifiers={['compact']}>
+        <Toolbar modifiers={['compact', 'underlined', 'margin-bottom']}>
           <ToolbarList>
             <Caption component={'span'}>{name}</Caption>
           </ToolbarList>

@@ -26,6 +26,16 @@
     justify-content: flex-end;
   }
 
+  @include modifier('underlined') {
+    border-bottom-style: $typography-style-border;
+    border-bottom-width: $typography-size-border;
+    border-bottom-color: $color-border;
+  }
+
+  @include modifier('margin-bottom') {
+    margin-bottom: $grid-container-margin;
+  }
+
   @include mobile-only {
     display: block;
 
