@@ -95,7 +95,7 @@ $typography-font-size-h3-mobile: $typography-font-size-h3 !default;
 $typography-font-size-h3-tablet: $typography-font-size-h3 !default;
 $typography-font-size-h3-laptop: $typography-font-size-h3 !default;
 $typography-font-size-h3-desktop: $typography-font-size-h3 !default;
-$typography-font-size-h4: ($typography-font-size-text * 1.5) !default;
+$typography-font-size-h4: math.div(19, 16) * 1rem;
 $typography-font-size-h4-mobile: $typography-font-size-h4 !default;
 $typography-font-size-h4-tablet: $typography-font-size-h4 !default;
 $typography-font-size-h4-laptop: $typography-font-size-h4 !default;
