@@ -2,6 +2,11 @@
 Changelog
 =========
 
+1.2.2 (2022-10-07)
+==================
+
+Fixed regression in danger button styling due to missing design tokens.
+
 1.2.1 (2022-10-07)
 ==================
 

@@ -7,7 +7,7 @@ publiccodeYmlVersion: '0.2'
 name: Open Forms SDK
 url: 'http://github.com/open-formulieren/open-forms-sdk.git'
 softwareType: standalone/frontend
-softwareVersion: 1.2.1
+softwareVersion: 1.2.2
 releaseDate: 't.b.d.'
 logo: 'https://github.com/open-formulieren/open-forms/blob/master/docs/logo.svg'
 platforms:
