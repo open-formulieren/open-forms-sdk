@@ -10,18 +10,45 @@
 $column-gap-size: $grid-margin-1;
 $column-half-gap-size: math.div($column-gap-size, 2);
 
+$col-sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+$col-sizes--mobile: 1, 2, 3, 4;
+
 .#{prefix(columns)} {
   display: flex;
   flex-direction: row;
 
+  .column {
+    box-sizing: border-box;
+  }
+
   @include mobile-only {
     flex-wrap: wrap;
+
+    .column {
+      width: 100%;
+      flex-basis: 100%;
+
+      &:not(:first-child) {
+        padding-top: $grid-margin-3;
+      }
+
+      @each $col-size in $col-sizes--mobile {
+        &--span-mobile-#{$col-size} {
+          $width: math.div($col-size, 4) * 100%;
+          width: $width;
+          max-width: $width;
+          flex-basis: $width;
+
+          &:not(:first-child) {
+            padding-top: 0;
+          }
+        }
+      }
+    }
   }
 
   @include desktop {
     .column {
-      $col-sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11;
-
       @each $col-size in $col-sizes {
         &--span-#{$col-size} {
           @include bootstrap-span(max-width, $col-size);
@@ -44,5 +71,4 @@ $column-half-gap-size: math.div($column-gap-size, 2);
     padding-left: $column-half-gap-size;
     padding-right: $column-half-gap-size;
   }
-
 }
