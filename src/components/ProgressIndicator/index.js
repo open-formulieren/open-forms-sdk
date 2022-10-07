@@ -12,7 +12,7 @@ import FAIcon from 'components/FAIcon';
 import Types from 'types';
 import {getBEMClassName} from 'utils';
 import {IsFormDesigner} from 'headers';
-import Span from 'components/Span';
+import Body from 'components/Body';
 
 import ProgressItem from './ProgressItem';
 
@@ -32,7 +32,7 @@ const LinkOrSpan = ({isActive, isApplicable, to, useLink, children, ...props}) =
     return <Link to={to} component={Anchor} modifiers={ getLinkModifiers(isActive, isApplicable) } {...props}>{children}</Link>
   }
 
-  return <Span modifiers={['muted']} {...props}>{children}</Span>
+  return <Body component="span" modifiers={['muted']} {...props}>{children}</Body>
 };
 
 LinkOrSpan.propTypes = {
@@ -192,9 +192,10 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
           showConfirmation
           && (
             <ProgressItem completed={completed}>
-              <Span
+              <Body
+                component="span"
                 modifiers={completed ? [] : ['muted']}
-              >{stepLabels.confirmation}</Span>
+              >{stepLabels.confirmation}</Body>
             </ProgressItem>
           )
         }
