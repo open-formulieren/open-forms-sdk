@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from 'react-intl';
 
-import FormStepSummary, {SummaryTableRow} from './index';
+import FormStepSummary, {LabelValueRow} from './index';
 import messagesNL from 'i18n/compiled/nl.json';
 import {
   testEmptyFields,
@@ -35,20 +35,16 @@ it('Unfilled dates displayed properly', () => {
 
   act(() => {
     render(
-      <table>
-        <tbody>
-          <SummaryTableRow
-            name="Date of birth"
-            value=""
-            component={dateComponent}
-          />
-        </tbody>
-      </table>,
+      <LabelValueRow
+        name="Date of birth"
+        value=""
+        component={dateComponent}
+      />,
       container
     );
   });
 
-  const value = container.getElementsByClassName('openforms-table__cell')[0].textContent;
+  const value = container.getElementsByClassName('openforms-summary-row__value')[0].textContent;
   expect(value).toEqual('');
 });
 
@@ -81,21 +77,17 @@ it('Multi-value select field displayed properly', () => {
         locale="nl"
         messages={messagesNL}
       >
-        <table>
-          <tbody>
-            <SummaryTableRow
-              name="Select Pets"
-              value={["dog", "fish"]}
-              component={selectBoxesComponent}
-            />
-          </tbody>
-        </table>
+        <LabelValueRow
+          name="Select Pets"
+          value={["dog", "fish"]}
+          component={selectBoxesComponent}
+        />
       </IntlProvider>,
       container
     );
   });
 
-  const value = container.getElementsByClassName("openforms-table__cell")[0].textContent;
+  const value = container.getElementsByClassName("openforms-summary-row__value")[0].textContent;
   expect(value).toEqual('Dog; Fish');
 });
 
@@ -112,7 +104,7 @@ it('Empty fields', () => {
     );
   });
 
-  const emptyValues = container.getElementsByClassName("openforms-table__cell");
+  const emptyValues = container.getElementsByClassName("openforms-summary-row__value");
 
   for (const emptyValue of emptyValues) {
     expect(emptyValue.textContent).toEqual('');
@@ -128,7 +120,7 @@ it('Columns without labels are not rendered', () => {
 
   act(() => {
     render(
-      <SummaryTableRow
+      <LabelValueRow
         name=""
         value={null}
         component={columnComponent}
@@ -137,7 +129,7 @@ it('Columns without labels are not rendered', () => {
     );
   });
 
-  const tableRows = container.getElementsByClassName('openforms-table__row');
+  const tableRows = container.getElementsByClassName('openforms-summary-row');
 
   expect(tableRows.length).toEqual(0);
 });
