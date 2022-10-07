@@ -59,6 +59,7 @@ const FormStepSaveModal = ({
     closeModal,
     onSaveConfirm,
     suspendFormUrl,
+    submissionId,
 }) => {
   const history = useHistory();
   const intl = useIntl();
@@ -103,7 +104,7 @@ const FormStepSaveModal = ({
     }
     try {
       // Destroy throws an exception if the API is not successful
-      await destroy(`${config.baseUrl}authentication/session`);
+      await destroy(`${config.baseUrl}authentication/${submissionId}/session`);
     } catch (e) {
       dispatch({
         type: 'API_ERROR',
@@ -186,6 +187,7 @@ FormStepSaveModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   onSaveConfirm: PropTypes.func.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
+  submissionId: PropTypes.string.isRequired,
 };
 
 export default FormStepSaveModal;
