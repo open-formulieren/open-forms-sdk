@@ -105,7 +105,7 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
 
       return summaryData;
     },
-    [refreshedSubmission]
+    [refreshedSubmission.url]
   );
 
   if (error) {
