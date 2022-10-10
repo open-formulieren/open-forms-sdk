@@ -8,8 +8,10 @@
 $block: '.#{prefix('summary-row')}';
 
 #{$block} {
+  $summary-row-spacing: var(--of-summary-row-spacing);
+
   @include body;
-  @include margin(true, $properties: padding-top, $value-mobile: math.div($typography-margin-text,2));
+  @include margin(true, $properties: padding-top, $value-mobile: $summary-row-spacing);
   @include laptop {
     display: flex;
   }
