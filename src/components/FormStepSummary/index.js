@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 
 import {getBEMClassName} from 'utils';
 import ComponentValueDisplay from 'components/FormStepSummary/ComponentValueDisplay';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
-import Caption from 'components/Caption';
-import Button from 'components/Button';
+import Anchor from 'components/Anchor';
+import FAIcon from 'components/FAIcon';
 
 
 
@@ -38,27 +37,19 @@ const FormStepSummary = ({slug, name, data, editStepText}) => {
   const history = useHistory();
 
     return (
-      <>
-        <Toolbar modifiers={['compact', 'underlined', 'margin-bottom']}>
-          <ToolbarList>
-            <Caption component={'span'}>{name}</Caption>
-          </ToolbarList>
-          <ToolbarList>
-            <Button
-              variant="anchor"
-              component="a"
-              href={editStepUrl}
-              onClick={(event) => {
-                event.preventDefault();
-                history.push(editStepUrl);
-              }}
-            >
-              {editStepText}
-            </Button>
-          </ToolbarList>
-        </Toolbar>
+      <div className={getBEMClassName('summary')}>
+        <div className={getBEMClassName('summary__step-header')}>
+          <div className={getBEMClassName('summary__step-name')}>{name}</div>
+          <Anchor href={editStepUrl} onClick={(event) => {
+            event.preventDefault();
+            history.push(editStepUrl);
+          }}>
+            <FAIcon icon="pen-to-square" />
+            {editStepText}
+          </Anchor>
+        </div>
 
-        <div className={getBEMClassName('step-summary')}>
+        <div className={getBEMClassName('summary__step-data')}>
           {
             data.map((item, index) => (
               <LabelValueRow
@@ -70,7 +61,7 @@ const FormStepSummary = ({slug, name, data, editStepText}) => {
             ))
           }
         </div>
-      </>
+      </div>
     );
   };
 
