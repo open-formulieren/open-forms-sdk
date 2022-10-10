@@ -15,6 +15,8 @@ $block: '.#{prefix('summary-row')}';
   }
 
   @include element('label') {
+    overflow-wrap: break-word;
+
     @include mobile-only {
       font-weight: bold;
     }
@@ -22,10 +24,14 @@ $block: '.#{prefix('summary-row')}';
     @include laptop {
       flex-grow: 1;
       max-width: 50%;
+      box-sizing:border-box;
+      padding-right: $grid-margin-1;
     }
   }
 
   @include element('value'){
+    overflow-wrap: break-word;
+
     @include laptop {
       flex-grow: 1;
       max-width: 50%;
