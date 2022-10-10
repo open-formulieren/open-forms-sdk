@@ -39,7 +39,7 @@
 
     // style layout
     @at-root .#{prefix('layout__row')} & {
-      @include margin(-$grid-container-margin, $properties: (margin-left, margin-right));
+      @include margin(calc(-1 * var(--of-progress-indicator-mobile-margin)), $properties: (margin-left, margin-right));
     }
 
     @include nested('caption') {
