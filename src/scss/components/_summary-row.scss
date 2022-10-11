@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
@@ -6,29 +8,63 @@
 $block: '.#{prefix('summary-row')}';
 
 #{$block} {
-  &--editgrid, &--fieldset {
-    th {
-      p {
-        font-weight: bold !important;
-      }
+  $summary-row-spacing: var(--of-summary-row-spacing);
+
+  @include body;
+  @include margin(true, $properties: padding-top, $value-mobile: $summary-row-spacing);
+  @include laptop {
+    display: flex;
+  }
+
+  @include element('label') {
+    overflow-wrap: break-word;
+
+    @include mobile-only {
+      font-weight: bold;
     }
 
-    &:not(:first-child) {
-      td, th {
-        @include margin($properties: padding-top);
-      }
-    }
-
-    & + & {
-      td, th {
-        @include margin(0px, $properties: padding-top);
-      }
+    @include laptop {
+      flex-grow: 1;
+      max-width: 50%;
+      box-sizing:border-box;
+      padding-right: $grid-margin-1;
     }
   }
 
-  @include modifier('last') {
-    td, th {
-      @include margin(true, $properties: padding-bottom);
+  @include element('value'){
+    overflow-wrap: break-word;
+
+    @include laptop {
+      flex-grow: 1;
+      max-width: 50%;
     }
+  }
+
+  @include modifier('fieldset') {
+    &:not(:first-child) {
+      @include margin($properties: padding-top);
+    }
+
+    @include element('label') {
+      @include h4(true, $margin-properties: margin-bottom);
+      font-weight: bold;
+    }
+  }
+
+  // TODO Fix so that the label of the repetitions don't have the
+  //  same style as the parent repeating group
+  @include modifier('editgrid') {
+    &:not(:first-child) {
+      @include margin($properties: padding-top);
+    }
+
+    @include element('label') {
+      @include h4(true);
+      font-weight: bold;
+    }
+  }
+
+  &:last-child {
+    @include margin(true, $properties: padding-bottom);
   }
 }

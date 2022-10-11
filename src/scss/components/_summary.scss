@@ -1,0 +1,35 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+@import '../mixins/bem';
+
+
+.#{prefix('summary')} {
+  &:first-child {
+    padding-top: $grid-margin-2;
+  }
+
+  @include element('step-header') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+    flex-wrap: wrap;
+
+    border-bottom-style: $typography-style-border;
+    border-bottom-width: $typography-size-border;
+    border-bottom-color: $color-border;
+    padding-bottom: $grid-margin-2;
+
+    .fa-icon {
+      padding-right: 5px;
+    }
+  }
+
+  @include element('step-name') {
+    @include body;
+    @include h3;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+}
