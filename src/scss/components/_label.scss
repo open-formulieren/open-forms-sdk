@@ -6,6 +6,7 @@
   @include body;
   @include body--big;
   display: block;
+  font-weight: var(--of-label-font-weight);
 
   &.field-required:after {
     content: '*';

@@ -11,7 +11,7 @@
 
   appearance: none;
   border-radius: 0;
-  font-weight: bold;
+  font-weight: var(--of-input-font-weight);
   padding: $grid-margin-2;
   width: 100%;
 
