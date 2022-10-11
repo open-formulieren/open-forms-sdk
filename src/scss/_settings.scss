@@ -62,7 +62,7 @@ $typography-color-link-hover: $typography-color-link !default;
 $typography-color-h: $typography-color-base !default;
 $typography-default-hover-link: false !default;
 $typography-decoration-link: underline !default;
-$typography-font-family-base: 'Fira Sans', Calibri, sans-serif;
+$typography-font-family-base: var(--of-typography-sans-serif-font-family);
 $typography-font-family-text: $typography-font-family-base !default;
 $typography-font-family-h: $typography-font-family-base !default;
 $typography-font-size-text: math.div(16, 16) * 1rem;
