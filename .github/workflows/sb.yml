@@ -76,9 +76,11 @@ jobs:
           name: github-pages
           path: ./storybook-static
 
-      - run: |
-          pwd
-          tree ./storybook-static
+      - name: Extract artifact
+        run: |
+          tar -xvf artifact.tar
+          rm artifact.tar
+        working-directory: ./storybook-static
 
       - name: Publish to Chromatic for visual regression tests
         uses: chromaui/action@v1
@@ -86,4 +88,4 @@ jobs:
         with:
           autoAcceptChanges: main
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          storybookBuildDir: ./open-forms-sdk/storybook-static
+          storybookBuildDir: ./storybook-static
