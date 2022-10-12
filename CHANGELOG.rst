@@ -2,6 +2,29 @@
 Changelog
 =========
 
+1.2.3 (2022-10-12)
+==================
+
+Fixed a number of styling issues
+
+This patch introduces support for a number of new design tokens to customize styles as
+well.
+
+* Fixed flicker on summary page
+* Tweaked styles of components using design tokens
+
+  - [#2137] ``--of-file-upload-drop-area-padding`` for file upload padding
+  - [#2138] ``--of-progress-indicator-mobile-margin`` for the progress indicator
+    horizontal margins on mobile
+  - [#2142] ``--of-fieldset-legend-color`` for the fieldset legend text color
+  - [#2129] ``--of-summary-row-spacing`` for vertical spacing of summary rows
+  - [#2150] ``--of-label-font-weight`` and ``--of-input-font-weight`` for label and
+    input element font-weights.
+  - [#2152] ``--of-typography-sans-serif-font-family`` to alter the main font-family
+
+* [#2149] Fixed inconsistent padding for content components
+* [#2129] Fixed responsiveness of summary page and tweaked step header styles
+
 1.2.2 (2022-10-07)
 ==================
 
@@ -211,9 +234,9 @@ Bugfixes for issues still present in rc.2
 * [#1340] Fixed misaligned asterisk for required fields
 * [#1301] Fixed validation in component variants with multiple=True:
 
-    - BSN
-    - Date
-    - Phone number
+  - BSN
+  - Date
+  - Phone number
 
 * [#1374] Fixed broken appointment dependent-dropdowns
 
