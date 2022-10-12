@@ -70,7 +70,8 @@ jobs:
       - build
       - tests
 
-    if: startsWith(github.ref, 'refs/tags/')
+    # do not publish in forks or non-tag pushes
+    if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'open-formulieren'
 
     steps:
       - uses: actions/checkout@v3
@@ -132,11 +133,11 @@ jobs:
           --tag $IMAGE_NAME:$RELEASE_VERSION
 
       - name: Log into registry
-        if: github.event_name == 'push'  # Exclude PRs
+        if: github.event_name == 'push' && github.repository_owner == 'open-formulieren' # Exclude PRs / forks
         run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Push the Docker image
-        if: github.event_name == 'push'  # Exclude PRs
+        if: github.event_name == 'push' && github.repository_owner == 'open-formulieren' # Exclude PRs / forks
         env:
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
         run: docker push $IMAGE_NAME:$RELEASE_VERSION
