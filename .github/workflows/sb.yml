@@ -62,7 +62,7 @@ jobs:
     needs:
       - storybook
 
-    if: ${{ secrets.CHROMATIC_PROJECT_TOKEN != "" }}
+    if: ${{ secrets.CHROMATIC_PROJECT_TOKEN }} != ""
 
     steps:
       - name: Download build artifact
