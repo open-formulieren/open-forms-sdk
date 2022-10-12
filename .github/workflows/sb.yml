@@ -65,12 +65,16 @@ jobs:
     if: github.repository_owner == 'open-formulieren'
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 👈 Required to retrieve git history
+
       - name: Download build artifact
         uses: actions/download-artifact@v3
         with:
           name: github-pages
           path: ./storybook-static
-
 
       - run: |
           pwd
