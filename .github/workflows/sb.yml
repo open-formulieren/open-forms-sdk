@@ -71,6 +71,11 @@ jobs:
           name: github-pages
           path: ./storybook-static
 
+
+      - run: |
+          pwd
+          tree ./storybook-static
+
       - name: Publish to Chromatic for visual regression tests
         uses: chromaui/action@v1
         if: github.event.pull_request.draft == false || github.event.push
