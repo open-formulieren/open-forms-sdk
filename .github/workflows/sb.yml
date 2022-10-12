@@ -62,7 +62,7 @@ jobs:
     needs:
       - storybook
 
-    if: ${{ secrets.CHROMATIC_PROJECT_TOKEN }} != ""
+    if: github.repository_owner == 'open-formulieren'
 
     steps:
       - name: Download build artifact
@@ -73,7 +73,7 @@ jobs:
 
       - name: Publish to Chromatic for visual regression tests
         uses: chromaui/action@v1
-        if: github.event.pull_request.draft == false
+        if: github.event.pull_request.draft == false || github.event.push
         with:
           autoAcceptChanges: main
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
