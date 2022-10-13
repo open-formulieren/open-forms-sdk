@@ -21,16 +21,20 @@ import { FormioComponent, FormDecorator } from './story-util';
 
 ## Default
 
-export const Template = ({ id = '', label = '', ...args}) => (
+export const Template = ({ id = '', label = '', required = false, ...args}) => (
   <FormioComponent component={{
       key: id,
       type: 'checkbox',
       input: true,
       label,
+      validate: {required: required},
 }}/>);
 
 <Canvas>
   <Story name="Default" args={{ id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden'}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Required" args={{ id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden', required: true}}>
     {Template.bind({})}
   </Story>
 </Canvas>
