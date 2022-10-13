@@ -22,6 +22,7 @@ $button-padding-h: $grid-margin-2;
   $color-active: null,
   $color-background-active: null,
   $color-border-active: null,
+  $force-colors: false,
 ) {
   // build the selector either as just the parent or the parent with modifier,
   // based on the theme name
@@ -31,10 +32,19 @@ $button-padding-h: $grid-margin-2;
   }
   // now output the actual CSS rules
   @at-root #{$sel} {
-    color: $color;
-    background-color: $color-background;
-    border-right-color: $color-border;
-    border-bottom-color: $color-border;
+
+    @if $force-colors {
+      color: $color !important;
+      background-color: $color-background !important;
+    } @else {
+      color: $color;
+      background-color: $color-background;
+    }
+
+    // TODO: can be removed once there are utrecht design tokens for the bottom/right
+    // border color
+    border-right-color: $color-border !important;
+    border-bottom-color: $color-border !important;
 
     &:not([aria-disabled="true"]):hover {
       @if $color-background-hover {
@@ -42,8 +52,10 @@ $button-padding-h: $grid-margin-2;
       }
 
       @if $color-border-hover {
-        border-right-color: $color-border-hover;
-        border-bottom-color: $color-border-hover;
+        // TODO: can be removed once there are utrecht design tokens for the bottom/right
+        // border color
+        border-right-color: $color-border-hover !important;
+        border-bottom-color: $color-border-hover !important;
       }
 
       @if $decorate-on-hover {
@@ -52,18 +64,22 @@ $button-padding-h: $grid-margin-2;
     }
 
     &:active {
+      // TODO: can be removed once there are utrecht design tokens for the bottom/right
+      // border color
       @if $color-active {
-        color: $color-active;
+        color: $color-active !important;
       }
       @if $color-background-active {
-        background-color: $color-background-active;
+        background-color: $color-background-active !important;
       }
 
       @if $color-border-active {
-        border-top-color: $color-border-active;
-        border-right-color: transparent;
-        border-left-color: $color-border-active;
-        border-bottom-color: transparent;
+        // TODO: can be removed once there are utrecht design tokens for the bottom/right
+        // border color
+        border-top-color: $color-border-active !important;
+        border-right-color: transparent !important;
+        border-left-color: $color-border-active !important;
+        border-bottom-color: transparent !important;
       }
     }
   }
@@ -106,6 +122,7 @@ $button-padding-h: $grid-margin-2;
     $color-active: var(--of-button-anchor-active-fg),
     $color-background-active: var(--of-button-anchor-active-bg),
     $color-border-active: var(--of-button-anchor-active-color-border),
+    $force-colors: true,  // there's no anchor variant for utrecht button yet
   );
   @include button-theme(
     'danger',

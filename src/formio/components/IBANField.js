@@ -41,7 +41,11 @@ export default class IBANField extends TextField {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('iban');
+    info.attr.class = [
+      applyPrefix('iban'),
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+    ].join(' ');
     return info;
   }
 }

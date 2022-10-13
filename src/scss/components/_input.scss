@@ -7,11 +7,15 @@
 .#{prefix(input)} {
   @include body;
   @include border(all, $size: 1px);
-  @include rows(1);
+  // force required because utrecht-textbox sets height initial
+  @include rows(1, $force: true);
 
   appearance: none;
   border-radius: 0;
-  font-weight: var(--of-input-font-weight);
+  // TODO: remove / remove (important) when utrecht-textbox component supports font-weight
+  // design token
+  font-weight: var(--of-input-font-weight) !important;
+  line-height: $typography-line-height-base !important;
   padding: $grid-margin-2;
   width: 100%;
 

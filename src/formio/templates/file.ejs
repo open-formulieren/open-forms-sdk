@@ -23,7 +23,7 @@
             {% if (ctx.component.uploadOnly) { %}
               {{file.originalName || file.name}}
             {% } else { %}
-              <a href="{{file.url || '#'}}" target="_blank" ref="fileLink">{{file.originalName || file.name}}</a>
+              <a href="{{file.url || '#'}}" target="_blank" ref="fileLink" class="{{ctx.ofPrefix}}-anchor utrecht-link">{{file.originalName || file.name}}</a>
             {% } %}
           </div>
           <div class="col-md-2">{{ctx.fileSize(file.size)}}</div>
@@ -60,8 +60,8 @@
 {% if (!ctx.disabled && ((ctx.component.multiple && (!ctx.component.maxNumberOfFiles || ctx.files.length < ctx.component.maxNumberOfFiles)) || !ctx.files.length)) { %}
   {% if (ctx.self.useWebViewCamera) { %}
     <div class="fileSelector">
-      <button class="btn btn-primary" ref="galleryButton"><i class="fa fa-book"></i> {{ctx.t('Gallery')}}</button>
-      <button class="btn btn-primary" ref="cameraButton"><i class="fa fa-camera"></i> {{ctx.t('Camera')}}</button>
+      <button class="btn btn-primary {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="galleryButton"><i class="fa fa-book"></i> {{ctx.t('Gallery')}}</button>
+      <button class="btn btn-primary {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="cameraButton"><i class="fa fa-camera"></i> {{ctx.t('Camera')}}</button>
     </div>
   {% } else if (!ctx.self.cameraMode) { %}
     <div class="fileSelector" ref="fileDrop" {{ctx.fileDropHidden ? 'hidden' : ''}}>
@@ -74,12 +74,12 @@
         {% } %}
 
         {% if (ctx.self.imageUpload) { %}
-          <a href="#" ref="toggleCameraMode"><i class="fa fa-camera"></i> {{ctx.t('Use Camera,')}}</a>
+          <a href="#" ref="toggleCameraMode" class="{{ctx.ofPrefix}}-anchor utrecht-link"><i class="fa fa-camera"></i> {{ctx.t('Use Camera,')}}</a>
         {% } %}
 
         {{ctx.t('or')}}
 
-        <a href="#" ref="fileBrowse" class="browse">{{ctx.t('browse')}}</a>
+        <a href="#" ref="fileBrowse" class="browse" class="{{ctx.ofPrefix}}-anchor utrecht-link">{{ctx.t('browse')}}</a>
 
         {% if (ctx.component.multiple) { %}
           {{ctx.t('to attach files.')}}
@@ -95,8 +95,8 @@
     <div>
       <video class="video" autoplay="true" ref="videoPlayer"></video>
     </div>
-    <button class="btn btn-primary" ref="takePictureButton"><i class="fa fa-camera"></i> {{ctx.t('Take Picture')}}</button>
-    <button class="btn btn-primary" ref="toggleCameraMode">{{ctx.t('Switch to file upload')}}</button>
+    <button class="btn btn-primary {{ctx.ofPrefix}}-button {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="takePictureButton"><i class="fa fa-camera"></i> {{ctx.t('Take Picture')}}</button>
+    <button class="btn btn-primary {{ctx.ofPrefix}}-button {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="toggleCameraMode">{{ctx.t('Switch to file upload')}}</button>
   {% } %}
 {% } %}
 {% ctx.statuses.forEach(function(status) { %}

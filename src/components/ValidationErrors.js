@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { FormFieldDescription } from '@utrecht/component-library-react';
 import {getBEMClassName} from 'utils';
 
 
@@ -8,9 +9,9 @@ const ValidationErrors = ({ errors=[] }) => (
   <div className={getBEMClassName('errors')}>
     {
       errors.map((err, index) => (
-        <div key={index} className={getBEMClassName('message', ['error'])}>
+        <FormFieldDescription status="invalid" key={index} className={getBEMClassName('message', ['error'])}>
           {err}
-        </div>
+        </FormFieldDescription>
       ))
     }
   </div>

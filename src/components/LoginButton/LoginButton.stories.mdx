@@ -1,0 +1,44 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+
+import LoginButtonIcon from "./LoginButtonIcon";
+
+<Meta
+  title="Pure React components/Login Button Icon"
+  component={LoginButtonIcon}
+  argTypes={{
+    children: {table: {disable: true}},
+    href: {
+      control: {
+        type: 'text',
+      }
+    },
+    imageSrc: {
+      control: {
+        type: 'text',
+      }
+    },
+    title: {
+      control: {
+        type: 'text',
+      }
+    },
+  }}
+  parameters={{
+    controls: {sort: 'requiredFirst'}
+  }}
+/>
+
+# Login Button
+export const Template = ({ identifier='6f64d852-f927-48b8-9b72-dae7fa9d4c18', imageSrc, href, title, ...args}) => (
+  <LoginButtonIcon identifier={identifier} logo={{title, imageSrc, href}} {...args} />
+);
+
+<Canvas>
+  <Story name="Default" args={{title: 'Login with DigiD', imageSrc: '/digid.png', href: 'https://example.com/login',}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<Props of={LoginButtonIcon} />

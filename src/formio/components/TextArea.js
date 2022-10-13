@@ -10,7 +10,11 @@ class TextArea extends Formio.Components.components.textarea {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = applyPrefix('textarea');
+    info.attr.class = [
+      applyPrefix('textarea'),
+      'utrecht-textarea',
+      'utrecht-textarea--html-textarea',
+    ].join(' ');
     return info;
   }
 }
