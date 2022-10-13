@@ -67,6 +67,12 @@ module.exports = {
       );
     }
 
+    const watchOptions = {
+      ...sbConfig.watchOptions,
+      // DO watch our own packages, especially useful when rebuilding the design-tokens
+      ignored: /node_modules\/(?!@open-formulieren)/,
+    };
+
     return {
       ...sbConfig,
       resolve: mergedResolve,
@@ -75,6 +81,7 @@ module.exports = {
         rules: mergedRules,
       },
       plugins: mergedPlugins,
+      watchOptions,
     };
   }
 }

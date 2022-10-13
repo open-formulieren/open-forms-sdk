@@ -14,7 +14,7 @@ export const VARIANTS = [
 ];
 
 const Button = ({ type='', component: Component=UtrechtButton, variant='', onDisabledClick, children, ...extra }) => {
-    const className = getBEMClassName('button', [variant]);
+    const className = getBEMClassName('button', variant ? [variant] : []);
 
     // https://www.a11y-101.com/development/aria-disabled
     const {disabled, ...remainingProps} = extra;
