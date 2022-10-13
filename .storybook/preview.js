@@ -7,7 +7,7 @@ import '@utrecht/design-tokens/dist/index.css';
 import 'styles.scss';
 
 // Include NL Design System component in Storybook only, until migration is complete
-// import 'components/nl-design-system-community.scss';
+import 'scss/nl-design-system-community.scss';
 
 import {reactIntl} from './reactIntl.js';
 
