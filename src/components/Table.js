@@ -7,6 +7,7 @@ import {getBEMClassName} from 'utils';
 import {
   Table as UtrechtTable,
   TableBody as UtrechtTableBody,
+  TableHeader as UtrechtTableHeader,
   TableCaption as UtrechtTableCaption,
   TableRow as UtrechtTableRow,
   TableCell as UtrechtTableCell,
@@ -75,6 +76,18 @@ Table.propTypes = {
     children: PropTypes.node,
 };
 
+const TableHeader = ({ children, }) => {
+  return (
+    <UtrechtTableHeader>
+      {children}
+    </UtrechtTableHeader>
+  );
+};
+
+TableHeader.propTypes = {
+    children: PropTypes.node,
+};
+
 const TableBody = ({ children, }) => {
   return (
     <UtrechtTableBody>
@@ -105,5 +118,6 @@ export {
   TableCaption,
   TableCell,
   TableHead,
+  TableHeader,
   TableRow,
 };

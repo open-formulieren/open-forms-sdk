@@ -1,6 +1,6 @@
 import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
 
-import { Table, TableBody, TableCaption, TableRow, TableHead, TableCell } from "./Table";
+import { Table, TableBody, TableCaption, TableRow, TableHead, TableHeader, TableCell } from "./Table";
 import Caption from "./Caption";
 
 <Meta
@@ -19,9 +19,15 @@ import Caption from "./Caption";
 export const Template = () => (
   <Table>
     <TableCaption>Table caption</TableCaption>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Header cell</TableHead>
+        <TableHead>Header cell</TableHead>
+      </TableRow>
+    </TableHeader>
     <TableBody>
       <TableRow>
-        <TableHead scope="row">Header cell</TableHead>
+        <TableCell>Data cell</TableCell>
         <TableCell>Data cell</TableCell>
       </TableRow>
     </TableBody>
