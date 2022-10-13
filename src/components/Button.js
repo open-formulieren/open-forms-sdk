@@ -86,8 +86,10 @@ const Button = ({ type='', component: Component=UtrechtButton, variant='', onDis
 };
 
 Button.propTypes = {
-    component: PropTypes.string,
-    type: PropTypes.string,
+    component: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.elementType,
+    ]),
     variant: PropTypes.oneOf(VARIANTS),
     onDisabledClick: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
