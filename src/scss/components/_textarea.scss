@@ -4,6 +4,6 @@
 
 .#{prefix(textarea)} {
   @extend .#{prefix(input)};
-  @include rows(3, min-height);
+  @include rows(3, min-height, $force: true);
   height: inherit;
 }
