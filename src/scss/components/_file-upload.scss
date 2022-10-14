@@ -39,6 +39,7 @@ we don't have strict BEM naming here.
 
   .row {
     display: flex;
+    align-items: center;
 
     .col-md-1 {
       @include bootstrap-span(width, 1);
@@ -91,7 +92,7 @@ we don't have strict BEM naming here.
 
   [ref="removeLink"] {
     cursor: pointer;
-    color: $color-danger;
+    color: $color-danger !important;
   }
 
   .file {

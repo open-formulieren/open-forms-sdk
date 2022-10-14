@@ -21,7 +21,7 @@
   &__remove {
     [ref="removeRow"] {
       cursor: pointer;
-      color: $color-danger;
+      color: $color-danger !important;
       padding-left: $grid-margin-2;
     }
   }
