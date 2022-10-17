@@ -1,4 +1,7 @@
 import { Formio } from 'react-formio';
+import FormioUtils from 'formiojs/utils';
+import { maskInput } from '@formio/vanilla-text-mask';
+
 import _ from 'lodash';
 
 import { applyPrefix } from '../utils';
@@ -75,6 +78,33 @@ class Currency extends Formio.Components.components.currency {
       'utrecht-textbox--html-input',
     ].join(' ');
     return info;
+  }
+
+  // Issue OF#1351
+  // Taken from Formio https://github.com/formio/formio.js/blob/v4.13.13/src/components/currency/Currency.js#L65
+  // Modified for the case where negative currencies are allowed.
+  // In addZerosAndFormatValue, we format the negative currency as -€ 127,54 so the validator checks against this format
+  setInputMask(input) {
+    let numberPattern = '';
+    if (this.component.allowNegative) {
+      numberPattern += '-*';
+    }
+    const affixes = FormioUtils.getCurrencyAffixes({
+      currency: this.component.currency,
+      decimalSeparator: this.decimalSeparator,
+      lang: this.options.language,
+    });
+    numberPattern += `${affixes.prefix}[0-9`;
+    numberPattern += this.decimalSeparator || '';
+    numberPattern += this.delimiter || '';
+    numberPattern += ']*';
+
+    input.setAttribute('pattern', numberPattern);
+    input.mask = maskInput({
+      inputElement: input,
+      mask: this.numberMask || '',
+      shadowRoot: this.root ? this.root.shadowRoot : null
+    });
   }
 }
 

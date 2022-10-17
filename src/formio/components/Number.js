@@ -1,4 +1,5 @@
 import { Formio } from 'react-formio';
+import { maskInput } from '@formio/vanilla-text-mask';
 
 import { applyPrefix } from '../utils';
 
@@ -31,6 +32,27 @@ class Number extends Formio.Components.components.number {
       updatedOptions.async = true;
     }
     return super.checkComponentValidity(data, dirty, row, updatedOptions);
+  }
+
+  // Issue OF#1351
+  // Taken from Formio https://github.com/formio/formio.js/blob/v4.13.13/src/components/number/Number.js#L112
+  // Modified for the case where negative numbers are allowed.
+  setInputMask(input) {
+    let numberPattern = '';
+    if (this.component.allowNegative) {
+      numberPattern += '-*';
+    }
+    numberPattern += '[0-9';
+    numberPattern += this.decimalSeparator || '';
+    numberPattern += this.delimiter || '';
+    numberPattern += ']*';
+
+    input.setAttribute('pattern', numberPattern);
+    input.mask = maskInput({
+      inputElement: input,
+      mask: this.numberMask,
+      shadowRoot: this.root ? this.root.shadowRoot : null,
+    });
   }
 }
 
