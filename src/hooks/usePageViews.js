@@ -6,7 +6,12 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const ANALYTICS_PROVIDERS = {
   debug: async (location) => (isDev && console.log(`Tracking navigation to ${location.pathname}`)),
-  googleAnalytics: async (location) => (window.ga && window.ga.send(['pageview', location.pathname])),
+  gtag: async (location) => {
+    return window.gtag && window.gtag('event', 'page_view', {
+      page_location: location.href,
+      page_path: location.pathname,
+    });
+  },
   // https://support.siteimprove.com/hc/en-gb/articles/115001615171-Siteimprove-Analytics-Custom-Visit-Tracking
   // unsure if SiteImprove subscribes to URL changes or not, if they do - we'll fire double events here.
   siteimprove: async (location, previousLocation) => (window._sz && window._sz.push(['trackdynamic', {
