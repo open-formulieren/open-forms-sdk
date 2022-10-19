@@ -90,11 +90,6 @@ we don't have strict BEM naming here.
     }
   }
 
-  [ref="removeLink"] {
-    cursor: pointer;
-    color: $color-danger !important;
-  }
-
   .file {
     @include body;
     @include body--big;

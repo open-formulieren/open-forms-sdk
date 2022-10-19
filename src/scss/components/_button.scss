@@ -135,19 +135,6 @@ $button-padding-h: $grid-margin-2;
     $color-background-active: var(--of-button-danger-active-bg),
     $color-border-active: var(--of-button-danger-active-color-border),
   );
-  @include button-theme(
-    $name: 'invisible',
-    $color: $typography-color-text,
-    $color-background: $color-background,
-    $color-border: $color-background,
-    $decorate-on-hover: false,
-    $force-colors: true,
-    $color-background-hover: $color-background,
-    $color-border-hover: $color-background,
-    $color-active: $color-background,
-    $color-background-active: $color-background,
-    $color-border-active: $color-background,
-  );
 
   appearance: none;
   border-radius: 0;
@@ -181,5 +168,21 @@ $button-padding-h: $grid-margin-2;
 
   .fa-icon:not(:last-child) {
     margin-right: $button-padding-h;
+  }
+
+  @include modifier('icon-only') {
+    color: var(--of-button-fg);
+    background-color: transparent;
+    border-style: none;
+
+    &:hover, &:active {
+      color: var(--of-button-fg);
+      background-color: transparent;
+      border-style: none;
+    }
+
+    &.#{prefix(button)}--danger {
+      color: var(--of-button-danger-bg)
+    }
   }
 }
