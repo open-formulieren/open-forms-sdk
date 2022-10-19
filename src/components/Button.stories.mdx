@@ -2,6 +2,7 @@ import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
 
 import Anchor from "./Anchor";
 import Button, {VARIANTS} from "./Button";
+import FAIcon from "./FAIcon";
 
 <Meta
   title="Pure React components/Button"
@@ -12,6 +13,9 @@ import Button, {VARIANTS} from "./Button";
       control: {
         type: 'radio',
       }
+    },
+    extraVariants: {
+      type: { name: 'array' }
     },
     children: {table: {disable: true}},
     onDisabledClick: {table: {disable: true}},
@@ -54,8 +58,20 @@ export const Template = ({label='Button', ...args}) => (
   <Story name="Anchor" args={{label: 'Anchor', variant: 'anchor'}}>
     {Template.bind({})}
   </Story>
-  <Story name="Icon only" args={{label: 'Icon only', variant: 'icon-only'}}>
-    {Template.bind({})}
+</Canvas>
+
+## Icon buttons
+
+export const IconButtonTemplate = ({icon='pen', ...args}) => (
+  <Button {...args}><FAIcon icon={icon} /></Button>
+);
+
+<Canvas>
+  <Story name="Icon only" args={{title: 'Icon only', variant: 'icon-only'}}>
+    {IconButtonTemplate.bind({})}
+  </Story>
+  <Story name="Icon only danger" args={{title: 'Icon only danger', variant: 'icon-only', extraVariants: ['danger']}}>
+    {IconButtonTemplate.bind({})}
   </Story>
 </Canvas>
 

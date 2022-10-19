@@ -11,10 +11,12 @@ export const VARIANTS = [
   'anchor',
   'danger',
   'image',
+  'icon-only',
 ];
 
-const Button = ({ type='', component: Component=UtrechtButton, variant='', onDisabledClick, children, ...extra }) => {
-    const className = getBEMClassName('button', variant ? [variant] : []);
+const Button = ({ type='', component: Component=UtrechtButton, variant='', extraVariants=[], onDisabledClick, children, ...extra }) => {
+    let modifiers = variant ? [variant, ...extraVariants] : extraVariants;
+    const className = getBEMClassName('button', modifiers);
 
     // https://www.a11y-101.com/development/aria-disabled
     const {disabled, ...remainingProps} = extra;
@@ -91,6 +93,7 @@ Button.propTypes = {
       PropTypes.elementType,
     ]),
     variant: PropTypes.oneOf(VARIANTS),
+    extraVariants: PropTypes.array,
     onDisabledClick: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
 };
