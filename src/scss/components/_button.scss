@@ -174,8 +174,10 @@ $button-padding-h: $grid-margin-2;
     color: var(--of-button-fg);
     background-color: transparent;
     border-style: none;
+    --utrecht-button-hover-background-color: transparent;
 
     &:hover, &:active {
+      --utrecht-button-hover-color: var(--of-button-fg);
       color: var(--of-button-fg);
       background-color: transparent;
       border-style: none;
