@@ -17,12 +17,4 @@
   &__input {
     width: 100%;
   }
-
-  &__remove {
-    [ref="removeRow"] {
-      cursor: pointer;
-      color: $color-danger;
-      padding-left: $grid-margin-2;
-    }
-  }
 }

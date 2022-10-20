@@ -4,7 +4,9 @@
   </td>
   {% if (!ctx.disabled) { %}
   <td class="{{ctx.ofPrefix}}multi-value-row__remove">
-      <i class="{{ctx.iconClass('remove')}}" ref="removeRow"></i>
+    <button type="button" class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--icon-only {{ctx.ofPrefix}}button--danger" title="{{ctx.t('Remove')}}" ref="removeRow">
+      <i class="{{ctx.iconClass('remove')}}"></i>
+    </button>
   </td>
   {% } %}
 </tr>

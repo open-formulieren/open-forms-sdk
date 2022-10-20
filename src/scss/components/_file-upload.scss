@@ -39,6 +39,7 @@ we don't have strict BEM naming here.
 
   .row {
     display: flex;
+    align-items: center;
 
     .col-md-1 {
       @include bootstrap-span(width, 1);
@@ -87,11 +88,6 @@ we don't have strict BEM naming here.
     & + .file {
       margin-top: $grid-container-margin-small;
     }
-  }
-
-  [ref="removeLink"] {
-    cursor: pointer;
-    color: $color-danger;
   }
 
   .file {
