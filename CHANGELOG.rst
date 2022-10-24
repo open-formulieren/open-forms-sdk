@@ -2,6 +2,14 @@
 Changelog
 =========
 
+1.2.4 (2022-10-24)
+==================
+
+Preparation for 2.0.0 release
+
+* [#1180] Fixed Google Analytics integration to track page views
+* [#2234] Update API endpoints to use v2 URLs instead of v1
+
 1.2.3 (2022-10-12)
 ==================
 
