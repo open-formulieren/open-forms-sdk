@@ -20,7 +20,7 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 import FormStepSummary from 'components/FormStepSummary';
 
 
-const PRIVACY_POLICY_ENDPOINT = '/api/v1/config/privacy_policy_info';
+const PRIVACY_POLICY_ENDPOINT = '/api/v2/config/privacy_policy_info';
 
 const initialState = {
   privacy: {
