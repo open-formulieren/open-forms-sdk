@@ -43,7 +43,7 @@ const Form = PropTypes.shape({
   explanationTemplate:PropTypes.string,
   requiredFieldsWithAsterisk: PropTypes.bool,
   autoLoginAuthenticationBackend: PropTypes.string,
-  i18nEnabled: PropTypes.bool,
+  translationEnabled: PropTypes.bool,
 });
 
 export default Form;
