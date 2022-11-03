@@ -1,0 +1,135 @@
+import { Meta, Canvas, Story, ArgsTable } from "@storybook/addon-docs";
+import { ConfigContext } from "Context";
+import { FormattedMessage } from "react-intl";
+import LanguageSelection from "./LanguageSelection";
+import { within, userEvent, waitFor } from "@storybook/testing-library";
+import { expect } from "@storybook/jest";
+
+<Meta
+  title="Pure React Components/LanguageSelection"
+  component={LanguageSelection}
+  argTypes={{
+    baseUrl: {
+      control: "text",
+      defaultValue: process.env.REACT_APP_BASE_API_URL,
+      description:
+        "Base URL of Open Forms API *this is taken from the `ConfigContext` and cannot be passed as a prop.*",
+      table: {
+        type: { summary: "string" },
+      },
+    },
+    heading: {
+      control: "text",
+      table: {
+        type: { summary: "string" },
+      },
+    },
+    headingLevel: {
+      control: { type: "number", min: 1, max: 6 },
+      table: {
+        type: { summary: "number" },
+      },
+    },
+    onLanguageChange: {
+      table: {
+        type: { summary: "function" },
+      },
+    },
+  }}
+  parameters={{
+    mockData: [
+      {
+        url: `${process.env.REACT_APP_BASE_API_URL}i18n/info`,
+        method: "GET",
+        status: 200,
+        response: {
+          languages: [
+            { code: "nl", name: "Nederlands" },
+            { code: "en", name: "English" },
+            { code: "fy", name: "frysk" },
+          ],
+          current: "nl",
+        },
+      },
+      {
+        url: `${process.env.REACT_APP_BASE_API_URL}i18n/language`,
+        method: "PUT",
+        status: 204,
+        response: {},
+      },
+    ],
+  }}
+/>
+
+export const Template = ({ baseUrl, ...rest }) => (
+  <ConfigContext.Provider value={{ baseUrl: baseUrl }}>
+    <LanguageSelection {...rest} />
+  </ConfigContext.Provider>
+);
+
+<Canvas>
+  <Story name="Default"
+    play={async ({args, canvasElement}) => {
+    const canvas = within(canvasElement);
+    const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+    await userEvent.click(frysk_button);
+    await userEvent.click(frysk_button); // click twice
+    await waitFor(() => expect(args.onLanguageChange).toHaveBeenCalledTimes(1)); // change once
+    }}
+  >{Template.bind({})}</Story>
+</Canvas>
+
+<ArgsTable story="Default" />
+
+### Errors
+
+Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some reason the language is unavailable a `ValidationError` is returned from the API:
+
+<Canvas>
+  <Story name="Unavailable language"
+    parameters={{
+      mockData: [
+        {
+          url: `${process.env.REACT_APP_BASE_API_URL}i18n/info`,
+          method: "GET",
+          status: 200,
+          response: {
+            languages: [
+              { code: "nl", name: "Nederlands" },
+              { code: "en", name: "English" },
+              { code: "fy", name: "frysk" },
+            ],
+            current: "nl",
+          },
+        },
+        {
+          url: `${process.env.REACT_APP_BASE_API_URL}i18n/language`,
+          method: "PUT",
+          status: 400,
+          response: {
+            type: "http://localhost:8000/fouten/ValidationError/",
+            code: "invalid",
+            title: "Invalid input.",
+            status: 400,
+            detail: "",
+            instance: "urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75",
+            invalidParams: [
+              {
+                name: "code",
+                code: "invalid_choice",
+                reason: '"fy" is not a valid choice.',
+              },
+            ],
+          },
+        },
+      ],
+    }}
+    play={async ({args, canvasElement}) => {
+    const canvas = within(canvasElement);
+    const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+    await userEvent.click(frysk_button);
+    await userEvent.click(frysk_button); // click twice
+    await waitFor(() => expect(args.onLanguageChange).toHaveBeenCalledTimes(0)); // change once
+    }}
+  >{Template.bind({})}</Story>
+</Canvas>
