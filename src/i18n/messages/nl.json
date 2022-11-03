@@ -184,6 +184,11 @@
     "description": "Payment overview title",
     "originalDefault": "Payment overview"
   },
+  "YcC4PD": {
+    "defaultMessage": "Taal kiezen",
+    "description": "Language selection heading",
+    "originalDefault": "Choose language"
+  },
   "YdeY1f": {
     "defaultMessage": "Afsluiten",
     "description": "return to form start button",
