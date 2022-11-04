@@ -69,16 +69,20 @@ const LanguageSelection = (props) => {
         {heading}
       </Heading>
       <ButtonGroup>
-        {items.map(({ current, label, lang, textContent }) => (
-          <LinkButton
-            pressed={current}
-            lang={lang}
-            aria-label={label}
-            key={lang}
-            onClick={changeLanguage(lang)}
-          >
-            {textContent}
-          </LinkButton>
+        {items.map(({ current, label, lang, textContent }, i, a) => (
+          <>
+            <LinkButton
+              pressed={current}
+              lang={lang}
+              aria-label={label}
+              key={lang}
+              onClick={changeLanguage(lang)}
+              inline
+            >
+              {textContent}
+            </LinkButton>
+            {i + 1 < a.length ? <span aria-hidden="true">{" | "}</span> : <></>}
+          </>
         ))}
       </ButtonGroup>
     </section>
