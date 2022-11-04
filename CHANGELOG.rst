@@ -2,6 +2,13 @@
 Changelog
 =========
 
+1.3.0 (2022-??-??) - in development
+===================================
+
+.. warning:: The default Open Forms theme is now only applied within the
+   ``.openforms-theme`` selector. If you embed the SDK 1.3, you need to ensure a/the
+   parent element has this class name.
+
 1.2.4 (2022-10-24)
 ==================
 

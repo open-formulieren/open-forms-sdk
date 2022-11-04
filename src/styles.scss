@@ -8,8 +8,8 @@
 @import 'flatpickr/dist/flatpickr.min.css';
 @import "formiojs/dist/formio.form.css";
 
-// output the design tokens in :root
-@import "@open-formulieren/design-tokens/dist/root.css";
+// output the design tokens under the .openforms-theme classname
+@import "@open-formulieren/design-tokens/dist/index.css";
 
 @import "./scss/settings";
 

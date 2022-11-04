@@ -27,6 +27,7 @@ export const parameters = {
   },
   themes: {
     default: "Open Forms",
+    target: 'root',
     list: [
       { name: 'Open Forms', class: 'openforms-theme', color: '#01689B' },
       { name: 'Gemeente Den Haag', class: 'denhaag-theme', color: 'hsl(138 58% 33%)' },
