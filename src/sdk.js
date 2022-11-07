@@ -101,7 +101,7 @@ class OpenForm {
 
     // Explicitly set the default language if translations are disabled
     if(!formObject.translationEnabled) {
-      await post(`${formObject.url}/set_default_language`);
+      await post(`${formObject.url}/activate_default_language`);
     }
 
     // render the wrapping React component
