@@ -12,7 +12,7 @@ import OFLibrary from './formio/templates';
 
 import './styles.scss';
 
-import { get } from 'api';
+import { get, post } from 'api';
 import { ConfigContext, FormioTranslations } from 'Context';
 import App from 'components/App';
 import {CSPNonce} from 'headers';
@@ -98,6 +98,11 @@ class OpenForm {
     const [messages, translations, formObject] = await Promise.all(promises);
 
     this.formObject = formObject;
+
+    // Explicitly set the default language if translations are disabled
+    if(!formObject.translationEnabled) {
+      await post(`${formObject.url}/set_default_language`);
+    }
 
     // render the wrapping React component
     // TODO: make this work with React 18 which has a different react-dom API
