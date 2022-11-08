@@ -1,17 +1,16 @@
 import React from 'react';
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 import {Switch, Route} from 'react-router-dom';
 
 import Form from 'components/Form';
 import { Layout, LayoutRow } from 'components/Layout';
 import ManageAppointment from 'components/appointments/ManageAppointment';
+import LanguageSelection from 'components/LanguageSelection';
 
-import LanguageSelection from "components/LanguageSelection";
 
-
-const LanguageSwitcher = ({ languageSelectorTarget }) => (
-  languageSelectorTarget ? (
-    ReactDOM.createPortal(<LanguageSelection />, languageSelectorTarget)
+const LanguageSwitcher = ({ target = null }) => (
+  target ? (
+    ReactDOM.createPortal(<LanguageSelection />, target)
   ) : (
     <LayoutRow>
       <LanguageSelection />
@@ -19,14 +18,20 @@ const LanguageSwitcher = ({ languageSelectorTarget }) => (
   )
 );
 
+LanguageSwitcher.propTypes = {
+  target: PropTypes.instanceOf(Element),
+};
+
 /*
 Top level router - routing between an actual form or supporting screens.
  */
 const App = ({ languageSelectorTarget, ...props }) => {
   return (
     <Layout>
-      <LanguageSwitcher languageSelectorTarget={languageSelectorTarget} />
+      <LanguageSwitcher target={languageSelectorTarget} />
+
       <LayoutRow>
+
         <Switch>
           {/* Anything dealing with appointments gets routed to it's own sub-router */}
           <Route path="/afspraak*" component={ManageAppointment} />
@@ -36,9 +41,14 @@ const App = ({ languageSelectorTarget, ...props }) => {
             <Form {...props} />
           </Route>
         </Switch>
+
       </LayoutRow>
     </Layout>
   );
+};
+
+App.propTypes = {
+  languageSelectorTarget: PropTypes.instanceOf(Element),
 };
 
 export default App;

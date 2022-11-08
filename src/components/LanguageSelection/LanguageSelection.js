@@ -1,69 +1,100 @@
-import PropTypes from "prop-types";
-import React, { useContext, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useAsync } from "react-use";
+import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useAsync } from 'react-use';
 
-import { get, put } from "api";
-import { v4 as uuidv4 } from "uuid";
-import { ConfigContext } from "Context";
-import Loader from "components/Loader";
+import { get, put } from 'api';
+import { ConfigContext } from 'Context';
+import Loader from 'components/Loader';
 
-import LanguageSelectionDisplay from "./LanguageSelectionDisplay";
+import LanguageSelectionDisplay from './LanguageSelectionDisplay';
 
-const LanguageSelection = (props) => {
+
+const DEFAULT_HEADING = (
+  <FormattedMessage
+    description="Language selection heading"
+    defaultMessage="Choose language"
+  />
+);
+
+
+const LanguageSelection = ({
+  heading=DEFAULT_HEADING,
+  headingLevel=2,
+  onLanguageChanged=console.log,
+}) => {
   // Hook uses
-  const config = useContext(ConfigContext);
+  const { baseUrl } = useContext(ConfigContext);
   const { locale } = useIntl();
-  const [current, setCurrent] = useState(locale);
-  const getAvailableLanguages = async () => {
-    const result = await get(`${config.baseUrl}i18n/info`);
-    setCurrent(result.current); // state change if current changed
-    return result.languages.map(({ code, name }) => ({
-      lang: code,
-      textContent: code.toUpperCase(),
-      label: name,
-      current: code === result.current,
-    }));
-  };
+  const [ err, setErr ] = useState(null);
+
+  // fetch language information from API
   const {
     loading,
-    value: items,
+    value: languageInfo,
     error,
   } = useAsync(
-    getAvailableLanguages,
-    [config.baseUrl] // actually current too?!
+    async () => {
+      const result = await get(`${baseUrl}i18n/info`);
+      // the browser preferences may have activated a different language than the
+      // client-side default language. In that case, we need to inform the parent
+      // components that the UI language needs to update.
+      //
+      // This will trigger the value of `locale` to change from the `useIntl()` hook.
+      if (result.current !== locale) {
+        onLanguageChanged(result.current);
+      }
+      return result;
+    },
+    [baseUrl, locale]
   );
-  if (error) {
-    throw error; // bubble up to boundary
+
+  const anyError = err || error ;
+  if (anyError) {
+    throw anyError; // bubble up to boundary
   }
   if (loading) {
     return <Loader modifiers={["small"]} />;
   }
 
-  // unpack props
-  const { onLanguageChange, ...displayProps } = props;
-  const headingId = uuidv4(); // TODO: useId() from 'react' in react > 18;
+  const { current, languages } = languageInfo;
+  // transform language information for display
+  const items = languages.map( ({ code, name }) => ({
+    lang: code,
+    textContent: code.toUpperCase(),
+    label: name,
+    current: code === locale,
+  }));
 
-  const changeLanguage = async (lang_code) => {
-    if (lang_code === current) return;
-    const prev = current;
-    // use current as a semaphore to prevent leaking memory
-    setCurrent(lang_code);
+  /**
+   * Event handler for user interaction to change the language.
+   * @param  {String} languageCode The code of the (new) language to activate.
+   * @return {Void}
+   */
+  const onLanguageChange = async (languageCode) => {
+    // do nothing if this is already the active language
+    if (languageCode === locale) return;
+
+    // activate other language in backend
     try {
-      await put(`${config.baseUrl}i18n/language`, { code: lang_code });
-    } catch(e) {
-      setCurrent(prev); // language didn't actually change
-      throw(e);
+      await put(`${baseUrl}i18n/language`, { code: languageCode });
+    } catch (err) {
+      // set error in state, which gets re-thrown in render and bubbles up
+      // to error bounary
+      // FIXME: memory leak in storybook -> use decorator with error boundary
+      setErr(err);
     }
-    onLanguageChange(lang_code);
+    // update UI language
+    onLanguageChanged(languageCode);
   };
 
   return (
     <LanguageSelectionDisplay
-      onLanguageChange={changeLanguage}
-      headingId={headingId}
+      onLanguageChange={onLanguageChange}
       items={items}
-      {...displayProps}
+      headingId="of-language-selection"
+      heading={heading}
+      headingLevel={headingLevel}
     />
   );
 };
@@ -71,18 +102,7 @@ const LanguageSelection = (props) => {
 LanguageSelection.propTypes = {
   heading: PropTypes.node,
   headingLevel: PropTypes.number,
-  onLanguageChange: PropTypes.func,
-};
-
-LanguageSelection.defaultProps = {
-  heading: (
-    <FormattedMessage
-      description="Language selection heading"
-      defaultMessage="Choose language"
-    />
-  ),
-  headingLevel: 2,
-  onLanguageChange: (new_language_code) => {},
+  onLanguageChanged: PropTypes.func,
 };
 
 export default LanguageSelection;

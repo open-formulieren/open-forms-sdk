@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import { Fragment } from "react";
+import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 
-import { ButtonGroup, Heading } from "@utrecht/component-library-react";
+import { ButtonGroup, Heading } from '@utrecht/component-library-react';
 
-import Button from "components/Button";
+import Button from 'components/Button';
 
 const LanguageSelectionDisplay = ({
   heading,

@@ -33,7 +33,7 @@ import LanguageSelection from "./LanguageSelection";
         type: { summary: "number" },
       },
     },
-    onLanguageChange: {
+    onLanguageChanged: {
       table: {
         type: { summary: "function" },
       },
@@ -82,7 +82,7 @@ export const Template = (args) => <LanguageSelection {...args} />;
     await userEvent.click(frysk_button);
     await userEvent.click(frysk_button); // click twice
     // TODO: Fix false positive: this assertion resolves after first click
-    await waitFor(() => expect(args.onLanguageChange).toHaveBeenCalledTimes(1)); // change once
+    await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(1)); // change once
     }}
   >{Template.bind({})}</Story>
 </Canvas>
@@ -136,7 +136,7 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
     const canvas = within(canvasElement);
     const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
     await userEvent.click(frysk_button);
-    await waitFor(() => expect(args.onLanguageChange).toHaveBeenCalledTimes(0)); // did not change language
+    await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(0)); // did not change language
     }}
   >{Template.bind({})}</Story>
 </Canvas>
