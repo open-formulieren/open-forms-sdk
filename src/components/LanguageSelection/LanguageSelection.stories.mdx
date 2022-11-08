@@ -2,16 +2,9 @@ import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-import { ConfigContext } from 'Context';
 import { LanguageSelection, LanguageSelectionDisplay } from './';
 
 export const BASE_URL = 'http://localhost:8000/'
-
-export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{ baseUrl: BASE_URL }}>
-    <Story />
-  </ConfigContext.Provider>
-);
 
 <Meta
   title="Pure React Components/Language Selection"
@@ -62,7 +55,7 @@ export const ConfigDecorator = (Story, {args}) => (
 
 The language selection allows end-user to switch between available languages.
 
-This functionality is split in two components - one purely for display and 
+This functionality is split in two components - one purely for display and
 styling purposes and the other one with smart behaviour to fetch the data
 from the backend.
 
@@ -72,13 +65,15 @@ The `LanguageSelectionDisplay` component serves to display the available languag
 
 export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
 
+<!-- todo: disable onLanguageChanged argType -->
+
 <Canvas>
-  <Story 
+  <Story
     name="Display"
     args={{
       heading: 'Language selection',
       headingLevel: 2,
-      onLanguageChanged: console.log,
+      headingId: 'heading-id',
       items: [
         {
           lang: 'en',
@@ -93,12 +88,13 @@ export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
           current: false,
         },
         {
-          lang: 'fy', 
+          lang: 'fy',
           textContent: 'FY',
           label: 'frysk',
           current: false,
         },
-      ]
+      ],
+      onLanguageChange: console.log,
     }}
   >
     {DisplayTemplate.bind({})}
@@ -119,21 +115,22 @@ It is responsible for rendering the `LanguageSelectionDisplay` component.
 
 export const Template = (args) => <LanguageSelection {...args} />;
 
-{/* TODO: bring back backend url arg for this particular story */}
+<!-- TODO: bring back backend url arg for this particular story -->
 
 <Canvas>
-  <Story 
+  <Story
     name="Default"
-    decorators={[ConfigDecorator]}
     play={async ({args, canvasElement}) => {
-    const canvas = within(canvasElement);
-    const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
-    await userEvent.click(frysk_button);
-    await userEvent.click(frysk_button); // click twice
-    // TODO: Fix false positive: this assertion resolves after first click
-    await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(1)); // change once
+      const canvas = within(canvasElement);
+      const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+      await userEvent.click(frysk_button);
+      await userEvent.click(frysk_button); // click twice
+      // TODO: Fix false positive: this assertion resolves after first click
+      await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(1)); // change once
     }}
-  >{Template.bind({})}</Story>
+  >
+    {Template.bind({})}
+  </Story>
 </Canvas>
 
 <ArgsTable story="Default" />
@@ -143,9 +140,8 @@ export const Template = (args) => <LanguageSelection {...args} />;
 Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some reason the language is unavailable a `ValidationError` is returned from the API:
 
 <Canvas>
-  <Story 
+  <Story
     name="Unavailable language"
-    decorators={[ConfigDecorator]}
     parameters={{
       mockData: [
         {
@@ -184,10 +180,10 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
       ],
     }}
     play={async ({args, canvasElement}) => {
-    const canvas = within(canvasElement);
-    const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
-    await userEvent.click(frysk_button);
-    await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(0)); // did not change language
+      const canvas = within(canvasElement);
+      const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+      await userEvent.click(frysk_button);
+      await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(0)); // did not change language
     }}
   >{Template.bind({})}</Story>
 </Canvas>

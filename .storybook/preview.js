@@ -1,4 +1,6 @@
 import { Formio, Templates } from 'react-formio';
+
+import { ConfigContext } from 'Context';
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
 
@@ -10,6 +12,13 @@ import 'styles.scss';
 import 'scss/nl-design-system-community.scss';
 
 import {reactIntl} from './reactIntl.js';
+
+const BASE_URL = 'http://localhost:8000/'
+const ConfigDecorator = (Story, { args }) => (
+  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
+    <Story />
+  </ConfigContext.Provider>
+);
 
 export const parameters = {
   reactIntl,
@@ -34,7 +43,11 @@ export const parameters = {
       { name: 'Gemeente Utrecht', class: 'utrecht-theme', color: '#cc0000' }
     ],
   },
-}
+};
+
+export const decorators = [
+  ConfigDecorator,
+];
 
 // Use our custom Form.io components
 Formio.use(OpenFormsModule);
