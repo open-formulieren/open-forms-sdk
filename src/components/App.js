@@ -9,24 +9,23 @@ import ManageAppointment from 'components/appointments/ManageAppointment';
 import LanguageSelection from "components/LanguageSelection";
 
 
-const LanguageSwitcher = ({languageSelectorTarget}) =>
+const LanguageSwitcher = ({ languageSelectorTarget }) => (
   languageSelectorTarget ? (
     ReactDOM.createPortal(<LanguageSelection />, languageSelectorTarget)
   ) : (
     <LayoutRow>
       <LanguageSelection />
     </LayoutRow>
-  );
-
+  )
+);
 
 /*
 Top level router - routing between an actual form or supporting screens.
  */
 const App = ({ languageSelectorTarget, ...props }) => {
-
   return (
     <Layout>
-      <LanguageSwitcher {...languageSelectorTarget}/>
+      <LanguageSwitcher languageSelectorTarget={languageSelectorTarget} />
       <LayoutRow>
         <Switch>
           {/* Anything dealing with appointments gets routed to it's own sub-router */}
