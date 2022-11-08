@@ -1,9 +1,12 @@
 import { Meta, Canvas, Story, ArgsTable } from "@storybook/addon-docs";
-import { ConfigContext } from "Context";
-import { FormattedMessage } from "react-intl";
-import LanguageSelection from "./LanguageSelection";
 import { within, userEvent, waitFor } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
+
+import { FormattedMessage } from "react-intl";
+
+import { ConfigContext } from "Context";
+import LanguageSelection from "./LanguageSelection";
+
 
 <Meta
   title="Pure React Components/LanguageSelection"
@@ -59,13 +62,17 @@ import { expect } from "@storybook/jest";
       },
     ],
   }}
+  decorators={[
+  (Story, {args}) => (
+    <ConfigContext.Provider value={{ baseUrl: args.baseUrl }}>
+      <Story />
+    </ConfigContext.Provider>
+  )
+  ]}
 />
 
-export const Template = ({ baseUrl, ...rest }) => (
-  <ConfigContext.Provider value={{ baseUrl: baseUrl }}>
-    <LanguageSelection {...rest} />
-  </ConfigContext.Provider>
-);
+export const Template = (args) => <LanguageSelection {...args} />;
+
 
 <Canvas>
   <Story name="Default"
@@ -74,6 +81,7 @@ export const Template = ({ baseUrl, ...rest }) => (
     const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
     await userEvent.click(frysk_button);
     await userEvent.click(frysk_button); // click twice
+    // TODO: Fix false positive: this assertion resolves after first click
     await waitFor(() => expect(args.onLanguageChange).toHaveBeenCalledTimes(1)); // change once
     }}
   >{Template.bind({})}</Story>
@@ -128,8 +136,7 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
     const canvas = within(canvasElement);
     const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
     await userEvent.click(frysk_button);
-    await userEvent.click(frysk_button); // click twice
-    await waitFor(() => expect(args.onLanguageChange).toHaveBeenCalledTimes(0)); // change once
+    await waitFor(() => expect(args.onLanguageChange).toHaveBeenCalledTimes(0)); // did not change language
     }}
   >{Template.bind({})}</Story>
 </Canvas>

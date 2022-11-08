@@ -1,22 +1,14 @@
-import React, { useContext, useState } from "react";
-import { ConfigContext } from "Context";
-import { useAsync } from "react-use";
-import Loader from "components/Loader";
-import { FormattedMessage, useIntl } from "react-intl";
-import { v4 as uuidv4 } from "uuid";
-import {
-  ButtonGroup,
-  Heading,
-  LinkButton,
-} from "@utrecht/component-library-react";
-import { get, put } from "../../api";
 import PropTypes from "prop-types";
+import React, { useContext, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useAsync } from "react-use";
 
-const propTypes = PropTypes.shape({
-  heading: PropTypes.string,
-  headingLevel: PropTypes.number,
-  onLanguageChange: PropTypes.func,
-});
+import { get, put } from "api";
+import { v4 as uuidv4 } from "uuid";
+import { ConfigContext } from "Context";
+import Loader from "components/Loader";
+
+import LanguageSelectionDisplay from "./LanguageSelectionDisplay";
 
 const LanguageSelection = (props) => {
   // Hook uses
@@ -49,47 +41,39 @@ const LanguageSelection = (props) => {
   }
 
   // unpack props
-  const { heading, headingLevel, onLanguageChange } = props;
-  const headingId = uuidv4(); // XXX: useId() from 'react'
+  const { onLanguageChange, ...displayProps } = props;
+  const headingId = uuidv4(); // TODO: useId() from 'react' in react > 18;
 
-  const changeLanguage = (lang_code) => async () => {
+  const changeLanguage = async (lang_code) => {
     if (lang_code === current) return;
-    await put(`${config.baseUrl}i18n/language`, { code: lang_code });
-    setCurrent(lang_code); // state change
+    const prev = current;
+    // use current as a semaphore to prevent leaking memory
+    setCurrent(lang_code);
+    try {
+      await put(`${config.baseUrl}i18n/language`, { code: lang_code });
+    } catch(e) {
+      setCurrent(prev); // language didn't actually change
+      throw(e);
+    }
     onLanguageChange(lang_code);
   };
 
   return (
-    <section className="utrecht-alternate-lang-nav" aria-labelledby={headingId}>
-      <Heading
-        level={headingLevel}
-        className="utrecht-alternate-lang-nav__heading"
-        id={headingId}
-      >
-        {heading}
-      </Heading>
-      <ButtonGroup>
-        {items.map(({ current, label, lang, textContent }, i, a) => (
-          <>
-            <LinkButton
-              pressed={current}
-              lang={lang}
-              aria-label={label}
-              key={lang}
-              onClick={changeLanguage(lang)}
-              inline
-            >
-              {textContent}
-            </LinkButton>
-            {i + 1 < a.length ? <span aria-hidden="true">{" | "}</span> : <></>}
-          </>
-        ))}
-      </ButtonGroup>
-    </section>
+    <LanguageSelectionDisplay
+      onLanguageChange={changeLanguage}
+      headingId={headingId}
+      items={items}
+      {...displayProps}
+    />
   );
 };
 
-LanguageSelection.propTypes = propTypes;
+LanguageSelection.propTypes = {
+  heading: PropTypes.node,
+  headingLevel: PropTypes.number,
+  onLanguageChange: PropTypes.func,
+};
+
 LanguageSelection.defaultProps = {
   heading: (
     <FormattedMessage
