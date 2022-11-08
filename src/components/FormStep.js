@@ -31,7 +31,7 @@ import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import { useImmerReducer } from 'use-immer';
 import { Form } from 'react-formio';
-import useAsync from 'react-use/esm/useAsync';
+import { useAsync } from 'react-use';
 
 import hooks from '../formio/hooks';
 
