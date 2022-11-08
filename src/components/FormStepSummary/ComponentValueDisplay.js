@@ -215,6 +215,14 @@ const CoSignDisplay = ({component, value}) => {
 };
 
 
+const WYSIWYGContentDisplay = ({component, value}) => {
+  if (!value) {
+    return (<EmptyDisplay/>);
+  }
+  return <div dangerouslySetInnerHTML={{__html: value}} />;
+};
+
+
 const ComponentValueDisplay = ({ value, component }) => {
   const {
     multiple=false,
@@ -272,6 +280,7 @@ const TYPE_TO_COMPONENT = {
   map: MapDisplay,
   password: PasswordDisplay,
   coSign: CoSignDisplay,
+  content: WYSIWYGContentDisplay,
 };
 
 
