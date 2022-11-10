@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import Anchor from 'components/Anchor';
@@ -42,7 +42,7 @@ class ErrorBoundary extends React.Component {
     }
 
     const ErrorComponent = ERROR_TYPE_MAP[error.name] || GenericError;
-    const Wrapper = useCard ? Card : React.Fragment;
+    const Wrapper = useCard ? Card : 'div';
     return (
       <ErrorComponent wrapper={Wrapper} error={error} />
     );
@@ -54,17 +54,25 @@ ErrorBoundary.propTypes = {
 };
 
 
-const GenericError = ({ wrapper: Wrapper, error }) => (
-  <Wrapper title={<FormattedMessage description="Error boundary title" defaultMessage="Oops!" />}>
-    <ErrorMessage>
-      <FormattedMessage
-        description="Generic error message"
-        defaultMessage="Unfortunately something went wrong!"
-      />
-    </ErrorMessage>
-    {error.detail && <Body>{error.detail}</Body>}
-  </Wrapper>
-);
+const GenericError = ({ wrapper: Wrapper, error }) => {
+  const intl = useIntl();
+  // Wrapper may be a DOM element, which can't handle <FormattedMessage />
+  const title = intl.formatMessage({
+    description: 'Error boundary title',
+    defaultMessage: 'Oops!',
+  });
+  return (
+    <Wrapper title={title}>
+      <ErrorMessage>
+        <FormattedMessage
+          description="Generic error message"
+          defaultMessage="Unfortunately something went wrong!"
+        />
+      </ErrorMessage>
+      {error.detail && <Body>{error.detail}</Body>}
+    </Wrapper>
+  );
+};
 
 GenericError.propTypes = {
   wrapper: PropTypes.elementType.isRequired,
