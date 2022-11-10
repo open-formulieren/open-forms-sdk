@@ -3,6 +3,7 @@ import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
 import { ConfigContext } from 'Context';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 import { LanguageSelection, LanguageSelectionDisplay } from '.';
 
@@ -121,7 +122,14 @@ The functional component handles the "smart" behaviour:
 
 It is responsible for rendering the `LanguageSelectionDisplay` component.
 
-export const Template = (args) => <LanguageSelection {...args} />;
+export const Template = (args) => {
+  const Wrapper = args.wrapInErrorBoundary ? ErrorBoundary : React.Fragment;
+  return (
+    <Wrapper>
+      <LanguageSelection {...args} />
+    </Wrapper>
+  );
+};
 
 <Canvas>
   <Story
@@ -164,6 +172,9 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
   <Story
     name="Unavailable language"
     decorators={[ConfigDecorator]}
+    args={{
+      wrapInErrorBoundary: true,
+    }}
     parameters={{
       mockData: [
         {

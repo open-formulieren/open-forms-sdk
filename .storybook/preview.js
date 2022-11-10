@@ -38,9 +38,6 @@ export const parameters = {
   },
 };
 
-export const decorators = [
-];
-
 // Use our custom Form.io components
 Formio.use(OpenFormsModule);
 // use our own template library
