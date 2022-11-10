@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import useTimeoutFn from "react-use/esm/useTimeoutFn";
+import { useTimeoutFn } from "react-use";
 
 import {get} from '../api';
 

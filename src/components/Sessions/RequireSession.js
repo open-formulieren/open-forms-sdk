@@ -2,8 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
-import useTimeout from 'react-use/esm/useTimeout';
-import useTimeoutFn from 'react-use/esm/useTimeoutFn';
+import { useTimeout, useTimeoutFn } from 'react-use';
 
 import {apiCall} from 'api';
 import Anchor from 'components/Anchor';

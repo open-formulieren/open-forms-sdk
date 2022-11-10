@@ -1,0 +1,250 @@
+import {useState} from 'react';
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
+import { IntlProvider } from 'react-intl';
+
+import { ConfigContext } from 'Context';
+import ErrorBoundary from 'components/ErrorBoundary';
+
+import { LanguageSelection, LanguageSelectionDisplay } from '.';
+
+export const BASE_URL = 'http://localhost:8000/api/v2/';
+
+export const ConfigDecorator = (Story, { args }) => (
+  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
+    <Story />
+  </ConfigContext.Provider>
+);
+
+<Meta
+  title="Composites/Language Selection"
+  component={LanguageSelection}
+  argTypes={{
+    heading: {
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
+    headingLevel: {
+      control: { type: 'number', min: 1, max: 6 },
+      table: {
+        type: { summary: 'number' },
+      },
+    },
+    onLanguageChanged: { table: { disable: true } },
+  }}
+  parameters={{
+    mockData: [
+      {
+        url: `${BASE_URL}i18n/info`,
+        method: 'GET',
+        status: 200,
+        response: {
+          languages: [
+            { code: 'nl', name: 'Nederlands' },
+            { code: 'en', name: 'English' },
+            { code: 'fy', name: 'frysk' },
+          ],
+          current: 'nl',
+        },
+      },
+      {
+        url: `${BASE_URL}i18n/language`,
+        method: 'PUT',
+        status: 204,
+        response: {},
+      },
+    ],
+  }}
+/>
+
+# Language selection
+
+The language selection allows end-user to switch between available languages, as supported
+by the backend.
+
+This functionality is split in two components - one purely for display and
+styling purposes and the other one with smart behaviour to fetch the data
+from the backend.
+
+## Presentation
+
+The `LanguageSelectionDisplay` component presents the available languages and
+dispatches events when the user changes the active language.
+
+export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
+
+<Canvas>
+  <Story
+    name="Display"
+    args={{
+      heading: 'Language selection',
+      headingLevel: 2,
+      headingId: 'heading-id',
+      items: [
+        {
+          lang: 'en',
+          textContent: 'EN',
+          label: 'English',
+          current: true,
+        },
+        {
+          lang: 'nl',
+          textContent: 'NL',
+          label: 'Nederlands',
+          current: false,
+        },
+        {
+          lang: 'fy',
+          textContent: 'FY',
+          label: 'frysk',
+          current: false,
+        },
+      ],
+      onLanguageChange: console.log,
+    }}
+  >
+    {DisplayTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Props
+
+<ArgsTable of={LanguageSelectionDisplay} />
+
+## Functional
+
+The functional component handles the "smart" behaviour:
+
+* Fetch available languages from the backend
+* Read the preferred language via the backend and the HTTP `Accept-Language` header
+* Handle the user language-changed events and propagate them up the component tree
+
+It is responsible for rendering the `LanguageSelectionDisplay` component.
+
+export const Template = (args) => {
+  return (
+    <IntlProvider messages={{}} locale={'nl'} defaultLocale="nl">
+      {
+        args.wrapInErrorBoundary
+          ? (
+            <ErrorBoundary>
+              <LanguageSelection {...args} />
+            </ErrorBoundary>
+          )
+          : <LanguageSelection {...args} />
+      }
+    </IntlProvider>
+  );
+};
+
+<Canvas>
+  <Story
+    name="Functional"
+    decorators={[ConfigDecorator]}
+    parameters={{
+      controls: { expanded: true },
+      docs: {
+        source: {
+          type: 'dynamic',
+          excludeDecorators: true,
+        }
+      }
+    }}
+    args={{
+      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+    }}
+    argTypes={{
+      baseUrl: {
+        description: '`string`, used when the mocks are disabled and passed to the config context.',
+      }
+    }}
+    play={async ({args, canvasElement}) => {
+      const canvas = within(canvasElement);
+      // wait for api info call to return
+      let frysk_button = await waitFor(() => canvas.findByText(/^fy$/i));
+      await userEvent.click(frysk_button);
+      // wait for PUT api call to have completed and loading state to be resolved
+      await waitFor(() => canvas.findByText(/^fy$/i));
+      await expect(args.onLanguageChanged).toHaveBeenCalledTimes(1); // change once
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+Note that you can modify the `baseUrl` arg in the canvas to make live requests if you disable the
+mock responses in the mock panel.
+
+### Props
+
+<ArgsTable of={LanguageSelection} />
+
+### Errors
+
+Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some reason the language is unavailable a `ValidationError` is returned from the API:
+
+<Canvas>
+  <Story
+    name="Unavailable language"
+    decorators={[ConfigDecorator]}
+    args={{
+      wrapInErrorBoundary: true,
+    }}
+    argTypes={{
+      heading: { table: { disable: true } },
+      headingLevel: { table: { disable: true } },
+    }}
+    parameters={{
+      mockData: [
+        {
+          url: `${BASE_URL}i18n/info`,
+          method: "GET",
+          status: 200,
+          response: {
+            languages: [
+              { code: "nl", name: "Nederlands" },
+              { code: "en", name: "English" },
+              { code: "fy", name: "frysk" },
+            ],
+            current: "nl",
+          },
+        },
+        {
+          url: `${BASE_URL}i18n/language`,
+          method: "PUT",
+          status: 400,
+          response: {
+            type: "http://localhost:8000/fouten/ValidationError/",
+            code: "invalid",
+            title: "Invalid input.",
+            status: 400,
+            detail: "",
+            instance: "urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75",
+            invalidParams: [
+              {
+                name: "code",
+                code: "invalid_choice",
+                reason: '"fy" is not a valid choice.',
+              },
+            ],
+          },
+        },
+      ],
+      docs: {
+        source: {
+          type: 'dynamic',
+          excludeDecorators: true,
+        }
+      }
+    }}
+    play={async ({args, canvasElement}) => {
+      const canvas = within(canvasElement);
+      const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+      await userEvent.click(frysk_button);
+      await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(0)); // did not change language
+    }}
+  >{Template.bind({})}</Story>
+</Canvas>

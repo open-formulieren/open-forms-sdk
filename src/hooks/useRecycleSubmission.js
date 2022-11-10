@@ -1,8 +1,8 @@
 import {useContext} from 'react';
 
 import {useLocation} from 'react-router-dom';
-import useLocalStorage from 'react-use/esm/useLocalStorage';
-import useAsync from 'react-use/esm/useAsync';
+import { useLocalStorage } from 'react-use';
+import { useAsync } from 'react-use';
 
 import {apiCall} from 'api';
 import {ConfigContext} from 'Context';

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
-import useAsync from 'react-use/esm/useAsync';
+import { useAsync } from 'react-use';
 
 import { post } from 'api';
 import Body from 'components/Body';

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import usePrevious from 'react-use/esm/usePrevious';
+import { usePrevious } from 'react-use';
 
 const isDev = process.env.NODE_ENV === 'development';
 

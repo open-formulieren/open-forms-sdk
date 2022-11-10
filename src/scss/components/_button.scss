@@ -3,6 +3,9 @@
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
+@import '@utrecht/components/dist/button/css/index.css';
+@import '@utrecht/components/dist/button-link/css/index.css';
+
 @import '../mixins/bem';
 @import '../mixins/prefix';
 

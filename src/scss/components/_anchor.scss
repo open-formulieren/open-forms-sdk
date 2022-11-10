@@ -2,6 +2,8 @@
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/typography';
 
+@import '@utrecht/components/dist/link-button/css/index.css';
+
 @import '../mixins/prefix';
 
 .#{prefix('anchor')} {

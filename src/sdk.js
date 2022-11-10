@@ -22,7 +22,6 @@ import {loadLocaleData, loadFormioTranslations} from 'i18n';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
 
-
 // use protected eval to not rely on unsafe-eval (CSP)
 Formio.use(ProtectedEval);
 
@@ -42,7 +41,6 @@ Formio.libraries = {
 fixLeafletIconUrls();
 
 class OpenForm {
-
   constructor( targetNode, opts ) {
     const {
       baseUrl,
@@ -52,6 +50,7 @@ class OpenForm {
       lang,
       sentryDSN,
       sentryEnv='',
+      languageSelectorTarget,
     } = opts;
 
     this.targetNode = targetNode;
@@ -59,6 +58,22 @@ class OpenForm {
     this.formId = formId;
     this.formObject = null;
     this.lang = lang;
+
+    switch (typeof languageSelectorTarget) {
+      case "string": {
+        this.languageSelectorTarget = document.querySelector(
+          languageSelectorTarget
+        );
+        break;
+      }
+      case "object": {
+        this.languageSelectorTarget = languageSelectorTarget;
+        break;
+      }
+      default:
+        this.languageSelectorTarget = undefined;
+        break;
+    }
 
     CSPNonce.setValue(CSPNonceValue);
     initialiseSentry(sentryDSN, sentryEnv);
@@ -112,7 +127,7 @@ class OpenForm {
           <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
             <FormioTranslations.Provider value={{i18n: translations, language: lang}}>
               <Router basename={this.basePath}>
-                <App form={this.formObject} />
+                <App languageSelectorTarget={this.languageSelectorTarget} form={this.formObject} />
               </Router>
             </FormioTranslations.Provider>
           </ConfigContext.Provider>
@@ -122,7 +137,6 @@ class OpenForm {
     );
   }
 }
-
 
 export default OpenForm;
 export { ANALYTICS_PROVIDERS } from 'hooks/usePageViews';

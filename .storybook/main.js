@@ -16,6 +16,7 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "storybook-addon-themes",
+    "storybook-addon-mock",
     "storybook-react-intl"
   ],
   "framework": "@storybook/react",
@@ -47,7 +48,7 @@ module.exports = {
     const oneOfRule = craConfig.module.rules.find(rule => rule.oneOf != null);
     const sassRule = oneOfRule.oneOf.find(rule => String(rule.test) === String(sassRegex));
     const ejsLoader = oneOfRule.oneOf.find(rule => rule.loader === 'ejs-loader');
-    const mergedRules = [sassRule, 
+    const mergedRules = [sassRule,
     {
       ...ejsLoader,
       // Exclude Storybook internal .ejs templates
