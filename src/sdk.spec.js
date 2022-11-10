@@ -33,7 +33,7 @@ const FORM = {
   explanationTemplate: '',
   requiredFieldsWithAsterisk: true,
   autoLoginAuthenticationBackend: '',
-  i18nEnabled: true,
+  translationEnabled: true,
 };
 
 const LANGUAGE_INFO = {
