@@ -1,6 +1,5 @@
 import { Formio, Templates } from 'react-formio';
 
-import { ConfigContext } from 'Context';
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
 

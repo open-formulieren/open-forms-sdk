@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router-dom';
 
 import Form from 'components/Form';
