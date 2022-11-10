@@ -58,7 +58,7 @@ const LanguageSelection = ({
     return <Loader modifiers={["small"]} />;
   }
 
-  const { current, languages } = languageInfo;
+  const { languages } = languageInfo;
   // transform language information for display
   const items = languages.map( ({ code, name }) => ({
     lang: code,
