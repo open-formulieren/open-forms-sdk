@@ -13,13 +13,6 @@ import 'scss/nl-design-system-community.scss';
 
 import {reactIntl} from './reactIntl.js';
 
-const BASE_URL = 'http://localhost:8000/'
-const ConfigDecorator = (Story, { args }) => (
-  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
-    <Story />
-  </ConfigContext.Provider>
-);
-
 export const parameters = {
   reactIntl,
   locale: reactIntl.defaultLocale,
@@ -46,7 +39,6 @@ export const parameters = {
 };
 
 export const decorators = [
-  ConfigDecorator,
 ];
 
 // Use our custom Form.io components

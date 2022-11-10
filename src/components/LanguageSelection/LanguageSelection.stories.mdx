@@ -2,9 +2,17 @@ import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-import { LanguageSelection, LanguageSelectionDisplay } from './';
+import { ConfigContext } from 'Context';
 
-export const BASE_URL = 'http://localhost:8000/'
+import { LanguageSelection, LanguageSelectionDisplay } from '.';
+
+export const BASE_URL = 'http://localhost:8000/api/v2/';
+
+export const ConfigDecorator = (Story, { args }) => (
+  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
+    <Story />
+  </ConfigContext.Provider>
+);
 
 <Meta
   title="Pure React Components/Language Selection"
@@ -115,11 +123,21 @@ It is responsible for rendering the `LanguageSelectionDisplay` component.
 
 export const Template = (args) => <LanguageSelection {...args} />;
 
-<!-- TODO: bring back backend url arg for this particular story -->
-
 <Canvas>
   <Story
     name="Default"
+    decorators={[ConfigDecorator]}
+    parameters={{
+      docs: {
+        source: {
+          type: 'dynamic',
+          excludeDecorators: true,
+        }
+      }
+    }}
+    args={{
+      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+    }}
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
       const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
@@ -133,6 +151,9 @@ export const Template = (args) => <LanguageSelection {...args} />;
   </Story>
 </Canvas>
 
+Note that you can modify the `baseUrl` to make live requests if you disable the
+mock responses in the mock panel.
+
 <ArgsTable story="Default" />
 
 ### Errors
@@ -142,6 +163,7 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
 <Canvas>
   <Story
     name="Unavailable language"
+    decorators={[ConfigDecorator]}
     parameters={{
       mockData: [
         {
@@ -178,6 +200,12 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
           },
         },
       ],
+      docs: {
+        source: {
+          type: 'dynamic',
+          excludeDecorators: true,
+        }
+      }
     }}
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
