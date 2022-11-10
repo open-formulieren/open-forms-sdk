@@ -3159,11 +3159,6 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@open-formulieren/design-tokens@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@open-formulieren/design-tokens/-/design-tokens-0.12.0.tgz#963d66847dca2647e99d97c510c551ad34a8804c"
-  integrity sha512-orY9xSBdI8ucmd6SXGypWuQBXILxahKUtgOYfNYpIHZAZxf+KSZGPSL8USgUWYEd5WL8Hutzo0ti9lPipF8ODQ==
-
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.6.tgz#9ced74cb23dae31ab385f775e237ce4c50422a1d"
@@ -5209,10 +5204,10 @@
     "@typescript-eslint/types" "5.23.0"
     eslint-visitor-keys "^3.0.0"
 
-"@utrecht/component-library-css@^1.0.0-alpha.343":
-  version "1.0.0-alpha.365"
-  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.365.tgz#eb871113eab9f0d5fcd9780caf9caacca538dc0d"
-  integrity sha512-U9ejXBSBHEG0/VTJJjODbjqFfQ0wxzQ0Eu4a3Xc2pN37a1e/G1iavnqdV9ZNehxuuMb1qqS9RGIV7DfHmwbYrQ==
+"@utrecht/component-library-css@^1.0.0-alpha.373":
+  version "1.0.0-alpha.373"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.373.tgz#840f0c9a61b4f565730c1c80d9c8de026793fcef"
+  integrity sha512-7ItYL+oQ6jl7DYeFthBp6I8BehBiUSmJE/TwJR+7O6kP02riPTjjsRV9UEljUETiNMNELpIMCVxi1zbMehaRrg==
 
 "@utrecht/component-library-react@^1.0.0-alpha.152":
   version "1.0.0-alpha.174"

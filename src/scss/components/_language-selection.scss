@@ -1,0 +1,14 @@
+@import '@utrecht/components/dist/alternate-lang-nav/css/index.css';
+@import '@utrecht/components/dist/button-group/css/index.css';
+
+/**
+ * Allow using different spacing rules for this specific component
+ */
+.utrecht-alternate-lang-nav {
+  .utrecht-button-group {
+    gap: var(
+      --of-language-selection-gap,
+      var(--utrecht-button-group-inline-gap, .2em)
+    );
+  }
+}

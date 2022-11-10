@@ -5,6 +5,8 @@ import { ButtonGroup, Heading } from '@utrecht/component-library-react';
 
 import Button from 'components/Button';
 
+const Spacer = () => (<span aria-hidden="true">{'|'}</span>);
+
 const LanguageSelectionDisplay = ({
   heading,
   headingLevel,
@@ -34,7 +36,7 @@ const LanguageSelectionDisplay = ({
           >
             {textContent}
           </Button>
-          {i + 1 < a.length ? <span aria-hidden="true">{" | "}</span> : <></>}
+          {i + 1 < a.length ? <Spacer /> : null}
         </Fragment>
       ))}
     </ButtonGroup>

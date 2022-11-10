@@ -29,7 +29,7 @@
   "dependencies": {
     "@formio/protected-eval": "^1.2.1",
     "@fortawesome/fontawesome-free": "^6.1.1",
-    "@open-formulieren/design-tokens": "^0.12.0",
+    "@open-formulieren/design-tokens": "^0.13.0",
     "@sentry/react": "^6.13.2",
     "@sentry/tracing": "^6.13.2",
     "classnames": "^2.3.1",
@@ -119,7 +119,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@utrecht/component-library-css": "^1.0.0-alpha.343",
+    "@utrecht/component-library-css": "^1.0.0-alpha.373",
     "@utrecht/component-library-react": "^1.0.0-alpha.152",
     "@utrecht/components": "^1.0.0-alpha.304",
     "@utrecht/design-tokens": "^1.0.0-alpha.336",
