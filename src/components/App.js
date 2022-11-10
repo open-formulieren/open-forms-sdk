@@ -7,17 +7,18 @@ import Form from 'components/Form';
 import { Layout, LayoutRow } from 'components/Layout';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import LanguageSelection from 'components/LanguageSelection';
+import Types from 'types';
 
-const LanguageSwitcher = ({ target = null, renderSelector = false }) => {
-  if (!renderSelector) return (<></>);
-  return target ? (
+
+const LanguageSwitcher = ({ target = null }) => (
+  target ? (
     ReactDOM.createPortal(<LanguageSelection />, target)
   ) : (
     <LayoutRow>
       <LanguageSelection />
     </LayoutRow>
-  );
-};
+  )
+);
 
 LanguageSwitcher.propTypes = {
   target: PropTypes.instanceOf(Element),
@@ -27,9 +28,10 @@ LanguageSwitcher.propTypes = {
 Top level router - routing between an actual form or supporting screens.
  */
 const App = ({ languageSelectorTarget, ...props }) => {
+  const { form: { translationEnabled } } = props;
   return (
     <Layout>
-      <LanguageSwitcher target={languageSelectorTarget} renderSelector={props.form.translationEnabled} />
+      { translationEnabled ? <LanguageSwitcher target={languageSelectorTarget} /> : null }
 
       <LayoutRow>
 
@@ -50,7 +52,7 @@ const App = ({ languageSelectorTarget, ...props }) => {
 
 App.propTypes = {
   languageSelectorTarget: PropTypes.instanceOf(Element),
-  form: PropTypes.object,  // FIXME generate from OpenAPI spec
+  form: Types.Form,
 };
 
 export default App;
