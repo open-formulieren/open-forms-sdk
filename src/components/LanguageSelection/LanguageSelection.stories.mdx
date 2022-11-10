@@ -154,11 +154,15 @@ export const Template = (args) => {
     }}
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
-      const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+      // wait for api info call to return
+      let frysk_button = await waitFor(() => canvas.findByText(/^fy$/i));
       await userEvent.click(frysk_button);
-      await userEvent.click(frysk_button); // click twice
-      // TODO: Fix false positive: this assertion resolves after first click
-      await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(1)); // change once
+      // wait for PUT api call to have completed and loading state to be resolved
+      frysk_button = await waitFor(() => canvas.findByText(/^fy$/i));
+      await expect(args.onLanguageChanged).toHaveBeenCalledTimes(1); // change once
+      await userEvent.click(frysk_button); // click second time
+      await waitFor(() => canvas.findByText(/^fy$/i)); // wait until buttons are visible again
+      await expect(args.onLanguageChanged).toHaveBeenCalledTimes(1); // should not be called again because the language hasn't changed
     }}
   >
     {Template.bind({})}

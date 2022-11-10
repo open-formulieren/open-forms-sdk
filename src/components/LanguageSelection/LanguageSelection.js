@@ -26,7 +26,10 @@ const LanguageSelection = ({
   // Hook uses
   const { baseUrl } = useContext(ConfigContext);
   const { locale } = useIntl();
+  const [ updatingLanguage, setUpdatingLanguage ] = useState(false);
   const [ err, setErr ] = useState(null);
+
+  console.log(locale);
 
   // fetch language information from API
   const {
@@ -53,7 +56,7 @@ const LanguageSelection = ({
   if (anyError) {
     throw anyError; // bubble up to boundary
   }
-  if (loading) {
+  if (loading || updatingLanguage) {
     return <Loader modifiers={["small"]} />;
   }
 
@@ -72,8 +75,13 @@ const LanguageSelection = ({
    * @return {Void}
    */
   const onLanguageChange = async (languageCode) => {
+    console.log('yarp');
+
+    setUpdatingLanguage(true);
+
     // do nothing if this is already the active language
-    if (languageCode === locale) return;
+    // or if an update is being processed.
+    if (updatingLanguage || languageCode === locale) return;
 
     // activate other language in backend
     try {
@@ -81,10 +89,11 @@ const LanguageSelection = ({
     } catch (err) {
       // set error in state, which gets re-thrown in render and bubbles up
       // to error bounary
-      // FIXME: memory leak in storybook -> use decorator with error boundary
+      setUpdatingLanguage(false);
       setErr(err);
     }
     // update UI language
+    setUpdatingLanguage(false);
     onLanguageChanged(languageCode);
   };
 
