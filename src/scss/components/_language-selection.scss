@@ -1,3 +1,5 @@
+@import '~microscope-sass/lib/typography';
+
 @import '@utrecht/components/dist/alternate-lang-nav/css/index.css';
 @import '@utrecht/components/dist/button-group/css/index.css';
 
@@ -10,5 +12,16 @@
       --of-language-selection-gap,
       var(--utrecht-button-group-inline-gap, .2em)
     );
+    align-items: center;
+
+    // ensure spacer font-size is the same as the button
+    > span[aria-hidden="true"] {
+      @include body;
+      @include body--big;
+    }
+  }
+
+  .openforms-button {
+    padding: 0;
   }
 }
