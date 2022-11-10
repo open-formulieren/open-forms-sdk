@@ -7,6 +7,7 @@ import Form from 'components/Form';
 import { Layout, LayoutRow } from 'components/Layout';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import LanguageSelection from 'components/LanguageSelection';
+import Types from 'types';
 
 
 const LanguageSwitcher = ({ target = null }) => (
@@ -27,9 +28,10 @@ LanguageSwitcher.propTypes = {
 Top level router - routing between an actual form or supporting screens.
  */
 const App = ({ languageSelectorTarget, ...props }) => {
+  const { form: { translationEnabled } } = props;
   return (
     <Layout>
-      <LanguageSwitcher target={languageSelectorTarget} />
+      { translationEnabled ? <LanguageSwitcher target={languageSelectorTarget} /> : null }
 
       <LayoutRow>
 
@@ -50,6 +52,7 @@ const App = ({ languageSelectorTarget, ...props }) => {
 
 App.propTypes = {
   languageSelectorTarget: PropTypes.instanceOf(Element),
+  form: Types.Form,
 };
 
 export default App;
