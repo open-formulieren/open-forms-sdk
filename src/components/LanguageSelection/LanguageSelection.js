@@ -29,8 +29,6 @@ const LanguageSelection = ({
   const [ updatingLanguage, setUpdatingLanguage ] = useState(false);
   const [ err, setErr ] = useState(null);
 
-  console.log(locale);
-
   // fetch language information from API
   const {
     loading,
@@ -75,14 +73,11 @@ const LanguageSelection = ({
    * @return {Void}
    */
   const onLanguageChange = async (languageCode) => {
-    console.log('yarp');
-
-    setUpdatingLanguage(true);
-
     // do nothing if this is already the active language
     // or if an update is being processed.
     if (updatingLanguage || languageCode === locale) return;
 
+    setUpdatingLanguage(true);
     // activate other language in backend
     try {
       await put(`${baseUrl}i18n/language`, { code: languageCode });
