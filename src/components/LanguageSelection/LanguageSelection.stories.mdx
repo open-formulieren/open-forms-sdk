@@ -16,7 +16,7 @@ export const ConfigDecorator = (Story, { args }) => (
 );
 
 <Meta
-  title="Pure React Components/Language Selection"
+  title="Composites/Language Selection"
   component={LanguageSelection}
   argTypes={{
     heading: {
@@ -31,11 +31,7 @@ export const ConfigDecorator = (Story, { args }) => (
         type: { summary: 'number' },
       },
     },
-    onLanguageChanged: {
-      table: {
-        type: { summary: 'function' },
-      },
-    },
+    onLanguageChanged: { table: { disable: true } },
   }}
   parameters={{
     mockData: [
@@ -62,7 +58,10 @@ export const ConfigDecorator = (Story, { args }) => (
   }}
 />
 
-The language selection allows end-user to switch between available languages.
+# Language selection
+
+The language selection allows end-user to switch between available languages, as supported
+by the backend.
 
 This functionality is split in two components - one purely for display and
 styling purposes and the other one with smart behaviour to fetch the data
@@ -70,11 +69,10 @@ from the backend.
 
 ## Presentation
 
-The `LanguageSelectionDisplay` component serves to display the available languages and dispatch events when the user changes the active language.
+The `LanguageSelectionDisplay` component presents the available languages and
+dispatches events when the user changes the active language.
 
 export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
-
-<!-- todo: disable onLanguageChanged argType -->
 
 <Canvas>
   <Story
@@ -110,7 +108,9 @@ export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
   </Story>
 </Canvas>
 
-<ArgsTable story="Display" />
+### Props
+
+<ArgsTable of={LanguageSelectionDisplay} />
 
 ## Functional
 
@@ -123,19 +123,20 @@ The functional component handles the "smart" behaviour:
 It is responsible for rendering the `LanguageSelectionDisplay` component.
 
 export const Template = (args) => {
-  const Wrapper = args.wrapInErrorBoundary ? ErrorBoundary : React.Fragment;
+  if (!args.wrapInErrorBoundary) return <LanguageSelection {...args} />;
   return (
-    <Wrapper>
+    <ErrorBoundary>
       <LanguageSelection {...args} />
-    </Wrapper>
+    </ErrorBoundary>
   );
 };
 
 <Canvas>
   <Story
-    name="Default"
+    name="Functional"
     decorators={[ConfigDecorator]}
     parameters={{
+      controls: { expanded: true },
       docs: {
         source: {
           type: 'dynamic',
@@ -145,6 +146,11 @@ export const Template = (args) => {
     }}
     args={{
       baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+    }}
+    argTypes={{
+      baseUrl: {
+        description: '`string`, used when the mocks are disabled and passed to the config context.',
+      }
     }}
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
@@ -159,10 +165,12 @@ export const Template = (args) => {
   </Story>
 </Canvas>
 
-Note that you can modify the `baseUrl` to make live requests if you disable the
+Note that you can modify the `baseUrl` arg in the canvas to make live requests if you disable the
 mock responses in the mock panel.
 
-<ArgsTable story="Default" />
+### Props
+
+<ArgsTable of={LanguageSelection} />
 
 ### Errors
 
@@ -174,6 +182,10 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
     decorators={[ConfigDecorator]}
     args={{
       wrapInErrorBoundary: true,
+    }}
+    argTypes={{
+      heading: { table: { disable: true } },
+      headingLevel: { table: { disable: true } },
     }}
     parameters={{
       mockData: [
