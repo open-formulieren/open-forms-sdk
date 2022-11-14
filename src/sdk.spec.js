@@ -51,8 +51,8 @@ describe("OpenForm", () => {
     const target = document.createElement("div");
 
     apiModule.get
-      .mockReturnValueOnce({})  // formio translations
       .mockReturnValueOnce(FORM)  // form detail endpoint
+      .mockReturnValueOnce({})  // formio translations
       .mockReturnValueOnce(LANGUAGE_INFO)  // language info
     ;
 
@@ -82,8 +82,8 @@ describe("OpenForm", () => {
     const target = document.getElementById("my-languages-element");
 
     apiModule.get
-      .mockReturnValueOnce({})  // formio translations
       .mockReturnValueOnce(FORM)  // form detail endpoint
+      .mockReturnValueOnce({})  // formio translations
       .mockReturnValueOnce(LANGUAGE_INFO)  // language info
     ;
 
