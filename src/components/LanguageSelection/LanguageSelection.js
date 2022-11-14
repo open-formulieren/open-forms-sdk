@@ -21,10 +21,9 @@ const DEFAULT_HEADING = (
 const LanguageSelection = ({
   heading=DEFAULT_HEADING,
   headingLevel=2,
-  onLanguageChanged=console.log,
 }) => {
   // Hook uses
-  const { baseUrl } = useContext(ConfigContext);
+  const { baseUrl, onLanguageChanged } = useContext(ConfigContext);
   const { locale } = useIntl();
   const [ updatingLanguage, setUpdatingLanguage ] = useState(false);
   const [ err, setErr ] = useState(null);

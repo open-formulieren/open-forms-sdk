@@ -12,13 +12,11 @@ import OFLibrary from './formio/templates';
 
 import './styles.scss';
 
-import { get, post } from 'api';
-import { ConfigContext, FormioTranslations } from 'Context';
-import App from 'components/App';
 import {CSPNonce} from 'headers';
 import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
-import {loadLocaleData, loadFormioTranslations} from 'i18n';
+import I18NManager from './i18n';
+import ErrorBoundary from 'components/ErrorBoundary';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
 
@@ -103,35 +101,24 @@ class OpenForm {
     const url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
 
-    const promises = [
-      // load the message catalog for i18n
-      loadLocaleData(lang),
-      loadFormioTranslations(this.baseUrl),
-      // fetch the form object from the API
-      get(url),
-    ];
-    const [messages, translations, formObject] = await Promise.all(promises);
-
-    this.formObject = formObject;
-
-    // Explicitly set the default language if translations are disabled
-    if(!formObject.translationEnabled) {
-      await post(`${formObject.url}/activate_default_language`);
-    }
-
     // render the wrapping React component
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
-        <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
-          <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
-            <FormioTranslations.Provider value={{i18n: translations, language: lang}}>
-              <Router basename={this.basePath}>
-                <App languageSelectorTarget={this.languageSelectorTarget} form={this.formObject} />
-              </Router>
-            </FormioTranslations.Provider>
-          </ConfigContext.Provider>
-        </IntlProvider>
+        <Router basename={this.basePath}>
+          {/* outer IntlProvider for errors thrown in I18NManager */}
+          <IntlProvider messages={{}} locale='en' >
+            <ErrorBoundary useCard>
+              <I18NManager
+                initialLang={lang}
+                baseUrl={this.baseUrl}
+                basePath={this.basePath}
+                languageSelectorTarget={this.languageSelectorTarget}
+                formUrl={url}
+              />
+            </ErrorBoundary>
+          </IntlProvider>
+        </Router>
       </React.StrictMode>,
       this.targetNode,
     );
