@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
 import {
@@ -8,6 +8,8 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router-dom';
+
+import {usePrevious} from 'react-use';
 
 import {ConfigContext} from 'Context';
 
@@ -88,7 +90,7 @@ const reducer = (draft, action) => {
       draft.processingError = '';
       break;
     }
-    case 'SESSION_EXPIRED': {
+    case 'DESTROY_SUBMISSION': {
       return {
         ...initialState,
         config: draft.config,
@@ -114,6 +116,7 @@ const reducer = (draft, action) => {
   const queryParams = useQuery();
   usePageViews();
   const intl = useIntl();
+  const prevLocale = usePrevious(intl.locale);
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -144,8 +147,18 @@ const reducer = (draft, action) => {
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(
     () => {
       removeSubmissionId();
-      dispatch({type: 'SESSION_EXPIRED'});
+      dispatch({type: 'DESTROY_SUBMISSION'});
     }
+  );
+
+  useEffect(
+    () => {
+      if (prevLocale === undefined) return;
+      if (intl.locale !== prevLocale) {
+        removeSubmissionId();
+        dispatch({type: 'DESTROY_SUBMISSION'});
+      }
+    }, [intl.locale, prevLocale, removeSubmissionId] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');

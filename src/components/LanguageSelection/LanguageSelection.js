@@ -23,7 +23,7 @@ const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
   // Hook uses
   const { baseUrl } = useContext(ConfigContext);
   const { onLanguageChangeDone } = useContext(I18NContext);
-  const { locale } = useIntl();
+  const { locale, formatMessage } = useIntl();
   const [ updatingLanguage, setUpdatingLanguage ] = useState(false);
   const [ err, setErr ] = useState(null);
 
@@ -59,6 +59,16 @@ const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
     // do nothing if this is already the active language
     // or if an update is being processed.
     if (updatingLanguage || languageCode === locale) return;
+
+    const confirmationQuestion = formatMessage(
+      {
+        description: 'change language prompt',
+        defaultMessage: 'Changing language will empty the form. Continue?'
+      }
+    );
+    if (!window.confirm(confirmationQuestion)) {
+      return;
+    }
 
     setUpdatingLanguage(true);
     // activate other language in backend
