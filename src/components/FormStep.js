@@ -566,6 +566,11 @@ const FormStep = ({
     logicCheckTimeout.current = {timeoutId, canSubmit: localCanSubmit};
 
     dispatch({type: 'FORMIO_CHANGE_HANDLED'});
+
+    const formInstance = formRef.current?.instance?.instance;
+    if (formInstance && !modifiedByHuman) {
+      formInstance.emit('reformatCurrencies');
+    }
   };
 
   const isLoadingSomething = (loading || isNavigating);

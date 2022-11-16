@@ -10,6 +10,16 @@ import { applyPrefix } from '../utils';
  * Extend the default text field to modify it to our needs.
  */
 class Currency extends Formio.Components.components.currency {
+  constructor(component, options, data) {
+    super(component, options, data);
+
+    this.on('reformatCurrencies', () => {
+      const value = this.data[this.key]
+      if (!value) return;
+      this.element.value = this.getValueAsString(this.addZerosAndFormatValue(this.parseValue(value)));
+      this.redraw();
+    });
+  }
 
   formatValue(value) {
     if (this.component.requireDecimal && value && !value.includes(this.decimalSeparator)) {
