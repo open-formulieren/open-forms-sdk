@@ -79,4 +79,12 @@
   .control-label--hidden {
     position: static !important;
   }
+
+  &--editgrid {
+    & > label {
+      // Only the label of the whole repeating group has h3 style. Not the label of each field
+      // within a repeat of the group.
+     @include h3;
+    }
+  }
 }
