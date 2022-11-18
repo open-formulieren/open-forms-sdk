@@ -38,6 +38,18 @@ export const parameters = {
       { name: 'Gemeente Utrecht', class: 'utrecht-theme', color: '#cc0000' }
     ],
   },
+  options: {
+    storySort: {
+      method: 'alphabetical',
+      order: [
+        'Introduction',
+        'Pure React components',
+        'Composites',
+        'Form.io components',
+        'Private API',
+      ],
+    }
+  },
 };
 
 // Use our custom Form.io components

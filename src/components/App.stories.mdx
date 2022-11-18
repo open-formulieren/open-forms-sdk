@@ -1,0 +1,183 @@
+import { Meta, Canvas, Story, ArgsTable } from "@storybook/addon-docs";
+import {
+  within,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@storybook/testing-library";
+import { expect } from "@storybook/jest";
+import { MemoryRouter } from "react-router-dom";
+import { ConfigContext } from "Context";
+
+import App from "./App";
+
+export const BASE_URL = "http://localhost:8000/api/v2/";
+
+export const ConfigDecorator = (Story, { args }) => (
+  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
+    <Story />
+  </ConfigContext.Provider>
+);
+
+<Meta
+  title="Private API/App"
+  component={App}
+  argTypes={{
+    form: {
+      control: false,
+    },
+  }}
+  args={{
+    "form.translationEnabled": true,
+  }}
+  parameters={{
+    mockData: [
+      {
+        url: `${BASE_URL}i18n/info`,
+        method: "GET",
+        status: 200,
+        response: {
+          languages: [
+            { code: "nl", name: "Nederlands" },
+            { code: "en", name: "English" },
+          ],
+          current: "nl",
+        },
+      },
+      {
+        url: `${BASE_URL}i18n/language`,
+        method: "PUT",
+        status: 204,
+        response: {},
+      },
+    ],
+  }}
+/>
+
+export const Template = (args) => {
+  const form = {
+    uuid: "81a22589-abce-4147-a2a3-62e9a56685aa",
+    name: "Mocked form",
+    loginRequired: false,
+    translationEnabled: args["form.translationEnabled"],
+    loginOptions: [],
+    autoLoginAuthenticationBackend: "",
+    paymentRequired: false,
+    paymentOptions: [],
+    literals: {
+      previousText: { resolved: "Previous page", value: "" },
+      beginText: { resolved: "Begin form", value: "" },
+      changeText: { resolved: "Change", value: "" },
+      confirmText: { resolved: "Confirm", value: "" },
+    },
+    slug: "jest",
+    url: "http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa",
+    steps: [
+      {
+        uuid: "fc9f2889-b1e4-4045-b88c-acf1adf716cb",
+        slug: "step1",
+        formDefinition: "Stap 1",
+        index: 0,
+        literals: {
+          previousText: { resolved: "Previous page", value: "" },
+          saveText: { resolved: "Save current information", value: "" },
+          nextText: { resolved: "Next", value: "" },
+        },
+        url: "http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa/steps/fc9f2889-b1e4-4045-b88c-acf1adf716cb",
+      },
+    ],
+    showProgressIndicator: true,
+    maintenanceMode: false,
+    active: true,
+    explanationTemplate: "<p>Toelichtingssjabloon...</p>",
+    submissionAllowed: "yes",
+    requiredFieldsWithAsterisk: true,
+  };
+  return (
+    <MemoryRouter>
+      <App form={form} />
+    </MemoryRouter>
+  );
+};
+
+# The App
+
+The App component is the top level router. It's responsible for rendering the
+outer most layout and rendering:
+
+- `Form` based on the `form` config that is passed with the shape from the
+  backend API.
+- the language selection component if translations are enabled. Note that the
+  render target is provided via the `I18NManager` component.
+
+<Canvas>
+  <Story
+    name="Default"
+    decorators={[ConfigDecorator]}
+    parameters={{
+      docs: {
+        source: {
+          type: "dynamic",
+          excludeDecorators: true,
+        },
+      },
+    }}
+    args={{
+      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable of={App} />
+
+## Translations
+
+If translations are enabled on the form, a `LanguageSelector` is rendered:
+
+<Canvas>
+  <Story
+    name="Translation Enabled"
+    decorators={[ConfigDecorator]}
+    parameters={{
+      docs: {
+        source: {
+          type: "dynamic",
+          excludeDecorators: true,
+        },
+      },
+    }}
+    args={{
+      "form.translationEnabled": true,
+      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+    }}
+    play={async ({ args, canvasElement }) => {
+      const langSelector = await within(canvasElement).findByText(/^nl$/i);
+      expect(langSelector).toBeTruthy();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+If they are not, no `LanguageSelector` is rendered:
+
+<Canvas>
+  <Story
+    name="Translation Disabled"
+    args={{
+      "form.translationEnabled": false,
+    }}
+    play={async ({ args, canvasElement }) => {
+      const canvas = within(canvasElement);
+      // wait for spinners to disappear
+      const spinners = document.querySelectorAll(".openforms-loading__spinner");
+      await Promise.all(Array.from(spinners).map(waitForElementToBeRemoved));
+      // assert there's no NL button
+      const langSelector = canvas.queryByText(/^nl$/i);
+      expect(langSelector).toBeNull();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
