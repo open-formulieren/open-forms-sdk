@@ -1,5 +1,6 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
+import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
 import {
   Redirect,
@@ -8,6 +9,8 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router-dom';
+
+import {usePrevious} from 'react-use';
 
 import {ConfigContext} from 'Context';
 
@@ -30,6 +33,20 @@ import {findNextApplicableStep} from 'components/utils';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
+
+const globalSubmissionState = createGlobalstate({hasSubmission: false});
+
+const flagActiveSubmission = () => {
+  globalSubmissionState.updateValue(state => {
+    state.hasSubmission = true;
+  });
+};
+
+const flagNoActiveSubmission = () => {
+  globalSubmissionState.updateValue(state => {
+    state.hasSubmission = false;
+  });
+};
 
 /**
  * Create a submission instance from a given form instance
@@ -88,7 +105,7 @@ const reducer = (draft, action) => {
       draft.processingError = '';
       break;
     }
-    case 'SESSION_EXPIRED': {
+    case 'DESTROY_SUBMISSION': {
       return {
         ...initialState,
         config: draft.config,
@@ -114,6 +131,7 @@ const reducer = (draft, action) => {
   const queryParams = useQuery();
   usePageViews();
   const intl = useIntl();
+  const prevLocale = usePrevious(intl.locale);
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -129,6 +147,7 @@ const reducer = (draft, action) => {
       type: 'SUBMISSION_LOADED',
       payload: submission,
     });
+    flagActiveSubmission();
     // navigate to the first step
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
     history.push(next ? next : firstStepRoute);
@@ -144,8 +163,20 @@ const reducer = (draft, action) => {
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(
     () => {
       removeSubmissionId();
-      dispatch({type: 'SESSION_EXPIRED'});
+      dispatch({type: 'DESTROY_SUBMISSION'});
+      flagNoActiveSubmission();
     }
+  );
+
+  useEffect(
+    () => {
+      if (prevLocale === undefined) return;
+      if (intl.locale !== prevLocale) {
+        removeSubmissionId();
+        dispatch({type: 'DESTROY_SUBMISSION'});
+        flagNoActiveSubmission();
+      }
+    }, [intl.locale, prevLocale, removeSubmissionId] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
@@ -174,6 +205,7 @@ const reducer = (draft, action) => {
       type: 'SUBMISSION_LOADED',
       payload: submission,
     });
+    flagActiveSubmission();
     setSubmissionId(submission.id);
     // navigate to the first step
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
@@ -339,3 +371,4 @@ Form.propTypes = {
 };
 
 export default Form;
+export {globalSubmissionState};

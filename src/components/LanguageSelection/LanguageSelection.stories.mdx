@@ -179,6 +179,7 @@ export const Template = (args) => {
       const canvas = within(canvasElement);
       // wait for api info call to return
       let frysk_button = await waitFor(() => canvas.findByText(/^fy$/i));
+      window.confirm = () => true;
       await userEvent.click(frysk_button);
       // wait for PUT api call to have completed and loading state to be resolved
       await waitFor(() => canvas.findByText(/^fy$/i));
@@ -257,6 +258,7 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
       const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+      window.confirm = () => true;
       await userEvent.click(frysk_button);
       await waitFor(() => expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(0)); // did not change language
     }}

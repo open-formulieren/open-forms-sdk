@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import { createGlobalstate, useGlobalState } from 'state-pool';
 import {useAsync} from 'react-use';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 // ensure flatpickr locales are included in bundle
 import "flatpickr/dist/l10n/nl.js";
@@ -30,6 +30,18 @@ const loadLocaleData = (locale) => {
             return messagesEN;
     }
 };
+
+/*
+Functionality to localize messages in a locale outside of the usual React lifecycle.
+ */
+const cache = createIntlCache();
+
+const formatMessageForLocale = (locale, msg) => {
+  const messages = loadLocaleData(locale);
+  const intl = createIntl({locale, messages}, cache);
+  return intl.formatMessage(msg);
+};
+
 
 // TODO: add language code argument!
 const loadFormioTranslations = async (baseUrl) => {
@@ -143,6 +155,7 @@ class I18NErrorBoundary extends React.Component {
 
 export {
   setLanguage,
+  formatMessageForLocale,
   I18NManager,
   I18NContext,
   I18NErrorBoundary,
