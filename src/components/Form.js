@@ -1,5 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
+import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
 import {
   Redirect,
@@ -32,6 +33,20 @@ import {findNextApplicableStep} from 'components/utils';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
+
+const globalSubmissionState = createGlobalstate({hasSubmission: false});
+
+const flagActiveSubmission = () => {
+  globalSubmissionState.updateValue(state => {
+    state.hasSubmission = true;
+  });
+};
+
+const flagNoActiveSubmission = () => {
+  globalSubmissionState.updateValue(state => {
+    state.hasSubmission = false;
+  });
+};
 
 /**
  * Create a submission instance from a given form instance
@@ -132,6 +147,7 @@ const reducer = (draft, action) => {
       type: 'SUBMISSION_LOADED',
       payload: submission,
     });
+    flagActiveSubmission();
     // navigate to the first step
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
     history.push(next ? next : firstStepRoute);
@@ -148,6 +164,7 @@ const reducer = (draft, action) => {
     () => {
       removeSubmissionId();
       dispatch({type: 'DESTROY_SUBMISSION'});
+      flagNoActiveSubmission();
     }
   );
 
@@ -157,6 +174,7 @@ const reducer = (draft, action) => {
       if (intl.locale !== prevLocale) {
         removeSubmissionId();
         dispatch({type: 'DESTROY_SUBMISSION'});
+        flagNoActiveSubmission();
       }
     }, [intl.locale, prevLocale, removeSubmissionId] // eslint-disable-line react-hooks/exhaustive-deps
   );
@@ -187,6 +205,7 @@ const reducer = (draft, action) => {
       type: 'SUBMISSION_LOADED',
       payload: submission,
     });
+    flagActiveSubmission();
     setSubmissionId(submission.id);
     // navigate to the first step
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
@@ -352,3 +371,4 @@ Form.propTypes = {
 };
 
 export default Form;
+export {globalSubmissionState};

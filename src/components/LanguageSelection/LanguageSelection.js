@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useGlobalState } from 'state-pool';
 import { useAsync } from 'react-use';
 
 import { get, put } from 'api';
 import { ConfigContext } from 'Context';
+import { globalSubmissionState } from 'components/Form';
 import Loader from 'components/Loader';
 import { I18NContext } from 'i18n';
 
@@ -26,6 +28,7 @@ const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
   const { locale, formatMessage } = useIntl();
   const [ updatingLanguage, setUpdatingLanguage ] = useState(false);
   const [ err, setErr ] = useState(null);
+  const [ submissionState ] = useGlobalState(globalSubmissionState);
 
   // fetch language information from API
   const {loading, value: languageInfo, error} = useAsync(
@@ -66,8 +69,12 @@ const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
         defaultMessage: 'Changing language will empty the form. Continue?'
       }
     );
-    if (!window.confirm(confirmationQuestion)) {
-      return;
+
+    // only prompt to confirm if there is an active submission
+    if (submissionState.hasSubmission) {
+      if (!window.confirm(confirmationQuestion)) {
+        return;
+      }
     }
 
     setUpdatingLanguage(true);
