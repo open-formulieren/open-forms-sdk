@@ -18,12 +18,12 @@ const fetchDefaults = {
 
 const SessionExpiresInHeader = 'X-Session-Expires-In';
 
-let sessionExpiresAt = createGlobalstate(null);
+let sessionExpiresAt = createGlobalstate({expiry: null});
 
 const updateSesionExpiry = (seconds) => {
   const newExpiry = new Date();
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
-  sessionExpiresAt.setValue(newExpiry);
+  sessionExpiresAt.setValue({expiry: newExpiry});
 };
 
 const throwForStatus = async (response) => {

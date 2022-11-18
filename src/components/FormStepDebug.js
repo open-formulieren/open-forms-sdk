@@ -7,11 +7,11 @@ import {sessionExpiresAt} from 'api';
 
 
 const DisplaySessionExpiry = () => {
-  const [expiryDate] = useGlobalState(sessionExpiresAt);
+  const [{expiry}] = useGlobalState(sessionExpiresAt);
   return (
     <>
       Session expires at: &nbsp;
-      <FormattedDate value={expiryDate} hour="numeric" minute="numeric" second="numeric" />
+      <FormattedDate value={expiry} hour="numeric" minute="numeric" second="numeric" />
     </>
   );
 };
