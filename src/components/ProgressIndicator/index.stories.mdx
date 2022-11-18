@@ -5,15 +5,15 @@ import ProgressIndicator from '.';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 <Meta
-  title="Pure React components/ProgressIndicator"
+  title="Composites/ProgressIndicator"
   component={ProgressIndicator}
   argTypes={{
     submissionAllowed: {
       options: Object.values(SUBMISSION_ALLOWED),
       control: {type: 'radio'},
     },
-    dynamicSubmissionAllowed: {
-      options: [null, ...Object.values(SUBMISSION_ALLOWED)],
+    'submission.submissionAllowed': {
+      options: Object.values(SUBMISSION_ALLOWED),
       control: {type: 'radio'},
     },
     submission: {table: {disable: true}},
@@ -35,14 +35,13 @@ export const Template = ({
   steps,
   completedSteps,
   applicableSteps,
-  dynamicSubmissionAllowed,
   ...args
 }) => {
   const submission = {
     id: 'ddfede40-99af-424c-97d1-d2c64e744a09',
     url: 'https://backend/api/v1/submissions/ddfede40-99af-424c-97d1-d2c64e744a09',
     form: 'https://backend/api/v1/forms/9d49e773',
-    submissionAllowed: dynamicSubmissionAllowed,
+    submissionAllowed: args['submission.submissionAllowed'],
     steps: steps.map((formStep, index) => ({
       isApplicable: applicableSteps.includes(index),
       completed: completedSteps.includes(index),
@@ -59,43 +58,50 @@ export const Template = ({
   }
   return (
     <MemoryRouter initialEntries={[currentUrl]}>
-      <ProgressIndicator 
-        submission={submission}
+      <ProgressIndicator
+        title={args.title}
+        submission={args.submission === null ? null : submission}
         steps={steps}
-        {...args} 
+        submissionAllowed={args.submissionAllowed}
+        completed={args.completed}
       />
     </MemoryRouter>
   );
 };
 
 <Canvas>
-  <Story name="Active submission" args={{
-    // story args
-    steps: [
-      {
-        url: 'https://backend/api/v1/form/9d49e773/steps/d6cab0dd',
-        uuid: 'd6cab0dd',
-        index: 0,
-        slug: 'first-step',
-        formDefinition: 'Stap 1'
-      },
-      {
-        url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
-        uuid: '8e62d7cf',
-        index: 1,
-        slug: 'second-step',
-        formDefinition: 'Stap 2'
-      },
-    ],
-    completedSteps: [0],
-    applicableSteps: [0],
-    dynamicSubmissionAllowed: null,
-    
-    // component props
-    title: 'Storybookformulier',
-    submissionAllowed: 'yes',
-    completed: false,
-  }}>
+  <Story
+    name="Active submission"
+    args={{
+      // story args
+      steps: [
+        {
+          url: 'https://backend/api/v1/form/9d49e773/steps/d6cab0dd',
+          uuid: 'd6cab0dd',
+          index: 0,
+          slug: 'first-step',
+          formDefinition: 'Stap 1'
+        },
+        {
+          url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
+          uuid: '8e62d7cf',
+          index: 1,
+          slug: 'second-step',
+          formDefinition: 'Stap 2'
+        },
+      ],
+      completedSteps: [0],
+      applicableSteps: [0],
+      'submission.submissionAllowed': 'yes',
+      // component props
+      title: 'Storybookformulier',
+      submissionAllowed: 'yes',
+      completed: false,
+    }}
+    argTypes={{
+      submissionAllowed: { table: { disable: true }},
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
@@ -105,34 +111,42 @@ export const Template = ({
 On initial load, no submission is available yet.
 
 <Canvas>
-  <Story name="Initial form load" args={{
-    // story args
-    steps: [
-      {
-        url: 'https://backend/api/v1/form/9d49e773/steps/d6cab0dd',
-        uuid: 'd6cab0dd',
-        index: 0,
-        slug: 'first-step',
-        formDefinition: 'Stap 1'
-      },
-      {
-        url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
-        uuid: '8e62d7cf',
-        index: 1,
-        slug: 'second-step',
-        formDefinition: 'Stap 2'
-      },
-    ],
-    completedSteps: [],
-    applicableSteps: [0, 1],
-    dynamicSubmissionAllowed: null,
-    
-    // component props
-    title: 'Initial load',
-    submissionAllowed: 'yes',
-    completed: false,
-    submission: null,
-  }}>
+  <Story
+    name="Initial form load"
+    args={{
+      // story args
+      steps: [
+        {
+          url: 'https://backend/api/v1/form/9d49e773/steps/d6cab0dd',
+          uuid: 'd6cab0dd',
+          index: 0,
+          slug: 'first-step',
+          formDefinition: 'Stap 1'
+        },
+        {
+          url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
+          uuid: '8e62d7cf',
+          index: 1,
+          slug: 'second-step',
+          formDefinition: 'Stap 2'
+        },
+      ],
+      completedSteps: [],
+      applicableSteps: [0, 1],
+      'submission.submissionAllowed': 'yes',
+      // component props
+      title: 'Initial load',
+      submissionAllowed: 'yes',
+      completed: false,
+      submission: null,
+    }}
+    argTypes={{
+      'submission.submissionAllowed': { table: { disable: true}},
+      completedSteps: { table: { disable: true}},
+      applicableSteps: { table: { disable: true}},
+      completed: { table: { disable: true}},
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
