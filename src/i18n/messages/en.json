@@ -9,11 +9,6 @@
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
-  "40nqWB": {
-    "defaultMessage": "Changing language will empty the form. Continue?",
-    "description": "change language prompt",
-    "originalDefault": "Changing language will empty the form. Continue?"
-  },
   "5uh2hS": {
     "defaultMessage": "Appointment cancellation failed",
     "description": "Appointment cancellation error message",
@@ -38,6 +33,11 @@
     "defaultMessage": "Please accept the privacy policy before submitting",
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
+  },
+  "94yVWJ": {
+    "defaultMessage": "Changing the language will require you to restart the form. Are you sure you want to continue?",
+    "description": "change language prompt",
+    "originalDefault": "Changing the language will require you to restart the form. Are you sure you want to continue?"
   },
   "9AU8U0": {
     "defaultMessage": "Unfortunately, this form is no longer in use. We apologise for any inconveniences.",

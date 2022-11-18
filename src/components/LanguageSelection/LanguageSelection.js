@@ -23,7 +23,7 @@ const DEFAULT_HEADING = (
 
 const changeLanguagePrompt = defineMessage({
   description: 'change language prompt',
-  defaultMessage: 'Changing language will empty the form. Continue?'
+  defaultMessage: 'Changing the language will require you to restart the form. Are you sure you want to continue?',
 });
 
 
@@ -72,10 +72,8 @@ const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
     const confirmationQuestion = formatMessageForLocale(languageCode, changeLanguagePrompt);
 
     // only prompt to confirm if there is an active submission
-    if (submissionState.hasSubmission) {
-      if (!window.confirm(confirmationQuestion)) {
-        return;
-      }
+    if (submissionState.hasSubmission && !window.confirm(confirmationQuestion)) {
+      return;
     }
 
     setUpdatingLanguage(true);
