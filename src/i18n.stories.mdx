@@ -1,0 +1,126 @@
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
+import { useIntl } from 'react-intl';
+
+import { ConfigContext } from 'Context';
+import { I18NManager, setLanguage, I18NErrorBoundary } from 'i18n';
+
+export const BASE_URL = 'http://localhost:8000/api/v2/';
+
+export const ConfigDecorator = (Story, { args }) => (
+  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
+    <Story />
+  </ConfigContext.Provider>
+);
+
+<Meta
+  title="Private API/Translation manager"
+  component={I18NManager}
+  decorators={[ConfigDecorator]}
+  argTypes={{
+    languageSelectorTarget: { control: false },
+    children: { control: false },
+  }}
+  parameters={{
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    },
+    mockData: [
+      {
+        url: `${BASE_URL}translations/formio`,
+        method: 'GET',
+        status: 200,
+        response: {
+          'nl': {
+            "Click to set value": "Klik om waarde in te stellen",
+            "Cancel": "Annuleren",
+          },
+        }
+      }
+    ]
+  }}
+/>
+
+# Language manager
+
+The `I18NManager` (internationalization manager) component takes care of loading the correct
+static translations and activating the react-intl locale whenever the content language is changed
+from the default or initial value.
+
+Backend API endpoints respond with the `Content-Language` HTTP header. Whenever the value of this
+header is different from the currently active locale, a locale switch is detected and triggered.
+
+The `I18NManager` component ensures that the translations for literals defined in code for
+_that language_ are loaded and activated.
+
+export const Debug = () => {
+  const {locale} = useIntl();
+  return (
+    <>
+      <div>Current locale: {locale}</div>
+      <div>
+        Change locale to:
+        <select value={locale} onChange={event => setLanguage(event.target.value)}>
+          <option value="nl">nl</option>
+          <option value="en">en</option>
+        </select>
+      </div>
+    </>
+  );
+};
+
+export const Template = (args) => (
+  <I18NManager languageSelectorTarget={null}>
+    <Debug />
+  </I18NManager>
+);
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+## Error handling
+
+Translations for a particular language are loaded asynchronously (or planned to be), which means that
+errors can happen when the backend cannot serve the required assets.
+
+It is recommended to wrap the component in an error boundary **that doesn't require tranlations**, like
+`I18NErrorBoundary`. Often the error message will already be in the appropriate language from the backend.
+
+export const ErrorTemplate = (args) => (
+  <I18NErrorBoundary>
+    <I18NManager languageSelectorTarget={null}>
+      <Debug />
+    </I18NManager>
+  </I18NErrorBoundary>
+);
+
+<Canvas>
+  <Story
+    name="Error loading assets"
+    parameters={{
+      mockData: [
+        {
+          url: `${BASE_URL}translations/formio`,
+          method: 'GET',
+          status: 503,
+          response: {
+            'type': `${BASE_URL}fouten/ServiceUnavailable/`,
+            'code': 'service_unavailable',
+            'title': 'Service is not available.',
+            'status': 503,
+            'detail': 'Service is not available.',
+            'instance': 'urn:uuid:60b443e3-b847-424b-aed0-23820fc2a48d',
+          }
+        }
+      ]
+    }}
+  >
+    {ErrorTemplate.bind({})}
+  </Story>
+</Canvas>

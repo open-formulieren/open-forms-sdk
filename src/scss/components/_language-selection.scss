@@ -24,4 +24,10 @@
   .openforms-button {
     padding: 0;
   }
+
+  // if we are not rendering in a designated portal node, ensure it's aligned to the
+  // right
+  @at-root .openforms-layout__row & {
+    margin-left: auto;
+  }
 }

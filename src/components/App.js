@@ -1,37 +1,34 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router-dom';
 
 import Form from 'components/Form';
 import { Layout, LayoutRow } from 'components/Layout';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import LanguageSelection from 'components/LanguageSelection';
+import { I18NContext } from 'i18n';
 import Types from 'types';
 
 
-const LanguageSwitcher = ({ target = null }) => (
-  target ? (
+const LanguageSwitcher = () => {
+  const { languageSelectorTarget: target } = useContext(I18NContext);
+  return target ? (
     ReactDOM.createPortal(<LanguageSelection />, target)
   ) : (
     <LayoutRow>
       <LanguageSelection />
     </LayoutRow>
   )
-);
-
-LanguageSwitcher.propTypes = {
-  target: PropTypes.instanceOf(Element),
 };
 
 /*
 Top level router - routing between an actual form or supporting screens.
  */
-const App = ({ languageSelectorTarget, ...props }) => {
+const App = ({ ...props }) => {
   const { form: { translationEnabled } } = props;
   return (
     <Layout>
-      { translationEnabled ? <LanguageSwitcher target={languageSelectorTarget} /> : null }
+      { translationEnabled ? <LanguageSwitcher /> : null }
 
       <LayoutRow>
 
@@ -51,7 +48,6 @@ const App = ({ languageSelectorTarget, ...props }) => {
 };
 
 App.propTypes = {
-  languageSelectorTarget: PropTypes.instanceOf(Element),
   form: Types.Form,
 };
 

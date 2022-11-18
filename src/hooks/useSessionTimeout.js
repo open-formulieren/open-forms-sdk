@@ -6,7 +6,8 @@ import {sessionExpiresAt} from 'api';
 
 const useSessionTimeout = (onTimeout) => {
   const [expired, setExpired] = useState(false);
-  const [expiryDate, setExpiryDate] = useGlobalState(sessionExpiresAt);
+  const [expiresAt, setExpiryDate] = useGlobalState(sessionExpiresAt);
+  const expiryDate = expiresAt?.expiry;
 
   const markExpired = useCallback(() => {
     onTimeout && onTimeout();
@@ -51,7 +52,7 @@ const useSessionTimeout = (onTimeout) => {
 
   const reset = () => {
     setExpired(false);
-    setExpiryDate(null);
+    setExpiryDate({expiry: null});
   }
 
   return [expired, expiryDate, reset];

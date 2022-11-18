@@ -6,6 +6,7 @@ import { IntlProvider } from 'react-intl';
 
 import { ConfigContext } from 'Context';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { I18NContext } from 'i18n';
 
 import { LanguageSelection, LanguageSelectionDisplay } from '.';
 
@@ -13,7 +14,12 @@ export const BASE_URL = 'http://localhost:8000/api/v2/';
 
 export const ConfigDecorator = (Story, { args }) => (
   <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
-    <Story />
+    <I18NContext.Provider value={{
+      languageSelectorTarget: null,
+      onLanguageChangeDone: args.onLanguageChangeDone,
+    }}>
+      <Story />
+    </I18NContext.Provider>
   </ConfigContext.Provider>
 );
 
@@ -33,7 +39,11 @@ export const ConfigDecorator = (Story, { args }) => (
         type: { summary: 'number' },
       },
     },
-    onLanguageChanged: { table: { disable: true } },
+    onLanguageChange: { action: true },
+    onLanguageChangeDone: {
+      action: true,
+      table: { disable: true }
+    },
   }}
   parameters={{
     mockData: [
@@ -103,7 +113,11 @@ export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
           current: false,
         },
       ],
-      onLanguageChange: console.log,
+    }}
+    play={async ({ args, canvasElement }) => {
+      const canvas = within(canvasElement);
+      await userEvent.click(canvas.getByText(/^fy$/i));
+      await expect(args.onLanguageChange).toHaveBeenCalled();
     }}
   >
     {DisplayTemplate.bind({})}
@@ -168,7 +182,7 @@ export const Template = (args) => {
       await userEvent.click(frysk_button);
       // wait for PUT api call to have completed and loading state to be resolved
       await waitFor(() => canvas.findByText(/^fy$/i));
-      await expect(args.onLanguageChanged).toHaveBeenCalledTimes(1); // change once
+      await expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(1); // change once
     }}
   >
     {Template.bind({})}
@@ -244,7 +258,7 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
       const canvas = within(canvasElement);
       const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
       await userEvent.click(frysk_button);
-      await waitFor(() => expect(args.onLanguageChanged).toHaveBeenCalledTimes(0)); // did not change language
+      await waitFor(() => expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(0)); // did not change language
     }}
   >{Template.bind({})}</Story>
 </Canvas>

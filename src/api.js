@@ -1,6 +1,6 @@
 import {createGlobalstate} from 'state-pool';
 
-import {CSPNonce, CSRFToken, IsFormDesigner} from './headers';
+import {CSPNonce, CSRFToken, IsFormDesigner, ContentLanguage} from './headers';
 
 import {
   APIError,
@@ -11,6 +11,7 @@ import {
   UnprocessableEntity,
   ServiceUnavailable,
 } from './errors';
+import {setLanguage} from './i18n';
 
 const fetchDefaults = {
   credentials: 'include', // required for Firefox 60, which is used in werkplekken
@@ -18,12 +19,12 @@ const fetchDefaults = {
 
 const SessionExpiresInHeader = 'X-Session-Expires-In';
 
-let sessionExpiresAt = createGlobalstate(null);
+let sessionExpiresAt = createGlobalstate({expiry: null});
 
 const updateSesionExpiry = (seconds) => {
   const newExpiry = new Date();
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
-  sessionExpiresAt.setValue(newExpiry);
+  sessionExpiresAt.setValue({expiry: newExpiry});
 };
 
 const throwForStatus = async (response) => {
@@ -113,6 +114,12 @@ const updateStoredHeadersValues = (headers) => {
   const isFormDesignerValue = headers.get(IsFormDesigner.headerName);
   if (isFormDesignerValue) {
     IsFormDesigner.setValue(isFormDesignerValue === 'true');
+  }
+
+  const contentLanguage = headers.get(ContentLanguage.headerName);
+  if (contentLanguage) {
+    ContentLanguage.setValue(contentLanguage);
+    setLanguage(contentLanguage);
   }
 };
 

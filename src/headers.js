@@ -50,4 +50,12 @@ let CSRFToken = factoryHeader(CSRFTokenHeaderName, null);
  */
 let IsFormDesigner = factoryHeader(IsFormDesignerHeaderName, false);
 
-export {CSPNonce, CSRFToken, IsFormDesigner};
+/**
+ * Global module-scoped variable to track the current (UI) language.
+ *
+ * The backend interprets the HTTP Accept-Language (request) header and informs us of
+ * the activated language via the Content-Language response header.
+ */
+let ContentLanguage = factoryHeader('Content-Language', 'nl');
+
+export {CSPNonce, CSRFToken, IsFormDesigner, ContentLanguage};
