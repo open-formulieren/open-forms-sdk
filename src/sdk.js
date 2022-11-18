@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
-import flatpickr from 'flatpickr';
+import 'flatpickr';
 
 import { Formio, Templates } from 'react-formio';
 import ProtectedEval from '@formio/protected-eval';
@@ -12,13 +11,13 @@ import OFLibrary from './formio/templates';
 
 import './styles.scss';
 
-import { get, post } from 'api';
-import { ConfigContext, FormioTranslations } from 'Context';
+import { get } from 'api';
+import { ConfigContext } from 'Context';
 import App from 'components/App';
 import {CSPNonce} from 'headers';
 import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
-import {loadLocaleData, loadFormioTranslations} from 'i18n';
+import {I18NManager} from 'i18n';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
 
@@ -87,51 +86,24 @@ class OpenForm {
   }
 
   async init() {
-    // use explicitly forced language, or look up the browser html lang attribute value
-    const lang = this.lang || document.querySelector('html').getAttribute('lang');
-
-    // Use the language to set the locale for flatpickr, which is used for translating widgets like the date picker.
-    try {
-      const flatpickrLocale = require(`flatpickr/dist/l10n/${lang}.js`)?.default[lang];
-      if (flatpickrLocale) flatpickr.localize(flatpickrLocale);
-    } catch (e) {
-      console.error('Language module not available in flatpickr.');
-    }
 
     ReactModal.setAppElement(this.targetNode);
 
     const url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
-
-    const promises = [
-      // load the message catalog for i18n
-      loadLocaleData(lang),
-      loadFormioTranslations(this.baseUrl),
-      // fetch the form object from the API
-      get(url),
-    ];
-    const [messages, translations, formObject] = await Promise.all(promises);
-
-    this.formObject = formObject;
-
-    // Explicitly set the default language if translations are disabled
-    if(!formObject.translationEnabled) {
-      await post(`${formObject.url}/activate_default_language`);
-    }
+    this.formObject = await get(url);
 
     // render the wrapping React component
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
-        <IntlProvider messages={messages} locale={lang} defaultLocale="nl">
-          <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
-            <FormioTranslations.Provider value={{i18n: translations, language: lang}}>
-              <Router basename={this.basePath}>
-                <App languageSelectorTarget={this.languageSelectorTarget} form={this.formObject} />
-              </Router>
-            </FormioTranslations.Provider>
-          </ConfigContext.Provider>
-        </IntlProvider>
+        <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
+          <I18NManager languageSelectorTarget={this.languageSelectorTarget}>
+            <Router basename={this.basePath}>
+              <App form={this.formObject} />
+            </Router>
+          </I18NManager>
+        </ConfigContext.Provider>
       </React.StrictMode>,
       this.targetNode,
     );

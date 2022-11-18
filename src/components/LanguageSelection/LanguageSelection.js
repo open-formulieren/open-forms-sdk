@@ -6,6 +6,7 @@ import { useAsync } from 'react-use';
 import { get, put } from 'api';
 import { ConfigContext } from 'Context';
 import Loader from 'components/Loader';
+import { I18NContext } from 'i18n';
 
 import LanguageSelectionDisplay from './LanguageSelectionDisplay';
 
@@ -18,36 +19,18 @@ const DEFAULT_HEADING = (
 );
 
 
-const LanguageSelection = ({
-  heading=DEFAULT_HEADING,
-  headingLevel=2,
-  onLanguageChanged=console.log,
-}) => {
+const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
   // Hook uses
   const { baseUrl } = useContext(ConfigContext);
+  const { onLanguageChangeDone } = useContext(I18NContext);
   const { locale } = useIntl();
   const [ updatingLanguage, setUpdatingLanguage ] = useState(false);
   const [ err, setErr ] = useState(null);
 
   // fetch language information from API
-  const {
-    loading,
-    value: languageInfo,
-    error,
-  } = useAsync(
-    async () => {
-      const result = await get(`${baseUrl}i18n/info`);
-      // the browser preferences may have activated a different language than the
-      // client-side default language. In that case, we need to inform the parent
-      // components that the UI language needs to update.
-      //
-      // This will trigger the value of `locale` to change from the `useIntl()` hook.
-      if (result.current !== locale) {
-        onLanguageChanged(result.current);
-      }
-      return result;
-    },
-    [baseUrl, locale]
+  const {loading, value: languageInfo, error} = useAsync(
+    async () => await get(`${baseUrl}i18n/info`),
+    [baseUrl],
   );
 
   const anyError = err || error ;
@@ -89,7 +72,7 @@ const LanguageSelection = ({
     }
     // update UI language
     setUpdatingLanguage(false);
-    onLanguageChanged(languageCode);
+    onLanguageChangeDone(languageCode);
   };
 
   return (
@@ -106,7 +89,6 @@ const LanguageSelection = ({
 LanguageSelection.propTypes = {
   heading: PropTypes.node,
   headingLevel: PropTypes.number,
-  onLanguageChanged: PropTypes.func,
 };
 
 export default LanguageSelection;
