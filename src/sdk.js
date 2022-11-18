@@ -17,7 +17,7 @@ import App from 'components/App';
 import {CSPNonce} from 'headers';
 import { AddFetchAuth } from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
-import {I18NManager} from 'i18n';
+import {I18NManager, I18NErrorBoundary} from 'i18n';
 import initialiseSentry from 'sentry';
 import ReactModal from 'react-modal';
 
@@ -98,11 +98,13 @@ class OpenForm {
     ReactDOM.render(
       <React.StrictMode>
         <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
-          <I18NManager languageSelectorTarget={this.languageSelectorTarget}>
-            <Router basename={this.basePath}>
-              <App form={this.formObject} />
-            </Router>
-          </I18NManager>
+          <I18NErrorBoundary>
+            <I18NManager languageSelectorTarget={this.languageSelectorTarget}>
+              <Router basename={this.basePath}>
+                <App form={this.formObject} />
+              </Router>
+            </I18NManager>
+          </I18NErrorBoundary>
         </ConfigContext.Provider>
       </React.StrictMode>,
       this.targetNode,

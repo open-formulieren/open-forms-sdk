@@ -152,4 +152,5 @@ const ERROR_TYPE_MAP = {
   'ServiceUnavailable': ServiceUnavailableError,
 };
 
+export { logError } ;
 export default ErrorBoundary;

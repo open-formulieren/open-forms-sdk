@@ -2,7 +2,7 @@ import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
 import { useIntl } from 'react-intl';
 
 import { ConfigContext } from 'Context';
-import { I18NManager, setLanguage } from 'i18n';
+import { I18NManager, setLanguage, I18NErrorBoundary } from 'i18n';
 
 export const BASE_URL = 'http://localhost:8000/api/v2/';
 
@@ -89,8 +89,16 @@ export const Template = (args) => (
 Translations for a particular language are loaded asynchronously (or planned to be), which means that
 errors can happen when the backend cannot serve the required assets.
 
-It is recommended to wrap the component in an error boundary **that doesn't require tranlations**. Often
-the error message will already be in the appropriate language from the backend.
+It is recommended to wrap the component in an error boundary **that doesn't require tranlations**, like
+`I18NErrorBoundary`. Often the error message will already be in the appropriate language from the backend.
+
+export const ErrorTemplate = (args) => (
+  <I18NErrorBoundary>
+    <I18NManager languageSelectorTarget={null}>
+      <Debug />
+    </I18NManager>
+  </I18NErrorBoundary>
+);
 
 <Canvas>
   <Story
@@ -113,6 +121,6 @@ the error message will already be in the appropriate language from the backend.
       ]
     }}
   >
-    {Template.bind({})}
+    {ErrorTemplate.bind({})}
   </Story>
 </Canvas>

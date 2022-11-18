@@ -8,6 +8,8 @@ import { IntlProvider } from 'react-intl';
 import "flatpickr/dist/l10n/nl.js";
 
 import { get } from 'api';
+import { logError } from 'components/ErrorBoundary';
+import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
 import {ConfigContext, FormioTranslations} from 'Context';
 
@@ -67,7 +69,6 @@ const I18NManager = ({ languageSelectorTarget, children }) => {
   );
 
   if (error) {
-    // TODO
     throw error;
   }
 
@@ -94,8 +95,55 @@ I18NManager.propTypes = {
 }
 
 
+/**
+ * Special error boundary that doesn't use react-intl anywhere.
+ *
+ * Usually you'd want to use 'components/ErrorBoundary', but those boundaries
+ * typically rely on an IntlProvider being active without problems. If we have errors
+ * in our I18NManager component, this is not the case, so we need to use a generic
+ * error boundary.
+ */
+class I18NErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+      error,
+    };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    logError(error, errorInfo);
+  }
+
+  render() {
+    const { children} = this.props;
+    const { hasError, error } = this.state;
+    if (!hasError) {
+      return children;
+    }
+
+    const defaultMsg = `
+      Er ging helaas iets fout. Neem a.u.b. contact op met de
+      helpdesk en informeer hen van dit probleem.
+    `;
+    return (
+      <ErrorMessage>
+        <div>{defaultMsg}</div>
+        {error.detail ? <p>Fout: <em>{error.detail}</em></p> : null }
+      </ErrorMessage>
+    );
+  }
+}
+
+
 export {
   setLanguage,
   I18NManager,
   I18NContext,
+  I18NErrorBoundary,
 };
