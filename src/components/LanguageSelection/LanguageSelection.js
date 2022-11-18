@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, defineMessage, useIntl } from 'react-intl';
 import { useGlobalState } from 'state-pool';
 import { useAsync } from 'react-use';
 
@@ -8,7 +8,7 @@ import { get, put } from 'api';
 import { ConfigContext } from 'Context';
 import { globalSubmissionState } from 'components/Form';
 import Loader from 'components/Loader';
-import { I18NContext } from 'i18n';
+import { I18NContext, formatMessageForLocale } from 'i18n';
 
 import LanguageSelectionDisplay from './LanguageSelectionDisplay';
 
@@ -21,11 +21,17 @@ const DEFAULT_HEADING = (
 );
 
 
+const changeLanguagePrompt = defineMessage({
+  description: 'change language prompt',
+  defaultMessage: 'Changing language will empty the form. Continue?'
+});
+
+
 const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
   // Hook uses
   const { baseUrl } = useContext(ConfigContext);
   const { onLanguageChangeDone } = useContext(I18NContext);
-  const { locale, formatMessage } = useIntl();
+  const { locale } = useIntl();
   const [ updatingLanguage, setUpdatingLanguage ] = useState(false);
   const [ err, setErr ] = useState(null);
   const [ submissionState ] = useGlobalState(globalSubmissionState);
@@ -63,12 +69,7 @@ const LanguageSelection = ({heading=DEFAULT_HEADING, headingLevel=2}) => {
     // or if an update is being processed.
     if (updatingLanguage || languageCode === locale) return;
 
-    const confirmationQuestion = formatMessage(
-      {
-        description: 'change language prompt',
-        defaultMessage: 'Changing language will empty the form. Continue?'
-      }
-    );
+    const confirmationQuestion = formatMessageForLocale(languageCode, changeLanguagePrompt);
 
     // only prompt to confirm if there is an active submission
     if (submissionState.hasSubmission) {
