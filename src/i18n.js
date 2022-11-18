@@ -43,9 +43,9 @@ const formatMessageForLocale = (locale, msg) => {
 };
 
 
-// TODO: add language code argument!
-const loadFormioTranslations = async (baseUrl) => {
-  return get(`${baseUrl}translations/formio`);
+const loadFormioTranslations = async (baseUrl, languageCode) => {
+  const messages = await get(`${baseUrl}i18n/formio/${languageCode}`);
+  return {[languageCode]: messages};
 };
 
 
@@ -65,7 +65,7 @@ const I18NManager = ({ languageSelectorTarget, children }) => {
     async () => {
       const promises = [
         loadLocaleData(languageCode),
-        loadFormioTranslations(baseUrl),
+        loadFormioTranslations(baseUrl, languageCode),
       ];
       const [messages, formioTranslations] = await Promise.all(promises);
       return {
