@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTitle } from 'react-use';
 
 import Caption from 'components/Caption';
 import { getBEMClassName } from 'utils';
@@ -30,6 +31,7 @@ CardTitle.propTypes = {
 };
 
 const Card = ({ children, title, titleComponent, caption, captionComponent, blockClassName='card', modifiers=[] }) => {
+  useTitle(title ? title : "Startformulier");
   const className = getBEMClassName(
     blockClassName,
     modifiers,
