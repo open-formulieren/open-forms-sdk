@@ -47,6 +47,7 @@ class OpenForm {
       formId,
       CSPNonce: CSPNonceValue,
       lang,
+      pageTitle,
       sentryDSN,
       sentryEnv='',
       languageSelectorTarget,
@@ -57,6 +58,7 @@ class OpenForm {
     this.formId = formId;
     this.formObject = null;
     this.lang = lang;
+    this.pageTitle = pageTitle;
 
     switch (typeof languageSelectorTarget) {
       case "string": {
@@ -83,6 +85,9 @@ class OpenForm {
       pathname = pathname.slice(0, pathname.length - 1);
     }
     this.basePath = pathname;
+
+    const pageTitleCurrent = `${this.pageTitle} - ${document.title}`;
+    console.log(pageTitleCurrent);
   }
 
   async init() {
@@ -97,11 +102,11 @@ class OpenForm {
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
-        <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
+        <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath, pageTitle: this.pageTitle}}>
           <I18NErrorBoundary>
             <I18NManager languageSelectorTarget={this.languageSelectorTarget}>
               <Router basename={this.basePath}>
-                <App form={this.formObject} />
+                <App form={this.formObject} pagename={this.pageTitle} />
               </Router>
             </I18NManager>
           </I18NErrorBoundary>

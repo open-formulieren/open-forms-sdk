@@ -26,6 +26,7 @@ Top level router - routing between an actual form or supporting screens.
  */
 const App = ({ ...props }) => {
   const { form: { translationEnabled } } = props;
+  console.log(document.title + " frontend")
   return (
     <Layout>
       { translationEnabled ? <LanguageSwitcher /> : null }
