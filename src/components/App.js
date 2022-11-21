@@ -28,6 +28,7 @@ Top level router - routing between an actual form or supporting screens.
 const App = ({...props}) => {
   const {
     form: {translationEnabled},
+    noDebug = false,
   } = props;
   return (
     <Layout>
@@ -45,7 +46,7 @@ const App = ({...props}) => {
         </Switch>
       </LayoutRow>
 
-      {DEBUG ? (
+      {DEBUG && !noDebug ? (
         <LayoutRow>
           <AppDebug />
         </LayoutRow>
