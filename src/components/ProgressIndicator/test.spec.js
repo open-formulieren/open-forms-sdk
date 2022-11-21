@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
-import { MemoryRouter } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
+import {render, unmountComponentAtNode} from 'react-dom';
+import {act} from 'react-dom/test-utils';
+import {MemoryRouter} from 'react-router-dom';
+import {IntlProvider} from 'react-intl';
 
 import ProgressIndicator from './index';
-import { SUBMISSION_ALLOWED } from 'components/constants';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 import messagesNL from 'i18n/compiled/nl.json';
-import { IsFormDesigner } from 'headers';
+import {IsFormDesigner} from 'headers';
 
 jest.mock('headers');
 
@@ -26,7 +26,6 @@ afterEach(() => {
   container = null;
 });
 
-
 const submissionDefaults = {
   id: 'some-id',
   url: 'https://some-url',
@@ -39,9 +38,7 @@ const submissionDefaults = {
   },
 };
 
-
 it('Progress Indicator submission allowed', () => {
-
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>
@@ -63,7 +60,6 @@ it('Progress Indicator submission allowed', () => {
 });
 
 it('Progress Indicator submission not allowed, with overview page', () => {
-
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>
@@ -85,14 +81,16 @@ it('Progress Indicator submission not allowed, with overview page', () => {
 });
 
 it('Progress Indicator submission not allowed, without overview page', () => {
-
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <ProgressIndicator
           title="Test Name"
           steps={[]}
-          submission={{...submissionDefaults, submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview}}
+          submission={{
+            ...submissionDefaults,
+            submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview,
+          }}
           submissionAllowed={SUBMISSION_ALLOWED.noWithoutOverview}
         />
       </MemoryRouter>,
@@ -106,9 +104,7 @@ it('Progress Indicator submission not allowed, without overview page', () => {
   expect(progressIndicatorSteps.textContent).not.toContain('Bevestiging');
 });
 
-
 it('Form landing page, no submission present in session', () => {
-
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>

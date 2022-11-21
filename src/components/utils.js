@@ -9,7 +9,6 @@ const findPreviousApplicableStep = (currentStepIndex, submission) => {
   return candidateStepIndex;
 };
 
-
 const findNextApplicableStep = (currentStepIndex, submission) => {
   let candidateStepIndex = currentStepIndex + 1;
   if (candidateStepIndex >= submission.steps.length) return candidateStepIndex;
@@ -22,11 +21,10 @@ const findNextApplicableStep = (currentStepIndex, submission) => {
 };
 
 const isLastStep = (currentStepIndex, submission) => {
-  return currentStepIndex === submission.steps.length-1;
+  return currentStepIndex === submission.steps.length - 1;
 };
 
-
-const getLoginUrl = (loginOption) => {
+const getLoginUrl = loginOption => {
   const nextUrl = new URL(window.location.href);
 
   const queryParams = Array.from(nextUrl.searchParams.keys());
@@ -41,21 +39,20 @@ const getLoginUrl = (loginOption) => {
   return loginUrl.toString();
 };
 
-
-const getLoginRedirectUrl = (form) => {
+const getLoginRedirectUrl = form => {
   // Automatically redirect the user to a specific login option (if configured)
-  if(form.autoLoginAuthenticationBackend) {
+  if (form.autoLoginAuthenticationBackend) {
     let autoLoginOption = form.loginOptions.find(
       option => option.identifier === form.autoLoginAuthenticationBackend
     );
 
-    if(autoLoginOption) {
+    if (autoLoginOption) {
       return getLoginUrl(autoLoginOption);
     }
   }
-}
+};
 
-const eventTriggeredBySubmitButton = (event) => {
+const eventTriggeredBySubmitButton = event => {
   const submitterAttributes = event.nativeEvent.submitter.attributes;
 
   for (const attribute of submitterAttributes) {

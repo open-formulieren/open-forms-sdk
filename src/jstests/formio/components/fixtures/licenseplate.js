@@ -6,11 +6,11 @@ export const licenseplate = {
       key: 'licenseplate',
       type: 'licenseplate',
       validate: {},
-      errors: {}
+      errors: {},
     },
   ],
   title: 'testLicensePlateForm',
-	display: 'Test License plate form',
-	name: 'testLicensePlateForm',
-	path: 'testLicensePlateForm',
+  display: 'Test License plate form',
+  name: 'testLicensePlateForm',
+  path: 'testLicensePlateForm',
 };

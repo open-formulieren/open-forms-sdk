@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
-import { IntlProvider } from 'react-intl';
+import {render, unmountComponentAtNode} from 'react-dom';
+import {act} from 'react-dom/test-utils';
+import {IntlProvider} from 'react-intl';
 
 import LoginButton from './index';
 import messagesNL from 'i18n/compiled/nl.json';
@@ -21,24 +21,23 @@ afterEach(() => {
   container = null;
 });
 
-
 it('Login button has the right URL after cancelling log in', () => {
   const option = {
-    identifier: "digid",
-    label: "DigiD",
-    url: "https://open-forms.nl/auth/digid-form/digid/start",
+    identifier: 'digid',
+    label: 'DigiD',
+    url: 'https://open-forms.nl/auth/digid-form/digid/start',
   };
 
-  const { location } = window;
+  const {location} = window;
   delete window.location;
-  window.location = { href: 'https://open-forms.nl/digid-form/?_start=1&_digid-message=login-cancelled' };
+  window.location = {
+    href: 'https://open-forms.nl/digid-form/?_start=1&_digid-message=login-cancelled',
+  };
 
   act(() => {
     render(
       <IntlProvider locale="nl" messages={messagesNL}>
-        <LoginButton
-          option={option}
-        />
+        <LoginButton option={option} />
       </IntlProvider>,
       container
     );

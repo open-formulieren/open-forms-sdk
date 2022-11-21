@@ -8,7 +8,7 @@ import {useIntl, FormattedMessage} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
 
 import {post, destroy} from 'api';
-import { ConfigContext } from 'Context';
+import {ConfigContext} from 'Context';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import ErrorMessage from 'components/ErrorMessage';
@@ -20,7 +20,6 @@ import Modal from 'components/modals/Modal';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {getBEMClassName} from 'utils';
 
-
 const initialState = {
   email: '',
   errorMessage: '',
@@ -28,7 +27,7 @@ const initialState = {
 };
 
 const reducer = (draft, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'SET_EMAIL': {
       draft.email = action.payload;
       break;
@@ -53,24 +52,14 @@ const reducer = (draft, action) => {
   }
 };
 
-
-const FormStepSaveModal = ({
-    isOpen,
-    closeModal,
-    onSaveConfirm,
-    suspendFormUrl,
-    submissionId,
-}) => {
+const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, submissionId}) => {
   const history = useHistory();
   const intl = useIntl();
   const config = useContext(ConfigContext);
 
-  const [
-    {email, errorMessage, isSaving},
-    dispatch
-  ] = useImmerReducer(reducer, initialState);
+  const [{email, errorMessage, isSaving}, dispatch] = useImmerReducer(reducer, initialState);
 
-  const onSubmit = async (event) => {
+  const onSubmit = async event => {
     event.preventDefault();
     if (isSaving) return;
 
@@ -82,21 +71,21 @@ const FormStepSaveModal = ({
         type: 'API_ERROR',
         payload: {
           feedback: intl.formatMessage({
-            description: "Modal saving data failed message",
-            defaultMessage: "Saving the data failed, please try again later"
+            description: 'Modal saving data failed message',
+            defaultMessage: 'Saving the data failed, please try again later',
           }),
         },
       });
       return;
     }
     const suspendResponse = await post(suspendFormUrl, {email});
-    if (!suspendResponse.ok){
+    if (!suspendResponse.ok) {
       dispatch({
         type: 'API_ERROR',
         payload: {
           feedback: intl.formatMessage({
-            description: "Modal suspending form failed message",
-            defaultMessage: "Suspending the form failed, please try again later"
+            description: 'Modal suspending form failed message',
+            defaultMessage: 'Suspending the form failed, please try again later',
           }),
         },
       });
@@ -110,8 +99,8 @@ const FormStepSaveModal = ({
         type: 'API_ERROR',
         payload: {
           feedback: intl.formatMessage({
-            description: "Modal logging out failed message",
-            defaultMessage: "Logging out failed, please try again later"
+            description: 'Modal logging out failed message',
+            defaultMessage: 'Logging out failed, please try again later',
           }),
         },
       });
@@ -124,61 +113,67 @@ const FormStepSaveModal = ({
   };
 
   return (
-      <Modal
-        title={<FormattedMessage
-                  description="Form save modal title"
-                  defaultMessage="Save and resume later"
-                />}
-        isOpen={isOpen}
-        closeModal={closeModal}
-      >
-        <Body component="form" onSubmit={onSubmit}>
+    <Modal
+      title={
+        <FormattedMessage
+          description="Form save modal title"
+          defaultMessage="Save and resume later"
+        />
+      }
+      isOpen={isOpen}
+      closeModal={closeModal}
+    >
+      <Body component="form" onSubmit={onSubmit}>
+        {isSaving ? <Loader modifiers={['centered']} /> : null}
 
-          {isSaving ? <Loader modifiers={['centered']} /> : null}
+        {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 
-          {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
+        <Body modifiers={['big']}>
+          <FormattedMessage
+            description="Form save modal body text"
+            defaultMessage="Enter your email address to get an email to resume the form at a later date"
+          />
+        </Body>
 
-          <Body modifiers={['big']}>
+        <div className={getBEMClassName('form-control')}>
+          <Label isRequired>
             <FormattedMessage
-              description="Form save modal body text"
-              defaultMessage="Enter your email address to get an email to resume the form at a later date"
+              description="Form save modal email field label"
+              defaultMessage="Your email address"
             />
-          </Body>
+          </Label>
 
-          <div className={getBEMClassName('form-control')}>
-
-            <Label isRequired >
-              <FormattedMessage
-                description="Form save modal email field label"
-                defaultMessage="Your email address" />
-            </Label>
-
-            <Input type="email" value={email} onChange={event => {
+          <Input
+            type="email"
+            value={email}
+            onChange={event => {
               dispatch({
                 type: 'SET_EMAIL',
-                payload: event.target.value
+                payload: event.target.value,
               });
-            }} />
+            }}
+          />
 
-            <HelpText>
+          <HelpText>
+            <FormattedMessage
+              description="Form save modal email field help text"
+              defaultMessage="The email address where you will receive the resume link."
+            />
+          </HelpText>
+        </div>
+
+        <Toolbar modifiers={['bottom', 'reverse']}>
+          <ToolbarList>
+            <Button type="submit" variant="primary" disabled={isSaving}>
               <FormattedMessage
-                description="Form save modal email field help text"
-                defaultMessage="The email address where you will receive the resume link."
+                description="Form save modal submit button"
+                defaultMessage="Confirm"
               />
-            </HelpText>
-
-          </div>
-
-          <Toolbar modifiers={['bottom', 'reverse']}>
-            <ToolbarList>
-              <Button type="submit" variant="primary" disabled={isSaving}>
-                <FormattedMessage description="Form save modal submit button" defaultMessage="Confirm" />
-              </Button>
-            </ToolbarList>
-          </Toolbar>
-
-        </Body>
-      </Modal>
+            </Button>
+          </ToolbarList>
+        </Toolbar>
+      </Body>
+    </Modal>
   );
 };
 

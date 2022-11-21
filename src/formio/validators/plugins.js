@@ -1,4 +1,4 @@
-import {post} from "../../api";
+import {post} from '../../api';
 
 const errorMessageMap = {
   'kvk-kvkNumber': 'Invalid Kvk Number',
@@ -8,12 +8,11 @@ const errorMessageMap = {
   'phonenumber-nl': 'Invalid Dutch phonenumber',
 };
 
-
-const pluginAPIValidator = (plugin) => {
+const pluginAPIValidator = plugin => {
   let defaultMsg = errorMessageMap[plugin];
   // catches undefined too
   if (defaultMsg == null) {
-    defaultMsg = "Invalid";
+    defaultMsg = 'Invalid';
   }
 
   return {
@@ -21,7 +20,7 @@ const pluginAPIValidator = (plugin) => {
     message(component) {
       return component.t(component.errorMessage(defaultMsg), {
         field: component.errorLabel,
-        data: component.data
+        data: component.data,
       });
     },
     check(component, setting, value) {
@@ -29,18 +28,15 @@ const pluginAPIValidator = (plugin) => {
 
       const {baseUrl} = component.currentForm?.options || component.options;
       const url = `${baseUrl}validation/plugins/${plugin}`;
-      return (
-        post(url, {value})
-          .then(response => {
-            const valid = response.data.isValid;
-            return valid ? true : response.data.messages.join('<br>');
-          })
-          .catch(() => false)
-      );
-    }
+      return post(url, {value})
+        .then(response => {
+          const valid = response.data.isValid;
+          return valid ? true : response.data.messages.join('<br>');
+        })
+        .catch(() => false);
+    },
   };
 };
-
 
 /**
  * Utility function to register the plugins from component configuration with the
@@ -48,9 +44,8 @@ const pluginAPIValidator = (plugin) => {
  * @param  {Object} component The Formio.js component instance
  * @return {Void}             Configures the validators on the component instance.
  */
-const enableValidationPlugins = (component) => {
+const enableValidationPlugins = component => {
   if (Array.isArray(component.component.validate.plugins)) {
-
     for (let plugin of component.component.validate.plugins) {
       const validator = pluginAPIValidator(plugin);
       if (validator == null) continue;
@@ -60,6 +55,5 @@ const enableValidationPlugins = (component) => {
     }
   }
 };
-
 
 export default enableValidationPlugins;

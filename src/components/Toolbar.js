@@ -3,47 +3,32 @@ import PropTypes from 'prop-types';
 
 import {getBEMClassName} from 'utils';
 
-
-const ToolbarList = ({ children, modifiers=[] }) => {
+const ToolbarList = ({children, modifiers = []}) => {
   return (
     <ul className={getBEMClassName('toolbar__list', modifiers)}>
-      { React.Children.map(children, child => child && (
-        <li className={getBEMClassName('toolbar__list-item')}>
-          {child}
-        </li>
-      )) }
+      {React.Children.map(
+        children,
+        child => child && <li className={getBEMClassName('toolbar__list-item')}>{child}</li>
+      )}
     </ul>
   );
 };
 
 ToolbarList.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   modifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
-
-const Toolbar = ({ children, modifiers=[] }) => {
+const Toolbar = ({children, modifiers = []}) => {
   const className = getBEMClassName('toolbar', modifiers);
-  return (
-    <div className={className}>
-      {children}
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 };
 
 Toolbar.propTypes = {
   children: PropTypes.node,
-  modifiers: PropTypes.arrayOf(PropTypes.oneOf([
-    'start',
-    'bottom',
-    'reverse',
-    'compact',
-    'mobile-reverse-order',
-  ])),
+  modifiers: PropTypes.arrayOf(
+    PropTypes.oneOf(['start', 'bottom', 'reverse', 'compact', 'mobile-reverse-order'])
+  ),
 };
-
 
 export {Toolbar, ToolbarList};

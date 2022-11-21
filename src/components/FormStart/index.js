@@ -2,8 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 
-import AuthenticationOutage, {useDetectAuthenticationOutage} from 'components/auth/AuthenticationOutage';
-import {useDetectAuthErrorMessages, AuthenticationErrors} from 'components/auth/AuthenticationErrors';
+import AuthenticationOutage, {
+  useDetectAuthenticationOutage,
+} from 'components/auth/AuthenticationOutage';
+import {
+  useDetectAuthErrorMessages,
+  AuthenticationErrors,
+} from 'components/auth/AuthenticationErrors';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -18,15 +23,16 @@ import {IsFormDesigner} from 'headers';
 import useStartSubmission from 'hooks/useStartSubmission';
 import {getBEMClassName} from 'utils';
 
-
 const FormStartMessage = ({form}) => {
   return (
     <Body modifiers={['compact']} component="div">
-      <div className={getBEMClassName('body', ['wysiwyg'])} dangerouslySetInnerHTML={{__html: form.explanationTemplate}}/>
+      <div
+        className={getBEMClassName('body', ['wysiwyg'])}
+        dangerouslySetInnerHTML={{__html: form.explanationTemplate}}
+      />
     </Body>
   );
 };
-
 
 /**
  * Form start screen.
@@ -35,7 +41,7 @@ const FormStartMessage = ({form}) => {
  * action to start the form, or (in the future) present the login button (DigiD,
  * eHerkenning...)
  */
-const FormStart = ({ form, onFormStart }) => {
+const FormStart = ({form, onFormStart}) => {
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
@@ -60,7 +66,7 @@ const FormStart = ({ form, onFormStart }) => {
       } catch (e) {
         setError(e);
       }
-    }
+    };
 
     if (doStart && !hasAuthErrors) {
       startForm();
@@ -95,9 +101,15 @@ const FormStart = ({ form, onFormStart }) => {
     const loginOption = form.loginOptions.find(option => option.identifier === outagePluginId);
     if (!loginOption) throw new Error('Unknown login plugin identifier');
     return (
-      <Card title={
-        <FormattedMessage description="Form start outage title" defaultMessage="Problem - {formName}" values={{formName: form.name}} />
-      }>
+      <Card
+        title={
+          <FormattedMessage
+            description="Form start outage title"
+            defaultMessage="Problem - {formName}"
+            values={{formName: form.name}}
+          />
+        }
+      >
         <AuthenticationOutage loginOption={loginOption} />
       </Card>
     );
@@ -107,37 +119,34 @@ const FormStart = ({ form, onFormStart }) => {
   return (
     <LiteralsProvider literals={form.literals}>
       <Card title={form.name}>
-
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
-        { !!authErrors ? <AuthenticationErrors parameters={authErrors}/> : null }
+        {!!authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
 
-        <FormStartMessage form={form}/>
+        <FormStartMessage form={form} />
 
         <Toolbar modifiers={['start']}>
           <ToolbarList>
-            { form.loginRequired
-              ? null
-              : (
-                  <Button variant="primary" component="a" href="#" onClick={onFormStart}>
-                    <Literal name="beginText" />
-                  </Button>
-              )
-            }
-            {
-              form.loginOptions.map((option) => <LoginButton option={option} key={option.identifier} />)
-            }
+            {form.loginRequired ? null : (
+              <Button variant="primary" component="a" href="#" onClick={onFormStart}>
+                <Literal name="beginText" />
+              </Button>
+            )}
+            {form.loginOptions.map(option => (
+              <LoginButton option={option} key={option.identifier} />
+            ))}
           </ToolbarList>
 
           <ToolbarList>
-           {
-             optionsWithIcons.map(option => (
-              <LoginButtonIcon key={option.identifier} identifier={option.identifier} logo={option.logo} />
-             ))
-           }
+            {optionsWithIcons.map(option => (
+              <LoginButtonIcon
+                key={option.identifier}
+                identifier={option.identifier}
+                logo={option.logo}
+              />
+            ))}
           </ToolbarList>
         </Toolbar>
-
       </Card>
     </LiteralsProvider>
   );
@@ -147,6 +156,5 @@ FormStart.propTypes = {
   form: Types.Form.isRequired,
   onFormStart: PropTypes.func.isRequired,
 };
-
 
 export default FormStart;

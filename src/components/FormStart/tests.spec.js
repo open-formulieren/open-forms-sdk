@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
-import { IntlProvider } from 'react-intl';
+import {render, unmountComponentAtNode} from 'react-dom';
+import {act} from 'react-dom/test-utils';
+import {IntlProvider} from 'react-intl';
 
 import useQuery from 'hooks/useQuery';
 import messagesNL from 'i18n/compiled/nl.json';
@@ -37,10 +37,7 @@ it('Form start page start if _start parameter is present', () => {
   act(() => {
     render(
       <IntlProvider locale="nl" messages={messagesNL}>
-        <FormStart
-          form={testForm}
-          onFormStart={onFormStart}
-        />
+        <FormStart form={testForm} onFormStart={onFormStart} />
       </IntlProvider>,
       container
     );
@@ -53,9 +50,11 @@ it('Form start does not start if there are auth errors', () => {
   const onFormStart = jest.fn();
 
   const testQueries = {
-    '_digid-message=error': 'Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.',
+    '_digid-message=error':
+      'Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.',
     '_digid-message=login-cancelled': 'Je hebt het inloggen met DigiD geannuleerd.',
-    '_eherkenning-message=error': 'Er is een fout opgetreden bij het inloggen met EHerkenning. Probeer het later opnieuw.',
+    '_eherkenning-message=error':
+      'Er is een fout opgetreden bij het inloggen met EHerkenning. Probeer het later opnieuw.',
     '_eherkenning-message=login-cancelled': 'Je hebt het inloggen met EHerkenning geannuleerd.',
   };
 
@@ -66,10 +65,7 @@ it('Form start does not start if there are auth errors', () => {
     act(() => {
       render(
         <IntlProvider locale="nl" messages={messagesNL}>
-          <FormStart
-            form={testForm}
-            onFormStart={onFormStart}
-          />
+          <FormStart form={testForm} onFormStart={onFormStart} />
         </IntlProvider>,
         container
       );

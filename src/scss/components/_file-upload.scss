@@ -2,14 +2,13 @@
 The markup uses bootstrap templates by default and is pretty complex. For that reason
 we don't have strict BEM naming here.
  */
-@use "sass:math";
+@use 'sass:math';
 
 @import '~microscope-sass/lib/typography';
 @import '~microscope-sass/lib/responsive';
 
 @import '../mixins/prefix';
 @import '../mixins/bootstrap';
-
 
 .#{prefix(form-control--file)} {
   @include body;
@@ -33,7 +32,13 @@ we don't have strict BEM naming here.
     }
 
     .list-group-item {
-      @include responsive(padding-top, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
+      @include responsive(
+        padding-top,
+        $grid-margin-1,
+        $grid-margin-1,
+        $grid-margin-1,
+        $grid-margin-1
+      );
     }
   }
 
@@ -109,9 +114,9 @@ we don't have strict BEM naming here.
         max-width: calc(100% - 2em);
       }
 
-      [ref="fileStatusRemove"] {
+      [ref='fileStatusRemove'] {
         cursor: pointer;
-        margin-left: .4em;
+        margin-left: 0.4em;
         opacity: 0.6;
         transition: all 0.4s ease;
 
@@ -129,9 +134,7 @@ we don't have strict BEM naming here.
 }
 
 .#{prefix(form-control--image)} {
-
   > div:nth-child(3) > div {
-
     @include responsive(padding, $grid-margin-1, $grid-margin-1, $grid-margin-1, $grid-margin-1);
 
     > span {
@@ -142,8 +145,8 @@ we don't have strict BEM naming here.
     }
   }
 
-  button[ref="takePictureButton"],
-  button[ref="toggleCameraMode"] {
+  button[ref='takePictureButton'],
+  button[ref='toggleCameraMode'] {
     @extend .#{prefix('button')};
     @extend .#{prefix('button--primary')};
     display: inline-block;

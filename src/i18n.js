@@ -1,14 +1,14 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
-import { createGlobalstate, useGlobalState } from 'state-pool';
+import {createGlobalstate, useGlobalState} from 'state-pool';
 import {useAsync} from 'react-use';
-import { IntlProvider, createIntl, createIntlCache } from 'react-intl';
+import {IntlProvider, createIntl, createIntlCache} from 'react-intl';
 
 // ensure flatpickr locales are included in bundle
-import "flatpickr/dist/l10n/nl.js";
+import 'flatpickr/dist/l10n/nl.js';
 
-import { get } from 'api';
-import { logError } from 'components/ErrorBoundary';
+import {get} from 'api';
+import {logError} from 'components/ErrorBoundary';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
 import {ConfigContext, FormioTranslations} from 'Context';
@@ -18,17 +18,17 @@ import messagesEN from './i18n/compiled/en.json';
 
 const currentLanguage = createGlobalstate('nl');
 
-const setLanguage = (langCode) => {
+const setLanguage = langCode => {
   currentLanguage.setValue(langCode);
 };
 
-const loadLocaleData = (locale) => {
-    switch (locale) {
-        case 'nl':
-            return messagesNL;
-        default:
-            return messagesEN;
-    }
+const loadLocaleData = locale => {
+  switch (locale) {
+    case 'nl':
+      return messagesNL;
+    default:
+      return messagesEN;
+  }
 };
 
 /*
@@ -42,12 +42,10 @@ const formatMessageForLocale = (locale, msg) => {
   return intl.formatMessage(msg);
 };
 
-
 const loadFormioTranslations = async (baseUrl, languageCode) => {
   const messages = await get(`${baseUrl}i18n/formio/${languageCode}`);
   return {[languageCode]: messages};
 };
-
 
 const I18NContext = React.createContext({
   onLanguageChangeDone: () => {},
@@ -55,30 +53,21 @@ const I18NContext = React.createContext({
 });
 I18NContext.displayName = 'I18NContext';
 
-
-const I18NManager = ({ languageSelectorTarget, children }) => {
+const I18NManager = ({languageSelectorTarget, children}) => {
   const {baseUrl} = useContext(ConfigContext);
   const [languageCode] = useGlobalState(currentLanguage);
 
   // ensure that we load the translations for the requested language
-  const {loading, value, error} = useAsync(
-    async () => {
-      const promises = [
-        loadLocaleData(languageCode),
-        loadFormioTranslations(baseUrl, languageCode),
-      ];
-      const [messages, formioTranslations] = await Promise.all(promises);
-      return {
-        messages,
-        formioTranslations,
-      };
-    },
-    [baseUrl, languageCode]
-  );
+  const {loading, value, error} = useAsync(async () => {
+    const promises = [loadLocaleData(languageCode), loadFormioTranslations(baseUrl, languageCode)];
+    const [messages, formioTranslations] = await Promise.all(promises);
+    return {
+      messages,
+      formioTranslations,
+    };
+  }, [baseUrl, languageCode]);
 
-  if (loading) return (
-    <Loader modifiers={['centered']} />
-  );
+  if (loading) return <Loader modifiers={['centered']} />;
 
   if (error) {
     throw error;
@@ -86,9 +75,9 @@ const I18NManager = ({ languageSelectorTarget, children }) => {
 
   const {messages, formioTranslations} = value;
 
-  const onLanguageChangeDone = (newLanguageCode) => {
+  const onLanguageChangeDone = newLanguageCode => {
     console.log(`Changed language to: ${newLanguageCode}`);
-  }
+  };
 
   return (
     <IntlProvider messages={messages} locale={languageCode} defaultLocale="nl">
@@ -104,8 +93,7 @@ const I18NManager = ({ languageSelectorTarget, children }) => {
 I18NManager.propTypes = {
   languageSelectorTarget: PropTypes.instanceOf(Element),
   children: PropTypes.node,
-}
-
+};
 
 /**
  * Special error boundary that doesn't use react-intl anywhere.
@@ -118,7 +106,7 @@ I18NManager.propTypes = {
 class I18NErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = {hasError: false, error: null};
   }
 
   static getDerivedStateFromError(error) {
@@ -133,8 +121,8 @@ class I18NErrorBoundary extends React.Component {
   }
 
   render() {
-    const { children} = this.props;
-    const { hasError, error } = this.state;
+    const {children} = this.props;
+    const {hasError, error} = this.state;
     if (!hasError) {
       return children;
     }
@@ -146,17 +134,14 @@ class I18NErrorBoundary extends React.Component {
     return (
       <ErrorMessage>
         <div>{defaultMsg}</div>
-        {error.detail ? <p>Fout: <em>{error.detail}</em></p> : null }
+        {error.detail ? (
+          <p>
+            Fout: <em>{error.detail}</em>
+          </p>
+        ) : null}
       </ErrorMessage>
     );
   }
 }
 
-
-export {
-  setLanguage,
-  formatMessageForLocale,
-  I18NManager,
-  I18NContext,
-  I18NErrorBoundary,
-};
+export {setLanguage, formatMessageForLocale, I18NManager, I18NContext, I18NErrorBoundary};

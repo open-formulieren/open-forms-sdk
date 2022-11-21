@@ -4,19 +4,10 @@ import classNames from 'classnames';
 
 import {getBEMClassName} from 'utils';
 
+const Label = ({children, isRequired = false}) => {
+  const className = classNames(getBEMClassName('label'), {'field-required': isRequired});
 
-const Label = ({ children, isRequired=false }) => {
-
-  const className = classNames(
-    getBEMClassName('label'),
-    {'field-required': isRequired},
-  );
-
-  return (
-    <label className={className}>
-      {children}
-    </label>
-  )
+  return <label className={className}>{children}</label>;
 };
 
 Label.propTypes = {

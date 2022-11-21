@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
@@ -11,7 +11,8 @@
 
 $button-line-height: $typography-line-height-text-big * $typography-font-size-text-big;
 $button-line-height-px: math.div($button-line-height, ($button-line-height * 0 + 1)) * 16px;
-$button-padding-v: math.div(($grid-row-height - $button-line-height-px), 2) - $typography-size-border;
+$button-padding-v: math.div(($grid-row-height - $button-line-height-px), 2) -
+  $typography-size-border;
 $button-padding-h: $grid-margin-2;
 
 @mixin button-theme(
@@ -25,17 +26,16 @@ $button-padding-h: $grid-margin-2;
   $color-active: null,
   $color-background-active: null,
   $color-border-active: null,
-  $force-colors: false,
+  $force-colors: false
 ) {
   // build the selector either as just the parent or the parent with modifier,
   // based on the theme name
   $sel: #{&};
   @if $name != '' {
-    $sel: "#{&}--#{$name}";
+    $sel: '#{&}--#{$name}';
   }
   // now output the actual CSS rules
   @at-root #{$sel} {
-
     @if $force-colors {
       color: $color !important;
       background-color: $color-background !important;
@@ -49,7 +49,7 @@ $button-padding-h: $grid-margin-2;
     border-right-color: $color-border !important;
     border-bottom-color: $color-border !important;
 
-    &:not([aria-disabled="true"]):hover {
+    &:not([aria-disabled='true']):hover {
       @if $color-background-hover {
         background-color: $color-background-hover;
       }
@@ -101,7 +101,7 @@ $button-padding-h: $grid-margin-2;
     $color-border-hover: var(--of-button-hover-color-border),
     $color-active: var(--of-button-active-fg),
     $color-background-active: var(--of-button-active-bg),
-    $color-border-active: var(--of-button-active-color-border),
+    $color-border-active: var(--of-button-active-color-border)
   );
   @include button-theme(
     'primary',
@@ -112,7 +112,7 @@ $button-padding-h: $grid-margin-2;
     $color-border-hover: var(--of-button-primary-hover-color-border),
     $color-active: var(--of-button-primary-active-fg),
     $color-background-active: var(--of-button-primary-active-bg),
-    $color-border-active: var(--of-button-primary-active-color-border),
+    $color-border-active: var(--of-button-primary-active-color-border)
   );
   @include button-theme(
     'anchor',
@@ -125,7 +125,8 @@ $button-padding-h: $grid-margin-2;
     $color-active: var(--of-button-anchor-active-fg),
     $color-background-active: var(--of-button-anchor-active-bg),
     $color-border-active: var(--of-button-anchor-active-color-border),
-    $force-colors: true,  // there's no anchor variant for utrecht button yet
+    $force-colors: true,
+    // there's no anchor variant for utrecht button yet
   );
   @include button-theme(
     'danger',
@@ -136,7 +137,7 @@ $button-padding-h: $grid-margin-2;
     $color-border-hover: var(--of-button-danger-hover-color-border),
     $color-active: var(--of-button-danger-active-fg),
     $color-background-active: var(--of-button-danger-active-bg),
-    $color-border-active: var(--of-button-danger-active-color-border),
+    $color-border-active: var(--of-button-danger-active-color-border)
   );
 
   appearance: none;
@@ -151,12 +152,12 @@ $button-padding-h: $grid-margin-2;
     display: none;
   }
 
-  &:not([aria-disabled="true"]) {
+  &:not([aria-disabled='true']) {
     cursor: pointer;
   }
 
   // styling for disabled button
-  &[aria-disabled="true"] {
+  &[aria-disabled='true'] {
     cursor: not-allowed;
     filter: saturate(0);
     opacity: 0.5;
@@ -179,7 +180,8 @@ $button-padding-h: $grid-margin-2;
     border-style: none;
     --utrecht-button-hover-background-color: transparent;
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       --utrecht-button-hover-color: var(--of-button-fg);
       color: var(--of-button-fg);
       background-color: transparent;
@@ -187,7 +189,7 @@ $button-padding-h: $grid-margin-2;
     }
 
     &.#{prefix(button)}--danger {
-      color: var(--of-button-danger-bg)
+      color: var(--of-button-danger-bg);
     }
   }
 }

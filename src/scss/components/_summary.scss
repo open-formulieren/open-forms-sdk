@@ -3,7 +3,6 @@
 @import '../mixins/prefix';
 @import '../mixins/bem';
 
-
 .#{prefix('summary')} {
   &:first-child {
     padding-top: $grid-margin-2;

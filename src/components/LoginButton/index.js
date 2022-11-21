@@ -5,7 +5,6 @@ import React from 'react';
 import Button from 'components/Button';
 import {getLoginUrl} from 'components/utils';
 
-
 const LoginButton = ({option, ...extra}) => (
   <Button variant="primary" component="a" href={getLoginUrl(option)} {...extra}>
     <FormattedMessage
@@ -30,4 +29,4 @@ LoginButton.propTypes = {
 };
 
 export default LoginButton;
-export {default as LoginButtonIcon} from './LoginButtonIcon'
+export {default as LoginButtonIcon} from './LoginButtonIcon';

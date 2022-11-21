@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
-import { useAsync } from 'react-use';
+import {useAsync} from 'react-use';
 
-import { post } from 'api';
+import {post} from 'api';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -18,10 +18,10 @@ import usePoll from 'hooks/usePoll';
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';
 
-const getStartPaymentUrl = (apiUrl) => {
+const getStartPaymentUrl = apiUrl => {
   const nextUrl = new URL(window.location.href);
   const startPaymentUrl = new URL(apiUrl);
-  startPaymentUrl.searchParams.set("next", nextUrl.toString());
+  startPaymentUrl.searchParams.set('next', nextUrl.toString());
   return startPaymentUrl.toString();
 };
 
@@ -33,24 +33,25 @@ const getStartPaymentUrl = (apiUrl) => {
  */
 const StartPayment = ({startUrl}) => {
   const fullUrl = getStartPaymentUrl(startUrl);
-  const {loading, value} = useAsync(
-    async () => {
-      const resp = await post(fullUrl);
-      if (!resp.ok) throw new Error('Could not start payment');
-      return resp.data;
-    },
-    [fullUrl]
-  );
+  const {loading, value} = useAsync(async () => {
+    const resp = await post(fullUrl);
+    if (!resp.ok) throw new Error('Could not start payment');
+    return resp.data;
+  }, [fullUrl]);
 
   return (
     <Card>
       <Body modifiers={['big']}>
-        <FormattedMessage description="Payment required info text" defaultMessage="Payment is required for this product" />
+        <FormattedMessage
+          description="Payment required info text"
+          defaultMessage="Payment is required for this product"
+        />
       </Body>
-      { loading
-        ? (<Loader modifiers={['centered']} />)
-        : (value ? <PaymentForm method={value.type} url={value.url} data={value.data} autoSubmit={false} /> : null)
-      }
+      {loading ? (
+        <Loader modifiers={['centered']} />
+      ) : value ? (
+        <PaymentForm method={value.type} url={value.url} data={value.data} autoSubmit={false} />
+      ) : null}
     </Card>
   );
 };
@@ -58,7 +59,6 @@ const StartPayment = ({startUrl}) => {
 StartPayment.propTypes = {
   startUrl: PropTypes.string.isRequired,
 };
-
 
 /**
  * Renders the confirmation page displayed after submitting a form.
@@ -70,31 +70,27 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
   const [statusResponse, setStatusResponse] = useState(null);
   const intl = useIntl();
   const genericErrorMessage = intl.formatMessage({
-      description: 'Generic submission error',
-      defaultMessage: 'Something went wrong while submitting the form.'
+    description: 'Generic submission error',
+    defaultMessage: 'Something went wrong while submitting the form.',
   });
 
-  const {loading, error} = usePoll(
-    statusUrl,
-    1000,
-    (response) => {
-      setStatusResponse(response);
-      switch (response.status) {
-        case 'done': {
-          if (response.result === RESULT_FAILED) {
-            const errorMessage = response.errorMessage || genericErrorMessage;
-            onFailure && onFailure(errorMessage);
-          } else if (response.result === RESULT_SUCCESS) {
-            onConfirmed && onConfirmed();
-          }
-          return true;
+  const {loading, error} = usePoll(statusUrl, 1000, response => {
+    setStatusResponse(response);
+    switch (response.status) {
+      case 'done': {
+        if (response.result === RESULT_FAILED) {
+          const errorMessage = response.errorMessage || genericErrorMessage;
+          onFailure && onFailure(errorMessage);
+        } else if (response.result === RESULT_SUCCESS) {
+          onConfirmed && onConfirmed();
         }
-        default: {
-          // nothing, it's pending/started or retrying
-        }
+        return true;
+      }
+      default: {
+        // nothing, it's pending/started or retrying
       }
     }
-  );
+  });
 
   if (error) {
     console.error(error);
@@ -102,10 +98,14 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
 
   if (loading) {
     return (
-      <Card title={<FormattedMessage
-                    description="Checking background processing status title"
-                    defaultMessage="Processing..." />}>
-
+      <Card
+        title={
+          <FormattedMessage
+            description="Checking background processing status title"
+            defaultMessage="Processing..."
+          />
+        }
+      >
         <Loader modifiers={['centered']} />
         <Body>
           <FormattedMessage
@@ -113,7 +113,6 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
             defaultMessage="Please hold on while we're processing your submission."
           />
         </Body>
-
       </Card>
     );
   }
@@ -136,12 +135,15 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
 
   return (
     <>
-      <Card title={<FormattedMessage
-                     description="On succesful completion title"
-                     defaultMessage="Confirmation: {reference}"
-                     values={{reference: publicReference}}
-                   />}>
-
+      <Card
+        title={
+          <FormattedMessage
+            description="On succesful completion title"
+            defaultMessage="Confirmation: {reference}"
+            values={{reference: publicReference}}
+          />
+        }
+      >
         <Body
           component="div"
           modifiers={['wysiwyg']}
@@ -158,37 +160,31 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
           </Anchor>
         </Body>
 
-        { showBackToMainWebsite
-          ? (
-            <Toolbar modifiers={['reverse']}>
-              <ToolbarList>
-                <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
-                  <Button type="button" variant="primary">
-                    <FormattedMessage
-                      description="Back to main website link title"
-                      defaultMessage="Return to main website"
-                    />
-                  </Button>
-                </Anchor>
-              </ToolbarList>
-            </Toolbar>
-          )
-          : null
-        }
-
+        {showBackToMainWebsite ? (
+          <Toolbar modifiers={['reverse']}>
+            <ToolbarList>
+              <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
+                <Button type="button" variant="primary">
+                  <FormattedMessage
+                    description="Back to main website link title"
+                    defaultMessage="Return to main website"
+                  />
+                </Button>
+              </Anchor>
+            </ToolbarList>
+          </Toolbar>
+        ) : null}
       </Card>
 
-      <ErrorBoundary>
-        { paymentUrl ? <StartPayment startUrl={paymentUrl} /> : null }
-      </ErrorBoundary>
+      <ErrorBoundary>{paymentUrl ? <StartPayment startUrl={paymentUrl} /> : null}</ErrorBoundary>
     </>
   );
-}
+};
 
 SubmissionConfirmation.propTypes = {
   statusUrl: PropTypes.string.isRequired,
   onFailure: PropTypes.func,
   onConfirmed: PropTypes.func,
-}
+};
 
 export default SubmissionConfirmation;

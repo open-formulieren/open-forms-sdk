@@ -1,6 +1,6 @@
-import { Formio } from 'react-formio';
+import {Formio} from 'react-formio';
 
-import { applyPrefix } from '../utils';
+import {applyPrefix} from '../utils';
 
 const FormioEditGrid = Formio.Components.components.editgrid;
 
@@ -13,9 +13,7 @@ const EditRowState = {
   Draft: 'draft',
 };
 
-
 class EditGrid extends FormioEditGrid {
-
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
@@ -29,34 +27,33 @@ class EditGrid extends FormioEditGrid {
     const dataValue = this.dataValue;
     if (this.isOpen(row)) {
       return this.renderComponents(row.components);
-    }
-    else {
+    } else {
       const flattenedComponents = this.flattenComponents(rowIndex);
 
-      return this.renderTemplate(
-        'editgridrow',
-        {
-          row: dataValue[rowIndex] || {},
-          data: this.data,
-          rowIndex,
-          components: this.component.components,
-          flattenedComponents,
-          displayValue: (component) => this.displayComponentValue(component),
-          isVisibleInRow: (component) => this.isComponentVisibleInRow(component, flattenedComponents),
-          getView: (component, data) => {
-            const instance = flattenedComponents[component.key];
-            const view = instance ? instance.getView(data || instance.dataValue) : '';
+      return this.renderTemplate('editgridrow', {
+        row: dataValue[rowIndex] || {},
+        data: this.data,
+        rowIndex,
+        components: this.component.components,
+        flattenedComponents,
+        displayValue: component => this.displayComponentValue(component),
+        isVisibleInRow: component => this.isComponentVisibleInRow(component, flattenedComponents),
+        getView: (component, data) => {
+          const instance = flattenedComponents[component.key];
+          const view = instance ? instance.getView(data || instance.dataValue) : '';
 
-            // If there is an html tag in view, don't allow it to be injected in template
-            const htmlTagRegExp = new RegExp('<(.*?)>');
-            return typeof view === 'string' && view.length && !instance.component?.template && htmlTagRegExp.test(view)
+          // If there is an html tag in view, don't allow it to be injected in template
+          const htmlTagRegExp = new RegExp('<(.*?)>');
+          return typeof view === 'string' &&
+            view.length &&
+            !instance.component?.template &&
+            htmlTagRegExp.test(view)
             ? `<input type="text" value="${view.replace(/"/g, '&quot;')}" readonly/>`
             : view;
-          },
-          state: this.editRows[rowIndex].state,
-          t: this.t.bind(this)
         },
-      );
+        state: this.editRows[rowIndex].state,
+        t: this.t.bind(this),
+      });
     }
   }
 
@@ -64,19 +61,19 @@ class EditGrid extends FormioEditGrid {
   // to only have methods defined on Component and not EditGrid
   shouldValidateDraft(editRow) {
     // Draft rows should be validated only when there was an attempt to submit a form
-    return (editRow.state === EditRowState.Draft &&
-      !this.pristine &&
-      !this.root?.pristine &&
-      !this.hasOpenRows()) ||
-      this.root?.submitted;
+    return (
+      (editRow.state === EditRowState.Draft &&
+        !this.pristine &&
+        !this.root?.pristine &&
+        !this.hasOpenRows()) ||
+      this.root?.submitted
+    );
   }
 
   // shouldValidateDraft and shouldValidateRow are copied from Formio, because when calling validateRow, 'this' seems
   // to only have methods defined on Component and not EditGrid
   shouldValidateRow(editRow, dirty) {
-    return this.shouldValidateDraft(editRow) ||
-      editRow.state === EditRowState.Editing ||
-      dirty;
+    return this.shouldValidateDraft(editRow) || editRow.state === EditRowState.Editing || dirty;
   }
 
   // Overwritten from Formio, because we have the case where some components can have Async validation
@@ -102,15 +99,19 @@ class EditGrid extends FormioEditGrid {
     }
 
     if (this.component.validate && this.component.validate.row) {
-      valid = this.evaluate(this.component.validate.row, {
-        valid,
-        row: editRow.data
-      }, 'valid', true);
+      valid = this.evaluate(
+        this.component.validate.row,
+        {
+          valid,
+          row: editRow.data,
+        },
+        'valid',
+        true
+      );
       if (valid.toString() !== 'true') {
         editRow.error = valid;
         valid = false;
-      }
-      else {
+      } else {
         editRow.error = null;
       }
       if (valid === null) {
@@ -118,7 +119,7 @@ class EditGrid extends FormioEditGrid {
       }
     }
 
-    editRow.errors = !valid ? this.errors.filter((err) => !errorsSnapshot.includes(err)) : null;
+    editRow.errors = !valid ? this.errors.filter(err => !errorsSnapshot.includes(err)) : null;
 
     if (!this.component.rowDrafts || this.root?.submitted) {
       this.showRowErrorAlerts(editRow, !!valid);
@@ -127,6 +128,5 @@ class EditGrid extends FormioEditGrid {
     return !!valid;
   }
 }
-
 
 export default EditGrid;

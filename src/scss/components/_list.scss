@@ -4,7 +4,6 @@
 @import '../mixins/prefix';
 
 .#{prefix('list')} {
-
   .#{prefix('caption')} + & {
     @include margin(true, $properties: margin-top);
   }

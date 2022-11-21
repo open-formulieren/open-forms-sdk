@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
 
-import { get, post } from 'api';
+import {get, post} from 'api';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 import {LiteralsProvider} from 'components/Literal';
@@ -19,7 +19,6 @@ import SummaryConfirmation from 'components/SummaryConfirmation';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import FormStepSummary from 'components/FormStepSummary';
 
-
 const PRIVACY_POLICY_ENDPOINT = '/api/v2/config/privacy_policy_info';
 
 const initialState = {
@@ -28,7 +27,7 @@ const initialState = {
     privacyLabel: '',
     policyAccepted: false,
   },
-  error: ''
+  error: '',
 };
 
 const reducer = (draft, action) => {
@@ -51,30 +50,30 @@ const reducer = (draft, action) => {
   }
 };
 
-const loadSummaryData = async (submissionUrl) => {
+const loadSummaryData = async submissionUrl => {
   return await get(`${submissionUrl.href}/summary`);
 };
 
-const completeSubmission = async (submission) => {
-    const response = await post(`${submission.url}/_complete`);
-    if (!response.ok) {
-      console.error(response.data);
-      // TODO Specific error for each type of invalid data?
-      throw new Error('InvalidSubmissionData');
-    } else {
-      return response.data;
-    }
+const completeSubmission = async submission => {
+  const response = await post(`${submission.url}/_complete`);
+  if (!response.ok) {
+    console.error(response.data);
+    // TODO Specific error for each type of invalid data?
+    throw new Error('InvalidSubmissionData');
+  } else {
+    return response.data;
+  }
 };
 
-const getPrivacyPolicyInfo = async (origin) => {
+const getPrivacyPolicyInfo = async origin => {
   const privacyPolicyUrl = new URL(PRIVACY_POLICY_ENDPOINT, origin);
   return await get(privacyPolicyUrl);
 };
 
-const PaymentInformation = ({isRequired, amount='', hasPaid}) => {
+const PaymentInformation = ({isRequired, amount = '', hasPaid}) => {
   if (!isRequired || hasPaid) return null;
 
-  return (<Price price={amount} />);
+  return <Price price={amount} />;
 };
 
 PaymentInformation.propTypes = {
@@ -83,36 +82,40 @@ PaymentInformation.propTypes = {
   hasPaid: PropTypes.bool.isRequired,
 };
 
-
-const Summary = ({ form, submission, processingError='', onConfirm, onLogout, onClearProcessingErrors }) => {
+const Summary = ({
+  form,
+  submission,
+  processingError = '',
+  onConfirm,
+  onLogout,
+  onClearProcessingErrors,
+}) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const history = useHistory();
 
   const refreshedSubmission = useRefreshSubmission(submission);
 
-  const {loading, value: summaryData, error} = useAsync(
-    async () => {
-      const submissionUrl = new URL(refreshedSubmission.url);
+  const {
+    loading,
+    value: summaryData,
+    error,
+  } = useAsync(async () => {
+    const submissionUrl = new URL(refreshedSubmission.url);
 
-      let promises = [
-        loadSummaryData(submissionUrl),
-        getPrivacyPolicyInfo(submissionUrl.origin),
-      ];
+    let promises = [loadSummaryData(submissionUrl), getPrivacyPolicyInfo(submissionUrl.origin)];
 
-      const [summaryData, privacyInfo] = await Promise.all(promises);
+    const [summaryData, privacyInfo] = await Promise.all(promises);
 
-      dispatch({type: 'PRIVACY_POLICY_LOADED', payload: privacyInfo});
+    dispatch({type: 'PRIVACY_POLICY_LOADED', payload: privacyInfo});
 
-      return summaryData;
-    },
-    [refreshedSubmission.url]
-  );
+    return summaryData;
+  }, [refreshedSubmission.url]);
 
   if (error) {
     console.error(error);
   }
 
-  const onSubmit = async (event) => {
+  const onSubmit = async event => {
     event.preventDefault();
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
     try {
@@ -123,9 +126,9 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
     }
   };
 
-  const onPrevPage = (event) => {
+  const onPrevPage = event => {
     event.preventDefault();
-    onClearProcessingErrors()
+    onClearProcessingErrors();
 
     const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
     const prevStepSlug = form.steps[previousStepIndex]?.slug;
@@ -137,43 +140,39 @@ const Summary = ({ form, submission, processingError='', onConfirm, onLogout, on
 
   return (
     <Card title="Controleer en bevestig">
-
-      { processingError ? <ErrorMessage>{processingError}</ErrorMessage> : null }
-      { state.error ? <ErrorMessage>{state.error}</ErrorMessage> : null }
+      {processingError ? <ErrorMessage>{processingError}</ErrorMessage> : null}
+      {state.error ? <ErrorMessage>{state.error}</ErrorMessage> : null}
 
       <LiteralsProvider literals={form.literals}>
         <Wrapper onSubmit={onSubmit}>
           <SubmissionContext.Provider value={{submission: refreshedSubmission}}>
-          { loading
-            ? (<Loader modifiers={['centered']} />)
-            : (
+            {loading ? (
+              <Loader modifiers={['centered']} />
+            ) : (
               <>
-                {
-                  summaryData.map((step, index) => (
-                    <FormStepSummary
-                      key={index}
-                      slug={step.slug}
-                      name={step.name}
-                      data={step.data}
-                      editStepText={form.literals.changeText.resolved}
-                    />
-                  ))
-                }
+                {summaryData.map((step, index) => (
+                  <FormStepSummary
+                    key={index}
+                    slug={step.slug}
+                    name={step.name}
+                    data={step.data}
+                    editStepText={form.literals.changeText.resolved}
+                  />
+                ))}
 
                 <PaymentInformation {...refreshedSubmission.payment} />
 
                 <SummaryConfirmation
                   submissionAllowed={refreshedSubmission.submissionAllowed}
                   privacy={state.privacy}
-                  onPrivacyCheckboxChange={(e) => dispatch({type: 'PRIVACY_POLICY_TOGGLE'})}
+                  onPrivacyCheckboxChange={e => dispatch({type: 'PRIVACY_POLICY_TOGGLE'})}
                   onPrevPage={onPrevPage}
                 />
 
-                {refreshedSubmission.isAuthenticated ? <LogoutButton onLogout={onLogout}/> : null}
+                {refreshedSubmission.isAuthenticated ? <LogoutButton onLogout={onLogout} /> : null}
               </>
-            )
-          }
-        </SubmissionContext.Provider>
+            )}
+          </SubmissionContext.Provider>
         </Wrapper>
       </LiteralsProvider>
     </Card>
@@ -187,6 +186,5 @@ Summary.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
-
 
 export default Summary;

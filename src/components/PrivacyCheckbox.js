@@ -7,8 +7,7 @@ import {getBEMClassName} from '../utils';
 import {Checkbox, FormField, FormLabel} from '@utrecht/component-library-react';
 import ErrorMessage from './ErrorMessage';
 
-
-const PrivacyCheckbox = ({label, value, warning=false, onChange}) => {
+const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
   const inputClassname = classNames(
     getBEMClassName('privacy-checkbox__input', warning ? ['warning'] : [])
   );
@@ -16,13 +15,7 @@ const PrivacyCheckbox = ({label, value, warning=false, onChange}) => {
   return (
     <FormField className={getBEMClassName('privacy-checkbox')}>
       <div className={inputClassname}>
-        <Checkbox
-          name="privacy"
-          id="privacy"
-          required={true}
-          value={value}
-          onChange={onChange}
-        />
+        <Checkbox name="privacy" id="privacy" required={true} value={value} onChange={onChange} />
         <div className={getBEMClassName('privacy-checkbox__checkmark')} />
         <FormLabel
           type="checkbox"
@@ -35,18 +28,16 @@ const PrivacyCheckbox = ({label, value, warning=false, onChange}) => {
           />
         </FormLabel>
       </div>
-      {
-        warning && (
-          <ErrorMessage modifiers={['warning']}>
-            <FormattedMessage
-              description="Warning privacy policy not checked when submitting"
-              defaultMessage="Please accept the privacy policy before submitting"
-            />
-          </ErrorMessage>
-        )
-      }
+      {warning && (
+        <ErrorMessage modifiers={['warning']}>
+          <FormattedMessage
+            description="Warning privacy policy not checked when submitting"
+            defaultMessage="Please accept the privacy policy before submitting"
+          />
+        </ErrorMessage>
+      )}
     </FormField>
-  )
+  );
 };
 
 PrivacyCheckbox.propTypes = {

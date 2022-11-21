@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
-import { IntlProvider } from 'react-intl';
+import {render, unmountComponentAtNode} from 'react-dom';
+import {act} from 'react-dom/test-utils';
+import {IntlProvider} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import Summary from 'components/Summary';
@@ -14,14 +14,19 @@ const SUBMISSION = {
   id: 'random-id',
   url: 'https://example.com',
   form: 'https://example.com',
-  steps: [{formStep: 'http://testserver/api/v1/forms/33af5a1c-552e-4e8f-8b19-287cf35b9edd/steps/0c2a1816-a7d7-4193-b431-918956744038'}],
+  steps: [
+    {
+      formStep:
+        'http://testserver/api/v1/forms/33af5a1c-552e-4e8f-8b19-287cf35b9edd/steps/0c2a1816-a7d7-4193-b431-918956744038',
+    },
+  ],
   submissionAllowed: SUBMISSION_ALLOWED.yes,
   payment: {
     isRequired: false,
     amount: '',
     hasPaid: false,
-  }
-}
+  },
+};
 
 jest.mock('react-use');
 jest.mock('hooks/useRefreshSubmission');
@@ -41,7 +46,6 @@ afterEach(() => {
   container = null;
 });
 
-
 it('Summary displays logout button if isAuthenticated is true', () => {
   const submissionIsAuthenticated = {
     ...SUBMISSION,
@@ -55,10 +59,7 @@ it('Summary displays logout button if isAuthenticated is true', () => {
 
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
+      <IntlProvider locale="nl" messages={messagesNL}>
         <Summary
           form={testForm}
           submission={SUBMISSION}
@@ -86,10 +87,7 @@ it('Summary does not display logout button if loginRequired is false', () => {
 
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
+      <IntlProvider locale="nl" messages={messagesNL}>
         <Summary
           form={formLoginRequired}
           submission={SUBMISSION}

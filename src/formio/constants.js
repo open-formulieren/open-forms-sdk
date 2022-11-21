@@ -1,3 +1,3 @@
 const PREFIX = 'openforms';
 
-export { PREFIX };
+export {PREFIX};

@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 @import '~microscope-sass/lib/grid';
 
@@ -14,6 +14,6 @@ $bootstrap-ratio-desktop: math.div(12, $grid-columns-desktop);
     math.div($bs-span, $bootstrap-ratio-mobile),
     math.div($bs-span, $bootstrap-ratio-tablet),
     math.div($bs-span, $bootstrap-ratio-laptop),
-    math.div($bs-span, $bootstrap-ratio-desktop),
+    math.div($bs-span, $bootstrap-ratio-desktop)
   );
 }

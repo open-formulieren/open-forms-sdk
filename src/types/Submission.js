@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
-
 const Submission = PropTypes.shape({
   id: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,

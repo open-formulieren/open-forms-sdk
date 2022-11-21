@@ -4,7 +4,6 @@ import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 
-
 /**
  * fix leaflet images import - https://github.com/Leaflet/Leaflet/issues/4968
  * @return {Void}
@@ -19,6 +18,5 @@ const fixIconUrls = () => {
     shadowUrl: shadowUrl,
   });
 };
-
 
 export {fixIconUrls};

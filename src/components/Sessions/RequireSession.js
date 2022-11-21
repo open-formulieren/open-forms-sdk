@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
-import { useTimeout, useTimeoutFn } from 'react-use';
+import {useTimeout, useTimeoutFn} from 'react-use';
 
 import {apiCall} from 'api';
 import Anchor from 'components/Anchor';
@@ -18,16 +18,14 @@ const WARN_SESSION_TIMEOUT_FACTOR = 0.9; // once 90% of the session expiry time 
 const RelativeTimeToExpiry = ({numSeconds}) => {
   // more than 24 hours -> don't bother
   if (numSeconds >= 3600 * 24) return null;
-  return (
-    <FormattedRelativeTime value={numSeconds} numeric="auto" updateIntervalInSeconds={1} />
-  );
+  return <FormattedRelativeTime value={numSeconds} numeric="auto" updateIntervalInSeconds={1} />;
 };
 
 RelativeTimeToExpiry.propTypes = {
   numSeconds: PropTypes.number.isRequired,
 };
 
-const useTriggerWarning = (numSeconds) => {
+const useTriggerWarning = numSeconds => {
   let timeout;
 
   const [showWarning, setShowWarning] = useState(false);
@@ -71,19 +69,29 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
     return () => {
       cancelExpiryTimeout();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiryDate]);
 
   if (expired) {
     return (
       <Card
-        title={<FormattedMessage description="Session expired card title" defaultMessage="Your session has expired"/>}>
+        title={
+          <FormattedMessage
+            description="Session expired card title"
+            defaultMessage="Your session has expired"
+          />
+        }
+      >
         <ErrorMessage>
           <FormattedMessage
             description="Session expired error message"
             defaultMessage="Your session has expired. Click <link>here</link> to restart."
             values={{
-              link: chunks => <Link to="/" component={Anchor}>{chunks}</Link>,
+              link: chunks => (
+                <Link to="/" component={Anchor}>
+                  {chunks}
+                </Link>
+              ),
             }}
           />
         </ErrorMessage>
@@ -103,7 +111,8 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
           <FormattedMessage
             description="Session expiry warning title (in modal)"
             defaultMessage="Your session will expire soon."
-          />}
+          />
+        }
         isOpen={showWarning}
         closeModal={() => {
           setWarningDismissed(true);
@@ -115,22 +124,30 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
             defaultMessage="Your session is about to expire {delta}. Extend your session if you wish to continue."
             values={{
               delta: <RelativeTimeToExpiry numSeconds={secondsToExpiry} />,
-            }}/>
+            }}
+          />
         </ErrorMessage>
         <Toolbar modifiers={['bottom', 'reverse']}>
           <ToolbarList>
-            <Button type="submit" variant="primary" onClick={async (event) => {
-              event.preventDefault();
-              await apiCall(`${baseUrl}ping`);
-            }}>
-              <FormattedMessage description="Extend session button (in modal)" defaultMessage="Extend" />
+            <Button
+              type="submit"
+              variant="primary"
+              onClick={async event => {
+                event.preventDefault();
+                await apiCall(`${baseUrl}ping`);
+              }}
+            >
+              <FormattedMessage
+                description="Extend session button (in modal)"
+                defaultMessage="Extend"
+              />
             </Button>
           </ToolbarList>
         </Toolbar>
       </Modal>
       {children}
     </>
-  )
+  );
 };
 
 RequireSession.propTypes = {
@@ -138,6 +155,5 @@ RequireSession.propTypes = {
   expiryDate: PropTypes.instanceOf(Date),
   children: PropTypes.node,
 };
-
 
 export default RequireSession;

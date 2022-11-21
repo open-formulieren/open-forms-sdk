@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { useRouteMatch, Link } from 'react-router-dom';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 
 import Anchor from 'components/Anchor';
@@ -16,23 +16,34 @@ import Body from 'components/Body';
 
 import ProgressItem from './ProgressItem';
 
-
 const getLinkModifiers = (active, isApplicable) => {
   return [
     'inherit',
     'hover',
     active ? 'active' : undefined,
     isApplicable ? undefined : 'muted',
-  ].filter( mod => mod !== undefined );
+  ].filter(mod => mod !== undefined);
 };
-
 
 const LinkOrSpan = ({isActive, isApplicable, to, useLink, children, ...props}) => {
   if (useLink) {
-    return <Link to={to} component={Anchor} modifiers={ getLinkModifiers(isActive, isApplicable) } {...props}>{children}</Link>
+    return (
+      <Link
+        to={to}
+        component={Anchor}
+        modifiers={getLinkModifiers(isActive, isApplicable)}
+        {...props}
+      >
+        {children}
+      </Link>
+    );
   }
 
-  return <Body component="span" modifiers={['muted']} {...props}>{children}</Body>
+  return (
+    <Body component="span" modifiers={['muted']} {...props}>
+      {children}
+    </Body>
+  );
 };
 
 LinkOrSpan.propTypes = {
@@ -42,8 +53,13 @@ LinkOrSpan.propTypes = {
   isApplicable: PropTypes.bool.isRequired,
 };
 
-
-const SidebarStepStatus = ({isCurrent, step, canNavigate, isApplicable=false, completed=false}) => {
+const SidebarStepStatus = ({
+  isCurrent,
+  step,
+  canNavigate,
+  isApplicable = false,
+  completed = false,
+}) => {
   return (
     <ProgressItem completed={completed}>
       <LinkOrSpan
@@ -83,7 +99,6 @@ SidebarStepStatus.propTypes = {
   }),
 };
 
-
 // TODO: translate these
 const stepLabels = {
   login: 'Inloggen',
@@ -91,8 +106,13 @@ const stepLabels = {
   confirmation: 'Bevestiging',
 };
 
-
-const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, completed=false }) => {
+const ProgressIndicator = ({
+  title,
+  submission = null,
+  steps,
+  submissionAllowed,
+  completed = false,
+}) => {
   const summaryMatch = !!useRouteMatch('/overzicht');
   const stepMatch = useRouteMatch('/stap/:step');
   const confirmationMatch = !!useRouteMatch('/bevestiging');
@@ -106,7 +126,8 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
 
   const applicableSteps = hasSubmission ? submission.steps.filter(step => step.isApplicable) : [];
   const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
-  const applicableCompleted = hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
+  const applicableCompleted =
+    hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
@@ -117,36 +138,38 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
   } else if (confirmationMatch) {
     activeStepTitle = stepLabels.configuration;
   } else {
-    const step = steps.find( step => step.slug === stepSlug);
+    const step = steps.find(step => step.slug === stepSlug);
     activeStepTitle = step.formDefinition;
   }
 
-    const canNavigateToStep = (index) => {
-      // The user can navigate to a step when:
-      // 1. All previous steps have been completed
-      // 2. The user is a form designer
-      if (IsFormDesigner.getValue()) return true;
+  const canNavigateToStep = index => {
+    // The user can navigate to a step when:
+    // 1. All previous steps have been completed
+    // 2. The user is a form designer
+    if (IsFormDesigner.getValue()) return true;
 
-      if (!submission) return false;
+    if (!submission) return false;
 
-      const previousSteps = submission.steps.slice(0, index);
-      const previousApplicableButNotCompletedSteps = previousSteps.filter(
-        step => step.isApplicable && !step.completed
-      )
+    const previousSteps = submission.steps.slice(0, index);
+    const previousApplicableButNotCompletedSteps = previousSteps.filter(
+      step => step.isApplicable && !step.completed
+    );
 
-      return !previousApplicableButNotCompletedSteps.length
-    };
+    return !previousApplicableButNotCompletedSteps.length;
+  };
 
   // try to get the value from the submission if provided, otherwise
   const submissionAllowedSpec = submission?.submissionAllowed ?? submissionAllowed;
-  const showOverview = (submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview);
-  const showConfirmation = (submissionAllowedSpec === SUBMISSION_ALLOWED.yes);
+  const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
+  const showConfirmation = submissionAllowedSpec === SUBMISSION_ALLOWED.yes;
 
   return (
     <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
-
-      <div className={getBEMClassName('progress-indicator__mobile-header')} onClick={() => setExpanded(!expanded)}>
-        <FAIcon icon={expanded ? 'chevron-up' : 'chevron-down' } modifiers={['normal']} />
+      <div
+        className={getBEMClassName('progress-indicator__mobile-header')}
+        onClick={() => setExpanded(!expanded)}
+      >
+        <FAIcon icon={expanded ? 'chevron-up' : 'chevron-down'} modifiers={['normal']} />
         <span className={getBEMClassName('progress-indicator__active-step')}>
           {activeStepTitle}
         </span>
@@ -160,64 +183,55 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
             {stepLabels.login}
           </Anchor>
         </ProgressItem>
-        {
-          steps.map( (step, index) => (
-            <SidebarStepStatus
-              key={step.uuid}
-              step={step}
-              completed={submission ? submission.steps[index].completed : false}
-              isApplicable={submission ? submission.steps[index].isApplicable : true}
-              canNavigate={canNavigateToStep(index)}
-              isCurrent={step.slug === stepSlug}
-              slug={step.slug}
-            />
-          ) )
-        }
-        {
-          showOverview
-          && (
-            <ProgressItem completed={confirmationMatch}>
-              <LinkOrSpan
-                to={'/overzicht'}
-                useLink={applicableCompleted}
-                isActive={summaryMatch}
-                isApplicable={applicableCompleted}
-              >
-                {stepLabels.overview}
-              </LinkOrSpan>
-            </ProgressItem>
-          )
-        }
-        {
-          showConfirmation
-          && (
-            <ProgressItem completed={completed}>
-              <Body
-                component="span"
-                modifiers={completed ? [] : ['muted']}
-              >{stepLabels.confirmation}</Body>
-            </ProgressItem>
-          )
-        }
+        {steps.map((step, index) => (
+          <SidebarStepStatus
+            key={step.uuid}
+            step={step}
+            completed={submission ? submission.steps[index].completed : false}
+            isApplicable={submission ? submission.steps[index].isApplicable : true}
+            canNavigate={canNavigateToStep(index)}
+            isCurrent={step.slug === stepSlug}
+            slug={step.slug}
+          />
+        ))}
+        {showOverview && (
+          <ProgressItem completed={confirmationMatch}>
+            <LinkOrSpan
+              to={'/overzicht'}
+              useLink={applicableCompleted}
+              isActive={summaryMatch}
+              isApplicable={applicableCompleted}
+            >
+              {stepLabels.overview}
+            </LinkOrSpan>
+          </ProgressItem>
+        )}
+        {showConfirmation && (
+          <ProgressItem completed={completed}>
+            <Body component="span" modifiers={completed ? [] : ['muted']}>
+              {stepLabels.confirmation}
+            </Body>
+          </ProgressItem>
+        )}
       </List>
     </Card>
   );
 };
 
-
 ProgressIndicator.propTypes = {
   title: PropTypes.string,
   submission: Types.Submission,
-  steps: PropTypes.arrayOf(PropTypes.shape({
-    url: PropTypes.string.isRequired,
-    uuid: PropTypes.string.isRequired,
-    index: PropTypes.number.isRequired,
-    slug: PropTypes.string.isRequired,
-    formDefinition: PropTypes.string.isRequired,
-  })).isRequired,
+  steps: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string.isRequired,
+      uuid: PropTypes.string.isRequired,
+      index: PropTypes.number.isRequired,
+      slug: PropTypes.string.isRequired,
+      formDefinition: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   submissionAllowed: PropTypes.oneOf(Object.values(SUBMISSION_ALLOWED)).isRequired,
   completed: PropTypes.bool,
 };
-
 
 export default ProgressIndicator;

@@ -5,12 +5,11 @@ import {Formio} from 'react-formio';
 import OpenFormsModule from 'formio/module';
 import {iban, twoComponentForm} from './fixtures/iban';
 
-
 // Use our custom components
 Formio.use(OpenFormsModule);
 
 describe('IBAN Component', () => {
-  test('IBAN component validation', (done) => {
+  test('IBAN component validation', done => {
     const formJSON = _.cloneDeep(iban);
 
     const validValues = [
@@ -30,28 +29,30 @@ describe('IBAN Component', () => {
     ];
 
     const testValidity = (values, valid) => {
-      values.forEach((value) => {
+      values.forEach(value => {
         const element = document.createElement('div');
 
-        Formio.createForm(element, formJSON).then(form => {
-          form.setPristine(false);
-          const component = form.getComponent('iban');
-          const changed = component.setValue(value);
-          expect(changed).toBeTruthy();
+        Formio.createForm(element, formJSON)
+          .then(form => {
+            form.setPristine(false);
+            const component = form.getComponent('iban');
+            const changed = component.setValue(value);
+            expect(changed).toBeTruthy();
 
-          setTimeout(() => {
-            if (valid) {
-              expect(!!component.error).toBeFalsy();
-            } else {
-              expect(!!component.error).toBeTruthy();
-              expect(component.error.message).toEqual("Invalid IBAN");
-            }
+            setTimeout(() => {
+              if (valid) {
+                expect(!!component.error).toBeFalsy();
+              } else {
+                expect(!!component.error).toBeTruthy();
+                expect(component.error.message).toEqual('Invalid IBAN');
+              }
 
-            if (value === invalidValues[4]) {
-              done();
-            }
-          }, 300);
-        }).catch(done);
+              if (value === invalidValues[4]) {
+                done();
+              }
+            }, 300);
+          })
+          .catch(done);
       });
     };
 
@@ -59,23 +60,25 @@ describe('IBAN Component', () => {
     testValidity(invalidValues, false);
   });
 
-  test("IBAN validation not triggered by other components", (done) => {
+  test('IBAN validation not triggered by other components', done => {
     const formJSON = _.cloneDeep(twoComponentForm);
 
     const testValidity = () => {
       const element = document.createElement('div');
 
-      Formio.createForm(element, formJSON).then(form => {
-        form.setPristine(false);
-        const component = form.getComponent('name');
-        const changed = component.setValue('John');
-        expect(changed).toBeTruthy();
+      Formio.createForm(element, formJSON)
+        .then(form => {
+          form.setPristine(false);
+          const component = form.getComponent('name');
+          const changed = component.setValue('John');
+          expect(changed).toBeTruthy();
 
-        setTimeout(() => {
+          setTimeout(() => {
             expect(!!component.error).toBeFalsy();
             done();
-        }, 300);
-      }).catch(done);
+          }, 300);
+        })
+        .catch(done);
     };
 
     testValidity();

@@ -1,74 +1,74 @@
 export const testEmptyFields = [
   {
-    name: "Amount to Pay",
+    name: 'Amount to Pay',
     value: undefined,
     component: {
-      "key": "amountToPay",
-      "type": "currency",
-      "multiple": false,
-    }
+      key: 'amountToPay',
+      type: 'currency',
+      multiple: false,
+    },
   },
   {
-    name: "Number of people",
+    name: 'Number of people',
     value: undefined,
     component: {
-      "key": "nPeople",
-      "type": "number",
-      "multiple": false,
-    }
+      key: 'nPeople',
+      type: 'number',
+      multiple: false,
+    },
   },
   {
-    name: "Upload File",
+    name: 'Upload File',
     value: [],
     component: {
-      "key": "uploadFile",
-      "type": "file",
-      "multiple": false,
-    }
+      key: 'uploadFile',
+      type: 'file',
+      multiple: false,
+    },
   },
   {
-    name: "Upload File Multiple",
+    name: 'Upload File Multiple',
     value: [],
     component: {
-      "key": "uploadFileMultiple",
-      "type": "file",
-      "multiple": true,
-    }
+      key: 'uploadFileMultiple',
+      type: 'file',
+      multiple: true,
+    },
   },
   {
-    name: "Upload File",
+    name: 'Upload File',
     value: [undefined],
     component: {
-      "key": "uploadFile1",
-      "type": "file",
-      "multiple": true,
-    }
+      key: 'uploadFile1',
+      type: 'file',
+      multiple: true,
+    },
   },
   {
-    name: "Select boxes",
+    name: 'Select boxes',
     value: undefined,
     component: {
-      "key": "selectBoxes",
-      "type": "selectboxes",
-      "multiple": false,
-    }
+      key: 'selectBoxes',
+      type: 'selectboxes',
+      multiple: false,
+    },
   },
   {
-    name: "Radio button",
+    name: 'Radio button',
     value: undefined,
     component: {
-      "key": "radioButton",
-      "type": "radio",
-      "multiple": false,
-    }
+      key: 'radioButton',
+      type: 'radio',
+      multiple: false,
+    },
   },
   {
-    name: "Select field",
+    name: 'Select field',
     value: undefined,
     component: {
-      "key": "select",
-      "type": "select",
-      "multiple": false,
-    }
+      key: 'select',
+      type: 'select',
+      multiple: false,
+    },
   },
 ];

@@ -1,11 +1,9 @@
-import { Formio } from 'react-formio';
+import {Formio} from 'react-formio';
 import classNames from 'classnames';
 
-import { applyPrefix } from '../utils';
-
+import {applyPrefix} from '../utils';
 
 const FormioComponent = Formio.Components.components.component;
-
 
 function getClassName() {
   return classNames(
@@ -14,14 +12,15 @@ function getClassName() {
     {[applyPrefix(`form-control--${this.key}`)]: this.key},
     {[applyPrefix('form-control--multiple')]: this.component.multiple},
     this.component.customClass,
-    {[applyPrefix('form-control--required')]: this.hasInput && this.component.validate && JSON.parse(this.component.validate.required)}, // apparently, the string "true" can be present too
+    {
+      [applyPrefix('form-control--required')]:
+        this.hasInput && this.component.validate && JSON.parse(this.component.validate.required),
+    }, // apparently, the string "true" can be present too
     {[applyPrefix('form-control--label-hidden')]: this.labelIsHidden()},
     {[applyPrefix('form-control--hidden')]: !this.visible},
-    'utrecht-form-field',
+    'utrecht-form-field'
   );
-};
-
-
+}
 
 /**
  * Extend the default button field to modify it to our needs.
@@ -31,7 +30,6 @@ class Component extends FormioComponent {
     return getClassName.call(this);
   }
 }
-
 
 /**
  * Override prototype of all components
@@ -45,12 +43,10 @@ class Component extends FormioComponent {
  * used in the inheritance chain once to replace the default className getter. The
  * latter option is the more maintainable one and that's exactly what happens below.
  */
-Object.defineProperty(
-  FormioComponent.prototype,
-  'className',
-  {get: function () {
+Object.defineProperty(FormioComponent.prototype, 'className', {
+  get: function () {
     return getClassName.call(this);
-  }}
-);
+  },
+});
 
 export default Component;

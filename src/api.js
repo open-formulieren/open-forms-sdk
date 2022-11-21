@@ -21,13 +21,13 @@ const SessionExpiresInHeader = 'X-Session-Expires-In';
 
 let sessionExpiresAt = createGlobalstate({expiry: null});
 
-const updateSesionExpiry = (seconds) => {
+const updateSesionExpiry = seconds => {
   const newExpiry = new Date();
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
   sessionExpiresAt.setValue({expiry: newExpiry});
 };
 
-const throwForStatus = async (response) => {
+const throwForStatus = async response => {
   if (response.ok) return;
 
   let responseData = null;
@@ -73,12 +73,7 @@ const throwForStatus = async (response) => {
     }
   }
 
-  throw new ErrorClass(
-    errorMessage,
-    response.status,
-    responseData.detail,
-    responseData.code,
-  );
+  throw new ErrorClass(errorMessage, response.status, responseData.detail, responseData.code);
 };
 
 const addHeaders = (headers, method) => {
@@ -100,7 +95,7 @@ const addHeaders = (headers, method) => {
   return headers;
 };
 
-const updateStoredHeadersValues = (headers) => {
+const updateStoredHeadersValues = headers => {
   const sessionExpiry = headers.get(SessionExpiresInHeader);
   if (sessionExpiry) {
     updateSesionExpiry(parseInt(sessionExpiry), 10);
@@ -123,9 +118,9 @@ const updateStoredHeadersValues = (headers) => {
   }
 };
 
-const apiCall = async (url, opts={}) => {
+const apiCall = async (url, opts = {}) => {
   const method = opts.method || 'GET';
-  const options = { ...fetchDefaults, ...opts };
+  const options = {...fetchDefaults, ...opts};
   options.headers = addHeaders(options.headers, method);
 
   const response = await window.fetch(url, options);
@@ -138,13 +133,13 @@ const apiCall = async (url, opts={}) => {
 const get = async (url, params = {}, multiParams = []) => {
   let searchParams = new URLSearchParams();
   if (Object.keys(params).length) {
-      searchParams = new URLSearchParams(params);
+    searchParams = new URLSearchParams(params);
   }
   if (multiParams.length > 0) {
-      multiParams.forEach((param) => {
-          const paramName = Object.keys(param)[0]; // param={foo: bar}
-          searchParams.append(paramName, param[paramName]);
-      });
+    multiParams.forEach(param => {
+      const paramName = Object.keys(param)[0]; // param={foo: bar}
+      searchParams.append(paramName, param[paramName]);
+    });
   }
   url += `?${searchParams}`;
   const response = await apiCall(url);
@@ -154,11 +149,11 @@ const get = async (url, params = {}, multiParams = []) => {
 
 const _unsafe = async (method = 'POST', url, data, signal) => {
   const opts = {
-      method,
-      headers: {
-          'Content-Type': 'application/json',
-          [CSRFToken.headerName]: CSRFToken.getValue(),
-      },
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      [CSRFToken.headerName]: CSRFToken.getValue(),
+    },
   };
   if (data) {
     opts.body = JSON.stringify(data);
@@ -167,11 +162,11 @@ const _unsafe = async (method = 'POST', url, data, signal) => {
     opts.signal = signal;
   }
   const response = await apiCall(url, opts);
-  const responseData = (response.status === 204) ? null : (await response.json());
+  const responseData = response.status === 204 ? null : await response.json();
   return {
-      ok: response.ok,
-      status: response.status,
-      data: responseData,
+    ok: response.ok,
+    status: response.status,
+    data: responseData,
   };
 };
 
@@ -190,19 +185,16 @@ const put = async (url, data = {}) => {
   return resp;
 };
 
-const destroy = async (url) => {
+const destroy = async url => {
   const opts = {
-      method: 'DELETE',
+    method: 'DELETE',
   };
   const response = await apiCall(url, opts);
   if (!response.ok) {
-      const responseData = await response.json();
-      console.error('Delete failed', responseData);
-      throw new Error('Delete failed');
+    const responseData = await response.json();
+    console.error('Delete failed', responseData);
+    throw new Error('Delete failed');
   }
 };
 
-export {
-    apiCall, get, post, put, patch, destroy,
-    sessionExpiresAt,
-};
+export {apiCall, get, post, put, patch, destroy, sessionExpiresAt};
