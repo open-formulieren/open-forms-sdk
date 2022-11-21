@@ -9,6 +9,7 @@ import {usePrevious} from 'react-use';
 import {ConfigContext} from 'Context';
 
 import {destroy, post} from 'api';
+import {START_FORM_QUERY_PARAM} from 'components/constants';
 import usePageViews from 'hooks/usePageViews';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
@@ -166,6 +167,7 @@ const Form = ({form}) => {
         removeSubmissionId();
         dispatch({type: 'DESTROY_SUBMISSION'});
         flagNoActiveSubmission();
+        history.push(`/?${START_FORM_QUERY_PARAM}=1`);
       }
     },
     [intl.locale, prevLocale, removeSubmissionId] // eslint-disable-line react-hooks/exhaustive-deps
