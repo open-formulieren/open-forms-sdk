@@ -29,14 +29,21 @@ export const ConfigDecorator = (Story, { args }) => (
     },
     mockData: [
       {
-        url: `${BASE_URL}translations/formio`,
+        url: `${BASE_URL}i18n/formio/nl`,
         method: 'GET',
         status: 200,
         response: {
-          'nl': {
-            "Click to set value": "Klik om waarde in te stellen",
-            "Cancel": "Annuleren",
-          },
+          "Click to set value": "Klik om waarde in te stellen",
+          "Cancel": "Annuleren",
+        }
+      },
+      {
+        url: `${BASE_URL}i18n/formio/en`,
+        method: 'GET',
+        status: 200,
+        response: {
+          "Click to set value": "Click to set value",
+          "Cancel": "Cancel",
         }
       }
     ]
@@ -106,7 +113,7 @@ export const ErrorTemplate = (args) => (
     parameters={{
       mockData: [
         {
-          url: `${BASE_URL}translations/formio`,
+          url: `${BASE_URL}i18n/formio/nl`,
           method: 'GET',
           status: 503,
           response: {
