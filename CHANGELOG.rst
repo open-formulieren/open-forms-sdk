@@ -2,12 +2,55 @@
 Changelog
 =========
 
-1.3.0 (2022-??-??) - in development
-===================================
+1.3.0-alpha.0 (2022-11-21)
+==========================
+
+First alpha for the 1.3.0 series
+
+Open Forms now aims to publish an alpha version every 4 weeks, and a new (minor) version
+every quarter.
 
 .. warning:: The default Open Forms theme is now only applied within the
    ``.openforms-theme`` selector. If you embed the SDK 1.3, you need to ensure a/the
    parent element has this class name.
+
+
+Features
+--------
+
+* Added NL Design System class names to form.io components
+* Added Utrecht component library devDependencies
+* Use NL Design System React components under the hood
+* Added ``TableHeader`` component
+* Integrate utrecht-button component design tokens
+* Integrate textbox/textarea design tokens
+* [#2126] Reworked "delete" icons to be accessible via keyboard navigation
+* [#2225] Only emit default styles/design tokens in openforms-theme scope
+* [#2232] Added support form translations configuration (enabled/disabled)
+* [#2253] Added ``LanguageSelection`` component presenting available languages
+* [#2254] Conditionally render ``LanguageSelection`` (depending if translations are
+  enabled for the form)
+* [#2255] Added ``I18NManager`` to manage the currently active locale (when forms
+  support translations)
+* [#2256] Restart submission when the end-user changes the locale/language
+
+Bugfixes
+--------
+
+* Fixed some accessibility issues
+* [#1351] Allow negative numbers and currencies
+* [#1180] Fixed analytics provider integrations
+* [#2335] Re-display drag & drop on upload cancellation
+* [#2344] Put asterisk next to repeating group label
+
+Project maintenance
+-------------------
+
+* Set up Chromatic & Storybook for visual regression testing
+* Updated Github Actions version following deprecation notices
+* [#1345] Add story for required checkbox
+* Updated browserslist database
+* [#280] Added prettier and eslint integration
 
 1.2.4 (2022-10-24)
 ==================
