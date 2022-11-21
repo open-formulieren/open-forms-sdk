@@ -36,7 +36,7 @@ both end users and administrators.
 Component
 =========
 
-|build-status|
+|build-status| |prettier|
 
 This component is a Javascript SDK.
 
@@ -69,3 +69,7 @@ Licensed under the `EUPL`_.
 .. |docs| image:: https://readthedocs.org/projects/open-forms/badge/?version=latest
     :target: https://open-forms.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation status
+
+.. |prettier| image:: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+    :alt: Code formatting with Prettier
+    :target: https://github.com/prettier/prettier
