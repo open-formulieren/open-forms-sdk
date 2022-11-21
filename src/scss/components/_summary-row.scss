@@ -5,7 +5,7 @@
 @import '../mixins/prefix';
 @import '../mixins/bem';
 
-$block: '.#{prefix(' summary-row ')}';
+$block: '.#{prefix(summary-row)}';
 
 #{$block} {
   $summary-row-spacing: var(--of-summary-row-spacing);
