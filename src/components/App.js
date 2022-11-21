@@ -2,12 +2,14 @@ import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
 import {Switch, Route} from 'react-router-dom';
 
+import AppDebug from 'components/AppDebug';
 import Form from 'components/Form';
 import {Layout, LayoutRow} from 'components/Layout';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import LanguageSelection from 'components/LanguageSelection';
 import {I18NContext} from 'i18n';
 import Types from 'types';
+import {DEBUG} from 'utils';
 
 const LanguageSwitcher = () => {
   const {languageSelectorTarget: target} = useContext(I18NContext);
@@ -42,6 +44,12 @@ const App = ({...props}) => {
           </Route>
         </Switch>
       </LayoutRow>
+
+      {DEBUG ? (
+        <LayoutRow>
+          <AppDebug />
+        </LayoutRow>
+      ) : null}
     </Layout>
   );
 };
