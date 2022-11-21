@@ -1,0 +1,42 @@
+@import 'microscope-sass/lib/bem';
+@import 'microscope-sass/lib/typography';
+
+.debug-info-container {
+  flex-basis: 100%;
+  padding: 1em;
+  margin-top: 2em;
+
+  // taken from backend _hijack.scss
+  border: 2px solid #ae9e49;
+
+  // keep the yellow/grey striped colors
+  background-size: 50px 50px;
+  background-color: #ffe761;
+  color: #555;
+  background-image: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.04) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.04) 50%,
+    rgba(0, 0, 0, 0.04) 75%,
+    transparent 75%,
+    transparent
+  );
+}
+
+.debug-info {
+  display: flex;
+  gap: 2em;
+  @include body;
+  @include margin(auto);
+  color: #555;
+
+  @include element(label) {
+    flex-basis: 50%;
+  }
+
+  @include element(value) {
+    flex-basis: 50%;
+  }
+}

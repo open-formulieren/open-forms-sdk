@@ -13,6 +13,9 @@
 
 @import './scss/settings';
 
+// TODO: eventually exclude this from production bundle
+@import './scss/components/debug-info';
+
 @import './scss/components/typography';
 @import './scss/components/fa-icon';
 
