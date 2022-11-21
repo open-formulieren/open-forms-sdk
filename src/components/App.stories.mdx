@@ -153,7 +153,7 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
     }}
     play={async ({ args, canvasElement }) => {
       const langSelector = await within(canvasElement).findByText(/^nl$/i);
-      expect(langSelector).toBeTruthy();
+      await expect(langSelector).toBeTruthy();
     }}
   >
     {Template.bind({})}
@@ -175,7 +175,7 @@ If they are not, no `LanguageSelector` is rendered:
       await Promise.all(Array.from(spinners).map(waitForElementToBeRemoved));
       // assert there's no NL button
       const langSelector = canvas.queryByText(/^nl$/i);
-      expect(langSelector).toBeNull();
+      await expect(langSelector).toBeNull();
     }}
   >
     {Template.bind({})}
