@@ -1,4 +1,4 @@
-import {RD_CRS} from "./rd";
+import {RD_CRS} from './rd';
 
 const TILES = 'https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard';
 
@@ -17,11 +17,9 @@ const TILE_LAYERS = {
   },
 };
 
-
 // Roughly the center of the Netherlands
 const DEFAULT_LAT_LON = [52.1326332, 5.291266];
 const DEFAULT_ZOOM = 13;
-
 
 const MAP_DEFAULTS = {
   continuousWorld: true,
@@ -31,5 +29,4 @@ const MAP_DEFAULTS = {
   zoom: DEFAULT_ZOOM,
 };
 
-
-export { TILES, ATTRIBUTION, TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS };
+export {TILES, ATTRIBUTION, TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS};

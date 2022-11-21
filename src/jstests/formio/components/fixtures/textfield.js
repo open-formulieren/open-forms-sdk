@@ -22,7 +22,7 @@ const addressPrefillForm = {
       derivePostcode: 'postcode',
       isSensitiveData: false,
       deriveStreetName: true,
-      deriveHouseNumber: 'houseNumber'
+      deriveHouseNumber: 'houseNumber',
     },
     {
       key: 'city',
@@ -32,14 +32,13 @@ const addressPrefillForm = {
       derivePostcode: 'postcode',
       deriveStreetName: false,
       deriveCity: true,
-      deriveHouseNumber: 'houseNumber'
-    }
+      deriveHouseNumber: 'houseNumber',
+    },
   ],
   title: 'Test Prefill Address form',
-	display: 'Test Prefill Address form',
-	name: 'testPrefillAddressForm',
-	path: 'testPrefillAddressForm',
+  display: 'Test Prefill Address form',
+  name: 'testPrefillAddressForm',
+  path: 'testPrefillAddressForm',
 };
-
 
 export {addressPrefillForm};

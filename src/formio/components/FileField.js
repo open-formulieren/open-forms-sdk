@@ -1,24 +1,23 @@
-import { Formio } from 'react-formio';
-import { default as formioUrlStorage } from 'formiojs/providers/storage/url';
+import {Formio} from 'react-formio';
+import {default as formioUrlStorage} from 'formiojs/providers/storage/url';
 
-import { CSRFToken } from 'headers';
+import {CSRFToken} from 'headers';
 
-const addCSRFToken = (xhr) => {
+const addCSRFToken = xhr => {
   const csrfTokenValue = CSRFToken.getValue();
   if (csrfTokenValue != null && csrfTokenValue) {
     xhr.setRequestHeader(CSRFToken.headerName, csrfTokenValue);
   }
-}
+};
 
-
-const CSRFEnabledUrl = (formio) => {
+const CSRFEnabledUrl = formio => {
   const defaultUrlStorage = formioUrlStorage(formio);
 
   // Taken and modified from Formio's formiojs/providers/storage/url.js
   const xhrRequest = (url, name, query, data, options, progressCallback, abortCallback) => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const json = (typeof data === 'string');
+      const json = typeof data === 'string';
       const fd = new FormData();
 
       if (typeof progressCallback === 'function') {
@@ -40,23 +39,23 @@ const CSRFEnabledUrl = (formio) => {
           // Need to test if xhr.response is decoded or not.
           let respData = {};
           try {
-            respData = (typeof xhr.response === 'string') ? JSON.parse(xhr.response) : {};
-            respData = (respData && respData.data) ? respData.data : respData;
-          }
-          catch (err) {
+            respData = typeof xhr.response === 'string' ? JSON.parse(xhr.response) : {};
+            respData = respData && respData.data ? respData.data : respData;
+          } catch (err) {
             respData = {};
           }
 
           // Get the url of the file.
-          let respUrl = respData.hasOwnProperty('url') ? respData.url : `${xhr.responseURL}/${name}`;
+          let respUrl = respData.hasOwnProperty('url')
+            ? respData.url
+            : `${xhr.responseURL}/${name}`;
 
           // If they provide relative url, then prepend the url.
           if (respUrl && respUrl[0] === '/') {
             respUrl = `${url}${respUrl}`;
           }
-          resolve({ url: respUrl, data: respData });
-        }
-        else {
+          resolve({url: respUrl, data: respData});
+        } else {
           reject(xhr.response || 'Unable to upload file');
         }
       };
@@ -96,17 +95,36 @@ const CSRFEnabledUrl = (formio) => {
     ...defaultUrlStorage,
     title: 'CSRFEnabledUrl',
     // Taken from Formio's formiojs/providers/storage/url.js to replace xhrRequest call
-    uploadFile(file, name, dir, progressCallback, url, options, fileKey, groupPermissions, groupId, abortCallback) {
-      const uploadRequest = function(form) {
-        return xhrRequest(url, name, {
-          baseUrl: encodeURIComponent(formio.projectUrl),
-          project: form ? form.project : '',
-          form: form ? form._id : ''
-        }, {
-          [fileKey]:file,
+    uploadFile(
+      file,
+      name,
+      dir,
+      progressCallback,
+      url,
+      options,
+      fileKey,
+      groupPermissions,
+      groupId,
+      abortCallback
+    ) {
+      const uploadRequest = function (form) {
+        return xhrRequest(
+          url,
           name,
-          dir
-        }, options, progressCallback, abortCallback).then(response => {
+          {
+            baseUrl: encodeURIComponent(formio.projectUrl),
+            project: form ? form.project : '',
+            form: form ? form._id : '',
+          },
+          {
+            [fileKey]: file,
+            name,
+            dir,
+          },
+          options,
+          progressCallback,
+          abortCallback
+        ).then(response => {
           // Store the project and form url along with the metadata.
           response.data = response.data || {};
           response.data.baseUrl = formio.projectUrl;
@@ -118,14 +136,13 @@ const CSRFEnabledUrl = (formio) => {
             url: response.url,
             size: file.size,
             type: file.type,
-            data: response.data
+            data: response.data,
           };
         });
       };
       if (file.private && formio.formId) {
-        return formio.loadForm().then((form) => uploadRequest(form));
-      }
-      else {
+        return formio.loadForm().then(form => uploadRequest(form));
+      } else {
         return uploadRequest();
       }
     },
@@ -138,20 +155,22 @@ CSRFEnabledUrl.title = 'CSRFEnabledUrl';
  * Extend the default file field to modify it to our needs.
  */
 class FileField extends Formio.Components.components.file {
-
   upload(files) {
     if (this.component.multiple && this.component.maxNumberOfFiles) {
       // this.data.file contains files that may have already been uploaded, while the argument 'files' gives the
       // files that are being uploaded in this call
-      if (files.length > this.component.maxNumberOfFiles || this.data?.file?.length >= this.component.maxNumberOfFiles) {
+      if (
+        files.length > this.component.maxNumberOfFiles ||
+        this.data?.file?.length >= this.component.maxNumberOfFiles
+      ) {
         const messages = [
           {
             message: this.t(
               'Too many files added. The maximum allowed number of files is {{ maxNumber }}.',
-              { maxNumber: this.component.maxNumberOfFiles }
+              {maxNumber: this.component.maxNumberOfFiles}
             ),
             level: 'error',
-          }
+          },
         ];
 
         this.setComponentValidity(messages, true, false);
@@ -170,21 +189,19 @@ class FileField extends Formio.Components.components.file {
     super.upload(files);
   }
 
-  checkComponentValidity(data, dirty, row, options = {}){
+  checkComponentValidity(data, dirty, row, options = {}) {
     if (this.loading) {
       // This prevents the FormStep from being submitted before the file upload is finished.
       // Once the upload is finished, the logic check will be performed and will re-enable the submit button
       const messages = [
-          {
-            message: this.t(
-              'Please wait for the file(s) upload to finish before continuing.',
-            ),
-            level: 'error',
-          }
-        ];
+        {
+          message: this.t('Please wait for the file(s) upload to finish before continuing.'),
+          level: 'error',
+        },
+      ];
 
-        this.setComponentValidity(messages, true, false);
-        return false;
+      this.setComponentValidity(messages, true, false);
+      return false;
     }
 
     return super.checkComponentValidity(data, dirty, row, options);
@@ -213,7 +230,6 @@ class FileField extends Formio.Components.components.file {
     Formio.makeRequest(null, '', fileInfo.url, 'delete');
   }
 }
-
 
 export {CSRFEnabledUrl};
 export default FileField;

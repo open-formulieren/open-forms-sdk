@@ -7,7 +7,7 @@
 body {
   padding: 0;
   margin-top: $grid-margin-4;
-  background-color: #E6E6E6;
+  background-color: #e6e6e6;
 
   @include mobile-only {
     margin: 0;

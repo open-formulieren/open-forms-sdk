@@ -6,23 +6,22 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const LiteralContext = React.createContext();
 LiteralContext.displayName = 'LiteralContext';
 
-
-const LiteralsProvider = ({ literals, children }) => (
+const LiteralsProvider = ({literals, children}) => (
   <LiteralContext.Provider value={literals}>{children}</LiteralContext.Provider>
 );
 
 LiteralsProvider.propTypes = {
-  literals: PropTypes.objectOf(PropTypes.shape({
-    resolved: PropTypes.string.isRequired,
-    value: PropTypes.string,
-  })).isRequired
+  literals: PropTypes.objectOf(
+    PropTypes.shape({
+      resolved: PropTypes.string.isRequired,
+      value: PropTypes.string,
+    })
+  ).isRequired,
 };
-
 
 const EMPTY_LITERAL = {resolved: ''};
 
-
-const Literal = ({ name }) => {
+const Literal = ({name}) => {
   const literals = useContext(LiteralContext);
   const value = (literals[name] || EMPTY_LITERAL).resolved;
   if (isDevelopment && !value) {

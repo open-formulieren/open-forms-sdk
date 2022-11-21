@@ -1,10 +1,9 @@
-import { Formio } from 'react-formio';
+import {Formio} from 'react-formio';
 import debounce from 'lodash/debounce';
 
-import { applyPrefix } from '../utils';
-import { get } from '../../api';
-import enableValidationPlugins from "../validators/plugins";
-
+import {applyPrefix} from '../utils';
+import {get} from '../../api';
+import enableValidationPlugins from '../validators/plugins';
 
 const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
 const HOUSE_NUMBER_REGEX = /^\d+$/;
@@ -15,7 +14,6 @@ const LOCATION_AUTOCOMPLETE_DEBOUNCE = 200;
  * Extend the default text field to modify it to our needs.
  */
 class TextField extends Formio.Components.components.textfield {
-
   constructor(component, options, data) {
     super(component, options, data);
     enableValidationPlugins(this);
@@ -24,15 +22,13 @@ class TextField extends Formio.Components.components.textfield {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = [
-      applyPrefix('input'),
-      'utrecht-textbox',
-      'utrecht-textbox--html-input',
-    ].join(' ');
+    info.attr.class = [applyPrefix('input'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
+      ' '
+    );
     return info;
   }
 
-  checkComponentValidity(data, dirty, row, options = {}){
+  checkComponentValidity(data, dirty, row, options = {}) {
     let updatedOptions = {...options};
     if (this.component.validate.plugins && this.component.validate.plugins.length) {
       updatedOptions.async = true;
@@ -55,7 +51,7 @@ class TextField extends Formio.Components.components.textfield {
             }
           })
           .catch(console.error);
-        }, LOCATION_AUTOCOMPLETE_DEBOUNCE);
+      }, LOCATION_AUTOCOMPLETE_DEBOUNCE);
     } else {
       this._debouncedSetLocationData.cancel();
     }
@@ -98,6 +94,5 @@ class TextField extends Formio.Components.components.textfield {
     return changed;
   }
 }
-
 
 export default TextField;

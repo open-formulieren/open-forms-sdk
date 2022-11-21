@@ -1,10 +1,10 @@
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 
 /**
  * Prefix a name/string/identifier with the Open Forms specific prefix.
  */
-const applyPrefix = (name) => {
+const applyPrefix = name => {
   return `${PREFIX}-${name}`;
 };
 
-export { applyPrefix };
+export {applyPrefix};

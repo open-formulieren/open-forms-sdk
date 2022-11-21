@@ -8,10 +8,13 @@
 @import '../mixins/prefix';
 
 $checkbox-checkmark-size: 1em * strip_unit($typography-line-height-text-big) !default;
-$checkbox-label-padding-v: calc((#{$grid-row-height} - #{1em * strip_unit($typography-line-height-text-big)}) / 2)!default;
-$checkbox-label-padding-h: $grid-margin-2!default;
-$checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2})!default;
-
+$checkbox-label-padding-v: calc(
+  (#{$grid-row-height} - #{1em * strip_unit($typography-line-height-text-big)}) / 2
+) !default;
+$checkbox-label-padding-h: $grid-margin-2 !default;
+$checkbox-label-padding-left: calc(
+  #{1em * strip_unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2}
+) !default;
 
 .#{prefix(checkbox)} {
   @include body;
@@ -23,7 +26,8 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
   position: relative;
 
   &__label {
-    padding: $checkbox-label-padding-v $checkbox-label-padding-h $checkbox-label-padding-v $checkbox-label-padding-left;
+    padding: $checkbox-label-padding-v $checkbox-label-padding-h $checkbox-label-padding-v
+      $checkbox-label-padding-left;
     width: 100%;
     cursor: pointer;
     position: relative; // Important: without it if you click on the checkmark, it won't select/unselect the item
@@ -51,29 +55,29 @@ $checkbox-label-padding-left: calc(#{1em * strip_unit($typography-line-height-te
     background-color: var(--of-color-primary);
   }
 
-  [type=checkbox],
-  [type=radio] {
+  [type='checkbox'],
+  [type='radio'] {
     @include absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
   }
 
   // Style specific for selectboxes
-  & [type=checkbox]:checked ~ &__checkmark:after {
-    content: "\2714";
+  & [type='checkbox']:checked ~ &__checkmark:after {
+    content: '\2714';
     color: var(--of-color-bg);
   }
 
   // Style specific for radio
-  & [type=radio] ~ &__checkmark {
+  & [type='radio'] ~ &__checkmark {
     @include rounded;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  & [type=radio]:checked ~ &__checkmark:after {
+  & [type='radio']:checked ~ &__checkmark:after {
     @include rounded;
     display: block;
-    content: "";
+    content: '';
     background-color: var(--of-color-bg);
     width: 0.4em;
     height: 0.4em;

@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedDate,
-  FormattedTime,
-  FormattedMessage,
-  FormattedNumber,
-  useIntl
-} from 'react-intl';
+import {FormattedDate, FormattedTime, FormattedMessage, FormattedNumber, useIntl} from 'react-intl';
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
@@ -17,7 +11,6 @@ import Map from 'components/Map';
 import {getFormattedDateString, getFormattedTimeString} from 'utils';
 import {humanFileSize} from './utils';
 
-
 const EmptyDisplay = () => '';
 
 const DefaultDisplay = ({component, value}) => {
@@ -26,36 +19,32 @@ const DefaultDisplay = ({component, value}) => {
   return value.toString();
 };
 
-
 const SignatureDisplay = ({component, value}) => {
   if (!value) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
-  return (<Image src={value} alt={component.key}/>);
+  return <Image src={value} alt={component.key} />;
 };
-
 
 const CheckboxDisplay = ({component, value}) => {
   if (value) {
-    return (<FormattedMessage description="'True' display" defaultMessage="yes" />);
+    return <FormattedMessage description="'True' display" defaultMessage="yes" />;
   }
-  return (<FormattedMessage description="'False' display" defaultMessage="no" />);
+  return <FormattedMessage description="'False' display" defaultMessage="no" />;
 };
-
 
 const RadioDisplay = ({component, value}) => {
   if (!value) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
   const obj = component.values.find(obj => obj.value === value);
   return obj ? obj.label : value;
 };
 
-
 const SelectDisplay = ({component, value}) => {
   const intl = useIntl();
   if (!value) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
 
   // special appointment cases
@@ -71,17 +60,13 @@ const SelectDisplay = ({component, value}) => {
   return obj ? obj.label : value;
 };
 
-
 const DateDisplay = ({component, value}) => {
   if (!value) return <EmptyDisplay />;
   const [year, month, day] = value.split('-');
   const date = new Date();
   date.setFullYear(parseInt(year), parseInt(month) - 1, parseInt(day));
-  return (
-    <FormattedDate value={date} />
-  );
+  return <FormattedDate value={date} />;
 };
-
 
 const TimeDisplay = ({component, value}) => {
   if (!value) return <EmptyDisplay />;
@@ -90,31 +75,31 @@ const TimeDisplay = ({component, value}) => {
   time.setHours(hours);
   time.setMinutes(minutes);
   time.setSeconds(seconds);
-  return (
-    <FormattedTime value={time} />
-  );
+  return <FormattedTime value={time} />;
 };
-
 
 const SelectboxesDisplay = ({component, value}) => {
   if (!value) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
 
   const selectedBoxes = Object.keys(value).filter(key => value[key] === true);
   if (!selectedBoxes.length) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
 
   const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
   const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
   return (
     <List modifiers={['extra-compact', 'dash']}>
-      {selectedLabels.map((label, i) => <Body key={i} component="span">{label}</Body>)}
+      {selectedLabels.map((label, i) => (
+        <Body key={i} component="span">
+          {label}
+        </Body>
+      ))}
     </List>
   );
 };
-
 
 const FileDisplay = ({component, value}) => {
   /*
@@ -155,25 +140,20 @@ const FileDisplay = ({component, value}) => {
 
   return (
     <Anchor key={url} href={url}>
-      {originalName}{' '}
-      {/* eslint-disable-next-line react/style-prop-object */}
-      (<FormattedNumber value={size} style="unit" unit={unit}/>)
+      {originalName} {/* eslint-disable-next-line react/style-prop-object */}
+      (<FormattedNumber value={size} style="unit" unit={unit} />)
     </Anchor>
   );
 };
 
-
 const NumberDisplay = ({component, value}) => {
-  if (!value && value !== 0) return <EmptyDisplay/>;
+  if (!value && value !== 0) return <EmptyDisplay />;
 
-  return (
-    <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />
-  );
+  return <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />;
 };
 
-
 const CurrencyDisplay = ({component, value}) => {
-  if (!value && value !== 0) return <EmptyDisplay/>;
+  if (!value && value !== 0) return <EmptyDisplay />;
 
   return (
     <FormattedNumber
@@ -186,76 +166,64 @@ const CurrencyDisplay = ({component, value}) => {
   );
 };
 
-
 const MapDisplay = ({component, value}) => {
   if (!value) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
 
-  return (
-    <Map markerCoordinates={value} disabled />
-  );
+  return <Map markerCoordinates={value} disabled />;
 };
-
 
 const PasswordDisplay = ({component, value}) => {
   if (!value) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
 
-  return Array.from(value).map(() => '*').join('');
+  return Array.from(value)
+    .map(() => '*')
+    .join('');
 };
-
 
 const CoSignDisplay = ({component, value}) => {
   if (!value) {
-    return (<EmptyDisplay/>);
+    return <EmptyDisplay />;
   }
-  return (<CoSign interactive={false} />);
+  return <CoSign interactive={false} />;
 };
 
-
-const ComponentValueDisplay = ({ value, component }) => {
-  const {
-    multiple=false,
-    type,
-  } = component;
+const ComponentValueDisplay = ({value, component}) => {
+  const {multiple = false, type} = component;
 
   if (!value) {
-    return <EmptyDisplay/>;
+    return <EmptyDisplay />;
   }
 
   const Formatter = TYPE_TO_COMPONENT[type] || DefaultDisplay;
 
   if (multiple) {
     const values = Array.isArray(value) ? value : [value];
-    const renderedValues = values.map(
-      componentValue => (<Formatter component={component} value={componentValue} />)
-    );
+    const renderedValues = values.map(componentValue => (
+      <Formatter component={component} value={componentValue} />
+    ));
 
     return (
       <>
-        {
-          renderedValues.map((renderedValue, index) => (
-            <React.Fragment key={index}>
-              { !!index && '; ' }
-              {renderedValue}
-            </React.Fragment>
-          ))
-        }
+        {renderedValues.map((renderedValue, index) => (
+          <React.Fragment key={index}>
+            {!!index && '; '}
+            {renderedValue}
+          </React.Fragment>
+        ))}
       </>
     );
   }
 
-  return (
-    <Formatter component={component} value={value} />
-  )
+  return <Formatter component={component} value={value} />;
 };
 
 ComponentValueDisplay.propTypes = {
   component: PropTypes.object.isRequired,
 };
-
 
 // mapping of Formio types to respective React components
 const TYPE_TO_COMPONENT = {
@@ -273,6 +241,5 @@ const TYPE_TO_COMPONENT = {
   password: PasswordDisplay,
   coSign: CoSignDisplay,
 };
-
 
 export default ComponentValueDisplay;

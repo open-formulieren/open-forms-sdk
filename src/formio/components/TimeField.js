@@ -5,7 +5,6 @@ import {getBEMClassName} from 'utils';
 
 const Time = Formio.Components.components.time;
 
-
 class TimeField extends Time {
   constructor(component, options, data) {
     super(component, options, data);
@@ -31,6 +30,5 @@ class TimeField extends Time {
     return info;
   }
 }
-
 
 export default TimeField;

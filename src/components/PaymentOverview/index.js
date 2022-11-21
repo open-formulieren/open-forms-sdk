@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
-import { FormattedMessage, defineMessage, useIntl } from 'react-intl';
+import {Link, useLocation} from 'react-router-dom';
+import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
 import Anchor from 'components/Anchor';
@@ -9,18 +9,13 @@ import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 
 // see openforms.payments.constants.UserAction in the backend
-const USER_ACTIONS = [
-  'accept',
-  'exception',
-  'cancel',
-  'unknown',
-];
+const USER_ACTIONS = ['accept', 'exception', 'cancel', 'unknown'];
 
 // see openforms.payments.constants.PaymentStatus in the backend
 const STATUS_MESSAGES = {
   started: defineMessage({
     description: 'payment started status',
-    defaultMessage: 'You\'ve started the payment process.',
+    defaultMessage: "You've started the payment process.",
   }),
   processing: defineMessage({
     description: 'payment processing status',
@@ -28,7 +23,8 @@ const STATUS_MESSAGES = {
   }),
   failed: defineMessage({
     description: 'payment failed status',
-    defaultMessage: 'The payment has failed. If you aborted the payment, please complete payment from the confirmation email.',
+    defaultMessage:
+      'The payment has failed. If you aborted the payment, please complete payment from the confirmation email.',
   }),
   completed: defineMessage({
     description: 'payment completed status',
@@ -40,11 +36,12 @@ const STATUS_MESSAGES = {
   }),
 };
 
-
-const Container = ({ children }) => (
-  <Card title={<FormattedMessage
-                  description="Payment overview title"
-                  defaultMessage="Payment overview" /> }>
+const Container = ({children}) => (
+  <Card
+    title={
+      <FormattedMessage description="Payment overview title" defaultMessage="Payment overview" />
+    }
+  >
     {children}
   </Card>
 );
@@ -52,7 +49,6 @@ const Container = ({ children }) => (
 Container.propTypes = {
   children: PropTypes.node,
 };
-
 
 const PaymentOverview = () => {
   const intl = useIntl();
@@ -89,20 +85,19 @@ const PaymentOverview = () => {
   return (
     <Container>
       <Body component="div">
-        <Wrapper>
-          {intl.formatMessage(statusMsg)}
-        </Wrapper>
+        <Wrapper>{intl.formatMessage(statusMsg)}</Wrapper>
       </Body>
 
       <Link to="/" component={Anchor}>
-        <FormattedMessage description="return to form start button" defaultMessage="Back to form start" />
+        <FormattedMessage
+          description="return to form start button"
+          defaultMessage="Back to form start"
+        />
       </Link>
     </Container>
   );
 };
 
-PaymentOverview.propTypes = {
-};
-
+PaymentOverview.propTypes = {};
 
 export default PaymentOverview;

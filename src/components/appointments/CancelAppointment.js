@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import React, {useContext, useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {FormattedDate, FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 
-import { post } from 'api';
+import {post} from 'api';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
@@ -22,7 +22,7 @@ const CancelAppointment = () => {
   const history = useHistory();
   const queryParams = useQuery();
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
   const [failed, setFailed] = useState(false);
 
@@ -57,7 +57,7 @@ const CancelAppointment = () => {
   // parse into native Date object - we receive an ISO-8601 string.
   const time = new Date(timeParam);
 
-  const onSubmit = async (event) => {
+  const onSubmit = async event => {
     event && event.preventDefault();
 
     setErrors([]);
@@ -75,78 +75,83 @@ const CancelAppointment = () => {
       }
       return;
     }
-    history.push("/afspraak-annuleren/succes");
+    history.push('/afspraak-annuleren/succes');
   };
 
-  const componentClassName = classNames(
-    getBEMClassName('form-control'),
-    {'formio-error-wrapper': errors.length > 0},
-  );
+  const componentClassName = classNames(getBEMClassName('form-control'), {
+    'formio-error-wrapper': errors.length > 0,
+  });
 
   return (
-    <Card title={<FormattedMessage description="Cancel appointment title" defaultMessage="Cancel appointment" />}>
-        <Body component="form" onSubmit={onSubmit}>
-
-          {
-            failed
-            ? (
-              <ErrorMessage>
-                <FormattedMessage
-                  description="Appointment cancellation error message"
-                  defaultMessage="Appointment cancellation failed"
-                />
-              </ErrorMessage>
-            )
-            : null
-          }
-
-          <Body modifiers={['big']}>
+    <Card
+      title={
+        <FormattedMessage
+          description="Cancel appointment title"
+          defaultMessage="Cancel appointment"
+        />
+      }
+    >
+      <Body component="form" onSubmit={onSubmit}>
+        {failed ? (
+          <ErrorMessage>
             <FormattedMessage
-              description="Appointment cancellation body text"
-              defaultMessage={
-`You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill
-out your email address for verification purposes.`}
-              values={{
-                date: (<FormattedDate value={time} day="numeric" month="long" />),
-                time: (<FormattedDate value={time} hour="numeric" minute="numeric" />),
-                b: chunks => <strong>{chunks}</strong>,
-              }}
+              description="Appointment cancellation error message"
+              defaultMessage="Appointment cancellation failed"
             />
-          </Body>
+          </ErrorMessage>
+        ) : null}
 
-          <div className={componentClassName}>
+        <Body modifiers={['big']}>
+          <FormattedMessage
+            description="Appointment cancellation body text"
+            defaultMessage={`You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill
+out your email address for verification purposes.`}
+            values={{
+              date: <FormattedDate value={time} day="numeric" month="long" />,
+              time: <FormattedDate value={time} hour="numeric" minute="numeric" />,
+              b: chunks => <strong>{chunks}</strong>,
+            }}
+          />
+        </Body>
 
-            <ValidationErrors errors={errors} />
+        <div className={componentClassName}>
+          <ValidationErrors errors={errors} />
 
-            <Label isRequired >
-              <FormattedMessage
-                description="Appointment cancellation email field label"
-                defaultMessage="Your email address" />
-            </Label>
+          <Label isRequired>
+            <FormattedMessage
+              description="Appointment cancellation email field label"
+              defaultMessage="Your email address"
+            />
+          </Label>
 
-            <Input type="email" value={email} onChange={event => {
+          <Input
+            type="email"
+            value={email}
+            onChange={event => {
               setEmail(event.target.value);
               setErrors([]);
-            }} />
+            }}
+          />
 
-            <HelpText>
+          <HelpText>
+            <FormattedMessage
+              description="Cancel appointment email field help text"
+              defaultMessage="The email address where you received the appointment confirmation email."
+            />
+          </HelpText>
+        </div>
+
+        <Toolbar modifiers={['bottom', 'reverse']}>
+          <ToolbarList>
+            <Button type="submit" variant="primary">
               <FormattedMessage
-                description="Cancel appointment email field help text"
-                defaultMessage="The email address where you received the appointment confirmation email."
+                description="Cancel appointment submit button"
+                defaultMessage="Cancel appointment"
               />
-            </HelpText>
-
-          </div>
-
-          <Toolbar modifiers={['bottom', 'reverse']}>
-            <ToolbarList>
-              <Button type="submit" variant="primary">
-                <FormattedMessage description="Cancel appointment submit button" defaultMessage="Cancel appointment" />
-              </Button>
-            </ToolbarList>
-          </Toolbar>
-
-        </Body>
+            </Button>
+          </ToolbarList>
+        </Toolbar>
+      </Body>
     </Card>
   );
 };

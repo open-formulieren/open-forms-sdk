@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
 import {FormattedMessage} from 'react-intl';
 
-import { get } from 'api';
+import {get} from 'api';
 import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import {ConfigContext, SubmissionContext} from 'Context';
-import { Toolbar, ToolbarList } from 'components/Toolbar';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Types from 'types';
 
 import {getBEMClassName} from 'utils';
@@ -22,8 +22,7 @@ const getCosignStatus = async (baseUrl, submissionUuid) => {
   return response;
 };
 
-
-const CoSignAuthentication = ({ form, submissionUuid, saveStepData, authPlugin }) => {
+const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) => {
   const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
   if (!loginOption) {
     return (
@@ -47,16 +46,14 @@ const CoSignAuthentication = ({ form, submissionUuid, saveStepData, authPlugin }
         <LoginButton option={modifiedLoginOption} onClick={async () => await saveStepData()} />
       </ToolbarList>
 
-      {
-        modifiedLoginOption.logo
-          ? (
-            <ToolbarList>
-              <LoginButtonIcon identifier={modifiedLoginOption.identifier} logo={modifiedLoginOption.logo} />
-            </ToolbarList>
-          )
-          : null
-      }
-
+      {modifiedLoginOption.logo ? (
+        <ToolbarList>
+          <LoginButtonIcon
+            identifier={modifiedLoginOption.identifier}
+            logo={modifiedLoginOption.logo}
+          />
+        </ToolbarList>
+      ) : null}
     </Toolbar>
   );
 };
@@ -68,13 +65,12 @@ CoSignAuthentication.propTypes = {
   saveStepData: PropTypes.func.isRequired,
 };
 
-
 const CoSign = ({
   submissionUuid,
-  interactive=true,
-  form=null,
+  interactive = true,
+  form = null,
   saveStepData,
-  authPlugin='digid-mock'
+  authPlugin = 'digid-mock',
 }) => {
   const {baseUrl} = useContext(ConfigContext);
   const {submission} = useContext(SubmissionContext);
@@ -83,7 +79,11 @@ const CoSign = ({
     submissionUuid = submission.id;
   }
 
-  const {loading, value: coSignState, error} = useAsync(
+  const {
+    loading,
+    value: coSignState,
+    error,
+  } = useAsync(
     async () => await getCosignStatus(baseUrl, submissionUuid),
     [baseUrl, submissionUuid]
   );
@@ -93,18 +93,20 @@ const CoSign = ({
 
   // while loading, display spinner
   if (loading) {
-    return (<Loader modifiers={['small']} />);
+    return <Loader modifiers={['small']} />;
   }
   const {coSigned, representation} = coSignState;
 
   if (interactive && !coSigned) {
-
   }
 
   if (!coSigned) {
     if (!interactive) {
       return (
-        <FormattedMessage description="Not co-signed (summary) message" defaultMessage="Not co-signed" />
+        <FormattedMessage
+          description="Not co-signed (summary) message"
+          defaultMessage="Not co-signed"
+        />
       );
     }
 
@@ -125,12 +127,12 @@ const CoSign = ({
   return (
     <Body component="div">
       <div className={getBEMClassName('co-sign__representation')}>
-      {
-        representation ?? (<FormattedMessage
-          description="Co-signed without representation fallback message"
-          defaultMessage="Something went wrong while processing the co-sign authentication. Please contact the municipality."
-        />)
-      }
+        {representation ?? (
+          <FormattedMessage
+            description="Co-signed without representation fallback message"
+            defaultMessage="Something went wrong while processing the co-sign authentication. Please contact the municipality."
+          />
+        )}
       </div>
     </Body>
   );
@@ -143,6 +145,5 @@ CoSign.propTypes = {
   saveStepData: PropTypes.func,
   authPlugin: PropTypes.string,
 };
-
 
 export default CoSign;

@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~@fortawesome/fontawesome-free/scss/brands';
@@ -18,9 +18,6 @@
   }
 
   &--inline {
-    @include margin(
-      math.div($typography-margin-text, 2),
-      $properties: margin-right
-    );
-  };
+    @include margin(math.div($typography-margin-text, 2), $properties: margin-right);
+  }
 }

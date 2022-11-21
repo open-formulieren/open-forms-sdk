@@ -9,20 +9,21 @@ import {currencyForm} from './fixtures/currency';
 Formio.use(OpenFormsModule);
 
 describe('Currency Component', () => {
-  test('Currency component with 0 decimalLimit formatted correctly', (done) => {
+  test('Currency component with 0 decimalLimit formatted correctly', done => {
     let formJSON = _.cloneDeep(currencyForm);
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON).then(form => {
-      form.setPristine(false);
-      const component = form.getComponent('currency');
-      const formattedValue = component.getValueAsString(1);
+    Formio.createForm(element, formJSON)
+      .then(form => {
+        form.setPristine(false);
+        const component = form.getComponent('currency');
+        const formattedValue = component.getValueAsString(1);
 
-      expect(formattedValue).toEqual('€1');
+        expect(formattedValue).toEqual('€1');
 
-      done();
-
-    }).catch(done);
+        done();
+      })
+      .catch(done);
   });
 });

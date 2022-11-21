@@ -1,7 +1,6 @@
-import { Formio } from 'react-formio';
+import {Formio} from 'react-formio';
 
-import { applyPrefix } from '../utils';
-
+import {applyPrefix} from '../utils';
 
 /**
  * Extend the default email field to modify it to our needs.
@@ -19,6 +18,5 @@ class Email extends Formio.Components.components.email {
     return info;
   }
 }
-
 
 export default Email;

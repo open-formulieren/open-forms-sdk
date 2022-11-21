@@ -4,7 +4,6 @@
 @import '../mixins/prefix';
 
 .#{prefix('co-sign')} {
-
   @include element('representation') {
     @include border(all, $size: 1px);
     background-color: var(--of-cosign-bg);
@@ -14,5 +13,4 @@
   .#{prefix('alert')} .#{prefix('body')} {
     margin-top: 0;
   }
-
 }

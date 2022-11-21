@@ -2,7 +2,6 @@ const CSPNonceHeaderName = 'X-CSP-Nonce';
 const CSRFTokenHeaderName = 'X-CSRFToken';
 const IsFormDesignerHeaderName = 'X-Is-Form-Designer';
 
-
 const factoryHeader = (headerName, headerValue) => {
   return {
     headerName: headerName,
@@ -12,7 +11,7 @@ const factoryHeader = (headerName, headerValue) => {
     },
     setValue(value) {
       headerValue = value;
-    }
+    },
   };
 };
 
@@ -29,7 +28,6 @@ const factoryHeader = (headerName, headerValue) => {
  */
 let CSPNonce = factoryHeader(CSPNonceHeaderName, null);
 
-
 /**
  * Global module-scoped variable to track the value of the CSRF Token.
  *
@@ -40,7 +38,6 @@ let CSPNonce = factoryHeader(CSPNonceHeaderName, null);
  * calls if it's set.
  */
 let CSRFToken = factoryHeader(CSRFTokenHeaderName, null);
-
 
 /**
  * Global module-scoped variable to track whether the user is a Form Designer.

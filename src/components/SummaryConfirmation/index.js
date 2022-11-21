@@ -7,14 +7,13 @@ import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Button from 'components/Button';
 import {Literal} from 'components/Literal';
 
-
 const SummaryConfirmation = ({
   submissionAllowed,
-  privacy: { requiresPrivacyConsent, policyAccepted, privacyLabel },
+  privacy: {requiresPrivacyConsent, policyAccepted, privacyLabel},
   onPrivacyCheckboxChange,
   onPrevPage,
 }) => {
-  const canSubmit = (submissionAllowed === SUBMISSION_ALLOWED.yes);
+  const canSubmit = submissionAllowed === SUBMISSION_ALLOWED.yes;
 
   const displayPrivacyNotice = canSubmit && requiresPrivacyConsent;
   const submitDisabled = requiresPrivacyConsent && !policyAccepted;
@@ -22,21 +21,17 @@ const SummaryConfirmation = ({
 
   return (
     <>
-      {
-        displayPrivacyNotice
-        ? (
-          <PrivacyCheckbox
-            value={policyAccepted}
-            label={privacyLabel}
-            warning={warningUncheckedPrivacy}
-            onChange={(e) => {
-              setWarningUncheckedPrivacy(false);
-              onPrivacyCheckboxChange(e);
-            }}
-          />
-        )
-        : null
-      }
+      {displayPrivacyNotice ? (
+        <PrivacyCheckbox
+          value={policyAccepted}
+          label={privacyLabel}
+          warning={warningUncheckedPrivacy}
+          onChange={e => {
+            setWarningUncheckedPrivacy(false);
+            onPrivacyCheckboxChange(e);
+          }}
+        />
+      ) : null}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
           <Button variant="anchor" component="a" onClick={onPrevPage}>
@@ -44,21 +39,17 @@ const SummaryConfirmation = ({
           </Button>
         </ToolbarList>
         <ToolbarList>
-          {
-            canSubmit
-            ? (
-              <Button
-                type="submit"
-                variant="primary"
-                name="confirm"
-                disabled={submitDisabled}
-                onDisabledClick={() => setWarningUncheckedPrivacy(true)}
-              >
-               <Literal name="confirmText" />
-              </Button>
-            )
-            : null
-          }
+          {canSubmit ? (
+            <Button
+              type="submit"
+              variant="primary"
+              name="confirm"
+              disabled={submitDisabled}
+              onDisabledClick={() => setWarningUncheckedPrivacy(true)}
+            >
+              <Literal name="confirmText" />
+            </Button>
+          ) : null}
         </ToolbarList>
       </Toolbar>
     </>
@@ -75,6 +66,5 @@ SummaryConfirmation.propTypes = {
   onPrivacyCheckboxChange: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func.isRequired,
 };
-
 
 export default SummaryConfirmation;

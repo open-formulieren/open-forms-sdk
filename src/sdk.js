@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import 'flatpickr';
 
-import { Formio, Templates } from 'react-formio';
+import {Formio, Templates} from 'react-formio';
 import ProtectedEval from '@formio/protected-eval';
 
 import OpenFormsModule from './formio/module';
@@ -11,11 +11,11 @@ import OFLibrary from './formio/templates';
 
 import './styles.scss';
 
-import { get } from 'api';
-import { ConfigContext } from 'Context';
+import {get} from 'api';
+import {ConfigContext} from 'Context';
 import App from 'components/App';
 import {CSPNonce} from 'headers';
-import { AddFetchAuth } from 'formio/plugins';
+import {AddFetchAuth} from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {I18NManager, I18NErrorBoundary} from 'i18n';
 import initialiseSentry from 'sentry';
@@ -34,13 +34,13 @@ Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 Formio.libraries = {
   // The flatpickr css is added as part of our scss build so add empty attribute to
   //   prevent Formio trying to get this css from a CDN
-  'flatpickr-css': ''
+  'flatpickr-css': '',
 };
 
 fixLeafletIconUrls();
 
 class OpenForm {
-  constructor( targetNode, opts ) {
+  constructor(targetNode, opts) {
     const {
       baseUrl,
       basePath,
@@ -48,7 +48,7 @@ class OpenForm {
       CSPNonce: CSPNonceValue,
       lang,
       sentryDSN,
-      sentryEnv='',
+      sentryEnv = '',
       languageSelectorTarget,
     } = opts;
 
@@ -59,13 +59,11 @@ class OpenForm {
     this.lang = lang;
 
     switch (typeof languageSelectorTarget) {
-      case "string": {
-        this.languageSelectorTarget = document.querySelector(
-          languageSelectorTarget
-        );
+      case 'string': {
+        this.languageSelectorTarget = document.querySelector(languageSelectorTarget);
         break;
       }
-      case "object": {
+      case 'object': {
         this.languageSelectorTarget = languageSelectorTarget;
         break;
       }
@@ -86,7 +84,6 @@ class OpenForm {
   }
 
   async init() {
-
     ReactModal.setAppElement(this.targetNode);
 
     const url = `${this.baseUrl}forms/${this.formId}`;
@@ -107,11 +104,11 @@ class OpenForm {
           </I18NErrorBoundary>
         </ConfigContext.Provider>
       </React.StrictMode>,
-      this.targetNode,
+      this.targetNode
     );
   }
 }
 
 export default OpenForm;
-export { ANALYTICS_PROVIDERS } from 'hooks/usePageViews';
-export { OpenForm, Formio, Templates, OFLibrary, OpenFormsModule };
+export {ANALYTICS_PROVIDERS} from 'hooks/usePageViews';
+export {OpenForm, Formio, Templates, OFLibrary, OpenFormsModule};

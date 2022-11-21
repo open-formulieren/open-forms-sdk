@@ -1,15 +1,15 @@
-import {Formio} from "react-formio";
-import {applyPrefix} from "../utils";
-import {electronicFormatIBAN, isValidIBAN} from "ibantools";
+import {Formio} from 'react-formio';
+import {applyPrefix} from '../utils';
+import {electronicFormatIBAN, isValidIBAN} from 'ibantools';
 
 const TextField = Formio.Components.components.textfield;
 
 const IbanValidator = {
-  key: "validate.iban",
+  key: 'validate.iban',
   message(component) {
     return component.t(component.errorMessage('Invalid IBAN'), {
       field: component.errorLabel,
-      data: component.data
+      data: component.data,
     });
   },
   check(component, setting, value) {
@@ -18,34 +18,34 @@ const IbanValidator = {
     }
     const iban = electronicFormatIBAN(value);
     return isValidIBAN(iban);
-  }
+  },
 };
 
 export default class IBANField extends TextField {
-
   constructor(component, options, data) {
     super(component, options, data);
     this.validator.validators.iban = IbanValidator;
-    this.validators.push("iban");
+    this.validators.push('iban');
   }
 
   static schema(...extend) {
-    return IBANField.schema({
+    return IBANField.schema(
+      {
         type: 'iban',
         label: 'IBAN',
         key: 'iban',
         validateOn: 'blur',
-    }, ...extend);
+      },
+      ...extend
+    );
   }
 
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = [
-      applyPrefix('iban'),
-      'utrecht-textbox',
-      'utrecht-textbox--html-input',
-    ].join(' ');
+    info.attr.class = [applyPrefix('iban'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
+      ' '
+    );
     return info;
   }
 }

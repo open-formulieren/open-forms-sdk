@@ -4,15 +4,11 @@ import {FormattedMessage, FormattedNumber} from 'react-intl';
 
 import {getBEMClassName} from 'utils';
 
-
-const Price = ({price=''}) => {
+const Price = ({price = ''}) => {
   return (
     <div className={getBEMClassName('price')}>
       <div className={getBEMClassName('price__label')}>
-        <FormattedMessage
-          description="Label for the total price to pay"
-          defaultMessage="Total"
-        />:
+        <FormattedMessage description="Label for the total price to pay" defaultMessage="Total" />:
       </div>
       <div className={getBEMClassName('price__amount')}>
         <FormattedNumber

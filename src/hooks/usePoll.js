@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import { useTimeoutFn } from "react-use";
+import {useTimeoutFn} from 'react-use';
 
 import {get} from '../api';
 
@@ -13,35 +13,31 @@ const usePoll = (url, timeout, callback) => {
     error: undefined,
   });
 
-  const [, cancel, reset] = useTimeoutFn(
-    async () => {
-      const response = await get(url);
+  const [, cancel, reset] = useTimeoutFn(async () => {
+    const response = await get(url);
 
-      // invoke the callback to process the response
-      try {
-        const done = callback(response);
-        if (!done) {
-          reset();
-        } else {
-          cancel();
-          setState({
-            loading: false,
-            error: undefined,
-          });
-        }
-      } catch (err) {
+    // invoke the callback to process the response
+    try {
+      const done = callback(response);
+      if (!done) {
+        reset();
+      } else {
         cancel();
         setState({
           loading: false,
-          error: err,
+          error: undefined,
         });
       }
-    },
-    timeout
-  );
+    } catch (err) {
+      cancel();
+      setState({
+        loading: false,
+        error: err,
+      });
+    }
+  }, timeout);
 
   return state;
 };
-
 
 export default usePoll;

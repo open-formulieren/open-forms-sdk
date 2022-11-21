@@ -6,8 +6,7 @@ import FAIcon from 'components/FAIcon';
 import useScrollIntoView from 'hooks/useScrollIntoView';
 import {getBEMClassName} from 'utils';
 
-
-const ErrorMessage = ({ children, modifiers=['error'] }) => {
+const ErrorMessage = ({children, modifiers = ['error']}) => {
   const errorRef = useScrollIntoView();
   if (!children) return null;
   return (
@@ -15,9 +14,7 @@ const ErrorMessage = ({ children, modifiers=['error'] }) => {
       <span className={getBEMClassName('alert__icon', ['wide'])}>
         <FAIcon icon="exclamation-circle" />
       </span>
-      <Body component="div">
-        {children}
-      </Body>
+      <Body component="div">{children}</Body>
     </div>
   );
 };

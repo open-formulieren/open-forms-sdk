@@ -14,18 +14,22 @@ const MaintenanceModeAlert = () => {
 
   let message;
   if (!userIsFormDesigner) {
-    message = (<FormattedMessage
-      description="Maintenance mode message"
-      defaultMessage="This form is currently undergoing maintenance and can not be accessed at the moment."
-    />);
+    message = (
+      <FormattedMessage
+        description="Maintenance mode message"
+        defaultMessage="This form is currently undergoing maintenance and can not be accessed at the moment."
+      />
+    );
   } else {
-    message = (<FormattedMessage
-      description="Maintenance mode message (for form designer)"
-      defaultMessage={`
+    message = (
+      <FormattedMessage
+        description="Maintenance mode message (for form designer)"
+        defaultMessage={`
         This form is currently in maintenance mode. As a staff user, you can
         continue filling out the form as usual.
       `}
-    />);
+      />
+    );
   }
 
   return (
@@ -38,13 +42,10 @@ const MaintenanceModeAlert = () => {
   );
 };
 
-
-const MaintenanceMode = ({ title, asToast=false }) => {
+const MaintenanceMode = ({title, asToast = false}) => {
   const alert = <MaintenanceModeAlert />;
   if (asToast) return alert;
-  return (
-    <Card title={title}>{alert}</Card>
-  )
+  return <Card title={title}>{alert}</Card>;
 };
 
 MaintenanceMode.propTypes = {

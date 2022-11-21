@@ -12,9 +12,9 @@ const currencyForm = {
     },
   ],
   title: 'Test Currency form',
-	display: 'Test Currency form',
-	name: 'testCurrencyForm',
-	path: 'testCurrencyForm',
+  display: 'Test Currency form',
+  name: 'testCurrencyForm',
+  path: 'testCurrencyForm',
 };
 
 export {currencyForm};

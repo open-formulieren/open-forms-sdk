@@ -8,14 +8,17 @@
 // component
 
 .#{prefix(form-control)} {
-
   @include modifier('content') {
     &:not(:first-child) {
-      @include responsive($properties: margin-top, $value-mobile: $grid-margin-3, $value-tablet: $grid-margin-4);
+      @include responsive(
+        $properties: margin-top,
+        $value-mobile: $grid-margin-3,
+        $value-tablet: $grid-margin-4
+      );
       padding-top: 0 !important;
     }
 
-    [ref="html"] {
+    [ref='html'] {
       @include wysiwyg;
       @include body;
       @include body--big;

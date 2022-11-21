@@ -1,6 +1,6 @@
-import { act } from "@testing-library/react";
+import {act} from '@testing-library/react';
 
-import { OpenForm } from "./sdk.js";
+import {OpenForm} from './sdk.js';
 
 // TODO: look into msw for API mocking instead
 // see https://testing-library.com/docs/react-testing-library/example-intro
@@ -44,61 +44,58 @@ const LANGUAGE_INFO = {
   current: 'nl',
 };
 
-
-describe("OpenForm", () => {
-  it("should accept a DOM node as languageSelectorTarget", async () => {
-    const formRoot = document.createElement("div");
-    const target = document.createElement("div");
+describe('OpenForm', () => {
+  it('should accept a DOM node as languageSelectorTarget', async () => {
+    const formRoot = document.createElement('div');
+    const target = document.createElement('div');
 
     apiModule.get
-      .mockReturnValueOnce(FORM)  // form detail endpoint
-      .mockReturnValueOnce({})  // formio translations
-      .mockReturnValueOnce(LANGUAGE_INFO)  // language info
-    ;
+      .mockReturnValueOnce(FORM) // form detail endpoint
+      .mockReturnValueOnce({}) // formio translations
+      .mockReturnValueOnce(LANGUAGE_INFO); // language info
 
     const form = new OpenForm(formRoot, {
-      baseUrl: "http://localhost:8000/api/v2/",
-      basePath: "",
-      formId: "81a22589-abce-4147-a2a3-62e9a56685aa",
+      baseUrl: 'http://localhost:8000/api/v2/',
+      basePath: '',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
       languageSelectorTarget: target,
-      lang: "nl",
+      lang: 'nl',
     });
 
     try {
       await act(async () => await form.init());
-    } catch(e) {
-      throw e;  // should not error
+    } catch (e) {
+      throw e; // should not error
     }
 
     expect(target).not.toBeEmptyDOMElement();
   });
 
-  it("should accept a target selector string as languageSelectorTarget", async () => {
+  it('should accept a target selector string as languageSelectorTarget', async () => {
     document.body.innerHTML = `
       <div id="my-languages-element"></div>
       <div id="root"></div>
     `;
     const formRoot = document.getElementById('root');
-    const target = document.getElementById("my-languages-element");
+    const target = document.getElementById('my-languages-element');
 
     apiModule.get
-      .mockReturnValueOnce(FORM)  // form detail endpoint
-      .mockReturnValueOnce({})  // formio translations
-      .mockReturnValueOnce(LANGUAGE_INFO)  // language info
-    ;
+      .mockReturnValueOnce(FORM) // form detail endpoint
+      .mockReturnValueOnce({}) // formio translations
+      .mockReturnValueOnce(LANGUAGE_INFO); // language info
 
     const form = new OpenForm(formRoot, {
-      baseUrl: "http://localhost:8000/api/v2/",
-      basePath: "",
-      formId: "81a22589-abce-4147-a2a3-62e9a56685aa",
-      languageSelectorTarget: "#my-languages-element",
-      lang: "nl",
+      baseUrl: 'http://localhost:8000/api/v2/',
+      basePath: '',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      languageSelectorTarget: '#my-languages-element',
+      lang: 'nl',
     });
 
     try {
       await act(async () => await form.init());
-    } catch(e) {
-      throw e;  // should not error
+    } catch (e) {
+      throw e; // should not error
     }
 
     expect(target).not.toBeEmptyDOMElement();

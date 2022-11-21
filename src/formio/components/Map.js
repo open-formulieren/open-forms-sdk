@@ -10,14 +10,16 @@ import LeafletMap from 'components/Map';
 
 const Field = Formio.Components.components.field;
 
-
 export default class Map extends Field {
   static schema(...extend) {
-    return Field.schema({
-      type: 'map',
-      label: 'Map',
-      key: 'map',
-    }, ...extend);
+    return Field.schema(
+      {
+        type: 'map',
+        label: 'Map',
+        key: 'map',
+      },
+      ...extend
+    );
   }
 
   static get builderInfo() {
@@ -25,7 +27,7 @@ export default class Map extends Field {
       title: 'Map',
       icon: 'map',
       weight: 500,
-      schema: Map.schema()
+      schema: Map.schema(),
     };
   }
 
@@ -73,9 +75,7 @@ export default class Map extends Field {
     this.loadRefs(element, {
       mapContainer: 'single',
     });
-    return super
-      .attach(element)
-      .then(() => this.renderReact());
+    return super.attach(element).then(() => this.renderReact());
   }
 
   destroy() {
@@ -99,11 +99,11 @@ export default class Map extends Field {
         markerCoordinates={markerCoordinates || null}
         onMarkerSet={this.onMarkerSet.bind(this)}
       />,
-      container,
+      container
     );
   }
 
-  setValue(value, flags={}) {
+  setValue(value, flags = {}) {
     const changed = super.setValue(value, flags);
     // re-render if the value is set, which may be because of existing submission data
     changed && this.renderReact();
