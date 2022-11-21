@@ -31,7 +31,7 @@ CardTitle.propTypes = {
 };
 
 const Card = ({ children, title, titleComponent, caption, captionComponent, blockClassName='card', modifiers=[] }) => {
-  useTitle(title ? title : "Startformulier");
+  useTitle(title ? title : "Start formulier");
   const className = getBEMClassName(
     blockClassName,
     modifiers,
