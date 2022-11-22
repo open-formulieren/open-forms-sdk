@@ -96,7 +96,13 @@ class OpenForm {
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
-        <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath, titlePrefix: prefix}}>
+        <ConfigContext.Provider
+          value={{
+            baseUrl: this.baseUrl,
+            basePath: this.basePath,
+            titlePrefix: prefix,
+          }}
+        >
           <I18NErrorBoundary>
             <I18NManager languageSelectorTarget={this.languageSelectorTarget}>
               <Router basename={this.basePath}>

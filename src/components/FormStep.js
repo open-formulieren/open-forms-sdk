@@ -24,27 +24,31 @@
 import React, {useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
-import { useHistory, useParams } from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
-import { useImmerReducer } from 'use-immer';
-import { Form } from 'react-formio';
-import { useAsync, useTitle } from 'react-use';
+import {useImmerReducer} from 'use-immer';
+import {Form} from 'react-formio';
+import {useAsync} from 'react-use';
 
 import hooks from '../formio/hooks';
 
-import { get, post, put } from 'api';
+import {get, post, put} from 'api';
 import Card from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-import {eventTriggeredBySubmitButton, findPreviousApplicableStep, isLastStep} from 'components/utils';
+import {
+  eventTriggeredBySubmitButton,
+  findPreviousApplicableStep,
+  isLastStep,
+} from 'components/utils';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import {ConfigContext, FormioTranslations} from 'Context';
-import { ValidationError } from 'errors';
-import {PREFIX}  from 'formio/constants';
+import {ValidationError} from 'errors';
+import {PREFIX} from 'formio/constants';
 import Types from 'types';
 import {DEBUG} from 'utils';
 
@@ -66,11 +70,11 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
     let validateResponse;
     try {
       validateResponse = await post(validateUrl, data);
-    } catch(error) {
+    } catch (error) {
       if (error instanceof ValidationError) {
         // process the errors
-        const invalidParams = error.invalidParams.filter(
-          param => param.name.startsWith(`${PREFIX}.`)
+        const invalidParams = error.invalidParams.filter(param =>
+          param.name.startsWith(`${PREFIX}.`)
         );
         const errors = invalidParams.map(({name, code, reason}) => ({
           path: name.replace(`${PREFIX}.`, '', 1),
@@ -86,14 +90,14 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
       }
     }
     if (!validateResponse.ok) {
-      console.warn(`Unexpected HTTP ${validateResponse.status}`)
+      console.warn(`Unexpected HTTP ${validateResponse.status}`);
     }
     next();
   };
   return customValidation;
 };
 
-const doLogicCheck = async (stepUrl, data, invalidKeys=[], signal) => {
+const doLogicCheck = async (stepUrl, data, invalidKeys = [], signal) => {
   const url = `${stepUrl}/_check_logic`;
   // filter out the invalid keys so we only send valid (client-side) input data to the
   // backend to evaluate logic.
@@ -110,9 +114,9 @@ const doLogicCheck = async (stepUrl, data, invalidKeys=[], signal) => {
 };
 
 class AbortedLogicCheck extends Error {
-  constructor(message='', ...args) {
+  constructor(message = '', ...args) {
     super(message, ...args);
-    this.name = 'AbortError';  // aligns with fetch Error.name that's thrown on abort
+    this.name = 'AbortError'; // aligns with fetch Error.name that's thrown on abort
   }
 }
 
@@ -127,9 +131,13 @@ const initialState = {
 };
 
 const reducer = (draft, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'STEP_LOADED': {
-      const {data, formStep: {configuration}, canSubmit} = action.payload;
+      const {
+        data,
+        formStep: {configuration},
+        canSubmit,
+      } = action.payload;
       draft.configuration = configuration;
       draft.backendData = data;
       draft.canSubmit = canSubmit;
@@ -142,7 +150,7 @@ const reducer = (draft, action) => {
       break;
     }
     case 'BLOCK_SUBMISSION': {
-      const { logicChecking=false } = action.payload || {};
+      const {logicChecking = false} = action.payload || {};
       draft.canSubmit = false;
       draft.logicChecking = logicChecking;
       break;
@@ -156,7 +164,9 @@ const reducer = (draft, action) => {
     }
     // a separate action type because we should _not_ touch the configuration in the state
     case 'LOGIC_CHECK_DONE': {
-      const {step: {data, canSubmit}} = action.payload;
+      const {
+        step: {data, canSubmit},
+      } = action.payload;
       // update the altered values but only if relevant (we don't want to unnecesary break
       // references that trigger re-rendering).
       if (!isEqual(draft.backendData, data)) {
@@ -185,14 +195,7 @@ const reducer = (draft, action) => {
   }
 };
 
-const FormStep = ({
-    form,
-    submission,
-    onLogicChecked,
-    onStepSubmitted,
-    onLogout,
-}) => {
-
+const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout}) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
@@ -201,18 +204,20 @@ const FormStep = ({
   const formRef = useRef(null);
   const [
     {
-      configuration, backendData,
-      canSubmit, logicChecking,
+      configuration,
+      backendData,
+      canSubmit,
+      logicChecking,
       isFormSaveModalOpen,
       isNavigating,
       error,
     },
-    dispatch
+    dispatch,
   ] = useImmerReducer(reducer, initialState);
 
   // react router hooks
   const history = useHistory();
-  const { step: slug } = useParams();
+  const {step: slug} = useParams();
 
   // logic check refs
   const logicCheckTimeout = useRef();
@@ -222,40 +227,34 @@ const FormStep = ({
   const controller = useRef(new AbortController());
   const configurationRef = useRef(configuration);
 
-  const closeFormStepSaveModal = () => dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: false}});
+  const closeFormStepSaveModal = () =>
+    dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: false}});
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
-
-  const pageTitle = `${config.titlePrefix} - ${formStep.formDefinition}`;
-  useTitle(pageTitle);
-
   const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
   // TODO: something is causing the FormStep.js to render multiple times, leading to
   // state updates on unmounted components.
-  const {loading} = useAsync(
-    async () => {
-      let stepDetail;
+  const {loading} = useAsync(async () => {
+    let stepDetail;
 
-      try {
-        stepDetail = await get(submissionStep.url);
-      } catch (e) {
-        dispatch({type: 'ERROR', payload: e});
-        return;
-      }
+    try {
+      stepDetail = await get(submissionStep.url);
+    } catch (e) {
+      dispatch({type: 'ERROR', payload: e});
+      return;
+    }
 
-      dispatch({
-        type: 'STEP_LOADED',
-        payload: stepDetail,
-      });
-      configurationRef.current = stepDetail.formStep.configuration;
-      window.scrollTo(0, 0, {behavior: 'smooth'})
-    },
-    [submissionStep.url]
-  );
+    dispatch({
+      type: 'STEP_LOADED',
+      payload: stepDetail,
+    });
+    configurationRef.current = stepDetail.formStep.configuration;
+    window.scrollTo(0, 0, {behavior: 'smooth'});
+  }, [submissionStep.url]);
 
   // throw errors from state so the error boundaries can pick them up
   if (error) {
@@ -276,7 +275,7 @@ const FormStep = ({
     return submissionData ? {...submissionData} : null;
   };
 
-  const checkAbortedLogicCheck = (signal) => {
+  const checkAbortedLogicCheck = signal => {
     const shouldAbortCurrentCheck = signal.aborted;
     if (!shouldAbortCurrentCheck) return;
     // throw custom error object to exit current callback forcibly
@@ -310,7 +309,7 @@ const FormStep = ({
         type: 'LOGIC_CHECK_INTERRUPTED',
         payload: {
           canSubmit: canSubmitState, // restore the original state from before the logic check
-        }
+        },
       });
       return;
     }
@@ -340,7 +339,12 @@ const FormStep = ({
       checkAbortedLogicCheck(controller.signal);
       // update our view of the data, which may have been changed by now because of user input
       data = getCurrentFormData();
-      const {submission, step} = await doLogicCheck(submissionStep.url, data, invalidKeys, controller.signal);
+      const {submission, step} = await doLogicCheck(
+        submissionStep.url,
+        data,
+        invalidKeys,
+        controller.signal
+      );
       // now process the result of the logic check.
 
       // first, check if we still have to process the results or not
@@ -361,7 +365,8 @@ const FormStep = ({
       // with the actual form configuration (!).
       const newConfiguration = step.formStep.configuration;
       const previousConfiguration = configurationRef.current;
-      const configurationChanged = previousConfiguration && !isEqual(previousConfiguration, newConfiguration);
+      const configurationChanged =
+        previousConfiguration && !isEqual(previousConfiguration, newConfiguration);
       if (configurationChanged) {
         formInstance.setForm(newConfiguration);
         configurationRef.current = newConfiguration;
@@ -391,14 +396,14 @@ const FormStep = ({
     } catch (e) {
       dispatch({type: 'LOGIC_CHECK_INTERRUPTED', payload: {canSubmit}});
       if (e.name !== 'AbortError') {
-        throw (e) // re-throw on unexpected errors
+        throw e; // re-throw on unexpected errors
       }
     }
   };
 
-  const onFormIOSubmit = async ({ data }) => {
+  const onFormIOSubmit = async ({data}) => {
     if (!submission) {
-      throw new Error("There is no active submission!");
+      throw new Error('There is no active submission!');
     }
 
     dispatch({type: 'NAVIGATE'});
@@ -422,11 +427,11 @@ const FormStep = ({
   // The handler of this submit event essentially calls the underlying formio.js
   // instance submit method, which leads to the submit event being emitted, and we tap
   // into that to handle the actual submission.
-  const onReactSubmit = async (event) => {
+  const onReactSubmit = async event => {
     event.preventDefault();
 
     // Issue #2084 - The button to save a row of an editgrid triggers a submit if there are validation errors
-    if(!eventTriggeredBySubmitButton(event)) {
+    if (!eventTriggeredBySubmitButton(event)) {
       return;
     }
 
@@ -436,7 +441,7 @@ const FormStep = ({
     // object has an instance property pointing to the WebForm...
     const formInstance = formRef.current.formio;
     if (!formInstance) {
-      console.warn("Form was not rendered (yet), aborting submission.");
+      console.warn('Form was not rendered (yet), aborting submission.');
       return;
     }
 
@@ -450,7 +455,7 @@ const FormStep = ({
     // whatever data is in the form before submitting. Untouched form fields are marked
     // as 'pristine' in Formio (see `Component.invalidMessage` method`) which causes
     // validation to be skipped.
-    const isValid = await formInstance.checkAsyncValidity(data, true, data);  // sets the validation error messages
+    const isValid = await formInstance.checkAsyncValidity(data, true, data); // sets the validation error messages
     // invalid forms may not be submitted.
     if (!isValid) {
       dispatch({type: 'BLOCK_SUBMISSION'});
@@ -469,18 +474,18 @@ const FormStep = ({
   };
 
   const onSaveConfirm = async () => {
-    const response = await submitStepData(
-      submissionStep.url, {...getCurrentFormData()}
-    );
+    const response = await submitStepData(submissionStep.url, {
+      ...getCurrentFormData(),
+    });
     return response;
   };
 
-  const onFormSave = async (event) => {
+  const onFormSave = async event => {
     event.preventDefault();
     dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: true}});
   };
 
-  const onPrevPage = (event) => {
+  const onPrevPage = event => {
     event.preventDefault();
 
     dispatch({type: 'NAVIGATE'});
@@ -501,7 +506,7 @@ const FormStep = ({
       return;
     }
 
-    formInstance.on('componentError', (error) => {
+    formInstance.on('componentError', error => {
       let firstComponentWithError = formInstance.getComponent(error.component.key);
       if (firstComponentWithError && firstComponentWithError.element) {
         firstComponentWithError.element.scrollIntoView();
@@ -520,10 +525,7 @@ const FormStep = ({
     if (shouldSetData) {
       // the cloneDeep is needed since we deliberately make the immer state mutable
       // for FormIO (multivalue input is one example why that's needed).
-      formInstance.setSubmission(
-        {data: cloneDeep(backendData)},
-        {noValidate: true},
-      );
+      formInstance.setSubmission({data: cloneDeep(backendData)}, {noValidate: true});
     }
   };
 
@@ -548,74 +550,70 @@ const FormStep = ({
     controller.current = abortController;
 
     // cancel old timeout if it's set
-    if(logicCheckTimeout.current) {
+    if (logicCheckTimeout.current) {
       localCanSubmit = logicCheckTimeout.current.canSubmit;
       clearTimeout(logicCheckTimeout.current.timeoutId);
     }
 
     // schedule a new logic check to run in LOGIC_CHECK_DEBOUNCE ms
-    const timeoutId = setTimeout(
-      async () => {
-        // we are executing the scheduled timeout, so for this event-handle cycle,
-        // reset the timeout, otherwise the 'LOGIC_CHECK_INTERRUPTED' always fires on
-        // the next change event which hold an outdated canSubmit state
-        logicCheckTimeout.current = null;
-        try {
-          await evaluateFormLogic(abortController, localCanSubmit);
-        } catch (e) {
-          dispatch({type: 'ERROR', payload: e});
-        }
-      },
-      LOGIC_CHECK_DEBOUNCE,
-    );
+    const timeoutId = setTimeout(async () => {
+      // we are executing the scheduled timeout, so for this event-handle cycle,
+      // reset the timeout, otherwise the 'LOGIC_CHECK_INTERRUPTED' always fires on
+      // the next change event which hold an outdated canSubmit state
+      logicCheckTimeout.current = null;
+      try {
+        await evaluateFormLogic(abortController, localCanSubmit);
+      } catch (e) {
+        dispatch({type: 'ERROR', payload: e});
+      }
+    }, LOGIC_CHECK_DEBOUNCE);
     logicCheckTimeout.current = {timeoutId, canSubmit: localCanSubmit};
 
     dispatch({type: 'FORMIO_CHANGE_HANDLED'});
   };
 
-  const isLoadingSomething = (loading || isNavigating);
+  const isLoadingSomething = loading || isNavigating;
   return (
     <>
       <Card title={submissionStep.name}>
-        { isLoadingSomething ? <Loader modifiers={['centered']} /> : null }
+        {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
-        {
-          (!isLoadingSomething && configuration) ? (
-            <form onSubmit={onReactSubmit}>
-              <Form
-                ref={formRef}
-                form={configuration}
-                onChange={onFormIOChange}
-                onSubmit={onFormIOSubmit}
-                onInitialized={onFormIOInitialized}
-                options={{
-                  noAlerts: true,
-                  baseUrl: config.baseUrl,
-                  language: formioTranslations.language,
-                  i18n: formioTranslations.i18n,
-                  evalContext: {
-                    ofPrefix: `${PREFIX}-`,
-                    requiredFieldsWithAsterisk: form.requiredFieldsWithAsterisk,
-                  },
-                  hooks: {
-                    ...hooks,
-                    customValidation: getCustomValidationHook(
-                      submissionStep.url,
-                      error => dispatch({type: 'ERROR', payload: error}),
-                    ),
-                  },
-                  // custom options
-                  intl,
-                  ofContext: {
-                    form: form,
-                    submissionUuid: submission.id,
-                    saveStepData: async () => await submitStepData(
-                      submissionStep.url, {...getCurrentFormData()}
-                    ),
-                  },
-                }}
-              />
-              { DEBUG ? <FormStepDebug data={getCurrentFormData()} /> : null }
+        {!isLoadingSomething && configuration ? (
+          <form onSubmit={onReactSubmit}>
+            <Form
+              ref={formRef}
+              form={configuration}
+              onChange={onFormIOChange}
+              onSubmit={onFormIOSubmit}
+              onInitialized={onFormIOInitialized}
+              options={{
+                noAlerts: true,
+                baseUrl: config.baseUrl,
+                language: formioTranslations.language,
+                i18n: formioTranslations.i18n,
+                evalContext: {
+                  ofPrefix: `${PREFIX}-`,
+                  requiredFieldsWithAsterisk: form.requiredFieldsWithAsterisk,
+                },
+                hooks: {
+                  ...hooks,
+                  customValidation: getCustomValidationHook(submissionStep.url, error =>
+                    dispatch({type: 'ERROR', payload: error})
+                  ),
+                },
+                // custom options
+                intl,
+                ofContext: {
+                  form: form,
+                  submissionUuid: submission.id,
+                  saveStepData: async () =>
+                    await submitStepData(submissionStep.url, {
+                      ...getCurrentFormData(),
+                    }),
+                },
+              }}
+            />
+            {DEBUG ? <FormStepDebug data={getCurrentFormData()} /> : null}
             <ButtonsToolbar
               literals={formStep.literals}
               canSubmitStep={canSubmit}
@@ -628,9 +626,8 @@ const FormStep = ({
               onLogout={onLogout}
               onNavigatePrevPage={onPrevPage}
             />
-            </form>
-          ) : null
-        }
+          </form>
+        ) : null}
       </Card>
       <FormStepSaveModal
         isOpen={isFormSaveModalOpen}
