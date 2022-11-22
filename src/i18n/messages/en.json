@@ -94,6 +94,11 @@
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
   },
+  "H4n86k": {
+    "defaultMessage": "Summary",
+    "description": "Summary page title",
+    "originalDefault": "Summary"
+  },
   "HGx1ny": {
     "defaultMessage": "Cancel appointment",
     "description": "Cancel appointment title",
@@ -239,6 +244,11 @@
     "description": "return to form start link after 403",
     "originalDefault": "Back to form start"
   },
+  "djrQar": {
+    "defaultMessage": "Log in",
+    "description": "Start page title",
+    "originalDefault": "Log in"
+  },
   "eO6Ysb": {
     "defaultMessage": "Your payment is currently processing.",
     "description": "payment processing status",
@@ -253,6 +263,11 @@
     "defaultMessage": "Please hold on while we're processing your submission.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
+  },
+  "fgRQ+z": {
+    "defaultMessage": "Confirmation",
+    "description": "Confirmation page title",
+    "originalDefault": "Confirmation"
   },
   "hHS5vj": {
     "defaultMessage": "Something went wrong while submitting the form.",
