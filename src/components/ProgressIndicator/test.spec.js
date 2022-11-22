@@ -42,12 +42,14 @@ it('Progress Indicator submission allowed', () => {
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <ProgressIndicator
-          title="Test Name"
-          steps={[]}
-          submission={{...submissionDefaults, submissionAllowed: SUBMISSION_ALLOWED.yes}}
-          submissionAllowed={SUBMISSION_ALLOWED.yes}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <ProgressIndicator
+            title="Test Name"
+            steps={[]}
+            submission={{...submissionDefaults, submissionAllowed: SUBMISSION_ALLOWED.yes}}
+            submissionAllowed={SUBMISSION_ALLOWED.yes}
+          />
+        </IntlProvider>
       </MemoryRouter>,
       container
     );
@@ -63,12 +65,17 @@ it('Progress Indicator submission not allowed, with overview page', () => {
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <ProgressIndicator
-          title="Test Name"
-          steps={[]}
-          submission={{...submissionDefaults, submissionAllowed: SUBMISSION_ALLOWED.noWithOverview}}
-          submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <ProgressIndicator
+            title="Test Name"
+            steps={[]}
+            submission={{
+              ...submissionDefaults,
+              submissionAllowed: SUBMISSION_ALLOWED.noWithOverview,
+            }}
+            submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
+          />
+        </IntlProvider>
       </MemoryRouter>,
       container
     );
@@ -84,15 +91,17 @@ it('Progress Indicator submission not allowed, without overview page', () => {
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <ProgressIndicator
-          title="Test Name"
-          steps={[]}
-          submission={{
-            ...submissionDefaults,
-            submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview,
-          }}
-          submissionAllowed={SUBMISSION_ALLOWED.noWithoutOverview}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <ProgressIndicator
+            title="Test Name"
+            steps={[]}
+            submission={{
+              ...submissionDefaults,
+              submissionAllowed: SUBMISSION_ALLOWED.noWithoutOverview,
+            }}
+            submissionAllowed={SUBMISSION_ALLOWED.noWithoutOverview}
+          />
+        </IntlProvider>
       </MemoryRouter>,
       container
     );
@@ -108,12 +117,14 @@ it('Form landing page, no submission present in session', () => {
   act(() => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <ProgressIndicator
-          title="Test Name"
-          steps={[]}
-          submission={null}
-          submissionAllowed={SUBMISSION_ALLOWED.yes}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <ProgressIndicator
+            title="Test Name"
+            steps={[]}
+            submission={null}
+            submissionAllowed={SUBMISSION_ALLOWED.yes}
+          />
+        </IntlProvider>
       </MemoryRouter>,
       container
     );
