@@ -118,6 +118,7 @@ export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
       const canvas = within(canvasElement);
       await userEvent.click(canvas.getByText(/^fy$/i));
       await expect(args.onLanguageChange).toHaveBeenCalled();
+      await expect(false).toBe(true);
     }}
   >
     {DisplayTemplate.bind({})}
