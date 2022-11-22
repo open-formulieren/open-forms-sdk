@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useRouteMatch, Link } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 
 import Anchor from 'components/Anchor';
+import { ConfigContext } from 'Context';
+import { useTitle } from 'react-use';
 import Card from 'components/Card';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import Caption from 'components/Caption';
@@ -108,18 +110,27 @@ const ProgressIndicator = ({ title, submission=null, steps, submissionAllowed, c
   const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
   const applicableCompleted = hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
+  // meaningful titles based on steps
+  const config = useContext(ConfigContext);
+  let pageTitle = "";
+
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
   if (isStartPage) {
     activeStepTitle = stepLabels.login;
+    pageTitle = `${config.titlePrefix} - ${stepLabels && stepLabels.login}`;
   } else if (summaryMatch) {
     activeStepTitle = stepLabels.overview;
+    pageTitle = `${config.titlePrefix} - ${stepLabels && stepLabels.overview}`;
   } else if (confirmationMatch) {
     activeStepTitle = stepLabels.configuration;
+    pageTitle = `${config.titlePrefix} - ${stepLabels && stepLabels.confirmation}`;
   } else {
     const step = steps.find( step => step.slug === stepSlug);
     activeStepTitle = step.formDefinition;
   }
+
+  useTitle(pageTitle);
 
     const canNavigateToStep = (index) => {
       // The user can navigate to a step when:
