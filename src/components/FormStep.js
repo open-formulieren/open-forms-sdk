@@ -31,7 +31,7 @@ import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import { useImmerReducer } from 'use-immer';
 import { Form } from 'react-formio';
-import { useAsync } from 'react-use';
+import { useAsync, useTitle } from 'react-use';
 
 import hooks from '../formio/hooks';
 
@@ -192,6 +192,7 @@ const FormStep = ({
     onStepSubmitted,
     onLogout,
 }) => {
+
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
@@ -225,6 +226,10 @@ const FormStep = ({
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
+
+  const pageTitle = `${config.titlePrefix} - ${formStep.formDefinition}`;
+  useTitle(pageTitle);
+
   const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 

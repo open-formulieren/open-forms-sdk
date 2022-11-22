@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import 'flatpickr';
 
-import { Formio, Templates } from 'react-formio';
+import {Formio, Templates} from 'react-formio';
 import ProtectedEval from '@formio/protected-eval';
 
 import OpenFormsModule from './formio/module';
@@ -11,11 +11,11 @@ import OFLibrary from './formio/templates';
 
 import './styles.scss';
 
-import { get } from 'api';
-import { ConfigContext } from 'Context';
+import {get} from 'api';
+import {ConfigContext} from 'Context';
 import App from 'components/App';
 import {CSPNonce} from 'headers';
-import { AddFetchAuth } from 'formio/plugins';
+import {AddFetchAuth} from 'formio/plugins';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {I18NManager, I18NErrorBoundary} from 'i18n';
 import initialiseSentry from 'sentry';
@@ -34,22 +34,21 @@ Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
 Formio.libraries = {
   // The flatpickr css is added as part of our scss build so add empty attribute to
   //   prevent Formio trying to get this css from a CDN
-  'flatpickr-css': ''
+  'flatpickr-css': '',
 };
 
 fixLeafletIconUrls();
 
 class OpenForm {
-  constructor( targetNode, opts ) {
+  constructor(targetNode, opts) {
     const {
       baseUrl,
       basePath,
       formId,
       CSPNonce: CSPNonceValue,
       lang,
-      pageTitle,
       sentryDSN,
-      sentryEnv='',
+      sentryEnv = '',
       languageSelectorTarget,
     } = opts;
 
@@ -58,16 +57,13 @@ class OpenForm {
     this.formId = formId;
     this.formObject = null;
     this.lang = lang;
-    this.pageTitle = pageTitle;
 
     switch (typeof languageSelectorTarget) {
-      case "string": {
-        this.languageSelectorTarget = document.querySelector(
-          languageSelectorTarget
-        );
+      case 'string': {
+        this.languageSelectorTarget = document.querySelector(languageSelectorTarget);
         break;
       }
-      case "object": {
+      case 'object': {
         this.languageSelectorTarget = languageSelectorTarget;
         break;
       }
@@ -85,38 +81,36 @@ class OpenForm {
       pathname = pathname.slice(0, pathname.length - 1);
     }
     this.basePath = pathname;
-
-    const pageTitleCurrent = `${this.pageTitle} - ${document.title}`;
-    console.log(pageTitleCurrent);
   }
 
   async init() {
-
     ReactModal.setAppElement(this.targetNode);
 
     const url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
     this.formObject = await get(url);
 
+    const prefix = document.title;
+
     // render the wrapping React component
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
-        <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath, pageTitle: this.pageTitle}}>
+        <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath, titlePrefix: prefix}}>
           <I18NErrorBoundary>
             <I18NManager languageSelectorTarget={this.languageSelectorTarget}>
               <Router basename={this.basePath}>
-                <App form={this.formObject} pagename={this.pageTitle} />
+                <App form={this.formObject} />
               </Router>
             </I18NManager>
           </I18NErrorBoundary>
         </ConfigContext.Provider>
       </React.StrictMode>,
-      this.targetNode,
+      this.targetNode
     );
   }
 }
 
 export default OpenForm;
-export { ANALYTICS_PROVIDERS } from 'hooks/usePageViews';
-export { OpenForm, Formio, Templates, OFLibrary, OpenFormsModule };
+export {ANALYTICS_PROVIDERS} from 'hooks/usePageViews';
+export {OpenForm, Formio, Templates, OFLibrary, OpenFormsModule};
