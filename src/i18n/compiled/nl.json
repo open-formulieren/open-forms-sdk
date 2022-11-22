@@ -11,12 +11,6 @@
       "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
     }
   ],
-  "40nqWB": [
-    {
-      "type": 0,
-      "value": "De taal veranderen, begint met een leeg formulier. Doorgaan?"
-    }
-  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -45,6 +39,12 @@
     {
       "type": 0,
       "value": "U moet akkoord gaan met het privacybeleid om door te gaan"
+    }
+  ],
+  "94yVWJ": [
+    {
+      "type": 0,
+      "value": "Indien u de taal verandert, dan moet u opnieuw beginnen met het formulier in te vullen. Bent u zeker dat u wilt doorgaan?"
     }
   ],
   "9AU8U0": [
@@ -123,6 +123,12 @@
     {
       "type": 0,
       "value": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw."
+    }
+  ],
+  "H4n86k": [
+    {
+      "type": 0,
+      "value": "Overzicht"
     }
   ],
   "HGx1ny": [
@@ -359,6 +365,12 @@
       "value": "Terug naar begin"
     }
   ],
+  "djrQar": [
+    {
+      "type": 0,
+      "value": "Inloggen"
+    }
+  ],
   "eO6Ysb": [
     {
       "type": 0,
@@ -375,6 +387,12 @@
     {
       "type": 0,
       "value": "Een moment geduld alstublieft. Uw inzending wordt verwerkt."
+    }
+  ],
+  "fgRQ+z": [
+    {
+      "type": 0,
+      "value": "Bevestiging"
     }
   ],
   "hHS5vj": [

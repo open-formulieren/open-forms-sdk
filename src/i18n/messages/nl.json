@@ -94,6 +94,11 @@
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
   },
+  "H4n86k": {
+    "defaultMessage": "Overzicht",
+    "description": "Summary page title",
+    "originalDefault": "Summary"
+  },
   "HGx1ny": {
     "defaultMessage": "Afspraak annuleren",
     "description": "Cancel appointment title",
@@ -239,6 +244,11 @@
     "description": "return to form start link after 403",
     "originalDefault": "Back to form start"
   },
+  "djrQar": {
+    "defaultMessage": "Inloggen",
+    "description": "Start page title",
+    "originalDefault": "Log in"
+  },
   "eO6Ysb": {
     "defaultMessage": "Uw betaling wordt momenteel verwerkt.",
     "description": "payment processing status",
@@ -253,6 +263,11 @@
     "defaultMessage": "Een moment geduld alstublieft. Uw inzending wordt verwerkt.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
+  },
+  "fgRQ+z": {
+    "defaultMessage": "Bevestiging",
+    "description": "Confirmation page title",
+    "originalDefault": "Confirmation"
   },
   "hHS5vj": {
     "defaultMessage": "Er is iets fout gegaan bij het verzenden.",

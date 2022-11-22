@@ -1,7 +1,8 @@
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { Canvas, Meta, Story, Props, ArgsTable } from '@storybook/addon-docs';
 import { MemoryRouter } from 'react-router-dom';
 
 import ProgressIndicator from '.';
+import ProgressIndicatorDisplay from './ProgressIndicatorDisplay';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 <Meta
@@ -23,6 +24,81 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 # ProgressIndicator
 
 The progress indicator displays the progression through a particular form's steps.
+
+## Presentation
+
+The `ProgressIndicatorDisplay` component shows the different steps in a form. The style of each
+step varies depending on whether it is applicable, it is completed or it is the currently active step.
+
+export const DisplayTemplate = (args) => (
+  <MemoryRouter>
+    <ProgressIndicatorDisplay {...args} />
+  </MemoryRouter>
+);
+
+<Canvas>
+  <Story
+    name="Display"
+    args={{
+      activeStepTitle: "Stap 2",
+      formTitle: "Storybookformulier",
+      steps: [
+        {
+          uuid: "111",
+          slug: "stap1",
+          formDefinition: "Stap 1",
+          isCompleted: true,
+          isApplicable: true,
+          isCurrent: false,
+          canNavigateTo: true,
+        },
+        {
+          uuid: "222",
+          slug: "stap2",
+          formDefinition: "Stap 2",
+          isCompleted: false,
+          isApplicable: true,
+          isCurrent: true,
+          canNavigateTo: true,
+        },
+        {
+          uuid: "333",
+          slug: "stap3",
+          formDefinition: "Stap 3",
+          isCompleted: false,
+          isApplicable: false,
+          isCurrent: false,
+          canNavigateTo: false,
+        },
+      ],
+      hasSubmission: true,
+      isStartPage: false,
+      isSummary: false,
+      isConfirmation: false,
+      isSubmissionComplete: false,
+      areApplicableStepsCompleted: false,
+      showOverview: true,
+      showConfirmation: false,
+    }}
+  >
+    {DisplayTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Props
+
+<ArgsTable of={ProgressIndicatorDisplay} />
+
+## Functional
+
+The `ProgressIndicator` component handles the 'smart' behaviour. It checks:
+
+* If the steps are currently active, completed, applicable or if a step can be clicked to navigate to it.
+* If the current page is the start page, the summary page or the confirmation page.
+* If all the applicable steps have been completed.
+
+It is responsible for rendering the `ProgressIndicatorDisplay` component.
+
 
 The current step is detected through the URL route match, based on the `slug` of an individual
 step. The complete collection of available form steps is loaded when the form is initially loaded,
@@ -154,3 +230,4 @@ On initial load, no submission is available yet.
 ## Props
 
 <Props of={ProgressIndicator} />
+

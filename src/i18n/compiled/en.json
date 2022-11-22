@@ -11,12 +11,6 @@
       "value": "Something went wrong while presenting the login option. Please contact the municipality."
     }
   ],
-  "40nqWB": [
-    {
-      "type": 0,
-      "value": "Changing language will empty the form. Continue?"
-    }
-  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -45,6 +39,12 @@
     {
       "type": 0,
       "value": "Please accept the privacy policy before submitting"
+    }
+  ],
+  "94yVWJ": [
+    {
+      "type": 0,
+      "value": "Changing the language will require you to restart the form. Are you sure you want to continue?"
     }
   ],
   "9AU8U0": [
@@ -123,6 +123,12 @@
     {
       "type": 0,
       "value": "Saving the data failed, please try again later"
+    }
+  ],
+  "H4n86k": [
+    {
+      "type": 0,
+      "value": "Summary"
     }
   ],
   "HGx1ny": [
@@ -359,6 +365,12 @@
       "value": "Back to form start"
     }
   ],
+  "djrQar": [
+    {
+      "type": 0,
+      "value": "Log in"
+    }
+  ],
   "eO6Ysb": [
     {
       "type": 0,
@@ -375,6 +387,12 @@
     {
       "type": 0,
       "value": "Please hold on while we're processing your submission."
+    }
+  ],
+  "fgRQ+z": [
+    {
+      "type": 0,
+      "value": "Confirmation"
     }
   ],
   "hHS5vj": [
