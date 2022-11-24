@@ -163,14 +163,14 @@ const Form = ({form}) => {
   useEffect(
     () => {
       if (prevLocale === undefined) return;
-      if (intl.locale !== prevLocale) {
+      if (intl.locale !== prevLocale && state.submission) {
         removeSubmissionId();
         dispatch({type: 'DESTROY_SUBMISSION'});
         flagNoActiveSubmission();
         history.push(`/?${START_FORM_QUERY_PARAM}=1`);
       }
     },
-    [intl.locale, prevLocale, removeSubmissionId] // eslint-disable-line react-hooks/exhaustive-deps
+    [intl.locale, prevLocale, removeSubmissionId, state.submission] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
