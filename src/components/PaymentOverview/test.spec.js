@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { IntlProvider } from 'react-intl';
+import {IntlProvider} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 import {render} from '@testing-library/react';
 
@@ -10,14 +10,13 @@ import messagesEN from 'i18n/compiled/en.json';
 /**
  * Set up mocks
  */
-jest.mock("../../map/rd", () => jest.fn());
+jest.mock('../../map/rd', () => jest.fn());
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn(),
-  Link: () => (<a>some link</a>),
+  Link: () => <a>some link</a>,
 }));
-
 
 describe('navigation without context', () => {
   it('displays a generic error message', () => {
@@ -25,11 +24,11 @@ describe('navigation without context', () => {
       pathname: 'localhost:3000/betaaloverzicht',
     }));
     const tree = renderer
-      .create((
+      .create(
         <IntlProvider locale="en" messages={messagesEN}>
           <PaymentOverview />
         </IntlProvider>
-      ))
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -40,15 +39,16 @@ describe('navigation without context', () => {
       state: {
         status: 'nope',
         userAction: 'accept',
-      }
+      },
     }));
 
-    expect(() => render(
-      <IntlProvider locale="en" messages={messagesEN}>
-        <PaymentOverview />
-      </IntlProvider>
-    )).toThrow();
-
+    expect(() =>
+      render(
+        <IntlProvider locale="en" messages={messagesEN}>
+          <PaymentOverview />
+        </IntlProvider>
+      )
+    ).toThrow();
   });
 
   it('throws on unexpected values (userAction)', () => {
@@ -57,18 +57,18 @@ describe('navigation without context', () => {
       state: {
         status: 'completed',
         userAction: 'nope',
-      }
+      },
     }));
 
-    expect(() => render(
-      <IntlProvider locale="en" messages={messagesEN}>
-        <PaymentOverview />
-      </IntlProvider>
-    )).toThrow();
-
+    expect(() =>
+      render(
+        <IntlProvider locale="en" messages={messagesEN}>
+          <PaymentOverview />
+        </IntlProvider>
+      )
+    ).toThrow();
   });
 });
-
 
 describe('on valid redirect', () => {
   it('renders the status information', () => {
@@ -77,15 +77,15 @@ describe('on valid redirect', () => {
       state: {
         status: 'completed',
         userAction: 'accept',
-      }
+      },
     }));
 
     const tree = renderer
-      .create((
+      .create(
         <IntlProvider locale="en" messages={messagesEN}>
           <PaymentOverview />
         </IntlProvider>
-      ))
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -96,15 +96,15 @@ describe('on valid redirect', () => {
       state: {
         status: 'failed',
         userAction: 'accept',
-      }
+      },
     }));
 
     const tree = renderer
-      .create((
+      .create(
         <IntlProvider locale="en" messages={messagesEN}>
           <PaymentOverview />
         </IntlProvider>
-      ))
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });

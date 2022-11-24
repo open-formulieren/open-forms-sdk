@@ -1,25 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 import MaintenanceMode from 'components/MaintenanceMode';
-import { DEBUG } from 'utils';
-
+import {DEBUG} from 'utils';
 
 const logError = (error, errorInfo) => {
   DEBUG && console.error(error, errorInfo);
 };
 
-
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = {hasError: false, error: null};
   }
 
   static getDerivedStateFromError(error) {
@@ -35,17 +33,15 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    const { useCard, children } = this.props;
-    const { hasError, error } = this.state;
+    const {useCard, children} = this.props;
+    const {hasError, error} = this.state;
     if (!hasError) {
       return children;
     }
 
     const ErrorComponent = ERROR_TYPE_MAP[error.name] || GenericError;
     const Wrapper = useCard ? Card : 'div';
-    return (
-      <ErrorComponent wrapper={Wrapper} error={error} />
-    );
+    return <ErrorComponent wrapper={Wrapper} error={error} />;
   }
 }
 
@@ -53,8 +49,7 @@ ErrorBoundary.propTypes = {
   useCard: PropTypes.bool,
 };
 
-
-const GenericError = ({ wrapper: Wrapper, error }) => {
+const GenericError = ({wrapper: Wrapper, error}) => {
   const intl = useIntl();
   // Wrapper may be a DOM element, which can't handle <FormattedMessage />
   const title = intl.formatMessage({
@@ -79,12 +74,16 @@ GenericError.propTypes = {
   error: PropTypes.object, // exception instance
 };
 
-
-const PermissionDeniedError = ({ wrapper: Wrapper, error }) => {
+const PermissionDeniedError = ({wrapper: Wrapper, error}) => {
   return (
-    <Wrapper title={<FormattedMessage
-        description="'Permission denied' error title"
-        defaultMessage="Authentication problem" />}>
+    <Wrapper
+      title={
+        <FormattedMessage
+          description="'Permission denied' error title"
+          defaultMessage="Authentication problem"
+        />
+      }
+    >
       <ErrorMessage>
         <FormattedMessage
           description="Authentication error message"
@@ -100,23 +99,26 @@ const PermissionDeniedError = ({ wrapper: Wrapper, error }) => {
           defaultMessage="Back to form start"
         />
       </Link>
-
     </Wrapper>
   );
 };
 
 PermissionDeniedError.propTypes = GenericError.propTypes;
 
-
-const UnprocessableEntityError = ({ wrapper: Wrapper, error }) => {
+const UnprocessableEntityError = ({wrapper: Wrapper, error}) => {
   if (error.code !== 'form-inactive') {
     return <GenericError wrapper={Wrapper} error={error} />;
   }
   // handle deactivated forms
   return (
-    <Wrapper title={<FormattedMessage
-        description="'Deactivated form' error title"
-        defaultMessage="Sorry - this form is no longer available" />}>
+    <Wrapper
+      title={
+        <FormattedMessage
+          description="'Deactivated form' error title"
+          defaultMessage="Sorry - this form is no longer available"
+        />
+      }
+    >
       <ErrorMessage>
         <FormattedMessage
           description="Deactivated form error message"
@@ -124,33 +126,35 @@ const UnprocessableEntityError = ({ wrapper: Wrapper, error }) => {
         />
       </ErrorMessage>
     </Wrapper>
-  )
+  );
 };
 
 UnprocessableEntityError.propTypes = GenericError.propTypes;
 
-
-const ServiceUnavailableError = ({ wrapper: Wrapper, error }) => {
+const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
   if (error.code !== 'form-maintenance') {
     return <GenericError wrapper={Wrapper} error={error} />;
   }
 
   // handle maintenance mode forms
   return (
-    <MaintenanceMode title={<FormattedMessage
-      description="'Maintenance mode form' error title"
-      defaultMessage="Form temporarily unavailable" />}
+    <MaintenanceMode
+      title={
+        <FormattedMessage
+          description="'Maintenance mode form' error title"
+          defaultMessage="Form temporarily unavailable"
+        />
+      }
     />
   );
 };
 
-
 // map the type of error to the component to render
 const ERROR_TYPE_MAP = {
-  'PermissionDenied': PermissionDeniedError,
-  'UnprocessableEntity': UnprocessableEntityError,
-  'ServiceUnavailable': ServiceUnavailableError,
+  PermissionDenied: PermissionDeniedError,
+  UnprocessableEntity: UnprocessableEntityError,
+  ServiceUnavailable: ServiceUnavailableError,
 };
 
-export { logError } ;
+export {logError};
 export default ErrorBoundary;

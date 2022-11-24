@@ -1,27 +1,24 @@
 import isObject from 'lodash/isObject';
-import { Formio } from 'react-formio';
+import {Formio} from 'react-formio';
 
-import { applyPrefix } from '../utils';
+import {applyPrefix} from '../utils';
 
 /**
  * Extend the default select field to modify it to our needs.
  */
 class Select extends Formio.Components.components.select {
-
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = [
-      applyPrefix('select'),
-      'utrecht-select',
-      'utrecht-select--html-select',
-    ].join(' ');
+    info.attr.class = [applyPrefix('select'), 'utrecht-select', 'utrecht-select--html-select'].join(
+      ' '
+    );
     return info;
   }
 
   setValue(value, flags = {}) {
     // check if it's an appointment config field
-    if ( this.component?.appointments != null ) {
+    if (this.component?.appointments != null) {
       // beforeSubmit converts the combination (value, label) into an object, which is
       // stored in the backend as {"identifier": value, "name": label}. So, when data
       // from the backend is loaded, we convert this back into the original format to
@@ -68,6 +65,5 @@ class Select extends Formio.Components.components.select {
     super.beforeSubmit();
   }
 }
-
 
 export default Select;

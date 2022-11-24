@@ -1,14 +1,11 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
-import { IntlProvider } from 'react-intl';
+import {render, unmountComponentAtNode} from 'react-dom';
+import {act} from 'react-dom/test-utils';
+import {IntlProvider} from 'react-intl';
 
 import FormStepSummary, {LabelValueRow} from './index';
 import messagesNL from 'i18n/compiled/nl.json';
-import {
-  testEmptyFields,
-} from './fixtures';
-
+import {testEmptyFields} from './fixtures';
 
 let container = null;
 
@@ -25,23 +22,15 @@ afterEach(() => {
   container = null;
 });
 
-
 it('Unfilled dates displayed properly', () => {
   const dateComponent = {
-    "key": "dateOfBirth",
-    "type": "date",
-    "format": "dd-MM-yyyy",
+    key: 'dateOfBirth',
+    type: 'date',
+    format: 'dd-MM-yyyy',
   };
 
   act(() => {
-    render(
-      <LabelValueRow
-        name="Date of birth"
-        value=""
-        component={dateComponent}
-      />,
-      container
-    );
+    render(<LabelValueRow name="Date of birth" value="" component={dateComponent} />, container);
   });
 
   const value = container.getElementsByClassName('openforms-summary-row__value')[0].textContent;
@@ -50,36 +39,33 @@ it('Unfilled dates displayed properly', () => {
 
 it('Multi-value select field displayed properly', () => {
   const selectBoxesComponent = {
-    "key": "selectPets",
-    "type": "select",
-    "multiple": true,
-    "data": {
-      "values": [
+    key: 'selectPets',
+    type: 'select',
+    multiple: true,
+    data: {
+      values: [
         {
-          "label": "Cat",
-          "value": "cat"
+          label: 'Cat',
+          value: 'cat',
         },
         {
-          "label": "Dog",
-          "value": "dog"
+          label: 'Dog',
+          value: 'dog',
         },
         {
-          "label": "Fish",
-          "value": "fish"
-        }
-      ]
-    }
+          label: 'Fish',
+          value: 'fish',
+        },
+      ],
+    },
   };
 
   act(() => {
     render(
-      <IntlProvider
-        locale="nl"
-        messages={messagesNL}
-      >
+      <IntlProvider locale="nl" messages={messagesNL}>
         <LabelValueRow
           name="Select Pets"
-          value={["dog", "fish"]}
+          value={['dog', 'fish']}
           component={selectBoxesComponent}
         />
       </IntlProvider>,
@@ -87,7 +73,7 @@ it('Multi-value select field displayed properly', () => {
     );
   });
 
-  const value = container.getElementsByClassName("openforms-summary-row__value")[0].textContent;
+  const value = container.getElementsByClassName('openforms-summary-row__value')[0].textContent;
   expect(value).toEqual('Dog; Fish');
 });
 
@@ -104,7 +90,7 @@ it('Empty fields', () => {
     );
   });
 
-  const emptyValues = container.getElementsByClassName("openforms-summary-row__value");
+  const emptyValues = container.getElementsByClassName('openforms-summary-row__value');
 
   for (const emptyValue of emptyValues) {
     expect(emptyValue.textContent).toEqual('');
@@ -115,22 +101,14 @@ it('Columns without labels are not rendered', () => {
   const columnComponent = {
     key: 'columns',
     type: 'columns',
-    columns: []
+    columns: [],
   };
 
   act(() => {
-    render(
-      <LabelValueRow
-        name=""
-        value={null}
-        component={columnComponent}
-      />,
-      container
-    );
+    render(<LabelValueRow name="" value={null} component={columnComponent} />, container);
   });
 
   const tableRows = container.getElementsByClassName('openforms-summary-row');
 
   expect(tableRows.length).toEqual(0);
 });
-

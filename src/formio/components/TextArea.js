@@ -1,7 +1,6 @@
-import { Formio } from 'react-formio';
+import {Formio} from 'react-formio';
 
-import { applyPrefix } from '../utils';
-
+import {applyPrefix} from '../utils';
 
 /**
  * Extend the default text field to modify it to our needs.
@@ -18,6 +17,5 @@ class TextArea extends Formio.Components.components.textarea {
     return info;
   }
 }
-
 
 export default TextArea;

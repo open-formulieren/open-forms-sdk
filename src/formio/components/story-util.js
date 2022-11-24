@@ -1,10 +1,10 @@
-import { Form } from 'react-formio';
+import {Form} from 'react-formio';
 
-import {PREFIX}  from 'formio/constants';
+import {PREFIX} from 'formio/constants';
 
-export const FormioForm = ({ form }) => (<Form form={form} />);
+export const FormioForm = ({form}) => <Form form={form} />;
 
-export const FormioComponent = ({ component, components=[] }) => (
+export const FormioComponent = ({component, components = []}) => (
   <Form
     form={{
       type: 'form',
@@ -22,9 +22,8 @@ export const FormioComponent = ({ component, components=[] }) => (
   />
 );
 
-export const FormDecorator = (Story) => (
-  <div
-    className="utrecht-document"
-    style={{'--utrecht-space-around': 1 }}
-  >{Story()}</div>
+export const FormDecorator = Story => (
+  <div className="utrecht-document" style={{'--utrecht-space-around': 1}}>
+    {Story()}
+  </div>
 );

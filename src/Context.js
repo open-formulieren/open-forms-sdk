@@ -9,5 +9,4 @@ FormioTranslations.displayName = 'FormioTranslations';
 const SubmissionContext = React.createContext({submission: null});
 SubmissionContext.displayName = 'SubmissionContext';
 
-
-export { ConfigContext, FormioTranslations, SubmissionContext };
+export {ConfigContext, FormioTranslations, SubmissionContext};

@@ -21,7 +21,7 @@
   }
 
   @include modifier('inherit') {
-    color: inherit!important;
+    color: inherit !important;
   }
 
   @include modifier('muted') {

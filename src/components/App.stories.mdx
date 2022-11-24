@@ -1,19 +1,15 @@
-import { Meta, Canvas, Story, ArgsTable } from "@storybook/addon-docs";
-import {
-  within,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@storybook/testing-library";
-import { expect } from "@storybook/jest";
-import { MemoryRouter } from "react-router-dom";
-import { ConfigContext } from "Context";
+import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
+import {within, waitFor, waitForElementToBeRemoved} from '@storybook/testing-library';
+import {expect} from '@storybook/jest';
+import {MemoryRouter} from 'react-router-dom';
+import {ConfigContext} from 'Context';
 
-import App from "./App";
+import App from './App';
 
-export const BASE_URL = "http://localhost:8000/api/v2/";
+export const BASE_URL = 'http://localhost:8000/api/v2/';
 
-export const ConfigDecorator = (Story, { args }) => (
-  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
+export const ConfigDecorator = (Story, {args}) => (
+  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
     <Story />
   </ConfigContext.Provider>
 );
@@ -27,25 +23,25 @@ export const ConfigDecorator = (Story, { args }) => (
     },
   }}
   args={{
-    "form.translationEnabled": true,
+    'form.translationEnabled': true,
   }}
   parameters={{
     mockData: [
       {
         url: `${BASE_URL}i18n/info`,
-        method: "GET",
+        method: 'GET',
         status: 200,
         response: {
           languages: [
-            { code: "nl", name: "Nederlands" },
-            { code: "en", name: "English" },
+            {code: 'nl', name: 'Nederlands'},
+            {code: 'en', name: 'English'},
           ],
-          current: "nl",
+          current: 'nl',
         },
       },
       {
         url: `${BASE_URL}i18n/language`,
-        method: "PUT",
+        method: 'PUT',
         status: 204,
         response: {},
       },
@@ -53,61 +49,60 @@ export const ConfigDecorator = (Story, { args }) => (
   }}
 />
 
-export const Template = (args) => {
+export const Template = args => {
   const form = {
-    uuid: "81a22589-abce-4147-a2a3-62e9a56685aa",
-    name: "Mocked form",
+    uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
+    name: 'Mocked form',
     loginRequired: false,
-    translationEnabled: args["form.translationEnabled"],
+    translationEnabled: args['form.translationEnabled'],
     loginOptions: [],
-    autoLoginAuthenticationBackend: "",
+    autoLoginAuthenticationBackend: '',
     paymentRequired: false,
     paymentOptions: [],
     literals: {
-      previousText: { resolved: "Previous page", value: "" },
-      beginText: { resolved: "Begin form", value: "" },
-      changeText: { resolved: "Change", value: "" },
-      confirmText: { resolved: "Confirm", value: "" },
+      previousText: {resolved: 'Previous page', value: ''},
+      beginText: {resolved: 'Begin form', value: ''},
+      changeText: {resolved: 'Change', value: ''},
+      confirmText: {resolved: 'Confirm', value: ''},
     },
-    slug: "jest",
-    url: "http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa",
+    slug: 'jest',
+    url: 'http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa',
     steps: [
       {
-        uuid: "fc9f2889-b1e4-4045-b88c-acf1adf716cb",
-        slug: "step1",
-        formDefinition: "Stap 1",
+        uuid: 'fc9f2889-b1e4-4045-b88c-acf1adf716cb',
+        slug: 'step1',
+        formDefinition: 'Stap 1',
         index: 0,
         literals: {
-          previousText: { resolved: "Previous page", value: "" },
-          saveText: { resolved: "Save current information", value: "" },
-          nextText: { resolved: "Next", value: "" },
+          previousText: {resolved: 'Previous page', value: ''},
+          saveText: {resolved: 'Save current information', value: ''},
+          nextText: {resolved: 'Next', value: ''},
         },
-        url: "http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa/steps/fc9f2889-b1e4-4045-b88c-acf1adf716cb",
+        url: 'http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa/steps/fc9f2889-b1e4-4045-b88c-acf1adf716cb',
       },
     ],
     showProgressIndicator: true,
     maintenanceMode: false,
     active: true,
-    explanationTemplate: "<p>Toelichtingssjabloon...</p>",
-    submissionAllowed: "yes",
+    explanationTemplate: '<p>Toelichtingssjabloon...</p>',
+    submissionAllowed: 'yes',
     requiredFieldsWithAsterisk: true,
   };
   return (
     <MemoryRouter>
-      <App form={form} />
+      <App form={form} noDebug />
     </MemoryRouter>
   );
 };
 
 # The App
 
-The App component is the top level router. It's responsible for rendering the
-outer most layout and rendering:
+The App component is the top level router. It's responsible for rendering the outer most layout and
+rendering:
 
-- `Form` based on the `form` config that is passed with the shape from the
-  backend API.
-- the language selection component if translations are enabled. Note that the
-  render target is provided via the `I18NManager` component.
+- `Form` based on the `form` config that is passed with the shape from the backend API.
+- the language selection component if translations are enabled. Note that the render target is
+  provided via the `I18NManager` component.
 
 <Canvas>
   <Story
@@ -116,7 +111,7 @@ outer most layout and rendering:
     parameters={{
       docs: {
         source: {
-          type: "dynamic",
+          type: 'dynamic',
           excludeDecorators: true,
         },
       },
@@ -142,16 +137,16 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
     parameters={{
       docs: {
         source: {
-          type: "dynamic",
+          type: 'dynamic',
           excludeDecorators: true,
         },
       },
     }}
     args={{
-      "form.translationEnabled": true,
+      'form.translationEnabled': true,
       baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
     }}
-    play={async ({ args, canvasElement }) => {
+    play={async ({args, canvasElement}) => {
       const langSelector = await within(canvasElement).findByText(/^nl$/i);
       await expect(langSelector).toBeTruthy();
     }}
@@ -166,12 +161,12 @@ If they are not, no `LanguageSelector` is rendered:
   <Story
     name="Translation Disabled"
     args={{
-      "form.translationEnabled": false,
+      'form.translationEnabled': false,
     }}
-    play={async ({ args, canvasElement }) => {
+    play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
       // wait for spinners to disappear
-      const spinners = document.querySelectorAll(".openforms-loading__spinner");
+      const spinners = document.querySelectorAll('.openforms-loading__spinner');
       await Promise.all(Array.from(spinners).map(waitForElementToBeRemoved));
       // assert there's no NL button
       const langSelector = canvas.queryByText(/^nl$/i);

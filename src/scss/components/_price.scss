@@ -9,10 +9,9 @@
 
   display: flex;
   justify-content: flex-end;
-	border-top-color: var(--of-color-border);
-	border-top-style: solid;
-	border-top-width: thin;
-
+  border-top-color: var(--of-color-border);
+  border-top-style: solid;
+  border-top-width: thin;
 
   &__amount {
     padding-left: 0.5em;

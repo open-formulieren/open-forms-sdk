@@ -6,7 +6,7 @@ class ExtendableError extends Error {
     if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(this, this.constructor);
     } else {
-      this.stack = (new Error(message)).stack;
+      this.stack = new Error(message).stack;
     }
   }
 }
@@ -32,8 +32,7 @@ export class ValidationError extends ExtendableError {
 
     return errorsPerComponent;
   }
-
-};
+}
 
 export class APIError extends ExtendableError {
   constructor(message, statusCode, detail, code) {

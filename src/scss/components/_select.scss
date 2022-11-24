@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/grid';
@@ -38,7 +38,7 @@ $select-background-color: var(--of-select-background-color, $color-white);
   $control-height: $grid-row-height;
   $list-hpadding: $grid-margin-2;
   $list-vpadding: $grid-margin-1;
-  $list-vpaddings:  $list-vpadding * 2;
+  $list-vpaddings: $list-vpadding * 2;
   $item-margin: math.div($grid-margin-0, 2);
   $item-margins: $item-margin * 2;
   $item-hpadding: $grid-margin-1;
@@ -71,7 +71,7 @@ $select-background-color: var(--of-select-background-color, $color-white);
 
   // Selected choices.
   .selection .choices__list {
-    display: contents;  // Might not work in legacy browsers.
+    display: contents; // Might not work in legacy browsers.
   }
 
   // Items within the current selection.
@@ -87,7 +87,7 @@ $select-background-color: var(--of-select-background-color, $color-white);
     height: $item-height;
     font-size: $item-height * 0.6;
     margin: $item-margin;
-    padding: 0 $item-hpadding!important;
+    padding: 0 $item-hpadding !important;
   }
 
   .selection .choices__item .choices_button {
@@ -114,6 +114,4 @@ $select-background-color: var(--of-select-background-color, $color-white);
     padding-left: $list-hpadding;
     padding-right: $list-hpadding;
   }
-
-
 }

@@ -14,7 +14,7 @@ export const useDetectAuthenticationOutage = () => {
   return query.get(AUTHENTICATION_OUTAGE_QUERY_PARAM);
 };
 
-const AuthenticationOutage = ({ loginOption }) => (
+const AuthenticationOutage = ({loginOption}) => (
   <div className={getBEMClassName('alert', ['error'])}>
     <span className={getBEMClassName('alert__icon', ['wide'])}>
       <FAIcon icon="exclamation-circle" />

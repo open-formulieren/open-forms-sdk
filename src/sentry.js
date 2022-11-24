@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/react";
-import { Integrations } from "@sentry/tracing";
+import * as Sentry from '@sentry/react';
+import {Integrations} from '@sentry/tracing';
 
 const initialiseSentry = (sentryDSN, env) => {
   if (!sentryDSN) return;

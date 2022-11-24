@@ -2,19 +2,14 @@ import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
-import {
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-  useRouteMatch,
-} from 'react-router-dom';
+import {Redirect, Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
 
 import {usePrevious} from 'react-use';
 
 import {ConfigContext} from 'Context';
 
 import {destroy, post} from 'api';
+import {START_FORM_QUERY_PARAM} from 'components/constants';
 import usePageViews from 'hooks/usePageViews';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
@@ -72,7 +67,6 @@ const initialState = {
   completed: false,
 };
 
-
 const reducer = (draft, action) => {
   switch (action.type) {
     case 'SUBMISSION_LOADED': {
@@ -125,7 +119,7 @@ const reducer = (draft, action) => {
  * @param  {Object} options.form The form definition from the Open Forms API
  * @return {JSX}
  */
- const Form = ({ form }) => {
+const Form = ({form}) => {
   const history = useHistory();
   const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
   const queryParams = useQuery();
@@ -141,7 +135,7 @@ const reducer = (draft, action) => {
   const initialStateFromProps = {...initialState, config, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
 
-  const onSubmissionLoaded = (submission, next='') => {
+  const onSubmissionLoaded = (submission, next = '') => {
     if (sessionExpired) return;
     dispatch({
       type: 'SUBMISSION_LOADED',
@@ -151,22 +145,20 @@ const reducer = (draft, action) => {
     // navigate to the first step
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
     history.push(next ? next : firstStepRoute);
-  }
+  };
 
   // if there is an active submission still, re-load that (relevant for hard-refreshes)
-  const [
-    loading,
-    setSubmissionId,
-    removeSubmissionId
-  ] = useRecycleSubmission(form, state.submission, onSubmissionLoaded);
-
-  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(
-    () => {
-      removeSubmissionId();
-      dispatch({type: 'DESTROY_SUBMISSION'});
-      flagNoActiveSubmission();
-    }
+  const [loading, setSubmissionId, removeSubmissionId] = useRecycleSubmission(
+    form,
+    state.submission,
+    onSubmissionLoaded
   );
+
+  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(() => {
+    removeSubmissionId();
+    dispatch({type: 'DESTROY_SUBMISSION'});
+    flagNoActiveSubmission();
+  });
 
   useEffect(
     () => {
@@ -175,8 +167,10 @@ const reducer = (draft, action) => {
         removeSubmissionId();
         dispatch({type: 'DESTROY_SUBMISSION'});
         flagNoActiveSubmission();
+        history.push(`/?${START_FORM_QUERY_PARAM}=1`);
       }
-    }, [intl.locale, prevLocale, removeSubmissionId] // eslint-disable-line react-hooks/exhaustive-deps
+    },
+    [intl.locale, prevLocale, removeSubmissionId] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
@@ -187,7 +181,7 @@ const reducer = (draft, action) => {
    * @param  {Event} event The DOM event, could be a button click or a custom event.
    * @return {Void}
    */
-  const onFormStart = async (event) => {
+  const onFormStart = async event => {
     event && event.preventDefault();
 
     // required to get rid of the error message saying the session is expired - once
@@ -212,7 +206,7 @@ const reducer = (draft, action) => {
     history.push(firstStepRoute);
   };
 
-  const onStepSubmitted = async (formStep) => {
+  const onStepSubmitted = async formStep => {
     const currentStepIndex = form.steps.indexOf(formStep);
 
     const nextStepIndex = findNextApplicableStep(currentStepIndex, state.submission);
@@ -222,27 +216,25 @@ const reducer = (draft, action) => {
     history.push(nextUrl);
   };
 
-  const onSubmitForm = (processingStatusUrl) => {
+  const onSubmitForm = processingStatusUrl => {
     removeSubmissionId();
     dispatch({
       type: 'SUBMITTED',
       payload: {
         submission: state.submission,
         processingStatusUrl,
-      }
+      },
     });
     history.push('/bevestiging');
   };
 
-  const onLogout = async (event) => {
+  const onLogout = async event => {
     event.preventDefault();
 
-    const confirmationQuestion = intl.formatMessage(
-      {
-        description: 'log out confirmation prompt',
-        defaultMessage: 'Are you sure that you want to logout?'
-      }
-    );
+    const confirmationQuestion = intl.formatMessage({
+      description: 'log out confirmation prompt',
+      defaultMessage: 'Are you sure that you want to logout?',
+    });
     if (!window.confirm(confirmationQuestion)) {
       return;
     }
@@ -253,7 +245,7 @@ const reducer = (draft, action) => {
     window.location.reload();
   };
 
-  const onProcessingFailure = (errorMessage) => {
+  const onProcessingFailure = errorMessage => {
     // TODO: provide generic fallback message in case no explicit
     // message is shown
     dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
@@ -264,13 +256,15 @@ const reducer = (draft, action) => {
   // params as state for the next component.
   if (queryParams.get('of_payment_status')) {
     return (
-      <Redirect to={{
-        pathname: '/betaaloverzicht',
-        state: {
-          status: queryParams.get('of_payment_status'),
-          userAction: queryParams.get('of_payment_action'),
-        },
-      }} />
+      <Redirect
+        to={{
+          pathname: '/betaaloverzicht',
+          state: {
+            status: queryParams.get('of_payment_status'),
+            userAction: queryParams.get('of_payment_action'),
+          },
+        }}
+      />
     );
   }
 
@@ -288,7 +282,6 @@ const reducer = (draft, action) => {
       <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>
         {/* Route the correct page based on URL */}
         <Switch>
-
           <Route exact path="/">
             <ErrorBoundary useCard>
               <FormStart form={form} onFormStart={onFormStart} />
@@ -318,8 +311,9 @@ const reducer = (draft, action) => {
                 statusUrl={state.processingStatusUrl}
                 onFailure={onProcessingFailure}
                 onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
-                component={SubmissionConfirmation} />
-              </ErrorBoundary>
+                component={SubmissionConfirmation}
+              />
+            </ErrorBoundary>
           </Route>
 
           <Route exact path="/betaaloverzicht">
@@ -328,40 +322,39 @@ const reducer = (draft, action) => {
             </ErrorBoundary>
           </Route>
 
-          <Route path="/stap/:step" render={() => (
-            <ErrorBoundary useCard>
-              <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-                <RequireSubmission
-                  form={form}
-                  submission={state.submission}
-                  onLogicChecked={(submission) => dispatch({type: 'SUBMISSION_LOADED', payload: submission})}
-                  onStepSubmitted={onStepSubmitted}
-                  onLogout={onLogout}
-                  component={FormStep}
-                />
-              </RequireSession>
-            </ErrorBoundary>
-          )} />
-
+          <Route
+            path="/stap/:step"
+            render={() => (
+              <ErrorBoundary useCard>
+                <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+                  <RequireSubmission
+                    form={form}
+                    submission={state.submission}
+                    onLogicChecked={submission =>
+                      dispatch({type: 'SUBMISSION_LOADED', payload: submission})
+                    }
+                    onStepSubmitted={onStepSubmitted}
+                    onLogout={onLogout}
+                    component={FormStep}
+                  />
+                </RequireSession>
+              </ErrorBoundary>
+            )}
+          />
         </Switch>
-
       </LayoutColumn>
 
-      {
-        form.showProgressIndicator && !paymentOverviewMatch
-        ? (
-          <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
-            <ProgressIndicator
-              title={form.name}
-              steps={form.steps}
-              submission={state.submission || state.submittedSubmission}
-              submissionAllowed={form.submissionAllowed}
-              completed={state.completed}
-            />
-          </LayoutColumn>
-        )
-        : null
-      }
+      {form.showProgressIndicator && !paymentOverviewMatch ? (
+        <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
+          <ProgressIndicator
+            title={form.name}
+            steps={form.steps}
+            submission={state.submission || state.submittedSubmission}
+            submissionAllowed={form.submissionAllowed}
+            completed={state.completed}
+          />
+        </LayoutColumn>
+      ) : null}
     </>
   );
 };

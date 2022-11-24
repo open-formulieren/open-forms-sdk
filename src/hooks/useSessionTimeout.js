@@ -3,8 +3,7 @@ import {useGlobalState} from 'state-pool';
 
 import {sessionExpiresAt} from 'api';
 
-
-const useSessionTimeout = (onTimeout) => {
+const useSessionTimeout = onTimeout => {
   const [expired, setExpired] = useState(false);
   const [expiresAt, setExpiryDate] = useGlobalState(sessionExpiresAt);
   const expiryDate = expiresAt?.expiry;
@@ -18,7 +17,7 @@ const useSessionTimeout = (onTimeout) => {
     let mounted = true;
     if (expiryDate == null) return;
 
-    const expiryInMs = expiryDate - (new Date());
+    const expiryInMs = expiryDate - new Date();
 
     // fun one! admin sessions can span multiple days, so if the expiry is in the far future
     // (> 1 day), don't even bother with checking/marking things as expired. It's not relevant.
@@ -41,7 +40,7 @@ const useSessionTimeout = (onTimeout) => {
         if (!mounted) return;
         markExpired();
       },
-      expiryInMs - 500,  // be a bit pro-active
+      expiryInMs - 500 // be a bit pro-active
     );
 
     return () => {
@@ -53,7 +52,7 @@ const useSessionTimeout = (onTimeout) => {
   const reset = () => {
     setExpired(false);
     setExpiryDate({expiry: null});
-  }
+  };
 
   return [expired, expiryDate, reset];
 };

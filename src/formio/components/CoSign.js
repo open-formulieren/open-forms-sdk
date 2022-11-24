@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Formio} from 'react-formio';
-import { IntlProvider } from 'react-intl';
+import {IntlProvider} from 'react-intl';
 
-import { applyPrefix } from '../utils';
+import {applyPrefix} from '../utils';
 import CoSignReact from 'components/CoSign';
 import {ConfigContext} from 'Context';
 
@@ -11,12 +11,15 @@ const Field = Formio.Components.components.field;
 
 export default class CoSign extends Field {
   static schema(...extend) {
-      return Field.schema({
-          label: 'Co-sign',
-          type: 'coSign',
-          authPlugin: 'digid', // default
-          input: false,
-      }, ...extend);
+    return Field.schema(
+      {
+        label: 'Co-sign',
+        type: 'coSign',
+        authPlugin: 'digid', // default
+        input: false,
+      },
+      ...extend
+    );
   }
 
   render() {
@@ -38,9 +41,7 @@ export default class CoSign extends Field {
     this.loadRefs(element, {
       coSignContainer: 'single',
     });
-    return super
-      .attach(element)
-      .then(() => this.renderReact());
+    return super.attach(element).then(() => this.renderReact());
   }
 
   destroy() {
@@ -54,7 +55,7 @@ export default class CoSign extends Field {
     // no container node ready (yet), defer to next render cycle
     if (!container) return;
 
-    const { form, submissionUuid, saveStepData } = this.options.ofContext;
+    const {form, submissionUuid, saveStepData} = this.options.ofContext;
 
     ReactDOM.render(
       <IntlProvider {...this.options.intl}>
@@ -67,7 +68,7 @@ export default class CoSign extends Field {
           />
         </ConfigContext.Provider>
       </IntlProvider>,
-      container,
+      container
     );
   }
 }

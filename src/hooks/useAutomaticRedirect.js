@@ -5,8 +5,7 @@ import useStartSubmission from './useStartSubmission';
 import {getLoginRedirectUrl} from 'components/utils';
 import {ConfigContext} from '../Context';
 
-
-const useAutomaticRedirect = (form) => {
+const useAutomaticRedirect = form => {
   const location = useLocation();
   const {basePath} = useContext(ConfigContext);
 

@@ -9,7 +9,11 @@
   // add vertical space/padding on top for elements except the first child in a container
   // This is sort of the inverse of @include margin(auto) which operates on the last-child.
   &:not(:first-child) {
-    @include responsive($properties: padding-top, $value-mobile: $grid-margin-3, $value-tablet: $grid-margin-4);
+    @include responsive(
+      $properties: padding-top,
+      $value-mobile: $grid-margin-3,
+      $value-tablet: $grid-margin-4
+    );
   }
 
   @include modifier('hidden') {
@@ -66,7 +70,7 @@
   &--no-asterisks {
     .required-field:after {
       // Override the asterisk
-      content: "" !important;
+      content: '' !important;
     }
   }
 
@@ -84,7 +88,7 @@
     & > label {
       // Only the label of the whole repeating group has h3 style. Not the label of each field
       // within a repeat of the group.
-     @include h3;
+      @include h3;
     }
   }
 }

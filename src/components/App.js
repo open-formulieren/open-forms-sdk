@@ -2,36 +2,39 @@ import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
 import {Switch, Route} from 'react-router-dom';
 
+import AppDebug from 'components/AppDebug';
 import Form from 'components/Form';
-import { Layout, LayoutRow } from 'components/Layout';
+import {Layout, LayoutRow} from 'components/Layout';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import LanguageSelection from 'components/LanguageSelection';
-import { I18NContext } from 'i18n';
+import {I18NContext} from 'i18n';
 import Types from 'types';
-
+import {DEBUG} from 'utils';
 
 const LanguageSwitcher = () => {
-  const { languageSelectorTarget: target } = useContext(I18NContext);
+  const {languageSelectorTarget: target} = useContext(I18NContext);
   return target ? (
     ReactDOM.createPortal(<LanguageSelection />, target)
   ) : (
     <LayoutRow>
       <LanguageSelection />
     </LayoutRow>
-  )
+  );
 };
 
 /*
 Top level router - routing between an actual form or supporting screens.
  */
-const App = ({ ...props }) => {
-  const { form: { translationEnabled } } = props;
+const App = ({...props}) => {
+  const {
+    form: {translationEnabled},
+    noDebug = false,
+  } = props;
   return (
     <Layout>
-      { translationEnabled ? <LanguageSwitcher /> : null }
+      {translationEnabled ? <LanguageSwitcher /> : null}
 
       <LayoutRow>
-
         <Switch>
           {/* Anything dealing with appointments gets routed to it's own sub-router */}
           <Route path="/afspraak*" component={ManageAppointment} />
@@ -41,8 +44,13 @@ const App = ({ ...props }) => {
             <Form {...props} />
           </Route>
         </Switch>
-
       </LayoutRow>
+
+      {DEBUG && !noDebug ? (
+        <LayoutRow>
+          <AppDebug />
+        </LayoutRow>
+      ) : null}
     </Layout>
   );
 };

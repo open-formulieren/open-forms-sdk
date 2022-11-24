@@ -1,15 +1,14 @@
-import { Formio } from 'react-formio';
-import { maskInput } from '@formio/vanilla-text-mask';
+import {Formio} from 'react-formio';
+import {maskInput} from '@formio/vanilla-text-mask';
 
-import { applyPrefix } from '../utils';
+import {applyPrefix} from '../utils';
 
-import enableValidationPlugins from "../validators/plugins";
+import enableValidationPlugins from '../validators/plugins';
 
 /**
  * Extend the default text field to modify it to our needs.
  */
 class Number extends Formio.Components.components.number {
-
   constructor(component, options, data) {
     super(component, options, data);
     enableValidationPlugins(this);
@@ -18,15 +17,13 @@ class Number extends Formio.Components.components.number {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = [
-      applyPrefix('input'),
-      'utrecht-textbox',
-      'utrecht-textbox--html-input',
-    ].join(' ');
+    info.attr.class = [applyPrefix('input'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
+      ' '
+    );
     return info;
   }
 
-  checkComponentValidity(data, dirty, row, options = {}){
+  checkComponentValidity(data, dirty, row, options = {}) {
     let updatedOptions = {...options};
     if (this.component.validate.plugins && this.component.validate.plugins.length) {
       updatedOptions.async = true;
@@ -55,6 +52,5 @@ class Number extends Formio.Components.components.number {
     });
   }
 }
-
 
 export default Number;

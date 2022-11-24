@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 
 import {getBEMClassName} from 'utils';
 
-
-const Layout = ({ children, component='div' }) => {
+const Layout = ({children, component = 'div'}) => {
   const className = getBEMClassName('layout');
   const Component = `${component}`;
-  return (
-    <Component className={className}>
-      {children}
-    </Component>
-  );
+  return <Component className={className}>{children}</Component>;
 };
 
 Layout.propTypes = {
@@ -19,16 +14,10 @@ Layout.propTypes = {
   component: PropTypes.string,
 };
 
-
-
-const LayoutRow = ({ children, modifiers=[], component='section' }) => {
+const LayoutRow = ({children, modifiers = [], component = 'section'}) => {
   const className = getBEMClassName('layout__row', modifiers);
   const Component = `${component}`;
-  return (
-    <Component className={className}>
-      {children}
-    </Component>
-  );
+  return <Component className={className}>{children}</Component>;
 };
 
 LayoutRow.propTypes = {
@@ -37,16 +26,10 @@ LayoutRow.propTypes = {
   component: PropTypes.string,
 };
 
-
-
-const LayoutColumn = ({ children, modifiers=[], component='div' }) => {
+const LayoutColumn = ({children, modifiers = [], component = 'div'}) => {
   const className = getBEMClassName('layout__column', modifiers);
   const Component = `${component}`;
-  return (
-    <Component className={className}>
-      {children}
-    </Component>
-  );
+  return <Component className={className}>{children}</Component>;
 };
 
 LayoutColumn.propTypes = {
@@ -54,7 +37,6 @@ LayoutColumn.propTypes = {
   modifiers: PropTypes.arrayOf(PropTypes.string),
   component: PropTypes.string,
 };
-
 
 export default Layout;
 export {Layout, LayoutRow, LayoutColumn};
