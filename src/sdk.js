@@ -90,7 +90,7 @@ class OpenForm {
     this.targetNode.textContent = `Loading form...`;
     this.formObject = await get(url);
 
-    const prefix = document.title;
+    const docTitlePrefix = document.title;
 
     // render the wrapping React component
     // TODO: make this work with React 18 which has a different react-dom API
@@ -100,7 +100,7 @@ class OpenForm {
           value={{
             baseUrl: this.baseUrl,
             basePath: this.basePath,
-            titlePrefix: prefix,
+            titlePrefix: docTitlePrefix,
           }}
         >
           <I18NErrorBoundary>

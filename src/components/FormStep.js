@@ -31,7 +31,7 @@ import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import {useImmerReducer} from 'use-immer';
 import {Form} from 'react-formio';
-import {useAsync} from 'react-use';
+import {useAsync, useTitle} from 'react-use';
 
 import hooks from '../formio/hooks';
 
@@ -233,6 +233,11 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
   const currentStepIndex = form.steps.indexOf(formStep);
+
+  // use meaningful document titles
+  const pageTitle = `${config.titlePrefix} - ${formStep.formDefinition}`;
+  useTitle(pageTitle);
+
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
   // fetch the form step configuration
