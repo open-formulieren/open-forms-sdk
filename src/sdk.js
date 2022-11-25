@@ -40,6 +40,7 @@ Formio.libraries = {
 fixLeafletIconUrls();
 
 const defaultDisplayComponents = {
+  app: null,
   form: null,
   progressIndicator: null,
 };
