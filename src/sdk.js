@@ -39,6 +39,11 @@ Formio.libraries = {
 
 fixLeafletIconUrls();
 
+const defaultDisplayComponents = {
+  form: null,
+  progressIndicator: null,
+};
+
 class OpenForm {
   constructor(targetNode, opts) {
     const {
@@ -50,6 +55,7 @@ class OpenForm {
       sentryDSN,
       sentryEnv = '',
       languageSelectorTarget,
+      displayComponents = {}, // TODO: document as unstable API
     } = opts;
 
     this.targetNode = targetNode;
@@ -57,6 +63,7 @@ class OpenForm {
     this.formId = formId;
     this.formObject = null;
     this.lang = lang;
+    this.displayComponents = {...defaultDisplayComponents, ...displayComponents};
 
     switch (typeof languageSelectorTarget) {
       case 'string': {
@@ -104,7 +111,12 @@ class OpenForm {
     ReactDOM.render(
       <React.StrictMode>
         <ConfigContext.Provider
-          value={{baseUrl: this.baseUrl, basePath: this.basePath, titlePrefix: this.titlePrefix}}
+          value={{
+            baseUrl: this.baseUrl,
+            basePath: this.basePath,
+            titlePrefix: this.titlePrefix,
+            displayComponents: this.displayComponents,
+          }}
         >
           <I18NErrorBoundary>
             <I18NManager

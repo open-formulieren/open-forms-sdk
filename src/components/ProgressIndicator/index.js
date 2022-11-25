@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useRouteMatch} from 'react-router-dom';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import Types from 'types';
+import {ConfigContext} from 'Context';
 import {IsFormDesigner} from 'headers';
+import Types from 'types';
 
 import ProgressIndicatorDisplay from './ProgressIndicatorDisplay';
 import {STEP_LABELS} from './constants';
@@ -16,6 +17,7 @@ const ProgressIndicator = ({
   submissionAllowed,
   completed = false,
 }) => {
+  const config = useContext(ConfigContext);
   const summaryMatch = !!useRouteMatch('/overzicht');
   const stepMatch = useRouteMatch('/stap/:step');
   const confirmationMatch = !!useRouteMatch('/bevestiging');
@@ -76,8 +78,11 @@ const ProgressIndicator = ({
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
   const showConfirmation = submissionAllowedSpec === SUBMISSION_ALLOWED.yes;
 
+  const ProgressIndicatorDisplayComponent =
+    config?.displayComponents?.progressIndicator ?? ProgressIndicatorDisplay;
+
   return (
-    <ProgressIndicatorDisplay
+    <ProgressIndicatorDisplayComponent
       activeStepTitle={activeStepTitle}
       formTitle={title}
       steps={getStepsInfo(steps)}

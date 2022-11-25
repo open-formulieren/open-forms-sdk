@@ -3,13 +3,13 @@ import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import {getBEMClassName} from 'utils';
 import FAIcon from 'components/FAIcon';
 import Caption from 'components/Caption';
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import List from 'components/List';
+import {getBEMClassName} from 'utils';
 
 import {STEP_LABELS} from './constants';
 import ProgressItem from './ProgressItem';
