@@ -4,6 +4,7 @@ const ConfigContext = React.createContext({
   baseUrl: '',
   basePath: '',
   displayComponents: {
+    app: null,
     form: null,
     progressIndicator: null,
   },
