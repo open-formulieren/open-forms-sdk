@@ -75,16 +75,11 @@ const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) =
 
   const {messages, formioTranslations} = value;
 
-  const logLanguageChangeDone = newLanguageCode => {
-    onLanguageChangeDone(newLanguageCode);
-    console.log(`Changed language to: ${newLanguageCode}`);
-  };
-
   return (
     <IntlProvider messages={messages} locale={languageCode} defaultLocale="nl">
       <FormioTranslations.Provider value={{i18n: formioTranslations, language: languageCode}}>
         <I18NContext.Provider
-          value={{languageSelectorTarget, onLanguageChangeDone: logLanguageChangeDone}}
+          value={{languageSelectorTarget, onLanguageChangeDone}}
         >
           {children}
         </I18NContext.Provider>
