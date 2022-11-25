@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
+import useTitle from 'hooks/useTitle';
 
 import {post} from 'api';
 import Body from 'components/Body';
@@ -67,8 +68,14 @@ StartPayment.propTypes = {
  * @param {Function} onConfirmed Callback to invoke if the background processing result is success.
  */
 const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
-  const [statusResponse, setStatusResponse] = useState(null);
   const intl = useIntl();
+  const pageTitle = intl.formatMessage({
+    description: 'Confirmation page',
+    defaultMessage: 'Confirmation',
+  });
+  useTitle(pageTitle);
+
+  const [statusResponse, setStatusResponse] = useState(null);
   const genericErrorMessage = intl.formatMessage({
     description: 'Generic submission error',
     defaultMessage: 'Something went wrong while submitting the form.',

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, useLocation} from 'react-router-dom';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
+import useTitle from 'hooks/useTitle';
 
 import Body from 'components/Body';
 import Anchor from 'components/Anchor';
@@ -53,6 +54,12 @@ Container.propTypes = {
 const PaymentOverview = () => {
   const intl = useIntl();
   const {state: {status, userAction} = {}} = useLocation();
+
+  const pageTitle = intl.formatMessage({
+    description: 'Check payment overview',
+    defaultMessage: 'Payment overview',
+  });
+  useTitle(pageTitle);
 
   // display a warning if someone navigates directly to this URL.
   if (!status || !userAction) {

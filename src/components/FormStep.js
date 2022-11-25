@@ -236,7 +236,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
-  // use meaningful document titles
   useTitle(formStep.formDefinition);
 
   // fetch the form step configuration

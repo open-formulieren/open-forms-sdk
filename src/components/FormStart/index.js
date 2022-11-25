@@ -51,7 +51,6 @@ const FormStart = ({form, onFormStart}) => {
 
   const onFormStartCalledRef = useRef(false);
 
-  // use meaningful document titles
   useTitle(form.name);
 
   useEffect(() => {
