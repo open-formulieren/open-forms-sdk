@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 import {getBEMClassName} from 'utils';
 
-const Layout = ({children, component = 'div'}) => {
+const Layout = ({children, component: Component = 'div'}) => {
   const className = getBEMClassName('layout');
-  const Component = `${component}`;
   return <Component className={className}>{children}</Component>;
 };
 

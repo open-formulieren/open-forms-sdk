@@ -1,0 +1,74 @@
+import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
+
+import Card from 'components/Card';
+import {Layout, LayoutRow} from 'components/Layout';
+import Body from 'components/Body';
+
+import FormDisplay from './FormDisplay';
+
+export const PaddedDiv = ({className, children}) => (
+  <div style={{padding: '1em 0'}} className={className}>{children}</div>
+);
+
+export const LayoutDecorator = (Story) => {
+  return (
+    <Layout component={PaddedDiv}>
+      <LayoutRow>
+        <Story />
+      </LayoutRow>
+    </Layout>
+  );
+};
+
+<Meta
+  title="Composites/Form display"
+  component={FormDisplay}
+  argTypes={{
+    showProgressIndicator: {control: 'boolean'},
+    isPaymentOverview: {control: 'boolean'},
+    router: { table: {disable: true}},
+    progressIndicator: { table: {disable: true}},
+  }}
+  decorators={[LayoutDecorator]}
+  parameters={{
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    }
+  }}
+/>
+
+The `FormDisplay` component allows you to manage the layout when forms and sub-pages are rendered.
+By default, it displays the form step and progress indicator in two columns.
+
+export const DummyRouter = () => <Card><Body>Body with routing capabilities</Body></Card>;
+
+export const DummyProgressIndicator = () => <Card><Body>Progress indicator</Body></Card>;
+
+export const Template = (args) => {
+  return (
+    <FormDisplay
+      router={<DummyRouter />}
+      progressIndicator={<DummyProgressIndicator />}
+      {...args}
+    />
+  );
+};
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      showProgressIndicator: true,
+      isPaymentOverview: false,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={FormDisplay} />
