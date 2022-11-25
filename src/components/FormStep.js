@@ -35,6 +35,7 @@ import {useAsync} from 'react-use';
 
 import hooks from '../formio/hooks';
 
+import useTitle from 'hooks/useTitle';
 import {get, post, put} from 'api';
 import Card from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
@@ -234,6 +235,9 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   const formStep = form.steps.find(s => s.slug === slug);
   const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
+
+  // use meaningful document titles
+  useTitle(formStep.formDefinition);
 
   // fetch the form step configuration
   // TODO: something is causing the FormStep.js to render multiple times, leading to

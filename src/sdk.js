@@ -88,6 +88,7 @@ class OpenForm {
 
     this.url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
+    this.titlePrefix = document.title;
     this.formObject = await get(this.url);
     this.render();
   }
@@ -102,7 +103,9 @@ class OpenForm {
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
-        <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
+        <ConfigContext.Provider
+          value={{baseUrl: this.baseUrl, basePath: this.basePath, titlePrefix: this.titlePrefix}}
+        >
           <I18NErrorBoundary>
             <I18NManager
               languageSelectorTarget={this.languageSelectorTarget}

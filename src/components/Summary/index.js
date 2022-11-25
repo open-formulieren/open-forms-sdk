@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
 import {useHistory} from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
+import useTitle from 'hooks/useTitle';
 
 import {get, post} from 'api';
 import Card from 'components/Card';
@@ -137,6 +138,10 @@ const Summary = ({
   };
 
   const Wrapper = refreshedSubmission.submissionAllowed === SUBMISSION_ALLOWED.yes ? 'form' : 'div';
+
+  // use meaningful document titles
+  // useTitle( ... data);
+  // console.log( ... data);
 
   return (
     <Card title="Controleer en bevestig">

@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
+import useTitle from 'hooks/useTitle';
 
 import AuthenticationOutage, {
   useDetectAuthenticationOutage,
@@ -49,6 +50,9 @@ const FormStart = ({form, onFormStart}) => {
   const hasAuthErrors = !!outagePluginId || !!authErrors;
 
   const onFormStartCalledRef = useRef(false);
+
+  // use meaningful document titles
+  useTitle(form.name);
 
   useEffect(() => {
     // if it's already called, do not call it again as this creates 'infite' cycles.
