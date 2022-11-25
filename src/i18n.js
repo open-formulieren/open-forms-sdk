@@ -53,7 +53,7 @@ const I18NContext = React.createContext({
 });
 I18NContext.displayName = 'I18NContext';
 
-const I18NManager = ({languageSelectorTarget, children}) => {
+const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) => {
   const {baseUrl} = useContext(ConfigContext);
   const [languageCode] = useGlobalState(currentLanguage);
 
@@ -75,14 +75,17 @@ const I18NManager = ({languageSelectorTarget, children}) => {
 
   const {messages, formioTranslations} = value;
 
-  const onLanguageChangeDone = newLanguageCode => {
+  const logLanguageChangeDone = newLanguageCode => {
+    onLanguageChangeDone(newLanguageCode);
     console.log(`Changed language to: ${newLanguageCode}`);
   };
 
   return (
     <IntlProvider messages={messages} locale={languageCode} defaultLocale="nl">
       <FormioTranslations.Provider value={{i18n: formioTranslations, language: languageCode}}>
-        <I18NContext.Provider value={{languageSelectorTarget, onLanguageChangeDone}}>
+        <I18NContext.Provider
+          value={{languageSelectorTarget, onLanguageChangeDone: logLanguageChangeDone}}
+        >
           {children}
         </I18NContext.Provider>
       </FormioTranslations.Provider>
@@ -92,6 +95,7 @@ const I18NManager = ({languageSelectorTarget, children}) => {
 
 I18NManager.propTypes = {
   languageSelectorTarget: PropTypes.instanceOf(Element),
+  onLanguageChangeDone: PropTypes.instanceOf(Function),
   children: PropTypes.node,
 };
 
