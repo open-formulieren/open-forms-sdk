@@ -505,6 +505,9 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     }
 
     formInstance.on('componentError', error => {
+      // Only scroll into view when the form is submitted
+      if (!formInstance.submitted) return;
+
       let firstComponentWithError = formInstance.getComponent(error.component.key);
       if (firstComponentWithError && firstComponentWithError.element) {
         firstComponentWithError.element.scrollIntoView();
