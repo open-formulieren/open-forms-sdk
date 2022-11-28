@@ -106,7 +106,7 @@ class OpenForm {
           <I18NErrorBoundary>
             <I18NManager
               languageSelectorTarget={this.languageSelectorTarget}
-              onLanguageChangeDone={this.onLanguageChangeDone}
+              onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
             >
               <Router basename={this.basePath}>
                 <App form={this.formObject} />

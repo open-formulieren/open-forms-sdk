@@ -78,9 +78,7 @@ const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) =
   return (
     <IntlProvider messages={messages} locale={languageCode} defaultLocale="nl">
       <FormioTranslations.Provider value={{i18n: formioTranslations, language: languageCode}}>
-        <I18NContext.Provider
-          value={{languageSelectorTarget, onLanguageChangeDone}}
-        >
+        <I18NContext.Provider value={{languageSelectorTarget, onLanguageChangeDone}}>
           {children}
         </I18NContext.Provider>
       </FormioTranslations.Provider>
