@@ -90,7 +90,7 @@ const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) =
 
 I18NManager.propTypes = {
   languageSelectorTarget: PropTypes.instanceOf(Element),
-  onLanguageChangeDone: PropTypes.instanceOf(Function),
+  onLanguageChangeDone: PropTypes.func,
   children: PropTypes.node,
 };
 
