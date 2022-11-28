@@ -4,7 +4,7 @@ import {PREFIX} from 'formio/constants';
 
 export const FormioForm = ({form}) => <Form form={form} />;
 
-export const FormioComponent = ({component, components = []}) => (
+export const FormioComponent = ({component, components = [], evalContext = {}}) => (
   <Form
     form={{
       type: 'form',
@@ -17,6 +17,7 @@ export const FormioComponent = ({component, components = []}) => (
       evalContext: {
         ofPrefix: `${PREFIX}-`,
         requiredFieldsWithAsterisk: true, // TODO: create addon to configure this?
+        ...evalContext,
       },
     }}
   />
