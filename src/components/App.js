@@ -4,12 +4,15 @@ import {Switch, Route} from 'react-router-dom';
 
 import AppDebug from 'components/AppDebug';
 import Form from 'components/Form';
-import {Layout, LayoutRow} from 'components/Layout';
-import ManageAppointment from 'components/appointments/ManageAppointment';
 import LanguageSelection from 'components/LanguageSelection';
+import {LayoutRow} from 'components/Layout';
+import ManageAppointment from 'components/appointments/ManageAppointment';
+import {ConfigContext} from 'Context';
 import {I18NContext} from 'i18n';
 import Types from 'types';
 import {DEBUG} from 'utils';
+
+import AppDisplay from './AppDisplay';
 
 const LanguageSwitcher = () => {
   const {languageSelectorTarget: target} = useContext(I18NContext);
@@ -26,32 +29,30 @@ const LanguageSwitcher = () => {
 Top level router - routing between an actual form or supporting screens.
  */
 const App = ({...props}) => {
+  const config = useContext(ConfigContext);
   const {
     form: {translationEnabled},
     noDebug = false,
   } = props;
+
+  const AppDisplayComponent = config?.displayComponents?.app ?? AppDisplay;
+
+  const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
+  const router = (
+    <Switch>
+      {/* Anything dealing with appointments gets routed to it's own sub-router */}
+      <Route path="/afspraak*" component={ManageAppointment} />
+
+      {/* All the rest goes to the actual form flow */}
+      <Route path="/">
+        <Form {...props} />
+      </Route>
+    </Switch>
+  );
+  const appDebug = DEBUG && !noDebug ? <AppDebug /> : null;
+
   return (
-    <Layout>
-      {translationEnabled ? <LanguageSwitcher /> : null}
-
-      <LayoutRow>
-        <Switch>
-          {/* Anything dealing with appointments gets routed to it's own sub-router */}
-          <Route path="/afspraak*" component={ManageAppointment} />
-
-          {/* All the rest goes to the actual form flow */}
-          <Route path="/">
-            <Form {...props} />
-          </Route>
-        </Switch>
-      </LayoutRow>
-
-      {DEBUG && !noDebug ? (
-        <LayoutRow>
-          <AppDebug />
-        </LayoutRow>
-      ) : null}
-    </Layout>
+    <AppDisplayComponent router={router} languageSwitcher={languageSwitcher} appDebug={appDebug} />
   );
 };
 

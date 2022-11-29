@@ -14,6 +14,7 @@ import usePageViews from 'hooks/usePageViews';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 import ErrorBoundary from 'components/ErrorBoundary';
+import FormDisplay from 'components/FormDisplay';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import {LayoutColumn} from 'components/Layout';
@@ -276,86 +277,90 @@ const Form = ({form}) => {
     );
   }
 
-  // render the form step if there's an active submission (and no summary)
-  return (
-    <>
-      <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>
-        {/* Route the correct page based on URL */}
-        <Switch>
-          <Route exact path="/">
-            <ErrorBoundary useCard>
-              <FormStart form={form} onFormStart={onFormStart} />
-            </ErrorBoundary>
-          </Route>
+  const progressIndicator = form.showProgressIndicator ? (
+    <ProgressIndicator
+      title={form.name}
+      steps={form.steps}
+      submission={state.submission || state.submittedSubmission}
+      submissionAllowed={form.submissionAllowed}
+      completed={state.completed}
+    />
+  ) : null;
 
-          <Route exact path="/overzicht">
-            <ErrorBoundary useCard>
-              <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-                <RequireSubmission
-                  submission={state.submission}
-                  form={form}
-                  processingError={state.processingError}
-                  onConfirm={onSubmitForm}
-                  onLogout={onLogout}
-                  component={Summary}
-                  onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
-                />
-              </RequireSession>
-            </ErrorBoundary>
-          </Route>
+  // Route the correct page based on URL
+  const router = (
+    <Switch>
+      <Route exact path="/">
+        <ErrorBoundary useCard>
+          <FormStart form={form} onFormStart={onFormStart} />
+        </ErrorBoundary>
+      </Route>
 
-          <Route exact path="/bevestiging">
-            <ErrorBoundary useCard>
+      <Route exact path="/overzicht">
+        <ErrorBoundary useCard>
+          <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+            <RequireSubmission
+              submission={state.submission}
+              form={form}
+              processingError={state.processingError}
+              onConfirm={onSubmitForm}
+              onLogout={onLogout}
+              component={Summary}
+              onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
+            />
+          </RequireSession>
+        </ErrorBoundary>
+      </Route>
+
+      <Route exact path="/bevestiging">
+        <ErrorBoundary useCard>
+          <RequireSubmission
+            submission={state.submittedSubmission}
+            statusUrl={state.processingStatusUrl}
+            onFailure={onProcessingFailure}
+            onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
+            component={SubmissionConfirmation}
+          />
+        </ErrorBoundary>
+      </Route>
+
+      <Route exact path="/betaaloverzicht">
+        <ErrorBoundary useCard>
+          <PaymentOverview />
+        </ErrorBoundary>
+      </Route>
+
+      <Route
+        path="/stap/:step"
+        render={() => (
+          <ErrorBoundary useCard>
+            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
               <RequireSubmission
-                submission={state.submittedSubmission}
-                statusUrl={state.processingStatusUrl}
-                onFailure={onProcessingFailure}
-                onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
-                component={SubmissionConfirmation}
+                form={form}
+                submission={state.submission}
+                onLogicChecked={submission =>
+                  dispatch({type: 'SUBMISSION_LOADED', payload: submission})
+                }
+                onStepSubmitted={onStepSubmitted}
+                onLogout={onLogout}
+                component={FormStep}
               />
-            </ErrorBoundary>
-          </Route>
+            </RequireSession>
+          </ErrorBoundary>
+        )}
+      />
+    </Switch>
+  );
 
-          <Route exact path="/betaaloverzicht">
-            <ErrorBoundary useCard>
-              <PaymentOverview />
-            </ErrorBoundary>
-          </Route>
-
-          <Route
-            path="/stap/:step"
-            render={() => (
-              <ErrorBoundary useCard>
-                <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-                  <RequireSubmission
-                    form={form}
-                    submission={state.submission}
-                    onLogicChecked={submission =>
-                      dispatch({type: 'SUBMISSION_LOADED', payload: submission})
-                    }
-                    onStepSubmitted={onStepSubmitted}
-                    onLogout={onLogout}
-                    component={FormStep}
-                  />
-                </RequireSession>
-              </ErrorBoundary>
-            )}
-          />
-        </Switch>
-      </LayoutColumn>
-
-      {form.showProgressIndicator && !paymentOverviewMatch ? (
-        <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
-          <ProgressIndicator
-            title={form.name}
-            steps={form.steps}
-            submission={state.submission || state.submittedSubmission}
-            submissionAllowed={form.submissionAllowed}
-            completed={state.completed}
-          />
-        </LayoutColumn>
-      ) : null}
-    </>
+  // render the form step if there's an active submission (and no summary)
+  const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
+  return (
+    <FormDisplayComponent
+      router={router}
+      progressIndicator={progressIndicator}
+      showProgressIndicator={form.showProgressIndicator}
+      isPaymentOverview={!!paymentOverviewMatch}
+    />
   );
 };
 
