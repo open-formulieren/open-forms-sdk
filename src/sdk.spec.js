@@ -44,15 +44,28 @@ const LANGUAGE_INFO = {
   current: 'nl',
 };
 
+const mockAPICalls = url => {
+  switch (url) {
+    case 'http://localhost:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa': {
+      return FORM;
+    }
+    case 'http://localhost:8000/api/v2/i18n/formio/nl': {
+      return {};
+    }
+    case 'http://localhost:8000/api/v2/i18n/info': {
+      return LANGUAGE_INFO;
+    }
+    default:
+      throw new Error(`Unknown url: ${url}`);
+  }
+};
+
 describe('OpenForm', () => {
   it('should accept a DOM node as languageSelectorTarget', async () => {
     const formRoot = document.createElement('div');
     const target = document.createElement('div');
 
-    apiModule.get
-      .mockReturnValueOnce(FORM) // form detail endpoint
-      .mockReturnValueOnce({}) // formio translations
-      .mockReturnValueOnce(LANGUAGE_INFO); // language info
+    apiModule.get.mockImplementation(mockAPICalls);
 
     const form = new OpenForm(formRoot, {
       baseUrl: 'http://localhost:8000/api/v2/',
@@ -79,10 +92,7 @@ describe('OpenForm', () => {
     const formRoot = document.getElementById('root');
     const target = document.getElementById('my-languages-element');
 
-    apiModule.get
-      .mockReturnValueOnce(FORM) // form detail endpoint
-      .mockReturnValueOnce({}) // formio translations
-      .mockReturnValueOnce(LANGUAGE_INFO); // language info
+    apiModule.get.mockImplementation(mockAPICalls);
 
     const form = new OpenForm(formRoot, {
       baseUrl: 'http://localhost:8000/api/v2/',
@@ -104,10 +114,7 @@ describe('OpenForm', () => {
   it('should render the form on init', async () => {
     const formRoot = document.createElement('div');
 
-    apiModule.get
-      .mockReturnValueOnce(FORM) // form detail endpoint
-      .mockReturnValueOnce({}) // formio translations
-      .mockReturnValueOnce(LANGUAGE_INFO); // language info
+    apiModule.get.mockImplementation(mockAPICalls);
 
     const form = new OpenForm(formRoot, {
       baseUrl: 'http://localhost:8000/api/v2/',
@@ -128,11 +135,7 @@ describe('OpenForm', () => {
   it('should re-fetch the form to get new literals after language change', async () => {
     const formRoot = document.createElement('div');
 
-    apiModule.get
-      .mockReturnValueOnce(FORM) // form detail endpoint
-      .mockReturnValueOnce({}) // formio translations
-      .mockReturnValueOnce(LANGUAGE_INFO) // language info
-      .mockReturnValueOnce(FORM); // form detail endpoint again
+    apiModule.get.mockImplementation(mockAPICalls);
 
     const form = new OpenForm(formRoot, {
       baseUrl: 'http://localhost:8000/api/v2/',
