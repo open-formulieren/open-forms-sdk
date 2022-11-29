@@ -13,7 +13,7 @@ window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const FORM = {
   uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
-  url: 'http://localhost:8000/api/v2/81a22589-abce-4147-a2a3-62e9a56685aa',
+  url: 'http://localhost:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa',
   name: 'MOCKED',
   active: true,
   loginRequired: false,
@@ -99,5 +99,59 @@ describe('OpenForm', () => {
     }
 
     expect(target).not.toBeEmptyDOMElement();
+  });
+
+  it('should render the form on init', async () => {
+    const formRoot = document.createElement('div');
+
+    apiModule.get
+      .mockReturnValueOnce(FORM) // form detail endpoint
+      .mockReturnValueOnce({}) // formio translations
+      .mockReturnValueOnce(LANGUAGE_INFO); // language info
+
+    const form = new OpenForm(formRoot, {
+      baseUrl: 'http://localhost:8000/api/v2/',
+      basePath: '',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      lang: 'nl',
+    });
+
+    try {
+      await act(async () => await form.init());
+    } catch (e) {
+      throw e; // should not error
+    }
+
+    expect(formRoot.textContent).not.toContain('Loading');
+  });
+
+  it('should re-fetch the form to get new literals after language change', async () => {
+    const formRoot = document.createElement('div');
+
+    apiModule.get
+      .mockReturnValueOnce(FORM) // form detail endpoint
+      .mockReturnValueOnce({}) // formio translations
+      .mockReturnValueOnce(LANGUAGE_INFO) // language info
+      .mockReturnValueOnce(FORM); // form detail endpoint again
+
+    const form = new OpenForm(formRoot, {
+      baseUrl: 'http://localhost:8000/api/v2/',
+      basePath: '',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      lang: 'nl',
+    });
+
+    try {
+      await act(async () => {
+        await form.init();
+        await form.onLanguageChangeDone('en');
+      });
+    } catch (e) {
+      throw e; // should not error
+    }
+
+    const is_get_form_call = args => args.length == 1 && args[0] == FORM.url;
+    const get_form_calls = apiModule.get.mock.calls.filter(is_get_form_call);
+    expect(get_form_calls.length).toBe(2);
   });
 });

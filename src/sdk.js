@@ -86,17 +86,28 @@ class OpenForm {
   async init() {
     ReactModal.setAppElement(this.targetNode);
 
-    const url = `${this.baseUrl}forms/${this.formId}`;
+    this.url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
-    this.formObject = await get(url);
+    this.formObject = await get(this.url);
+    this.render();
+  }
 
+  async onLanguageChangeDone(newLanguagecode) {
+    this.formObject = await get(this.url);
+    this.render();
+  }
+
+  async render() {
     // render the wrapping React component
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
       <React.StrictMode>
         <ConfigContext.Provider value={{baseUrl: this.baseUrl, basePath: this.basePath}}>
           <I18NErrorBoundary>
-            <I18NManager languageSelectorTarget={this.languageSelectorTarget}>
+            <I18NManager
+              languageSelectorTarget={this.languageSelectorTarget}
+              onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
+            >
               <Router basename={this.basePath}>
                 <App form={this.formObject} />
               </Router>
