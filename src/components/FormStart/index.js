@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import useTitle from 'hooks/useTitle';
 
 import AuthenticationOutage, {
   useDetectAuthenticationOutage,
@@ -22,6 +21,7 @@ import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import {UnprocessableEntity} from 'errors';
 import {IsFormDesigner} from 'headers';
 import useStartSubmission from 'hooks/useStartSubmission';
+import useTitle from 'hooks/useTitle';
 import {getBEMClassName} from 'utils';
 
 const FormStartMessage = ({form}) => {

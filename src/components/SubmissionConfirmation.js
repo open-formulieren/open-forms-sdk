@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
-import useTitle from 'hooks/useTitle';
 
 import {post} from 'api';
 import Body from 'components/Body';
@@ -15,6 +14,7 @@ import Loader from 'components/Loader';
 import PaymentForm from 'components/PaymentForm';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import usePoll from 'hooks/usePoll';
+import useTitle from 'hooks/useTitle';
 
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';
@@ -70,7 +70,7 @@ StartPayment.propTypes = {
 const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
   const intl = useIntl();
   const pageTitle = intl.formatMessage({
-    description: 'Confirmation page',
+    description: 'Confirmation page title',
     defaultMessage: 'Confirmation',
   });
   useTitle(pageTitle);

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, useLocation} from 'react-router-dom';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
-import useTitle from 'hooks/useTitle';
 
 import Body from 'components/Body';
 import Anchor from 'components/Anchor';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import useTitle from 'hooks/useTitle';
 
 // see openforms.payments.constants.UserAction in the backend
 const USER_ACTIONS = ['accept', 'exception', 'cancel', 'unknown'];
@@ -56,7 +56,7 @@ const PaymentOverview = () => {
   const {state: {status, userAction} = {}} = useLocation();
 
   const pageTitle = intl.formatMessage({
-    description: 'Check payment overview',
+    description: 'Payment overview page title',
     defaultMessage: 'Payment overview',
   });
   useTitle(pageTitle);

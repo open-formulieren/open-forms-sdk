@@ -49,6 +49,11 @@
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
+  "AG5zPa": {
+    "defaultMessage": "Check and confirm",
+    "description": "Check overview and confirm",
+    "originalDefault": "Check and confirm"
+  },
   "Ao+97J": {
     "defaultMessage": "Er is iets fout gegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op.",
     "description": "Co-signed without representation fallback message",
@@ -268,6 +273,16 @@
     "defaultMessage": "Bevestiging",
     "description": "Confirmation page title",
     "originalDefault": "Confirmation"
+  },
+  "fwS7yY": {
+    "defaultMessage": "Payment overview",
+    "description": "Payment overview page title",
+    "originalDefault": "Payment overview"
+  },
+  "gPfRU4": {
+    "defaultMessage": "Check and confirm",
+    "description": "Summary page title",
+    "originalDefault": "Check and confirm"
   },
   "hHS5vj": {
     "defaultMessage": "Er is iets fout gegaan bij het verzenden.",

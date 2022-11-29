@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {useAsync} from 'react-use';
 import {useHistory} from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
-import useTitle from 'hooks/useTitle';
 
 import {get, post} from 'api';
 import Card from 'components/Card';
@@ -20,6 +19,7 @@ import Types from 'types';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import FormStepSummary from 'components/FormStepSummary';
+import useTitle from 'hooks/useTitle';
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v2/config/privacy_policy_info';
 
@@ -142,7 +142,7 @@ const Summary = ({
 
   const intl = useIntl();
   const pageTitle = intl.formatMessage({
-    description: 'Check overview and confirm',
+    description: 'Summary page title',
     defaultMessage: 'Check and confirm',
   });
   useTitle(pageTitle);
