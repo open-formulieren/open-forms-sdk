@@ -4,7 +4,11 @@
   tabindex="{{ctx.component.tabindex || 0}}"
   ref="padBody"
 >
-  <button type="button" class="btn btn-sm btn-light signature-pad-refresh utrecht-button utrecht-button--html-button utrecht-button--subtle" ref="refresh">
+  <button
+    type="button"
+    class="btn btn-sm btn-light signature-pad-refresh utrecht-button utrecht-button--html-button utrecht-button--subtle"
+    ref="refresh"
+  >
     <i class="{{ctx.iconClass('refresh')}}"></i>
   </button>
   <canvas class="signature-pad-canvas" height="{{ctx.component.height}}" ref="canvas"></canvas>
@@ -13,10 +17,10 @@
     <i class="{{ctx.iconClass('asterisk')}}"></i>
   </span>
   {% } %}
-  <img ref="signatureImage" class="signature-pad-body__image">
+  <img ref="signatureImage" class="signature-pad-body__image" />
 </div>
 {% if (ctx.component.footer) { %}
-  <div class="signature-pad-footer">
-    {{ctx.t(ctx.component.footer, { _userInput: true })}}
-  </div>
+<div class="signature-pad-footer">
+  {{ctx.t(ctx.component.footer, {_userInput: true})}}
+</div>
 {% } %}
