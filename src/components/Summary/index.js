@@ -7,6 +7,7 @@ import {useImmerReducer} from 'use-immer';
 import {get, post} from 'api';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
@@ -18,6 +19,7 @@ import Types from 'types';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import FormStepSummary from 'components/FormStepSummary';
+import useTitle from 'hooks/useTitle';
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v2/config/privacy_policy_info';
 
@@ -138,11 +140,24 @@ const Summary = ({
 
   const Wrapper = refreshedSubmission.submissionAllowed === SUBMISSION_ALLOWED.yes ? 'form' : 'div';
 
+  const intl = useIntl();
+  const pageTitle = intl.formatMessage({
+    description: 'Summary page title',
+    defaultMessage: 'Check and confirm',
+  });
+  useTitle(pageTitle);
+
   return (
-    <Card title="Controleer en bevestig">
+    <Card
+      title={
+        <FormattedMessage
+          description="Check overview and confirm"
+          defaultMessage="Check and confirm"
+        />
+      }
+    >
       {processingError ? <ErrorMessage>{processingError}</ErrorMessage> : null}
       {state.error ? <ErrorMessage>{state.error}</ErrorMessage> : null}
-
       <LiteralsProvider literals={form.literals}>
         <Wrapper onSubmit={onSubmit}>
           <SubmissionContext.Provider value={{submission: refreshedSubmission}}>

@@ -49,6 +49,11 @@
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
+  "AG5zPa": {
+    "defaultMessage": "Check and confirm",
+    "description": "Check overview and confirm",
+    "originalDefault": "Check and confirm"
+  },
   "Ao+97J": {
     "defaultMessage": "Something went wrong while processing the co-sign authentication. Please contact the municipality.",
     "description": "Co-signed without representation fallback message",
@@ -268,6 +273,16 @@
     "defaultMessage": "Confirmation",
     "description": "Confirmation page title",
     "originalDefault": "Confirmation"
+  },
+  "fwS7yY": {
+    "defaultMessage": "Payment overview",
+    "description": "Payment overview page title",
+    "originalDefault": "Payment overview"
+  },
+  "gPfRU4": {
+    "defaultMessage": "Check and confirm",
+    "description": "Summary page title",
+    "originalDefault": "Check and confirm"
   },
   "hHS5vj": {
     "defaultMessage": "Something went wrong while submitting the form.",

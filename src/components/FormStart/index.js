@@ -21,6 +21,7 @@ import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import {UnprocessableEntity} from 'errors';
 import {IsFormDesigner} from 'headers';
 import useStartSubmission from 'hooks/useStartSubmission';
+import useTitle from 'hooks/useTitle';
 import {getBEMClassName} from 'utils';
 
 const FormStartMessage = ({form}) => {
@@ -49,6 +50,8 @@ const FormStart = ({form, onFormStart}) => {
   const hasAuthErrors = !!outagePluginId || !!authErrors;
 
   const onFormStartCalledRef = useRef(false);
+
+  useTitle(form.name);
 
   useEffect(() => {
     // if it's already called, do not call it again as this creates 'infite' cycles.

@@ -40,6 +40,7 @@ import Card from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
+import useTitle from 'hooks/useTitle';
 import {
   eventTriggeredBySubmitButton,
   findPreviousApplicableStep,
@@ -234,6 +235,8 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   const formStep = form.steps.find(s => s.slug === slug);
   const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
+
+  useTitle(formStep.formDefinition);
 
   // fetch the form step configuration
   // TODO: something is causing the FormStep.js to render multiple times, leading to

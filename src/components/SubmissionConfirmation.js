@@ -14,6 +14,7 @@ import Loader from 'components/Loader';
 import PaymentForm from 'components/PaymentForm';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import usePoll from 'hooks/usePoll';
+import useTitle from 'hooks/useTitle';
 
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';
@@ -67,8 +68,14 @@ StartPayment.propTypes = {
  * @param {Function} onConfirmed Callback to invoke if the background processing result is success.
  */
 const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
-  const [statusResponse, setStatusResponse] = useState(null);
   const intl = useIntl();
+  const pageTitle = intl.formatMessage({
+    description: 'Confirmation page title',
+    defaultMessage: 'Confirmation',
+  });
+  useTitle(pageTitle);
+
+  const [statusResponse, setStatusResponse] = useState(null);
   const genericErrorMessage = intl.formatMessage({
     description: 'Generic submission error',
     defaultMessage: 'Something went wrong while submitting the form.',

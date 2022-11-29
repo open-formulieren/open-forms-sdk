@@ -7,6 +7,7 @@ import Body from 'components/Body';
 import Anchor from 'components/Anchor';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import useTitle from 'hooks/useTitle';
 
 // see openforms.payments.constants.UserAction in the backend
 const USER_ACTIONS = ['accept', 'exception', 'cancel', 'unknown'];
@@ -53,6 +54,12 @@ Container.propTypes = {
 const PaymentOverview = () => {
   const intl = useIntl();
   const {state: {status, userAction} = {}} = useLocation();
+
+  const pageTitle = intl.formatMessage({
+    description: 'Payment overview page title',
+    defaultMessage: 'Payment overview',
+  });
+  useTitle(pageTitle);
 
   // display a warning if someone navigates directly to this URL.
   if (!status || !userAction) {

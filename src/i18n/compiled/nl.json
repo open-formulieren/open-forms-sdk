@@ -59,6 +59,12 @@
       "value": "Afspraak geannuleerd"
     }
   ],
+  "AG5zPa": [
+    {
+      "type": 0,
+      "value": "Check and confirm"
+    }
+  ],
   "Ao+97J": [
     {
       "type": 0,
@@ -393,6 +399,18 @@
     {
       "type": 0,
       "value": "Bevestiging"
+    }
+  ],
+  "fwS7yY": [
+    {
+      "type": 0,
+      "value": "Payment overview"
+    }
+  ],
+  "gPfRU4": [
+    {
+      "type": 0,
+      "value": "Check and confirm"
     }
   ],
   "hHS5vj": [
