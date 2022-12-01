@@ -66,6 +66,8 @@ const SidebarStepStatus = ({
         useLink={isApplicable && canNavigate}
         isActive={isCurrent}
         isApplicable={isApplicable}
+        aria-label={formDefinition}
+        title={formDefinition}
       >
         <FormattedMessage
           description="Step label in progress indicator"
@@ -115,7 +117,11 @@ const ProgressIndicatorDisplay = ({
         onClick={() => setExpanded(!expanded)}
       >
         <FAIcon icon={expanded ? 'chevron-up' : 'chevron-down'} modifiers={['normal']} />
-        <span className={getBEMClassName('progress-indicator__active-step')}>
+        <span
+          className={getBEMClassName('progress-indicator__active-step')}
+          aria-label="activeStepTitle"
+          title="active step title"
+        >
           {activeStepTitle}
         </span>
       </div>
