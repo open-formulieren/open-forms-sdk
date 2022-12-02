@@ -2,9 +2,10 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+// not all icons need to be seen by assistive technologies.
 const FAIcon = ({
   icon,
-  component: Component = 'span',
+  component: Component = 'i',
   extraClassName = '',
   modifiers = [],
   ...props
