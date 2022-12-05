@@ -461,6 +461,10 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     const isValid = await formInstance.checkAsyncValidity(data, true, data); // sets the validation error messages
     // invalid forms may not be submitted.
     if (!isValid) {
+      let firstComponentWithError = formInstance.getComponent(formInstance.errors[0].component.key);
+      if (firstComponentWithError && firstComponentWithError.element) {
+        firstComponentWithError.element.scrollIntoView();
+      }
       dispatch({type: 'BLOCK_SUBMISSION'});
       return;
     }
@@ -506,16 +510,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
       console.warn('No form instance available!');
       return;
     }
-
-    formInstance.on('componentError', error => {
-      // Only scroll into view when the form is submitted
-      if (!formInstance.submitted) return;
-
-      let firstComponentWithError = formInstance.getComponent(error.component.key);
-      if (firstComponentWithError && firstComponentWithError.element) {
-        firstComponentWithError.element.scrollIntoView();
-      }
-    });
 
     // We cannot filter 'blank' values to prevent Formio validation from running, as
     // Formio will use the default values in that case which have been explicitly
