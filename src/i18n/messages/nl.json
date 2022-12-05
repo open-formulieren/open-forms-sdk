@@ -329,6 +329,11 @@
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
   },
+  "sJsjTA": {
+    "defaultMessage": "Completed",
+    "description": "Completion message",
+    "originalDefault": "Completed"
+  },
   "senRv3": {
     "defaultMessage": "U staat op het punt uw afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden.",
     "description": "Appointment cancellation body text",

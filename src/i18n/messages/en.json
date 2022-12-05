@@ -329,6 +329,11 @@
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
   },
+  "sJsjTA": {
+    "defaultMessage": "Completed",
+    "description": "Completion message",
+    "originalDefault": "Completed"
+  },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
     "description": "Appointment cancellation body text",

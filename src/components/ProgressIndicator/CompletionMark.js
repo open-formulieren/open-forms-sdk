@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useIntl} from 'react-intl';
+import {IntlProvider, FormattedMessage, useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
 

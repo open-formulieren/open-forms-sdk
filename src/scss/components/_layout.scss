@@ -11,10 +11,6 @@
   display: flex;
   flex-direction: column;
 
-  .sr-only {
-    visibility: hidden;
-  }
-
   @include element('row') {
     @include container(flex);
     @include responsive(flex-direction, column, row);
