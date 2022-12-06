@@ -29,7 +29,7 @@ const PaymentForm = ({method, url, data, autoSubmit = true}) => {
   ));
 
   return (
-    <form ref={formRef} method={method} action={url}>
+    <form ref={formRef} method={method} action={url} autocomplete="on">
       {dataFields}
       <Button type="submit" variant="primary">
         <FormattedMessage description="Start payment button" defaultMessage="Pay now" />

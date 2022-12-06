@@ -583,7 +583,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
         {!isLoadingSomething && configuration ? (
-          <form onSubmit={onReactSubmit}>
+          <form onSubmit={onReactSubmit} autocomplete="on">
             <Form
               ref={formRef}
               form={configuration}
