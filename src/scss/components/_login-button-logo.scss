@@ -1,0 +1,20 @@
+@use 'sass:math';
+
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix(login-button-logo)} {
+  display: flex;
+  align-items: center;
+
+  @include mobile-only {
+    width: 25%;
+    justify-content: center;
+  }
+
+  &__image {
+    max-height: $grid-row-height;
+    max-width: $grid-row-height;
+  }
+}

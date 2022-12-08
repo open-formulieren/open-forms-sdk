@@ -1,0 +1,178 @@
+import { Canvas, Meta, Story, Props, ArgsTable } from '@storybook/addon-docs';
+
+import {LiteralsProvider} from 'components/Literal';
+
+import LoginOptions from '.';
+import LoginOptionsDisplay from './LoginOptionsDisplay';
+
+<Meta
+  title="Composites/Login Options"
+  component={LoginOptions}
+/>
+
+# Login Options
+
+The `LoginOptions` component displays the options that are available for a user to authenticate when starting a form.
+
+## Presentation
+
+The `LoginOptionsDisplay` component shows the different buttons that can be clicked to start the authentication process.
+Next to each button, the corresponding logo is displayed.
+
+export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptions}) => (
+  <LoginOptionsDisplay
+    loginAsYourselfOptions={loginAsYourselfOptions}
+    loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
+  />
+);
+
+<Canvas>
+  <Story
+    name="Display"
+    args={{
+      loginAsYourselfOptions: [
+        {
+          identifier: "digid",
+          label: "DigiD",
+          logo: {
+              href: "https://www.digid.nl/",
+              title: "DigiD",
+              imageSrc: "/digid.png"
+          },
+          url: "http://localhost:8999/auth/form-slug/digid/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+        },
+        {
+          identifier: "eHerkenning",
+          label: "eHerkenning",
+          logo: {
+              href: "https://www.eherkenning.nl/",
+              title: "eHerkenning",
+              imageSrc: "/eherkenning.png"
+          },
+          url: "http://localhost:8999/auth/form-slug/eherkenning/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+        },
+        {
+          identifier: "eidas",
+          label: "eIDAS",
+          logo: {
+              href: "https://www.eherkenning.nl/",
+              title: "eIDAS",
+              imageSrc: "/eidas.png"
+          },
+          url: "http://localhost:8999/auth/form-slug/eidas/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+        },
+        {
+          identifier: "anonymous",
+          label: "Begin form",
+          url: "#",
+        }
+      ],
+      loginAsGemachtigdeOptions: [{
+	      identifier: "digid_machtigen",
+	      label: "DigiD Machtigen",
+        logo: {
+            href: "https://www.digid.nl/",
+            title: "DigiD Machtigen",
+            imageSrc: "/digid.png"
+        },
+        url: "http://localhost:8999/auth/issue-2447-style-login-page/digid_machtigen/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+      }]
+    }}
+  >
+    {DisplayTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Props
+
+<ArgsTable of={LoginOptionsDisplay} />
+
+## Functional
+
+The `LoginOptions` component handles the 'smart' part of the component. It separates the login options between
+the ones that can be used to 'login as yourself' and the ones that can be used to log in 'on behalf of someone else'.
+It also formats the labels that will be displayed on the buttons and creates the right URL to which the user will be
+redirected upon clicking one of the buttons.
+
+export const Template = ({form, onFormStart}) => (
+  <LiteralsProvider literals={{'beginText': {resolved: 'Begin Form'}}}>
+    <LoginOptions
+      form={form}
+      onFormStart={onFormStart}
+    />
+  </LiteralsProvider>
+);
+
+<Canvas>
+  <Story
+    name="Functional"
+    args={{
+      form: {
+        loginOptions: [
+          {
+            identifier: "digid",
+            label: "DigiD",
+            url: "http://localhost:8999/auth/form-slug/digid/start",
+            logo: {
+              title: "DigiD simulatie",
+              imageSrc: "/digid.png",
+              href: "https://www.digid.nl/"
+            },
+            isForGemachtigde: false
+          },
+          {
+            identifier: "eherkenning",
+            label: "eHerkenning",
+            url: "http://localhost:8999/auth/form-slug/eherkenning/start",
+            logo: {
+              title: "eHerkenning",
+              imageSrc: "/eherkenning.png",
+              href: "https://www.eherkenning.nl/"
+            },
+            isForGemachtigde: false
+          },
+          {
+            identifier: "eidas",
+            label: "eIDAS",
+            url: "http://localhost:8999/auth/form-slug/eidas/start",
+            logo: {
+              title: "eIDAS",
+              imageSrc: "/eidas.png",
+              href: "https://digital-strategy.ec.europa.eu/en/policies/eu-trust-mark"
+            },
+            isForGemachtigde: false
+          },
+          {
+            identifier: "digid_machtigen",
+            label: "DigiD Machtigen",
+            url: "http://localhost:8999/auth/form-slug/digid_machtigen_oidc/start",
+            logo: {
+              title: "DigiD Machtigen",
+              imageSrc: "/digid.png",
+              href: "https://www.digid.nl/"
+            },
+            isForGemachtigde: true
+          },
+          {
+            identifier: "eherkenning_bewindvoering",
+            label: "eHerkenning bewindvoering",
+            url: "http://localhost:8999/auth/form-slug/eherkenning_bewindvoering_oidc/start",
+            logo: {
+              title: "eHerkenning bewindvoering",
+              imageSrc: "/eherkenning.png",
+              href: "https://www.eherkenning.nl/"
+            },
+            isForGemachtigde: true
+          },
+        ]
+      },
+      onFormStart: () => {},
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Props
+
+<ArgsTable of={LoginOptions} />

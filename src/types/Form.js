@@ -2,22 +2,23 @@ import PropTypes from 'prop-types';
 
 import ButtonTextLiteral from './ButtonTextLiteral';
 
+const LoginOption = PropTypes.shape({
+  identifier: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  logo: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    imageSrc: PropTypes.string.isRequired,
+    href: PropTypes.string,
+  }),
+  isForGemachtigde: PropTypes.bool,
+});
+
 const Form = PropTypes.shape({
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   loginRequired: PropTypes.bool.isRequired,
-  loginOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      identifier: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      logo: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        imageSrc: PropTypes.string.isRequired,
-        href: PropTypes.string,
-      }),
-    })
-  ).isRequired,
+  loginOptions: PropTypes.arrayOf(LoginOption).isRequired,
   product: PropTypes.string,
   slug: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
