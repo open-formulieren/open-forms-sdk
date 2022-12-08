@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {IntlProvider, FormattedMessage, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
 
@@ -25,7 +25,7 @@ const CompletionMark = ({completed = false}) => {
         aria-label={ariaLabel}
         title={ariaLabel}
       />
-      <span class="sr-only">{ariaLabel}</span>
+      <span className="sr-only">{ariaLabel}</span>
     </>
   );
 };
