@@ -1,56 +1,75 @@
-<!-- Button.stories.mdx -->
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
-import { FormioComponent, FormDecorator } from './story-util';
+import {Canvas, Meta, Story, Props} from '@storybook/addon-docs';
+import {FormioComponent, FormDecorator} from './story-util';
 
 <Meta
   title="Form.io components/Signature"
   argTypes={{
     components: {
-      type: { name: 'array' },
+      type: {name: 'array'},
     },
+    description: {
+      type: {name: 'string', required: false},
+    },
+    footer: {
+      type: {name: 'string', required: false},
+    },
+    label: {
+      type: {name: 'string', required: true},
+    },
+    label: {
+      type: {name: 'string', required: false},
+    },
+    backgroundColor: {control: 'color'},
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' }
+    controls: {sort: 'requiredFirst'},
   }}
 />
 
 # Signature
 
-A signature field is a special field that allows someone to sign the field with either their finger on a touch enabled device or with the mouse pointer. This signature will be converted into an image and stored with the form submission.
+A signature field is a special field that allows someone to sign the field with either their finger
+on a touch enabled device or with the mouse pointer. This signature will be converted into an image
+and stored with the form submission.
 
-**Background Color**
+**Footer Label**
 
-The Background color of the signature area. This can be an RGB value in RGB(255,255,255) format, a hex value like #000000 or the name of a color.
-
-**Pen color**
-
-The pen color in the signature area. This can be an RGB value in RGB(255,255,255) format, a hex value like #000000 or the name of a color.
-
+You can enter a short instruction here.
 
 ## Default
 
-export const Template = ({ components = [], ...args}) => (
-  <FormioComponent components={components}/>
-);
+export const Template = ({components = [], ...args}) => <FormioComponent components={components} />;
 
 <Canvas>
-  <Story name="Default" args={{ 
+  <Story
+    name="Default"
+    args={{
       components: [
         {
-          key: 'basic', 
-          type: 'SignatureField',
-          label: 'basic',
-          components: [
-                {
-                  key: 'Title signature',
-                  type: 'signature',
-                  label: '# Label',
-                }
-              ],
-        }
-      ]
-    }}>
+          label: 'Handtekening',
+          key: 'signature',
+          description: 'Plaats hierboven uw handtekening',
+          footer: 'Plaats hierboven uw handtekening',
+          showInSummary: true,
+          showInEmail: false,
+          showInPDF: true,
+          isSensitiveData: true,
+          validate: {
+            required: true,
+          },
+          registration: {
+            attribute: '',
+          },
+          type: 'signature',
+          input: true,
+          tableView: false,
+          penColor: 'black',
+          backgroundColor: 'rgb(245,245,235)',
+        },
+      ],
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
