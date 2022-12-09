@@ -1,0 +1,58 @@
+<!-- Button.stories.mdx -->
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { FormioComponent, FormDecorator } from './story-util';
+
+<Meta
+  title="Form.io components/Signature"
+  argTypes={{
+    components: {
+      type: { name: 'array' },
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: { sort: 'requiredFirst' }
+  }}
+/>
+
+# Signature
+
+A signature field is a special field that allows someone to sign the field with either their finger on a touch enabled device or with the mouse pointer. This signature will be converted into an image and stored with the form submission.
+
+**Background Color**
+
+The Background color of the signature area. This can be an RGB value in RGB(255,255,255) format, a hex value like #000000 or the name of a color.
+
+**Pen color**
+
+The pen color in the signature area. This can be an RGB value in RGB(255,255,255) format, a hex value like #000000 or the name of a color.
+
+
+## Default
+
+export const Template = ({ components = [], ...args}) => (
+  <FormioComponent components={components}/>
+);
+
+<Canvas>
+  <Story name="Default" args={{ 
+      components: [
+        {
+          key: 'basic', 
+          type: 'SignatureField',
+          label: 'basic',
+          components: [
+                {
+                  key: 'Title signature',
+                  type: 'signature',
+                  label: '# Label',
+                }
+              ],
+        }
+      ]
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Default" />
