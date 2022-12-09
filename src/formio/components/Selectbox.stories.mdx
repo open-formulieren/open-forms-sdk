@@ -1,0 +1,59 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { FormioComponent, FormDecorator } from './story-util';
+
+<Meta
+  title="Form.io components/Selectboxes"
+  argTypes={{
+    id: {
+      type: { name: 'string' },
+    },
+    label: {
+      type: { name: 'string', required: false },
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: { sort: 'requiredFirst' }
+  }}
+/>
+
+# Select Boxes
+
+The Select Boxes allows the user to check multiple values from a list of options. The Value column is what will be stored in the database and the Label is what is shown to the users.
+
+**Inline Layout**
+
+If checked, this field will layout the checkboxes horizontally instead of vertically.
+
+
+## Default
+
+export const Template = ({ id = '', label = '', ...args}) => (
+  <FormioComponent component={{
+      key: id,
+      type: 'selectboxes',
+      input: true,
+      label,
+      "values": [
+          {
+              "label": "Optie A",
+              "value": "selectA"
+          },
+          {
+              "label": "Optie B",
+              "value": "selectB"
+          },
+          {
+              "label": "Optie C",
+              "value": "selectC"
+          }
+      ],
+}}/>);
+
+<Canvas>
+  <Story name="Default" args={{ id: 'option', label: 'Welke opties wilt u allemaal?'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Default" />
