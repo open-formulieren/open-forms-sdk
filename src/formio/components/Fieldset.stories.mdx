@@ -1,0 +1,117 @@
+import {Canvas, Meta, Story, Props} from '@storybook/addon-docs';
+import {FormioComponent, FormDecorator} from './story-util';
+
+<Meta
+  title="Form.io components/Fieldset"
+  argTypes={{
+    components: {
+      type: {name: 'array'},
+    },
+    id: {
+      type: {name: 'string'},
+    },
+    label: {
+      type: {name: 'string', required: false},
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: {sort: 'requiredFirst'},
+  }}
+/>
+
+# Field Set
+
+A Field Set can be used to create a title of an area of the form. This is useful to put inside
+Layout components or in between lots of related components. The Field Set is for display only and
+will not be saved to the API.
+
+**Legend**
+
+A Field Set label that will appear as a Legend for the component in the form.
+
+## Default
+
+
+export const Template = ({id = '', label = '', ...args}) => (
+  <FormioComponent
+    component={{
+      key: 'fieldSet',
+      type: 'fieldset',
+      input: false,
+      label,
+      tableView: false,
+      components: [
+        {
+          key: id,
+          type: 'selectboxes',
+          input: true,
+          label: 'Tab-focus selectboxes',
+          values: [
+            {
+              label: 'tab naar mij',
+              value: 'tabNaarMij',
+            },
+            {
+              label: 'keyboard arrow naar mij',
+              value: 'keyboardArrowNaarMij',
+            },
+          ],
+          validate: {
+            required: true,
+          },
+          inputType: 'checkbox',
+          showInPDF: true,
+          tableView: false,
+          showInEmail: false,
+          defaultValue: {
+            drie: false,
+            tabNaarMij: false,
+            keyboardArrowNaarMij: false,
+          },
+          registration: {
+            attribute: '',
+          },
+          showInSummary: true,
+          isSensitiveData: false,
+        },
+        {
+          key: 'radioButton',
+          type: 'radio',
+          input: true,
+          label: 'Radio button',
+          values: [
+            {
+              label: 'radio 1',
+              value: 'radio1',
+            },
+            {
+              label: 'radio 2',
+              value: 'radio2',
+            },
+          ],
+          validate: {
+            required: true,
+          },
+          showInPDF: true,
+          tableView: false,
+          showInEmail: false,
+          registration: {
+            attribute: '',
+          },
+          showInSummary: true,
+          isSensitiveData: false,
+        },
+      ],
+      hideHeader: false,
+    }}
+  />
+);
+
+<Canvas>
+  <Story name="Default" args={{id: 'veldengroep1', label: 'Uw keuzevelden'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Props story="Default" />
