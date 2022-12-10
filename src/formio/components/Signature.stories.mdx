@@ -4,22 +4,20 @@ import {FormioComponent, FormDecorator} from './story-util';
 <Meta
   title="Form.io components/Signature"
   argTypes={{
-    components: {
-      type: {name: 'array'},
-    },
+    backgroundColor: {control: 'color'},
     description: {
       type: {name: 'string', required: false},
     },
     footer: {
       type: {name: 'string', required: false},
     },
+    id: {
+      type: {name: 'string'},
+    },
     label: {
       type: {name: 'string', required: true},
     },
-    label: {
-      type: {name: 'string', required: false},
-    },
-    backgroundColor: {control: 'color'},
+    penColor: {control: 'color'},
   }}
   decorators={[FormDecorator]}
   parameters={{
@@ -29,45 +27,52 @@ import {FormioComponent, FormDecorator} from './story-util';
 
 # Signature
 
-A signature field is a special field that allows someone to sign the field with either their finger
-on a touch enabled device or with the mouse pointer. This signature will be converted into an image
-and stored with the form submission.
+A signature field is a special field that allows someone to sign the field with either their finger on a touch enabled device or with the mouse pointer. This signature will be converted into an image and stored with the form submission.
 
 **Footer Label**
 
-You can enter a short instruction here.
+You can enter a short instruction in the footer.
 
 ## Default
 
-export const Template = ({components = [], ...args}) => <FormioComponent components={components} />;
+export const Template = ({
+  backgroundColor = '',
+  description = '',
+  footer = '',
+  id = '',
+  label = '',
+  penColor = '',
+  ...args
+}) => (
+  <FormioComponent
+    component={{
+      backgroundColor,
+      description,
+      footer,
+      input: true,
+      isSensitiveData: true,
+      key: id,
+      label,
+      penColor,
+      showInEmail: false,
+      showInPDF: true,
+      showInSummary: true,
+      tableView: false,
+      type: 'signature',
+    }}
+  />
+);
 
 <Canvas>
   <Story
     name="Default"
     args={{
-      components: [
-        {
-          label: 'Handtekening',
-          key: 'signature',
-          description: 'Plaats hierboven uw handtekening',
-          footer: 'Plaats hierboven uw handtekening',
-          showInSummary: true,
-          showInEmail: false,
-          showInPDF: true,
-          isSensitiveData: true,
-          validate: {
-            required: true,
-          },
-          registration: {
-            attribute: '',
-          },
-          type: 'signature',
-          input: true,
-          tableView: false,
-          penColor: 'black',
-          backgroundColor: 'rgb(245,245,235)',
-        },
-      ],
+      backgroundColor: 'rgb(245,245,235)',
+      description: 'Plaats hierboven uw handtekening',
+      footer: 'Plaats hierboven uw handtekening',
+      id: 'handtekening',
+      label: 'Handtekening',
+      penColor: 'black',
     }}
   >
     {Template.bind({})}
