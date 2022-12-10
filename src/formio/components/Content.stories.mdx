@@ -1,0 +1,54 @@
+import {Canvas, Meta, Story, ArgsTable} from '@storybook/addon-docs';
+import {FormioComponent, FormDecorator} from './story-util';
+
+<Meta
+  title="Form.io components/Content"
+  argTypes={{
+    id: {
+      type: {name: 'string'},
+    },
+    label: {
+      type: {name: 'string', required: false},
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: {sort: 'requiredFirst'},
+  }}
+/>
+
+# Content
+
+## Default
+
+export const Template = ({customClass = '', html = '', id = '', label = '', ...args}) => (
+  <FormioComponent
+    component={{
+      html,
+      label,
+      key: id,
+      showInEmail: false,
+      showInPDF: true,
+      input: false,
+      tableView: false,
+      customClass,
+      type: 'content',
+    }}
+  />
+);
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      customClass: 'breed',
+      html: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a felis ante. Nunc dictum, dui et scelerisque euismod, ex dui sodales magna, quis vehicula nulla justo sed urna. Integer maximus tempus tellus vel commodo. Orci varius natoque penatibus et magnis dis parturient montes.</p>',
+      id: 'content',
+      label: 'Vrije tekst',
+    }}
+  >
+    {Template.bind({})} lorem
+  </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
