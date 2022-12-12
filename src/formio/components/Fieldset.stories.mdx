@@ -32,70 +32,69 @@ A Field Set label that will appear as a Legend for the component in the form.
 
 ## Default
 
-
-export const Template = ({id = '', label = '', ...args}) => (
+export const Template = ({descriptionFamilyName, descriptionGivenName, id = '', label = '', labelFirstName, labelLastName, labelPrivacy, placeholderFirstName, placeholderLastName, ...args}) => (
   <FormioComponent
     component={{
-      key: 'fieldSet',
+      key: id,
       type: 'fieldset',
       input: false,
       label,
       tableView: false,
       components: [
         {
-          key: id,
-          type: 'selectboxes',
+          key: 'given-name',
+          type: 'textfield',
           input: true,
-          label: 'Tab-focus selectboxes',
-          values: [
-            {
-              label: 'tab naar mij',
-              value: 'tabNaarMij',
-            },
-            {
-              label: 'keyboard arrow naar mij',
-              value: 'keyboardArrowNaarMij',
-            },
-          ],
-          validate: {
-            required: true,
+          label: labelFirstName,
+          prefill: {
+            plugin: '',
+            attribute: '',
           },
-          inputType: 'checkbox',
           showInPDF: true,
-          tableView: false,
+          tableView: true,
+          deriveCity: false,
+          description: descriptionGivenName,
+          placeholder: placeholderFirstName,
           showInEmail: false,
-          defaultValue: {
-            drie: false,
-            tabNaarMij: false,
-            keyboardArrowNaarMij: false,
-          },
           registration: {
             attribute: '',
           },
           showInSummary: true,
           isSensitiveData: false,
+          deriveStreetName: false,
         },
         {
-          key: 'radioButton',
-          type: 'radio',
+          key: 'family-name',
+          type: 'textfield',
           input: true,
-          label: 'Radio button',
-          values: [
-            {
-              label: 'radio 1',
-              value: 'radio1',
-            },
-            {
-              label: 'radio 2',
-              value: 'radio2',
-            },
-          ],
-          validate: {
-            required: true,
+          label: labelLastName,
+          prefill: {
+            plugin: '',
+            attribute: '',
           },
           showInPDF: true,
-          tableView: false,
+          tableView: true,
+          deriveCity: false,
+          description: descriptionFamilyName,
+          placeholder: placeholderLastName,
           showInEmail: false,
+          registration: {
+            attribute: '',
+          },
+          showInSummary: true,
+          isSensitiveData: false,
+          deriveStreetName: false,
+        },
+        {
+          key: 'ikGaAkkoordMetDePrivacyVoorwaarden',
+          type: 'checkbox',
+          input: true,
+          label: labelPrivacy,
+          showInPDF: true,
+          tableView: false,
+          description: 'privacy-check',
+          showInEmail: false,
+          defaultValue: false,
           registration: {
             attribute: '',
           },
@@ -109,7 +108,7 @@ export const Template = ({id = '', label = '', ...args}) => (
 );
 
 <Canvas>
-  <Story name="Default" args={{id: 'veldengroep1', label: 'Uw keuzevelden'}}>
+  <Story name="Default" args={{descriptionFamilyName: 'family-name', descriptionGivenName: 'given-name' , id: 'veldengroep1', label: 'Uw keuzevelden', labelFirstName: 'Voornaam', labelLastName: 'Achternaam', labelPrivacy: 'Ik ga akkoord met de privacy-voorwaarden', placeholderFirstName: 'voornaam...', placeholderLastName: 'achternaam...'}}>
     {Template.bind({})}
   </Story>
 </Canvas>
