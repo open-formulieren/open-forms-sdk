@@ -1,0 +1,128 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {getWorker} from 'msw-storybook-addon';
+
+export const worker = getWorker();
+
+import {FileField} from './FileField';
+import {
+  UPLOAD_URL,
+  mockFileUploadDelete,
+  mockFileUploadErrorPost,
+  mockFileUploadPost,
+} from './FileUpload.mocks';
+import {FormDecorator, FormioComponent} from './story-util';
+
+export const FILEPATTERN = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.rar',
+  'application/zip',
+  'image/heic',
+  'image/jpeg',
+  'image/png',
+  'text/csv',
+  'text/plain',
+];
+
+export const ERRORS = ['File is too big', 'File is of the wrong type'];
+
+<Meta
+  title="Form.io components/FileUpload"
+  component={FileField}
+  argTypes={{
+    filePattern: {
+      options: FILEPATTERN,
+      control: {type: 'check'},
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: {sort: 'requiredFirst'},
+    msw: {
+      handlers: [mockFileUploadPost, mockFileUploadDelete],
+    },
+  }}
+/>
+
+# File Upload
+
+**Note** - file uploads on the Docs page will always error due to the way
+the network mocking library works. Use the canvas instead.
+
+export const Template = ({
+  id,
+  label,
+  required,
+  description,
+  filePattern=[],
+  multiple,
+  backendErrors=[],
+}) => {
+  if (backendErrors.length) {
+    worker.use(mockFileUploadErrorPost(backendErrors));
+  }
+  return (
+    <FormioComponent
+      component={{
+        type: 'file',
+        id: 'ef2k87',
+        key: id,
+        label,
+        input: true,
+        description,
+        validate: {
+          required,
+        },
+        multiple,
+        filePattern: filePattern.join(','),
+        storage: 'url',
+        url: UPLOAD_URL,
+      }}
+    />
+  );
+}
+
+## Happy flow
+
+<Canvas>
+  <Story
+    name="Happy flow"
+    args={{
+      id: 'fileUpload1',
+      label: 'Attachment',
+      description: 'Klik om een bestand te selecteren en in te zenden',
+      required: false,
+      multiple: false,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Happy flow" />
+
+## Error flow
+
+The backend performs a number of checks on file uploads and may return validation
+errors. These are displayed on the upload component.
+
+<Canvas>
+  <Story
+    name="Error flow"
+    argTypes={{
+      filePattern: {table: {disable: true}},
+    }}
+    args={{
+      id: 'fileUpload2',
+      label: 'Attachment',
+      description: '',
+      required: false,
+      multiple: false,
+      backendErrors: ['A dangerous virus was detected!'],
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Error flow" />
