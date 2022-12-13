@@ -1,23 +1,15 @@
-import {Canvas, Meta, Story, Props} from '@storybook/addon-docs';
+import {Canvas, Meta, Story, ArgsTable} from '@storybook/addon-docs';
 import {FormioComponent, FormDecorator} from './story-util';
 
 <Meta
   title="Form.io components/Signature"
   argTypes={{
-    backgroundColor: {control: 'color'},
     description: {
       type: {name: 'string', required: false},
-    },
-    footer: {
-      type: {name: 'string', required: false},
-    },
-    id: {
-      type: {name: 'string'},
     },
     label: {
       type: {name: 'string', required: true},
     },
-    penColor: {control: 'color'},
   }}
   decorators={[FormDecorator]}
   parameters={{
@@ -27,38 +19,17 @@ import {FormioComponent, FormDecorator} from './story-util';
 
 # Signature
 
-A signature field is a special field that allows someone to sign the field with either their finger on a touch enabled device or with the mouse pointer. This signature will be converted into an image and stored with the form submission.
+A signature field is a special field that allows someone to sign the field with either their finger
+on a touch enabled device or with the mouse pointer. This signature will be converted into an image
+and stored with the form submission.
 
-**Footer Label**
-
-You can enter a short instruction in the footer.
 
 ## Default
 
-export const Template = ({
-  backgroundColor = '',
-  description = '',
-  footer = '',
-  id = '',
-  label = '',
-  penColor = '',
-  ...args
-}) => (
+export const Template = ({description = '', label = '', ...args}) => (
   <FormioComponent
     component={{
-      backgroundColor,
-      description,
-      footer,
-      input: true,
-      isSensitiveData: true,
-      key: id,
-      label,
-      penColor,
-      showInEmail: false,
-      showInPDF: true,
-      showInSummary: true,
-      tableView: false,
-      type: 'signature',
+      description, input: true, isSensitiveData: true, key: 'id', label, showInEmail: false, showInPDF: true, showInSummary: true, tableView: false, type: 'signature',
     }}
   />
 );
@@ -66,17 +37,10 @@ export const Template = ({
 <Canvas>
   <Story
     name="Default"
-    args={{
-      backgroundColor: 'rgb(245,245,235)',
-      description: 'Plaats hierboven uw handtekening',
-      footer: 'Plaats hierboven uw handtekening',
-      id: 'handtekening',
-      label: 'Handtekening',
-      penColor: 'black',
-    }}
+    args={{ description: 'Plaats hierboven uw handtekening', label: 'Handtekening'}}
   >
     {Template.bind({})}
   </Story>
 </Canvas>
 
-<Props story="Default" />
+<ArgsTable story="Default" />
