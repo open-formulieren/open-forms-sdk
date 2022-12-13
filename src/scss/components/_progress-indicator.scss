@@ -13,6 +13,16 @@
 .#{prefix('progress-indicator')} {
   @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
 
+  // temporary fix for replacing div with a button for accessibility
+  button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+  }
+
   @include element('mobile-header') {
     @include body;
     @include body--big;
@@ -39,10 +49,8 @@
 
     // style layout
     @at-root .#{prefix('layout__row')} & {
-      @include margin(
-        calc(-1 * var(--of-progress-indicator-mobile-margin)),
-        $properties: (margin-left, margin-right)
-      );
+      @include margin(calc(-1 * var(--of-progress-indicator-mobile-margin)),
+        $properties: (margin-left, margin-right));
     }
 
     @include nested('caption') {

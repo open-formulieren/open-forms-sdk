@@ -1,4 +1,9 @@
 {
+  "+CrcRw": {
+    "defaultMessage": "Completed",
+    "description": "Step completion marker icon label",
+    "originalDefault": "Completed"
+  },
   "0j8tMq": {
     "defaultMessage": "Uitloggen",
     "description": "Log out button text",
@@ -174,6 +179,11 @@
     "description": "Form start outage title",
     "originalDefault": "Problem - {formName}"
   },
+  "Rj0x41": {
+    "defaultMessage": "Show/hide steps",
+    "description": "Active step toggle titles",
+    "originalDefault": "Show/hide steps"
+  },
   "SE7xol": {
     "defaultMessage": "nee",
     "description": "'False' display",
@@ -314,6 +324,11 @@
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
+  "mtGZKB": {
+    "defaultMessage": "Progress step indicator icon",
+    "description": "Toggle active step progress indicator icon",
+    "originalDefault": "Progress step indicator icon"
+  },
   "nwQjsz": {
     "defaultMessage": "Uw sessie vervalt binnenkort.",
     "description": "Session expiry warning title (in modal)",
@@ -328,11 +343,6 @@
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
-  },
-  "sJsjTA": {
-    "defaultMessage": "Completed",
-    "description": "Completion message",
-    "originalDefault": "Completed"
   },
   "senRv3": {
     "defaultMessage": "U staat op het punt uw afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden.",
