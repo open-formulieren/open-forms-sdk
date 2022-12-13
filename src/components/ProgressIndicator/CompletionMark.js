@@ -7,7 +7,7 @@ const CompletionMark = ({completed = false}) => {
   const intl = useIntl();
   // Wrapper may be a DOM element, which can't handle <FormattedMessage />
   const ariaLabel = intl.formatMessage({
-    description: 'Completion message',
+    description: 'Step completion marker icon label',
     defaultMessage: 'Completed',
   });
 
