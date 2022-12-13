@@ -1,0 +1,81 @@
+import {Canvas, Meta, Story, ArgsTable} from '@storybook/addon-docs';
+import {FormioComponent, FormDecorator} from './story-util';
+
+<Meta
+  title="Form.io components/RepeatingGroup"
+  argTypes={{
+    id: {
+      type: {name: 'string'},
+    },
+    label: {
+      type: {name: 'string', required: false},
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: {sort: 'requiredFirst'},
+  }}
+/>
+
+# Repeating Group / Herhalende groep
+
+Edit Grids allow users to replicate a table like structure when it comes to the capture and display of form data. Users can add multiple components inside the Edit Grid. Additionally, any number of grids can be added within a form, which is especially useful when needing the ability to add or duplicate multiple fields sets.
+
+By default, the grid is empty, but can have other form components placed inside.
+
+## Default
+
+export const Template = ({id = '', label = '', ...args}) => (
+  <FormioComponent
+    component={{
+      key: id,
+      type: 'editgrid',
+      input: true,
+      label,
+      components: [
+        {
+          key: 'kleur',
+          type: 'textfield',
+          input: true,
+          label: 'Kleur',
+          registration: {
+            attribute: '',
+          },
+          showInSummary: true,
+          isSensitiveData: false,
+          deriveStreetName: false,
+        },
+        {
+          key: 'bedrag',
+          type: 'currency',
+          input: true,
+          label: 'Waarde',
+          currency: 'EUR',
+          delimiter: true,
+          allowNegative: false,
+        },
+        {
+          key: 'content',
+          html: "<p>De totale waarde van uw auto's is: €{{ totaleWaarde|localize }}</p>",
+          type: 'content',
+          input: false,
+          label: 'Content',
+          hidden: true,
+        },
+      ],
+      groupLabel: "Herhalende groep: auto's",
+      inlineEdit: true,
+      description: 'Herhalende groep voor data',
+      isSensitiveData: false,
+    }}
+  />
+);
+
+<Canvas>
+  <Story name="EditGrid" args={{id: 'repeating1', label: 'Auto\'s'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="EditGrid" />
+
