@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 
 import Literal from 'components/Literal';
 import {getLoginUrl} from 'components/utils';
-import Types from 'types';
+import {ConfigContext} from 'Context';
 
+import Types from 'types';
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
 const LoginOptions = ({form, onFormStart}) => {
+  const config = useContext(ConfigContext);
+
   const loginAsYourselfOptions = [];
   const loginAsGemachtigdeOptions = [];
 
@@ -37,9 +40,11 @@ const LoginOptions = ({form, onFormStart}) => {
     });
   }
 
+  const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
+
   if (form.loginRequired) {
     return (
-      <LoginOptionsDisplay
+      <LoginDisplayComponent
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
       />
@@ -48,7 +53,7 @@ const LoginOptions = ({form, onFormStart}) => {
 
   return (
     <form onSubmit={onFormStart}>
-      <LoginOptionsDisplay
+      <LoginDisplayComponent
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
       />

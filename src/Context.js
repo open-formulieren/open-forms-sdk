@@ -7,6 +7,7 @@ const ConfigContext = React.createContext({
     app: null,
     form: null,
     progressIndicator: null,
+    loginOptions: null,
   },
 });
 ConfigContext.displayName = 'ConfigContext';

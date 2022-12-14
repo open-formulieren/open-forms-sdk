@@ -19,9 +19,9 @@ const getCosignStatus = async (baseUrl, submissionUuid) => {
   return await get(endpoint);
 };
 
-const noop = () => {};
-
 const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) => {
+  const config = useContext(ConfigContext);
+
   const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
   if (!loginOption) {
     return (
@@ -33,6 +33,8 @@ const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) 
       </ErrorMessage>
     );
   }
+
+  const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
 
   // add the co-sign submission parameter to the login URL
   const loginUrl = new URL(loginOption.url);
@@ -50,7 +52,7 @@ const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) 
   };
 
   return (
-    <LoginOptionsDisplay
+    <LoginDisplayComponent
       loginAsYourselfOptions={[modifiedLoginOption]}
       loginAsGemachtigdeOptions={[]}
     />
