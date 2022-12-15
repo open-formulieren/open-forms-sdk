@@ -8,9 +8,9 @@ import {get} from 'api';
 import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
+import LoginOptionsDisplay from 'components/LoginOptions/LoginOptionsDisplay';
 import {ConfigContext, SubmissionContext} from 'Context';
 import {getBEMClassName} from 'utils';
-import LoginOptionsDisplay from 'components/LoginOptions/LoginOptionsDisplay';
 
 // TODO: tests!
 

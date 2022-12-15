@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import Literal from 'components/Literal';
 import {getLoginUrl} from 'components/utils';
 import {ConfigContext} from 'Context';
-
 import Types from 'types';
+
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
 const LoginOptions = ({form, onFormStart}) => {
@@ -41,23 +41,15 @@ const LoginOptions = ({form, onFormStart}) => {
   }
 
   const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
-
-  if (form.loginRequired) {
-    return (
-      <LoginDisplayComponent
-        loginAsYourselfOptions={loginAsYourselfOptions}
-        loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
-      />
-    );
-  }
+  const Container = form.loginRequired ? React.Fragment : 'form';
 
   return (
-    <form onSubmit={onFormStart}>
+    <Container onSubmit={onFormStart}>
       <LoginDisplayComponent
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
       />
-    </form>
+    </Container>
   );
 };
 

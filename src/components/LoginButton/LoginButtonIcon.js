@@ -12,10 +12,8 @@ const LoginButtonIcon = ({identifier, logo}) => {
       className={getBEMClassName('login-button-logo')}
       href={href}
       key={identifier}
-      onClick={event => {
-        event.preventDefault();
-        window.open(href, '_blank', 'noopener,noreferrer');
-      }}
+      target="_blank"
+      rel="noreferrer nofollower"
     >
       <img className={getBEMClassName('login-button-logo__image')} alt={title} src={imageSrc} />
     </a>

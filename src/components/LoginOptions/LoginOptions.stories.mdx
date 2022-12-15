@@ -1,4 +1,6 @@
-import { Canvas, Meta, Story, Props, ArgsTable } from '@storybook/addon-docs';
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
+import { userEvent, within, waitFor } from '@storybook/testing-library';
+import { jest, expect } from '@storybook/jest';
 
 import {LiteralsProvider} from 'components/Literal';
 
@@ -7,7 +9,6 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
 
 <Meta
   title="Composites/Login Options"
-  component={LoginOptions}
 />
 
 # Login Options
@@ -29,6 +30,11 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
 <Canvas>
   <Story
     name="Display"
+    decorators={[(Story) => (
+      <form>
+        {Story()}
+      </form>
+    )]}
     args={{
       loginAsYourselfOptions: [
         {
@@ -39,7 +45,7 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
               title: "DigiD",
               imageSrc: "/digid.png"
           },
-          url: "http://localhost:8999/auth/form-slug/digid/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+          url: "#",
         },
         {
           identifier: "eHerkenning",
@@ -49,7 +55,7 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
               title: "eHerkenning",
               imageSrc: "/eherkenning.png"
           },
-          url: "http://localhost:8999/auth/form-slug/eherkenning/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+          url: "#",
         },
         {
           identifier: "eidas",
@@ -59,12 +65,11 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
               title: "eIDAS",
               imageSrc: "/eidas.png"
           },
-          url: "http://localhost:8999/auth/form-slug/eidas/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+          url: "#",
         },
         {
           identifier: "anonymous",
           label: "Begin form",
-          url: "#",
         }
       ],
       loginAsGemachtigdeOptions: [{
@@ -75,7 +80,7 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
             title: "DigiD Machtigen",
             imageSrc: "/digid.png"
         },
-        url: "http://localhost:8999/auth/issue-2447-style-login-page/digid_machtigen/start?next=http%3A%2F%2Flocalhost%3A3000%2F%3F_start%3D1",
+        url: "#",
       }]
     }}
   >
@@ -94,25 +99,63 @@ the ones that can be used to 'login as yourself' and the ones that can be used t
 It also formats the labels that will be displayed on the buttons and creates the right URL to which the user will be
 redirected upon clicking one of the buttons.
 
-export const Template = ({form, onFormStart}) => (
+export const LiteralDecorator = (Story) => (
   <LiteralsProvider literals={{'beginText': {resolved: 'Begin Form'}}}>
-    <LoginOptions
-      form={form}
-      onFormStart={onFormStart}
-    />
+    {Story()}
   </LiteralsProvider>
+);
+
+export const Template = ({form, onFormStart}) => (
+  <LoginOptions
+    form={form}
+    onFormStart={onFormStart}
+  />
 );
 
 <Canvas>
   <Story
     name="Functional"
+    decorators={[LiteralDecorator]}
+    play={async ({args, canvasElement}) => {
+      const canvas = within(canvasElement);
+      let anonymousStartButton = await canvas.getByRole('button');
+      await userEvent.click(anonymousStartButton);
+      await waitFor(() => expect(args.onFormStart).toHaveBeenCalled());
+    }}
+    argTypes={{
+      onFormStart: {
+        action: true,
+      }
+    }}
     args={{
       form: {
+        uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
+        name: 'Test form',
+        loginRequired: false,
+        translationEnabled: false,
+        autoLoginAuthenticationBackend: '',
+        paymentRequired: false,
+        paymentOptions: [],
+        literals: {
+          previousText: {resolved: 'Previous page', value: ''},
+          beginText: {resolved: 'Begin form', value: ''},
+          changeText: {resolved: 'Change', value: ''},
+          confirmText: {resolved: 'Confirm', value: ''},
+        },
+        slug: 'test-form',
+        url: 'http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa',
+        steps: [],
+        showProgressIndicator: true,
+        maintenanceMode: false,
+        active: true,
+        explanationTemplate: '<p>Toelichtingssjabloon...</p>',
+        submissionAllowed: 'yes',
+        requiredFieldsWithAsterisk: true,
         loginOptions: [
           {
             identifier: "digid",
             label: "DigiD",
-            url: "http://localhost:8999/auth/form-slug/digid/start",
+            url: "#",
             logo: {
               title: "DigiD simulatie",
               imageSrc: "/digid.png",
@@ -123,7 +166,7 @@ export const Template = ({form, onFormStart}) => (
           {
             identifier: "eherkenning",
             label: "eHerkenning",
-            url: "http://localhost:8999/auth/form-slug/eherkenning/start",
+            url: "#",
             logo: {
               title: "eHerkenning",
               imageSrc: "/eherkenning.png",
@@ -134,7 +177,7 @@ export const Template = ({form, onFormStart}) => (
           {
             identifier: "eidas",
             label: "eIDAS",
-            url: "http://localhost:8999/auth/form-slug/eidas/start",
+            url: "#",
             logo: {
               title: "eIDAS",
               imageSrc: "/eidas.png",
@@ -145,7 +188,7 @@ export const Template = ({form, onFormStart}) => (
           {
             identifier: "digid_machtigen",
             label: "DigiD Machtigen",
-            url: "http://localhost:8999/auth/form-slug/digid_machtigen_oidc/start",
+            url: "#",
             logo: {
               title: "DigiD Machtigen",
               imageSrc: "/digid.png",
@@ -156,7 +199,7 @@ export const Template = ({form, onFormStart}) => (
           {
             identifier: "eherkenning_bewindvoering",
             label: "eHerkenning bewindvoering",
-            url: "http://localhost:8999/auth/form-slug/eherkenning_bewindvoering_oidc/start",
+            url: "#",
             logo: {
               title: "eHerkenning bewindvoering",
               imageSrc: "/eherkenning.png",
@@ -166,7 +209,7 @@ export const Template = ({form, onFormStart}) => (
           },
         ]
       },
-      onFormStart: () => {},
+      onFormStart: jest.fn(e => e.preventDefault()),
     }}
   >
     {Template.bind({})}
