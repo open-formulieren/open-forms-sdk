@@ -13,7 +13,13 @@ import { FormioComponent, FormDecorator } from './story-util';
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' }
+    controls: { sort: 'requiredFirst' },
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    }
   }}
 />
 
