@@ -11,20 +11,16 @@ import {FormioComponent, FormDecorator} from './story-util';
       type: {name: 'string', required: false},
     },
     customClass: {
-      options: ['default', 'warning', 'info', 'error', 'success'],
+      options: ['', 'info', 'warning', 'error', 'success'],
       control: {
         type: 'radio',
         labels: {
-          default: null,
+          '': '-',
           warning: 'Warning',
           info: 'Info',
           error: 'Error',
           success: 'Success',
         },
-      },
-      table: {
-        type: {summary: 'radio'},
-        defaultValue: {summary: 'null'},
       },
     },
   }}
@@ -59,12 +55,10 @@ export const Template = ({customClass = '', html = '', id = '', label = '', ...a
   <Story
     name="Default"
     args={{
-      customClass: {
-        options: ['defaultx', 'warningx', 'info', 'error', 'success'],
-      },
       id: 'content1',
       html: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a felis ante. Nunc dictum, dui et scelerisque euismod, ex dui sodales magna, quis vehicula nulla justo sed urna. Integer maximus tempus tellus vel commodo. Orci varius natoque penatibus et magnis dis parturient montes.</p>',
       label: 'Vrije tekst',
+      customClass: '',
     }}
   >
     {Template.bind({})}
