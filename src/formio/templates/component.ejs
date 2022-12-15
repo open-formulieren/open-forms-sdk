@@ -6,5 +6,5 @@
     {% if (ctx.visible) { %}
       {{ctx.children}}
     {% } %}
-  <div ref="messageContainer" class="{{ctx.ofPrefix}}errors"></div>
+  <div ref="messageContainer" class="{{ctx.ofPrefix}}errors" aria-live="assertive"></div>
 </div>
