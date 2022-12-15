@@ -1,0 +1,68 @@
+import {Canvas, Meta, Story, ArgsTable} from '@storybook/addon-docs';
+import {FormioComponent, FormDecorator} from './story-util';
+
+<Meta
+  title="Form.io components/Content"
+  argTypes={{
+    id: {
+      type: {name: 'string'},
+    },
+    label: {
+      type: {name: 'string', required: false},
+    },
+    customClass: {
+      options: ['', 'info', 'warning', 'error', 'success'],
+      control: {
+        type: 'radio',
+        labels: {
+          '': '-',
+          warning: 'Warning',
+          info: 'Info',
+          error: 'Error',
+          success: 'Success',
+        },
+      },
+    },
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: {sort: 'requiredFirst'},
+  }}
+/>
+
+# Content
+
+A Content component may be added to a form to provide non-field information. For example, if you
+need instructions at the top of a form that are for display only, use the Content component. The
+Content component value is not submitted back to the server. The style of each content varies
+depending on whether a style class is chosen.
+
+## Default
+
+export const Template = ({customClass = '', html = '', id = '', label = '', ...args}) => (
+  <FormioComponent
+    component={{
+      html,
+      label,
+      key: id,
+      customClass,
+      type: 'content',
+    }}
+  />
+);
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      id: 'content1',
+      html: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a felis ante. Nunc dictum, dui et scelerisque euismod, ex dui sodales magna, quis vehicula nulla justo sed urna. Integer maximus tempus tellus vel commodo. Orci varius natoque penatibus et magnis dis parturient montes.</p>',
+      label: 'Vrije tekst',
+      customClass: '',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
