@@ -1,4 +1,4 @@
-import {Canvas, Meta, Story, Props} from '@storybook/addon-docs';
+import {Canvas, Meta, Story, ArgsTable} from '@storybook/addon-docs';
 import {FormioComponent, FormDecorator} from './story-util';
 
 <Meta
@@ -32,7 +32,18 @@ A Field Set label that will appear as a Legend for the component in the form.
 
 ## Default
 
-export const Template = ({descriptionFamilyName, descriptionGivenName, id = '', label = '', labelFirstName, labelLastName, labelPrivacy, placeholderFirstName, placeholderLastName, ...args}) => (
+export const Template = ({
+  descriptionFamilyName,
+  descriptionGivenName,
+  id = '',
+  label = '',
+  labelFirstName,
+  labelLastName,
+  labelPrivacy,
+  placeholderFirstName,
+  placeholderLastName,
+  ...args
+}) => (
   <FormioComponent
     component={{
       key: id,
@@ -50,12 +61,10 @@ export const Template = ({descriptionFamilyName, descriptionGivenName, id = '', 
             plugin: '',
             attribute: '',
           },
-          showInPDF: true,
           tableView: true,
           deriveCity: false,
           description: descriptionGivenName,
           placeholder: placeholderFirstName,
-          showInEmail: false,
           registration: {
             attribute: '',
           },
@@ -72,12 +81,10 @@ export const Template = ({descriptionFamilyName, descriptionGivenName, id = '', 
             plugin: '',
             attribute: '',
           },
-          showInPDF: true,
           tableView: true,
           deriveCity: false,
           description: descriptionFamilyName,
           placeholder: placeholderLastName,
-          showInEmail: false,
           registration: {
             attribute: '',
           },
@@ -90,10 +97,8 @@ export const Template = ({descriptionFamilyName, descriptionGivenName, id = '', 
           type: 'checkbox',
           input: true,
           label: labelPrivacy,
-          showInPDF: true,
           tableView: false,
           description: 'privacy-check',
-          showInEmail: false,
           defaultValue: false,
           registration: {
             attribute: '',
@@ -108,9 +113,22 @@ export const Template = ({descriptionFamilyName, descriptionGivenName, id = '', 
 );
 
 <Canvas>
-  <Story name="Default" args={{descriptionFamilyName: 'family-name', descriptionGivenName: 'given-name' , id: 'veldengroep1', label: 'Uw keuzevelden', labelFirstName: 'Voornaam', labelLastName: 'Achternaam', labelPrivacy: 'Ik ga akkoord met de privacy-voorwaarden', placeholderFirstName: 'voornaam...', placeholderLastName: 'achternaam...'}}>
+  <Story
+    name="Default"
+    args={{
+      descriptionFamilyName: 'family-name',
+      descriptionGivenName: 'given-name',
+      id: 'veldengroep1',
+      label: 'Uw keuzevelden',
+      labelFirstName: 'Voornaam',
+      labelLastName: 'Achternaam',
+      labelPrivacy: 'Ik ga akkoord met de privacy-voorwaarden',
+      placeholderFirstName: 'voornaam...',
+      placeholderLastName: 'achternaam...',
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
 
-<Props story="Default" />
+<ArgsTable story="Default" />
