@@ -11,5 +11,8 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "useTabs": false
+  "useTabs": false,
+  "importOrder": ["^((components|formio|hooks|map|types)/(.*)|(api|Context|errors|headers|i18n|sdk|sentry|utils))$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
