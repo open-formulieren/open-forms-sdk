@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
-import PropTypes from 'prop-types';
+import Types from 'types';
 
+import {ConfigContext} from 'Context';
 import Literal from 'components/Literal';
 import {getLoginUrl} from 'components/utils';
-import {ConfigContext} from 'Context';
-import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 

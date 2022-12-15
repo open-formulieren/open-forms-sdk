@@ -1,14 +1,13 @@
+import {fireEvent} from '@testing-library/react';
+import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
-import {fireEvent} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 
 import {LiteralsProvider} from 'components/Literal';
-import messagesNL from 'i18n/compiled/nl.json';
 
 import LoginOptions from './index';
-import LoginButton from '../LoginButton';
 
 let container = null;
 
