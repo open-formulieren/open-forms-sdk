@@ -1,11 +1,10 @@
 import {useContext} from 'react';
-
 import {useLocation} from 'react-router-dom';
 import {useLocalStorage} from 'react-use';
 import {useAsync} from 'react-use';
 
-import {apiCall} from 'api';
 import {ConfigContext} from 'Context';
+import {apiCall} from 'api';
 import useQuery from 'hooks/useQuery';
 
 const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded) => {

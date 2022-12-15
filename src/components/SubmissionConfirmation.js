@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {post} from 'api';
+import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FAIcon from 'components/FAIcon';
-import Anchor from 'components/Anchor';
 import Loader from 'components/Loader';
 import PaymentForm from 'components/PaymentForm';
 import {Toolbar, ToolbarList} from 'components/Toolbar';

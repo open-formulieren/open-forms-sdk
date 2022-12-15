@@ -1,13 +1,14 @@
+import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
-import {MemoryRouter} from 'react-router-dom';
 import {IntlProvider} from 'react-intl';
+import {MemoryRouter} from 'react-router-dom';
+
+import {SUBMISSION_ALLOWED} from 'components/constants';
+import {IsFormDesigner} from 'headers';
 
 import ProgressIndicator from './index';
-import {SUBMISSION_ALLOWED} from 'components/constants';
-import messagesNL from 'i18n/compiled/nl.json';
-import {IsFormDesigner} from 'headers';
 
 jest.mock('headers');
 

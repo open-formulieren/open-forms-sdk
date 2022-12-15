@@ -1,7 +1,8 @@
+import React from 'react';
+import {FormattedMessage} from 'react-intl';
+
 import Body from 'components/Body';
 import Card from 'components/Card';
-import {FormattedMessage} from 'react-intl';
-import React from 'react';
 
 const CancelAppointmentSuccess = () => (
   <Card

@@ -1,5 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import {getBEMClassName} from '../../utils';
 
 // FIXME: this really should not be a <input type="image" />, it completely violates

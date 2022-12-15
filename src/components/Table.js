@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
-import Body from 'components/Body';
-import {getBEMClassName} from 'utils';
 import {
   Table as UtrechtTable,
   TableBody as UtrechtTableBody,
-  TableHeader as UtrechtTableHeader,
   TableCaption as UtrechtTableCaption,
-  TableRow as UtrechtTableRow,
   TableCell as UtrechtTableCell,
+  TableHeader as UtrechtTableHeader,
   TableHeaderCell as UtrechtTableHeaderCell,
+  TableRow as UtrechtTableRow,
 } from '@utrecht/component-library-react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import Body from 'components/Body';
+import {getBEMClassName} from 'utils';
 
 const TableCell = ({children, component = Body, modifiers = []}) => {
   const Component = component;

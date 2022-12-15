@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import {Formio} from 'react-formio';
 import {IntlProvider} from 'react-intl';
 
-import {applyPrefix} from '../utils';
-import CoSignReact from 'components/CoSign';
 import {ConfigContext} from 'Context';
+import CoSignReact from 'components/CoSign';
+
+import {applyPrefix} from '../utils';
 
 const Field = Formio.Components.components.field;
 

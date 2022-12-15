@@ -1,5 +1,5 @@
-import {Formio} from 'react-formio';
 import classNames from 'classnames';
+import {Formio} from 'react-formio';
 
 import {applyPrefix} from '../utils';
 

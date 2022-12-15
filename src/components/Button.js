@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import {getBEMClassName} from 'utils';
 import {
   Button as UtrechtButton,
-  LinkButton as UtrechtLinkButton,
   ButtonLink as UtrechtButtonLink,
+  LinkButton as UtrechtLinkButton,
 } from '@utrecht/component-library-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import {getBEMClassName} from 'utils';
 
 export const VARIANTS = ['', 'primary', 'secondary', 'anchor', 'danger', 'image', 'icon-only'];
 

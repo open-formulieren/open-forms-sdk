@@ -1,5 +1,5 @@
-import {Formio} from 'react-formio';
 import {default as formioUrlStorage} from 'formiojs/providers/storage/url';
+import {Formio} from 'react-formio';
 
 import {CSRFToken} from 'headers';
 

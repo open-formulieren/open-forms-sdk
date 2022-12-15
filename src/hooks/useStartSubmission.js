@@ -1,5 +1,6 @@
-import useQuery from './useQuery';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
+
+import useQuery from './useQuery';
 
 const useStartSubmission = () => {
   const query = useQuery();

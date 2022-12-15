@@ -1,23 +1,23 @@
-import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
+import React, {useEffect, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
+import Types from 'types';
 
-import AuthenticationOutage, {
-  useDetectAuthenticationOutage,
-} from 'components/auth/AuthenticationOutage';
-import {
-  useDetectAuthErrorMessages,
-  AuthenticationErrors,
-} from 'components/auth/AuthenticationErrors';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
+import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
 import MaintenanceMode from 'components/MaintenanceMode';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import Types from 'types';
-import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
+import {
+  AuthenticationErrors,
+  useDetectAuthErrorMessages,
+} from 'components/auth/AuthenticationErrors';
+import AuthenticationOutage, {
+  useDetectAuthenticationOutage,
+} from 'components/auth/AuthenticationOutage';
 import {UnprocessableEntity} from 'errors';
 import {IsFormDesigner} from 'headers';
 import useStartSubmission from 'hooks/useStartSubmission';

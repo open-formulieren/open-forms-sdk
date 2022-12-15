@@ -2,8 +2,9 @@ import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 
-import {SUBMISSION_ALLOWED} from 'components/constants';
 import {LiteralsProvider} from 'components/Literal';
+import {SUBMISSION_ALLOWED} from 'components/constants';
+
 import SummaryConfirmation from './index';
 
 let container = null;

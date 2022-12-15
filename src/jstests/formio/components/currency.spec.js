@@ -1,8 +1,9 @@
-import React from 'react';
 import _ from 'lodash';
+import React from 'react';
 import {Formio} from 'react-formio';
 
 import OpenFormsModule from 'formio/module';
+
 import {currencyForm} from './fixtures/currency';
 
 // Use our custom components

@@ -1,11 +1,11 @@
+import {render} from '@testing-library/react';
+import messagesEN from 'i18n/compiled/en.json';
 import React from 'react';
-import renderer from 'react-test-renderer';
 import {IntlProvider} from 'react-intl';
 import {useLocation} from 'react-router-dom';
-import {render} from '@testing-library/react';
+import renderer from 'react-test-renderer';
 
 import PaymentOverview from 'components/PaymentOverview';
-import messagesEN from 'i18n/compiled/en.json';
 
 /**
  * Set up mocks

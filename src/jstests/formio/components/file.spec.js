@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React from 'react';
 import {Formio} from 'react-formio';
-import _ from 'lodash';
 
 // Use our custom components
 import OpenFormsModule from 'formio/module';

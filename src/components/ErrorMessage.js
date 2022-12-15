@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import Body from 'components/Body';
 import FAIcon from 'components/FAIcon';

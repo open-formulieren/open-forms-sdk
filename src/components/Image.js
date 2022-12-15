@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import {Image as UtrechtImage} from '@utrecht/component-library-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import {getBEMClassName} from 'utils';
 
 const Image = ({src, alt = ''}) => {

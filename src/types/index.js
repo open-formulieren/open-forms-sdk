@@ -3,8 +3,8 @@
  *
  * Use these types when you find yourself referencing complex shapes in multiple places.
  */
-import Form from './Form';
 import ButtonTextLiteral from './ButtonTextLiteral';
+import Form from './Form';
 import Submission from './Submission';
 
 const Types = {

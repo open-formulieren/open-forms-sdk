@@ -1,5 +1,5 @@
-import {FormattedMessage} from 'react-intl';
 import React from 'react';
+import {FormattedMessage} from 'react-intl';
 
 const STEP_LABELS = {
   login: <FormattedMessage description="Start page title" defaultMessage="Log in" />,

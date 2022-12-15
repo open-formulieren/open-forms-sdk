@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import {Formio} from 'react-formio';
 
 import LeafletMap from 'components/Map';

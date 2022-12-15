@@ -1,8 +1,8 @@
-import React from 'react';
+import {Link as UtrechtLink} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import {getBEMClassName} from 'utils';
-import {Link as UtrechtLink} from '@utrecht/component-library-react';
 
 export const ANCHOR_MODIFIERS = ['hover', 'active', 'inherit', 'muted', 'indent'];
 

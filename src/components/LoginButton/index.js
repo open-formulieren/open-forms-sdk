@@ -1,6 +1,6 @@
-import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {FormattedMessage} from 'react-intl';
 
 import Button from 'components/Button';
 import {getLoginUrl} from 'components/utils';
