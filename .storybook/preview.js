@@ -1,4 +1,6 @@
 import { Formio, Templates } from 'react-formio';
+import 'flatpickr';
+import 'flatpickr/dist/l10n/nl.js';  // ensure NL locale is included
 
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';

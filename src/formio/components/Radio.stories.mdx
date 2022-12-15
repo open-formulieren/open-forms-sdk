@@ -13,7 +13,13 @@ import { FormioComponent, FormDecorator } from './story-util';
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' }
+    controls: { sort: 'requiredFirst' },
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    }
   }}
 />
 
@@ -23,24 +29,24 @@ import { FormioComponent, FormDecorator } from './story-util';
 
 export const Template = ({ id = '', label = '', ...args}) => (
   <FormioComponent component={{
-      key: id,
-      type: 'radio',
-      input: true,
-      label,
-      "values": [
-          {
-              "label": "Optie A",
-              "value": "radioA"
-          },
-          {
-              "label": "Optie B",
-              "value": "radioB"
-          },
-          {
-              "label": "Optie C",
-              "value": "radioC"
-          }
-      ],
+    key: id,
+    type: 'radio',
+    input: true,
+    label,
+    values: [
+      {
+          "label": "Optie A",
+          "value": "radioA"
+      },
+      {
+          "label": "Optie B",
+          "value": "radioB"
+      },
+      {
+          "label": "Optie C with a <a href=\"https://github.com/open-formulieren/\" target=\"_blank\">link</a>",
+          "value": "radioC"
+      }
+    ],
 }}/>);
 
 <Canvas>

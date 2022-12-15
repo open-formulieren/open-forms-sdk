@@ -10,7 +10,13 @@ import { FormioComponent, FormDecorator } from './story-util';
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' }
+    controls: { sort: 'requiredFirst' },
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    }
   }}
 />
 
@@ -37,10 +43,10 @@ export const Template = ({ components = [], ...args}) => (
 );
 
 <Canvas>
-  <Story name="Default" args={{ 
+  <Story name="Default" args={{
       components: [
         {
-          key: 'cols1', 
+          key: 'cols1',
           type: 'columns',
           label: 'Columns 1',
           columns: [
@@ -113,24 +119,24 @@ export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSiz
 );
 
 <Canvas>
-  <Story 
+  <Story
     name="Column sizes"
     argTypes={{
-      col1Size: { 
+      col1Size: {
         name: 'Size column 1',
         type: { required: true },
         control: { type: 'range', min: 1, max: 12, step: 1 }
       },
-      col2Size: { 
+      col2Size: {
         name: 'Size column 2',
         type: { required: true },
         control: { type: 'range', min: 1, max: 12, step: 1 }
       },
-      col1MobileSize: { 
+      col1MobileSize: {
         name: 'Size on mobile column 1',
         control: { type: 'range', min: 0, max: 4, step: 1 }
       },
-      col2MobileSize: { 
+      col2MobileSize: {
         name: 'Size on mobile column 2',
         control: { type: 'range', min: 0, max: 4, step: 1 }
       },
@@ -159,7 +165,7 @@ export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSiz
 ## Address
 
 <Canvas>
-  <Story name="Address" args={{ 
+  <Story name="Address" args={{
       components: [
         {
           key: 'address',
