@@ -1,14 +1,14 @@
+import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 import {useAsync} from 'react-use';
 
-import Summary from 'components/Summary';
-import messagesNL from 'i18n/compiled/nl.json';
 import {testForm} from 'components/FormStart/fixtures';
-import useRefreshSubmission from 'hooks/useRefreshSubmission';
+import Summary from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+import useRefreshSubmission from 'hooks/useRefreshSubmission';
 
 const SUBMISSION = {
   id: 'random-id',

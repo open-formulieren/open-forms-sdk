@@ -1,17 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
+import {Link} from 'react-router-dom';
 import {useTimeout, useTimeoutFn} from 'react-use';
 
+import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
 import Anchor from 'components/Anchor';
+import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
-import Modal from 'components/modals/Modal';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import Button from 'components/Button';
-import {ConfigContext} from 'Context';
+import Modal from 'components/modals/Modal';
 
 const WARN_SESSION_TIMEOUT_FACTOR = 0.9; // once 90% of the session expiry time has passed, show a warning
 

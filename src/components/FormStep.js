@@ -21,37 +21,37 @@
  *     restored to its original state
  *
  */
-import React, {useRef, useContext} from 'react';
+import cloneDeep from 'lodash/cloneDeep';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
+import React, {useContext, useRef} from 'react';
+import {Form} from 'react-formio';
 import {useIntl} from 'react-intl';
 import {useHistory, useParams} from 'react-router-dom';
-import cloneDeep from 'lodash/cloneDeep';
-import isEqual from 'lodash/isEqual';
-import isEmpty from 'lodash/isEmpty';
-import omit from 'lodash/omit';
-import {useImmerReducer} from 'use-immer';
-import {Form} from 'react-formio';
 import {useAsync} from 'react-use';
+import Types from 'types';
+import {useImmerReducer} from 'use-immer';
 
-import hooks from '../formio/hooks';
-
+import {ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
+import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-import useTitle from 'hooks/useTitle';
 import {
   eventTriggeredBySubmitButton,
   findPreviousApplicableStep,
   isLastStep,
 } from 'components/utils';
-import ButtonsToolbar from 'components/ButtonsToolbar';
-import {ConfigContext, FormioTranslations} from 'Context';
 import {ValidationError} from 'errors';
 import {PREFIX} from 'formio/constants';
-import Types from 'types';
+import useTitle from 'hooks/useTitle';
 import {DEBUG} from 'utils';
+
+import hooks from '../formio/hooks';
 
 const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
 

@@ -1,8 +1,9 @@
-import React from 'react';
 import _ from 'lodash';
+import React from 'react';
 import {Formio} from 'react-formio';
 
 import OpenFormsModule from 'formio/module';
+
 import {timeForm} from './fixtures/time';
 
 // Use our custom components

@@ -1,8 +1,7 @@
-import {Formio} from 'react-formio';
-import FormioUtils from 'formiojs/utils';
 import {maskInput} from '@formio/vanilla-text-mask';
-
+import FormioUtils from 'formiojs/utils';
 import _ from 'lodash';
+import {Formio} from 'react-formio';
 
 import {applyPrefix} from '../utils';
 

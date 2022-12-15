@@ -1,10 +1,10 @@
+import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 
 import useQuery from 'hooks/useQuery';
-import messagesNL from 'i18n/compiled/nl.json';
 
 import FormStart from '.';
 import {testForm} from './fixtures';

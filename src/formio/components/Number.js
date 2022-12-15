@@ -1,8 +1,7 @@
-import {Formio} from 'react-formio';
 import {maskInput} from '@formio/vanilla-text-mask';
+import {Formio} from 'react-formio';
 
 import {applyPrefix} from '../utils';
-
 import enableValidationPlugins from '../validators/plugins';
 
 /**

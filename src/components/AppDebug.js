@@ -1,6 +1,6 @@
 import {useIntl} from 'react-intl';
-import {useGlobalState} from 'state-pool';
 import {FormattedDate, FormattedRelativeTime} from 'react-intl';
+import {useGlobalState} from 'state-pool';
 
 import {sessionExpiresAt} from 'api';
 

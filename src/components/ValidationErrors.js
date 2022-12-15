@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import {FormFieldDescription} from '@utrecht/component-library-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import {getBEMClassName} from 'utils';
 
 const ValidationErrors = ({errors = []}) => (

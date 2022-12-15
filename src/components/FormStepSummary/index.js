@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import {getBEMClassName} from 'utils';
-import ComponentValueDisplay from 'components/FormStepSummary/ComponentValueDisplay';
 import Anchor from 'components/Anchor';
 import FAIcon from 'components/FAIcon';
+import ComponentValueDisplay from 'components/FormStepSummary/ComponentValueDisplay';
+import {getBEMClassName} from 'utils';
 
 const LabelValueRow = ({name, value, component}) => {
   if (!name) {

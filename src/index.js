@@ -1,5 +1,6 @@
-import {OpenForm} from './sdk';
 import './index.scss';
+import {OpenForm} from './sdk';
+
 // import displayComponents from './custom-display-components';
 
 const {REACT_APP_BASE_API_URL, REACT_APP_FORM_ID} = process.env;

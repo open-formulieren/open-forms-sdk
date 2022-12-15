@@ -1,10 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {Link, useLocation} from 'react-router-dom';
+import React from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
+import {Link, useLocation} from 'react-router-dom';
 
-import Body from 'components/Body';
 import Anchor from 'components/Anchor';
+import Body from 'components/Body';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 import useTitle from 'hooks/useTitle';

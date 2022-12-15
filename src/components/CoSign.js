@@ -1,17 +1,16 @@
-import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
-import {useAsync} from 'react-use';
+import React, {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
+import {useAsync} from 'react-use';
+import Types from 'types';
 
+import {ConfigContext, SubmissionContext} from 'Context';
 import {get} from 'api';
 import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
 import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
-import {ConfigContext, SubmissionContext} from 'Context';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import Types from 'types';
-
 import {getBEMClassName} from 'utils';
 
 // TODO: tests!

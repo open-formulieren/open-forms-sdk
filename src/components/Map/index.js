@@ -1,11 +1,10 @@
 import isEqual from 'lodash/isEqual';
-import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
+import React, {useEffect} from 'react';
+import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
 import {useGeolocation} from 'react-use';
 
-import {MapContainer, TileLayer, Marker, useMap, useMapEvent} from 'react-leaflet';
-
-import {TILE_LAYERS, DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS} from 'map/constants';
+import {DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS, TILE_LAYERS} from 'map/constants';
 import {getBEMClassName} from 'utils';
 
 const useDefaultCoordinates = () => {

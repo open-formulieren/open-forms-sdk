@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
-import {useGlobalState} from 'state-pool';
 import {useAsync} from 'react-use';
+import {useGlobalState} from 'state-pool';
 
-import {get, put} from 'api';
 import {ConfigContext} from 'Context';
+import {get, put} from 'api';
 import {globalSubmissionState} from 'components/Form';
 import Loader from 'components/Loader';
 import {I18NContext, formatMessageForLocale} from 'i18n';

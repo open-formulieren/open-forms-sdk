@@ -1,34 +1,32 @@
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
-import {createGlobalstate} from 'state-pool';
-import {useImmerReducer} from 'use-immer';
 import {Redirect, Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
-
 import {usePrevious} from 'react-use';
+import {createGlobalstate} from 'state-pool';
+import Types from 'types';
+import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
-
 import {destroy, post} from 'api';
-import {START_FORM_QUERY_PARAM} from 'components/constants';
-import usePageViews from 'hooks/usePageViews';
-import useRecycleSubmission from 'hooks/useRecycleSubmission';
-import useSessionTimeout from 'hooks/useSessionTimeout';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import {LayoutColumn} from 'components/Layout';
 import Loader from 'components/Loader';
-import ProgressIndicator from 'components/ProgressIndicator';
 import PaymentOverview from 'components/PaymentOverview';
+import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
+import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
-import useQuery from 'hooks/useQuery';
-import Types from 'types';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
+import usePageViews from 'hooks/usePageViews';
+import useQuery from 'hooks/useQuery';
+import useRecycleSubmission from 'hooks/useRecycleSubmission';
+import useSessionTimeout from 'hooks/useSessionTimeout';
 
 const globalSubmissionState = createGlobalstate({hasSubmission: false});
 

@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 
-import {SUBMISSION_ALLOWED} from 'components/constants';
-import PrivacyCheckbox from 'components/PrivacyCheckbox';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Button from 'components/Button';
 import {Literal} from 'components/Literal';
+import PrivacyCheckbox from 'components/PrivacyCheckbox';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const SummaryConfirmation = ({
   submissionAllowed,

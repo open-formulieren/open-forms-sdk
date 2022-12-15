@@ -1,9 +1,9 @@
-import React from 'react';
+import {Heading} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import Caption from 'components/Caption';
 import {getBEMClassName} from 'utils';
-import {Heading} from '@utrecht/component-library-react';
 
 const CardTitle = ({title, component = 'h2', blockClassName = 'card'}) => {
   const headingLevel = {

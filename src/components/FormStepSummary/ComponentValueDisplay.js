@@ -1,6 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {FormattedDate, FormattedTime, FormattedMessage, FormattedNumber, useIntl} from 'react-intl';
+import React from 'react';
+import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime, useIntl} from 'react-intl';
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
@@ -9,6 +9,7 @@ import Image from 'components/Image';
 import List from 'components/List';
 import Map from 'components/Map';
 import {getFormattedDateString, getFormattedTimeString} from 'utils';
+
 import {humanFileSize} from './utils';
 
 const EmptyDisplay = () => '';

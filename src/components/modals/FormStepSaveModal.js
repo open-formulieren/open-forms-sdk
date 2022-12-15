@@ -1,14 +1,14 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
-import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
+import React, {useContext} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useHistory} from 'react-router-dom';
-import {useIntl, FormattedMessage} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
 
-import {post, destroy} from 'api';
 import {ConfigContext} from 'Context';
+import {destroy, post} from 'api';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import ErrorMessage from 'components/ErrorMessage';
@@ -16,8 +16,8 @@ import HelpText from 'components/HelpText';
 import Input from 'components/Input';
 import Label from 'components/Label';
 import Loader from 'components/Loader';
-import Modal from 'components/modals/Modal';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
+import Modal from 'components/modals/Modal';
 import {getBEMClassName} from 'utils';
 
 const initialState = {

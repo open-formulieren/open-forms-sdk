@@ -1,25 +1,23 @@
+import ProtectedEval from '@formio/protected-eval';
+import 'flatpickr';
+import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router} from 'react-router-dom';
-import 'flatpickr';
-
 import {Formio, Templates} from 'react-formio';
-import ProtectedEval from '@formio/protected-eval';
+import ReactModal from 'react-modal';
+import {BrowserRouter as Router} from 'react-router-dom';
+
+import {ConfigContext} from 'Context';
+import {get} from 'api';
+import App from 'components/App';
+import {AddFetchAuth} from 'formio/plugins';
+import {CSPNonce} from 'headers';
+import {I18NErrorBoundary, I18NManager} from 'i18n';
+import initialiseSentry from 'sentry';
 
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
-
 import './styles.scss';
-
-import {get} from 'api';
-import {ConfigContext} from 'Context';
-import App from 'components/App';
-import {CSPNonce} from 'headers';
-import {AddFetchAuth} from 'formio/plugins';
-import {fixIconUrls as fixLeafletIconUrls} from 'map';
-import {I18NManager, I18NErrorBoundary} from 'i18n';
-import initialiseSentry from 'sentry';
-import ReactModal from 'react-modal';
 
 // use protected eval to not rely on unsafe-eval (CSP)
 Formio.use(ProtectedEval);

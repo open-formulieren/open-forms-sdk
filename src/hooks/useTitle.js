@@ -1,5 +1,6 @@
 import {useContext} from 'react';
 import {useTitle as reactUseTitle} from 'react-use';
+
 import {ConfigContext} from 'Context';
 
 const useTitle = localTitle => {

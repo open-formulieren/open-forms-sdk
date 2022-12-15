@@ -1,18 +1,18 @@
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import FAIcon from 'components/FAIcon';
-import Caption from 'components/Caption';
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
+import Caption from 'components/Caption';
 import Card from 'components/Card';
+import FAIcon from 'components/FAIcon';
 import List from 'components/List';
 import {getBEMClassName} from 'utils';
 
-import {STEP_LABELS} from './constants';
 import ProgressItem from './ProgressItem';
+import {STEP_LABELS} from './constants';
 
 const getLinkModifiers = (active, isApplicable) => {
   return [

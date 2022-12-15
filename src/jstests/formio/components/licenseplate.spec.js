@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import {Formio} from 'react-formio';
 
-import OpenFormsModule from 'formio/module';
 import LicensePlateField from 'formio/components/LicensePlateField';
+import OpenFormsModule from 'formio/module';
+
 import {licenseplate} from './fixtures/licenseplate';
 
 // Use our custom components

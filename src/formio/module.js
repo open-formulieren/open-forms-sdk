@@ -1,26 +1,26 @@
+import BsnField from './components/BsnField';
 import Button from './components/Button';
-import Component from './components/Component';
 import Checkbox from './components/Checkbox';
+import CoSign from './components/CoSign';
+import Component from './components/Component';
+import ContentComponent from './components/Content';
+import Currency from './components/Currency';
+import DateField from './components/DateField';
+import EditGrid from './components/EditGrid';
+import Email from './components/Email';
+import FileField, {CSRFEnabledUrl} from './components/FileField';
+import IBANField from './components/IBANField';
+import LicensePlateField from './components/LicensePlateField';
+import Map from './components/Map';
+import {default as NumberComponent} from './components/Number';
+import PasswordField from './components/Password';
+import PhoneNumberField from './components/PhoneNumberField';
+import PostcodeField from './components/PostcodeField';
 import Radio from './components/Radio';
 import Select from './components/Select';
-import TextField from './components/TextField';
 import TextArea from './components/TextArea';
-import IBANField from './components/IBANField';
-import Email from './components/Email';
-import Currency from './components/Currency';
-import {default as NumberComponent} from './components/Number';
-import ContentComponent from './components/Content';
-import DateField from './components/DateField';
+import TextField from './components/TextField';
 import TimeField from './components/TimeField';
-import PostcodeField from './components/PostcodeField';
-import PhoneNumberField from './components/PhoneNumberField';
-import BsnField from './components/BsnField';
-import FileField, {CSRFEnabledUrl} from './components/FileField';
-import Map from './components/Map';
-import PasswordField from './components/Password';
-import LicensePlateField from './components/LicensePlateField';
-import CoSign from './components/CoSign';
-import EditGrid from './components/EditGrid';
 
 const FormIOModule = {
   components: {

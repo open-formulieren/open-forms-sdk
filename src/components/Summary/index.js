@@ -1,24 +1,24 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {useAsync} from 'react-use';
+import React from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useHistory} from 'react-router-dom';
+import {useAsync} from 'react-use';
+import Types from 'types';
 import {useImmerReducer} from 'use-immer';
 
+import {SubmissionContext} from 'Context';
 import {get, post} from 'api';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
-import {FormattedMessage, useIntl} from 'react-intl';
+import FormStepSummary from 'components/FormStepSummary';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
 import Price from 'components/Price';
-import {findPreviousApplicableStep} from 'components/utils';
-import {SubmissionContext} from 'Context';
-import useRefreshSubmission from 'hooks/useRefreshSubmission';
-import Types from 'types';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import FormStepSummary from 'components/FormStepSummary';
+import {findPreviousApplicableStep} from 'components/utils';
+import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v2/config/privacy_policy_info';

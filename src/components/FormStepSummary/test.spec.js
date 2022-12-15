@@ -1,11 +1,11 @@
+import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 
-import FormStepSummary, {LabelValueRow} from './index';
-import messagesNL from 'i18n/compiled/nl.json';
 import {testEmptyFields} from './fixtures';
+import FormStepSummary, {LabelValueRow} from './index';
 
 let container = null;
 

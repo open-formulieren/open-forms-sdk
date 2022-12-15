@@ -1,8 +1,9 @@
-import React from 'react';
 import _ from 'lodash';
+import React from 'react';
 import {Formio} from 'react-formio';
 
 import OpenFormsModule from 'formio/module';
+
 import {iban, twoComponentForm} from './fixtures/iban';
 
 // Use our custom components

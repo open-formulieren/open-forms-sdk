@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import ReactModal from 'react-modal';
+import React, {useEffect} from 'react';
 import {useIntl} from 'react-intl';
+import ReactModal from 'react-modal';
 
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';

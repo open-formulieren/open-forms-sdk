@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {Checkbox, FormField, FormLabel} from '@utrecht/component-library-react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {getBEMClassName} from '../utils';
-import {Checkbox, FormField, FormLabel} from '@utrecht/component-library-react';
 import ErrorMessage from './ErrorMessage';
 
 const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {

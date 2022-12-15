@@ -3,6 +3,7 @@ import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
+
 import ButtonsToolbar from './index';
 
 let container = null;

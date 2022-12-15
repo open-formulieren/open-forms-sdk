@@ -1,9 +1,8 @@
+import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {IntlProvider} from 'react-intl';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
-
-import messagesNL from 'i18n/compiled/nl.json';
+import {IntlProvider} from 'react-intl';
 
 import {AuthenticationErrors} from '.';
 

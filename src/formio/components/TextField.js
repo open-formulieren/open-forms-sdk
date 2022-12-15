@@ -1,8 +1,8 @@
-import {Formio} from 'react-formio';
 import debounce from 'lodash/debounce';
+import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
 import {get} from '../../api';
+import {applyPrefix} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;

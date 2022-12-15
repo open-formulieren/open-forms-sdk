@@ -1,20 +1,19 @@
-import React, {useContext} from 'react';
-import PropTypes from 'prop-types';
-import {createGlobalstate, useGlobalState} from 'state-pool';
-import {useAsync} from 'react-use';
-import {IntlProvider, createIntl, createIntlCache} from 'react-intl';
-
 // ensure flatpickr locales are included in bundle
 import 'flatpickr/dist/l10n/nl.js';
+import PropTypes from 'prop-types';
+import React, {useContext} from 'react';
+import {IntlProvider, createIntl, createIntlCache} from 'react-intl';
+import {useAsync} from 'react-use';
+import {createGlobalstate, useGlobalState} from 'state-pool';
 
+import {ConfigContext, FormioTranslations} from 'Context';
 import {get} from 'api';
 import {logError} from 'components/ErrorBoundary';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
-import {ConfigContext, FormioTranslations} from 'Context';
 
-import messagesNL from './i18n/compiled/nl.json';
 import messagesEN from './i18n/compiled/en.json';
+import messagesNL from './i18n/compiled/nl.json';
 
 const currentLanguage = createGlobalstate('nl');
 

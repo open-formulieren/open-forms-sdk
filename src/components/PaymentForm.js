@@ -1,5 +1,5 @@
-import React, {useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import React, {useEffect, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import Button from 'components/Button';

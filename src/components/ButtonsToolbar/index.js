@@ -1,11 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import {Literal, LiteralsProvider} from 'components/Literal';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Button from 'components/Button';
+import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const ButtonsToolbar = ({
