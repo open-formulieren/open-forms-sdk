@@ -10,6 +10,30 @@ import {FormioComponent, FormDecorator} from './story-util';
     label: {
       type: {name: 'string', required: false},
     },
+    customClass: {
+      options: ['default', 'warning', 'info', 'error', 'success'],
+      mapping: {
+        default: false,
+        warning: false,
+        info: true,
+        error: false,
+        success: false,
+      },
+      control: {
+        type: 'radio',
+        labels: {
+          default: null,
+          warning: 'Warning',
+          info: 'Info',
+          error: 'Error',
+          success: 'Success',
+        },
+      },
+      table: {
+        type: {summary: 'radio'},
+        defaultValue: {summary: 'null'},
+      },
+    },
   }}
   decorators={[FormDecorator]}
   parameters={{
@@ -19,6 +43,11 @@ import {FormioComponent, FormDecorator} from './story-util';
 
 # Content
 
+A Content component may be added to a form to provide non-field information. For example, if you
+need instructions at the top of a form that are for display only, use the Content component. The
+Content component value is not submitted back to the server. The style of each content varies
+depending on whether a style class is chosen.
+
 ## Default
 
 export const Template = ({customClass = '', html = '', id = '', label = '', ...args}) => (
@@ -27,10 +56,6 @@ export const Template = ({customClass = '', html = '', id = '', label = '', ...a
       html,
       label,
       key: id,
-      showInEmail: false,
-      showInPDF: true,
-      input: false,
-      tableView: false,
       customClass,
       type: 'content',
     }}
@@ -41,13 +66,12 @@ export const Template = ({customClass = '', html = '', id = '', label = '', ...a
   <Story
     name="Default"
     args={{
-      customClass: 'breed',
+      id: 'content1',
       html: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a felis ante. Nunc dictum, dui et scelerisque euismod, ex dui sodales magna, quis vehicula nulla justo sed urna. Integer maximus tempus tellus vel commodo. Orci varius natoque penatibus et magnis dis parturient montes.</p>',
-      id: 'content',
       label: 'Vrije tekst',
     }}
   >
-    {Template.bind({})} lorem
+    {Template.bind({})}
   </Story>
 </Canvas>
 
