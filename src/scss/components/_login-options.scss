@@ -1,0 +1,7 @@
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+.#{prefix(login-options)} {
+  @include body;
+}

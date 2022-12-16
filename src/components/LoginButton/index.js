@@ -1,32 +1,34 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
 
 import Button from 'components/Button';
-import {getLoginUrl} from 'components/utils';
+import FormattedLoginOption from 'types/FormattedLoginOption';
+import {getBEMClassName} from 'utils';
 
-const LoginButton = ({option, ...extra}) => (
-  <Button variant="primary" component="a" href={getLoginUrl(option)} {...extra}>
-    <FormattedMessage
-      description="Login button label"
-      defaultMessage="Login with {provider}"
-      values={{provider: option.label}}
-    />
-  </Button>
-);
+import LoginButtonIcon from './LoginButtonIcon';
+
+const LoginButton = ({option, ...extra}) => {
+  let url = option.url;
+  let extraProps = {...extra};
+  let component = 'a';
+
+  if (!url) {
+    url = '#';
+    extraProps = {...extraProps, type: 'submit'};
+    component = 'button';
+  }
+
+  return (
+    <div className={getBEMClassName('login-button')}>
+      <Button variant="primary" component={component} href={url} {...extraProps}>
+        {option.label}
+      </Button>
+      <LoginButtonIcon identifier={option.identifier} logo={option.logo} />
+    </div>
+  );
+};
 
 LoginButton.propTypes = {
-  option: PropTypes.shape({
-    identifier: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    logo: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      imageSrc: PropTypes.string.isRequired,
-      href: PropTypes.string,
-    }),
-  }),
+  option: FormattedLoginOption.isRequired,
 };
 
 export default LoginButton;
-export {default as LoginButtonIcon} from './LoginButtonIcon';

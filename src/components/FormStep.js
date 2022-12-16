@@ -606,6 +606,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
                   submissionUuid: submission.id,
                   saveStepData: async () =>
                     await submitStepData(submissionStep.url, {...getCurrentFormData()}),
+                  displayComponents: config.displayComponents,
                 },
               }}
             />

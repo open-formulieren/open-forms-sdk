@@ -1,0 +1,21 @@
+@use 'sass:math';
+
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/responsive';
+
+@import '../mixins/prefix';
+
+.#{prefix(login-button)} {
+  display: flex;
+  align-items: center;
+  gap: math.div($grid-container-margin-base, 2);
+
+  @include margin(auto, margin-bottom, math.div($grid-container-margin-base, 2));
+
+  @include mobile-only {
+    gap: 0;
+    .#{prefix(button)} {
+      width: 75%;
+    }
+  }
+}

@@ -9,19 +9,19 @@ import {get} from 'api';
 import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
-import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
+import LoginOptionsDisplay from 'components/LoginOptions/LoginOptionsDisplay';
 import {getBEMClassName} from 'utils';
 
 // TODO: tests!
 
 const getCosignStatus = async (baseUrl, submissionUuid) => {
   const endpoint = `${baseUrl}submissions/${submissionUuid}/co-sign`;
-  const response = await get(endpoint);
-  return response;
+  return await get(endpoint);
 };
 
 const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) => {
+  const config = useContext(ConfigContext);
+
   const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
   if (!loginOption) {
     return (
@@ -34,26 +34,28 @@ const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) 
     );
   }
 
-  // add the co sign submission parameter to the login URL
+  const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
+
+  // add the co-sign submission parameter to the login URL
   const loginUrl = new URL(loginOption.url);
   loginUrl.searchParams.set('coSignSubmission', submissionUuid);
-  const modifiedLoginOption = {...loginOption, url: loginUrl.toString()};
+  const modifiedLoginOption = {
+    ...loginOption,
+    url: loginUrl.toString(),
+    label: (
+      <FormattedMessage
+        description="Login button label"
+        defaultMessage="Login with {provider}"
+        values={{provider: loginOption.label}}
+      />
+    ),
+  };
 
   return (
-    <Toolbar modifiers={['start']}>
-      <ToolbarList>
-        <LoginButton option={modifiedLoginOption} onClick={async () => await saveStepData()} />
-      </ToolbarList>
-
-      {modifiedLoginOption.logo ? (
-        <ToolbarList>
-          <LoginButtonIcon
-            identifier={modifiedLoginOption.identifier}
-            logo={modifiedLoginOption.logo}
-          />
-        </ToolbarList>
-      ) : null}
-    </Toolbar>
+    <LoginDisplayComponent
+      loginAsYourselfOptions={[modifiedLoginOption]}
+      loginAsGemachtigdeOptions={[]}
+    />
   );
 };
 

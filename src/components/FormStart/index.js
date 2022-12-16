@@ -4,13 +4,11 @@ import {FormattedMessage} from 'react-intl';
 import Types from 'types';
 
 import Body from 'components/Body';
-import Button from 'components/Button';
 import Card from 'components/Card';
-import {Literal, LiteralsProvider} from 'components/Literal';
+import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
-import LoginButton, {LoginButtonIcon} from 'components/LoginButton';
+import LoginOptions from 'components/LoginOptions';
 import MaintenanceMode from 'components/MaintenanceMode';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {
   AuthenticationErrors,
   useDetectAuthErrorMessages,
@@ -117,7 +115,6 @@ const FormStart = ({form, onFormStart}) => {
       </Card>
     );
   }
-  const optionsWithIcons = form.loginOptions.filter(option => option.logo && option.logo.imageSrc);
 
   return (
     <LiteralsProvider literals={form.literals}>
@@ -128,28 +125,7 @@ const FormStart = ({form, onFormStart}) => {
 
         <FormStartMessage form={form} />
 
-        <Toolbar modifiers={['start']}>
-          <ToolbarList>
-            {form.loginRequired ? null : (
-              <Button variant="primary" component="a" href="#" onClick={onFormStart}>
-                <Literal name="beginText" />
-              </Button>
-            )}
-            {form.loginOptions.map(option => (
-              <LoginButton option={option} key={option.identifier} />
-            ))}
-          </ToolbarList>
-
-          <ToolbarList>
-            {optionsWithIcons.map(option => (
-              <LoginButtonIcon
-                key={option.identifier}
-                identifier={option.identifier}
-                logo={option.logo}
-              />
-            ))}
-          </ToolbarList>
-        </Toolbar>
+        <LoginOptions form={form} onFormStart={onFormStart} />
       </Card>
     </LiteralsProvider>
   );

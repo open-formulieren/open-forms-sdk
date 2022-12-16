@@ -25,6 +25,8 @@ const isLastStep = (currentStepIndex, submission) => {
 };
 
 const getLoginUrl = loginOption => {
+  if (loginOption.url === '#') return loginOption.url;
+
   const nextUrl = new URL(window.location.href);
 
   const queryParams = Array.from(nextUrl.searchParams.keys());
