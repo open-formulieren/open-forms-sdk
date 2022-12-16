@@ -290,9 +290,10 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * @param  {AbortController} controller     AbortController used to abort XHR requests and/or result processing
    *   because of new user input.
    * @param  {Boolean} canSubmitState The original canSubmit state at the time of scheduling the logic check.
+   * @param  {Boolean} forceEvaluation Force re-evaluation of the logic check even if the data hasn't changed (#2488).
    * @return {Void}                No return, dispatches reducer actions leading to state updates.
    */
-  const evaluateFormLogic = async (controller, canSubmitState) => {
+  const evaluateFormLogic = async (controller, canSubmitState, forceEvaluation) => {
     // the canSubmitState variable essentially captures whether the form was submittable
     // or not at the time the logic check was scheduled. The logic check itself can modify
     // this based on backend response data, but one of the first actions when a change
@@ -307,7 +308,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     const dataEmpty = isEmpty(data);
     const dataUnchanged = previousData && isEqual(previousData, data);
 
-    if (dataEmpty || dataUnchanged) {
+    if (!forceEvaluation && (dataEmpty || dataUnchanged)) {
       dispatch({
         type: 'LOGIC_CHECK_INTERRUPTED',
         payload: {
@@ -553,6 +554,11 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
       clearTimeout(logicCheckTimeout.current.timeoutId);
     }
 
+    // Issue #2488 - If an unsaved iteration of the repeating group had errors, deleting the line doesn't trigger a
+    // data change (because of the inlineEdit=False property). So we need to force re-evaluation to make the "next step"
+    // button become active again
+    const forceEvaluateLogic = !!flags?.deletedRepeatingGroupRow;
+
     // schedule a new logic check to run in LOGIC_CHECK_DEBOUNCE ms
     const timeoutId = setTimeout(async () => {
       // we are executing the scheduled timeout, so for this event-handle cycle,
@@ -560,7 +566,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
       // the next change event which hold an outdated canSubmit state
       logicCheckTimeout.current = null;
       try {
-        await evaluateFormLogic(abortController, localCanSubmit);
+        await evaluateFormLogic(abortController, localCanSubmit, forceEvaluateLogic);
       } catch (e) {
         dispatch({type: 'ERROR', payload: e});
       }

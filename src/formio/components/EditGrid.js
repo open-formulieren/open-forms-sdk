@@ -127,6 +127,23 @@ class EditGrid extends FormioEditGrid {
 
     return !!valid;
   }
+
+  cancelRow(rowIndex) {
+    if (this.options.readOnly) {
+      return;
+    }
+
+    this.triggerChange({
+      modified: true,
+      noPristineChangeOnModified: this.component.rowDrafts,
+      isolateRow: true,
+      // Issue #2488 - Add a flag so that from the onFormIOChange function we know that this onChange was triggered
+      // by removing a repeating group row. Then we can force re-evaluation of the logic.
+      deletedRepeatingGroupRow: true,
+    });
+
+    return super.cancelRow(rowIndex);
+  }
 }
 
 export default EditGrid;
