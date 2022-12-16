@@ -126,7 +126,7 @@ const ProgressIndicatorDisplay = ({
       {/* Turn a Div with an onClick event into a button for accesibility */}
       <button
         className={getBEMClassName('progress-indicator__mobile-header')}
-        aria-pressed={expanded ? 'false' : 'true'}
+        aria-pressed={expanded ? 'true' : 'false'}
         onClick={() => setExpanded(!expanded)}
       >
         <FAIcon
