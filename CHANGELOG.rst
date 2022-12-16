@@ -2,6 +2,64 @@
 SDK Changelog
 =============
 
+1.3.0 (2023-??-??)
+==================
+
+.. warning:: SDK 1.3.0 requires at least version 2.1.0 of the backend API.
+
+1.3.0-alpha.1 (2022-12-19)
+==========================
+
+Second alpha for the 1.3.0 series
+
+This release brings support for custom display-components via an experimental API. The
+main ``OpenForm`` constructor now accepts a ``displayComponents`` object option, mapping
+component labels to callbacks accepting the necessary props.
+
+Which props must be supported, are documented in Storybook. Display components have
+their own Story and documentation section. You can of course also find inspiration by
+checking the code of our default components.
+
+Features
+--------
+
+* [#1517] The ``Form`` component is now split into a smart and display component. This
+  is the first pass at a component-replacement API for developers integrating the SDK.
+* [#2374] The progress indicator is now split into a smart and display component, making
+  it possible to replace this in your own application stack.
+* [#2267] Form step names are now wrapped in headings in the summary page
+* [#2272] Navigating between form steps/phases now sets accessible page titles
+* [#2270] added focus styles to buttons and signature refresh button
+* [#2447] Login buttons structure refactor, accounting for authentication plugins that
+  work via 'machtigen' principles. This also splits the component into a smart and
+  display component that can be replaced.
+
+Bugfixes
+--------
+
+* [#2384] Fixed language switch before logging on/starting the form
+* [#2391] Fix loading translated literals and progress steps
+* [#2406] Make required checkboxes consistent in style if no asterisks are used
+* [#2407, #2431] Scroll validation errors into view only on submit
+* [#2465] Added user input marker to some Formio templates which should prevent
+  accidental static translations to be loaded from user input
+* [#2488] Force logic re-evaluation on repeating groups row delete
+
+Project maintenance
+-------------------
+
+* Switched to using organization-wide project boards, allowing us to create and track
+  issues directly in the SDK repository
+* [#304] Added Formio ``signature`` component to Storybook
+* [#305] Added Formio ``selectboxes`` component to Storybook
+* [#306] Added Formio ``content`` component to Storybook
+* Added import-sorting plugin to prettier
+* Fix code previews in formio stories
+* Fix flatpickr locale error in ``date`` component stories
+* [#2465] Added example to Storybook for radio option labels with anchors/links embedded
+* Update changelog title so it can be included in the backend docs build
+
+
 1.3.0-alpha.0 (2022-11-21)
 ==========================
 
