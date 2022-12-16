@@ -42,9 +42,10 @@ const LoginOptions = ({form, onFormStart}) => {
 
   const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
   const Container = form.loginRequired ? React.Fragment : 'form';
+  const containerProps = form.loginRequired ? {} : {onSubmit: onFormStart};
 
   return (
-    <Container onSubmit={onFormStart}>
+    <Container {...containerProps}>
       <LoginDisplayComponent
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
