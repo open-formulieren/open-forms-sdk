@@ -1,6 +1,6 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
-import { userEvent, within, waitFor } from '@storybook/testing-library';
-import { jest, expect } from '@storybook/jest';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect, jest} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
 
 import {LiteralsProvider} from 'components/Literal';
 
@@ -15,8 +15,8 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
-    }
+      },
+    },
   }}
   argTypes={{
     form: {table: {disable: true}},
@@ -25,18 +25,21 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
 
 # Login Options
 
-The `LoginOptions` component displays the options that are available for a user to authenticate when starting a form.
+The `LoginOptions` component displays the options that are available for a user to authenticate when
+starting a form.
 
 ## Presentation
 
-The `LoginOptionsDisplay` component shows the different buttons that can be clicked to start the authentication process.
-Next to each button, the corresponding logo is displayed.
+The `LoginOptionsDisplay` component shows the different buttons that can be clicked to start the
+authentication process. Next to each button, the corresponding logo is displayed.
 
 export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptions}) => (
-  <form onSubmit={e => {
+  <form
+    onSubmit={e => {
       e.preventDefault();
-      alert('anonymous form start')
-    }}>
+      alert('anonymous form start');
+    }}
+  >
     <LoginOptionsDisplay
       loginAsYourselfOptions={loginAsYourselfOptions}
       loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
@@ -48,63 +51,65 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
   <Story
     name="Display"
     argTypes={{
-      onFormStart: {table: {disable: true}}
+      onFormStart: {table: {disable: true}},
     }}
     args={{
       loginAsYourselfOptions: [
         {
-          identifier: "digid",
-          label: "DigiD",
+          identifier: 'digid',
+          label: 'DigiD',
           logo: {
-              href: "https://www.digid.nl/",
-              title: "DigiD",
-              imageSrc: "/digid.png"
+            href: 'https://www.digid.nl/',
+            title: 'DigiD',
+            imageSrc: './digid.png',
           },
-          url: "#",
+          url: '#',
         },
         {
-          identifier: "eHerkenning",
-          label: "eHerkenning",
+          identifier: 'eHerkenning',
+          label: 'eHerkenning',
           logo: {
-              href: "https://www.eherkenning.nl/",
-              title: "eHerkenning",
-              imageSrc: "/eherkenning.png"
+            href: 'https://www.eherkenning.nl/',
+            title: 'eHerkenning',
+            imageSrc: './eherkenning.png',
           },
-          url: "#",
+          url: '#',
         },
         {
-          identifier: "eidas",
-          label: "eIDAS",
+          identifier: 'eidas',
+          label: 'eIDAS',
           logo: {
-              href: "https://www.eherkenning.nl/",
-              title: "eIDAS",
-              imageSrc: "/eidas.png"
+            href: 'https://www.eherkenning.nl/',
+            title: 'eIDAS',
+            imageSrc: './eidas.png',
           },
-          url: "#",
+          url: '#',
         },
         {
-          identifier: "anonymous",
-          label: "Begin form",
-        }
+          identifier: 'anonymous',
+          label: 'Begin form',
+        },
       ],
-      loginAsGemachtigdeOptions: [{
-	      identifier: "digid_machtigen",
-	      label: "DigiD Machtigen",
-        logo: {
-            href: "https://www.digid.nl/",
-            title: "DigiD Machtigen",
-            imageSrc: "/digid.png"
+      loginAsGemachtigdeOptions: [
+        {
+          identifier: 'digid_machtigen',
+          label: 'DigiD Machtigen',
+          logo: {
+            href: 'https://www.digid.nl/',
+            title: 'DigiD Machtigen',
+            imageSrc: './digid.png',
+          },
+          url: '#',
         },
-        url: "#",
-      }]
+      ],
     }}
   >
     {DisplayTemplate.bind({})}
   </Story>
 </Canvas>
 
-Note that the anonymous form start option is implemented as a button with `type="submit"` and is therefore
-expected to be nested inside of a `<form>` element with an appropriate `onSubmit` handler.
+Note that the anonymous form start option is implemented as a button with `type="submit"` and is
+therefore expected to be nested inside of a `<form>` element with an appropriate `onSubmit` handler.
 
 ### Props
 
@@ -112,18 +117,18 @@ expected to be nested inside of a `<form>` element with an appropriate `onSubmit
 
 ## Functional
 
-The `LoginOptions` component handles the 'smart' part of the component. It separates the login options between
-the ones that can be used to 'login as yourself' and the ones that can be used to log in 'on behalf of someone else'.
-It also formats the labels that will be displayed on the buttons and creates the right URL to which the user will be
-redirected upon clicking one of the buttons.
+The `LoginOptions` component handles the 'smart' part of the component. It separates the login
+options between the ones that can be used to 'login as yourself' and the ones that can be used to
+log in 'on behalf of someone else'. It also formats the labels that will be displayed on the buttons
+and creates the right URL to which the user will be redirected upon clicking one of the buttons.
 
-export const LiteralDecorator = (Story, { args }) => (
-  <LiteralsProvider literals={{'beginText': {resolved: args.beginText}}}>
+export const LiteralDecorator = (Story, {args}) => (
+  <LiteralsProvider literals={{beginText: {resolved: args.beginText}}}>
     <Story />
   </LiteralsProvider>
 );
 
-export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
+export const Template = ({loginRequired = false, loginOptions, onFormStart}) => (
   <LoginOptions
     form={{
       uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
@@ -167,66 +172,66 @@ export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
     argTypes={{
       onFormStart: {
         action: true,
-      }
+      },
     }}
     args={{
       beginText: 'Begin form (anonymous)',
       loginRequired: false,
       loginOptions: [
         {
-          identifier: "digid",
-          label: "DigiD",
-          url: "#",
+          identifier: 'digid',
+          label: 'DigiD',
+          url: '#',
           logo: {
-            title: "DigiD simulatie",
-            imageSrc: "/digid.png",
-            href: "https://www.digid.nl/"
+            title: 'DigiD simulatie',
+            imageSrc: './digid.png',
+            href: 'https://www.digid.nl/',
           },
-          isForGemachtigde: false
+          isForGemachtigde: false,
         },
         {
-          identifier: "eherkenning",
-          label: "eHerkenning",
-          url: "#",
+          identifier: 'eherkenning',
+          label: 'eHerkenning',
+          url: '#',
           logo: {
-            title: "eHerkenning",
-            imageSrc: "/eherkenning.png",
-            href: "https://www.eherkenning.nl/"
+            title: 'eHerkenning',
+            imageSrc: './eherkenning.png',
+            href: 'https://www.eherkenning.nl/',
           },
-          isForGemachtigde: false
+          isForGemachtigde: false,
         },
         {
-          identifier: "eidas",
-          label: "eIDAS",
-          url: "#",
+          identifier: 'eidas',
+          label: 'eIDAS',
+          url: '#',
           logo: {
-            title: "eIDAS",
-            imageSrc: "/eidas.png",
-            href: "https://digital-strategy.ec.europa.eu/en/policies/eu-trust-mark"
+            title: 'eIDAS',
+            imageSrc: './eidas.png',
+            href: 'https://digital-strategy.ec.europa.eu/en/policies/eu-trust-mark',
           },
-          isForGemachtigde: false
+          isForGemachtigde: false,
         },
         {
-          identifier: "digid_machtigen",
-          label: "DigiD Machtigen",
-          url: "#",
+          identifier: 'digid_machtigen',
+          label: 'DigiD Machtigen',
+          url: '#',
           logo: {
-            title: "DigiD Machtigen",
-            imageSrc: "/digid.png",
-            href: "https://www.digid.nl/"
+            title: 'DigiD Machtigen',
+            imageSrc: './digid.png',
+            href: 'https://www.digid.nl/',
           },
-          isForGemachtigde: true
+          isForGemachtigde: true,
         },
         {
-          identifier: "eherkenning_bewindvoering",
-          label: "eHerkenning bewindvoering",
-          url: "#",
+          identifier: 'eherkenning_bewindvoering',
+          label: 'eHerkenning bewindvoering',
+          url: '#',
           logo: {
-            title: "eHerkenning bewindvoering",
-            imageSrc: "/eherkenning.png",
-            href: "https://www.eherkenning.nl/"
+            title: 'eHerkenning bewindvoering',
+            imageSrc: './eherkenning.png',
+            href: 'https://www.eherkenning.nl/',
           },
-          isForGemachtigde: true
+          isForGemachtigde: true,
         },
       ],
       onFormStart: jest.fn(e => e.preventDefault()),
@@ -243,22 +248,22 @@ export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
     argTypes={{
       onFormStart: {
         action: true,
-      }
+      },
     }}
     args={{
       beginText: '(anonymous)',
       loginRequired: true,
       loginOptions: [
         {
-          identifier: "digid",
-          label: "DigiD",
-          url: "#",
+          identifier: 'digid',
+          label: 'DigiD',
+          url: '#',
           logo: {
-            title: "DigiD simulatie",
-            imageSrc: "/digid.png",
-            href: "https://www.digid.nl/"
+            title: 'DigiD simulatie',
+            imageSrc: './digid.png',
+            href: 'https://www.digid.nl/',
           },
-          isForGemachtigde: false
+          isForGemachtigde: false,
         },
       ],
       onFormStart: jest.fn(e => {
