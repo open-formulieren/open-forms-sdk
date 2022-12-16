@@ -34,6 +34,11 @@
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
   },
+  "8wgdHE": {
+    "defaultMessage": "Inloggen voor iemand anders",
+    "description": "Log in on behalf of someone else title",
+    "originalDefault": "Log in on behalf of someone else"
+  },
   "94yVWJ": {
     "defaultMessage": "Indien u de taal verandert, dan moet u opnieuw beginnen met het formulier in te vullen. Bent u zeker dat u wilt doorgaan?",
     "description": "change language prompt",
@@ -50,7 +55,7 @@
     "originalDefault": "Appointment cancelled"
   },
   "AG5zPa": {
-    "defaultMessage": "Check and confirm",
+    "defaultMessage": "Controleer en bevestig",
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
   },
@@ -275,12 +280,12 @@
     "originalDefault": "Confirmation"
   },
   "fwS7yY": {
-    "defaultMessage": "Payment overview",
+    "defaultMessage": "Betaaloverzicht",
     "description": "Payment overview page title",
     "originalDefault": "Payment overview"
   },
   "gPfRU4": {
-    "defaultMessage": "Check and confirm",
+    "defaultMessage": "Controle en bevestiging",
     "description": "Summary page title",
     "originalDefault": "Check and confirm"
   },

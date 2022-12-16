@@ -34,6 +34,11 @@
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
   },
+  "8wgdHE": {
+    "defaultMessage": "Log in on behalf of someone else",
+    "description": "Log in on behalf of someone else title",
+    "originalDefault": "Log in on behalf of someone else"
+  },
   "94yVWJ": {
     "defaultMessage": "Changing the language will require you to restart the form. Are you sure you want to continue?",
     "description": "change language prompt",
