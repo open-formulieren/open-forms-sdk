@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
 import {Route, Switch} from 'react-router-dom';
-import Types from 'types';
 
 import {ConfigContext} from 'Context';
 import AppDebug from 'components/AppDebug';
@@ -10,6 +9,7 @@ import LanguageSelection from 'components/LanguageSelection';
 import {LayoutRow} from 'components/Layout';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import {I18NContext} from 'i18n';
+import Types from 'types';
 import {DEBUG} from 'utils';
 
 import AppDisplay from './AppDisplay';

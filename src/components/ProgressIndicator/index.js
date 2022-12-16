@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {useRouteMatch} from 'react-router-dom';
-import Types from 'types';
 
 import {ConfigContext} from 'Context';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {IsFormDesigner} from 'headers';
+import Types from 'types';
 
 import ProgressIndicatorDisplay from './ProgressIndicatorDisplay';
 import {STEP_LABELS} from './constants';

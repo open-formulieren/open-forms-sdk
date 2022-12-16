@@ -3,7 +3,6 @@ import {useIntl} from 'react-intl';
 import {Redirect, Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
 import {usePrevious} from 'react-use';
 import {createGlobalstate} from 'state-pool';
-import Types from 'types';
 import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
@@ -27,6 +26,7 @@ import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
+import Types from 'types';
 
 const globalSubmissionState = createGlobalstate({hasSubmission: false});
 

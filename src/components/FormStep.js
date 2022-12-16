@@ -31,7 +31,6 @@ import {Form} from 'react-formio';
 import {useIntl} from 'react-intl';
 import {useHistory, useParams} from 'react-router-dom';
 import {useAsync} from 'react-use';
-import Types from 'types';
 import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext, FormioTranslations} from 'Context';
@@ -49,6 +48,7 @@ import {
 import {ValidationError} from 'errors';
 import {PREFIX} from 'formio/constants';
 import useTitle from 'hooks/useTitle';
+import Types from 'types';
 import {DEBUG} from 'utils';
 
 import hooks from '../formio/hooks';

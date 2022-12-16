@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import Types from 'types';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
@@ -20,6 +19,7 @@ import {UnprocessableEntity} from 'errors';
 import {IsFormDesigner} from 'headers';
 import useStartSubmission from 'hooks/useStartSubmission';
 import useTitle from 'hooks/useTitle';
+import Types from 'types';
 import {getBEMClassName} from 'utils';
 
 const FormStartMessage = ({form}) => {

@@ -3,7 +3,6 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 import {useAsync} from 'react-use';
-import Types from 'types';
 import {useImmerReducer} from 'use-immer';
 
 import {SubmissionContext} from 'Context';
@@ -20,6 +19,7 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 import {findPreviousApplicableStep} from 'components/utils';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
+import Types from 'types';
 
 const PRIVACY_POLICY_ENDPOINT = '/api/v2/config/privacy_policy_info';
 
