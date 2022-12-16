@@ -18,6 +18,9 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
       }
     }
   }}
+  argTypes={{
+    form: {table: {disable: true}},
+  }}
 />
 
 # Login Options
@@ -44,6 +47,9 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
 <Canvas>
   <Story
     name="Display"
+    argTypes={{
+      onFormStart: {table: {disable: true}}
+    }}
     args={{
       loginAsYourselfOptions: [
         {
@@ -159,7 +165,6 @@ export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
       await waitFor(() => expect(args.onFormStart).toHaveBeenCalled());
     }}
     argTypes={{
-      form: {table: {disable: true}},
       onFormStart: {
         action: true,
       }
@@ -236,7 +241,6 @@ export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
     name="No \'machtigen\' options"
     decorators={[LiteralDecorator]}
     argTypes={{
-      form: {table: {disable: true}},
       onFormStart: {
         action: true,
       }
