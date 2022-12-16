@@ -9,6 +9,15 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
 
 <Meta
   title="Composites/Login Options"
+  component={LoginOptions}
+  parameters={{
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    }
+  }}
 />
 
 # Login Options
@@ -21,20 +30,20 @@ The `LoginOptionsDisplay` component shows the different buttons that can be clic
 Next to each button, the corresponding logo is displayed.
 
 export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptions}) => (
-  <LoginOptionsDisplay
-    loginAsYourselfOptions={loginAsYourselfOptions}
-    loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
-  />
+  <form onSubmit={e => {
+      e.preventDefault();
+      alert('anonymous form start')
+    }}>
+    <LoginOptionsDisplay
+      loginAsYourselfOptions={loginAsYourselfOptions}
+      loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
+    />
+  </form>
 );
 
 <Canvas>
   <Story
     name="Display"
-    decorators={[(Story) => (
-      <form>
-        {Story()}
-      </form>
-    )]}
     args={{
       loginAsYourselfOptions: [
         {
@@ -88,6 +97,9 @@ export const DisplayTemplate = ({loginAsYourselfOptions, loginAsGemachtigdeOptio
   </Story>
 </Canvas>
 
+Note that the anonymous form start option is implemented as a button with `type="submit"` and is therefore
+expected to be nested inside of a `<form>` element with an appropriate `onSubmit` handler.
+
 ### Props
 
 <ArgsTable of={LoginOptionsDisplay} />
@@ -99,15 +111,39 @@ the ones that can be used to 'login as yourself' and the ones that can be used t
 It also formats the labels that will be displayed on the buttons and creates the right URL to which the user will be
 redirected upon clicking one of the buttons.
 
-export const LiteralDecorator = (Story) => (
-  <LiteralsProvider literals={{'beginText': {resolved: 'Begin Form'}}}>
-    {Story()}
+export const LiteralDecorator = (Story, { args }) => (
+  <LiteralsProvider literals={{'beginText': {resolved: args.beginText}}}>
+    <Story />
   </LiteralsProvider>
 );
 
-export const Template = ({form, onFormStart}) => (
+export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
   <LoginOptions
-    form={form}
+    form={{
+      uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      name: 'Test form',
+      loginRequired,
+      loginOptions,
+      translationEnabled: false,
+      autoLoginAuthenticationBackend: '',
+      paymentRequired: false,
+      paymentOptions: [],
+      literals: {
+        previousText: {resolved: 'Previous page', value: ''},
+        beginText: {resolved: 'Begin form', value: ''},
+        changeText: {resolved: 'Change', value: ''},
+        confirmText: {resolved: 'Confirm', value: ''},
+      },
+      slug: 'test-form',
+      url: `<placeholder>`,
+      steps: [],
+      showProgressIndicator: true,
+      maintenanceMode: false,
+      active: true,
+      explanationTemplate: '<p>Toelichtingssjabloon...</p>',
+      submissionAllowed: 'yes',
+      requiredFieldsWithAsterisk: true,
+    }}
     onFormStart={onFormStart}
   />
 );
@@ -128,87 +164,65 @@ export const Template = ({form, onFormStart}) => (
       }
     }}
     args={{
-      form: {
-        uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
-        name: 'Test form',
-        loginRequired: false,
-        translationEnabled: false,
-        autoLoginAuthenticationBackend: '',
-        paymentRequired: false,
-        paymentOptions: [],
-        literals: {
-          previousText: {resolved: 'Previous page', value: ''},
-          beginText: {resolved: 'Begin form', value: ''},
-          changeText: {resolved: 'Change', value: ''},
-          confirmText: {resolved: 'Confirm', value: ''},
+      beginText: 'Begin form (anonymous)',
+      loginRequired: false,
+      loginOptions: [
+        {
+          identifier: "digid",
+          label: "DigiD",
+          url: "#",
+          logo: {
+            title: "DigiD simulatie",
+            imageSrc: "/digid.png",
+            href: "https://www.digid.nl/"
+          },
+          isForGemachtigde: false
         },
-        slug: 'test-form',
-        url: 'http://127.0.0.1:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa',
-        steps: [],
-        showProgressIndicator: true,
-        maintenanceMode: false,
-        active: true,
-        explanationTemplate: '<p>Toelichtingssjabloon...</p>',
-        submissionAllowed: 'yes',
-        requiredFieldsWithAsterisk: true,
-        loginOptions: [
-          {
-            identifier: "digid",
-            label: "DigiD",
-            url: "#",
-            logo: {
-              title: "DigiD simulatie",
-              imageSrc: "/digid.png",
-              href: "https://www.digid.nl/"
-            },
-            isForGemachtigde: false
+        {
+          identifier: "eherkenning",
+          label: "eHerkenning",
+          url: "#",
+          logo: {
+            title: "eHerkenning",
+            imageSrc: "/eherkenning.png",
+            href: "https://www.eherkenning.nl/"
           },
-          {
-            identifier: "eherkenning",
-            label: "eHerkenning",
-            url: "#",
-            logo: {
-              title: "eHerkenning",
-              imageSrc: "/eherkenning.png",
-              href: "https://www.eherkenning.nl/"
-            },
-            isForGemachtigde: false
+          isForGemachtigde: false
+        },
+        {
+          identifier: "eidas",
+          label: "eIDAS",
+          url: "#",
+          logo: {
+            title: "eIDAS",
+            imageSrc: "/eidas.png",
+            href: "https://digital-strategy.ec.europa.eu/en/policies/eu-trust-mark"
           },
-          {
-            identifier: "eidas",
-            label: "eIDAS",
-            url: "#",
-            logo: {
-              title: "eIDAS",
-              imageSrc: "/eidas.png",
-              href: "https://digital-strategy.ec.europa.eu/en/policies/eu-trust-mark"
-            },
-            isForGemachtigde: false
+          isForGemachtigde: false
+        },
+        {
+          identifier: "digid_machtigen",
+          label: "DigiD Machtigen",
+          url: "#",
+          logo: {
+            title: "DigiD Machtigen",
+            imageSrc: "/digid.png",
+            href: "https://www.digid.nl/"
           },
-          {
-            identifier: "digid_machtigen",
-            label: "DigiD Machtigen",
-            url: "#",
-            logo: {
-              title: "DigiD Machtigen",
-              imageSrc: "/digid.png",
-              href: "https://www.digid.nl/"
-            },
-            isForGemachtigde: true
+          isForGemachtigde: true
+        },
+        {
+          identifier: "eherkenning_bewindvoering",
+          label: "eHerkenning bewindvoering",
+          url: "#",
+          logo: {
+            title: "eHerkenning bewindvoering",
+            imageSrc: "/eherkenning.png",
+            href: "https://www.eherkenning.nl/"
           },
-          {
-            identifier: "eherkenning_bewindvoering",
-            label: "eHerkenning bewindvoering",
-            url: "#",
-            logo: {
-              title: "eHerkenning bewindvoering",
-              imageSrc: "/eherkenning.png",
-              href: "https://www.eherkenning.nl/"
-            },
-            isForGemachtigde: true
-          },
-        ]
-      },
+          isForGemachtigde: true
+        },
+      ],
       onFormStart: jest.fn(e => e.preventDefault()),
     }}
   >
