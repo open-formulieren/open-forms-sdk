@@ -159,6 +159,7 @@ export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
       await waitFor(() => expect(args.onFormStart).toHaveBeenCalled());
     }}
     argTypes={{
+      form: {table: {disable: true}},
       onFormStart: {
         action: true,
       }
@@ -224,6 +225,42 @@ export const Template = ({loginRequired=false, loginOptions, onFormStart}) => (
         },
       ],
       onFormStart: jest.fn(e => e.preventDefault()),
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="No \'machtigen\' options"
+    decorators={[LiteralDecorator]}
+    argTypes={{
+      form: {table: {disable: true}},
+      onFormStart: {
+        action: true,
+      }
+    }}
+    args={{
+      beginText: '(anonymous)',
+      loginRequired: true,
+      loginOptions: [
+        {
+          identifier: "digid",
+          label: "DigiD",
+          url: "#",
+          logo: {
+            title: "DigiD simulatie",
+            imageSrc: "/digid.png",
+            href: "https://www.digid.nl/"
+          },
+          isForGemachtigde: false
+        },
+      ],
+      onFormStart: jest.fn(e => {
+        e.preventDefault();
+        alert('form start triggered');
+      }),
     }}
   >
     {Template.bind({})}
