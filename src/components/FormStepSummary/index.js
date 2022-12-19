@@ -42,7 +42,7 @@ const FormStepSummary = ({slug, name, data, editStepText}) => {
   return (
     <div className={getBEMClassName('summary')}>
       <div className={getBEMClassName('summary__step-header')}>
-        <h3 className={getBEMClassName('summary__step-name')}>{name}</h3>
+        <h2 className={getBEMClassName('summary__step-name')}>{name}</h2>
         <Anchor
           href={editStepUrl}
           onClick={event => {

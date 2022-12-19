@@ -44,7 +44,7 @@ E.g. to re-use the card component:
 ```jsx
 import Card from '@openformulieren/sdk/components/Card';
 
-const MyCard = props => <Card titleComponent="h3" {...props} />;
+const MyCard = props => <Card titleComponent="h2" {...props} />;
 
 export default MyCard;
 ```

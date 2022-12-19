@@ -4,4 +4,13 @@
 
 .#{prefix(login-options)} {
   @include body;
+
+  @include element('list') {
+    @include margin(auto);
+  }
+
+  @include element('caption') {
+    @include h2;
+    @include margin(auto);
+  }
 }

@@ -22,7 +22,7 @@ const usePreventScroll = open => {
 const Modal = ({
   isOpen = false,
   title = '',
-  titleComponent: Title = 'h2',
+  titleComponent: Title = 'h1',
   closeModal,
   contentModifiers = [],
   children,
