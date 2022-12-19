@@ -6,5 +6,5 @@
     {% if (ctx.visible) { %}
       {{ctx.children}}
     {% } %}
-  <div ref="messageContainer" class="{{ctx.ofPrefix}}errors" aria-live="{{ctx.component.validateOn === 'blur' ? 'assertive' : 'polite'}}"></div>
+  <div ref="messageContainer" class="{{ctx.ofPrefix}}errors" aria-live="{{ctx.component.validateOn === 'blur' ? 'assertive' : 'polite'}}" aria-atomic="true"></div>
 </div>
