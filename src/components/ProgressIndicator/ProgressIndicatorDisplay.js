@@ -120,7 +120,7 @@ const ProgressIndicatorDisplay = ({
         </span>
       </div>
 
-      <Caption component="h3">{formTitle}</Caption>
+      <Caption component="h2">{formTitle}</Caption>
 
       <List ordered>
         <ProgressItem completed={hasSubmission}>

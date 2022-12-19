@@ -17,12 +17,12 @@ const LoginOptionsDisplay = ({loginAsYourselfOptions, loginAsGemachtigdeOptions}
 
       {loginAsGemachtigdeOptions.length > 0 && (
         <>
-          <h3>
+          <h2>
             <FormattedMessage
               description="Log in on behalf of someone else title"
               defaultMessage="Log in on behalf of someone else"
             />
-          </h3>
+          </h2>
 
           <div className={getBEMClassName('login-options__list')}>
             {loginAsGemachtigdeOptions.map(option => (

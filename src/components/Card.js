@@ -5,7 +5,7 @@ import React from 'react';
 import Caption from 'components/Caption';
 import {getBEMClassName} from 'utils';
 
-const CardTitle = ({title, component = 'h2', blockClassName = 'card'}) => {
+const CardTitle = ({title, component = 'h1', blockClassName = 'card'}) => {
   const headingLevel = {
     h1: 1,
     h2: 2,
