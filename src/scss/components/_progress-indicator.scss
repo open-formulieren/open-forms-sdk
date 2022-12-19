@@ -13,20 +13,18 @@
 .#{prefix('progress-indicator')} {
   @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
 
-  // temporary fix for replacing div with a button for accessibility
-  button {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-  }
-
   @include element('mobile-header') {
     @include body;
     @include body--big;
     @include margin(-$grid-container-margin, $properties: margin-left);
+
+    // style for replacing div with a button for accessibility
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font-family: $typography-font-family-base !important;
+    cursor: pointer;
 
     @include show-on-mobile(flex);
     align-items: center;
