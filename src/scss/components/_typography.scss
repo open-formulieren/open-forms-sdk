@@ -13,7 +13,7 @@
 }
 
 .#{prefix(caption)} {
-  @include h3(auto);
+  @include h2(auto);
 }
 
 .#{prefix(body)} {
