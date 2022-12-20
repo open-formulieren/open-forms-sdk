@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 
 import Anchor from 'components/Anchor';
@@ -108,17 +108,37 @@ const ProgressIndicatorDisplay = ({
 }) => {
   const [expanded, setExpanded] = useState(false);
 
+  const intl = useIntl();
+  // Wrapper may be a DOM element, which can't handle <FormattedMessage />
+  const ariaIconLabel = intl.formatMessage({
+    description: 'Toggle active step progress indicator icon',
+    defaultMessage: 'Progress step indicator icon',
+  });
+  const toggleStepsTitle = intl.formatMessage({
+    description: 'Active step toggle titles',
+    defaultMessage: 'Show/hide steps',
+  });
+
   return (
     <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
-      <div
+      {/* Turn a Div with an onClick event into a button for accesibility */}
+      <button
         className={getBEMClassName('progress-indicator__mobile-header')}
+        aria-pressed={expanded ? 'true' : 'false'}
         onClick={() => setExpanded(!expanded)}
       >
-        <FAIcon icon={expanded ? 'chevron-up' : 'chevron-down'} modifiers={['normal']} />
-        <span className={getBEMClassName('progress-indicator__active-step')}>
+        <FAIcon
+          icon={expanded ? 'chevron-up' : 'chevron-down'}
+          modifiers={['normal']}
+          aria-label={ariaIconLabel}
+        />
+        <span
+          className={getBEMClassName('progress-indicator__active-step')}
+          aria-label={toggleStepsTitle}
+        >
           {activeStepTitle}
         </span>
-      </div>
+      </button>
 
       <Caption component="h2">{formTitle}</Caption>
 

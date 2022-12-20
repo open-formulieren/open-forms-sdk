@@ -9,7 +9,10 @@
     class="btn btn-sm btn-light signature-pad-refresh utrecht-button utrecht-button--html-button utrecht-button--subtle"
     ref="refresh"
   >
-    <i class="{{ctx.iconClass('refresh')}}"></i>
+    <i class="{{ctx.iconClass('refresh')}}">
+      <!-- For accessibility a Button element must contain text content -->
+      <span class="sr-only">{{ctx.t('Refresh')}}</span>
+    </i>
   </button>
   <canvas class="signature-pad-canvas" height="{{ctx.component.height}}" ref="canvas"></canvas>
   {% if (ctx.required) { %}

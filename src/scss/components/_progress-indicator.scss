@@ -18,6 +18,13 @@
     @include body--big;
     @include margin(-$grid-container-margin, $properties: margin-left);
 
+    // style for replacing div with a button for accessibility
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 100vw;
+
     @include show-on-mobile(flex);
     align-items: center;
 
