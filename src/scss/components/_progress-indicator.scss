@@ -20,11 +20,10 @@
 
     // style for replacing div with a button for accessibility
     background: none;
-    color: inherit;
     border: none;
     padding: 0;
-    font-family: $typography-font-family-base !important;
     cursor: pointer;
+    width: 100vw;
 
     @include show-on-mobile(flex);
     align-items: center;
@@ -47,8 +46,10 @@
 
     // style layout
     @at-root .#{prefix('layout__row')} & {
-      @include margin(calc(-1 * var(--of-progress-indicator-mobile-margin)),
-        $properties: (margin-left, margin-right));
+      @include margin(
+        calc(-1 * var(--of-progress-indicator-mobile-margin)),
+        $properties: (margin-left, margin-right)
+      );
     }
 
     @include nested('caption') {
