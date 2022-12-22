@@ -38,7 +38,7 @@ const LinkOrSpan = ({isActive, isApplicable, to, useLink, children, ...props}) =
   }
 
   return (
-    <Body component="span" modifiers={['muted']} {...props}>
+    <Body component="span" modifiers={['big', 'muted']} {...props}>
       {children}
     </Body>
   );
@@ -178,7 +178,7 @@ const ProgressIndicatorDisplay = ({
           )}
           {showConfirmation && (
             <ProgressItem completed={isSubmissionComplete}>
-              <Body component="span" modifiers={isSubmissionComplete ? [] : ['muted']}>
+              <Body component="span" modifiers={isSubmissionComplete ? ['big'] : ['big', 'muted']}>
                 {STEP_LABELS.confirmation}
               </Body>
             </ProgressItem>
