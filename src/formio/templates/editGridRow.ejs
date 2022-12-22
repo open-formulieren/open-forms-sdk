@@ -1,6 +1,8 @@
 <div class="{{ctx.ofPrefix}}editgrid__row">
     {% for (const key in ctx.flattenedComponents) { %}
-        <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
+        {% if (ctx.isVisibleInRow(ctx.flattenedComponents[key])) { %}
+            <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
+        {% } %}
     {% } %}
 
   {% if (!ctx.self.options.readOnly) { %}
