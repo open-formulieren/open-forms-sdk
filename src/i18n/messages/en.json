@@ -184,11 +184,6 @@
     "description": "Form start outage title",
     "originalDefault": "Problem - {formName}"
   },
-  "Rj0x41": {
-    "defaultMessage": "Show/hide steps",
-    "description": "Active step toggle titles",
-    "originalDefault": "Show/hide steps"
-  },
   "SE7xol": {
     "defaultMessage": "no",
     "description": "'False' display",
@@ -343,6 +338,11 @@
     "defaultMessage": "Your session has expired",
     "description": "Session expired card title",
     "originalDefault": "Your session has expired"
+  },
+  "pxwKb+": {
+    "defaultMessage": "Current step",
+    "description": "Active step title",
+    "originalDefault": "Current step"
   },
   "r1L6Zj": {
     "defaultMessage": "Suspending the form failed, please try again later",
