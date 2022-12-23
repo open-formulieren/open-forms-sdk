@@ -109,76 +109,82 @@ const ProgressIndicatorDisplay = ({
   const [expanded, setExpanded] = useState(false);
 
   const intl = useIntl();
-  // Wrapper may be a DOM element, which can't handle <FormattedMessage />
+  // aria-labels are passed to DOM element, which can't handle <FormattedMessage />, so we
+  // use imperative API
   const ariaIconLabel = intl.formatMessage({
-    description: 'Toggle active step progress indicator icon',
-    defaultMessage: 'Progress step indicator icon',
+    description: 'Progress step indicator toggle icon (mobile)',
+    defaultMessage: 'Toggle the progress status display',
   });
-  const toggleStepsTitle = intl.formatMessage({
-    description: 'Active step toggle titles',
-    defaultMessage: 'Show/hide steps',
-  });
+  const accessibleToggleStepsLabel = intl.formatMessage(
+    {
+      description: 'Active step accessible label in mobile progress indicator',
+      defaultMessage: 'Current step: {activeStepTitle}',
+    },
+    {activeStepTitle}
+  );
 
   return (
     <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
-      {/* Turn a Div with an onClick event into a button for accesibility */}
-      <button
-        className={getBEMClassName('progress-indicator__mobile-header')}
-        aria-pressed={expanded ? 'true' : 'false'}
-        onClick={() => setExpanded(!expanded)}
-      >
-        <FAIcon
-          icon={expanded ? 'chevron-up' : 'chevron-down'}
-          modifiers={['normal']}
-          aria-label={ariaIconLabel}
-        />
-        <span
-          className={getBEMClassName('progress-indicator__active-step')}
-          aria-label={toggleStepsTitle}
+      <nav>
+        {/* Turn a Div with an onClick event into a button for accesibility */}
+        <button
+          className={getBEMClassName('progress-indicator__mobile-header')}
+          aria-pressed={expanded ? 'true' : 'false'}
+          onClick={() => setExpanded(!expanded)}
         >
-          {activeStepTitle}
-        </span>
-      </button>
-
-      <Caption component="h2">{formTitle}</Caption>
-
-      <List ordered>
-        <ProgressItem completed={hasSubmission}>
-          <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true)}>
-            {STEP_LABELS.login}
-          </Anchor>
-        </ProgressItem>
-        {steps.map((step, _) => (
-          <SidebarStepStatus
-            key={step.uuid}
-            slug={step.slug}
-            formDefinition={step.formDefinition}
-            completed={step.isCompleted}
-            isApplicable={step.isApplicable}
-            canNavigate={step.canNavigateTo}
-            isCurrent={step.isCurrent}
+          <FAIcon
+            icon={expanded ? 'chevron-up' : 'chevron-down'}
+            modifiers={['normal']}
+            aria-label={ariaIconLabel}
           />
-        ))}
-        {showOverview && (
-          <ProgressItem completed={isConfirmation}>
-            <LinkOrSpan
-              to={'/overzicht'}
-              useLink={areApplicableStepsCompleted}
-              isActive={isSummary}
-              isApplicable={areApplicableStepsCompleted}
-            >
-              {STEP_LABELS.overview}
-            </LinkOrSpan>
+          <span
+            className={getBEMClassName('progress-indicator__active-step')}
+            aria-label={accessibleToggleStepsLabel}
+          >
+            {activeStepTitle}
+          </span>
+        </button>
+
+        <Caption component="h2">{formTitle}</Caption>
+
+        <List ordered>
+          <ProgressItem completed={hasSubmission}>
+            <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true)}>
+              {STEP_LABELS.login}
+            </Anchor>
           </ProgressItem>
-        )}
-        {showConfirmation && (
-          <ProgressItem completed={isSubmissionComplete}>
-            <Body component="span" modifiers={isSubmissionComplete ? [] : ['muted']}>
-              {STEP_LABELS.confirmation}
-            </Body>
-          </ProgressItem>
-        )}
-      </List>
+          {steps.map((step, _) => (
+            <SidebarStepStatus
+              key={step.uuid}
+              slug={step.slug}
+              formDefinition={step.formDefinition}
+              completed={step.isCompleted}
+              isApplicable={step.isApplicable}
+              canNavigate={step.canNavigateTo}
+              isCurrent={step.isCurrent}
+            />
+          ))}
+          {showOverview && (
+            <ProgressItem completed={isConfirmation}>
+              <LinkOrSpan
+                to={'/overzicht'}
+                useLink={areApplicableStepsCompleted}
+                isActive={isSummary}
+                isApplicable={areApplicableStepsCompleted}
+              >
+                {STEP_LABELS.overview}
+              </LinkOrSpan>
+            </ProgressItem>
+          )}
+          {showConfirmation && (
+            <ProgressItem completed={isSubmissionComplete}>
+              <Body component="span" modifiers={isSubmissionComplete ? [] : ['muted']}>
+                {STEP_LABELS.confirmation}
+              </Body>
+            </ProgressItem>
+          )}
+        </List>
+      </nav>
     </Card>
   );
 };

@@ -159,6 +159,11 @@
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
   },
+  "M5WEhc": {
+    "defaultMessage": "Current step: {activeStepTitle}",
+    "description": "Active step accessible label in mobile progress indicator",
+    "originalDefault": "Current step: {activeStepTitle}"
+  },
   "PCFPnE": {
     "defaultMessage": "Payment is required for this product",
     "description": "Payment required info text",
@@ -183,11 +188,6 @@
     "defaultMessage": "Problem - {formName}",
     "description": "Form start outage title",
     "originalDefault": "Problem - {formName}"
-  },
-  "Rj0x41": {
-    "defaultMessage": "Show/hide steps",
-    "description": "Active step toggle titles",
-    "originalDefault": "Show/hide steps"
   },
   "SE7xol": {
     "defaultMessage": "no",
@@ -324,15 +324,15 @@
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
   },
+  "jqJgG+": {
+    "defaultMessage": "Toggle the progress status display",
+    "description": "Progress step indicator toggle icon (mobile)",
+    "originalDefault": "Toggle the progress status display"
+  },
   "mMYAWl": {
     "defaultMessage": "Your session is about to expire {delta}. Extend your session if you wish to continue.",
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
-  },
-  "mtGZKB": {
-    "defaultMessage": "Progress step indicator icon",
-    "description": "Toggle active step progress indicator icon",
-    "originalDefault": "Progress step indicator icon"
   },
   "nwQjsz": {
     "defaultMessage": "Your session will expire soon.",
