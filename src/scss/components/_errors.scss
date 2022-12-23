@@ -1,11 +1,14 @@
-@import '~microscope-sass/lib/color';
+@import '@utrecht/components/dist/form-field-description/css/index.css';
 
 @import '../mixins/bem';
-@import '../mixins/prefix';
 
-.#{prefix(errors)} {
-  @include body;
-  @include body--big;
-  @include color-danger;
-  font-weight: bold;
+.utrecht-form-field-description {
+  @include modifier('openforms-errors') {
+    --utrecht-form-field-description-font-size: var(--of-text-big-font-size, inherit);
+
+    @include margin($value-mobile: $typography-margin-list);
+    font-weight: bold;
+    line-height: $typography-line-height-text-big;
+    overflow-wrap: break-word;
+  }
 }

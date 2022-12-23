@@ -129,7 +129,7 @@ we don't have strict BEM naming here.
   }
 
   .bg-error {
-    @extend .#{prefix(errors)};
+    @extend .utrecht-form-field-description--openforms-errors;
   }
 }
 
