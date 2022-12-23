@@ -19,7 +19,7 @@
           {% if (!ctx.disabled) { %}
             <div class="col-md-1">
               <button type="button" class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--icon-only {{ctx.ofPrefix}}button--danger" ref="removeLink" title="{{ctx.t('Remove')}}">
-                <i class="{{ctx.iconClass('remove')}}"></i>
+                <i class="{{ctx.iconClass('trash-can')}}"></i>
               </button>
             </div>
           {% } %}
@@ -54,7 +54,7 @@
         <span>
           <img ref="fileImage" src="" alt="{{file.originalName || file.name}}" style="width:{{ctx.component.imageSize}}px">
           {% if (!ctx.disabled) { %}
-            <i class="{{ctx.iconClass('remove')}}" ref="removeLink"></i>
+            <i class="{{ctx.iconClass('trash-can')}}" ref="removeLink"></i>
           {% } %}
         </span>
       </div>
@@ -108,7 +108,7 @@
     <div class="row">
       <div class="fileName col-form-label col-sm-10">
         <span class="fileName__file">{{status.originalName}}</span>
-        <i class="{{ctx.iconClass('remove')}}" ref="fileStatusRemove" title="{{ctx.t('remove')}}"></i>
+        <i class="{{ctx.iconClass('trash-can')}}" ref="fileStatusRemove" title="{{ctx.t('remove')}}"></i>
       </div>
       <div class="fileSize col-form-label col-sm-2 text-right">{{ctx.fileSize(status.size)}}</div>
     </div>
