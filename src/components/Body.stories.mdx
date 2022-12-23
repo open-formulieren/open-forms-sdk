@@ -1,0 +1,42 @@
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+
+import Body, {VARIANTS} from "./Body";
+
+<Meta
+  title="Pure React components/Body"
+  component={Body}
+  argTypes={{
+    children: {table: {disable: true}},
+    component: {table: {disable: true}},
+    modifiers: {
+      options: VARIANTS,
+      control: {
+        type: 'check',
+      }
+    },
+  }}
+  parameters={{
+    controls: {sort: 'requiredFirst'},
+  }}
+/>
+
+
+# Body
+
+export const Template = ({content='Body', modifiers}) => (
+  <Body modifiers={modifiers} >{content}</Body>
+);
+
+
+## Variants
+
+<Canvas>
+  <Story name="Default" args={{content: 'Lorem ipsum...', modifiers:[]}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+## Props
+
+<Props of={Body} />

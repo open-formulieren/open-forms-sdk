@@ -3,6 +3,8 @@ import React from 'react';
 
 import {getBEMClassName} from 'utils';
 
+export const VARIANTS = ['big', 'muted', 'small'];
+
 const Body = ({modifiers = [], component = 'p', children, ...props}) => {
   const Component = `${component}`;
   const className = getBEMClassName('body', modifiers);
@@ -14,7 +16,7 @@ const Body = ({modifiers = [], component = 'p', children, ...props}) => {
 };
 
 Body.propTypes = {
-  modifiers: PropTypes.arrayOf(PropTypes.string),
+  modifiers: PropTypes.oneOf(VARIANTS),
   component: PropTypes.string,
   children: PropTypes.node,
 };
