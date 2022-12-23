@@ -9,7 +9,6 @@ import {default as FieldSetTemplate} from './fieldset.ejs';
 import {default as FileTemplate} from './file.ejs';
 import {default as LabelTemplate} from './label.ejs';
 import {default as MapTemplate} from './map.ejs';
-import {default as MessageTemplate} from './message.ejs';
 import {default as MultiValueRowTemplate} from './multiValueRow.ejs';
 import {default as MultiValueTableTemplate} from './multiValueTable.ejs';
 import {default as RadioTemplate} from './radio.ejs';
@@ -20,7 +19,6 @@ import {default as TextTemplate} from './text.ejs';
 const OFLibrary = {
   component: {form: ComponentTemplate},
   field: {form: FieldTemplate}, // wrapper around the individual field types
-  message: {form: MessageTemplate},
 
   button: {form: ButtonTemplate},
   checkbox: {form: CheckboxTemplate},
