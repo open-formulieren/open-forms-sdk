@@ -109,15 +109,19 @@ const ProgressIndicatorDisplay = ({
   const [expanded, setExpanded] = useState(false);
 
   const intl = useIntl();
-  // Wrapper may be a DOM element, which can't handle <FormattedMessage />
+  // aria-labels are passed to DOM element, which can't handle <FormattedMessage />, so we
+  // use imperative API
   const ariaIconLabel = intl.formatMessage({
-    description: 'Toggle active step progress indicator icon',
-    defaultMessage: 'Progress step indicator icon',
+    description: 'Progress step indicator toggle icon (mobile)',
+    defaultMessage: 'Toggle the progress status display',
   });
-  const toggleStepsTitle = intl.formatMessage({
-    description: 'Active step title',
-    defaultMessage: 'Current step',
-  });
+  const accessibleToggleStepsLabel = intl.formatMessage(
+    {
+      description: 'Active step accessible label in mobile progress indicator',
+      defaultMessage: 'Current step: {activeStepTitle}',
+    },
+    {activeStepTitle}
+  );
 
   return (
     <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
@@ -135,7 +139,7 @@ const ProgressIndicatorDisplay = ({
           />
           <span
             className={getBEMClassName('progress-indicator__active-step')}
-            aria-label={toggleStepsTitle + ': ' + activeStepTitle}
+            aria-label={accessibleToggleStepsLabel}
           >
             {activeStepTitle}
           </span>

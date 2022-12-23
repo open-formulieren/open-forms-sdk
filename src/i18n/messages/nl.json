@@ -159,6 +159,11 @@
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
   },
+  "M5WEhc": {
+    "defaultMessage": "Huidige stap: {activeStepTitle}",
+    "description": "Active step accessible label in mobile progress indicator",
+    "originalDefault": "Current step: {activeStepTitle}"
+  },
   "PCFPnE": {
     "defaultMessage": "Voor dit product is betaling vereist",
     "description": "Payment required info text",
@@ -319,15 +324,15 @@
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
   },
+  "jqJgG+": {
+    "defaultMessage": "Toon/verberg de voortgang in het formulier",
+    "description": "Progress step indicator toggle icon (mobile)",
+    "originalDefault": "Toggle the progress status display"
+  },
   "mMYAWl": {
     "defaultMessage": "Uw sessie staat op het punt om te vervallen {delta}. Verleng uw sessie indien u door wenst te gaan.",
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
-  },
-  "mtGZKB": {
-    "defaultMessage": "Progress step indicator icon",
-    "description": "Toggle active step progress indicator icon",
-    "originalDefault": "Progress step indicator icon"
   },
   "nwQjsz": {
     "defaultMessage": "Uw sessie vervalt binnenkort.",
@@ -338,11 +343,6 @@
     "defaultMessage": "Sessie verlopen",
     "description": "Session expired card title",
     "originalDefault": "Your session has expired"
-  },
-  "pxwKb+": {
-    "defaultMessage": "Huidige stap",
-    "description": "Active step title",
-    "originalDefault": "Current step"
   },
   "r1L6Zj": {
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
