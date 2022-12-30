@@ -8,6 +8,7 @@
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
+@import '../mixins/anchor';
 
 $button-line-height: $typography-line-height-text-big * $typography-font-size-text-big;
 $button-line-height-px: math.div($button-line-height, ($button-line-height * 0 + 1)) * 16px;
@@ -139,21 +140,6 @@ $button-padding-h: $grid-margin-2;
       )
   );
   @include button-theme(
-    'anchor',
-    var(--of-button-anchor-fg),
-    var(--of-button-anchor-bg),
-    var(--of-button-anchor-color-border),
-    true,
-    $color-background-hover: var(--of-button-anchor-hover-bg),
-    $color-border-hover: var(--of-button-anchor-hover-color-border),
-    $color-active: var(--of-button-anchor-active-fg),
-    $color-background-active: var(--of-button-anchor-active-bg),
-    $color-border-active: var(--of-button-anchor-active-color-border),
-    $color-border-focus:
-      var(--of-button-anchor-focus-color-border, var(--utrecht-button-focus-border-color)),
-    $force-colors: true // there's no anchor variant for utrecht button yet
-  );
-  @include button-theme(
     'danger',
     var(--of-button-danger-fg),
     var(--of-button-danger-bg),
@@ -220,6 +206,48 @@ $button-padding-h: $grid-margin-2;
 
     &.#{prefix(button)}--danger {
       color: var(--of-button-danger-bg);
+    }
+  }
+
+  @include modifier('anchor') {
+    --utrecht-button-hover-background-color: transparent;
+
+    color: var(--of-button-anchor-fg);
+    background-color: var(--of-button-anchor-bg);
+    border-right-color: var(--of-button-anchor-color-border) !important;
+    border-bottom-color: var(--of-button-anchor-color-border) !important;
+
+    @include of-anchor;
+
+    &:not([aria-disabled='true']):hover {
+      --_utrecht-button-hover-color: var(--of-link-hover-color);
+
+      color: var(--of-link-hover-color);
+      background-color: var(--of-button-anchor-hover-bg);
+      border-color: var(--of-button-anchor-hover-color-border) !important;
+    }
+
+    &:active {
+      color: var(--of-button-anchor-active-fg);
+      background-color: var(--of-button-anchor-active-fg);
+      // TODO: can be removed once there are utrecht design tokens for the bottom/right
+      // border color
+      border-top-color: var(--of-button-anchor-active-color-border);
+      border-right-color: transparent !important;
+      border-left-color: var(--of-button-anchor-active-color-border);
+      border-bottom-color: transparent !important;
+    }
+
+    &:focus,
+    &:focus-visible {
+      // TODO: can be removed once there are utrecht design tokens for the bottom/right border color
+      // issue: https: //github.com/nl-design-system/utrecht/issues/1406
+      border-color: var(
+        --of-button-anchor-focus-color-border,
+        var(--utrecht-button-focus-border-color)
+      ) !important;
+      // TODO: can be removed once there are utrecht design tokens for the border-width
+      border-width: 2px !important;
     }
   }
 }
