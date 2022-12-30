@@ -3,6 +3,7 @@
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
+@import '../mixins/wysiwyg';
 
 // the html div doesn't get it's own class name, but it is part of the form-control--content
 // component
@@ -19,7 +20,7 @@
     }
 
     [ref='html'] {
-      @include wysiwyg;
+      @include of-wysiwyg;
       @include body;
       @include body--big;
       width: 100%;

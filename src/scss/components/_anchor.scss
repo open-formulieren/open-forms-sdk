@@ -5,15 +5,18 @@
 @import '@utrecht/components/dist/link-button/css/index.css';
 
 @import '../mixins/prefix';
+@import '../mixins/anchor';
 
 .#{prefix('anchor')} {
   @include text;
+  @include of-anchor;
 
-  &:not(#{&}--hover) {
-    @include anchor;
-  }
   @include modifier('hover') {
-    @include anchor(true);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: var(--of-link-text-decoration, underline);
+    }
   }
 
   @include modifier('active') {

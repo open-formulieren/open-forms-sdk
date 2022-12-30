@@ -1,5 +1,5 @@
 @import '../mixins/prefix';
-@import '~microscope-sass/lib/typography';
+@import '../mixins/wysiwyg';
 
 .#{prefix(privacy-checkbox)} {
   &__input {
@@ -20,7 +20,7 @@
     // This is needed because the label is populated with the value coming from a WYSIWYG editor
     // which adds <p></p> around each paragraph in the text. This tag gets a margin which looks off.
     // So here it is overwritten.
-    @include wysiwyg;
+    @include of-wysiwyg;
     p {
       @include body('auto');
     }

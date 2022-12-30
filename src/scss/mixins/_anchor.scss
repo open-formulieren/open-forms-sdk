@@ -1,0 +1,10 @@
+@mixin of-anchor() {
+  color: var(--of-link-color);
+  cursor: pointer;
+  text-decoration: var(--of-link-text-decoration, underline);
+
+  &:hover {
+    color: var(--of-link-hover-color);
+    text-decoration: none;
+  }
+}

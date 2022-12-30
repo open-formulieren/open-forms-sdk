@@ -1,0 +1,11 @@
+@import '~microscope-sass/lib/typography';
+
+@import './anchor';
+
+@mixin of-wysiwyg() {
+  @include wysiwyg;
+
+  a {
+    @include of-anchor;
+  }
+}

@@ -3,6 +3,7 @@
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
+@import '../mixins/wysiwyg';
 
 .#{prefix(title)} {
   @include h1(auto);
@@ -29,7 +30,7 @@
   }
 
   @include modifier(wysiwyg) {
-    @include wysiwyg;
+    @include of-wysiwyg;
   }
 }
 
