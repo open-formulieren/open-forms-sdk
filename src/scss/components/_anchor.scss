@@ -12,10 +12,10 @@
   @include of-anchor;
 
   @include modifier('hover') {
-    text-decoration: none;
+    text-decoration: var(--utrecht-link-hover-text-decoration, none);
 
     &:hover {
-      text-decoration: var(--of-link-text-decoration, underline);
+      text-decoration: var(--utrecht-link-text-decoration, underline);
     }
   }
 
