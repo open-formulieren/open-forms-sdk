@@ -174,7 +174,8 @@ class AbortedLogicCheck extends Error {
 }
 
 /**
- * The initial state for FormStep component, get mutated by `reducer`.
+ * The initial state for FormStep component,
+ * @see {reducer}
  * @type {{configuration: null, logicChecking: boolean, isFormSaveModalOpen: boolean, isNavigating: boolean, error: null, backendData: {}, canSubmit: boolean}}
  */
 const initialState = {
@@ -188,7 +189,9 @@ const initialState = {
 };
 
 /**
- * React (state) reducer, contains various the lead to state manipulation.
+ * State updates are performed by calling `dispatch` with an action, The reducer applies the action
+ * to a "draft" state resulting in a new (immutable) state.
+ *
  * @see {@link Immer documentation} https://immerjs.github.io/immer/example-setstate#useimmerreducer
  * @see {@link React documentation} https://reactjs.org/docs/hooks-reference.html#usereducer
  *
