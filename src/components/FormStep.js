@@ -329,10 +329,10 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * TODO: something is causing the FormStep.js to render multiple times, leading to state updates
    *   on unmounted components.
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `ERROR` When an error occurred while loading the form step configuration.
-   *   - `STEP_LOADED` When the form step is fetched fom the  backend.
+   *   - `STEP_LOADED` When the form step is fetched fom the backend.
    */
   const {loading} = useAsync(async () => {
     let stepDetail;
@@ -360,7 +360,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   /**
    * Closes the save confirmation modal.
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `TOGGLE_FORM_SAVE_MODAL` Immediately, resulting in `isFormSaveModalOpen=false`, closing
    *     modal.
@@ -405,7 +405,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   /**
    * Evaluates the server side logic.
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `LOGIC_CHECK_INTERRUPTED` When there's no point/change in state to be expected by the logic
    *       check
@@ -542,7 +542,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * A form has been submitted.
    * @see {onReactSubmit} We wrap the submit so that we control our own submit buttonLOGIC_CHECK_DONE
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `NAVIGATE` Immediately (if submission is available).
    *   - `ERROR` When an error occurred while loading the form step configuration.
@@ -578,7 +578,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * instance submit method, which leads to the submit event being emitted, and we tap
    * into that to handle the actual submission.
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `BLOCK_SUBMISSION` When the the logic is checking and the form should be disabled for
    *       submission.
@@ -648,7 +648,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * Get called when the user presses the save button.
    * @see {onSaveConfirm} Opens a modal, `onSaveConfirm` after user confirms.
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `TOGGLE_FORM_SAVE_MODAL` After preventing default event handler, resulting in
    *     `isFormSaveModalOpen=true`, opening modal.
@@ -665,7 +665,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * Handler to navigate back to the previous step or page
    * @param {PointerEvent} event
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `NAVIGATE` After preventing default event handler.
    */
@@ -716,7 +716,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * A value has been changed within the rendered form
    * @see {@link Form.io documentation} https://help.form.io/developers/form-renderer#form-events
    *
-   * During evaluation, the following actions may be dispatched:
+   * During evaluation, the following actions are/may be dispatched:
    *
    *   - `BLOCK_SUBMISSION` When the the form midfier by a humer (`modifiedByHuman`)  and the form
    *       should be disabled for submission.
