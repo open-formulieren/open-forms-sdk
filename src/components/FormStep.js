@@ -357,14 +357,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     throw error;
   }
 
-  /**
-   * Closes the save confirmation modal.
-   *
-   * During evaluation, the following actions are/may be dispatched:
-   *
-   *   - `TOGGLE_FORM_SAVE_MODAL` Immediately, resulting in `isFormSaveModalOpen=false`, closing
-   *     modal.
-   */
   const closeFormStepSaveModal = () => {
     dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: false}});
   };
