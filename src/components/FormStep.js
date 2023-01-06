@@ -640,10 +640,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     }
   };
 
-  /**
-   * Gets called when the user confirms saving the form.
-   * @return {Promise}
-   */
   const onSaveConfirm = async () => {
     return await submitStepData(submissionStep.url, {...getCurrentFormData()});
   };
