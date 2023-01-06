@@ -82,9 +82,20 @@ const submitStepData = async (stepUrl, data) => {
  *
  * @param {string} stepUrl
  * @param {Function} onBackendError
- * @return {Function|void}
+ * @return {Function}
  */
 const getCustomValidationHook = (stepUrl, onBackendError) => {
+  /**
+   * The custom validation function.
+   *
+   * @param {Object} data The submission data object that is going to be submitted to the server.
+   *   This allows you to alter the submission data object in real time.
+   * @param {Object} next Called when the beforeSubmit handler is done executing. If you call this
+   *   method without any arguments, like next(), then this means that no errors should be added to
+   *   the default form validation. If you wish to introduce your own custom errors, then you can
+   *   call this method with either a single error object, or an array of errors like the example
+   *   below.
+   */
   return async (data, next) => {
     const PREFIX = 'data';
     const validateUrl = `${stepUrl}/validate`;
@@ -98,11 +109,13 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
         const invalidParams = error.invalidParams.filter(param =>
           param.name.startsWith(`${PREFIX}.`)
         );
+
         const errors = invalidParams.map(({name, code, reason}) => ({
           path: name.replace(`${PREFIX}.`, '', 1),
           message: reason,
           code: code,
         }));
+
         next(errors);
         return;
       } else {
@@ -111,9 +124,11 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
         return;
       }
     }
+
     if (!validateResponse.ok) {
       console.warn(`Unexpected HTTP ${validateResponse.status}`);
     }
+
     next();
   };
 };
@@ -269,7 +284,6 @@ const reducer = (draft, action) => {
  * @return {React.ReactNode}
  */
 const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout}) => {
-  console.log(form);
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
