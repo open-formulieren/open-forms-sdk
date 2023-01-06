@@ -686,14 +686,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
    * Called when the form has completed the render, attach, and one initialization change event
    * loop.
    * @see {@link Form.io documentation} https://help.form.io/developers/form-renderer#form-events
-   *
-   *  - We cannot filter 'blank' values to prevent Formio validation from running, as Formio will
-   *    use the default values in that case which have been explicitly unset.
-   *  - In the situation that we have invalid backend data (loading a submission with a required
-   *    field with default value that was cleared, for example), we _need_ to see the validation
-   *    errors since the data is not valid.
-   *  - For the initial, empty form load, no validation errors are displayed as there is no
-   *    respective backend data.
    */
   const onFormIOInitialized = () => {
     const formInstance = formRef.current?.instance?.instance;
@@ -703,6 +695,13 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
       return;
     }
 
+    // We cannot filter 'blank' values to prevent Formio validation from running, as
+    // Formio will use the default values in that case which have been explicitly
+    // unset. In the situation that we have invalid backend data (loading a submission
+    // with a required field with default value that was cleared, for example), we
+    // _need_ to see the validation errors since the data is not valid.
+    // For the initial, empty form load, no validation errors are displayed as there
+    // is no respective backend data.
     const submissionData = formInstance.submission.data;
     const shouldSetData = !isEmpty(backendData) && !isEqual(submissionData, backendData);
     if (shouldSetData) {
