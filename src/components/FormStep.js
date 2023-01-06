@@ -53,22 +53,43 @@ import {DEBUG} from 'utils';
 
 import hooks from '../formio/hooks';
 
-const LOGIC_CHECK_DEBOUNCE = 1000; // in ms - once the user stops
+/**
+ * Debounce interval in milliseconds (1000ms equals 1s) to prevent excessive amount of logic checks.
+ * @type {number}
+ */
+const LOGIC_CHECK_DEBOUNCE = 1000;
 
+/**
+ * Submits the form step data to the backend.
+ * @param {string} stepUrl
+ * @param {Object} data The submission json object.
+ * @throws {Error} Throws an error if the backend response is not ok.
+ * @return {Promise}
+ */
 const submitStepData = async (stepUrl, data) => {
   const stepDataResponse = await put(stepUrl, {data});
+
   if (!stepDataResponse.ok) {
     throw new Error(`Backend responded with HTTP ${stepDataResponse.status}`);
   }
+
   return stepDataResponse;
 };
 
+/**
+ * Provides a hook to inject custom validations into the submission process.
+ * @see {@link Form.io documentation} https://help.form.io/developers/form-renderer#customvalidation-submission-next
+ *
+ * @param {string} stepUrl
+ * @param {Function} onBackendError
+ * @return {Function|void}
+ */
 const getCustomValidationHook = (stepUrl, onBackendError) => {
-  const customValidation = async (data, next) => {
+  return async (data, next) => {
     const PREFIX = 'data';
-
     const validateUrl = `${stepUrl}/validate`;
     let validateResponse;
+
     try {
       validateResponse = await post(validateUrl, data);
     } catch (error) {
@@ -95,25 +116,41 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
     }
     next();
   };
-  return customValidation;
 };
 
+/**
+ * Submits the form step data to the backend in order te evaluate its logic using the _check_Logic
+ * endpoint.
+ * @param {string} stepUrl
+ * @param {Object} data The current form data.
+ * @param {*[]} invalidKeys
+ * @param {*} signal
+ * @throws {Error} Throws an error if the backend response is not ok.
+ * @return {Promise}
+ */
 const doLogicCheck = async (stepUrl, data, invalidKeys = [], signal) => {
   const url = `${stepUrl}/_check_logic`;
   // filter out the invalid keys so we only send valid (client-side) input data to the
   // backend to evaluate logic.
   let dataForLogicCheck = invalidKeys.length ? omit(data, invalidKeys) : data;
   const stepDetailData = await post(url, {data: dataForLogicCheck}, signal);
+
   if (!stepDetailData.ok) {
     throw new Error('Invalid response'); // TODO -> proper error & use ErrorBoundary
   }
 
   // Re-add any invalid data to the step data that was not sent for the logic check. Otherwise, any previously saved
   // data in the step will overwrite the user input
-  if (invalidKeys.length) Object.assign(stepDetailData.data.step.data, data);
+  if (invalidKeys.length) {
+    Object.assign(stepDetailData.data.step.data, data);
+  }
+
   return stepDetailData.data;
 };
 
+/**
+ * Get thrown if logic check is aborted.
+ */
 class AbortedLogicCheck extends Error {
   constructor(message = '', ...args) {
     super(message, ...args);
@@ -121,6 +158,10 @@ class AbortedLogicCheck extends Error {
   }
 }
 
+/**
+ * The initial state for FormStep component, get mutated by `reducer`.
+ * @type {{configuration: null, logicChecking: boolean, isFormSaveModalOpen: boolean, isNavigating: boolean, error: null, backendData: {}, canSubmit: boolean}}
+ */
 const initialState = {
   configuration: null,
   backendData: {},
@@ -131,6 +172,19 @@ const initialState = {
   error: null,
 };
 
+/**
+ * React (state) reducer, contains various the lead to state manipulation.
+ * @see {@link Immer documentation} https://immerjs.github.io/immer/example-setstate#useimmerreducer
+ * @see {@link React documentation} https://reactjs.org/docs/hooks-reference.html#usereducer
+ *
+ * @param {Object} draft Draft state that produces new state once action is applied to it.
+ * @param {Object} action Object that specified the state mutation, can contain the following keys:
+ *    - `type` (string, required) the action to perform on draft state.
+ *    - `playload` (Object) the data to use when performing the state mutation.
+ *
+ * @throws {Error} Throws an error if the action is not recognized.
+ * @return {undefined} Nothing is returned but actions lead to re-renders with updated state.
+ */
 const reducer = (draft, action) => {
   switch (action.type) {
     case 'STEP_LOADED': {
@@ -146,16 +200,19 @@ const reducer = (draft, action) => {
       draft.isNavigating = false;
       break;
     }
+
     case 'FORMIO_CHANGE_HANDLED': {
       draft.logicChecking = false;
       break;
     }
+
     case 'BLOCK_SUBMISSION': {
       const {logicChecking = false} = action.payload || {};
       draft.canSubmit = false;
       draft.logicChecking = logicChecking;
       break;
     }
+
     // can happen because of a logic check abort
     case 'LOGIC_CHECK_INTERRUPTED': {
       const {canSubmit} = action.payload;
@@ -163,6 +220,7 @@ const reducer = (draft, action) => {
       draft.canSubmit = canSubmit;
       break;
     }
+
     // a separate action type because we should _not_ touch the configuration in the state
     case 'LOGIC_CHECK_DONE': {
       const {
@@ -177,26 +235,41 @@ const reducer = (draft, action) => {
       draft.logicChecking = false;
       break;
     }
+
     case 'TOGGLE_FORM_SAVE_MODAL': {
       const {open} = action.payload;
       draft.isFormSaveModalOpen = open;
       break;
     }
+
     case 'NAVIGATE': {
       draft.isNavigating = true;
       break;
     }
+
     case 'ERROR': {
       draft.error = action.payload;
       break;
     }
+
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
   }
 };
 
+/**
+ * Form step React component, uses (Form.io) Form component internally.*
+ * @param {Types.Form} form
+ * @param {Object} submission
+ * @param {Function} onLogicChecked
+ * @param {Function} onStepSubmitted
+ * @param {Function} onLogout
+ * @throws {Error} Throws errors from state so the error boundaries can pick them up.
+ * @return {React.ReactNode}
+ */
 const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout}) => {
+  console.log(form);
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
@@ -228,9 +301,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   const controller = useRef(new AbortController());
   const configurationRef = useRef(configuration);
 
-  const closeFormStepSaveModal = () =>
-    dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: false}});
-
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
   const currentStepIndex = form.steps.indexOf(formStep);
@@ -238,9 +308,16 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
 
   useTitle(formStep.formDefinition);
 
-  // fetch the form step configuration
-  // TODO: something is causing the FormStep.js to render multiple times, leading to
-  // state updates on unmounted components.
+  /**
+   * Fetches the form step data from the backend.
+   * @todo something is causing the FormStep.js to render multiple times, leading to state updates
+   *   on unmounted components.
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `ERROR` When an error occurred while loading the form step configuration.
+   *   - `STEP_LOADED` When the form step is fetched fom the  backend.
+   */
   const {loading} = useAsync(async () => {
     let stepDetail;
 
@@ -264,34 +341,70 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     throw error;
   }
 
-  // event loops and async programming are fun!
-  // UI inputs are wonky if end-users perform input while evaluating logic checks that
-  // operate on (slightly) stale form data. Evaluating the ref value once before
-  // something doing IO and using that value _after_ the IO event completed can lead
-  // to de-sync. This utility ensures you always have an up-to-date view of the form
-  // data.
-  //
-  // Currently it's a simple wrapper around the form ref, but we may do more advanced
-  // things using immer.produce to deal with immutable state inside at some point.
+  /**
+   * Closes the save confirmation modal.
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `TOGGLE_FORM_SAVE_MODAL` Immediately, resulting in `isFormSaveModalOpen=false`, closing
+   *     modal.
+   */
+  const closeFormStepSaveModal = () => {
+    dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: false}});
+  };
+
+  /**
+   * Event loops and async programming are fun!
+   *
+   * UI inputs are wonky if end-users perform input while evaluating logic checks that operate on
+   * (slightly) stale form data. Evaluating the ref value once before something doing IO and using
+   * that value _after_ the IO event completed can lead to de-sync. This utility ensures you always
+   * have an up-to-date view of the form data.
+   *
+   * Currently it's a simple wrapper around the form ref, but we may do more advanced things using
+   * immer.produce to deal with immutable state inside at some point.
+   *
+   * @return {Object|null}
+   */
   const getCurrentFormData = () => {
     const submissionData = formRef.current?.formio?.submission?.data;
     return submissionData ? {...submissionData} : null;
   };
 
+  /**
+   * Check whether a current logic using the _check_Logic endpoint should be cancelled.
+   * @throws {AbortedLogicCheck} Throws an AbortedLogicCheck if the current logic check should be
+   *   aborted
+   * @param {*} signal
+   */
   const checkAbortedLogicCheck = signal => {
     const shouldAbortCurrentCheck = signal.aborted;
-    if (!shouldAbortCurrentCheck) return;
+    if (!shouldAbortCurrentCheck) {
+      return;
+    }
     // throw custom error object to exit current callback forcibly
     throw new AbortedLogicCheck('Aborted logic check');
   };
 
   /**
-   * Evaluate the server side logic
-   * @param  {AbortController} controller     AbortController used to abort XHR requests and/or result processing
-   *   because of new user input.
-   * @param  {Boolean} canSubmitState The original canSubmit state at the time of scheduling the logic check.
-   * @param  {Boolean} forceEvaluation Force re-evaluation of the logic check even if the data hasn't changed (#2488).
-   * @return {Void}                No return, dispatches reducer actions leading to state updates.
+   * Evaluates the server side logic.
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `LOGIC_CHECK_INTERRUPTED` When there's no point/change in state to be expected by the logic
+   *       check
+   *   - `BLOCK_SUBMISSION` When the the logic is checking and the form should be disabled for
+   *       submission.
+   *   - `LOGIC_CHECK_DONE` When the logic check is done and the form should be enabled for
+   *       submission.
+   *   - `LOGIC_CHECK_INTERRUPTED` When an error occurred during the logic check.
+   *
+   * @param  {AbortController} controller AbortController used to abort XHR requests and/or result
+   *   processing because of new user input.
+   * @param  {boolean} canSubmitState The original canSubmit state at the time of scheduling the
+   *   logic check.
+   * @param  {boolean} forceEvaluation Force re-evaluation of the logic check even if the data
+   *   hasn't changed (#2488).
    */
   const evaluateFormLogic = async (controller, canSubmitState, forceEvaluation) => {
     // the canSubmitState variable essentially captures whether the form was submittable
@@ -299,12 +412,11 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     // this based on backend response data, but one of the first actions when a change
     // event is received is blocking the submit button to give the logic check time to
     // complete.
-    //
+    let data = getCurrentFormData();
+
     // IF there's no point/change in state to be expected by the logic check, we need
     // to reinstate the original canSubmitState, which happens in the guard clause below.
-    let data = getCurrentFormData();
     const previousData = previouslyCheckedData.current;
-
     const dataEmpty = isEmpty(data);
     const dataUnchanged = previousData && isEqual(previousData, data);
 
@@ -339,16 +451,20 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
 
     // now the actual checking *can* be aborted, which results in an exception being thrown.
     try {
-      // call the backend to do the check
+      // `checkAbortedLogicCheck` throws error if checko should be aborted, skipping `doLogicCheck`.
       checkAbortedLogicCheck(controller.signal);
-      // update our view of the data, which may have been changed by now because of user input
+
+      // update our view of the data, which may have been changed by now because of user input.
       data = getCurrentFormData();
+
+      // call the backend to do the check
       const {submission, step} = await doLogicCheck(
         submissionStep.url,
         data,
         invalidKeys,
         controller.signal
       );
+
       // now process the result of the logic check.
 
       // first, check if we still have to process the results or not
@@ -399,12 +515,25 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
       });
     } catch (e) {
       dispatch({type: 'LOGIC_CHECK_INTERRUPTED', payload: {canSubmit}});
+
       if (e.name !== 'AbortError') {
         throw e; // re-throw on unexpected errors
       }
     }
   };
 
+  /**
+   * A form has been submitted.
+   * @see {onReactSubmit} We wrap the submit so that we control our own submit buttonLOGIC_CHECK_DONE
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `NAVIGATE` Immediately (if submission is available).
+   *   - `ERROR` When an error occurred while loading the form step configuration.
+   *
+   * @param {Object} data The submission json object.
+   * @return {Promise}
+   */
   const onFormIOSubmit = async ({data}) => {
     if (!submission) {
       throw new Error('There is no active submission!');
@@ -424,13 +553,22 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     onStepSubmitted(formStep);
   };
 
-  // we wrap the submit so that we control our own submit button, as the form builder
-  // does NOT include submit buttons. We need this to navigate between our own steps
-  // and navigate flow.
-  //
-  // The handler of this submit event essentially calls the underlying formio.js
-  // instance submit method, which leads to the submit event being emitted, and we tap
-  // into that to handle the actual submission.
+  /**
+   * we wrap the submit so that we control our own submit button, as the form builder
+   * does NOT include submit buttons. We need this to navigate between our own steps
+   * and navigate flow.
+   *
+   * The handler of this submit event essentially calls the underlying formio.js
+   * instance submit method, which leads to the submit event being emitted, and we tap
+   * into that to handle the actual submission.
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `BLOCK_SUBMISSION` When the the logic is checking and the form should be disabled for
+   *       submission.
+   *
+   * @param {Event} event
+   */
   const onReactSubmit = async event => {
     event.preventDefault();
 
@@ -439,7 +577,9 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
       return;
     }
 
-    if (!canSubmit) return;
+    if (!canSubmit) {
+      return;
+    }
 
     // current is the component, current.instance is the component instance, and that
     // object has an instance property pointing to the WebForm...
@@ -450,16 +590,19 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     }
 
     const data = getCurrentFormData();
+
     // set internal state, which implies a submit attempt was done (whether succesful
     // or with (validation) errors is irrelevant, see formio.js/src/WebForm.js). This
     // ensures that validation errors are only cleared for the field being changed.
     formInstance.submitted = true;
     formInstance.setPristine(false);
+
     // we set the dirty flag, even if there are no changes at all to force validation of
     // whatever data is in the form before submitting. Untouched form fields are marked
     // as 'pristine' in Formio (see `Component.invalidMessage` method`) which causes
     // validation to be skipped.
     const isValid = await formInstance.checkAsyncValidity(data, true, data); // sets the validation error messages
+
     // invalid forms may not be submitted.
     if (!isValid) {
       let firstComponentWithError = formInstance.getComponent(formInstance.errors[0].component.key);
@@ -481,16 +624,39 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     }
   };
 
+  /**
+   * Gets called when the user confirms saving the form.
+   * @return {Promise}
+   */
   const onSaveConfirm = async () => {
-    const response = await submitStepData(submissionStep.url, {...getCurrentFormData()});
-    return response;
+    return await submitStepData(submissionStep.url, {...getCurrentFormData()});
   };
 
+  /**
+   * Get called when the user presses the save button.
+   * @see {onSaveConfirm} Opens a modal, `onSaveConfirm` after user confirms.
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `TOGGLE_FORM_SAVE_MODAL` After preventing default event handler, resulting in
+   *     `isFormSaveModalOpen=true`, opening modal.
+   *
+   * @param {PointerEvent} event
+   * @return {Promise}
+   */
   const onFormSave = async event => {
     event.preventDefault();
     dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: true}});
   };
 
+  /**
+   * Gets called when the user presses the previous page button.
+   * @param {PointerEvent} event
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `NAVIGATE` After preventing default event handler.
+   */
   const onPrevPage = event => {
     event.preventDefault();
 
@@ -504,6 +670,19 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     history.push(navigateTo);
   };
 
+  /**
+   * Called when the form has completed the render, attach, and one initialization change event
+   * loop.
+   * @see {@link Form.io documentation} https://help.form.io/developers/form-renderer#form-events
+   *
+   *  - We cannot filter 'blank' values to prevent Formio validation from running, as Formio will
+   *    use the default values in that case which have been explicitly unset.
+   *  - In the situation that we have invalid backend data (loading a submission with a required
+   *    field with default value that was cleared, for example), we _need_ to see the validation
+   *    errors since the data is not valid.
+   *  - For the initial, empty form load, no validation errors are displayed as there is no
+   *    respective backend data.
+   */
   const onFormIOInitialized = () => {
     const formInstance = formRef.current?.instance?.instance;
 
@@ -512,13 +691,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
       return;
     }
 
-    // We cannot filter 'blank' values to prevent Formio validation from running, as
-    // Formio will use the default values in that case which have been explicitly
-    // unset. In the situation that we have invalid backend data (loading a submission
-    // with a required field with default value that was cleared, for example), we
-    // _need_ to see the validation errors since the data is not valid.
-    // For the initial, empty form load, no validation errors are displayed as there
-    // is no respective backend data.
     const submissionData = formInstance.submission.data;
     const shouldSetData = !isEmpty(backendData) && !isEqual(submissionData, backendData);
     if (shouldSetData) {
@@ -528,7 +700,25 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     }
   };
 
-  // See 'change' event https://help.form.io/developers/form-renderer#form-events
+  /**
+   * A value has been changed within the rendered form
+   * @see {@link Form.io documentation} https://help.form.io/developers/form-renderer#form-events
+   *
+   * During evaluation, the following actions may be dispatched:
+   *
+   *   - `BLOCK_SUBMISSION` When the the form midfier by a humer (`modifiedByHuman`)  and the form
+   *       should be disabled for submission.
+   *   - `ERROR` When an error occurred while evaluating the form logic.
+   *   - `FORMIO_CHANGE_HANDLED` When the change is successfully handled .
+   *
+   * @param {*} changed The changes that occurred, and the component that triggered the change.
+   *   See "componentChange" event for description of this argument
+   * @param {*} flags The change loop flags.
+   * @param {*} modifiedByHuman Flag to determine if the change was made by a human interaction, or
+   *   programatic.
+   *
+   * @return {Promise}
+   */
   const onFormIOChange = async (changed, flags, modifiedByHuman) => {
     // formio form not mounted -> nothing to do
     if (!formRef.current) return;
@@ -540,7 +730,10 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     // be interrupted inside the evaluateFormLogic handler because the data hasn't
     // changed. We can skip this particular block-unblock cycle by only blocking the
     // submission because of human input.
-    if (modifiedByHuman) dispatch({type: 'BLOCK_SUBMISSION'});
+    if (modifiedByHuman) {
+      dispatch({type: 'BLOCK_SUBMISSION'});
+    }
+
     let localCanSubmit = canSubmit;
 
     // signal abortion, and set a new controller for the newly scheduled check.
