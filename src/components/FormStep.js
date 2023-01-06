@@ -532,7 +532,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
 
   /**
    * A form has been submitted.
-   * @see {onReactSubmit} We wrap the submit so that we control our own submit buttonLOGIC_CHECK_DONE
+   * @see {onReactSubmit} We wrap the submit so that we control our own submit button.
    *
    * During evaluation, the following actions are/may be dispatched:
    *
