@@ -581,13 +581,9 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     event.preventDefault();
 
     // Issue #2084 - The button to save a row of an editgrid triggers a submit if there are validation errors
-    if (!eventTriggeredBySubmitButton(event)) {
-      return;
-    }
+    if (!eventTriggeredBySubmitButton(event)) return;
 
-    if (!canSubmit) {
-      return;
-    }
+    if (!canSubmit) return;
 
     // current is the component, current.instance is the component instance, and that
     // object has an instance property pointing to the WebForm...
