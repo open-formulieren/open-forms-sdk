@@ -176,7 +176,6 @@ class AbortedLogicCheck extends Error {
 /**
  * The initial state for FormStep component,
  * @see {reducer}
- * @type {{configuration: null, logicChecking: boolean, isFormSaveModalOpen: boolean, isNavigating: boolean, error: null, backendData: {}, canSubmit: boolean}}
  */
 const initialState = {
   configuration: null,
