@@ -326,7 +326,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
 
   /**
    * Fetches the form step data from the backend.
-   * @todo something is causing the FormStep.js to render multiple times, leading to state updates
+   * TODO: something is causing the FormStep.js to render multiple times, leading to state updates
    *   on unmounted components.
    *
    * During evaluation, the following actions may be dispatched:
