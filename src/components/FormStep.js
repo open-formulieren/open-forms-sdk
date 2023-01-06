@@ -650,7 +650,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   };
 
   /**
-   * Gets called when the user presses the previous page button.
+   * Handler to navigate back to the previous step or page
    * @param {PointerEvent} event
    *
    * During evaluation, the following actions may be dispatched:
