@@ -361,19 +361,15 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
     dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: false}});
   };
 
-  /**
-   * Event loops and async programming are fun!
-   *
-   * UI inputs are wonky if end-users perform input while evaluating logic checks that operate on
-   * (slightly) stale form data. Evaluating the ref value once before something doing IO and using
-   * that value _after_ the IO event completed can lead to de-sync. This utility ensures you always
-   * have an up-to-date view of the form data.
-   *
-   * Currently it's a simple wrapper around the form ref, but we may do more advanced things using
-   * immer.produce to deal with immutable state inside at some point.
-   *
-   * @return {Object|null}
-   */
+  // event loops and async programming are fun!
+  // UI inputs are wonky if end-users perform input while evaluating logic checks that
+  // operate on (slightly) stale form data. Evaluating the ref value once before
+  // something doing IO and using that value _after_ the IO event completed can lead
+  // to de-sync. This utility ensures you always have an up-to-date view of the form
+  // data.
+  //
+  // Currently it's a simple wrapper around the form data ref, but we may do more advanced
+  // things using immer.produce to deal with immutable state inside at some point.
   const getCurrentFormData = () => {
     const submissionData = formRef.current?.formio?.submission?.data;
     return submissionData ? {...submissionData} : null;
