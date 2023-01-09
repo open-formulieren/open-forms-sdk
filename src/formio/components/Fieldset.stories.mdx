@@ -128,15 +128,20 @@ export const Template = ({ descriptionFamilyName, descriptionGivenName, id = '',
   <Story
     name="Default"
     args={{
-      descriptionFamilyName: 'family-name',
-      descriptionGivenName: 'given-name',
-      id: 'veldengroep1',
-      label: 'Uw keuzevelden',
-      labelFirstName: 'Voornaam',
-      labelLastName: 'Achternaam',
-      labelPrivacy: 'Ik ga akkoord met de privacy-voorwaarden',
-      placeholderFirstName: 'voornaam...',
-      placeholderLastName: 'achternaam...',
+      id: 'fieldset',  // really not relevant or interesting at all tbh, we just have to provide something
+      label: 'The group of fields',  // English first for code/documentation!
+      hideHeader: false,
+      nestedComponents: [
+        {
+          key: 'given-name',
+          type: 'textfield',
+          input: true,
+          label: 'Given name',
+          description: 'Given name as in your passport/identity card.',
+          placeholder: 'Willy',
+        },
+        ...
+      ],
     }}
   >
     {Template.bind({})}
