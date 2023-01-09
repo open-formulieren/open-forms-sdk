@@ -1,11 +1,16 @@
 @import '~microscope-sass/lib/typography';
 
-@import './anchor';
+@import '@utrecht/components/dist/link/css/index';
 
 @mixin of-wysiwyg() {
-  @include wysiwyg;
+  @include wysiwyg($not-me: a);
 
   a {
-    @include of-anchor;
+    @extend .utrecht-link;
+
+    // TODO: Remove if it is added to the utrecht-link style
+    &:visited:hover {
+      color: var(--utrecht-link-hover-color);
+    }
   }
 }

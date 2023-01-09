@@ -13,10 +13,6 @@ we don't have strict BEM naming here.
 .#{prefix(form-control--file)} {
   @include body;
 
-  a {
-    @extend .#{prefix('anchor')};
-  }
-
   .list-group {
     padding: 0;
     margin: 0;

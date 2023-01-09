@@ -5,10 +5,10 @@
 
 @import '@utrecht/components/dist/button/css/index.css';
 @import '@utrecht/components/dist/button-link/css/index.css';
+@import '@utrecht/components/dist/link/css/index';
 
 @import '../mixins/bem';
 @import '../mixins/prefix';
-@import '../mixins/anchor';
 
 $button-line-height: $typography-line-height-text-big * $typography-font-size-text-big;
 $button-line-height-px: math.div($button-line-height, ($button-line-height * 0 + 1)) * 16px;
@@ -217,12 +217,12 @@ $button-padding-h: $grid-margin-2;
     border-right-color: var(--of-button-anchor-color-border) !important;
     border-bottom-color: var(--of-button-anchor-color-border) !important;
 
-    @include of-anchor;
+    @extend .utrecht-link;
 
     &:not([aria-disabled='true']):hover {
-      --_utrecht-button-hover-color: var(--of-link-hover-color);
+      text-decoration: var(--utrecht-link-hover-text-decoration);
+      color: var(--utrecht-link-hover-color);
 
-      color: var(--of-link-hover-color);
       background-color: var(--of-button-anchor-hover-bg);
       border-color: var(--of-button-anchor-hover-color-border) !important;
     }

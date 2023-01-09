@@ -3,19 +3,24 @@
 @import '~microscope-sass/lib/typography';
 
 @import '@utrecht/components/dist/link-button/css/index.css';
+@import '@utrecht/components/dist/link/css/index';
 
 @import '../mixins/prefix';
-@import '../mixins/anchor';
 
 .#{prefix('anchor')} {
   @include text;
-  @include of-anchor;
+  @extend .utrecht-link;
+
+  // TODO: Remove if it is added to the utrecht-link style
+  &:visited:hover {
+    color: var(--utrecht-link-hover-color);
+  }
 
   @include modifier('hover') {
     text-decoration: var(--utrecht-link-hover-text-decoration, none);
 
     &:hover {
-      text-decoration: var(--utrecht-link-text-decoration, underline);
+      text-decoration: var(--utrecht-link-text-decoration, underline) !important;
     }
   }
 

@@ -27,7 +27,7 @@
             {% if (ctx.component.uploadOnly) { %}
               {{file.originalName || file.name}}
             {% } else { %}
-              <a href="{{file.url || '#'}}" target="_blank" ref="fileLink" class="{{ctx.ofPrefix}}-anchor utrecht-link">{{file.originalName || file.name}}</a>
+              <a href="{{file.url || '#'}}" target="_blank" ref="fileLink" class="{{ctx.ofPrefix}}anchor utrecht-link">{{file.originalName || file.name}}</a>
             {% } %}
           </div>
           <div class="col-md-2">{{ctx.fileSize(file.size)}}</div>
@@ -78,12 +78,12 @@
         {% } %}
 
         {% if (ctx.self.imageUpload) { %}
-          <a href="#" ref="toggleCameraMode" class="{{ctx.ofPrefix}}-anchor utrecht-link"><i class="fa fa-camera"></i> {{ctx.t('Use Camera,')}}</a>
+          <a href="#" ref="toggleCameraMode" class="{{ctx.ofPrefix}}anchor utrecht-link"><i class="fa fa-camera"></i> {{ctx.t('Use Camera,')}}</a>
         {% } %}
 
         {{ctx.t('or')}}
 
-        <a href="#" ref="fileBrowse" class="browse" class="{{ctx.ofPrefix}}-anchor utrecht-link">{{ctx.t('browse')}}</a>
+        <a href="#" ref="fileBrowse" class="browse" class="{{ctx.ofPrefix}}anchor utrecht-link">{{ctx.t('browse')}}</a>
 
         {% if (ctx.component.multiple) { %}
           {{ctx.t('to attach files.')}}
