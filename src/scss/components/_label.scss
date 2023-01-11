@@ -1,3 +1,5 @@
+@use './anchor';
+
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
@@ -5,6 +7,7 @@
 .#{prefix(label)} {
   @include body;
   @include body--big;
+  @include anchor.extend-utrecht-link;
   display: block;
   font-weight: var(--of-label-font-weight);
 

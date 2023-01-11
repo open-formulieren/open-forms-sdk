@@ -3,6 +3,7 @@ The markup uses bootstrap templates by default and is pretty complex. For that r
 we don't have strict BEM naming here.
  */
 @use 'sass:math';
+@use './anchor';
 
 @import '~microscope-sass/lib/typography';
 @import '~microscope-sass/lib/responsive';
@@ -12,10 +13,7 @@ we don't have strict BEM naming here.
 
 .#{prefix(form-control--file)} {
   @include body;
-
-  a {
-    @extend .#{prefix('anchor')};
-  }
+  @include anchor.extend-utrecht-link;
 
   .list-group {
     padding: 0;
