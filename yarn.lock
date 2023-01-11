@@ -5336,10 +5336,10 @@
     "@typescript-eslint/types" "5.23.0"
     eslint-visitor-keys "^3.0.0"
 
-"@utrecht/component-library-css@^1.0.0-alpha.373":
-  version "1.0.0-alpha.373"
-  resolved "https://registry.npmjs.org/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.373.tgz"
-  integrity sha512-7ItYL+oQ6jl7DYeFthBp6I8BehBiUSmJE/TwJR+7O6kP02riPTjjsRV9UEljUETiNMNELpIMCVxi1zbMehaRrg==
+"@utrecht/component-library-css@^1.0.0-alpha.417":
+  version "1.0.0-alpha.417"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.417.tgz#cc75f326af08a6c501f7dcfd3fdce425295b0093"
+  integrity sha512-5MS5WmvBDd69yQUlWg97ynsPPfXbur49STcUP/UTCaQrWzB5xUu/NhbaWFdVEW2PqGh2/TOT4tE/ziaeY4Aksw==
 
 "@utrecht/component-library-react@^1.0.0-alpha.152":
   version "1.0.0-alpha.174"
@@ -5349,10 +5349,10 @@
     clsx "1.2.1"
     date-fns "2.29.3"
 
-"@utrecht/components@^1.0.0-alpha.304":
-  version "1.0.0-alpha.326"
-  resolved "https://registry.npmjs.org/@utrecht/components/-/components-1.0.0-alpha.326.tgz"
-  integrity sha512-lSHEAxzqPg9tH1UFUz7AdzKNiNr95Lg2oq0uOEkSOqxwGaachaZX3w6Noak3EzjEjTgI2zG3vdNR5MCUKZiZvQ==
+"@utrecht/components@^1.0.0-alpha.378":
+  version "1.0.0-alpha.378"
+  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.378.tgz#2d7efd87d728af428b178b64a895ad78ccc13739"
+  integrity sha512-rVNBYKpgnZ76RQ0P8QY0S9PxBAYelm2uy2CIZkbWAEDFIVNA50paQOMqesbjqADp3JZgEKFMJ04MABa5beXP3Q==
   dependencies:
     clsx "1.2.1"
 
