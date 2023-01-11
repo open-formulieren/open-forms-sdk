@@ -1,4 +1,8 @@
+/**
+ * TODO: properly refactor these components, the styles are bonkers...
+ */
 @use 'sass:math';
+@use 'microscope-sass/lib/bem';
 
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
@@ -6,7 +10,6 @@
 @import '@utrecht/components/dist/button/css/index.css';
 @import '@utrecht/components/dist/button-link/css/index.css';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 $button-line-height: $typography-line-height-text-big * $typography-font-size-text-big;
@@ -20,7 +23,6 @@ $button-padding-h: $grid-margin-2;
   $color,
   $color-background,
   $color-border: var(--of-color-bg),
-  $decorate-on-hover: false,
   $color-background-hover: null,
   $color-border-hover: null,
   $color-active: null,
@@ -73,10 +75,6 @@ $button-padding-h: $grid-margin-2;
         // border color
         border-right-color: $color-border-hover !important;
         border-bottom-color: $color-border-hover !important;
-      }
-
-      @if $decorate-on-hover {
-        @include anchor(true);
       }
     }
 
@@ -139,21 +137,6 @@ $button-padding-h: $grid-margin-2;
       )
   );
   @include button-theme(
-    'anchor',
-    var(--of-button-anchor-fg),
-    var(--of-button-anchor-bg),
-    var(--of-button-anchor-color-border),
-    true,
-    $color-background-hover: var(--of-button-anchor-hover-bg),
-    $color-border-hover: var(--of-button-anchor-hover-color-border),
-    $color-active: var(--of-button-anchor-active-fg),
-    $color-background-active: var(--of-button-anchor-active-bg),
-    $color-border-active: var(--of-button-anchor-active-color-border),
-    $color-border-focus:
-      var(--of-button-anchor-focus-color-border, var(--utrecht-button-focus-border-color)),
-    $force-colors: true // there's no anchor variant for utrecht button yet
-  );
-  @include button-theme(
     'danger',
     var(--of-button-danger-fg),
     var(--of-button-danger-bg),
@@ -193,18 +176,11 @@ $button-padding-h: $grid-margin-2;
     opacity: 0.5;
   }
 
-  @include modifier('image') {
-    @include rows(1);
-    border: none;
-    padding: 0;
-    cursor: default;
-  }
-
   .fa-icon:not(:last-child) {
     margin-right: $button-padding-h;
   }
 
-  @include modifier('icon-only') {
+  @include bem.modifier('icon-only') {
     color: var(--of-button-fg);
     background-color: transparent;
     border-style: none;
@@ -220,6 +196,34 @@ $button-padding-h: $grid-margin-2;
 
     &.#{prefix(button)}--danger {
       color: var(--of-button-danger-bg);
+    }
+  }
+
+  // anchor variants, these map to utrecht components:
+  // * UtrechtButton (the default)
+  // * UtrechtButtonLink (`a` component)
+  // * UtrechtLinkButton (`button` component)
+  @include bem.modifier('anchor') {
+    @include button-theme(
+      '',
+      var(--of-button-anchor-fg, var(--utrecht-link-color)),
+      var(--of-button-anchor-bg),
+      var(--of-button-anchor-color-border),
+      $color-background-hover: var(--of-button-anchor-hover-bg, var(--utrecht-link-hover-color)),
+      $color-border-hover: var(--of-button-anchor-hover-color-border),
+      $color-active: var(--of-button-anchor-active-fg),
+      $color-background-active: var(--of-button-anchor-active-bg),
+      $color-border-active: var(--of-button-anchor-active-color-border),
+      $color-border-focus:
+        var(--of-button-anchor-focus-color-border, var(--utrecht-button-focus-border-color)),
+      $force-colors: true // there will not be an anchor variant
+    );
+
+    // the OPPOSITE of what we normally do
+    text-decoration: var(--utrecht-link-hover-text-decoration, none);
+    &:hover {
+      --of-button-anchor-fg: var(--utrecht-link-hover-color);
+      text-decoration: var(--utrecht-link-text-decoration, underline);
     }
   }
 }

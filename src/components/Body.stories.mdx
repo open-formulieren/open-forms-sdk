@@ -23,12 +23,23 @@ import Body, {VARIANTS} from "./Body";
 
 # Body
 
-export const Template = ({content='Body', modifiers}) => (
-  <Body modifiers={modifiers} >{content}</Body>
-);
+export const Template = ({content='Body', modifiers=[]}) => {
+  const isWysiwyg = modifiers.includes('wysiwyg');
+  const extra = isWysiwyg
+    ? ({
+      dangerouslySetInnerHTML: {__html: content},
+      component: 'div',
+    })
+    : {};
+  return (
+    <Body modifiers={modifiers} {...extra}>{isWysiwyg ? null : content}</Body>
+  );
+}
 
 
 ## Variants
+
+### Plain
 
 <Canvas>
   <Story name="Default" args={{content: 'Lorem ipsum...', modifiers:[]}}>
@@ -36,6 +47,19 @@ export const Template = ({content='Body', modifiers}) => (
   </Story>
 </Canvas>
 
+### What-you-see-is-what-you-get (WYSIWYG)
+
+<Canvas>
+  <Story
+    name="WYSIWYG"
+    args={{
+      content: '<p>Lorem ipsum with a <a href="https://example.com" target="_blank" rel="noopener nofollower">clickable</a> link...<p>',
+      modifiers: ['wysiwyg'],
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
 
 ## Props
 

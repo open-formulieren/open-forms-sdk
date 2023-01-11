@@ -1,39 +1,75 @@
-@import '~microscope-sass/lib/bem';
-@import '~microscope-sass/lib/color';
-@import '~microscope-sass/lib/typography';
+/**
+ * The OpenForms Anchor component wraps around and extends the .utrecht-link component.
+ *
+ * Our own .openforms-anchor is being phased out in favour of
+ * .utrecht-link--openforms-<foo> extensions.
+ *
+ * TODO: there are probably some gains in implementing/overriding :visited, :hover and/or
+ * :active states for some variants.
+ */
+@use 'microscope-sass/lib/bem';
 
 @import '@utrecht/components/dist/link-button/css/index.css';
+@import '@utrecht/components/dist/link/css/index'; // emits the .utrecht-link {...} styles
 
-@import '../mixins/prefix';
-
-.#{prefix('anchor')} {
-  @include text;
-
-  &:not(#{&}--hover) {
-    @include anchor;
+/**
+ * Extensions of the utrecht-link component with OF-specific styles.
+ */
+.utrecht-link {
+  @include bem.modifier('openforms') {
+    font-family: var(
+      --of-utrecht-link-font-family,
+      var(--of-typography-sans-serif-font-family, var(--utrecht-document-font-family))
+    );
+    margin: 0;
+    cursor: pointer;
   }
-  @include modifier('hover') {
-    @include anchor(true);
+
+  // swap the hover/no-hover text decoration rules compared to the non-modified variant
+  @include bem.modifier('openforms-hover') {
+    text-decoration: var(--utrecht-link-hover-text-decoration);
+
+    &:hover {
+      text-decoration: var(--utrecht-link-text-decoration);
+    }
   }
 
-  @include modifier('active') {
+  @include bem.modifier('openforms-active') {
     font-weight: bold;
   }
 
-  @include modifier('inherit') {
-    color: inherit !important;
+  @include bem.modifier('openforms-inherit') {
+    color: inherit;
+
+    &:hover {
+      color: inherit;
+    }
   }
 
-  @include modifier('muted') {
-    color: var(--of-color-fg-muted) !important;
+  @include bem.modifier('openforms-muted') {
+    color: var(--of-utrecht-link-muted-color, var(--of-color-fg-muted));
+
+    &:hover {
+      --of-utrecht-link-muted-color: var(--of-color-fg);
+    }
+
+    &.utrecht-link--openforms-active {
+      --of-utrecht-link-muted-color: var(--of-color-fg);
+    }
   }
 
-  &--active#{&}--muted,
-  &--muted:hover {
-    color: var(--of-color-fg) !important;
-  }
-
-  @include modifier('indent') {
+  @include bem.modifier('openforms-indent') {
     padding-left: 0.6em;
+  }
+}
+
+/**
+ * Apply the standard link styles (without modifiers) to the anchor tags.
+
+ * For WYSIWYG-like content where classnames cannot be controlled.
+ */
+@mixin extend-utrecht-link() {
+  a {
+    @extend .utrecht-link, .utrecht-link--openforms;
   }
 }

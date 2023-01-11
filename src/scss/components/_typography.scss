@@ -1,7 +1,9 @@
+@use 'microscope-sass/lib/bem';
+@use './anchor';
+
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix(title)} {
@@ -20,27 +22,27 @@
   @include body(auto);
   clear: both;
 
-  @include modifier(small) {
+  @include bem.modifier(small) {
     @include body--small;
   }
 
-  @include modifier(big) {
+  @include bem.modifier(big) {
     @include body--big;
   }
 
-  @include modifier(wysiwyg) {
+  @include bem.modifier(wysiwyg) {
     @include wysiwyg;
+    @include anchor.extend-utrecht-link;
+  }
+
+  @include bem.modifier(muted) {
+    color: var(--of-color-fg-muted);
   }
 }
 
 .#{prefix(title)},
 .#{prefix(subtitle)},
-.#{prefix(caption)},
-.#{prefix(body)} {
-  &--emphasized {
-    font-style: italic;
-  }
-
+.#{prefix(caption)} {
   &--muted {
     color: var(--of-color-fg-muted);
   }

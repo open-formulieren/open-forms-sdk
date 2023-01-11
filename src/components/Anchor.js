@@ -1,8 +1,7 @@
 import {Link as UtrechtLink} from '@utrecht/component-library-react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import {getBEMClassName} from 'utils';
 
 export const ANCHOR_MODIFIERS = ['hover', 'active', 'inherit', 'muted', 'indent'];
 
@@ -10,8 +9,13 @@ function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
-const Anchor = ({children, href, modifiers = [], component: Component = UtrechtLink, ...extra}) => {
-  const className = getBEMClassName('anchor', modifiers);
+const Anchor = ({children, href, modifiers = [], ...extra}) => {
+  // extend with our own modifiers
+  const className = classNames(
+    'utrecht-link--openforms', // always apply our own modifier
+    ...modifiers.map(mod => `utrecht-link--openforms-${mod}`)
+  );
+
   const {navigate, ...rest} = extra; // workaround for https://github.com/ReactTraining/react-router/issues/6962
   const extraProps = {...rest};
   if (href) {
@@ -44,9 +48,9 @@ const Anchor = ({children, href, modifiers = [], component: Component = UtrechtL
   }
 
   return (
-    <Component className={className} {...extraProps}>
+    <UtrechtLink className={className} {...extraProps}>
       {children}
-    </Component>
+    </UtrechtLink>
   );
 };
 
@@ -54,7 +58,6 @@ Anchor.propTypes = {
   href: PropTypes.string,
   modifiers: PropTypes.arrayOf(PropTypes.oneOf(ANCHOR_MODIFIERS)),
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  component: PropTypes.string,
   onClick: PropTypes.func,
 };
 

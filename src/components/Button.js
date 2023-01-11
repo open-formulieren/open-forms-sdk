@@ -8,7 +8,7 @@ import React from 'react';
 
 import {getBEMClassName} from 'utils';
 
-export const VARIANTS = ['', 'primary', 'secondary', 'anchor', 'danger', 'image', 'icon-only'];
+export const VARIANTS = ['', 'primary', 'secondary', 'anchor', 'danger', 'icon-only'];
 
 const Button = ({
   type = '',

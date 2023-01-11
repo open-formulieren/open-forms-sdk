@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
 
 import Anchor, {ANCHOR_MODIFIERS} from './Anchor';
 
@@ -25,8 +25,13 @@ import Anchor, {ANCHOR_MODIFIERS} from './Anchor';
 Anchors are used for clickable links. Optionally, you can hook into the `click` event
 with the `onClick` prop, which will fire in addition to the default click handler.
 
+The `Anchor` components wraps around the `UtrechtLink`
+[component](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-link-readme--page)
+and therefore supports the relevant `--utrecht-link-*` design tokens. Additional
+Open Forms specific styles are added via the `--openforms-*` modifiers.
+
 This component can and should be used whenever using `react-router` `LinkAnchor`
-components.
+components, as it implements the required handlers which `UtrechtLink` doesn't.
 
 export const Template = ({label, ...args}) => <Anchor href="https://example.com" {...args}>{label}</Anchor>;
 
@@ -67,20 +72,9 @@ The standard look of the anchor component without modifiers.
   }}>
     {Template.bind({})}
   </Story>
-</Canvas>
-
-## Replacing the HTML element
-
-You can pass an alternative `component` to render instead of the default `a` tag. This
-may be either:
-
-* built in HTML tags, passing a string (e.g. `span`)
-* custom React components (e.g. `component={MyComponent}`)
-
-<Canvas>
-  <Story name="CustomComponent" args={{
-    component: 'span',
-    label: 'span tag',
+  <Story name="Inherit" args={{
+    modifiers: ['inherit'],
+    label: 'Inherit',
   }}>
     {Template.bind({})}
   </Story>
@@ -88,4 +82,24 @@ may be either:
 
 ## Props
 
-<Props of={Anchor} />
+<ArgsTable of={Anchor} />
+
+## Available design tokens
+
+Anchor components can be styled through design tokens. See the
+[upstream](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-link-tokens--page)
+documentation for the available `.utrecht-link` tokens.
+
+Below are Open Forms' extensions to the existing tokens in CSS-variable format:
+
+```css
+.openforms-theme {
+  /*
+    falls back to --of-typography-sans-serif-font-family or
+    --utrecht-document-font-family
+  */
+  --of-utrecht-link-font-family: <font-family>;
+  /* falls back to --of-color-fg-muted */
+  --of-utrecht-link-muted-color: <color>;
+}
+```
