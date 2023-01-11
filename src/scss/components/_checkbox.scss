@@ -1,19 +1,20 @@
-@import '~microscope-sass/lib/color';
-@import '~microscope-sass/lib/grid';
-@import '~microscope-sass/lib/transform';
-@import '~microscope-sass/lib/typography';
-@import '~microscope-sass/lib/util';
+@use 'microscope-sass/lib/bem';
+@use 'microscope-sass/lib/transform';
+@use 'microscope-sass/lib/util';
+@use './anchor';
 
-@import '../mixins/bem';
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/typography';
+
 @import '../mixins/prefix';
 
-$checkbox-checkmark-size: 1em * strip_unit($typography-line-height-text-big) !default;
+$checkbox-checkmark-size: 1em * util.strip-unit($typography-line-height-text-big) !default;
 $checkbox-label-padding-v: calc(
-  (#{$grid-row-height} - #{1em * strip_unit($typography-line-height-text-big)}) / 2
+  (#{$grid-row-height} - #{1em * util.strip-unit($typography-line-height-text-big)}) / 2
 ) !default;
 $checkbox-label-padding-h: $grid-margin-2 !default;
 $checkbox-label-padding-left: calc(
-  #{1em * strip_unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2}
+  #{1em * util.strip-unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2}
 ) !default;
 
 .#{prefix(checkbox)} {
@@ -25,7 +26,12 @@ $checkbox-label-padding-left: calc(
   background-color: var(--of-checkbox-bg);
   position: relative;
 
-  &__label {
+  @include bem.element('label') {
+    @include anchor.extend-utrecht-link;
+    a {
+      color: fuchsia;
+    }
+
     padding: $checkbox-label-padding-v $checkbox-label-padding-h $checkbox-label-padding-v
       $checkbox-label-padding-left;
     width: 100%;
@@ -38,8 +44,8 @@ $checkbox-label-padding-left: calc(
     @include outline(var(--of-color-info));
   }
 
-  &__checkmark {
-    @include absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
+  @include bem.element('checkmark') {
+    @include transform.absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
     @include border(all, $color: var(--of-field-border-color));
 
     display: flex;
@@ -57,7 +63,7 @@ $checkbox-label-padding-left: calc(
 
   [type='checkbox'],
   [type='radio'] {
-    @include absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
+    @include transform.absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
   }
 
   // Style specific for selectboxes
@@ -68,14 +74,14 @@ $checkbox-label-padding-left: calc(
 
   // Style specific for radio
   & [type='radio'] ~ &__checkmark {
-    @include rounded;
+    @include transform.rounded;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   & [type='radio']:checked ~ &__checkmark:after {
-    @include rounded;
+    @include transform.rounded;
     display: block;
     content: '';
     background-color: var(--of-color-bg);
