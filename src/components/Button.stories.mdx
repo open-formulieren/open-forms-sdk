@@ -55,7 +55,13 @@ export const Template = ({label='Button', ...args}) => (
   <Story name="Danger" args={{label: 'Danger', variant: 'danger'}}>
     {Template.bind({})}
   </Story>
-  <Story name="Anchor" args={{label: 'Anchor', variant: 'anchor'}}>
+  <Story name="Anchor" args={{label: 'UtrechtButton', variant: 'anchor'}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Anchor/button" args={{label: 'button tag', variant: 'anchor', component: 'button'}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Anchor/a" args={{label: 'anchor tag', variant: 'anchor', component: 'a', href: '#'}}>
     {Template.bind({})}
   </Story>
 </Canvas>

@@ -24,7 +24,7 @@ import {getBEMClassName} from 'utils';
 
 const FormStartMessage = ({form}) => {
   return (
-    <Body modifiers={['compact']} component="div">
+    <Body component="div">
       <div
         className={getBEMClassName('body', ['wysiwyg'])}
         dangerouslySetInnerHTML={{__html: form.explanationTemplate}}

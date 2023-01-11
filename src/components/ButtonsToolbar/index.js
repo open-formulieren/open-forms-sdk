@@ -27,7 +27,7 @@ const ButtonsToolbar = ({
       <LiteralsProvider literals={literals}>
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
-            <Button variant="anchor" onClick={onNavigatePrevPage}>
+            <Button variant="anchor" onClick={onNavigatePrevPage} component="a">
               <Literal name="previousText" />
             </Button>
           </ToolbarList>
