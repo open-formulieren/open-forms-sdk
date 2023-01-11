@@ -1,3 +1,5 @@
+@use './anchor';
+
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
@@ -22,6 +24,7 @@
       @include wysiwyg;
       @include body;
       @include body--big;
+      @include anchor.extend-utrecht-link;
       width: 100%;
     }
   }
