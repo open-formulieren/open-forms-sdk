@@ -97,4 +97,3 @@ jobs:
           storybookBuildDir: ./storybook-static
           onlyChanged: true
           externals: 'src/img/**'
-          debug: true
