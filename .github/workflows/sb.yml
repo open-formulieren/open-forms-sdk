@@ -15,7 +15,7 @@ on:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages-${{ github.ref_name }}"  # unique builds for branch/tag name
+  group: 'pages-${{ github.ref_name }}' # unique builds for branch/tag name
   cancel-in-progress: true
 
 jobs:
@@ -51,7 +51,7 @@ jobs:
       id-token: write
 
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'  # Exclude PRs
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Exclude PRs
     needs: storybook
     steps:
       - name: Setup Pages
@@ -68,7 +68,7 @@ jobs:
       - storybook
 
     # do not run in forks
-    if:  github.event_name == 'push' || ! github.event.pull_request.head.repo.fork
+    if: github.event_name == 'push' || ! github.event.pull_request.head.repo.fork
 
     steps:
       - name: Checkout repository
@@ -95,3 +95,6 @@ jobs:
           autoAcceptChanges: main
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           storybookBuildDir: ./storybook-static
+          onlyChanged: true
+          externals: 'src/img/**'
+          debug: true
