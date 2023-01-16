@@ -6,6 +6,7 @@ import Component from './components/Component';
 import ContentComponent from './components/Content';
 import Currency from './components/Currency';
 import DateField from './components/DateField';
+import DateTimeField from './components/DateTimeField';
 import EditGrid from './components/EditGrid';
 import Email from './components/Email';
 import FileField, {CSRFEnabledUrl} from './components/FileField';
@@ -37,6 +38,7 @@ const FormIOModule = {
     number: NumberComponent,
     content: ContentComponent,
     date: DateField,
+    datetime: DateTimeField,
     time: TimeField,
     postcode: PostcodeField,
     phoneNumber: PhoneNumberField,
