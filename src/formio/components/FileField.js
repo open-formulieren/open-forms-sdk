@@ -189,6 +189,18 @@ class FileField extends Formio.Components.components.file {
     super.upload(files);
   }
 
+  validatePattern(file, val) {
+    // file type not recognized; get file extension and specify mime type manually
+    if (file.type === '') {
+      let ext = file.name.split('.').pop();
+      if (ext === 'msg') {
+        file = file.slice(0, file.size, 'application/vnd.ms-outlook');
+      }
+    }
+
+    return super.validatePattern(file, val);
+  }
+
   checkComponentValidity(data, dirty, row, options = {}) {
     if (this.loading) {
       // This prevents the FormStep from being submitted before the file upload is finished.
