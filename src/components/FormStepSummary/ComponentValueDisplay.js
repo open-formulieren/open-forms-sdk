@@ -69,6 +69,18 @@ const DateDisplay = ({component, value}) => {
   return <FormattedDate value={date} />;
 };
 
+const DateTimeDisplay = ({component, value}) => {
+  if (!value) return <EmptyDisplay />;
+  const datetime = Date.parse(value);
+  return (
+    <>
+      <FormattedDate value={datetime} />
+      &nbsp;
+      <FormattedTime value={datetime} />
+    </>
+  );
+};
+
 const TimeDisplay = ({component, value}) => {
   if (!value) return <EmptyDisplay />;
   const [hours, minutes, seconds] = value.split(':');
@@ -234,6 +246,7 @@ const TYPE_TO_COMPONENT = {
   select: SelectDisplay,
   file: FileDisplay,
   date: DateDisplay,
+  datetime: DateTimeDisplay,
   time: TimeDisplay,
   selectboxes: SelectboxesDisplay,
   number: NumberDisplay,
