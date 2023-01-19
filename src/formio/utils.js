@@ -7,4 +7,11 @@ const applyPrefix = (name) => {
   return `${PREFIX}-${name}`;
 };
 
-export { applyPrefix };
+const escapeHtml = source => {
+  var pre = document.createElement('pre');
+  var text = document.createTextNode(source);
+  pre.appendChild(text);
+  return pre.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&apos;').replace(/&/g, '&amp;');
+};
+
+export {applyPrefix, escapeHtml};
