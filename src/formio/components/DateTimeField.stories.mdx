@@ -1,0 +1,63 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
+
+import { FormioComponent, FormDecorator } from './story-util';
+
+<Meta
+  title="Form.io components/DateTimeField"
+  argTypes={{
+    id: {
+      type: { name: 'string' },
+    },
+    label: {
+      type: { name: 'string', required: false },
+    },
+    format: {
+      type: { name: 'string', required: false },
+    },
+    time_24hr: {
+      type: { name: 'boolean', required: false },
+    }
+  }}
+  decorators={[FormDecorator]}
+  parameters={{
+    controls: { sort: 'requiredFirst' },
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    }
+  }}
+/>
+
+# DateTimeField
+
+## Default
+
+export const Template = ({
+   id = '',
+   label = '',
+   format='',
+   time_24hr='',
+   ...args
+}) => (
+  <FormioComponent component={{
+      key: id,
+      type: 'datetime',
+      input: true,
+      format: format,
+      placeholder: format,
+      time_24hr: time_24hr,
+      label,
+      timePicker: {
+        showMeridian: !time_24hr,
+      }
+}}/>);
+
+<Canvas>
+  <Story name="Default" args={{ id: 'dateTime', label: 'Datum / Tijd', format: 'dd-MM-yyyy HH:mm', time_24hr: true,}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
