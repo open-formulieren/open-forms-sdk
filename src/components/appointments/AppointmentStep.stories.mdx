@@ -1,0 +1,20 @@
+import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
+
+import AppointmentStep from 'components/appointments/AppointmentStep';
+
+
+<Meta
+  title="Composites/Appointment form"
+  component={AppointmentStep}
+/>
+
+export const Template = () => <AppointmentStep/>
+
+<Canvas>
+  <Story name="Default" args={{label: 'Default'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+<ArgsTable of={AppointmentStep} />
