@@ -16,4 +16,7 @@
     max-height: $grid-row-height;
     max-width: $grid-row-height;
   }
+  // Implement CSS classname modifiers openforms-login-button-logo--{dark|light} depending on backend information
+  // Add prop appearance with possible values dark and light to LoginButtonIcon component, which configures the modifier of the component
+
 }
