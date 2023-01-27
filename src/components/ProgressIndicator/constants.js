@@ -7,6 +7,9 @@ const STEP_LABELS = {
   confirmation: (
     <FormattedMessage description="Confirmation page title" defaultMessage="Confirmation" />
   ),
+  appointment: (
+    <FormattedMessage description="Appointment page title" defaultMessage="Appointment" />
+  ),
 };
 
 export {STEP_LABELS};

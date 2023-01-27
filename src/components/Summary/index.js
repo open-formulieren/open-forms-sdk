@@ -136,7 +136,11 @@ const Summary = ({
 
     const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
     const prevStepSlug = form.steps[previousStepIndex]?.slug;
-    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+    const navigateTo = form.appointmentEnabled
+      ? '/appointment'
+      : prevStepSlug
+      ? `/stap/${prevStepSlug}`
+      : '/';
     history.push(navigateTo);
   };
 
