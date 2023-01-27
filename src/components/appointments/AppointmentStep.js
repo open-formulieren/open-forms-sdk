@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import Card from 'components/Card';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Button from 'components/Button';
+import Body from 'components/Body';
 
 import AppointmentFields from './AppointmentFields';
 
@@ -17,15 +18,17 @@ const AppointmentStep = ({onSubmit}) => {
         />
       }
     >
-      <AppointmentFields />
+      <Body component="form" onSubmit={onSubmit}>
+        <AppointmentFields />
 
-      <Toolbar>
-        <ToolbarList>
-          <Button type="submit" onClick={onSubmit}>
-            <FormattedMessage description="Save appointment" defaultMessage="Next" />
-          </Button>
-        </ToolbarList>
-      </Toolbar>
+        <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
+          <ToolbarList>
+            <Button type="submit" variant="primary">
+              <FormattedMessage description="Save appointment" defaultMessage="Next" />
+            </Button>
+          </ToolbarList>
+        </Toolbar>
+      </Body>
     </Card>
   );
 };
