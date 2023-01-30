@@ -2,10 +2,49 @@
 SDK Changelog
 =============
 
-1.3.0 (2023-??-??)
-==================
+1.3.0-beta.0 (2023-01-30)
+=========================
 
-.. warning:: SDK 1.3.0 requires at least version 2.1.0 of the backend API.
+First beta version of the SDK.
+
+.. warning:: SDK 1.3.0 requires at least version 2.1.0-beta.0 of the backend API.
+
+This beta version marks the feature freeze for the 1.3.0 SDK version (and the 2.1.0
+backend version).
+
+Features
+--------
+
+* [#2266] Added various ``aria-*`` attributes and more descriptive messages to improve
+  accessibility
+* [#2276] Added attributes to validation error messages and containers for improved
+  accessibility
+* [#2267] Improved accessibility of navigation elements
+* [#2516] Use consistent 'bin' icons for delete buttons/icons instead of crosses
+* [#2557] Added datetime component type
+
+Bugfixes
+--------
+
+* Fixed incorrect ``inputType`` value for time component story
+* [#2440] Fixed hidden components being displayed in repeating groups
+* [#2502] Fixed appearance of disabled progress indicator links
+* [#2377] Fixed link-hover theme configuration not being applied consistently. Note:
+  you should now be using the ``--utrecht-link-*`` design tokens.
+* [#2539] Fixed mime type validation for mime types unknown by the browser (such as
+  ``.msg``)
+
+Project maintenance
+-------------------
+
+* [#325] Fixed Content component story
+* [#307] Added more components to Storybook documentation: Body, Fieldset, nested
+  components
+* Added more documentation in ``src/components/FormStep.js``
+* Removed unused table component
+* [#335] Configured turbosnap in Chromatic UI to save snapshots
+* Updated the contributing guidelines and technical vision
+
 
 1.3.0-alpha.1 (2022-12-19)
 ==========================
