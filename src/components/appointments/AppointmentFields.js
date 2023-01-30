@@ -1,16 +1,24 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {useAsync} from 'react-use';
 
-import {getBEMClassName} from '../../utils';
-import Label from '../Label';
-import {getFormattedDateString, getFormattedTimeString} from 'utils';
+import {ConfigContext} from 'Context';
+import {get} from 'api';
+import Label from 'components/Label';
+import Loader from 'components/Loader';
+import {getBEMClassName, getFormattedDateString, getFormattedTimeString} from 'utils';
 
-const ProductField = ({product, setProduct}) => {
-  // todo replace mock with api call
-  const data = [
-    {code: 'PASAAN', identifier: '1', name: 'Paspoort aanvraag'},
-    {code: 'RIJAAN', identifier: '5', name: 'Rijbewijs aanvraag (Drivers license)'},
-  ];
+const requestOrEmpty = async (url, query, condition) => {
+  if (condition) {
+    return await get(url, query);
+  } else {
+    return [];
+  }
+};
+
+const ProductField = ({value, onChange, url}) => {
+  const {loading, value: items} = useAsync(async () => await get(url));
+  // todo process errors
 
   return (
     <div className={getBEMClassName('form-control')}>
@@ -18,27 +26,27 @@ const ProductField = ({product, setProduct}) => {
         <FormattedMessage description="Appointment product field label" defaultMessage="Product" />
       </Label>
 
-      <select
-        className={getBEMClassName('select')}
-        value={product}
-        onChange={event => {
-          setProduct(event.target.value);
-          // todo empty errors
-          // todo empty all other fields
-        }}
-      >
-        <option value={''}></option>
-        {data.map(item => (
-          <option value={item.identifier}>{item.name}</option>
-        ))}
-      </select>
+      {loading ? (
+        <Loader />
+      ) : (
+        <select className={getBEMClassName('select')} value={value} onChange={onChange}>
+          <option value={''}></option>
+          {items.map(item => (
+            <option value={item.identifier} key={item.identifier}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      )}
     </div>
   );
 };
 
-const LocationField = ({location, setLocation}) => {
-  // todo replace mock with api call
-  const data = [{identifier: '1', name: 'Maykin Media'}];
+const LocationField = ({value, onChange, url, urlQuery}) => {
+  const {loading, value: items} = useAsync(
+    async () => await requestOrEmpty(url, urlQuery, urlQuery.product_id),
+    [urlQuery.product_id]
+  );
 
   return (
     <div className={getBEMClassName('form-control')}>
@@ -49,29 +57,28 @@ const LocationField = ({location, setLocation}) => {
         />
       </Label>
 
-      <select
-        className={getBEMClassName('select')}
-        value={location}
-        onChange={event => {
-          setLocation(event.target.value);
-          // todo empty errors
-          // todo empty all other fields
-        }}
-      >
-        <option value={''}></option>
-        {data.map(item => (
-          <option value={item.identifier}>{item.name}</option>
-        ))}
-      </select>
+      {loading ? (
+        <Loader />
+      ) : (
+        <select className={getBEMClassName('select')} value={value} onChange={onChange}>
+          <option value={''}></option>
+          {items.map(item => (
+            <option value={item.identifier} key={item.identifier}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      )}
     </div>
   );
 };
 
-const DateField = ({date, setDate}) => {
+const DateField = ({value, onChange, url, urlQuery}) => {
   const intl = useIntl();
-
-  // todo replace mock with api call
-  const data = [{date: '2021-08-19'}, {date: '2021-08-20'}, {date: '2021-08-23'}];
+  const {loading, value: items} = useAsync(
+    async () => await requestOrEmpty(url, urlQuery, urlQuery.product_id && urlQuery.location_id),
+    [urlQuery.product_id, urlQuery.location_id]
+  );
 
   return (
     <div className={getBEMClassName('form-control')}>
@@ -79,29 +86,33 @@ const DateField = ({date, setDate}) => {
         <FormattedMessage description="Appointment date field label" defaultMessage="Date" />
       </Label>
 
-      <select
-        className={getBEMClassName('select')}
-        value={date}
-        onChange={event => {
-          setDate(event.target.value);
-          // todo empty errors
-          // todo empty all other fields
-        }}
-      >
-        <option value={''}></option>
-        {data.map(item => (
-          <option value={item.date}>{getFormattedDateString(intl, item.date)}</option>
-        ))}
-      </select>
+      {loading ? (
+        <Loader />
+      ) : (
+        <select className={getBEMClassName('select')} value={value} onChange={onChange}>
+          <option value={''}></option>
+          {items.map(item => (
+            <option value={item.date} key={item.date}>
+              {getFormattedDateString(intl, item.date)}
+            </option>
+          ))}
+        </select>
+      )}
     </div>
   );
 };
 
-const TimeField = ({time, setTime}) => {
+const TimeField = ({value, onChange, url, urlQuery}) => {
   const intl = useIntl();
-
-  // todo replace mock with api call
-  const data = [{time: '2021-08-23T08:00:00+02:00'}, {time: '2021-08-23T08:10:00+02:00'}];
+  const {loading, value: items} = useAsync(
+    async () =>
+      await requestOrEmpty(
+        url,
+        urlQuery,
+        urlQuery.product_id && urlQuery.location_id && urlQuery.date
+      ),
+    [urlQuery.product_id, urlQuery.location_id, urlQuery.date]
+  );
 
   return (
     <div className={getBEMClassName('form-control')}>
@@ -109,20 +120,18 @@ const TimeField = ({time, setTime}) => {
         <FormattedMessage description="Appointment time field label" defaultMessage="Time" />
       </Label>
 
-      <select
-        className={getBEMClassName('select')}
-        value={time}
-        onChange={event => {
-          setTime(event.target.value);
-          // todo empty errors
-          // todo empty all other fields
-        }}
-      >
-        <option value={''}></option>
-        {data.map(item => (
-          <option value={item.time}>{getFormattedTimeString(intl, item.time)}</option>
-        ))}
-      </select>
+      {loading ? (
+        <Loader />
+      ) : (
+        <select className={getBEMClassName('select')} value={value} onChange={onChange}>
+          <option value={''}></option>
+          {items.map(item => (
+            <option value={item.time} key={item.time}>
+              {getFormattedTimeString(intl, item.time)}
+            </option>
+          ))}
+        </select>
+      )}
     </div>
   );
 };
@@ -133,12 +142,46 @@ const AppointmentFields = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
+  // appointment urls
+  const {baseUrl} = useContext(ConfigContext);
+
   return (
     <>
-      <ProductField product={product} setProduct={setProduct} />
-      <LocationField location={location} setLocation={setLocation} />
-      <DateField date={date} setDate={setDate} />
-      <TimeField time={time} setTime={setTime} />
+      <ProductField
+        value={product}
+        onChange={e => {
+          setProduct(e.target.value);
+          setLocation('');
+          setDate('');
+          setTime('');
+        }}
+        url={`${baseUrl}appointments/products`}
+      />
+      <LocationField
+        value={location}
+        onChange={e => {
+          setLocation(e.target.value);
+          setDate('');
+          setTime('');
+        }}
+        url={`${baseUrl}appointments/locations`}
+        urlQuery={{product_id: product}}
+      />
+      <DateField
+        value={date}
+        onChange={e => {
+          setDate(e.target.value);
+          setTime('');
+        }}
+        url={`${baseUrl}appointments/dates`}
+        urlQuery={{product_id: product, location_id: location}}
+      />
+      <TimeField
+        value={time}
+        onChange={e => setTime(e.target.value)}
+        url={`${baseUrl}appointments/times`}
+        urlQuery={{product_id: product, location_id: location, date: date}}
+      />
     </>
   );
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
+import Body from 'components/Body';
+import Button from 'components/Button';
 import Card from 'components/Card';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import Button from 'components/Button';
-import Body from 'components/Body';
 
 import AppointmentFields from './AppointmentFields';
 
