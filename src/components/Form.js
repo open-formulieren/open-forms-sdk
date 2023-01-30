@@ -7,7 +7,6 @@ import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
 import {destroy, post} from 'api';
-import AppointmentStep from 'components/appointments/AppointmentStep';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import FormStart from 'components/FormStart';
@@ -20,6 +19,7 @@ import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
+import AppointmentStep from 'components/appointments/AppointmentStep';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
