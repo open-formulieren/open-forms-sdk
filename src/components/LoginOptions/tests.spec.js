@@ -11,6 +11,23 @@ import LoginOptions from './index';
 
 let container = null;
 
+const FORM_DEFAULTS = {
+  uuid: 'b75c7b87-6916-4968-b2ae-c37fff174a04',
+  name: 'dummy',
+  slug: 'dummy',
+  url: 'https://example.com/dummy',
+  maintenanceMode: false,
+  showProgressIndicator: false,
+  submissionAllowed: 'yes',
+  literals: {
+    beginText: {resolved: '', value: ''},
+    changeText: {resolved: '', value: ''},
+    confirmText: {resolved: '', value: ''},
+    previousText: {resolved: '', value: ''},
+  },
+  steps: [],
+};
+
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
@@ -26,6 +43,7 @@ afterEach(() => {
 
 it('Login not required, options wrapped in form tag', () => {
   const form = {
+    ...FORM_DEFAULTS,
     loginRequired: false,
     loginOptions: [],
   };
@@ -51,6 +69,7 @@ it('Login not required, options wrapped in form tag', () => {
 
 it('Login required, options not wrapped in form tag', () => {
   const form = {
+    ...FORM_DEFAULTS,
     loginRequired: true,
     loginOptions: [
       {
@@ -99,6 +118,7 @@ it('Login required, options not wrapped in form tag', () => {
 
 it('Login button has the right URL after cancelling log in', () => {
   const form = {
+    ...FORM_DEFAULTS,
     loginRequired: true,
     loginOptions: [
       {
