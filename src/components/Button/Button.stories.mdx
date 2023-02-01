@@ -1,8 +1,8 @@
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
+import {Canvas, Meta, Props, Story} from '@storybook/addon-docs';
 
-import Anchor from "./Anchor";
-import Button, {VARIANTS} from "./Button";
-import FAIcon from "./FAIcon";
+import Anchor from 'components/Anchor';
+import Button, {VARIANTS} from 'components/Button';
+import FAIcon from 'components/FAIcon';
 
 <Meta
   title="Pure React components/Button"
@@ -12,10 +12,10 @@ import FAIcon from "./FAIcon";
       options: VARIANTS,
       control: {
         type: 'radio',
-      }
+      },
     },
     extraVariants: {
-      type: { name: 'array' }
+      type: {name: 'array'},
     },
     children: {table: {disable: true}},
     onDisabledClick: {table: {disable: true}},
@@ -27,12 +27,9 @@ import FAIcon from "./FAIcon";
 
 # Buttons
 
-Any additional props are passed down to the button component (or custom component, if
-using that).
+Any additional props are passed down to the button component (or custom component, if using that).
 
-export const Template = ({label='Button', ...args}) => (
-  <Button {...args}>{label}</Button>
-);
+export const Template = ({label = 'Button', ...args}) => <Button {...args}>{label}</Button>;
 
 <Canvas>
   <Story name="Extra props" args={{title: 'Title attribute', label: 'Hover me'}}>
@@ -68,15 +65,20 @@ export const Template = ({label='Button', ...args}) => (
 
 ## Icon buttons
 
-export const IconButtonTemplate = ({icon='pen', ...args}) => (
-  <Button {...args}><FAIcon icon={icon} /></Button>
+export const IconButtonTemplate = ({icon = 'pen', ...args}) => (
+  <Button {...args}>
+    <FAIcon icon={icon} />
+  </Button>
 );
 
 <Canvas>
   <Story name="Icon only" args={{title: 'Icon only', variant: 'icon-only'}}>
     {IconButtonTemplate.bind({})}
   </Story>
-  <Story name="Icon only danger" args={{title: 'Icon only danger', variant: 'icon-only', extraVariants: ['danger']}}>
+  <Story
+    name="Icon only danger"
+    args={{title: 'Icon only danger', variant: 'icon-only', extraVariants: ['danger']}}
+  >
     {IconButtonTemplate.bind({})}
   </Story>
 </Canvas>
@@ -86,27 +88,33 @@ export const IconButtonTemplate = ({icon='pen', ...args}) => (
 Passing the `disabled` prop sets the appropriate `aria-disabled` attribute.
 
 <Canvas>
-  <Story name="Disabled" args={{
-    disabled: true,
-    onDisabledClick: () => alert('clicked disabled button'),
-  }}>
+  <Story
+    name="Disabled"
+    args={{
+      disabled: true,
+      onDisabledClick: () => alert('clicked disabled button'),
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
 
 ## Replacing the HTML element
 
-You can pass an alternative `component` to render instead of the default `a` tag. This
-may be either:
+You can pass an alternative `component` to render instead of the default `a` tag. This may be
+either:
 
-* built in HTML tags, passing a string (e.g. `span`)
-* custom React components (e.g. `component={MyComponent}`)
+- built in HTML tags, passing a string (e.g. `span`)
+- custom React components (e.g. `component={MyComponent}`)
 
 <Canvas>
-  <Story name="CustomComponent" args={{
-    component: 'div',
-    value: 'div element',
-  }}>
+  <Story
+    name="CustomComponent"
+    args={{
+      component: 'div',
+      value: 'div element',
+    }}
+  >
     {Template.bind({})}
   </Story>
   <Story name="Link" args={{label: 'Link', component: Anchor}}>
