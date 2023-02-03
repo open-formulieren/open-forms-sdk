@@ -1,0 +1,104 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+
+import Anchor, {ANCHOR_MODIFIERS} from '.';
+
+<Meta
+  title="Pure React components/Anchor"
+  component={Anchor}
+  argTypes={{
+    modifiers: {
+      options: ANCHOR_MODIFIERS,
+      control: {
+        type: 'check',
+      },
+    },
+    children: {control: false},
+    onClick: {control: false},
+  }}
+  parameters={{
+    controls: {sort: 'requiredFirst'},
+  }}
+/>
+
+# Anchors
+
+Anchors are used for clickable links. Optionally, you can hook into the `click` event with the
+`onClick` prop, which will fire in addition to the default click handler.
+
+The `Anchor` components wraps around the `UtrechtLink`
+[component](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-link-readme--page)
+and therefore supports the relevant `--utrecht-link-*` design tokens. Additional Open Forms specific
+styles are added via the `--openforms-*` modifiers.
+
+This component can and should be used whenever using `react-router` `LinkAnchor` components, as it
+implements the required handlers which `UtrechtLink` doesn't.
+
+export const Template = ({label, ...args}) => (
+  <Anchor href="https://example.com" {...args}>
+    {label}
+  </Anchor>
+);
+
+## Anchor without modifiers
+
+The standard look of the anchor component without modifiers.
+
+<Canvas>
+  <Story name="Default" args={{label: 'Anchor/link'}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Variants by modifier
+
+<Canvas>
+  <Story
+    name="Hover"
+    args={{
+      modifiers: ['hover'],
+      label: 'Hover',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Active"
+    args={{
+      modifiers: ['active'],
+      label: 'Active',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Muted"
+    args={{
+      modifiers: ['muted'],
+      label: 'Muted',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Indent"
+    args={{
+      modifiers: ['indent'],
+      label: 'Indent',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Inherit"
+    args={{
+      modifiers: ['inherit'],
+      label: 'Inherit',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={Anchor} />
