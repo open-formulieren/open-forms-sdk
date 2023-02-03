@@ -1,19 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
-
-import { getBEMClassName } from 'utils';
-
+import {getBEMClassName} from 'utils';
 
 const LoginButtonIcon = ({identifier, logo}) => {
   if (!logo) return null;
 
-  const {href, imageSrc, title, logoAppearance} = logo;
+  const {href, imageSrc, title, appearance} = logo;
   return (
     <a
       // Implement CSS classname modifiers openforms-login-button-logo--{dark|light} depending on backend information
-      className={getBEMClassName('login-button-logo')}
+      className={getBEMClassName('login-button-logo', [appearance])}
       href={href}
       key={identifier}
       target="_blank"
@@ -25,14 +22,12 @@ const LoginButtonIcon = ({identifier, logo}) => {
 };
 
 LoginButtonIcon.propTypes = {
-  // Add prop appearance with possible values dark and light to LoginButtonIcon component, which configures the modifier of the component
-  // Implement CSS classname modifiers openforms-login-button-logo--{dark|light} depending on backend information
   identifier: PropTypes.string.isRequired,
   logo: PropTypes.shape({
     title: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
     href: PropTypes.string,
-    logoAppearance: PropTypes.string,
+    appearance: PropTypes.string,
   }),
 };
 
