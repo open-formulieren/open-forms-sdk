@@ -3,6 +3,8 @@ import React from 'react';
 
 import {getBEMClassName} from 'utils';
 
+export const LOGO_APPEARANCES = ['dark', 'light'];
+
 const LoginButtonIcon = ({identifier, logo}) => {
   if (!logo) return null;
 
@@ -27,7 +29,7 @@ LoginButtonIcon.propTypes = {
     title: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
     href: PropTypes.string,
-    appearance: PropTypes.string,
+    appearance: PropTypes.oneOf(LOGO_APPEARANCES).isRequired,
   }),
 };
 

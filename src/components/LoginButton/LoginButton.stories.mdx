@@ -1,6 +1,6 @@
 import {Canvas, Meta, Props, Story} from '@storybook/addon-docs';
 
-import LoginButtonIcon from './LoginButtonIcon';
+import LoginButtonIcon, {LOGO_APPEARANCES} from './LoginButtonIcon';
 
 <Meta
   title="Pure React components/Login Button Icon"
@@ -23,8 +23,9 @@ import LoginButtonIcon from './LoginButtonIcon';
       },
     },
     appearance: {
+      options: LOGO_APPEARANCES,
       control: {
-        type: 'text',
+        type: 'radio',
       },
     },
   }}
@@ -44,18 +45,30 @@ export const Template = ({
   href,
   title,
   ...args
-}) => <LoginButtonIcon identifier={identifier} logo={{appearance, title, imageSrc, href}} {...args} />;
+}) => (
+  <LoginButtonIcon identifier={identifier} logo={{appearance, title, imageSrc, href}} {...args} />
+);
 
 <Canvas>
   <Story
     name="Dark"
-    args={{appearance: 'dark', title: 'Login with DigiD', imageSrc: './digid.png', href: 'https://example.com/login'}}
+    args={{
+      appearance: 'dark',
+      title: 'Login with DigiD',
+      imageSrc: './digid.png',
+      href: 'https://example.com/login',
+    }}
   >
     {Template.bind({})}
   </Story>
   <Story
     name="Light"
-    args={{appearance: 'light', title: 'Login with eHerkenning', imageSrc: './eherkenning.png', href: 'https://example.com/login'}}
+    args={{
+      appearance: 'light',
+      title: 'Login with eHerkenning',
+      imageSrc: './eherkenning.png',
+      href: 'https://example.com/login',
+    }}
   >
     {Template.bind({})}
   </Story>
