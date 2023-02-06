@@ -1,6 +1,6 @@
 import {Canvas, Meta, Props, Story} from '@storybook/addon-docs';
 
-import LoginButtonIcon from './LoginButtonIcon';
+import LoginButtonIcon, {LOGO_APPEARANCES} from './LoginButtonIcon';
 
 <Meta
   title="Pure React components/Login Button Icon"
@@ -22,6 +22,12 @@ import LoginButtonIcon from './LoginButtonIcon';
         type: 'text',
       },
     },
+    appearance: {
+      options: LOGO_APPEARANCES,
+      control: {
+        type: 'radio',
+      },
+    },
   }}
   parameters={{
     controls: {sort: 'requiredFirst'},
@@ -30,18 +36,39 @@ import LoginButtonIcon from './LoginButtonIcon';
 
 # Login Button
 
+Focus-color depends on whether the Login Button logos have a dark or light colored background.
+
 export const Template = ({
+  appearance,
   identifier = '6f64d852-f927-48b8-9b72-dae7fa9d4c18',
   imageSrc,
   href,
   title,
   ...args
-}) => <LoginButtonIcon identifier={identifier} logo={{title, imageSrc, href}} {...args} />;
+}) => (
+  <LoginButtonIcon identifier={identifier} logo={{appearance, title, imageSrc, href}} {...args} />
+);
 
 <Canvas>
   <Story
-    name="Default"
-    args={{title: 'Login with DigiD', imageSrc: './digid.png', href: 'https://example.com/login'}}
+    name="Dark"
+    args={{
+      appearance: 'dark',
+      title: 'Login with DigiD',
+      imageSrc: './digid.png',
+      href: 'https://example.com/login',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Light"
+    args={{
+      appearance: 'light',
+      title: 'Login with eHerkenning',
+      imageSrc: './eherkenning.png',
+      href: 'https://example.com/login',
+    }}
   >
     {Template.bind({})}
   </Story>
