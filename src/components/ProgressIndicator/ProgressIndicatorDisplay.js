@@ -180,8 +180,8 @@ const ProgressIndicatorDisplay = ({
               <LinkOrSpan
                 to={'/appointment'}
                 useLink={areApplicableStepsCompleted}
-                // isActive={isSummary}
-                // isApplicable={areApplicableStepsCompleted}
+                isActive={isSummary}
+                isApplicable={true}
               >
                 {STEP_LABELS.appointment}
               </LinkOrSpan>

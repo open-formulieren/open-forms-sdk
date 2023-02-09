@@ -7,6 +7,7 @@ import AppDebug from 'components/AppDebug';
 import Form from 'components/Form';
 import LanguageSelection from 'components/LanguageSelection';
 import {LayoutRow} from 'components/Layout';
+import AppointmentForm from 'components/appointments/AppointmentForm';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import {I18NContext} from 'i18n';
 import Types from 'types';
@@ -42,6 +43,9 @@ const App = ({...props}) => {
     <Switch>
       {/* Anything dealing with appointments gets routed to it's own sub-router */}
       <Route path="/afspraak*" component={ManageAppointment} />
+      <Route path="/appointment*">
+        <AppointmentForm {...props} />
+      </Route>
 
       {/* All the rest goes to the actual form flow */}
       <Route path="/">
