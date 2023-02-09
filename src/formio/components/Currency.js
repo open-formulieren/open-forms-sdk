@@ -1,6 +1,6 @@
 import { Formio } from 'react-formio';
 import FormioUtils from 'formiojs/utils';
-import { maskInput } from '@formio/vanilla-text-mask';
+import { maskInput } from 'vanilla-text-mask';
 
 import _ from 'lodash';
 

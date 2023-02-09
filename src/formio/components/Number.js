@@ -1,5 +1,5 @@
 import { Formio } from 'react-formio';
-import { maskInput } from '@formio/vanilla-text-mask';
+import { maskInput } from 'vanilla-text-mask';
 
 import { applyPrefix } from '../utils';
 
