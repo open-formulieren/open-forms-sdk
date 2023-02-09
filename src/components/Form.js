@@ -19,7 +19,6 @@ import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import Summary from 'components/Summary';
-import AppointmentStep from 'components/appointments/AppointmentStep';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
@@ -212,11 +211,7 @@ const Form = ({form}) => {
     const nextStepIndex = findNextApplicableStep(currentStepIndex, state.submission);
     const nextStep = form.steps[nextStepIndex]; // will be undefined if it's the last step
 
-    const nextUrl = nextStep
-      ? `/stap/${nextStep.slug}`
-      : form.appointmentEnabled
-      ? '/appointment'
-      : '/overzicht';
+    const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
     history.push(nextUrl);
   };
 
@@ -230,13 +225,6 @@ const Form = ({form}) => {
       },
     });
     history.push('/bevestiging');
-  };
-
-  const onAppointmentSubmit = () => {
-    console.log('Appointment data were filled');
-    // todo change submission data
-
-    history.push('/overzicht');
   };
 
   const onLogout = async event => {
@@ -294,7 +282,6 @@ const Form = ({form}) => {
       submission={state.submission || state.submittedSubmission}
       submissionAllowed={form.submissionAllowed}
       completed={state.completed}
-      appointmentEnabled={form.appointmentEnabled}
     />
   ) : null;
 
@@ -360,19 +347,6 @@ const Form = ({form}) => {
           </ErrorBoundary>
         )}
       />
-
-      <Route exact path="/appointment">
-        <ErrorBoundary useCard>
-          <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-            <RequireSubmission
-              submission={state.submission}
-              form={form}
-              onSubmit={onAppointmentSubmit}
-              component={AppointmentStep}
-            />
-          </RequireSession>
-        </ErrorBoundary>
-      </Route>
     </Switch>
   );
 
