@@ -139,7 +139,7 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$VERSION" == "main" ] && VERSION=latest
 
-          echo ::set-output name=tag::${VERSION}
+          echo "tag=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build the Docker image
         env:
