@@ -13,6 +13,12 @@
   @include mobile-only {
     @include container-margin($properties: padding);
 
+    @include bem.element('header') {
+      &:not(:last-child) {
+        margin-bottom: $grid-margin-2;
+      }
+    }
+
     @include bem.modifier('mobile-header-hidden') {
       @include bem.element('header') {
         display: none;
