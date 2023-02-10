@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
-import {useRouteMatch} from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
+import {useLocation, useRouteMatch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -17,11 +17,23 @@ const ProgressIndicator = ({
   submissionAllowed,
   completed = false,
 }) => {
+  const {pathname} = useLocation();
   const config = useContext(ConfigContext);
   const summaryMatch = !!useRouteMatch('/overzicht');
   const stepMatch = useRouteMatch('/stap/:step');
   const confirmationMatch = !!useRouteMatch('/bevestiging');
   const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
+  const [expanded, setExpanded] = useState(false);
+
+  // collapse the expanded progress indicator if nav occurred, see
+  // open-formulieren/open-forms#2673. It's important that *only* the pathname triggers
+  // the effect, which is why exhaustive deps is ignored.
+  useEffect(() => {
+    if (expanded) {
+      setExpanded(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   // figure out the slug from the currently active step IF we're looking at a step
   const stepSlug = stepMatch ? stepMatch.params.step : '';
@@ -94,6 +106,8 @@ const ProgressIndicator = ({
       areApplicableStepsCompleted={applicableCompleted}
       showOverview={showOverview}
       showConfirmation={showConfirmation}
+      expanded={expanded}
+      onExpandClick={() => setExpanded(!expanded)}
     />
   );
 };

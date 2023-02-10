@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 
@@ -105,9 +105,9 @@ const ProgressIndicatorDisplay = ({
   areApplicableStepsCompleted,
   showOverview,
   showConfirmation,
+  expanded = false,
+  onExpandClick,
 }) => {
-  const [expanded, setExpanded] = useState(false);
-
   const intl = useIntl();
   // aria-labels are passed to DOM element, which can't handle <FormattedMessage />, so we
   // use imperative API
@@ -130,7 +130,7 @@ const ProgressIndicatorDisplay = ({
         <button
           className={getBEMClassName('progress-indicator__mobile-header')}
           aria-pressed={expanded ? 'true' : 'false'}
-          onClick={() => setExpanded(!expanded)}
+          onClick={onExpandClick}
         >
           <FAIcon
             icon={expanded ? 'chevron-up' : 'chevron-down'}
@@ -211,6 +211,8 @@ ProgressIndicatorDisplay.propTypes = {
   areApplicableStepsCompleted: PropTypes.bool,
   showOverview: PropTypes.bool,
   showConfirmation: PropTypes.bool,
+  expanded: PropTypes.bool,
+  onExpandClick: PropTypes.func.isRequired,
 };
 
 export default ProgressIndicatorDisplay;
