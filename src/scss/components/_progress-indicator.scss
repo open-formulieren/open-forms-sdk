@@ -23,7 +23,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    width: 100vw;
+    width: calc(100% - $grid-container-margin);
 
     @include show-on-mobile(flex);
     align-items: center;
