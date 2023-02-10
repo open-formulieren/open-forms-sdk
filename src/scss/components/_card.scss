@@ -1,7 +1,8 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix('card')} {
@@ -10,15 +11,16 @@
   box-sizing: border-box;
 
   @include mobile-only {
-    @include container-margin(
-      $properties: (
-        padding-left,
-        padding-right,
-      )
-    );
+    @include container-margin($properties: padding);
+
+    @include bem.modifier('mobile-header-hidden') {
+      @include bem.element('header') {
+        display: none;
+      }
+    }
   }
 
-  @include element('body') {
+  @include bem.element('body') {
     @include rows(1, margin-top);
 
     @include mobile-only {
