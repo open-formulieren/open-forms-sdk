@@ -8,6 +8,7 @@
 
 .#{prefix(title)} {
   @include h1(auto);
+  @include ellipsis;
 }
 
 .#{prefix(subtitle)} {

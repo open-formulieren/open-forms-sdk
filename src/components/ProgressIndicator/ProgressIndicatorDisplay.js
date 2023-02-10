@@ -66,6 +66,7 @@ const SidebarStepStatus = ({
         useLink={isApplicable && canNavigate}
         isActive={isCurrent}
         isApplicable={isApplicable}
+        aria-label={formDefinition}
       >
         <FormattedMessage
           description="Step label in progress indicator"

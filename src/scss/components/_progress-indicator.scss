@@ -83,9 +83,11 @@
 
   @include bem.element('marker') {
     width: 1em;
+    flex-shrink: 0;
   }
 
   @include bem.element('label') {
     flex-grow: 1;
+    word-break: break-all;
   }
 }
