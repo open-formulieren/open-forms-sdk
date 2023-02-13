@@ -71,6 +71,7 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
 
   &__title {
     // extend generic title component
+    @extend .utrecht-heading-1;
     @extend .#{prefix(title)};
   }
 }

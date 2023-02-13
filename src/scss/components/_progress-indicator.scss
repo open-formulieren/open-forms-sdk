@@ -1,7 +1,8 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 @mixin nested($classname) {
@@ -13,7 +14,7 @@
 .#{prefix('progress-indicator')} {
   @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
 
-  @include element('mobile-header') {
+  @include bem.element('mobile-header') {
     @include body;
     @include body--big;
     @include margin(-$grid-container-margin, $properties: margin-left);
@@ -23,20 +24,23 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    width: calc(100% - $grid-container-margin);
+    width: calc(100% + $grid-container-margin);
 
     @include show-on-mobile(flex);
+
     align-items: center;
 
     .fa-icon {
       display: block;
-      width: $grid-container-margin * 2;
+      flex-shrink: 0;
+      flex-basis: $grid-container-margin * 2;
       text-align: center;
     }
+  }
 
-    span {
-      font-weight: bold;
-    }
+  @include bem.element('active-step') {
+    @include ellipsis;
+    font-weight: bold;
   }
 
   // mobile styling for the progress indicator
@@ -61,7 +65,7 @@
       @include margin($grid-container-margin, $properties: margin-left);
     }
 
-    @include modifier('mobile-collapsed') {
+    @include bem.modifier('mobile-collapsed') {
       @include nested('caption') {
         display: none;
       }
@@ -77,11 +81,13 @@
   display: flex;
   justify-content: flex-start;
 
-  @include element('marker') {
+  @include bem.element('marker') {
     width: 1em;
+    flex-shrink: 0;
   }
 
-  @include element('label') {
+  @include bem.element('label') {
     flex-grow: 1;
+    word-break: break-all;
   }
 }

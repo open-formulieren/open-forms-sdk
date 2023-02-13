@@ -767,7 +767,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
   const isLoadingSomething = loading || isNavigating;
   return (
     <>
-      <Card title={submissionStep.name}>
+      <Card title={submissionStep.name} modifiers={['mobile-header-hidden']}>
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
         {!isLoadingSomething && configuration ? (

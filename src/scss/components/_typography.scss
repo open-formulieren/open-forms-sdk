@@ -1,13 +1,15 @@
 @use 'microscope-sass/lib/bem';
 @use './anchor';
 
+@import '@utrecht/components/dist/heading-1/css/index';
+
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
 
 .#{prefix(title)} {
-  @include h1(auto);
+  @include ellipsis;
 }
 
 .#{prefix(subtitle)} {
@@ -36,14 +38,6 @@
   }
 
   @include bem.modifier(muted) {
-    color: var(--of-color-fg-muted);
-  }
-}
-
-.#{prefix(title)},
-.#{prefix(subtitle)},
-.#{prefix(caption)} {
-  &--muted {
     color: var(--of-color-fg-muted);
   }
 }
