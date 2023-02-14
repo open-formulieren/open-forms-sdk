@@ -56,8 +56,10 @@ const loadSummaryData = async submissionUrl => {
   return await get(`${submissionUrl.href}/summary`);
 };
 
-const completeSubmission = async submission => {
-  const response = await post(`${submission.url}/_complete`);
+const completeSubmission = async (submission, privacy) => {
+  const response = await post(`${submission.url}/_complete`, {
+    privacyPolicyAccepted: privacy.policyAccepted,
+  });
   if (!response.ok) {
     console.error(response.data);
     // TODO Specific error for each type of invalid data?
@@ -121,7 +123,7 @@ const Summary = ({
     event.preventDefault();
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
     try {
-      const {statusUrl} = await completeSubmission(refreshedSubmission);
+      const {statusUrl} = await completeSubmission(refreshedSubmission, state.privacy);
       onConfirm(statusUrl);
     } catch (e) {
       dispatch({type: 'ERROR', payload: e.message});
