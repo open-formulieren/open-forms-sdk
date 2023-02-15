@@ -2,6 +2,17 @@
 Changelog
 =========
 
+1.1.2 (2023-02-09)
+==================
+
+Periodic maintenance release
+
+* [#1832] Debounce the location autofill API calls
+* [#1868] Ensure that invalid data is still kept in the client-side data state (fix
+  for new bug in #1526)
+* [#1351] Allow negative numbers and currencies
+* [security#22] Fixed self-XSS through bad filenames in file-upload component
+
 1.1.1 (2022-07-25)
 ==================
 
