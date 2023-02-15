@@ -59,6 +59,16 @@ $select-background-color: var(--of-select-background-color, $color-white);
     font-weight: bold;
     padding: 0 $list-hpadding;
     width: 100%;
+
+    .choices__list {
+      background-color: var(--of-color-bg);
+      border-color: var(--of-field-border-color);
+      color: var(--of-color-fg);
+
+      .is-highlighted {
+        background-color: var(--of-select-highlighted-bg);
+      }
+    }
   }
 
   // The wrapper containing the select, results, and input.
