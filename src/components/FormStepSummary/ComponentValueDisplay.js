@@ -207,7 +207,7 @@ const CoSignDisplay = ({component, value}) => {
 const ComponentValueDisplay = ({value, component}) => {
   const {multiple = false, type} = component;
 
-  if (!value) {
+  if (value == null) {
     return <EmptyDisplay />;
   }
 
