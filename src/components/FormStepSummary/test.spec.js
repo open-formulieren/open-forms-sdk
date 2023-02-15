@@ -80,12 +80,14 @@ it('Multi-value select field displayed properly', () => {
 it('Empty fields', () => {
   act(() => {
     render(
-      <FormStepSummary
-        name="Form Step 1"
-        slug="fs-1"
-        editStepText="Change"
-        data={testEmptyFields}
-      />,
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <FormStepSummary
+          name="Form Step 1"
+          slug="fs-1"
+          editStepText="Change"
+          data={testEmptyFields}
+        />
+      </IntlProvider>,
       container
     );
   });
@@ -111,4 +113,44 @@ it('Columns without labels are not rendered', () => {
   const tableRows = container.getElementsByClassName('openforms-summary-row');
 
   expect(tableRows.length).toEqual(0);
+});
+
+it('Number fields with zero values are displayed', () => {
+  const numberComponent = {
+    key: 'numberComponent',
+    type: 'number',
+    multiple: false,
+  };
+
+  act(() => {
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <LabelValueRow name="Number zero" value={0} component={numberComponent} />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const value = container.getElementsByClassName('openforms-summary-row__value')[0].textContent;
+  expect(value).toEqual('0');
+});
+
+it('Number fields with zero values are displayed', () => {
+  const numberComponent = {
+    key: 'currencyComponent',
+    type: 'currency',
+    multiple: false,
+  };
+
+  act(() => {
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <LabelValueRow name="Currency zero" value={0} component={numberComponent} />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const value = container.getElementsByClassName('openforms-summary-row__value')[0].textContent;
+  expect(value).toEqual('€ 0,00');
 });
