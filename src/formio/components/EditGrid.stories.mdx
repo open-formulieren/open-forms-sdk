@@ -2,13 +2,16 @@ import {Canvas, Meta, Story, ArgsTable} from '@storybook/addon-docs';
 import {FormioComponent, FormDecorator} from './story-util';
 
 <Meta
-  title="Form.io components/RepeatingGroup"
+  title="Form.io components/EditGrid (Repeating group)"
   argTypes={{
     id: {
       type: {name: 'string'},
     },
     label: {
       type: {name: 'string', required: false},
+    },
+    maxLength: {
+      type: {name: 'number', required: false},
     },
   }}
   decorators={[FormDecorator]}
@@ -19,63 +22,83 @@ import {FormioComponent, FormDecorator} from './story-util';
 
 # Repeating Group / Herhalende groep
 
-Edit Grids allow users to replicate a table like structure when it comes to the capture and display of form data. Users can add multiple components inside the Edit Grid. Additionally, any number of grids can be added within a form, which is especially useful when needing the ability to add or duplicate multiple fields sets.
+The `editGrid` component is used to capture structured data according to a certain sub-schema
+where the number of repetitions can vary. The data is stored in a `Array` where each element's
+data corresponds to the nested schema of the edit grid.
 
-By default, the grid is empty, but can have other form components placed inside.
+Form designers can freely design the components within the edit grid, while end-users have
+the controls to add additional items to the data array. In the form designer, the grid starts
+without any children (empty grid).
 
 ## Default
 
-export const Template = ({id = '', label = '', ...args}) => (
+export const defaultNested = [
+  {
+    key: 'kleur',
+    type: 'textfield',
+    input: true,
+    label: 'Kleur',
+    registration: {
+      attribute: '',
+    },
+    showInSummary: true,
+    isSensitiveData: false,
+    deriveStreetName: false,
+  },
+  {
+    key: 'bedrag',
+    type: 'currency',
+    input: true,
+    label: 'Waarde',
+    currency: 'EUR',
+    delimiter: true,
+    allowNegative: false,
+  },
+];
+
+export const Template = ({
+  id = '',
+  label = '',
+  groupLabel = '',
+  childComponents = [],
+  description = '',
+  maxLength = null,
+  ...args
+}) => (
   <FormioComponent
     component={{
       key: id,
       type: 'editgrid',
       input: true,
+      hideLabel: false,
       label,
-      components: [
-        {
-          key: 'kleur',
-          type: 'textfield',
-          input: true,
-          label: 'Kleur',
-          registration: {
-            attribute: '',
-          },
-          showInSummary: true,
-          isSensitiveData: false,
-          deriveStreetName: false,
-        },
-        {
-          key: 'bedrag',
-          type: 'currency',
-          input: true,
-          label: 'Waarde',
-          currency: 'EUR',
-          delimiter: true,
-          allowNegative: false,
-        },
-        {
-          key: 'content',
-          html: "<p>De totale waarde van uw auto's is: €{{ totaleWaarde|localize }}</p>",
-          type: 'content',
-          input: false,
-          label: 'Content',
-          hidden: true,
-        },
-      ],
-      groupLabel: "Herhalende groep: auto's",
-      inlineEdit: true,
-      description: 'Herhalende groep voor data',
+      components: childComponents,
+      groupLabel,
+      inlineEdit: false,
+      description,
       isSensitiveData: false,
+      validate: {maxLength},
+      ...args,
     }}
   />
 );
 
 <Canvas>
-  <Story name="EditGrid" args={{id: 'repeating1', label: 'Auto\'s'}}>
+  <Story name="Default" args={{
+      id: 'repeating1',
+      label: 'Auto\'s',
+      groupLabel: 'Auto',
+      childComponents: defaultNested,
+      description: 'Herhalende groep voor data',
+      disableAddingRemovingRows: false,
+      addAnother: 'Nog één toevoegen',
+      saveRow: 'Bevestigen',
+      removeRow: 'Verwijderen',
+      maxLength: null,
+    }}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
-<ArgsTable story="EditGrid" />
+<ArgsTable story="Default" />
 
