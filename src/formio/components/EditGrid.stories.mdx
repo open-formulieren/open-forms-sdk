@@ -63,6 +63,7 @@ export const Template = ({
   childComponents = [],
   description = '',
   maxLength = null,
+  data = [],
   ...args
 }) => (
   <FormioComponent
@@ -80,11 +81,14 @@ export const Template = ({
       validate: {maxLength},
       ...args,
     }}
+    data={{[id]: data}}
   />
 );
 
 <Canvas>
-  <Story name="Default" args={{
+  <Story
+    name="Default"
+    args={{
       id: 'repeating1',
       label: 'Auto\'s',
       groupLabel: 'Auto',
@@ -102,3 +106,27 @@ export const Template = ({
 
 <ArgsTable story="Default" />
 
+## With submission data
+
+<Canvas>
+  <Story
+    name="With data"
+    args={{
+      id: 'repeating2',
+      label: 'Auto\'s',
+      groupLabel: 'Auto',
+      childComponents: defaultNested,
+      description: 'Herhalende groep voor data',
+      disableAddingRemovingRows: false,
+      addAnother: 'Nog één toevoegen',
+      saveRow: 'Bevestigen',
+      removeRow: 'Verwijderen',
+      maxLength: null,
+      data: [{
+        'kleur': 'Red',
+        'bedrag': '15000000',
+      }]
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

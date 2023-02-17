@@ -4,12 +4,13 @@ import {PREFIX} from 'formio/constants';
 
 export const FormioForm = ({form}) => <Form form={form} />;
 
-export const FormioComponent = ({component, components = [], evalContext = {}}) => (
+export const FormioComponent = ({component, components = [], evalContext = {}, data = {}}) => (
   <Form
     form={{
       type: 'form',
       components: components.length ? components : [component],
     }}
+    submission={{data: data}}
     options={{
       noAlerts: true,
       language: 'nl', // TODO - get this from the i18n addon
