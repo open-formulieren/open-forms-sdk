@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
 
@@ -7,17 +7,19 @@ import Body from 'components/Body';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
+import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import ProgressIndicatorDisplay from 'components/ProgressIndicator/ProgressIndicatorDisplay';
 import {STEP_LABELS} from 'components/ProgressIndicator/constants';
-import Summary from 'components/Summary';
+import SummaryConfirmation from 'components/SummaryConfirmation';
 import AppointmentStep from 'components/appointments/AppointmentStep';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 import useTitle from 'hooks/useTitle';
 
 const AppointmentProgressIndicator = ({title}) => {
   const config = useContext(ConfigContext);
-  const summaryMatch = !!useRouteMatch('/overzicht');
-  const confirmationMatch = !!useRouteMatch('/bevestiging');
+  const summaryMatch = !!useRouteMatch('/appointment/overzicht');
+  const confirmationMatch = !!useRouteMatch('/appointment/bevestiging');
   const appointmentMatch = !!useRouteMatch('/appointment');
 
   // figure out the title for the mobile menu based on the state
@@ -49,6 +51,51 @@ const AppointmentProgressIndicator = ({title}) => {
       showConfirmation={true}
       showAppointment={true}
     />
+  );
+};
+
+const AppointmentSummary = ({form, onConfirm}) => {
+  const history = useHistory();
+  const onPrevPage = event => {
+    event.preventDefault();
+    history.push('/appointment');
+  };
+
+  const intl = useIntl();
+  const pageTitle = intl.formatMessage({
+    description: 'Summary page title',
+    defaultMessage: 'Check and confirm',
+  });
+  useTitle(pageTitle);
+
+  const [privacy, setPrivacy] = useState({
+    requiresPrivacyConsent: true,
+    privacyLabel: '',
+    policyAccepted: false,
+  });
+
+  return (
+    <Card
+      title={
+        <FormattedMessage
+          description="Check overview and confirm"
+          defaultMessage="Check and confirm"
+        />
+      }
+    >
+      <LiteralsProvider literals={form.literals}>
+        <form onSubmit={onConfirm}>
+          <SummaryConfirmation
+            submissionAllowed={SUBMISSION_ALLOWED.yes}
+            privacy={privacy}
+            onPrivacyCheckboxChange={e =>
+              setPrivacy({...privacy, policyAccepted: e.target.checked})
+            }
+            onPrevPage={onPrevPage}
+          />
+        </form>
+      </LiteralsProvider>
+    </Card>
   );
 };
 
@@ -94,12 +141,6 @@ const AppointmentForm = ({form}) => {
     history.push('/appointment/overzicht');
   };
 
-  const onLogout = () => {
-    // todo
-    console.log('logout');
-    history.push('/appointment');
-  };
-
   const progressIndicator = form.showProgressIndicator ? (
     // should we use generic ProgressIndicator?
     <AppointmentProgressIndicator title={form.name} />
@@ -108,27 +149,26 @@ const AppointmentForm = ({form}) => {
   // Route the correct page based on URL
   const router = (
     <Switch>
+      <Route path="/appointment/overzicht">
+        <ErrorBoundary useCard>
+          <AppointmentSummary form={form} onConfirm={onSubmitForm} />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/appointment/bevestiging">
+        <ErrorBoundary useCard>
+          <AppointmentConfirmation />
+        </ErrorBoundary>
+      </Route>
+
       <Route path="/">
         <ErrorBoundary useCard>
           <AppointmentStep form={form} onSubmit={onAppointmentSubmit} />
         </ErrorBoundary>
       </Route>
-
-      <Route path="/overzicht">
-        <ErrorBoundary useCard>
-          <Summary form={form} onLogout={onLogout} onConfirm={onSubmitForm} />
-        </ErrorBoundary>
-      </Route>
-
-      <Route path="/bevestiging">
-        <ErrorBoundary useCard>
-          <AppointmentConfirmation />
-        </ErrorBoundary>
-      </Route>
     </Switch>
   );
 
-  // render the form step if there's an active submission (and no summary)
   const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   return (
     <FormDisplayComponent
