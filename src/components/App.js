@@ -43,7 +43,7 @@ const App = ({...props}) => {
     <Switch>
       {/* Anything dealing with appointments gets routed to it's own sub-router */}
       <Route path="/afspraak*" component={ManageAppointment} />
-      <Route path="/appointment*">
+      <Route path="/appointment">
         <AppointmentForm {...props} />
       </Route>
 
