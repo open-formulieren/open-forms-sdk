@@ -267,6 +267,12 @@ const Form = ({form}) => {
     );
   }
 
+  // redirect to the appointment form
+  // use redirect instead of history to replace the location
+  if (form.appointmentEnabled) {
+    return <Redirect to={{pathname: '/appointment'}} />;
+  }
+
   if (loading || shouldAutomaticallyRedirect) {
     return (
       <LayoutColumn>
