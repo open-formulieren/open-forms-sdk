@@ -108,6 +108,7 @@ const ProgressIndicatorDisplay = ({
   showConfirmation,
   expanded = false,
   onExpandClick,
+  sticky = true,
 }) => {
   const intl = useIntl();
   // aria-labels are passed to DOM element, which can't handle <FormattedMessage />, so we
@@ -124,8 +125,15 @@ const ProgressIndicatorDisplay = ({
     {activeStepTitle}
   );
 
+  const modifiers = [];
+  if (sticky) {
+    modifiers.push('sticky');
+  }
+  if (!expanded) {
+    modifiers.push('mobile-collapsed');
+  }
   return (
-    <Card blockClassName="progress-indicator" modifiers={expanded ? [] : ['mobile-collapsed']}>
+    <Card blockClassName="progress-indicator" modifiers={modifiers}>
       <nav>
         {/* Turn a Div with an onClick event into a button for accesibility */}
         <button
@@ -214,6 +222,7 @@ ProgressIndicatorDisplay.propTypes = {
   showConfirmation: PropTypes.bool,
   expanded: PropTypes.bool,
   onExpandClick: PropTypes.func.isRequired,
+  sticky: PropTypes.bool,
 };
 
 export default ProgressIndicatorDisplay;

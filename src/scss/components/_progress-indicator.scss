@@ -14,10 +14,10 @@
 .#{prefix('progress-indicator')} {
   @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
 
-  // sticky sidebar
-  position: -webkit-sticky;
-  position: sticky;
-  top: $grid-margin-4;
+  @include bem.modifier('sticky') {
+    position: sticky;
+    top: var(--of-progress-indicator-sticky-spacing);
+  }
 
   @include bem.element('mobile-header') {
     @include body;
