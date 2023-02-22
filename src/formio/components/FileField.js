@@ -3,6 +3,8 @@ import {Formio} from 'react-formio';
 
 import {CSRFToken} from 'headers';
 
+import {applyPrefix} from '../utils';
+
 const addCSRFToken = xhr => {
   const csrfTokenValue = CSRFToken.getValue();
   if (csrfTokenValue != null && csrfTokenValue) {
@@ -187,6 +189,12 @@ class FileField extends Formio.Components.components.file {
     });
 
     super.upload(files);
+  }
+
+  browseFiles(attrs = {}) {
+    // provide class name for hiding element, override style to avoid triggering CSP
+    attrs = {...attrs, class: applyPrefix('file-upload-input'), style: ''};
+    return super.browseFiles(attrs);
   }
 
   validatePattern(file, val) {
