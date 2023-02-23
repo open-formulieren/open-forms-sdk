@@ -3,7 +3,7 @@
     <ul>
       {% ctx.rows.forEach(function(row, rowIndex) { %}
       <div class="{{ctx.ofPrefix}}editgrid__group">
-        {% if (!!ctx.component.groupLabel) { %}<div class="{{ctx.ofPrefix}}editgrid__group-label">{{ ctx.component.groupLabel }} {{ rowIndex + 1 }}</div>{% } %}
+				{% if (!!ctx.component.groupLabel) { %}<div class="{{ctx.ofPrefix}}editgrid__group-label">{{ ctx.t(ctx.component.groupLabel, { _userInput: true }) }} {{ rowIndex + 1 }}</div>{% } %}
         <li class="{{ctx.ofPrefix}}editgrid__list" ref="{{ctx.ref.row}}">
           {{row}}
 
