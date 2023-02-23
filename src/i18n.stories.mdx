@@ -3,8 +3,7 @@ import { useIntl } from 'react-intl';
 
 import { ConfigContext } from 'Context';
 import { I18NManager, setLanguage, I18NErrorBoundary } from 'i18n';
-
-export const BASE_URL = 'http://localhost:8000/api/v2/';
+import {BASE_URL, mockFormioTranslations, mockFormioTranslationsServiceUnavailable} from 'components/LanguageSelection/mocks';
 
 export const ConfigDecorator = (Story, { args }) => (
   <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
@@ -27,26 +26,7 @@ export const ConfigDecorator = (Story, { args }) => (
         excludeDecorators: true,
       }
     },
-    mockData: [
-      {
-        url: `${BASE_URL}i18n/formio/nl`,
-        method: 'GET',
-        status: 200,
-        response: {
-          "Click to set value": "Klik om waarde in te stellen",
-          "Cancel": "Annuleren",
-        }
-      },
-      {
-        url: `${BASE_URL}i18n/formio/en`,
-        method: 'GET',
-        status: 200,
-        response: {
-          "Click to set value": "Click to set value",
-          "Cancel": "Cancel",
-        }
-      }
-    ]
+    msw: {handlers: [mockFormioTranslations]},
   }}
 />
 
@@ -111,21 +91,7 @@ export const ErrorTemplate = (args) => (
   <Story
     name="Error loading assets"
     parameters={{
-      mockData: [
-        {
-          url: `${BASE_URL}i18n/formio/nl`,
-          method: 'GET',
-          status: 503,
-          response: {
-            'type': `${BASE_URL}fouten/ServiceUnavailable/`,
-            'code': 'service_unavailable',
-            'title': 'Service is not available.',
-            'status': 503,
-            'detail': 'Service is not available.',
-            'instance': 'urn:uuid:60b443e3-b847-424b-aed0-23820fc2a48d',
-          }
-        }
-      ]
+      msw: {handlers: [mockFormioTranslationsServiceUnavailable]},
     }}
   >
     {ErrorTemplate.bind({})}

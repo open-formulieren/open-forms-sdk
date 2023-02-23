@@ -2,15 +2,16 @@ import {useState} from 'react';
 import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
+import { rest } from 'msw';
 import { IntlProvider } from 'react-intl';
+import { getWorker } from 'msw-storybook-addon';
 
 import { ConfigContext } from 'Context';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { I18NContext } from 'i18n';
 
 import { LanguageSelection, LanguageSelectionDisplay } from '.';
-
-export const BASE_URL = 'http://localhost:8000/api/v2/';
+import { BASE_URL, DEFAULT_LANGUAGES, mockLanguageInfoGet, mockLanguageChoicePut, mockInvalidLanguageChoicePut } from './mocks';
 
 export const ConfigDecorator = (Story, { args }) => (
   <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
@@ -22,6 +23,8 @@ export const ConfigDecorator = (Story, { args }) => (
     </I18NContext.Provider>
   </ConfigContext.Provider>
 );
+
+export const worker = getWorker();
 
 <Meta
   title="Composites/Language Selection"
@@ -46,27 +49,9 @@ export const ConfigDecorator = (Story, { args }) => (
     },
   }}
   parameters={{
-    mockData: [
-      {
-        url: `${BASE_URL}i18n/info`,
-        method: 'GET',
-        status: 200,
-        response: {
-          languages: [
-            { code: 'nl', name: 'Nederlands' },
-            { code: 'en', name: 'English' },
-            { code: 'fy', name: 'frysk' },
-          ],
-          current: 'nl',
-        },
-      },
-      {
-        url: `${BASE_URL}i18n/language`,
-        method: 'PUT',
-        status: 204,
-        response: {},
-      },
-    ],
+    msw: {
+      handlers: [mockLanguageChoicePut],
+    }
   }}
 />
 
@@ -139,6 +124,7 @@ The functional component handles the "smart" behaviour:
 It is responsible for rendering the `LanguageSelectionDisplay` component.
 
 export const Template = (args) => {
+  worker.use(mockLanguageInfoGet(args.languages));
   return (
     <IntlProvider messages={{}} locale={'nl'} defaultLocale="nl">
       {
@@ -169,6 +155,7 @@ export const Template = (args) => {
     }}
     args={{
       baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+      languages: DEFAULT_LANGUAGES,
     }}
     argTypes={{
       baseUrl: {
@@ -207,47 +194,18 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
     decorators={[ConfigDecorator]}
     args={{
       wrapInErrorBoundary: true,
+      languages: DEFAULT_LANGUAGES,
     }}
     argTypes={{
       heading: { table: { disable: true } },
       headingLevel: { table: { disable: true } },
     }}
     parameters={{
-      mockData: [
-        {
-          url: `${BASE_URL}i18n/info`,
-          method: "GET",
-          status: 200,
-          response: {
-            languages: [
-              { code: "nl", name: "Nederlands" },
-              { code: "en", name: "English" },
-              { code: "fy", name: "frysk" },
-            ],
-            current: "nl",
-          },
-        },
-        {
-          url: `${BASE_URL}i18n/language`,
-          method: "PUT",
-          status: 400,
-          response: {
-            type: "http://localhost:8000/fouten/ValidationError/",
-            code: "invalid",
-            title: "Invalid input.",
-            status: 400,
-            detail: "",
-            instance: "urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75",
-            invalidParams: [
-              {
-                name: "code",
-                code: "invalid_choice",
-                reason: '"fy" is not a valid choice.',
-              },
-            ],
-          },
-        },
-      ],
+      msw: {
+        handlers: [
+          mockInvalidLanguageChoicePut('fy'),
+        ],
+      },
       docs: {
         source: {
           type: 'dynamic',

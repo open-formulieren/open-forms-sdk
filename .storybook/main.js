@@ -7,24 +7,20 @@ const configFactory = require('../config/webpack.config');
 const sassRegex = /\.(scss|sass)$/;
 
 module.exports = {
-  "stories": [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
+  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    'storybook-addon-themes',
+    'storybook-react-intl',
   ],
-  "addons": [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "storybook-addon-themes",
-    "storybook-addon-mock",
-    "storybook-react-intl"
-  ],
-  "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-webpack5"
+  framework: '@storybook/react',
+  core: {
+    builder: '@storybook/builder-webpack5',
   },
-  staticDirs: ['../src/img/'],
-  "webpackFinal": async (sbConfig, { configType }) => {
+  staticDirs: ['../src/img/', '../public'],
+  webpackFinal: async (sbConfig, {configType}) => {
     // configType is DEVELOPMENT or PRODUCTION
     const craConfig = configFactory(configType.toLowerCase());
 
@@ -48,23 +44,25 @@ module.exports = {
     const oneOfRule = craConfig.module.rules.find(rule => rule.oneOf != null);
     const sassRule = oneOfRule.oneOf.find(rule => String(rule.test) === String(sassRegex));
     const ejsLoader = oneOfRule.oneOf.find(rule => rule.loader === 'ejs-loader');
-    const mergedRules = [sassRule,
-    {
-      ...ejsLoader,
-      // Exclude Storybook internal .ejs templates
-      test: /formio.*\.ejs$/,
-    },
-    ...sbConfig.module.rules];
+    const mergedRules = [
+      sassRule,
+      {
+        ...ejsLoader,
+        // Exclude Storybook internal .ejs templates
+        test: /formio.*\.ejs$/,
+      },
+      ...sbConfig.module.rules,
+    ];
 
     const mergedPlugins = [...sbConfig.plugins];
-    if (configType === "PRODUCTION") {
+    if (configType === 'PRODUCTION') {
       // from ../config/webpack.config
       mergedPlugins.push(
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
           filename: '[name].css',
-        }),
+        })
       );
     }
 
@@ -84,5 +82,5 @@ module.exports = {
       plugins: mergedPlugins,
       watchOptions,
     };
-  }
-}
+  },
+};
