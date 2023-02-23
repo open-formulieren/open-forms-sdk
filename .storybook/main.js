@@ -13,7 +13,6 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     'storybook-addon-themes',
-    'storybook-addon-mock',
     'storybook-react-intl',
   ],
   framework: '@storybook/react',
