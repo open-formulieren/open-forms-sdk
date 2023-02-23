@@ -4,6 +4,7 @@ import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
 import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
+import {initialize, mswDecorator} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
 import 'scss/dte-theme.scss';
 // Include NL Design System component in Storybook only, until migration is complete
@@ -17,6 +18,8 @@ import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
 
 import {reactIntl} from './reactIntl.js';
+
+initialize();
 
 export const parameters = {
   reactIntl,
@@ -54,6 +57,8 @@ export const parameters = {
     },
   },
 };
+
+export const decorators = [mswDecorator];
 
 // Use our custom Form.io components
 Formio.use(OpenFormsModule);

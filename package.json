@@ -259,5 +259,8 @@
       "jest-watch-typeahead/testname"
     ],
     "resetMocks": true
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
