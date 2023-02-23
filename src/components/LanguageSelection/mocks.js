@@ -43,3 +43,35 @@ export const mockInvalidLanguageChoicePut = (lang = 'fy') =>
       })
     );
   });
+
+const FORMIO_TRANSLATIONS = {
+  nl: {
+    'Click to set value': 'Klik om waarde in te stellen',
+    Cancel: 'Annuleren',
+  },
+  en: {
+    'Click to set value': 'Click to set value',
+    Cancel: 'Cancel',
+  },
+};
+
+export const mockFormioTranslations = rest.get(`${BASE_URL}i18n/formio/:lang`, (req, res, ctx) => {
+  const {lang} = req.params;
+  const translations = FORMIO_TRANSLATIONS[lang];
+  return res(ctx.json(translations));
+});
+
+export const mockFormioTranslationsServiceUnavailable = rest.get(
+  `${BASE_URL}i18n/formio/:lang`,
+  (req, res, ctx) => {
+    const errBody = {
+      type: `${BASE_URL}fouten/ServiceUnavailable/`,
+      code: 'service_unavailable',
+      title: 'Service is not available.',
+      status: 503,
+      detail: 'Service is not available.',
+      instance: 'urn:uuid:60b443e3-b847-424b-aed0-23820fc2a48d',
+    };
+    return res(ctx.status(503), ctx.json(errBody));
+  }
+);
