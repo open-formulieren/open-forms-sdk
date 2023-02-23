@@ -19,7 +19,9 @@ import OFLibrary from 'formio/templates';
 
 import {reactIntl} from './reactIntl.js';
 
-initialize();
+initialize({
+  onUnhandledRequest: 'bypass',
+});
 
 export const parameters = {
   reactIntl,
