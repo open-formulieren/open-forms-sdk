@@ -18,6 +18,10 @@ export const mockLanguageInfoGet = (languages = DEFAULT_LANGUAGES) =>
     );
   });
 
+export const mockLanguageChoicePut = rest.put(`${BASE_URL}i18n/language`, (req, res, ctx) => {
+  return res(ctx.status(204));
+});
+
 export const mockInvalidLanguageChoicePut = (lang = 'fy') =>
   rest.put(`${BASE_URL}i18n/language`, (req, res, ctx) => {
     return res(

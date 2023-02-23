@@ -4,9 +4,9 @@ import {expect} from '@storybook/jest';
 import {MemoryRouter} from 'react-router-dom';
 import {ConfigContext} from 'Context';
 
-import App from './App';
+import {BASE_URL, mockLanguageInfoGet, mockLanguageChoicePut} from 'components/LanguageSelection/mocks';
 
-export const BASE_URL = 'http://localhost:8000/api/v2/';
+import App from './App';
 
 export const ConfigDecorator = (Story, {args}) => (
   <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
@@ -26,26 +26,15 @@ export const ConfigDecorator = (Story, {args}) => (
     'form.translationEnabled': true,
   }}
   parameters={{
-    mockData: [
-      {
-        url: `${BASE_URL}i18n/info`,
-        method: 'GET',
-        status: 200,
-        response: {
-          languages: [
-            {code: 'nl', name: 'Nederlands'},
-            {code: 'en', name: 'English'},
-          ],
-          current: 'nl',
-        },
-      },
-      {
-        url: `${BASE_URL}i18n/language`,
-        method: 'PUT',
-        status: 204,
-        response: {},
-      },
-    ],
+    msw: {
+      handlers: [
+        mockLanguageInfoGet([
+          {code: 'nl', name: 'Nederlands'},
+          {code: 'en', name: 'English'},
+        ]),
+        mockLanguageChoicePut,
+      ],
+    },
   }}
 />
 

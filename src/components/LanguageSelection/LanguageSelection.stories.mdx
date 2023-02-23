@@ -11,7 +11,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { I18NContext } from 'i18n';
 
 import { LanguageSelection, LanguageSelectionDisplay } from '.';
-import { BASE_URL, DEFAULT_LANGUAGES, mockLanguageInfoGet, mockInvalidLanguageChoicePut } from './mocks';
+import { BASE_URL, DEFAULT_LANGUAGES, mockLanguageInfoGet, mockLanguageChoicePut, mockInvalidLanguageChoicePut } from './mocks';
 
 export const ConfigDecorator = (Story, { args }) => (
   <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
@@ -50,11 +50,7 @@ export const worker = getWorker();
   }}
   parameters={{
     msw: {
-      handlers: [
-        rest.put(`${BASE_URL}i18n/language`, (req, res, ctx) => {
-          return res(ctx.status(204));
-        }),
-      ],
+      handlers: [mockLanguageChoicePut],
     }
   }}
 />
