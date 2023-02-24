@@ -1,24 +1,32 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {rest} from 'msw';
+import {getWorker} from 'msw-storybook-addon';
 import {useState} from 'react';
-import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
-import { within, userEvent, waitFor } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
-import { rest } from 'msw';
-import { IntlProvider } from 'react-intl';
-import { getWorker } from 'msw-storybook-addon';
+import {IntlProvider} from 'react-intl';
 
-import { ConfigContext } from 'Context';
+import {ConfigContext} from 'Context';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { I18NContext } from 'i18n';
+import {I18NContext} from 'i18n';
+import {BASE_URL} from 'story-utils/mocks';
 
-import { LanguageSelection, LanguageSelectionDisplay } from '.';
-import { BASE_URL, DEFAULT_LANGUAGES, mockLanguageInfoGet, mockLanguageChoicePut, mockInvalidLanguageChoicePut } from './mocks';
+import {LanguageSelection, LanguageSelectionDisplay} from '.';
+import {
+  DEFAULT_LANGUAGES,
+  mockInvalidLanguageChoicePut,
+  mockLanguageChoicePut,
+  mockLanguageInfoGet,
+} from './mocks';
 
-export const ConfigDecorator = (Story, { args }) => (
-  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
-    <I18NContext.Provider value={{
-      languageSelectorTarget: null,
-      onLanguageChangeDone: args.onLanguageChangeDone,
-    }}>
+export const ConfigDecorator = (Story, {args}) => (
+  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
+    <I18NContext.Provider
+      value={{
+        languageSelectorTarget: null,
+        onLanguageChangeDone: args.onLanguageChangeDone,
+      }}
+    >
       <Story />
     </I18NContext.Provider>
   </ConfigContext.Provider>
@@ -33,43 +41,42 @@ export const worker = getWorker();
     heading: {
       control: 'text',
       table: {
-        type: { summary: 'string' },
+        type: {summary: 'string'},
       },
     },
     headingLevel: {
-      control: { type: 'number', min: 1, max: 6 },
+      control: {type: 'number', min: 1, max: 6},
       table: {
-        type: { summary: 'number' },
+        type: {summary: 'number'},
       },
     },
-    onLanguageChange: { action: true },
+    onLanguageChange: {action: true},
     onLanguageChangeDone: {
       action: true,
-      table: { disable: true }
+      table: {disable: true},
     },
   }}
   parameters={{
     msw: {
       handlers: [mockLanguageChoicePut],
-    }
+    },
   }}
 />
 
 # Language selection
 
-The language selection allows end-user to switch between available languages, as supported
-by the backend.
+The language selection allows end-user to switch between available languages, as supported by the
+backend.
 
-This functionality is split in two components - one purely for display and
-styling purposes and the other one with smart behaviour to fetch the data
-from the backend.
+This functionality is split in two components - one purely for display and styling purposes and the
+other one with smart behaviour to fetch the data from the backend.
 
 ## Presentation
 
-The `LanguageSelectionDisplay` component presents the available languages and
-dispatches events when the user changes the active language.
+The `LanguageSelectionDisplay` component presents the available languages and dispatches events when
+the user changes the active language.
 
-export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
+export const DisplayTemplate = args => <LanguageSelectionDisplay {...args} />;
 
 <Canvas>
   <Story
@@ -99,7 +106,7 @@ export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
         },
       ],
     }}
-    play={async ({ args, canvasElement }) => {
+    play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
       await userEvent.click(canvas.getByText(/^fy$/i));
       await expect(args.onLanguageChange).toHaveBeenCalled();
@@ -117,25 +124,23 @@ export const DisplayTemplate = (args) => <LanguageSelectionDisplay {...args} />;
 
 The functional component handles the "smart" behaviour:
 
-* Fetch available languages from the backend
-* Read the preferred language via the backend and the HTTP `Accept-Language` header
-* Handle the user language-changed events and propagate them up the component tree
+- Fetch available languages from the backend
+- Read the preferred language via the backend and the HTTP `Accept-Language` header
+- Handle the user language-changed events and propagate them up the component tree
 
 It is responsible for rendering the `LanguageSelectionDisplay` component.
 
-export const Template = (args) => {
+export const Template = args => {
   worker.use(mockLanguageInfoGet(args.languages));
   return (
     <IntlProvider messages={{}} locale={'nl'} defaultLocale="nl">
-      {
-        args.wrapInErrorBoundary
-          ? (
-            <ErrorBoundary>
-              <LanguageSelection {...args} />
-            </ErrorBoundary>
-          )
-          : <LanguageSelection {...args} />
-      }
+      {args.wrapInErrorBoundary ? (
+        <ErrorBoundary>
+          <LanguageSelection {...args} />
+        </ErrorBoundary>
+      ) : (
+        <LanguageSelection {...args} />
+      )}
     </IntlProvider>
   );
 };
@@ -145,13 +150,13 @@ export const Template = (args) => {
     name="Functional"
     decorators={[ConfigDecorator]}
     parameters={{
-      controls: { expanded: true },
+      controls: {expanded: true},
       docs: {
         source: {
           type: 'dynamic',
           excludeDecorators: true,
-        }
-      }
+        },
+      },
     }}
     args={{
       baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
@@ -160,7 +165,7 @@ export const Template = (args) => {
     argTypes={{
       baseUrl: {
         description: '`string`, used when the mocks are disabled and passed to the config context.',
-      }
+      },
     }}
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
@@ -186,7 +191,8 @@ mock responses in the mock panel.
 
 ### Errors
 
-Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some reason the language is unavailable a `ValidationError` is returned from the API:
+Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some reason the language is
+unavailable a `ValidationError` is returned from the API:
 
 <Canvas>
   <Story
@@ -197,21 +203,19 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
       languages: DEFAULT_LANGUAGES,
     }}
     argTypes={{
-      heading: { table: { disable: true } },
-      headingLevel: { table: { disable: true } },
+      heading: {table: {disable: true}},
+      headingLevel: {table: {disable: true}},
     }}
     parameters={{
       msw: {
-        handlers: [
-          mockInvalidLanguageChoicePut('fy'),
-        ],
+        handlers: [mockInvalidLanguageChoicePut('fy')],
       },
       docs: {
         source: {
           type: 'dynamic',
           excludeDecorators: true,
-        }
-      }
+        },
+      },
     }}
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
@@ -220,5 +224,7 @@ Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some re
       await userEvent.click(frysk_button);
       await waitFor(() => expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(0)); // did not change language
     }}
-  >{Template.bind({})}</Story>
+  >
+    {Template.bind({})}
+  </Story>
 </Canvas>

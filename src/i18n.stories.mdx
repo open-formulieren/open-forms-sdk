@@ -1,12 +1,16 @@
-import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs';
-import { useIntl } from 'react-intl';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {useIntl} from 'react-intl';
 
-import { ConfigContext } from 'Context';
-import { I18NManager, setLanguage, I18NErrorBoundary } from 'i18n';
-import {BASE_URL, mockFormioTranslations, mockFormioTranslationsServiceUnavailable} from 'components/LanguageSelection/mocks';
+import {ConfigContext} from 'Context';
+import {
+  mockFormioTranslations,
+  mockFormioTranslationsServiceUnavailable,
+} from 'components/LanguageSelection/mocks';
+import {I18NErrorBoundary, I18NManager, setLanguage} from 'i18n';
+import {BASE_URL} from 'story-utils/mocks';
 
-export const ConfigDecorator = (Story, { args }) => (
-  <ConfigContext.Provider value={{ baseUrl: args.baseUrl || BASE_URL }}>
+export const ConfigDecorator = (Story, {args}) => (
+  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
     <Story />
   </ConfigContext.Provider>
 );
@@ -16,15 +20,15 @@ export const ConfigDecorator = (Story, { args }) => (
   component={I18NManager}
   decorators={[ConfigDecorator]}
   argTypes={{
-    languageSelectorTarget: { control: false },
-    children: { control: false },
+    languageSelectorTarget: {control: false},
+    children: {control: false},
   }}
   parameters={{
     docs: {
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
+      },
     },
     msw: {handlers: [mockFormioTranslations]},
   }}
@@ -32,15 +36,15 @@ export const ConfigDecorator = (Story, { args }) => (
 
 # Language manager
 
-The `I18NManager` (internationalization manager) component takes care of loading the correct
-static translations and activating the react-intl locale whenever the content language is changed
-from the default or initial value.
+The `I18NManager` (internationalization manager) component takes care of loading the correct static
+translations and activating the react-intl locale whenever the content language is changed from the
+default or initial value.
 
 Backend API endpoints respond with the `Content-Language` HTTP header. Whenever the value of this
 header is different from the currently active locale, a locale switch is detected and triggered.
 
-The `I18NManager` component ensures that the translations for literals defined in code for
-_that language_ are loaded and activated.
+The `I18NManager` component ensures that the translations for literals defined in code for _that
+language_ are loaded and activated.
 
 export const Debug = () => {
   const {locale} = useIntl();
@@ -58,28 +62,26 @@ export const Debug = () => {
   );
 };
 
-export const Template = (args) => (
+export const Template = args => (
   <I18NManager languageSelectorTarget={null}>
     <Debug />
   </I18NManager>
 );
 
 <Canvas>
-  <Story name="Default">
-    {Template.bind({})}
-  </Story>
+  <Story name="Default">{Template.bind({})}</Story>
 </Canvas>
-
 
 ## Error handling
 
-Translations for a particular language are loaded asynchronously (or planned to be), which means that
-errors can happen when the backend cannot serve the required assets.
+Translations for a particular language are loaded asynchronously (or planned to be), which means
+that errors can happen when the backend cannot serve the required assets.
 
-It is recommended to wrap the component in an error boundary **that doesn't require tranlations**, like
-`I18NErrorBoundary`. Often the error message will already be in the appropriate language from the backend.
+It is recommended to wrap the component in an error boundary **that doesn't require tranlations**,
+like `I18NErrorBoundary`. Often the error message will already be in the appropriate language from
+the backend.
 
-export const ErrorTemplate = (args) => (
+export const ErrorTemplate = args => (
   <I18NErrorBoundary>
     <I18NManager languageSelectorTarget={null}>
       <Debug />

@@ -1,10 +1,11 @@
-import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
-import {within, waitFor, waitForElementToBeRemoved} from '@storybook/testing-library';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
+import {waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-library';
 import {MemoryRouter} from 'react-router-dom';
-import {ConfigContext} from 'Context';
 
-import {BASE_URL, mockLanguageInfoGet, mockLanguageChoicePut} from 'components/LanguageSelection/mocks';
+import {ConfigContext} from 'Context';
+import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
+import {BASE_URL} from 'story-utils/mocks';
 
 import App from './App';
 
@@ -106,7 +107,7 @@ rendering:
       },
     }}
     args={{
-      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+      baseUrl: BASE_URL,
     }}
   >
     {Template.bind({})}
@@ -133,7 +134,7 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
     }}
     args={{
       'form.translationEnabled': true,
-      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+      baseUrl: BASE_URL,
     }}
     play={async ({args, canvasElement}) => {
       const langSelector = await within(canvasElement).findByText(/^nl$/i);
