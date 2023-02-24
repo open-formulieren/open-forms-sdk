@@ -51,7 +51,7 @@ import useTitle from 'hooks/useTitle';
 import Types from 'types';
 import {DEBUG} from 'utils';
 
-import hooks from '../formio/hooks';
+import hooks from '../../formio/hooks';
 
 /**
  * Debounce interval in milliseconds (1000ms equals 1s) to prevent excessive amount of logic checks.
