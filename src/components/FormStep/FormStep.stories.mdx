@@ -1,9 +1,13 @@
 import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
+import {getWorker} from 'msw-storybook-addon';
 
 import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
 import {getForm, getSubmission} from 'story-utils/mocks';
 
 import FormStep from '.';
+import {getSubmissionStepDetail, mockSubmissionStepGet, mockSubmissionLogicCheckPost} from './mocks';
+
+export const worker = getWorker();
 
 <Meta
   title="Private API/FormStep"
@@ -16,19 +20,26 @@ import FormStep from '.';
         type: 'dynamic',
         excludeDecorators: true,
       }
-    }
+    },
   }}
 />
 
-export const Template = (args) => (
-  <FormStep
-    form={getForm()}
-    submission={getSubmission()}
-    onLogicChecked={() => alert('logic checked')}
+export const Template = (args) => {
+  const submissionStepDetailBody = getSubmissionStepDetail({
+    formioConfiguration: args.formioConfiguration});
+  worker.use(
+    mockSubmissionStepGet(submissionStepDetailBody),
+    mockSubmissionLogicCheckPost(args.submission, submissionStepDetailBody),
+  );
+  return (<FormStep
+    form={args.form}
+    submission={args.submission}
+    onLogicChecked={() => console.log('logic checked')}
     onStepSubmitted={() => alert('step submitted')}
     onLogout={() => alert('logged out')}
-  />
-);
+    showDebug={args.showDebug}
+  />);
+};
 
 # FormStep component
 
@@ -45,10 +56,33 @@ the URL parameters.
   <Story
     name="Default"
     args={{
+      formioConfiguration: {
+        display: 'form',
+        components: [
+          {
+            type: 'textfield',
+            key: 'text1',
+            label: 'Simple text field',
+            description: 'A help text for the text field',
+          },
+          {
+            type: 'radio',
+            key: 'radio1',
+            label: 'Radio choices',
+            values: [
+              {value: 'option1', label: 'Option1'},
+              {value: 'option2', label: 'Option2'},
+            ]
+          }
+        ]
+      },
       routerArgs: {
         route: '/stap/:step',
         initialEntries: ['/stap/step-1'],
       },
+      form: getForm(),
+      submission: getSubmission(),
+      showDebug: false,
     }}
   >
     {Template.bind({})}

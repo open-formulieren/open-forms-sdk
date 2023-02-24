@@ -71,6 +71,8 @@ const SUBMISSION_DETAILS = {
       canSubmit: true,
     },
   ],
+  submissionAllowed: 'yes',
+  isAuthenticated: false,
 };
 
 /**
