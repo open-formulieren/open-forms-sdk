@@ -1,0 +1,72 @@
+import {Meta} from '@storybook/addon-docs';
+
+<Meta title="Developers/Documentation" />
+
+# Developer documentation
+
+This documentation is aimed at Open Formulieren-developers working on the SDK.
+
+## Story guidelines
+
+Documenting stories is primarily done in `.mdx` format so that we can mix proze
+with technical/auto-generated documentation.
+
+This allows us to document components and the parts they are made up of (e.g. a `Display`
+aspect vs. the full `Functional` component).
+
+If there are design tokens that can change the appearance of a component, document
+these on a separate page. For an example, look at the `Language Selection` component.
+
+## Mocking in Stories
+
+A number of components implement the API communication with the Open Forms backend. To
+mock these API calls, we make use of [`msw-storybook-addon`](https://github.com/mswjs/msw-storybook-addon).
+
+When documenting such components, it's recommended to organize the code per-component to keep
+implementation, stories, mocks (and tests) close together. For example, given `MyComponent`,
+you would see a folder structure like:
+
+```
+MyComponent
+├── index.js
+├── mocks.js
+├── MyComponentDisplay.js
+└── MyComponent.stories.mdx
+```
+
+### Known limitations
+
+There are some known limitations related to mocking, with possible
+workarounds documented below.
+
+**Dynamic mock data**
+
+There is no dedicated add-on panel to manage mock responses. Instead,
+you can rely on story args to dynamically change response data. To
+achieve this, you need to configure the worker as part of the story
+template, for example:
+
+```jsx
+import { getWorker } from 'msw-storybook-addon';
+
+import {myMockFactory} from './mocks';
+
+export const worker = getWorker();
+
+export const Template = (args) => {
+  worker.use(myMockFactory(args.someArg));
+  return <MyComponent />;
+}
+```
+
+**Story interaction on docs page**
+
+Putting multiple stories on the Docs page does not play well with API
+mocks, see the [upstream issue](https://github.com/mswjs/msw-storybook-addon/issues/83).
+
+Summarized - all stories share the same service worker and the last story to register
+a mock/handler basically 'wins'. This leads to inconsistent behaviour compared
+to the Canvas.
+
+There is no workaround - you should do interaction testing in the Canvas rather than
+the Docs tab.
