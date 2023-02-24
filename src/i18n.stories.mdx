@@ -1,19 +1,12 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {useIntl} from 'react-intl';
 
-import {ConfigContext} from 'Context';
 import {
   mockFormioTranslations,
   mockFormioTranslationsServiceUnavailable,
 } from 'components/LanguageSelection/mocks';
 import {I18NErrorBoundary, I18NManager, setLanguage} from 'i18n';
-import {BASE_URL} from 'story-utils/mocks';
-
-export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
-    <Story />
-  </ConfigContext.Provider>
-);
+import {ConfigDecorator} from 'story-utils/decorators';
 
 <Meta
   title="Private API/Translation manager"

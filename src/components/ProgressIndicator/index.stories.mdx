@@ -1,9 +1,11 @@
-import { Canvas, Meta, Story, Props, ArgsTable } from '@storybook/addon-docs';
-import { MemoryRouter } from 'react-router-dom';
+import {ArgsTable, Canvas, Meta, Props, Story} from '@storybook/addon-docs';
+import {MemoryRouter} from 'react-router-dom';
+
+import {SUBMISSION_ALLOWED} from 'components/constants';
+import {RouterDecorator} from 'story-utils/decorators';
 
 import ProgressIndicator from '.';
 import ProgressIndicatorDisplay from './ProgressIndicatorDisplay';
-import {SUBMISSION_ALLOWED} from 'components/constants';
 
 <Meta
   title="Composites/ProgressIndicator"
@@ -27,44 +29,41 @@ The progress indicator displays the progression through a particular form's step
 
 ## Presentation
 
-The `ProgressIndicatorDisplay` component shows the different steps in a form. The style of each
-step varies depending on whether it is applicable, it is completed or it is the currently active step.
+The `ProgressIndicatorDisplay` component shows the different steps in a form. The style of each step
+varies depending on whether it is applicable, it is completed or it is the currently active step.
 
-export const DisplayTemplate = (args) => (
-  <MemoryRouter>
-    <ProgressIndicatorDisplay {...args} />
-  </MemoryRouter>
-);
+export const DisplayTemplate = args => <ProgressIndicatorDisplay {...args} />;
 
 <Canvas>
   <Story
     name="Display"
+    decorators={[RouterDecorator]}
     args={{
-      activeStepTitle: "Stap 2",
-      formTitle: "Storybookformulier",
+      activeStepTitle: 'Stap 2',
+      formTitle: 'Storybookformulier',
       steps: [
         {
-          uuid: "111",
-          slug: "stap1",
-          formDefinition: "Stap 1",
+          uuid: '111',
+          slug: 'stap1',
+          formDefinition: 'Stap 1',
           isCompleted: true,
           isApplicable: true,
           isCurrent: false,
           canNavigateTo: true,
         },
         {
-          uuid: "222",
-          slug: "stap2",
-          formDefinition: "Stap 2",
+          uuid: '222',
+          slug: 'stap2',
+          formDefinition: 'Stap 2',
           isCompleted: false,
           isApplicable: true,
           isCurrent: true,
           canNavigateTo: true,
         },
         {
-          uuid: "333",
-          slug: "stap3",
-          formDefinition: "Stap 3",
+          uuid: '333',
+          slug: 'stap3',
+          formDefinition: 'Stap 3',
           isCompleted: false,
           isApplicable: false,
           isCurrent: false,
@@ -93,26 +92,21 @@ export const DisplayTemplate = (args) => (
 
 The `ProgressIndicator` component handles the 'smart' behaviour. It checks:
 
-* If the steps are currently active, completed, applicable or if a step can be clicked to navigate to it.
-* If the current page is the start page, the summary page or the confirmation page.
-* If all the applicable steps have been completed.
+- If the steps are currently active, completed, applicable or if a step can be clicked to navigate
+  to it.
+- If the current page is the start page, the summary page or the confirmation page.
+- If all the applicable steps have been completed.
 
 It is responsible for rendering the `ProgressIndicatorDisplay` component.
 
+The current step is detected through the URL route match, based on the `slug` of an individual step.
+The complete collection of available form steps is loaded when the form is initially loaded, and
+passed as prop through the component.
 
-The current step is detected through the URL route match, based on the `slug` of an individual
-step. The complete collection of available form steps is loaded when the form is initially loaded,
-and passed as prop through the component.
+Note that a particular step may become not-applicable while filling out the form because of certain
+logic rules. The details of each step's status are available in `submission.steps[@index]`.
 
-Note that a particular step may become not-applicable while filling out the form because of
-certain logic rules. The details of each step's status are available in `submission.steps[@index]`.
-
-export const Template = ({
-  steps,
-  completedSteps,
-  applicableSteps,
-  ...args
-}) => {
+export const Template = ({steps, completedSteps, applicableSteps, ...args}) => {
   const submission = {
     id: 'ddfede40-99af-424c-97d1-d2c64e744a09',
     url: 'https://backend/api/v1/submissions/ddfede40-99af-424c-97d1-d2c64e744a09',
@@ -156,14 +150,14 @@ export const Template = ({
           uuid: 'd6cab0dd',
           index: 0,
           slug: 'first-step',
-          formDefinition: 'Stap 1'
+          formDefinition: 'Stap 1',
         },
         {
           url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
           uuid: '8e62d7cf',
           index: 1,
           slug: 'second-step',
-          formDefinition: 'Stap 2'
+          formDefinition: 'Stap 2',
         },
       ],
       completedSteps: [0],
@@ -175,7 +169,7 @@ export const Template = ({
       completed: false,
     }}
     argTypes={{
-      submissionAllowed: { table: { disable: true }},
+      submissionAllowed: {table: {disable: true}},
     }}
   >
     {Template.bind({})}
@@ -197,14 +191,14 @@ On initial load, no submission is available yet.
           uuid: 'd6cab0dd',
           index: 0,
           slug: 'first-step',
-          formDefinition: 'Stap 1'
+          formDefinition: 'Stap 1',
         },
         {
           url: 'https://backend/api/v1/form/9d49e773/steps/8e62d7cf',
           uuid: '8e62d7cf',
           index: 1,
           slug: 'second-step',
-          formDefinition: 'Stap 2'
+          formDefinition: 'Stap 2',
         },
       ],
       completedSteps: [],
@@ -217,10 +211,10 @@ On initial load, no submission is available yet.
       submission: null,
     }}
     argTypes={{
-      'submission.submissionAllowed': { table: { disable: true}},
-      completedSteps: { table: { disable: true}},
-      applicableSteps: { table: { disable: true}},
-      completed: { table: { disable: true}},
+      'submission.submissionAllowed': {table: {disable: true}},
+      completedSteps: {table: {disable: true}},
+      applicableSteps: {table: {disable: true}},
+      completed: {table: {disable: true}},
     }}
   >
     {Template.bind({})}
@@ -230,4 +224,3 @@ On initial load, no submission is available yet.
 ## Props
 
 <Props of={ProgressIndicator} />
-

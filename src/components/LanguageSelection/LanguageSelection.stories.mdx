@@ -10,6 +10,7 @@ import {ConfigContext} from 'Context';
 import ErrorBoundary from 'components/ErrorBoundary';
 import {I18NContext} from 'i18n';
 import {BASE_URL} from 'story-utils/mocks';
+import {ConfigDecorator} from 'story-utils/decorators';
 
 import {LanguageSelection, LanguageSelectionDisplay} from '.';
 import {
@@ -19,17 +20,15 @@ import {
   mockLanguageInfoGet,
 } from './mocks';
 
-export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
-    <I18NContext.Provider
-      value={{
-        languageSelectorTarget: null,
-        onLanguageChangeDone: args.onLanguageChangeDone,
-      }}
-    >
-      <Story />
-    </I18NContext.Provider>
-  </ConfigContext.Provider>
+export const I18NDecorator = (Story, {args}) => (
+  <I18NContext.Provider
+    value={{
+      languageSelectorTarget: null,
+      onLanguageChangeDone: args.onLanguageChangeDone,
+    }}
+  >
+    <Story />
+  </I18NContext.Provider>
 );
 
 export const worker = getWorker();
@@ -37,6 +36,7 @@ export const worker = getWorker();
 <Meta
   title="Composites/Language Selection"
   component={LanguageSelection}
+  decorators={[I18NDecorator, ConfigDecorator]}
   argTypes={{
     heading: {
       control: 'text',
@@ -148,7 +148,6 @@ export const Template = args => {
 <Canvas>
   <Story
     name="Functional"
-    decorators={[ConfigDecorator]}
     parameters={{
       controls: {expanded: true},
       docs: {
@@ -159,7 +158,7 @@ export const Template = args => {
       },
     }}
     args={{
-      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+      baseUrl: BASE_URL,
       languages: DEFAULT_LANGUAGES,
     }}
     argTypes={{
@@ -197,7 +196,6 @@ unavailable a `ValidationError` is returned from the API:
 <Canvas>
   <Story
     name="Unavailable language"
-    decorators={[ConfigDecorator]}
     args={{
       wrapInErrorBoundary: true,
       languages: DEFAULT_LANGUAGES,

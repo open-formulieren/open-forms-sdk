@@ -1,23 +1,18 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
 import {waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-library';
-import {MemoryRouter} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
+import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
 import {BASE_URL} from 'story-utils/mocks';
 
 import App from './App';
 
-export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
-    <Story />
-  </ConfigContext.Provider>
-);
-
 <Meta
   title="Private API/App"
   component={App}
+  decorators={[ConfigDecorator, RouterDecorator]}
   argTypes={{
     form: {
       control: false,
@@ -78,11 +73,7 @@ export const Template = args => {
     submissionAllowed: 'yes',
     requiredFieldsWithAsterisk: true,
   };
-  return (
-    <MemoryRouter>
-      <App form={form} noDebug />
-    </MemoryRouter>
-  );
+  return <App form={form} noDebug />;
 };
 
 # The App
@@ -97,7 +88,6 @@ rendering:
 <Canvas>
   <Story
     name="Default"
-    decorators={[ConfigDecorator]}
     parameters={{
       docs: {
         source: {
@@ -123,7 +113,6 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
 <Canvas>
   <Story
     name="Translation Enabled"
-    decorators={[ConfigDecorator]}
     parameters={{
       docs: {
         source: {
