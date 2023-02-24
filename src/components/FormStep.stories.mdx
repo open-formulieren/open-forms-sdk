@@ -1,15 +1,14 @@
 import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
 
-import {ConfigDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
+import {getForm, getSubmission} from 'story-utils/mocks';
 
 import FormStep from './FormStep';
-
-export const
 
 <Meta
   title="Private API/FormStep"
   component={FormStep}
-  decorators={[ConfigDecorator]}
+  decorators={[ConfigDecorator, RouterDecorator]}
   argTypes={{}}
   parameters={{
     docs: {
@@ -20,6 +19,16 @@ export const
     }
   }}
 />
+
+export const Template = (args) => (
+  <FormStep
+    form={getForm()}
+    submission={getSubmission()}
+    onLogicChecked={() => alert('logic checked')}
+    onStepSubmitted={() => alert('step submitted')}
+    onLogout={() => alert('logged out')}
+  />
+);
 
 # FormStep component
 
@@ -32,21 +41,19 @@ down to the Formio form renderer.
 The component depends on a React Router parent, as the requested form step is taken from
 the URL parameters.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      routerArgs: {
+        route: '/stap/:step',
+        initialEntries: ['/stap/step-1'],
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
 
 ## Props
 
