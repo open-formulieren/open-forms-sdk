@@ -1,6 +1,6 @@
 import {rest} from 'msw';
 
-export const BASE_URL = 'http://localhost:8000/api/v2/';
+import {BASE_URL} from 'story-utils/mocks';
 
 export const DEFAULT_LANGUAGES = [
   {code: 'nl', name: 'Nederlands'},

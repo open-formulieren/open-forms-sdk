@@ -24,7 +24,7 @@ const Form = PropTypes.shape({
   url: PropTypes.string.isRequired,
   maintenanceMode: PropTypes.bool.isRequired,
   showProgressIndicator: PropTypes.bool.isRequired,
-  submissionAllowed: PropTypes.string.isRequired,
+  submissionAllowed: PropTypes.oneOf(['yes', 'no_with_overview', 'no_without_overview']).isRequired,
   literals: PropTypes.shape({
     beginText: ButtonTextLiteral.isRequired,
     changeText: ButtonTextLiteral.isRequired,

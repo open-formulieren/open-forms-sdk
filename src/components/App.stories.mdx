@@ -1,22 +1,18 @@
-import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
-import {within, waitFor, waitForElementToBeRemoved} from '@storybook/testing-library';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
-import {MemoryRouter} from 'react-router-dom';
-import {ConfigContext} from 'Context';
+import {waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-library';
 
-import {BASE_URL, mockLanguageInfoGet, mockLanguageChoicePut} from 'components/LanguageSelection/mocks';
+import {ConfigContext} from 'Context';
+import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
+import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
+import {BASE_URL} from 'story-utils/mocks';
 
 import App from './App';
-
-export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
-    <Story />
-  </ConfigContext.Provider>
-);
 
 <Meta
   title="Private API/App"
   component={App}
+  decorators={[ConfigDecorator, RouterDecorator]}
   argTypes={{
     form: {
       control: false,
@@ -77,11 +73,7 @@ export const Template = args => {
     submissionAllowed: 'yes',
     requiredFieldsWithAsterisk: true,
   };
-  return (
-    <MemoryRouter>
-      <App form={form} noDebug />
-    </MemoryRouter>
-  );
+  return <App form={form} noDebug />;
 };
 
 # The App
@@ -96,7 +88,6 @@ rendering:
 <Canvas>
   <Story
     name="Default"
-    decorators={[ConfigDecorator]}
     parameters={{
       docs: {
         source: {
@@ -104,9 +95,6 @@ rendering:
           excludeDecorators: true,
         },
       },
-    }}
-    args={{
-      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
     }}
   >
     {Template.bind({})}
@@ -122,7 +110,6 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
 <Canvas>
   <Story
     name="Translation Enabled"
-    decorators={[ConfigDecorator]}
     parameters={{
       docs: {
         source: {
@@ -132,8 +119,7 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
       },
     }}
     args={{
-      'form.translationEnabled': true,
-      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
+      'form.translationEnabled': true
     }}
     play={async ({args, canvasElement}) => {
       const langSelector = await within(canvasElement).findByText(/^nl$/i);

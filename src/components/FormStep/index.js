@@ -51,7 +51,7 @@ import useTitle from 'hooks/useTitle';
 import Types from 'types';
 import {DEBUG} from 'utils';
 
-import hooks from '../formio/hooks';
+import hooks from '../../formio/hooks';
 
 /**
  * Debounce interval in milliseconds (1000ms equals 1s) to prevent excessive amount of logic checks.
@@ -285,7 +285,14 @@ const reducer = (draft, action) => {
  * @throws {Error} Throws errors from state so the error boundaries can pick them up.
  * @return {React.ReactNode}
  */
-const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout}) => {
+const FormStep = ({
+  form,
+  submission,
+  onLogicChecked,
+  onStepSubmitted,
+  onLogout,
+  showDebug = DEBUG,
+}) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
@@ -804,7 +811,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onLogout})
                 },
               }}
             />
-            {DEBUG ? <FormStepDebug data={getCurrentFormData()} /> : null}
+            {showDebug ? <FormStepDebug data={getCurrentFormData()} /> : null}
             <ButtonsToolbar
               literals={formStep.literals}
               canSubmitStep={canSubmit}
@@ -837,6 +844,7 @@ FormStep.propTypes = {
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+  showDebug: PropTypes.bool,
 };
 
 export default FormStep;

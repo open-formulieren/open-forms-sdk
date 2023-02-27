@@ -1,0 +1,109 @@
+import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
+import {getWorker} from 'msw-storybook-addon';
+import produce from 'immer';
+import {v4 as uuid4 } from 'uuid';
+
+import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
+import {getForm, getSubmission} from 'story-utils/mocks';
+
+import FormStep from '.';
+import {getSubmissionStepDetail, mockSubmissionStepGet, mockSubmissionLogicCheckPost} from './mocks';
+
+export const worker = getWorker();
+
+<Meta
+  title="Private API/FormStep"
+  component={FormStep}
+  decorators={[ConfigDecorator, RouterDecorator]}
+  argTypes={{
+    submission: {control: false},
+    form: {control: false},
+    routerArgs: {table: {disable: true}},
+  }}
+  parameters={{
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      }
+    },
+  }}
+/>
+
+export const Template = (args) => {
+  // force mutation/re-render by using different step URLs every time
+  const submission = produce(args.submission, draftSubmission => {
+    for (const step of draftSubmission.steps) {
+      step.url = `${draftSubmission.url}/steps/${uuid4()}`;
+    }
+  });
+  const submissionStepDetailBody = getSubmissionStepDetail({
+    formioConfiguration: args.formioConfiguration});
+  worker.resetHandlers();
+  worker.use(
+    mockSubmissionStepGet(submissionStepDetailBody),
+    mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
+  );
+  return (
+    <FormStep
+      form={args.form}
+      submission={submission}
+      onLogicChecked={() => {}}
+      onStepSubmitted={() => alert('step submitted')}
+      onLogout={() => alert('logged out')}
+      showDebug={args.showDebug}
+    />
+  );
+};
+
+# FormStep component
+
+The `FormStep` component is the heart of the application.
+
+It fetches the (dynamic) configuration from the backend, reconciles it with the submission
+data and ensures that the form fields are rendered by passing the configuration and data
+down to the Formio form renderer.
+
+The component depends on a React Router parent, as the requested form step is taken from
+the URL parameters.
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      formioConfiguration: {
+        display: 'form',
+        components: [
+          {
+            type: 'textfield',
+            key: 'text1',
+            label: 'Simple text field',
+            description: 'A help text for the text field',
+          },
+          {
+            type: 'radio',
+            key: 'radio1',
+            label: 'Radio choices',
+            values: [
+              {value: 'option1', label: 'Option1'},
+              {value: 'option2', label: 'Option2'},
+            ]
+          }
+        ]
+      },
+      routerArgs: {
+        route: '/stap/:step',
+        initialEntries: ['/stap/step-1'],
+      },
+      form: getForm(),
+      submission: getSubmission(),
+      showDebug: false,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={FormStep} />
