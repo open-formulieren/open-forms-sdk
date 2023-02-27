@@ -44,6 +44,11 @@ const ProgressIndicator = ({
   const applicableCompleted =
     hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
+  // If any step cannot be submitted, there should NOT be an active link to the overview page.
+  const canSubmitSteps = hasSubmission
+    ? submission.steps.filter(step => !step.canSubmit).length === 0
+    : false;
+
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
   if (isStartPage) {
@@ -103,7 +108,7 @@ const ProgressIndicator = ({
       isSummary={summaryMatch}
       isConfirmation={confirmationMatch}
       isSubmissionComplete={completed}
-      areApplicableStepsCompleted={applicableCompleted}
+      areApplicableStepsCompleted={applicableCompleted && canSubmitSteps}
       showOverview={showOverview}
       showConfirmation={showConfirmation}
       expanded={expanded}
