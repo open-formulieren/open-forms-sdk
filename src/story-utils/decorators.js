@@ -4,7 +4,7 @@ import {ConfigContext} from 'Context';
 import {BASE_URL} from 'story-utils/mocks';
 
 export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
+  <ConfigContext.Provider value={{baseUrl: BASE_URL}}>
     <Story />
   </ConfigContext.Provider>
 );

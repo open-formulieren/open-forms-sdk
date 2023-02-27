@@ -96,9 +96,6 @@ rendering:
         },
       },
     }}
-    args={{
-      baseUrl: BASE_URL,
-    }}
   >
     {Template.bind({})}
   </Story>
@@ -122,8 +119,7 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
       },
     }}
     args={{
-      'form.translationEnabled': true,
-      baseUrl: BASE_URL,
+      'form.translationEnabled': true
     }}
     play={async ({args, canvasElement}) => {
       const langSelector = await within(canvasElement).findByText(/^nl$/i);
