@@ -1,5 +1,7 @@
 import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
 import {getWorker} from 'msw-storybook-addon';
+import produce from 'immer';
+import {v4 as uuid4 } from 'uuid';
 
 import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
 import {getForm, getSubmission} from 'story-utils/mocks';
@@ -13,7 +15,11 @@ export const worker = getWorker();
   title="Private API/FormStep"
   component={FormStep}
   decorators={[ConfigDecorator, RouterDecorator]}
-  argTypes={{}}
+  argTypes={{
+    submission: {control: false},
+    form: {control: false},
+    routerArgs: {table: {disable: true}},
+  }}
   parameters={{
     docs: {
       source: {
@@ -25,20 +31,29 @@ export const worker = getWorker();
 />
 
 export const Template = (args) => {
+  // force mutation/re-render by using different step URLs every time
+  const submission = produce(args.submission, draftSubmission => {
+    for (const step of draftSubmission.steps) {
+      step.url = `${draftSubmission.url}/steps/${uuid4()}`;
+    }
+  });
   const submissionStepDetailBody = getSubmissionStepDetail({
     formioConfiguration: args.formioConfiguration});
+  worker.resetHandlers();
   worker.use(
     mockSubmissionStepGet(submissionStepDetailBody),
-    mockSubmissionLogicCheckPost(args.submission, submissionStepDetailBody),
+    mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
   );
-  return (<FormStep
-    form={args.form}
-    submission={args.submission}
-    onLogicChecked={() => console.log('logic checked')}
-    onStepSubmitted={() => alert('step submitted')}
-    onLogout={() => alert('logged out')}
-    showDebug={args.showDebug}
-  />);
+  return (
+    <FormStep
+      form={args.form}
+      submission={submission}
+      onLogicChecked={() => {}}
+      onStepSubmitted={() => alert('step submitted')}
+      onLogout={() => alert('logged out')}
+      showDebug={args.showDebug}
+    />
+  );
 };
 
 # FormStep component
