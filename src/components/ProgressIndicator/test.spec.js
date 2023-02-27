@@ -329,3 +329,50 @@ it('Progress indicator DOES let you navigate between steps if you are NOT a form
   expect(link).not.toBeUndefined();
   expect(link.textContent).toContain('Step 3');
 });
+
+it('Progress indicator does NOT let you navigate to the overview if a step is blocked', () => {
+  const steps = [
+    {
+      slug: 'step-1',
+      formDefinition: 'Step 1',
+      index: 0,
+      isApplicable: true,
+      url: 'http://test.nl/api/v1/forms/111/steps/111',
+      uuid: '111',
+      completed: true,
+      canSubmit: false,
+    },
+  ];
+
+  IsFormDesigner.getValue.mockReturnValue(false);
+
+  act(() => {
+    render(
+      <MemoryRouter initialEntries={['/stap/step-1']}>
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <ProgressIndicator
+            title="Test Name"
+            steps={steps}
+            submission={{
+              ...submissionDefaults,
+              submissionAllowed: SUBMISSION_ALLOWED.yes,
+              steps: steps,
+            }}
+            submissionAllowed={SUBMISSION_ALLOWED.yes}
+          />
+        </IntlProvider>
+      </MemoryRouter>,
+      container
+    );
+  });
+
+  const overview = container.getElementsByTagName('li')[2];
+
+  const overviewLink = overview.getElementsByTagName('a')[0];
+  const overviewSpan = overview.getElementsByTagName('span')[0];
+
+  // Check that the overview is not a link since a step cannot be submitted
+  expect(overviewLink).toBeUndefined();
+  expect(overviewSpan).not.toBeUndefined();
+  expect(overviewSpan.textContent).toContain('Overzicht');
+});
