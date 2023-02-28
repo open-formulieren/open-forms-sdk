@@ -5,28 +5,12 @@ import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 
+import {getForm} from 'api-mocks';
 import {LiteralsProvider} from 'components/Literal';
 
 import LoginOptions from './index';
 
 let container = null;
-
-const FORM_DEFAULTS = {
-  uuid: 'b75c7b87-6916-4968-b2ae-c37fff174a04',
-  name: 'dummy',
-  slug: 'dummy',
-  url: 'https://example.com/dummy',
-  maintenanceMode: false,
-  showProgressIndicator: false,
-  submissionAllowed: 'yes',
-  literals: {
-    beginText: {resolved: '', value: ''},
-    changeText: {resolved: '', value: ''},
-    confirmText: {resolved: '', value: ''},
-    previousText: {resolved: '', value: ''},
-  },
-  steps: [],
-};
 
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -42,12 +26,8 @@ afterEach(() => {
 });
 
 it('Login not required, options wrapped in form tag', () => {
-  const form = {
-    ...FORM_DEFAULTS,
-    loginRequired: false,
-    loginOptions: [],
-  };
-  const onFormStart = jest.fn();
+  const form = getForm({loginRequired: false, loginOptions: []});
+  const onFormStart = jest.fn(e => e.preventDefault());
 
   act(() => {
     render(
@@ -68,8 +48,7 @@ it('Login not required, options wrapped in form tag', () => {
 });
 
 it('Login required, options not wrapped in form tag', () => {
-  const form = {
-    ...FORM_DEFAULTS,
+  const form = getForm({
     loginRequired: true,
     loginOptions: [
       {
@@ -80,13 +59,13 @@ it('Login required, options not wrapped in form tag', () => {
           title: 'DigiD simulatie',
           imageSrc: '/digid.png',
           href: 'https://www.digid.nl/',
+          appearance: 'light',
         },
         isForGemachtigde: false,
       },
     ],
-  };
-
-  const onFormStart = jest.fn();
+  });
+  const onFormStart = jest.fn(e => e.preventDefault());
 
   const {location} = window;
   delete window.location;
@@ -117,8 +96,7 @@ it('Login required, options not wrapped in form tag', () => {
 });
 
 it('Login button has the right URL after cancelling log in', () => {
-  const form = {
-    ...FORM_DEFAULTS,
+  const form = getForm({
     loginRequired: true,
     loginOptions: [
       {
@@ -129,13 +107,14 @@ it('Login button has the right URL after cancelling log in', () => {
           title: 'DigiD simulatie',
           imageSrc: '/digid.png',
           href: 'https://www.digid.nl/',
+          appearance: 'light',
         },
         isForGemachtigde: false,
       },
     ],
-  };
+  });
 
-  const onFormStart = jest.fn();
+  const onFormStart = jest.fn(e => e.preventDefault());
 
   const {location} = window;
   delete window.location;
