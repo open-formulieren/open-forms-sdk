@@ -1,86 +1,43 @@
-import {act} from '@testing-library/react';
+import {act, waitForElementToBeRemoved, within} from '@testing-library/react';
+
+import {BASE_URL, getForm, mockFormGet} from 'api-mocks';
+import mswServer from 'api-mocks/msw-server';
+import {mockFormioTranslations, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 
 import {OpenForm} from './sdk.js';
-
-// TODO: look into msw for API mocking instead
-// see https://testing-library.com/docs/react-testing-library/example-intro
-const apiModule = require('api');
-jest.mock('api');
 
 // scrollIntoView is not not supported in Jest
 let scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
-const FORM = {
-  uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
-  url: 'http://localhost:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa',
-  name: 'MOCKED',
-  active: true,
-  loginRequired: false,
-  loginOptions: [],
-  product: '',
-  slug: 'jest',
-  maintenanceMode: false,
-  showProgressIndicator: true,
-  submissionAllowed: 'yes',
-  literals: {
-    beginText: {resolved: 'begin', value: ''},
-    changeText: {resolved: 'change', value: ''},
-    confirmText: {resolved: 'confirm', value: ''},
-    previousText: {resolved: 'previous', value: ''},
-  },
-  steps: [],
-  explanationTemplate: '',
-  requiredFieldsWithAsterisk: true,
-  autoLoginAuthenticationBackend: '',
-  translationEnabled: true,
-};
+const LANGUAGES = [
+  {code: 'nl', name: 'Nederlands'},
+  {code: 'en', name: 'English'},
+];
 
-const LANGUAGE_INFO = {
-  languages: [
-    {code: 'nl', name: 'Nederlands'},
-    {code: 'en', name: 'English'},
-  ],
-  current: 'nl',
-};
-
-const mockAPICalls = url => {
-  switch (url) {
-    case 'http://localhost:8000/api/v2/forms/81a22589-abce-4147-a2a3-62e9a56685aa': {
-      return FORM;
-    }
-    case 'http://localhost:8000/api/v2/i18n/formio/nl': {
-      return {};
-    }
-    case 'http://localhost:8000/api/v2/i18n/info': {
-      return LANGUAGE_INFO;
-    }
-    default:
-      throw new Error(`Unknown url: ${url}`);
-  }
-};
+const apiMocks = [
+  mockFormGet(getForm({translationEnabled: true})),
+  mockLanguageInfoGet(LANGUAGES),
+  mockFormioTranslations,
+];
 
 describe('OpenForm', () => {
   it('should accept a DOM node as languageSelectorTarget', async () => {
+    mswServer.use(...apiMocks);
     const formRoot = document.createElement('div');
     const target = document.createElement('div');
-
-    apiModule.get.mockImplementation(mockAPICalls);
-
     const form = new OpenForm(formRoot, {
-      baseUrl: 'http://localhost:8000/api/v2/',
+      baseUrl: BASE_URL,
       basePath: '',
       formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
       languageSelectorTarget: target,
       lang: 'nl',
     });
 
-    try {
-      await act(async () => await form.init());
-    } catch (e) {
-      throw e; // should not error
-    }
+    await act(async () => await form.init());
 
+    // wait for the loader to be removed when all network requests have completed
+    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
     expect(target).not.toBeEmptyDOMElement();
   });
 
@@ -91,70 +48,69 @@ describe('OpenForm', () => {
     `;
     const formRoot = document.getElementById('root');
     const target = document.getElementById('my-languages-element');
-
-    apiModule.get.mockImplementation(mockAPICalls);
-
+    mswServer.use(...apiMocks);
     const form = new OpenForm(formRoot, {
-      baseUrl: 'http://localhost:8000/api/v2/',
+      baseUrl: BASE_URL,
       basePath: '',
       formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
       languageSelectorTarget: '#my-languages-element',
       lang: 'nl',
     });
 
-    try {
-      await act(async () => await form.init());
-    } catch (e) {
-      throw e; // should not error
-    }
+    await act(async () => await form.init());
 
+    // wait for the loader to be removed when all network requests have completed
+    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
     expect(target).not.toBeEmptyDOMElement();
   });
 
   it('should render the form on init', async () => {
     const formRoot = document.createElement('div');
-
-    apiModule.get.mockImplementation(mockAPICalls);
-
+    mswServer.use(...apiMocks);
     const form = new OpenForm(formRoot, {
-      baseUrl: 'http://localhost:8000/api/v2/',
+      baseUrl: BASE_URL,
       basePath: '',
       formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
       lang: 'nl',
     });
 
-    try {
-      await act(async () => await form.init());
-    } catch (e) {
-      throw e; // should not error
-    }
+    await act(async () => await form.init());
 
+    // wait for the loader to be removed when all network requests have completed
+    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
     expect(formRoot.textContent).not.toContain('Loading');
   });
 
   it('should re-fetch the form to get new literals after language change', async () => {
     const formRoot = document.createElement('div');
-
-    apiModule.get.mockImplementation(mockAPICalls);
+    // first we load NL variant, second time we load the form in NL
+    const formNL = getForm({translationEnabled: true, name: 'Nederlandse versie'});
+    const formEN = getForm({translationEnabled: true, name: 'English version'});
+    mswServer.use(
+      mockFormGet(formNL, true),
+      mockFormGet(formEN, true),
+      mockLanguageInfoGet(LANGUAGES),
+      mockFormioTranslations
+    );
 
     const form = new OpenForm(formRoot, {
-      baseUrl: 'http://localhost:8000/api/v2/',
+      baseUrl: BASE_URL,
       basePath: '',
       formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
       lang: 'nl',
     });
 
-    try {
-      await act(async () => {
-        await form.init();
-        await form.onLanguageChangeDone('en');
-      });
-    } catch (e) {
-      throw e; // should not error
-    }
+    await act(async () => {
+      await form.init();
+      await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    });
 
-    const is_get_form_call = args => args.length == 1 && args[0] == FORM.url;
-    const get_form_calls = apiModule.get.mock.calls.filter(is_get_form_call);
-    expect(get_form_calls.length).toBe(2);
+    expect(within(formRoot).getAllByText('Nederlandse versie').length).toBeGreaterThan(0);
+
+    await act(async () => {
+      await form.onLanguageChangeDone('en');
+    });
+
+    expect(within(formRoot).getAllByText('English version').length).toBeGreaterThan(0);
   });
 });
