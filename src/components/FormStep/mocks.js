@@ -1,6 +1,6 @@
 import {rest} from 'msw';
 
-import {BASE_URL} from 'story-utils/mocks';
+import {BASE_URL} from 'api-mocks';
 
 const DEFAULT_FORMIO_CONFIGURATION = {
   display: 'form',

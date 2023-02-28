@@ -1,6 +1,6 @@
 import {rest} from 'msw';
 
-import {BASE_URL} from 'story-utils/mocks';
+import {BASE_URL} from 'api-mocks';
 
 export const DEFAULT_LANGUAGES = [
   {code: 'nl', name: 'Nederlands'},
@@ -8,12 +8,12 @@ export const DEFAULT_LANGUAGES = [
   {code: 'fy', name: 'frysk'},
 ];
 
-export const mockLanguageInfoGet = (languages = DEFAULT_LANGUAGES) =>
+export const mockLanguageInfoGet = (languages = DEFAULT_LANGUAGES, current = 'nl') =>
   rest.get(`${BASE_URL}i18n/info`, (req, res, ctx) => {
     return res(
       ctx.json({
         languages: languages,
-        current: 'nl',
+        current: current,
       })
     );
   });

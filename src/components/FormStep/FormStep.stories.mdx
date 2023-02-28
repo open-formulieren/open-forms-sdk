@@ -1,13 +1,17 @@
-import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
-import {getWorker} from 'msw-storybook-addon';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import produce from 'immer';
-import {v4 as uuid4 } from 'uuid';
+import {getWorker} from 'msw-storybook-addon';
+import {v4 as uuid4} from 'uuid';
 
+import {getForm, getSubmission} from 'api-mocks';
 import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
-import {getForm, getSubmission} from 'story-utils/mocks';
 
 import FormStep from '.';
-import {getSubmissionStepDetail, mockSubmissionStepGet, mockSubmissionLogicCheckPost} from './mocks';
+import {
+  getSubmissionStepDetail,
+  mockSubmissionLogicCheckPost,
+  mockSubmissionStepGet,
+} from './mocks';
 
 export const worker = getWorker();
 
@@ -25,12 +29,12 @@ export const worker = getWorker();
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
+      },
     },
   }}
 />
 
-export const Template = (args) => {
+export const Template = args => {
   // force mutation/re-render by using different step URLs every time
   const submission = produce(args.submission, draftSubmission => {
     for (const step of draftSubmission.steps) {
@@ -38,11 +42,12 @@ export const Template = (args) => {
     }
   });
   const submissionStepDetailBody = getSubmissionStepDetail({
-    formioConfiguration: args.formioConfiguration});
+    formioConfiguration: args.formioConfiguration,
+  });
   worker.resetHandlers();
   worker.use(
     mockSubmissionStepGet(submissionStepDetailBody),
-    mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
+    mockSubmissionLogicCheckPost(submission, submissionStepDetailBody)
   );
   return (
     <FormStep
@@ -60,12 +65,12 @@ export const Template = (args) => {
 
 The `FormStep` component is the heart of the application.
 
-It fetches the (dynamic) configuration from the backend, reconciles it with the submission
-data and ensures that the form fields are rendered by passing the configuration and data
-down to the Formio form renderer.
+It fetches the (dynamic) configuration from the backend, reconciles it with the submission data and
+ensures that the form fields are rendered by passing the configuration and data down to the Formio
+form renderer.
 
-The component depends on a React Router parent, as the requested form step is taken from
-the URL parameters.
+The component depends on a React Router parent, as the requested form step is taken from the URL
+parameters.
 
 <Canvas>
   <Story
@@ -87,9 +92,9 @@ the URL parameters.
             values: [
               {value: 'option1', label: 'Option1'},
               {value: 'option2', label: 'Option2'},
-            ]
-          }
-        ]
+            ],
+          },
+        ],
       },
       routerArgs: {
         route: '/stap/:step',
