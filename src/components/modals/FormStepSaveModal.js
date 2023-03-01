@@ -131,7 +131,7 @@ const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, s
         <Body modifiers={['big']}>
           <FormattedMessage
             description="Form save modal body text"
-            defaultMessage="Enter your email address to get an email to resume the form at a later date"
+            defaultMessage="Enter your email address to get an email to resume the form at a later date This can be done on any device where you open the link."
           />
         </Body>
 

@@ -75,7 +75,7 @@
     "originalDefault": "Login with {provider}"
   },
   "Cd5WGC": {
-    "defaultMessage": "U ontvangt een e-mail met een unieke link om op een later moment verder te gaan met invullen. Dit kan vanaf elk toestel waar u de link opent.",
+    "defaultMessage": "Vul hieronder uw e-mailadres in. U krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar u de link opent.",
     "description": "Form save modal body text",
     "originalDefault": "Enter your email address to get an email to resume the form at a later date"
   },
@@ -120,7 +120,7 @@
     "originalDefault": "Cancel appointment"
   },
   "HhcSoc": {
-    "defaultMessage": "Formulier bewaren en later hervatten",
+    "defaultMessage": "Opslaan en later verdergaan",
     "description": "Form save modal title",
     "originalDefault": "Save and resume later"
   },
@@ -175,7 +175,7 @@
     "originalDefault": "Extend"
   },
   "R5NUuU": {
-    "defaultMessage": "Bevestigen",
+    "defaultMessage": "Later verdergaan",
     "description": "Form save modal submit button",
     "originalDefault": "Confirm"
   },
