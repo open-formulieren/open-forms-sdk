@@ -1,7 +1,7 @@
 import {MemoryRouter, Route, Switch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
-import {BASE_URL} from 'story-utils/mocks';
+import {BASE_URL} from 'api-mocks';
 
 export const ConfigDecorator = (Story, {args}) => (
   <ConfigContext.Provider value={{baseUrl: BASE_URL}}>

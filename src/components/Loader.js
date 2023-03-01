@@ -6,7 +6,7 @@ import {getBEMClassName} from 'utils';
 const Loader = ({modifiers = []}) => {
   const className = getBEMClassName('loading', modifiers);
   return (
-    <div className={className}>
+    <div className={className} role="status">
       <span className={getBEMClassName('loading__spinner')} />
     </div>
   );

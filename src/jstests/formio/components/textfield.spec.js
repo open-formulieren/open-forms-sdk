@@ -1,13 +1,12 @@
 import _ from 'lodash';
-import React from 'react';
 import {Formio} from 'react-formio';
 
+import {BASE_URL} from 'api-mocks';
+import mswServer from 'api-mocks/msw-server';
 import OpenFormsModule from 'formio/module';
 
 import {addressPrefillForm} from './fixtures/textfield';
-
-const apiModule = require('../../../api');
-jest.mock('../../../api');
+import {mockLocationGet} from './textfield.mocks';
 
 // Use our custom components
 Formio.use(OpenFormsModule);
@@ -15,11 +14,11 @@ Formio.use(OpenFormsModule);
 describe('TextField Component', () => {
   test('Address prefill city', done => {
     let formJSON = _.cloneDeep(addressPrefillForm);
-    apiModule.get.mockResolvedValue({city: 'Amsterdam', streetName: 'Beautiful Street'});
+    mswServer.use(mockLocationGet({city: 'Amsterdam', streetName: 'Beautiful Street'}));
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
+    Formio.createForm(element, formJSON, {baseUrl: BASE_URL})
       .then(form => {
         form.setPristine(false);
         const componentCity = form.getComponent('city');
@@ -38,11 +37,11 @@ describe('TextField Component', () => {
     let formJSON = _.cloneDeep(addressPrefillForm);
     formJSON.components[2].disabled = true;
     formJSON.components[3].disabled = true;
-    apiModule.get.mockResolvedValue({});
+    mswServer.use(mockLocationGet({}));
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
+    Formio.createForm(element, formJSON, {baseUrl: BASE_URL})
       .then(form => {
         form.setPristine(false);
         const componentCity = form.getComponent('city');
@@ -61,11 +60,11 @@ describe('TextField Component', () => {
 
   test('TextField (editable) with address prefill does not modify city if already filled', done => {
     let formJSON = _.cloneDeep(addressPrefillForm);
-    apiModule.get.mockResolvedValue({});
+    mswServer.use(mockLocationGet({}));
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
+    Formio.createForm(element, formJSON, {baseUrl: BASE_URL})
       .then(form => {
         form.setPristine(false);
         const componentCity = form.getComponent('city');
@@ -85,11 +84,11 @@ describe('TextField Component', () => {
 
   test('Address prefill street', done => {
     let formJSON = _.cloneDeep(addressPrefillForm);
-    apiModule.get.mockResolvedValue({city: 'Amsterdam', streetName: 'Beautiful Street'});
+    mswServer.use(mockLocationGet({city: 'Amsterdam', streetName: 'Beautiful Street'}));
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
+    Formio.createForm(element, formJSON, {baseUrl: BASE_URL})
       .then(form => {
         form.setPristine(false);
         const componentStreet = form.getComponent('streetName');
@@ -108,11 +107,11 @@ describe('TextField Component', () => {
     let formJSON = _.cloneDeep(addressPrefillForm);
     formJSON.components[2].disabled = true;
     formJSON.components[3].disabled = true;
-    apiModule.get.mockResolvedValue({});
+    mswServer.use(mockLocationGet({}));
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
+    Formio.createForm(element, formJSON, {baseUrl: BASE_URL})
       .then(form => {
         form.setPristine(false);
         const componentStreet = form.getComponent('streetName');
@@ -131,11 +130,11 @@ describe('TextField Component', () => {
 
   test('TextField (editable) with address prefill (invalid data) does not modify street if already filled', done => {
     let formJSON = _.cloneDeep(addressPrefillForm);
-    apiModule.get.mockResolvedValue({});
+    mswServer.use(mockLocationGet({}));
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
+    Formio.createForm(element, formJSON, {baseUrl: BASE_URL})
       .then(form => {
         form.setPristine(false);
         const componentStreet = form.getComponent('streetName');

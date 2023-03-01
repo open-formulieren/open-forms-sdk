@@ -3,9 +3,9 @@ import {expect} from '@storybook/jest';
 import {waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-library';
 
 import {ConfigContext} from 'Context';
+import {BASE_URL} from 'api-mocks';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
-import {BASE_URL} from 'story-utils/mocks';
 
 import App from './App';
 
@@ -119,7 +119,7 @@ If translations are enabled on the form, a `LanguageSelector` is rendered:
       },
     }}
     args={{
-      'form.translationEnabled': true
+      'form.translationEnabled': true,
     }}
     play={async ({args, canvasElement}) => {
       const langSelector = await within(canvasElement).findByText(/^nl$/i);
