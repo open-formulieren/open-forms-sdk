@@ -2,6 +2,68 @@
 SDK Changelog
 =============
 
+1.3.0 (2023-03-01)
+==================
+
+Open Forms SDK 1.3.0 feature release.
+
+This feature release contains roughly the following improvements compared to 1.2.0:
+
+* Added support for multilingual forms
+* Improved accessibility
+* Improved mobile user experience
+* Components are now organized in smart/presentational parts to make programmatic
+  overriding/replacing easier
+* More re-use of NL Design System components and principles + better design token
+  documentation
+
+See below for the detailed changes since the beta version.
+
+.. warning:: SDK 1.3.0 requires at least version 2.1.0-rc.0 of the backend API.
+
+Features
+--------
+
+* [#322] The focus-style ring color of login icons now adapts to the icon appearance
+  (dark vs. light).
+* [#2646] The privacy policy accept/reject is now recorded in the backend.
+* [#2675] The progress indicator now stays in the viewport on non-mobile devices.
+* [#337] Added support for translations to the group label of repeating groups
+
+Bugfixes
+--------
+
+* [#348] Fixed unintended horizontal scroll on mobile.
+* [#2676] Fixed/improved mobile behaviour.
+
+    * Fixed regressions introduced between 1.2.x and 1.3.0 beta.
+    * The progress indicator now closes after navigating.
+    * Fixed overflowing text when large unbreakable words are present.
+    * Fixed overflowing text in titles with large unbreakable words.
+    * Reduced visual clutter due to repeated elements.
+    * Added more spacing between title and body on start page.
+
+* [#2686] Fixed regression in options menu of dropdowns.
+* [#2708] Fixed rendering the missing value ``0`` in summary pages.
+* [#2692] Fixed (visible) file input element being appended to the DOM by Formio.
+* [security#19] Escape textarea content to prevent self-XSS.
+* [security#22] Escape file upload user-generated content to prevent self-XSS.
+
+Project hygiene
+---------------
+
+* Available/used design tokens (globally/per component) are now automatically documented
+  in storybook from the style-dictionary build artifacts. Theme designers can use this
+  information to find relevant tokens.
+* Organized code of a number of components (Button, Anchor) into their own directories.
+* Replaced deprecated Github Actions ``set-output`` command.
+* [#311] Added repeating group component to Storybook documentation.
+* [#365] Replaced storybook API mocks with MSW mocks.
+* [#366] Added the ``FormStep`` component to the private API documentation in Storybook.
+* Documented how to document stories in storybook.
+* [#368] Refactored tests to use MSW mocks
+
+
 1.3.0-beta.0 (2023-01-30)
 =========================
 
