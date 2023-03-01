@@ -64,6 +64,49 @@ Project hygiene
 * [#368] Refactored tests to use MSW mocks
 
 
+1.2.7 (2023-03-01)
+==================
+
+Security release (low severity)
+
+* [security#22] Fixed additional missing user-input escape when the filename of uploads
+  is reflected in backend validation errors.
+
+
+1.1.3 (2023-03-01)
+==================
+
+Security release (low severity)
+
+* [security#19] Escape textarea content to prevent self-XSS.
+* [security#22] Fixed additional missing user-input escape when the filename of uploads
+  is reflected in backend validation errors.
+
+
+1.2.6 (2023-02-23)
+==================
+
+Security release (low severity)
+
+When HTML is used in the filename of an upload, self-XSS is possible. The impact is
+limited when using a content-security policy blocking inline scripts.
+
+* [#1351] Allow negative numbers and currencies
+* [security#22] Escape file upload user-generated content to prevent self-XSS.
+
+
+1.1.2 (2023-02-09)
+==================
+
+Periodic maintenance release
+
+* [#1832] Debounce the location autofill API calls
+* [#1868] Ensure that invalid data is still kept in the client-side data state (fix
+  for new bug in #1526)
+* [#1351] Allow negative numbers and currencies
+* [security#22] Fixed self-XSS through bad filenames in file-upload component
+
+
 1.3.0-beta.0 (2023-01-30)
 =========================
 
@@ -106,6 +149,18 @@ Project maintenance
 * Removed unused table component
 * [#335] Configured turbosnap in Chromatic UI to save snapshots
 * Updated the contributing guidelines and technical vision
+
+
+1.2.5 (2023-01-19)
+==================
+
+Security release (low severity)
+
+This seemed to only be triggered in form configurations with textareas and data pickers,
+while the end-user needs to input malicious content by themselves. Additionally, using
+a content-security policy blocking inline scripts severely hinders the exploitability.
+
+* [security#19] Escape textarea content to prevent self-XSS.
 
 
 1.3.0-alpha.1 (2022-12-19)
