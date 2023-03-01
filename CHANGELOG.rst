@@ -2,6 +2,15 @@
 Changelog
 =========
 
+1.1.3 (2023-03-01)
+==================
+
+Security release (low severity)
+
+* [security#19] Escape textarea content to prevent self-XSS.
+* [security#22] Fixed additional missing user-input escape when the filename of uploads
+  is reflected in backend validation errors.
+
 1.1.2 (2023-02-09)
 ==================
 
