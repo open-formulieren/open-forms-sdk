@@ -3,7 +3,7 @@ import produce from 'immer';
 import {getWorker} from 'msw-storybook-addon';
 import {v4 as uuid4} from 'uuid';
 
-import {getForm, getSubmission} from 'api-mocks';
+import {buildForm, buildSubmission} from 'api-mocks';
 import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
 
 import FormStep from '.';
@@ -100,8 +100,8 @@ parameters.
         route: '/stap/:step',
         initialEntries: ['/stap/step-1'],
       },
-      form: getForm(),
-      submission: getSubmission(),
+      form: buildForm(),
+      submission: buildSubmission(),
       showDebug: false,
     }}
   >

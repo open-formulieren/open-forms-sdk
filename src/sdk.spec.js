@@ -1,6 +1,6 @@
 import {act, waitForElementToBeRemoved, within} from '@testing-library/react';
 
-import {BASE_URL, getForm, mockFormGet} from 'api-mocks';
+import {BASE_URL, buildForm, mockFormGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockFormioTranslations, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 
@@ -16,7 +16,7 @@ const LANGUAGES = [
 ];
 
 const apiMocks = [
-  mockFormGet(getForm({translationEnabled: true})),
+  mockFormGet(buildForm({translationEnabled: true})),
   mockLanguageInfoGet(LANGUAGES),
   mockFormioTranslations,
 ];
@@ -84,8 +84,8 @@ describe('OpenForm', () => {
   it('should re-fetch the form to get new literals after language change', async () => {
     const formRoot = document.createElement('div');
     // first we load NL variant, second time we load the form in NL
-    const formNL = getForm({translationEnabled: true, name: 'Nederlandse versie'});
-    const formEN = getForm({translationEnabled: true, name: 'English version'});
+    const formNL = buildForm({translationEnabled: true, name: 'Nederlandse versie'});
+    const formEN = buildForm({translationEnabled: true, name: 'English version'});
     mswServer.use(
       mockFormGet(formNL, true),
       mockFormGet(formEN, true),

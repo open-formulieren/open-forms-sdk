@@ -48,9 +48,9 @@ const FORM_DEFAULTS = {
  *                            '.'-joined strings as keys for deep paths.
  * @return {Object}           A form detail object conforming to the Form proptype spec.
  */
-export const getForm = getDefaultFactory(FORM_DEFAULTS);
+export const buildForm = getDefaultFactory(FORM_DEFAULTS);
 
-export const mockFormGet = (formDetail = getForm(), once = false) =>
+export const mockFormGet = (formDetail = buildForm(), once = false) =>
   rest.get(`${BASE_URL}forms/:uuid`, (req, res, ctx) => {
     // update with request details for consistent response
     const uuid = req.url.pathname.split('/').slice(-1)[0];

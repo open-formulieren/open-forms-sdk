@@ -5,7 +5,7 @@ import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 
-import {getForm} from 'api-mocks';
+import {buildForm} from 'api-mocks';
 import {LiteralsProvider} from 'components/Literal';
 
 import LoginOptions from './index';
@@ -26,7 +26,7 @@ afterEach(() => {
 });
 
 it('Login not required, options wrapped in form tag', () => {
-  const form = getForm({loginRequired: false, loginOptions: []});
+  const form = buildForm({loginRequired: false, loginOptions: []});
   const onFormStart = jest.fn(e => e.preventDefault());
 
   act(() => {
@@ -48,7 +48,7 @@ it('Login not required, options wrapped in form tag', () => {
 });
 
 it('Login required, options not wrapped in form tag', () => {
-  const form = getForm({
+  const form = buildForm({
     loginRequired: true,
     loginOptions: [
       {
@@ -96,7 +96,7 @@ it('Login required, options not wrapped in form tag', () => {
 });
 
 it('Login button has the right URL after cancelling log in', () => {
-  const form = getForm({
+  const form = buildForm({
     loginRequired: true,
     loginOptions: [
       {

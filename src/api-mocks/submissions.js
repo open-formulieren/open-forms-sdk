@@ -27,4 +27,4 @@ const SUBMISSION_DETAILS = {
  *                            '.'-joined strings as keys for deep paths.
  * @return {Object}           A submission object.
  */
-export const getSubmission = getDefaultFactory(SUBMISSION_DETAILS);
+export const buildSubmission = getDefaultFactory(SUBMISSION_DETAILS);
