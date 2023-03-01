@@ -114,9 +114,9 @@
         <div>{{ctx.t('Uploading file...')}}</div>
       </div>
     {% } else if (status.status === 'error') { %}
-      <div class="alert alert-danger bg-{{status.status}}">{{ctx.t(status.message)}}</div>
+      <div class="alert alert-danger bg-{{status.status}}">{{{ctx.t(status.message)}}}</div>
     {% } else { %}
-      <div class="bg-{{status.status}}">{{ctx.t(status.message)}}</div>
+      <div class="bg-{{status.status}}">{{{ctx.t(status.message)}}}</div>
     {% } %}
   </div>
 {% }) %}
