@@ -2,6 +2,28 @@
 Changelog
 =========
 
+1.2.6 (2023-02-23)
+==================
+
+Security release (low severity)
+
+When HTML is used in the filename of an upload, self-XSS is possible. The impact is
+limited when using a content-security policy blocking inline scripts.
+
+* [#1351] Allow negative numbers and currencies
+* [security#22] Escape file upload user-generated content to prevent self-XSS.
+
+1.2.5 (2023-01-19)
+==================
+
+Security release (low severity)
+
+This seemed to only be triggered in form configurations with textareas and data pickers,
+while the end-user needs to input malicious content by themselves. Additionally, using
+a content-security policy blocking inline scripts severely hinders the exploitability.
+
+* [security#19] Escape textarea content to prevent self-XSS.
+
 1.2.4 (2022-10-24)
 ==================
 
