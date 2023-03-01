@@ -2,6 +2,14 @@
 Changelog
 =========
 
+1.2.7 (2023-03-01)
+==================
+
+Security release (low severity)
+
+* [security#22] Fixed additional missing user-input escape when the filename of uploads
+  is reflected in backend validation errors.
+
 1.2.6 (2023-02-23)
 ==================
 
