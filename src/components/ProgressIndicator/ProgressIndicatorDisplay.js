@@ -179,7 +179,7 @@ const ProgressIndicatorDisplay = ({
             <ProgressItem completed={isAppointment}>
               <LinkOrSpan
                 to={'/appointment'}
-                useLink={areApplicableStepsCompleted}
+                useLink={true}
                 isActive={isSummary}
                 isApplicable={true}
               >
