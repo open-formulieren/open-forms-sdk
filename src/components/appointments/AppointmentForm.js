@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
+import {Route, Switch, useHistory, useLocation, useRouteMatch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import Body from 'components/Body';
@@ -17,6 +17,19 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 import useTitle from 'hooks/useTitle';
 
 const AppointmentProgressIndicator = ({title}) => {
+  const {pathname} = useLocation();
+  const [expanded, setExpanded] = useState(false);
+
+  // collapse the expanded progress indicator if nav occurred, see
+  // open-formulieren/open-forms#2673. It's important that *only* the pathname triggers
+  // the effect, which is why exhaustive deps is ignored.
+  useEffect(() => {
+    if (expanded) {
+      setExpanded(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
   const config = useContext(ConfigContext);
   const summaryMatch = !!useRouteMatch('/appointment/overzicht');
   const confirmationMatch = !!useRouteMatch('/appointment/bevestiging');
@@ -50,6 +63,7 @@ const AppointmentProgressIndicator = ({title}) => {
       showOverview={true}
       showConfirmation={true}
       showAppointment={true}
+      onExpandClick={() => setExpanded(!expanded)}
     />
   );
 };
