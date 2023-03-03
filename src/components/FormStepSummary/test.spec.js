@@ -154,3 +154,27 @@ it('Number fields with zero values are displayed', () => {
   const value = container.getElementsByClassName('openforms-summary-row__value')[0].textContent;
   expect(value).toEqual('€ 0,00');
 });
+
+it('Checkboxes are capitalised', () => {
+  const dateComponent = {
+    key: 'checkbox',
+    type: 'checkbox',
+  };
+
+  act(() => {
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <LabelValueRow name="Date of birth" value={true} component={dateComponent} />
+        <LabelValueRow name="Date of birth" value={false} component={dateComponent} />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const valueTrue = container.getElementsByClassName('openforms-summary-row__value')[0].textContent;
+  expect(valueTrue).toEqual('Ja');
+
+  const valueFalse = container.getElementsByClassName('openforms-summary-row__value')[1]
+    .textContent;
+  expect(valueFalse).toEqual('Nee');
+});
