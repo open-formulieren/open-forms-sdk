@@ -29,9 +29,9 @@ const SignatureDisplay = ({component, value}) => {
 
 const CheckboxDisplay = ({component, value}) => {
   if (value) {
-    return <FormattedMessage description="'True' display" defaultMessage="yes" />;
+    return <FormattedMessage description="'True' display" defaultMessage="Yes" />;
   }
-  return <FormattedMessage description="'False' display" defaultMessage="no" />;
+  return <FormattedMessage description="'False' display" defaultMessage="No" />;
 };
 
 const RadioDisplay = ({component, value}) => {
