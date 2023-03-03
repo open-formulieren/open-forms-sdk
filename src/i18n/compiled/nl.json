@@ -253,10 +253,10 @@
       "value": "Bevestigen"
     }
   ],
-  "RMkhVs": [
+  "RJ+0F/": [
     {
       "type": 0,
-      "value": "ja"
+      "value": "Ja"
     }
   ],
   "Rf8Sot": [
@@ -267,12 +267,6 @@
     {
       "type": 1,
       "value": "formName"
-    }
-  ],
-  "SE7xol": [
-    {
-      "type": 0,
-      "value": "nee"
     }
   ],
   "UWylpR": [
@@ -343,6 +337,12 @@
     {
       "type": 0,
       "value": "Uw e-mailadres"
+    }
+  ],
+  "abKEBH": [
+    {
+      "type": 0,
+      "value": "Nee"
     }
   ],
   "abtbgK": [
