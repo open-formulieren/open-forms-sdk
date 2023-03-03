@@ -14,6 +14,11 @@ class Password extends Formio.Components.components.password {
     );
     return info;
   }
+
+  getView(value, options) {
+    // In Formio they use '--- PROTECTED ---' which then somewhere gets stripped out
+    return '*'.repeat(value.length);
+  }
 }
 
 export default Password;
