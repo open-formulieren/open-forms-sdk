@@ -16,6 +16,8 @@ import AppointmentStep from 'components/appointments/AppointmentStep';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useTitle from 'hooks/useTitle';
 
+import FormStart from '../FormStart';
+
 const AppointmentProgressIndicator = ({title}) => {
   const {pathname} = useLocation();
   const [expanded, setExpanded] = useState(false);
@@ -155,6 +157,11 @@ const AppointmentForm = ({form}) => {
     history.push('/appointment/overzicht');
   };
 
+  const onFormStart = () => {
+    console.log('Appointment form starts');
+    history.push('/appointment/form');
+  };
+
   const progressIndicator = form.showProgressIndicator ? (
     // should we use generic ProgressIndicator?
     <AppointmentProgressIndicator title={form.name} />
@@ -175,9 +182,15 @@ const AppointmentForm = ({form}) => {
         </ErrorBoundary>
       </Route>
 
-      <Route path="/">
+      <Route path="/appointment/form">
         <ErrorBoundary useCard>
           <AppointmentStep form={form} onSubmit={onAppointmentSubmit} />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/">
+        <ErrorBoundary useCard>
+          <FormStart form={form} onFormStart={onFormStart} />
         </ErrorBoundary>
       </Route>
     </Switch>
