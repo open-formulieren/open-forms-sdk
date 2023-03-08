@@ -21,6 +21,9 @@ import {reactIntl} from './reactIntl.js';
 
 initialize({
   onUnhandledRequest: 'bypass',
+  serviceWorker: {
+    url: './mockServiceWorker.js',
+  },
 });
 
 export const parameters = {
