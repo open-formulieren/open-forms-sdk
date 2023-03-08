@@ -37,7 +37,7 @@ $checkbox-label-padding-left: calc(
     width: 100%;
     cursor: pointer;
     position: relative; // Important: without it if you click on the checkmark, it won't select/unselect the item
-    word-break: break-word;
+    word-break: break-all;
   }
 
   & :focus ~ &__label {
