@@ -832,6 +832,7 @@ const FormStep = ({
         closeModal={closeFormStepSaveModal}
         onSaveConfirm={onSaveConfirm}
         suspendFormUrl={`${submission.url}/_suspend`}
+        suspendFormUrlLifetime={form.resumeLinkLifetime}
         submissionId={submission.id}
       />
     </>

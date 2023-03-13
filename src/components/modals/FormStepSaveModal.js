@@ -52,7 +52,14 @@ const reducer = (draft, action) => {
   }
 };
 
-const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, submissionId}) => {
+const FormStepSaveModal = ({
+  isOpen,
+  closeModal,
+  onSaveConfirm,
+  suspendFormUrl,
+  suspendFormUrlLifetime,
+  submissionId,
+}) => {
   const history = useHistory();
   const intl = useIntl();
   const config = useContext(ConfigContext);
@@ -131,7 +138,8 @@ const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, s
         <Body modifiers={['big']}>
           <FormattedMessage
             description="Form save modal body text"
-            defaultMessage="Enter your email address to get an email to resume the form at a later date This can be done on any device where you open the link."
+            defaultMessage="Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. De link remains valid for {numberOfDays} day(s)."
+            values={{numberOfDays: suspendFormUrlLifetime}}
           />
         </Body>
 
@@ -167,7 +175,7 @@ const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, s
             <Button type="submit" variant="primary" disabled={isSaving}>
               <FormattedMessage
                 description="Form save modal submit button"
-                defaultMessage="Confirm"
+                defaultMessage="Continue later"
               />
             </Button>
           </ToolbarList>
@@ -183,6 +191,7 @@ FormStepSaveModal.propTypes = {
   onSaveConfirm: PropTypes.func.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
   submissionId: PropTypes.string.isRequired,
+  suspendFormUrlLifetime: PropTypes.number.isRequired,
 };
 
 export default FormStepSaveModal;
