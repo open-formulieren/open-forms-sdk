@@ -4,6 +4,11 @@
     "description": "Step completion marker icon label",
     "originalDefault": "Completed"
   },
+  "+DxzBU": {
+    "defaultMessage": "Vul hieronder uw e-mailadres in. U krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar u de link opent. De link blijft maximaal {numberOfDays, plural, one {1 dag} other {{numberOfDays} dagen}} actief.",
+    "description": "Form save modal body text",
+    "originalDefault": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
+  },
   "0j8tMq": {
     "defaultMessage": "Uitloggen",
     "description": "Log out button text",
@@ -73,11 +78,6 @@
     "defaultMessage": "Inloggen met {provider}",
     "description": "Login button label",
     "originalDefault": "Login with {provider}"
-  },
-  "Cd5WGC": {
-    "defaultMessage": "Vul hieronder uw e-mailadres in. U krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar u de link opent.",
-    "description": "Form save modal body text",
-    "originalDefault": "Enter your email address to get an email to resume the form at a later date"
   },
   "CvRUHm": {
     "defaultMessage": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar.",
@@ -159,6 +159,11 @@
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
   },
+  "M/8TYr": {
+    "defaultMessage": "Later verdergaan",
+    "description": "Form save modal submit button",
+    "originalDefault": "Continue later"
+  },
   "M5WEhc": {
     "defaultMessage": "Huidige stap: {activeStepTitle}",
     "description": "Active step accessible label in mobile progress indicator",
@@ -173,11 +178,6 @@
     "defaultMessage": "Verlengen",
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
-  },
-  "R5NUuU": {
-    "defaultMessage": "Later verdergaan",
-    "description": "Form save modal submit button",
-    "originalDefault": "Confirm"
   },
   "RJ+0F/": {
     "defaultMessage": "Ja",

@@ -138,7 +138,7 @@ const FormStepSaveModal = ({
         <Body modifiers={['big']}>
           <FormattedMessage
             description="Form save modal body text"
-            defaultMessage="Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. De link remains valid for {numberOfDays} day(s)."
+            defaultMessage="Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
             values={{numberOfDays: suspendFormUrlLifetime}}
           />
         </Body>
