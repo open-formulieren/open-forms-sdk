@@ -37,6 +37,7 @@ const FORM_DEFAULTS = {
   ],
   explanationTemplate: '',
   requiredFieldsWithAsterisk: true,
+  resumeLinkLifetime: 7,
   autoLoginAuthenticationBackend: '',
   translationEnabled: false,
 };
