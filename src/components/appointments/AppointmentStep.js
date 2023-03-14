@@ -81,7 +81,7 @@ const AppointmentStep = ({onSubmit}) => {
       title={
         <FormattedMessage
           description="Experiment appointment step"
-          defaultMessage="Create experiment appointment"
+          defaultMessage="Appointment details"
         />
       }
     >
