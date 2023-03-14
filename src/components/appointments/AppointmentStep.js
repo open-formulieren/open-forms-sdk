@@ -27,19 +27,20 @@ const AppointmentField = ({
   getOptionValue,
   getOptionLabel,
   url,
-  urlQuery = {},
+  urlQuery = [],
   ...props
 }) => {
   const [field, meta] = useField(props);
+  const urlQueryValues = urlQuery.map(param => param[1]);
   // load options from appointments api
   const {loading, value: items} = useAsync(async () => {
     if (urlQuery) {
-      const notEmpty = Object.values(urlQuery).every(val => !!val);
-      return await requestOrEmpty(url, urlQuery, notEmpty);
+      const notEmpty = urlQueryValues.every(val => !!val);
+      return await requestOrEmpty(url, Object.fromEntries(urlQuery), notEmpty);
     } else {
       return await get(url);
     }
-  }, Object.values(urlQuery));
+  }, urlQueryValues);
 
   return (
     <div className={getBEMClassName('form-control')}>
@@ -107,7 +108,7 @@ const AppointmentStep = ({onSubmit}) => {
               getOptionValue={item => item.identifier}
               getOptionLabel={item => item.name}
               url={`${baseUrl}appointments/locations`}
-              urlQuery={{product_id: formik.values.product}}
+              urlQuery={[['product_id', formik.values.product]]}
             />
             <AppointmentField
               name="date"
@@ -115,7 +116,10 @@ const AppointmentStep = ({onSubmit}) => {
               getOptionValue={item => item.date}
               getOptionLabel={item => getFormattedDateString(intl, item.date)}
               url={`${baseUrl}appointments/dates`}
-              urlQuery={{product_id: formik.values.product, location_id: formik.values.location}}
+              urlQuery={[
+                ['product_id', formik.values.product],
+                ['location_id', formik.values.location],
+              ]}
             />
             <AppointmentField
               name="time"
@@ -123,11 +127,11 @@ const AppointmentStep = ({onSubmit}) => {
               getOptionValue={item => item.time}
               getOptionLabel={item => getFormattedTimeString(intl, item.time)}
               url={`${baseUrl}appointments/times`}
-              urlQuery={{
-                product_id: formik.values.product,
-                location_id: formik.values.location,
-                date: formik.values.date,
-              }}
+              urlQuery={[
+                ['product_id', formik.values.product],
+                ['location_id', formik.values.location],
+                ['date', formik.values.date],
+              ]}
             />
 
             <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>

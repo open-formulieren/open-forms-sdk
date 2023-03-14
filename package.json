@@ -83,16 +83,6 @@
       "react-app/jest",
       "plugin:prettier/recommended"
     ],
-    "parserOptions": {
-      "babelOptions": {
-        "presets": [
-          [
-            "babel-preset-react-app",
-            false
-          ]
-        ]
-      }
-    },
     "rules": {
       "react/style-prop-object": [
         "error",
