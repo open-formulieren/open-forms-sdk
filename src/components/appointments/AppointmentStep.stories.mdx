@@ -1,50 +1,28 @@
 import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
-import {ConfigContext} from 'Context';
 
-import AppointmentStep from 'components/appointments/AppointmentStep';
+import {ConfigDecorator} from 'story-utils/decorators';
 
+import AppointmentStep from './AppointmentStep';
+import {
+  mockAppointmentProducts,
+  mockAppointmentLocations,
+  mockAppointmentDates,
+  mockAppointmentTimes
+} from './mocks';
 
-export const BASE_URL = 'http://localhost:8000/api/v2/';
-
-export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{baseUrl: args.baseUrl || BASE_URL}}>
-    <Story />
-  </ConfigContext.Provider>
-);
 
 <Meta
   title="Composites/Appointment step"
   component={AppointmentStep}
   parameters={{
-    mockData: [
-      {
-        url: `${BASE_URL}appointments/products`,
-        method: 'GET',
-        status: 200,
-        response: [
-          {code: 'PASAAN', identifier: '1', name: 'Paspoort aanvraag'},
-          {code: 'RIJAAN', identifier: '2', name: 'Rijbewijs aanvraag (Drivers license)'},
-        ]
-      },
-      {
-        url: `${BASE_URL}appointments/locations?product_id=:product_id`,
-        method: 'GET',
-        status: 200,
-        response: [{identifier: '1', name: 'Maykin Media'}]
-      },
-      {
-        url: `${BASE_URL}appointments/dates?product_id=:product_id&location_id=:location_id`,
-        method: 'GET',
-        status: 200,
-        response: [{date: '2021-08-19'}, {date: '2021-08-20'}]
-      },
-      {
-        url: `${BASE_URL}appointments/times?product_id=:product_id&location_id=:location_id&date=:date`,
-        method: 'GET',
-        status: 200,
-        response: [{time: '2021-08-20T08:00:00+02:00'}, {time: '2021-08-20T08:10:00+02:00'}]
-      },
-    ]
+    msw: {
+      handlers: [
+        mockAppointmentProducts,
+        mockAppointmentLocations,
+        mockAppointmentDates,
+        mockAppointmentTimes
+      ],
+    },
   }}
 />
 
@@ -61,9 +39,6 @@ export const Template = () => <AppointmentStep/>
           excludeDecorators: true,
         },
       },
-    }}
-    args={{
-      baseUrl: process.env.REACT_APP_BASE_API_URL || BASE_URL,
     }}
   >
     {Template.bind({})}
