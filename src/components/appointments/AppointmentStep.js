@@ -101,6 +101,14 @@ const AppointmentStep = ({onSubmit}) => {
               getOptionValue={item => item.identifier}
               getOptionLabel={item => item.name}
               url={`${baseUrl}appointments/products`}
+              onChange={e => {
+                // default handler
+                formik.handleChange(e);
+                // empty other fields to prevent unnecessary requests
+                formik.setFieldValue('location', '');
+                formik.setFieldValue('date', '');
+                formik.setFieldValue('time', '');
+              }}
             />
             <AppointmentField
               name="location"
@@ -109,6 +117,13 @@ const AppointmentStep = ({onSubmit}) => {
               getOptionLabel={item => item.name}
               url={`${baseUrl}appointments/locations`}
               urlQuery={[['product_id', formik.values.product]]}
+              onChange={e => {
+                // default handler
+                formik.handleChange(e);
+                // empty other fields to prevent unnecessary requests
+                formik.setFieldValue('date', '');
+                formik.setFieldValue('time', '');
+              }}
             />
             <AppointmentField
               name="date"
@@ -120,6 +135,12 @@ const AppointmentStep = ({onSubmit}) => {
                 ['product_id', formik.values.product],
                 ['location_id', formik.values.location],
               ]}
+              onChange={e => {
+                // default handler
+                formik.handleChange(e);
+                // empty other fields to prevent unnecessary requests
+                formik.setFieldValue('time', '');
+              }}
             />
             <AppointmentField
               name="time"
