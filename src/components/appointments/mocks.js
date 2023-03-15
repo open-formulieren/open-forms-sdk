@@ -18,28 +18,28 @@ const DEFAULT_TIMES = [
   {time: '2021-08-20T08:10:00+02:00'},
 ];
 
-export const mockAppointmentProducts = rest.get(
+export const mockAppointmentProductsGet = rest.get(
   `${BASE_URL}appointments/products`,
   (req, res, ctx) => {
     return res(ctx.json(DEFAULT_PRODUCTS));
   }
 );
 
-export const mockAppointmentLocations = rest.get(
+export const mockAppointmentLocationsGet = rest.get(
   `${BASE_URL}appointments/locations?product_id=:product_id`,
   (req, res, ctx) => {
     return res(ctx.json(DEFAULT_LOCATIONS));
   }
 );
 
-export const mockAppointmentDates = rest.get(
+export const mockAppointmentDatesGet = rest.get(
   `${BASE_URL}appointments/dates?product_id=:product_id&location_id=:location_id`,
   (req, res, ctx) => {
     return res(ctx.json(DEFAULT_DATES));
   }
 );
 
-export const mockAppointmentTimes = rest.get(
+export const mockAppointmentTimesGet = rest.get(
   `${BASE_URL}appointments/times?product_id=:product_id&location_id=:location_id&date=:date`,
   (req, res, ctx) => {
     const date = req.url.searchParams.get('date');

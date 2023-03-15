@@ -1,32 +1,31 @@
-import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import AppointmentStep from './AppointmentStep';
 import {
-  mockAppointmentProducts,
-  mockAppointmentLocations,
-  mockAppointmentDates,
-  mockAppointmentTimes
+  mockAppointmentDatesGet,
+  mockAppointmentLocationsGet,
+  mockAppointmentProductsGet,
+  mockAppointmentTimesGet,
 } from './mocks';
 
-
 <Meta
-  title="Composites/Appointment step"
+  title="Private API/Appointments/Step"
   component={AppointmentStep}
   parameters={{
     msw: {
       handlers: [
-        mockAppointmentProducts,
-        mockAppointmentLocations,
-        mockAppointmentDates,
-        mockAppointmentTimes
+        mockAppointmentProductsGet,
+        mockAppointmentLocationsGet,
+        mockAppointmentDatesGet,
+        mockAppointmentTimesGet,
       ],
     },
   }}
 />
 
-export const Template = () => <AppointmentStep/>
+export const Template = ({onSubmit}) => <AppointmentStep onSubmit={onSubmit} />;
 
 <Canvas>
   <Story
@@ -39,11 +38,11 @@ export const Template = () => <AppointmentStep/>
           excludeDecorators: true,
         },
       },
+      controls: {hideNoControlsWarning: true},
     }}
   >
     {Template.bind({})}
   </Story>
 </Canvas>
-
 
 <ArgsTable of={AppointmentStep} />

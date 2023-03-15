@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Route, Switch, useHistory, useLocation, useRouteMatch} from 'react-router-dom';
@@ -15,6 +16,7 @@ import SummaryConfirmation from 'components/SummaryConfirmation';
 import AppointmentStep from 'components/appointments/AppointmentStep';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useTitle from 'hooks/useTitle';
+import Types from 'types';
 
 const AppointmentProgressIndicator = ({title}) => {
   const {pathname} = useLocation();
@@ -68,6 +70,10 @@ const AppointmentProgressIndicator = ({title}) => {
   );
 };
 
+AppointmentProgressIndicator.propTypes = {
+  title: PropTypes.string.isRequired,
+};
+
 const AppointmentSummary = ({form, onConfirm}) => {
   const history = useHistory();
   const onPrevPage = event => {
@@ -113,6 +119,11 @@ const AppointmentSummary = ({form, onConfirm}) => {
   );
 };
 
+AppointmentSummary.propTypes = {
+  form: Types.Form.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+};
+
 const AppointmentConfirmation = () => {
   const intl = useIntl();
   const pageTitle = intl.formatMessage({
@@ -140,6 +151,8 @@ const AppointmentConfirmation = () => {
     </Card>
   );
 };
+
+AppointmentConfirmation.propTypes = {};
 
 const AppointmentForm = ({form}) => {
   const history = useHistory();
@@ -192,6 +205,10 @@ const AppointmentForm = ({form}) => {
       isPaymentOverview={false}
     />
   );
+};
+
+AppointmentForm.propTypes = {
+  form: Types.Form.isRequired,
 };
 
 export default AppointmentForm;

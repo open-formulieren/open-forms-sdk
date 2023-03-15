@@ -1,4 +1,5 @@
 import {Formik, useField} from 'formik';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
@@ -71,6 +72,15 @@ const AppointmentField = ({
       )}
     </div>
   );
+};
+
+AppointmentField.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  getOptionValue: PropTypes.func.isRequired,
+  getOptionLabel: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
+  urlQuery: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
 };
 
 const AppointmentStep = ({onSubmit}) => {
@@ -167,6 +177,10 @@ const AppointmentStep = ({onSubmit}) => {
       </Formik>
     </Card>
   );
+};
+
+AppointmentStep.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default AppointmentStep;
