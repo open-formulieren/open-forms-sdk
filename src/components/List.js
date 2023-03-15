@@ -6,9 +6,11 @@ import {getBEMClassName} from 'utils';
 const List = ({children, modifiers = [], ordered = false, component = ''}) => {
   const Component = component ? component : ordered ? 'ol' : 'ul';
   const className = getBEMClassName('list', modifiers);
+  // remove empty children
+  const filtered = children.filter(child => !!child);
   return (
     <Component className={className}>
-      {React.Children.map(children, child => (
+      {React.Children.map(filtered, child => (
         <li className={getBEMClassName('list__item')}>{child}</li>
       ))}
     </Component>

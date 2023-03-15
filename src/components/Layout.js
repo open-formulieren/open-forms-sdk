@@ -10,7 +10,7 @@ const Layout = ({children, component: Component = 'div'}) => {
 
 Layout.propTypes = {
   children: PropTypes.node,
-  component: PropTypes.string,
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 };
 
 const LayoutRow = ({children, modifiers = [], component = 'section'}) => {

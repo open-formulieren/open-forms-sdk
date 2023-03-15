@@ -48,6 +48,7 @@ const Form = PropTypes.shape({
   requiredFieldsWithAsterisk: PropTypes.bool,
   autoLoginAuthenticationBackend: PropTypes.string,
   translationEnabled: PropTypes.bool,
+  appointmentEnabled: PropTypes.bool,
 });
 
 export default Form;
