@@ -5,6 +5,44 @@
       "value": "Completed"
     }
   ],
+  "+DxzBU": [
+    {
+      "type": 0,
+      "value": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "1 day"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numberOfDays"
+            },
+            {
+              "type": 0,
+              "value": " days"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numberOfDays"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "0j8tMq": [
     {
       "type": 0,
@@ -91,12 +129,6 @@
     {
       "type": 1,
       "value": "provider"
-    }
-  ],
-  "Cd5WGC": [
-    {
-      "type": 0,
-      "value": "Enter your email address to get an email to resume the form at a later date"
     }
   ],
   "CvRUHm": [
@@ -225,6 +257,12 @@
       "value": "Total"
     }
   ],
+  "M/8TYr": [
+    {
+      "type": 0,
+      "value": "Continue later"
+    }
+  ],
   "M5WEhc": [
     {
       "type": 0,
@@ -245,12 +283,6 @@
     {
       "type": 0,
       "value": "Extend"
-    }
-  ],
-  "R5NUuU": [
-    {
-      "type": 0,
-      "value": "Confirm"
     }
   ],
   "RJ+0F/": [

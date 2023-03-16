@@ -5,6 +5,44 @@
       "value": "Voltooid"
     }
   ],
+  "+DxzBU": [
+    {
+      "type": 0,
+      "value": "Vul hieronder uw e-mailadres in. U krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar u de link opent. De link blijft maximaal "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "1 dag"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numberOfDays"
+            },
+            {
+              "type": 0,
+              "value": " dagen"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numberOfDays"
+    },
+    {
+      "type": 0,
+      "value": " actief."
+    }
+  ],
   "0j8tMq": [
     {
       "type": 0,
@@ -93,12 +131,6 @@
       "value": "provider"
     }
   ],
-  "Cd5WGC": [
-    {
-      "type": 0,
-      "value": "U ontvangt een e-mail met een unieke link om op een later moment verder te gaan met invullen. Dit kan vanaf elk toestel waar u de link opent."
-    }
-  ],
   "CvRUHm": [
     {
       "type": 0,
@@ -158,7 +190,7 @@
   "HhcSoc": [
     {
       "type": 0,
-      "value": "Formulier bewaren en later hervatten"
+      "value": "Opslaan en later verdergaan"
     }
   ],
   "J9svUq": [
@@ -225,6 +257,12 @@
       "value": "Totaal"
     }
   ],
+  "M/8TYr": [
+    {
+      "type": 0,
+      "value": "Later verdergaan"
+    }
+  ],
   "M5WEhc": [
     {
       "type": 0,
@@ -245,12 +283,6 @@
     {
       "type": 0,
       "value": "Verlengen"
-    }
-  ],
-  "R5NUuU": [
-    {
-      "type": 0,
-      "value": "Bevestigen"
     }
   ],
   "RJ+0F/": [
