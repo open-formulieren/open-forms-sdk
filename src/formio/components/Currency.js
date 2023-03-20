@@ -2,7 +2,7 @@ import { Formio } from 'react-formio';
 import FormioUtils from 'formiojs/utils';
 import { maskInput } from 'vanilla-text-mask';
 
-import _ from 'lodash';
+import _, {set} from 'lodash';
 
 import { applyPrefix } from '../utils';
 
@@ -101,6 +101,32 @@ class Currency extends Formio.Components.components.currency {
       mask: this.numberMask || '',
       shadowRoot: this.root ? this.root.shadowRoot : null
     });
+  }
+
+  // Overwrite Formio method because of issue OF#2903
+  set dataValue(value) {
+    if (
+      !this.allowData ||
+      !this.key ||
+      (!this.visible && this.component.clearOnHide && !this.rootPristine)
+    ) {
+      return;
+    }
+    // Issue 2903 - make it possible to set the value to null. Otherwise, the user cannot clear the
+    // value of a number/currency field if it has already been saved.
+    if (value === undefined) {
+      this.unset();
+      return;
+    }
+
+    value = this.hook('setDataValue', value, this.key, this._data);
+    set(this._data, this.key, value);
+  }
+
+  // Inheritance of getter/setter: since we have overwritten the setter, we must define a
+  // getter or the property 'dataValue' will always return undefined
+  get dataValue() {
+    return super.dataValue;
   }
 }
 

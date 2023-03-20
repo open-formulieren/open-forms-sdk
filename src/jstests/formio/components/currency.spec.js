@@ -25,4 +25,27 @@ describe('Currency Component', () => {
 
     }).catch(done);
   });
+
+  test('#2903 - Emptying currency component results in null value in data', done => {
+    let formJSON = _.cloneDeep(currencyForm);
+
+    const element = document.createElement('div');
+
+    Formio.createForm(element, formJSON)
+      .then(form => {
+        form.setPristine(false);
+        const component = form.getComponent('currency');
+        component.setValue(13);
+
+        expect(form._data['currency']).toEqual(13);
+
+        component.dataValue = null;
+
+        // null, instead of undefined (default Formio behaviour which removes the key from the data)
+        expect(form._data['currency']).toEqual(null);
+
+        done();
+      })
+      .catch(done);
+  });
 });
