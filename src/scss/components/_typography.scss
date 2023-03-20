@@ -9,7 +9,7 @@
 @import '../mixins/prefix';
 
 .#{prefix(title)} {
-  @include ellipsis;
+  word-break: break-all;
 }
 
 .#{prefix(subtitle)} {
