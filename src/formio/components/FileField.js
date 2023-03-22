@@ -138,6 +138,29 @@ CSRFEnabledUrl.title = 'CSRFEnabledUrl';
  * Extend the default file field to modify it to our needs.
  */
 class FileField extends Formio.Components.components.file {
+  attach(element) {
+    super.attach(element);
+
+    this.refs.fileStatusRemove.forEach((fileStatusRemove, index) => {
+      this.removeEventListener(fileStatusRemove, 'click');
+
+      this.addEventListener(fileStatusRemove, 'click', event => {
+        event.preventDefault();
+        if (this.abortUpload) {
+          this.abortUpload();
+        }
+
+        // Formiojs bug #4555 - After deleting a file, if the drag&drop area had been hidden, it
+        // doesn't show after deleting.
+        // OF issue #2912 - We cannot use the abortUpload method, because this gets overwritten
+        // during successful upload of a file
+        this.fileDropHidden = false;
+
+        this.statuses.splice(index, 1);
+        this.redraw();
+      });
+    });
+  }
 
   upload(files) {
     if (this.component.multiple && this.component.maxNumberOfFiles) {
