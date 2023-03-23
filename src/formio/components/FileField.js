@@ -205,6 +205,8 @@ class FileField extends Formio.Components.components.file {
         file = file.slice(0, file.size, 'application/vnd.ms-outlook');
       }
     }
+    //gh-2911 let the backend figure heic out. super is not that super
+    if (file.type === 'image/heif') return true;
 
     return super.validatePattern(file, val);
   }
