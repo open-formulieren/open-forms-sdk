@@ -4,6 +4,8 @@
 @import '../mixins/bem';
 @import '../mixins/prefix';
 
+$input-padding: $grid-margin-2;
+
 .#{prefix(input)} {
   @include body;
   @include border(all, $size: 1px);
@@ -16,11 +18,11 @@
   // design token
   font-weight: var(--of-input-font-weight) !important;
   line-height: $typography-line-height-base !important;
-  padding: $grid-margin-2;
+  padding: $input-padding;
   width: 100%;
 
   @include modifier('time') {
-    width: 4em;
+    width: calc(5ch + 2 * $input-padding);
   }
 
   &:disabled {
