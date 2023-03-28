@@ -148,3 +148,4 @@ CoSign.propTypes = {
 };
 
 export default CoSign;
+export {CoSignAuthentication};
