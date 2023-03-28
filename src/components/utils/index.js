@@ -1,4 +1,4 @@
-import {START_FORM_QUERY_PARAM} from './constants';
+import {START_FORM_QUERY_PARAM} from 'components/constants';
 
 const findPreviousApplicableStep = (currentStepIndex, submission) => {
   let candidateStepIndex = currentStepIndex - 1;
@@ -24,7 +24,7 @@ const isLastStep = (currentStepIndex, submission) => {
   return currentStepIndex === submission.steps.length - 1;
 };
 
-const getLoginUrl = loginOption => {
+const getLoginUrl = (loginOption, extraParams = {}) => {
   if (loginOption.url === '#') return loginOption.url;
 
   const nextUrl = new URL(window.location.href);
@@ -33,6 +33,8 @@ const getLoginUrl = loginOption => {
   queryParams.map(param => nextUrl.searchParams.delete(param));
 
   const loginUrl = new URL(loginOption.url);
+
+  Object.entries(extraParams).map(([key, value]) => loginUrl.searchParams.set(key, value));
 
   if (!loginUrl.searchParams.has('coSignSubmission')) {
     nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
