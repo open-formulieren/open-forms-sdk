@@ -60,7 +60,7 @@ const SidebarStepStatus = ({
   completed = false,
 }) => {
   return (
-    <ProgressItem completed={completed}>
+    <ProgressItem completed={completed} modifiers={isApplicable ? [] : ['not-applicable']}>
       <LinkOrSpan
         to={`/stap/${slug}`}
         useLink={isApplicable && canNavigate}
@@ -158,7 +158,7 @@ const ProgressIndicatorDisplay = ({
 
         <Caption component="h2">{formTitle}</Caption>
 
-        <List ordered>
+        <List ordered modifiers={['extra-compact']}>
           <ProgressItem completed={hasSubmission}>
             <Anchor href="#" modifiers={getLinkModifiers(isStartPage, true)}>
               {STEP_LABELS.login}

@@ -84,7 +84,12 @@
 
 .#{prefix('progress-indicator-item')} {
   display: flex;
+  @include margin($grid-margin-1, $properties: padding);
   justify-content: flex-start;
+
+  @include bem.modifier('not-applicable') {
+    display: var(--of-progress-indicator-item-not-applicable-display, flex);
+  }
 
   @include bem.element('marker') {
     width: 1em;

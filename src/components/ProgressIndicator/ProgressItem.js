@@ -5,9 +5,9 @@ import {getBEMClassName} from 'utils';
 
 import CompletionMark from './CompletionMark';
 
-const ProgressItem = ({completed, children}) => {
+const ProgressItem = ({completed, children, modifiers = []}) => {
   return (
-    <div className={getBEMClassName('progress-indicator-item')}>
+    <div className={getBEMClassName('progress-indicator-item', modifiers)}>
       <div className={getBEMClassName('progress-indicator-item__marker')}>
         <CompletionMark completed={completed} />
       </div>
@@ -20,6 +20,7 @@ const ProgressItem = ({completed, children}) => {
 ProgressItem.propTypes = {
   completed: PropTypes.bool.isRequired,
   children: PropTypes.node,
+  modifiers: PropTypes.array,
 };
 
 export default ProgressItem;

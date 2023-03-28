@@ -8,6 +8,7 @@ const List = ({children, modifiers = [], ordered = false, component = ''}) => {
   const className = getBEMClassName('list', modifiers);
   // remove empty children
   const filtered = children.filter(child => !!child);
+
   return (
     <Component className={className}>
       {React.Children.map(filtered, child => (
