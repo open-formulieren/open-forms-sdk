@@ -16,6 +16,7 @@ const ProgressIndicator = ({
   steps,
   submissionAllowed,
   completed = false,
+  hideNonApplicableSteps = false,
 }) => {
   const {pathname} = useLocation();
   const config = useContext(ConfigContext);
@@ -103,6 +104,7 @@ const ProgressIndicator = ({
       activeStepTitle={activeStepTitle}
       formTitle={title}
       steps={getStepsInfo(steps)}
+      hideNonApplicableSteps={hideNonApplicableSteps}
       hasSubmission={hasSubmission}
       isStartPage={isStartPage}
       isSummary={summaryMatch}
@@ -131,6 +133,7 @@ ProgressIndicator.propTypes = {
   ).isRequired,
   submissionAllowed: PropTypes.oneOf(Object.values(SUBMISSION_ALLOWED)).isRequired,
   completed: PropTypes.bool,
+  hideNonApplicableSteps: PropTypes.bool,
 };
 
 export default ProgressIndicator;

@@ -285,6 +285,7 @@ const Form = ({form}) => {
     <ProgressIndicator
       title={form.name}
       steps={form.steps}
+      hideNonApplicableSteps={form.hideNonApplicableSteps}
       submission={state.submission || state.submittedSubmission}
       submissionAllowed={form.submissionAllowed}
       completed={state.completed}

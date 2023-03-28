@@ -46,6 +46,7 @@ const Form = PropTypes.shape({
   ).isRequired,
   explanationTemplate: PropTypes.string,
   requiredFieldsWithAsterisk: PropTypes.bool,
+  hideNonApplicableSteps: PropTypes.bool,
   resumeLinkLifetime: PropTypes.number,
   autoLoginAuthenticationBackend: PropTypes.string,
   translationEnabled: PropTypes.bool,
