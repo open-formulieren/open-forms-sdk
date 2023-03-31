@@ -2,6 +2,17 @@
 SDK Changelog
 =============
 
+1.3.1 (2023-03-31)
+==================
+
+Periodic maintenance release
+
+* [#2912] Fix disappearing drag and drop area when removing a file from the upload file widget.
+* [#2911] Delegate validation of .heic and .heif files to the backend.
+* [#2903] Prevent number and currency fields to re-fill themselves upon input deletion.
+* [#2907] Improve the styling when titles are too long to fit on one line (avoid clipping them with ellipsis).
+* [#2077] + [#2888] Enable reaching the "previous page" button with keyboard navigation.
+
 1.3.0 (2023-03-01)
 ==================
 
