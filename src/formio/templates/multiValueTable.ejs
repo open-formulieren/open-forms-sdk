@@ -4,7 +4,7 @@
   {% if (!ctx.disabled) {%}
     <tr>
       <td colspan="2">
-        <button class="{{ctx.ofPrefix}}button" ref="addButton">
+        <button class="{{ctx.ofPrefix}}button {{ctx.ofPrefix}}button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="addButton">
           <i class="{{ctx.iconClass('plus')}}"></i>
           <div class="{{ctx.ofPrefix}}multi-value-table__button-label">{{ctx.t(ctx.addAnother, {_userInput: true})}}</div>
         </button>
