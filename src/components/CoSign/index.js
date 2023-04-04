@@ -9,6 +9,7 @@ import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
 import LoginOptionsDisplay from 'components/LoginOptions/LoginOptionsDisplay';
+import {getLoginUrl} from 'components/utils';
 import Types from 'types';
 import {getBEMClassName} from 'utils';
 
@@ -37,11 +38,10 @@ const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) 
   const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
 
   // add the co-sign submission parameter to the login URL
-  const loginUrl = new URL(loginOption.url);
-  loginUrl.searchParams.set('coSignSubmission', submissionUuid);
+  const loginUrl = getLoginUrl(loginOption, {coSignSubmission: submissionUuid});
   const modifiedLoginOption = {
     ...loginOption,
-    url: loginUrl.toString(),
+    url: loginUrl,
     label: (
       <FormattedMessage
         description="Login button label"
@@ -148,3 +148,4 @@ CoSign.propTypes = {
 };
 
 export default CoSign;
+export {CoSignAuthentication};
