@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
@@ -55,6 +55,7 @@ class OpenForm {
       sentryEnv = '',
       languageSelectorTarget,
       displayComponents = {}, // TODO: document as unstable API
+      useHashRouting = false,
     } = opts;
 
     this.targetNode = targetNode;
@@ -63,6 +64,7 @@ class OpenForm {
     this.formObject = null;
     this.lang = lang;
     this.displayComponents = {...defaultDisplayComponents, ...displayComponents};
+    this.useHashRouting = useHashRouting;
 
     switch (typeof languageSelectorTarget) {
       case 'string': {
@@ -105,6 +107,8 @@ class OpenForm {
   }
 
   render() {
+    const Router = this.useHashRouting ? HashRouter : BrowserRouter;
+
     // render the wrapping React component
     // TODO: make this work with React 18 which has a different react-dom API
     ReactDOM.render(
