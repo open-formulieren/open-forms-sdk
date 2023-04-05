@@ -18,8 +18,9 @@ otherwise you will get CORS errors.
 Clone this repository, and create/edit `.env.local` for your needs:
 
 ```
-REACT_APP_BASE_API_URL=http://localhost:8000/api/v1/
+REACT_APP_BASE_API_URL=http://localhost:8000/api/v2/
 REACT_APP_FORM_ID=93c09209-5fb9-4105-b6bb-9d9f0aa6782c
+REACT_APP_USE_HASH_ROUTING=false
 ```
 
 Initialize or update the submodules:
