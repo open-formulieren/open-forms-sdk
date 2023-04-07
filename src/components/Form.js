@@ -295,6 +295,9 @@ const Form = ({form}) => {
   const router = (
     <Switch>
       <Route exact path="/">
+        <Redirect to="/startpagina" />
+      </Route>
+      <Route exact path="/startpagina">
         <ErrorBoundary useCard>
           <FormStart form={form} onFormStart={onFormStart} />
         </ErrorBoundary>
