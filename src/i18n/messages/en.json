@@ -329,6 +329,11 @@
     "description": "Progress step indicator toggle icon (mobile)",
     "originalDefault": "Toggle the progress status display"
   },
+  "kH9Cpi": {
+    "defaultMessage": "Start page",
+    "description": "Start page title",
+    "originalDefault": "Start page"
+  },
   "mMYAWl": {
     "defaultMessage": "Your session is about to expire {delta}. Extend your session if you wish to continue.",
     "description": "Session expiry warning message (in modal)",
