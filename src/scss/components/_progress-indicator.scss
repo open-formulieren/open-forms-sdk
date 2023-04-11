@@ -43,7 +43,7 @@
     }
   }
 
-  @include bem.element('active-step') {
+  @include bem.element('form-title') {
     @include ellipsis;
     font-weight: bold;
   }
@@ -64,6 +64,10 @@
     @include nested('caption') {
       @include margin(true, $properties: margin-top);
       @include margin($grid-container-margin, $properties: margin-left);
+
+      @include mobile-only {
+        display: none;
+      }
     }
 
     @include nested('list') {

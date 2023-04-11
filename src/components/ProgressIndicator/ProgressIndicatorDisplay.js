@@ -122,9 +122,9 @@ const ProgressIndicatorDisplay = ({
   const accessibleToggleStepsLabel = intl.formatMessage(
     {
       description: 'Active step accessible label in mobile progress indicator',
-      defaultMessage: 'Current step: {activeStepTitle}',
+      defaultMessage: 'Current step in form {formTitle}: {activeStepTitle}',
     },
-    {activeStepTitle}
+    {formTitle, activeStepTitle}
   );
 
   const modifiers = [];
@@ -149,14 +149,16 @@ const ProgressIndicatorDisplay = ({
             aria-label={ariaIconLabel}
           />
           <span
-            className={getBEMClassName('progress-indicator__active-step')}
+            className={getBEMClassName('progress-indicator__form-title')}
             aria-label={accessibleToggleStepsLabel}
           >
-            {activeStepTitle}
+            {formTitle}
           </span>
         </button>
 
-        <Caption component="h2">{formTitle}</Caption>
+        <Caption component="h2">
+          <FormattedMessage description="Title of progress indicator" defaultMessage="Progress" />
+        </Caption>
 
         <List ordered>
           <ProgressItem completed={hasSubmission}>

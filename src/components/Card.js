@@ -15,9 +15,11 @@ const CardTitle = ({title, component = 'h1', blockClassName = 'card'}) => {
     h6: 6,
   };
 
+  const className = component === 'h1' ? 'title' : 'subtitle';
+
   return (
     <header className={getBEMClassName(`${blockClassName}__header`)}>
-      <Heading level={headingLevel[component] || 1} className={getBEMClassName('title')}>
+      <Heading level={headingLevel[component] || 1} className={getBEMClassName(className)}>
         {title}
       </Heading>
     </header>
