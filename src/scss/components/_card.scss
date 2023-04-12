@@ -10,10 +10,6 @@
   padding: $grid-margin-8;
   box-sizing: border-box;
 
-  @include bem.modifier('no-padding') {
-    padding: 0;
-  }
-
   @include mobile-only {
     @include container-margin($properties: padding);
 
@@ -23,7 +19,7 @@
       }
     }
 
-    // If there are nested cards, we should not necessarily hide all nested headers,
+    // If there are cards with multiple headers inside, we should not necessarily hide all nested headers,
     // so we only hide the first child
     &--mobile-header-hidden > &__header {
       display: none;

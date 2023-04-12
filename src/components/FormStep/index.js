@@ -36,7 +36,7 @@ import {useImmerReducer} from 'use-immer';
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
 import ButtonsToolbar from 'components/ButtonsToolbar';
-import Card from 'components/Card';
+import Card, {CardTitle} from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
@@ -778,7 +778,8 @@ const FormStep = ({
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
         {!isLoadingSomething && configuration ? (
-          <Card title={submissionStep.name} titleComponent="h2" modifiers={['no-padding']}>
+          <>
+            <CardTitle title={submissionStep.name} component="h2" headingType="subtitle" />
             <form onSubmit={onReactSubmit}>
               <Form
                 ref={formRef}
@@ -826,7 +827,7 @@ const FormStep = ({
                 onNavigatePrevPage={onPrevPage}
               />
             </form>
-          </Card>
+          </>
         ) : null}
       </Card>
       <FormStepSaveModal
