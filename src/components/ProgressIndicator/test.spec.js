@@ -57,7 +57,7 @@ it('Progress Indicator submission allowed', () => {
   });
 
   const progressIndicatorSteps = container.getElementsByTagName('ol')[0];
-  expect(progressIndicatorSteps.textContent).toContain('Inloggen');
+  expect(progressIndicatorSteps.textContent).toContain('Startpagina');
   expect(progressIndicatorSteps.textContent).toContain('Overzicht');
   expect(progressIndicatorSteps.textContent).toContain('Bevestiging');
 });
@@ -83,7 +83,7 @@ it('Progress Indicator submission not allowed, with overview page', () => {
   });
 
   const progressIndicatorSteps = container.getElementsByTagName('ol')[0];
-  expect(progressIndicatorSteps.textContent).toContain('Inloggen');
+  expect(progressIndicatorSteps.textContent).toContain('Startpagina');
   expect(progressIndicatorSteps.textContent).toContain('Overzicht');
   expect(progressIndicatorSteps.textContent).not.toContain('Bevestiging');
 });
@@ -109,7 +109,7 @@ it('Progress Indicator submission not allowed, without overview page', () => {
   });
 
   const progressIndicatorSteps = container.getElementsByTagName('ol')[0];
-  expect(progressIndicatorSteps.textContent).toContain('Inloggen');
+  expect(progressIndicatorSteps.textContent).toContain('Startpagina');
   expect(progressIndicatorSteps.textContent).not.toContain('Overzicht');
   expect(progressIndicatorSteps.textContent).not.toContain('Bevestiging');
 });
@@ -132,7 +132,7 @@ it('Form landing page, no submission present in session', () => {
   });
 
   const progressIndicatorSteps = container.getElementsByTagName('ol')[0];
-  expect(progressIndicatorSteps.textContent).toContain('Inloggen');
+  expect(progressIndicatorSteps.textContent).toContain('Startpagina');
   expect(progressIndicatorSteps.textContent).toContain('Overzicht');
   expect(progressIndicatorSteps.textContent).toContain('Bevestiging');
 });

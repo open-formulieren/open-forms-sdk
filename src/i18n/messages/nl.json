@@ -329,6 +329,11 @@
     "description": "Progress step indicator toggle icon (mobile)",
     "originalDefault": "Toggle the progress status display"
   },
+  "kH9Cpi": {
+    "defaultMessage": "Startpagina",
+    "description": "Start page title",
+    "originalDefault": "Start page"
+  },
   "mMYAWl": {
     "defaultMessage": "Uw sessie staat op het punt om te vervallen {delta}. Verleng uw sessie indien u door wenst te gaan.",
     "description": "Session expiry warning message (in modal)",
