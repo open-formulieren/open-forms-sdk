@@ -36,7 +36,7 @@ import {useImmerReducer} from 'use-immer';
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
 import ButtonsToolbar from 'components/ButtonsToolbar';
-import Card from 'components/Card';
+import Card, {CardTitle} from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
@@ -774,57 +774,60 @@ const FormStep = ({
   const isLoadingSomething = loading || isNavigating;
   return (
     <>
-      <Card title={submissionStep.name} modifiers={['mobile-header-hidden']}>
+      <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
         {!isLoadingSomething && configuration ? (
-          <form onSubmit={onReactSubmit}>
-            <Form
-              ref={formRef}
-              form={configuration}
-              onChange={onFormIOChange}
-              onSubmit={onFormIOSubmit}
-              onInitialized={onFormIOInitialized}
-              options={{
-                noAlerts: true,
-                baseUrl: config.baseUrl,
-                language: formioTranslations.language,
-                i18n: formioTranslations.i18n,
-                evalContext: {
-                  ofPrefix: `${PREFIX}-`,
-                  requiredFieldsWithAsterisk: form.requiredFieldsWithAsterisk,
-                },
-                hooks: {
-                  ...hooks,
-                  customValidation: getCustomValidationHook(submissionStep.url, error =>
-                    dispatch({type: 'ERROR', payload: error})
-                  ),
-                },
-                // custom options
-                intl,
-                ofContext: {
-                  form: form,
-                  submissionUuid: submission.id,
-                  saveStepData: async () =>
-                    await submitStepData(submissionStep.url, {...getCurrentFormData()}),
-                  displayComponents: config.displayComponents,
-                },
-              }}
-            />
-            {showDebug ? <FormStepDebug data={getCurrentFormData()} /> : null}
-            <ButtonsToolbar
-              literals={formStep.literals}
-              canSubmitStep={canSubmit}
-              canSubmitForm={submission.submissionAllowed}
-              isAuthenticated={submission.isAuthenticated}
-              isLastStep={isLastStep(currentStepIndex, submission)}
-              isCheckingLogic={logicChecking}
-              loginRequired={form.loginRequired}
-              onFormSave={onFormSave}
-              onLogout={onLogout}
-              onNavigatePrevPage={onPrevPage}
-            />
-          </form>
+          <>
+            <CardTitle title={submissionStep.name} component="h2" headingType="subtitle" />
+            <form onSubmit={onReactSubmit}>
+              <Form
+                ref={formRef}
+                form={configuration}
+                onChange={onFormIOChange}
+                onSubmit={onFormIOSubmit}
+                onInitialized={onFormIOInitialized}
+                options={{
+                  noAlerts: true,
+                  baseUrl: config.baseUrl,
+                  language: formioTranslations.language,
+                  i18n: formioTranslations.i18n,
+                  evalContext: {
+                    ofPrefix: `${PREFIX}-`,
+                    requiredFieldsWithAsterisk: form.requiredFieldsWithAsterisk,
+                  },
+                  hooks: {
+                    ...hooks,
+                    customValidation: getCustomValidationHook(submissionStep.url, error =>
+                      dispatch({type: 'ERROR', payload: error})
+                    ),
+                  },
+                  // custom options
+                  intl,
+                  ofContext: {
+                    form: form,
+                    submissionUuid: submission.id,
+                    saveStepData: async () =>
+                      await submitStepData(submissionStep.url, {...getCurrentFormData()}),
+                    displayComponents: config.displayComponents,
+                  },
+                }}
+              />
+              {showDebug ? <FormStepDebug data={getCurrentFormData()} /> : null}
+              <ButtonsToolbar
+                literals={formStep.literals}
+                canSubmitStep={canSubmit}
+                canSubmitForm={submission.submissionAllowed}
+                isAuthenticated={submission.isAuthenticated}
+                isLastStep={isLastStep(currentStepIndex, submission)}
+                isCheckingLogic={logicChecking}
+                loginRequired={form.loginRequired}
+                onFormSave={onFormSave}
+                onLogout={onLogout}
+                onNavigatePrevPage={onPrevPage}
+              />
+            </form>
+          </>
         ) : null}
       </Card>
       <FormStepSaveModal

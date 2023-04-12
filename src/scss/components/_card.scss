@@ -19,10 +19,10 @@
       }
     }
 
-    @include bem.modifier('mobile-header-hidden') {
-      @include bem.element('header') {
-        display: none;
-      }
+    // If there are cards with multiple headers inside, we should not necessarily hide all nested headers,
+    // so we only hide the first child
+    &--mobile-header-hidden > &__header {
+      display: none;
     }
   }
 

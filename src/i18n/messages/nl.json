@@ -9,6 +9,11 @@
     "description": "Form save modal body text",
     "originalDefault": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
   },
+  "/zQgYv": {
+    "defaultMessage": "Next",
+    "description": "Save appointment",
+    "originalDefault": "Next"
+  },
   "0j8tMq": {
     "defaultMessage": "Uitloggen",
     "description": "Log out button text",
@@ -68,6 +73,11 @@
     "defaultMessage": "Controleer en bevestig",
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
+  },
+  "AnNsAY": {
+    "defaultMessage": "Voortgang",
+    "description": "Title of progress indicator",
+    "originalDefault": "Progress"
   },
   "Ao+97J": {
     "defaultMessage": "Er is iets fout gegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op.",
@@ -164,11 +174,6 @@
     "description": "Form save modal submit button",
     "originalDefault": "Continue later"
   },
-  "M5WEhc": {
-    "defaultMessage": "Huidige stap: {activeStepTitle}",
-    "description": "Active step accessible label in mobile progress indicator",
-    "originalDefault": "Current step: {activeStepTitle}"
-  },
   "PCFPnE": {
     "defaultMessage": "Voor dit product is betaling vereist",
     "description": "Payment required info text",
@@ -228,6 +233,11 @@
     "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
+  },
+  "Zepehv": {
+    "defaultMessage": "Appointment",
+    "description": "Appointment page title",
+    "originalDefault": "Appointment"
   },
   "a8QRYP": {
     "defaultMessage": "Uw e-mailadres",
@@ -309,6 +319,11 @@
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
+  "hR1LxA": {
+    "defaultMessage": "Current step in form {formTitle}: {activeStepTitle}",
+    "description": "Active step accessible label in mobile progress indicator",
+    "originalDefault": "Current step in form {formTitle}: {activeStepTitle}"
+  },
   "iubnaw": {
     "defaultMessage": "Het e-mailadres waarop u de link ontvangt om het formulier te hervatten.",
     "description": "Form save modal email field help text",
@@ -389,9 +404,19 @@
     "description": "Appointment cancellation missing time query string parameter",
     "originalDefault": "Failed to determine the appointment time"
   },
+  "xCQcFj": {
+    "defaultMessage": "{label}",
+    "description": "Appointment {name} field label",
+    "originalDefault": "{label}"
+  },
   "zkdWYe": {
     "defaultMessage": "Terug naar de website",
     "description": "Back to main website link title",
     "originalDefault": "Return to main website"
+  },
+  "zpq0Cf": {
+    "defaultMessage": "Appointment details",
+    "description": "Experiment appointment step",
+    "originalDefault": "Appointment details"
   }
 }

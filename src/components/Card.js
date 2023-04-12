@@ -5,7 +5,7 @@ import React from 'react';
 import Caption from 'components/Caption';
 import {getBEMClassName} from 'utils';
 
-const CardTitle = ({title, component = 'h1', blockClassName = 'card'}) => {
+const CardTitle = ({title, component = 'h1', headingType = 'title', blockClassName = 'card'}) => {
   const headingLevel = {
     h1: 1,
     h2: 2,
@@ -17,7 +17,7 @@ const CardTitle = ({title, component = 'h1', blockClassName = 'card'}) => {
 
   return (
     <header className={getBEMClassName(`${blockClassName}__header`)}>
-      <Heading level={headingLevel[component] || 1} className={getBEMClassName('title')}>
+      <Heading level={headingLevel[component] || 1} className={getBEMClassName(headingType)}>
         {title}
       </Heading>
     </header>
@@ -28,12 +28,14 @@ CardTitle.propTypes = {
   title: PropTypes.node.isRequired,
   component: PropTypes.string,
   blockClassName: PropTypes.string,
+  headingType: PropTypes.oneOf(['title', 'subtitle']),
 };
 
 const Card = ({
   children,
   title,
   titleComponent,
+  titleHeadingType = 'title',
   caption,
   captionComponent,
   blockClassName = 'card',
@@ -44,7 +46,12 @@ const Card = ({
     <div className={className}>
       {/* Emit header/title only if there is one */}
       {title ? (
-        <CardTitle title={title} component={titleComponent} blockClassName={blockClassName} />
+        <CardTitle
+          title={title}
+          component={titleComponent}
+          headingType={titleHeadingType}
+          blockClassName={blockClassName}
+        />
       ) : null}
 
       {/* Emit the caption if provided */}
@@ -70,3 +77,4 @@ Card.propTypes = {
 };
 
 export default Card;
+export {CardTitle};

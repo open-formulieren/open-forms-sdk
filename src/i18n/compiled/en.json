@@ -43,6 +43,12 @@
       "value": "."
     }
   ],
+  "/zQgYv": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
   "0j8tMq": [
     {
       "type": 0,
@@ -113,6 +119,12 @@
     {
       "type": 0,
       "value": "Check and confirm"
+    }
+  ],
+  "AnNsAY": [
+    {
+      "type": 0,
+      "value": "Progress"
     }
   ],
   "Ao+97J": [
@@ -263,16 +275,6 @@
       "value": "Continue later"
     }
   ],
-  "M5WEhc": [
-    {
-      "type": 0,
-      "value": "Current step: "
-    },
-    {
-      "type": 1,
-      "value": "activeStepTitle"
-    }
-  ],
   "PCFPnE": [
     {
       "type": 0,
@@ -363,6 +365,12 @@
     {
       "type": 0,
       "value": " geannuleerd."
+    }
+  ],
+  "Zepehv": [
+    {
+      "type": 0,
+      "value": "Appointment"
     }
   ],
   "a8QRYP": [
@@ -477,6 +485,24 @@
     {
       "type": 0,
       "value": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
+    }
+  ],
+  "hR1LxA": [
+    {
+      "type": 0,
+      "value": "Current step in form "
+    },
+    {
+      "type": 1,
+      "value": "formTitle"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "activeStepTitle"
     }
   ],
   "iubnaw": [
@@ -611,10 +637,22 @@
       "value": "Failed to determine the appointment time"
     }
   ],
+  "xCQcFj": [
+    {
+      "type": 1,
+      "value": "label"
+    }
+  ],
   "zkdWYe": [
     {
       "type": 0,
       "value": "Return to main website"
+    }
+  ],
+  "zpq0Cf": [
+    {
+      "type": 0,
+      "value": "Appointment details"
     }
   ]
 }
