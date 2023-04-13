@@ -98,6 +98,7 @@ const ProgressIndicatorDisplay = ({
   activeStepTitle,
   formTitle,
   steps,
+  hideNonApplicableSteps,
   hasSubmission,
   isStartPage,
   isSummary,
@@ -115,6 +116,9 @@ const ProgressIndicatorDisplay = ({
   const intl = useIntl();
   // aria-labels are passed to DOM element, which can't handle <FormattedMessage />, so we
   // use imperative API
+  if (hideNonApplicableSteps) {
+    steps = steps.filter(step => step.isApplicable);
+  }
   const ariaIconLabel = intl.formatMessage({
     description: 'Progress step indicator toggle icon (mobile)',
     defaultMessage: 'Toggle the progress status display',
@@ -240,6 +244,7 @@ ProgressIndicatorDisplay.propTypes = {
   expanded: PropTypes.bool,
   onExpandClick: PropTypes.func.isRequired,
   sticky: PropTypes.bool,
+  hideNonApplicableSteps: PropTypes.bool,
 };
 
 export default ProgressIndicatorDisplay;

@@ -40,6 +40,7 @@ const FORM_DEFAULTS = {
   resumeLinkLifetime: 7,
   autoLoginAuthenticationBackend: '',
   translationEnabled: false,
+  hideNonApplicableSteps: false,
 };
 
 /**
