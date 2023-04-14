@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+1.3.2 (2023-04-14)
+==================
+
+Periodic maintenance release
+
+* [#2909] Prevent the cursors jumping back to the start of email fields.
+* [#2939] Fix co-sign component error 'missing next parameter'.
+
 1.3.1 (2023-03-31)
 ==================
 
