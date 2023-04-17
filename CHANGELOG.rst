@@ -2,6 +2,43 @@
 SDK Changelog
 =============
 
+1.2.8 (2023-04-17)
+==================
+
+Periodic bugfix release
+
+* [#2903] Fixed unintended clearing of number/currency data with backend logic
+* [#2912] Fixed disappearing file upload drag and drop area after deleting a succesful
+  upload.
+
+1.1.4 (2023-04-17)
+==================
+
+This release marks the end-of-life (EOL) of the 1.1.x series.
+
+* [#2903] Fixed unintended clearing of number/currency data with backend logic
+* [#2912] Fixed disappearing file upload drag and drop area after deleting a succesful
+  upload.
+
+1.3.2 (2023-04-14)
+==================
+
+Periodic maintenance release
+
+* [#2909] Prevent the cursors jumping back to the start of email fields.
+* [#2939] Fix co-sign component error 'missing next parameter'.
+
+1.3.1 (2023-03-31)
+==================
+
+Periodic maintenance release
+
+* [#2912] Fix disappearing drag and drop area when removing a file from the upload file widget.
+* [#2911] Delegate validation of .heic and .heif files to the backend.
+* [#2903] Prevent number and currency fields to re-fill themselves upon input deletion.
+* [#2907] Improve the styling when titles are too long to fit on one line (avoid clipping them with ellipsis).
+* [#2077] + [#2888] Enable reaching the "previous page" button with keyboard navigation.
+
 1.3.0 (2023-03-01)
 ==================
 
