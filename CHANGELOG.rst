@@ -2,6 +2,15 @@
 Changelog
 =========
 
+1.1.4 (2023-04-17)
+==================
+
+This release marks the end-of-life (EOL) of the 1.1.x series.
+
+* [#2903] Fixed unintended clearing of number/currency data with backend logic
+* [#2912] Fixed disappearing file upload drag and drop area after deleting a succesful
+  upload.
+
 1.1.3 (2023-03-01)
 ==================
 
