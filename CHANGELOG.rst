@@ -2,6 +2,15 @@
 SDK Changelog
 =============
 
+1.2.8 (2023-04-17)
+==================
+
+Periodic bugfix release
+
+* [#2903] Fixed unintended clearing of number/currency data with backend logic
+* [#2912] Fixed disappearing file upload drag and drop area after deleting a succesful
+  upload.
+
 1.1.4 (2023-04-17)
 ==================
 
