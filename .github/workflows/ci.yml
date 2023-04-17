@@ -160,3 +160,14 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
         run: docker push $IMAGE_NAME:$RELEASE_VERSION
+
+  update-docker-readme:
+    needs:
+      - docker
+    uses: ./.github/workflows/dockerhub-description.yml
+    if: github.event_name == 'push' && github.repository_owner == 'open-formulieren' # Exclude PRs / forks
+    with:
+      image_name: openformulieren/open-forms-sdk
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
