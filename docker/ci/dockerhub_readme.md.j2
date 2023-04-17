@@ -1,0 +1,59 @@
+# Open Forms SDK - official Docker image
+
+## Quick reference
+
+- **Documentation**: https://open-forms.readthedocs.io/en/latest/
+- **Maintained by**: [the Open Forms maintainers]({{ github_org }})
+- **Where to get help**: [the Open Forms Github]({{ github_org }}/open-forms/issues)
+
+## Supported tags and respective `Dockerfile` links
+
+{% for supported_tag in supported_tags -%}
+- [`{{ supported_tag.tag }}`]({{ supported_tag.dockerfile_url }})
+{% endfor %}
+
+## Quick reference (cont.)
+
+- **Supported architectures**: `amd64`
+
+## What is the Open Forms SDK?
+
+The Open Forms Javascript SDK (source development kit) enables users to embed,
+render and submit forms that are defined in [Open Forms][Open Forms]. The SDK leverages
+the Open Forms API, and is (partially) built on top of the [formio.js][formio.js] SDK.
+
+A default style is included but rendered form elements can be styled in line
+with your own website.
+
+Open Forms is developed in line with the [Common Ground][Common Ground] principles,
+with many plugins for government usage and with a strong focus on usability for
+both end users and administrators.
+
+[Open Forms]: {{ github_org }}/open-forms/
+[formio.js]: https://github.com/formio/formio.js/
+[Common Ground]: https://commonground.nl/
+
+## Usage
+
+```bash
+docker run -p 8080:8080 openformulieren/open-forms-sdk:latest
+```
+
+This will start the container serving the static assets:
+
+* `http://localhost:8080/open-forms-sdk.js`
+* `http://localhost:8080/open-forms-sdk.css`
+
+**Tagged images**
+
+Tagged images serve their assets in a subpath for deterministic paths while allowing
+cache-busting:
+
+```bash
+docker run -p 8080:8080 openformulieren/open-forms-sdk:<version>
+```
+
+This will start the container serving the static assets:
+
+* `http://localhost:8080/<version>/open-forms-sdk.js`
+* `http://localhost:8080/<version>/open-forms-sdk.css`
