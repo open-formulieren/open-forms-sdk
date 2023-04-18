@@ -107,6 +107,40 @@ parameters.
   >
     {Template.bind({})}
   </Story>
+  <Story
+    name="Suspension disallowed"
+    args={{
+      formioConfiguration: {
+        display: 'form',
+        components: [
+          {
+            type: 'textfield',
+            key: 'text1',
+            label: 'Simple text field',
+            description: 'A help text for the text field',
+          },
+          {
+            type: 'radio',
+            key: 'radio1',
+            label: 'Radio choices',
+            values: [
+              {value: 'option1', label: 'Option1'},
+              {value: 'option2', label: 'Option2'},
+            ],
+          },
+        ],
+      },
+      routerArgs: {
+        route: '/stap/:step',
+        initialEntries: ['/stap/step-1'],
+      },
+      form: buildForm({suspensionAllowed: false}),
+      submission: buildSubmission(),
+      showDebug: false,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
 </Canvas>
 
 ## Props
