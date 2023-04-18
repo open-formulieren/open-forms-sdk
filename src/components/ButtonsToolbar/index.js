@@ -58,7 +58,7 @@ ButtonsToolbar.propTypes = {
   literals: PropTypes.object,
   canSubmitStep: PropTypes.bool.isRequired,
   canSubmitForm: PropTypes.string.isRequired,
-  canSuspendForm: PropTypes.string.isRequired,
+  canSuspendForm: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   isCheckingLogic: PropTypes.bool.isRequired,

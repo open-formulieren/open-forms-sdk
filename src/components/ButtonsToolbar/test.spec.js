@@ -1,3 +1,4 @@
+import {render as renderTest, screen} from '@testing-library/react';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
@@ -36,6 +37,7 @@ it('Last step of submittable form, button is present', () => {
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
+        canSuspendForm={true}
         isAuthenticated={false}
         isLastStep={true}
         isCheckingLogic={false}
@@ -65,6 +67,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
+        canSuspendForm={true}
         isAuthenticated={false}
         isLastStep={true}
         isCheckingLogic={false}
@@ -94,6 +97,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+        canSuspendForm={true}
         isAuthenticated={false}
         isLastStep={true}
         isCheckingLogic={false}
@@ -122,6 +126,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
         literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+        canSuspendForm={true}
         isAuthenticated={false}
         isLastStep={false}
         isCheckingLogic={false}
@@ -140,4 +145,48 @@ it('Non-last step of non-submittable form without overview, button IS present', 
   expect(buttons[0].textContent).toEqual('Previous step');
   expect(buttons[1].textContent).toEqual('Save step');
   expect(buttons[2].textContent).toEqual('Next step');
+});
+
+it('Suspending form allowed, button is present', () => {
+  const mockFunction = jest.fn();
+
+  renderTest(
+    <ButtonsToolbar
+      literals={LITERALS}
+      canSubmitStep={true}
+      canSubmitForm={SUBMISSION_ALLOWED.yes}
+      canSuspendForm={true}
+      isAuthenticated={false}
+      isLastStep={true}
+      isCheckingLogic={false}
+      loginRequired={false}
+      onNavigatePrevPage={mockFunction}
+      onFormSave={mockFunction}
+      onLogout={mockFunction}
+    />
+  );
+
+  expect(screen.queryByText('Save step')).toBeInTheDocument();
+});
+
+it('Suspending form not allowed, button is NOT present', () => {
+  const mockFunction = jest.fn();
+
+  renderTest(
+    <ButtonsToolbar
+      literals={LITERALS}
+      canSubmitStep={true}
+      canSubmitForm={SUBMISSION_ALLOWED.yes}
+      canSuspendForm={false}
+      isAuthenticated={false}
+      isLastStep={true}
+      isCheckingLogic={false}
+      loginRequired={false}
+      onNavigatePrevPage={mockFunction}
+      onFormSave={mockFunction}
+      onLogout={mockFunction}
+    />
+  );
+
+  expect(screen.queryByText('Save step')).not.toBeInTheDocument();
 });
