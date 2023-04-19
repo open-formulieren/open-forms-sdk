@@ -2,6 +2,11 @@
 SDK Changelog
 =============
 
+1.3.3 (2023-04-19)
+==================
+
+* [#2875] Patched and confirmed fix for SiteImprove analytics tracking
+
 1.3.2 (2023-04-14)
 ==================
 
