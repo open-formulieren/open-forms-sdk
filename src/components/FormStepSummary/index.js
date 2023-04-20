@@ -35,7 +35,7 @@ LabelValueRow.propTypes = {
   component: PropTypes.object.isRequired,
 };
 
-const FormStepSummary = ({slug, name, data, editStepText}) => {
+const FormStepSummary = ({slug, name, data, editStepText = ''}) => {
   const editStepUrl = `/stap/${slug}`;
   const history = useHistory();
 
@@ -43,16 +43,18 @@ const FormStepSummary = ({slug, name, data, editStepText}) => {
     <div className={getBEMClassName('summary')}>
       <div className={getBEMClassName('summary__step-header')}>
         <h2 className={getBEMClassName('summary__step-name')}>{name}</h2>
-        <Anchor
-          href={editStepUrl}
-          onClick={event => {
-            event.preventDefault();
-            history.push(editStepUrl);
-          }}
-        >
-          <FAIcon icon="pen-to-square" />
-          {editStepText}
-        </Anchor>
+        {editStepText && (
+          <Anchor
+            href={editStepUrl}
+            onClick={event => {
+              event.preventDefault();
+              history.push(editStepUrl);
+            }}
+          >
+            <FAIcon icon="pen-to-square" />
+            {editStepText}
+          </Anchor>
+        )}
       </div>
 
       <div className={getBEMClassName('summary__step-data')}>
@@ -72,7 +74,7 @@ const FormStepSummary = ({slug, name, data, editStepText}) => {
 FormStepSummary.propTypes = {
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  editStepText: PropTypes.string.isRequired,
+  editStepText: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

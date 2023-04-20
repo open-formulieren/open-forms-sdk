@@ -4,7 +4,6 @@ import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime, useIntl
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
-import CoSign from 'components/CoSign';
 import Image from 'components/Image';
 import List from 'components/List';
 import Map from 'components/Map';
@@ -197,13 +196,6 @@ const PasswordDisplay = ({component, value}) => {
     .join('');
 };
 
-const CoSignDisplay = ({component, value}) => {
-  if (!value) {
-    return <EmptyDisplay />;
-  }
-  return <CoSign interactive={false} />;
-};
-
 const ComponentValueDisplay = ({value, component}) => {
   const {multiple = false, type} = component;
 
@@ -253,7 +245,6 @@ const TYPE_TO_COMPONENT = {
   currency: CurrencyDisplay,
   map: MapDisplay,
   password: PasswordDisplay,
-  coSign: CoSignDisplay,
 };
 
 export default ComponentValueDisplay;

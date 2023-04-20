@@ -14,6 +14,7 @@ import Types from 'types';
 import {DEBUG} from 'utils';
 
 import AppDisplay from './AppDisplay';
+import {CosignCheck, CosignDone, CosignLogin, CosignRetrieveSubmission} from './Cosign';
 
 const LanguageSwitcher = () => {
   const {languageSelectorTarget: target} = useContext(I18NContext);
@@ -41,10 +42,26 @@ const App = ({...props}) => {
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
   const router = (
     <Switch>
-      {/* Anything dealing with appointments gets routed to it's own sub-router */}
+      {/* Anything dealing with appointments gets routed to its own sub-router */}
       <Route path="/afspraak*" component={ManageAppointment} />
       <Route path="/appointment">
         <AppointmentForm {...props} />
+      </Route>
+
+      {/* Anything dealing with co-sign TODO: make separate switch? */}
+      <Route exact path="/cosign">
+        <CosignLogin form={props.form} />
+      </Route>
+      <Route exact path="/cosign/retrieve">
+        {/* TODO Add some check that the user logged in */}
+        <CosignRetrieveSubmission form={props.form} />
+      </Route>
+      <Route exact path="/cosign/done">
+        <CosignDone form={props.form} />
+      </Route>
+      <Route exact path="/cosign/:submission">
+        {/* TODO Add RequiresSubmission in session*/}
+        <CosignCheck form={props.form} />
       </Route>
 
       {/* All the rest goes to the actual form flow */}

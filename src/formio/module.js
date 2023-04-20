@@ -1,7 +1,7 @@
 import BsnField from './components/BsnField';
 import Button from './components/Button';
 import Checkbox from './components/Checkbox';
-import CoSign from './components/CoSign';
+import CoSignEmail from './components/CoSignEmail';
 import Component from './components/Component';
 import ContentComponent from './components/Content';
 import Currency from './components/Currency';
@@ -47,8 +47,8 @@ const FormIOModule = {
     map: Map,
     password: PasswordField,
     licenseplate: LicensePlateField,
-    coSign: CoSign,
     editgrid: EditGrid,
+    cosign: CoSignEmail,
   },
   providers: {
     storage: {url: CSRFEnabledUrl},
