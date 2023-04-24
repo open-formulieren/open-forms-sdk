@@ -1,7 +1,7 @@
 <!--This template is used by both the radio and the selectboxes components-->
 <div class="{{ctx.ofPrefix}}form-choices utrecht-form-fieldset__fieldset utrecht-form-fieldset__fieldset--html-fieldset">
   {% ctx.values.forEach(function(item) { %}
-    <div class="{{ctx.ofPrefix}}form-choices__choice utrecht-form-field utrecht-form-field--{{ ctx.input.attr['type'] }}">
+    <div class="{{ctx.ofPrefix}}form-choices__choice utrecht-form-field utrecht-form-field--{{ctx.input.attr['type']}}">
       <input
         ref="input"
         class="utrecht-radio-button"

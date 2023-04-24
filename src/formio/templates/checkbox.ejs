@@ -1,25 +1,30 @@
-<div class="{{ctx.ofPrefix}}checkbox utrecht-form-field utrecht-form-field--checkbox">
-    <{{ctx.input.type}}
+<div class="{{ctx.ofPrefix}}form-choices utrecht-form-fieldset__fieldset utrecht-form-fieldset__fieldset--html-fieldset">
+  <div class="{{ctx.ofPrefix}}form-choices__choice utrecht-form-field utrecht-form-field--checkbox">
+    <input
       ref="input"
-      {% for (var attr in ctx.input.attr) { %}
-      {{attr}}="{{ctx.input.attr[attr]}}"
-      {% } %}
       id="{{ctx.instance.id}}-{{ctx.component.key}}"
+
+      {% for (var attr in ctx.input.attr) { %}
+        {{attr}}="{{ctx.input.attr[attr]}}"
+      {% } %}
+
       {% if (ctx.checked) { %}checked=true{% } %}
     >
+      {{ctx.input.content}}
+    </input>
 
-        {{ctx.input.content}}
-    </{{ctx.input.type}}>
+    <div class="{{ctx.ofPrefix}}form-choices__checkmark"></div>
 
-    <div class="{{ctx.ofPrefix}}checkbox__checkmark"></div>
-    <label class="{{ctx.ofPrefix}}checkbox__label utrecht-form-label utrecht-form-label--checkbox {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}  {% if (ctx.component.validate.required) { %}required-field utrecht-form-label--required{% } %} {{ctx.input.labelClass}}" for="{{ctx.instance.id}}-{{ctx.component.key}}">
-        {{ctx.input.label}}&nbsp;
+    <p class="{{ctx.ofPrefix}}form-choices__choice-label utrecht-form-field__label utrecht-form-field__label--{{ctx.input.attr['type']}}">
+      <label class="{{ctx.ofPrefix}}form-choices__label utrecht-form-label utrecht-form-label--checkbox {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}  {% if (ctx.component.validate.required) { %}required-field utrecht-form-label--required{% } %} {{ctx.input.labelClass}}" for="{{ctx.instance.id}}-{{ctx.component.key}}">
+        {{ctx.input.label}}&nbsp
         {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
             {{ ctx.t('(optional)') }}
         {% } %}
         {% if (ctx.component.tooltip) { %}
-            <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
+          <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
         {% } %}
-
-  </label>
+      </label>
+    </p>
+  </div>
 </div>
