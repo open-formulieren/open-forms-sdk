@@ -30,23 +30,31 @@ $checkbox-label-padding-left: calc(
     position: relative;
   }
 
-  @include bem.element('choice-label') {
-    padding: $checkbox-label-padding-v 0;
-    width: 100%;
-  }
-
   @include bem.element('label') {
+    // The 'trick' here is that the padding of the label for the input needs to overlap with the
+    // checkmark. In this way, it *looks* like when you click on the checkmark, the radio/checkbox
+    // is toggled
     padding: $checkbox-label-padding-v $checkbox-label-padding-h $checkbox-label-padding-v
       $checkbox-label-padding-left;
     position: relative;
     width: 100%;
-
     cursor: pointer;
-    word-break: break-all;
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 
-  & :focus ~ &__choice-label {
+  & :focus ~ &__label {
     @include outline(var(--of-color-info));
+  }
+
+  @include bem.element('wysiwyg-text') {
+    // This is needed because the label is populated with the value coming from a WYSIWYG editor
+    // which adds <p></p> around each paragraph in the text. This tag gets a margin which looks off.
+    // So here it is overwritten.
+    @include wysiwyg;
+    p {
+      @include body('auto');
+    }
   }
 
   @include bem.element('checkmark') {
@@ -80,9 +88,6 @@ $checkbox-label-padding-left: calc(
   //Style specific for radio
   & [type='radio'] ~ &__checkmark {
     @include transform.rounded;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   & [type='radio']:checked ~ &__checkmark:after {
