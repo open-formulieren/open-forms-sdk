@@ -300,7 +300,11 @@ const Form = ({form}) => {
       </Route>
       <Route exact path="/startpagina">
         <ErrorBoundary useCard>
-          <FormStart form={form} onFormStart={onFormStart} />
+          <FormStart
+            form={form}
+            hasActiveSubmission={!!state.submission}
+            onFormStart={onFormStart}
+          />
         </ErrorBoundary>
       </Route>
 
