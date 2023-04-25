@@ -781,7 +781,12 @@ const FormStep = ({
 
         {!isLoadingSomething && configuration ? (
           <>
-            <CardTitle title={submissionStep.name} component="h2" headingType="subtitle" />
+            <CardTitle
+              title={submissionStep.name}
+              component="h2"
+              headingType="subtitle"
+              modifiers={['padded']}
+            />
             <form onSubmit={onReactSubmit}>
               <Form
                 ref={formRef}

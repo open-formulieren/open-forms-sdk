@@ -10,12 +10,18 @@
   padding: $grid-margin-8;
   box-sizing: border-box;
 
+  @include bem.element('header') {
+    @include bem.modifier('padded') {
+      @include rows(1, padding-bottom);
+    }
+  }
+
   @include mobile-only {
     @include container-margin($properties: padding);
 
     @include bem.element('header') {
-      &:not(:last-child) {
-        margin-bottom: $grid-margin-2;
+      @include bem.modifier('padded') {
+        padding-bottom: $grid-margin-2;
       }
     }
 
