@@ -1,0 +1,76 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {getWorker} from 'msw-storybook-addon';
+import { useArgs } from '@storybook/client-api';
+import {rest} from 'msw';
+
+import FormStepSaveModal from './FormStepSaveModal';
+import Button from 'components/Button';
+import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
+import {BASE_URL} from 'api-mocks';
+
+
+<Meta
+  title="Private API/FormStepSaveModal"
+  component={FormStepSaveModal}
+  argTypes={{
+    isOpen: {controls: 'boolean'},
+    suspendFormUrlLifetime: {controls: 'int'},
+    suspendFormUrl: {table: {disable: true}},
+    submissionId: {table: {disable: true}},
+  }}
+  decorators={[ConfigDecorator, RouterDecorator]}
+/>
+
+[//]: # ( Code related to mocking the calls made when saving the form )
+
+export const suspendFormUrl = `${BASE_URL}submissions/111-222-333/_suspend`;
+export const mockSuspendFormPOST = rest.post(suspendFormUrl, (req, res, ctx) => {
+  return res(ctx.json({ok: true}));
+});
+export const mockDestroySessionDELETE = rest.delete(
+  `${BASE_URL}authentication/111-222-333/session`,
+  (req, res, ctx) => res(ctx.status(204))
+);
+export const worker = getWorker();
+
+
+export const Template = (args) => {
+  const [_, updateArgs] = useArgs();
+  return (
+    <>
+      <Button variant="primary" onClick={() => updateArgs({isOpen: !args.isOpen})}>
+        Open Modal
+      </Button>
+      <FormStepSaveModal
+        closeModal={() => updateArgs({isOpen: !args.isOpen})} {...args}
+      />
+    </>
+  );
+};
+
+# FormStepSaveModal component
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      isOpen: false,
+      suspendFormUrlLifetime: 7,
+      onSaveConfirm: () => ({ok: true}),
+      onSessionDestroyed: () => {},
+      suspendFormUrl: suspendFormUrl,
+      submissionId: '111-222-333',
+    }}
+    parameters={{
+      msw: {
+        handlers: [mockSuspendFormPOST, mockDestroySessionDELETE],
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={FormStepSaveModal} />
