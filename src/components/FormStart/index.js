@@ -40,7 +40,7 @@ const FormStartMessage = ({form}) => {
  * This is shown when the form is initially loaded and provides the explicit user
  * action to start the form, or present the login button (DigiD, eHerkenning...)
  */
-const FormStart = ({form, hasActiveSubmission, onFormStart}) => {
+const FormStart = ({form, hasActiveSubmission, onFormStart, onFormAbort}) => {
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
@@ -126,7 +126,7 @@ const FormStart = ({form, hasActiveSubmission, onFormStart}) => {
         <FormStartMessage form={form} />
 
         {hasActiveSubmission ? (
-          <ExistingSubmissionOptions form={form} />
+          <ExistingSubmissionOptions form={form} onFormAbort={onFormAbort} />
         ) : (
           <LoginOptions form={form} onFormStart={onFormStart} />
         )}
@@ -137,7 +137,9 @@ const FormStart = ({form, hasActiveSubmission, onFormStart}) => {
 
 FormStart.propTypes = {
   form: Types.Form.isRequired,
+  hasActiveSubmission: PropTypes.bool,
   onFormStart: PropTypes.func.isRequired,
+  onFormAbort: PropTypes.func.isRequired,
 };
 
 export default FormStart;
