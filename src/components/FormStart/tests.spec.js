@@ -33,11 +33,17 @@ it('Form start page start if _start parameter is present', () => {
   useQuery.mockReturnValue(testLocation);
 
   const onFormStart = jest.fn();
+  const onFormAbort = jest.fn();
 
   act(() => {
     render(
       <IntlProvider locale="nl" messages={messagesNL}>
-        <FormStart form={testForm} onFormStart={onFormStart} />
+        <FormStart
+          form={testForm}
+          onFormStart={onFormStart}
+          onFormAbort={onFormAbort}
+          hasActiveSubmission={false}
+        />
       </IntlProvider>,
       container
     );
@@ -48,6 +54,7 @@ it('Form start page start if _start parameter is present', () => {
 
 it('Form start does not start if there are auth errors', () => {
   const onFormStart = jest.fn();
+  const onFormAbort = jest.fn();
 
   const testQueries = {
     '_digid-message=error':
@@ -65,7 +72,12 @@ it('Form start does not start if there are auth errors', () => {
     act(() => {
       render(
         <IntlProvider locale="nl" messages={messagesNL}>
-          <FormStart form={testForm} onFormStart={onFormStart} />
+          <FormStart
+            form={testForm}
+            onFormStart={onFormStart}
+            onFormAbort={onFormAbort}
+            hasActiveSubmission={false}
+          />
         </IntlProvider>,
         container
       );
@@ -74,4 +86,30 @@ it('Form start does not start if there are auth errors', () => {
     expect(container.textContent).toContain(expectedMessage);
     expect(onFormStart).toHaveBeenCalledTimes(0);
   }
+});
+
+it('Form start page does not show login buttons if an active submission is present', () => {
+  useQuery.mockReturnValue(new URLSearchParams());
+  const onFormStart = jest.fn();
+  const onFormAbort = jest.fn();
+
+  act(() => {
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <FormStart
+          form={testForm}
+          onFormStart={onFormStart}
+          onFormAbort={onFormAbort}
+          hasActiveSubmission={true}
+        />
+      </IntlProvider>,
+      container
+    );
+  });
+
+  const buttons = container.getElementsByTagName('button');
+
+  expect(buttons.length).toEqual(2);
+  expect(buttons[0].textContent).toEqual('Continue existing submission');
+  expect(buttons[1].textContent).toEqual('Abort existing submission');
 });
