@@ -100,7 +100,7 @@
     "originalDefault": "Authentication problem"
   },
   "DvlDIB": {
-    "defaultMessage": "Weet u zeker dat u wilt uitloggen?",
+    "defaultMessage": "Are you sure that you want to logout?",
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
   },
@@ -183,6 +183,11 @@
     "defaultMessage": "Verlengen",
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
+  },
+  "R0CpY1": {
+    "defaultMessage": "Abort existing submission",
+    "description": "Abort existing submission button label",
+    "originalDefault": "Abort existing submission"
   },
   "RJ+0F/": {
     "defaultMessage": "Ja",
@@ -274,11 +279,6 @@
     "description": "return to form start link after 403",
     "originalDefault": "Back to form start"
   },
-  "djrQar": {
-    "defaultMessage": "Inloggen",
-    "description": "Start page title",
-    "originalDefault": "Log in"
-  },
   "eO6Ysb": {
     "defaultMessage": "Uw betaling wordt momenteel verwerkt.",
     "description": "payment processing status",
@@ -348,6 +348,16 @@
     "defaultMessage": "Startpagina",
     "description": "Start page title",
     "originalDefault": "Start page"
+  },
+  "lq29t6": {
+    "defaultMessage": "Are you sure that you want to abort this submission? You will lose your progress if you continue.",
+    "description": "Abort confirmation prompt",
+    "originalDefault": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
+  },
+  "lxjglE": {
+    "defaultMessage": "Continue existing submission",
+    "description": "Continue existing submission button label",
+    "originalDefault": "Continue existing submission"
   },
   "mMYAWl": {
     "defaultMessage": "Uw sessie staat op het punt om te vervallen {delta}. Verleng uw sessie indien u door wenst te gaan.",
