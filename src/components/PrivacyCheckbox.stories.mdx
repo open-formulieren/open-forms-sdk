@@ -2,7 +2,7 @@ import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {userEvent, within} from '@storybook/testing-library';
 import {expect} from '@storybook/jest';
 
-import PrivacyCheckbox from "./PrivacyCheckbox";
+import PrivacyCheckbox from './PrivacyCheckbox';
 
 <Meta
   title="Pure React components/Privacy Checkbox"
@@ -15,8 +15,9 @@ import PrivacyCheckbox from "./PrivacyCheckbox";
       },
     },
     onChange: {control: 'func'},
-    warning: 'bool',
-    value: 'bool'
+    value: {
+      table: {disable: true},
+    }
   }}
 />
 
@@ -34,7 +35,6 @@ export const Template = ({label, value, warning, onChange}) => {
     args={{
       label: '<p>Ja, ik heb kennis genomen van het <a href=\"https://maykinmedia.nl/en/privacy/\" target=\"_blank\" rel=\"noreferrer noopener\">privacybeleid</a> en geef uitdrukkelijk toestemming voor het verwerken van de door mij opgegeven gegevens.</p>',
       warning: false,
-      value: false,
     }}
     play={async ({args, canvasElement}) => {
       const canvas = within(canvasElement);
@@ -54,7 +54,6 @@ export const Template = ({label, value, warning, onChange}) => {
     args={{
       label: '<p>Ja, ik heb kennis genomen van het <a href=\"https://maykinmedia.nl/en/privacy/\" target=\"_blank\" rel=\"noreferrer noopener\">privacybeleid</a> en geef uitdrukkelijk toestemming voor het verwerken van de door mij opgegeven gegevens.</p>',
       warning: true,
-      value: false,
     }}
   >
     {Template.bind({})}
