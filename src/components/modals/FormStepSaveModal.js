@@ -52,7 +52,14 @@ const reducer = (draft, action) => {
   }
 };
 
-const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, submissionId}) => {
+const FormStepSaveModal = ({
+  isOpen,
+  closeModal,
+  onSaveConfirm,
+  onSessionDestroyed,
+  suspendFormUrl,
+  submissionId,
+}) => {
   const history = useHistory();
   const intl = useIntl();
   const config = useContext(ConfigContext);
@@ -107,9 +114,12 @@ const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, s
       return;
     }
 
+    onSessionDestroyed();
     // redirect back to start page
     dispatch({type: 'SAVE_SUCCEEDED'});
     history.push('/');
+    // TODO: replace with a proper reset of the state instead of a page reload.
+    window.location.reload();
   };
 
   return (
@@ -180,6 +190,7 @@ const FormStepSaveModal = ({isOpen, closeModal, onSaveConfirm, suspendFormUrl, s
 FormStepSaveModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
+  onSessionDestroyed: PropTypes.func.isRequired,
   onSaveConfirm: PropTypes.func.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
   submissionId: PropTypes.string.isRequired,
