@@ -834,6 +834,9 @@ const FormStep = ({
         isOpen={isFormSaveModalOpen}
         closeModal={closeFormStepSaveModal}
         onSaveConfirm={onSaveConfirm}
+        onSessionDestroyed={() => {
+          localStorage.removeItem(form.uuid);
+        }}
         suspendFormUrl={`${submission.url}/_suspend`}
         suspendFormUrlLifetime={form.resumeLinkLifetime}
         submissionId={submission.id}

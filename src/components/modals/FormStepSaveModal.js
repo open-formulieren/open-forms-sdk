@@ -56,6 +56,7 @@ const FormStepSaveModal = ({
   isOpen,
   closeModal,
   onSaveConfirm,
+  onSessionDestroyed,
   suspendFormUrl,
   suspendFormUrlLifetime,
   submissionId,
@@ -114,9 +115,12 @@ const FormStepSaveModal = ({
       return;
     }
 
+    onSessionDestroyed();
     // redirect back to start page
     dispatch({type: 'SAVE_SUCCEEDED'});
     history.push('/');
+    // TODO: replace with a proper reset of the state instead of a page reload.
+    window.location.reload();
   };
 
   return (
@@ -188,6 +192,7 @@ const FormStepSaveModal = ({
 FormStepSaveModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
+  onSessionDestroyed: PropTypes.func.isRequired,
   onSaveConfirm: PropTypes.func.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
   submissionId: PropTypes.string.isRequired,
