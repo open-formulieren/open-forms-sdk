@@ -4,8 +4,8 @@ import {FormattedMessage} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 
 import Button from 'components/Button';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Types from 'types';
-import {getBEMClassName} from 'utils';
 
 const ExistingSubmissionOptions = ({form, onFormAbort}) => {
   const history = useHistory();
@@ -13,31 +13,29 @@ const ExistingSubmissionOptions = ({form, onFormAbort}) => {
   const firstStepRoute = `/stap/${form.steps[0].slug}`;
 
   return (
-    <div className={getBEMClassName('login-options')}>
-      <div className={getBEMClassName('login-options__list')}>
-        <div className={getBEMClassName('login-button')}>
-          <Button
-            variant="primary"
-            onClick={() => {
-              history.push(firstStepRoute);
-            }}
-          >
-            <FormattedMessage
-              defaultMessage="Continue existing submission"
-              description="Continue existing submission button label"
-            />
-          </Button>
-        </div>
-        <div className={getBEMClassName('login-button')}>
-          <Button variant="danger" onClick={onFormAbort}>
-            <FormattedMessage
-              defaultMessage="Abort existing submission"
-              description="Abort existing submission button label"
-            />
-          </Button>
-        </div>
-      </div>
-    </div>
+    <Toolbar modifiers={['column']}>
+      <ToolbarList>
+        <Button
+          variant="primary"
+          onClick={() => {
+            history.push(firstStepRoute);
+          }}
+        >
+          <FormattedMessage
+            defaultMessage="Continue existing submission"
+            description="Continue existing submission button label"
+          />
+        </Button>
+      </ToolbarList>
+      <ToolbarList>
+        <Button variant="danger" onClick={onFormAbort}>
+          <FormattedMessage
+            defaultMessage="Abort existing submission"
+            description="Abort existing submission button label"
+          />
+        </Button>
+      </ToolbarList>
+    </Toolbar>
   );
 };
 

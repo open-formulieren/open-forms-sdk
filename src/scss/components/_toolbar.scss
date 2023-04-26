@@ -26,6 +26,11 @@
     justify-content: flex-end;
   }
 
+  @include modifier('column') {
+    flex-direction: column;
+    row-gap: $typography-margin-text;
+  }
+
   @include mobile-only {
     display: block;
 
