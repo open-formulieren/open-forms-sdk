@@ -1,4 +1,5 @@
 import {default as formioUrlStorage} from 'formiojs/providers/storage/url';
+import FormioUtils from 'formiojs/utils';
 import {Formio} from 'react-formio';
 
 import {CSRFToken} from 'headers';
@@ -212,7 +213,62 @@ class FileField extends Formio.Components.components.file {
       this.loading = false;
     });
 
+    let hasTypeErrors = false;
+    let statuses = [];
+
+    // Issue #3040 - Overwriting code from the super, in order to update the error message for wrong
+    // file types, so that it doesn't show the (escaped) MIME type to the user.
+    Array.prototype.forEach.call(files, file => {
+      const fileUpload = {
+        originalName: file.name,
+        name: FormioUtils.uniqueName(
+          file.name,
+          this.component.fileNameTemplate,
+          this.evalContext()
+        ),
+        size: file.size,
+        status: 'info',
+        message: this.t('Processing file. Please wait...'),
+      };
+
+      if (this.component.filePattern && !this.validatePattern(file, this.component.filePattern)) {
+        fileUpload.status = 'error';
+        fileUpload.message = this.t(
+          'The uploaded file is not of an allowed type. It must be: {{ pattern }}.',
+          {
+            pattern: this.formatAllowedTypesLabels(
+              this.component.file.allowedTypesLabels,
+              this.component.filePattern
+            ),
+          }
+        );
+        hasTypeErrors = true;
+      }
+
+      statuses.push(fileUpload);
+    });
+
+    if (hasTypeErrors) {
+      this.statuses = this.statuses.concat(statuses);
+      this.redraw();
+      return;
+    }
+
     super.upload(files);
+  }
+
+  formatAllowedTypesLabels(allowedTypesLabels, filePattern) {
+    if (!allowedTypesLabels) return filePattern;
+
+    const numberOfAllowedTypes = allowedTypesLabels.length;
+    if (numberOfAllowedTypes > 1) {
+      return this.t('{{ labels }} or {{ lastLabel }}', {
+        labels: allowedTypesLabels.slice(0, numberOfAllowedTypes - 1).join(', '),
+        lastLabel: allowedTypesLabels[numberOfAllowedTypes - 1],
+      });
+    }
+
+    return allowedTypesLabels[0];
   }
 
   browseFiles(attrs = {}) {
