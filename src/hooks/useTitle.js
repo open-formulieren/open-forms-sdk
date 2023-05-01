@@ -4,8 +4,9 @@ import {useTitle as reactUseTitle} from 'react-use';
 import {ConfigContext} from 'Context';
 
 const useTitle = localTitle => {
-  const {titlePrefix} = useContext(ConfigContext);
-  return reactUseTitle(titlePrefix ? `${localTitle} | ${titlePrefix}` : localTitle);
+  let {baseTitle} = useContext(ConfigContext);
+  baseTitle = baseTitle ? baseTitle.trim() : '';
+  return reactUseTitle(baseTitle ? `${localTitle} | ${baseTitle}` : localTitle);
 };
 
 export default useTitle;

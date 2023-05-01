@@ -3,6 +3,7 @@ import React from 'react';
 const ConfigContext = React.createContext({
   baseUrl: '',
   basePath: '',
+  baseTitle: '',
   displayComponents: {
     app: null,
     form: null,
