@@ -12,7 +12,7 @@ const ButtonsToolbar = ({
   literals,
   canSubmitStep,
   canSubmitForm,
-  loginRequired,
+  canSuspendForm,
   isAuthenticated,
   isLastStep,
   isCheckingLogic,
@@ -32,9 +32,11 @@ const ButtonsToolbar = ({
             </Button>
           </ToolbarList>
           <ToolbarList>
-            <Button type="button" variant="secondary" name="save" onClick={onFormSave}>
-              <Literal name="saveText" />
-            </Button>
+            {canSuspendForm && (
+              <Button type="button" variant="secondary" name="save" onClick={onFormSave}>
+                <Literal name="saveText" />
+              </Button>
+            )}
             {showSubmitButton && (
               <Button type="submit" variant="primary" name="next" disabled={!canSubmitStep}>
                 {isCheckingLogic ? (
@@ -56,8 +58,8 @@ ButtonsToolbar.propTypes = {
   literals: PropTypes.object,
   canSubmitStep: PropTypes.bool.isRequired,
   canSubmitForm: PropTypes.string.isRequired,
+  canSuspendForm: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
-  loginRequired: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   isCheckingLogic: PropTypes.bool.isRequired,
   onNavigatePrevPage: PropTypes.func.isRequired,

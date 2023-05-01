@@ -15,6 +15,7 @@ const FORM_DEFAULTS = {
   maintenanceMode: false,
   active: true,
   submissionAllowed: 'yes',
+  suspensionAllowed: true,
   literals: {
     beginText: {resolved: 'Begin', value: ''},
     changeText: {resolved: 'Change', value: ''},

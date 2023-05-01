@@ -818,6 +818,7 @@ const FormStep = ({
                 literals={formStep.literals}
                 canSubmitStep={canSubmit}
                 canSubmitForm={submission.submissionAllowed}
+                canSuspendForm={form.suspensionAllowed}
                 isAuthenticated={submission.isAuthenticated}
                 isLastStep={isLastStep(currentStepIndex, submission)}
                 isCheckingLogic={logicChecking}
