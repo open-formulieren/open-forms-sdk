@@ -24,6 +24,18 @@ export const FILEPATTERN = [
   'text/plain',
 ];
 
+export const MIME_TO_LABEL = {
+  'application/pdf': '.pdf',
+  'application/msword': '.doc',
+  'application/vnd.rar': '.rar',
+  'application/zip': '.zip',
+  'image/heic': '.heic',
+  'image/jpeg': '.jpeg',
+  'image/png': '.png',
+  'text/csv': '.csv',
+  'text/plain': '.txt',
+}
+
 export const ERRORS = ['File is too big', 'File is of the wrong type'];
 
 <Meta
@@ -48,6 +60,9 @@ export const ERRORS = ['File is too big', 'File is of the wrong type'];
 
 **Note** - file uploads on the Docs page will always error due to the way
 the network mocking library works. Use the canvas instead.
+
+By selecting a `filePattern` and uploading a file of different type, it is possible to see the
+error raised when a user uploads a file of wrong type.
 
 export const Template = ({
   id,
@@ -77,6 +92,10 @@ export const Template = ({
         filePattern: filePattern.join(','),
         storage: 'url',
         url: UPLOAD_URL,
+        file: {
+          type: filePattern,
+          allowedTypesLabels: filePattern.map(pattern => MIME_TO_LABEL[pattern]),
+        }
       }}
     />
   );
