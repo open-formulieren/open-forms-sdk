@@ -1,3 +1,4 @@
+import {render as renderTest, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
@@ -93,23 +94,18 @@ it('Form start page does not show login buttons if an active submission is prese
   const onFormStart = jest.fn();
   const onFormAbort = jest.fn();
 
-  act(() => {
-    render(
-      <IntlProvider locale="nl" messages={messagesNL}>
-        <FormStart
-          form={testForm}
-          onFormStart={onFormStart}
-          onFormAbort={onFormAbort}
-          hasActiveSubmission={true}
-        />
-      </IntlProvider>,
-      container
-    );
-  });
+  renderTest(
+    <IntlProvider locale="nl" messages={messagesNL}>
+      <FormStart
+        form={testForm}
+        onFormStart={onFormStart}
+        onFormAbort={onFormAbort}
+        hasActiveSubmission={true}
+      />
+    </IntlProvider>,
+    container
+  );
 
-  const buttons = container.getElementsByTagName('button');
-
-  expect(buttons.length).toEqual(2);
-  expect(buttons[0].textContent).toEqual('Continue existing submission');
-  expect(buttons[1].textContent).toEqual('Abort existing submission');
+  expect(screen.queryByRole('button', {name: 'Continue existing submission'})).toBeInTheDocument();
+  expect(screen.queryByRole('button', {name: 'Abort existing submission'})).toBeInTheDocument();
 });

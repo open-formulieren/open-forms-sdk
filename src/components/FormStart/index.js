@@ -137,7 +137,7 @@ const FormStart = ({form, hasActiveSubmission, onFormStart, onFormAbort}) => {
 
 FormStart.propTypes = {
   form: Types.Form.isRequired,
-  hasActiveSubmission: PropTypes.bool,
+  hasActiveSubmission: PropTypes.bool.isRequired,
   onFormStart: PropTypes.func.isRequired,
   onFormAbort: PropTypes.func.isRequired,
 };
