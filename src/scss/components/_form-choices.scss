@@ -1,14 +1,101 @@
+@use 'microscope-sass/lib/bem';
+@use 'microscope-sass/lib/transform';
+@use 'microscope-sass/lib/util';
+@use './anchor';
+
+@import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
-.#{prefix(form-choices)} {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+$checkbox-checkmark-size: 1em * util.strip-unit($typography-line-height-text-big) !default;
+$checkbox-label-padding-v: calc(
+  (#{$grid-row-height} - #{1em * util.strip-unit($typography-line-height-text-big)}) / 2
+) !default;
+$checkbox-label-padding-h: $grid-margin-2 !default;
+$checkbox-label-padding-left: calc(
+  #{1em * util.strip-unit($typography-line-height-text-big)} + #{$grid-margin-2 * 2}
+) !default;
 
-  &__choice {
+.#{prefix(form-choices)} {
+  @include bem.element('choice') {
+    @include body;
+    @include body--big;
+    @include rows(1, min-height);
     @include margin($value-mobile: $typography-margin-list);
+
+    display: flex;
+    align-items: center;
+    background-color: var(--of-checkbox-bg);
+    position: relative;
+  }
+
+  @include bem.element('label') {
+    // The 'trick' here is that the padding of the label for the input needs to overlap with the
+    // checkmark. In this way, it *looks* like when you click on the checkmark, the radio/checkbox
+    // is toggled
+    padding: $checkbox-label-padding-v $checkbox-label-padding-h $checkbox-label-padding-v
+      $checkbox-label-padding-left;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  & :focus ~ &__label {
+    @include outline(var(--of-color-info));
+  }
+
+  @include bem.element('wysiwyg-text') {
+    // This is needed because the label is populated with the value coming from a WYSIWYG editor
+    // which adds <p></p> around each paragraph in the text. This tag gets a margin which looks off.
+    // So here it is overwritten.
+    @include wysiwyg;
+    p {
+      @include body('auto');
+    }
+  }
+
+  @include bem.element('checkmark') {
+    @include transform.absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
+    @include border(all, $color: var(--of-field-border-color));
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--of-color-bg);
+    width: $checkbox-checkmark-size;
+    height: $checkbox-checkmark-size;
+    cursor: pointer;
+  }
+
+  & :checked ~ &__checkmark {
+    background-color: var(--of-color-primary);
+  }
+
+  [type='checkbox'],
+  [type='radio'] {
+    @include transform.absolute($checkbox-label-padding-v, $checkbox-label-padding-h);
+  }
+
+  // Style specific for selectboxes
+  & [type='checkbox']:checked ~ &__checkmark:after {
+    content: '\2714';
+    color: var(--of-color-bg);
+  }
+
+  //Style specific for radio
+  & [type='radio'] ~ &__checkmark {
+    @include transform.rounded;
+  }
+
+  & [type='radio']:checked ~ &__checkmark:after {
+    @include transform.rounded;
+    display: block;
+    content: '';
+    background-color: var(--of-color-bg);
+    width: 0.4em;
+    height: 0.4em;
   }
 }

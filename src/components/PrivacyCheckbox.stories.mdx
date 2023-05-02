@@ -1,0 +1,65 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {userEvent, within} from '@storybook/testing-library';
+import {expect} from '@storybook/jest';
+
+import PrivacyCheckbox from './PrivacyCheckbox';
+
+<Meta
+  title="Pure React components/Privacy Checkbox"
+  component={PrivacyCheckbox}
+  argTypes={{
+    heading: {
+      label: 'text',
+      table: {
+        type: {summary: 'string'},
+      },
+    },
+    onChange: {control: 'func'},
+    value: {
+      table: {disable: true},
+    }
+  }}
+/>
+
+# Privacy Checkbox
+
+## Default
+
+export const Template = ({label, value, warning, onChange}) => {
+  return (<PrivacyCheckbox label={label} value={value} warning={warning} onChange={onChange}/>);
+};
+
+<Canvas>
+  <Story
+    name="Privacy Checkbox Default"
+    args={{
+      label: '<p>Ja, ik heb kennis genomen van het <a href=\"https://maykinmedia.nl/en/privacy/\" target=\"_blank\" rel=\"noreferrer noopener\">privacybeleid</a> en geef uitdrukkelijk toestemming voor het verwerken van de door mij opgegeven gegevens.</p>',
+      warning: false,
+    }}
+    play={async ({args, canvasElement}) => {
+      const canvas = within(canvasElement);
+      await userEvent.click(canvas.getByRole('checkbox'));
+      await expect(args.onChange).toHaveBeenCalled();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## With warning
+
+<Canvas>
+  <Story
+    name="Privacy Checkbox With warning"
+    args={{
+      label: '<p>Ja, ik heb kennis genomen van het <a href=\"https://maykinmedia.nl/en/privacy/\" target=\"_blank\" rel=\"noreferrer noopener\">privacybeleid</a> en geef uitdrukkelijk toestemming voor het verwerken van de door mij opgegeven gegevens.</p>',
+      warning: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Props
+
+<ArgsTable of={PrivacyCheckbox} />

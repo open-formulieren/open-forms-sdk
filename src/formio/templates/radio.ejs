@@ -1,35 +1,31 @@
-<div class="{{ctx.ofPrefix}}form-choices">
+<!--This template is used by both the radio and the selectboxes components-->
+<div class="{{ctx.ofPrefix}}form-choices utrecht-form-fieldset__fieldset utrecht-form-fieldset__fieldset--html-fieldset">
   {% ctx.values.forEach(function(item) { %}
-    <div class="{{ctx.ofPrefix}}form-choices__choice utrecht-form-field utrecht-form-field--radio">
-        <div class="{{ctx.ofPrefix}}checkbox">
-              <{{ctx.input.type}}
-                ref="input"
+    <div class="{{ctx.ofPrefix}}form-choices__choice utrecht-form-field utrecht-form-field--{{ctx.input.attr['type']}}">
+      <input
+        ref="input"
+        value="{{item.value}}"
+        id="{{ctx.id}}{{ctx.row}}-{{item.value}}"
 
-                {% for (var attr in ctx.input.attr) { %}
-                  {{attr}}="{{ctx.input.attr[attr]}}"
-                {% } %}
+        {% for (var attr in ctx.input.attr) { %}
+          {{attr}}="{{ctx.input.attr[attr]}}"
+        {% } %}
 
-                value="{{item.value}}"
+        {% if (ctx.value && (ctx.value === item.value || (typeof ctx.value === 'object' && ctx.value.hasOwnProperty(item.value) && ctx.value[item.value]))) { %}
+          checked=true
+        {% } %}
 
-                {% if (ctx.value && (ctx.value === item.value || (typeof ctx.value === 'object' && ctx.value.hasOwnProperty(item.value) && ctx.value[item.value]))) { %}
-                  checked=true
-                {% } %}
-
-                {% if (item.disabled) { %}
-                  disabled=true
-                {% } %}
-
-                id="{{ctx.id}}{{ctx.row}}-{{item.value}}"
-              >
-                {{ctx.input.content}}
-            </{{ctx.input.type}}>
-
-            <div class="{{ctx.ofPrefix}}checkbox__checkmark"></div>
-
-            {% if (!ctx.component.optionsLabelPosition || ctx.component.optionsLabelPosition === 'right' || ctx.component.optionsLabelPosition === 'bottom') { %}
-                <label class="{{ctx.ofPrefix}}checkbox__label utrecht-form-label utrecht-form-label--radio {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}" for="{{ctx.id}}{{ctx.row}}-{{item.value}}">{{ctx.t(item.label, { _userInput: true })}}</label>
-            {% } %}
-        </div>
+        {% if (item.disabled) { %}
+          disabled=true
+        {% } %}
+      />
+      <div class="{{ctx.ofPrefix}}form-choices__checkmark"></div>
+      <label
+        class="{{ctx.ofPrefix}}form-choices__label utrecht-form-label utrecht-form-label--{{ctx.input.attr['type']}} {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
+        for="{{ctx.id}}{{ctx.row}}-{{item.value}}"
+      >
+        {{ item.label }}
+      </label>
     </div>
-      {% }) %}
+  {% }) %}
 </div>

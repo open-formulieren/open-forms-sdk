@@ -1,33 +1,36 @@
 import {Checkbox, FormField, FormLabel} from '@utrecht/component-library-react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {getBEMClassName} from '../utils';
+import {getBEMClassName} from 'utils';
+
 import ErrorMessage from './ErrorMessage';
 
 const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
-  const inputClassname = classNames(
-    getBEMClassName('privacy-checkbox__input', warning ? ['warning'] : [])
-  );
-
   return (
-    <FormField className={getBEMClassName('privacy-checkbox')}>
-      <div className={inputClassname}>
+    <div
+      className={`${getBEMClassName(
+        'form-choices'
+      )} utrecht-form-fieldset__fieldset utrecht-form-fieldset__fieldset--html-fieldset`}
+    >
+      <FormField className={getBEMClassName('form-choices__choice')}>
         <Checkbox name="privacy" id="privacy" required={true} value={value} onChange={onChange} />
-        <div className={getBEMClassName('privacy-checkbox__checkmark')} />
+        <div className={getBEMClassName('form-choices__checkmark')} />
+
         <FormLabel
           type="checkbox"
-          className={getBEMClassName('privacy-checkbox__label')}
+          className={`${getBEMClassName(
+            'form-choices__label'
+          )} utrecht-form-label utrecht-form-label--checkbox`}
           htmlFor="privacy"
         >
           <div
-            className={getBEMClassName('privacy-checkbox__wyswyg-text')}
+            className={getBEMClassName('form-choices__wysiwyg-text')}
             dangerouslySetInnerHTML={{__html: label}}
           />
         </FormLabel>
-      </div>
+      </FormField>
       {warning && (
         <ErrorMessage modifiers={['warning']}>
           <FormattedMessage
@@ -36,7 +39,7 @@ const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
           />
         </ErrorMessage>
       )}
-    </FormField>
+    </div>
   );
 };
 
