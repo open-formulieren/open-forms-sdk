@@ -4,7 +4,6 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useHistory} from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
@@ -60,7 +59,6 @@ const FormStepSaveModal = ({
   suspendFormUrl,
   submissionId,
 }) => {
-  const history = useHistory();
   const intl = useIntl();
   const config = useContext(ConfigContext);
 
@@ -114,12 +112,8 @@ const FormStepSaveModal = ({
       return;
     }
 
-    onSessionDestroyed();
-    // redirect back to start page
     dispatch({type: 'SAVE_SUCCEEDED'});
-    history.push('/');
-    // TODO: replace with a proper reset of the state instead of a page reload.
-    window.location.reload();
+    onSessionDestroyed();
   };
 
   return (
