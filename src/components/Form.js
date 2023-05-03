@@ -227,6 +227,31 @@ const Form = ({form}) => {
     history.push('/bevestiging');
   };
 
+  const destroySession = async confirmationMessage => {
+    if (!window.confirm(confirmationMessage)) {
+      return;
+    }
+
+    await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
+
+    removeSubmissionId();
+    history.push('/');
+    // TODO: replace with a proper reset of the state instead of a page reload.
+    window.location.reload();
+  };
+
+  const onFormAbort = async event => {
+    event.preventDefault();
+
+    const confirmationQuestion = intl.formatMessage({
+      description: 'Abort confirmation prompt',
+      defaultMessage:
+        'Are you sure that you want to abort this submission? You will lose your progress if you continue.',
+    });
+
+    await destroySession(confirmationQuestion);
+  };
+
   const onLogout = async event => {
     event.preventDefault();
 
@@ -234,14 +259,8 @@ const Form = ({form}) => {
       description: 'log out confirmation prompt',
       defaultMessage: 'Are you sure that you want to logout?',
     });
-    if (!window.confirm(confirmationQuestion)) {
-      return;
-    }
-    await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
-    removeSubmissionId();
-    history.push('/');
-    // TODO: replace with a proper reset of the state instead of a page reload.
-    window.location.reload();
+
+    await destroySession(confirmationQuestion);
   };
 
   const onProcessingFailure = errorMessage => {
@@ -300,7 +319,12 @@ const Form = ({form}) => {
       </Route>
       <Route exact path="/startpagina">
         <ErrorBoundary useCard>
-          <FormStart form={form} onFormStart={onFormStart} />
+          <FormStart
+            form={form}
+            hasActiveSubmission={!!state.submission}
+            onFormStart={onFormStart}
+            onFormAbort={onFormAbort}
+          />
         </ErrorBoundary>
       </Route>
 

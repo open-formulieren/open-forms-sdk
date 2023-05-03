@@ -1,3 +1,4 @@
+import {render as renderTest, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
@@ -33,11 +34,17 @@ it('Form start page start if _start parameter is present', () => {
   useQuery.mockReturnValue(testLocation);
 
   const onFormStart = jest.fn();
+  const onFormAbort = jest.fn();
 
   act(() => {
     render(
       <IntlProvider locale="nl" messages={messagesNL}>
-        <FormStart form={testForm} onFormStart={onFormStart} />
+        <FormStart
+          form={testForm}
+          onFormStart={onFormStart}
+          onFormAbort={onFormAbort}
+          hasActiveSubmission={false}
+        />
       </IntlProvider>,
       container
     );
@@ -48,6 +55,7 @@ it('Form start page start if _start parameter is present', () => {
 
 it('Form start does not start if there are auth errors', () => {
   const onFormStart = jest.fn();
+  const onFormAbort = jest.fn();
 
   const testQueries = {
     '_digid-message=error':
@@ -65,7 +73,12 @@ it('Form start does not start if there are auth errors', () => {
     act(() => {
       render(
         <IntlProvider locale="nl" messages={messagesNL}>
-          <FormStart form={testForm} onFormStart={onFormStart} />
+          <FormStart
+            form={testForm}
+            onFormStart={onFormStart}
+            onFormAbort={onFormAbort}
+            hasActiveSubmission={false}
+          />
         </IntlProvider>,
         container
       );
@@ -74,4 +87,25 @@ it('Form start does not start if there are auth errors', () => {
     expect(container.textContent).toContain(expectedMessage);
     expect(onFormStart).toHaveBeenCalledTimes(0);
   }
+});
+
+it('Form start page does not show login buttons if an active submission is present', () => {
+  useQuery.mockReturnValue(new URLSearchParams());
+  const onFormStart = jest.fn();
+  const onFormAbort = jest.fn();
+
+  renderTest(
+    <IntlProvider locale="nl" messages={messagesNL}>
+      <FormStart
+        form={testForm}
+        onFormStart={onFormStart}
+        onFormAbort={onFormAbort}
+        hasActiveSubmission={true}
+      />
+    </IntlProvider>,
+    container
+  );
+
+  expect(screen.queryByRole('button', {name: 'Continue existing submission'})).toBeInTheDocument();
+  expect(screen.queryByRole('button', {name: 'Abort existing submission'})).toBeInTheDocument();
 });

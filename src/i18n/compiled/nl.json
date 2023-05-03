@@ -158,7 +158,7 @@
   "DvlDIB": [
     {
       "type": 0,
-      "value": "Weet u zeker dat u wilt uitloggen?"
+      "value": "Are you sure that you want to logout?"
     }
   ],
   "DxbUkA": [
@@ -285,6 +285,12 @@
     {
       "type": 0,
       "value": "Verlengen"
+    }
+  ],
+  "R0CpY1": [
+    {
+      "type": 0,
+      "value": "Abort existing submission"
     }
   ],
   "RJ+0F/": [
@@ -433,12 +439,6 @@
       "value": "Terug naar begin"
     }
   ],
-  "djrQar": [
-    {
-      "type": 0,
-      "value": "Inloggen"
-    }
-  ],
   "eO6Ysb": [
     {
       "type": 0,
@@ -533,6 +533,18 @@
     {
       "type": 0,
       "value": "Startpagina"
+    }
+  ],
+  "lq29t6": [
+    {
+      "type": 0,
+      "value": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
+    }
+  ],
+  "lxjglE": [
+    {
+      "type": 0,
+      "value": "Continue existing submission"
     }
   ],
   "mMYAWl": [

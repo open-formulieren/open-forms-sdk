@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
+import ExistingSubmissionOptions from 'components/ExistingSubmissionOptions';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LoginOptions from 'components/LoginOptions';
@@ -37,10 +38,9 @@ const FormStartMessage = ({form}) => {
  * Form start screen.
  *
  * This is shown when the form is initially loaded and provides the explicit user
- * action to start the form, or (in the future) present the login button (DigiD,
- * eHerkenning...)
+ * action to start the form, or present the login button (DigiD, eHerkenning...)
  */
-const FormStart = ({form, onFormStart}) => {
+const FormStart = ({form, hasActiveSubmission, onFormStart, onFormAbort}) => {
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
@@ -125,7 +125,11 @@ const FormStart = ({form, onFormStart}) => {
 
         <FormStartMessage form={form} />
 
-        <LoginOptions form={form} onFormStart={onFormStart} />
+        {hasActiveSubmission ? (
+          <ExistingSubmissionOptions form={form} onFormAbort={onFormAbort} />
+        ) : (
+          <LoginOptions form={form} onFormStart={onFormStart} />
+        )}
       </Card>
     </LiteralsProvider>
   );
@@ -133,7 +137,9 @@ const FormStart = ({form, onFormStart}) => {
 
 FormStart.propTypes = {
   form: Types.Form.isRequired,
+  hasActiveSubmission: PropTypes.bool.isRequired,
   onFormStart: PropTypes.func.isRequired,
+  onFormAbort: PropTypes.func.isRequired,
 };
 
 export default FormStart;

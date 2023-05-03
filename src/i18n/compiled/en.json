@@ -287,6 +287,12 @@
       "value": "Extend"
     }
   ],
+  "R0CpY1": [
+    {
+      "type": 0,
+      "value": "Abort existing submission"
+    }
+  ],
   "RJ+0F/": [
     {
       "type": 0,
@@ -433,12 +439,6 @@
       "value": "Back to form start"
     }
   ],
-  "djrQar": [
-    {
-      "type": 0,
-      "value": "Log in"
-    }
-  ],
   "eO6Ysb": [
     {
       "type": 0,
@@ -533,6 +533,18 @@
     {
       "type": 0,
       "value": "Start page"
+    }
+  ],
+  "lq29t6": [
+    {
+      "type": 0,
+      "value": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
+    }
+  ],
+  "lxjglE": [
+    {
+      "type": 0,
+      "value": "Continue existing submission"
     }
   ],
   "mMYAWl": [
