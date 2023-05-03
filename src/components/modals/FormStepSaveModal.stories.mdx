@@ -17,8 +17,16 @@ import {BASE_URL} from 'api-mocks';
     suspendFormUrlLifetime: {controls: 'int'},
     suspendFormUrl: {table: {disable: true}},
     submissionId: {table: {disable: true}},
+    onSessionDestroyed: {table: {disable: true}},
+    onSaveConfirm: {table: {disable: true}},
+    closeModal: {table: {disable: true}},
   }}
   decorators={[ConfigDecorator, RouterDecorator]}
+  parameters={{
+    actions: {
+      argTypesRegex: 'onSaveConfirm',
+    },
+  }}
 />
 
 [//]: # ( Code related to mocking the calls made when saving the form )
@@ -42,7 +50,7 @@ export const Template = (args) => {
         Open Modal
       </Button>
       <FormStepSaveModal
-        closeModal={() => updateArgs({isOpen: !args.isOpen})} {...args}
+        closeModal={() => updateArgs({isOpen: !args.isOpen})} onSessionDestroyed={() => updateArgs({isOpen: false})} {...args}
       />
     </>
   );
@@ -57,7 +65,6 @@ export const Template = (args) => {
       isOpen: false,
       suspendFormUrlLifetime: 7,
       onSaveConfirm: () => ({ok: true}),
-      onSessionDestroyed: () => {},
       suspendFormUrl: suspendFormUrl,
       submissionId: '111-222-333',
     }}
