@@ -104,6 +104,10 @@ const reducer = (draft, action) => {
         config: draft.config,
       };
     }
+    case 'RESET': {
+      const initialState = action.payload;
+      return initialState;
+    }
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -351,6 +355,11 @@ const Form = ({form}) => {
                 }
                 onStepSubmitted={onStepSubmitted}
                 onLogout={onLogout}
+                onSessionDestroyed={() => {
+                  resetSession();
+                  history.push('/');
+                  dispatch({type: 'RESET', payload: initialStateFromProps});
+                }}
                 component={FormStep}
               />
             </RequireSession>
