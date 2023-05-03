@@ -96,7 +96,7 @@ class OpenForm {
 
     this.url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
-    this.titlePrefix = document.title;
+    this.baseTitle = document.title;
     this.formObject = await get(this.url);
     this.render();
   }
@@ -117,7 +117,7 @@ class OpenForm {
           value={{
             baseUrl: this.baseUrl,
             basePath: this.basePath,
-            titlePrefix: this.titlePrefix,
+            baseTitle: this.baseTitle,
             displayComponents: this.displayComponents,
           }}
         >
