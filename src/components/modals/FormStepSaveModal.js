@@ -4,7 +4,6 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useHistory} from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
@@ -56,11 +55,11 @@ const FormStepSaveModal = ({
   isOpen,
   closeModal,
   onSaveConfirm,
+  onSessionDestroyed,
   suspendFormUrl,
   suspendFormUrlLifetime,
   submissionId,
 }) => {
-  const history = useHistory();
   const intl = useIntl();
   const config = useContext(ConfigContext);
 
@@ -114,9 +113,8 @@ const FormStepSaveModal = ({
       return;
     }
 
-    // redirect back to start page
     dispatch({type: 'SAVE_SUCCEEDED'});
-    history.push('/');
+    onSessionDestroyed();
   };
 
   return (
@@ -188,6 +186,7 @@ const FormStepSaveModal = ({
 FormStepSaveModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
+  onSessionDestroyed: PropTypes.func.isRequired,
   onSaveConfirm: PropTypes.func.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
   submissionId: PropTypes.string.isRequired,
