@@ -2,14 +2,9 @@
  * Display a modal to allow the user to save the form step in it's current state.
  */
 import React, {useContext} from 'react';
-<<<<<<< HEAD
-import PropTypes from 'prop-types';
-import {useHistory} from 'react-router-dom';
-import {useIntl, FormattedMessage} from 'react-intl';
-=======
 import {FormattedMessage, useIntl} from 'react-intl';
->>>>>>> 9c18906 (:ok_hand: [open-formulieren/open-forms#2929] PR Feedback)
 import {useImmerReducer} from 'use-immer';
+import PropTypes from 'prop-types';
 
 import {post, destroy} from 'api';
 import { ConfigContext } from 'Context';
