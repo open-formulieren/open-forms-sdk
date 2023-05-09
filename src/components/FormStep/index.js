@@ -282,6 +282,7 @@ const reducer = (draft, action) => {
  * @param {Function} onLogicChecked
  * @param {Function} onStepSubmitted
  * @param {Function} onLogout
+ * @param {Function} onSessionDestroyed
  * @throws {Error} Throws errors from state so the error boundaries can pick them up.
  * @return {React.ReactNode}
  */
@@ -291,6 +292,7 @@ const FormStep = ({
   onLogicChecked,
   onStepSubmitted,
   onLogout,
+  onSessionDestroyed,
   showDebug = DEBUG,
 }) => {
   const intl = useIntl();
@@ -831,6 +833,7 @@ const FormStep = ({
         isOpen={isFormSaveModalOpen}
         closeModal={closeFormStepSaveModal}
         onSaveConfirm={onSaveConfirm}
+        onSessionDestroyed={onSessionDestroyed}
         suspendFormUrl={`${submission.url}/_suspend`}
         submissionId={submission.id}
       />
@@ -844,6 +847,7 @@ FormStep.propTypes = {
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onSessionDestroyed: PropTypes.func.isRequired,
   showDebug: PropTypes.bool,
 };
 
