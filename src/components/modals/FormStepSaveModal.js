@@ -2,10 +2,9 @@
  * Display a modal to allow the user to save the form step in it's current state.
  */
 import React, {useContext} from 'react';
-import PropTypes from 'prop-types';
-import {useHistory} from 'react-router-dom';
-import {useIntl, FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
+import PropTypes from 'prop-types';
 
 import {post, destroy} from 'api';
 import { ConfigContext } from 'Context';
@@ -55,13 +54,13 @@ const reducer = (draft, action) => {
 
 
 const FormStepSaveModal = ({
-    isOpen,
-    closeModal,
-    onSaveConfirm,
-    suspendFormUrl,
-    submissionId,
+  isOpen,
+  closeModal,
+  onSaveConfirm,
+  onSessionDestroyed,
+  suspendFormUrl,
+  submissionId,
 }) => {
-  const history = useHistory();
   const intl = useIntl();
   const config = useContext(ConfigContext);
 
@@ -118,9 +117,8 @@ const FormStepSaveModal = ({
       return;
     }
 
-    // redirect back to start page
     dispatch({type: 'SAVE_SUCCEEDED'});
-    history.push('/');
+    onSessionDestroyed();
   };
 
   return (
@@ -185,6 +183,7 @@ const FormStepSaveModal = ({
 FormStepSaveModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
+  onSessionDestroyed: PropTypes.func.isRequired,
   onSaveConfirm: PropTypes.func.isRequired,
   suspendFormUrl: PropTypes.string.isRequired,
   submissionId: PropTypes.string.isRequired,

@@ -191,6 +191,7 @@ const FormStep = ({
     onLogicChecked,
     onStepSubmitted,
     onLogout,
+    onSessionDestroyed,
 }) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
@@ -631,6 +632,7 @@ const FormStep = ({
         isOpen={isFormSaveModalOpen}
         closeModal={closeFormStepSaveModal}
         onSaveConfirm={onSaveConfirm}
+        onSessionDestroyed={onSessionDestroyed}
         suspendFormUrl={`${submission.url}/_suspend`}
         submissionId={submission.id}
       />
@@ -644,6 +646,7 @@ FormStep.propTypes = {
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onSessionDestroyed: PropTypes.func.isRequired,
 };
 
 export default FormStep;
