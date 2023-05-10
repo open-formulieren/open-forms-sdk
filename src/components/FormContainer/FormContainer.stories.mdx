@@ -6,9 +6,11 @@ import { Field } from "formik";
   title="Private API / Appointments / Form Container"
   component={Field}
   parameters={{
-    initialValues: {
-      test: 'test'
-    }
+    formik: {
+      initialValues: {
+        test: 'test'
+      }
+    },
   }}
 />
 
