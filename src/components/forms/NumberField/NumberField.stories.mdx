@@ -1,0 +1,96 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { userEvent, within } from "@storybook/testing-library";
+import { expect } from '@storybook/jest';
+
+import { FormikDecorator } from "story-utils/decorators";
+
+import NumberField  from "./NumberField";
+
+
+export const Template = (args) => (
+  <NumberField {...args} />
+);
+const generalTest = async (canvasElement) => {
+  const canvas = within(canvasElement);
+  await expect(canvas.getByLabelText('Amount')).toBeVisible();
+  await expect(canvas.getByText('Amount')).toBeVisible();
+  await expect(canvas.getByText('This is a custom description for the amount field')).toBeVisible();
+  // Assert that clicking on the label focuses the input
+  const label = canvas.getByText('Amount');
+  userEvent.click(label);
+  await expect(canvas.getByRole('textbox')).toHaveFocus();
+  // Assert that you're not able to type letters
+  const input = canvas.getByRole('textbox');
+  userEvent.type(input, 'abc');
+  await expect(input).toHaveValue('0');
+};
+
+<Meta
+  title="Pure React Components / Forms / NumberField"
+  component={NumberField}
+  parameters={{
+    formik: {
+      initialValues: {
+        amount: '0'
+      },
+    }
+  }}
+/>
+
+
+<Canvas>
+  <Story
+    name="Negative/Decimals Enabled"
+    decorators={[FormikDecorator]}
+    play={async ({ canvasElement }) => {
+      await generalTest(canvasElement)
+      const canvas = within(canvasElement);
+      // Assert that you're able to provide a negative number
+      const input = canvas.getByRole('textbox');
+      userEvent.clear(input);
+      userEvent.type(input, '-1');
+      await expect(input).toHaveValue('-1');
+      // Assert that you're able to provide a decimal number
+      userEvent.clear(input);
+      userEvent.type(input, '1.5');
+      await expect(input).toHaveValue('1.5');
+    }}
+    args={{
+      name: 'amount',
+      id: 'amount',
+      label: "Amount",
+      description: "This is a custom description for the amount field",
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Negative/Decimals Disabled"
+    decorators={[FormikDecorator]}
+    play={async ({ canvasElement }) => {
+      await generalTest(canvasElement)
+      //Assert that you're not able to provide a negative number
+      const canvas = within(canvasElement);
+      const input = canvas.getByRole('textbox');
+      userEvent.clear(input);
+      userEvent.type(input, '-1');
+      await expect(input).toHaveValue('1');
+}}
+    args={{
+      min: 0,
+      step: 1,
+      name: 'amount',
+      id: 'amount',
+      label: "Amount",
+      description: "This is a custom description for the amount field",
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
