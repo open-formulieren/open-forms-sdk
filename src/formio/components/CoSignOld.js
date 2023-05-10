@@ -10,7 +10,7 @@ import {applyPrefix} from '../utils';
 
 const Field = Formio.Components.components.field;
 
-export default class CoSign extends Field {
+export default class CoSignOld extends Field {
   static schema(...extend) {
     return Field.schema(
       {

@@ -1,9 +1,10 @@
 import BsnField from './components/BsnField';
 import Button from './components/Button';
 import Checkbox from './components/Checkbox';
-import CoSign from './components/CoSign';
+import CoSignOld from './components/CoSignOld';
 import Component from './components/Component';
 import ContentComponent from './components/Content';
+import Cosign from './components/Cosign';
 import Currency from './components/Currency';
 import DateField from './components/DateField';
 import DateTimeField from './components/DateTimeField';
@@ -47,7 +48,8 @@ const FormIOModule = {
     map: Map,
     password: PasswordField,
     licenseplate: LicensePlateField,
-    coSign: CoSign,
+    coSign: CoSignOld,
+    cosign: Cosign,
     editgrid: EditGrid,
   },
   providers: {
