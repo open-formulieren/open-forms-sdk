@@ -41,7 +41,7 @@ export const FormikDecorator = (Story, context) => {
       onSubmit={(values, formikHelpers) => console.log(values, formikHelpers)}
     >
       <form>
-        <Story {...context} />
+        <Story />
       </form>
     </Formik>
   );
