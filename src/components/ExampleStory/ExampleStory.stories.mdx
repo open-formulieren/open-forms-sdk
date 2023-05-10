@@ -1,0 +1,25 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { FormikDecorator } from "../../story-utils/decorators";
+import { Field } from "formik";
+
+<Meta
+  title="Private API / Appointments / Wrapper"
+  component={Field}
+  parameters={{
+    initialValues: {
+      test: 'test'
+    }
+  }}
+/>
+
+
+export const Template = () => <Field type="text" as="input" name={'test'} />;
+
+<Canvas>
+  <Story
+    name="Default"
+    decorators={[FormikDecorator]}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

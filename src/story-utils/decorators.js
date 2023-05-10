@@ -1,3 +1,4 @@
+import {Formik} from 'formik';
 import {MemoryRouter, Route, Switch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
@@ -27,5 +28,21 @@ export const RouterDecorator = (Story, {args: {routerArgs = {}}}) => {
         <Story />
       </RouterStoryWrapper>
     </MemoryRouter>
+  );
+};
+
+export const FormikDecorator = (Story, context) => {
+  const {initialValues} = context.parameters;
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      enableReinitialize
+      onSubmit={(values, formikHelpers) => console.log(values, formikHelpers)}
+    >
+      <form>
+        <Story {...context} />
+      </form>
+    </Formik>
   );
 };
