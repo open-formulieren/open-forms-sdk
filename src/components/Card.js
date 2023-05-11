@@ -5,7 +5,13 @@ import React from 'react';
 import Caption from 'components/Caption';
 import {getBEMClassName} from 'utils';
 
-const CardTitle = ({title, component = 'h1', headingType = 'title', blockClassName = 'card'}) => {
+const CardTitle = ({
+  title,
+  component = 'h1',
+  headingType = 'title',
+  blockClassName = 'card',
+  modifiers = [],
+}) => {
   const headingLevel = {
     h1: 1,
     h2: 2,
@@ -16,7 +22,7 @@ const CardTitle = ({title, component = 'h1', headingType = 'title', blockClassNa
   };
 
   return (
-    <header className={getBEMClassName(`${blockClassName}__header`)}>
+    <header className={getBEMClassName(`${blockClassName}__header`, modifiers)}>
       <Heading level={headingLevel[component] || 1} className={getBEMClassName(headingType)}>
         {title}
       </Heading>
@@ -29,6 +35,7 @@ CardTitle.propTypes = {
   component: PropTypes.string,
   blockClassName: PropTypes.string,
   headingType: PropTypes.oneOf(['title', 'subtitle']),
+  modifiers: PropTypes.arrayOf(PropTypes.oneOf(['padded'])),
 };
 
 const Card = ({
