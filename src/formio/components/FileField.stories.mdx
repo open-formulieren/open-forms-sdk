@@ -1,5 +1,7 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {getWorker} from 'msw-storybook-addon';
+import { within, userEvent } from '@storybook/testing-library';
+import {expect} from '@storybook/jest';
 
 export const worker = getWorker();
 
@@ -61,9 +63,6 @@ export const ERRORS = ['File is too big', 'File is of the wrong type'];
 **Note** - file uploads on the Docs page will always error due to the way
 the network mocking library works. Use the canvas instead.
 
-By selecting a `filePattern` and uploading a file of different type, it is possible to see the
-error raised when a user uploads a file of wrong type.
-
 export const Template = ({
   id,
   label,
@@ -119,6 +118,75 @@ export const Template = ({
 </Canvas>
 
 <ArgsTable story="Happy flow" />
+
+## File type validation errors
+
+By selecting a `filePattern` and uploading a file of different type, it is possible to see the
+error raised when a user uploads a file of wrong type.
+
+<Canvas>
+  <Story
+    name="One allowed file type"
+    argTypes={{
+      filePattern: {table: {disable: true}}, // Ideally would like a readonly, but it looks like it's not possible in SB yet.
+    }}
+    args={{
+      id: 'fileUpload2',
+      label: 'Attachment',
+      description: 'Klik om een bestand te selecteren en in te zenden. Alleen PDFs zijn toegestaan.',
+      required: false,
+      multiple: false,
+      filePattern: ['application/pdf']
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      // Click on browse to make the input node injected in the dom
+      const browseLink = canvas.getByRole('link', {name: 'browse'});
+      await userEvent.click(browseLink); // This opens the file dialog, but without it the input node is not injected into the DOM
+      // Upload a file of the wrong type
+      const file = new File(['not-a-pdf'], 'not-a-pdf.png', {type: 'image/png'});
+      const inputfile = document.querySelectorAll('.openforms-file-upload-input');
+      await userEvent.upload(inputfile[0], file);
+      // Check that the error message is there
+      const errorMessage = canvas.getByText('The uploaded file is not of an allowed type. It must be: .pdf.');
+      await expect(errorMessage).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Multiple allowed file types"
+    argTypes={{
+      filePattern: {table: {disable: true}},
+    }}
+    args={{
+      id: 'fileUpload2',
+      label: 'Attachment',
+      description: 'Klik om een bestand te selecteren en in te zenden. Alleen PDFs en PNGs zijn toegestaan.',
+      required: false,
+      multiple: false,
+      filePattern: ['application/pdf', 'image/png']
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      // Click on browse to make the input node injected in the dom
+      const browseLink = canvas.getByRole('link', {name: 'browse'});
+      await userEvent.click(browseLink);
+      // Upload a file of the wrong type
+      const file = new File(['not-a-pdf-or-png'], 'not-a-pdf-or-png.txt', {type: 'text/plain'});
+      const inputfile = document.querySelectorAll('.openforms-file-upload-input');
+      await userEvent.upload(inputfile[0], file);
+      // Check that the error message is there
+      const errorMessage = canvas.getByText('The uploaded file is not of an allowed type. It must be: .pdf or .png.');
+      await expect(errorMessage).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
 
 ## Error flow
 

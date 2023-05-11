@@ -260,15 +260,12 @@ class FileField extends Formio.Components.components.file {
   formatAllowedTypesLabels(allowedTypesLabels, filePattern) {
     if (!allowedTypesLabels) return filePattern;
 
-    const numberOfAllowedTypes = allowedTypesLabels.length;
-    if (numberOfAllowedTypes > 1) {
-      return this.t('{{ labels }} or {{ lastLabel }}', {
-        labels: allowedTypesLabels.slice(0, numberOfAllowedTypes - 1).join(', '),
-        lastLabel: allowedTypesLabels[numberOfAllowedTypes - 1],
-      });
-    }
-
-    return allowedTypesLabels[0];
+    const [last, ...otherLabels] = allowedTypesLabels.reverse();
+    if (!otherLabels.length) return last;
+    return this.t('{{ labels }} or {{ lastLabel }}', {
+      labels: otherLabels.join(', '),
+      lastLabel: last,
+    });
   }
 
   browseFiles(attrs = {}) {
