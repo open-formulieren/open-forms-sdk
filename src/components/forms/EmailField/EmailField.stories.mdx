@@ -1,0 +1,48 @@
+import { EmailField } from "./EmailField";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { FormikDecorator } from "../../../story-utils/decorators";
+import { userEvent, within } from "@storybook/testing-library";
+import { expect } from '@storybook/jest';
+export const Template = (args) => (
+  <EmailField {...args} />
+);
+
+<Meta
+  title="Pure React Components / Forms / EmailField"
+  component={EmailField}
+  parameters={{
+    formik: {
+      initialValues: {
+        email: 'test'
+      },
+    }
+  }}
+/>
+
+<Canvas>
+  <Story
+    name="Default"
+    decorators={[FormikDecorator]}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(canvas.getByRole('textbox')).toBeInTheDocument();
+      await expect(canvas.getByText('Email')).toBeInTheDocument();
+      await expect(canvas.getByText('This is a custom description for the email field')).toBeInTheDocument();
+      //Check if clicking on the label focuses the input
+      const label = canvas.getByText('Email');
+      userEvent.click(label);
+      await expect(canvas.getByRole('textbox')).toHaveFocus();
+    }}
+    args={{
+      name: 'email',
+      id: 'email',
+      label: "Email",
+      description: "This is a custom description for the email field",
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
