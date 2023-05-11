@@ -1,0 +1,73 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { FormikDecorator } from "../../../story-utils/decorators";
+import { SelectField } from "./SelectField";
+import { userEvent, within } from "@storybook/testing-library";
+import { expect } from '@storybook/jest';
+
+
+export const Template = (args) => (
+  <SelectField {...args} />
+);
+const test = async (canvasElement) => {
+  const canvas = within(canvasElement);
+  await expect(canvas.getByRole('combobox')).toBeInTheDocument();
+  await expect(canvas.getByText('Option')).toBeInTheDocument();
+  await expect(canvas.getByText('This is a custom description for the option field')).toBeInTheDocument();
+  const label = canvas.getByText('Option');
+  userEvent.click(label);
+  await expect(canvas.getByRole('combobox')).toHaveFocus();
+}
+
+<Meta
+  title="Pure React Components / Forms / SelectField"
+  component={SelectField}
+  parameters={{
+    initialValues: {
+      test: 'test'
+    },
+  }}
+/>
+
+<Canvas>
+  <Story
+    name="Static"
+    decorators={[FormikDecorator]}
+    play={async ({canvasElement}) => await test(canvasElement)}
+    args={{
+      id: 'option',
+      label: "Option",
+      description: "This is a custom description for the option field",
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+      options: [
+        { value: 'test', label: 'Test' },
+        { value: 'test2', label: 'Test 2' },
+      ],
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Dynamic"
+    decorators={[FormikDecorator]}
+    play={async ({canvasElement}) => await test(canvasElement)}
+    args={{
+      id: 'option',
+      label: "Option",
+      description: "This is a custom description for the option field",
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+      options: [
+        { value: 'test', label: 'Test' },
+        { value: 'test2', label: 'Test 2' },
+      ],
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
