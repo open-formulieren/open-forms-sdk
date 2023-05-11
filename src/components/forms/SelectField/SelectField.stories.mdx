@@ -1,0 +1,61 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { FormikDecorator } from "../../../story-utils/decorators";
+import { SelectField } from "./SelectField";
+
+
+export const Template = (args) => (
+  <SelectField {...args} />
+);
+
+<Meta
+  title="Pure React Components / Forms / SelectField"
+  component={SelectField}
+  parameters={{
+    initialValues: {
+      test: 'test'
+    },
+  }}
+/>
+
+
+<Canvas>
+  <Story
+    name="Static"
+    decorators={[FormikDecorator]}
+    args={{
+      id: 'amount',
+      label: "Amount",
+      description: "This is a custom description for the amount field",
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+      options: [
+        { value: 'test', label: 'Test' },
+        { value: 'test2', label: 'Test 2' },
+      ],
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Dynamic"
+    decorators={[FormikDecorator]}
+    args={{
+      id: 'amount',
+      label: "Amount",
+      description: "This is a custom description for the amount field",
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+      options: [
+        { value: 'test', label: 'Test' },
+        { value: 'test2', label: 'Test 2' },
+      ],
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
