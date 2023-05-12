@@ -9,7 +9,6 @@
 
 $select-background-color: var(--of-select-background-color, $color-white);
 
-
 .#{prefix(rs-select)} {
   @include body;
   @include border(all, $size: 1px);

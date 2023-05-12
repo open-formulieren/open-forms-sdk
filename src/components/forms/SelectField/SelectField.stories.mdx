@@ -1,29 +1,37 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { FormikDecorator } from "../../../story-utils/decorators";
-import { SelectField } from "./SelectField";
-import { userEvent, within } from "@storybook/testing-library";
-import { expect } from '@storybook/jest';
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
 
+import {FormikDecorator} from '../../../story-utils/decorators';
+import AsyncSelectField from './AsyncSelectField';
+import {SelectField} from './SelectField';
 
-export const Template = (args) => (
-  <SelectField {...args} />
-);
-const test = async (canvasElement) => {
+export const Template = args => <SelectField {...args} />;
+export const DynamicTemplate = args => <AsyncSelectField {...args} />;
+const retrieveOptions = async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return [
+    {value: 'option1', label: 'Option 1'},
+    {value: 'option2', label: 'Option 2'},
+    {value: 'option3', label: 'Option 3'},
+  ];
+};
+const test = async canvasElement => {
   const canvas = within(canvasElement);
-  await expect(canvas.getByRole('combobox')).toBeInTheDocument();
-  await expect(canvas.getByText('Option')).toBeInTheDocument();
-  await expect(canvas.getByText('This is a custom description for the option field')).toBeInTheDocument();
+  await expect(canvas.getByRole('combobox')).toBeVisible();
+  await expect(canvas.getByText('Option')).toBeVisible();
+  await expect(canvas.getByText('This is a custom description for the option field')).toBeVisible();
   const label = canvas.getByText('Option');
   userEvent.click(label);
   await expect(canvas.getByRole('combobox')).toHaveFocus();
-}
+};
 
 <Meta
   title="Pure React Components / Forms / SelectField"
   component={SelectField}
   parameters={{
     initialValues: {
-      test: 'test'
+      test: 'test',
     },
   }}
 />
@@ -34,15 +42,16 @@ const test = async (canvasElement) => {
     decorators={[FormikDecorator]}
     play={async ({canvasElement}) => await test(canvasElement)}
     args={{
+      name: 'option',
       id: 'option',
-      label: "Option",
-      description: "This is a custom description for the option field",
+      label: 'Option',
+      description: 'This is a custom description for the option field',
       disabled: false,
       invalid: false,
       isRequired: true,
       options: [
-        { value: 'test', label: 'Test' },
-        { value: 'test2', label: 'Test 2' },
+        {value: 'test', label: 'Test'},
+        {value: 'test2', label: 'Test 2'},
       ],
     }}
   >
@@ -56,18 +65,16 @@ const test = async (canvasElement) => {
     decorators={[FormikDecorator]}
     play={async ({canvasElement}) => await test(canvasElement)}
     args={{
+      name: 'option',
       id: 'option',
-      label: "Option",
-      description: "This is a custom description for the option field",
+      label: 'Option',
+      description: 'This is a custom description for the option field',
       disabled: false,
       invalid: false,
       isRequired: true,
-      options: [
-        { value: 'test', label: 'Test' },
-        { value: 'test2', label: 'Test 2' },
-      ],
+      optionsRetriever: retrieveOptions,
     }}
   >
-    {Template.bind({})}
+    {DynamicTemplate.bind({})}
   </Story>
 </Canvas>

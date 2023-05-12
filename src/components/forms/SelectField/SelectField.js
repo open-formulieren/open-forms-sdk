@@ -1,9 +1,12 @@
 import {FormFieldDescription, FormLabel, Paragraph} from '@utrecht/component-library-react';
-import SelectAsync from 'react-select';
+import {Field} from 'formik';
+import PropTypes from 'prop-types';
+import Select from 'react-select';
 
 import {getBEMClassName} from '../../../utils';
 
 export const SelectField = ({
+  name = '',
   label = '',
   id = '',
   isRequired = false,
@@ -19,9 +22,10 @@ export const SelectField = ({
       <Paragraph className={labelClassName}>
         <FormLabel htmlFor={id}>{label}</FormLabel>
       </Paragraph>
-      <SelectAsync
+      <Field
+        name={name}
+        component={Select}
         inputId={id}
-        name={id}
         components={{DropdownIndicator: () => null, IndicatorSeparator: () => null}}
         classNames={{
           control: state => {
@@ -42,8 +46,24 @@ export const SelectField = ({
         options={options}
         unstyled
         isDisabled={disabled}
-      ></SelectAsync>
+      />
       {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
     </>
   );
+};
+
+SelectField.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  id: PropTypes.string,
+  isRequired: PropTypes.bool,
+  description: PropTypes.string,
+  disabled: PropTypes.bool,
+  invalid: PropTypes.bool,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ).isRequired,
 };
