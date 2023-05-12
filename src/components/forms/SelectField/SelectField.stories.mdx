@@ -2,12 +2,24 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { FormikDecorator } from "../../../story-utils/decorators";
 import { SelectField } from "./SelectField";
 import { userEvent, within } from "@storybook/testing-library";
-import { expect } from '@storybook/jest';
+import { expect } from "@storybook/jest";
+import AsyncSelectField from "./AsyncSelectField";
 
 
 export const Template = (args) => (
   <SelectField {...args} />
 );
+export const DynamicTemplate = (args) => (
+  <AsyncSelectField {...args} />
+)
+const retrieveOptions = async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
+};
 const test = async (canvasElement) => {
   const canvas = within(canvasElement);
   await expect(canvas.getByRole('combobox')).toBeInTheDocument();
@@ -62,12 +74,9 @@ const test = async (canvasElement) => {
       disabled: false,
       invalid: false,
       isRequired: true,
-      options: [
-        { value: 'test', label: 'Test' },
-        { value: 'test2', label: 'Test 2' },
-      ],
+      optionsRetriever: retrieveOptions,
     }}
   >
-    {Template.bind({})}
+    {DynamicTemplate.bind({})}
   </Story>
 </Canvas>

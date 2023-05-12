@@ -1,5 +1,6 @@
 import {FormFieldDescription, FormLabel, Paragraph} from '@utrecht/component-library-react';
 import SelectAsync from 'react-select';
+import Select from 'react-select';
 
 import {getBEMClassName} from '../../../utils';
 
@@ -19,7 +20,7 @@ export const SelectField = ({
       <Paragraph className={labelClassName}>
         <FormLabel htmlFor={id}>{label}</FormLabel>
       </Paragraph>
-      <SelectAsync
+      <Select
         inputId={id}
         name={id}
         components={{DropdownIndicator: () => null, IndicatorSeparator: () => null}}
@@ -42,7 +43,7 @@ export const SelectField = ({
         options={options}
         unstyled
         isDisabled={disabled}
-      ></SelectAsync>
+      />
       {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
     </>
   );
