@@ -1,5 +1,7 @@
-import {useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {useLocation} from 'react-router-dom';
+
+import {ConfigContext} from 'Context';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -85,13 +87,19 @@ const trackPageView = (location, previousLocation) => {
  * @return {Void}
  */
 const usePageViews = async () => {
+  const {basePath} = useContext(ConfigContext);
   const location = useLocation();
   const previousLocation = usePrevious(location);
   useEffect(() => {
     // if there's no change, do nothing
     if (previousLocation && previousLocation.pathname === location.pathname) return;
-    trackPageView(location, previousLocation);
-  }, [location, previousLocation]);
+    const fullPath = `${basePath}${location.pathname}`;
+    const fullPreviousPath = previousLocation && `${basePath}${previousLocation.pathname}`;
+    trackPageView(
+      {...location, pathname: fullPath},
+      previousLocation && {...previousLocation, pathname: fullPreviousPath}
+    );
+  }, [basePath, location, previousLocation]);
 };
 
 export default usePageViews;
