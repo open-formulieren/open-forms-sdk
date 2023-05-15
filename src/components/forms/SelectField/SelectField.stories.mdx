@@ -22,9 +22,9 @@ const retrieveOptions = async () => {
 };
 const test = async (canvasElement) => {
   const canvas = within(canvasElement);
-  await expect(canvas.getByRole('combobox')).toBeInTheDocument();
-  await expect(canvas.getByText('Option')).toBeInTheDocument();
-  await expect(canvas.getByText('This is a custom description for the option field')).toBeInTheDocument();
+  await expect(canvas.getByRole('combobox')).toBeVisible();
+  await expect(canvas.getByText('Option')).toBeVisible();
+  await expect(canvas.getByText('This is a custom description for the option field')).toBeVisible();
   const label = canvas.getByText('Option');
   userEvent.click(label);
   await expect(canvas.getByRole('combobox')).toHaveFocus();
@@ -46,6 +46,7 @@ const test = async (canvasElement) => {
     decorators={[FormikDecorator]}
     play={async ({canvasElement}) => await test(canvasElement)}
     args={{
+      name: 'option',
       id: 'option',
       label: "Option",
       description: "This is a custom description for the option field",
@@ -68,6 +69,7 @@ const test = async (canvasElement) => {
     decorators={[FormikDecorator]}
     play={async ({canvasElement}) => await test(canvasElement)}
     args={{
+      name: 'option',
       id: 'option',
       label: "Option",
       description: "This is a custom description for the option field",
