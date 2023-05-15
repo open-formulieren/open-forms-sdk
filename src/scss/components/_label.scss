@@ -1,4 +1,5 @@
 @use './anchor';
+@use 'microscope-sass/lib/bem';
 
 @import '~microscope-sass/lib/typography';
 
@@ -11,10 +12,21 @@
   display: block;
   font-weight: var(--of-label-font-weight);
 
-  &.field-required:after {
-    content: '*';
-    color: var(--of-color-danger);
-    z-index: 0; // otherwise this is above the progress indicator in some browsers
+  // .field-required is deprecated, use the modifier instead.
+  &.field-required {
+    &:after {
+      content: '*';
+      color: var(--of-color-danger);
+      z-index: 0; // otherwise this is above the progress indicator in some browsers
+    }
+  }
+
+  @include bem.modifier('required') {
+    &:after {
+      content: '*';
+      color: var(--of-color-danger);
+      z-index: 0; // otherwise this is above the progress indicator in some browsers
+    }
   }
 }
 

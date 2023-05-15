@@ -1,0 +1,49 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
+
+import {FormikDecorator} from 'story-utils/decorators';
+
+import TextField from './TextField';
+
+export const Template = args => <TextField {...args} />;
+
+<Meta
+  title="Pure React Components / Forms / TextField"
+  component={TextField}
+  parameters={{
+    formik: {
+      initialValues: {
+        test: '',
+      },
+    },
+  }}
+/>
+
+<Canvas>
+  <Story
+    name="Default"
+    decorators={[FormikDecorator]}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(canvas.getByRole('textbox')).toBeVisible();
+      await expect(canvas.getByText('test')).toBeVisible();
+      await expect(canvas.getByText('This is a custom description')).toBeVisible();
+      // Check if clicking on the label focuses the input
+      const label = canvas.getByText('test');
+      userEvent.click(label);
+      await expect(canvas.getByRole('textbox')).toHaveFocus();
+    }}
+    args={{
+      name: 'test',
+      id: 'test',
+      label: 'test',
+      description: 'This is a custom description',
+      disabled: false,
+      invalid: false,
+      isRequired: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
