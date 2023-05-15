@@ -1,5 +1,7 @@
-import {useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {useLocation} from 'react-router-dom';
+
+import {ConfigContext} from 'Context';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -42,7 +44,7 @@ const ANALYTICS_PROVIDERS = {
   siteimprove: async (location, previousLocation) =>
     /* SiteImprove
     Docs: https://support.siteimprove.com/hc/en-gb/articles/115001615171-Siteimprove-Analytics-Custom-Visit-Tracking
-		Note: siteimprove requires the full URL to track pages, not merely the path
+    Note: siteimprove requires the full URL to track pages, not merely the path
     */
     window._sz &&
     window._sz.push([
@@ -57,7 +59,7 @@ const ANALYTICS_PROVIDERS = {
     ]),
   matomoOrPiwik: async (location, previousLocation) => {
     /* Matomo, Piwik and Piwik PRO are all supported
-		Matomo: https://developer.matomo.org/guides/spa-tracking
+    Matomo: https://developer.matomo.org/guides/spa-tracking
     Piwik: https://piwik.org/docs/tracking-javascript-guide/
     Piwik PRO: https://developers.piwik.pro/en/latest/data_collection/web/guides.html
     Hashrouting support: https://developer.matomo.org/guides/spa-tracking / alternatively: https://www.npmjs.com/package/@datapunt/matomo-tracker-react (from Amsterdam)
@@ -92,6 +94,7 @@ const trackPageView = (location, previousLocation) => {
  * @return {Void}
  */
 const usePageViews = async () => {
+  const {basePath} = useContext(ConfigContext);
   const location = useLocation();
   const previousLocation = usePrevious(location);
   useEffect(() => {
@@ -102,8 +105,13 @@ const usePageViews = async () => {
       previousLocation.hash === location.hash
     )
       return;
-    trackPageView(location, previousLocation);
-  }, [location, previousLocation]);
+    const fullPath = `${basePath}${location.pathname}`;
+    const fullPreviousPath = previousLocation && `${basePath}${previousLocation.pathname}`;
+    trackPageView(
+      {...location, pathname: fullPath},
+      previousLocation && {...previousLocation, pathname: fullPreviousPath}
+    );
+  }, [basePath, location, previousLocation]);
 };
 
 export default usePageViews;
