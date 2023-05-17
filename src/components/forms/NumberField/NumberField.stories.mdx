@@ -12,14 +12,15 @@ const generalTest = async canvasElement => {
   await expect(canvas.getByLabelText('Amount')).toBeVisible();
   await expect(canvas.getByText('Amount')).toBeVisible();
   await expect(canvas.getByText('This is a custom description for the amount field')).toBeVisible();
+  // Assert that you're not able to type letters
+  const input = canvas.getByRole('textbox');
+  userEvent.click(input);
+  userEvent.type(input, 'abc');
+  await expect(input).toHaveValue('4');
   // Assert that clicking on the label focuses the input
   const label = canvas.getByText('Amount');
   userEvent.click(label);
   await expect(canvas.getByRole('textbox')).toHaveFocus();
-  // Assert that you're not able to type letters
-  const input = canvas.getByRole('textbox');
-  userEvent.type(input, 'abc');
-  await expect(input).toHaveValue('0');
 };
 
 <Meta
@@ -28,7 +29,7 @@ const generalTest = async canvasElement => {
   parameters={{
     formik: {
       initialValues: {
-        amount: '0',
+        amount: '4',
       },
     },
   }}
@@ -49,7 +50,7 @@ const generalTest = async canvasElement => {
       // Assert that you're able to provide a decimal number
       userEvent.clear(input);
       userEvent.type(input, '1.5');
-      await expect(input).toHaveValue('1.5');
+      await expect(input).toHaveValue('1,5');
     }}
     args={{
       name: 'amount',
@@ -73,7 +74,7 @@ const generalTest = async canvasElement => {
       const input = canvas.getByRole('textbox');
       userEvent.clear(input);
       userEvent.type(input, '-1');
-      await expect(input).toHaveValue('1');
+      await expect(input).toHaveValue('');
     }}
     args={{
       min: 0,

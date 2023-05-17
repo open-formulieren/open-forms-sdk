@@ -24,7 +24,7 @@ const NumberField = ({
   disabled = false,
   invalid = false,
 }) => {
-  const [field, helpers] = useField(name);
+  const [field, meta, helpers] = useField(name);
   const {locale} = useIntl();
 
   const numberFormat = new Intl.NumberFormat(locale);
@@ -39,11 +39,19 @@ const NumberField = ({
   const thousandSeparator = decimalSeparator === ',' ? '.' : ',';
   const isAllowedToTypeDecimals = !step;
 
+  // This function makes sure that the user can't type a number that is lower than the min value
+  const isAllowed = values => {
+    const {formattedValue, floatValue} = values;
+    const isEmpty = formattedValue === '';
+    const isBelowMin = min ? floatValue >= min : true;
+    return isEmpty || isBelowMin;
+  };
+
   const inputProps = {
     // To handle the State in formik
     // It is important to note that the onChange handler, **DOES NOT** handle any sanitization of the input.
     ...field,
-    value: helpers.value,
+    value: meta.value,
 
     // These are passed down to the customInput
     id,
@@ -56,6 +64,7 @@ const NumberField = ({
 
     // These are for the NumericFormat component
     customInput: Textbox,
+    isAllowed,
     allowNegative,
     decimalSeparator,
     thousandSeparator,
