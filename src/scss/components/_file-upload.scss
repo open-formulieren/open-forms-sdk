@@ -69,7 +69,6 @@ we don't have strict BEM naming here.
       }
       overflow-wrap: break-word;
     }
-
     .col-sm-2 {
       @include bootstrap-span(width, 2);
     }
@@ -97,6 +96,8 @@ we don't have strict BEM naming here.
     @include body;
     @include body--big;
 
+    width: 100%;
+
     &.has-error {
       @include border(left, $color-danger, 4px);
       padding-left: $grid-margin-3;
@@ -107,21 +108,28 @@ we don't have strict BEM naming here.
       align-items: center;
 
       &__file {
-        @include ellipsis;
+        word-break: normal;
+        overflow-wrap: anywhere;
         display: inline-block;
-        max-width: calc(100% - 2em);
+        width: 100%;
       }
+    }
 
-      [ref='fileStatusRemove'] {
-        cursor: pointer;
-        margin-left: 0.4em;
-        opacity: 0.6;
-        transition: all 0.4s ease;
+    .fileSize {
+      width: 100%;
+      line-height: 2em;
+      padding-left: $grid-margin-1;
+    }
 
-        &:hover {
-          opacity: 1;
-          color: $color-danger;
-        }
+    [ref='fileStatusRemove'] {
+      cursor: pointer;
+      margin-left: 0.4em;
+      opacity: 0.6;
+      transition: all 0.4s ease;
+
+      &:hover {
+        opacity: 1;
+        color: $color-danger;
       }
     }
   }
