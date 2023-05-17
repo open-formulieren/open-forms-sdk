@@ -8,6 +8,8 @@ import {
 import {useField} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {useIntl} from 'react-intl';
+import {NumericFormat} from 'react-number-format';
 
 import {getBEMClassName} from 'utils';
 
@@ -22,52 +24,57 @@ const NumberField = ({
   disabled = false,
   invalid = false,
 }) => {
-  // We have to use the hook here instead of the Field component since we need to intercept the onChange event
-  const [field] = useField(name);
+  const [field, helpers] = useField(name);
+  const {locale} = useIntl();
 
+  const numberFormat = new Intl.NumberFormat(locale);
   const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
+  const inputClassName = getBEMClassName('input', [invalid && 'invalid'].filter(Boolean));
 
-  const onChange = e => {
-    const inputValue = e.target.value;
-    const numericValue = Number(inputValue);
-
-    // Check if the input value is not a number and not a minus sign
-    if (isNaN(numericValue) && inputValue !== '-') {
-      return;
-    }
-    // Check if the numeric value is below the minimum value
-    if (min && numericValue < min) {
-      return;
-    }
-    // Check if the numeric value is not divisible by the step value
-    if (step && (numericValue % step !== 0 || inputValue.includes('.'))) {
-      return;
-    }
-    field.onChange(e);
-  };
+  const allowNegative = min && min < 0;
+  // We get the decimal separator by formatting a arbitrary number, and then extracting the decimal separator
+  const decimalSeparator = numberFormat
+    .formatToParts(1.1)
+    .find(part => part.type === 'decimal').value;
+  const thousandSeparator = decimalSeparator === ',' ? '.' : ',';
+  const isAllowedToTypeDecimals = !step;
 
   const inputProps = {
+    // To handle the State in formik
+    // It is important to note that the onChange handler, **DOES NOT** handle any sanitization of the input.
     ...field,
+    value: helpers.value,
+
+    // These are passed down to the customInput
     id,
+    className: inputClassName,
     disabled,
     invalid,
     min,
     step,
     type: 'text',
-    onChange,
+
+    // These are for the NumericFormat component
+    customInput: Textbox,
+    allowNegative,
+    decimalSeparator,
+    thousandSeparator,
+    decimalScale: isAllowedToTypeDecimals ? 2 : 0,
   };
+
   return (
     <UtrechtFormField type="text" invalid={invalid.toString()}>
       <Paragraph className={labelClassName}>
         <FormLabel htmlFor={id}>{label}</FormLabel>
       </Paragraph>
       <Paragraph>
-        <Textbox {...inputProps} />
+        <NumericFormat {...inputProps} />
       </Paragraph>
       {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
     </UtrechtFormField>
   );
 };
+
 NumberField.propTypes = {
   name: PropTypes.string.isRequired,
   min: PropTypes.number,
