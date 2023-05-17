@@ -1,59 +1,64 @@
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
-import { FormioComponent, FormDecorator } from './story-util';
+import {Canvas, Meta, Props, Story} from '@storybook/addon-docs';
+
+import {FormDecorator, FormioComponent} from './story-util';
 
 <Meta
   title="Form.io components/Selectboxes"
   argTypes={{
     id: {
-      type: { name: 'string' },
+      type: {name: 'string'},
     },
     label: {
-      type: { name: 'string', required: false },
+      type: {name: 'string', required: false},
     },
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' },
+    controls: {sort: 'requiredFirst'},
     docs: {
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
-    }
+      },
+    },
   }}
 />
 
 # Select Boxes
 
-The Select Boxes allows the user to check multiple values from a list of options. The Value column is what will be stored in the database and the Label is what is shown to the users.
-
+The Select Boxes allows the user to check multiple values from a list of options. The Value column
+is what will be stored in the database and the Label is what is shown to the users.
 
 ## Default
 
-export const Template = ({ id = '', label = '', ...args}) => (
-  <FormioComponent component={{
+export const Template = ({id = '', label = '', ...args}) => (
+  <FormioComponent
+    component={{
       key: id,
       type: 'selectboxes',
       input: true,
       label,
-      "values": [
-          {
-              "label": "Optie A",
-              "value": "selectA"
-          },
-          {
-              "label": "Optie B",
-              "value": "selectB"
-          },
-          {
-              "label": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-              "value": "selectC"
-          }
+      values: [
+        {
+          label: 'Optie A',
+          value: 'selectA',
+        },
+        {
+          label: 'Optie B',
+          value: 'selectB',
+        },
+        {
+          label:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+          value: 'selectC',
+        },
       ],
-}}/>);
+    }}
+  />
+);
 
 <Canvas>
-  <Story name="Default" args={{ id: 'option', label: 'Welke opties wilt u allemaal?'}}>
+  <Story name="Default" args={{id: 'option', label: 'Welke opties wilt u allemaal?'}}>
     {Template.bind({})}
   </Story>
 </Canvas>

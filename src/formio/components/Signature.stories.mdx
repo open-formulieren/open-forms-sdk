@@ -1,5 +1,6 @@
-import {Canvas, Meta, Story, ArgsTable} from '@storybook/addon-docs';
-import {FormioComponent, FormDecorator} from './story-util';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+
+import {FormDecorator, FormioComponent} from './story-util';
 
 <Meta
   title="Form.io components/Signature"
@@ -18,8 +19,8 @@ import {FormioComponent, FormDecorator} from './story-util';
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
-    }
+      },
+    },
   }}
 />
 
@@ -29,13 +30,21 @@ A signature field is a special field that allows someone to sign the field with 
 on a touch enabled device or with the mouse pointer. This signature will be converted into an image
 and stored with the form submission.
 
-
 ## Default
 
 export const Template = ({description = '', label = '', ...args}) => (
   <FormioComponent
     component={{
-      description, input: true, isSensitiveData: true, key: 'id', label, showInEmail: false, showInPDF: true, showInSummary: true, tableView: false, type: 'signature',
+      description,
+      input: true,
+      isSensitiveData: true,
+      key: 'id',
+      label,
+      showInEmail: false,
+      showInPDF: true,
+      showInSummary: true,
+      tableView: false,
+      type: 'signature',
     }}
   />
 );
@@ -43,7 +52,7 @@ export const Template = ({description = '', label = '', ...args}) => (
 <Canvas>
   <Story
     name="Default"
-    args={{ description: 'Plaats hierboven uw handtekening', label: 'Handtekening'}}
+    args={{description: 'Plaats hierboven uw handtekening', label: 'Handtekening'}}
   >
     {Template.bind({})}
   </Story>

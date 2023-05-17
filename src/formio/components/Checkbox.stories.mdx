@@ -1,25 +1,26 @@
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
-import { FormioComponent, FormDecorator } from './story-util';
+import {Canvas, Meta, Props, Story} from '@storybook/addon-docs';
+
+import {FormDecorator, FormioComponent} from './story-util';
 
 <Meta
   title="Form.io components/Checkbox"
   argTypes={{
     id: {
-      type: { name: 'string' },
+      type: {name: 'string'},
     },
     label: {
-      type: { name: 'string', required: false },
+      type: {name: 'string', required: false},
     },
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' },
+    controls: {sort: 'requiredFirst'},
     docs: {
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
-    }
+      },
+    },
   }}
 />
 
@@ -27,46 +28,58 @@ import { FormioComponent, FormDecorator } from './story-util';
 
 ## Default
 
-export const Template = ({ id = '', label = '', required = false, ...args}) => (
-  <FormioComponent component={{
+export const Template = ({id = '', label = '', required = false, ...args}) => (
+  <FormioComponent
+    component={{
       key: id,
       type: 'checkbox',
       input: true,
       label,
       validate: {required: required},
-}}/>);
+    }}
+  />
+);
 
 <Canvas>
-  <Story name="Default" args={{ id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden'}}>
+  <Story name="Default" args={{id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden'}}>
     {Template.bind({})}
   </Story>
-  <Story name="Required" args={{ id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden', required: true}}>
+  <Story
+    name="Required"
+    args={{id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden', required: true}}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
 
 ## Required fields without asterisks
 
-It is also possible to configure the required fields to not have an asterisk after the label and to add "(optional)"
-after the label of optional fields.
+It is also possible to configure the required fields to not have an asterisk after the label and to
+add "(optional)" after the label of optional fields.
 
-export const TemplateWithoutAsterisks = ({ id = '', label = '', required = false, ...args}) => (
-  <FormioComponent component={{
+export const TemplateWithoutAsterisks = ({id = '', label = '', required = false, ...args}) => (
+  <FormioComponent
+    component={{
       key: id,
       type: 'checkbox',
       input: true,
       label,
       validate: {required: required},
-}} evalContext={{requiredFieldsWithAsterisk: false}} />);
+    }}
+    evalContext={{requiredFieldsWithAsterisk: false}}
+  />
+);
 
 <Canvas>
-  <Story name="Optional" args={{ id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden'}}>
+  <Story name="Optional" args={{id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden'}}>
     {TemplateWithoutAsterisks.bind({})}
   </Story>
-  <Story name="Required no asterisk" args={{ id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden', required: true}}>
+  <Story
+    name="Required no asterisk"
+    args={{id: 'agree-terms', label: 'Ik ga akkoord met de voorwaarden', required: true}}
+  >
     {TemplateWithoutAsterisks.bind({})}
   </Story>
 </Canvas>
-
 
 <Props story="Default" />

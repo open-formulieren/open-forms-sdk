@@ -1,25 +1,26 @@
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
-import { FormioComponent, FormDecorator } from './story-util';
+import {Canvas, Meta, Props, Story} from '@storybook/addon-docs';
+
+import {FormDecorator, FormioComponent} from './story-util';
 
 <Meta
   title="Form.io components/PostcodeField"
   argTypes={{
     id: {
-      type: { name: 'string' },
+      type: {name: 'string'},
     },
     label: {
-      type: { name: 'string', required: false },
+      type: {name: 'string', required: false},
     },
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' },
+    controls: {sort: 'requiredFirst'},
     docs: {
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
-    }
+      },
+    },
   }}
 />
 
@@ -27,16 +28,19 @@ import { FormioComponent, FormDecorator } from './story-util';
 
 ## Default
 
-export const Template = ({ id = '', label = '', ...args}) => (
-  <FormioComponent component={{
+export const Template = ({id = '', label = '', ...args}) => (
+  <FormioComponent
+    component={{
       key: id,
       type: 'postcode',
       input: true,
       label,
-}}/>);
+    }}
+  />
+);
 
 <Canvas>
-  <Story name="Default" args={{ id: 'postal-code', label: 'Postcode'}}>
+  <Story name="Default" args={{id: 'postal-code', label: 'Postcode'}}>
     {Template.bind({})}
   </Story>
 </Canvas>

@@ -1,9 +1,7 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
-import {getWorker} from 'msw-storybook-addon';
-import { within, userEvent } from '@storybook/testing-library';
 import {expect} from '@storybook/jest';
-
-export const worker = getWorker();
+import {userEvent, within} from '@storybook/testing-library';
+import {getWorker} from 'msw-storybook-addon';
 
 import {FileField} from './FileField';
 import {
@@ -13,6 +11,8 @@ import {
   mockFileUploadPost,
 } from './FileUpload.mocks';
 import {FormDecorator, FormioComponent} from './story-util';
+
+export const worker = getWorker();
 
 export const FILEPATTERN = [
   'application/pdf',
@@ -36,7 +36,7 @@ export const MIME_TO_LABEL = {
   'image/png': '.png',
   'text/csv': '.csv',
   'text/plain': '.txt',
-}
+};
 
 export const ERRORS = ['File is too big', 'File is of the wrong type'];
 
@@ -60,17 +60,17 @@ export const ERRORS = ['File is too big', 'File is of the wrong type'];
 
 # File Upload
 
-**Note** - file uploads on the Docs page will always error due to the way
-the network mocking library works. Use the canvas instead.
+**Note** - file uploads on the Docs page will always error due to the way the network mocking
+library works. Use the canvas instead.
 
 export const Template = ({
   id,
   label,
   required,
   description,
-  filePattern=[],
+  filePattern = [],
   multiple,
-  backendErrors=[],
+  backendErrors = [],
 }) => {
   if (backendErrors.length) {
     worker.use(mockFileUploadErrorPost(backendErrors));
@@ -94,11 +94,11 @@ export const Template = ({
         file: {
           type: filePattern,
           allowedTypesLabels: filePattern.map(pattern => MIME_TO_LABEL[pattern]),
-        }
+        },
       }}
     />
   );
-}
+};
 
 ## Happy flow
 
@@ -121,8 +121,8 @@ export const Template = ({
 
 ## File type validation errors
 
-By selecting a `filePattern` and uploading a file of different type, it is possible to see the
-error raised when a user uploads a file of wrong type.
+By selecting a `filePattern` and uploading a file of different type, it is possible to see the error
+raised when a user uploads a file of wrong type.
 
 <Canvas>
   <Story
@@ -133,10 +133,11 @@ error raised when a user uploads a file of wrong type.
     args={{
       id: 'fileUpload2',
       label: 'Attachment',
-      description: 'Klik om een bestand te selecteren en in te zenden. Alleen PDFs zijn toegestaan.',
+      description:
+        'Klik om een bestand te selecteren en in te zenden. Alleen PDFs zijn toegestaan.',
       required: false,
       multiple: false,
-      filePattern: ['application/pdf']
+      filePattern: ['application/pdf'],
     }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
@@ -148,7 +149,9 @@ error raised when a user uploads a file of wrong type.
       const inputfile = document.querySelectorAll('.openforms-file-upload-input');
       await userEvent.upload(inputfile[0], file);
       // Check that the error message is there
-      const errorMessage = canvas.getByText('The uploaded file is not of an allowed type. It must be: .pdf.');
+      const errorMessage = canvas.getByText(
+        'The uploaded file is not of an allowed type. It must be: .pdf.'
+      );
       await expect(errorMessage).toBeVisible();
     }}
   >
@@ -165,10 +168,11 @@ error raised when a user uploads a file of wrong type.
     args={{
       id: 'fileUpload2',
       label: 'Attachment',
-      description: 'Klik om een bestand te selecteren en in te zenden. Alleen PDFs en PNGs zijn toegestaan.',
+      description:
+        'Klik om een bestand te selecteren en in te zenden. Alleen PDFs en PNGs zijn toegestaan.',
       required: false,
       multiple: false,
-      filePattern: ['application/pdf', 'image/png']
+      filePattern: ['application/pdf', 'image/png'],
     }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
@@ -180,7 +184,9 @@ error raised when a user uploads a file of wrong type.
       const inputfile = document.querySelectorAll('.openforms-file-upload-input');
       await userEvent.upload(inputfile[0], file);
       // Check that the error message is there
-      const errorMessage = canvas.getByText('The uploaded file is not of an allowed type. It must be: .pdf or .png.');
+      const errorMessage = canvas.getByText(
+        'The uploaded file is not of an allowed type. It must be: .pdf or .png.'
+      );
       await expect(errorMessage).toBeVisible();
     }}
   >
@@ -190,8 +196,8 @@ error raised when a user uploads a file of wrong type.
 
 ## Error flow
 
-The backend performs a number of checks on file uploads and may return validation
-errors. These are displayed on the upload component.
+The backend performs a number of checks on file uploads and may return validation errors. These are
+displayed on the upload component.
 
 <Canvas>
   <Story

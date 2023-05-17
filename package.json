@@ -71,8 +71,8 @@
     "build:design-tokens": "yarn workspace @open-formulieren/design-tokens run build",
     "storybook": "start-storybook -p 6006",
     "build:storybook": "build-storybook --webpack-stats-json",
-    "format": "prettier --write 'src/**/*.{js,scss}'",
-    "checkformat": "prettier --check 'src/**/*.{js,scss}'"
+    "format": "prettier --write 'src/**/*.{js,scss,mdx}'",
+    "checkformat": "prettier --check 'src/**/*.{js,scss,mdx}'"
   },
   "workspaces": [
     "design-tokens"

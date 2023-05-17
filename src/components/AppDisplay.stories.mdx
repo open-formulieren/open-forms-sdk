@@ -1,4 +1,4 @@
-import {Meta, Canvas, Story, ArgsTable} from '@storybook/addon-docs';
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 
 import Body from 'components/Body';
 
@@ -8,43 +8,53 @@ import AppDisplay from './AppDisplay';
   title="Composites/App display"
   component={AppDisplay}
   argTypes={{
-    router: { table: {disable: true}},
-    languageSwitcher: { table: {disable: true}},
-    appDebug: { control: 'boolean' },
+    router: {table: {disable: true}},
+    languageSwitcher: {table: {disable: true}},
+    appDebug: {control: 'boolean'},
   }}
 />
 
 The `AppDisplay` component allows you to tweak the markup for the general SDK scaffolding.
 
 export const SpacedDiv = ({children}) => (
-    <div style={{
-        background: 'white',
-        margin: '.5em',
-        padding: '1em',
-        width: '100%',
-    }}>
-        {children}
-    </div>
+  <div
+    style={{
+      background: 'white',
+      margin: '.5em',
+      padding: '1em',
+      width: '100%',
+    }}
+  >
+    {children}
+  </div>
 );
 
-export const Template = (args) => {
-    return (
-        <AppDisplay
-            router={<SpacedDiv><Body>{'<Router>'}</Body></SpacedDiv>}
-            languageSwitcher={
-              <div style={{marginLeft: 'auto', marginRight: 'auto'}}>
-                <Body>{'<Language switcher>'}</Body>
-              </div>}
-            appDebug={args.appDebug ? <SpacedDiv><Body>{'<App debug>'}</Body></SpacedDiv>: null}
-        />
-    );
-}
+export const Template = args => {
+  return (
+    <AppDisplay
+      router={
+        <SpacedDiv>
+          <Body>{'<Router>'}</Body>
+        </SpacedDiv>
+      }
+      languageSwitcher={
+        <div style={{marginLeft: 'auto', marginRight: 'auto'}}>
+          <Body>{'<Language switcher>'}</Body>
+        </div>
+      }
+      appDebug={
+        args.appDebug ? (
+          <SpacedDiv>
+            <Body>{'<App debug>'}</Body>
+          </SpacedDiv>
+        ) : null
+      }
+    />
+  );
+};
 
 <Canvas>
-  <Story
-    name="Default"
-    args={{appDebug: false }}
-  >
+  <Story name="Default" args={{appDebug: false}}>
     {Template.bind({})}
   </Story>
 </Canvas>

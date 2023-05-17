@@ -1,23 +1,24 @@
-import { Canvas, Meta, Story } from '@storybook/addon-docs';
-import { FormioComponent, FormDecorator } from './story-util';
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+
+import {FormDecorator, FormioComponent} from './story-util';
 
 <Meta
   title="Form.io components/Content"
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' },
+    controls: {sort: 'requiredFirst'},
     docs: {
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
-    }
+      },
+    },
   }}
   argTypes={{
     label: {type: {required: false}},
     customClass: {
       options: [null, 'info', 'warning', 'error', 'success'],
-      control: { type: 'radio', labels: {null: '(none)'} },
+      control: {type: 'radio', labels: {null: '(none)'}},
     },
   }}
 />
@@ -52,7 +53,7 @@ export const Template = ({customClass = null, html = '', id = '', label = '', ..
       customClass: null,
       html: `<p>Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit. Quisque a felis ante. Nunc dictum, dui et scelerisque euismod,
 ex dui sodales magna, quis vehicula nulla justo sed urna. Integer maximus tempus tellus vel commodo.
-Orci varius natoque penatibus et magnis dis parturient montes.</p>`
+Orci varius natoque penatibus et magnis dis parturient montes.</p>`,
     }}
   >
     {Template.bind({})}

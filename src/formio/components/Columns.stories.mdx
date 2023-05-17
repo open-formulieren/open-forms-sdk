@@ -1,49 +1,50 @@
-import { Canvas, Meta, Story, Props } from '@storybook/addon-docs';
-import { FormioComponent, FormDecorator } from './story-util';
+import {Canvas, Meta, Props, Story} from '@storybook/addon-docs';
+
+import {FormDecorator, FormioComponent} from './story-util';
 
 <Meta
   title="Form.io components/Columns"
   argTypes={{
     components: {
-      type: { name: 'array' },
+      type: {name: 'array'},
     },
   }}
   decorators={[FormDecorator]}
   parameters={{
-    controls: { sort: 'requiredFirst' },
+    controls: {sort: 'requiredFirst'},
     docs: {
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      }
-    }
+      },
+    },
   }}
 />
 
 # Columns
 
-Columns are intended for simple grouping of components on a single line, e.g. a
-postal code + house number combination.
+Columns are intended for simple grouping of components on a single line, e.g. a postal code + house
+number combination.
 
-Complex nested structures are out of scope, as aligning all the labels, inputs, help texts
-and error messages is not trivial due to the possible absence of these components.
+Complex nested structures are out of scope, as aligning all the labels, inputs, help texts and error
+messages is not trivial due to the possible absence of these components.
 
 **Column width**
 
-The column width is dictated by the `size` key, which should be an integer value between
-`1` and `12` since we're using a 12-column grid.
+The column width is dictated by the `size` key, which should be an integer value between `1` and
+`12` since we're using a 12-column grid.
 
-On mobile, the default width is 100%, but you can tweak this using the optional
-`sizeMobile` key, ranging between `1` and `4`.
+On mobile, the default width is 100%, but you can tweak this using the optional `sizeMobile` key,
+ranging between `1` and `4`.
 
 ## Default
 
-export const Template = ({ components = [], ...args}) => (
-  <FormioComponent components={components}/>
-);
+export const Template = ({components = [], ...args}) => <FormioComponent components={components} />;
 
 <Canvas>
-  <Story name="Default" args={{
+  <Story
+    name="Default"
+    args={{
       components: [
         {
           key: 'cols1',
@@ -57,7 +58,7 @@ export const Template = ({ components = [], ...args}) => (
                   key: 'howManyDroidsDidYouDestroy',
                   type: 'textfield',
                   label: '# droids destroyed?',
-                }
+                },
               ],
             },
             {
@@ -66,7 +67,7 @@ export const Template = ({ components = [], ...args}) => (
                 {
                   key: 'whatAboutDroidekas',
                   type: 'textfield',
-                  label: 'What about Droideka\'s?',
+                  label: "What about Droideka's?",
                 },
               ],
             },
@@ -86,10 +87,12 @@ export const Template = ({ components = [], ...args}) => (
           key: 'isTheForceTrulyWithYou',
           type: 'textfield',
           label: 'Is the force truly with you?',
-          description: 'Harum provident earum quod perferendis dolor tempora. Est ipsum molestiae dolor repellendus id omnis vel.',
-        }
-      ]
-    }}>
+          description:
+            'Harum provident earum quod perferendis dolor tempora. Est ipsum molestiae dolor repellendus id omnis vel.',
+        },
+      ],
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
@@ -98,24 +101,30 @@ export const Template = ({ components = [], ...args}) => (
 
 ## Size control
 
-export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSize, ...args }) => (
-  <FormioComponent component={{
-    id: 'columnsSize',
-    type: 'columns',
-    label: 'Column sizes',
-    columns: [
-      {
-        size: col1Size,
-        sizeMobile: col1MobileSize,
-        components: [{type: 'content', html: `Size: ${col1Size}, mobile size: ${col1MobileSize || 'unset'}`}],
-      },
-      {
-        size: col2Size,
-        sizeMobile: col2MobileSize,
-        components: [{type: 'content', html: `Size: ${col2Size}, mobile size: ${col2MobileSize || 'unset'}`}],
-      }
-    ]
-  }}/>
+export const SizeTemplate = ({col1Size, col2Size, col1MobileSize, col2MobileSize, ...args}) => (
+  <FormioComponent
+    component={{
+      id: 'columnsSize',
+      type: 'columns',
+      label: 'Column sizes',
+      columns: [
+        {
+          size: col1Size,
+          sizeMobile: col1MobileSize,
+          components: [
+            {type: 'content', html: `Size: ${col1Size}, mobile size: ${col1MobileSize || 'unset'}`},
+          ],
+        },
+        {
+          size: col2Size,
+          sizeMobile: col2MobileSize,
+          components: [
+            {type: 'content', html: `Size: ${col2Size}, mobile size: ${col2MobileSize || 'unset'}`},
+          ],
+        },
+      ],
+    }}
+  />
 );
 
 <Canvas>
@@ -124,30 +133,30 @@ export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSiz
     argTypes={{
       col1Size: {
         name: 'Size column 1',
-        type: { required: true },
-        control: { type: 'range', min: 1, max: 12, step: 1 }
+        type: {required: true},
+        control: {type: 'range', min: 1, max: 12, step: 1},
       },
       col2Size: {
         name: 'Size column 2',
-        type: { required: true },
-        control: { type: 'range', min: 1, max: 12, step: 1 }
+        type: {required: true},
+        control: {type: 'range', min: 1, max: 12, step: 1},
       },
       col1MobileSize: {
         name: 'Size on mobile column 1',
-        control: { type: 'range', min: 0, max: 4, step: 1 }
+        control: {type: 'range', min: 0, max: 4, step: 1},
       },
       col2MobileSize: {
         name: 'Size on mobile column 2',
-        control: { type: 'range', min: 0, max: 4, step: 1 }
+        control: {type: 'range', min: 0, max: 4, step: 1},
       },
       components: {
         table: {
           disable: true,
-        }
-      }
+        },
+      },
     }}
     parameters={{
-      controls: {sort: 'requiredFirst'}
+      controls: {sort: 'requiredFirst'},
     }}
     args={{
       col1Size: 8,
@@ -165,7 +174,9 @@ export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSiz
 ## Address
 
 <Canvas>
-  <Story name="Address" args={{
+  <Story
+    name="Address"
+    args={{
       components: [
         {
           key: 'address',
@@ -180,7 +191,7 @@ export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSiz
                   key: 'postalCode',
                   type: 'postcode',
                   label: 'Postal code',
-                }
+                },
               ],
             },
             {
@@ -194,10 +205,11 @@ export const SizeTemplate = ({ col1Size, col2Size, col1MobileSize, col2MobileSiz
                 },
               ],
             },
-          ]
-        }
-      ]
-    }}>
+          ],
+        },
+      ],
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

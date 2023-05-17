@@ -1,13 +1,13 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
-import {getWorker} from 'msw-storybook-addon';
-import { useArgs } from '@storybook/client-api';
+import {useArgs} from '@storybook/client-api';
 import {rest} from 'msw';
+import {getWorker} from 'msw-storybook-addon';
 
-import FormStepSaveModal from './FormStepSaveModal';
+import {BASE_URL} from 'api-mocks';
 import Button from 'components/Button';
 import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
-import {BASE_URL} from 'api-mocks';
 
+import FormStepSaveModal from './FormStepSaveModal';
 
 <Meta
   title="Private API/FormStepSaveModal"
@@ -29,7 +29,7 @@ import {BASE_URL} from 'api-mocks';
   }}
 />
 
-[//]: # ( Code related to mocking the calls made when saving the form )
+[//]: # ' Code related to mocking the calls made when saving the form '
 
 export const suspendFormUrl = `${BASE_URL}submissions/111-222-333/_suspend`;
 export const mockSuspendFormPOST = rest.post(suspendFormUrl, (req, res, ctx) => {
@@ -41,8 +41,7 @@ export const mockDestroySessionDELETE = rest.delete(
 );
 export const worker = getWorker();
 
-
-export const Template = (args) => {
+export const Template = args => {
   const [_, updateArgs] = useArgs();
   return (
     <>
@@ -50,7 +49,9 @@ export const Template = (args) => {
         Open Modal
       </Button>
       <FormStepSaveModal
-        closeModal={() => updateArgs({isOpen: !args.isOpen})} onSessionDestroyed={() => updateArgs({isOpen: false})} {...args}
+        closeModal={() => updateArgs({isOpen: !args.isOpen})}
+        onSessionDestroyed={() => updateArgs({isOpen: false})}
+        {...args}
       />
     </>
   );
