@@ -1,8 +1,8 @@
-import { EmailField } from "./EmailField";
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { FormikDecorator } from "../../../story-utils/decorators";
-import { userEvent, within } from "@storybook/testing-library";
-import { expect } from '@storybook/jest';
+import {Canvas, Meta, Story} from "@storybook/addon-docs";
+import {userEvent, within} from "@storybook/testing-library";
+import {expect} from '@storybook/jest';
+import {FormikDecorator} from "story-utils/decorators";
+import EmailField from "./EmailField";
 export const Template = (args) => (
   <EmailField {...args} />
 );
@@ -25,9 +25,9 @@ export const Template = (args) => (
     decorators={[FormikDecorator]}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
-      await expect(canvas.getByRole('textbox')).toBeInTheDocument();
-      await expect(canvas.getByText('Email')).toBeInTheDocument();
-      await expect(canvas.getByText('This is a custom description for the email field')).toBeInTheDocument();
+      await expect(canvas.getByRole('textbox')).toBeVisible();
+      await expect(canvas.getByLabelText('Email')).toBeVisible();
+      await expect(canvas.getByText('This is a custom description for the email field')).toBeVisible();
       //Check if clicking on the label focuses the input
       const label = canvas.getByText('Email');
       userEvent.click(label);
