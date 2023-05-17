@@ -1,0 +1,11 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+
+import ProductSelect from './ProductSelect';
+
+export const Template = args => <ProductSelect {...args} namePrefix={'test'} />;
+
+<Meta title="Pure React Components / Forms / ProductSelect" component={ProductSelect} />
+
+<Canvas>
+  <Story name="Static">{Template.bind({})}</Story>
+</Canvas>

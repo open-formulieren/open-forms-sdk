@@ -1,0 +1,14 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+
+import {FormikDecorator} from '../../story-utils/decorators';
+import AppointmentProduct from './AppointmentProduct';
+
+export const Template = args => <AppointmentProduct {...args} namePrefix={'test'} />;
+
+<Meta title="Private API / Appointments / Appointment Product" component={AppointmentProduct} />
+
+<Canvas>
+  <Story name="Static" decorators={[FormikDecorator]}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
