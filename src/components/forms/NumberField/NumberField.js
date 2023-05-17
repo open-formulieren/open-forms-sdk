@@ -36,14 +36,16 @@ const NumberField = ({
   const decimalSeparator = numberFormat
     .formatToParts(1.1)
     .find(part => part.type === 'decimal').value;
-  const thousandSeparator = decimalSeparator === ',' ? '.' : ',';
-  const isAllowedToTypeDecimals = !step;
+  const thousandSeparator = numberFormat
+    .formatToParts(1000)
+    .find(part => part.type === 'group').value;
+  const isAllowedToTypeDecimals = !step || !Number.isInteger(step);
 
   // This function makes sure that the user can't type a number that is lower than the min value
   const isAllowed = values => {
     const {formattedValue, floatValue} = values;
     const isEmpty = formattedValue === '';
-    const isBelowMin = min ? floatValue >= min : true;
+    const isBelowMin = !isNaN(min) ? floatValue >= min : true;
     return isEmpty || isBelowMin;
   };
 

@@ -16,7 +16,7 @@ const generalTest = async canvasElement => {
   const input = canvas.getByRole('textbox');
   userEvent.click(input);
   userEvent.type(input, 'abc');
-  await expect(input).toHaveValue('4');
+  await expect(input).toHaveDisplayValue('4');
   // Assert that clicking on the label focuses the input
   const label = canvas.getByText('Amount');
   userEvent.click(label);
@@ -46,11 +46,11 @@ const generalTest = async canvasElement => {
       const input = canvas.getByRole('textbox');
       userEvent.clear(input);
       userEvent.type(input, '-1');
-      await expect(input).toHaveValue('-1');
+      await expect(input).toHaveDisplayValue('-1');
       // Assert that you're able to provide a decimal number
       userEvent.clear(input);
       userEvent.type(input, '1.5');
-      await expect(input).toHaveValue('1,5');
+      await expect(input).toHaveDisplayValue('1,5');
     }}
     args={{
       name: 'amount',
@@ -74,7 +74,7 @@ const generalTest = async canvasElement => {
       const input = canvas.getByRole('textbox');
       userEvent.clear(input);
       userEvent.type(input, '-1');
-      await expect(input).toHaveValue('1');
+      await expect(input).toHaveDisplayValue('1');
     }}
     args={{
       min: 0,
