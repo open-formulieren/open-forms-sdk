@@ -1,12 +1,13 @@
 import {FormFieldDescription, FormLabel, Paragraph} from '@utrecht/component-library-react';
 import {Field} from 'formik';
 import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
 
-import {getBEMClassName} from '../../../utils';
+import {getBEMClassName} from 'utils';
 
-export const SelectField = ({
-  name = '',
+const SelectField = ({
+  name,
   label = '',
   id = '',
   isRequired = false,
@@ -14,9 +15,10 @@ export const SelectField = ({
   disabled = false,
   invalid = false,
   options = [],
+  valueProperty = 'value',
+  ...props
 }) => {
   const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
-
   return (
     <>
       <Paragraph className={labelClassName}>
@@ -44,15 +46,29 @@ export const SelectField = ({
           },
         }}
         options={options}
+        getOptionValue={opt => opt[valueProperty]}
         unstyled
         isDisabled={disabled}
+        loadingMessage={() => (
+          <FormattedMessage
+            description="(Async) select options loading message"
+            defaultMessage="Loading..."
+          />
+        )}
+        noOptionsMessage={() => (
+          <FormattedMessage
+            description="Select 'no options' message"
+            defaultMessage="No results found"
+          />
+        )}
+        {...props}
       />
       {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
     </>
   );
 };
 
-SelectField.propTypes = {
+export const SelectFieldPropTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   id: PropTypes.string,
@@ -60,10 +76,12 @@ SelectField.propTypes = {
   description: PropTypes.string,
   disabled: PropTypes.bool,
   invalid: PropTypes.bool,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string,
-    })
-  ).isRequired,
+  valueProperty: PropTypes.string,
 };
+
+SelectField.propTypes = {
+  ...SelectFieldPropTypes,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default SelectField;
