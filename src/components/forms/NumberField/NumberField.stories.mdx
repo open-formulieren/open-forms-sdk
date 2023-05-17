@@ -74,7 +74,7 @@ const generalTest = async canvasElement => {
       const input = canvas.getByRole('textbox');
       userEvent.clear(input);
       userEvent.type(input, '-1');
-      await expect(input).toHaveValue('');
+      await expect(input).toHaveValue('1');
     }}
     args={{
       min: 0,
