@@ -1,4 +1,6 @@
 import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {within} from '@storybook/testing-library';
 
 import {FormikDecorator} from '../../story-utils/decorators';
 import AppointmentProduct from './AppointmentProduct';
@@ -8,7 +10,17 @@ export const Template = args => <AppointmentProduct {...args} namePrefix={'test'
 <Meta title="Private API / Appointments / Appointment Product" component={AppointmentProduct} />
 
 <Canvas>
-  <Story name="Static" decorators={[FormikDecorator]}>
+  <Story
+    name="Static"
+    decorators={[FormikDecorator]}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      //Ensure the Select Field is rendered
+      await expect(canvas.getByRole('combobox')).toBeVisible();
+      // Ensure the Text Field is rendered
+      await expect(canvas.getByRole('textbox')).toBeVisible();
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
