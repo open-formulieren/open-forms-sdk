@@ -4,7 +4,7 @@ import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import Literal from 'components/Literal';
-import {getLoginUrl} from 'components/utils';
+import {getCoSignLoginUrl, getLoginUrl} from 'components/utils';
 import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
@@ -44,11 +44,25 @@ const LoginOptions = ({form, onFormStart}) => {
   const Container = form.loginRequired ? React.Fragment : 'form';
   const containerProps = form.loginRequired ? {} : {onSubmit: onFormStart};
 
+  let cosignInfo;
+  if (form.cosignLoginInfo) {
+    cosignInfo = {...form.cosignLoginInfo};
+    cosignInfo.url = getCoSignLoginUrl(form);
+    cosignInfo.label = (
+      <FormattedMessage
+        description="Login button label"
+        defaultMessage="Login with {provider}"
+        values={{provider: form.cosignLoginInfo.label}}
+      />
+    );
+  }
+
   return (
     <Container {...containerProps}>
       <LoginDisplayComponent
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
+        cosignLoginInfo={cosignInfo}
       />
     </Container>
   );
