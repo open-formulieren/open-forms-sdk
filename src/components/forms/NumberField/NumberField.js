@@ -13,10 +13,19 @@ import {NumericFormat} from 'react-number-format';
 
 import {getBEMClassName} from 'utils';
 
+const getSeparators = locale => {
+  const numberFormat = new Intl.NumberFormat(locale);
+  const parts = numberFormat.formatToParts(1000.1);
+  const decimalSeparator = parts.find(part => part.type === 'decimal').value;
+  const thousandSeparator = parts.find(part => part.type === 'group').value;
+  return {decimalSeparator, thousandSeparator};
+};
+
 const NumberField = ({
   name,
   min,
   step,
+  useNumberType = false, // number type can be convenient for small numbers with the +- spinner buttons
   label = '',
   isRequired = false,
   description = '',
@@ -27,27 +36,12 @@ const NumberField = ({
   const [field, meta, helpers] = useField(name);
   const {locale} = useIntl();
 
-  const numberFormat = new Intl.NumberFormat(locale);
   const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
   const inputClassName = getBEMClassName('input', [invalid && 'invalid'].filter(Boolean));
 
-  const allowNegative = min && min < 0;
   // We get the decimal separator by formatting a arbitrary number, and then extracting the decimal separator
-  const decimalSeparator = numberFormat
-    .formatToParts(1.1)
-    .find(part => part.type === 'decimal').value;
-  const thousandSeparator = numberFormat
-    .formatToParts(1000)
-    .find(part => part.type === 'group').value;
-  const isAllowedToTypeDecimals = !step || !Number.isInteger(step);
-
-  // This function makes sure that the user can't type a number that is lower than the min value
-  const isAllowed = values => {
-    const {formattedValue, floatValue} = values;
-    const isEmpty = formattedValue === '';
-    const isBelowMin = !isNaN(min) ? floatValue >= min : true;
-    return isEmpty || isBelowMin;
-  };
+  const {decimalSeparator, thousandSeparator} = getSeparators(locale);
+  const isInteger = step != null && Number.isInteger(step);
 
   const inputProps = {
     // To handle the State in formik
@@ -62,15 +56,18 @@ const NumberField = ({
     invalid,
     min,
     step,
-    type: 'text',
+    type: useNumberType ? 'number' : 'text',
 
     // These are for the NumericFormat component
     customInput: Textbox,
-    isAllowed,
-    allowNegative,
-    decimalSeparator,
-    thousandSeparator,
-    decimalScale: isAllowedToTypeDecimals ? 2 : 0,
+    // only pass the localized separators when we're not using type="number" input
+    ...(!useNumberType
+      ? {
+          decimalSeparator,
+          thousandSeparator,
+          decimalScale: isInteger ? undefined : 2,
+        }
+      : {}),
   };
 
   return (
@@ -88,6 +85,7 @@ const NumberField = ({
 
 NumberField.propTypes = {
   name: PropTypes.string.isRequired,
+  useNumberType: PropTypes.bool,
   min: PropTypes.number,
   step: PropTypes.number,
   label: PropTypes.string,
