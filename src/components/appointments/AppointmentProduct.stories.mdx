@@ -5,7 +5,7 @@ import {within} from '@storybook/testing-library';
 import {FormikDecorator} from '../../story-utils/decorators';
 import AppointmentProduct from './AppointmentProduct';
 
-export const Template = args => <AppointmentProduct {...args} namePrefix={'test'} />;
+export const Template = args => <AppointmentProduct {...args} />;
 
 <Meta title="Private API / Appointments / Appointment Product" component={AppointmentProduct} />
 
@@ -19,6 +19,12 @@ export const Template = args => <AppointmentProduct {...args} namePrefix={'test'
       await expect(canvas.getByRole('combobox')).toBeVisible();
       // Ensure the Text Field is rendered
       await expect(canvas.getByRole('textbox')).toBeVisible();
+    }}
+    args={{
+      header: 'Onderwerp (1/2)',
+      namePrefix: 'appointment',
+      selectLabel: 'Onderwerp',
+      numberLabel: 'Aantal personen',
     }}
   >
     {Template.bind({})}

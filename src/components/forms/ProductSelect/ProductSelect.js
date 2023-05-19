@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import AsyncSelectField from '../SelectField/AsyncSelectField';
 
-const ProductSelect = ({namePrefix}) => {
+const ProductSelect = ({namePrefix, label, description}) => {
   const getOptions = async () => {
     // Mocking the response
     const response = await new Promise(resolve => {
@@ -31,11 +31,19 @@ const ProductSelect = ({namePrefix}) => {
       value: identifier,
     }));
   };
-  console.log(namePrefix);
 
-  return <AsyncSelectField optionsRetriever={getOptions} name={`${namePrefix}.product`} />;
+  return (
+    <AsyncSelectField
+      optionsRetriever={getOptions}
+      name={`${namePrefix}.product`}
+      label={label}
+      description={description}
+    />
+  );
 };
 ProductSelect.PropTypes = {
   namePrefix: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  description: PropTypes.string,
 };
 export default ProductSelect;
