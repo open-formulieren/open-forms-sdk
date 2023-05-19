@@ -21,7 +21,6 @@ export const Template = args => <AppointmentProduct {...args} />;
       await expect(canvas.getByRole('textbox')).toBeVisible();
     }}
     args={{
-      header: 'Onderwerp (1/2)',
       namePrefix: 'appointment',
       selectLabel: 'Onderwerp',
       numberLabel: 'Aantal personen',

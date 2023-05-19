@@ -1,0 +1,40 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent} from '@storybook/testing-library';
+
+import {FormikDecorator} from '../../story-utils/decorators';
+import ChooseProductStep from './ChooseProductStep';
+
+export const Template = args => <ChooseProductStep {...args} />;
+
+<Meta
+  title="Private API / Appointments / ChooseProductStep"
+  component={ChooseProductStep}
+  decorators={[FormikDecorator]}
+/>
+
+<Canvas>
+  <Story
+    name="Default"
+    play={async ({canvasElement}) => {
+      const form = canvasElement.querySelector('form');
+      const addButton = canvasElement.querySelector('button[variant="primary"]');
+      const removeButtons = canvasElement.querySelectorAll('button[variant="danger"]');
+      // Assert we cannot remove the only product
+      expect(removeButtons.length).toBe(1);
+      userEvent.click(removeButtons[0]);
+      expect(canvasElement.querySelectorAll('input').length).toBe(2);
+      // Assert that we can add a product
+      userEvent.click(addButton);
+      expect(canvasElement.querySelectorAll('input').length).toBe(4);
+      // Assert that we can remove a product
+      userEvent.click(removeButtons[0]);
+      expect(canvasElement.querySelectorAll('input').length).toBe(2);
+    }}
+    args={{
+      namePrefix: 'test',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -1,0 +1,19 @@
+@use 'microscope-sass/lib/bem';
+@import '../mixins/prefix';
+
+.#{prefix('choose-product-step')} {
+  .#{prefix('button--danger')} {
+  }
+
+  .#{prefix('button--primary')} {
+    margin-top: 2rem;
+  }
+
+  > div {
+    border: 1px solid black;
+    padding: 2rem 2rem 0 2rem;
+  }
+  > div:last-of-type {
+    border-top: none;
+  }
+}

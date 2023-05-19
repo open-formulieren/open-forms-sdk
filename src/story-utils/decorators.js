@@ -32,7 +32,7 @@ export const RouterDecorator = (Story, {args: {routerArgs = {}}}) => {
 };
 
 export const FormikDecorator = (Story, context) => {
-  const initialValues = context.parameters?.formik?.initialValues || {};
+  const initialValues = context.parameters?.formik?.initialValues || {appointmentProducts: [{}]};
 
   return (
     <Formik
