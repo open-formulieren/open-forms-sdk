@@ -1,4 +1,5 @@
-import {default as EmailField} from './EmailField/EmailField';
-import {default as TextField} from './TextField/TextField';
+import {default as EmailField} from './EmailField';
+import {default as NumberField} from './NumberField';
+import {default as TextField} from './TextField';
 
-export {TextField, EmailField};
+export {TextField, EmailField, NumberField};
