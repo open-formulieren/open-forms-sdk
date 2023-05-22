@@ -15177,6 +15177,13 @@ react-modal@3.14.3:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
+react-number-format@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-5.2.1.tgz#09981be3edf22d48406ad5412a13a62fe6832806"
+  integrity sha512-C9L9GQDH/hv6ZDAwk6cdF0OhWw3EGXPvoigUtig47710SRh/HvCczuksrTXecMH2PBo/jjaaOSIVmUaKGxdZ3w==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-refresh@^0.11.0:
   version "0.11.0"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"
