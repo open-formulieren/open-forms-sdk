@@ -8,7 +8,7 @@ import {
 import {useField} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {NumericFormat} from 'react-number-format';
 
 import {getBEMClassName} from 'utils';
@@ -38,7 +38,10 @@ const NumberField = ({
 
   const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
   const inputClassName = getBEMClassName('input', [invalid && 'invalid'].filter(Boolean));
-
+  const descriptionClassName = getBEMClassName(
+    'description',
+    [invalid && 'invalid'].filter(Boolean)
+  );
   // We get the decimal separator by formatting a arbitrary number, and then extracting the decimal separator
   const {decimalSeparator, thousandSeparator} = getSeparators(locale);
   const isInteger = step != null && Number.isInteger(step);
@@ -71,14 +74,29 @@ const NumberField = ({
   };
 
   return (
-    <UtrechtFormField type="text" invalid={invalid.toString()}>
+    <UtrechtFormField
+      type="text"
+      invalid={invalid.toString()}
+      className={getBEMClassName('form-field', [invalid && 'invalid'].filter(Boolean))}
+    >
       <Paragraph className={labelClassName}>
         <FormLabel htmlFor={id}>{label}</FormLabel>
       </Paragraph>
       <Paragraph>
         <NumericFormat {...inputProps} />
       </Paragraph>
-      {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
+      {description && (
+        <FormFieldDescription invalid={invalid} className={descriptionClassName}>
+          {invalid ? (
+            <FormattedMessage
+              description="Error message for invalid input"
+              defaultMessage="invalid input"
+            />
+          ) : (
+            description
+          )}
+        </FormFieldDescription>
+      )}
     </UtrechtFormField>
   );
 };

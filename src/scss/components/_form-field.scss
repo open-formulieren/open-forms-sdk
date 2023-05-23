@@ -1,0 +1,23 @@
+@use 'microscope-sass/lib/bem';
+@import '../mixins/prefix';
+@import '~microscope-sass/lib/color';
+
+
+.#{prefix(form-field)} {
+  @include bem.modifier('invalid') {
+    background-color: var(--of-alert-error-bg); // Tried using $color-danger, but it's way to red it feels like.
+    padding: 1rem;
+    border-left: 6px solid $color-danger;
+
+    .#{prefix('description')} {
+      color: $color-danger;
+      font-weight: 700;
+    }
+  }
+
+
+
+
+
+}
+
