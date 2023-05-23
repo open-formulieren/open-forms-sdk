@@ -5,7 +5,7 @@ import {
   Textbox,
   FormField as UtrechtFormField,
 } from '@utrecht/component-library-react';
-import {Field} from 'formik';
+import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -18,25 +18,31 @@ export const TextField = ({
   description = '',
   id = '',
   disabled = false,
-  invalid = false,
+  ...inputProps
 }) => {
-  const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
+  const {getFieldMeta} = useFormikContext();
+  const {error} = getFieldMeta(name);
 
-  const inputProps = {
-    id,
-    disabled,
-    invalid,
-  };
+  const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
+  const invalid = !!error;
 
   return (
-    <UtrechtFormField type={'text'} invalid={invalid}>
+    <UtrechtFormField type="text" invalid={invalid}>
       <Paragraph className={labelClassName}>
         <FormLabel htmlFor={id}>{label}</FormLabel>
       </Paragraph>
       <Paragraph>
-        <Field name={name} as={Textbox} {...inputProps} />
+        <Field
+          name={name}
+          as={Textbox}
+          id={id}
+          disabled={disabled}
+          invalid={invalid}
+          {...inputProps}
+        />
       </Paragraph>
-      {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
+      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      {invalid && <FormFieldDescription invalid>{error}</FormFieldDescription>}
     </UtrechtFormField>
   );
 };
@@ -48,7 +54,6 @@ TextField.propTypes = {
   description: PropTypes.string,
   id: PropTypes.string,
   disabled: PropTypes.bool,
-  invalid: PropTypes.bool,
 };
 
 export default TextField;

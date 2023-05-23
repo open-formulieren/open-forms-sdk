@@ -10,6 +10,7 @@ export const Template = args => <EmailField {...args} />;
 
 <Meta
   title="Pure React Components / Forms / EmailField"
+  decorators={[FormikDecorator]}
   component={EmailField}
   parameters={{
     formik: {
@@ -23,19 +24,6 @@ export const Template = args => <EmailField {...args} />;
 <Canvas>
   <Story
     name="Default"
-    decorators={[FormikDecorator]}
-    play={async ({canvasElement}) => {
-      const canvas = within(canvasElement);
-      await expect(canvas.getByRole('textbox')).toBeVisible();
-      await expect(canvas.getByLabelText('Email')).toBeVisible();
-      await expect(
-        canvas.getByText('This is a custom description for the email field')
-      ).toBeVisible();
-      //Check if clicking on the label focuses the input
-      const label = canvas.getByText('Email');
-      userEvent.click(label);
-      await expect(canvas.getByRole('textbox')).toHaveFocus();
-    }}
     args={{
       name: 'email',
       id: 'email',
@@ -44,6 +32,20 @@ export const Template = args => <EmailField {...args} />;
       disabled: false,
       invalid: false,
       isRequired: true,
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const input = canvas.getByLabelText('Email');
+      await expect(input).toBeVisible();
+      await expect(canvas.getByRole('textbox')).toBe(input);
+      await expect(input.type).toBe('email');
+      await expect(
+        canvas.getByText('This is a custom description for the email field')
+      ).toBeVisible();
+      // Check if clicking on the label focuses the input
+      const label = canvas.getByText('Email');
+      userEvent.click(label);
+      await expect(canvas.getByRole('textbox')).toHaveFocus();
     }}
   >
     {Template.bind({})}
