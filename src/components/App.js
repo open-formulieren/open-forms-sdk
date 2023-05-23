@@ -14,6 +14,7 @@ import Types from 'types';
 import {DEBUG} from 'utils';
 
 import AppDisplay from './AppDisplay';
+import CosignCheck from './Cosign';
 
 const LanguageSwitcher = () => {
   const {languageSelectorTarget: target} = useContext(I18NContext);
@@ -41,9 +42,12 @@ const App = ({...props}) => {
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
   const router = (
     <Routes>
-      {/* Anything dealing with appointments gets routed to it's own sub-router */}
+      {/* Anything dealing with appointments gets routed to its own sub-router */}
       <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
       <Route path="appointment/*" element={<AppointmentForm {...props} />} />
+
+      <Route exact path="cosign/*" element={<CosignCheck {...props} />} />
+
       {/* All the rest goes to the actual form flow */}
       <Route path="*" element={<Form {...props} />} />
     </Routes>

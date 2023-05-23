@@ -10,6 +10,7 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 const SummaryConfirmation = ({
   submissionAllowed,
   privacy: {requiresPrivacyConsent, policyAccepted, privacyLabel},
+  showPreviousPageLink = true,
   onPrivacyCheckboxChange,
   onPrevPage,
 }) => {
@@ -33,11 +34,13 @@ const SummaryConfirmation = ({
         />
       ) : null}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
-        <ToolbarList>
-          <Button variant="anchor" component="a" onClick={onPrevPage}>
-            <Literal name="previousText" />
-          </Button>
-        </ToolbarList>
+        {showPreviousPageLink && (
+          <ToolbarList>
+            <Button variant="anchor" component="a" onClick={onPrevPage}>
+              <Literal name="previousText" />
+            </Button>
+          </ToolbarList>
+        )}
         <ToolbarList>
           {canSubmit ? (
             <Button
