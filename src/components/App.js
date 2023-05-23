@@ -7,6 +7,7 @@ import AppDebug from 'components/AppDebug';
 import Form from 'components/Form';
 import LanguageSelection from 'components/LanguageSelection';
 import {LayoutRow} from 'components/Layout';
+import {CosignSummary} from 'components/Summary';
 import AppointmentForm from 'components/appointments/AppointmentForm';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import {I18NContext} from 'i18n';
@@ -14,7 +15,7 @@ import Types from 'types';
 import {DEBUG} from 'utils';
 
 import AppDisplay from './AppDisplay';
-import CosignCheck from './Cosign';
+import ErrorBoundary from './ErrorBoundary';
 
 const LanguageSwitcher = () => {
   const {languageSelectorTarget: target} = useContext(I18NContext);
@@ -46,7 +47,11 @@ const App = ({...props}) => {
       <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
       <Route path="appointment/*" element={<AppointmentForm {...props} />} />
 
-      <Route exact path="cosign/*" element={<CosignCheck {...props} />} />
+      <Route exact path="cosign/*">
+        <ErrorBoundary useCard>
+          <CosignSummary {...props} />
+        </ErrorBoundary>
+      </Route>
 
       {/* All the rest goes to the actual form flow */}
       <Route path="*" element={<Form {...props} />} />

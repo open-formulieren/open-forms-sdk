@@ -7,7 +7,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {testForm} from 'components/FormStart/fixtures';
-import Summary from 'components/Summary';
+import SubmissionSummary from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 
@@ -67,9 +67,15 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   useRefreshSubmission.mockReturnValue(submissionIsAuthenticated);
 
   act(() => {
+<<<<<<< HEAD
     root.render(
       <Wrap>
         <Summary
+=======
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <SubmissionSummary
+>>>>>>> 5e7cf44 (:construction: [open-formulieren/open-forms#1530] Share code between SubmissionSummary and CosignSummary)
           form={testForm}
           submission={SUBMISSION}
           onConfirm={onConfirm}
@@ -94,9 +100,15 @@ it('Summary does not display logout button if loginRequired is false', () => {
   useRefreshSubmission.mockReturnValue(SUBMISSION);
 
   act(() => {
+<<<<<<< HEAD
     root.render(
       <Wrap>
         <Summary
+=======
+    render(
+      <IntlProvider locale="nl" messages={messagesNL}>
+        <SubmissionSummary
+>>>>>>> 5e7cf44 (:construction: [open-formulieren/open-forms#1530] Share code between SubmissionSummary and CosignSummary)
           form={formLoginRequired}
           submission={SUBMISSION}
           onConfirm={onConfirm}

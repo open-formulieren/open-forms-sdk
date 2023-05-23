@@ -9,6 +9,7 @@
   @include color-background;
   padding: $grid-margin-8;
   box-sizing: border-box;
+  width: 100%;
 
   @include bem.element('header') {
     @include bem.modifier('padded') {
