@@ -27,7 +27,7 @@ export const TextField = ({
   const invalid = !!error;
 
   return (
-    <UtrechtFormField type="text" invalid={invalid}>
+    <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
       <Paragraph className={labelClassName}>
         <FormLabel htmlFor={id}>{label}</FormLabel>
       </Paragraph>
@@ -36,13 +36,18 @@ export const TextField = ({
           name={name}
           as={Textbox}
           id={id}
+          className="utrecht-textbox--openforms"
           disabled={disabled}
           invalid={invalid}
           {...inputProps}
         />
       </Paragraph>
       {description && <FormFieldDescription>{description}</FormFieldDescription>}
-      {invalid && <FormFieldDescription invalid>{error}</FormFieldDescription>}
+      {invalid && (
+        <FormFieldDescription invalid className="utrecht-form-field-description--openforms-errors">
+          {error}
+        </FormFieldDescription>
+      )}
     </UtrechtFormField>
   );
 };

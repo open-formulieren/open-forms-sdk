@@ -1,0 +1,14 @@
+@use 'microscope-sass/lib/bem';
+
+@import '@utrecht/components/dist/form-field/css/index.css';
+
+// Overrides of the utrecht form field styles
+.utrecht-form-field {
+  @include bem.modifier('openforms') {
+    background-color: var(--of-utrecht-form-field-background-color, unset);
+
+    &.utrecht-form-field--invalid {
+      --of-utrecht-form-field-background-color: var(--of-alert-error-bg);
+    }
+  }
+}

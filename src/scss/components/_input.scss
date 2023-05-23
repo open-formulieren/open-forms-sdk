@@ -1,7 +1,8 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 $input-padding: $grid-margin-2;
@@ -21,7 +22,7 @@ $input-padding: $grid-margin-2;
   padding: $input-padding;
   width: 100%;
 
-  @include modifier('time') {
+  @include bem.modifier('time') {
     width: calc(5ch + 2 * $input-padding);
   }
 
@@ -40,3 +41,16 @@ $aliases: email, iban;
     @extend .#{prefix(input)};
   }
 }
+
+// overrides of the utrecht-textbox component
+.utrecht-textbox {
+  @include bem.modifier('openforms') {
+    font-weight: var(--of-input-font-weight);
+  }
+}
+
+// TODO: design tokens to set
+// --utrecht-textbox-line-height: 1.5
+// --utrecht-form-field-invalid-border-inline-start-color
+// --utrecht-form-field-invalid-border-inline-start-width
+// --utrecht-form-field-invalid-padding-inline-start
