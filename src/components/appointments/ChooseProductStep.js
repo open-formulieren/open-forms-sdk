@@ -45,6 +45,8 @@ const ChooseProductStep = ({namePrefix}) => {
                     description: 'Product unit step number label',
                     defaultMessage: 'Amount',
                   })}
+                  selectRequired
+                  numberRequired
                 />
                 <Toolbar modifiers={['bottom', 'reverse']}>
                   <ToolbarList>

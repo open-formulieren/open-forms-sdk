@@ -10,11 +10,14 @@ const AppointmentProduct = ({
   numberLabel = '',
   selectDescription = '',
   numberDescription = '',
+  selectRequired = false,
+  numberRequired = false,
 }) => {
   const selectProps = {
     namePrefix: `${namePrefix}.product`,
     label: selectLabel,
     description: selectDescription,
+    isRequired: selectRequired,
   };
 
   const numberProps = {
@@ -24,6 +27,7 @@ const AppointmentProduct = ({
     description: numberDescription,
     step: 1,
     min: 1,
+    isRequired: numberRequired,
   };
   return (
     <>
@@ -43,5 +47,7 @@ AppointmentProduct.propTypes = {
   numberLabel: PropTypes.string,
   selectDescription: PropTypes.string,
   numberDescription: PropTypes.string,
+  selectRequired: PropTypes.bool,
+  numberRequired: PropTypes.bool,
 };
 export default AppointmentProduct;
