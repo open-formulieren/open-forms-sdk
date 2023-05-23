@@ -50,3 +50,33 @@ export const Template = args => <EmailField {...args} />;
     {Template.bind({})}
   </Story>
 </Canvas>
+
+<Canvas>
+  <Story
+    name="Validation error"
+    parameters={{
+    formik: {
+      initialValues: {
+        email: 'test',
+      },
+      initialErrors: {
+        email: 'invalid_email',
+      },
+    },
+  }}
+    args={{
+      name: 'email',
+      id: 'email',
+      label: 'Email',
+      description: 'Description above the errors',
+      disabled: false,
+      isRequired: true,
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(canvas.getByText('invalid_email')).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

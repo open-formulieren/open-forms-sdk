@@ -11,6 +11,9 @@ import {FormDecorator, FormioComponent} from './story-util';
     label: {
       type: {name: 'string', required: false},
     },
+    description: {
+      type: {name: 'string', required: false},
+    },
   }}
   decorators={[FormDecorator]}
   parameters={{
@@ -28,19 +31,20 @@ import {FormDecorator, FormioComponent} from './story-util';
 
 ## Default
 
-export const Template = ({id = '', label = '', ...args}) => (
+export const Template = ({id = '', label = '', description = ''}) => (
   <FormioComponent
     component={{
       key: id,
       type: 'email',
       input: true,
       label,
+      description,
     }}
   />
 );
 
 <Canvas>
-  <Story name="Default" args={{id: 'email', label: 'E-mailadres'}}>
+  <Story name="Default" args={{id: 'email', label: 'E-mailadres', description: ''}}>
     {Template.bind({})}
   </Story>
 </Canvas>
