@@ -1,0 +1,37 @@
+@use 'sass:math';
+
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/transform';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+$select-background-color: var(--of-select-background-color, $color-white);
+
+.#{prefix(rs-select)} {
+  @include body;
+  @include border(all, $size: 1px);
+  border-bottom-width: 4px;
+  border-color: #4d4d4d;
+  padding-left: 8px;
+}
+
+.#{prefix(rs-select--focus)} {
+  border-bottom-width: 4px;
+  border-color: #cccccc;
+}
+
+.#{prefix(rs-select-menu)} {
+  @include border(all, $size: 1px);
+  border-color: #cccccc;
+  background-color: #f6f6f6;
+}
+
+.#{prefix(rs-select-option)} {
+  padding: 4px;
+}
+
+.#{prefix(rs-select-option--focus)} {
+  background-color: #cccccc;
+}
