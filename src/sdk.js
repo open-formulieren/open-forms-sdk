@@ -2,7 +2,7 @@ import ProtectedEval from '@formio/protected-eval';
 import 'flatpickr';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
 import {BrowserRouter, HashRouter} from 'react-router-dom';
@@ -98,6 +98,7 @@ class OpenForm {
     this.targetNode.textContent = `Loading form...`;
     this.baseTitle = document.title;
     this.formObject = await get(this.url);
+    this.root = createRoot(this.targetNode);
     this.render();
   }
 
@@ -110,8 +111,7 @@ class OpenForm {
     const Router = this.useHashRouting ? HashRouter : BrowserRouter;
 
     // render the wrapping React component
-    // TODO: make this work with React 18 which has a different react-dom API
-    ReactDOM.render(
+    this.root.render(
       <React.StrictMode>
         <ConfigContext.Provider
           value={{
@@ -132,8 +132,7 @@ class OpenForm {
             </I18NManager>
           </I18NErrorBoundary>
         </ConfigContext.Provider>
-      </React.StrictMode>,
-      this.targetNode
+      </React.StrictMode>
     );
   }
 }

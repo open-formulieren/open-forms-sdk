@@ -2,7 +2,7 @@
  * A form widget to select a location on a Leaflet map.
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 
 import LeafletMap from 'components/Map';
@@ -74,12 +74,15 @@ export default class Map extends Field {
     this.loadRefs(element, {
       mapContainer: 'single',
     });
-    return super.attach(element).then(() => this.renderReact());
+    return super.attach(element).then(() => {
+      this.reactRoot = createRoot(this.refs.mapContainer);
+      this.renderReact();
+    });
   }
 
   destroy() {
     const container = this.refs.mapContainer;
-    container && ReactDOM.unmountComponentAtNode(container);
+    container && this.reactRoot.unmount();
     super.destroy();
   }
 
@@ -93,12 +96,11 @@ export default class Map extends Field {
     // no container node ready (yet), defer to next render cycle
     if (!container) return;
 
-    ReactDOM.render(
+    this.reactRoot.render(
       <LeafletMap
         markerCoordinates={markerCoordinates || null}
         onMarkerSet={this.onMarkerSet.bind(this)}
-      />,
-      container
+      />
     );
   }
 
