@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 
 import MaintenanceMode from 'components/MaintenanceMode';
 import {ServiceUnavailable} from 'errors';
@@ -27,7 +27,7 @@ const RequireSubmission = ({submission, component: Component, ...props}) => {
   }
 
   if (!submission || !Object.keys(submission).length) {
-    return <Redirect to="/" />;
+    return <Navigate replace to="/" />;
   }
   return (
     <>

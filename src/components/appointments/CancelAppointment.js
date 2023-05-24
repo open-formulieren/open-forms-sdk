@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {post} from 'api';
@@ -19,7 +19,7 @@ import {getBEMClassName} from 'utils';
 
 const CancelAppointment = () => {
   const {baseUrl} = useContext(ConfigContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const queryParams = useQuery();
 
   const [email, setEmail] = useState('');
@@ -75,7 +75,7 @@ const CancelAppointment = () => {
       }
       return;
     }
-    history.push('/afspraak-annuleren/succes');
+    navigate('/afspraak-annuleren/succes');
   };
 
   const componentClassName = classNames(getBEMClassName('form-control'), {

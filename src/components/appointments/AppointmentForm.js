@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Route, Routes, useHistory, useLocation, useRouteMatch} from 'react-router-dom';
+import {Route, Routes, useLocation, useNavigate, useRouteMatch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import Body from 'components/Body';
@@ -75,10 +75,10 @@ AppointmentProgressIndicator.propTypes = {
 };
 
 const AppointmentSummary = ({form, onConfirm}) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const onPrevPage = event => {
     event.preventDefault();
-    history.push('/appointment');
+    navigate('/appointment');
   };
 
   const intl = useIntl();
@@ -155,17 +155,17 @@ const AppointmentConfirmation = () => {
 AppointmentConfirmation.propTypes = {};
 
 const AppointmentForm = ({form}) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // extract the declared properties and configuration
   const config = useContext(ConfigContext);
   const onSubmitForm = () => {
-    history.push('/appointment/bevestiging');
+    navigate('/appointment/bevestiging');
   };
 
   const onAppointmentSubmit = () => {
     console.log('Appointment data were filled');
-    history.push('/appointment/overzicht');
+    navigate('/appointment/overzicht');
   };
 
   const progressIndicator = form.showProgressIndicator ? (

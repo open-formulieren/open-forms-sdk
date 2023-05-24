@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import Anchor from 'components/Anchor';
 import FAIcon from 'components/FAIcon';
@@ -37,7 +37,7 @@ LabelValueRow.propTypes = {
 
 const FormStepSummary = ({slug, name, data, editStepText}) => {
   const editStepUrl = `/stap/${slug}`;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div className={getBEMClassName('summary')}>
@@ -47,7 +47,7 @@ const FormStepSummary = ({slug, name, data, editStepText}) => {
           href={editStepUrl}
           onClick={event => {
             event.preventDefault();
-            history.push(editStepUrl);
+            navigate(editStepUrl);
           }}
         >
           <FAIcon icon="pen-to-square" />

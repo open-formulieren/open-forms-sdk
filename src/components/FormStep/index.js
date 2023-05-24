@@ -29,7 +29,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';
 import {Form} from 'react-formio';
 import {useIntl} from 'react-intl';
-import {useHistory, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
@@ -315,7 +315,7 @@ const FormStep = ({
   ] = useImmerReducer(reducer, initialState);
 
   // react router hooks
-  const history = useHistory();
+  const navigate = useNavigate();
   const {step: slug} = useParams();
 
   // logic check refs
@@ -672,7 +672,7 @@ const FormStep = ({
 
     const prevStepSlug = form.steps[previousStepIndex]?.slug;
     const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
-    history.push(navigateTo);
+    navigate(navigateTo);
   };
 
   /**
