@@ -552,12 +552,32 @@ const FormStep = ({
       throw new Error('There is no active submission!');
     }
 
+    // React.StrictMode results in components being unmounted and remounted in dev mode
+    // (this catches bugs early!) and is something we want. However, the react-formio
+    // component is *not* able to deal with this because it is old and upgrading that
+    // library is currently not an option.
+    //
+    // Due to the unmount-and-remount, the `onSubmit` event is bound twice on the
+    // formio instance, causing this callback to run twice. In dev mode, this leads to
+    // racing HTTP PUT calls, which result in a HTTP 500 server error for unique
+    // constraint violation, breaking filling out steps for the first time in dev (prod
+    // is fine). To mitigate this, we track the internal state.
+    //
+    // We anticipate that these kind of issues will go away by themselves when the new
+    // renderer is done that doesn't manually keep track of callbacks, but instead uses
+    // pure React props. That is still a while away though.
+    const formInstance = formRef.current.formio;
+    if (formInstance._of_already_submitting) return;
+
+    formInstance._of_already_submitting = true;
     dispatch({type: 'NAVIGATE'});
 
     try {
       await submitStepData(submissionStep.url, data);
     } catch (e) {
       dispatch({type: 'ERROR', payload: e});
+    } finally {
+      delete formInstance._of_already_submitting;
     }
 
     // This will reload the submission
