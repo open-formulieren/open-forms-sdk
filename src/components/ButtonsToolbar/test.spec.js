@@ -1,6 +1,6 @@
 import {render as renderTest, screen} from '@testing-library/react';
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -8,17 +8,19 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 import ButtonsToolbar from './index';
 
 let container = null;
-
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
 
@@ -32,7 +34,7 @@ it('Last step of submittable form, button is present', () => {
   const mockFunction = jest.fn();
 
   act(() => {
-    render(
+    root.render(
       <ButtonsToolbar
         literals={LITERALS}
         canSubmitStep={true}
@@ -45,8 +47,7 @@ it('Last step of submittable form, button is present', () => {
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}
-      />,
-      container
+      />
     );
   });
 
@@ -62,7 +63,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
   const mockFunction = jest.fn();
 
   act(() => {
-    render(
+    root.render(
       <ButtonsToolbar
         literals={LITERALS}
         canSubmitStep={true}
@@ -75,8 +76,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}
-      />,
-      container
+      />
     );
   });
 
@@ -92,7 +92,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
   const mockFunction = jest.fn();
 
   act(() => {
-    render(
+    root.render(
       <ButtonsToolbar
         literals={LITERALS}
         canSubmitStep={true}
@@ -105,8 +105,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}
-      />,
-      container
+      />
     );
   });
 
@@ -121,7 +120,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
   const mockFunction = jest.fn();
 
   act(() => {
-    render(
+    root.render(
       <ButtonsToolbar
         literals={LITERALS}
         canSubmitStep={true}
@@ -134,8 +133,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
         onNavigatePrevPage={mockFunction}
         onFormSave={mockFunction}
         onLogout={mockFunction}
-      />,
-      container
+      />
     );
   });
 

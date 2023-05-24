@@ -100,11 +100,10 @@ describe('OpenForm', () => {
       lang: 'nl',
     });
 
-    await act(async () => {
-      await form.init();
-      await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
-    });
+    await act(async () => await form.init());
 
+    // wait for the loader to be removed when all network requests have completed
+    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
     expect(within(formRoot).getAllByText('Nederlandse versie').length).toBeGreaterThan(0);
 
     await act(async () => {

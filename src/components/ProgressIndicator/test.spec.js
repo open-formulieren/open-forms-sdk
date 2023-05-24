@@ -1,6 +1,6 @@
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
@@ -13,17 +13,19 @@ import ProgressIndicator from './index';
 jest.mock('headers');
 
 let container = null;
-
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
 
@@ -41,7 +43,7 @@ const submissionDefaults = {
 
 it('Progress Indicator submission allowed', () => {
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -51,8 +53,7 @@ it('Progress Indicator submission allowed', () => {
             submissionAllowed={SUBMISSION_ALLOWED.yes}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 
@@ -64,7 +65,7 @@ it('Progress Indicator submission allowed', () => {
 
 it('Progress Indicator submission not allowed, with overview page', () => {
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -77,8 +78,7 @@ it('Progress Indicator submission not allowed, with overview page', () => {
             submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 
@@ -90,7 +90,7 @@ it('Progress Indicator submission not allowed, with overview page', () => {
 
 it('Progress Indicator submission not allowed, without overview page', () => {
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -103,8 +103,7 @@ it('Progress Indicator submission not allowed, without overview page', () => {
             submissionAllowed={SUBMISSION_ALLOWED.noWithoutOverview}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 
@@ -116,7 +115,7 @@ it('Progress Indicator submission not allowed, without overview page', () => {
 
 it('Form landing page, no submission present in session', () => {
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -126,8 +125,7 @@ it('Form landing page, no submission present in session', () => {
             submissionAllowed={SUBMISSION_ALLOWED.yes}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 
@@ -171,7 +169,7 @@ it('Progress indicator does NOT let you navigate between steps if you are NOT a 
   IsFormDesigner.getValue.mockReturnValue(false);
 
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/stap/step-2']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -185,8 +183,7 @@ it('Progress indicator does NOT let you navigate between steps if you are NOT a 
             submissionAllowed={SUBMISSION_ALLOWED.yes}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 
@@ -237,7 +234,7 @@ it('Progress indicator DOES let you navigate between steps if you ARE a form des
   IsFormDesigner.getValue.mockReturnValue(true);
 
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/stap/step-2']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -251,8 +248,7 @@ it('Progress indicator DOES let you navigate between steps if you ARE a form des
             submissionAllowed={SUBMISSION_ALLOWED.yes}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 
@@ -303,7 +299,7 @@ it('Progress indicator DOES let you navigate between steps if you are NOT a form
   IsFormDesigner.getValue.mockReturnValue(false);
 
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/stap/step-1']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -317,8 +313,7 @@ it('Progress indicator DOES let you navigate between steps if you are NOT a form
             submissionAllowed={SUBMISSION_ALLOWED.yes}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 
@@ -347,7 +342,7 @@ it('Progress indicator does NOT let you navigate to the overview if a step is bl
   IsFormDesigner.getValue.mockReturnValue(false);
 
   act(() => {
-    render(
+    root.render(
       <MemoryRouter initialEntries={['/stap/step-1']}>
         <IntlProvider locale="nl" messages={messagesNL}>
           <ProgressIndicator
@@ -361,8 +356,7 @@ it('Progress indicator does NOT let you navigate to the overview if a step is bl
             submissionAllowed={SUBMISSION_ALLOWED.yes}
           />
         </IntlProvider>
-      </MemoryRouter>,
-      container
+      </MemoryRouter>
     );
   });
 

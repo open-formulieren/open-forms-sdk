@@ -1,6 +1,6 @@
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 
@@ -10,26 +10,28 @@ let scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 let container = null;
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
 
 it('Renders DigiD default error', () => {
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <AuthenticationErrors parameters={{'_digid-message': 'error'}} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 
@@ -40,11 +42,10 @@ it('Renders DigiD default error', () => {
 
 it('Renders DigiD cancel login error', () => {
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <AuthenticationErrors parameters={{'_digid-message': 'login-cancelled'}} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 
@@ -53,11 +54,10 @@ it('Renders DigiD cancel login error', () => {
 
 it('Renders EHerkenning default error', () => {
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <AuthenticationErrors parameters={{'_eherkenning-message': 'error'}} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 
@@ -68,11 +68,10 @@ it('Renders EHerkenning default error', () => {
 
 it('Renders EHerkenning cancel login error', () => {
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <AuthenticationErrors parameters={{'_eherkenning-message': 'login-cancelled'}} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 
@@ -81,11 +80,10 @@ it('Renders EHerkenning cancel login error', () => {
 
 it('Renders eIDAS default error', () => {
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <AuthenticationErrors parameters={{'_eidas-message': 'error'}} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 
@@ -96,11 +94,10 @@ it('Renders eIDAS default error', () => {
 
 it('Renders eIDAS cancel login error', () => {
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <AuthenticationErrors parameters={{'_eidas-message': 'login-cancelled'}} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 

@@ -3,6 +3,7 @@ import messagesEN from 'i18n/compiled/en.json';
 import React from 'react';
 import {IntlProvider} from 'react-intl';
 import {useLocation} from 'react-router-dom';
+import {MemoryRouter} from 'react-router-dom';
 import renderer from 'react-test-renderer';
 
 import PaymentOverview from 'components/PaymentOverview';
@@ -18,6 +19,12 @@ jest.mock('react-router-dom', () => ({
   Link: () => <a>some link</a>,
 }));
 
+const Wrap = ({children}) => (
+  <IntlProvider locale="en" messages={messagesEN}>
+    <MemoryRouter>{children}</MemoryRouter>
+  </IntlProvider>
+);
+
 describe('navigation without context', () => {
   it('displays a generic error message', () => {
     useLocation.mockImplementation(() => ({
@@ -25,9 +32,9 @@ describe('navigation without context', () => {
     }));
     const tree = renderer
       .create(
-        <IntlProvider locale="en" messages={messagesEN}>
+        <Wrap>
           <PaymentOverview />
-        </IntlProvider>
+        </Wrap>
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -44,9 +51,9 @@ describe('navigation without context', () => {
 
     expect(() =>
       render(
-        <IntlProvider locale="en" messages={messagesEN}>
+        <Wrap>
           <PaymentOverview />
-        </IntlProvider>
+        </Wrap>
       )
     ).toThrow();
   });
@@ -62,9 +69,9 @@ describe('navigation without context', () => {
 
     expect(() =>
       render(
-        <IntlProvider locale="en" messages={messagesEN}>
+        <Wrap>
           <PaymentOverview />
-        </IntlProvider>
+        </Wrap>
       )
     ).toThrow();
   });
@@ -82,9 +89,9 @@ describe('on valid redirect', () => {
 
     const tree = renderer
       .create(
-        <IntlProvider locale="en" messages={messagesEN}>
+        <Wrap>
           <PaymentOverview />
-        </IntlProvider>
+        </Wrap>
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -101,9 +108,9 @@ describe('on valid redirect', () => {
 
     const tree = renderer
       .create(
-        <IntlProvider locale="en" messages={messagesEN}>
+        <Wrap>
           <PaymentOverview />
-        </IntlProvider>
+        </Wrap>
       )
       .toJSON();
     expect(tree).toMatchSnapshot();

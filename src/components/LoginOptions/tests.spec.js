@@ -1,7 +1,7 @@
 import {fireEvent} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 
@@ -11,17 +11,19 @@ import {LiteralsProvider} from 'components/Literal';
 import LoginOptions from './index';
 
 let container = null;
-
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
 
@@ -30,11 +32,10 @@ it('Login not required, options wrapped in form tag', () => {
   const onFormStart = jest.fn(e => e.preventDefault());
 
   act(() => {
-    render(
+    root.render(
       <LiteralsProvider literals={{beginText: {resolved: 'Begin Form'}}}>
         <LoginOptions form={form} onFormStart={onFormStart} />
-      </LiteralsProvider>,
-      container
+      </LiteralsProvider>
     );
   });
 
@@ -74,11 +75,10 @@ it('Login required, options not wrapped in form tag', () => {
   };
 
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <LoginOptions form={form} onFormStart={onFormStart} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 
@@ -123,11 +123,10 @@ it('Login button has the right URL after cancelling log in', () => {
   };
 
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <LoginOptions form={form} onFormStart={onFormStart} />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 

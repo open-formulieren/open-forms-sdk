@@ -1,8 +1,9 @@
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
+import {MemoryRouter} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {testForm} from 'components/FormStart/fixtures';
@@ -32,19 +33,27 @@ jest.mock('react-use');
 jest.mock('hooks/useRefreshSubmission');
 
 let container = null;
-
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
+
+const Wrap = ({children}) => (
+  <IntlProvider locale="nl" messages={messagesNL}>
+    <MemoryRouter>{children}</MemoryRouter>
+  </IntlProvider>
+);
 
 it('Summary displays logout button if isAuthenticated is true', () => {
   const submissionIsAuthenticated = {
@@ -58,16 +67,15 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   useRefreshSubmission.mockReturnValue(submissionIsAuthenticated);
 
   act(() => {
-    render(
-      <IntlProvider locale="nl" messages={messagesNL}>
+    root.render(
+      <Wrap>
         <Summary
           form={testForm}
           submission={SUBMISSION}
           onConfirm={onConfirm}
           onLogout={onLogout}
         />
-      </IntlProvider>,
-      container
+      </Wrap>
     );
   });
 
@@ -86,16 +94,15 @@ it('Summary does not display logout button if loginRequired is false', () => {
   useRefreshSubmission.mockReturnValue(SUBMISSION);
 
   act(() => {
-    render(
-      <IntlProvider locale="nl" messages={messagesNL}>
+    root.render(
+      <Wrap>
         <Summary
           form={formLoginRequired}
           submission={SUBMISSION}
           onConfirm={onConfirm}
           onLogout={onLogout}
         />
-      </IntlProvider>,
-      container
+      </Wrap>
     );
   });
 

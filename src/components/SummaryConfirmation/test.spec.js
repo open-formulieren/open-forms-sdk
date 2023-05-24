@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 
 import {LiteralsProvider} from 'components/Literal';
@@ -8,17 +8,19 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 import SummaryConfirmation from './index';
 
 let container = null;
-
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
 
@@ -37,7 +39,7 @@ it('Summary of non-submittable form, button is NOT present', () => {
   const mockFunction = jest.fn();
 
   act(() => {
-    render(
+    root.render(
       <LiteralsProvider literals={LITERALS}>
         <SummaryConfirmation
           submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
@@ -45,8 +47,7 @@ it('Summary of non-submittable form, button is NOT present', () => {
           onPrivacyCheckboxChange={mockFunction}
           onPrevPage={mockFunction}
         />
-      </LiteralsProvider>,
-      container
+      </LiteralsProvider>
     );
   });
 
@@ -60,7 +61,7 @@ it('Summary of submittable form, button IS present', () => {
   const mockFunction = jest.fn();
 
   act(() => {
-    render(
+    root.render(
       <LiteralsProvider literals={LITERALS}>
         <SummaryConfirmation
           submissionAllowed={SUBMISSION_ALLOWED.yes}
@@ -68,8 +69,7 @@ it('Summary of submittable form, button IS present', () => {
           onPrivacyCheckboxChange={mockFunction}
           onPrevPage={mockFunction}
         />
-      </LiteralsProvider>,
-      container
+      </LiteralsProvider>
     );
   });
 

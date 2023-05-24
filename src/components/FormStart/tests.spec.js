@@ -1,9 +1,10 @@
 import {render as renderTest, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
+import {MemoryRouter} from 'react-router-dom';
 
 import useQuery from 'hooks/useQuery';
 
@@ -15,19 +16,27 @@ let scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 let container = null;
-
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
+
+const Wrap = ({children}) => (
+  <IntlProvider locale="nl" messages={messagesNL}>
+    <MemoryRouter>{children}</MemoryRouter>
+  </IntlProvider>
+);
 
 it('Form start page start if _start parameter is present', () => {
   const testLocation = new URLSearchParams('?_start=1');
@@ -37,16 +46,15 @@ it('Form start page start if _start parameter is present', () => {
   const onFormAbort = jest.fn();
 
   act(() => {
-    render(
-      <IntlProvider locale="nl" messages={messagesNL}>
+    root.render(
+      <Wrap>
         <FormStart
           form={testForm}
           onFormStart={onFormStart}
           onFormAbort={onFormAbort}
           hasActiveSubmission={false}
         />
-      </IntlProvider>,
-      container
+      </Wrap>
     );
   });
 
@@ -71,16 +79,15 @@ it('Form start does not start if there are auth errors', () => {
     useQuery.mockReturnValue(testLocation);
 
     act(() => {
-      render(
-        <IntlProvider locale="nl" messages={messagesNL}>
+      root.render(
+        <Wrap>
           <FormStart
             form={testForm}
             onFormStart={onFormStart}
             onFormAbort={onFormAbort}
             hasActiveSubmission={false}
           />
-        </IntlProvider>,
-        container
+        </Wrap>
       );
     });
 
@@ -95,14 +102,14 @@ it('Form start page does not show login buttons if an active submission is prese
   const onFormAbort = jest.fn();
 
   renderTest(
-    <IntlProvider locale="nl" messages={messagesNL}>
+    <Wrap>
       <FormStart
         form={testForm}
         onFormStart={onFormStart}
         onFormAbort={onFormAbort}
         hasActiveSubmission={true}
       />
-    </IntlProvider>,
+    </Wrap>,
     container
   );
 
