@@ -49,10 +49,10 @@
     "react-modal": "3.14.3",
     "react-number-format": "^5.2.1",
     "react-router-dom": "^5.2.0",
+    "react-select": "^5.7.3",
     "react-use": "^17.2.4",
     "state-pool": "^0.8.0",
-    "use-immer": "^0.5.1",
-    "react-select": "^5.7.3"
+    "use-immer": "^0.5.1"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
@@ -169,12 +169,12 @@
     "prettier": "^2.7.1",
     "prompts": "^2.4.2",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
-    "react-dom": "^17.0.2",
+    "react-dom": "^18.2.0",
     "react-refresh": "^0.11.0",
-    "react-test-renderer": "^17.0.2",
+    "react-test-renderer": "^18.2.0",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "rimraf": "^3.0.2",
