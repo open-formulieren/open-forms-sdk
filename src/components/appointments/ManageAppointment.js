@@ -17,7 +17,9 @@ const ManageAppointment = () => {
           </ErrorBoundary>
         </Route>
 
-        <Route exact path="/afspraak-annuleren/succes" component={CancelAppointmentSuccess} />
+        <Route exact path="/afspraak-annuleren/succes">
+          <CancelAppointmentSuccess />
+        </Route>
       </Switch>
     </LayoutColumn>
   );

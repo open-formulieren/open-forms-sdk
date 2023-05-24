@@ -366,30 +366,27 @@ const Form = ({form}) => {
         </ErrorBoundary>
       </Route>
 
-      <Route
-        path="/stap/:step"
-        render={() => (
-          <ErrorBoundary useCard>
-            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-              <RequireSubmission
-                form={form}
-                submission={state.submission}
-                onLogicChecked={submission =>
-                  dispatch({type: 'SUBMISSION_LOADED', payload: submission})
-                }
-                onStepSubmitted={onStepSubmitted}
-                onLogout={onLogout}
-                onSessionDestroyed={() => {
-                  resetSession();
-                  history.push('/');
-                  dispatch({type: 'RESET', payload: initialStateFromProps});
-                }}
-                component={FormStep}
-              />
-            </RequireSession>
-          </ErrorBoundary>
-        )}
-      />
+      <Route path="/stap/:step">
+        <ErrorBoundary useCard>
+          <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+            <RequireSubmission
+              form={form}
+              submission={state.submission}
+              onLogicChecked={submission =>
+                dispatch({type: 'SUBMISSION_LOADED', payload: submission})
+              }
+              onStepSubmitted={onStepSubmitted}
+              onLogout={onLogout}
+              onSessionDestroyed={() => {
+                resetSession();
+                history.push('/');
+                dispatch({type: 'RESET', payload: initialStateFromProps});
+              }}
+              component={FormStep}
+            />
+          </RequireSession>
+        </ErrorBoundary>
+      </Route>
     </Switch>
   );
 
