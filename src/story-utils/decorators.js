@@ -3,6 +3,7 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
+import {LiteralsProvider} from 'components/Literal';
 
 export const ConfigDecorator = (Story, {args}) => (
   <ConfigContext.Provider value={{baseUrl: BASE_URL}}>
@@ -47,3 +48,24 @@ export const FormikDecorator = (Story, context) => {
     </Formik>
   );
 };
+
+export const LiteralDecorator = (Story, {args}) => (
+  <LiteralsProvider
+    literals={{
+      previousText: {
+        resolved: args.previousText,
+      },
+      beginText: {
+        resolved: args.beginText,
+      },
+      changeText: {
+        resolved: args.changeText,
+      },
+      confirmText: {
+        resolved: args.confirmText,
+      },
+    }}
+  >
+    <Story />
+  </LiteralsProvider>
+);
