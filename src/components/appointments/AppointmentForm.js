@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Route, Switch, useHistory, useLocation, useRouteMatch} from 'react-router-dom';
+import {Route, Routes, useHistory, useLocation, useRouteMatch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import Body from 'components/Body';
@@ -175,31 +175,20 @@ const AppointmentForm = ({form}) => {
 
   // Route the correct page based on URL
   const router = (
-    <Switch>
-      <Route path="/appointment/overzicht">
-        <ErrorBoundary useCard>
-          <AppointmentSummary form={form} onConfirm={onSubmitForm} />
-        </ErrorBoundary>
-      </Route>
-
-      <Route path="/appointment/bevestiging">
-        <ErrorBoundary useCard>
-          <AppointmentConfirmation />
-        </ErrorBoundary>
-      </Route>
-
-      <Route path="/">
-        <ErrorBoundary useCard>
-          <AppointmentStep form={form} onSubmit={onAppointmentSubmit} />
-        </ErrorBoundary>
-      </Route>
-    </Switch>
+    <Routes>
+      <Route
+        path="overzicht"
+        element={<AppointmentSummary form={form} onConfirm={onSubmitForm} />}
+      />
+      <Route path="bevestiging" element={<AppointmentConfirmation />} />
+      <Route path="" element={<AppointmentStep form={form} onSubmit={onAppointmentSubmit} />} />
+    </Routes>
   );
 
   const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   return (
     <FormDisplayComponent
-      router={router}
+      router={<ErrorBoundary useCard>{router}</ErrorBoundary>}
       progressIndicator={progressIndicator}
       showProgressIndicator={form.showProgressIndicator}
       isPaymentOverview={false}

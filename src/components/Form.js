@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
-import {Redirect, Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
+import {Redirect, Route, Routes, useHistory, useRouteMatch} from 'react-router-dom';
 import {usePrevious} from 'react-use';
 import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
@@ -317,77 +317,91 @@ const Form = ({form}) => {
 
   // Route the correct page based on URL
   const router = (
-    <Switch>
-      <Route exact path="/">
-        <Redirect to="/startpagina" />
-      </Route>
-      <Route exact path="/startpagina">
-        <ErrorBoundary useCard>
-          <FormStart
-            form={form}
-            hasActiveSubmission={!!state.submission}
-            onFormStart={onFormStart}
-            onFormAbort={onFormAbort}
-          />
-        </ErrorBoundary>
-      </Route>
+    <Routes>
+      <Route path="" element={<Redirect to="startpagina" />} />
 
-      <Route exact path="/overzicht">
-        <ErrorBoundary useCard>
-          <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-            <RequireSubmission
-              submission={state.submission}
+      <Route
+        path="startpagina"
+        element={
+          <ErrorBoundary useCard>
+            <FormStart
               form={form}
-              processingError={state.processingError}
-              onConfirm={onSubmitForm}
-              onLogout={onLogout}
-              component={Summary}
-              onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
+              hasActiveSubmission={!!state.submission}
+              onFormStart={onFormStart}
+              onFormAbort={onFormAbort}
             />
-          </RequireSession>
-        </ErrorBoundary>
-      </Route>
+          </ErrorBoundary>
+        }
+      />
 
-      <Route exact path="/bevestiging">
-        <ErrorBoundary useCard>
-          <RequireSubmission
-            submission={state.submittedSubmission}
-            statusUrl={state.processingStatusUrl}
-            onFailure={onProcessingFailure}
-            onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
-            component={SubmissionConfirmation}
-          />
-        </ErrorBoundary>
-      </Route>
+      <Route
+        path="overzicht"
+        element={
+          <ErrorBoundary useCard>
+            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+              <RequireSubmission
+                submission={state.submission}
+                form={form}
+                processingError={state.processingError}
+                onConfirm={onSubmitForm}
+                onLogout={onLogout}
+                component={Summary}
+                onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
+              />
+            </RequireSession>
+          </ErrorBoundary>
+        }
+      />
 
-      <Route exact path="/betaaloverzicht">
-        <ErrorBoundary useCard>
-          <PaymentOverview />
-        </ErrorBoundary>
-      </Route>
-
-      <Route path="/stap/:step">
-        <ErrorBoundary useCard>
-          <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+      <Route
+        path="bevestiging"
+        element={
+          <ErrorBoundary useCard>
             <RequireSubmission
-              form={form}
-              submission={state.submission}
-              onLogicChecked={submission =>
-                dispatch({type: 'SUBMISSION_LOADED', payload: submission})
-              }
-              onStepSubmitted={onStepSubmitted}
-              onLogout={onLogout}
-              onSessionDestroyed={() => {
-                resetSession();
-                history.push('/');
-                dispatch({type: 'RESET', payload: initialStateFromProps});
-              }}
-              component={FormStep}
+              submission={state.submittedSubmission}
+              statusUrl={state.processingStatusUrl}
+              onFailure={onProcessingFailure}
+              onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
+              component={SubmissionConfirmation}
             />
-          </RequireSession>
-        </ErrorBoundary>
-      </Route>
-    </Switch>
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path="betaaloverzicht"
+        element={
+          <ErrorBoundary useCard>
+            <PaymentOverview />
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path="stap/:step"
+        element={
+          <ErrorBoundary useCard>
+            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+              <RequireSubmission
+                form={form}
+                submission={state.submission}
+                onLogicChecked={submission =>
+                  dispatch({type: 'SUBMISSION_LOADED', payload: submission})
+                }
+                onStepSubmitted={onStepSubmitted}
+                onLogout={onLogout}
+                onSessionDestroyed={() => {
+                  resetSession();
+                  history.push('/');
+                  dispatch({type: 'RESET', payload: initialStateFromProps});
+                }}
+                component={FormStep}
+              />
+            </RequireSession>
+          </ErrorBoundary>
+        }
+      />
+    </Routes>
   );
 
   // render the form step if there's an active submission (and no summary)
