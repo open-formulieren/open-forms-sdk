@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
-import {Navigate, Route, Routes, useNavigate, useRouteMatch} from 'react-router-dom';
+import {Navigate, Route, Routes, useMatch, useNavigate} from 'react-router-dom';
 import {usePrevious} from 'react-use';
 import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
@@ -176,7 +176,7 @@ const Form = ({form}) => {
     [intl.locale, prevLocale, removeSubmissionId, state.submission] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
+  const paymentOverviewMatch = useMatch('/betaaloverzicht');
 
   /**
    * When the form is started, create a submission and add it to the state.

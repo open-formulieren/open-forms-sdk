@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Route, Routes, useLocation, useNavigate, useRouteMatch} from 'react-router-dom';
+import {Route, Routes, useLocation, useMatch, useNavigate} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import Body from 'components/Body';
@@ -33,9 +33,9 @@ const AppointmentProgressIndicator = ({title}) => {
   }, [pathname]);
 
   const config = useContext(ConfigContext);
-  const summaryMatch = !!useRouteMatch('/appointment/overzicht');
-  const confirmationMatch = !!useRouteMatch('/appointment/bevestiging');
-  const appointmentMatch = !!useRouteMatch('/appointment');
+  const summaryMatch = !!useMatch('/appointment/overzicht');
+  const confirmationMatch = !!useMatch('/appointment/bevestiging');
+  const appointmentMatch = !!useMatch('/appointment');
 
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;

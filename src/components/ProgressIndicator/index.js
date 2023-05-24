@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
-import {useLocation, useRouteMatch} from 'react-router-dom';
+import {useLocation, useMatch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -20,9 +20,9 @@ const ProgressIndicator = ({
 }) => {
   const {pathname} = useLocation();
   const config = useContext(ConfigContext);
-  const summaryMatch = !!useRouteMatch('/overzicht');
-  const stepMatch = useRouteMatch('/stap/:step');
-  const confirmationMatch = !!useRouteMatch('/bevestiging');
+  const summaryMatch = !!useMatch('/overzicht');
+  const stepMatch = useMatch('/stap/:step');
+  const confirmationMatch = !!useMatch('/bevestiging');
   const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
   const [expanded, setExpanded] = useState(false);
 
