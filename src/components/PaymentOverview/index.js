@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
-import {Link, useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
-import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import Link from 'components/Link';
 import useTitle from 'hooks/useTitle';
 
 // see openforms.payments.constants.UserAction in the backend
@@ -95,7 +95,7 @@ const PaymentOverview = () => {
         <Wrapper>{intl.formatMessage(statusMsg)}</Wrapper>
       </Body>
 
-      <Link to="/" component={Anchor}>
+      <Link to="/">
         <FormattedMessage
           description="return to form start button"
           defaultMessage="Back to form start"

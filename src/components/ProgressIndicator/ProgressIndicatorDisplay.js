@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Link} from 'react-router-dom';
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Caption from 'components/Caption';
 import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
+import Link from 'components/Link';
 import List from 'components/List';
 import {getBEMClassName} from 'utils';
 
@@ -26,12 +26,7 @@ const getLinkModifiers = (active, isApplicable) => {
 const LinkOrSpan = ({isActive, isApplicable, to, useLink, children, ...props}) => {
   if (useLink) {
     return (
-      <Link
-        to={to}
-        component={Anchor}
-        modifiers={getLinkModifiers(isActive, isApplicable)}
-        {...props}
-      >
+      <Link to={to} modifiers={getLinkModifiers(isActive, isApplicable)} {...props}>
         {children}
       </Link>
     );

@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Link} from 'react-router-dom';
 
-import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import Link from 'components/Link';
 import MaintenanceMode from 'components/MaintenanceMode';
 import {DEBUG} from 'utils';
 
@@ -93,7 +92,7 @@ const PermissionDeniedError = ({wrapper: Wrapper, error}) => {
 
       {error.detail && <Body>{error.detail}</Body>}
 
-      <Link to="/" component={Anchor}>
+      <Link to="/">
         <FormattedMessage
           description="return to form start link after 403"
           defaultMessage="Back to form start"
