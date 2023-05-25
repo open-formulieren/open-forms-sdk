@@ -8,7 +8,7 @@ import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {Label} from 'components/forms';
+import {Label, ValidationErrors} from 'components/forms';
 
 export const TextField = ({
   name,
@@ -39,11 +39,7 @@ export const TextField = ({
         />
       </Paragraph>
       {description && <FormFieldDescription>{description}</FormFieldDescription>}
-      {invalid && (
-        <FormFieldDescription invalid className="utrecht-form-field-description--openforms-errors">
-          {error}
-        </FormFieldDescription>
-      )}
+      <ValidationErrors error={error} />
     </UtrechtFormField>
   );
 };

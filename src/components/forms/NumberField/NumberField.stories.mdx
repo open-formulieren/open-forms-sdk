@@ -95,7 +95,6 @@ accepted/displayed on the screen.
       description: 'HTML type=number, still allows typing invalid values.',
       useNumberType: true,
       disabled: false,
-      invalid: false,
       isRequired: false,
     }}
     play={async ({canvasElement}) => {
@@ -162,7 +161,6 @@ minimum/maximum values.
       label: 'Amount',
       description: 'This is a custom description for the amount field',
       disabled: false,
-      invalid: false,
       isRequired: true,
     }}
   >
@@ -188,7 +186,6 @@ minimum/maximum values.
       label: 'Amount',
       description: 'This is a custom description for the amount field',
       disabled: false,
-      invalid: false,
       isRequired: true,
     }}
   >
@@ -199,3 +196,37 @@ minimum/maximum values.
 ## Props
 
 <ArgsTable of={NumberField} />
+
+## Validation errors
+
+<Canvas>
+  <Story
+    name="Validation error"
+    parameters={{
+      formik: {
+        initialValues: {
+          amount: 42,
+        },
+        initialErrors: {
+          amount: 'invalid',
+        },
+      },
+    }}
+    args={{
+      name: 'amount',
+      label: 'Amount',
+      description: 'Description above the errors',
+      disabled: false,
+      isRequired: true,
+      useNumberType: false,
+      min: undefined,
+      step: undefined,
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(canvas.getByText('invalid')).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

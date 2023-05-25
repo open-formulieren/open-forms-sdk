@@ -1,6 +1,5 @@
 import {
   FormFieldDescription,
-  FormLabel,
   Paragraph,
   Textbox,
   FormField as UtrechtFormField,
@@ -11,8 +10,7 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {NumericFormat} from 'react-number-format';
 
-import {Label} from 'components/forms';
-import {getBEMClassName} from 'utils';
+import {Label, ValidationErrors} from 'components/forms';
 
 const getSeparators = locale => {
   const numberFormat = new Intl.NumberFormat(locale);
@@ -32,53 +30,48 @@ const NumberField = ({
   description = '',
   id = '',
   disabled = false,
-  invalid = false,
 }) => {
-  const [field, meta, helpers] = useField(name);
+  const [fieldProps, {value, error}] = useField(name);
   const {locale} = useIntl();
 
-  const inputClassName = getBEMClassName('input', [invalid && 'invalid'].filter(Boolean));
+  const invalid = !!error;
 
   // We get the decimal separator by formatting a arbitrary number, and then extracting the decimal separator
   const {decimalSeparator, thousandSeparator} = getSeparators(locale);
   const isInteger = step != null && Number.isInteger(step);
 
-  const inputProps = {
-    // To handle the State in formik
-    // It is important to note that the onChange handler, **DOES NOT** handle any sanitization of the input.
-    ...field,
-    value: meta.value,
-
-    // These are passed down to the customInput
-    id,
-    className: inputClassName,
-    disabled,
-    invalid,
-    min,
-    step,
-    type: useNumberType ? 'number' : 'text',
-
-    // These are for the NumericFormat component
-    customInput: Textbox,
-    // only pass the localized separators when we're not using type="number" input
-    ...(!useNumberType
-      ? {
-          decimalSeparator,
-          thousandSeparator,
-          decimalScale: isInteger ? undefined : 2,
-        }
-      : {}),
-  };
+  // only pass the localized separators when we're not using type="number" input
+  const separatorProps = useNumberType
+    ? {}
+    : {
+        decimalSeparator,
+        thousandSeparator,
+        decimalScale: isInteger ? undefined : 2,
+      };
 
   return (
-    <UtrechtFormField type="text" invalid={invalid.toString()}>
+    <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
       <Label id={id} isRequired={isRequired} disabled={disabled}>
         {label}
       </Label>
       <Paragraph>
-        <NumericFormat {...inputProps} />
+        <NumericFormat
+          // Note: the onChange handler does not handle any input sanitation
+          {...fieldProps}
+          value={value}
+          id={id}
+          className="utrecht-textbox--openforms"
+          disabled={disabled}
+          invalid={invalid}
+          min={min}
+          step={step}
+          type={useNumberType ? 'number' : 'text'}
+          customInput={Textbox}
+          {...separatorProps}
+        />
       </Paragraph>
-      {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
+      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      <ValidationErrors error={error} />
     </UtrechtFormField>
   );
 };
