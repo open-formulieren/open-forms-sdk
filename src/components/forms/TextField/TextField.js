@@ -38,6 +38,7 @@ export const TextField = ({
           className="utrecht-textbox--openforms"
           disabled={disabled}
           invalid={invalid}
+          {...inputProps}
         />
       </Paragraph>
       {description && <FormFieldDescription>{description}</FormFieldDescription>}

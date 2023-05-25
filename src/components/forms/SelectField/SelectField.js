@@ -1,6 +1,7 @@
 import {FormField, FormFieldDescription} from '@utrecht/component-library-react';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
 
