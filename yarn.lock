@@ -5501,7 +5501,7 @@
   resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.417.tgz#cc75f326af08a6c501f7dcfd3fdce425295b0093"
   integrity sha512-5MS5WmvBDd69yQUlWg97ynsPPfXbur49STcUP/UTCaQrWzB5xUu/NhbaWFdVEW2PqGh2/TOT4tE/ziaeY4Aksw==
 
-"@utrecht/component-library-react@^1.0.0-alpha.319":
+"@utrecht/component-library-react@^1.0.0-alpha.321":
   version "1.0.0-alpha.321"
   resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.321.tgz#0b531f07bd0bde988ba505b5857e27cdc5a23c1e"
   integrity sha512-f63QXwlrSI2CS+FeWs8RtrScjW6/PXisPLQYcvINLdh76Uo4MyrnjS5kNHxo/wxVv+y19h2GwmbaDDX7oxZ3vQ==
@@ -5510,10 +5510,10 @@
     date-fns "2.30.0"
     lodash.chunk "4.2.0"
 
-"@utrecht/components@^1.0.0-alpha.378":
-  version "1.0.0-alpha.378"
-  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.378.tgz#2d7efd87d728af428b178b64a895ad78ccc13739"
-  integrity sha512-rVNBYKpgnZ76RQ0P8QY0S9PxBAYelm2uy2CIZkbWAEDFIVNA50paQOMqesbjqADp3JZgEKFMJ04MABa5beXP3Q==
+"@utrecht/components@^1.0.0-alpha.473":
+  version "1.0.0-alpha.473"
+  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.473.tgz#50ccf42a40fae50a7087d83cb4bb1469a2638190"
+  integrity sha512-hL0s3fA5DnkFokt8LyPzJCViotqQH4AuDjuoYuB8vyxVM7hng6zc5yaaT4MUY620hoyFbk4Izug81L8jiWju9Q==
   dependencies:
     clsx "1.2.1"
 
