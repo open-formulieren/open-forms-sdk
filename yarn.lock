@@ -5517,10 +5517,10 @@
   dependencies:
     clsx "1.2.1"
 
-"@utrecht/design-tokens@^1.0.0-alpha.336":
-  version "1.0.0-alpha.358"
-  resolved "https://registry.npmjs.org/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.358.tgz"
-  integrity sha512-JvpHvynpCkhC07DCYJBRr+Jycm8O75vxHeSiMlKMWYGgt4pAE5iAO1cB77dEwYxDLkYtW8bR+hKTEIHxBp13Fw==
+"@utrecht/design-tokens@^1.0.0-alpha.505":
+  version "1.0.0-alpha.505"
+  resolved "https://registry.yarnpkg.com/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.505.tgz#ab7d2c36f2d88ec6597f7042254677dadcfd91e3"
+  integrity sha512-Y4fxoaKaaca6Pjg0z1IbTgcCJpV2ICwGK8Wp1ikTdiVIQtAx9Uj6LVy3kxI6JTqlizxNgVKzgCA/zVjdxZsTUg==
 
 "@vue/compiler-core@3.2.12", "@vue/compiler-core@^3.0.5":
   version "3.2.12"

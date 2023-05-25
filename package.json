@@ -129,7 +129,7 @@
     "@utrecht/component-library-css": "^1.0.0-alpha.417",
     "@utrecht/component-library-react": "^1.0.0-alpha.321",
     "@utrecht/components": "^1.0.0-alpha.473",
-    "@utrecht/design-tokens": "^1.0.0-alpha.336",
+    "@utrecht/design-tokens": "^1.0.0-alpha.505",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-formatjs": "^10.3.8",
