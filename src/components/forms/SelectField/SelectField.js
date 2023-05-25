@@ -19,14 +19,13 @@ const SelectField = ({
   ...props
 }) => {
   const {getFieldProps, getFieldHelpers, getFieldMeta} = useFormikContext();
+  const generatedId = React.useId();
+  id = id || generatedId;
 
   const {error} = getFieldMeta(name);
   const {value: formikValue} = getFieldProps(name);
   const {setValue} = getFieldHelpers(name);
 
-  if (!id) {
-    id = `formfield-${name}`; // TODO: use React.useId when we're on React 18
-  }
   const invalid = !!error;
 
   // map the formik value back to the value object for react-select

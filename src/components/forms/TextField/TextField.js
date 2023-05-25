@@ -20,11 +20,11 @@ export const TextField = ({
   ...inputProps
 }) => {
   const {getFieldMeta} = useFormikContext();
+  const generatedId = React.useId();
+  id = id || generatedId;
+
   const {error} = getFieldMeta(name);
   const invalid = !!error;
-  if (!id) {
-    id = `formfield-${name}`; // TODO: use React.useId when we're on React 18
-  }
   return (
     <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
       <Label id={id} isRequired={isRequired} disabled={disabled}>

@@ -33,11 +33,10 @@ const NumberField = ({
 }) => {
   const [fieldProps, {value, error}] = useField(name);
   const {locale} = useIntl();
+  const generatedId = React.useId();
+  id = id || generatedId;
 
   const invalid = !!error;
-  if (!id) {
-    id = `formfield-${name}`; // TODO: use React.useId when we're on React 18
-  }
 
   // We get the decimal separator by formatting a arbitrary number, and then extracting the decimal separator
   const {decimalSeparator, thousandSeparator} = getSeparators(locale);
