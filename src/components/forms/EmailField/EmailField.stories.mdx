@@ -55,15 +55,15 @@ export const Template = args => <EmailField {...args} />;
   <Story
     name="Validation error"
     parameters={{
-    formik: {
-      initialValues: {
-        email: 'test',
+      formik: {
+        initialValues: {
+          email: 'test',
+        },
+        initialErrors: {
+          email: 'invalid_email',
+        },
       },
-      initialErrors: {
-        email: 'invalid_email',
-      },
-    },
-  }}
+    }}
     args={{
       name: 'email',
       id: 'email',

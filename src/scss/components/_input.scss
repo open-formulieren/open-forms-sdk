@@ -1,5 +1,6 @@
 @use 'microscope-sass/lib/bem';
 
+@import '@utrecht/components/dist/textbox/css/index.css';
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
@@ -43,8 +44,10 @@ $aliases: email, iban;
 }
 
 // overrides of the utrecht-textbox component
-.utrecht-textbox {
-  @include bem.modifier('openforms') {
-    font-weight: var(--of-input-font-weight);
+.openforms-theme {
+  .utrecht-textbox {
+    @include bem.modifier('openforms') {
+      font-weight: var(--of-input-font-weight);
+    }
   }
 }

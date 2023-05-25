@@ -2,17 +2,19 @@
 
 @import '@utrecht/components/dist/form-field/css/index.css';
 
-// Overrides of the utrecht form field styles
-.utrecht-form-field {
-  @include bem.modifier('openforms') {
-    background-color: var(--of-utrecht-form-field-background-color, unset);
+// Overrides of the utrecht form field styles for our own theme
+.openforms-theme {
+  .utrecht-form-field {
+    @include bem.modifier('openforms') {
+      background-color: var(--of-utrecht-form-field-background-color, unset);
 
-    &.utrecht-form-field--invalid {
-      --of-utrecht-form-field-background-color: var(--of-alert-error-bg);
-      // apply padding in all dimensions for error state
-      padding-inline-end: var(--utrecht-form-field-invalid-padding-inline-start);
-      padding-block-start: var(--utrecht-form-field-invalid-padding-inline-start);
-      padding-block-end: var(--utrecht-form-field-invalid-padding-inline-start);
+      &.utrecht-form-field--invalid {
+        --of-utrecht-form-field-background-color: var(--of-alert-error-bg);
+        // apply padding in all dimensions for error state
+        padding-inline-end: var(--utrecht-form-field-invalid-padding-inline-start);
+        padding-block-start: var(--utrecht-form-field-invalid-padding-inline-start);
+        padding-block-end: var(--utrecht-form-field-invalid-padding-inline-start);
+      }
     }
   }
 }
