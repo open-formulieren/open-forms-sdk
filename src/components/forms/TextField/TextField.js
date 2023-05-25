@@ -1,6 +1,5 @@
 import {
   FormFieldDescription,
-  FormLabel,
   Paragraph,
   Textbox,
   FormField as UtrechtFormField,
@@ -9,7 +8,7 @@ import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getBEMClassName} from 'utils';
+import {Label} from 'components/forms';
 
 export const TextField = ({
   name,
@@ -22,15 +21,12 @@ export const TextField = ({
 }) => {
   const {getFieldMeta} = useFormikContext();
   const {error} = getFieldMeta(name);
-
-  const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
   const invalid = !!error;
-
   return (
     <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
-      <Paragraph className={labelClassName}>
-        <FormLabel htmlFor={id}>{label}</FormLabel>
-      </Paragraph>
+      <Label id={id} isRequired={isRequired} disabled={disabled}>
+        {label}
+      </Label>
       <Paragraph>
         <Field
           name={name}

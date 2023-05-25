@@ -11,6 +11,7 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {NumericFormat} from 'react-number-format';
 
+import {Label} from 'components/forms';
 import {getBEMClassName} from 'utils';
 
 const getSeparators = locale => {
@@ -36,7 +37,6 @@ const NumberField = ({
   const [field, meta, helpers] = useField(name);
   const {locale} = useIntl();
 
-  const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
   const inputClassName = getBEMClassName('input', [invalid && 'invalid'].filter(Boolean));
 
   // We get the decimal separator by formatting a arbitrary number, and then extracting the decimal separator
@@ -72,9 +72,9 @@ const NumberField = ({
 
   return (
     <UtrechtFormField type="text" invalid={invalid.toString()}>
-      <Paragraph className={labelClassName}>
-        <FormLabel htmlFor={id}>{label}</FormLabel>
-      </Paragraph>
+      <Label id={id} isRequired={isRequired} disabled={disabled}>
+        {label}
+      </Label>
       <Paragraph>
         <NumericFormat {...inputProps} />
       </Paragraph>

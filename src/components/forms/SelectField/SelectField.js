@@ -1,9 +1,10 @@
-import {FormFieldDescription, FormLabel, Paragraph} from '@utrecht/component-library-react';
+import {FormFieldDescription} from '@utrecht/component-library-react';
 import {Field} from 'formik';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
 
+import {Label} from 'components/forms';
 import {getBEMClassName} from 'utils';
 
 const SelectField = ({
@@ -18,12 +19,11 @@ const SelectField = ({
   valueProperty = 'value',
   ...props
 }) => {
-  const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
   return (
     <>
-      <Paragraph className={labelClassName}>
-        <FormLabel htmlFor={id}>{label}</FormLabel>
-      </Paragraph>
+      <Label id={id} isRequired={isRequired} disabled={disabled}>
+        {label}
+      </Label>
       <Field
         name={name}
         component={Select}
