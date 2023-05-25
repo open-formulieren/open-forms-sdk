@@ -86,7 +86,6 @@ NumberField.propTypes = {
   description: PropTypes.string,
   id: PropTypes.string,
   disabled: PropTypes.bool,
-  invalid: PropTypes.bool,
 };
 
 export default NumberField;
