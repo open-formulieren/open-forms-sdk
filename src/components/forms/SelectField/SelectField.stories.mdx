@@ -48,7 +48,6 @@ export const Template = args => <SelectField {...args} />;
       label: 'Static options',
       description: 'This is a custom description for the select field',
       disabled: false,
-      invalid: false,
       isRequired: true,
       options: [
         {value: 'option-1', label: 'Option 1'},
@@ -110,7 +109,6 @@ export const DynamicTemplate = ({getOptionsDelay, dynamicOptions, ...args}) => {
       label: 'Dynamic options',
       description: 'This is a custom description for the select field',
       disabled: false,
-      invalid: false,
       isRequired: true,
       getOptionsDelay: 1000,
       dynamicOptions: [
@@ -152,3 +150,38 @@ All the props of `SelectField` itself are supported, and any additional props pa
 The `AsyncSelectField` requires the `getOptions` prop to populate the options.
 
 <ArgsTable of={AsyncSelectField} />
+
+## Validation errors
+
+<Canvas>
+  <Story
+    name="Validation error"
+    parameters={{
+      formik: {
+        initialValues: {
+          invalidSelect: '',
+        },
+        initialErrors: {
+          invalidSelect: 'invalid',
+        },
+      },
+    }}
+    args={{
+      name: 'invalidSelect',
+      label: 'Invalid select',
+      description: 'Description above the errors',
+      disabled: false,
+      isRequired: false,
+      options: [
+        {value: 'option-1', label: 'Option 1'},
+        {value: 'option-2', label: 'Option 2'},
+      ],
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(canvas.getByText('invalid')).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

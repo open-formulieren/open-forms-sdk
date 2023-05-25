@@ -8,7 +8,7 @@
 
 @import '../mixins/prefix';
 
-$select-background-color: var(--of-select-background-color, $color-white);
+// FIXME: use NL DS design tokens for these styles
 
 .#{prefix(rs-select)} {
   @include body;
