@@ -16,7 +16,7 @@ const RouterStoryWrapper = ({route = '', children}) => {
   }
   return (
     <Routes>
-      <Route path={route}>{children}</Route>
+      <Route path={route} element={children} />
     </Routes>
   );
 };
