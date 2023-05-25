@@ -47,7 +47,7 @@ const App = ({...props}) => {
       <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
       <Route path="appointment/*" element={<AppointmentForm {...props} />} />
 
-      <Route exact path="cosign/*">
+      <Route exact path="/cosign/check">
         <ErrorBoundary useCard>
           <CosignSummary {...props} />
         </ErrorBoundary>
