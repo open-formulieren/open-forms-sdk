@@ -75,8 +75,12 @@ exports[`on valid redirect renders an error message on failure 1`] = `
         </div>
       </div>
     </div>
-    <a>
-      some link
+    <a
+      className="utrecht-link utrecht-link--openforms"
+      href="/"
+      onClick={[Function]}
+    >
+      Back to form start
     </a>
      
   </div>
@@ -105,8 +109,12 @@ exports[`on valid redirect renders the status information 1`] = `
     >
       Your payment has been received.
     </div>
-    <a>
-      some link
+    <a
+      className="utrecht-link utrecht-link--openforms"
+      href="/"
+      onClick={[Function]}
+    >
+      Back to form start
     </a>
      
   </div>

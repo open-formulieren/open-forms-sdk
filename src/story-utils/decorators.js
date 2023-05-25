@@ -1,5 +1,5 @@
 import {Formik} from 'formik';
-import {MemoryRouter, Route, Switch} from 'react-router-dom';
+import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
@@ -15,9 +15,9 @@ const RouterStoryWrapper = ({route = '', children}) => {
     return <>{children}</>;
   }
   return (
-    <Switch>
-      <Route path={route}>{children}</Route>
-    </Switch>
+    <Routes>
+      <Route path={route} element={children} />
+    </Routes>
   );
 };
 

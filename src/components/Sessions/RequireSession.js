@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
-import {Link} from 'react-router-dom';
 import {useTimeout, useTimeoutFn} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
-import Anchor from 'components/Anchor';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
+import Link from 'components/Link';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Modal from 'components/modals/Modal';
 
@@ -87,11 +86,7 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
             description="Session expired error message"
             defaultMessage="Your session has expired. Click <link>here</link> to restart."
             values={{
-              link: chunks => (
-                <Link to="/" component={Anchor}>
-                  {chunks}
-                </Link>
-              ),
+              link: chunks => <Link to="/">{chunks}</Link>,
             }}
           />
         </ErrorMessage>

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import AppDebug from 'components/AppDebug';
@@ -40,18 +40,13 @@ const App = ({...props}) => {
 
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
   const router = (
-    <Switch>
+    <Routes>
       {/* Anything dealing with appointments gets routed to it's own sub-router */}
-      <Route path="/afspraak*" component={ManageAppointment} />
-      <Route path="/appointment">
-        <AppointmentForm {...props} />
-      </Route>
-
+      <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
+      <Route path="appointment/*" element={<AppointmentForm {...props} />} />
       {/* All the rest goes to the actual form flow */}
-      <Route path="/">
-        <Form {...props} />
-      </Route>
-    </Switch>
+      <Route path="*" element={<Form {...props} />} />
+    </Routes>
   );
   const appDebug = DEBUG && !noDebug ? <AppDebug /> : null;
 

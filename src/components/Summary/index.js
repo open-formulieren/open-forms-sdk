@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
@@ -95,7 +95,7 @@ const Summary = ({
   onClearProcessingErrors,
 }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const refreshedSubmission = useRefreshSubmission(submission);
 
@@ -137,7 +137,7 @@ const Summary = ({
     const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
     const prevStepSlug = form.steps[previousStepIndex]?.slug;
     const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
-    history.push(navigateTo);
+    navigate(navigateTo);
   };
 
   const Wrapper = refreshedSubmission.submissionAllowed === SUBMISSION_ALLOWED.yes ? 'form' : 'div';

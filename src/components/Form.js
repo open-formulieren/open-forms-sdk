@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
-import {Redirect, Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
+import {Navigate, Route, Routes, useMatch, useNavigate} from 'react-router-dom';
 import {usePrevious} from 'react-use';
 import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
@@ -123,7 +123,7 @@ const reducer = (draft, action) => {
  * @return {JSX}
  */
 const Form = ({form}) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
   const queryParams = useQuery();
   usePageViews();
@@ -147,7 +147,7 @@ const Form = ({form}) => {
     flagActiveSubmission();
     // navigate to the first step
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
-    history.push(next ? next : firstStepRoute);
+    navigate(next ? next : firstStepRoute);
   };
 
   // if there is an active submission still, re-load that (relevant for hard-refreshes)
@@ -170,13 +170,13 @@ const Form = ({form}) => {
         removeSubmissionId();
         dispatch({type: 'DESTROY_SUBMISSION'});
         flagNoActiveSubmission();
-        history.push(`/?${START_FORM_QUERY_PARAM}=1`);
+        navigate(`/?${START_FORM_QUERY_PARAM}=1`);
       }
     },
     [intl.locale, prevLocale, removeSubmissionId, state.submission] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const paymentOverviewMatch = useRouteMatch('/betaaloverzicht');
+  const paymentOverviewMatch = useMatch('/betaaloverzicht');
 
   /**
    * When the form is started, create a submission and add it to the state.
@@ -206,7 +206,7 @@ const Form = ({form}) => {
     setSubmissionId(submission.id);
     // navigate to the first step
     const firstStepRoute = `/stap/${form.steps[0].slug}`;
-    history.push(firstStepRoute);
+    navigate(firstStepRoute);
   };
 
   const onStepSubmitted = async formStep => {
@@ -216,7 +216,7 @@ const Form = ({form}) => {
     const nextStep = form.steps[nextStepIndex]; // will be undefined if it's the last step
 
     const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
-    history.push(nextUrl);
+    navigate(nextUrl);
   };
 
   const onSubmitForm = processingStatusUrl => {
@@ -228,7 +228,7 @@ const Form = ({form}) => {
         processingStatusUrl,
       },
     });
-    history.push('/bevestiging');
+    navigate('/bevestiging');
   };
 
   const destroySession = async confirmationMessage => {
@@ -239,7 +239,7 @@ const Form = ({form}) => {
     await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
 
     removeSubmissionId();
-    history.push('/');
+    navigate('/');
     // TODO: replace with a proper reset of the state instead of a page reload.
     window.location.reload();
   };
@@ -271,20 +271,19 @@ const Form = ({form}) => {
     // TODO: provide generic fallback message in case no explicit
     // message is shown
     dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
-    history.push('/overzicht');
+    navigate('/overzicht');
   };
 
   // handle redirect from payment provider to render appropriate page and include the
   // params as state for the next component.
   if (queryParams.get('of_payment_status')) {
     return (
-      <Redirect
-        to={{
-          pathname: '/betaaloverzicht',
-          state: {
-            status: queryParams.get('of_payment_status'),
-            userAction: queryParams.get('of_payment_action'),
-          },
+      <Navigate
+        replace
+        to="/betaaloverzicht"
+        state={{
+          status: queryParams.get('of_payment_status'),
+          userAction: queryParams.get('of_payment_action'),
         }}
       />
     );
@@ -293,7 +292,7 @@ const Form = ({form}) => {
   // redirect to the appointment form
   // use redirect instead of history to replace the location
   if (form.appointmentEnabled) {
-    return <Redirect to={{pathname: '/appointment'}} />;
+    return <Navigate replace to="/appointment" />;
   }
 
   if (loading || shouldAutomaticallyRedirect) {
@@ -317,58 +316,69 @@ const Form = ({form}) => {
 
   // Route the correct page based on URL
   const router = (
-    <Switch>
-      <Route exact path="/">
-        <Redirect to="/startpagina" />
-      </Route>
-      <Route exact path="/startpagina">
-        <ErrorBoundary useCard>
-          <FormStart
-            form={form}
-            hasActiveSubmission={!!state.submission}
-            onFormStart={onFormStart}
-            onFormAbort={onFormAbort}
-          />
-        </ErrorBoundary>
-      </Route>
-
-      <Route exact path="/overzicht">
-        <ErrorBoundary useCard>
-          <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-            <RequireSubmission
-              submission={state.submission}
-              form={form}
-              processingError={state.processingError}
-              onConfirm={onSubmitForm}
-              onLogout={onLogout}
-              component={Summary}
-              onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
-            />
-          </RequireSession>
-        </ErrorBoundary>
-      </Route>
-
-      <Route exact path="/bevestiging">
-        <ErrorBoundary useCard>
-          <RequireSubmission
-            submission={state.submittedSubmission}
-            statusUrl={state.processingStatusUrl}
-            onFailure={onProcessingFailure}
-            onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
-            component={SubmissionConfirmation}
-          />
-        </ErrorBoundary>
-      </Route>
-
-      <Route exact path="/betaaloverzicht">
-        <ErrorBoundary useCard>
-          <PaymentOverview />
-        </ErrorBoundary>
-      </Route>
+    <Routes>
+      <Route path="" element={<Navigate replace to="startpagina" />} />
 
       <Route
-        path="/stap/:step"
-        render={() => (
+        path="startpagina"
+        element={
+          <ErrorBoundary useCard>
+            <FormStart
+              form={form}
+              hasActiveSubmission={!!state.submission}
+              onFormStart={onFormStart}
+              onFormAbort={onFormAbort}
+            />
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path="overzicht"
+        element={
+          <ErrorBoundary useCard>
+            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+              <RequireSubmission
+                submission={state.submission}
+                form={form}
+                processingError={state.processingError}
+                onConfirm={onSubmitForm}
+                onLogout={onLogout}
+                component={Summary}
+                onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
+              />
+            </RequireSession>
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path="bevestiging"
+        element={
+          <ErrorBoundary useCard>
+            <RequireSubmission
+              submission={state.submittedSubmission}
+              statusUrl={state.processingStatusUrl}
+              onFailure={onProcessingFailure}
+              onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
+              component={SubmissionConfirmation}
+            />
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path="betaaloverzicht"
+        element={
+          <ErrorBoundary useCard>
+            <PaymentOverview />
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path="stap/:step"
+        element={
           <ErrorBoundary useCard>
             <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
               <RequireSubmission
@@ -381,16 +391,16 @@ const Form = ({form}) => {
                 onLogout={onLogout}
                 onSessionDestroyed={() => {
                   resetSession();
-                  history.push('/');
+                  navigate('/');
                   dispatch({type: 'RESET', payload: initialStateFromProps});
                 }}
                 component={FormStep}
               />
             </RequireSession>
           </ErrorBoundary>
-        )}
+        }
       />
-    </Switch>
+    </Routes>
   );
 
   // render the form step if there's an active submission (and no summary)

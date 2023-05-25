@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Route, Switch, useHistory, useLocation, useRouteMatch} from 'react-router-dom';
+import {Route, Routes, useLocation, useMatch, useNavigate} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import Body from 'components/Body';
@@ -33,9 +33,9 @@ const AppointmentProgressIndicator = ({title}) => {
   }, [pathname]);
 
   const config = useContext(ConfigContext);
-  const summaryMatch = !!useRouteMatch('/appointment/overzicht');
-  const confirmationMatch = !!useRouteMatch('/appointment/bevestiging');
-  const appointmentMatch = !!useRouteMatch('/appointment');
+  const summaryMatch = !!useMatch('/appointment/overzicht');
+  const confirmationMatch = !!useMatch('/appointment/bevestiging');
+  const appointmentMatch = !!useMatch('/appointment');
 
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
@@ -75,10 +75,10 @@ AppointmentProgressIndicator.propTypes = {
 };
 
 const AppointmentSummary = ({form, onConfirm}) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const onPrevPage = event => {
     event.preventDefault();
-    history.push('/appointment');
+    navigate('/appointment');
   };
 
   const intl = useIntl();
@@ -155,17 +155,17 @@ const AppointmentConfirmation = () => {
 AppointmentConfirmation.propTypes = {};
 
 const AppointmentForm = ({form}) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // extract the declared properties and configuration
   const config = useContext(ConfigContext);
   const onSubmitForm = () => {
-    history.push('/appointment/bevestiging');
+    navigate('/appointment/bevestiging');
   };
 
   const onAppointmentSubmit = () => {
     console.log('Appointment data were filled');
-    history.push('/appointment/overzicht');
+    navigate('/appointment/overzicht');
   };
 
   const progressIndicator = form.showProgressIndicator ? (
@@ -175,31 +175,20 @@ const AppointmentForm = ({form}) => {
 
   // Route the correct page based on URL
   const router = (
-    <Switch>
-      <Route path="/appointment/overzicht">
-        <ErrorBoundary useCard>
-          <AppointmentSummary form={form} onConfirm={onSubmitForm} />
-        </ErrorBoundary>
-      </Route>
-
-      <Route path="/appointment/bevestiging">
-        <ErrorBoundary useCard>
-          <AppointmentConfirmation />
-        </ErrorBoundary>
-      </Route>
-
-      <Route path="/">
-        <ErrorBoundary useCard>
-          <AppointmentStep form={form} onSubmit={onAppointmentSubmit} />
-        </ErrorBoundary>
-      </Route>
-    </Switch>
+    <Routes>
+      <Route
+        path="overzicht"
+        element={<AppointmentSummary form={form} onConfirm={onSubmitForm} />}
+      />
+      <Route path="bevestiging" element={<AppointmentConfirmation />} />
+      <Route path="" element={<AppointmentStep form={form} onSubmit={onAppointmentSubmit} />} />
+    </Routes>
   );
 
   const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   return (
     <FormDisplayComponent
-      router={router}
+      router={<ErrorBoundary useCard>{router}</ErrorBoundary>}
       progressIndicator={progressIndicator}
       showProgressIndicator={form.showProgressIndicator}
       isPaymentOverview={false}

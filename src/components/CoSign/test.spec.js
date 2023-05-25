@@ -1,6 +1,6 @@
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 
@@ -9,17 +9,19 @@ import {testLoginForm} from 'components/FormStart/fixtures';
 import {CoSignAuthentication} from './index';
 
 let container = null;
-
+let root = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  root.unmount();
   container.remove();
+  root = null;
   container = null;
 });
 
@@ -32,7 +34,7 @@ it('CoSign component constructs the right auth URL', () => {
   };
 
   act(() => {
-    render(
+    root.render(
       <IntlProvider locale="nl" messages={messagesNL}>
         <CoSignAuthentication
           form={testLoginForm}
@@ -40,8 +42,7 @@ it('CoSign component constructs the right auth URL', () => {
           authPlugin="digid"
           saveStepData={() => {}}
         />
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   });
 

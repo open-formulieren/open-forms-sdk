@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {IntlProvider} from 'react-intl';
 
@@ -42,12 +42,15 @@ export default class CoSignOld extends Field {
     this.loadRefs(element, {
       coSignContainer: 'single',
     });
-    return super.attach(element).then(() => this.renderReact());
+    return super.attach(element).then(() => {
+      this.reactRoot = createRoot(this.refs.coSignContainer);
+      this.renderReact();
+    });
   }
 
   destroy() {
     const container = this.refs.coSignContainer;
-    container && ReactDOM.unmountComponentAtNode(container);
+    container && this.reactRoot.unmount();
     super.destroy();
   }
 
@@ -58,7 +61,7 @@ export default class CoSignOld extends Field {
 
     const {form, submissionUuid, saveStepData, displayComponents} = this.options.ofContext;
 
-    ReactDOM.render(
+    this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
         <ConfigContext.Provider
           value={{baseUrl: this.options.baseUrl, displayComponents: displayComponents}}
@@ -70,8 +73,7 @@ export default class CoSignOld extends Field {
             saveStepData={saveStepData}
           />
         </ConfigContext.Provider>
-      </IntlProvider>,
-      container
+      </IntlProvider>
     );
   }
 }
