@@ -18,9 +18,26 @@ const SelectField = ({
   valueProperty = 'value',
   ...props
 }) => {
-  const {getFieldMeta} = useFormikContext();
+  const {getFieldProps, getFieldHelpers, getFieldMeta} = useFormikContext();
+
   const {error} = getFieldMeta(name);
+  const {value: formikValue} = getFieldProps(name);
+  const {setValue} = getFieldHelpers(name);
+
+  if (!id) {
+    id = `formfield-${name}`; // TODO: use React.useId when we're on React 18
+  }
   const invalid = !!error;
+
+  // map the formik value back to the value object for react-select
+  let value = undefined;
+  const isSingle = !Array.isArray(formikValue);
+  if (isSingle) {
+    value = options.find(opt => opt[valueProperty] === formikValue) || null;
+  } else {
+    value = options.filter(opt => formikValue.includes(opt[valueProperty]));
+  }
+
   return (
     <FormField invalid={invalid} className="utrecht-form-field--openforms">
       <Label id={id} isRequired={isRequired} disabled={disabled}>
@@ -68,6 +85,14 @@ const SelectField = ({
           />
         )}
         {...props}
+        onChange={newValue => {
+          const isSingle = !Array.isArray(newValue);
+          const normalized = isSingle ? [newValue] : newValue;
+          const rawValues = normalized.map(val => val?.[valueProperty] ?? null);
+          const rawValue = isSingle ? rawValues[0] : rawValues;
+          setValue(rawValue);
+        }}
+        value={value}
       />
       {description && <FormFieldDescription>{description}</FormFieldDescription>}
       <ValidationErrors error={error} />
@@ -77,7 +102,7 @@ const SelectField = ({
 
 export const SelectFieldPropTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string,
+  label: PropTypes.node,
   id: PropTypes.string,
   isRequired: PropTypes.bool,
   description: PropTypes.string,
