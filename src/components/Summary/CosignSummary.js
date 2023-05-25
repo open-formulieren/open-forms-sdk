@@ -62,6 +62,7 @@ const CosignSummary = ({form}) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   // The backend has added the submission to the session, but we need to load it
+  // eslint-disable-next-line
   const [loading, setSubmissionId, removeSubmissionId] = useRecycleSubmission(
     form,
     state.submission,
@@ -124,6 +125,7 @@ const CosignSummary = ({form}) => {
     await destroySession();
   };
 
+  // eslint-disable-next-line
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(async () => {
     await destroySession();
   });

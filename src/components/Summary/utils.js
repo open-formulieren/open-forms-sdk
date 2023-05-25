@@ -56,4 +56,4 @@ const loadSummaryData = async submissionUrl => {
   return await get(`${submissionUrl.href}/summary`);
 };
 
-export {getPrivacyPolicyInfo, loadSummaryData};
+export {shouldDisplayComponent, getPrivacyPolicyInfo, loadSummaryData};
