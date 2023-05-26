@@ -5,6 +5,7 @@ import {FormattedMessage} from 'react-intl';
 
 import Button from 'components/Button';
 import FAIcon from 'components/FAIcon';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {getBEMClassName} from 'utils';
 
 import Product from './Product';
@@ -29,7 +30,25 @@ const ChooseProductStep = () => {
                     values={{number: index + 1, total: numProducts}}
                   />
                 </div>
+
                 <Product namePrefix="products" index={index} />
+
+                {numProducts > 1 && (
+                  <Toolbar modifiers={['reverse']}>
+                    <ToolbarList>
+                      <Button
+                        type="button"
+                        variant="danger"
+                        onClick={() => arrayHelpers.remove(index)}
+                      >
+                        <FormattedMessage
+                          description="Appointments: remove product/service button text"
+                          defaultMessage="Remove"
+                        />
+                      </Button>
+                    </ToolbarList>
+                  </Toolbar>
+                )}
               </div>
             ))}
           </div>
