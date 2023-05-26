@@ -1,7 +1,9 @@
+@use 'microscope-sass/lib/bem';
+
+@import '@utrecht/components/dist/textbox/css/index.css';
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 $input-padding: $grid-margin-2;
@@ -21,7 +23,7 @@ $input-padding: $grid-margin-2;
   padding: $input-padding;
   width: 100%;
 
-  @include modifier('time') {
+  @include bem.modifier('time') {
     width: calc(5ch + 2 * $input-padding);
   }
 
@@ -38,5 +40,14 @@ $aliases: email, iban;
 @each $alias in $aliases {
   .#{prefix($alias)} {
     @extend .#{prefix(input)};
+  }
+}
+
+// overrides of the utrecht-textbox component
+.openforms-theme {
+  .utrecht-textbox {
+    @include bem.modifier('openforms') {
+      font-weight: var(--of-input-font-weight);
+    }
   }
 }

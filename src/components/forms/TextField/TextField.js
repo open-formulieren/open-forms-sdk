@@ -1,15 +1,14 @@
 import {
   FormFieldDescription,
-  FormLabel,
   Paragraph,
   Textbox,
   FormField as UtrechtFormField,
 } from '@utrecht/component-library-react';
-import {Field} from 'formik';
+import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getBEMClassName} from 'utils';
+import {Label, ValidationErrors} from 'components/forms';
 
 export const TextField = ({
   name,
@@ -18,25 +17,29 @@ export const TextField = ({
   description = '',
   id = '',
   disabled = false,
-  invalid = false,
+  ...inputProps
 }) => {
-  const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
-
-  const inputProps = {
-    id,
-    disabled,
-    invalid,
-  };
-
+  const {getFieldMeta} = useFormikContext();
+  const {error} = getFieldMeta(name);
+  const invalid = !!error;
   return (
-    <UtrechtFormField type={'text'} invalid={invalid}>
-      <Paragraph className={labelClassName}>
-        <FormLabel htmlFor={id}>{label}</FormLabel>
-      </Paragraph>
+    <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
+      <Label id={id} isRequired={isRequired} disabled={disabled}>
+        {label}
+      </Label>
       <Paragraph>
-        <Field name={name} as={Textbox} {...inputProps} />
+        <Field
+          name={name}
+          as={Textbox}
+          id={id}
+          className="utrecht-textbox--openforms"
+          disabled={disabled}
+          invalid={invalid}
+          {...inputProps}
+        />
       </Paragraph>
-      {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
+      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      <ValidationErrors error={error} />
     </UtrechtFormField>
   );
 };
@@ -48,7 +51,6 @@ TextField.propTypes = {
   description: PropTypes.string,
   id: PropTypes.string,
   disabled: PropTypes.bool,
-  invalid: PropTypes.bool,
 };
 
 export default TextField;

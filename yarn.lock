@@ -2243,7 +2243,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.18.3", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.18.3", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
   version "7.21.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.5.tgz#8492dddda9644ae3bda3b45eabe87382caee7200"
   integrity sha512-8jI69toZqqcsnqGGqwGS4Qb1VwLOEp4hz+CXPywcvjs60u3B4Pom/U/7rm4W8tMOYEB+E9wgD0mW1l3r8qlI9Q==
@@ -5501,25 +5501,26 @@
   resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.417.tgz#cc75f326af08a6c501f7dcfd3fdce425295b0093"
   integrity sha512-5MS5WmvBDd69yQUlWg97ynsPPfXbur49STcUP/UTCaQrWzB5xUu/NhbaWFdVEW2PqGh2/TOT4tE/ziaeY4Aksw==
 
-"@utrecht/component-library-react@^1.0.0-alpha.152":
-  version "1.0.0-alpha.174"
-  resolved "https://registry.npmjs.org/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.174.tgz"
-  integrity sha512-cXYIoW+mqsMf00k9umcqqomC6Jf47UhQ2r340fkak/9jkPDT1B1MoVN1eGWzjRGxLEEH3vddHbHF6MggVLllCw==
+"@utrecht/component-library-react@^1.0.0-alpha.321":
+  version "1.0.0-alpha.321"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.321.tgz#0b531f07bd0bde988ba505b5857e27cdc5a23c1e"
+  integrity sha512-f63QXwlrSI2CS+FeWs8RtrScjW6/PXisPLQYcvINLdh76Uo4MyrnjS5kNHxo/wxVv+y19h2GwmbaDDX7oxZ3vQ==
   dependencies:
     clsx "1.2.1"
-    date-fns "2.29.3"
+    date-fns "2.30.0"
+    lodash.chunk "4.2.0"
 
-"@utrecht/components@^1.0.0-alpha.378":
-  version "1.0.0-alpha.378"
-  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.378.tgz#2d7efd87d728af428b178b64a895ad78ccc13739"
-  integrity sha512-rVNBYKpgnZ76RQ0P8QY0S9PxBAYelm2uy2CIZkbWAEDFIVNA50paQOMqesbjqADp3JZgEKFMJ04MABa5beXP3Q==
+"@utrecht/components@^1.0.0-alpha.473":
+  version "1.0.0-alpha.473"
+  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.473.tgz#50ccf42a40fae50a7087d83cb4bb1469a2638190"
+  integrity sha512-hL0s3fA5DnkFokt8LyPzJCViotqQH4AuDjuoYuB8vyxVM7hng6zc5yaaT4MUY620hoyFbk4Izug81L8jiWju9Q==
   dependencies:
     clsx "1.2.1"
 
-"@utrecht/design-tokens@^1.0.0-alpha.336":
-  version "1.0.0-alpha.358"
-  resolved "https://registry.npmjs.org/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.358.tgz"
-  integrity sha512-JvpHvynpCkhC07DCYJBRr+Jycm8O75vxHeSiMlKMWYGgt4pAE5iAO1cB77dEwYxDLkYtW8bR+hKTEIHxBp13Fw==
+"@utrecht/design-tokens@^1.0.0-alpha.505":
+  version "1.0.0-alpha.505"
+  resolved "https://registry.yarnpkg.com/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.505.tgz#ab7d2c36f2d88ec6597f7042254677dadcfd91e3"
+  integrity sha512-Y4fxoaKaaca6Pjg0z1IbTgcCJpV2ICwGK8Wp1ikTdiVIQtAx9Uj6LVy3kxI6JTqlizxNgVKzgCA/zVjdxZsTUg==
 
 "@vue/compiler-core@3.2.12", "@vue/compiler-core@^3.0.5":
   version "3.2.12"
@@ -8280,10 +8281,12 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-date-fns@2.29.3:
-  version "2.29.3"
-  resolved "https://registry.npmjs.org/date-fns/-/date-fns-2.29.3.tgz"
-  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
+date-fns@2.30.0:
+  version "2.30.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
+  integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"
@@ -12545,6 +12548,11 @@ lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz"
   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
+
+lodash.chunk@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.chunk/-/lodash.chunk-4.2.0.tgz#66e5ce1f76ed27b4303d8c6512e8d1216e8106bc"
+  integrity sha512-ZzydJKfUHJwHa+hF5X66zLFCBrWn5GeF28OHEr4WVWtNDXlQ/IjWKPBiikqKo2ne0+v6JgCgJ0GzJp8k8bHC7w==
 
 lodash.debounce@^4.0.8:
   version "4.0.8"

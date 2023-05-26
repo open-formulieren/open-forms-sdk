@@ -1,9 +1,10 @@
-import {FormFieldDescription, FormLabel, Paragraph} from '@utrecht/component-library-react';
-import {Field} from 'formik';
+import {FormField, FormFieldDescription} from '@utrecht/component-library-react';
+import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
 
+import {Label, ValidationErrors} from 'components/forms';
 import {getBEMClassName} from 'utils';
 
 const SelectField = ({
@@ -13,17 +14,18 @@ const SelectField = ({
   isRequired = false,
   description = '',
   disabled = false,
-  invalid = false,
   options = [],
   valueProperty = 'value',
   ...props
 }) => {
-  const labelClassName = getBEMClassName('label', [isRequired && 'required'].filter(Boolean));
+  const {getFieldMeta} = useFormikContext();
+  const {error} = getFieldMeta(name);
+  const invalid = !!error;
   return (
-    <>
-      <Paragraph className={labelClassName}>
-        <FormLabel htmlFor={id}>{label}</FormLabel>
-      </Paragraph>
+    <FormField invalid={invalid} className="utrecht-form-field--openforms">
+      <Label id={id} isRequired={isRequired} disabled={disabled}>
+        {label}
+      </Label>
       <Field
         name={name}
         component={Select}
@@ -31,12 +33,16 @@ const SelectField = ({
         components={{DropdownIndicator: () => null, IndicatorSeparator: () => null}}
         classNames={{
           control: state => {
-            return getBEMClassName('rs-select', [
-              state.isFocused && 'focus',
-              disabled && 'disabled',
-              invalid && 'invalid',
-              isRequired && 'required',
-            ]);
+            const ofClassname = getBEMClassName(
+              'rs-select',
+              [
+                state.isFocused && 'focus',
+                disabled && 'disabled',
+                invalid && 'invalid',
+                isRequired && 'required',
+              ].filter(Boolean)
+            );
+            return ['utrecht-select', ofClassname].join(' ');
           },
           menu: () => {
             return getBEMClassName('rs-select-menu');
@@ -63,8 +69,9 @@ const SelectField = ({
         )}
         {...props}
       />
-      {description && <FormFieldDescription invalid={invalid}>{description}</FormFieldDescription>}
-    </>
+      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      <ValidationErrors error={error} />
+    </FormField>
   );
 };
 
@@ -75,7 +82,6 @@ export const SelectFieldPropTypes = {
   isRequired: PropTypes.bool,
   description: PropTypes.string,
   disabled: PropTypes.bool,
-  invalid: PropTypes.bool,
   valueProperty: PropTypes.string,
 };
 

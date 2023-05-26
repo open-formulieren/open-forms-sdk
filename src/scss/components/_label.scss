@@ -1,6 +1,7 @@
-@use './anchor';
 @use 'microscope-sass/lib/bem';
+@use './anchor';
 
+@import '@utrecht/components/dist/form-label/css/index.css';
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';

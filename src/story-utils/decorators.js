@@ -33,10 +33,11 @@ export const RouterDecorator = (Story, {args: {routerArgs = {}}}) => {
 
 export const FormikDecorator = (Story, context) => {
   const initialValues = context.parameters?.formik?.initialValues || {};
-
+  const initialErrors = context.parameters?.formik?.initialErrors || {};
   return (
     <Formik
       initialValues={initialValues}
+      initialErrors={initialErrors}
       enableReinitialize
       onSubmit={(values, formikHelpers) => console.log(values, formikHelpers)}
     >
