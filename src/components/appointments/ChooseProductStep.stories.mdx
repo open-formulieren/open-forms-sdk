@@ -16,10 +16,12 @@ export const Template = args => <ChooseProductStep {...args} />;
   parameters={{
     formik: {
       initialValues: {
-        products: [{
-          product: '',
-          amount: 1,
-        }],
+        products: [
+          {
+            product: '',
+            amount: 1,
+          },
+        ],
       },
     },
     msw: {
@@ -27,5 +29,26 @@ export const Template = args => <ChooseProductStep {...args} />;
     },
   }}
 />
+
+## Choose product step
+
+The appointment form allows making appointments for one or multiple products/services.
+
+This component enables the UX to select the desired product and add additional products if desired.
+At least one product must be provided.
+
+<Canvas>
+  <Story
+    name="Empty state"
+    args={{}}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
 
 <ArgsTable of={ChooseProductStep} />
