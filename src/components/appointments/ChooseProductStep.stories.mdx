@@ -1,0 +1,31 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
+
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+
+import ChooseProductStep from './ChooseProductStep';
+import {mockAppointmentProductsGet} from './mocks';
+
+export const Template = args => <ChooseProductStep {...args} />;
+
+<Meta
+  title="Private API / Appointments / Steps / Choose product"
+  component={ChooseProductStep}
+  decorators={[FormikDecorator, ConfigDecorator]}
+  parameters={{
+    formik: {
+      initialValues: {
+        products: [{
+          product: '',
+          amount: 1,
+        }],
+      },
+    },
+    msw: {
+      handlers: [mockAppointmentProductsGet],
+    },
+  }}
+/>
+
+<ArgsTable of={ChooseProductStep} />
