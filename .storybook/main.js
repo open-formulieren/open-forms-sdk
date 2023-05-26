@@ -15,6 +15,9 @@ module.exports = {
     'storybook-addon-themes',
     'storybook-react-intl',
   ],
+  features: {
+    interactionsDebugger: true,
+  },
   framework: '@storybook/react',
   core: {
     builder: '@storybook/builder-webpack5',
