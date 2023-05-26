@@ -2832,10 +2832,10 @@
   resolved "https://registry.npmjs.org/@gar/promisify/-/promisify-1.1.3.tgz"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@gemeente-denhaag/design-tokens-components@^0.2.3-alpha.286":
-  version "0.2.3-alpha.286"
-  resolved "https://registry.npmjs.org/@gemeente-denhaag/design-tokens-components/-/design-tokens-components-0.2.3-alpha.286.tgz"
-  integrity sha512-jZHwGiA2BJI67PP8L0G+4ILKIgeb8MNQjz5gv/V1hvedNGFKqgdU+3ftZTE19hGOyTOHAvwYk6GGx0hpWvUeEA==
+"@gemeente-denhaag/design-tokens-components@^0.2.3-alpha.315":
+  version "0.2.3-alpha.315"
+  resolved "https://registry.yarnpkg.com/@gemeente-denhaag/design-tokens-components/-/design-tokens-components-0.2.3-alpha.315.tgz#a8a39195001cf95431669db3e183a1ae262db177"
+  integrity sha512-GVOtWxPFniGnRg5OI9XjT5hzth3P15sGWLupCBZy3UyzqRJoZGlHTTz01aV+H9AkoydPVgo7LPWSgzOm5vvtEA==
 
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
