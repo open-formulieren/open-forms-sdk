@@ -3,8 +3,8 @@ import {rest} from 'msw';
 import {BASE_URL} from 'api-mocks';
 
 const DEFAULT_PRODUCTS = [
-  {code: 'PASAAN', identifier: '1', name: 'Paspoort aanvraag'},
-  {code: 'RIJAAN', identifier: '2', name: 'Rijbewijs aanvraag (Drivers license)'},
+  {code: 'PASAAN', identifier: '166a5c79', name: 'Paspoort aanvraag'},
+  {code: 'RIJAAN', identifier: 'e8e045ab', name: 'Rijbewijs aanvraag (Drivers license)'},
 ];
 
 const DEFAULT_LOCATIONS = [{identifier: '1', name: 'Maykin Media'}];

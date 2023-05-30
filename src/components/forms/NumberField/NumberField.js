@@ -33,6 +33,8 @@ const NumberField = ({
 }) => {
   const [fieldProps, {value, error}] = useField(name);
   const {locale} = useIntl();
+  const generatedId = React.useId();
+  id = id || generatedId;
 
   const invalid = !!error;
 
@@ -81,7 +83,7 @@ NumberField.propTypes = {
   useNumberType: PropTypes.bool,
   min: PropTypes.number,
   step: PropTypes.number,
-  label: PropTypes.string,
+  label: PropTypes.node,
   isRequired: PropTypes.bool,
   description: PropTypes.string,
   id: PropTypes.string,

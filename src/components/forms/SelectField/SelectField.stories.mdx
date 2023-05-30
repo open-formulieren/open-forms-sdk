@@ -54,6 +54,13 @@ export const Template = args => <SelectField {...args} />;
         {value: 'option-2', label: 'Option 2'},
       ],
     }}
+    parameters={{
+      formik: {
+        initialValues: {
+          select: '',
+        },
+      },
+    }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
       const dropdown = canvas.getByLabelText('Static options');

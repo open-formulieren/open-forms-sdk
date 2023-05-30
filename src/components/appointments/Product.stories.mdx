@@ -1,0 +1,72 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
+
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+
+import Product from './Product';
+import {mockAppointmentProductsGet} from './mocks';
+
+export const PRODUCTS_DATA = [
+  {
+    product: '166a5c79',
+    amount: 2,
+  },
+  {
+    product: 'e8e045ab',
+    amount: 1,
+  },
+];
+
+export const Template = ({product}) => {
+  const data_entry = PRODUCTS_DATA.find(prod => prod.product === product);
+  const index = PRODUCTS_DATA.indexOf(data_entry);
+  return <Product namePrefix="products" index={index} />;
+};
+
+<Meta
+  title="Private API / Appointments / Product"
+  component={Product}
+  decorators={[FormikDecorator, ConfigDecorator]}
+  argTypes={{
+    product: {
+      options: ['166a5c79', 'e8e045ab'],
+      control: {type: 'radio'},
+    },
+  }}
+  parameters={{
+    formik: {
+      initialValues: {
+        products: PRODUCTS_DATA,
+      },
+    },
+    msw: {
+      handlers: [mockAppointmentProductsGet],
+    },
+  }}
+/>
+
+<Canvas>
+  <Story
+    name="Product and amount"
+    args={{
+      namePrefix: 'products',
+      product: '166a5c79',
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      // search for a product
+      await expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
+      await userEvent.type(canvas.getByLabelText('Product'), 'Rijbewijs');
+      await userEvent.click(await canvas.findByText('Rijbewijs aanvraag (Drivers license)'));
+      await expect(canvas.queryByText('Paspoort aanvraag')).toBeNull();
+      await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
+      const amountInput = canvas.getByLabelText('Amount');
+      await userEvent.clear(amountInput);
+      await userEvent.type(amountInput, '1');
+      await expect(amountInput).toHaveDisplayValue('1');
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
