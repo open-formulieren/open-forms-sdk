@@ -137,6 +137,30 @@ minimum/maximum values.
 
 <Canvas>
   <Story
+    name="Default"
+    args={{
+      name: 'amount',
+      id: 'amount',
+      label: 'Amount',
+      description: 'This is a custom description for the amount field',
+      disabled: false,
+      isRequired: false,
+      useNumberType: false,
+      min: undefined,
+      step: undefined,
+    }}
+    parameters={{
+      formik: {
+        initialValues: {amount: ''},
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
     name="Small localised numbers with decimals"
     play={async ({canvasElement}) => {
       await generalTest(canvasElement);
