@@ -47,11 +47,14 @@ const App = ({...props}) => {
       <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
       <Route path="appointment/*" element={<AppointmentForm {...props} />} />
 
-      <Route exact path="/cosign/check">
-        <ErrorBoundary useCard>
-          <CosignSummary {...props} />
-        </ErrorBoundary>
-      </Route>
+      <Route
+        path="/cosign/check"
+        element={
+          <ErrorBoundary useCard>
+            <CosignSummary {...props} />
+          </ErrorBoundary>
+        }
+      />
 
       {/* All the rest goes to the actual form flow */}
       <Route path="*" element={<Form {...props} />} />

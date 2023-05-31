@@ -67,20 +67,16 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   useRefreshSubmission.mockReturnValue(submissionIsAuthenticated);
 
   act(() => {
-<<<<<<< HEAD
     root.render(
       <Wrap>
-        <Summary
-=======
-    render(
-      <IntlProvider locale="nl" messages={messagesNL}>
-        <SubmissionSummary
->>>>>>> 5e7cf44 (:construction: [open-formulieren/open-forms#1530] Share code between SubmissionSummary and CosignSummary)
-          form={testForm}
-          submission={SUBMISSION}
-          onConfirm={onConfirm}
-          onLogout={onLogout}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <SubmissionSummary
+            form={testForm}
+            submission={SUBMISSION}
+            onConfirm={onConfirm}
+            onLogout={onLogout}
+          />
+        </IntlProvider>
       </Wrap>
     );
   });
@@ -100,20 +96,16 @@ it('Summary does not display logout button if loginRequired is false', () => {
   useRefreshSubmission.mockReturnValue(SUBMISSION);
 
   act(() => {
-<<<<<<< HEAD
     root.render(
       <Wrap>
-        <Summary
-=======
-    render(
-      <IntlProvider locale="nl" messages={messagesNL}>
-        <SubmissionSummary
->>>>>>> 5e7cf44 (:construction: [open-formulieren/open-forms#1530] Share code between SubmissionSummary and CosignSummary)
-          form={formLoginRequired}
-          submission={SUBMISSION}
-          onConfirm={onConfirm}
-          onLogout={onLogout}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <SubmissionSummary
+            form={formLoginRequired}
+            submission={SUBMISSION}
+            onConfirm={onConfirm}
+            onLogout={onLogout}
+          />
+        </IntlProvider>
       </Wrap>
     );
   });

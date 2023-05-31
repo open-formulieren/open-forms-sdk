@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
@@ -56,7 +56,7 @@ const reducer = (draft, action) => {
 };
 
 const CosignSummary = ({form}) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const [state, dispatch] = useImmerReducer(reducer, initialState);
@@ -97,16 +97,20 @@ const CosignSummary = ({form}) => {
     event.preventDefault();
 
     submissionUrl.pathname = `/api/v2/submissions/${state.submission.id}/cosign`;
-    await post(submissionUrl.href);
+    await post(submissionUrl.href, {
+      privacyPolicyAccepted: state.privacyInfo.policyAccepted,
+    });
 
-    history.push('/cosign/done');
+    removeSubmissionId();
+    dispatch({type: 'RESET', payload: initialState});
+    navigate('/cosign/done');
   };
 
   const destroySession = async () => {
     await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
     removeSubmissionId();
     dispatch({type: 'RESET', payload: initialState});
-    history.push('/');
+    navigate('/');
   };
 
   const onLogout = async event => {
@@ -129,6 +133,10 @@ const CosignSummary = ({form}) => {
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(async () => {
     await destroySession();
   });
+
+  if (!(loading || loadingData) && !state.summaryData) {
+    throw new Error('Could not load the data for this submission.');
+  }
 
   return (
     <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
