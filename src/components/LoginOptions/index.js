@@ -4,7 +4,7 @@ import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import Literal from 'components/Literal';
-import {getCoSignLoginUrl, getLoginUrl} from 'components/utils';
+import {getLoginUrl} from 'components/utils';
 import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
@@ -47,7 +47,6 @@ const LoginOptions = ({form, onFormStart}) => {
   let cosignInfo;
   if (form.cosignLoginInfo) {
     cosignInfo = {...form.cosignLoginInfo};
-    cosignInfo.url = getCoSignLoginUrl(form);
     cosignInfo.label = (
       <FormattedMessage
         description="Login button label"

@@ -43,20 +43,6 @@ const getLoginUrl = (loginOption, extraParams = {}) => {
   return loginUrl.toString();
 };
 
-const getCoSignLoginUrl = form => {
-  const loginInfo = form.cosignLoginInfo;
-
-  if (!loginInfo) return '';
-  if (loginInfo.url === '#') return loginInfo.url;
-
-  let cosignLoginUrl = new URL(loginInfo.url);
-  let nextUrl = new URL(cosignLoginUrl.searchParams.get('next'));
-  let cosignURL = new URL(window.location.href + '/cosign/check');
-  nextUrl.searchParams.set('next', cosignURL.href);
-  cosignLoginUrl.searchParams.set('next', nextUrl.href);
-  return cosignLoginUrl.href;
-};
-
 const getLoginRedirectUrl = form => {
   // Automatically redirect the user to a specific login option (if configured)
   if (form.autoLoginAuthenticationBackend) {
@@ -87,5 +73,4 @@ export {
   getLoginRedirectUrl,
   getLoginUrl,
   eventTriggeredBySubmitButton,
-  getCoSignLoginUrl,
 };
