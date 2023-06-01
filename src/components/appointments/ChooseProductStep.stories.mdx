@@ -1,0 +1,130 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
+
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+
+import ChooseProductStep from './ChooseProductStep';
+import {mockAppointmentProductsGet} from './mocks';
+
+export const Template = () => <ChooseProductStep />;
+
+<Meta
+  title="Private API / Appointments / Steps / Choose product"
+  component={ChooseProductStep}
+  decorators={[FormikDecorator, ConfigDecorator]}
+  parameters={{
+    controls: {hideNoControlsWarning: true},
+    formik: {
+      initialValues: {
+        products: [
+          {
+            product: '',
+            amount: 1,
+          },
+        ],
+      },
+    },
+    msw: {
+      handlers: [mockAppointmentProductsGet],
+    },
+  }}
+/>
+
+## Choose product step
+
+The appointment form allows making appointments for one or multiple products/services.
+
+This component enables the UX to select the desired product and add additional products if desired.
+At least one product must be provided.
+
+<Canvas>
+  <Story
+    name="Initial state"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      // we expect a single initial row
+      const dropdowns = canvas.getAllByRole('combobox');
+      await expect(dropdowns).toHaveLength(1);
+      const amountInputs = canvas.getAllByLabelText('Amount');
+      await expect(amountInputs).toHaveLength(1);
+      // there should be a button to add a row
+      await expect(canvas.getByRole('button', {name: 'Add another product'})).toBeVisible();
+      // and no button to remove the single row
+      await expect(await canvas.queryByRole('button', {name: 'Remove'})).toBeNull();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Interaction
+
+Users can add rows for multiple products. Additional products can be removed again after adding
+them, unless there's only a single row left - then removing that row is not allowed.
+
+<Canvas>
+  <Story
+    name="Adding products"
+    parameters={{
+      formik: {
+        initialValues: {
+          products: [
+            {
+              product: '166a5c79',
+              amount: 2,
+            },
+          ],
+        },
+      },
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const addButton = canvas.getByRole('button', {name: 'Add another product'});
+      await userEvent.click(addButton);
+      const dropdowns = canvas.getAllByRole('combobox');
+      await expect(dropdowns).toHaveLength(2);
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Removing products"
+    parameters={{
+      formik: {
+        initialValues: {
+          products: [
+            {
+              product: '166a5c79',
+              amount: 2,
+            },
+            {
+              product: 'e8e045ab',
+              amount: 1,
+            },
+          ],
+        },
+      },
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const dropdowns = canvas.getAllByRole('combobox');
+      await expect(dropdowns).toHaveLength(2);
+      await expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
+      await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
+      // now any of both products can be removed
+      const removeButtons = await canvas.queryAllByRole('button', {name: 'Remove'});
+      await expect(removeButtons).toHaveLength(2);
+      // and after removing one row, the last remaining one can't be removed
+      await userEvent.click(removeButtons[0]);
+      await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
+      await expect(await canvas.queryByText('Paspoort aanvraag')).toBeNull();
+      await expect(await canvas.queryByRole('button', {name: 'Remove'})).toBeNull();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

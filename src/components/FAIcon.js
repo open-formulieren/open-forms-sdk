@@ -8,6 +8,7 @@ const FAIcon = ({
   component: Component = 'i',
   extraClassName = '',
   modifiers = [],
+  noAriaHidden = false,
   ...props
 }) => {
   const className = classNames(
@@ -18,13 +19,14 @@ const FAIcon = ({
     ...modifiers.map(mod => `fa-icon--${mod}`),
     extraClassName
   );
-
-  return <Component className={className} {...props} />;
+  const ariaHidden = noAriaHidden ? 'false' : 'true';
+  return <Component className={className} aria-hidden={ariaHidden} {...props} />;
 };
 
 FAIcon.propTypes = {
   icon: PropTypes.string.isRequired,
   modifiers: PropTypes.arrayOf(PropTypes.oneOf(['small', 'normal', 'inline'])),
+  noAriaHidden: PropTypes.bool,
   component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
   extraClassName: PropTypes.string,
 };

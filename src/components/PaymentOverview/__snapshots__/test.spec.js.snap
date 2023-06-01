@@ -24,6 +24,7 @@ exports[`navigation without context displays a generic error message 1`] = `
         className="openforms-alert__icon openforms-alert__icon--wide"
       >
         <i
+          aria-hidden="true"
           className="fa fas fa-icon fa-exclamation-circle"
         />
       </span>
@@ -65,6 +66,7 @@ exports[`on valid redirect renders an error message on failure 1`] = `
           className="openforms-alert__icon openforms-alert__icon--wide"
         >
           <i
+            aria-hidden="true"
             className="fa fas fa-icon fa-exclamation-circle"
           />
         </span>
