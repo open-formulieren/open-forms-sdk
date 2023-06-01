@@ -2,13 +2,14 @@ import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {useArgs} from '@storybook/client-api';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import {LiteralDecorator} from 'story-utils/decorators';
+import {LiteralDecorator, RouterDecorator} from 'story-utils/decorators';
 
 import GenericSummary from './GenericSummary';
 
 <Meta
   title="Private API/GenericSummary"
   component={GenericSummary}
+  decorators={[LiteralDecorator, RouterDecorator]}
   argTypes={{
     submissionAllowed: {
       options: [SUBMISSION_ALLOWED.yes, SUBMISSION_ALLOWED.noWithOverview],
