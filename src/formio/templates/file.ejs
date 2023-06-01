@@ -106,10 +106,12 @@
 {% ctx.statuses.forEach(function(status) { %}
   <div class="file {{status.status === 'error' ? ' has-error' : ''}}">
     <div class="row">
-      <div class="fileName col-form-label col-sm-10">
+      <div class="fileName col-form-label">
         <span class="fileName__file">{{{status.originalName}}}</span>
-        <i class="{{ctx.iconClass('trash-can')}}" ref="fileStatusRemove" title="{{ctx.t('remove')}}"></i>
       </div>
+    </div>
+    <div class="row">
+			<i class="{{ctx.iconClass('trash-can')}}" ref="fileStatusRemove" title="{{ctx.t('remove')}}"></i>
       <div class="fileSize col-form-label col-sm-2 text-right">{{ctx.fileSize(status.size)}}</div>
     </div>
     {% if (status.status === 'progress') { %}
