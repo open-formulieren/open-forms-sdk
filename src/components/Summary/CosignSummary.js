@@ -1,11 +1,10 @@
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
-import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
-import {destroy, post} from 'api';
+import {post} from 'api';
 import {LayoutColumn} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';
 import {RequireSession} from 'components/Sessions';
@@ -17,60 +16,26 @@ import Types from 'types';
 import GenericSummary from './GenericSummary';
 import {getPrivacyPolicyInfo, loadSummaryData} from './utils';
 
-const initialState = {
-  submission: null,
-  privacyInfo: {
-    requiresPrivacyConsent: true,
-    privacyLabel: '',
-    policyAccepted: false,
-  },
-  summaryData: null,
-};
-
-const reducer = (draft, action) => {
-  switch (action.type) {
-    case 'SUBMISSION_LOADED': {
-      draft.submission = action.payload;
-      break;
-    }
-    case 'LOADED_PRIVACY_INFO': {
-      draft.privacyInfo = {...draft.privacyInfo, ...action.payload};
-      break;
-    }
-    case 'LOADED_SUMMARY_DATA': {
-      draft.summaryData = action.payload;
-      break;
-    }
-    case 'TOGGLE_PRIVACY_CHECKBOX': {
-      draft.privacyInfo.policyAccepted = !draft.privacyInfo.policyAccepted;
-      break;
-    }
-    case 'RESET': {
-      const initialState = action.payload;
-      return initialState;
-    }
-    default: {
-      throw new Error(`Unknown action ${action.type}`);
-    }
-  }
-};
-
-const CosignSummary = ({form}) => {
-  const navigate = useNavigate();
+const CosignSummary = ({
+  form,
+  submission,
+  summaryData,
+  privacyInfo,
+  onSubmissionLoaded,
+  onDataLoaded,
+  onCosignComplete,
+  onDestroySession,
+  onPrivacyCheckboxChange,
+}) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
-  const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   // The backend has added the submission to the session, but we need to load it
   // eslint-disable-next-line
   const [loading, setSubmissionId, removeSubmissionId] = useRecycleSubmission(
     form,
-    state.submission,
-    submission =>
-      dispatch({
-        type: 'SUBMISSION_LOADED',
-        payload: submission,
-      }),
+    submission,
+    submission => onSubmissionLoaded(submission),
     error => {
       throw error;
     }
@@ -79,38 +44,34 @@ const CosignSummary = ({form}) => {
   let submissionUrl = new URL(form.url);
 
   const {loading: loadingData, error: loadingDataError} = useAsync(async () => {
-    if (!state.submission) return;
+    if (!submission) return;
 
-    submissionUrl.pathname = `/api/v2/submissions/${state.submission.id}`;
+    submissionUrl.pathname = `/api/v2/submissions/${submission.id}`;
 
     let promises = [loadSummaryData(submissionUrl), getPrivacyPolicyInfo(config.baseUrl)];
 
-    const [retrievedSummaryData, privacyInfo] = await Promise.all(promises);
+    const [retrievedSummaryData, retrievedPrivacyInfo] = await Promise.all(promises);
 
-    dispatch({type: 'LOADED_PRIVACY_INFO', payload: privacyInfo});
-    dispatch({type: 'LOADED_SUMMARY_DATA', payload: retrievedSummaryData});
-  }, [state.submission]);
+    onDataLoaded({privacyInfo: retrievedPrivacyInfo, summaryData: retrievedSummaryData});
+  }, [submission]);
 
   if (loadingDataError) throw loadingDataError;
 
   const onSubmit = async event => {
     event.preventDefault();
 
-    submissionUrl.pathname = `/api/v2/submissions/${state.submission.id}/cosign`;
-    await post(submissionUrl.href, {
-      privacyPolicyAccepted: state.privacyInfo.policyAccepted,
+    submissionUrl.pathname = `/api/v2/submissions/${submission.id}/cosign`;
+    const response = await post(submissionUrl.href, {
+      privacyPolicyAccepted: privacyInfo.policyAccepted,
     });
 
     removeSubmissionId();
-    dispatch({type: 'RESET', payload: initialState});
-    navigate('/cosign/done');
+    onCosignComplete(response.data.downloadReportUrl);
   };
 
   const destroySession = async () => {
-    await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
     removeSubmissionId();
-    dispatch({type: 'RESET', payload: initialState});
-    navigate('/');
+    onDestroySession();
   };
 
   const onLogout = async event => {
@@ -134,7 +95,7 @@ const CosignSummary = ({form}) => {
     await destroySession();
   });
 
-  if (!(loading || loadingData) && !state.summaryData) {
+  if (!(loading || loadingData) && !summaryData) {
     throw new Error('Could not load the data for this submission.');
   }
 
@@ -150,14 +111,14 @@ const CosignSummary = ({form}) => {
               />
             }
             submissionAllowed={SUBMISSION_ALLOWED.yes}
-            summaryData={state.summaryData}
+            summaryData={summaryData}
             showPaymentInformation={false}
-            privacyInformation={state.privacyInfo}
+            privacyInformation={privacyInfo}
             showPreviousPageLink={false}
             editStepText=""
             isLoading={loading || loadingData}
             isAuthenticated={true}
-            onPrivacyCheckboxChange={() => dispatch({type: 'TOGGLE_PRIVACY_CHECKBOX'})}
+            onPrivacyCheckboxChange={onPrivacyCheckboxChange}
             onSubmit={onSubmit}
             onLogout={onLogout}
           />
@@ -169,6 +130,24 @@ const CosignSummary = ({form}) => {
 
 CosignSummary.propTypes = {
   form: Types.Form.isRequired,
+  submission: Types.Submission,
+  summaryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      slug: PropTypes.string,
+      data: PropTypes.arrayOf(PropTypes.object),
+    })
+  ),
+  privacyInfo: PropTypes.shape({
+    requiresPrivacyConsent: PropTypes.bool,
+    policyAccepted: PropTypes.bool,
+    privacyLabel: PropTypes.string,
+  }),
+  onSubmissionLoaded: PropTypes.func.isRequired,
+  onDataLoaded: PropTypes.func.isRequired,
+  onCosignComplete: PropTypes.func.isRequired,
+  onDestroySession: PropTypes.func.isRequired,
+  onPrivacyCheckboxChange: PropTypes.func.isRequired,
 };
 
 export default CosignSummary;
