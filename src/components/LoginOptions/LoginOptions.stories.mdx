@@ -132,13 +132,14 @@ export const LiteralDecorator = (Story, {args}) => (
   </LiteralsProvider>
 );
 
-export const Template = ({loginRequired = false, loginOptions, onFormStart}) => (
+export const Template = ({loginRequired = false, loginOptions, cosignLoginInfo, onFormStart}) => (
   <LoginOptions
     form={{
       uuid: '81a22589-abce-4147-a2a3-62e9a56685aa',
       name: 'Test form',
       loginRequired,
       loginOptions,
+      cosignLoginInfo,
       translationEnabled: false,
       autoLoginAuthenticationBackend: '',
       paymentRequired: false,
@@ -276,6 +277,54 @@ export const Template = ({loginRequired = false, loginOptions, onFormStart}) => 
           isForGemachtigde: false,
         },
       ],
+      onFormStart: jest.fn(e => {
+        e.preventDefault();
+        alert('form start triggered');
+      }),
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Co-sign option"
+    decorators={[LiteralDecorator]}
+    argTypes={{
+      onFormStart: {
+        action: true,
+      },
+    }}
+    args={{
+      beginText: '(anonymous)',
+      loginRequired: true,
+      loginOptions: [
+        {
+          identifier: 'digid',
+          label: 'DigiD',
+          url: '#',
+          logo: {
+            title: 'DigiD simulatie',
+            imageSrc: './digid.png',
+            href: 'https://www.digid.nl/',
+            appearance: 'dark',
+          },
+          isForGemachtigde: false,
+        },
+      ],
+      cosignLoginInfo: {
+        identifier: 'digid',
+        label: 'DigiD',
+        url: '#',
+        logo: {
+          title: 'DigiD simulatie',
+          imageSrc: './digid.png',
+          href: 'https://www.digid.nl/',
+          appearance: 'dark',
+        },
+        isForGemachtigde: false,
+      },
       onFormStart: jest.fn(e => {
         e.preventDefault();
         alert('form start triggered');

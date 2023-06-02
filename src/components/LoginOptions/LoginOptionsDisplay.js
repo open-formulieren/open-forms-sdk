@@ -6,7 +6,11 @@ import LoginButton from 'components/LoginButton';
 import FormattedLoginOption from 'types/FormattedLoginOption';
 import {getBEMClassName} from 'utils';
 
-const LoginOptionsDisplay = ({loginAsYourselfOptions, loginAsGemachtigdeOptions}) => {
+const LoginOptionsDisplay = ({
+  loginAsYourselfOptions,
+  loginAsGemachtigdeOptions,
+  cosignLoginInfo,
+}) => {
   return (
     <div className={getBEMClassName('login-options')}>
       <div className={getBEMClassName('login-options__list')}>
@@ -31,6 +35,19 @@ const LoginOptionsDisplay = ({loginAsYourselfOptions, loginAsGemachtigdeOptions}
           </div>
         </>
       )}
+
+      {cosignLoginInfo && (
+        <>
+          <h2 className={getBEMClassName('login-options__caption')}>
+            <FormattedMessage
+              description="Log in to co-sign the form title"
+              defaultMessage="Log in to co-sign the form"
+            />
+          </h2>
+
+          <LoginButton key={cosignLoginInfo.identifier} option={cosignLoginInfo} />
+        </>
+      )}
     </div>
   );
 };
@@ -38,6 +55,7 @@ const LoginOptionsDisplay = ({loginAsYourselfOptions, loginAsGemachtigdeOptions}
 LoginOptionsDisplay.propTypes = {
   loginAsYourselfOptions: PropTypes.arrayOf(FormattedLoginOption).isRequired,
   loginAsGemachtigdeOptions: PropTypes.arrayOf(FormattedLoginOption).isRequired,
+  cosignLoginInfo: FormattedLoginOption,
 };
 
 export default LoginOptionsDisplay;

@@ -19,6 +19,7 @@ const Form = PropTypes.shape({
   name: PropTypes.string.isRequired,
   loginRequired: PropTypes.bool.isRequired,
   loginOptions: PropTypes.arrayOf(LoginOption).isRequired,
+  cosignLoginInfo: LoginOption,
   product: PropTypes.string,
   slug: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,

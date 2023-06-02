@@ -44,11 +44,23 @@ const LoginOptions = ({form, onFormStart}) => {
   const Container = form.loginRequired ? React.Fragment : 'form';
   const containerProps = form.loginRequired ? {} : {onSubmit: onFormStart};
 
+  let cosignInfo = form.cosignLoginInfo && {
+    ...form.cosignLoginInfo,
+    label: (
+      <FormattedMessage
+        description="Login button label"
+        defaultMessage="Login with {provider}"
+        values={{provider: form.cosignLoginInfo.label}}
+      />
+    ),
+  };
+
   return (
     <Container {...containerProps}>
       <LoginDisplayComponent
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
+        cosignLoginInfo={cosignInfo}
       />
     </Container>
   );
