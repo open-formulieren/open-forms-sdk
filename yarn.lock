@@ -5524,10 +5524,10 @@
   resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.417.tgz#cc75f326af08a6c501f7dcfd3fdce425295b0093"
   integrity sha512-5MS5WmvBDd69yQUlWg97ynsPPfXbur49STcUP/UTCaQrWzB5xUu/NhbaWFdVEW2PqGh2/TOT4tE/ziaeY4Aksw==
 
-"@utrecht/component-library-react@^1.0.0-alpha.321":
-  version "1.0.0-alpha.321"
-  resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.321.tgz#0b531f07bd0bde988ba505b5857e27cdc5a23c1e"
-  integrity sha512-f63QXwlrSI2CS+FeWs8RtrScjW6/PXisPLQYcvINLdh76Uo4MyrnjS5kNHxo/wxVv+y19h2GwmbaDDX7oxZ3vQ==
+"@utrecht/component-library-react@^1.0.0-alpha.334":
+  version "1.0.0-alpha.334"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.334.tgz#bd5f20831994c47e3ffcf7e72977c6ec096a916b"
+  integrity sha512-F6uIYgRr1+lUdM83n7RX7swye0q0NrHW/594nohskfHH5fkQZKOrgxcGLICRwvcWvKphsf6v4uPC4hmIAtnXBQ==
   dependencies:
     clsx "1.2.1"
     date-fns "2.30.0"
