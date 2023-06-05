@@ -1,0 +1,249 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
+import {act} from '@testing-library/react';
+
+import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
+
+export const waitForPosition = () => act(async () => {});
+
+<Meta title="Private API / FloatingWidget" component={FloatingWidget} />
+
+Use the `FloatingWidget` component and `useFloatingWidget` hook when you want to provide a form
+control/widget in a widget.
+
+The widget will position itself to the form field with the appropriate accessible attributes set.
+
+## API
+
+This component requires both the `FloatingWidget` wrapper component and `useFloatingWidget` hook to
+manage the state, position and attributes.
+
+### Example
+
+```jsx
+const FormField = () => {
+  const {
+    refs,
+    floatingStyles,
+    context,
+    getFloatingProps,
+    getReferenceProps,
+    isOpen,
+    setIsOpen,
+    arrowRef,
+  } = useFloatingWidget();
+  return (
+    <div>
+      <input type="text" name="reference" ref={refs.setReference} {...getReferenceProps()} />
+      <FloatingWidget
+        isOpen={isOpen}
+        context={context}
+        setFloating={refs.setFloating}
+        floatingStyles={floatingStyles}
+        getFloatingProps={getFloatingProps}
+        arrowRef={arrowRef}
+      >
+        <p>Floating widget content</p>
+        <p>
+          <input name="widgetInput" />
+          <button onClick={() => setIsOpen(false, {keepDismissed: true})}>close</button>
+        </p>
+      </FloatingWidget>
+    </div>
+  );
+};
+```
+
+### FloatingWidget props
+
+<ArgsTable of={FloatingWidget} />
+
+## Stories for interaction tests
+
+export const FloatingWidgetExample = () => {
+  const {
+    refs,
+    floatingStyles,
+    context,
+    getFloatingProps,
+    getReferenceProps,
+    isOpen,
+    setIsOpen,
+    arrowRef,
+  } = useFloatingWidget();
+  return (
+    <>
+      <div>
+        <label htmlFor="reference">Reference</label>
+        <input
+          name="reference"
+          type="text"
+          id="reference"
+          defaultValue=""
+          ref={refs.setReference}
+          data-testid="reference"
+          {...getReferenceProps()}
+        />
+        <FloatingWidget
+          isOpen={isOpen}
+          context={context}
+          setFloating={refs.setFloating}
+          floatingStyles={floatingStyles}
+          getFloatingProps={getFloatingProps}
+          arrowRef={arrowRef}
+          data-testid="floating-widget"
+        >
+          <div style={{padding: '1em'}}>
+            <p>Floating widget content</p>
+            <p>
+              <input name="widgetInput" defaultValue="" data-testid="widget-input" />
+              <button
+                onClick={() => {
+                  setIsOpen(false, {keepDismissed: true});
+                }}
+              >
+                close
+              </button>
+            </p>
+          </div>
+        </FloatingWidget>
+      </div>
+      <div>
+        <label htmlFor="other-input">Other input</label>
+        <input
+          name="otherInput"
+          type="text"
+          id="other-input"
+          defaultValue=""
+          data-testid="other-input"
+        />
+      </div>
+    </>
+  );
+};
+
+<Canvas>
+  <Story name="Default">
+    <FloatingWidgetExample />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Focus reference input"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      await userEvent.click(canvas.getByText('Reference'));
+      const reference = canvas.getByTestId('reference');
+      await expect(reference).toHaveFocus();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+    }}
+  >
+    <FloatingWidgetExample />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Type in reference input closes widget"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      const reference = canvas.getByTestId('reference');
+      await reference.focus();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      await userEvent.type(reference, 'Some input');
+      await expect(await canvas.queryByRole('dialog')).toBeNull();
+    }}
+  >
+    <FloatingWidgetExample />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Dismiss widget and re-open with click"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const reference = canvas.getByTestId('reference');
+      await userEvent.click(reference);
+      await expect(reference).toHaveFocus();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      await userEvent.keyboard('[Escape]');
+      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      await expect(reference).toHaveFocus();
+      await userEvent.click(reference);
+      await expect(reference).toHaveFocus();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+    }}
+  >
+    <FloatingWidgetExample />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Tab navigate to widget input"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const reference = canvas.getByTestId('reference');
+      await userEvent.click(reference);
+      await waitForPosition();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      const widgetInput = canvas.getByTestId('widget-input');
+      await expect(widgetInput).not.toHaveFocus();
+      await userEvent.tab();
+      await waitForPosition();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      await expect(widgetInput).toHaveFocus();
+    }}
+  >
+    <FloatingWidgetExample />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Submit widget and close widget"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const reference = canvas.getByTestId('reference');
+      await userEvent.click(reference);
+      await waitForPosition();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      const button = canvas.getByRole('button', {name: 'close'});
+      await expect(button).toBeVisible();
+      await userEvent.click(button);
+      await waitForPosition();
+      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      await expect(reference).toHaveFocus();
+    }}
+  >
+    <FloatingWidgetExample />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Focus other input closes widget"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const reference = canvas.getByTestId('reference');
+      await userEvent.click(reference);
+      await waitForPosition();
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      await userEvent.tab();
+      await expect(canvas.getByTestId('widget-input')).toHaveFocus();
+      await userEvent.tab();
+      await expect(canvas.getByRole('button')).toHaveFocus();
+      await userEvent.tab();
+      await waitForPosition();
+      await expect(canvas.getByTestId('other-input')).toHaveFocus();
+      await expect(await canvas.queryByRole('dialog')).toBeNull();
+    }}
+  >
+    <FloatingWidgetExample />
+  </Story>
+</Canvas>

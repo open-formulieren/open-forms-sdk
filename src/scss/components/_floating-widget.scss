@@ -1,0 +1,27 @@
+@use 'microscope-sass/lib/bem';
+@use '../mixins/prefix';
+
+.#{prefix.prefix('floating-widget')} {
+  padding: 0;
+  border: 0;
+  border-radius: var(--of-floating-widget-border-radius, 0);
+  box-sizing: border-box;
+  background: var(--of-floating-widget-background, var(--of-color-bg));
+  box-shadow: var(
+    --of-floating-widget-box-shadow,
+    1px 0 0 #e6e6e6,
+    -1px 0 0 #e6e6e6,
+    0 1px 0 #e6e6e6,
+    0 -1px 0 #e6e6e6,
+    0 3px 13px rgba(0, 0, 0, 0.08)
+  );
+
+  @include bem.element('arrow') {
+    fill: var(--of-color-bg, #fff);
+
+    path[clip-path] {
+      stroke: var(--of-floating-widget-arrow-border-color, #e6e6e6);
+      stroke-width: var(--of-floating-widget-arrow-stroke-width, 3);
+    }
+  }
+}
