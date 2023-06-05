@@ -1,8 +1,10 @@
-import {default as EmailField} from './EmailField';
-import {default as NumberField} from './NumberField';
-import {default as TextField} from './TextField';
-
-export {default as Label} from './Label';
+// high-level
+export {default as EmailField} from './EmailField';
+export {default as NumberField} from './NumberField';
 export {SelectField, AsyncSelectField} from './SelectField';
+export {default as TextField} from './TextField';
+
+// helpers
+export * from './FloatingWidget';
+export {default as Label} from './Label';
 export {default as ValidationErrors} from './ValidationErrors';
-export {TextField, EmailField, NumberField};
