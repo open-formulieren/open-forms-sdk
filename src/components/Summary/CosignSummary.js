@@ -66,7 +66,7 @@ const CosignSummary = ({
     });
 
     removeSubmissionId();
-    onCosignComplete(response.data.downloadReportUrl);
+    onCosignComplete(response.data.reportDownloadUrl);
   };
 
   const destroySession = async () => {
