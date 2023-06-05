@@ -84,6 +84,34 @@ export const Template = args => <SelectField {...args} />;
   </Story>
 </Canvas>
 
+<Canvas>
+  <Story
+    name="Force menu open"
+    args={{
+      name: 'select',
+      id: 'select-static',
+      label: 'Static options',
+      description: 'This is a custom description for the select field',
+      disabled: false,
+      isRequired: true,
+      options: [
+        {value: 'option-1', label: 'Option 1'},
+        {value: 'option-2', label: 'Option 2'},
+      ],
+      menuIsOpen: true,
+    }}
+    parameters={{
+      formik: {
+        initialValues: {
+          select: '',
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
 ### Props
 
 The select field is built on top of [react-select](https://react-select.com/). Any additional props
