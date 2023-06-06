@@ -15,6 +15,7 @@ import PaymentForm from 'components/PaymentForm';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import usePoll from 'hooks/usePoll';
 import useTitle from 'hooks/useTitle';
+import Types from 'types';
 
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';
@@ -67,7 +68,7 @@ StartPayment.propTypes = {
  * @param {Function} onFailure Callback to invoke if the background processing result is failure.
  * @param {Function} onConfirmed Callback to invoke if the background processing result is success.
  */
-const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
+const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, form}) => {
   const intl = useIntl();
   const pageTitle = intl.formatMessage({
     description: 'Confirmation page title',
@@ -140,6 +141,11 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
 
   const showBackToMainWebsite = mainWebsiteUrl && !paymentUrl;
 
+  // Fall back to the literal message in code for backwards compatibility.
+  const linkTitle = form.submissionReportDownloadLinkTitle || (
+    <FormattedMessage description="Download report PDF link title" defaultMessage="Download PDF" />
+  );
+
   return (
     <>
       <Card
@@ -160,10 +166,7 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed}) => {
         <Body>
           <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
           <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
-            <FormattedMessage
-              description="Download report PDF link title"
-              defaultMessage="Download PDF"
-            />
+            {linkTitle}
           </Anchor>
         </Body>
 
@@ -192,6 +195,7 @@ SubmissionConfirmation.propTypes = {
   statusUrl: PropTypes.string.isRequired,
   onFailure: PropTypes.func,
   onConfirmed: PropTypes.func,
+  form: Types.Form.isRequired,
 };
 
 export default SubmissionConfirmation;
