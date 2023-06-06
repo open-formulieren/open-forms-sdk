@@ -10,7 +10,6 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 const SummaryConfirmation = ({
   submissionAllowed,
   privacy: {requiresPrivacyConsent, policyAccepted, privacyLabel},
-  showPreviousPageLink = true,
   onPrivacyCheckboxChange,
   onPrevPage,
 }) => {
@@ -35,7 +34,7 @@ const SummaryConfirmation = ({
       ) : null}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
-          {showPreviousPageLink && (
+          {!!onPrevPage && (
             <Button variant="anchor" component="a" onClick={onPrevPage}>
               <Literal name="previousText" />
             </Button>

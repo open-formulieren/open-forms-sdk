@@ -16,7 +16,7 @@ const initialState = {
     privacyLabel: '',
     policyAccepted: false,
   },
-  summaryData: null,
+  summaryData: [],
   reportUrl: '',
   cosignedSubmission: null,
 };
@@ -43,7 +43,6 @@ const reducer = (draft, action) => {
       return {...initialState, reportUrl: action.payload};
     }
     case 'RESET': {
-      const initialState = action.payload;
       return initialState;
     }
     default: {
@@ -70,7 +69,7 @@ const Cosign = ({...props}) => {
   const onDestroySession = async () => {
     await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
 
-    dispatch({type: 'RESET', payload: initialState});
+    dispatch({type: 'RESET'});
     navigate('/');
   };
 

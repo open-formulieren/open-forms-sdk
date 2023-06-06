@@ -142,7 +142,6 @@ const SubmissionSummary = ({
         showPaymentInformation={paymentInfo.isRequired && !paymentInfo.hasPaid}
         amountToPay={paymentInfo.amount}
         privacyInformation={state.privacy}
-        showPreviousPageLink={true}
         editStepText={form.literals.changeText.resolved}
         isLoading={loading}
         isAuthenticated={refreshedSubmission.isAuthenticated}
@@ -158,10 +157,11 @@ const SubmissionSummary = ({
 
 SubmissionSummary.propTypes = {
   form: Types.Form.isRequired,
-  submission: Types.Submission,
+  submission: Types.Submission.isRequired,
   processingError: PropTypes.string,
   onConfirm: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onClearProcessingErrors: PropTypes.func.isRequired,
 };
 
 export default SubmissionSummary;

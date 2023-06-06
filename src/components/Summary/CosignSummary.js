@@ -35,18 +35,16 @@ const CosignSummary = ({
   const [loading, setSubmissionId, removeSubmissionId] = useRecycleSubmission(
     form,
     submission,
-    submission => onSubmissionLoaded(submission),
+    onSubmissionLoaded,
     error => {
       throw error;
     }
   );
 
-  let submissionUrl = new URL(form.url);
-
   const {loading: loadingData, error: loadingDataError} = useAsync(async () => {
     if (!submission) return;
 
-    submissionUrl.pathname = `/api/v2/submissions/${submission.id}`;
+    const submissionUrl = new URL(submission.url);
 
     let promises = [loadSummaryData(submissionUrl), getPrivacyPolicyInfo(config.baseUrl)];
 
@@ -60,8 +58,8 @@ const CosignSummary = ({
   const onSubmit = async event => {
     event.preventDefault();
 
-    submissionUrl.pathname = `/api/v2/submissions/${submission.id}/cosign`;
-    const response = await post(submissionUrl.href, {
+    const cosignEndpoint = new URL(`/api/v2/submissions/${submission.id}/cosign`, submission.url);
+    const response = await post(cosignEndpoint.href, {
       privacyPolicyAccepted: privacyInfo.policyAccepted,
     });
 
@@ -78,7 +76,7 @@ const CosignSummary = ({
     event.preventDefault();
 
     const confirmationMessage = intl.formatMessage({
-      description: 'log out confirmation prompt in cosign page',
+      description: 'log out confirmation prompt on co-sign page',
       defaultMessage:
         'Are you sure that you want to logout and not co-sign the current form submission?',
     });
@@ -114,7 +112,6 @@ const CosignSummary = ({
             summaryData={summaryData}
             showPaymentInformation={false}
             privacyInformation={privacyInfo}
-            showPreviousPageLink={false}
             editStepText=""
             isLoading={loading || loadingData}
             isAuthenticated={true}
@@ -137,12 +134,12 @@ CosignSummary.propTypes = {
       slug: PropTypes.string,
       data: PropTypes.arrayOf(PropTypes.object),
     })
-  ),
+  ).isRequired,
   privacyInfo: PropTypes.shape({
     requiresPrivacyConsent: PropTypes.bool,
     policyAccepted: PropTypes.bool,
     privacyLabel: PropTypes.string,
-  }),
+  }).isRequired,
   onSubmissionLoaded: PropTypes.func.isRequired,
   onDataLoaded: PropTypes.func.isRequired,
   onCosignComplete: PropTypes.func.isRequired,

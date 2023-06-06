@@ -14,10 +14,9 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 const GenericSummary = ({
   title,
   submissionAllowed,
-  summaryData,
+  summaryData = [],
   showPaymentInformation,
   amountToPay,
-  showPreviousPageLink,
   privacyInformation,
   editStepText,
   isLoading,
@@ -44,7 +43,7 @@ const GenericSummary = ({
       <Wrapper onSubmit={onSubmit}>
         {summaryData.map((step, index) => (
           <FormStepSummary
-            key={index}
+            key={`${index}-${step.slug}`}
             slug={step.slug}
             name={step.name}
             data={step.data}
@@ -57,7 +56,6 @@ const GenericSummary = ({
         <SummaryConfirmation
           submissionAllowed={submissionAllowed}
           privacy={privacyInformation}
-          showPreviousPageLink={showPreviousPageLink}
           onPrivacyCheckboxChange={onPrivacyCheckboxChange}
           onPrevPage={onPrevPage}
         />
@@ -84,7 +82,6 @@ GenericSummary.propTypes = {
   ),
   showPaymentInformation: PropTypes.bool,
   amountToPay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  showPreviousPageLink: PropTypes.bool,
   privacyInformation: PropTypes.shape({
     requiresPrivacyConsent: PropTypes.bool.isRequired,
     policyAccepted: PropTypes.bool.isRequired,
