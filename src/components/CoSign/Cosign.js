@@ -2,11 +2,11 @@ import React, {useContext} from 'react';
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
 
+import {ConfigContext} from 'Context';
 import {destroy} from 'api';
 import ErrorBoundary from 'components/ErrorBoundary';
 import {CosignSummary} from 'components/Summary';
 
-import {ConfigContext} from '../../Context';
 import CosignDone from './CosignDone';
 
 const initialState = {
@@ -27,12 +27,9 @@ const reducer = (draft, action) => {
       draft.submission = action.payload;
       break;
     }
-    case 'LOADED_PRIVACY_INFO': {
-      draft.privacyInfo = {...draft.privacyInfo, ...action.payload};
-      break;
-    }
-    case 'LOADED_SUMMARY_DATA': {
-      draft.summaryData = action.payload;
+    case 'LOADED_DATA': {
+      draft.privacyInfo = action.payload.privacyInfo;
+      draft.summaryData = action.payload.summaryData;
       break;
     }
     case 'TOGGLE_PRIVACY_CHECKBOX': {
@@ -57,8 +54,10 @@ const Cosign = ({...props}) => {
   const config = useContext(ConfigContext);
 
   const onDataLoaded = data => {
-    dispatch({type: 'LOADED_PRIVACY_INFO', payload: data.privacyInfo});
-    dispatch({type: 'LOADED_SUMMARY_DATA', payload: data.summaryData});
+    dispatch({
+      type: 'LOADED_DATA',
+      payload: {privacyInfo: data.privacyInfo, summaryData: data.summaryData},
+    });
   };
 
   const onCosignComplete = reportUrl => {

@@ -21,13 +21,14 @@ const GenericSummary = ({
   editStepText,
   isLoading,
   isAuthenticated,
-  errors,
+  errors = [],
   onPrivacyCheckboxChange,
   onSubmit,
   onLogout,
   onPrevPage = null,
 }) => {
   const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? 'form' : 'div';
+  const wrapperProps = submissionAllowed === SUBMISSION_ALLOWED.yes ? {onSubmit: onSubmit} : {};
 
   if (isLoading) {
     return (
@@ -39,8 +40,10 @@ const GenericSummary = ({
 
   return (
     <Card title={title}>
-      {errors && errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
-      <Wrapper onSubmit={onSubmit}>
+      {errors.map(error => (
+        <ErrorMessage key={error}>{error}</ErrorMessage>
+      ))}
+      <Wrapper {...wrapperProps}>
         {summaryData.map((step, index) => (
           <FormStepSummary
             key={`${index}-${step.slug}`}
