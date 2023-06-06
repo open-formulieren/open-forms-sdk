@@ -1,5 +1,6 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {useArgs} from '@storybook/client-api';
+import {useEffect} from 'react';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {LiteralDecorator, RouterDecorator} from 'story-utils/decorators';
@@ -125,7 +126,9 @@ import GenericSummary from './GenericSummary';
 
 export const Template = args => {
   const [_, updateArgs] = useArgs();
-  updateArgs({onPrevPage: args.showPreviousPageLink ? () => {} : null});
+  useEffect(() => {
+    updateArgs({onPrevPage: args.showPreviousPageLink ? () => {} : null});
+  }, [args.showPreviousPageLink]);
   return (
     <GenericSummary
       onPrivacyCheckboxChange={() =>
