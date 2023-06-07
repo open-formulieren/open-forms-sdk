@@ -4,7 +4,7 @@ import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime, useIntl
 
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
-import CoSign from 'components/CoSign';
+import CoSignOld from 'components/CoSign';
 import Image from 'components/Image';
 import List from 'components/List';
 import Map from 'components/Map';
@@ -201,7 +201,7 @@ const CoSignDisplay = ({component, value}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
-  return <CoSign interactive={false} />;
+  return <CoSignOld interactive={false} />;
 };
 
 const ComponentValueDisplay = ({value, component}) => {

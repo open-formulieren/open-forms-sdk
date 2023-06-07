@@ -18,7 +18,7 @@ import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
-import Summary from 'components/Summary';
+import SubmissionSummary from 'components/Summary';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
@@ -344,7 +344,7 @@ const Form = ({form}) => {
                 processingError={state.processingError}
                 onConfirm={onSubmitForm}
                 onLogout={onLogout}
-                component={Summary}
+                component={SubmissionSummary}
                 onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
               />
             </RequireSession>

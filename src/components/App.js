@@ -4,6 +4,7 @@ import {Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import AppDebug from 'components/AppDebug';
+import {Cosign} from 'components/CoSign';
 import Form from 'components/Form';
 import LanguageSelection from 'components/LanguageSelection';
 import {LayoutRow} from 'components/Layout';
@@ -41,9 +42,12 @@ const App = ({...props}) => {
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
   const router = (
     <Routes>
-      {/* Anything dealing with appointments gets routed to it's own sub-router */}
+      {/* Anything dealing with appointments gets routed to its own sub-router */}
       <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
       <Route path="appointment/*" element={<AppointmentForm {...props} />} />
+
+      <Route path="cosign/*" element={<Cosign {...props} />} />
+
       {/* All the rest goes to the actual form flow */}
       <Route path="*" element={<Form {...props} />} />
     </Routes>

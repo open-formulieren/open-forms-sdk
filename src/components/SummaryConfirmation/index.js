@@ -34,9 +34,11 @@ const SummaryConfirmation = ({
       ) : null}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
-          <Button variant="anchor" component="a" onClick={onPrevPage}>
-            <Literal name="previousText" />
-          </Button>
+          {!!onPrevPage && (
+            <Button variant="anchor" component="a" onClick={onPrevPage}>
+              <Literal name="previousText" />
+            </Button>
+          )}
         </ToolbarList>
         <ToolbarList>
           {canSubmit ? (
@@ -64,7 +66,7 @@ SummaryConfirmation.propTypes = {
     privacyLabel: PropTypes.string.isRequired,
   }).isRequired,
   onPrivacyCheckboxChange: PropTypes.func.isRequired,
-  onPrevPage: PropTypes.func.isRequired,
+  onPrevPage: PropTypes.func,
 };
 
 export default SummaryConfirmation;

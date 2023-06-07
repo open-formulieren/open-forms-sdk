@@ -13,6 +13,9 @@ import {getLoginUrl} from 'components/utils';
 import Types from 'types';
 import {getBEMClassName} from 'utils';
 
+import Cosign from './Cosign';
+import CosignDone from './CosignDone';
+
 // TODO: tests!
 
 const getCosignStatus = async (baseUrl, submissionUuid) => {
@@ -66,7 +69,7 @@ CoSignAuthentication.propTypes = {
   saveStepData: PropTypes.func.isRequired,
 };
 
-const CoSign = ({
+const CoSignOld = ({
   submissionUuid,
   interactive = true,
   form = null,
@@ -139,7 +142,7 @@ const CoSign = ({
   );
 };
 
-CoSign.propTypes = {
+CoSignOld.propTypes = {
   interactive: PropTypes.bool,
   form: Types.Form,
   submissionUuid: PropTypes.string, // fall back to context if not provided
@@ -147,5 +150,5 @@ CoSign.propTypes = {
   authPlugin: PropTypes.string,
 };
 
-export default CoSign;
-export {CoSignAuthentication};
+export default CoSignOld;
+export {CoSignAuthentication, Cosign, CosignDone};

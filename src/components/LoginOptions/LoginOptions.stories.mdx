@@ -2,7 +2,7 @@ import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect, jest} from '@storybook/jest';
 import {userEvent, waitFor, within} from '@storybook/testing-library';
 
-import {LiteralsProvider} from 'components/Literal';
+import {LiteralDecorator} from 'story-utils/decorators';
 
 import LoginOptions from '.';
 import LoginOptionsDisplay from './LoginOptionsDisplay';
@@ -125,12 +125,6 @@ The `LoginOptions` component handles the 'smart' part of the component. It separ
 options between the ones that can be used to 'login as yourself' and the ones that can be used to
 log in 'on behalf of someone else'. It also formats the labels that will be displayed on the buttons
 and creates the right URL to which the user will be redirected upon clicking one of the buttons.
-
-export const LiteralDecorator = (Story, {args}) => (
-  <LiteralsProvider literals={{beginText: {resolved: args.beginText}}}>
-    <Story />
-  </LiteralsProvider>
-);
 
 export const Template = ({loginRequired = false, loginOptions, cosignLoginInfo, onFormStart}) => (
   <LoginOptions

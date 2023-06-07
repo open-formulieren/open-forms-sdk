@@ -7,7 +7,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {testForm} from 'components/FormStart/fixtures';
-import Summary from 'components/Summary';
+import SubmissionSummary from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 
@@ -69,12 +69,14 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   act(() => {
     root.render(
       <Wrap>
-        <Summary
-          form={testForm}
-          submission={SUBMISSION}
-          onConfirm={onConfirm}
-          onLogout={onLogout}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <SubmissionSummary
+            form={testForm}
+            submission={SUBMISSION}
+            onConfirm={onConfirm}
+            onLogout={onLogout}
+          />
+        </IntlProvider>
       </Wrap>
     );
   });
@@ -96,12 +98,14 @@ it('Summary does not display logout button if loginRequired is false', () => {
   act(() => {
     root.render(
       <Wrap>
-        <Summary
-          form={formLoginRequired}
-          submission={SUBMISSION}
-          onConfirm={onConfirm}
-          onLogout={onLogout}
-        />
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <SubmissionSummary
+            form={formLoginRequired}
+            submission={SUBMISSION}
+            onConfirm={onConfirm}
+            onLogout={onLogout}
+          />
+        </IntlProvider>
       </Wrap>
     );
   });

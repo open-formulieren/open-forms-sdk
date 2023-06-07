@@ -7,7 +7,7 @@ import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
 import useQuery from 'hooks/useQuery';
 
-const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded) => {
+const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onError = () => {}) => {
   const location = useLocation();
   const config = useContext(ConfigContext);
   const queryParams = useQuery();
@@ -34,8 +34,11 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded) => {
     } catch (e) {
       if ([403, 404, 422].includes(e.statusCode)) {
         removeSubmissionId();
+        onError(e);
         return;
       }
+      onError(e);
+      return;
     }
     if (response.ok) {
       const submission = await response.json();
