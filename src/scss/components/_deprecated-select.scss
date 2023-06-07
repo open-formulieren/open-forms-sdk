@@ -1,0 +1,104 @@
+@use 'sass:math';
+
+@import '~microscope-sass/lib/color';
+@import '~microscope-sass/lib/grid';
+@import '~microscope-sass/lib/transform';
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+$select-background-color: var(--of-select-background-color, $color-white);
+
+// Styling for the choicejs widget for the select component
+// Overwriting styles found here: https://github.com/Choices-js/Choices/blob/master/src/styles/choices.scss
+.#{prefix(form-control--select)} {
+  $control-height: $grid-row-height;
+  $list-hpadding: $grid-margin-2;
+  $list-vpadding: $grid-margin-1;
+  $list-vpaddings: $list-vpadding * 2;
+  $item-margin: math.div($grid-margin-0, 2);
+  $item-margins: $item-margin * 2;
+  $item-hpadding: $grid-margin-1;
+  $vborders: $typography-size-border;
+
+  width: 100%;
+
+  // The wrapper div.
+  // Style as a regular input.
+  .choices {
+    @include body;
+    @include border(all, $size: 1px);
+    @include rows(1, min-height);
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 0;
+    font-weight: bold;
+    padding: 0 $list-hpadding;
+    width: 100%;
+
+    .choices__list {
+      background-color: var(--of-color-bg);
+      border-color: var(--of-field-border-color);
+      color: var(--of-color-fg);
+
+      .is-highlighted {
+        background-color: var(--of-select-highlighted-bg);
+      }
+    }
+  }
+
+  // The wrapper containing the select, results, and input.
+  .selection {
+    @include rows(1);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; // Allow flex to wrap.
+  }
+
+  // Selected choices.
+  .selection .choices__list {
+    display: contents; // Might not work in legacy browsers.
+  }
+
+  // Items within the current selection.
+  .selection .choices__item {
+    $item-height: $control-height - $list-vpaddings - $item-margins - $vborders;
+    @include body;
+    @include body--small;
+    @include color-background(color);
+    background-color: var(--of-color-primary);
+    border-color: var(--of-color-primary);
+    display: inline-flex;
+    align-items: center;
+    height: $item-height;
+    font-size: $item-height * 0.6;
+    margin: $item-margin;
+    padding: 0 $item-hpadding !important;
+  }
+
+  .selection .choices__item .choices_button {
+    border-color: var(--of-color-secondary);
+    color: var(--of-color-secondary);
+  }
+
+  // The filter/search input.
+  .choices__input {
+    @include body;
+    @include body--small;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+  }
+
+  // Available choices.
+  .selection + .choices__list {
+    left: 0;
+  }
+
+  // Items within the available choices.
+  .selection + .choices__list .choices__item {
+    padding-left: $list-hpadding;
+    padding-right: $list-hpadding;
+  }
+}

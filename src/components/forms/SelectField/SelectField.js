@@ -1,5 +1,7 @@
 import {FormField, FormFieldDescription} from '@utrecht/component-library-react';
+import classNames from 'classnames';
 import {Field, useFormikContext} from 'formik';
+import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -47,30 +49,33 @@ const SelectField = ({
         name={name}
         component={Select}
         inputId={id}
-        components={{DropdownIndicator: () => null, IndicatorSeparator: () => null}}
         classNames={{
-          control: state => {
-            const ofClassname = getBEMClassName(
-              'rs-select',
-              [
-                state.isFocused && 'focus',
-                disabled && 'disabled',
-                invalid && 'invalid',
-                isRequired && 'required',
-              ].filter(Boolean)
-            );
-            return ['utrecht-select', ofClassname].join(' ');
-          },
-          menu: () => {
-            return getBEMClassName('rs-select-menu');
-          },
-          option: state => {
-            return getBEMClassName('rs-select-option', [state.isFocused && 'focus']);
+          control: state =>
+            classNames('utrecht-select', 'utrecht-select--openforms', {
+              'utrecht-select--focus': state.isFocused,
+              'utrecht-select--focus-visible': state.isFocused,
+              'utrecht-select--disabled': disabled,
+              'utrecht-select--invalid': invalid,
+              'utrecht-select--required': isRequired,
+            }),
+          menu: () => 'rs-menu',
+          option: state =>
+            classNames('rs-menu__option', {
+              'rs-menu__option--focus': state.isFocused,
+              'rs-menu__option--visible-focus': state.isFocused,
+            }),
+          singleValue: () => 'rs-value rs-value--single',
+          multiValue: () => 'rs-value rs-value--multi',
+          noOptionsMessage: () => 'rs-no-options',
+        }}
+        styles={{
+          control: (baseStyles, state) => {
+            return omit(baseStyles, 'outline');
           },
         }}
+        unstyled
         options={options}
         getOptionValue={opt => opt[valueProperty]}
-        unstyled
         isDisabled={disabled}
         loadingMessage={() => (
           <FormattedMessage
