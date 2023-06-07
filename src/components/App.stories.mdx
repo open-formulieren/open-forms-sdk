@@ -5,14 +5,14 @@ import {waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-lib
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, DeprecatedRouterDecorator} from 'story-utils/decorators';
 
 import App from './App';
 
 <Meta
   title="Private API/App"
   component={App}
-  decorators={[ConfigDecorator, RouterDecorator]}
+  decorators={[ConfigDecorator, DeprecatedRouterDecorator]}
   argTypes={{
     form: {
       control: false,

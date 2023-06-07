@@ -2,7 +2,7 @@ import {ArgsTable, Canvas, Meta, Props, Story} from '@storybook/addon-docs';
 import {MemoryRouter} from 'react-router-dom';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import {RouterDecorator} from 'story-utils/decorators';
+import {DeprecatedRouterDecorator} from 'story-utils/decorators';
 
 import ProgressIndicator from '.';
 import ProgressIndicatorDisplay from './ProgressIndicatorDisplay';
@@ -37,7 +37,7 @@ export const DisplayTemplate = args => <ProgressIndicatorDisplay {...args} />;
 <Canvas>
   <Story
     name="Display"
-    decorators={[RouterDecorator]}
+    decorators={[DeprecatedRouterDecorator]}
     args={{
       activeStepTitle: 'Stap 2',
       formTitle: 'Storybookformulier',

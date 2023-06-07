@@ -5,7 +5,7 @@ import {getWorker} from 'msw-storybook-addon';
 
 import {BASE_URL} from 'api-mocks';
 import Button from 'components/Button';
-import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, DeprecatedRouterDecorator} from 'story-utils/decorators';
 
 import FormStepSaveModal from './FormStepSaveModal';
 
@@ -21,7 +21,7 @@ import FormStepSaveModal from './FormStepSaveModal';
     onSaveConfirm: {table: {disable: true}},
     closeModal: {table: {disable: true}},
   }}
-  decorators={[ConfigDecorator, RouterDecorator]}
+  decorators={[ConfigDecorator, DeprecatedRouterDecorator]}
   parameters={{
     actions: {
       argTypesRegex: 'onSaveConfirm',

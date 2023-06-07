@@ -3,6 +3,7 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
+import {Layout, LayoutRow} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';
 
 export const ConfigDecorator = (Story, {args}) => (
@@ -22,10 +23,11 @@ const RouterStoryWrapper = ({route = '', children}) => {
   );
 };
 
-export const RouterDecorator = (Story, {args: {routerArgs = {}}}) => {
+export const DeprecatedRouterDecorator = (Story, {args: {routerArgs = {}}}) => {
+  const {route, ...rest} = routerArgs;
   return (
-    <MemoryRouter {...routerArgs}>
-      <RouterStoryWrapper route={routerArgs.route}>
+    <MemoryRouter {...rest}>
+      <RouterStoryWrapper route={route}>
         <Story />
       </RouterStoryWrapper>
     </MemoryRouter>
@@ -69,3 +71,19 @@ export const LiteralDecorator = (Story, {args}) => (
     <Story />
   </LiteralsProvider>
 );
+
+const PaddedDiv = ({className, children}) => (
+  <div style={{padding: '1em 0'}} className={className}>
+    {children}
+  </div>
+);
+
+export const LayoutDecorator = Story => {
+  return (
+    <Layout component={PaddedDiv}>
+      <LayoutRow>
+        <Story />
+      </LayoutRow>
+    </Layout>
+  );
+};
