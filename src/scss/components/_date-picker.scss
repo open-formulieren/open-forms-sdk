@@ -1,0 +1,62 @@
+@use 'microscope-sass/lib/bem';
+@use '../mixins/prefix';
+
+@import '@utrecht/components/dist/calendar/css/index.css';
+
+.#{prefix.prefix('datepicker')} {
+  padding: 0;
+  border: 0;
+  border-radius: var(--of-datepicker-border-radius, 0);
+  box-sizing: border-box;
+  background: var(--of-datepicker-background, var(--of-color-bg));
+  box-shadow: var(
+    --of-datepicker-box-shadow,
+    1px 0 0 #e6e6e6,
+    -1px 0 0 #e6e6e6,
+    0 1px 0 #e6e6e6,
+    0 -1px 0 #e6e6e6,
+    0 3px 13px rgba(0, 0, 0, 0.08)
+  );
+
+  @include bem.element('arrow') {
+    fill: var(--of-color-bg, #fff);
+
+    path[clip-path] {
+      stroke: var(--of-datepicker-arrow-border-color, #e6e6e6);
+      stroke-width: var(--of-datepicker-arrow-stroke-width, 3);
+    }
+  }
+}
+
+.#{prefix.prefix('datepicker-textbox')} {
+  position: relative;
+
+  .utrecht-textbox {
+    padding-right: 3em;
+  }
+
+  @include bem.element('calendar-toggle') {
+    position: absolute;
+    padding: 0.5em;
+    font-size: 150%;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    color: var(--of-color-fg-muted);
+  }
+}
+
+.openforms-theme .utrecht-calendar {
+  .utrecht-calendar {
+    &__table-days-item-day {
+      &--selected {
+        text-decoration: var(
+          --of-datepicker-table-days-item-day-selected-text-decoration,
+          underline
+        );
+      }
+    }
+  }
+}
