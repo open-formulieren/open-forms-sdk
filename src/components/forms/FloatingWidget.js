@@ -14,6 +14,14 @@
  * Note that `getReferenceProps` returns event handlers like onKeyDown - if you are
  * overriding these events yourself, make sure you don't accidentally overwrite the
  * floating widget handlers.
+ *
+ * We've done an attempt (see https://github.com/open-formulieren/open-forms-sdk/pull/432/files#r1221521810)
+ * to make the hook the *only* API by having it return the `FloatingWidget` component (
+ * as a closure) so that the additional props like refs/floatingStyles... etc. wouldn't
+ * need to be passed. This didn't work with React sort of blowing up because of too
+ * many re-renders. I suspect the refs/useRef calls with the closure component might be
+ * a problem and possibly useMemo could be a solution to this, but this is entirely
+ * guesswork and unvalidated. Making this work is left as an exercise to the reader.
  */
 import {
   FloatingArrow,

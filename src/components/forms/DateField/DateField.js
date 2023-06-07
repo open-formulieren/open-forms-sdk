@@ -154,7 +154,8 @@ const DateField = ({
   const {error} = getFieldMeta(name);
   const invalid = !!error;
 
-  id = id || React.useId();
+  const generatedId = React.useId();
+  id = id || generatedId;
 
   const calendarEvents = disabledDates.map(date => ({
     date: date,

@@ -1,11 +1,14 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
 import {act} from '@testing-library/react';
 
 import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
 
 export const waitForPosition = () => act(async () => {});
+export const waitForFocus = async element => {
+  await waitFor(() => expect(reference).toHaveFocus());
+};
 
 <Meta title="Private API / FloatingWidget" component={FloatingWidget} />
 
@@ -137,7 +140,7 @@ export const FloatingWidgetExample = () => {
       await expect(await canvas.queryByRole('dialog')).toBeNull();
       await userEvent.click(canvas.getByText('Reference'));
       const reference = canvas.getByTestId('reference');
-      await expect(reference).toHaveFocus();
+      await waitForFocus(reference);
       await expect(canvas.getByRole('dialog')).toBeVisible();
     }}
   >
@@ -169,13 +172,13 @@ export const FloatingWidgetExample = () => {
       const canvas = within(canvasElement);
       const reference = canvas.getByTestId('reference');
       await userEvent.click(reference);
-      await expect(reference).toHaveFocus();
+      await waitForFocus(reference);
       await expect(canvas.getByRole('dialog')).toBeVisible();
       await userEvent.keyboard('[Escape]');
       await expect(await canvas.queryByRole('dialog')).toBeNull();
-      await expect(reference).toHaveFocus();
+      await waitForFocus(reference);
       await userEvent.click(reference);
-      await expect(reference).toHaveFocus();
+      await waitForFocus(reference);
       await expect(canvas.getByRole('dialog')).toBeVisible();
     }}
   >
@@ -218,7 +221,7 @@ export const FloatingWidgetExample = () => {
       await userEvent.click(button);
       await waitForPosition();
       await expect(await canvas.queryByRole('dialog')).toBeNull();
-      await expect(reference).toHaveFocus();
+      await waitForFocus(reference);
     }}
   >
     <FloatingWidgetExample />
