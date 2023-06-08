@@ -1,11 +1,9 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
-import {userEvent, waitFor, within} from '@storybook/testing-library';
-import {act} from '@testing-library/react';
+import {userEvent, waitFor, within, waitForElementToBeRemoved} from '@storybook/testing-library';
 
 import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
 
-export const waitForPosition = () => act(async () => {});
 export const waitForFocus = async element => {
   await waitFor(() => expect(reference).toHaveFocus());
 };
@@ -158,7 +156,7 @@ export const FloatingWidgetExample = () => {
       await reference.focus();
       await expect(canvas.getByRole('dialog')).toBeVisible();
       await userEvent.type(reference, 'Some input');
-      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      await waitForElementToBeRemoved(() => canvas.queryByRole('dialog'));
     }}
   >
     <FloatingWidgetExample />
@@ -175,7 +173,7 @@ export const FloatingWidgetExample = () => {
       await waitForFocus(reference);
       await expect(canvas.getByRole('dialog')).toBeVisible();
       await userEvent.keyboard('[Escape]');
-      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      await waitForElementToBeRemoved(() => canvas.queryByRole('dialog'));
       await waitForFocus(reference);
       await userEvent.click(reference);
       await waitForFocus(reference);
@@ -193,12 +191,10 @@ export const FloatingWidgetExample = () => {
       const canvas = within(canvasElement);
       const reference = canvas.getByTestId('reference');
       await userEvent.click(reference);
-      await waitForPosition();
       await expect(canvas.getByRole('dialog')).toBeVisible();
       const widgetInput = canvas.getByTestId('widget-input');
       await expect(widgetInput).not.toHaveFocus();
       await userEvent.tab();
-      await waitForPosition();
       await expect(canvas.getByRole('dialog')).toBeVisible();
       await expect(widgetInput).toHaveFocus();
     }}
@@ -214,13 +210,11 @@ export const FloatingWidgetExample = () => {
       const canvas = within(canvasElement);
       const reference = canvas.getByTestId('reference');
       await userEvent.click(reference);
-      await waitForPosition();
       await expect(canvas.getByRole('dialog')).toBeVisible();
       const button = canvas.getByRole('button', {name: 'close'});
       await expect(button).toBeVisible();
       await userEvent.click(button);
-      await waitForPosition();
-      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      await waitForElementToBeRemoved(() => canvas.queryByRole('dialog'));
       await waitForFocus(reference);
     }}
   >
@@ -235,16 +229,14 @@ export const FloatingWidgetExample = () => {
       const canvas = within(canvasElement);
       const reference = canvas.getByTestId('reference');
       await userEvent.click(reference);
-      await waitForPosition();
       await expect(canvas.getByRole('dialog')).toBeVisible();
       await userEvent.tab();
       await expect(canvas.getByTestId('widget-input')).toHaveFocus();
       await userEvent.tab();
       await expect(canvas.getByRole('button')).toHaveFocus();
       await userEvent.tab();
-      await waitForPosition();
       await expect(canvas.getByTestId('other-input')).toHaveFocus();
-      await expect(await canvas.queryByRole('dialog')).toBeNull();
+      await waitForElementToBeRemoved(() => canvas.queryByRole('dialog'));
     }}
   >
     <FloatingWidgetExample />
