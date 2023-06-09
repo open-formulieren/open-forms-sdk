@@ -57,7 +57,6 @@
   }
 
   .#{prefix(body)},
-  .#{prefix(help-text)},
   .#{prefix(suffix)} {
     @include margin(true, margin-top, $value-mobile: $typography-margin-list);
   }

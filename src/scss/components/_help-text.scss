@@ -1,20 +1,6 @@
 @use 'microscope-sass/lib/bem';
 
 @import '@utrecht/components/dist/form-field-description/css/index.css';
-@import '~microscope-sass/lib/color';
-@import '~microscope-sass/lib/typography';
-
-@import '../mixins/prefix';
-
-/// @deprecated The custom CSS classes are deprecated in favour of utrecht components with custom modifiers
-.#{prefix(help-text)} {
-  @include body;
-  @include border(left, var(--of-color-info), 4px);
-  background-color: var(--of-helptext-bg);
-  $help-text-line-height: $typography-line-height-text * $typography-font-size-text;
-  padding: calc((#{$grid-row-height} - #{$help-text-line-height}) / 2) $grid-margin-3;
-  padding-left: $grid-margin-3 - 4px;
-}
 
 // Extensions of the utrecht-form-field component, scoped to our own theme.
 .openforms-theme {
