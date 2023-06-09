@@ -1,12 +1,14 @@
-<label
-  class="utrecht-form-label {{ctx.ofPrefix}}label {{ctx.label.className}} {% if (ctx.component.validate.required) { %}required-field utrecht-form-label--required{% } %}"
-  for="{{ctx.instance.id}}-{{ctx.component.key}}"
->
-  {{ ctx.t(ctx.component.label, { _userInput: true }) }}
-  {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
-    {{ ctx.t('(optional)') }}
-  {% } %}
-  {% if (ctx.component.tooltip) { %}
-    <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
-  {% } %}
-</label>
+<p class="utrecht-paragraph utrecht-form-field__label">
+  <label
+    class="utrecht-form-label {{ctx.label.className}} {% if (ctx.component.validate.required) { %}utrecht-form-label--openforms-required{% } %}"
+    for="{{ctx.instance.id}}-{{ctx.component.key}}"
+  >
+    {{ ctx.t(ctx.component.label, { _userInput: true }) }}
+    {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
+      {{ ctx.t('(optional)') }}
+    {% } %}
+    {% if (ctx.component.tooltip) { %}
+      <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
+    {% } %}
+  </label>
+</p>

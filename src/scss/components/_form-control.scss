@@ -47,11 +47,6 @@
     background-color: var(--of-alert-error-bg);
   }
 
-  .#{prefix(label)} {
-    @include margin($value-mobile: $typography-margin-list);
-    overflow-wrap: break-word;
-  }
-
   .#{prefix(prefix)} {
     @include margin($value-mobile: $typography-margin-list);
   }

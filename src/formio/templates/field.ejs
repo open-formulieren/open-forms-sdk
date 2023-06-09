@@ -1,9 +1,10 @@
+<div class="utrecht-form-field utrecht-form-field--openforms">
 {% if (!ctx.label.hidden && ctx.label.labelPosition !== 'bottom') { %}
   {{ ctx.labelMarkup }}
 {% } %}
 
 {% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required) { %}
-  <label class="{{ctx.ofPrefix}}label {{ctx.label.className}}"></label>
+  <label class="utrecht-form-label utrecht-form-label--openforms-required {{ctx.label.className}}"></label>
 {% } %}
 
 {{ctx.element}}
@@ -15,3 +16,4 @@
 {% if (ctx.component.description) { %}
   <div class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext">{{ctx.t(ctx.component.description)}}</div>
 {% } %}
+</div>
