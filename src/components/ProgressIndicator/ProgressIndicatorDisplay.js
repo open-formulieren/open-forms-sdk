@@ -98,12 +98,10 @@ const ProgressIndicatorDisplay = ({
   isStartPage,
   isSummary,
   isConfirmation,
-  isAppointment,
   isSubmissionComplete,
   areApplicableStepsCompleted,
   showOverview,
   showConfirmation,
-  showAppointment,
   expanded = false,
   onExpandClick,
   sticky = true,
@@ -176,18 +174,6 @@ const ProgressIndicatorDisplay = ({
               isCurrent={step.isCurrent}
             />
           ))}
-          {showAppointment && (
-            <ProgressItem completed={isAppointment}>
-              <LinkOrSpan
-                to={'/appointment'}
-                useLink={true}
-                isActive={isSummary}
-                isApplicable={true}
-              >
-                {STEP_LABELS.appointment}
-              </LinkOrSpan>
-            </ProgressItem>
-          )}
           {showOverview && (
             <ProgressItem completed={isConfirmation}>
               <LinkOrSpan
@@ -235,7 +221,6 @@ ProgressIndicatorDisplay.propTypes = {
   areApplicableStepsCompleted: PropTypes.bool,
   showOverview: PropTypes.bool,
   showConfirmation: PropTypes.bool,
-  showAppointment: PropTypes.bool,
   expanded: PropTypes.bool,
   onExpandClick: PropTypes.func.isRequired,
   sticky: PropTypes.bool,
