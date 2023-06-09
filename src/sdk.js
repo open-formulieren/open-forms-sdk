@@ -5,7 +5,7 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
-import {BrowserRouter, HashRouter} from 'react-router-dom';
+import {RouterProvider, createBrowserRouter, createHashRouter} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
@@ -108,7 +108,16 @@ class OpenForm {
   }
 
   render() {
-    const Router = this.useHashRouting ? HashRouter : BrowserRouter;
+    const createRouter = this.useHashRouting ? createHashRouter : createBrowserRouter;
+    const router = createRouter(
+      [
+        {
+          path: '*',
+          element: <App form={this.formObject} />,
+        },
+      ],
+      {basename: this.basepath}
+    );
 
     // render the wrapping React component
     this.root.render(
@@ -126,9 +135,7 @@ class OpenForm {
               languageSelectorTarget={this.languageSelectorTarget}
               onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
             >
-              <Router basename={this.basePath}>
-                <App form={this.formObject} />
-              </Router>
+              <RouterProvider router={router} />
             </I18NManager>
           </I18NErrorBoundary>
         </ConfigContext.Provider>

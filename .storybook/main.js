@@ -14,6 +14,7 @@ module.exports = {
     '@storybook/addon-interactions',
     'storybook-addon-themes',
     'storybook-react-intl',
+    'storybook-addon-react-router-v6',
   ],
   features: {
     interactionsDebugger: true,

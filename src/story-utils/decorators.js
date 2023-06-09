@@ -55,16 +55,16 @@ export const LiteralDecorator = (Story, {args}) => (
   <LiteralsProvider
     literals={{
       previousText: {
-        resolved: args.previousText,
+        resolved: args.previousText || 'Previous',
       },
       beginText: {
-        resolved: args.beginText,
+        resolved: args.beginText || 'Start',
       },
       changeText: {
-        resolved: args.changeText,
+        resolved: args.changeText || 'Change',
       },
       confirmText: {
-        resolved: args.confirmText,
+        resolved: args.confirmText || 'Confirm',
       },
     }}
   >
