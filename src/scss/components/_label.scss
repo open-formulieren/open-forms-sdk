@@ -11,18 +11,10 @@
   @include body--big;
   @include anchor.extend-utrecht-link;
   display: block;
-  font-weight: var(--of-label-font-weight);
+  font-weight: var(--utrecht-form-label-font-weight, var(--of-label-font-weight));
 
-  // .field-required is deprecated, use the modifier instead.
+  // .field-required is deprecated, use .utrecht-form-label--openforms-required instead.
   &.field-required {
-    &:after {
-      content: '*';
-      color: var(--of-color-danger);
-      z-index: 0; // otherwise this is above the progress indicator in some browsers
-    }
-  }
-
-  @include bem.modifier('required') {
     &:after {
       content: '*';
       color: var(--of-color-danger);
@@ -37,4 +29,19 @@
 .#{prefix(suffix)} {
   @include body;
   color: var(--of-color-fg-muted);
+}
+
+.openforms-theme {
+  .utrecht-form-label {
+    display: block;
+    line-height: 1.333;
+
+    @include bem.modifier('openforms-required') {
+      &:after {
+        content: '*';
+        color: var(--of-color-danger);
+        z-index: 0; // otherwise this is above the progress indicator in some browsers
+      }
+    }
+  }
 }

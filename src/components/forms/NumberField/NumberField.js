@@ -1,16 +1,11 @@
-import {
-  FormFieldDescription,
-  Paragraph,
-  Textbox,
-  FormField as UtrechtFormField,
-} from '@utrecht/component-library-react';
+import {Paragraph, Textbox, FormField as UtrechtFormField} from '@utrecht/component-library-react';
 import {useField} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {useIntl} from 'react-intl';
 import {NumericFormat} from 'react-number-format';
 
-import {Label, ValidationErrors} from 'components/forms';
+import {HelpText, Label, ValidationErrors} from 'components/forms';
 
 const getSeparators = locale => {
   const numberFormat = new Intl.NumberFormat(locale);
@@ -72,7 +67,7 @@ const NumberField = ({
           {...separatorProps}
         />
       </Paragraph>
-      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      <HelpText>{description}</HelpText>
       <ValidationErrors error={error} />
     </UtrechtFormField>
   );

@@ -1,4 +1,4 @@
-import {FormField, FormFieldDescription} from '@utrecht/component-library-react';
+import {FormField} from '@utrecht/component-library-react';
 import classNames from 'classnames';
 import {Field, useFormikContext} from 'formik';
 import omit from 'lodash/omit';
@@ -7,8 +7,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
 
-import {Label, ValidationErrors} from 'components/forms';
-import {getBEMClassName} from 'utils';
+import {HelpText, Label, ValidationErrors} from 'components/forms';
 
 const SelectField = ({
   name,
@@ -99,7 +98,7 @@ const SelectField = ({
         }}
         value={value}
       />
-      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      <HelpText>{description}</HelpText>
       <ValidationErrors error={error} />
     </FormField>
   );

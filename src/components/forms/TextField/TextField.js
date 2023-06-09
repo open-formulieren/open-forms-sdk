@@ -1,14 +1,9 @@
-import {
-  FormFieldDescription,
-  Paragraph,
-  Textbox,
-  FormField as UtrechtFormField,
-} from '@utrecht/component-library-react';
+import {Paragraph, Textbox, FormField as UtrechtFormField} from '@utrecht/component-library-react';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {Label, ValidationErrors} from 'components/forms';
+import {HelpText, Label, ValidationErrors} from 'components/forms';
 
 export const TextField = ({
   name,
@@ -41,7 +36,7 @@ export const TextField = ({
           {...inputProps}
         />
       </Paragraph>
-      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      <HelpText>{description}</HelpText>
       <ValidationErrors error={error} />
     </UtrechtFormField>
   );

@@ -1,9 +1,4 @@
-import {
-  FormField,
-  FormFieldDescription,
-  Paragraph,
-  Textbox,
-} from '@utrecht/component-library-react';
+import {FormField, Paragraph, Textbox} from '@utrecht/component-library-react';
 import parse from 'date-fns/parse';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
@@ -11,7 +6,13 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
-import {FloatingWidget, Label, ValidationErrors, useFloatingWidget} from 'components/forms';
+import {
+  FloatingWidget,
+  HelpText,
+  Label,
+  ValidationErrors,
+  useFloatingWidget,
+} from 'components/forms';
 import {getBEMClassName} from 'utils';
 
 import DatePickerCalendar from './DatePickerCalendar';
@@ -177,7 +178,7 @@ const DateField = ({
         invalid={invalid}
         calendarProps={{minDate, maxDate, events: calendarEvents}}
       />
-      {description && <FormFieldDescription>{description}</FormFieldDescription>}
+      <HelpText>{description}</HelpText>
       <ValidationErrors error={error} />
     </FormField>
   );

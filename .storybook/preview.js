@@ -7,8 +7,6 @@ import 'flatpickr/dist/l10n/nl.js';
 import {initialize, mswDecorator} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
 import 'scss/dte-theme.scss';
-// Include NL Design System component in Storybook only, until migration is complete
-import 'scss/nl-design-system-community.scss';
 // load these AFTER the community styles, which is closer in simulating the CSS loading
 // order of our own components
 import 'styles.scss';
