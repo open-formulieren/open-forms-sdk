@@ -3,8 +3,6 @@ import FormioUtils from 'formiojs/utils';
 import _, {set} from 'lodash';
 import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
-
 /**
  * Extend the default text field to modify it to our needs.
  */
@@ -72,10 +70,12 @@ class Currency extends Formio.Components.components.currency {
 
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = [applyPrefix('input'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
-      ' '
-    );
+    // apply NLDS CSS classes
+    info.attr.class = [
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+      'utrecht-textbox--openforms',
+    ].join(' ');
     return info;
   }
 

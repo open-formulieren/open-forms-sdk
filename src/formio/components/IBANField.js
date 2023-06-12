@@ -1,8 +1,6 @@
 import {electronicFormatIBAN, isValidIBAN} from 'ibantools';
 import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
-
 const TextField = Formio.Components.components.textfield;
 
 const IbanValidator = {
@@ -43,10 +41,12 @@ export default class IBANField extends TextField {
 
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = [applyPrefix('iban'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
-      ' '
-    );
+    // apply NLDS CSS classes
+    info.attr.class = [
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+      'utrecht-textbox--openforms',
+    ].join(' ');
     return info;
   }
 }

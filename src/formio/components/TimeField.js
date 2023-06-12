@@ -1,7 +1,6 @@
 import {Formio} from 'react-formio';
 
 import MinMaxTimeValidator from 'formio/validators/MinMaxTimeValidator';
-import {getBEMClassName} from 'utils';
 
 const Time = Formio.Components.components.time;
 
@@ -21,11 +20,12 @@ class TimeField extends Time {
 
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
+    // apply NLDS CSS classes
     info.attr.class = [
-      getBEMClassName('input', ['time']),
       'utrecht-textbox',
       'utrecht-textbox--html-input',
+      'utrecht-textbox--openforms',
+      'utrecht-textbox--openforms-time',
     ].join(' ');
     return info;
   }

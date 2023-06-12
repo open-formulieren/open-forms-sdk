@@ -1,10 +1,17 @@
+import classNames from 'classnames';
 import React from 'react';
 
-import {getBEMClassName} from 'utils';
-
+// TODO: refactor to use components/forms and delete this component
 const Input = ({...extra}) => (
   <div>
-    <input className={getBEMClassName('input')} {...extra} />
+    <input
+      className={classNames(
+        'utrecht-textbox',
+        'utrecht-textbox--html-input',
+        'utrecht-textbox--openforms'
+      )}
+      {...extra}
+    />
   </div>
 );
 

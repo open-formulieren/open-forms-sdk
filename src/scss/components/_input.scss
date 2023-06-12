@@ -49,5 +49,9 @@ $aliases: email, iban;
     @include bem.modifier('openforms') {
       font-weight: var(--of-input-font-weight);
     }
+
+    @include bem.modifier('openforms-time') {
+      width: calc(5ch + 2 * $input-padding);
+    }
   }
 }

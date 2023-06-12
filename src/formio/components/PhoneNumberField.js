@@ -1,6 +1,5 @@
 import {Formio} from 'formiojs';
 
-import {applyPrefix} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 const PhoneNumber = Formio.Components.components.phoneNumber;
@@ -23,6 +22,9 @@ const PhoneNumberValidator = {
   },
 };
 
+/**
+ * @deprecated - instead, use a TextField with the appropriate validators and options.
+ */
 class PhoneNumberField extends PhoneNumber {
   constructor(component, options, data) {
     super(component, options, data);
@@ -33,10 +35,12 @@ class PhoneNumberField extends PhoneNumber {
 
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = [applyPrefix('input'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
-      ' '
-    );
+    // apply NLDS CSS classes
+    info.attr.class = [
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+      'utrecht-textbox--openforms',
+    ].join(' ');
     return info;
   }
 

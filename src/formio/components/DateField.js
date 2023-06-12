@@ -1,7 +1,5 @@
 import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
-
 const DateTimeField = Formio.Components.components.datetime;
 
 const extractDate = value => {
@@ -20,10 +18,12 @@ class DateField extends DateTimeField {
 
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = [applyPrefix('input'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
-      ' '
-    );
+    // apply NLDS CSS classes
+    info.attr.class = [
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+      'utrecht-textbox--openforms',
+    ].join(' ');
     return info;
   }
 
