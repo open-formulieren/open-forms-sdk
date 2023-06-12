@@ -57,11 +57,7 @@ $grid-margin-10: 50px; // Yes.
 
 $typography-color-base: var(--of-color-fg) !default;
 $typography-color-text: $typography-color-base !default;
-$typography-color-link: var(--of-link-color, var(--utrecht-link-color));
-$typography-color-link-hover: $typography-color-link !default;
 $typography-color-h: $typography-color-base !default;
-$typography-default-hover-link: false !default;
-$typography-decoration-link: underline !default;
 $typography-font-family-base: var(--of-typography-sans-serif-font-family);
 $typography-font-family-text: $typography-font-family-base !default;
 $typography-font-family-h: $typography-font-family-base !default;
