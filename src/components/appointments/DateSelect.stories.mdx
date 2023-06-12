@@ -1,0 +1,80 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
+
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+
+import DateSelect from './DateSelect';
+import {mockAppointmentDatesGet} from './mocks';
+
+export const Template = () => <DateSelect />;
+
+<Meta
+  title="Private API / Appointments / DateSelect"
+  decorators={[FormikDecorator, ConfigDecorator]}
+  component={DateSelect}
+  parameters={{
+    formik: {
+      initialValues: {
+        products: [{product: 'e8e045ab', amount: 1}],
+        location: '1396f17c',
+        date: '',
+      },
+    },
+    msw: {
+      handlers: [mockAppointmentDatesGet],
+    },
+  }}
+/>
+
+## Disable dates outside of range
+
+<Canvas>
+  <Story name="Calendar with available date range">{Template.bind({})}</Story>
+</Canvas>
+
+## Disable missing dates within range
+
+<Canvas>
+  <Story
+    name="Calendar with disabled gaps in date range"
+    parameters={{
+      formik: {
+        initialValues: {
+          products: [{product: 'e8e045ab', amount: 1}],
+          location: '34000e85',
+          date: '',
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## No location selected (yet)
+
+A date can only be selected if a location is picked, as it is required input for the API endpoint.
+
+<Canvas>
+  <Story
+    name="Calendar disabled when no location is set"
+    parameters={{
+      formik: {
+        initialValues: {
+          products: [{product: 'e8e045ab', amount: 1}],
+          location: '',
+          date: '',
+        },
+      },
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(canvas.getByLabelText('Date')).toBeDisabled();
+      await userEvent.click(canvas.getByLabelText('Date'));
+      await expect(await canvas.queryByRole('dialog')).not.toBeInTheDocument();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
