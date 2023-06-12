@@ -5,7 +5,7 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {NumericFormat} from 'react-number-format';
 
-import {HelpText, Label, ValidationErrors} from 'components/forms';
+import {HelpText, Label, ValidationErrors, Wrapper} from 'components/forms';
 
 const getSeparators = locale => {
   const numberFormat = new Intl.NumberFormat(locale);
@@ -47,29 +47,31 @@ const NumberField = ({
       };
 
   return (
-    <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
-      <Label id={id} isRequired={isRequired} disabled={disabled}>
-        {label}
-      </Label>
-      <Paragraph>
-        <NumericFormat
-          // Note: the onChange handler does not handle any input sanitation
-          {...fieldProps}
-          value={value}
-          id={id}
-          className="utrecht-textbox--openforms"
-          disabled={disabled}
-          invalid={invalid}
-          min={min}
-          step={step}
-          type={useNumberType ? 'number' : 'text'}
-          customInput={Textbox}
-          {...separatorProps}
-        />
-      </Paragraph>
-      <HelpText>{description}</HelpText>
-      <ValidationErrors error={error} />
-    </UtrechtFormField>
+    <Wrapper>
+      <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
+        <Label id={id} isRequired={isRequired} disabled={disabled}>
+          {label}
+        </Label>
+        <Paragraph>
+          <NumericFormat
+            // Note: the onChange handler does not handle any input sanitation
+            {...fieldProps}
+            value={value}
+            id={id}
+            className="utrecht-textbox--openforms"
+            disabled={disabled}
+            invalid={invalid}
+            min={min}
+            step={step}
+            type={useNumberType ? 'number' : 'text'}
+            customInput={Textbox}
+            {...separatorProps}
+          />
+        </Paragraph>
+        <HelpText>{description}</HelpText>
+        <ValidationErrors error={error} />
+      </UtrechtFormField>
+    </Wrapper>
   );
 };
 

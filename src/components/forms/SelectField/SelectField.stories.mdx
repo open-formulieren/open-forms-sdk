@@ -3,7 +3,7 @@ import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
 import {useCallback} from 'react';
 
-import {FormikDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
 import AsyncSelectField from './AsyncSelectField';
 import SelectField from './SelectField';
@@ -215,6 +215,36 @@ The `AsyncSelectField` requires the `getOptions` prop to populate the options.
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
       await expect(canvas.getByText('invalid')).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly.
+
+<Canvas>
+  <Story
+    name="No asterisk for required"
+    decorators={[ConfigDecorator]}
+    parameters={{
+      config: {
+        requiredFieldsWithAsterisk: false,
+      },
+    }}
+    args={{
+      name: 'select',
+      id: 'select',
+      label: 'Default required',
+      disabled: false,
+      isRequired: true,
+      options: [
+        {value: 'option-1', label: 'Option 1'},
+        {value: 'option-2', label: 'Option 2'},
+      ],
     }}
   >
     {Template.bind({})}

@@ -2,7 +2,7 @@ import {Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
 
-import {FormikDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
 import TextField from './TextField';
 
@@ -72,6 +72,30 @@ export const Template = args => <TextField {...args} />;
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
       await expect(canvas.getByText('invalid')).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly.
+
+<Canvas>
+  <Story
+    name="No asterisk for required"
+    decorators={[ConfigDecorator]}
+    parameters={{
+      config: {
+        requiredFieldsWithAsterisk: false,
+      },
+    }}
+    args={{
+      name: 'test',
+      label: 'Default required',
+      isRequired: true,
     }}
   >
     {Template.bind({})}

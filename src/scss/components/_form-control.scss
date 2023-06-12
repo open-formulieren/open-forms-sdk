@@ -61,7 +61,8 @@
   }
 
   &--no-asterisks {
-    .required-field:after {
+    .required-field:after,
+    .utrecht-form-label.utrecht-form-label--openforms-required:after {
       // Override the asterisk
       content: '' !important;
     }

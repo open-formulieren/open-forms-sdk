@@ -4,6 +4,7 @@ const ConfigContext = React.createContext({
   baseUrl: '',
   basePath: '',
   baseTitle: '',
+  requiredFieldsWithAsterisk: true,
   displayComponents: {
     app: null,
     form: null,

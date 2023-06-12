@@ -11,6 +11,7 @@ import {
   HelpText,
   Label,
   ValidationErrors,
+  Wrapper,
   useFloatingWidget,
 } from 'components/forms';
 import {getBEMClassName} from 'utils';
@@ -166,21 +167,23 @@ const DateField = ({
   }));
 
   return (
-    <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
-      <Label id={id} isRequired={isRequired} disabled={disabled}>
-        {label}
-      </Label>
-      <Field
-        as={DatePicker}
-        name={name}
-        id={id}
-        disabled={disabled}
-        invalid={invalid}
-        calendarProps={{minDate, maxDate, events: calendarEvents}}
-      />
-      <HelpText>{description}</HelpText>
-      <ValidationErrors error={error} />
-    </FormField>
+    <Wrapper>
+      <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
+        <Label id={id} isRequired={isRequired} disabled={disabled}>
+          {label}
+        </Label>
+        <Field
+          as={DatePicker}
+          name={name}
+          id={id}
+          disabled={disabled}
+          invalid={invalid}
+          calendarProps={{minDate, maxDate, events: calendarEvents}}
+        />
+        <HelpText>{description}</HelpText>
+        <ValidationErrors error={error} />
+      </FormField>
+    </Wrapper>
   );
 };
 

@@ -1,4 +1,5 @@
 import {Formik} from 'formik';
+import merge from 'lodash/merge';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
@@ -6,11 +7,26 @@ import {BASE_URL} from 'api-mocks';
 import {Layout, LayoutRow} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';
 
-export const ConfigDecorator = (Story, {args}) => (
-  <ConfigContext.Provider value={{baseUrl: BASE_URL}}>
-    <Story />
-  </ConfigContext.Provider>
-);
+export const ConfigDecorator = (Story, {parameters}) => {
+  const defaults = {
+    baseUrl: BASE_URL,
+    basePath: '',
+    baseTitle: '',
+    requiredFieldsWithAsterisk: true,
+    displayComponents: {
+      app: null,
+      form: null,
+      progressIndicator: null,
+      loginOptions: null,
+    },
+  };
+  const fromParams = parameters?.config || {};
+  return (
+    <ConfigContext.Provider value={merge(defaults, fromParams)}>
+      <Story />
+    </ConfigContext.Provider>
+  );
+};
 
 const RouterStoryWrapper = ({route = '', children}) => {
   if (!route) {
