@@ -52,6 +52,7 @@ $checkbox-label-padding-left: calc(
     // which adds <p></p> around each paragraph in the text. This tag gets a margin which looks off.
     // So here it is overwritten.
     @include wysiwyg;
+    // @include anchor.extend-utrecht-link;
     p {
       @include body('auto');
     }
