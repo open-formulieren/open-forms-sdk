@@ -8,7 +8,6 @@ import {Cosign} from 'components/CoSign';
 import Form from 'components/Form';
 import LanguageSelection from 'components/LanguageSelection';
 import {LayoutRow} from 'components/Layout';
-import AppointmentForm from 'components/appointments/AppointmentForm';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import {I18NContext} from 'i18n';
 import Types from 'types';
@@ -44,8 +43,6 @@ const App = ({...props}) => {
     <Routes>
       {/* Anything dealing with appointments gets routed to its own sub-router */}
       <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
-      <Route path="appointment/*" element={<AppointmentForm {...props} />} />
-
       <Route path="cosign/*" element={<Cosign {...props} />} />
 
       {/* All the rest goes to the actual form flow */}
