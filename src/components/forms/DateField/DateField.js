@@ -189,7 +189,7 @@ const DateField = ({
 
 DateField.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string,
+  label: PropTypes.node,
   isRequired: PropTypes.bool,
   description: PropTypes.string,
   id: PropTypes.string,
