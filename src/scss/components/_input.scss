@@ -1,47 +1,8 @@
 @use 'microscope-sass/lib/bem';
 
 @import '@utrecht/components/dist/textbox/css/index.css';
-@import '~microscope-sass/lib/grid';
-@import '~microscope-sass/lib/typography';
-
-@import '../mixins/prefix';
 
 $input-padding: $grid-margin-2;
-
-.#{prefix(input)} {
-  @include body;
-  @include border(all, $size: 1px);
-  // force required because utrecht-textbox sets height initial
-  @include rows(1, $force: true);
-
-  appearance: none;
-  border-radius: 0;
-  // TODO: remove / remove (important) when utrecht-textbox component supports font-weight
-  // design token
-  font-weight: var(--of-input-font-weight) !important;
-  line-height: $typography-line-height-base !important;
-  padding: $input-padding;
-  width: 100%;
-
-  @include bem.modifier('time') {
-    width: calc(5ch + 2 * $input-padding);
-  }
-
-  &:disabled {
-    background-color: #e9ecef;
-    cursor: not-allowed;
-  }
-}
-
-// aliases that are also text inputs, but have their own class names:
-
-$aliases: email, iban;
-
-@each $alias in $aliases {
-  .#{prefix($alias)} {
-    @extend .#{prefix(input)};
-  }
-}
 
 // overrides of the utrecht-textbox component
 .openforms-theme {
