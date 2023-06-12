@@ -2,12 +2,17 @@ import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
 
+import Card from 'components/Card';
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
 import ChooseProductStep from './ChooseProductStep';
 import {mockAppointmentProductsGet} from './mocks';
 
-export const Template = () => <ChooseProductStep />;
+export const Template = args => (
+  <Card title={args.formName} titleComponent="h1" modifiers={['mobile-header-hidden']}>
+    <ChooseProductStep />
+  </Card>
+);
 
 <Meta
   title="Private API / Appointments / Steps / Choose product"
@@ -28,6 +33,9 @@ export const Template = () => <ChooseProductStep />;
     msw: {
       handlers: [mockAppointmentProductsGet],
     },
+  }}
+  args={{
+    formName: 'Appointment form',
   }}
 />
 

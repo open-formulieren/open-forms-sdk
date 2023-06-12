@@ -6,7 +6,7 @@ import {NumberField} from 'components/forms';
 import ProductSelect from './ProductSelect';
 
 const Product = ({namePrefix, index}) => (
-  <>
+  <div>
     <ProductSelect name={`${namePrefix}[${index}].product`} />
     <NumberField
       name={`${namePrefix}[${index}].amount`}
@@ -21,7 +21,7 @@ const Product = ({namePrefix, index}) => (
       step={1}
       min={1}
     />
-  </>
+  </div>
 );
 
 Product.propTypes = {
