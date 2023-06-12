@@ -47,17 +47,11 @@
     background-color: var(--of-alert-error-bg);
   }
 
-  .#{prefix(label)} {
-    @include margin($value-mobile: $typography-margin-list);
-    overflow-wrap: break-word;
-  }
-
   .#{prefix(prefix)} {
     @include margin($value-mobile: $typography-margin-list);
   }
 
   .#{prefix(body)},
-  .#{prefix(help-text)},
   .#{prefix(suffix)} {
     @include margin(true, margin-top, $value-mobile: $typography-margin-list);
   }
@@ -67,7 +61,8 @@
   }
 
   &--no-asterisks {
-    .required-field:after {
+    .required-field:after,
+    .utrecht-form-label.utrecht-form-label--openforms-required:after {
       // Override the asterisk
       content: '' !important;
     }

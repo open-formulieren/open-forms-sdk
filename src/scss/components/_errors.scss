@@ -2,13 +2,22 @@
 
 @import '../mixins/bem';
 
+// Extensions available to all themes
 .utrecht-form-field-description {
   @include modifier('openforms-errors') {
-    --utrecht-form-field-description-font-size: var(--of-text-big-font-size, inherit);
-
-    @include margin($value-mobile: $typography-margin-list);
-    font-weight: bold;
-    line-height: $typography-line-height-text-big;
     overflow-wrap: break-word;
+    font-weight: var(--of-utrecht-form-field-description-errors-font-weight, inherit);
+    line-height: var(--of-utrecht-form-field-description-errors-line-height, inherit);
+  }
+}
+
+// Extensions scoped to our own theme
+.openforms-theme {
+  .utrecht-form-field-description {
+    @include modifier('openforms-errors') {
+      &:empty {
+        --utrecht-form-field-description-margin-block-start: 0;
+      }
+    }
   }
 }

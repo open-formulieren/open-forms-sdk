@@ -127,6 +127,7 @@ class OpenForm {
             baseUrl: this.baseUrl,
             basePath: this.basePath,
             baseTitle: this.baseTitle,
+            requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
             displayComponents: this.displayComponents,
           }}
         >

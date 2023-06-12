@@ -11,11 +11,11 @@ import {destroy, post} from 'api';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import ErrorMessage from 'components/ErrorMessage';
-import HelpText from 'components/HelpText';
 import Input from 'components/Input';
 import Label from 'components/Label';
 import Loader from 'components/Loader';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
+import {HelpText} from 'components/forms';
 import Modal from 'components/modals/Modal';
 import {getBEMClassName} from 'utils';
 

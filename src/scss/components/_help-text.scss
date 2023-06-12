@@ -1,14 +1,29 @@
+@use 'microscope-sass/lib/bem';
+
 @import '@utrecht/components/dist/form-field-description/css/index.css';
-@import '~microscope-sass/lib/color';
-@import '~microscope-sass/lib/typography';
 
-@import '../mixins/prefix';
+// Extensions of the utrecht-form-field component, scoped to our own theme.
+.openforms-theme {
+  --utrecht-form-field-description-margin-block-end: 0;
+  --utrecht-form-field-description-margin-block-start: 8px;
 
-.#{prefix(help-text)} {
-  @include body;
-  @include border(left, var(--of-color-info), 4px);
-  background-color: var(--of-helptext-bg);
-  $help-text-line-height: $typography-line-height-text * $typography-font-size-text;
-  padding: calc((#{$grid-row-height} - #{$help-text-line-height}) / 2) $grid-margin-3;
-  padding-left: $grid-margin-3 - 4px;
+  --utrecht-paragraph-margin-block-end: 0;
+  --utrecht-paragraph-margin-block-start: 0;
+
+  .utrecht-form-field-description {
+    @include modifier('openforms-helptext') {
+      --_border-left-width: var(--of-utrecht-form-field-description-border-left-width);
+      line-height: var(--of-utrecht-form-field-description-line-height, 1.5);
+      background-color: var(--of-utrecht-form-field-description-background-color);
+      border-left-style: solid;
+      border-left-color: var(--of-utrecht-form-field-description-border-left-color);
+      border-left-width: var(--_border-left-width);
+      padding-block-end: var(--of-utrecht-form-field-description-padding-block);
+      padding-block-start: var(--of-utrecht-form-field-description-padding-block);
+      padding-inline-end: var(--of-utrecht-form-field-description-padding-inline);
+      padding-inline-start: calc(
+        var(--of-utrecht-form-field-description-padding-inline) - var(--_border-left-width)
+      );
+    }
+  }
 }

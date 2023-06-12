@@ -1,9 +1,4 @@
-import {
-  FormField,
-  FormFieldDescription,
-  Paragraph,
-  Textbox,
-} from '@utrecht/component-library-react';
+import {FormField, Paragraph, Textbox} from '@utrecht/component-library-react';
 import parse from 'date-fns/parse';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
@@ -11,7 +6,14 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
-import {FloatingWidget, Label, ValidationErrors, useFloatingWidget} from 'components/forms';
+import {
+  FloatingWidget,
+  HelpText,
+  Label,
+  ValidationErrors,
+  Wrapper,
+  useFloatingWidget,
+} from 'components/forms';
 import {getBEMClassName} from 'utils';
 
 import DatePickerCalendar from './DatePickerCalendar';
@@ -165,21 +167,23 @@ const DateField = ({
   }));
 
   return (
-    <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
-      <Label id={id} isRequired={isRequired} disabled={disabled}>
-        {label}
-      </Label>
-      <Field
-        as={DatePicker}
-        name={name}
-        id={id}
-        disabled={disabled}
-        invalid={invalid}
-        calendarProps={{minDate, maxDate, events: calendarEvents}}
-      />
-      {description && <FormFieldDescription>{description}</FormFieldDescription>}
-      <ValidationErrors error={error} />
-    </FormField>
+    <Wrapper>
+      <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
+        <Label id={id} isRequired={isRequired} disabled={disabled}>
+          {label}
+        </Label>
+        <Field
+          as={DatePicker}
+          name={name}
+          id={id}
+          disabled={disabled}
+          invalid={invalid}
+          calendarProps={{minDate, maxDate, events: calendarEvents}}
+        />
+        <HelpText>{description}</HelpText>
+        <ValidationErrors error={error} />
+      </FormField>
+    </Wrapper>
   );
 };
 

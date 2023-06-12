@@ -9,11 +9,11 @@ import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
-import HelpText from 'components/HelpText';
 import Input from 'components/Input';
 import Label from 'components/Label';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import ValidationErrors from 'components/ValidationErrors';
+import {HelpText} from 'components/forms';
 import useQuery from 'hooks/useQuery';
 import {getBEMClassName} from 'utils';
 
