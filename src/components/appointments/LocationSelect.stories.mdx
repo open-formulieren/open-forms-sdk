@@ -1,0 +1,80 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
+
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+
+import LocationSelect from './LocationSelect';
+import {mockAppointmentLocationsGet} from './mocks';
+
+export const Template = () => <LocationSelect name="product" />;
+
+<Meta
+  title="Private API / Appointments / LocationSelect"
+  decorators={[FormikDecorator, ConfigDecorator]}
+  component={LocationSelect}
+  parameters={{
+    formik: {
+      initialValues: {
+        products: [{product: 'e8e045ab', amount: 1}],
+        location: '',
+      },
+    },
+    msw: {
+      handlers: [mockAppointmentLocationsGet],
+    },
+  }}
+/>
+
+## Multiple locations for same product
+
+<Canvas>
+  <Story
+    name="Multiple candidate locations"
+    play={async ({canvasElement}) => {
+      // test that the options are fetched from the API endpoint
+      const canvas = within(canvasElement);
+      await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
+      const dropdown = canvas.getByLabelText('Location');
+      await userEvent.click(dropdown);
+      await userEvent.keyboard('[ArrowDown]');
+      await expect(await canvas.findByText('Open Gem')).toBeVisible();
+      await expect(await canvas.findByText('Bahamas')).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Single location for products
+
+<Canvas>
+  <Story
+    name="Single candidate location"
+    parameters={{
+      formik: {
+        initialValues: {
+          products: [
+            {product: 'e8e045ab', amount: 1},
+            {product: '166a5c79', amount: 1},
+          ],
+          location: '',
+        },
+      },
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
+      await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
+      const dropdown = canvas.getByLabelText('Location');
+      await userEvent.click(dropdown);
+      await userEvent.keyboard('[ArrowDown]');
+      await expect(await canvas.findByText('Open Gem')).toBeVisible();
+      await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
+      await userEvent.keyboard('[Escape]');
+      await expect(await canvas.findByText('Open Gem')).toBeVisible();
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
