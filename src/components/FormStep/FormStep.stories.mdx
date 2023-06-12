@@ -4,7 +4,7 @@ import {getWorker} from 'msw-storybook-addon';
 import {v4 as uuid4} from 'uuid';
 
 import {buildForm, buildSubmission} from 'api-mocks';
-import {ConfigDecorator, RouterDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, DeprecatedRouterDecorator} from 'story-utils/decorators';
 
 import FormStep from '.';
 import {
@@ -18,7 +18,7 @@ export const worker = getWorker();
 <Meta
   title="Private API/FormStep"
   component={FormStep}
-  decorators={[ConfigDecorator, RouterDecorator]}
+  decorators={[ConfigDecorator, DeprecatedRouterDecorator]}
   argTypes={{
     submission: {control: false},
     form: {control: false},

@@ -1,16 +1,17 @@
 import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
 import {useArgs} from '@storybook/client-api';
-import {useEffect} from 'react';
+import {useState} from 'react';
+import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import {LiteralDecorator, RouterDecorator} from 'story-utils/decorators';
+import {LiteralDecorator} from 'story-utils/decorators';
 
 import GenericSummary from './GenericSummary';
 
 <Meta
   title="Private API/GenericSummary"
   component={GenericSummary}
-  decorators={[LiteralDecorator, RouterDecorator]}
+  decorators={[LiteralDecorator, withRouter]}
   argTypes={{
     submissionAllowed: {
       options: [SUBMISSION_ALLOWED.yes, SUBMISSION_ALLOWED.noWithOverview],
@@ -105,7 +106,6 @@ import GenericSummary from './GenericSummary';
     showPreviousPageLink: true,
     privacyInformation: {
       requiresPrivacyConsent: true,
-      policyAccepted: false,
       privacyLabel: 'This is a privacy policy example.',
     },
     editStepText: 'Change',
@@ -116,30 +116,30 @@ import GenericSummary from './GenericSummary';
     previousText: 'Previous',
     submissionAllowed: SUBMISSION_ALLOWED.yes,
   }}
-  decorators={[LiteralDecorator]}
   parameters={{
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      },
+    },
     actions: {
       argTypesRegex: 'onSubmit|onLogout|onPrevPage',
+    },
+    reactRouter: {
+      routePath: '/',
     },
   }}
 />
 
-export const Template = args => {
-  const [_, updateArgs] = useArgs();
-  useEffect(() => {
-    updateArgs({onPrevPage: args.showPreviousPageLink ? () => {} : null});
-  }, [args.showPreviousPageLink]);
+export const Template = ({showPreviousPageLink, privacyInformation, ...args}) => {
+  const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
   return (
     <GenericSummary
-      onPrivacyCheckboxChange={() =>
-        updateArgs({
-          privacyInformation: {
-            ...args.privacyInformation,
-            policyAccepted: !args.privacyInformation.policyAccepted,
-          },
-        })
-      }
       {...args}
+      onPrevPage={showPreviousPageLink ? () => {} : null}
+      privacyInformation={{...privacyInformation, policyAccepted: privacyPolicyAccepted}}
+      onPrivacyCheckboxChange={() => setPrivacyPolicyAccepted(!privacyPolicyAccepted)}
     />
   );
 };
