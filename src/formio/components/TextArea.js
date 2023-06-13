@@ -1,6 +1,6 @@
 import {Formio} from 'react-formio';
 
-import {applyPrefix, escapeHtml} from '../utils';
+import {escapeHtml} from '../utils';
 
 /**
  * Extend the default text field to modify it to our needs.
@@ -8,11 +8,11 @@ import {applyPrefix, escapeHtml} from '../utils';
 class TextArea extends Formio.Components.components.textarea {
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
+    // apply NLDS CSS classes
     info.attr.class = [
-      applyPrefix('textarea'),
       'utrecht-textarea',
       'utrecht-textarea--html-textarea',
+      'utrecht-textarea--openforms',
     ].join(' ');
     return info;
   }
