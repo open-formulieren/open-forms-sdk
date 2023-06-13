@@ -76,6 +76,9 @@ end-user, the times are displayed in their local timezone, configured on their O
   <Story
     name="Times are localized"
     height="280px"
+    parameters={{
+      chromatic: {disableSnapshot: true},
+    }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
       const dropdown = canvas.getByLabelText('Time');
