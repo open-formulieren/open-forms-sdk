@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {Field, useFormikContext} from 'formik';
 import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
 
@@ -18,6 +18,7 @@ const SelectField = ({
   disabled = false,
   options = [],
   valueProperty = 'value',
+  autoSelectOnlyOption = false,
   ...props
 }) => {
   const {getFieldProps, getFieldHelpers, getFieldMeta} = useFormikContext();
@@ -38,6 +39,19 @@ const SelectField = ({
   } else {
     value = options.filter(opt => formikValue.includes(opt[valueProperty]));
   }
+
+  useEffect(
+    () => {
+      if (!autoSelectOnlyOption) return;
+      // do nothing if more than one option exists
+      if (options.length !== 1) return;
+      // do nothing if a value is set
+      if ((isSingle && value) || (!isSingle && value.length > 1)) return;
+      setValue(options[0][valueProperty]);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [autoSelectOnlyOption, isSingle, value, JSON.stringify(options), setValue, valueProperty]
+  );
 
   return (
     <Wrapper>
@@ -114,6 +128,7 @@ export const SelectFieldPropTypes = {
   description: PropTypes.string,
   disabled: PropTypes.bool,
   valueProperty: PropTypes.string,
+  autoSelectOnlyOption: PropTypes.bool,
 };
 
 SelectField.propTypes = {

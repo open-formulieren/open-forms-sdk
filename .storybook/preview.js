@@ -52,6 +52,7 @@ export const parameters = {
       method: 'alphabetical',
       order: [
         'Introduction',
+        'Developers',
         'Pure React components',
         'Composites',
         'Form.io components',

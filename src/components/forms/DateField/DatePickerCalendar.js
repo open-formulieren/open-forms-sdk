@@ -17,8 +17,7 @@ const loadCalendarLocale = locale => {
 };
 
 const DatePickerCalendar = props => {
-  const intl = useIntl();
-  const locale = loadCalendarLocale(intl.locale);
+  const locale = useCalendarLocale();
   return (
     <Calendar
       locale={locale}
@@ -49,6 +48,12 @@ const DatePickerCalendar = props => {
       {...props}
     />
   );
+};
+
+export const useCalendarLocale = () => {
+  const intl = useIntl();
+  const locale = loadCalendarLocale(intl.locale);
+  return locale;
 };
 
 export default DatePickerCalendar;
