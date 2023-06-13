@@ -1,0 +1,96 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {addDays, formatISO} from 'date-fns';
+
+import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+
+import TimeSelect from './TimeSelect';
+import {mockAppointmentTimesGet} from './mocks';
+
+export const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date'});
+
+<Meta
+  title="Private API / Appointments / TimeSelect"
+  decorators={[FormikDecorator, ConfigDecorator]}
+  component={TimeSelect}
+  parameters={{
+    formik: {
+      initialValues: {
+        products: [{product: 'e8e045ab', amount: 1}],
+        location: '1396f17c',
+        date: tomorrow,
+        datetime: '',
+      },
+    },
+    msw: {
+      handlers: [mockAppointmentTimesGet],
+    },
+  }}
+/>
+
+## Select an available time
+
+Given the location, products and date, the API endpoint returns a set of available appointment
+times. These are displayed to the user as a time, but the value stored and submitted is a full
+ISO-8601 datetime string.
+
+<Canvas>
+  <Story name="Default" height="280px">
+    <TimeSelect />
+  </Story>
+</Canvas>
+
+## Interactions
+
+The time field is only enabled when one or more products, a location and a date have been selected.
+
+<Canvas>
+  <Story
+    name="No date selected -> disabled"
+    parameters={{
+      formik: {
+        initialValues: {
+          products: [{product: 'e8e045ab', amount: 1}],
+          location: '1396f17c',
+          date: '',
+          datetime: '',
+        },
+      },
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const dropdown = canvas.getByLabelText('Time');
+      await expect(dropdown.role).toBe('combobox');
+      await expect(dropdown).toBeDisabled();
+    }}
+  >
+    <TimeSelect />
+  </Story>
+</Canvas>
+
+The times received from the backend are typically in UTC or otherwise timezone-aware. For the
+end-user, the times are displayed in their local timezone, configured on their OS/browser.
+
+<Canvas>
+  <Story
+    name="Times are localized"
+    height="280px"
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      const dropdown = canvas.getByLabelText('Time');
+      await dropdown.focus();
+      await userEvent.keyboard('[ArrowDown]');
+      await waitFor(async () => {
+        // see mocks.js for the returned times
+        await expect(canvas.getByText('08:00')).toBeVisible();
+        await expect(canvas.getByText('08:10')).toBeVisible();
+        await expect(canvas.getByText('10:00')).toBeVisible();
+        await expect(canvas.getByText('10:30')).toBeVisible();
+        await expect(canvas.getByText('14:30')).toBeVisible();
+      });
+    }}
+  >
+    <TimeSelect />
+  </Story>
+</Canvas>
