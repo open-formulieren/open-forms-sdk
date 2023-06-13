@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import {Formik} from 'formik';
 import React, {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
@@ -9,21 +9,16 @@ import Body from 'components/Body';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
-import Input from 'components/Input';
-import Label from 'components/Label';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import ValidationErrors from 'components/ValidationErrors';
-import {HelpText} from 'components/forms';
+import {EmailField} from 'components/forms';
+import {ValidationError} from 'errors';
 import useQuery from 'hooks/useQuery';
-import {getBEMClassName} from 'utils';
 
 const CancelAppointment = () => {
   const {baseUrl} = useContext(ConfigContext);
   const navigate = useNavigate();
   const queryParams = useQuery();
 
-  const [email, setEmail] = useState('');
-  const [errors, setErrors] = useState([]);
   const [failed, setFailed] = useState(false);
 
   // validate the necessary information to know which submission we are dealing with
@@ -57,30 +52,24 @@ const CancelAppointment = () => {
   // parse into native Date object - we receive an ISO-8601 string.
   const time = new Date(timeParam);
 
-  const onSubmit = async event => {
-    event && event.preventDefault();
-
-    setErrors([]);
-
+  const onSubmit = async ({email}, actions) => {
     const endpoint = `${baseUrl}appointments/${submissionId}/cancel`;
-    const response = await post(endpoint, {email});
-
-    if (!response.ok) {
-      if (response.status === 400) {
-        const invalidParams = response.data.invalidParams || [];
-        const errors = invalidParams.map(invalidParam => invalidParam.reason);
-        setErrors(errors);
+    try {
+      await post(endpoint, {email});
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        const error = e.invalidParams.map(invalidParam => invalidParam.reason).join('\n');
+        actions.setFieldError('email', error);
       } else {
         setFailed(true);
       }
       return;
+    } finally {
+      actions.setSubmitting(false);
     }
+
     navigate('/afspraak-annuleren/succes');
   };
-
-  const componentClassName = classNames(getBEMClassName('form-control'), {
-    'formio-error-wrapper': errors.length > 0,
-  });
 
   return (
     <Card
@@ -91,67 +80,61 @@ const CancelAppointment = () => {
         />
       }
     >
-      <Body component="form" onSubmit={onSubmit}>
-        {failed ? (
-          <ErrorMessage>
-            <FormattedMessage
-              description="Appointment cancellation error message"
-              defaultMessage="Appointment cancellation failed"
-            />
-          </ErrorMessage>
-        ) : null}
+      <Formik initialValues={{email: ''}} onSubmit={onSubmit}>
+        {props => (
+          <Body component="form" onSubmit={props.handleSubmit}>
+            {failed && (
+              <ErrorMessage>
+                <FormattedMessage
+                  description="Appointment cancellation error message"
+                  defaultMessage="Appointment cancellation failed"
+                />
+              </ErrorMessage>
+            )}
 
-        <Body modifiers={['big']}>
-          <FormattedMessage
-            description="Appointment cancellation body text"
-            defaultMessage={`You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill
-out your email address for verification purposes.`}
-            values={{
-              date: <FormattedDate value={time} day="numeric" month="long" />,
-              time: <FormattedDate value={time} hour="numeric" minute="numeric" />,
-              b: chunks => <strong>{chunks}</strong>,
-            }}
-          />
-        </Body>
-
-        <div className={componentClassName}>
-          <ValidationErrors errors={errors} />
-
-          <Label isRequired>
-            <FormattedMessage
-              description="Appointment cancellation email field label"
-              defaultMessage="Your email address"
-            />
-          </Label>
-
-          <Input
-            type="email"
-            value={email}
-            onChange={event => {
-              setEmail(event.target.value);
-              setErrors([]);
-            }}
-          />
-
-          <HelpText>
-            <FormattedMessage
-              description="Cancel appointment email field help text"
-              defaultMessage="The email address where you received the appointment confirmation email."
-            />
-          </HelpText>
-        </div>
-
-        <Toolbar modifiers={['bottom', 'reverse']}>
-          <ToolbarList>
-            <Button type="submit" variant="primary">
+            <Body modifiers={['big']}>
               <FormattedMessage
-                description="Cancel appointment submit button"
-                defaultMessage="Cancel appointment"
+                description="Appointment cancellation body text"
+                defaultMessage={`You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill
+out your email address for verification purposes.`}
+                values={{
+                  date: <FormattedDate value={time} day="numeric" month="long" />,
+                  time: <FormattedDate value={time} hour="numeric" minute="numeric" />,
+                  b: chunks => <strong>{chunks}</strong>,
+                }}
               />
-            </Button>
-          </ToolbarList>
-        </Toolbar>
-      </Body>
+            </Body>
+
+            <EmailField
+              name="email"
+              isRequired
+              label={
+                <FormattedMessage
+                  description="Appointment cancellation email field label"
+                  defaultMessage="Your email address"
+                />
+              }
+              description={
+                <FormattedMessage
+                  description="Cancel appointment email field help text"
+                  defaultMessage="The email address where you received the appointment confirmation email."
+                />
+              }
+            />
+
+            <Toolbar modifiers={['bottom', 'reverse']}>
+              <ToolbarList>
+                <Button type="submit" variant="primary">
+                  <FormattedMessage
+                    description="Cancel appointment submit button"
+                    defaultMessage="Cancel appointment"
+                  />
+                </Button>
+              </ToolbarList>
+            </Toolbar>
+          </Body>
+        )}
+      </Formik>
     </Card>
   );
 };

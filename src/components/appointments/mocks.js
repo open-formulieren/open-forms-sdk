@@ -99,7 +99,30 @@ export const mockAppointmentTimesGet = rest.get(
   }
 );
 
-export const mockAppointmentCancel = rest.post(
+export const mockAppointmentCancelPost = rest.post(
   `${BASE_URL}appointments/:uuid/cancel`,
   (req, res, ctx) => res(ctx.status(204))
+);
+
+export const mockAppointmentCancelErrorPost = rest.post(
+  `${BASE_URL}appointments/:uuid/cancel`,
+  (req, res, ctx) =>
+    res(
+      ctx.status(400),
+      ctx.json({
+        type: 'http://localhost:8000/fouten/ValidationError/',
+        code: 'invalid',
+        title: 'Invalid input.',
+        status: 400,
+        detail: '',
+        instance: 'urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75',
+        invalidParams: [
+          {
+            name: 'email',
+            code: 'invalid',
+            reason: 'Invalid e-mail for the submission.',
+          },
+        ],
+      })
+    )
 );
