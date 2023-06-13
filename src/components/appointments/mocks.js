@@ -69,9 +69,22 @@ export const mockAppointmentDatesGet = rest.get(
   `${BASE_URL}appointments/dates`,
   (req, res, ctx) => {
     const locationId = req.url.searchParams.get('location_id');
-    const {dates} = DATES.find(d => d.location === locationId);
-    const evaluated = dates.map(d => ({date: d()}));
-    return res(ctx.json(evaluated));
+    let result = [];
+    switch (locationId) {
+      case 'no-date': {
+        result = [];
+        break;
+      }
+      case 'single-date': {
+        result = [{date: _getDate(1)()}];
+        break;
+      }
+      default: {
+        const {dates} = DATES.find(d => d.location === locationId);
+        result = dates.map(d => ({date: d()}));
+      }
+    }
+    return res(ctx.json(result));
   }
 );
 

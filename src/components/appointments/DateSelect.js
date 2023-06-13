@@ -1,6 +1,7 @@
+import {Paragraph} from '@utrecht/component-library-react';
 import {eachDayOfInterval, formatISO, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
-import React, {useCallback, useContext} from 'react';
+import React, {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
 
@@ -25,22 +26,33 @@ const DateSelect = () => {
   const {baseUrl} = useContext(ConfigContext);
   const {values} = useFormikContext();
 
-  const productIds = (values.products || []).map(prod => prod.product);
-  const locationId = values.location;
-
   // get the available dates from the API
   const {
     loading,
     value: availableDates = [],
     error,
   } = useAsync(
-    async () => await getDates(baseUrl, productIds, locationId),
+    async () => {
+      const productIds = (values.products || []).map(prod => prod.product);
+      return await getDates(baseUrl, productIds, values.location);
+    },
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
-    [baseUrl, JSON.stringify(productIds), locationId]
+    [baseUrl, JSON.stringify(values)]
   );
 
   if (error) {
     throw error;
+  }
+
+  if (!loading && values.location && availableDates && !availableDates.length) {
+    return (
+      <Paragraph>
+        <FormattedMessage
+          description="Appoinments: message shown for no available dates at all"
+          defaultMessage="Sorry, there are no available dates for your appointment. Please try again later."
+        />
+      </Paragraph>
+    );
   }
 
   const today = new Date();
@@ -49,11 +61,13 @@ const DateSelect = () => {
   const possibleDays = eachDayOfInterval({start: minDate, end: maxDate}).map(d =>
     formatISO(d, {representation: 'date'})
   );
+
   const disabledDays = possibleDays.filter(date => !availableDates.includes(date));
+
   return (
     <DateField
       name="date"
-      disabled={loading || !locationId}
+      disabled={loading || !values.location}
       isRequired
       label={
         <FormattedMessage description="Appoinments: appointment date label" defaultMessage="Date" />
