@@ -98,3 +98,8 @@ export const mockAppointmentTimesGet = rest.get(
     return res(ctx.json(times));
   }
 );
+
+export const mockAppointmentCancel = rest.post(
+  `${BASE_URL}appointments/:uuid/cancel`,
+  (req, res, ctx) => res(ctx.status(204))
+);

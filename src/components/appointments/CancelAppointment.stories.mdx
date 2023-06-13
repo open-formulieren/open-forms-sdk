@@ -1,0 +1,52 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {withRouter} from 'storybook-addon-react-router-v6';
+
+import Card from 'components/Card';
+import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+
+import CancelAppointment from './CancelAppointment';
+import {mockAppointmentCancel} from './mocks';
+
+<Meta
+  title="Private API / Appointments / Cancellation / Cancel"
+  component={CancelAppointment}
+  decorators={[LayoutDecorator, withRouter, ConfigDecorator]}
+/>
+
+<Canvas>
+  <Story
+    name="Default"
+    parameters={{
+      reactRouter: {
+        searchParams: {
+          time: '2023-06-13T10:00:00+02:00',
+          submission_uuid: '999c6769-bc2e-43d6-a2e0-5bf104f5130e',
+        },
+      },
+      msw: {
+        handlers: [mockAppointmentCancel],
+      },
+    }}
+  >
+    <CancelAppointment />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Missing time parameter">
+    <Card title="Error">
+      <CancelAppointment />
+    </Card>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Missing submission parameter"
+    parameters={{reactRouter: {searchParams: {time: '2023-06-13T10:00:00+02:00'}}}}
+  >
+    <Card title="Error">
+      <CancelAppointment />
+    </Card>
+  </Story>
+</Canvas>

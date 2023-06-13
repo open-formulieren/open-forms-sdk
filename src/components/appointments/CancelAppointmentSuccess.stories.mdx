@@ -1,0 +1,17 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+
+import {LayoutDecorator} from 'story-utils/decorators';
+
+import CancelAppointmentSuccess from './CancelAppointmentSuccess';
+
+<Meta
+  title="Private API / Appointments / Cancellation / Success"
+  component={CancelAppointmentSuccess}
+  decorators={[LayoutDecorator]}
+/>
+
+<Canvas>
+  <Story name="Default">
+    <CancelAppointmentSuccess />
+  </Story>
+</Canvas>
