@@ -1,6 +1,7 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
+import {Formik} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -11,26 +12,18 @@ import {destroy, post} from 'api';
 import Body from 'components/Body';
 import Button from 'components/Button';
 import ErrorMessage from 'components/ErrorMessage';
-import Input from 'components/Input';
-import Label from 'components/Label';
 import Loader from 'components/Loader';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import {HelpText} from 'components/forms';
+import {EmailField} from 'components/forms';
 import Modal from 'components/modals/Modal';
-import {getBEMClassName} from 'utils';
 
 const initialState = {
-  email: '',
   errorMessage: '',
   isSaving: false,
 };
 
 const reducer = (draft, action) => {
   switch (action.type) {
-    case 'SET_EMAIL': {
-      draft.email = action.payload;
-      break;
-    }
     case 'START_SAVE': {
       draft.errorMessage = '';
       draft.isSaving = true;
@@ -63,16 +56,16 @@ const FormStepSaveModal = ({
   const intl = useIntl();
   const config = useContext(ConfigContext);
 
-  const [{email, errorMessage, isSaving}, dispatch] = useImmerReducer(reducer, initialState);
+  const [{errorMessage, isSaving}, dispatch] = useImmerReducer(reducer, initialState);
 
-  const onSubmit = async event => {
-    event.preventDefault();
+  const onSubmit = async ({email}, actions) => {
     if (isSaving) return;
 
     dispatch({type: 'START_SAVE'});
 
     const saveResponse = await onSaveConfirm();
     if (!saveResponse.ok) {
+      actions.setSubmitting(false);
       dispatch({
         type: 'API_ERROR',
         payload: {
@@ -86,6 +79,7 @@ const FormStepSaveModal = ({
     }
     const suspendResponse = await post(suspendFormUrl, {email});
     if (!suspendResponse.ok) {
+      actions.setSubmitting(false);
       dispatch({
         type: 'API_ERROR',
         payload: {
@@ -101,6 +95,7 @@ const FormStepSaveModal = ({
       // Destroy throws an exception if the API is not successful
       await destroy(`${config.baseUrl}authentication/${submissionId}/session`);
     } catch (e) {
+      actions.setSubmitting(false);
       dispatch({
         type: 'API_ERROR',
         payload: {
@@ -113,6 +108,7 @@ const FormStepSaveModal = ({
       return;
     }
 
+    actions.setSubmitting(false);
     dispatch({type: 'SAVE_SUCCEEDED'});
     onSessionDestroyed();
   };
@@ -128,57 +124,51 @@ const FormStepSaveModal = ({
       isOpen={isOpen}
       closeModal={closeModal}
     >
-      <Body component="form" onSubmit={onSubmit}>
-        {isSaving ? <Loader modifiers={['centered']} /> : null}
+      <Formik initialValues={{email: ''}} onSubmit={onSubmit}>
+        {props => (
+          <Body component="form" onSubmit={props.handleSubmit}>
+            {isSaving ? <Loader modifiers={['centered']} /> : null}
 
-        {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
+            {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 
-        <Body modifiers={['big']}>
-          <FormattedMessage
-            description="Form save modal body text"
-            defaultMessage="Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
-            values={{numberOfDays: suspendFormUrlLifetime}}
-          />
-        </Body>
-
-        <div className={getBEMClassName('form-control')}>
-          <Label isRequired>
-            <FormattedMessage
-              description="Form save modal email field label"
-              defaultMessage="Your email address"
-            />
-          </Label>
-
-          <Input
-            type="email"
-            value={email}
-            onChange={event => {
-              dispatch({
-                type: 'SET_EMAIL',
-                payload: event.target.value,
-              });
-            }}
-          />
-
-          <HelpText>
-            <FormattedMessage
-              description="Form save modal email field help text"
-              defaultMessage="The email address where you will receive the resume link."
-            />
-          </HelpText>
-        </div>
-
-        <Toolbar modifiers={['bottom', 'reverse']}>
-          <ToolbarList>
-            <Button type="submit" variant="primary" disabled={isSaving}>
+            <Body modifiers={['big']}>
               <FormattedMessage
-                description="Form save modal submit button"
-                defaultMessage="Continue later"
+                description="Form save modal body text"
+                defaultMessage="Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
+                values={{numberOfDays: suspendFormUrlLifetime}}
               />
-            </Button>
-          </ToolbarList>
-        </Toolbar>
-      </Body>
+            </Body>
+
+            <EmailField
+              name="email"
+              isRequired
+              label={
+                <FormattedMessage
+                  description="Form save modal email field label"
+                  defaultMessage="Your email address"
+                />
+              }
+              description={
+                <FormattedMessage
+                  description="Form save modal email field help text"
+                  defaultMessage="The email address where you will receive the resume link."
+                />
+              }
+            />
+
+            <Toolbar modifiers={['bottom', 'reverse']}>
+              <ToolbarList>
+                <Button type="submit" variant="primary" disabled={isSaving}>
+                  <FormattedMessage
+                    description="Form save modal submit button"
+                    defaultMessage="Continue later"
+                  />
+                </Button>
+              </ToolbarList>
+            </Toolbar>
+          </Body>
+        )}
+      </Formik>
     </Modal>
   );
 };

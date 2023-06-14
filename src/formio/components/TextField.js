@@ -2,7 +2,6 @@ import debounce from 'lodash/debounce';
 import {Formio} from 'react-formio';
 
 import {get} from '../../api';
-import {applyPrefix} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
@@ -21,10 +20,12 @@ class TextField extends Formio.Components.components.textfield {
 
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = [applyPrefix('input'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
-      ' '
-    );
+    // apply NLDS CSS classes
+    info.attr.class = [
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+      'utrecht-textbox--openforms',
+    ].join(' ');
     return info;
   }
 

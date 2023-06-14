@@ -1,9 +1,22 @@
-@import '~microscope-sass/lib/grid';
+@use 'microscope-sass/lib/bem';
 
-@import '../mixins/prefix';
+@import '@utrecht/components/dist/textarea/css/index.css';
+@import 'microscope-sass/lib/grid';
 
-.#{prefix(textarea)} {
-  @extend .#{prefix(input)};
-  @include rows(3, min-height, $force: true);
-  height: inherit;
+.utrecht-textarea {
+  @include bem.modifier('openforms') {
+    font-weight: var(--of-input-font-weight, normal);
+  }
+}
+
+.openforms-theme {
+  .utrecht-textarea {
+    @include rows(3, min-height, $force: true);
+    height: inherit;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
+    width: 100%;
+  }
 }

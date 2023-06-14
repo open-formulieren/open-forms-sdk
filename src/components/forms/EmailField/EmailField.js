@@ -8,7 +8,7 @@ EmailField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   isRequired: PropTypes.bool,
-  description: PropTypes.string,
+  description: PropTypes.node,
   id: PropTypes.string,
   disabled: PropTypes.bool,
 };

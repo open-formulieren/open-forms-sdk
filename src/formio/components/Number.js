@@ -2,7 +2,6 @@ import {maskInput} from '@formio/vanilla-text-mask';
 import {set} from 'lodash';
 import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 /**
@@ -16,10 +15,12 @@ class Number extends Formio.Components.components.number {
 
   get inputInfo() {
     const info = super.inputInfo;
-    // change the default CSS classes
-    info.attr.class = [applyPrefix('input'), 'utrecht-textbox', 'utrecht-textbox--html-input'].join(
-      ' '
-    );
+    // apply NLDS CSS classes
+    info.attr.class = [
+      'utrecht-textbox',
+      'utrecht-textbox--html-input',
+      'utrecht-textbox--openforms',
+    ].join(' ');
     return info;
   }
 
