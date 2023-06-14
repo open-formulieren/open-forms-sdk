@@ -3,7 +3,7 @@ import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
 
 import Card from 'components/Card';
-import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, FormikDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import LocationAndTimeStep from './LocationAndTimeStep';
 import {
@@ -12,16 +12,10 @@ import {
   mockAppointmentTimesGet,
 } from './mocks';
 
-export const Template = args => (
-  <Card title={args.formName} titleComponent="h1" modifiers={['mobile-header-hidden']}>
-    <LocationAndTimeStep />
-  </Card>
-);
-
 <Meta
   title="Private API / Appointments / Steps / Location and time"
   component={LocationAndTimeStep}
-  decorators={[FormikDecorator, ConfigDecorator]}
+  decorators={[LayoutDecorator, FormikDecorator, ConfigDecorator]}
   parameters={{
     controls: {hideNoControlsWarning: true},
     formik: {
@@ -35,9 +29,6 @@ export const Template = args => (
     msw: {
       handlers: [mockAppointmentLocationsGet, mockAppointmentDatesGet, mockAppointmentTimesGet],
     },
-  }}
-  args={{
-    formName: 'Appointment form',
   }}
 />
 
@@ -60,6 +51,8 @@ swapped.
       const canvas = within(canvasElement);
     }}
   >
-    {Template.bind({})}
+    <Card>
+      <LocationAndTimeStep />
+    </Card>
   </Story>
 </Canvas>

@@ -1,23 +1,17 @@
-import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
 
 import Card from 'components/Card';
-import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, FormikDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import ChooseProductStep from './ChooseProductStep';
 import {mockAppointmentProductsGet} from './mocks';
 
-export const Template = args => (
-  <Card title={args.formName} titleComponent="h1" modifiers={['mobile-header-hidden']}>
-    <ChooseProductStep />
-  </Card>
-);
-
 <Meta
   title="Private API / Appointments / Steps / Choose product"
   component={ChooseProductStep}
-  decorators={[FormikDecorator, ConfigDecorator]}
+  decorators={[LayoutDecorator, FormikDecorator, ConfigDecorator]}
   parameters={{
     controls: {hideNoControlsWarning: true},
     formik: {
@@ -33,9 +27,6 @@ export const Template = args => (
     msw: {
       handlers: [mockAppointmentProductsGet],
     },
-  }}
-  args={{
-    formName: 'Appointment form',
   }}
 />
 
@@ -62,7 +53,9 @@ At least one product must be provided.
       await expect(await canvas.queryByRole('button', {name: 'Remove'})).toBeNull();
     }}
   >
-    {Template.bind({})}
+    <Card>
+      <ChooseProductStep />
+    </Card>
   </Story>
 </Canvas>
 
@@ -94,7 +87,9 @@ them, unless there's only a single row left - then removing that row is not allo
       await expect(dropdowns).toHaveLength(2);
     }}
   >
-    {Template.bind({})}
+    <Card>
+      <ChooseProductStep />
+    </Card>
   </Story>
 </Canvas>
 
@@ -133,6 +128,8 @@ them, unless there's only a single row left - then removing that row is not allo
       await expect(await canvas.queryByRole('button', {name: 'Remove'})).toBeNull();
     }}
   >
-    {Template.bind({})}
+    <Card>
+      <ChooseProductStep />
+    </Card>
   </Story>
 </Canvas>
