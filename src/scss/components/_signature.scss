@@ -1,6 +1,6 @@
-@import '~microscope-sass/lib/typography';
+@use 'microscope-sass/lib/bem';
 
-@import '../mixins/bem';
+@import '~microscope-sass/lib/typography';
 
 .signature-pad-body {
   @include margin(auto, $value-mobile: 0.5em);
@@ -10,7 +10,7 @@
   margin: 0;
   z-index: 0; // otherwise this is above the progress indicator
 
-  @include element('image') {
+  @include bem.element('image') {
     width: 100%;
     display: none;
   }

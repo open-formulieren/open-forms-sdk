@@ -1,10 +1,11 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix('co-sign')} {
-  @include element('representation') {
+  @include bem.element('representation') {
     @include border(all, $size: 1px);
     background-color: var(--of-cosign-bg);
     padding: $grid-margin-2;

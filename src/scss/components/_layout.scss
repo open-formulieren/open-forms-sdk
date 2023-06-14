@@ -1,9 +1,10 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/responsive';
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix('layout')} {
@@ -11,7 +12,7 @@
   display: flex;
   flex-direction: column;
 
-  @include element('row') {
+  @include bem.element('row') {
     @include container(flex);
     @include responsive(flex-direction, column, row);
 
@@ -21,7 +22,7 @@
       padding: 0;
     }
 
-    @include modifier('secondary') {
+    @include bem.modifier('secondary') {
       @include hide-on-mobile(flex);
 
       @media print {
@@ -30,7 +31,7 @@
     }
   }
 
-  @include element('column') {
+  @include bem.element('column') {
     display: flex;
     flex-direction: column;
 
@@ -46,7 +47,7 @@
       @include columns-responsive(4, 4, 4, 4);
     }
 
-    @include modifier('secondary') {
+    @include bem.modifier('secondary') {
       @media print {
         display: none;
       }
@@ -54,12 +55,12 @@
 
     @include mobile-only {
       @each $i in (1, 2, 3, 4) {
-        @include modifier(mobile-order-#{$i}) {
+        @include bem.modifier(mobile-order-#{$i}) {
           order: #{$i};
         }
       }
 
-      @include modifier('mobile-sticky') {
+      @include bem.modifier('mobile-sticky') {
         position: sticky;
         z-index: 1;
         top: $grid-container-margin;
@@ -75,7 +76,7 @@
         );
       }
 
-      @include modifier('mobile-padding-top') {
+      @include bem.modifier('mobile-padding-top') {
         @include margin($grid-container-margin, $properties: padding-top);
       }
     }

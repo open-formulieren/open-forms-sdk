@@ -1,6 +1,7 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix('list')} {
@@ -12,7 +13,7 @@
   margin: 0;
   padding: 0;
 
-  @include element('item') {
+  @include bem.element('item') {
     @include body;
     @include body--big;
   }
@@ -24,20 +25,20 @@
     flex-wrap: wrap;
   }
 
-  @include modifier('compact') {
-    @include element('item') {
+  @include bem.modifier('compact') {
+    @include bem.element('item') {
       @include margin($value-mobile: $grid-margin-1);
     }
   }
 
-  @include modifier('extra-compact') {
-    @include element('item') {
+  @include bem.modifier('extra-compact') {
+    @include bem.element('item') {
       @include margin(false);
     }
   }
 
-  @include modifier('dash') {
-    @include element('item') {
+  @include bem.modifier('dash') {
+    @include bem.element('item') {
       &:before {
         @include body;
         @include margin($grid-margin-0, $properties: margin-right);
