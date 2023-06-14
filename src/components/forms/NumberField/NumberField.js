@@ -82,7 +82,7 @@ NumberField.propTypes = {
   step: PropTypes.number,
   label: PropTypes.node,
   isRequired: PropTypes.bool,
-  description: PropTypes.string,
+  description: PropTypes.node,
   id: PropTypes.string,
   disabled: PropTypes.bool,
 };

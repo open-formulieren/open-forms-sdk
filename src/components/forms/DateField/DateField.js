@@ -191,7 +191,7 @@ DateField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.node,
   isRequired: PropTypes.bool,
-  description: PropTypes.string,
+  description: PropTypes.node,
   id: PropTypes.string,
   disabled: PropTypes.bool,
   minDate: PropTypes.instanceOf(Date),
