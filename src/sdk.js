@@ -116,7 +116,7 @@ class OpenForm {
           element: <App form={this.formObject} />,
         },
       ],
-      {basename: this.basepath}
+      {basename: this.basePath}
     );
 
     // render the wrapping React component
