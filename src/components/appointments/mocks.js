@@ -40,13 +40,6 @@ const DATES = [
   },
 ];
 
-const DEFAULT_TIMES = [
-  {time: '2021-08-19T10:00:00+02:00'},
-  {time: '2021-08-19T10:30:00+02:00'},
-  {time: '2021-08-20T08:00:00+02:00'},
-  {time: '2021-08-20T08:10:00+02:00'},
-];
-
 export const mockAppointmentProductsGet = rest.get(
   `${BASE_URL}appointments/products`,
   (req, res, ctx) => {
@@ -92,9 +85,15 @@ export const mockAppointmentTimesGet = rest.get(
   `${BASE_URL}appointments/times`,
   (req, res, ctx) => {
     const date = req.url.searchParams.get('date');
-    const times = DEFAULT_TIMES.filter(
-      t => new Date(t.time).toDateString() === new Date(date).toDateString()
-    );
+    // ensure we can handle datetimes with timezone information in varying formats.
+    // Ideally, the API returns UTC, but the UI needs to display localized times.
+    const times = [
+      `${date}T08:00:00Z`,
+      `${date}T08:30:00Z`,
+      `${date}T06:00:00Z`,
+      `${date}T06:10:00Z`,
+      `${date}T14:30:00+02:00`,
+    ].map(datetime => ({time: datetime}));
     return res(ctx.json(times));
   }
 );
