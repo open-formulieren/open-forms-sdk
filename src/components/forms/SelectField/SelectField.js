@@ -125,7 +125,7 @@ export const SelectFieldPropTypes = {
   label: PropTypes.node,
   id: PropTypes.string,
   isRequired: PropTypes.bool,
-  description: PropTypes.string,
+  description: PropTypes.node,
   disabled: PropTypes.bool,
   valueProperty: PropTypes.string,
   autoSelectOnlyOption: PropTypes.bool,
