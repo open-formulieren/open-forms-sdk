@@ -1,0 +1,50 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs';
+import {Field} from 'formik';
+
+import {FormikDecorator} from './decorators';
+
+<Meta
+  title="Private API / Story Utils / FormikDecorator"
+  component={Field}
+  parameters={{
+    formik: {
+      initialValues: {
+        test: 'some value',
+      },
+    },
+  }}
+/>
+
+Use the `FormikDecorator` to wrap a (form field) component in a `<Formik>` container, providing the
+necessary context.
+
+Support parameters are `initialValues` and `initialErrors`.
+
+For example:
+
+```jsx
+import {Field} from 'formik';
+
+import {FormikDecorator} from 'story-utils/decorators';
+
+<Canvas>
+  <Story
+    name="Default"
+    decorators={[FormikDecorator]}
+    parameters={{
+      formik: {
+        initialValues: {test: 'some value'},
+        initialErrors: {test: 'an error'},
+      },
+    }}
+  >
+    <Field type="text" as="input" name="test" />
+  </Story>
+</Canvas>;
+```
+
+<Canvas>
+  <Story name="Default" decorators={[FormikDecorator]}>
+    <Field type="text" as="input" name="test" />
+  </Story>
+</Canvas>
