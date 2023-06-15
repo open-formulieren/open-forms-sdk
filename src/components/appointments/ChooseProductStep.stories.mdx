@@ -1,6 +1,7 @@
 import {Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
+import {withRouter} from 'storybook-addon-react-router-v6';
 
 import Card from 'components/Card';
 import {ConfigDecorator, FormikDecorator, LayoutDecorator} from 'story-utils/decorators';
@@ -11,7 +12,7 @@ import {mockAppointmentProductsGet} from './mocks';
 <Meta
   title="Private API / Appointments / Steps / Choose product"
   component={ChooseProductStep}
-  decorators={[LayoutDecorator, FormikDecorator, ConfigDecorator]}
+  decorators={[LayoutDecorator, FormikDecorator, withRouter, ConfigDecorator]}
   parameters={{
     controls: {hideNoControlsWarning: true},
     formik: {
