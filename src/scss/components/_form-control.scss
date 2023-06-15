@@ -1,6 +1,7 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/typography';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix(form-control)} {
@@ -16,7 +17,7 @@
     );
   }
 
-  @include modifier('hidden') {
+  @include bem.modifier('hidden') {
     display: none;
   }
 

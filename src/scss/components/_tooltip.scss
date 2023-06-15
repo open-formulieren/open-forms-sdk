@@ -4,7 +4,6 @@
 @import '~microscope-sass/lib/typography';
 @import '~microscope-sass/lib/util';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 .#{prefix(tooltip)} {

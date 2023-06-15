@@ -11,7 +11,7 @@
   --utrecht-paragraph-margin-block-start: 0;
 
   .utrecht-form-field-description {
-    @include modifier('openforms-helptext') {
+    @include bem.modifier('openforms-helptext') {
       --_border-left-width: var(--of-utrecht-form-field-description-border-left-width);
       line-height: var(--of-utrecht-form-field-description-line-height, 1.5);
       background-color: var(--of-utrecht-form-field-description-background-color);

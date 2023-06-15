@@ -1,5 +1,6 @@
+@use 'microscope-sass/lib/bem';
+
 @import '../settings';
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 @keyframes spin {
@@ -16,16 +17,16 @@
   align-items: center;
   @include margin(true, $properties: margin-bottom);
 
-  @include modifier('centered') {
+  @include bem.modifier('centered') {
     justify-content: center;
   }
 
-  @include modifier('only-child') {
+  @include bem.modifier('only-child') {
     margin-bottom: 0;
   }
 
-  @include modifier('small') {
-    @include element('spinner') {
+  @include bem.modifier('small') {
+    @include bem.element('spinner') {
       width: 15px;
       height: 15px;
       border-width: 4px;
@@ -33,7 +34,7 @@
     }
   }
 
-  @include element('spinner') {
+  @include bem.element('spinner') {
     border: 6px solid var(--of-color-secondary);
     border-top: 6px solid var(--of-color-primary);
     border-radius: 50%;

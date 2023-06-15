@@ -1,3 +1,5 @@
+@use 'microscope-sass/lib/bem';
+
 @import '../mixins/prefix';
 @import '../settings';
 
@@ -7,11 +9,11 @@
   display: flex;
   justify-content: flex-start;
 
-  @include modifier('info') {
+  @include bem.modifier('info') {
     background-color: var(--of-alert-info-bg);
   }
 
-  @include modifier('error') {
+  @include bem.modifier('error') {
     background-color: var(--of-alert-error-bg);
 
     .fa-icon {
@@ -19,7 +21,7 @@
     }
   }
 
-  @include modifier('warning') {
+  @include bem.modifier('warning') {
     background-color: var(--of-alert-warning-bg);
 
     .fa-icon {
@@ -27,15 +29,15 @@
     }
   }
 
-  @include modifier('with-margin') {
+  @include bem.modifier('with-margin') {
     margin: 1rem 0;
   }
 
-  @include element('icon') {
+  @include bem.element('icon') {
     display: block;
     width: 1em;
 
-    @include modifier('wide') {
+    @include bem.modifier('wide') {
       width: 2em;
     }
   }

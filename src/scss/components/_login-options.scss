@@ -1,3 +1,5 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
@@ -5,11 +7,11 @@
 .#{prefix(login-options)} {
   @include body;
 
-  @include element('list') {
+  @include bem.element('list') {
     @include margin(auto);
   }
 
-  @include element('caption') {
+  @include bem.element('caption') {
     @include h2;
     @include margin(auto);
   }

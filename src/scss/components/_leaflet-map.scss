@@ -1,4 +1,5 @@
-@import '../mixins/bem';
+@use 'microscope-sass/lib/bem';
+
 @import '../mixins/prefix';
 
 .#{prefix(leaflet-map)} {
@@ -6,7 +7,7 @@
   position: relative;
   z-index: 0;
 
-  @include modifier('disabled') {
+  @include bem.modifier('disabled') {
     cursor: default;
   }
 }

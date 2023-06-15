@@ -4,7 +4,6 @@
 @import '~microscope-sass/lib/typography';
 @import '~microscope-sass/lib/responsive';
 
-@import '../mixins/bem';
 @import '../mixins/prefix';
 
 $modal-z-index: var(--of-modal-zindex, 1000) !default;

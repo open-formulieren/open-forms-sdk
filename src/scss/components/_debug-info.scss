@@ -1,4 +1,5 @@
-@import 'microscope-sass/lib/bem';
+@use 'microscope-sass/lib/bem';
+
 @import 'microscope-sass/lib/typography';
 
 .debug-info-container {
@@ -32,11 +33,11 @@
   @include margin(auto);
   color: #555;
 
-  @include element(label) {
+  @include bem.element(label) {
     flex-basis: 50%;
   }
 
-  @include element(value) {
+  @include bem.element(value) {
     flex-basis: 50%;
   }
 }

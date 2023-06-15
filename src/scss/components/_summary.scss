@@ -1,14 +1,15 @@
+@use 'microscope-sass/lib/bem';
+
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
-@import '../mixins/bem';
 
 .#{prefix('summary')} {
   &:first-child {
     padding-top: $grid-margin-2;
   }
 
-  @include element('step-header') {
+  @include bem.element('step-header') {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,7 +26,7 @@
     }
   }
 
-  @include element('step-name') {
+  @include bem.element('step-name') {
     @include body;
     @include h3;
     max-width: 100%;
