@@ -1,5 +1,7 @@
 @use 'microscope-sass/lib/bem';
 
+@import '@utrecht/components/dist/unordered-list/css/index';
+
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
