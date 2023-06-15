@@ -1,0 +1,138 @@
+import {ArgsTable, Canvas, Meta, Story} from '@storybook/addon-docs';
+import {expect} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {addDays, formatISO} from 'date-fns';
+import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+
+import {buildForm} from 'api-mocks';
+import {ConfigDecorator, DeprecatedRouterDecorator, LayoutDecorator} from 'story-utils/decorators';
+
+import CreateAppointment, {routes as childRoutes} from './CreateAppointment';
+import {
+  mockAppointmentDatesGet,
+  mockAppointmentLocationsGet,
+  mockAppointmentProductsGet,
+  mockAppointmentTimesGet,
+} from './mocks';
+
+<Meta
+  title="Private API / Appointments / CreateForm"
+  component={CreateAppointment}
+  decorators={[ConfigDecorator, LayoutDecorator]}
+  parameters={{
+    msw: {
+      handlers: [
+        mockAppointmentProductsGet,
+        mockAppointmentLocationsGet,
+        mockAppointmentDatesGet,
+        mockAppointmentTimesGet,
+      ],
+    },
+  }}
+  argTypes={{
+    form: {table: {disable: true}},
+  }}
+/>
+
+export const Template = ({showProgressIndicator, name}) => {
+  const form = buildForm({showProgressIndicator, name, appointmentEnabled: true});
+  const routes = [
+    {
+      path: '/appointments/*',
+      element: <CreateAppointment form={form} />,
+      children: childRoutes,
+    },
+  ];
+  const router = createMemoryRouter(routes, {
+    initialEntries: ['/appointments/'],
+    initialIndex: 0,
+  });
+  return <RouterProvider router={router} />;
+};
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      showProgressIndicator: true,
+      name: 'Plan an appointment',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={CreateAppointment} />
+
+## Fill out all steps
+
+Interaction test for the happy flow.
+
+export const waitForFocus = async element => {
+  await waitFor(() => expect(element).toHaveFocus());
+};
+
+<Canvas>
+  <Story
+    name="Happy flow"
+    args={{
+      showProgressIndicator: true,
+      name: 'Plan an appointment',
+    }}
+    play={async ({canvasElement}) => {
+      const canvas = within(canvasElement);
+      // XXX: disabled button does not show up in accessibility tree
+      await waitFor(
+        async () =>
+          await expect(
+            await canvas.queryByRole('button', {name: 'Confirm products'})
+          ).toHaveAttribute('aria-disabled', 'true')
+      );
+      // select the product
+      let productDropdown;
+      await waitFor(async () => {
+        productDropdown = await canvas.findByRole('combobox');
+        expect(productDropdown).toBeVisible();
+      });
+      await productDropdown.focus();
+      await userEvent.keyboard('[ArrowDown]');
+      const productOption = await canvas.findByText('Paspoort aanvraag');
+      await userEvent.click(productOption);
+      // submit the step
+      await userEvent.click(canvas.getByRole('button', {name: 'Confirm products'}));
+      // fill out location and time step
+      expect(canvas.getByText('Location and time')).toBeVisible();
+      await waitFor(async () => {
+        await expect(canvas.getByRole('button', {name: 'Back to products'})).toBeVisible();
+        await expect(
+          await canvas.queryByRole('button', {name: 'To contact details'})
+        ).toHaveAttribute('aria-disabled', 'true');
+        // location auto-filled
+        await canvas.findByText('Open Gem');
+      });
+      // this location has a date available tomorrow (see ./mocks.js)
+      const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date'});
+      const dateLabel = await canvas.findByText('Date');
+      await waitFor(async () => {
+        const dateInput = await canvas.findByLabelText('Date');
+        await expect(dateInput).not.toBeDisabled();
+        await userEvent.type(dateInput, tomorrow);
+      });
+      let timeDropdown;
+      await waitFor(async () => {
+        timeDropdown = await canvas.findByLabelText('Time');
+        await expect(timeDropdown).not.toBeDisabled();
+      });
+      await timeDropdown.focus();
+      await userEvent.keyboard('[ArrowDown]');
+      const timeOption = await canvas.findByText(/[0-2]{2}:00$/);
+      await userEvent.click(timeOption);
+      // submit the step
+      await userEvent.click(canvas.getByRole('button', {name: 'To contact details'}));
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
