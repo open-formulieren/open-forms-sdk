@@ -81,9 +81,11 @@ export const waitForFocus = async element => {
       showProgressIndicator: true,
       name: 'Plan an appointment',
     }}
+    parameters={{
+      chromatic: {disableSnapshot: true},
+    }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
-      // XXX: disabled button does not show up in accessibility tree
       await waitFor(
         async () =>
           await expect(
