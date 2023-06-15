@@ -6,9 +6,14 @@ import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {AsyncSelectField} from 'components/forms';
 
-const getProducts = async baseUrl => {
-  const productList = await get(`${baseUrl}appointments/products`);
-  return productList;
+// TODO: we should cache this in a more transient scope
+let products = null;
+
+export const getProducts = async baseUrl => {
+  if (products === null) {
+    products = await get(`${baseUrl}appointments/products`);
+  }
+  return products;
 };
 
 const ProductSelect = ({name}) => {

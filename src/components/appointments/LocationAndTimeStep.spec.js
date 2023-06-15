@@ -3,6 +3,7 @@ import {render as realRender, screen, waitFor} from '@testing-library/react';
 import {Formik} from 'formik';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
+import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
@@ -12,27 +13,39 @@ import LocationAndTimeStep from './LocationAndTimeStep';
 import {
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
+  mockAppointmentProductsGet,
   mockAppointmentTimesGet,
 } from './mocks';
 
-const render = (comp, initialValues) =>
-  realRender(
-    <ConfigContext.Provider
-      value={{
-        baseUrl: BASE_URL,
-        basePath: '',
-        baseTitle: '',
-        requiredFieldsWithAsterisk: true,
-        displayComponents: {},
-      }}
-    >
-      <IntlProvider locale="en" messages={messagesEN}>
-        <Formik initialValues={initialValues} onSubmit={console.log}>
-          {comp}
-        </Formik>
-      </IntlProvider>
-    </ConfigContext.Provider>
-  );
+const render = (comp, initialValues) => {
+  const routes = [
+    {
+      path: '/appointments/kalender',
+      element: (
+        <ConfigContext.Provider
+          value={{
+            baseUrl: BASE_URL,
+            basePath: '',
+            baseTitle: '',
+            requiredFieldsWithAsterisk: true,
+            displayComponents: {},
+          }}
+        >
+          <IntlProvider locale="en" messages={messagesEN}>
+            <Formik initialValues={initialValues} onSubmit={console.log}>
+              {comp}
+            </Formik>
+          </IntlProvider>
+        </ConfigContext.Provider>
+      ),
+    },
+  ];
+  const router = createMemoryRouter(routes, {
+    initialEntries: ['/appointments/kalender'],
+    initialIndex: 0,
+  });
+  realRender(<RouterProvider router={router} />);
+};
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -51,7 +64,7 @@ afterEach(() => {
 
 describe('The location and time step', () => {
   it('disables date and time until a location is selected', async () => {
-    mswServer.use(mockAppointmentLocationsGet);
+    mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet);
 
     render(
       <LocationAndTimeStep />,
@@ -75,7 +88,7 @@ describe('The location and time step', () => {
   });
 
   it('disables time until a location and date are selected', async () => {
-    mswServer.use(mockAppointmentLocationsGet, mockAppointmentDatesGet);
+    mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
 
     render(<LocationAndTimeStep />, {
       products: [{product: 'e8e045ab', amount: 1}],
@@ -90,7 +103,12 @@ describe('The location and time step', () => {
   });
 
   it('enables time when a location and date are selected', async () => {
-    mswServer.use(mockAppointmentLocationsGet, mockAppointmentDatesGet, mockAppointmentTimesGet);
+    mswServer.use(
+      mockAppointmentProductsGet,
+      mockAppointmentLocationsGet,
+      mockAppointmentDatesGet,
+      mockAppointmentTimesGet
+    );
 
     render(<LocationAndTimeStep />, {
       products: [{product: 'e8e045ab', amount: 1}],
@@ -105,7 +123,7 @@ describe('The location and time step', () => {
   });
 
   it('autoselects location when there is only one option and enables the date field', async () => {
-    mswServer.use(mockAppointmentLocationsGet, mockAppointmentDatesGet);
+    mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
 
     render(<LocationAndTimeStep />, {
       products: [{product: '166a5c79', amount: 1}],
