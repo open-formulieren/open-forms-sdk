@@ -43,10 +43,10 @@
       "value": "."
     }
   ],
-  "/zQgYv": [
+  "+uwsgF": [
     {
       "type": 0,
-      "value": "Next"
+      "value": "Location and time"
     }
   ],
   "0j8tMq": [
@@ -61,10 +61,46 @@
       "value": "Something went wrong while presenting the login option. Please contact the municipality."
     }
   ],
+  "1vvlWB": [
+    {
+      "type": 0,
+      "value": "Thank you for co-signing this submission."
+    }
+  ],
+  "2I8NDW": [
+    {
+      "type": 0,
+      "value": "Date"
+    }
+  ],
+  "2KKNKT": [
+    {
+      "type": 0,
+      "value": "Previous year"
+    }
+  ],
+  "2osLqe": [
+    {
+      "type": 0,
+      "value": "Location and time"
+    }
+  ],
+  "4IX8hk": [
+    {
+      "type": 0,
+      "value": "Loading..."
+    }
+  ],
   "5uh2hS": [
     {
       "type": 0,
       "value": "Appointment cancellation failed"
+    }
+  ],
+  "61Rlys": [
+    {
+      "type": 0,
+      "value": "Check and co-sign submission"
     }
   ],
   "6GNK65": [
@@ -79,10 +115,34 @@
       "value": "Pay now"
     }
   ],
+  "7Fk8NY": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "amount"
+    },
+    {
+      "type": 0,
+      "value": "x"
+    }
+  ],
   "7kd6yw": [
     {
       "type": 0,
       "value": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
+    }
+  ],
+  "8EnHAe": [
+    {
+      "type": 0,
+      "value": "Time"
     }
   ],
   "8MZ9TV": [
@@ -121,6 +181,12 @@
       "value": "Check and confirm"
     }
   ],
+  "Aaq2GF": [
+    {
+      "type": 0,
+      "value": "Sorry, there are no available dates for your appointment. Please try again later."
+    }
+  ],
   "AnNsAY": [
     {
       "type": 0,
@@ -131,6 +197,12 @@
     {
       "type": 0,
       "value": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
+    }
+  ],
+  "AustF4": [
+    {
+      "type": 0,
+      "value": "Next month"
     }
   ],
   "AxDC+M": [
@@ -147,6 +219,12 @@
     {
       "type": 0,
       "value": "This form is currently undergoing maintenance and can not be accessed at the moment."
+    }
+  ],
+  "DCzTpQ": [
+    {
+      "type": 0,
+      "value": "Remove"
     }
   ],
   "DK2ewv": [
@@ -181,6 +259,18 @@
       "value": "Download PDF"
     }
   ],
+  "EBUHP+": [
+    {
+      "type": 0,
+      "value": "Contact details"
+    }
+  ],
+  "GiRKAS": [
+    {
+      "type": 0,
+      "value": "Back to products"
+    }
+  ],
   "GpGYMo": [
     {
       "type": 0,
@@ -203,6 +293,18 @@
     {
       "type": 0,
       "value": "Save and resume later"
+    }
+  ],
+  "IhLYXK": [
+    {
+      "type": 0,
+      "value": "Toggle calendar"
+    }
+  ],
+  "IzoDEF": [
+    {
+      "type": 0,
+      "value": "Select your product(s)"
     }
   ],
   "J9svUq": [
@@ -229,10 +331,22 @@
       "value": "Unfortunately something went wrong!"
     }
   ],
+  "KWP1b9": [
+    {
+      "type": 0,
+      "value": "Previous month"
+    }
+  ],
   "KvSkZT": [
     {
       "type": 0,
       "value": "Oops!"
+    }
+  ],
+  "LBjx2X": [
+    {
+      "type": 0,
+      "value": "Location"
     }
   ],
   "LEeGSv": [
@@ -281,6 +395,12 @@
       "value": "Payment is required for this product"
     }
   ],
+  "QPdaOi": [
+    {
+      "type": 0,
+      "value": "No results found"
+    }
+  ],
   "Qu8SM1": [
     {
       "type": 0,
@@ -309,6 +429,12 @@
       "value": "formName"
     }
   ],
+  "Tip5+d": [
+    {
+      "type": 0,
+      "value": "Next year"
+    }
+  ],
   "UWylpR": [
     {
       "type": 0,
@@ -321,6 +447,24 @@
     {
       "type": 0,
       "value": " authentication service. Please try again later."
+    }
+  ],
+  "UyEKdQ": [
+    {
+      "type": 0,
+      "value": "Product "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    },
+    {
+      "type": 0,
+      "value": "/"
+    },
+    {
+      "type": 1,
+      "value": "total"
     }
   ],
   "VaNtPf": [
@@ -373,12 +517,6 @@
       "value": " geannuleerd."
     }
   ],
-  "Zepehv": [
-    {
-      "type": 0,
-      "value": "Appointment"
-    }
-  ],
   "a8QRYP": [
     {
       "type": 0,
@@ -419,6 +557,12 @@
     {
       "type": 1,
       "value": "reference"
+    }
+  ],
+  "bPuRrE": [
+    {
+      "type": 0,
+      "value": "yyyy-mm-dd"
     }
   ],
   "bgfiRG": [
@@ -469,10 +613,22 @@
       "value": "Payment overview"
     }
   ],
+  "g1jgtg": [
+    {
+      "type": 0,
+      "value": "Confirm products"
+    }
+  ],
   "gPfRU4": [
     {
       "type": 0,
       "value": "Check and confirm"
+    }
+  ],
+  "gUyAAs": [
+    {
+      "type": 0,
+      "value": "Times are in your local time"
     }
   ],
   "hHS5vj": [
@@ -517,10 +673,28 @@
       "value": "Sorry - this form is no longer available"
     }
   ],
+  "jGbpQq": [
+    {
+      "type": 0,
+      "value": "Download PDF report of the submission"
+    }
+  ],
   "jYh8Nr": [
     {
       "type": 0,
       "value": "Your appointment has been cancelled"
+    }
+  ],
+  "jbeaEq": [
+    {
+      "type": 0,
+      "value": "Location and time"
+    }
+  ],
+  "jbireK": [
+    {
+      "type": 0,
+      "value": "Your products"
     }
   ],
   "jqJgG+": [
@@ -533,6 +707,24 @@
     {
       "type": 0,
       "value": "Start page"
+    }
+  ],
+  "kICI8K": [
+    {
+      "type": 0,
+      "value": "Product"
+    }
+  ],
+  "l/0YVO": [
+    {
+      "type": 0,
+      "value": "Product"
+    }
+  ],
+  "lY+Mza": [
+    {
+      "type": 0,
+      "value": "Product"
     }
   ],
   "lq29t6": [
@@ -571,6 +763,50 @@
     {
       "type": 0,
       "value": "Your session has expired"
+    }
+  ],
+  "oTz7XX": [
+    {
+      "type": 0,
+      "value": "Add another product"
+    }
+  ],
+  "qKxfrz": [
+    {
+      "type": 0,
+      "value": "Log in to co-sign the form"
+    }
+  ],
+  "qf2UCG": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (optional)"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "withAsterisk"
     }
   ],
   "r1L6Zj": [
@@ -613,6 +849,12 @@
       "value": ". Please fill out your email address for verification purposes."
     }
   ],
+  "svhHKB": [
+    {
+      "type": 0,
+      "value": "To contact details"
+    }
+  ],
   "tBQ8TL": [
     {
       "type": 0,
@@ -649,22 +891,28 @@
       "value": "Failed to determine the appointment time"
     }
   ],
-  "xCQcFj": [
+  "vf9+XT": [
     {
-      "type": 1,
-      "value": "label"
+      "type": 0,
+      "value": "Amount"
+    }
+  ],
+  "yW2uhj": [
+    {
+      "type": 0,
+      "value": "Co-sign confirmation"
+    }
+  ],
+  "zQWnFh": [
+    {
+      "type": 0,
+      "value": "Are you sure that you want to logout and not co-sign the current form submission?"
     }
   ],
   "zkdWYe": [
     {
       "type": 0,
       "value": "Return to main website"
-    }
-  ],
-  "zpq0Cf": [
-    {
-      "type": 0,
-      "value": "Appointment details"
     }
   ]
 }

@@ -22,7 +22,7 @@ const APPOINTMENT_STEPS = [
     path: 'producten',
     element: <ChooseProductStep />,
     name: defineMessage({
-      description: "Appointments navbar title for '' step",
+      description: "Appointments navbar title for 'products' step",
       defaultMessage: 'Product',
     }),
     validCheck: isProductStepValid,
@@ -31,7 +31,7 @@ const APPOINTMENT_STEPS = [
     path: 'kalender',
     element: <LocationAndTimeStep />,
     name: defineMessage({
-      description: "Appointments navbar title for '' step",
+      description: "Appointments navbar title for 'location and time' step",
       defaultMessage: 'Location and time',
     }),
     validCheck: isLocationAndTimeStepValid,
@@ -40,7 +40,7 @@ const APPOINTMENT_STEPS = [
     path: 'contactgegevens',
     element: <>Contactgegevens</>,
     name: defineMessage({
-      description: "Appointments navbar title for '' step",
+      description: "Appointments navbar title for 'contact details' step",
       defaultMessage: 'Contact details',
     }),
     validCheck: () => false,

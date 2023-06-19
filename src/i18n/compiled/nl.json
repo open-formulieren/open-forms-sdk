@@ -43,10 +43,10 @@
       "value": " actief."
     }
   ],
-  "/zQgYv": [
+  "+uwsgF": [
     {
       "type": 0,
-      "value": "Next"
+      "value": "Afspraakdetails"
     }
   ],
   "0j8tMq": [
@@ -61,10 +61,46 @@
       "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
     }
   ],
+  "1vvlWB": [
+    {
+      "type": 0,
+      "value": "Bedankt voor het mede-ondertekenen van deze inzending."
+    }
+  ],
+  "2I8NDW": [
+    {
+      "type": 0,
+      "value": "Datum"
+    }
+  ],
+  "2KKNKT": [
+    {
+      "type": 0,
+      "value": "Vorig jaar"
+    }
+  ],
+  "2osLqe": [
+    {
+      "type": 0,
+      "value": "Locatie en tijd"
+    }
+  ],
+  "4IX8hk": [
+    {
+      "type": 0,
+      "value": "Opties ophalen..."
+    }
+  ],
   "5uh2hS": [
     {
       "type": 0,
       "value": "Afspraak annuleren mislukt"
+    }
+  ],
+  "61Rlys": [
+    {
+      "type": 0,
+      "value": "Controle en mede-ondertekenen inzending"
     }
   ],
   "6GNK65": [
@@ -79,10 +115,34 @@
       "value": "Nu betalen"
     }
   ],
+  "7Fk8NY": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "amount"
+    },
+    {
+      "type": 0,
+      "value": "x"
+    }
+  ],
   "7kd6yw": [
     {
       "type": 0,
       "value": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen."
+    }
+  ],
+  "8EnHAe": [
+    {
+      "type": 0,
+      "value": "Tijdstip"
     }
   ],
   "8MZ9TV": [
@@ -121,6 +181,12 @@
       "value": "Controleer en bevestig"
     }
   ],
+  "Aaq2GF": [
+    {
+      "type": 0,
+      "value": "Sorry, er zijn geen datums beschikbaar voor uw afspraak. Probeer het later opnieuw."
+    }
+  ],
   "AnNsAY": [
     {
       "type": 0,
@@ -131,6 +197,12 @@
     {
       "type": 0,
       "value": "Er is iets fout gegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op."
+    }
+  ],
+  "AustF4": [
+    {
+      "type": 0,
+      "value": "Volgende maand"
     }
   ],
   "AxDC+M": [
@@ -149,6 +221,12 @@
       "value": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar."
     }
   ],
+  "DCzTpQ": [
+    {
+      "type": 0,
+      "value": "Verwijderen"
+    }
+  ],
   "DK2ewv": [
     {
       "type": 0,
@@ -158,7 +236,7 @@
   "DvlDIB": [
     {
       "type": 0,
-      "value": "Are you sure that you want to logout?"
+      "value": "Bent u zeker dat uw wilt uitloggen?"
     }
   ],
   "DxbUkA": [
@@ -179,6 +257,18 @@
     {
       "type": 0,
       "value": "Download uw inzending als PDF document"
+    }
+  ],
+  "EBUHP+": [
+    {
+      "type": 0,
+      "value": "Contactgegevens"
+    }
+  ],
+  "GiRKAS": [
+    {
+      "type": 0,
+      "value": "Terug naar producten"
     }
   ],
   "GpGYMo": [
@@ -205,6 +295,18 @@
       "value": "Opslaan en later verdergaan"
     }
   ],
+  "IhLYXK": [
+    {
+      "type": 0,
+      "value": "Toon/verberg de kalender"
+    }
+  ],
+  "IzoDEF": [
+    {
+      "type": 0,
+      "value": "Product en/of dienst(en)"
+    }
+  ],
   "J9svUq": [
     {
       "type": 0,
@@ -229,10 +331,22 @@
       "value": "Er ging helaas iets fout!"
     }
   ],
+  "KWP1b9": [
+    {
+      "type": 0,
+      "value": "Vorige maand"
+    }
+  ],
   "KvSkZT": [
     {
       "type": 0,
       "value": "Oeps!"
+    }
+  ],
+  "LBjx2X": [
+    {
+      "type": 0,
+      "value": "Locatie"
     }
   ],
   "LEeGSv": [
@@ -281,6 +395,12 @@
       "value": "Voor dit product is betaling vereist"
     }
   ],
+  "QPdaOi": [
+    {
+      "type": 0,
+      "value": "Geen beschikbare keuzes"
+    }
+  ],
   "Qu8SM1": [
     {
       "type": 0,
@@ -290,7 +410,7 @@
   "R0CpY1": [
     {
       "type": 0,
-      "value": "Abort existing submission"
+      "value": "Opnieuw starten"
     }
   ],
   "RJ+0F/": [
@@ -309,6 +429,12 @@
       "value": "formName"
     }
   ],
+  "Tip5+d": [
+    {
+      "type": 0,
+      "value": "Volgend jaar"
+    }
+  ],
   "UWylpR": [
     {
       "type": 0,
@@ -321,6 +447,24 @@
     {
       "type": 0,
       "value": " authenticatieservice. Gelieve later opnieuw te proberen."
+    }
+  ],
+  "UyEKdQ": [
+    {
+      "type": 0,
+      "value": "Product "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    },
+    {
+      "type": 0,
+      "value": "/"
+    },
+    {
+      "type": 1,
+      "value": "total"
     }
   ],
   "VaNtPf": [
@@ -373,12 +517,6 @@
       "value": " geannuleerd."
     }
   ],
-  "Zepehv": [
-    {
-      "type": 0,
-      "value": "Appointment"
-    }
-  ],
   "a8QRYP": [
     {
       "type": 0,
@@ -419,6 +557,12 @@
     {
       "type": 1,
       "value": "reference"
+    }
+  ],
+  "bPuRrE": [
+    {
+      "type": 0,
+      "value": "jjjj-mm-dd"
     }
   ],
   "bgfiRG": [
@@ -469,10 +613,22 @@
       "value": "Betaaloverzicht"
     }
   ],
+  "g1jgtg": [
+    {
+      "type": 0,
+      "value": "Bevestig producten"
+    }
+  ],
   "gPfRU4": [
     {
       "type": 0,
       "value": "Controle en bevestiging"
+    }
+  ],
+  "gUyAAs": [
+    {
+      "type": 0,
+      "value": "U wordt op dit tijdstip op de afspraak verwacht"
     }
   ],
   "hHS5vj": [
@@ -490,7 +646,7 @@
   "hR1LxA": [
     {
       "type": 0,
-      "value": "Current step in form "
+      "value": "Huidige stap in formulier "
     },
     {
       "type": 1,
@@ -517,10 +673,28 @@
       "value": "Onze excuses - dit formulier is niet langer beschikbaar"
     }
   ],
+  "jGbpQq": [
+    {
+      "type": 0,
+      "value": "Download uw inzending als PDF document"
+    }
+  ],
   "jYh8Nr": [
     {
       "type": 0,
       "value": "Uw afspraak is geannuleerd"
+    }
+  ],
+  "jbeaEq": [
+    {
+      "type": 0,
+      "value": "Afspraakdetails: locatie en tijdstip"
+    }
+  ],
+  "jbireK": [
+    {
+      "type": 0,
+      "value": "Uw producten"
     }
   ],
   "jqJgG+": [
@@ -535,16 +709,34 @@
       "value": "Startpagina"
     }
   ],
+  "kICI8K": [
+    {
+      "type": 0,
+      "value": "Product"
+    }
+  ],
+  "l/0YVO": [
+    {
+      "type": 0,
+      "value": "Product"
+    }
+  ],
+  "lY+Mza": [
+    {
+      "type": 0,
+      "value": "Product"
+    }
+  ],
   "lq29t6": [
     {
       "type": 0,
-      "value": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
+      "value": "Bent u zeker dat u deze formulierinzending wilt afbreken? U verliest alle voortgang als u bevestigt."
     }
   ],
   "lxjglE": [
     {
       "type": 0,
-      "value": "Continue existing submission"
+      "value": "Doorgaan met bestaande formuliergegevens"
     }
   ],
   "mMYAWl": [
@@ -571,6 +763,50 @@
     {
       "type": 0,
       "value": "Sessie verlopen"
+    }
+  ],
+  "oTz7XX": [
+    {
+      "type": 0,
+      "value": "Nog een product toevoegen"
+    }
+  ],
+  "qKxfrz": [
+    {
+      "type": 0,
+      "value": "Log in om het formulier mede te ondertekenen"
+    }
+  ],
+  "qf2UCG": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (optioneel)"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "withAsterisk"
     }
   ],
   "r1L6Zj": [
@@ -613,6 +849,12 @@
       "value": " te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden."
     }
   ],
+  "svhHKB": [
+    {
+      "type": 0,
+      "value": "Naar contactgegevens"
+    }
+  ],
   "tBQ8TL": [
     {
       "type": 0,
@@ -649,22 +891,28 @@
       "value": "Het systeem kon de afspraak niet vinden"
     }
   ],
-  "xCQcFj": [
+  "vf9+XT": [
     {
-      "type": 1,
-      "value": "label"
+      "type": 0,
+      "value": "Aantal"
+    }
+  ],
+  "yW2uhj": [
+    {
+      "type": 0,
+      "value": "Bevestiging mede-ondertekening"
+    }
+  ],
+  "zQWnFh": [
+    {
+      "type": 0,
+      "value": "Bent u zeker dat u wilt uitloggen en hiermee de inzending niet mede-ondertekent?"
     }
   ],
   "zkdWYe": [
     {
       "type": 0,
       "value": "Terug naar de website"
-    }
-  ],
-  "zpq0Cf": [
-    {
-      "type": 0,
-      "value": "Appointment details"
     }
   ]
 }
