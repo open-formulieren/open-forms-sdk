@@ -102,14 +102,14 @@ const ProductSummary = () => {
         />
       </Heading3>
       <UnorderedList className="utrecht-unordered-list--distanced">
-        {products.map(({product, amount}, index) => (
-          <UnorderedListItem key={`${product}-${index}`}>
+        {products.map(({productId, amount}, index) => (
+          <UnorderedListItem key={`${productId}-${index}`}>
             <FormattedMessage
               description="Product summary on appointments location and time step"
               defaultMessage="{name}: {amount}x"
               values={{
                 amount,
-                name: productsById[product],
+                name: productsById[productId],
               }}
             />
           </UnorderedListItem>

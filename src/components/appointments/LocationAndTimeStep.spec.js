@@ -70,7 +70,7 @@ describe('The location and time step', () => {
       <LocationAndTimeStep />,
       // product with multiple locations, see ./mocks.js
       {
-        products: [{product: 'e8e045ab', amount: 1}],
+        products: [{productId: 'e8e045ab', amount: 1}],
         location: '',
         date: '',
         datetime: '',
@@ -91,7 +91,7 @@ describe('The location and time step', () => {
     mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
 
     render(<LocationAndTimeStep />, {
-      products: [{product: 'e8e045ab', amount: 1}],
+      products: [{productId: 'e8e045ab', amount: 1}],
       location: '34000e85',
       date: '',
       datetime: '',
@@ -111,7 +111,7 @@ describe('The location and time step', () => {
     );
 
     render(<LocationAndTimeStep />, {
-      products: [{product: 'e8e045ab', amount: 1}],
+      products: [{productId: 'e8e045ab', amount: 1}],
       location: '34000e85',
       date: '2023-06-12', // location Bahamas always has 'today' available
       datetime: '',
@@ -126,7 +126,7 @@ describe('The location and time step', () => {
     mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
 
     render(<LocationAndTimeStep />, {
-      products: [{product: '166a5c79', amount: 1}],
+      products: [{productId: '166a5c79', amount: 1}],
       location: '',
       date: '',
       datetime: '',

@@ -12,8 +12,8 @@ import {getBEMClassName} from 'utils';
 import Product from './Product';
 import SubmitRow from './SubmitRow';
 
-const isValidProduct = ({product, amount}) => {
-  if (!product) return false;
+const isValidProduct = ({productId, amount}) => {
+  if (!productId) return false;
   if (amount <= 0) return false;
   return true;
 };
@@ -58,7 +58,7 @@ const ChooseProductStep = () => {
         {arrayHelpers => (
           <div className={getBEMClassName('editgrid')}>
             <div className={getBEMClassName('editgrid__groups')}>
-              {products.map(({product: productId}, index) => (
+              {products.map(({productId}, index) => (
                 // blank blocks don't have a product selected yet -> so the index is added
                 // to make the key guaranteed unique
                 <div key={`${productId}-${index}`} className={getBEMClassName('editgrid__group')}>
@@ -96,7 +96,7 @@ const ChooseProductStep = () => {
               <Button
                 type="button"
                 variant="primary"
-                onClick={() => arrayHelpers.push({product: '', amount: 1})}
+                onClick={() => arrayHelpers.push({productId: '', amount: 1})}
               >
                 <FAIcon icon="plus" />
                 <FormattedMessage

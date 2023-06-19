@@ -1,4 +1,5 @@
 import {Form, Formik, useFormikContext} from 'formik';
+import produce from 'immer';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
@@ -77,25 +78,29 @@ const checkMatchesPath = (currentPathname, path) => {
 
 const AppointmentProgress = ({title, currentStep}) => {
   const config = useContext(ConfigContext);
-  const {values} = useFormikContext();
+  const {
+    status: {submittedSteps},
+  } = useFormikContext();
   const intl = useIntl();
   const {pathname: currentPathname} = useLocation();
 
   const [expanded, setExpanded] = useState(false);
 
   const currentStepIndex = APPOINTMENT_STEP_PATHS.indexOf(currentStep);
-  const steps = APPOINTMENT_STEPS.map(({path, name, validCheck}) => {
+  const steps = APPOINTMENT_STEPS.map(({path, name}) => {
     const index = APPOINTMENT_STEP_PATHS.indexOf(path);
     const previousStepIndex = Math.max(index - 1, 0);
-    const previousStepCompleted = APPOINTMENT_STEPS[previousStepIndex].validCheck(values);
-    const isValid = validCheck(values);
+    const previousStepCompleted = submittedSteps.includes(
+      APPOINTMENT_STEP_PATHS[previousStepIndex]
+    );
     return {
       uuid: `appointments-${path}`,
-      href: path,
-      isCompleted: previousStepCompleted && isValid,
+      to: path,
+      isCompleted: submittedSteps.includes(path),
       isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, path),
-      canNavigateTo: previousStepCompleted || isValid,
+      canNavigateTo:
+        submittedSteps.includes(path) || previousStepCompleted || index === currentStepIndex,
       formDefinition: intl.formatMessage(name),
     };
   });
@@ -144,7 +149,7 @@ const CreateAppointment = ({form}) => {
       initialValues={{
         products: [
           {
-            product: '',
+            productId: '',
             amount: 1,
           },
         ],
@@ -155,7 +160,8 @@ const CreateAppointment = ({form}) => {
         dateOfBirth: '',
         phoneNumber: '',
       }}
-      onSubmit={(values, {setSubmitting}) => {
+      initialStatus={{submittedSteps: []}}
+      onSubmit={(values, {setSubmitting, setStatus}) => {
         switch (currentStep) {
           // last step -> actually submit everything?
           case APPOINTMENT_STEP_PATHS.at(-1): {
@@ -169,7 +175,9 @@ const CreateAppointment = ({form}) => {
             const index = APPOINTMENT_STEP_PATHS.indexOf(currentStep);
             const nextStep = APPOINTMENT_STEP_PATHS[index + 1];
             setSubmitting(false);
+            setStatus({submittedSteps: APPOINTMENT_STEP_PATHS.filter((_, idx) => idx <= index)});
             navigate(nextStep);
+            // TODO: store data in local storage so that hard refreshes don't break the state
             return;
           }
         }

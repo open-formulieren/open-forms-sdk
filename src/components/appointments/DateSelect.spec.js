@@ -28,7 +28,7 @@ const render = (comp, locationId) =>
       <IntlProvider locale="en" messages={messagesEN}>
         <Formik
           initialValues={{
-            products: [{product: 'e8e045ab', amount: 1}],
+            products: [{productId: 'e8e045ab', amount: 1}],
             location: locationId,
             date: '',
           }}

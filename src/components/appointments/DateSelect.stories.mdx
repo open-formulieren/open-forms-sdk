@@ -14,7 +14,7 @@ import {mockAppointmentDatesGet} from './mocks';
   parameters={{
     formik: {
       initialValues: {
-        products: [{product: 'e8e045ab', amount: 1}],
+        products: [{productId: 'e8e045ab', amount: 1}],
         location: '1396f17c',
         date: '',
       },
@@ -49,7 +49,7 @@ These gaps must be marked as disabled dates.
     parameters={{
       formik: {
         initialValues: {
-          products: [{product: 'e8e045ab', amount: 1}],
+          products: [{productId: 'e8e045ab', amount: 1}],
           location: '34000e85',
           date: '',
         },
@@ -70,7 +70,7 @@ A date can only be selected if a location is picked, as it is required input for
     parameters={{
       formik: {
         initialValues: {
-          products: [{product: 'e8e045ab', amount: 1}],
+          products: [{productId: 'e8e045ab', amount: 1}],
           location: '',
           date: '',
         },
@@ -97,7 +97,7 @@ When no appointment dates are available, instead we render an informative messag
     parameters={{
       formik: {
         initialValues: {
-          products: [{product: 'e8e045ab', amount: 1}],
+          products: [{productId: 'e8e045ab', amount: 1}],
           location: 'no-date',
           date: '',
         },
@@ -117,7 +117,7 @@ When no appointment dates are available, instead we render an informative messag
     parameters={{
       formik: {
         initialValues: {
-          products: [{product: 'e8e045ab', amount: 1}],
+          products: [{productId: 'e8e045ab', amount: 1}],
           location: 'single-date',
           date: '',
         },

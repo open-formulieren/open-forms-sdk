@@ -166,7 +166,7 @@ const ProgressIndicatorDisplay = ({
           {steps.map((step, _) => (
             <SidebarStepStatus
               key={step.uuid}
-              to={step.href || `/stap/${step.slug}`}
+              to={step.to || `/stap/${step.slug}`}
               formDefinition={step.formDefinition}
               completed={step.isCompleted}
               isApplicable={step.isApplicable}
@@ -207,8 +207,8 @@ ProgressIndicatorDisplay.propTypes = {
     PropTypes.shape({
       uuid: PropTypes.string.isRequired,
       slug: PropTypes.string,
+      to: PropTypes.string,
       formDefinition: PropTypes.string,
-      href: PropTypes.string,
       isCompleted: PropTypes.bool,
       isApplicable: PropTypes.bool,
       isCurrent: PropTypes.bool,
