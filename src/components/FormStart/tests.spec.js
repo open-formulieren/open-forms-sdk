@@ -1,5 +1,5 @@
 import {render as renderTest, screen} from '@testing-library/react';
-import messagesNL from 'i18n/compiled/nl.json';
+import messagesEN from 'i18n/compiled/en.json';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
@@ -33,7 +33,7 @@ afterEach(() => {
 });
 
 const Wrap = ({children}) => (
-  <IntlProvider locale="nl" messages={messagesNL}>
+  <IntlProvider locale="en" messages={messagesEN}>
     <MemoryRouter>{children}</MemoryRouter>
   </IntlProvider>
 );
