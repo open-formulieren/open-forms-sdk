@@ -17,7 +17,7 @@ export const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date
   parameters={{
     formik: {
       initialValues: {
-        products: [{product: 'e8e045ab', amount: 1}],
+        products: [{productId: 'e8e045ab', amount: 1}],
         location: '1396f17c',
         date: tomorrow,
         datetime: '',
@@ -51,7 +51,7 @@ The time field is only enabled when one or more products, a location and a date 
     parameters={{
       formik: {
         initialValues: {
-          products: [{product: 'e8e045ab', amount: 1}],
+          products: [{productId: 'e8e045ab', amount: 1}],
           location: '1396f17c',
           date: '',
           datetime: '',

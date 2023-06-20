@@ -9,17 +9,17 @@ import {mockAppointmentProductsGet} from './mocks';
 
 export const PRODUCTS_DATA = [
   {
-    product: '166a5c79',
+    productId: '166a5c79',
     amount: 2,
   },
   {
-    product: 'e8e045ab',
+    productId: 'e8e045ab',
     amount: 1,
   },
 ];
 
-export const Template = ({product}) => {
-  const data_entry = PRODUCTS_DATA.find(prod => prod.product === product);
+export const Template = ({productId}) => {
+  const data_entry = PRODUCTS_DATA.find(prod => prod.productId === productId);
   const index = PRODUCTS_DATA.indexOf(data_entry);
   return <Product namePrefix="products" index={index} />;
 };
@@ -29,7 +29,7 @@ export const Template = ({product}) => {
   component={Product}
   decorators={[FormikDecorator, ConfigDecorator]}
   argTypes={{
-    product: {
+    productId: {
       options: ['166a5c79', 'e8e045ab'],
       control: {type: 'radio'},
     },
@@ -51,7 +51,7 @@ export const Template = ({product}) => {
     name="Product and amount"
     args={{
       namePrefix: 'products',
-      product: '166a5c79',
+      productId: '166a5c79',
     }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);

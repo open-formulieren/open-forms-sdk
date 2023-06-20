@@ -18,7 +18,7 @@ const getLocations = async (baseUrl, productIds) => {
 const LocationSelect = () => {
   const {baseUrl} = useContext(ConfigContext);
   const {values} = useFormikContext();
-  const productIds = (values.products || []).map(prod => prod.product);
+  const productIds = (values.products || []).map(prod => prod.productId);
   const getOptions = useCallback(
     async () => await getLocations(baseUrl, productIds),
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055

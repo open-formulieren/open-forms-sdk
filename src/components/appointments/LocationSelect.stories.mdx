@@ -16,7 +16,7 @@ export const Template = () => <LocationSelect name="product" />;
   parameters={{
     formik: {
       initialValues: {
-        products: [{product: 'e8e045ab', amount: 1}],
+        products: [{productId: 'e8e045ab', amount: 1}],
         location: '',
       },
     },
@@ -55,8 +55,8 @@ export const Template = () => <LocationSelect name="product" />;
       formik: {
         initialValues: {
           products: [
-            {product: 'e8e045ab', amount: 1},
-            {product: '166a5c79', amount: 1},
+            {productId: 'e8e045ab', amount: 1},
+            {productId: '166a5c79', amount: 1},
           ],
           location: '',
         },

@@ -83,6 +83,7 @@ const ProgressIndicator = ({
     return steps.map((step, index) => ({
       uuid: step.uuid,
       slug: step.slug,
+      to: step.href || `/stap/${step.slug}`,
       formDefinition: step.formDefinition,
       isCompleted: submission ? submission.steps[index].completed : false,
       isApplicable: submission ? submission.steps[index].isApplicable : true,
@@ -128,6 +129,7 @@ ProgressIndicator.propTypes = {
       uuid: PropTypes.string.isRequired,
       index: PropTypes.number.isRequired,
       slug: PropTypes.string.isRequired,
+      href: PropTypes.string,
       formDefinition: PropTypes.string.isRequired,
     })
   ).isRequired,

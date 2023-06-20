@@ -1,6 +1,7 @@
 import {Canvas, Meta, Story} from '@storybook/addon-docs';
 import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
+import {withRouter} from 'storybook-addon-react-router-v6';
 
 import Card from 'components/Card';
 import {ConfigDecorator, FormikDecorator, LayoutDecorator} from 'story-utils/decorators';
@@ -11,14 +12,14 @@ import {mockAppointmentProductsGet} from './mocks';
 <Meta
   title="Private API / Appointments / Steps / Choose product"
   component={ChooseProductStep}
-  decorators={[LayoutDecorator, FormikDecorator, ConfigDecorator]}
+  decorators={[LayoutDecorator, FormikDecorator, withRouter, ConfigDecorator]}
   parameters={{
     controls: {hideNoControlsWarning: true},
     formik: {
       initialValues: {
         products: [
           {
-            product: '',
+            productId: '',
             amount: 1,
           },
         ],
@@ -72,7 +73,7 @@ them, unless there's only a single row left - then removing that row is not allo
         initialValues: {
           products: [
             {
-              product: '166a5c79',
+              productId: '166a5c79',
               amount: 2,
             },
           ],
@@ -101,11 +102,11 @@ them, unless there's only a single row left - then removing that row is not allo
         initialValues: {
           products: [
             {
-              product: '166a5c79',
+              productId: '166a5c79',
               amount: 2,
             },
             {
-              product: 'e8e045ab',
+              productId: 'e8e045ab',
               amount: 1,
             },
           ],

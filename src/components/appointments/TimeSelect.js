@@ -27,7 +27,7 @@ const TimeSelect = () => {
 
   const getOptions = useCallback(
     async () => {
-      const productIds = (values.products || []).map(prod => prod.product);
+      const productIds = (values.products || []).map(prod => prod.productId);
       const results = await getDatetimes(baseUrl, productIds, values.location, values.date);
       // Array.prototype.toSorted is too new, jest tests can't handle it yet
       return results

@@ -47,7 +47,7 @@ LinkOrSpan.propTypes = {
 };
 
 const SidebarStepStatus = ({
-  slug,
+  to,
   formDefinition,
   canNavigate,
   isCurrent,
@@ -57,7 +57,7 @@ const SidebarStepStatus = ({
   return (
     <ProgressItem completed={completed}>
       <LinkOrSpan
-        to={`/stap/${slug}`}
+        to={to}
         useLink={isApplicable && canNavigate}
         isActive={isCurrent}
         isApplicable={isApplicable}
@@ -81,7 +81,7 @@ const SidebarStepStatus = ({
 };
 
 SidebarStepStatus.propTypes = {
-  slug: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
   formDefinition: PropTypes.string.isRequired,
   isCurrent: PropTypes.bool.isRequired,
   completed: PropTypes.bool,
@@ -166,7 +166,7 @@ const ProgressIndicatorDisplay = ({
           {steps.map((step, _) => (
             <SidebarStepStatus
               key={step.uuid}
-              slug={step.slug}
+              to={step.to || `/stap/${step.slug}`}
               formDefinition={step.formDefinition}
               completed={step.isCompleted}
               isApplicable={step.isApplicable}
@@ -199,13 +199,15 @@ const ProgressIndicatorDisplay = ({
   );
 };
 
+// TODO: clean up props to be more generic and apply mapping in call-sites
 ProgressIndicatorDisplay.propTypes = {
   activeStepTitle: PropTypes.node,
   formTitle: PropTypes.string,
   steps: PropTypes.arrayOf(
     PropTypes.shape({
-      uuid: PropTypes.string,
+      uuid: PropTypes.string.isRequired,
       slug: PropTypes.string,
+      to: PropTypes.string,
       formDefinition: PropTypes.string,
       isCompleted: PropTypes.bool,
       isApplicable: PropTypes.bool,

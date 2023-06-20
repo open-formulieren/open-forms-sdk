@@ -27,11 +27,15 @@ const ButtonsToolbar = ({
       <LiteralsProvider literals={literals}>
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
-            <Button variant="anchor" onClick={onNavigatePrevPage}>
-              <Literal name="previousText" />
-            </Button>
+            {onNavigatePrevPage && (
+              <Button variant="anchor" onClick={onNavigatePrevPage}>
+                <Literal name="previousText" />
+              </Button>
+            )}
           </ToolbarList>
           <ToolbarList>
+            {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
+            need to be its own prop */}
             {canSuspendForm && (
               <Button type="button" variant="secondary" name="save" onClick={onFormSave}>
                 <Literal name="saveText" />
@@ -62,7 +66,7 @@ ButtonsToolbar.propTypes = {
   isLastStep: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   isCheckingLogic: PropTypes.bool.isRequired,
-  onNavigatePrevPage: PropTypes.func.isRequired,
+  onNavigatePrevPage: PropTypes.func,
   onFormSave: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };

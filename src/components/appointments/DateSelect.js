@@ -33,7 +33,7 @@ const DateSelect = () => {
     error,
   } = useAsync(
     async () => {
-      const productIds = (values.products || []).map(prod => prod.product);
+      const productIds = (values.products || []).map(prod => prod.productId);
       return await getDates(baseUrl, productIds, values.location);
     },
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055

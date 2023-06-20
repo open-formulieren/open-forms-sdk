@@ -7,7 +7,7 @@ import ProductSelect from './ProductSelect';
 
 const Product = ({namePrefix, index}) => (
   <div>
-    <ProductSelect name={`${namePrefix}[${index}].product`} />
+    <ProductSelect name={`${namePrefix}[${index}].productId`} />
     <NumberField
       name={`${namePrefix}[${index}].amount`}
       label={

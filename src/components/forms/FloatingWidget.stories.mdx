@@ -5,7 +5,7 @@ import {userEvent, waitFor, waitForElementToBeRemoved, within} from '@storybook/
 import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
 
 export const waitForFocus = async element => {
-  await waitFor(() => expect(reference).toHaveFocus());
+  await waitFor(() => expect(element).toHaveFocus());
 };
 
 <Meta title="Private API / FloatingWidget" component={FloatingWidget} />
