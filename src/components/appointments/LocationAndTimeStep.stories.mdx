@@ -48,16 +48,8 @@ This component enables the UX to select an available location. The input of prod
 then determines the available dates. Finally, the selected date determines the available times. A
 location, date and time must be provided as input by the user.
 
-**TODO**: in the current iteration, the location follows product selection, but this order should be
-swapped.
-
 <Canvas>
-  <Story
-    name="Initial state"
-    play={async ({canvasElement}) => {
-      const canvas = within(canvasElement);
-    }}
-  >
+  <Story name="Initial state">
     <Card>
       <LocationAndTimeStep />
     </Card>

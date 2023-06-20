@@ -89,7 +89,7 @@ export const waitForFocus = async element => {
       await waitFor(
         async () =>
           await expect(
-            await canvas.queryByRole('button', {name: 'Confirm products'})
+            await canvas.queryByRole('button', {name: 'Bevestig producten'})
           ).toHaveAttribute('aria-disabled', 'true')
       );
       // select the product
@@ -103,28 +103,28 @@ export const waitForFocus = async element => {
       const productOption = await canvas.findByText('Paspoort aanvraag');
       await userEvent.click(productOption);
       // submit the step
-      await userEvent.click(canvas.getByRole('button', {name: 'Confirm products'}));
+      await userEvent.click(canvas.getByRole('button', {name: 'Bevestig producten'}));
       // fill out location and time step
-      expect(canvas.getByText('Location and time')).toBeVisible();
+      expect(await canvas.findByText('Locatie en tijd')).toBeVisible();
       await waitFor(async () => {
-        await expect(canvas.getByRole('button', {name: 'Back to products'})).toBeVisible();
+        await expect(canvas.getByRole('button', {name: 'Terug naar producten'})).toBeVisible();
         await expect(
-          await canvas.queryByRole('button', {name: 'To contact details'})
+          await canvas.queryByRole('button', {name: 'Naar contactgegevens'})
         ).toHaveAttribute('aria-disabled', 'true');
         // location auto-filled
         await canvas.findByText('Open Gem');
       });
       // this location has a date available tomorrow (see ./mocks.js)
       const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date'});
-      const dateLabel = await canvas.findByText('Date');
+      const dateLabel = await canvas.findByText('Datum');
       await waitFor(async () => {
-        const dateInput = await canvas.findByLabelText('Date');
+        const dateInput = await canvas.findByLabelText('Datum');
         await expect(dateInput).not.toBeDisabled();
         await userEvent.type(dateInput, tomorrow);
       });
       let timeDropdown;
       await waitFor(async () => {
-        timeDropdown = await canvas.findByLabelText('Time');
+        timeDropdown = await canvas.findByLabelText('Tijdstip');
         await expect(timeDropdown).not.toBeDisabled();
       });
       await timeDropdown.focus();
@@ -132,7 +132,7 @@ export const waitForFocus = async element => {
       const timeOption = await canvas.findByText(/[0-2]{2}:00$/);
       await userEvent.click(timeOption);
       // submit the step
-      await userEvent.click(canvas.getByRole('button', {name: 'To contact details'}));
+      await userEvent.click(canvas.getByRole('button', {name: 'Naar contactgegevens'}));
     }}
   >
     {Template.bind({})}

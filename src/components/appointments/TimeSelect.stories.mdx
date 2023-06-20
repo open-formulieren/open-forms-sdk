@@ -60,7 +60,7 @@ The time field is only enabled when one or more products, a location and a date 
     }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
-      const dropdown = canvas.getByLabelText('Time');
+      const dropdown = canvas.getByLabelText('Tijdstip');
       await expect(dropdown.role).toBe('combobox');
       await expect(dropdown).toBeDisabled();
     }}
@@ -81,7 +81,7 @@ end-user, the times are displayed in their local timezone, configured on their O
     }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
-      const dropdown = canvas.getByLabelText('Time');
+      const dropdown = canvas.getByLabelText('Tijdstip');
       await dropdown.focus();
       await userEvent.keyboard('[ArrowDown]');
       await waitFor(async () => {

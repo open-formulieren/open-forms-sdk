@@ -78,8 +78,8 @@ A date can only be selected if a location is picked, as it is required input for
     }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
-      await expect(canvas.getByLabelText('Date')).toBeDisabled();
-      await userEvent.click(canvas.getByLabelText('Date'));
+      await expect(canvas.getByLabelText('Datum')).toBeDisabled();
+      await userEvent.click(canvas.getByLabelText('Datum'));
       await expect(await canvas.queryByRole('dialog')).not.toBeInTheDocument();
     }}
   >

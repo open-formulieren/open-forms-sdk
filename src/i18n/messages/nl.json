@@ -9,10 +9,10 @@
     "description": "Form save modal body text",
     "originalDefault": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
   },
-  "/zQgYv": {
-    "defaultMessage": "Next",
-    "description": "Save appointment",
-    "originalDefault": "Next"
+  "+uwsgF": {
+    "defaultMessage": "Afspraakdetails",
+    "description": "Appointments navbar title for 'location and time' step",
+    "originalDefault": "Location and time"
   },
   "0j8tMq": {
     "defaultMessage": "Uitloggen",
@@ -24,10 +24,40 @@
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
+  "1vvlWB": {
+    "defaultMessage": "Bedankt voor het mede-ondertekenen van deze inzending.",
+    "description": "Co-sign confirmation page body",
+    "originalDefault": "Thank you for co-signing this submission."
+  },
+  "2I8NDW": {
+    "defaultMessage": "Datum",
+    "description": "Appoinments: appointment date label",
+    "originalDefault": "Date"
+  },
+  "2KKNKT": {
+    "defaultMessage": "Vorig jaar",
+    "description": "Calendar: previous year button title",
+    "originalDefault": "Previous year"
+  },
+  "2osLqe": {
+    "defaultMessage": "Locatie en tijd",
+    "description": "Appointments: select location and time step title",
+    "originalDefault": "Location and time"
+  },
+  "4IX8hk": {
+    "defaultMessage": "Opties ophalen...",
+    "description": "(Async) select options loading message",
+    "originalDefault": "Loading..."
+  },
   "5uh2hS": {
     "defaultMessage": "Afspraak annuleren mislukt",
     "description": "Appointment cancellation error message",
     "originalDefault": "Appointment cancellation failed"
+  },
+  "61Rlys": {
+    "defaultMessage": "Controle en mede-ondertekenen inzending",
+    "description": "Check overview and co-sign",
+    "originalDefault": "Check and co-sign submission"
   },
   "6GNK65": {
     "defaultMessage": "U moet ingelogd zijn voor deze actie.",
@@ -39,10 +69,20 @@
     "description": "Start payment button",
     "originalDefault": "Pay now"
   },
+  "7Fk8NY": {
+    "defaultMessage": "{name}: {amount}x",
+    "description": "Product summary on appointments location and time step",
+    "originalDefault": "{name}: {amount}x"
+  },
   "7kd6yw": {
     "defaultMessage": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen.",
     "description": "Maintenance mode message (for form designer)",
     "originalDefault": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
+  },
+  "8EnHAe": {
+    "defaultMessage": "Tijdstip",
+    "description": "Appoinments: time select label",
+    "originalDefault": "Time"
   },
   "8MZ9TV": {
     "defaultMessage": "U moet akkoord gaan met het privacybeleid om door te gaan",
@@ -74,6 +114,11 @@
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
   },
+  "Aaq2GF": {
+    "defaultMessage": "Sorry, er zijn geen datums beschikbaar voor uw afspraak. Probeer het later opnieuw.",
+    "description": "Appoinments: message shown for no available dates at all",
+    "originalDefault": "Sorry, there are no available dates for your appointment. Please try again later."
+  },
   "AnNsAY": {
     "defaultMessage": "Voortgang",
     "description": "Title of progress indicator",
@@ -83,6 +128,11 @@
     "defaultMessage": "Er is iets fout gegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op.",
     "description": "Co-signed without representation fallback message",
     "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
+  },
+  "AustF4": {
+    "defaultMessage": "Volgende maand",
+    "description": "Calendar: next month button title",
+    "originalDefault": "Next month"
   },
   "AxDC+M": {
     "defaultMessage": "Inloggen met {provider}",
@@ -94,13 +144,18 @@
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
   },
+  "DCzTpQ": {
+    "defaultMessage": "Verwijderen",
+    "description": "Appointments: remove product/service button text",
+    "originalDefault": "Remove"
+  },
   "DK2ewv": {
     "defaultMessage": "Inlogprobleem",
     "description": "'Permission denied' error title",
     "originalDefault": "Authentication problem"
   },
   "DvlDIB": {
-    "defaultMessage": "Are you sure that you want to logout?",
+    "defaultMessage": "Bent u zeker dat uw wilt uitloggen?",
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
   },
@@ -113,6 +168,16 @@
     "defaultMessage": "Download uw inzending als PDF document",
     "description": "Download report PDF link title",
     "originalDefault": "Download PDF"
+  },
+  "EBUHP+": {
+    "defaultMessage": "Contactgegevens",
+    "description": "Appointments navbar title for 'contact details' step",
+    "originalDefault": "Contact details"
+  },
+  "GiRKAS": {
+    "defaultMessage": "Terug naar producten",
+    "description": "Appointments location and time step: previous step text",
+    "originalDefault": "Back to products"
   },
   "GpGYMo": {
     "defaultMessage": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw.",
@@ -134,6 +199,16 @@
     "description": "Form save modal title",
     "originalDefault": "Save and resume later"
   },
+  "IhLYXK": {
+    "defaultMessage": "Toon/verberg de kalender",
+    "description": "Datepicker: accessible calendar toggle label",
+    "originalDefault": "Toggle calendar"
+  },
+  "IzoDEF": {
+    "defaultMessage": "Product en/of dienst(en)",
+    "description": "Appointments products step title",
+    "originalDefault": "Select your product(s)"
+  },
   "J9svUq": {
     "defaultMessage": "Sluiten",
     "description": "Modal close icon title",
@@ -154,10 +229,20 @@
     "description": "Generic error message",
     "originalDefault": "Unfortunately something went wrong!"
   },
+  "KWP1b9": {
+    "defaultMessage": "Vorige maand",
+    "description": "Calendar: previous month button title",
+    "originalDefault": "Previous month"
+  },
   "KvSkZT": {
     "defaultMessage": "Oeps!",
     "description": "Error boundary title",
     "originalDefault": "Oops!"
+  },
+  "LBjx2X": {
+    "defaultMessage": "Locatie",
+    "description": "Appoinments: location select label",
+    "originalDefault": "Location"
   },
   "LEeGSv": {
     "defaultMessage": "{isApplicable, select, false {{label} (n.v.t.)} other {{label}} }",
@@ -179,13 +264,18 @@
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
   },
+  "QPdaOi": {
+    "defaultMessage": "Geen beschikbare keuzes",
+    "description": "Select 'no options' message",
+    "originalDefault": "No results found"
+  },
   "Qu8SM1": {
     "defaultMessage": "Verlengen",
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
   },
   "R0CpY1": {
-    "defaultMessage": "Abort existing submission",
+    "defaultMessage": "Opnieuw starten",
     "description": "Abort existing submission button label",
     "originalDefault": "Abort existing submission"
   },
@@ -199,10 +289,20 @@
     "description": "Form start outage title",
     "originalDefault": "Problem - {formName}"
   },
+  "Tip5+d": {
+    "defaultMessage": "Volgend jaar",
+    "description": "Calendar: next year button title",
+    "originalDefault": "Next year"
+  },
   "UWylpR": {
     "defaultMessage": "Dit formulier is tijdelijk niet beschikbaar wegens een storing bij de {label} authenticatieservice. Gelieve later opnieuw te proberen.",
     "description": "Authentication outage message",
     "originalDefault": "This form is temporarily unavailable because of an outage with the {label} authentication service. Please try again later."
+  },
+  "UyEKdQ": {
+    "defaultMessage": "Product {number}/{total}",
+    "description": "Appointments: single product label/header",
+    "originalDefault": "Product {number}/{total}"
   },
   "VaNtPf": {
     "defaultMessage": "Afspraak annuleren",
@@ -239,11 +339,6 @@
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
   },
-  "Zepehv": {
-    "defaultMessage": "Appointment",
-    "description": "Appointment page title",
-    "originalDefault": "Appointment"
-  },
   "a8QRYP": {
     "defaultMessage": "Uw e-mailadres",
     "description": "Appointment cancellation email field label",
@@ -263,6 +358,11 @@
     "defaultMessage": "Bevestiging: {reference}",
     "description": "On succesful completion title",
     "originalDefault": "Confirmation: {reference}"
+  },
+  "bPuRrE": {
+    "defaultMessage": "jjjj-mm-dd",
+    "description": "Datepicker text input placeholder",
+    "originalDefault": "yyyy-mm-dd"
   },
   "bgfiRG": {
     "defaultMessage": "U hebt de betaling gestart.",
@@ -304,10 +404,20 @@
     "description": "Payment overview page title",
     "originalDefault": "Payment overview"
   },
+  "g1jgtg": {
+    "defaultMessage": "Bevestig producten",
+    "description": "Appointments products step: next step text",
+    "originalDefault": "Confirm products"
+  },
   "gPfRU4": {
     "defaultMessage": "Controle en bevestiging",
     "description": "Summary page title",
     "originalDefault": "Check and confirm"
+  },
+  "gUyAAs": {
+    "defaultMessage": "U wordt op dit tijdstip op de afspraak verwacht",
+    "description": "Appoinments: time select help text",
+    "originalDefault": "Times are in your local time"
   },
   "hHS5vj": {
     "defaultMessage": "Er is iets fout gegaan bij het verzenden.",
@@ -320,7 +430,7 @@
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
   "hR1LxA": {
-    "defaultMessage": "Current step in form {formTitle}: {activeStepTitle}",
+    "defaultMessage": "Huidige stap in formulier {formTitle}: {activeStepTitle}",
     "description": "Active step accessible label in mobile progress indicator",
     "originalDefault": "Current step in form {formTitle}: {activeStepTitle}"
   },
@@ -334,10 +444,25 @@
     "description": "'Deactivated form' error title",
     "originalDefault": "Sorry - this form is no longer available"
   },
+  "jGbpQq": {
+    "defaultMessage": "Download uw inzending als PDF document",
+    "description": "Download report PDF link title",
+    "originalDefault": "Download PDF report of the submission"
+  },
   "jYh8Nr": {
     "defaultMessage": "Uw afspraak is geannuleerd",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
+  },
+  "jbeaEq": {
+    "defaultMessage": "Afspraakdetails: locatie en tijdstip",
+    "description": "Appointments: location and time step step page title",
+    "originalDefault": "Location and time"
+  },
+  "jbireK": {
+    "defaultMessage": "Uw producten",
+    "description": "Product summary on appointments location and time step heading",
+    "originalDefault": "Your products"
   },
   "jqJgG+": {
     "defaultMessage": "Toon/verberg de voortgang in het formulier",
@@ -349,13 +474,28 @@
     "description": "Start page title",
     "originalDefault": "Start page"
   },
+  "kICI8K": {
+    "defaultMessage": "Product",
+    "description": "Appointments navbar title for 'products' step",
+    "originalDefault": "Product"
+  },
+  "l/0YVO": {
+    "defaultMessage": "Product",
+    "description": "Appoinments: product select label",
+    "originalDefault": "Product"
+  },
+  "lY+Mza": {
+    "defaultMessage": "Product",
+    "description": "Appointments products step page title",
+    "originalDefault": "Product"
+  },
   "lq29t6": {
-    "defaultMessage": "Are you sure that you want to abort this submission? You will lose your progress if you continue.",
+    "defaultMessage": "Bent u zeker dat u deze formulierinzending wilt afbreken? U verliest alle voortgang als u bevestigt.",
     "description": "Abort confirmation prompt",
     "originalDefault": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
   },
   "lxjglE": {
-    "defaultMessage": "Continue existing submission",
+    "defaultMessage": "Doorgaan met bestaande formuliergegevens",
     "description": "Continue existing submission button label",
     "originalDefault": "Continue existing submission"
   },
@@ -374,6 +514,21 @@
     "description": "Session expired card title",
     "originalDefault": "Your session has expired"
   },
+  "oTz7XX": {
+    "defaultMessage": "Nog een product toevoegen",
+    "description": "Appointments: add additional product/service button text",
+    "originalDefault": "Add another product"
+  },
+  "qKxfrz": {
+    "defaultMessage": "Log in om het formulier mede te ondertekenen",
+    "description": "Log in to co-sign the form title",
+    "originalDefault": "Log in to co-sign the form"
+  },
+  "qf2UCG": {
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (optioneel)}}",
+    "description": "Form field label, field possibly optional",
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}"
+  },
   "r1L6Zj": {
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
@@ -383,6 +538,11 @@
     "defaultMessage": "U staat op het punt uw afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden.",
     "description": "Appointment cancellation body text",
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
+  },
+  "svhHKB": {
+    "defaultMessage": "Naar contactgegevens",
+    "description": "Appointments location and time step: next step text",
+    "originalDefault": "To contact details"
   },
   "tBQ8TL": {
     "defaultMessage": "Niet mede-ondertekend",
@@ -414,19 +574,24 @@
     "description": "Appointment cancellation missing time query string parameter",
     "originalDefault": "Failed to determine the appointment time"
   },
-  "xCQcFj": {
-    "defaultMessage": "{label}",
-    "description": "Appointment {name} field label",
-    "originalDefault": "{label}"
+  "vf9+XT": {
+    "defaultMessage": "Aantal",
+    "description": "Appointments: product amount field label",
+    "originalDefault": "Amount"
+  },
+  "yW2uhj": {
+    "defaultMessage": "Bevestiging mede-ondertekening",
+    "description": "On succesful completion title",
+    "originalDefault": "Co-sign confirmation"
+  },
+  "zQWnFh": {
+    "defaultMessage": "Bent u zeker dat u wilt uitloggen en hiermee de inzending niet mede-ondertekent?",
+    "description": "log out confirmation prompt on co-sign page",
+    "originalDefault": "Are you sure that you want to logout and not co-sign the current form submission?"
   },
   "zkdWYe": {
     "defaultMessage": "Terug naar de website",
     "description": "Back to main website link title",
     "originalDefault": "Return to main website"
-  },
-  "zpq0Cf": {
-    "defaultMessage": "Appointment details",
-    "description": "Experiment appointment step",
-    "originalDefault": "Appointment details"
   }
 }

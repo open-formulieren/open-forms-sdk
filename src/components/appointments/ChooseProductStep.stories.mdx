@@ -46,12 +46,12 @@ At least one product must be provided.
       // we expect a single initial row
       const dropdowns = canvas.getAllByRole('combobox');
       await expect(dropdowns).toHaveLength(1);
-      const amountInputs = canvas.getAllByLabelText('Amount');
+      const amountInputs = canvas.getAllByLabelText('Aantal');
       await expect(amountInputs).toHaveLength(1);
       // there should be a button to add a row
-      await expect(canvas.getByRole('button', {name: 'Add another product'})).toBeVisible();
+      await expect(canvas.getByRole('button', {name: 'Nog een product toevoegen'})).toBeVisible();
       // and no button to remove the single row
-      await expect(await canvas.queryByRole('button', {name: 'Remove'})).toBeNull();
+      await expect(await canvas.queryByRole('button', {name: 'Verwijderen'})).toBeNull();
     }}
   >
     <Card>
@@ -82,7 +82,7 @@ them, unless there's only a single row left - then removing that row is not allo
     }}
     play={async ({canvasElement}) => {
       const canvas = within(canvasElement);
-      const addButton = canvas.getByRole('button', {name: 'Add another product'});
+      const addButton = canvas.getByRole('button', {name: 'Nog een product toevoegen'});
       await userEvent.click(addButton);
       const dropdowns = canvas.getAllByRole('combobox');
       await expect(dropdowns).toHaveLength(2);
@@ -120,13 +120,13 @@ them, unless there's only a single row left - then removing that row is not allo
       await expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
       await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
       // now any of both products can be removed
-      const removeButtons = await canvas.queryAllByRole('button', {name: 'Remove'});
+      const removeButtons = await canvas.queryAllByRole('button', {name: 'Verwijderen'});
       await expect(removeButtons).toHaveLength(2);
       // and after removing one row, the last remaining one can't be removed
       await userEvent.click(removeButtons[0]);
       await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
       await expect(await canvas.queryByText('Paspoort aanvraag')).toBeNull();
-      await expect(await canvas.queryByRole('button', {name: 'Remove'})).toBeNull();
+      await expect(await canvas.queryByRole('button', {name: 'Verwijderen'})).toBeNull();
     }}
   >
     <Card>
