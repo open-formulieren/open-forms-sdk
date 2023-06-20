@@ -2,7 +2,7 @@
 SDK Changelog
 =============
 
-1.4.0 (2023-06-??)
+1.4.0 (2023-06-21)
 ==================
 
 SDK for the upcoming Open Forms 2.2 release.
