@@ -1,16 +1,20 @@
 {
-    "supportedTags": [
-        {
-            "gitRef": "main",
-            "tag": "latest"
-        },
-        {
-            "gitRef": "stable/1.3.x",
-            "tag": null
-        },
-        {
-            "gitRef": "stable/1.2.x",
-            "tag": null
-        }
-    ]
+  "supportedTags": [
+    {
+      "gitRef": "main",
+      "tag": "latest"
+    },
+    {
+      "gitRef": "stable/1.4.x",
+      "tag": null
+    },
+    {
+      "gitRef": "stable/1.3.x",
+      "tag": null
+    },
+    {
+      "gitRef": "stable/1.2.x",
+      "tag": null
+    }
+  ]
 }
