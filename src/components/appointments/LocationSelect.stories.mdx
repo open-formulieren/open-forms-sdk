@@ -35,7 +35,7 @@ export const Template = () => <LocationSelect name="product" />;
       // test that the options are fetched from the API endpoint
       const canvas = within(canvasElement);
       await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
-      const dropdown = canvas.getByLabelText('Location');
+      const dropdown = canvas.getByLabelText('Locatie');
       await userEvent.click(dropdown);
       await userEvent.keyboard('[ArrowDown]');
       await expect(await canvas.findByText('Open Gem')).toBeVisible();
@@ -66,7 +66,7 @@ export const Template = () => <LocationSelect name="product" />;
       const canvas = within(canvasElement);
       await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
       await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
-      const dropdown = canvas.getByLabelText('Location');
+      const dropdown = canvas.getByLabelText('Locatie');
       await userEvent.click(dropdown);
       await userEvent.keyboard('[ArrowDown]');
       await expect(await canvas.findByText('Open Gem')).toBeVisible();
