@@ -2,6 +2,17 @@
 SDK Changelog
 =============
 
+1.3.4 (2023-06-21)
+==================
+
+Periodic bugfix release
+
+* [#2875] Fixed SiteImprove analytics, for real this time.
+* [#2929] Fixed a cache/storage invalidation bug which would sometimes lead to
+  authentication errors.
+* [#3096] Fixed validation errors inadvertedly being removed in repeating groups,
+  blocking the form (step) submission.
+
 1.3.3 (2023-04-19)
 ==================
 
