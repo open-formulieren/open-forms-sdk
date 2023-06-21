@@ -2,6 +2,85 @@
 SDK Changelog
 =============
 
+1.4.0 (2023-06-21)
+==================
+
+SDK for the upcoming Open Forms 2.2 release.
+
+.. warning:: SDK 1.4.0 requires at least version 2.2.0 of the Open Formulieren API.
+
+Features
+--------
+
+* [#2789] The text content of the suspend/pause modal is now retrieved from the API.
+* [#2240] Added hash fragment routing option, especially interesting for parties
+  embedding the SDK in their CMS or SPA/PWA who can't implement catch-all routes.
+* [#2788] Renamed/rephrased the form entry point page title to "start page".
+* [#2921] Added the form title back to every step page so that both form and step title
+  are displayed.
+* [#2444] Added option to hide non-applicable steps in the overview/progress indicator.
+* [#2863] Updated the order of parts in the document title for better accessibility.
+* [#3004] Form suspension can now be disabled.
+* [#396] Radio, checkbox and selectboxes components can now be themed using NL Design
+  System.
+* [#1530] Implemented entirely new co-sign flow and deprecated the existing one.
+* [#2809] The submission PDF report download link title is now configurable.
+
+* Implemented a number of form components using NL Design System for non-formio forms:
+
+  * [#3057] Text field.
+  * [#3059] Email field.
+  * [#3058] Number field, with widgets for small and large numbers and localization.
+  * [#3061, #420] Select field, with static and dynamically retrieved options.
+  * [#3060] Added a datepicker-based date field.
+  * [#442] These should all be themeable with the appropriate design tokens - see our
+    storybook.
+
+* [#2471, #3062, #3063, #3065, #3067] (experimental) Started appointment form rework UX.
+
+Bugfixes
+--------
+
+* [#2760] Fixed checkbox value not being capitalized on summary page.
+* [#2077, #2888] Fixed "previous" link and privacy consent checkbox not being reachable
+  with keyboard navigation.
+* [#2907] Fixed long form names being truncated with an ellipsis - they now wrap.
+* [#2903] Fixed unintended clearing of number/currency data with backend logic.
+* [#2911] Fixed support for heic/heif file types.
+* [#2912] Fixed disappearing file upload drag and drop area after deleting a succesful
+  upload.
+* [#2909] Fixed the cursors jumping back to the start of email fields.
+* [#2905] Fixed overflow being visually cut off in time field.
+* [#2939] Fixed co-sign component error 'missing next parameter'.
+* [#2813] Fixed inconsistent styling of add-buttons in varous places.
+* [#2875] Fixed SiteImprove analytics, for real this time.
+* [#2986] Fixed users accidentally restarting a form submission when they navigate back
+  to the start page.
+* [#2929] Fixed a cache/storage invalidation bug which would sometimes lead to
+  authentication errors.
+* [#3040] Fixed user-unfriendly validation errors for invalid file-type uploads.
+* [#2808] Fixed overflowing filenames in upload validation errors.
+* [#3096] Fixed validation errors inadvertedly being removed in repeating groups,
+  blocking the form (step) submission.
+
+Project hygiene
+---------------
+
+* Fixed MSW relative path for deployed version of storybook.
+* [#308] Documented the file upload component in storybook.
+* Automated updating the Docker Hub SDK description/README.
+* Documented the Form step modal in storybook.
+* Removed 1.1.x series from supported versions.
+* [#3056] Added ``FormikDecorator`` for storybook to support Formik forms.
+* Upgraded to React 18.
+* Upgraded to react-router v6.
+* Removed a bunch of CSS in favour of NL DS community components.
+* Moved developer documentation to be better visible (at the top).
+* Refactored some internal components to now use the new components from
+  ``components/forms``.
+* Documented the appointment cancellation components in Storybook.
+* Upgraded react-intl to v6.
+
 1.3.4 (2023-06-21)
 ==================
 
