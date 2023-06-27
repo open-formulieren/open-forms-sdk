@@ -1,0 +1,39 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+
+import DateField from './DateField';
+import * as InputGroupStories from './DateField-inputgroup.stories';
+import DateInputGroup from './DateInputGroup';
+
+<Meta of={InputGroupStories} />
+
+# DateField - input group
+
+## Memorable dates
+
+Memorable dates are dates that users can easily remember, such as a date of birth or marriage.
+
+To avoid users having to scroll/click a lot in calendar widgets, it's recommended to use the input
+group widget where they can enter numbers for day, month and year.
+
+## Widget prop
+
+Use the prop `widget="inputGroup"` to use this widget.
+
+<Canvas of={InputGroupStories.InputGroup} />
+
+## Props
+
+<ArgTypes of={DateField} exclude={['minDate', 'maxDate', 'disabledDates']} />
+
+**DateInputGroup props**
+
+Internally, the `DateField` uses the `DateInputGroup` widget.
+
+<ArgTypes of={DateInputGroup} />
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly.
+
+<Canvas of={InputGroupStories.NoAsterisks} />
