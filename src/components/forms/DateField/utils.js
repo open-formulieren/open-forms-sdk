@@ -1,10 +1,28 @@
-import {parse, parseISO} from 'date-fns';
+import {parseISO} from 'date-fns';
 
-export const parseDate = value => {
+const RE_PARTS = {
+  year: '(?<year>\\d{4})',
+  month: '(?<month>\\d{1,2})',
+  day: '(?<day>\\d{1,2})',
+};
+
+export const parseDate = (value, meta = null) => {
   if (!value) return undefined;
-  const parsed = parse(value, 'yyyy-MM-dd', new Date());
-  // Invalid Date is apparently a thing :ThisIsFine:
-  if (isNaN(parsed)) return undefined;
+
+  let parsed;
+  if (meta) {
+    // respect the order of the parts, but be lax about the separator
+    const orderedParts = orderByPart(RE_PARTS, meta);
+    const re = new RegExp(orderedParts.join('[^0-9]'));
+    const match = value.match(re);
+    if (!match) return undefined;
+    const {year, month, day} = match.groups;
+    parsed = parseISOFromParts(year, month, day)[1];
+  } else {
+    parsed = parseISO(value);
+  }
+
+  if (isNaN(parsed)) return undefined; // Invalid date (which is instanceof Date)
   return parsed;
 };
 
@@ -34,10 +52,20 @@ export const convertMonth = (month, toAdd) => {
   return String(monthNumber + toAdd);
 };
 
-export const dateFromParts = (yearStr, monthStr, dayStr) => {
+const parseISOFromParts = (yearStr, monthStr, dayStr) => {
   const bits = [yearStr.padStart(4, '0'), monthStr.padStart(2, '0'), dayStr.padStart(2, '0')];
   const ISOFormatted = bits.join('-');
-  const parsed = parseISO(ISOFormatted);
+  return [ISOFormatted, parseISO(ISOFormatted)];
+};
+
+export const dateFromParts = (yearStr, monthStr, dayStr) => {
+  const {ISOFormatted, parsed} = parseISOFromParts(yearStr, monthStr, dayStr);
   if (isNaN(parsed)) return undefined; // Invalid date (which is instanceof Date)
   return ISOFormatted;
+};
+
+export const orderByPart = (parts, meta) => {
+  return Object.keys(parts)
+    .sort((a, b) => meta[a] - meta[b])
+    .map(part => parts[part]);
 };

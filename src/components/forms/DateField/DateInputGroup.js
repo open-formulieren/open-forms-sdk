@@ -1,13 +1,14 @@
 import {FormLabel, Paragraph, Textbox} from '@utrecht/component-library-react';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {forwardRef, useEffect, useId, useMemo, useState} from 'react';
+import React, {forwardRef, useEffect, useId, useState} from 'react';
 import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 
 import {InputGroup, InputGroupItem} from 'components/forms';
 
 import {useDateLocaleMeta} from './hooks';
-import {convertMonth, dateFromParts, parseDate} from './utils';
+import {PART_PLACEHOLDERS} from './messages';
+import {convertMonth, dateFromParts, orderByPart, parseDate} from './utils';
 
 const DatePartInput = forwardRef(({name, value, onChange, ...props}, ref) => (
   <Textbox
@@ -42,10 +43,7 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           disabled={disabled}
           value={day}
           onChange={onChange}
-          placeholder={intl.formatMessage({
-            description: 'Placeholder for day part of a date',
-            defaultMessage: 'd',
-          })}
+          placeholder={intl.formatMessage(PART_PLACEHOLDERS.day)}
           id={dayId}
         />
       </InputGroupItem>
@@ -60,10 +58,7 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           disabled={disabled}
           value={month}
           onChange={onChange}
-          placeholder={intl.formatMessage({
-            description: 'Placeholder for month part of a date',
-            defaultMessage: 'm',
-          })}
+          placeholder={intl.formatMessage(PART_PLACEHOLDERS.month)}
           id={monthId}
         />
       </InputGroupItem>
@@ -78,18 +73,13 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           disabled={disabled}
           value={year}
           onChange={onChange}
-          placeholder={intl.formatMessage({
-            description: 'Placeholder for year part of a date',
-            defaultMessage: 'yyyy',
-          })}
+          placeholder={intl.formatMessage(PART_PLACEHOLDERS.year)}
           id={yearId}
         />
       </InputGroupItem>
     ),
   };
-  const orderedParts = Object.keys(parts)
-    .sort((a, b) => meta[a] - meta[b])
-    .map(part => parts[part]);
+  const orderedParts = orderByPart(parts, meta);
   return <>{orderedParts}</>;
 };
 
