@@ -1,0 +1,15 @@
+import ofTokens from '@open-formulieren/design-tokens/dist/tokens';
+import {Meta} from '@storybook/addon-docs';
+import TokensTable from 'design-token-editor/lib/esm/TokensTable';
+
+<Meta title="All design tokens" />
+
+## All available design tokens
+
+Themeing of Open Forms is primarily done by setting values for design tokens used by components.
+Below you can find all the tokens exclusively defined and used by Open Forms.
+
+Note that we also use community components which use their respective design tokens. Those are
+**not** documented on this page.
+
+<TokensTable container={ofTokens} limitTo="of." autoExpand />

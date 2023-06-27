@@ -1,0 +1,15 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as CardStories from './Card.stories';
+
+<Meta of={CardStories} />
+
+# Cards
+
+Cards allow presenting some content with an (optional) title.
+
+<Canvas of={CardStories.Default} />
+
+## Props
+
+<ArgTypes of={CardStories} />

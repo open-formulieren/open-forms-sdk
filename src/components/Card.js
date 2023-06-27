@@ -75,10 +75,14 @@ const Card = ({
 
 Card.propTypes = {
   title: PropTypes.node,
-  caption: PropTypes.string,
-  children: PropTypes.node,
+  /**
+   * Alternative HTML element to render, the default is h1.
+   */
   titleComponent: PropTypes.string,
+  titleHeadingType: PropTypes.oneOf(['title', 'subtitle']),
+  caption: PropTypes.string,
   captionComponent: PropTypes.string,
+  children: PropTypes.node,
   blockClassName: PropTypes.string,
   modifiers: PropTypes.arrayOf(PropTypes.string),
 };

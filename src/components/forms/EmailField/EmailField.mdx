@@ -1,0 +1,32 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as EmailFieldStories from './EmailField.stories';
+
+<Meta of={EmailFieldStories} />
+
+# Email Field
+
+The value of the field is tracked in the Formik parent state, linked through the `name` prop. You
+can use `lodash.get` syntax for the name, e.g. `foo.bar` will look up the key `bar` inside the
+object `foo`.
+
+TODO: hard-wire the e-mail validator for client-side validation.
+
+<Canvas of={EmailFieldStories.Default} />
+
+## Props
+
+<ArgTypes of={EmailFieldStories} />
+
+## Validation errors
+
+Validation errors are tracked in the Formik state and displayed if any are present.
+
+<Story of={EmailFieldStories.ValidationError} />
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly, through the `ConfigContext`.
+
+<Story of={EmailFieldStories.NoAsterisks} />

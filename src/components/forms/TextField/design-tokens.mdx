@@ -1,0 +1,28 @@
+import ofTokens from '@open-formulieren/design-tokens/dist/tokens';
+import {Meta} from '@storybook/blocks';
+import TokensTable from 'design-token-editor/lib/esm/TokensTable';
+
+import * as TextFieldStories from './TextField.stories';
+
+<Meta of={TextFieldStories} name="Design tokens" />
+
+This component is composed with NL Design System community components, which can be styled through
+design tokens.
+
+## Textbox
+
+<TokensTable container={ofTokens} limitTo="utrecht.textbox" autoExpand />
+
+## Form label
+
+<TokensTable container={ofTokens} limitTo="utrecht.form-label" autoExpand />
+
+## Form field description
+
+<TokensTable container={ofTokens} limitTo="utrecht.form-field-description" autoExpand />
+
+### Open Forms extensions
+
+We extend the component to make additional styling for the default theme possible.
+
+<TokensTable container={ofTokens} limitTo="of.utrecht-form-field-description" autoExpand />

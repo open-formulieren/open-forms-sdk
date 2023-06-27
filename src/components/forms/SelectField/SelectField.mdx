@@ -1,0 +1,62 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as SelectFieldStories from './SelectField.stories';
+
+<Meta of={SelectFieldStories} />
+
+# Select Field vs Async Select Field
+
+Use the `SelectField` component whenever you have `options` that are known upfront. If your options
+are retrieved from some external data source (like an API endpoint) instead, use the
+`AsyncSelectField` variant.
+
+## SelectField
+
+<Canvas of={SelectFieldStories.Static} />
+
+### Props
+
+The select field is built on top of [react-select](https://react-select.com/). Any additional props
+passed to our `SelectField` component are forwarded to the library's `Select` component.
+
+<ArgTypes of={SelectFieldStories.Static} />
+
+## AsyncSelectField
+
+When using this component, provide an `optionsRetriever` callback that will be used to retrieve the
+options. This callback should be an async function returning an array of options.
+
+The callback is passed to `useAsync` in the `react-use` library. You should properly wrap the
+callback in `useCallback` to prevent excessive fetches/API calls.
+
+export const DynamicTemplate = ({getOptionsDelay, dynamicOptions, ...args}) => {
+  const getOptions = useCallback(async () => {
+    await delay(getOptionsDelay);
+    return dynamicOptions;
+  }, [JSON.stringify(dynamicOptions), getOptionsDelay]);
+  return <AsyncSelectField {...args} getOptions={getOptions} />;
+};
+
+<Canvas of={SelectFieldStories.Async} />
+
+### Props
+
+All the props of `SelectField` itself are supported, and any additional props passed to
+`AsyncSelectField` are forwarded to the underlying `SelectField`.
+
+The `AsyncSelectField` requires the `getOptions` prop to populate the options.
+
+<ArgTypes of={SelectFieldStories.Async} />
+
+## Validation errors
+
+Validation errors are tracked in the Formik state and displayed if any are present.
+
+<Story of={SelectFieldStories.ValidationError} />
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly, through the `ConfigContext`.
+
+<Story of={SelectFieldStories.NoAsterisks} />

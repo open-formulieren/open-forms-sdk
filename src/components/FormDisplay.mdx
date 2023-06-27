@@ -1,0 +1,18 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+
+import * as FormDisplayStories from './FormDisplay.stories';
+
+<Meta of={FormDisplayStories} />
+
+# Form Display
+
+The `FormDisplay` component allows you to manage the layout when forms and sub-pages are rendered.
+
+It is the presentation component for the `Form` component. By default, it displays the form step and
+progress indicator in two columns.
+
+<Canvas of={FormDisplayStories.Default} />
+
+## Props
+
+<ArgTypes of={FormDisplayStories} />

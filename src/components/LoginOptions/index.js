@@ -42,7 +42,14 @@ const LoginOptions = ({form, onFormStart}) => {
 
   const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
   const Container = form.loginRequired ? React.Fragment : 'form';
-  const containerProps = form.loginRequired ? {} : {onSubmit: onFormStart};
+  const containerProps = form.loginRequired
+    ? {}
+    : {
+        onSubmit: e => {
+          e.preventDefault();
+          onFormStart(e);
+        },
+      };
 
   let cosignInfo = form.cosignLoginInfo && {
     ...form.cosignLoginInfo,

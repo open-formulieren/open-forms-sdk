@@ -1,0 +1,23 @@
+import ofTokens from '@open-formulieren/design-tokens/dist/tokens';
+import {Meta} from '@storybook/blocks';
+import TokensTable from 'design-token-editor/lib/esm/TokensTable';
+
+import * as LanguageSelectionStories from './LanguageSelection.stories';
+
+<Meta of={LanguageSelectionStories} name="Design tokens" />
+
+## Available design tokens
+
+**Open Forms specific tokens**
+
+<TokensTable container={ofTokens} limitTo="of.language-selection." autoExpand />
+
+**Utrecht tokens**
+
+There is some upstream documentation available:
+
+- `button-group`
+  [documentation](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-button-group-tokens--page)
+
+- `alternate-language-navigation`
+  [documentation](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-alternate-lang-nav-readme--page)

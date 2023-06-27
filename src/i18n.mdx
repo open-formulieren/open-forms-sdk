@@ -1,0 +1,34 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+
+import {I18NManager} from 'i18n';
+
+import * as I18NStories from './i18n.stories';
+
+<Meta of={I18NStories} />
+
+# Language manager
+
+The `I18NManager` (internationalization manager) component takes care of loading the correct static
+translations and activating the react-intl locale whenever the content language is changed from the
+default or initial value.
+
+Backend API endpoints respond with the `Content-Language` HTTP header. Whenever the value of this
+header is different from the currently active locale, a locale switch is detected and triggered.
+
+The `I18NManager` component ensures that the translations for literals defined in code for _that
+language_ are loaded and activated.
+
+<Canvas of={I18NStories.Default} />
+
+## Error handling
+
+Translations for a particular language are loaded asynchronously (or planned to be), which means
+that errors can happen when the backend cannot serve the required assets.
+
+It is recommended to wrap the component in an error boundary **that doesn't require tranlations**,
+like `I18NErrorBoundary`. Often the error message will already be in the appropriate language from
+the backend.
+
+## Props
+
+<ArgTypes of={I18NManager} />

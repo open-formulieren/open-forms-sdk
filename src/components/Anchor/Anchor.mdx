@@ -1,0 +1,38 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as AnchorStories from './Anchor.stories';
+
+<Meta of={AnchorStories} />
+
+# Anchors
+
+Anchors are used for clickable links. Optionally, you can hook into the `click` event with the
+`onClick` prop, which will fire in addition to the default click handler.
+
+The `Anchor` components wraps around the `UtrechtLink`
+[component](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-link-readme--page)
+and therefore supports the relevant `--utrecht-link-*` design tokens. Additional Open Forms specific
+styles are added via the `--openforms-*` modifiers.
+
+This component can and should be used whenever using `react-router` `LinkAnchor` components, as it
+implements the required handlers which `UtrechtLink` doesn't.
+
+## Anchor ithout modifiers
+
+The standard look of the anchor component without modifiers.
+
+<Canvas of={AnchorStories.Default} />
+
+## Variants by modifier
+
+<Canvas>
+  <Story of={AnchorStories.Hover} />
+  <Story of={AnchorStories.Active} />
+  <Story of={AnchorStories.Muted} />
+  <Story of={AnchorStories.Indent} />
+  <Story of={AnchorStories.Inherit} />
+</Canvas>
+
+## Props
+
+<ArgTypes of={AnchorStories} />

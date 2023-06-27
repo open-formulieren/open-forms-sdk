@@ -1,31 +1,60 @@
+import merge from 'lodash/merge';
+import {useContext} from 'react';
 import {Form} from 'react-formio';
+import {useIntl} from 'react-intl';
 
+import {ConfigContext, FormioTranslations} from 'Context';
 import {PREFIX} from 'formio/constants';
 
-export const FormioForm = ({form}) => <Form form={form} />;
+const RenderFormioForm = ({configuration, submissionData = {}, evalContext = {}}) => {
+  const config = useContext(ConfigContext);
+  const formioTranslations = useContext(FormioTranslations);
+  const {locale} = useIntl();
+  // Similar to FormStep/index.js usage
+  return (
+    <Form
+      form={configuration}
+      submission={{data: submissionData}}
+      options={{
+        noAlerts: true,
+        baseUrl: config.baseUrl,
+        language: locale,
+        i18n: formioTranslations.i18n, // TODO - get this from backend/bake into build?
+        evalContext: {
+          ofPrefix: `${PREFIX}-`,
+          requiredFieldsWithAsterisk: config.requiredFieldsWithAsterisk,
+          ...evalContext,
+        },
+      }}
+    />
+  );
+};
 
-export const FormioComponent = ({component, components = [], evalContext = {}, data = {}}) => (
-  <Form
-    form={{
-      type: 'form',
-      components: components.length ? components : [component],
-    }}
-    submission={{data: data}}
-    options={{
-      noAlerts: true,
-      language: 'nl', // TODO - get this from the i18n addon
-      // i18n: formioTranslations.i18n, // TODO - get this from backend/bake into build?
-      evalContext: {
-        ofPrefix: `${PREFIX}-`,
-        requiredFieldsWithAsterisk: true, // TODO: create addon to configure this?
-        ...evalContext,
-      },
-    }}
+export const SingleFormioComponent = ({
+  type,
+  key,
+  formioKey = null,
+  label,
+  extraComponentProperties = {},
+  submissionData = {},
+  evalContext = {},
+}) => {
+  // in case this is used as a react component, allow using an alias, because React
+  // reserves the key 'prop'
+  key = formioKey ?? key;
+  const component = merge({type, key, label}, extraComponentProperties);
+  return (
+    <RenderFormioForm
+      configuration={{type: 'form', components: [component]}}
+      submissionData={submissionData}
+      evalContext={evalContext}
+    />
+  );
+};
+
+export const MultipleFormioComponents = ({components, evalContext = {}}) => (
+  <RenderFormioForm
+    configuration={{type: 'form', components: components}}
+    evalContext={evalContext}
   />
-);
-
-export const FormDecorator = Story => (
-  <div className="utrecht-document" style={{'--utrecht-space-around': 1}}>
-    {Story()}
-  </div>
 );

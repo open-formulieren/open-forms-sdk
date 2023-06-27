@@ -1,0 +1,45 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as LanguageSelectionStories from './LanguageSelection.stories';
+
+<Meta of={LanguageSelectionStories} />
+
+# Language selection
+
+The language selection allows end-user to switch between available languages, as supported by the
+backend.
+
+This functionality is split in two components - one purely for display and styling purposes and the
+other one with smart behaviour to fetch the data from the backend.
+
+## Presentation
+
+The `LanguageSelectionDisplay` component presents the available languages and dispatches events when
+the user changes the active language.
+
+<Canvas of={LanguageSelectionStories.Display} />
+
+### Props
+
+<ArgTypes of={LanguageSelectionStories.Display} />
+
+## Functional
+
+The functional component handles the "smart" behaviour:
+
+- Fetch available languages from the backend
+- Read the preferred language via the backend and the HTTP `Accept-Language` header
+- Handle the user language-changed events and propagate them up the component tree
+
+It is responsible for rendering the `LanguageSelectionDisplay` component.
+
+<Canvas of={LanguageSelectionStories.Functional} />
+
+### Props
+
+<ArgTypes of={LanguageSelectionStories.Functional} />
+
+### Errors
+
+Errors are left to bubble up to the nearest `ErrorBoundary`, e.g. if for some reason the language is
+unavailable, then a `ValidationError` is returned from the API.

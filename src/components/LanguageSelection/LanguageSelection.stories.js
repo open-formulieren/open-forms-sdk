@@ -1,0 +1,155 @@
+import {expect} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {getWorker} from 'msw-storybook-addon';
+import React, {useState} from 'react';
+import {IntlProvider} from 'react-intl';
+
+import ErrorBoundary from 'components/ErrorBoundary';
+import {I18NContext} from 'i18n';
+import {ConfigDecorator} from 'story-utils/decorators';
+
+import {LanguageSelection, LanguageSelectionDisplay} from '.';
+import {
+  DEFAULT_LANGUAGES,
+  mockInvalidLanguageChoicePut,
+  mockLanguageChoicePut,
+  mockLanguageInfoGet,
+} from './mocks';
+
+const I18NDecorator = (Story, {args}) => {
+  return (
+    <I18NContext.Provider
+      value={{
+        languageSelectorTarget: null,
+        onLanguageChangeDone: args.onLanguageChangeDone,
+      }}
+    >
+      <Story />
+    </I18NContext.Provider>
+  );
+};
+
+const worker = getWorker();
+
+export default {
+  title: 'Composites / Language Selection',
+  component: LanguageSelection,
+  decorators: [I18NDecorator, ConfigDecorator],
+  argTypes: {
+    heading: {control: 'text'},
+  },
+  parameters: {
+    msw: {
+      handlers: [mockLanguageChoicePut],
+    },
+  },
+};
+
+export const Display = {
+  render: args => <LanguageSelectionDisplay {...args} />,
+  args: {
+    heading: 'Language selection',
+    headingLevel: 2,
+    headingId: 'heading-id',
+    items: [
+      {
+        lang: 'en',
+        textContent: 'EN',
+        label: 'English',
+        current: true,
+      },
+      {
+        lang: 'nl',
+        textContent: 'NL',
+        label: 'Nederlands',
+        current: false,
+      },
+      {
+        lang: 'fy',
+        textContent: 'FY',
+        label: 'frysk',
+        current: false,
+      },
+    ],
+  },
+  argTypes: {
+    onLanguageChange: {action: true},
+  },
+  play: async ({args, canvasElement}) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByText(/^fy$/i));
+    await expect(args.onLanguageChange).toHaveBeenCalled();
+  },
+};
+
+const render = ({languages, wrapInErrorBoundary, ...args}) => {
+  worker.use(mockLanguageInfoGet(languages));
+  const Wrapper = wrapInErrorBoundary ? ErrorBoundary : React.Fragment;
+  return (
+    <IntlProvider messages={{}} locale={'nl'} defaultLocale="nl">
+      <Wrapper>
+        <LanguageSelection {...args} />
+      </Wrapper>
+    </IntlProvider>
+  );
+};
+
+const functionalArgTypes = {
+  onLanguageChangeDone: {
+    action: true,
+    table: {disable: true},
+  },
+};
+
+export const Functional = {
+  render,
+  args: {
+    wrapInErrorBoundary: false,
+    languages: DEFAULT_LANGUAGES,
+  },
+  argTypes: functionalArgTypes,
+  parameters: {
+    controls: {expanded: true},
+    docs: {
+      argTypes: {
+        exclude: ['wrapInErrorBoundary', 'languages'],
+      },
+    },
+  },
+  play: async ({args, canvasElement}) => {
+    const canvas = within(canvasElement);
+    // wait for api info call to return
+    let frysk_button = await waitFor(() => canvas.findByText(/^fy$/i));
+    window.confirm = () => true;
+    await userEvent.click(frysk_button);
+    // wait for PUT api call to have completed and loading state to be resolved
+    await waitFor(() => canvas.findByText(/^fy$/i));
+    await expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(1); // change once
+  },
+};
+
+export const UnavailableLanguage = {
+  name: 'Unavailable language',
+  render,
+  args: {
+    wrapInErrorBoundary: true,
+    languages: DEFAULT_LANGUAGES,
+  },
+  argTypes: {
+    ...functionalArgTypes,
+    heading: {table: {disable: true}},
+    headingLevel: {table: {disable: true}},
+  },
+  parameters: {
+    msw: {
+      handlers: [mockInvalidLanguageChoicePut('fy')],
+    },
+  },
+  play: async ({args, canvasElement}) => {
+    const canvas = within(canvasElement);
+    const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
+    window.confirm = () => true;
+    await userEvent.click(frysk_button);
+    await waitFor(() => expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(0)); // did not change language
+  },
+};

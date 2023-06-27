@@ -1,0 +1,17 @@
+import {Meta} from '@storybook/blocks';
+
+import * as ColumnsStories from './Columns.stories';
+
+<Meta of={ColumnsStories} />
+
+# Columns
+
+Columns are intended for simple grouping of components on a single line, e.g. a postal code + house
+number combination. Complex nested structures are out of scope, as aligning all the labels, inputs,
+help texts and error messages is not trivial due to the possible absence of these components.
+
+**Column width**
+
+The column width is dictated by the `size` key, which should be an integer value between `1` and
+`12` since we're using a 12-column grid. On mobile, the default width is 100%, but you can tweak
+this using the optional `sizeMobile` key, ranging between `1` and `4`.

@@ -1,0 +1,22 @@
+import {ArgTypes, Meta, Story} from '@storybook/blocks';
+
+import CreateAppointment from './CreateAppointment';
+import * as CreateAppointmentStories from './CreateAppointment.stories';
+
+<Meta of={CreateAppointmentStories} />
+
+# CreateAppointment form
+
+The create appointment UI is used when `form.appointmentEnabled` is `true`. This brings the user in
+a (mostly) fixed form step progression to select their products, appointment details and provide
+contact details.
+
+**NOTE**
+
+This is currently under development.
+
+<Story of={CreateAppointmentStories.Default} />
+
+## Props
+
+<ArgTypes of={CreateAppointment} />

@@ -1,0 +1,23 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+
+import FormStep from '.';
+import * as FormStepStories from './FormStep.stories';
+
+<Meta of={FormStepStories} />
+
+# FormStep component
+
+The `FormStep` component is the heart of the application.
+
+It fetches the (dynamic) configuration from the backend, reconciles it with the submission data and
+ensures that the form fields are rendered by passing the configuration and data down to the Formio
+form renderer.
+
+The component depends on a React Router parent, as the requested form step is taken from the URL
+parameters.
+
+<Canvas of={FormStepStories.Default} />
+
+## Props
+
+<ArgTypes of={FormStep} />

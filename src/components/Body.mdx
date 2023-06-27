@@ -1,0 +1,23 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as BodyStories from './Body.stories';
+
+<Meta of={BodyStories} />
+
+# Body
+
+The body component is intended to wrap text content.
+
+## Variants
+
+### Plain
+
+<Canvas of={BodyStories.Default} />
+
+### What-you-see-is-what-you-get (WYSIWYG)
+
+<Canvas of={BodyStories.WYSIWYG} />
+
+## Props
+
+<ArgTypes of={BodyStories} />

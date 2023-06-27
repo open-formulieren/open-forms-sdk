@@ -1,0 +1,20 @@
+import {Meta} from '@storybook/blocks';
+
+import * as FileFieldStories from './FileField.stories';
+
+<Meta of={FileFieldStories} />
+
+# File Upload
+
+**Note** - file uploads on the Docs page will always error due to the way the network mocking
+library works. Use the canvas instead.
+
+## File type validation errors
+
+By selecting a `filePattern` and uploading a file of different type, it is possible to see the error
+raised when a user uploads a file of wrong type.
+
+## Error flow
+
+The backend performs a number of checks on file uploads and may return validation errors. These are
+displayed on the upload component.

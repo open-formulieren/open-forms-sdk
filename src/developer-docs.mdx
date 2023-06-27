@@ -1,0 +1,187 @@
+import {Meta} from '@storybook/blocks';
+
+<Meta title="Developers / Documentation" />
+
+# Developer documentation
+
+This documentation is aimed at Open Formulieren-developers working on the SDK.
+
+## Story guidelines
+
+Stories are written in [CSF](https://storybook.js.org/docs/react/writing-stories/introduction) and
+mixed in with proze documentation, written in
+[MDX](https://storybook.js.org/docs/react/writing-docs/mdx) (Markdown + JSX).
+
+- Stories go in `<Component>.stories.js`
+- Documentation goes in `<Component>.mdx`
+- MDX documentation can (and should) import from the stories module.
+
+### What to put in stories?
+
+**Metadata**
+
+The stories must have a default export which sets the title (and thus the location in the navbar),
+component meta, decorators/parameters/argtypes relevant for all or most of the stories, e.g.:
+
+```js
+import ExampleComponent from './ExampleComponent';
+
+export default {
+  title: 'Private API / My example',
+  component: ExampleComponent,
+  decorators: [ConfigDecorator],
+  parameters: {
+    formik: {initialValues: {foo: 'bar'}},
+  },
+  argTypes: {
+    children: {control: {disable: true}},
+  },
+};
+```
+
+**Stories for variants**
+
+Often components have a number of variants that change their appearance. Definining a story ensures
+that they are snapshotted in Chromatic and have visual regression testing.
+
+Variants are not limited to appearance - they can also have differences in behaviour, which we
+typically test using the `play` function too.
+
+An example:
+
+```jsx
+export const Default = {
+  name: 'Default', // optional, inferred from the exported name
+  args: {
+    isEnabled: true,
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button'));
+    // expect(something);
+  };
+};
+```
+
+Scan the existing stories for real usage of these patterns.
+
+### What to put in MDX?
+
+Any useful context/documentation for developers working with the components, or for third parties
+intending to override the components (e.g. the display components for complex/smart components that
+implement behaviour).
+
+The separation between stories in CSF format and documentation in MDX is quite nice because it
+allows you to document stories that you want to lock-in (through visual regression testing or
+interaction testing) without cluttering the human-readable documentation. This means that you _do
+not_ have to include every story in your MDX file!
+
+Typical elements in the MDX page are:
+
+- Meta element for storybook
+- A quick summary of what the component is and does, when to use it or not
+- If relevant, the existence and props of the related `Display` presentation component
+- The props of the component, introspected via its `propTypes` by Storybook
+- Relevant stories to illustrate some textual documentation, e.g. how validation errors are handled
+  in form field components.
+
+**Tips and tricks for the various blocks**
+
+Storybook offers some docs to build your documentation with:
+
+```jsx
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+// stories in CSF
+import MyComponent from './MyComponent';
+import * as MyComponentStories from './MyComponent.stories.js';
+
+// the actual react component
+```
+
+You need to include the meta tag, optionally with a `name` prop to give a different name in the
+navbar. This ensures the documentation ends up in the right tree in the menu.
+
+```jsx
+<Meta of={MyComponentStories} name="Not Docs." />
+```
+
+Next, you can use the `Canvas` and `Story` elements. They are almost the same, except that the
+`Canvas` component provides "show code" controls and the `Story` doesn't. Typically you want to have
+one canvas for the component default story, so that it's clear to developers using the component how
+they should call it.
+
+Example:
+
+```jsx
+<Canvas of={MyComponentStories.Default} />
+```
+
+Finally, to document the API of the component (better known as the prop types), you should use the
+`ArgTypes` block. You can feed it the entire stories meta, a particular story or (recommended) the
+component itself. It introspects the component prop types and documents them. You can enrich this
+more by providing docblock annotations above each prop types in your component code.
+
+```jsx
+<ArgTypes of={MyComponent} />
+```
+
+### Design tokens
+
+Design tokens follow rougly the same pattern as MDX above, except we typically put them in a
+separate docs entry: `design-tokens.mdx`. You can use the `TokensTable` from the design-token-editor
+package to document the relevant design tokens.
+
+For an example, look at the `Language Selection` component.
+
+## Mocking in Stories
+
+A number of components implement the API communication with the Open Forms backend. To mock these
+API calls, we make use of [`msw-storybook-addon`](https://github.com/mswjs/msw-storybook-addon).
+
+When documenting such components, it's recommended to organize the code per-component to keep
+implementation, stories, mocks (and tests) close together. For example, given `MyComponent`, you
+would see a folder structure like:
+
+```
+MyComponent
+├── index.js
+├── mocks.js
+├── MyComponentDisplay.js
+├── MyComponent.stories.js
+└── MyComponent.mdx
+```
+
+### Known limitations
+
+There are some known limitations related to mocking, with possible workarounds documented below.
+
+**Dynamic mock data**
+
+There is no dedicated add-on panel to manage mock responses. Instead, you can rely on story args to
+dynamically change response data. To achieve this, you need to configure the worker as part of the
+story template, for example:
+
+```jsx
+import {getWorker} from 'msw-storybook-addon';
+
+import {myMockFactory} from './mocks';
+
+export const worker = getWorker();
+
+export const Template = args => {
+  worker.use(myMockFactory(args.someArg));
+  return <MyComponent />;
+};
+```
+
+**Story interaction on docs page**
+
+Putting multiple stories on the Docs page does not play well with API mocks, see the
+[upstream issue](https://github.com/mswjs/msw-storybook-addon/issues/83).
+
+Summarized - all stories share the same service worker and the last story to register a mock/handler
+basically 'wins'. This leads to inconsistent behaviour compared to the Canvas.
+
+There is no workaround - you should do interaction testing in the Canvas rather than the Docs tab.
+This would also be a good reason to _not_ include those stories in the MDX documentation.

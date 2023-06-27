@@ -1,0 +1,16 @@
+import {Meta, Story} from '@storybook/blocks';
+
+import * as LocationAndTimeStepStories from './LocationAndTimeStep.stories';
+
+<Meta of={LocationAndTimeStepStories} />
+
+## Location and time step
+
+The appointment form requires users to select the location for their appointment and the moment
+they'd like to visit.
+
+This component enables the UX to select an available location. The input of product(s) and location
+then determines the available dates. Finally, the selected date determines the available times. A
+location, date and time must be provided as input by the user.
+
+<Story of={LocationAndTimeStepStories.InitialState} />

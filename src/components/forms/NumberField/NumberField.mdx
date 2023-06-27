@@ -1,0 +1,87 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as NumberFieldStories from './NumberField.stories';
+
+<Meta of={NumberFieldStories} />
+
+# Number inputs
+
+Numeric inputs are essential for some types of data, but using the correct inputs is rather hard due
+to a couple of reasons:
+
+- some data looks numeric, but actually isn't
+- associated validations (minimum and maximum values)
+- accessibility concerns (especially when silently truncating or ignoring data)
+- localisation - different locales use different decimal separators
+
+The implementation of our `Number` component attempts to address these, and has taken certain
+sources into account when doing so:
+
+- [GOV.UK](https://technology.blog.gov.uk/2020/02/24/why-the-gov-uk-design-system-team-changed-the-input-type-for-numbers/)
+
+## SSN, Credit card, phone numbers...
+
+Do not use the `NumberField` for these, instead use a `TextField`, possibly with
+`inputmode="numeric"` and `pattern=[0-9]+` props.
+
+This kind of data are actually just text inputs/strings that happen to consist only of digits. As a
+rule of thumb, if leading zeroes are significant, you should use a `TextField` instead.
+
+## Small number inputs
+
+When you expect small, incremental values for numbers (such as number of attendees or products), you
+can use this variant by specyfing the `useNumberType` boolean prop. This results in increment/
+decrement buttons being exposed to the user so they don't need to type in the value.
+
+This works well together with the `min` prop to specify a minimum value and `step` to specify the
+increment/decrement step. E.g. to cycle between positive integers, you would use `min={1} step={1}`.
+
+**Warning**
+
+The HTML input does not prevent people from typing in invalid values (such as negative numbers or
+decimals). You need to address this with input validators at the form level and display the
+appropriate validation error(s).
+
+(Silently) truncating user input (like a minus sign or decimal separator) is confusing, and for
+users of assistive technology even worse as they have no feedback on what is actually
+accepted/displayed on the screen.
+
+<Canvas of={NumberFieldStories.SmallNumbers} />
+
+## Free form number fields
+
+Free form number inputs allow entering arbitrary numbers - decimals, negative, large, small... They
+take the current locale into account and present formatted numbers. E.g. in the NL locale, the `.`
+decimal separator will be converted to a comma, while thousand groups are automatically formatted
+with a period.
+
+Only numerical keyboard entries are allowed.
+
+**TODO**: check accessibility impact of this!
+
+The developer/form designers are responsible for defining validation rules for the values to express
+minimum/maximum values.
+
+**Notes**
+
+- Props like `min` and `step` are ignored as they only apply to the `type="number"` inputs.
+
+- The interaction tests rely on the NL locale. TODO: figure out how to change the locale in play
+  functions.
+
+<Canvas of={NumberFieldStories.Default} />
+
+## Props
+
+<ArgTypes of={NumberFieldStories} />
+
+## Validation errors
+
+<Story of={NumberFieldStories.ValidationError} />
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly.
+
+<Story of={NumberFieldStories.NoAsterisks} />

@@ -44,9 +44,25 @@ const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
 };
 
 PrivacyCheckbox.propTypes = {
+  /**
+   * Label content displayed next to the checkbox, allows HTML.
+   *
+   * Ensure that this only contains trusted markup, as the content is NOT escaped.
+   */
   label: PropTypes.string.isRequired,
+  /**
+   * Policy accepted state.
+   */
   value: PropTypes.bool.isRequired,
+  /**
+   * Whether to display the warning or not.
+   */
   warning: PropTypes.bool,
+  /**
+   * Callback for when the checkbox is clicked/toggled.
+   *
+   * The callback receives a checkbox input change event.
+   */
   onChange: PropTypes.func.isRequired,
 };
 

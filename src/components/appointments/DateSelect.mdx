@@ -1,0 +1,36 @@
+import {Canvas, Meta} from '@storybook/blocks';
+
+import * as DateSelectStories from './DateSelect.stories';
+
+<Meta of={DateSelectStories} />
+
+## Disable dates outside of range
+
+The API returns a set of available dates. All dates before and all dates after this range must be
+marked as disabled, as they are not available dates.
+
+<Canvas of={DateSelectStories.AvailableDatesRange} story={{height: '460px'}} />
+
+## Disable missing dates within range
+
+The set of available dates returned by the API can be sparse, e.g. to exclude Saturdays and Sundays
+because appointments during the weekend are not possible, or because a date is already fully booked.
+These gaps must be marked as disabled dates.
+
+<Canvas of={DateSelectStories.DisabledGaps} story={{height: '460px'}} />
+
+## No location selected (yet)
+
+A date can only be selected if a location is picked, as it is required input for the API endpoint.
+
+<Canvas of={DateSelectStories.NoLocationSelected} />
+
+## No available dates available at all
+
+When no appointment dates are available, instead we render an informative message.
+
+<Canvas of={DateSelectStories.NoDatesAvailable} />
+
+## Single date available
+
+<Canvas of={DateSelectStories.SingleDateAvailable} story={{height: '460px'}} />

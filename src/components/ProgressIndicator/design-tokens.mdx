@@ -1,0 +1,13 @@
+import ofTokens from '@open-formulieren/design-tokens/dist/tokens';
+import {Meta} from '@storybook/blocks';
+import TokensTable from 'design-token-editor/lib/esm/TokensTable';
+
+import * as ProgressIndicatorStories from './ProgressIndicator.stories';
+
+<Meta of={ProgressIndicatorStories} name="Design tokens" />
+
+## Available design tokens
+
+**Open Forms specific tokens**
+
+<TokensTable container={ofTokens} limitTo="of.progress-indicator." autoExpand />

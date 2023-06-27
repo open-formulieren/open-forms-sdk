@@ -1,0 +1,15 @@
+import {Meta} from '@storybook/blocks';
+
+import * as EditGridStories from './EditGrid.stories';
+
+<Meta of={EditGridStories} />
+
+# Repeating Group / Herhalende groep
+
+The `editGrid` component is used to capture structured data according to a certain sub-schema where
+the number of repetitions can vary. The data is stored in a `Array` where each element's data
+corresponds to the nested schema of the edit grid.
+
+Form designers can freely design the components within the edit grid, while end-users have the
+controls to add additional items to the data array. In the form designer, the grid starts without
+any children (empty grid).

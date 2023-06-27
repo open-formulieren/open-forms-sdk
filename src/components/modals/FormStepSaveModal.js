@@ -174,12 +174,36 @@ const FormStepSaveModal = ({
 };
 
 FormStepSaveModal.propTypes = {
+  /**
+   * Modal open/closed state.
+   */
   isOpen: PropTypes.bool.isRequired,
+  /**
+   * Callback function to close the modal
+   *
+   * Invoked on ESC keypress or clicking the "X" to close the modal.
+   */
   closeModal: PropTypes.func.isRequired,
+  /**
+   * Callback to execute when the submission session is destroyed, effectively logging
+   * out the user.
+   */
   onSessionDestroyed: PropTypes.func.isRequired,
+  /**
+   * Callback to persist the submission data to the backend.
+   */
   onSaveConfirm: PropTypes.func.isRequired,
+  /**
+   * Backend API endpoint to suspend the submission.
+   */
   suspendFormUrl: PropTypes.string.isRequired,
+  /**
+   * Backend ID of the submission, used to construct API endpoint URLs.
+   */
   submissionId: PropTypes.string.isRequired,
+  /**
+   * Duration that the resume URL is valid for, in days.
+   */
   suspendFormUrlLifetime: PropTypes.number.isRequired,
 };
 

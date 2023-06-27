@@ -80,7 +80,13 @@ GenericSummary.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       slug: PropTypes.string.isRequired,
-      data: PropTypes.arrayOf(PropTypes.object).isRequired,
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          value: PropTypes.string.isRequired,
+          component: PropTypes.object.isRequired,
+        })
+      ).isRequired,
     })
   ),
   showPaymentInformation: PropTypes.bool,
