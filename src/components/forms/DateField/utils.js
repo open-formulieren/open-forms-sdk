@@ -1,4 +1,4 @@
-import parse from 'date-fns/parse';
+import {parse, parseISO} from 'date-fns';
 
 export const parseDate = value => {
   if (!value) return undefined;
@@ -26,4 +26,18 @@ export const getDateLocaleMeta = locale => {
     day: parts.indexOf(dayPart),
     separator: separator,
   };
+};
+
+export const convertMonth = (month, toAdd) => {
+  if (!month) return '';
+  const monthNumber = parseInt(month);
+  return String(monthNumber + toAdd);
+};
+
+export const dateFromParts = (yearStr, monthStr, dayStr) => {
+  const bits = [yearStr.padStart(4, '0'), monthStr.padStart(2, '0'), dayStr.padStart(2, '0')];
+  const ISOFormatted = bits.join('-');
+  const parsed = parseISO(ISOFormatted);
+  if (isNaN(parsed)) return undefined; // Invalid date (which is instanceof Date)
+  return ISOFormatted;
 };

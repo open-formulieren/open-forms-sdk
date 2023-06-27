@@ -1,5 +1,4 @@
 import {FormLabel, Paragraph, Textbox} from '@utrecht/component-library-react';
-import {parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useEffect, useId, useMemo, useState} from 'react';
@@ -7,7 +6,8 @@ import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 
 import {InputGroup, InputGroupItem} from 'components/forms';
 
-import {getDateLocaleMeta, parseDate} from './utils';
+import {useDateLocaleMeta} from './hooks';
+import {convertMonth, dateFromParts, parseDate} from './utils';
 
 const DatePartInput = forwardRef(({name, value, onChange, ...props}, ref) => (
   <Textbox
@@ -29,7 +29,7 @@ DatePartInput.propTypes = {
 
 const DateInputs = ({day, month, year, disabled, onChange}) => {
   const intl = useIntl();
-  const meta = useMemo(() => getDateLocaleMeta(intl.locale), [intl.locale]);
+  const meta = useDateLocaleMeta();
   const [dayId, monthId, yearId] = [useId(), useId(), useId()];
   const parts = {
     day: (
@@ -102,21 +102,6 @@ DateInputs.propTypes = {
   year: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-};
-
-// TODO: check if we can merge this with the ./utils/parseDate function
-const dateFromParts = (yearStr, monthStr, dayStr) => {
-  const bits = [yearStr.padStart(4, '0'), monthStr.padStart(2, '0'), dayStr.padStart(2, '0')];
-  const ISOFormatted = bits.join('-');
-  const parsed = parseISO(ISOFormatted);
-  if (isNaN(parsed)) return undefined; // Invalid date (which is instanceof Date)
-  return ISOFormatted;
-};
-
-const convertMonth = (month, toAdd) => {
-  if (!month) return '';
-  const monthNumber = parseInt(month);
-  return String(monthNumber + toAdd);
 };
 
 const DateInputGroup = ({
