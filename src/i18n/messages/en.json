@@ -144,6 +144,11 @@
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
   },
+  "DBTNgI": {
+    "defaultMessage": "d",
+    "description": "Placeholder for day part of a date",
+    "originalDefault": "d"
+  },
   "DCzTpQ": {
     "defaultMessage": "Remove",
     "description": "Appointments: remove product/service button text",
@@ -259,6 +264,11 @@
     "description": "Form save modal submit button",
     "originalDefault": "Continue later"
   },
+  "MJXZYI": {
+    "defaultMessage": "m",
+    "description": "Placeholder for month part of a date",
+    "originalDefault": "m"
+  },
   "PCFPnE": {
     "defaultMessage": "Payment is required for this product",
     "description": "Payment required info text",
@@ -283,6 +293,11 @@
     "defaultMessage": "Yes",
     "description": "'True' display",
     "originalDefault": "Yes"
+  },
+  "RSPyzt": {
+    "defaultMessage": "Month",
+    "description": "Date input group: month label",
+    "originalDefault": "Month"
   },
   "Rf8Sot": {
     "defaultMessage": "Problem - {formName}",
@@ -504,6 +519,11 @@
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
+  "nfRRDu": {
+    "defaultMessage": "yyyy",
+    "description": "Placeholder for year part of a date",
+    "originalDefault": "yyyy"
+  },
   "nwQjsz": {
     "defaultMessage": "Your session will expire soon.",
     "description": "Session expiry warning title (in modal)",
@@ -569,6 +589,11 @@
     "description": "Appointment cancellation missing submission ID query string parameter",
     "originalDefault": "Failed to determine the appointment"
   },
+  "vCObuG": {
+    "defaultMessage": "Day",
+    "description": "Date input group: day label",
+    "originalDefault": "Day"
+  },
   "vIfXbq": {
     "defaultMessage": "Failed to determine the appointment time",
     "description": "Appointment cancellation missing time query string parameter",
@@ -578,6 +603,11 @@
     "defaultMessage": "Amount",
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
+  },
+  "yKo62N": {
+    "defaultMessage": "Year",
+    "description": "Date input group: year label",
+    "originalDefault": "Year"
   },
   "yW2uhj": {
     "defaultMessage": "Co-sign confirmation",

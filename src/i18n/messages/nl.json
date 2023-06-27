@@ -72,7 +72,8 @@
   "7Fk8NY": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments location and time step",
-    "originalDefault": "{name}: {amount}x"
+    "originalDefault": "{name}: {amount}x",
+    "isTranslated": true
   },
   "7kd6yw": {
     "defaultMessage": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen.",
@@ -144,6 +145,12 @@
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
   },
+  "DBTNgI": {
+    "defaultMessage": "d",
+    "description": "Placeholder for day part of a date",
+    "originalDefault": "d",
+    "isTranslated": true
+  },
   "DCzTpQ": {
     "defaultMessage": "Verwijderen",
     "description": "Appointments: remove product/service button text",
@@ -162,7 +169,8 @@
   "DxbUkA": {
     "defaultMessage": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
     "description": "Auth error message",
-    "originalDefault": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw."
+    "originalDefault": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
+    "isTranslated": true
   },
   "E4h5vK": {
     "defaultMessage": "Download uw inzending als PDF document",
@@ -259,6 +267,12 @@
     "description": "Form save modal submit button",
     "originalDefault": "Continue later"
   },
+  "MJXZYI": {
+    "defaultMessage": "m",
+    "description": "Placeholder for month part of a date",
+    "originalDefault": "m",
+    "isTranslated": true
+  },
   "PCFPnE": {
     "defaultMessage": "Voor dit product is betaling vereist",
     "description": "Payment required info text",
@@ -284,6 +298,11 @@
     "description": "'True' display",
     "originalDefault": "Yes"
   },
+  "RSPyzt": {
+    "defaultMessage": "Maand",
+    "description": "Date input group: month label",
+    "originalDefault": "Month"
+  },
   "Rf8Sot": {
     "defaultMessage": "Probleem - {formName}",
     "description": "Form start outage title",
@@ -302,7 +321,8 @@
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
     "description": "Appointments: single product label/header",
-    "originalDefault": "Product {number}/{total}"
+    "originalDefault": "Product {number}/{total}",
+    "isTranslated": true
   },
   "VaNtPf": {
     "defaultMessage": "Afspraak annuleren",
@@ -337,7 +357,8 @@
   "ZehFnX": {
     "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
-    "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
+    "originalDefault": "Je hebt het inloggen met {service} geannuleerd.",
+    "isTranslated": true
   },
   "a8QRYP": {
     "defaultMessage": "Uw e-mailadres",
@@ -427,7 +448,8 @@
   "hQRQCS": {
     "defaultMessage": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
-    "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
+    "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
+    "isTranslated": true
   },
   "hR1LxA": {
     "defaultMessage": "Huidige stap in formulier {formTitle}: {activeStepTitle}",
@@ -477,17 +499,20 @@
   "kICI8K": {
     "defaultMessage": "Product",
     "description": "Appointments navbar title for 'products' step",
-    "originalDefault": "Product"
+    "originalDefault": "Product",
+    "isTranslated": true
   },
   "l/0YVO": {
     "defaultMessage": "Product",
     "description": "Appoinments: product select label",
-    "originalDefault": "Product"
+    "originalDefault": "Product",
+    "isTranslated": true
   },
   "lY+Mza": {
     "defaultMessage": "Product",
     "description": "Appointments products step page title",
-    "originalDefault": "Product"
+    "originalDefault": "Product",
+    "isTranslated": true
   },
   "lq29t6": {
     "defaultMessage": "Bent u zeker dat u deze formulierinzending wilt afbreken? U verliest alle voortgang als u bevestigt.",
@@ -503,6 +528,11 @@
     "defaultMessage": "Uw sessie staat op het punt om te vervallen {delta}. Verleng uw sessie indien u door wenst te gaan.",
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
+  },
+  "nfRRDu": {
+    "defaultMessage": "jjjj",
+    "description": "Placeholder for year part of a date",
+    "originalDefault": "yyyy"
   },
   "nwQjsz": {
     "defaultMessage": "Uw sessie vervalt binnenkort.",
@@ -569,6 +599,11 @@
     "description": "Appointment cancellation missing submission ID query string parameter",
     "originalDefault": "Failed to determine the appointment"
   },
+  "vCObuG": {
+    "defaultMessage": "Dag",
+    "description": "Date input group: day label",
+    "originalDefault": "Day"
+  },
   "vIfXbq": {
     "defaultMessage": "Het systeem kon de afspraak niet vinden",
     "description": "Appointment cancellation missing time query string parameter",
@@ -578,6 +613,11 @@
     "defaultMessage": "Aantal",
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
+  },
+  "yKo62N": {
+    "defaultMessage": "Jaar",
+    "description": "Date input group: year label",
+    "originalDefault": "Year"
   },
   "yW2uhj": {
     "defaultMessage": "Bevestiging mede-ondertekening",

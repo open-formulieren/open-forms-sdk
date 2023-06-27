@@ -221,6 +221,12 @@
       "value": "This form is currently undergoing maintenance and can not be accessed at the moment."
     }
   ],
+  "DBTNgI": [
+    {
+      "type": 0,
+      "value": "d"
+    }
+  ],
   "DCzTpQ": [
     {
       "type": 0,
@@ -389,6 +395,12 @@
       "value": "Continue later"
     }
   ],
+  "MJXZYI": [
+    {
+      "type": 0,
+      "value": "m"
+    }
+  ],
   "PCFPnE": [
     {
       "type": 0,
@@ -417,6 +429,12 @@
     {
       "type": 0,
       "value": "Yes"
+    }
+  ],
+  "RSPyzt": [
+    {
+      "type": 0,
+      "value": "Month"
     }
   ],
   "Rf8Sot": [
@@ -753,6 +771,12 @@
       "value": ". Extend your session if you wish to continue."
     }
   ],
+  "nfRRDu": [
+    {
+      "type": 0,
+      "value": "yyyy"
+    }
+  ],
   "nwQjsz": [
     {
       "type": 0,
@@ -885,6 +909,12 @@
       "value": "Failed to determine the appointment"
     }
   ],
+  "vCObuG": [
+    {
+      "type": 0,
+      "value": "Day"
+    }
+  ],
   "vIfXbq": [
     {
       "type": 0,
@@ -895,6 +925,12 @@
     {
       "type": 0,
       "value": "Amount"
+    }
+  ],
+  "yKo62N": [
+    {
+      "type": 0,
+      "value": "Year"
     }
   ],
   "yW2uhj": [
