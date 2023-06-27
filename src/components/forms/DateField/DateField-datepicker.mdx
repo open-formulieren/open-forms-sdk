@@ -1,0 +1,49 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+
+import DateField from './DateField';
+import * as DatepickerStories from './DateField-datepicker.stories';
+import DatePicker from './DatePicker';
+
+<Meta of={DatepickerStories} />
+
+# DateField - datepicker
+
+## Date picker widget
+
+The date picker widget is suitable for nearby dates (in the future or past).
+
+A calendar component is appropriate because:
+
+- you can display occupied dates and/or date ranges
+- you can indicate the current date
+- it is not expected that the user needs to click the year/month button too many times
+
+We aim to make it accessible to assistive technology and keyboard-only navigation.
+
+### Known issues/enhancements:
+
+- Use arrow keys to navigate inside calendar
+- Selecting a date in the next/previous month has some odd behaviour at the moment
+
+## Widget prop
+
+Use the prop `widget="datepicker"` to use this widget.
+
+<Canvas of={DatepickerStories.Datepicker} story={{height: '60ex'}} />
+
+## Props
+
+<ArgTypes of={DateField} exclude={['showFormattedDate']} />
+
+**DatePicker props**
+
+Internally, the `DateField` uses the `DatePicker` widget.
+
+<ArgTypes of={DatePicker} />
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly.
+
+<Canvas of={DatepickerStories.NoAsterisks} story={{height: '60ex'}} />
