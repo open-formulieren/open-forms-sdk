@@ -100,7 +100,7 @@ const LanguageSelection = ({heading = DEFAULT_HEADING, headingLevel = 2}) => {
 
 LanguageSelection.propTypes = {
   heading: PropTypes.node,
-  headingLevel: PropTypes.number,
+  headingLevel: PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
 };
 
 export default LanguageSelection;

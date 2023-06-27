@@ -1,0 +1,32 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as TextFieldStories from './TextField.stories';
+
+<Meta of={TextFieldStories} />
+
+# TextField
+
+A text-based input field with label, help text and validation errors.
+
+The value of the field is tracked in the Formik parent state, linked through the `name` prop. You
+can use `lodash.get` syntax for the name, e.g. `foo.bar` will look up the key `bar` inside the
+object `foo`.
+
+<Canvas of={TextFieldStories.Default} />
+
+## Props
+
+<ArgTypes of={TextFieldStories} />
+
+## Validation errors
+
+Validation errors are tracked in the Formik state and displayed if any are present.
+
+<Story of={TextFieldStories.ValidationError} />
+
+## No asterisks
+
+The backend can be configured to treat fields as required by default and instead mark optional
+fields explicitly, through the `ConfigContext`.
+
+<Story of={TextFieldStories.NoAsterisks} />

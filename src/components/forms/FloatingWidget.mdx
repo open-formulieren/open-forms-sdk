@@ -1,0 +1,58 @@
+import {ArgTypes, Meta} from '@storybook/blocks';
+
+import {FloatingWidget} from './FloatingWidget';
+import * as FloatingWidgetStories from './FloatingWidget.stories';
+
+<Meta of={FloatingWidgetStories} />
+
+# Floating widget
+
+Use the `FloatingWidget` component and `useFloatingWidget` hook when you want to provide a form
+control/widget in a widget.
+
+The widget will position itself to the form field with the appropriate accessible attributes set.
+
+## API
+
+This component requires both the `FloatingWidget` wrapper component and `useFloatingWidget` hook to
+manage the state, position and attributes.
+
+### Example
+
+```jsx
+const FormField = () => {
+  const {
+    refs,
+    floatingStyles,
+    context,
+    getFloatingProps,
+    getReferenceProps,
+    isOpen,
+    setIsOpen,
+    arrowRef,
+  } = useFloatingWidget();
+  return (
+    <div>
+      <input type="text" name="reference" ref={refs.setReference} {...getReferenceProps()} />
+      <FloatingWidget
+        isOpen={isOpen}
+        context={context}
+        setFloating={refs.setFloating}
+        floatingStyles={floatingStyles}
+        getFloatingProps={getFloatingProps}
+        arrowRef={arrowRef}
+      >
+        <p>Floating widget content</p>
+        <p>
+          <input name="widgetInput" />
+          <button onClick={() => setIsOpen(false, {keepDismissed: true})}>close</button>
+        </p>
+      </FloatingWidget>
+    </div>
+  );
+};
+```
+
+## FloatingWidget props
+
+<ArgTypes of={FloatingWidget} />

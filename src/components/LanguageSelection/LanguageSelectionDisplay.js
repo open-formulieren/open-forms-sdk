@@ -34,7 +34,7 @@ const LanguageSelectionDisplay = ({heading, headingLevel, headingId, items, onLa
 
 LanguageSelectionDisplay.propTypes = {
   heading: PropTypes.node.isRequired,
-  headingLevel: PropTypes.number.isRequired,
+  headingLevel: PropTypes.oneOf([1, 2, 3, 4, 5, 6]).isRequired,
   headingId: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({

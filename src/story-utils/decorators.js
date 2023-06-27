@@ -1,9 +1,11 @@
+import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
+import Card from 'components/Card';
 import {Layout, LayoutRow} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';
 
@@ -103,3 +105,15 @@ export const LayoutDecorator = Story => {
     </Layout>
   );
 };
+
+export const withUtrechtDocument = (Story, {parameters}) => (
+  <Document style={{'--utrecht-space-around': parameters?.utrechtDocument?.spaceAround ?? 1}}>
+    <Story />
+  </Document>
+);
+
+export const withCard = (Story, {parameters: {card: cardProps = {}}}) => (
+  <Card {...cardProps}>
+    <Story />
+  </Card>
+);

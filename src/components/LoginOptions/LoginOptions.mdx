@@ -1,0 +1,52 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import LoginOptions from '.';
+import * as LoginOptionsStories from './LoginOptions.stories';
+import LoginOptionsDisplay from './LoginOptionsDisplay';
+
+<Meta of={LoginOptionsStories} />
+
+# Login Options
+
+The `LoginOptions` component displays the options that are available for a user to authenticate when
+starting a form.
+
+A form requires authentication as soon as any of the steps requires authentication, otherwise
+starting the form anonymously is an option too. This is communicated through the
+`form.loginRequired` property.
+
+## Presentation
+
+The `LoginOptionsDisplay` component shows the different buttons that can be clicked to start the
+authentication process. Next to each button, the corresponding logo is displayed. The icons have
+either a dark or light appearance, affecting the color of the focus ring for accessibility.
+
+<Canvas of={LoginOptionsStories.Display} />
+
+Note that the anonymous form start option is implemented as a button with `type="submit"` and is
+therefore expected to be nested inside of a `<form>` element with an appropriate `onSubmit` handler.
+
+### Props
+
+<ArgTypes of={LoginOptionsDisplay} />
+
+## Functional
+
+The `LoginOptions` component handles the 'smart' part of the component. It separates the login
+options between the ones that can be used to 'login as yourself' and the ones that can be used to
+log in 'on behalf of someone else'. It also formats the labels that will be displayed on the buttons
+and creates the appropriate URL to which the user will be redirected upon clicking one of the
+buttons.
+
+<Canvas of={LoginOptionsStories.Functional} />
+
+### Co-signing
+
+When the form contains a co-sign component, an additional button is displayed for the co-signer to
+start this flow, taking them to the configured authentication plugin.
+
+<Story of={LoginOptionsStories.WithCoSignOption} />
+
+### Props
+
+<ArgTypes of={LoginOptions} />

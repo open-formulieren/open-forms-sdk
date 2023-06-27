@@ -1,0 +1,31 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+
+import App from './App';
+import * as AppStories from './App.stories';
+
+<Meta of={AppStories} />
+
+# The App
+
+The App component is the top level entrypoint. It's responsible for rendering the outer most layout
+and rendering:
+
+- `Form` based on the `form` config that is passed with the shape from the backend API.
+- the language selection component if translations are enabled. Note that the render target is
+  provided via the `I18NManager` component.
+
+<Canvas of={AppStories.Default} />
+
+## Props
+
+<ArgTypes of={App} />
+
+## Translations
+
+If translations are enabled on the form, a `LanguageSelector` is rendered:
+
+<Canvas of={AppStories.TranslationEnabled} sourceState="none" />
+
+If they are not, no `LanguageSelector` is rendered:
+
+<Canvas of={AppStories.TranslationDisabled} sourceState="none" />

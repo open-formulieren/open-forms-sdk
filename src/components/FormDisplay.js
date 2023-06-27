@@ -27,8 +27,8 @@ const FormDisplay = ({
 };
 
 FormDisplay.propTypes = {
-  router: PropTypes.element.isRequired,
-  progressIndicator: PropTypes.element,
+  router: PropTypes.node.isRequired,
+  progressIndicator: PropTypes.node,
   showProgressIndicator: PropTypes.bool,
   isPaymentOverview: PropTypes.bool,
 };

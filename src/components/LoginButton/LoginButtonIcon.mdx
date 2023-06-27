@@ -1,0 +1,16 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as LoginButtonIconStories from './LoginButtonIcon.stories';
+
+<Meta of={LoginButtonIconStories} />
+
+# Login Button icons
+
+Focus-color depends on whether the Login Button logos have a dark or light colored background.
+
+<Canvas of={LoginButtonIconStories.Dark} />
+<Canvas of={LoginButtonIconStories.Light} />
+
+## Props
+
+<ArgTypes of={LoginButtonIconStories} include={['identifier', 'logo']} />

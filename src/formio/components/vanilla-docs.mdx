@@ -1,0 +1,32 @@
+import {Meta} from '@storybook/blocks';
+
+<Meta title="Form.io components / Vanilla / Docs" />
+
+# Vanilla Form.io components
+
+These components are the components that are shipped by default in Form.io. Most of the component
+definitions should thus also work in other Form.io renderers.
+
+Keep in mind that we also tweak and extend some vanilla components with features specific to Open
+Forms - these component definitions may not work 100% the same when taken outside of Open Forms.
+
+## Known incompatibilities
+
+### Columns
+
+We use different properties for the column sizes, while Form.io uses Bootstrap-related properties.
+
+### TextField
+
+Open Forms implements deriving city and street name from postal code + house number data entered in
+different components - this is not available outside of Open Forms.
+
+### Currency
+
+The upstream component has a number of bugs with negative values and formatting of zeroes, which we
+patched in our own component. Otherwise it should behave the same.
+
+### DateTimeField
+
+Open Forms allows dynamic min/max datetime validation (relative to some variable, for example),
+which is not supported by Form.io.

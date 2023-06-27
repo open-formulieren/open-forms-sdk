@@ -10,6 +10,7 @@ const FORM_DEFAULTS = {
   url: `${BASE_URL}forms/mock`,
   loginRequired: false,
   loginOptions: [],
+  cosignLoginInfo: undefined,
   product: '',
   showProgressIndicator: true,
   maintenanceMode: false,
@@ -42,6 +43,8 @@ const FORM_DEFAULTS = {
   autoLoginAuthenticationBackend: '',
   translationEnabled: false,
   hideNonApplicableSteps: false,
+  paymentRequired: false,
+  paymentOptions: [],
 };
 
 /**

@@ -1,0 +1,20 @@
+import {Canvas, Meta} from '@storybook/blocks';
+
+import * as TimeSelectStories from './TimeSelect.stories';
+
+<Meta of={TimeSelectStories} />
+
+# Select an available time
+
+Given the location, products and date, the API endpoint returns a set of available appointment
+times. These are displayed to the user as a time, but the value stored and submitted is a full
+ISO-8601 datetime string.
+
+<Canvas of={TimeSelectStories.Default} story={{height: '280px'}} />
+
+## Interactions
+
+- The time field is only enabled when one or more products, a location and a date have been
+  selected.
+- The times received from the backend are typically in UTC or otherwise timezone-aware. For the
+  end-user, the times are displayed in their local timezone, configured on their OS/browser.

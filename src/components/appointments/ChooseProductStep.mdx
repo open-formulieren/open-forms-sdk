@@ -1,0 +1,19 @@
+import {Canvas, Meta} from '@storybook/blocks';
+
+import * as ChooseProductStepStories from './ChooseProductStep.stories';
+
+<Meta of={ChooseProductStepStories} />
+
+# Choose product step
+
+The appointment form allows making appointments for one or multiple products/services.
+
+This component enables the UX to select the desired product and add additional products if desired.
+At least one product must be provided.
+
+<Canvas of={ChooseProductStepStories.InitialState} />
+
+## Interaction
+
+Users can add rows for multiple products. Additional products can be removed again after adding
+them, unless there's only a single row left - then removing that row is not allowed.

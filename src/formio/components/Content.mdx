@@ -1,0 +1,14 @@
+import {Canvas, Meta} from '@storybook/blocks';
+
+import * as ContentStories from './Content.stories';
+
+<Meta of={ContentStories} />
+
+# Content
+
+A Content component may be added to a form to provide non-field information. For example, if you
+need instructions at the top of a form that are for display only, use the Content component. The
+Content component value is not submitted back to the server. The style of each content varies
+depending on whether a style class is chosen.
+
+<Canvas of={ContentStories.Content} />

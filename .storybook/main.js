@@ -1,13 +1,14 @@
 const _ = require('lodash');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 const configFactory = require('../config/webpack.config');
 
 // from ../config/webpack.config
 const sassRegex = /\.(scss|sass)$/;
-
-module.exports = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+const config = {
+  core: {
+    disableTelemetry: true,
+  },
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -18,16 +19,18 @@ module.exports = {
   ],
   features: {
     interactionsDebugger: true,
+    storyStoreV7: true,
+    buildStoriesJson: true,
   },
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-webpack5',
+
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
   },
   staticDirs: ['../src/img/', '../public'],
   webpackFinal: async (sbConfig, {configType}) => {
     // configType is DEVELOPMENT or PRODUCTION
     const craConfig = configFactory(configType.toLowerCase());
-
     const mergedResolve = {
       ...sbConfig.resolve,
       extensions: _.uniq([...sbConfig.resolve.extensions, ...craConfig.resolve.extensions]),
@@ -57,7 +60,6 @@ module.exports = {
       },
       ...sbConfig.module.rules,
     ];
-
     const mergedPlugins = [...sbConfig.plugins];
     if (configType === 'PRODUCTION') {
       // from ../config/webpack.config
@@ -69,13 +71,11 @@ module.exports = {
         })
       );
     }
-
     const watchOptions = {
       ...sbConfig.watchOptions,
       // DO watch our own packages, especially useful when rebuilding the design-tokens
       ignored: /node_modules\/(?!@open-formulieren)/,
     };
-
     return {
       ...sbConfig,
       resolve: mergedResolve,
@@ -87,4 +87,8 @@ module.exports = {
       watchOptions,
     };
   },
+  docs: {
+    autodocs: 'tag',
+  },
 };
+export default config;

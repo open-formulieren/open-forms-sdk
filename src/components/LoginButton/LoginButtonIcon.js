@@ -24,7 +24,13 @@ const LoginButtonIcon = ({identifier, logo}) => {
 };
 
 LoginButtonIcon.propTypes = {
+  /**
+   * Unique login option identifier.
+   */
   identifier: PropTypes.string.isRequired,
+  /**
+   * Login logo details as provided by the backend.
+   */
   logo: PropTypes.shape({
     title: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,

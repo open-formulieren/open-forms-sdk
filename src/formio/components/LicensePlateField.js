@@ -1,5 +1,6 @@
 import TextField from './TextField';
 
+// TODO: deprecate and convert to textfield preset
 export default class LicensePlateField extends TextField {
   static schema(...extend) {
     return TextField.schema(
