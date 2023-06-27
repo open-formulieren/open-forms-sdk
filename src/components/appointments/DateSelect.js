@@ -67,6 +67,7 @@ const DateSelect = () => {
   return (
     <DateField
       name="date"
+      widget="datepicker"
       disabled={loading || !values.location}
       isRequired
       label={

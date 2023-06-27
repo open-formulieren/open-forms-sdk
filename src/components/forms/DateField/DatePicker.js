@@ -47,6 +47,7 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
             // See open-formulieren/open-forms-sdk#433 for locale-aware formats support
             defaultMessage: 'yyyy-mm-dd',
           })}
+          disabled={disabled}
           {...extra}
           onChange={onChange}
           onFocus={event => {
