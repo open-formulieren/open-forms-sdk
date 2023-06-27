@@ -120,9 +120,9 @@ export const DatepickerTypeDateManually = {
     const canvas = within(canvasElement);
     await expect(await canvas.queryByRole('dialog')).toBeNull();
     const textInput = canvas.getByLabelText('A nearby date');
-    await userEvent.type(textInput, '2023-05-29');
+    await userEvent.type(textInput, '29/05/2023');
     await expect(await canvas.queryByRole('dialog')).toBeNull();
-    await expect(textInput).toHaveDisplayValue('2023-05-29');
+    await expect(textInput).toHaveDisplayValue('29-5-2023');
     // check that the date is properly highlighted
     await userEvent.click(textInput);
     await expect(await canvas.findByRole('dialog')).toBeVisible();
