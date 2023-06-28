@@ -53,6 +53,10 @@ export const DeprecatedRouterDecorator = (Story, {args: {routerArgs = {}}}) => {
 };
 
 export const FormikDecorator = (Story, context) => {
+  const isDisabled = context.parameters?.formik?.disable ?? false;
+  if (isDisabled) {
+    return <Story />;
+  }
   const initialValues = context.parameters?.formik?.initialValues || {};
   const initialErrors = context.parameters?.formik?.initialErrors || {};
   return (

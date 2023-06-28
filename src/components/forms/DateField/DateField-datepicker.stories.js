@@ -7,9 +7,15 @@ import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 import DateField from './DateField';
 
 export default {
-  title: 'Pure React Components / Forms / DateField',
+  title: 'Pure React Components / Forms / DateField / Datepicker',
   component: DateField,
   decorators: [FormikDecorator],
+  args: {
+    widget: 'datepicker',
+  },
+  argTypes: {
+    showFormattedDate: {table: {disable: true}},
+  },
   parameters: {
     formik: {
       initialValues: {

@@ -1,0 +1,56 @@
+import ofTokens from '@open-formulieren/design-tokens/dist/tokens';
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+import TokensTable from 'design-token-editor/lib/esm/TokensTable';
+
+import InputGroup, {InputGroupItem} from './InputGroup';
+import * as InputGroupStories from './InputGroup.stories';
+
+<Meta of={InputGroupStories} />
+
+# Input group
+
+An input group is a set of closely related inputs that should be considered a single value, for
+example:
+
+- parts of a date
+- date + time
+- parts of a duration
+
+<Canvas of={InputGroupStories.Basic} />
+
+## Usage
+
+The input group is a low level component, intended to replace a regular `Textbox` or `Select`
+component.
+
+It should be composed with the `Wrapper`, `FormField`, `FormLabel`, `HelpText` and
+`ValidationErrors` components.
+
+## Props
+
+<ArgTypes of={InputGroup} />
+
+**InputGroupItem**
+
+<ArgTypes of={InputGroupItem} />
+
+## Design tokens
+
+We use the `Fieldset` component from `@utrecht/component-library-react`, and as such those
+[design tokens](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-component-form-fieldset-design-tokens--docs)
+apply.
+
+Additionally Open Forms defines some design tokens to handle the invalid state. We recommend setting
+the following values to prevent double 'error borders'.
+
+```css
+--of-input-group-invalid-border-inline-start-color: transparent;
+--of-input-group-invalid-border-inline-start-width: 0;
+--of-input-group-invalid-padding-inline-start: 0;
+```
+
+<TokensTable container={ofTokens} limitTo="of.input-group" autoExpand />
+
+## References
+
+- [NL Design System](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css-component-form-fieldset-readme--docs)

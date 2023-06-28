@@ -1,0 +1,37 @@
+@use 'microscope-sass/lib/bem';
+
+.openforms-input-group {
+  display: flex;
+  justify-content: var(--of-input-group-justify-content);
+  align-items: var(--of-input-group-align-items);
+  gap: var(--of-input-group-gap);
+
+  @include bem.element('item') {
+    display: flex;
+    flex-direction: column;
+    gap: var(--of-input-group-item-gap);
+  }
+
+  @include bem.element('label') {
+    font-size: var(--of-input-group-label-font-size);
+  }
+}
+
+// XXX: move to upstream @utrecht/components when the input group is moved there.
+.utrecht-form-field {
+  @include bem.modifier('openforms') {
+    .utrecht-form-fieldset {
+      @include bem.modifier('invalid') {
+        --utrecht-form-fieldset-invalid-border-inline-start-color: var(
+          --of-input-group-invalid-border-inline-start-color
+        );
+        --utrecht-form-fieldset-invalid-border-inline-start-width: var(
+          --of-input-group-invalid-border-inline-start-width
+        );
+        --utrecht-form-fieldset-invalid-padding-inline-start: var(
+          --of-input-group-invalid-padding-inline-start
+        );
+      }
+    }
+  }
+}
