@@ -48,7 +48,6 @@ export const ISO8601 = {
     <Formik
       initialValues={{test: ''}}
       onSubmit={(values, actions) => {
-        console.log(onSubmit, values);
         onSubmit(values);
         actions.setSubmitting(false);
       }}

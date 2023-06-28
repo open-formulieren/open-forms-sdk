@@ -1,7 +1,7 @@
 import {FormLabel, Paragraph, Textbox} from '@utrecht/component-library-react';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {forwardRef, useEffect, useId, useState} from 'react';
+import React, {forwardRef, useId, useState} from 'react';
 import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 
 import {InputGroup, InputGroupItem} from 'components/forms';
@@ -116,10 +116,22 @@ const DateInputGroup = ({
   });
 
   const enteredDate = dateFromParts(dateParts.year, dateParts.month, dateParts.day);
-  useEffect(() => {
-    if (!enteredDate || enteredDate === value) return;
-    onChange({target: {name, value: enteredDate}});
-  }, [onChange, name, value, enteredDate]);
+
+  const onPartChange = event => {
+    const {
+      target: {name: partName, value},
+    } = event;
+    const newDateParts = {...dateParts, [partName]: value};
+    // update internal state
+    setDateParts(newDateParts);
+
+    // calculate the nw formik state value for the "composite" field
+    const {year, month, day} = newDateParts;
+    const newDate = dateFromParts(year, month, day);
+
+    // clear value if it's not a valid date or update it if it is valid
+    onChange({target: {name, value: newDate ?? ''}});
+  };
 
   return (
     <>
@@ -129,7 +141,7 @@ const DateInputGroup = ({
           month={dateParts.month}
           day={dateParts.day}
           disabled={disabled}
-          onChange={({target: {name, value}}) => setDateParts({...dateParts, [name]: value})}
+          onChange={onPartChange}
         />
       </InputGroup>
       {showFormattedDate && (
