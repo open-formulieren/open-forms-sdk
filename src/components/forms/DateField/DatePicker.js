@@ -1,7 +1,8 @@
 import {Paragraph, Textbox} from '@utrecht/component-library-react';
+import {formatISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
@@ -9,11 +10,15 @@ import {FloatingWidget, Label, useFloatingWidget} from 'components/forms';
 import {getBEMClassName} from 'utils';
 
 import DatePickerCalendar from './DatePickerCalendar';
-import {parseDate} from './utils';
+import {useDateLocaleMeta} from './hooks';
+import {PART_PLACEHOLDERS} from './messages';
+import {orderByPart, parseDate} from './utils';
 
 const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarProps, ...extra}) => {
   const intl = useIntl();
+  const dateLocaleMeta = useDateLocaleMeta();
   const {getFieldProps} = useFormikContext();
+  const [inputValue, setInputValue] = useState('');
   const {
     refs,
     floatingStyles,
@@ -26,9 +31,33 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
   } = useFloatingWidget();
 
   const calendarIconClassName = getBEMClassName('datepicker-textbox__calendar-toggle');
+
+  // value is always in ISO format in the formik state
   const {value} = getFieldProps(name);
   const currentDate = parseDate(value);
 
+  // valid date -> set the locale-aware formatted value as input state
+  const expectedTextboxValue = !isNaN(currentDate)
+    ? intl.formatDate(currentDate, {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      })
+    : inputValue;
+
+  if (inputValue !== expectedTextboxValue) {
+    setInputValue(expectedTextboxValue);
+    return;
+  }
+
+  const placeholderParts = orderByPart(
+    {
+      day: intl.formatMessage(PART_PLACEHOLDERS.day),
+      month: intl.formatMessage(PART_PLACEHOLDERS.month),
+      year: intl.formatMessage(PART_PLACEHOLDERS.year),
+    },
+    dateLocaleMeta
+  );
   const {onFocus, ...referenceProps} = getReferenceProps();
   return (
     <>
@@ -42,14 +71,26 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
           id={id}
           className="utrecht-textbox--openforms"
           autoComplete="off"
-          placeholder={intl.formatMessage({
-            description: 'Datepicker text input placeholder',
-            // See open-formulieren/open-forms-sdk#433 for locale-aware formats support
-            defaultMessage: 'yyyy-mm-dd',
-          })}
+          placeholder={placeholderParts.join(dateLocaleMeta.separator)}
           disabled={disabled}
           {...extra}
-          onChange={onChange}
+          value={inputValue}
+          onChange={event => {
+            const enteredText = event.target.value;
+            setInputValue(enteredText);
+
+            const newDate = parseDate(enteredText, dateLocaleMeta);
+            // if we couldn't parse a valid date -> clear the value in the formik state
+            // (hitting backspace, deleting the input value completely...)
+            if (!newDate) {
+              onChange({target: {name, value: ''}});
+              return;
+            }
+
+            // set the ISO-8601 date in the actual form state
+            const enteredDate = formatISO(newDate, {representation: 'date'});
+            onChange({target: {name, value: enteredDate}});
+          }}
           onFocus={event => {
             onFocus(event);
             extra?.onFocus?.(event);

@@ -1,13 +1,14 @@
 import {FormLabel, Paragraph, Textbox} from '@utrecht/component-library-react';
-import {parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {forwardRef, useEffect, useId, useMemo, useState} from 'react';
+import React, {forwardRef, useId, useState} from 'react';
 import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 
 import {InputGroup, InputGroupItem} from 'components/forms';
 
-import {getDateLocaleMeta, parseDate} from './utils';
+import {useDateLocaleMeta} from './hooks';
+import {PART_PLACEHOLDERS} from './messages';
+import {convertMonth, dateFromParts, orderByPart, parseDate} from './utils';
 
 const DatePartInput = forwardRef(({name, value, onChange, ...props}, ref) => (
   <Textbox
@@ -29,7 +30,7 @@ DatePartInput.propTypes = {
 
 const DateInputs = ({day, month, year, disabled, onChange}) => {
   const intl = useIntl();
-  const meta = useMemo(() => getDateLocaleMeta(intl.locale), [intl.locale]);
+  const meta = useDateLocaleMeta();
   const [dayId, monthId, yearId] = [useId(), useId(), useId()];
   const parts = {
     day: (
@@ -42,10 +43,7 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           disabled={disabled}
           value={day}
           onChange={onChange}
-          placeholder={intl.formatMessage({
-            description: 'Placeholder for day part of a date',
-            defaultMessage: 'd',
-          })}
+          placeholder={intl.formatMessage(PART_PLACEHOLDERS.day)}
           id={dayId}
         />
       </InputGroupItem>
@@ -60,10 +58,7 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           disabled={disabled}
           value={month}
           onChange={onChange}
-          placeholder={intl.formatMessage({
-            description: 'Placeholder for month part of a date',
-            defaultMessage: 'm',
-          })}
+          placeholder={intl.formatMessage(PART_PLACEHOLDERS.month)}
           id={monthId}
         />
       </InputGroupItem>
@@ -78,18 +73,13 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           disabled={disabled}
           value={year}
           onChange={onChange}
-          placeholder={intl.formatMessage({
-            description: 'Placeholder for year part of a date',
-            defaultMessage: 'yyyy',
-          })}
+          placeholder={intl.formatMessage(PART_PLACEHOLDERS.year)}
           id={yearId}
         />
       </InputGroupItem>
     ),
   };
-  const orderedParts = Object.keys(parts)
-    .sort((a, b) => meta[a] - meta[b])
-    .map(part => parts[part]);
+  const orderedParts = orderByPart(parts, meta);
   return <>{orderedParts}</>;
 };
 
@@ -102,21 +92,6 @@ DateInputs.propTypes = {
   year: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-};
-
-// TODO: check if we can merge this with the ./utils/parseDate function
-const dateFromParts = (yearStr, monthStr, dayStr) => {
-  const bits = [yearStr.padStart(4, '0'), monthStr.padStart(2, '0'), dayStr.padStart(2, '0')];
-  const ISOFormatted = bits.join('-');
-  const parsed = parseISO(ISOFormatted);
-  if (isNaN(parsed)) return undefined; // Invalid date (which is instanceof Date)
-  return ISOFormatted;
-};
-
-const convertMonth = (month, toAdd) => {
-  if (!month) return '';
-  const monthNumber = parseInt(month);
-  return String(monthNumber + toAdd);
 };
 
 const DateInputGroup = ({
@@ -141,10 +116,22 @@ const DateInputGroup = ({
   });
 
   const enteredDate = dateFromParts(dateParts.year, dateParts.month, dateParts.day);
-  useEffect(() => {
-    if (!enteredDate || enteredDate === value) return;
-    onChange({target: {name, value: enteredDate}});
-  }, [onChange, name, value, enteredDate]);
+
+  const onPartChange = event => {
+    const {
+      target: {name: partName, value},
+    } = event;
+    const newDateParts = {...dateParts, [partName]: value};
+    // update internal state
+    setDateParts(newDateParts);
+
+    // calculate the nw formik state value for the "composite" field
+    const {year, month, day} = newDateParts;
+    const newDate = dateFromParts(year, month, day);
+
+    // clear value if it's not a valid date or update it if it is valid
+    onChange({target: {name, value: newDate ?? ''}});
+  };
 
   return (
     <>
@@ -154,7 +141,7 @@ const DateInputGroup = ({
           month={dateParts.month}
           day={dateParts.day}
           disabled={disabled}
-          onChange={({target: {name, value}}) => setDateParts({...dateParts, [name]: value})}
+          onChange={onPartChange}
         />
       </InputGroup>
       {showFormattedDate && (
