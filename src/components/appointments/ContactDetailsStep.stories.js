@@ -55,7 +55,7 @@ export const FillOutAllFields = {
     });
 
     await step('Check submit status', async () => {
-      const submitButton = canvas.getByRole('button', {name: 'To overview'});
+      const submitButton = canvas.getByRole('button', {name: 'Naar overzicht'});
       await expect(submitButton).not.toBeDisabled();
       await expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
     });
