@@ -16,9 +16,6 @@ import {getProducts} from './ProductSelect';
 import SubmitRow from './SubmitRow';
 import TimeSelect from './TimeSelect';
 
-// FIXME: check the wizard state - if the user messed with the URLs -> navigate back to
-// required preceding step
-
 // TODO: replace with ZOD validation, see #435
 export const isStepValid = data => {
   const {location, datetime} = data;
