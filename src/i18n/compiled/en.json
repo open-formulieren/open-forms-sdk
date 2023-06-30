@@ -187,6 +187,12 @@
       "value": "Sorry, there are no available dates for your appointment. Please try again later."
     }
   ],
+  "AlDZqS": [
+    {
+      "type": 0,
+      "value": "Contact details"
+    }
+  ],
   "AnNsAY": [
     {
       "type": 0,
@@ -257,6 +263,18 @@
     {
       "type": 0,
       "value": ". Probeer het later opnieuw."
+    }
+  ],
+  "E+3d5q": [
+    {
+      "type": 0,
+      "value": "To overview"
+    }
+  ],
+  "E1laLd": [
+    {
+      "type": 0,
+      "value": "Back to location and time"
     }
   ],
   "E4h5vK": [
@@ -567,6 +585,12 @@
       "value": " to restart."
     }
   ],
+  "ay8sO5": [
+    {
+      "type": 0,
+      "value": "Contact details"
+    }
+  ],
   "bCGJi9": [
     {
       "type": 0,
@@ -575,12 +599,6 @@
     {
       "type": 1,
       "value": "reference"
-    }
-  ],
-  "bPuRrE": [
-    {
-      "type": 0,
-      "value": "yyyy-mm-dd"
     }
   ],
   "bgfiRG": [

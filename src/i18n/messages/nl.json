@@ -72,8 +72,8 @@
   "7Fk8NY": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments location and time step",
-    "originalDefault": "{name}: {amount}x",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "{name}: {amount}x"
   },
   "7kd6yw": {
     "defaultMessage": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen.",
@@ -120,6 +120,11 @@
     "description": "Appoinments: message shown for no available dates at all",
     "originalDefault": "Sorry, there are no available dates for your appointment. Please try again later."
   },
+  "AlDZqS": {
+    "defaultMessage": "Contactgegevens",
+    "description": "Appointments: contact details step page title",
+    "originalDefault": "Contact details"
+  },
   "AnNsAY": {
     "defaultMessage": "Voortgang",
     "description": "Title of progress indicator",
@@ -148,8 +153,8 @@
   "DBTNgI": {
     "defaultMessage": "d",
     "description": "Placeholder for day part of a date",
-    "originalDefault": "d",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "d"
   },
   "DCzTpQ": {
     "defaultMessage": "Verwijderen",
@@ -169,8 +174,18 @@
   "DxbUkA": {
     "defaultMessage": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
     "description": "Auth error message",
-    "originalDefault": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw."
+  },
+  "E+3d5q": {
+    "defaultMessage": "Naar overzicht",
+    "description": "Appointments contact details step: next step text",
+    "originalDefault": "To overview"
+  },
+  "E1laLd": {
+    "defaultMessage": "Terug naar locatie en tijdstip",
+    "description": "Appointments contact details step: previous step text",
+    "originalDefault": "Back to location and time"
   },
   "E4h5vK": {
     "defaultMessage": "Download uw inzending als PDF document",
@@ -270,8 +285,8 @@
   "MJXZYI": {
     "defaultMessage": "m",
     "description": "Placeholder for month part of a date",
-    "originalDefault": "m",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "m"
   },
   "PCFPnE": {
     "defaultMessage": "Voor dit product is betaling vereist",
@@ -321,8 +336,8 @@
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
     "description": "Appointments: single product label/header",
-    "originalDefault": "Product {number}/{total}",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "Product {number}/{total}"
   },
   "VaNtPf": {
     "defaultMessage": "Afspraak annuleren",
@@ -357,8 +372,8 @@
   "ZehFnX": {
     "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
-    "originalDefault": "Je hebt het inloggen met {service} geannuleerd.",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
   },
   "a8QRYP": {
     "defaultMessage": "Uw e-mailadres",
@@ -375,15 +390,15 @@
     "description": "Session expired error message",
     "originalDefault": "Your session has expired. Click <link>here</link> to restart."
   },
+  "ay8sO5": {
+    "defaultMessage": "Uw gegevens",
+    "description": "Appointments: contact details step title",
+    "originalDefault": "Contact details"
+  },
   "bCGJi9": {
     "defaultMessage": "Bevestiging: {reference}",
     "description": "On succesful completion title",
     "originalDefault": "Confirmation: {reference}"
-  },
-  "bPuRrE": {
-    "defaultMessage": "jjjj-mm-dd",
-    "description": "Datepicker text input placeholder",
-    "originalDefault": "yyyy-mm-dd"
   },
   "bgfiRG": {
     "defaultMessage": "U hebt de betaling gestart.",
@@ -448,8 +463,8 @@
   "hQRQCS": {
     "defaultMessage": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
-    "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
   "hR1LxA": {
     "defaultMessage": "Huidige stap in formulier {formTitle}: {activeStepTitle}",
@@ -499,20 +514,20 @@
   "kICI8K": {
     "defaultMessage": "Product",
     "description": "Appointments navbar title for 'products' step",
-    "originalDefault": "Product",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "Product"
   },
   "l/0YVO": {
     "defaultMessage": "Product",
     "description": "Appoinments: product select label",
-    "originalDefault": "Product",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "Product"
   },
   "lY+Mza": {
     "defaultMessage": "Product",
     "description": "Appointments products step page title",
-    "originalDefault": "Product",
-    "isTranslated": true
+    "isTranslated": true,
+    "originalDefault": "Product"
   },
   "lq29t6": {
     "defaultMessage": "Bent u zeker dat u deze formulierinzending wilt afbreken? U verliest alle voortgang als u bevestigt.",

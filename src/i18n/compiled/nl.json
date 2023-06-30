@@ -187,6 +187,12 @@
       "value": "Sorry, er zijn geen datums beschikbaar voor uw afspraak. Probeer het later opnieuw."
     }
   ],
+  "AlDZqS": [
+    {
+      "type": 0,
+      "value": "Contactgegevens"
+    }
+  ],
   "AnNsAY": [
     {
       "type": 0,
@@ -257,6 +263,18 @@
     {
       "type": 0,
       "value": ". Probeer het later opnieuw."
+    }
+  ],
+  "E+3d5q": [
+    {
+      "type": 0,
+      "value": "Naar overzicht"
+    }
+  ],
+  "E1laLd": [
+    {
+      "type": 0,
+      "value": "Terug naar locatie en tijdstip"
     }
   ],
   "E4h5vK": [
@@ -567,6 +585,12 @@
       "value": " om opnieuw te beginnen."
     }
   ],
+  "ay8sO5": [
+    {
+      "type": 0,
+      "value": "Uw gegevens"
+    }
+  ],
   "bCGJi9": [
     {
       "type": 0,
@@ -575,12 +599,6 @@
     {
       "type": 1,
       "value": "reference"
-    }
-  ],
-  "bPuRrE": [
-    {
-      "type": 0,
-      "value": "jjjj-mm-dd"
     }
   ],
   "bgfiRG": [
