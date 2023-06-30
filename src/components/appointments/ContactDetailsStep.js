@@ -82,7 +82,7 @@ const ContactDetailsStep = () => {
           description: 'Appointments contact details step: previous step text',
           defaultMessage: 'Back to location and time',
         })}
-        navigateBackTo="producten"
+        navigateBackTo="kalender"
       />
     </>
   );
