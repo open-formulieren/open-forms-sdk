@@ -1,19 +1,55 @@
-<div class="utrecht-form-field utrecht-form-field--openforms">
-{% if (!ctx.label.hidden && ctx.label.labelPosition !== 'bottom') { %}
-  {{ ctx.labelMarkup }}
-{% } %}
+{% if (ctx.component.type === 'radio' || ctx.component.type === 'selectboxes') { %}
+  <div class="utrecht-form-fieldset">
+    <fieldset
+      class="utrecht-form-fieldset__fieldset utrecht-form-fieldset--html-fieldset"
+      role="radiogroup"
+      {% if (ctx.component.description) { %}aria-describedby="{{ctx.id}}-description"{% } %}
+    >
 
-{% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required) { %}
-  <label class="utrecht-form-label utrecht-form-label--openforms-required {{ctx.label.className}}"></label>
-{% } %}
+      <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend utrecht-form-field__label">
+        <label class="utrecht-form-label utrecht-form-label--openforms-required">
+          {{ ctx.t(ctx.component.label, { _userInput: true }) }}
+          {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
+            {{ ctx.t('(optional)') }}
+          {% } %}
+          {% if (ctx.component.tooltip) { %}
+            <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
+          {% } %}
+        </label>
+      </legend>
 
-{{ctx.element}}
+      {{ctx.element}}
 
-{% if (!ctx.label.hidden && ctx.label.labelPosition === 'bottom') { %}
-  {{ ctx.labelMarkup }}
-{% } %}
+      {% if (ctx.component.description) { %}
+        <div
+          class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext"
+          id="{{ctx.id}}-description"
+        >
+          {{ctx.t(ctx.component.description)}}
+        </div>
+      {% } %}
 
-{% if (ctx.component.description) { %}
-  <div class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext">{{ctx.t(ctx.component.description)}}</div>
+    </fieldset>
+  </div>
+
+{% } else { %}
+  <div class="utrecht-form-field utrecht-form-field--openforms">
+  {% if (!ctx.label.hidden && ctx.label.labelPosition !== 'bottom') { %}
+    {{ ctx.labelMarkup }}
+  {% } %}
+
+  {% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required) { %}
+    <label class="utrecht-form-label utrecht-form-label--openforms-required {{ctx.label.className}}"></label>
+  {% } %}
+
+  {{ctx.element}}
+
+  {% if (!ctx.label.hidden && ctx.label.labelPosition === 'bottom') { %}
+    {{ ctx.labelMarkup }}
+  {% } %}
+
+  {% if (ctx.component.description) { %}
+    <div class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext">{{ctx.t(ctx.component.description)}}</div>
+  {% } %}
+  </div>
 {% } %}
-</div>

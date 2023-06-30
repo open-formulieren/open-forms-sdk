@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const HelpText = ({children}) => {
+const HelpText = ({children, ...props}) => {
   if (!children) return null;
   return (
     <FormFieldDescription
@@ -11,6 +11,7 @@ const HelpText = ({children}) => {
         'utrecht-form-field-description--openforms-helptext',
         'utrecht-form-field__description'
       )}
+      {...props}
     >
       {children}
     </FormFieldDescription>
