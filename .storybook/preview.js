@@ -1,4 +1,6 @@
 import '@gemeente-denhaag/design-tokens-components/dist/theme/index.css';
+import '@nl-design-system-unstable/amsterdam-design-tokens/dist/index.css';
+import '@nl-design-system-unstable/rotterdam-design-tokens/dist/index.css';
 import '@utrecht/design-tokens/dist/index.css';
 import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
@@ -52,7 +54,9 @@ export default {
       target: 'root',
       list: [
         {name: 'Open Forms', class: 'openforms-theme', color: '#01689B'},
-        {name: 'Gemeente Den Haag', class: 'denhaag-theme', color: 'hsl(138 58% 33%)'},
+        {name: 'Gemeente Amsterdam', class: 'amsterdam-theme', color: '#004699'},
+        {name: 'Gemeente Den Haag', class: 'denhaag-theme', color: '#238541'},
+        {name: 'Gemeente Rotterdam', class: 'rotterdam-theme', color: '#00811F'},
         {name: 'Gemeente Utrecht', class: 'utrecht-theme', color: '#cc0000'},
       ],
     },
