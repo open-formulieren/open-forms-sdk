@@ -98,6 +98,80 @@ export const mockAppointmentTimesGet = rest.get(
   }
 );
 
+export const mockAppointmentCustomerFieldsGet = rest.get(
+  `${BASE_URL}appointments/customer-fields`,
+  (req, res, ctx) => {
+    // all possible field types from the backend
+    const fields = [
+      {
+        type: 'textfield',
+        key: 'lastName',
+        label: 'Last name',
+        autocomplete: 'family-name',
+        validate: {
+          required: true,
+          maxLength: 128,
+        },
+      },
+      {
+        type: 'date',
+        key: 'dateOfBirth',
+        label: 'Birthday',
+        autocomplete: 'bday',
+        validate: {
+          required: true,
+        },
+        openForms: {
+          widget: 'inputGroup',
+        },
+      },
+      {
+        type: 'email',
+        key: 'email',
+        label: 'Email',
+        autocomplete: 'email',
+        validate: {
+          required: true,
+          maxLength: 254,
+        },
+      },
+      {
+        type: 'phoneNumber',
+        key: 'phone',
+        label: 'Telephone',
+        autocomplete: 'tel',
+        validate: {
+          required: true,
+          maxLength: 16,
+        },
+      },
+      {
+        type: 'bsn',
+        key: 'bsn',
+        label: 'BSN',
+        validate: {
+          required: true,
+          maxLength: 16,
+        },
+      },
+      {
+        type: 'radio',
+        key: 'gender',
+        label: 'Gender',
+        validate: {
+          required: true,
+        },
+        values: [
+          {value: 'X', label: "Don't want to say"},
+          {value: 'M', label: 'Male'},
+          {value: 'F', label: 'Female'},
+        ],
+      },
+    ];
+    return res(ctx.json(fields));
+  }
+);
+
 export const mockAppointmentCancelPost = rest.post(
   `${BASE_URL}appointments/:uuid/cancel`,
   (req, res, ctx) => res(ctx.status(204))
