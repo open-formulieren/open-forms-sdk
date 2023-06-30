@@ -28,10 +28,12 @@ DatePartInput.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const DateInputs = ({day, month, year, disabled, onChange}) => {
+const DateInputs = ({day, month, year, disabled, onChange, autoComplete}) => {
   const intl = useIntl();
   const meta = useDateLocaleMeta();
   const [dayId, monthId, yearId] = [useId(), useId(), useId()];
+  // see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+  const isBdayAutoComplete = autoComplete === 'bday';
   const parts = {
     day: (
       <InputGroupItem key="day">
@@ -45,6 +47,7 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           onChange={onChange}
           placeholder={intl.formatMessage(PART_PLACEHOLDERS.day)}
           id={dayId}
+          autoComplete={isBdayAutoComplete ? 'bday-day' : undefined}
         />
       </InputGroupItem>
     ),
@@ -60,6 +63,7 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           onChange={onChange}
           placeholder={intl.formatMessage(PART_PLACEHOLDERS.month)}
           id={monthId}
+          autoComplete={isBdayAutoComplete ? 'bday-month' : undefined}
         />
       </InputGroupItem>
     ),
@@ -75,6 +79,7 @@ const DateInputs = ({day, month, year, disabled, onChange}) => {
           onChange={onChange}
           placeholder={intl.formatMessage(PART_PLACEHOLDERS.year)}
           id={yearId}
+          autoComplete={isBdayAutoComplete ? 'bday-year' : undefined}
         />
       </InputGroupItem>
     ),
@@ -92,6 +97,7 @@ DateInputs.propTypes = {
   year: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  autoComplete: PropTypes.string,
 };
 
 const DateInputGroup = ({
@@ -102,6 +108,7 @@ const DateInputGroup = ({
   id,
   disabled = false,
   showFormattedDate = false,
+  autoComplete,
 }) => {
   const {getFieldProps, getFieldMeta} = useFormikContext();
   const {value} = getFieldProps(name);
@@ -142,6 +149,7 @@ const DateInputGroup = ({
           day={dateParts.day}
           disabled={disabled}
           onChange={onPartChange}
+          autoComplete={autoComplete}
         />
       </InputGroup>
       {showFormattedDate && (
@@ -161,6 +169,7 @@ DateInputGroup.propTypes = {
   id: PropTypes.string,
   disabled: PropTypes.bool,
   showFormattedDate: PropTypes.bool,
+  autoComplete: PropTypes.string,
 };
 
 export default DateInputGroup;
