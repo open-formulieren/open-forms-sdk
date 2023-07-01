@@ -1,0 +1,49 @@
+@use 'microscope-sass/lib/bem';
+
+@import '@utrecht/components/dist/custom-checkbox/css/index.css';
+
+// Design tokens: see src/components/checkbox-field.tokens.json
+
+// Extensions on NL DS component
+.utrecht-form-field {
+  @include bem.modifier('openforms') {
+    &.utrecht-form-field--checkbox {
+      background-color: var(
+        --of-utrecht-form-field-checkbox-background-color,
+        var(--of-checkbox-bg)
+      );
+
+      & + & {
+        margin-block-start: var(--of-utrecht-form-field-checkbox-margin-block-start);
+      }
+
+      .utrecht-custom-checkbox {
+        margin-block-start: var(--of-utrecht-form-label-checkbox-padding-block-start);
+        margin-inline-start: var(--of-utrecht-form-label-checkbox-padding-inline-start);
+      }
+
+      .utrecht-form-label--checkbox {
+        padding-block-end: var(--of-utrecht-form-label-checkbox-padding-block-end);
+        padding-block-start: var(--of-utrecht-form-label-checkbox-padding-block-start);
+        padding-inline-end: var(--of-utrecht-form-label-checkbox-padding-inline-end);
+        padding-inline-start: var(--of-utrecht-form-label-checkbox-padding-inline-start);
+
+        &:focus-within {
+          outline: var(--of-utrecht-form-label-checkbox-focus-within-outline);
+        }
+      }
+
+      .utrecht-form-field__label {
+        --utrecht-form-field-label-margin-block-end: var(
+          --of-utrecht-form-field-checkbox-label-margin-block-end
+        );
+      }
+    }
+  }
+}
+
+.openforms-theme {
+  .utrecht-custom-checkbox--openforms:not(:checked) {
+    background-color: var(--utrecht-checkbox-background-color);
+  }
+}

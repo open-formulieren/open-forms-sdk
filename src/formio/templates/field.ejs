@@ -2,12 +2,12 @@
   <div class="utrecht-form-fieldset">
     <fieldset
       class="utrecht-form-fieldset__fieldset utrecht-form-fieldset--html-fieldset"
-      role="radiogroup"
+      {% if (ctx.component.type === 'radio') { %}role="radiogroup"{% } %}
       {% if (ctx.component.description) { %}aria-describedby="{{ctx.id}}-description"{% } %}
     >
 
       <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend utrecht-form-field__label">
-        <label class="utrecht-form-label utrecht-form-label--openforms-required">
+        <span class="utrecht-form-label utrecht-form-label--openforms-required">
           {{ ctx.t(ctx.component.label, { _userInput: true }) }}
           {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
             {{ ctx.t('(optional)') }}
@@ -15,7 +15,7 @@
           {% if (ctx.component.tooltip) { %}
             <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
           {% } %}
-        </label>
+        </span>
       </legend>
 
       {{ctx.element}}

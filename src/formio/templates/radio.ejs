@@ -1,6 +1,6 @@
 <!-- rendered by both radio and selectboxes component -->
 {% ctx.values.forEach(function(item) { %}
-<div class="utrecht-form-field utrecht-form-field--radio utrecht-form-field--openforms">
+<div class="utrecht-form-field utrecht-form-field--{{ctx.component.inputType}} utrecht-form-field--openforms">
   <input
     ref="input"
     value="{{item.value}}"
@@ -14,10 +14,10 @@
     checked=true
     {% } %}
   >
-  <p class="utrecht-paragraph utrecht-form-field__label utrecht-form-field__label--radio">
+  <p class="utrecht-paragraph utrecht-form-field__label utrecht-form-field__label--{{ctx.component.inputType}}">
     <label
       for="{{ctx.id}}{{ctx.row}}-{{item.value}}"
-      class="utrecht-form-label utrecht-form-label--radio {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
+      class="utrecht-form-label utrecht-form-label--{{ctx.component.inputType}} {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
     >
       {{ item.label }}
     </label>
