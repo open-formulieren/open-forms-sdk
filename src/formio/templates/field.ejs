@@ -33,7 +33,7 @@
   </div>
 
 {% } else { %}
-  <div class="utrecht-form-field utrecht-form-field--openforms">
+  <div class="utrecht-form-field utrecht-form-field--{{ctx.component.type}} utrecht-form-field--openforms">
   {% if (!ctx.label.hidden && ctx.label.labelPosition !== 'bottom') { %}
     {{ ctx.labelMarkup }}
   {% } %}
