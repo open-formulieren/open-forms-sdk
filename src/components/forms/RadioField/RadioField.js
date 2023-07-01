@@ -40,6 +40,7 @@ export const RadioField = ({
   return (
     <Wrapper>
       <Fieldset
+        className="utrecht-form-fieldset--openforms"
         disabled={disabled}
         invalid={invalid}
         role="radiogroup"

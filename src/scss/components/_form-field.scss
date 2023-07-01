@@ -17,4 +17,21 @@
       }
     }
   }
+  .utrecht-form-fieldset {
+    @include bem.modifier('openforms') {
+      background-color: var(--of-utrecht-form-field-background-color, unset);
+
+      &.utrecht-form-fieldset--invalid {
+        --of-utrecht-form-field-background-color: var(--of-alert-error-bg);
+        // apply padding in all dimensions for error state
+        padding-inline-end: var(--utrecht-form-field-invalid-padding-inline-start);
+        padding-block-start: var(--utrecht-form-field-invalid-padding-inline-start);
+        padding-block-end: var(--utrecht-form-field-invalid-padding-inline-start);
+      }
+
+      .utrecht-form-field-description {
+        --utrecht-space-around: 1;
+      }
+    }
+  }
 }
