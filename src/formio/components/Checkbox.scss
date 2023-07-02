@@ -17,7 +17,8 @@
         margin-block-start: var(--of-utrecht-form-field-checkbox-margin-block-start);
       }
 
-      .utrecht-custom-checkbox {
+      .utrecht-custom-checkbox,
+      .utrecht-checkbox--custom {
         margin-block-start: var(--of-utrecht-form-label-checkbox-padding-block-start);
         margin-inline-start: var(--of-utrecht-form-label-checkbox-padding-inline-start);
       }

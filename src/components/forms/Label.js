@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 
-export const LabelContent = ({id, disabled = false, isRequired = false, children}) => {
+export const LabelContent = ({id, disabled = false, isRequired = false, type, children}) => {
   const {requiredFieldsWithAsterisk} = useContext(ConfigContext);
   return (
     <FormLabel
@@ -14,6 +14,7 @@ export const LabelContent = ({id, disabled = false, isRequired = false, children
       disabled={disabled}
       className={classNames({
         'utrecht-form-label--openforms-required': isRequired,
+        [`utrecht-form-label--${type}`]: type,
       })}
     >
       <FormattedMessage
@@ -33,6 +34,7 @@ LabelContent.propTypes = {
   isRequired: PropTypes.bool,
   disabled: PropTypes.bool,
   children: PropTypes.node,
+  type: PropTypes.string,
 };
 
 const Label = ({id, isRequired = false, disabled = false, children}) => (
