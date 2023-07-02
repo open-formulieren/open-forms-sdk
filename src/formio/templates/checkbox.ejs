@@ -21,7 +21,7 @@
           {{ ctx.t('(optional)') }}
       {% } %}
       {% if (ctx.component.tooltip) { %}
-        <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}"></i>
+        <i ref="tooltip" class="{{ctx.iconClass('question-sign')}}" data-tooltip="{{ ctx.tooltip }}"></i>
       {% } %}
     </label>
   </div>
