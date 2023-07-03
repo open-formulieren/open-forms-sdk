@@ -47,6 +47,7 @@ const TimeSelect = () => {
         });
     },
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [baseUrl, calendarLocale, JSON.stringify(values)]
   );
 

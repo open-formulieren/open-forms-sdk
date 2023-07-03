@@ -3,7 +3,7 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import Button from 'components/Button';
-import Card, {CardTitle} from 'components/Card';
+import {CardTitle} from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import useTitle from 'hooks/useTitle';
