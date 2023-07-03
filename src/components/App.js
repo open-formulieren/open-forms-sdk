@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
-import {Outlet} from 'react-router-dom';
+import {Navigate, Outlet, useMatch} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import AppDebug from 'components/AppDebug';
@@ -56,8 +56,10 @@ Top level router - routing between an actual form or supporting screens.
  */
 const App = ({...props}) => {
   const config = useContext(ConfigContext);
+  const appointmentMatch = useMatch('afspraak-maken/*');
+
   const {
-    form: {translationEnabled},
+    form: {translationEnabled, appointmentEnabled},
     noDebug = false,
   } = props;
 
@@ -65,6 +67,10 @@ const App = ({...props}) => {
 
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
   const appDebug = DEBUG && !noDebug ? <AppDebug /> : null;
+
+  if (appointmentEnabled && !appointmentMatch) {
+    return <Navigate replace to="../afspraak-maken" />;
+  }
 
   return (
     <AppDisplayComponent
