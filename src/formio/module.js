@@ -20,6 +20,7 @@ import PhoneNumberField from './components/PhoneNumberField';
 import PostcodeField from './components/PostcodeField';
 import Radio from './components/Radio';
 import Select from './components/Select';
+import Selectboxes from './components/Selectboxes';
 import TextArea from './components/TextArea';
 import TextField from './components/TextField';
 import TimeField from './components/TimeField';
@@ -30,6 +31,7 @@ const FormIOModule = {
     component: Component,
     checkbox: Checkbox,
     radio: Radio,
+    selectboxes: Selectboxes,
     select: Select,
     textfield: TextField,
     textarea: TextArea,

@@ -3,9 +3,9 @@ import {Formio} from 'react-formio';
 import './Checkbox.scss';
 
 /**
- * Extend the default checkbox field to modify it to our needs.
+ * Extend the default selectboxes field to modify it to our needs.
  */
-class Checkbox extends Formio.Components.components.checkbox {
+class Selectboxes extends Formio.Components.components.selectboxes {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
@@ -19,4 +19,4 @@ class Checkbox extends Formio.Components.components.checkbox {
   }
 }
 
-export default Checkbox;
+export default Selectboxes;

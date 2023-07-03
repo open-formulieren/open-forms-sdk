@@ -2,8 +2,10 @@
 export {default as DateField} from './DateField';
 export {default as EmailField} from './EmailField';
 export {default as NumberField} from './NumberField';
+export {default as RadioField} from './RadioField';
 export {SelectField, AsyncSelectField} from './SelectField';
 export {default as TextField} from './TextField';
+export * from './Checkbox';
 
 // helpers
 export * from './FloatingWidget';

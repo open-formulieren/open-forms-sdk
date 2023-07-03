@@ -3,7 +3,7 @@ import React from 'react';
 
 import {getBEMClassName} from 'utils';
 
-export const VARIANTS = ['big', 'muted', 'small', 'wysiwyg'];
+export const VARIANTS = ['big', 'muted', 'small', 'wysiwyg', 'inline'];
 
 const Body = ({modifiers = [], component = 'p', children, ...props}) => {
   const Component = `${component}`;

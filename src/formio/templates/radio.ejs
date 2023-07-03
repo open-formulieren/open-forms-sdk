@@ -1,31 +1,26 @@
-<!--This template is used by both the radio and the selectboxes components-->
-<div class="{{ctx.ofPrefix}}form-choices utrecht-form-fieldset__fieldset utrecht-form-fieldset__fieldset--html-fieldset">
-  {% ctx.values.forEach(function(item) { %}
-    <div class="{{ctx.ofPrefix}}form-choices__choice utrecht-form-field utrecht-form-field--{{ctx.input.attr['type']}}">
-      <input
-        ref="input"
-        value="{{item.value}}"
-        id="{{ctx.id}}{{ctx.row}}-{{item.value}}"
+<!-- rendered by both radio and selectboxes component -->
+{% ctx.values.forEach(function(item) { %}
+<div class="utrecht-form-field utrecht-form-field--{{ctx.component.inputType}} utrecht-form-field--openforms">
+  <input
+    ref="input"
+    value="{{item.value}}"
+    id="{{ctx.id}}{{ctx.row}}-{{item.value}}"
 
-        {% for (var attr in ctx.input.attr) { %}
-          {{attr}}="{{ctx.input.attr[attr]}}"
-        {% } %}
+    {% for (var attr in ctx.input.attr) { %}
+    {{attr}}="{{ctx.input.attr[attr]}}"
+    {% } %}
 
-        {% if (ctx.value && (ctx.value === item.value || (typeof ctx.value === 'object' && ctx.value.hasOwnProperty(item.value) && ctx.value[item.value]))) { %}
-          checked=true
-        {% } %}
-
-        {% if (item.disabled) { %}
-          disabled=true
-        {% } %}
-      />
-      <div class="{{ctx.ofPrefix}}form-choices__checkmark"></div>
-      <label
-        class="{{ctx.ofPrefix}}form-choices__label utrecht-form-label utrecht-form-label--{{ctx.input.attr['type']}} {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
-        for="{{ctx.id}}{{ctx.row}}-{{item.value}}"
-      >
-        {{ item.label }}
-      </label>
-    </div>
-  {% }) %}
+    {% if (ctx.value && (ctx.value === item.value || (typeof ctx.value === 'object' && ctx.value.hasOwnProperty(item.value) && ctx.value[item.value]))) { %}
+    checked=true
+    {% } %}
+  >
+  <p class="utrecht-paragraph utrecht-form-field__label utrecht-form-field__label--{{ctx.component.inputType}}">
+    <label
+      for="{{ctx.id}}{{ctx.row}}-{{item.value}}"
+      class="utrecht-form-label utrecht-form-label--{{ctx.component.inputType}} {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
+    >
+      {{ item.label }}
+    </label>
+  </p>
 </div>
+{% }) %}

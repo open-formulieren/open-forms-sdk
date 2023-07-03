@@ -1,0 +1,9 @@
+/**
+ * Temporary workaround until we refactor more to NL Design System components.
+ */
+
+.openforms-privacy-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--of-privacy-checkbox-spacing, 8px);
+}
