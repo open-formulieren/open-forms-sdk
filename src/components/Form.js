@@ -289,12 +289,6 @@ const Form = ({form}) => {
     );
   }
 
-  // redirect to the appointment form
-  // use redirect instead of history to replace the location
-  if (form.appointmentEnabled) {
-    return <Navigate replace to="/appointment" />;
-  }
-
   if (loading || shouldAutomaticallyRedirect) {
     return (
       <LayoutColumn>

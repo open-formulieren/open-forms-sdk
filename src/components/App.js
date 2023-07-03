@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
-import {Route, Routes} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import AppDebug from 'components/AppDebug';
@@ -14,6 +14,25 @@ import Types from 'types';
 import {DEBUG} from 'utils';
 
 import AppDisplay from './AppDisplay';
+
+export const getRoutes = (form, noDebug = false) => {
+  const routes = [
+    {
+      path: 'afspraak-annuleren',
+      element: <ManageAppointment />,
+    },
+    {
+      path: 'cosign/*',
+      element: <Cosign form={form} noDebug={noDebug} />,
+    },
+    // All the rest goes to the formio-based form flow
+    {
+      path: '*',
+      element: <Form form={form} noDebug={noDebug} />,
+    },
+  ];
+  return routes;
+};
 
 const LanguageSwitcher = () => {
   const {languageSelectorTarget: target} = useContext(I18NContext);
@@ -39,20 +58,14 @@ const App = ({...props}) => {
   const AppDisplayComponent = config?.displayComponents?.app ?? AppDisplay;
 
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
-  const router = (
-    <Routes>
-      {/* Anything dealing with appointments gets routed to its own sub-router */}
-      <Route path="afspraak-annuleren/*" element={<ManageAppointment />} />
-      <Route path="cosign/*" element={<Cosign {...props} />} />
-
-      {/* All the rest goes to the actual form flow */}
-      <Route path="*" element={<Form {...props} />} />
-    </Routes>
-  );
   const appDebug = DEBUG && !noDebug ? <AppDebug /> : null;
 
   return (
-    <AppDisplayComponent router={router} languageSwitcher={languageSwitcher} appDebug={appDebug} />
+    <AppDisplayComponent
+      router={<Outlet />}
+      languageSwitcher={languageSwitcher}
+      appDebug={appDebug}
+    />
   );
 };
 

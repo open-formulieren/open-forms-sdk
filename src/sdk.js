@@ -9,7 +9,7 @@ import {RouterProvider, createBrowserRouter, createHashRouter} from 'react-route
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
-import App from 'components/App';
+import App, {getRoutes} from 'components/App';
 import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
@@ -114,6 +114,7 @@ class OpenForm {
         {
           path: '*',
           element: <App form={this.formObject} />,
+          children: getRoutes(this.formObject),
         },
       ],
       {basename: this.basePath}
