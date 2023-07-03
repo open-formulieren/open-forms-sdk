@@ -8,7 +8,7 @@
 .utrecht-form-field {
   @include bem.modifier('openforms') {
     &.utrecht-form-field--checkbox {
-      background-color: var(
+      --_of-utrecht-form-field-checkbox-background-color: var(
         --of-utrecht-form-field-checkbox-background-color,
         var(--of-checkbox-bg)
       );
@@ -21,6 +21,19 @@
       .utrecht-checkbox--custom {
         margin-block-start: var(--of-utrecht-form-label-checkbox-padding-block-start);
         margin-inline-start: var(--of-utrecht-form-label-checkbox-padding-inline-start);
+
+        &:focus ~ .utrecht-form-field__label--checkbox {
+          outline: var(--of-utrecht-form-label-checkbox-focus-within-outline);
+        }
+      }
+
+      .utrecht-form-field__label {
+        background-color: var(--_of-utrecht-form-field-checkbox-background-color);
+        --_of-checkbox-label-shift: calc(
+          var(--of-utrecht-form-label-checkbox-padding-block-start) + var(--utrecht-checkbox-size)
+        );
+        padding-inline-start: var(--_of-checkbox-label-shift);
+        margin-inline-start: calc(var(--_of-checkbox-label-shift) * -1);
       }
 
       .utrecht-form-label--checkbox {
@@ -28,10 +41,6 @@
         padding-block-start: var(--of-utrecht-form-label-checkbox-padding-block-start);
         padding-inline-end: var(--of-utrecht-form-label-checkbox-padding-inline-end);
         padding-inline-start: var(--of-utrecht-form-label-checkbox-padding-inline-start);
-
-        &:focus-within {
-          outline: var(--of-utrecht-form-label-checkbox-focus-within-outline);
-        }
       }
 
       .utrecht-form-field__label {
@@ -46,5 +55,14 @@
 .openforms-theme {
   .utrecht-custom-checkbox--openforms:not(:checked) {
     background-color: var(--utrecht-checkbox-background-color);
+  }
+
+  .utrecht-form-field {
+    @include bem.modifier('checkbox') {
+      .utrecht-form-field-description {
+        grid-column-start: input;
+        grid-column-end: description;
+      }
+    }
   }
 }

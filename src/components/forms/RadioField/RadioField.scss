@@ -22,16 +22,16 @@
         padding-block-start: var(--of-utrecht-form-label-radio-padding-block-start);
         padding-inline-end: var(--of-utrecht-form-label-radio-padding-inline-end);
         padding-inline-start: var(--of-utrecht-form-label-radio-padding-inline-start);
-
-        &:focus-within {
-          outline: var(--of-utrecht-form-label-radio-focus-within-outline);
-        }
       }
 
       .utrecht-form-field__label {
         --utrecht-form-field-label-margin-block-end: var(
           --of-utrecht-form-field-radio-label-margin-block-end
         );
+      }
+
+      &:focus-within {
+        outline: var(--of-utrecht-form-label-radio-focus-within-outline);
       }
     }
   }

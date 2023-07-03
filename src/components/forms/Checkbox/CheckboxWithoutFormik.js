@@ -24,6 +24,7 @@ const CheckboxWithoutFormik = ({
         value={value}
         onChange={onChange}
         appearance="custom"
+        className="utrecht-form-field__input utrecht-custom-checkbox utrecht-custom-checkbox--html-input utrecht-custom-checkbox--openforms"
       />
       <div className="utrecht-form-field__label utrecht-form-field__label--checkbox">
         <LabelContent id={id} isRequired={isRequired} disabled={disabled} type="checkbox">
