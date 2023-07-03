@@ -8,7 +8,7 @@ import ChooseProductStep from './ChooseProductStep';
 import {mockAppointmentProductsGet} from './mocks';
 
 export default {
-  title: 'Private API / Appointments / Steps / Choose product',
+  title: 'Private API / Appointments / Steps / 1 - Choose product',
   component: ChooseProductStep,
   decorators: [withCard, LayoutDecorator, FormikDecorator, withRouter, ConfigDecorator],
   parameters: {

@@ -119,6 +119,11 @@
     "description": "Appoinments: message shown for no available dates at all",
     "originalDefault": "Sorry, there are no available dates for your appointment. Please try again later."
   },
+  "AlDZqS": {
+    "defaultMessage": "Contact details",
+    "description": "Appointments: contact details step page title",
+    "originalDefault": "Contact details"
+  },
   "AnNsAY": {
     "defaultMessage": "Progress",
     "description": "Title of progress indicator",
@@ -168,6 +173,16 @@
     "defaultMessage": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
     "description": "Auth error message",
     "originalDefault": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw."
+  },
+  "E+3d5q": {
+    "defaultMessage": "To overview",
+    "description": "Appointments contact details step: next step text",
+    "originalDefault": "To overview"
+  },
+  "E1laLd": {
+    "defaultMessage": "Back to location and time",
+    "description": "Appointments contact details step: previous step text",
+    "originalDefault": "Back to location and time"
   },
   "E4h5vK": {
     "defaultMessage": "Download PDF",
@@ -369,15 +384,15 @@
     "description": "Session expired error message",
     "originalDefault": "Your session has expired. Click <link>here</link> to restart."
   },
+  "ay8sO5": {
+    "defaultMessage": "Contact details",
+    "description": "Appointments: contact details step title",
+    "originalDefault": "Contact details"
+  },
   "bCGJi9": {
     "defaultMessage": "Confirmation: {reference}",
     "description": "On succesful completion title",
     "originalDefault": "Confirmation: {reference}"
-  },
-  "bPuRrE": {
-    "defaultMessage": "yyyy-mm-dd",
-    "description": "Datepicker text input placeholder",
-    "originalDefault": "yyyy-mm-dd"
   },
   "bgfiRG": {
     "defaultMessage": "You've started the payment process.",

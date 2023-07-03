@@ -1,5 +1,4 @@
 import {Form, Formik, useFormikContext} from 'formik';
-import produce from 'immer';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
@@ -12,10 +11,9 @@ import FormDisplay from 'components/FormDisplay';
 import ProgressIndicatorDisplay from 'components/ProgressIndicator/ProgressIndicatorDisplay';
 import Types from 'types';
 
-import ChooseProductStep, {isStepValid as isProductStepValid} from './ChooseProductStep';
-import LocationAndTimeStep, {
-  isStepValid as isLocationAndTimeStepValid,
-} from './LocationAndTimeStep';
+import ChooseProductStep from './ChooseProductStep';
+import ContactDetailsStep from './ContactDetailsStep';
+import LocationAndTimeStep from './LocationAndTimeStep';
 
 const APPOINTMENT_STEPS = [
   {
@@ -25,7 +23,6 @@ const APPOINTMENT_STEPS = [
       description: "Appointments navbar title for 'products' step",
       defaultMessage: 'Product',
     }),
-    validCheck: isProductStepValid,
   },
   {
     path: 'kalender',
@@ -34,16 +31,14 @@ const APPOINTMENT_STEPS = [
       description: "Appointments navbar title for 'location and time' step",
       defaultMessage: 'Location and time',
     }),
-    validCheck: isLocationAndTimeStepValid,
   },
   {
     path: 'contactgegevens',
-    element: <>Contactgegevens</>,
+    element: <ContactDetailsStep />,
     name: defineMessage({
       description: "Appointments navbar title for 'contact details' step",
       defaultMessage: 'Contact details',
     }),
-    validCheck: () => false,
   },
 ];
 
@@ -155,7 +150,7 @@ const CreateAppointment = ({form}) => {
         ],
         location: '',
         date: '',
-        time: '',
+        datetime: '',
         lastName: '',
         dateOfBirth: '',
         phoneNumber: '',

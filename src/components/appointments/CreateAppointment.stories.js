@@ -8,6 +8,7 @@ import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import CreateAppointment, {routes as childRoutes} from './CreateAppointment';
 import {
+  mockAppointmentCustomerFieldsGet,
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
   mockAppointmentProductsGet,
@@ -25,6 +26,7 @@ export default {
         mockAppointmentLocationsGet,
         mockAppointmentDatesGet,
         mockAppointmentTimesGet,
+        mockAppointmentCustomerFieldsGet,
       ],
     },
   },

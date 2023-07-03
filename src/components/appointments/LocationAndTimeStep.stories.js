@@ -11,7 +11,7 @@ import {
 } from './mocks';
 
 export default {
-  title: 'Private API / Appointments / Steps / Location and time',
+  title: 'Private API / Appointments / Steps / 2 - Location and time',
   component: LocationAndTimeStep,
   decorators: [withCard, LayoutDecorator, FormikDecorator, withRouter, ConfigDecorator],
   parameters: {
@@ -21,7 +21,7 @@ export default {
         products: [{productId: '166a5c79', amount: 1}],
         location: '',
         date: '',
-        time: '',
+        datetime: '',
       },
     },
     msw: {

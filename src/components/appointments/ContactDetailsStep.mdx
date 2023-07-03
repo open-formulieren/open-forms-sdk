@@ -1,0 +1,15 @@
+import {Meta, Story} from '@storybook/blocks';
+
+import * as ContactDetailsStepStories from './ContactDetailsStep.stories';
+
+<Meta of={ContactDetailsStepStories} />
+
+## Contact details step
+
+The appointment form requires users to provide certain contact details. Which fields depend on the
+configuration of the appointment plugin and may even be influenced by the selected product(s).
+
+Required fields are retrieved from the API, which returns a list of Form.io component definitions.
+This step in turn renders these.
+
+<Story of={ContactDetailsStepStories.InitialState} />

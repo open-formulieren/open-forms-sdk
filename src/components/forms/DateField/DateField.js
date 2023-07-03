@@ -30,6 +30,7 @@ const DateField = ({
   maxDate,
   disabledDates = [],
   showFormattedDate = false,
+  ...props
 }) => {
   const {getFieldMeta} = useFormikContext();
   const {error} = getFieldMeta(name);
@@ -75,6 +76,7 @@ const DateField = ({
           disabled={disabled}
           invalid={invalid}
           {...fieldProps}
+          {...props}
         />
         <HelpText>{description}</HelpText>
         <ValidationErrors error={error} />
