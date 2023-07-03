@@ -8,6 +8,7 @@ import {Cosign} from 'components/CoSign';
 import Form from 'components/Form';
 import LanguageSelection from 'components/LanguageSelection';
 import {LayoutRow} from 'components/Layout';
+import {CreateAppointment, appointmentRoutes} from 'components/appointments';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import {I18NContext} from 'i18n';
 import Types from 'types';
@@ -20,6 +21,11 @@ export const getRoutes = (form, noDebug = false) => {
     {
       path: 'afspraak-annuleren',
       element: <ManageAppointment />,
+    },
+    {
+      path: 'afspraak-maken/*',
+      element: <CreateAppointment form={form} />,
+      children: appointmentRoutes,
     },
     {
       path: 'cosign/*',
