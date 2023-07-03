@@ -6,6 +6,7 @@ import Body from 'components/Body';
 import {CheckboxWithoutFormik} from 'components/forms';
 
 import ErrorMessage from './ErrorMessage';
+import './PrivacyCheckbox.scss';
 
 const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
   const labelBody = (
@@ -16,7 +17,7 @@ const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
     />
   );
   return (
-    <>
+    <div className="openforms-privacy-checkbox">
       <CheckboxWithoutFormik
         name="privacy"
         label={labelBody}
@@ -33,7 +34,7 @@ const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
           />
         </ErrorMessage>
       )}
-    </>
+    </div>
   );
 };
 
