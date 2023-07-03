@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 import {Navigate, Outlet, matchPath, resolvePath, useLocation, useNavigate} from 'react-router-dom';
+import {useSessionStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import Card from 'components/Card';
@@ -132,6 +133,22 @@ const CreateAppointment = ({form}) => {
   const navigate = useNavigate();
   const {pathname: currentPathname} = useLocation();
 
+  const storageKey = `appointmentData|${form.slug}`;
+  const [appointmentData, setAppointmentData] = useSessionStorage(storageKey, {
+    products: [
+      {
+        productId: '',
+        amount: 1,
+      },
+    ],
+    location: '',
+    date: '',
+    datetime: '',
+    lastName: '',
+    dateOfBirth: '',
+    phoneNumber: '',
+  });
+
   const currentStep =
     APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
@@ -141,27 +158,17 @@ const CreateAppointment = ({form}) => {
     <Formik
       validateOnChange={false}
       validateOnBlur
-      initialValues={{
-        products: [
-          {
-            productId: '',
-            amount: 1,
-          },
-        ],
-        location: '',
-        date: '',
-        datetime: '',
-        lastName: '',
-        dateOfBirth: '',
-        phoneNumber: '',
-      }}
+      initialValues={appointmentData}
       initialStatus={{submittedSteps: []}}
       onSubmit={(values, {setSubmitting, setStatus}) => {
+        setAppointmentData(values);
         switch (currentStep) {
           // last step -> actually submit everything?
           case APPOINTMENT_STEP_PATHS.at(-1): {
             console.log(values);
             // TODO: post to API endpoint, handle validation errors
+            // TODO: clear session storage key
+            window.sessionStorage.clearItem(storageKey);
             setSubmitting(false);
             break;
           }
