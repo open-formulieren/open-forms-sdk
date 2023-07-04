@@ -14,6 +14,7 @@ import Types from 'types';
 
 import ChooseProductStep from './ChooseProductStep';
 import ContactDetailsStep from './ContactDetailsStep';
+import {AppointmentConfigContext} from './Context';
 import LocationAndTimeStep from './LocationAndTimeStep';
 
 const APPOINTMENT_STEPS = [
@@ -153,55 +154,59 @@ const CreateAppointment = ({form}) => {
     APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
 
+  const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
+
   const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   return (
-    <Formik
-      validateOnChange={false}
-      validateOnBlur
-      initialValues={appointmentData}
-      initialStatus={{submittedSteps: []}}
-      onSubmit={(values, {setSubmitting, setStatus}) => {
-        setAppointmentData(values);
-        switch (currentStep) {
-          // last step -> actually submit everything?
-          case APPOINTMENT_STEP_PATHS.at(-1): {
-            console.log(values);
-            // TODO: post to API endpoint, handle validation errors
-            // TODO: clear session storage key
-            window.sessionStorage.clearItem(storageKey);
-            setSubmitting(false);
-            break;
+    <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
+      <Formik
+        validateOnChange={false}
+        validateOnBlur
+        initialValues={appointmentData}
+        initialStatus={{submittedSteps: []}}
+        onSubmit={(values, {setSubmitting, setStatus}) => {
+          setAppointmentData(values);
+          switch (currentStep) {
+            // last step -> actually submit everything?
+            case APPOINTMENT_STEP_PATHS.at(-1): {
+              console.log(values);
+              // TODO: post to API endpoint, handle validation errors
+              // TODO: clear session storage key
+              window.sessionStorage.clearItem(storageKey);
+              setSubmitting(false);
+              break;
+            }
+            // any step other than the last -> navigate to the next step
+            default: {
+              const index = APPOINTMENT_STEP_PATHS.indexOf(currentStep);
+              const nextStep = APPOINTMENT_STEP_PATHS[index + 1];
+              setSubmitting(false);
+              setStatus({submittedSteps: APPOINTMENT_STEP_PATHS.filter((_, idx) => idx <= index)});
+              navigate(nextStep);
+              // TODO: store data in local storage so that hard refreshes don't break the state
+              return;
+            }
           }
-          // any step other than the last -> navigate to the next step
-          default: {
-            const index = APPOINTMENT_STEP_PATHS.indexOf(currentStep);
-            const nextStep = APPOINTMENT_STEP_PATHS[index + 1];
-            setSubmitting(false);
-            setStatus({submittedSteps: APPOINTMENT_STEP_PATHS.filter((_, idx) => idx <= index)});
-            navigate(nextStep);
-            // TODO: store data in local storage so that hard refreshes don't break the state
-            return;
-          }
-        }
-      }}
-      // TODO: hook up validationSchema from zod, see #435
-    >
-      {/* TODO: don't do inline style */}
-      <Form style={{width: '100%'}}>
-        <FormDisplayComponent
-          router={
-            <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
-              <ErrorBoundary>
-                <Outlet />
-              </ErrorBoundary>
-            </Card>
-          }
-          progressIndicator={<AppointmentProgress title={form.name} currentStep={currentStep} />}
-          showProgressIndicator={form.showProgressIndicator}
-          isPaymentOverview={false}
-        />
-      </Form>
-    </Formik>
+        }}
+        // TODO: hook up validationSchema from zod, see #435
+      >
+        {/* TODO: don't do inline style */}
+        <Form style={{width: '100%'}}>
+          <FormDisplayComponent
+            router={
+              <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
+                <ErrorBoundary>
+                  <Outlet />
+                </ErrorBoundary>
+              </Card>
+            }
+            progressIndicator={<AppointmentProgress title={form.name} currentStep={currentStep} />}
+            showProgressIndicator={form.showProgressIndicator}
+            isPaymentOverview={false}
+          />
+        </Form>
+      </Formik>
+    </AppointmentConfigContext.Provider>
   );
 };
 
