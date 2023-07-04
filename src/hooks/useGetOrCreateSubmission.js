@@ -1,20 +1,20 @@
+import {createSubmission} from 'data/submissions';
 import {useContext} from 'react';
 import {useAsync, useSessionStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';
-import {post} from 'api';
 
-const SESSION_STORAGE_KEY = 'appointment|submission';
+export const SESSION_STORAGE_KEY = 'appointment|submission';
 
-const useGetOrCreateSubmission = () => {
+const useGetOrCreateSubmission = form => {
   const {baseUrl} = useContext(ConfigContext);
   const [submission, setSubmission] = useSessionStorage(SESSION_STORAGE_KEY, null);
 
   const {loading, error} = useAsync(async () => {
     if (submission !== null) return;
-    const response = await post(`${baseUrl}submissions`);
+    const response = await createSubmission(baseUrl, form);
     setSubmission(response.data);
-  }, [baseUrl, submission]);
+  }, [baseUrl, form, submission]);
 
   return {
     isLoading: loading,

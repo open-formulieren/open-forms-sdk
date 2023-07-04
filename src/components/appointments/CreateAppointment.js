@@ -152,7 +152,7 @@ const CreateAppointment = ({form}) => {
     phoneNumber: '',
   });
 
-  const {isLoading, error, submission, removeSubmissionFromStorage} = useGetOrCreateSubmission();
+  const {isLoading, error, removeSubmissionFromStorage} = useGetOrCreateSubmission(form);
   if (error) throw error;
 
   const currentStep =

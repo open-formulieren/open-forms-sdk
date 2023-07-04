@@ -5,6 +5,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
+import {SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import CreateAppointment, {routes as childRoutes} from './CreateAppointment';
@@ -16,10 +17,15 @@ import {
   mockAppointmentTimesGet,
 } from './mocks';
 
+const withClearSessionStorage = Story => {
+  window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
+  return <Story />;
+};
+
 export default {
   title: 'Private API / Appointments / CreateForm',
   component: CreateAppointment,
-  decorators: [ConfigDecorator, LayoutDecorator],
+  decorators: [withClearSessionStorage, ConfigDecorator, LayoutDecorator],
   parameters: {
     msw: {
       handlers: [

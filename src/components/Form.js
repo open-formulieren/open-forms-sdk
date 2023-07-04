@@ -1,3 +1,4 @@
+import {createSubmission} from 'data/submissions';
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {Navigate, Route, Routes, useMatch, useNavigate} from 'react-router-dom';
@@ -6,7 +7,7 @@ import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
-import {destroy, post} from 'api';
+import {destroy} from 'api';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import FormStart from 'components/FormStart';
@@ -42,23 +43,7 @@ const flagNoActiveSubmission = () => {
   });
 };
 
-/**
- * Create a submission instance from a given form instance
- * @param  {Object} config The Open Forms backend config parameters, containing the baseUrl
- * @param  {Object} form   The relevant Open Forms form instance.
- * @return {Object}        The Submission instance.
- */
-const createSubmission = async (config, form) => {
-  const createData = {
-    form: form.url,
-    formUrl: window.location.toString(),
-  };
-  const submissionResponse = await post(`${config.baseUrl}submissions`, createData);
-  return submissionResponse.data;
-};
-
 const initialState = {
-  config: {baseUrl: ''},
   submission: null,
   submittedSubmission: null,
   processingStatusUrl: '',
@@ -77,7 +62,6 @@ const reducer = (draft, action) => {
     case 'SUBMITTED': {
       return {
         ...initialState,
-        config: draft.config,
         submittedSubmission: action.payload.submission,
         processingStatusUrl: action.payload.processingStatusUrl,
       };
@@ -101,7 +85,6 @@ const reducer = (draft, action) => {
     case 'DESTROY_SUBMISSION': {
       return {
         ...initialState,
-        config: draft.config,
       };
     }
     case 'RESET': {
@@ -135,7 +118,7 @@ const Form = ({form}) => {
   const config = useContext(ConfigContext);
 
   // load the state management/reducer
-  const initialStateFromProps = {...initialState, config, step: steps[0]};
+  const initialStateFromProps = {...initialState, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
 
   const onSubmissionLoaded = (submission, next = '') => {
@@ -196,8 +179,7 @@ const Form = ({form}) => {
       return;
     }
 
-    const {config} = state;
-    const submission = await createSubmission(config, form);
+    const submission = await createSubmission(config.baseUrl, form);
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
