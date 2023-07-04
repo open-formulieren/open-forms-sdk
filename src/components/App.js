@@ -59,7 +59,10 @@ const App = ({...props}) => {
   const appointmentMatch = useMatch('afspraak-maken/*');
 
   const {
-    form: {translationEnabled, appointmentEnabled},
+    form: {
+      translationEnabled,
+      appointmentOptions: {isAppointment},
+    },
     noDebug = false,
   } = props;
 
@@ -68,7 +71,7 @@ const App = ({...props}) => {
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
   const appDebug = DEBUG && !noDebug ? <AppDebug /> : null;
 
-  if (appointmentEnabled && !appointmentMatch) {
+  if (isAppointment && !appointmentMatch) {
     return <Navigate replace to="../afspraak-maken" />;
   }
 
