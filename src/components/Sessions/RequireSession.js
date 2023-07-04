@@ -46,7 +46,7 @@ const useTriggerWarning = numSeconds => {
   ];
 };
 
-const RequireSession = ({expired = false, expiryDate = null, children}) => {
+const RequireSession = ({expired = false, expiryDate = null, onNavigate, children}) => {
   const {baseUrl} = useContext(ConfigContext);
   const [warningDismissed, setWarningDismissed] = useState(false);
 
@@ -86,7 +86,11 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
             description="Session expired error message"
             defaultMessage="Your session has expired. Click <link>here</link> to restart."
             values={{
-              link: chunks => <Link to="/">{chunks}</Link>,
+              link: chunks => (
+                <Link onClick={onNavigate} to="/">
+                  {chunks}
+                </Link>
+              ),
             }}
           />
         </ErrorMessage>
@@ -148,6 +152,7 @@ const RequireSession = ({expired = false, expiryDate = null, children}) => {
 RequireSession.propTypes = {
   expired: PropTypes.bool,
   expiryDate: PropTypes.instanceOf(Date),
+  onNavigate: PropTypes.func,
   children: PropTypes.node,
 };
 

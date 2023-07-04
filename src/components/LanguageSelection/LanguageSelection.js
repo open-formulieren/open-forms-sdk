@@ -6,8 +6,8 @@ import {useGlobalState} from 'state-pool';
 
 import {ConfigContext} from 'Context';
 import {get, put} from 'api';
-import {globalSubmissionState} from 'components/Form';
 import Loader from 'components/Loader';
+import {globalSubmissionState} from 'data/submissions';
 import {I18NContext, formatMessageForLocale} from 'i18n';
 
 import LanguageSelectionDisplay from './LanguageSelectionDisplay';

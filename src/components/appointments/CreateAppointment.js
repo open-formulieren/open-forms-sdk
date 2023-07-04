@@ -11,7 +11,10 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import Loader from 'components/Loader';
 import ProgressIndicatorDisplay from 'components/ProgressIndicator/ProgressIndicatorDisplay';
+import {RequireSession} from 'components/Sessions';
+import {flagNoActiveSubmission} from 'data/submissions';
 import useGetOrCreateSubmission from 'hooks/useGetOrCreateSubmission';
+import useSessionTimeout from 'hooks/useSessionTimeout';
 import Types from 'types';
 
 import ChooseProductStep from './ChooseProductStep';
@@ -155,6 +158,11 @@ const CreateAppointment = ({form}) => {
   const {isLoading, error, removeSubmissionFromStorage} = useGetOrCreateSubmission(form);
   if (error) throw error;
 
+  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(() => {
+    removeSubmissionFromStorage();
+    flagNoActiveSubmission();
+  });
+
   const currentStep =
     APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
@@ -178,6 +186,7 @@ const CreateAppointment = ({form}) => {
               // TODO: post to API endpoint, handle validation errors
               window.sessionStorage.clearItem(storageKey);
               removeSubmissionFromStorage();
+              resetSession();
               setSubmitting(false);
               break;
             }
@@ -199,11 +208,21 @@ const CreateAppointment = ({form}) => {
         <Form style={{width: '100%'}}>
           <FormDisplayComponent
             router={
-              <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
+              <Wrapper sessionExpired={sessionExpired} title={form.name}>
                 <ErrorBoundary>
-                  {isLoading ? <Loader modifiers={['centered']} /> : <Outlet />}
+                  {isLoading ? (
+                    <Loader modifiers={['centered']} />
+                  ) : (
+                    <RequireSession
+                      expired={sessionExpired}
+                      expiryDate={expiryDate}
+                      onNavigate={() => resetSession()}
+                    >
+                      <Outlet />
+                    </RequireSession>
+                  )}
                 </ErrorBoundary>
-              </Card>
+              </Wrapper>
             }
             progressIndicator={<AppointmentProgress title={form.name} currentStep={currentStep} />}
             showProgressIndicator={form.showProgressIndicator}
@@ -217,6 +236,16 @@ const CreateAppointment = ({form}) => {
 
 CreateAppointment.propTypes = {
   form: Types.Form.isRequired,
+};
+
+const Wrapper = ({sessionExpired = false, children, ...props}) => {
+  if (sessionExpired) return <>{children}</>;
+
+  return (
+    <Card titleComponent="h1" modifiers={['mobile-header-hidden']} {...props}>
+      {children}
+    </Card>
+  );
 };
 
 export default CreateAppointment;

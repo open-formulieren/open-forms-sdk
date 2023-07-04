@@ -1,3 +1,5 @@
+import {createGlobalstate} from 'state-pool';
+
 import {post} from 'api';
 
 /**
@@ -13,4 +15,18 @@ export const createSubmission = async (baseUrl, form) => {
   };
   const submissionResponse = await post(`${baseUrl}submissions`, createData);
   return submissionResponse.data;
+};
+
+export const globalSubmissionState = createGlobalstate({hasSubmission: false});
+
+export const flagActiveSubmission = () => {
+  globalSubmissionState.updateValue(state => {
+    state.hasSubmission = true;
+  });
+};
+
+export const flagNoActiveSubmission = () => {
+  globalSubmissionState.updateValue(state => {
+    state.hasSubmission = false;
+  });
 };
