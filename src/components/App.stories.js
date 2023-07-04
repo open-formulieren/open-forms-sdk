@@ -1,16 +1,18 @@
 import {expect} from '@storybook/jest';
 import {waitForElementToBeRemoved, within} from '@storybook/testing-library';
+import {Outlet} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildForm} from 'api-mocks';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import {ConfigDecorator, DeprecatedRouterDecorator} from 'story-utils/decorators';
+import {ConfigDecorator} from 'story-utils/decorators';
 
-import App from './App';
+import App, {getRoutes} from './App';
 
 export default {
   title: 'Private API / App',
   component: App,
-  decorators: [ConfigDecorator, DeprecatedRouterDecorator],
+  decorators: [ConfigDecorator],
   args: {
     'form.translationEnabled': true,
   },
@@ -30,12 +32,27 @@ export default {
   },
 };
 
+const Wrapper = ({form}) => {
+  const routes = [
+    {
+      path: '*',
+      element: <App form={form} noDebug />,
+      children: getRoutes(form, true),
+    },
+  ];
+  const router = createMemoryRouter(routes, {
+    initialEntries: ['/'],
+    initialIndex: 0,
+  });
+  return <RouterProvider router={router} />;
+};
+
 const render = args => {
   const form = buildForm({
     translationEnabled: args['form.translationEnabled'],
     explanationTemplate: '<p>Toelichtingssjabloon...</p>',
   });
-  return <App form={form} noDebug />;
+  return <Wrapper form={form} />;
 };
 
 export const Default = {
