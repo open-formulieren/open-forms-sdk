@@ -9,7 +9,9 @@ import {ConfigContext} from 'Context';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
+import Loader from 'components/Loader';
 import ProgressIndicatorDisplay from 'components/ProgressIndicator/ProgressIndicatorDisplay';
+import useGetOrCreateSubmission from 'hooks/useGetOrCreateSubmission';
 import Types from 'types';
 
 import ChooseProductStep from './ChooseProductStep';
@@ -150,6 +152,9 @@ const CreateAppointment = ({form}) => {
     phoneNumber: '',
   });
 
+  const {isLoading, error, submission, removeSubmissionFromStorage} = useGetOrCreateSubmission();
+  if (error) throw error;
+
   const currentStep =
     APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
@@ -171,8 +176,8 @@ const CreateAppointment = ({form}) => {
             case APPOINTMENT_STEP_PATHS.at(-1): {
               console.log(values);
               // TODO: post to API endpoint, handle validation errors
-              // TODO: clear session storage key
               window.sessionStorage.clearItem(storageKey);
+              removeSubmissionFromStorage();
               setSubmitting(false);
               break;
             }
@@ -196,7 +201,7 @@ const CreateAppointment = ({form}) => {
             router={
               <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
                 <ErrorBoundary>
-                  <Outlet />
+                  {isLoading ? <Loader modifiers={['centered']} /> : <Outlet />}
                 </ErrorBoundary>
               </Card>
             }
