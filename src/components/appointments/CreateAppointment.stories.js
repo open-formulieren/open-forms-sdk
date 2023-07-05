@@ -4,6 +4,7 @@ import {addDays, formatISO} from 'date-fns';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildForm} from 'api-mocks';
+import {mockSubmissionPost} from 'api-mocks/submissions';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import CreateAppointment, {routes as childRoutes} from './CreateAppointment';
@@ -22,6 +23,7 @@ export default {
   parameters: {
     msw: {
       handlers: [
+        mockSubmissionPost(),
         mockAppointmentProductsGet,
         mockAppointmentLocationsGet,
         mockAppointmentDatesGet,

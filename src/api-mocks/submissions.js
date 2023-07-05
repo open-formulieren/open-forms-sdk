@@ -1,3 +1,5 @@
+import {rest} from 'msw';
+
 import {BASE_URL, getDefaultFactory} from './base';
 
 // FIXME - this is incomplete, the prop types aren't detailed enough.
@@ -28,3 +30,8 @@ const SUBMISSION_DETAILS = {
  * @return {Object}           A submission object.
  */
 export const buildSubmission = getDefaultFactory(SUBMISSION_DETAILS);
+
+export const mockSubmissionPost = (submission = buildSubmission()) =>
+  rest.post(`${BASE_URL}submissions`, (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json(submission));
+  });

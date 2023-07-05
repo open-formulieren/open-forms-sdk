@@ -17,6 +17,7 @@ import 'styles.scss';
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
 
+import {withClearSessionStorage} from './decorators';
 import {reactIntl} from './reactIntl.js';
 
 initialize({
@@ -32,7 +33,7 @@ Formio.use(OpenFormsModule);
 Templates.current = OFLibrary;
 
 export default {
-  decorators: [mswDecorator],
+  decorators: [mswDecorator, withClearSessionStorage],
   globals: {
     locale: reactIntl.defaultLocale,
     locales: {
