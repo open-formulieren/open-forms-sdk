@@ -5,6 +5,7 @@ import {withRouter} from 'storybook-addon-react-router-v6';
 import {ConfigDecorator, FormikDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
 import ChooseProductStep from './ChooseProductStep';
+import {AppointmentConfigContext} from './Context';
 import {mockAppointmentProductsGet} from './mocks';
 
 export default {
@@ -105,5 +106,22 @@ export const RemovingProducts = {
     await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
     await expect(await canvas.queryByText('Paspoort aanvraag')).toBeNull();
     await expect(await canvas.queryByRole('button', {name: 'Verwijderen'})).toBeNull();
+  },
+};
+
+const withoutMultipleProducts = Story => (
+  <AppointmentConfigContext.Provider value={{supportsMultipleProducts: false}}>
+    <Story />
+  </AppointmentConfigContext.Provider>
+);
+
+export const NoMultipleProducts = {
+  name: 'No multiple products support',
+  decorators: [withoutMultipleProducts],
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    const buttons = canvas.getAllByRole('button');
+    await expect(buttons).toHaveLength(1);
+    await canvas.findByRole('button', {name: 'Bevestig producten'});
   },
 };

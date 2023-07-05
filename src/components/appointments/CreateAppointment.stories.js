@@ -30,6 +30,9 @@ export default {
       ],
     },
   },
+  args: {
+    supportsMultipleProducts: true,
+  },
   argTypes: {
     form: {table: {disable: true}},
   },
@@ -50,8 +53,13 @@ const Wrapper = ({form}) => {
   return <RouterProvider router={router} />;
 };
 
-const render = ({showProgressIndicator, name}) => {
-  const form = buildForm({showProgressIndicator, name, appointmentEnabled: true});
+const render = ({showProgressIndicator, supportsMultipleProducts, name}) => {
+  const form = buildForm({
+    showProgressIndicator,
+    name,
+    'appointmentOptions.isAppointment': true,
+    'appointmentOptions.supportsMultipleProducts': supportsMultipleProducts,
+  });
   return <Wrapper form={form} />;
 };
 

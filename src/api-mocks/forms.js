@@ -17,6 +17,10 @@ const FORM_DEFAULTS = {
   active: true,
   submissionAllowed: 'yes',
   suspensionAllowed: true,
+  appointmentOptions: {
+    isAppointment: false,
+    supportsMultipleProducts: null,
+  },
   literals: {
     beginText: {resolved: 'Begin', value: ''},
     changeText: {resolved: 'Change', value: ''},
