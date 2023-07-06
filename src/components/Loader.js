@@ -3,6 +3,8 @@ import React from 'react';
 
 import {getBEMClassName} from 'utils';
 
+export const MODIFIERS = ['centered', 'only-child', 'small'];
+
 const Loader = ({modifiers = []}) => {
   const className = getBEMClassName('loading', modifiers);
   return (
@@ -13,7 +15,7 @@ const Loader = ({modifiers = []}) => {
 };
 
 Loader.propTypes = {
-  modifiers: PropTypes.arrayOf(PropTypes.oneOf(['centered', 'only-child', 'small'])),
+  modifiers: PropTypes.arrayOf(PropTypes.oneOf(MODIFIERS)),
 };
 
 export default Loader;

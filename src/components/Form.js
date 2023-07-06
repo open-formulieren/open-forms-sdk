@@ -1,9 +1,7 @@
-import {createSubmission} from 'data/submissions';
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {Navigate, Route, Routes, useMatch, useNavigate} from 'react-router-dom';
 import {usePrevious} from 'react-use';
-import {createGlobalstate} from 'state-pool';
 import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
@@ -22,26 +20,13 @@ import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import SubmissionSummary from 'components/Summary';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
+import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 import Types from 'types';
-
-const globalSubmissionState = createGlobalstate({hasSubmission: false});
-
-const flagActiveSubmission = () => {
-  globalSubmissionState.updateValue(state => {
-    state.hasSubmission = true;
-  });
-};
-
-const flagNoActiveSubmission = () => {
-  globalSubmissionState.updateValue(state => {
-    state.hasSubmission = false;
-  });
-};
 
 const initialState = {
   submission: null,
@@ -397,4 +382,3 @@ Form.propTypes = {
 };
 
 export default Form;
-export {globalSubmissionState};
