@@ -20,3 +20,55 @@
     display: flex;
   }
 }
+
+.utrecht-form-field__label .tooltip {
+  --#{prefix(tooltip-arrow-width)}: 1rem;
+  --#{prefix(tooltip-arrow-height)}: 0.5rem;
+  --#{prefix(tooltip-bg)}: var(--{prefix(color-bg)});
+  z-index: 1;
+  &-arrow {
+    // TODO: make arrow optional?
+    // visibility: hidden;
+    position: absolute;
+    width: var(--#{prefix(tooltip-arrow-width)});
+    height: var(--#{prefix(tooltip-arrow-height)});
+    &:before {
+      position: absolute;
+      content: '';
+      border-color: transparent;
+      border-style: solid;
+    }
+  }
+}
+.utrecht-form-field__label .tooltip[x-placement^='right'] {
+  .tooltip-inner {
+    margin-left: inherit; // undo formio tweak
+  }
+  .tooltip-arrow {
+    border-right: inherit; // undo formio tweak
+
+    left: calc(-1 * var(--#{prefix(tooltip-arrow-height)}));
+    width: var(--#{prefix(tooltip-arrow-height)});
+    height: var(--#{prefix(tooltip-arrow-width)});
+    &:before {
+      right: -1px;
+      border-width: calc(var(--#{prefix(tooltip-arrow-width)}) * 0.5)
+        var(--#{prefix(tooltip-arrow-height)}) calc(var(--#{prefix(tooltip-arrow-width)}) * 0.5) 0;
+      border-right-color: var(--#{prefix(tooltip-bg)});
+    }
+  }
+}
+
+.utrecht-form-field__label .tooltip[x-placement^='left'] {
+  .tooltip-arrow {
+    right: calc(-1 * var(--#{prefix(tooltip-arrow-height)}));
+    width: var(--#{prefix(tooltip-arrow-height)});
+    height: var(--#{prefix(tooltip-arrow-width)});
+    &:before {
+      left: -1px;
+      border-width: calc(var(--#{prefix(tooltip-arrow-width)}) * 0.5) 0
+        calc(var(--#{prefix(tooltip-arrow-width)}) * 0.5) var(--#{prefix(tooltip-arrow-height)});
+      border-left-color: var(--#{prefix(tooltip-bg)});
+    }
+  }
+}
