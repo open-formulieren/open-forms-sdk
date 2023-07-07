@@ -6,6 +6,7 @@
 
 @import '../mixins/prefix';
 
+.utrecht-form-field__label .tooltip,
 .#{prefix(tooltip)} {
   &-inner {
     @include border(all);
