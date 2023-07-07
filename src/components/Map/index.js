@@ -24,7 +24,7 @@ const useDefaultCoordinates = () => {
   return [latitude, longitude];
 };
 
-const LeaftletMap = ({markerCoordinates, onMarkerSet, disabled = false}) => {
+const LeaftletMap = ({markerCoordinates, onMarkerSet, zoomLevel, disabled = false}) => {
   const defaultCoordinates = useDefaultCoordinates();
   const coordinates = markerCoordinates || defaultCoordinates;
 
@@ -40,7 +40,7 @@ const LeaftletMap = ({markerCoordinates, onMarkerSet, disabled = false}) => {
   return (
     <MapContainer
       center={MAP_DEFAULTS.center}
-      zoom={MAP_DEFAULTS.zoom}
+      zoom={zoomLevel}
       continuousWorld
       crs={MAP_DEFAULTS.crs}
       attributionControl
@@ -49,7 +49,7 @@ const LeaftletMap = ({markerCoordinates, onMarkerSet, disabled = false}) => {
       <TileLayer url={TILE_LAYERS.url} {...TILE_LAYERS.options} />
       {coordinates ? (
         <>
-          <MapView coordinates={coordinates} />
+          <MapView coordinates={coordinates} zoomLevel={zoomLevel} />
           <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
         </>
       ) : null}
