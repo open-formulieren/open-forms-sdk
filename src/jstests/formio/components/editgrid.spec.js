@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import {Formio} from 'react-formio';
 
 import {BASE_URL} from 'api-mocks';
@@ -10,30 +10,25 @@ import {editgridForm} from './fixtures/editgrid';
 Formio.use(OpenFormsModule);
 
 describe('EditGrid Component', () => {
-  test('Unsaved row raises error', done => {
-    let formJSON = _.cloneDeep(editgridForm);
+  test('Unsaved row raises error', async () => {
+    // setup
+    const formJSON = cloneDeep(editgridForm);
     const data = {repeatingGroup: []};
 
     const element = document.createElement('div');
 
-    let formInstance;
+    const form = await Formio.createForm(element, formJSON, {baseUrl: BASE_URL});
+    form.setPristine(false);
+    const componentRepeatingGroup = form.getComponent('repeatingGroup');
 
-    Formio.createForm(element, formJSON, {baseUrl: BASE_URL})
-      .then(form => {
-        form.setPristine(false);
-        const componentRepeatingGroup = form.getComponent('repeatingGroup');
-        componentRepeatingGroup.addRow();
+    // check presumption
+    expect(form.errors.length).toBe(0);
 
-        formInstance = form;
+    // act
+    componentRepeatingGroup.addRow();
+    await form.checkAsyncValidity(data, true, data);
 
-        return form.checkAsyncValidity(data, true, data);
-      })
-      .then(isValid => {
-        setTimeout(() => {
-          expect(formInstance.errors.length).toBeGreaterThan(0);
-          done();
-        }, 300);
-      })
-      .catch(done);
+    //assert
+    expect(form.errors.length).toBeGreaterThan(0);
   });
 });
