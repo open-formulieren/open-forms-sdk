@@ -1,4 +1,4 @@
-import {useFormikContext} from 'formik';
+import PropTypes from 'prop-types';
 import React, {useCallback, useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 
@@ -15,10 +15,9 @@ const getLocations = async (baseUrl, productIds) => {
   return locationList;
 };
 
-const LocationSelect = () => {
+const LocationSelect = ({products}) => {
   const {baseUrl} = useContext(ConfigContext);
-  const {values} = useFormikContext();
-  const productIds = (values.products || []).map(prod => prod.productId);
+  const productIds = products.map(prod => prod.productId);
   const getOptions = useCallback(
     async () => await getLocations(baseUrl, productIds),
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
@@ -39,10 +38,18 @@ const LocationSelect = () => {
       valueProperty="identifier"
       getOptionLabel={location => location.name}
       autoSelectOnlyOption
+      validateOnChange
     />
   );
 };
 
-LocationSelect.propTypes = {};
+LocationSelect.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      productId: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
 
 export default LocationSelect;

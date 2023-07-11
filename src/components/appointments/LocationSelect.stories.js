@@ -13,13 +13,15 @@ export default {
   parameters: {
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: '',
       },
     },
     msw: {
       handlers: [mockAppointmentLocationsGet],
     },
+  },
+  args: {
+    products: [{productId: 'e8e045ab', amount: 1}],
   },
 };
 
@@ -39,16 +41,11 @@ export const MultipleCandidates = {
 
 export const SingleCandidate = {
   name: 'Single candidate location',
-  parameters: {
-    formik: {
-      initialValues: {
-        products: [
-          {productId: 'e8e045ab', amount: 1},
-          {productId: '166a5c79', amount: 1},
-        ],
-        location: '',
-      },
-    },
+  args: {
+    products: [
+      {productId: 'e8e045ab', amount: 1},
+      {productId: '166a5c79', amount: 1},
+    ],
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);

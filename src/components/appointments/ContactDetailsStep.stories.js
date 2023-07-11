@@ -3,25 +3,31 @@ import {userEvent, within} from '@storybook/testing-library';
 import {addDays, formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
-import {ConfigDecorator, FormikDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
 import ContactDetailsStep from './ContactDetailsStep';
 import {mockAppointmentCustomerFieldsGet} from './mocks';
+import {withAppointmentState} from './story-utils';
 
 const TOMORROW = formatISO(addDays(new Date(), 1), {representation: 'date'});
 
 export default {
   title: 'Private API / Appointments / Steps / 3 - Contact details',
   component: ContactDetailsStep,
-  decorators: [withCard, LayoutDecorator, FormikDecorator, withRouter, ConfigDecorator],
+  decorators: [withCard, LayoutDecorator, withAppointmentState, withRouter, ConfigDecorator],
   parameters: {
     controls: {hideNoControlsWarning: true},
-    formik: {
-      initialValues: {
-        products: [{productId: '166a5c79', amount: 1}],
-        location: '1396f17c',
-        date: TOMORROW,
-        datetime: `${TOMORROW}T08:00:00Z`,
+    appointmentState: {
+      currentStep: 'contactgegevens',
+      appointmentData: {
+        producten: {
+          products: [{productId: '166a5c79', amount: 1}],
+        },
+        kalender: {
+          location: '1396f17c',
+          date: TOMORROW,
+          datetime: `${TOMORROW}T08:00:00Z`,
+        },
       },
     },
     msw: {

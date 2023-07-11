@@ -17,7 +17,6 @@ export default {
     controls: {hideNoControlsWarning: true},
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: '1396f17c',
         date: tomorrow,
         datetime: '',
@@ -26,6 +25,9 @@ export default {
     msw: {
       handlers: [mockAppointmentTimesGet],
     },
+  },
+  args: {
+    products: [{productId: 'e8e045ab', amount: 1}],
   },
 };
 
@@ -36,7 +38,6 @@ export const NoDateSelectedDisabled = {
   parameters: {
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: '1396f17c',
         date: '',
         datetime: '',

@@ -2,30 +2,34 @@ import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
-import {ConfigDecorator, FormikDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
 import ChooseProductStep from './ChooseProductStep';
 import {AppointmentConfigContext} from './Context';
 import {mockAppointmentProductsGet} from './mocks';
+import {withAppointmentState} from './story-utils';
 
 export default {
   title: 'Private API / Appointments / Steps / 1 - Choose product',
   component: ChooseProductStep,
-  decorators: [withCard, LayoutDecorator, FormikDecorator, withRouter, ConfigDecorator],
+  decorators: [withCard, LayoutDecorator, withAppointmentState, withRouter, ConfigDecorator],
   parameters: {
     controls: {hideNoControlsWarning: true},
-    formik: {
-      initialValues: {
-        products: [
-          {
-            productId: '',
-            amount: 1,
-          },
-        ],
-      },
-    },
     msw: {
       handlers: [mockAppointmentProductsGet],
+    },
+    appointmentState: {
+      currentStep: 'producten',
+      appointmentData: {
+        producten: {
+          products: [
+            {
+              productId: '',
+              amount: 1,
+            },
+          ],
+        },
+      },
     },
   },
 };
@@ -52,14 +56,17 @@ export const InitialState = {
 export const AddingProducts = {
   name: 'Adding products',
   parameters: {
-    formik: {
-      initialValues: {
-        products: [
-          {
-            productId: '166a5c79',
-            amount: 2,
-          },
-        ],
+    appointmentState: {
+      currentStep: 'producten',
+      appointmentData: {
+        producten: {
+          products: [
+            {
+              productId: '166a5c79',
+              amount: 2,
+            },
+          ],
+        },
       },
     },
   },
@@ -75,18 +82,21 @@ export const AddingProducts = {
 export const RemovingProducts = {
   name: 'Removing products',
   parameters: {
-    formik: {
-      initialValues: {
-        products: [
-          {
-            productId: '166a5c79',
-            amount: 2,
-          },
-          {
-            productId: 'e8e045ab',
-            amount: 1,
-          },
-        ],
+    appointmentState: {
+      currentStep: 'producten',
+      appointmentData: {
+        producten: {
+          products: [
+            {
+              productId: '166a5c79',
+              amount: 2,
+            },
+            {
+              productId: 'e8e045ab',
+              amount: 1,
+            },
+          ],
+        },
       },
     },
   },

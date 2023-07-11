@@ -1,30 +1,48 @@
 import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
-import {useFormikContext} from 'formik';
+import {Form, Formik} from 'formik';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
+import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
+import {z} from 'zod';
+import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {CardTitle} from 'components/Card';
 import Loader from 'components/Loader';
 import useTitle from 'hooks/useTitle';
 
-import {isStepValid as isProductStepValid} from './ChooseProductStep';
+import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
 import DateSelect from './DateSelect';
 import LocationSelect from './LocationSelect';
 import {getProducts} from './ProductSelect';
 import SubmitRow from './SubmitRow';
 import TimeSelect from './TimeSelect';
 
-// TODO: replace with ZOD validation, see #435
-export const isStepValid = data => {
-  const {location, datetime} = data;
-  return isProductStepValid(data) && Boolean(location && datetime);
+const schema = z.object({
+  location: z.string(),
+  date: z.coerce.date(),
+  datetime: z.string().datetime({offset: true}),
+});
+
+// XXX: check field dependencies - clear time if date/location is not valid etc.
+
+const INITIAL_VALUES = {
+  location: '',
+  date: '',
+  datetime: '',
 };
 
-const LocationAndTimeStep = () => {
+const LocationAndTimeStep = ({navigateTo = null}) => {
   const intl = useIntl();
-  const {values} = useFormikContext();
+  const {
+    appointmentData: {products = []},
+    stepData,
+    submitStep,
+  } = useCreateAppointmentContext();
+  const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
       description: 'Appointments: location and time step step page title',
@@ -46,42 +64,61 @@ const LocationAndTimeStep = () => {
         modifiers={['padded']}
       />
 
-      <ProductSummary />
+      <ProductSummary products={products} />
 
-      <div>
-        <LocationSelect />
-        <DateSelect />
-        <TimeSelect />
-      </div>
+      <Formik
+        initialValues={{...INITIAL_VALUES, ...stepData}}
+        validateOnChange={false}
+        validateOnBlur
+        validateOnMount
+        validationSchema={toFormikValidationSchema(schema)}
+        onSubmit={(values, {setSubmitting}) => {
+          flushSync(() => {
+            submitStep(values);
+            setSubmitting(false);
+          });
+          if (navigateTo !== null) navigate(navigateTo);
+        }}
+      >
+        {({isValid}) => (
+          // TODO: don't do inline style
+          <Form style={{width: '100%'}}>
+            <div>
+              <LocationSelect products={products} />
+              <DateSelect products={products} />
+              <TimeSelect products={products} />
+            </div>
 
-      <SubmitRow
-        canSubmit={isStepValid(values)}
-        nextText={intl.formatMessage({
-          description: 'Appointments location and time step: next step text',
-          defaultMessage: 'To contact details',
-        })}
-        previousText={intl.formatMessage({
-          description: 'Appointments location and time step: previous step text',
-          defaultMessage: 'Back to products',
-        })}
-        navigateBackTo="producten"
-      />
+            <SubmitRow
+              canSubmit={isValid}
+              nextText={intl.formatMessage({
+                description: 'Appointments location and time step: next step text',
+                defaultMessage: 'To contact details',
+              })}
+              previousText={intl.formatMessage({
+                description: 'Appointments location and time step: previous step text',
+                defaultMessage: 'Back to products',
+              })}
+              navigateBackTo="producten"
+            />
+          </Form>
+        )}
+      </Formik>
     </>
   );
 };
 
-LocationAndTimeStep.propTypes = {};
+LocationAndTimeStep.propTypes = {
+  navigateTo: PropTypes.string,
+};
 
-const ProductSummary = () => {
+const ProductSummary = ({products}) => {
   const {baseUrl} = useContext(ConfigContext);
   const {
     loading,
     value: allProducts,
     error,
   } = useAsync(async () => await getProducts(baseUrl), [baseUrl]);
-  const {
-    values: {products},
-  } = useFormikContext();
 
   if (!products.length) return null;
   if (error) throw error;
@@ -116,6 +153,13 @@ const ProductSummary = () => {
   );
 };
 
-ProductSummary.propTypes = {};
+ProductSummary.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      productId: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
 
 export default LocationAndTimeStep;

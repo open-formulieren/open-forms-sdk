@@ -8,7 +8,7 @@ import LocationAndTimeStep from '../LocationAndTimeStep';
 export const APPOINTMENT_STEPS = [
   {
     path: 'producten',
-    element: <ChooseProductStep />,
+    element: <ChooseProductStep navigateTo="../kalender" />,
     name: defineMessage({
       description: "Appointments navbar title for 'products' step",
       defaultMessage: 'Product',
@@ -16,7 +16,7 @@ export const APPOINTMENT_STEPS = [
   },
   {
     path: 'kalender',
-    element: <LocationAndTimeStep />,
+    element: <LocationAndTimeStep navigateTo="../contactgegevens" />,
     name: defineMessage({
       description: "Appointments navbar title for 'location and time' step",
       defaultMessage: 'Location and time',
