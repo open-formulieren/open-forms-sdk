@@ -34,8 +34,8 @@ export const RadioField = ({
   const generatedId = React.useId();
   id = id || generatedId;
 
-  const {error} = getFieldMeta(name);
-  const invalid = !!error;
+  const {error, touched} = getFieldMeta(name);
+  const invalid = touched && !!error;
   const descriptionid = `${id}-description`;
   return (
     <Wrapper>
@@ -72,7 +72,7 @@ export const RadioField = ({
         ))}
 
         <HelpText id={descriptionid}>{description}</HelpText>
-        <ValidationErrors error={error} />
+        {touched && <ValidationErrors error={error} />}
       </Fieldset>
     </Wrapper>
   );

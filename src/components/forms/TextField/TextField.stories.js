@@ -49,6 +49,9 @@ export const ValidationError = {
       initialErrors: {
         textinput: 'invalid',
       },
+      initialTouched: {
+        textinput: true,
+      },
     },
   },
   args: {

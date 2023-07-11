@@ -28,7 +28,7 @@ DatePartInput.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const DateInputs = ({day, month, year, disabled, onChange, autoComplete}) => {
+const DateInputs = ({day, month, year, disabled, onChange, onBlur, autoComplete}) => {
   const intl = useIntl();
   const meta = useDateLocaleMeta();
   const [dayId, monthId, yearId] = [useId(), useId(), useId()];
@@ -47,6 +47,7 @@ const DateInputs = ({day, month, year, disabled, onChange, autoComplete}) => {
           onChange={onChange}
           placeholder={intl.formatMessage(PART_PLACEHOLDERS.day)}
           id={dayId}
+          onBlur={onBlur}
           autoComplete={isBdayAutoComplete ? 'bday-day' : undefined}
         />
       </InputGroupItem>
@@ -63,6 +64,7 @@ const DateInputs = ({day, month, year, disabled, onChange, autoComplete}) => {
           onChange={onChange}
           placeholder={intl.formatMessage(PART_PLACEHOLDERS.month)}
           id={monthId}
+          onBlur={onBlur}
           autoComplete={isBdayAutoComplete ? 'bday-month' : undefined}
         />
       </InputGroupItem>
@@ -79,6 +81,7 @@ const DateInputs = ({day, month, year, disabled, onChange, autoComplete}) => {
           onChange={onChange}
           placeholder={intl.formatMessage(PART_PLACEHOLDERS.year)}
           id={yearId}
+          onBlur={onBlur}
           autoComplete={isBdayAutoComplete ? 'bday-year' : undefined}
         />
       </InputGroupItem>
@@ -98,6 +101,7 @@ DateInputs.propTypes = {
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   autoComplete: PropTypes.string,
+  onBlur: PropTypes.func,
 };
 
 const DateInputGroup = ({
@@ -105,14 +109,14 @@ const DateInputGroup = ({
   label,
   isRequired,
   onChange,
-  id,
   disabled = false,
   showFormattedDate = false,
   autoComplete,
 }) => {
-  const {getFieldProps, getFieldMeta} = useFormikContext();
+  const {getFieldProps, getFieldMeta, getFieldHelpers} = useFormikContext();
   const {value} = getFieldProps(name);
   const {error} = getFieldMeta(name);
+  const {setTouched} = getFieldHelpers(name);
   const currentDate = parseDate(value);
 
   // keep in mind the first month is 0 in JS...
@@ -150,6 +154,7 @@ const DateInputGroup = ({
           disabled={disabled}
           onChange={onPartChange}
           autoComplete={autoComplete}
+          onBlur={() => setTouched(true)}
         />
       </InputGroup>
       {showFormattedDate && (
@@ -166,7 +171,6 @@ DateInputGroup.propTypes = {
   label: PropTypes.node,
   isRequired: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  id: PropTypes.string,
   disabled: PropTypes.bool,
   showFormattedDate: PropTypes.bool,
   autoComplete: PropTypes.string,

@@ -146,6 +146,9 @@ export const ValidationError = {
       initialErrors: {
         amount: 'invalid',
       },
+      initialTouched: {
+        amount: true,
+      },
     },
   },
   args: {

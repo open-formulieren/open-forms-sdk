@@ -59,6 +59,7 @@ const parseISOFromParts = (yearStr, monthStr, dayStr) => {
 };
 
 export const dateFromParts = (yearStr, monthStr, dayStr) => {
+  if (!yearStr || !monthStr || !dayStr) return undefined;
   const [ISOFormatted, parsed] = parseISOFromParts(yearStr, monthStr, dayStr);
   if (isNaN(parsed)) return undefined; // Invalid date (which is instanceof Date)
   return ISOFormatted;

@@ -143,6 +143,9 @@ export const ValidationError = {
       initialErrors: {
         invalidSelect: 'invalid',
       },
+      initialTouched: {
+        invalidSelect: true,
+      },
     },
   },
   args: {

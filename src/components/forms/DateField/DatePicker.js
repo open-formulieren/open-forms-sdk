@@ -3,6 +3,7 @@ import {formatISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+import {flushSync} from 'react-dom';
 import {useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
@@ -17,7 +18,8 @@ import {orderByPart, parseDate} from './utils';
 const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarProps, ...extra}) => {
   const intl = useIntl();
   const dateLocaleMeta = useDateLocaleMeta();
-  const {getFieldProps} = useFormikContext();
+  const {getFieldProps, getFieldHelpers} = useFormikContext();
+  const {setTouched} = getFieldHelpers(name);
   const [inputValue, setInputValue] = useState('');
   const {
     refs,
@@ -37,18 +39,13 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
   const currentDate = parseDate(value);
 
   // valid date -> set the locale-aware formatted value as input state
-  const expectedTextboxValue = !isNaN(currentDate)
+  const textboxValue = !isNaN(currentDate)
     ? intl.formatDate(currentDate, {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
       })
     : inputValue;
-
-  if (inputValue !== expectedTextboxValue) {
-    setInputValue(expectedTextboxValue);
-    return;
-  }
 
   const placeholderParts = orderByPart(
     {
@@ -74,7 +71,7 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
           placeholder={placeholderParts.join(dateLocaleMeta.separator)}
           disabled={disabled}
           {...extra}
-          value={inputValue}
+          value={textboxValue}
           onChange={event => {
             const enteredText = event.target.value;
             setInputValue(enteredText);
@@ -121,10 +118,12 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
       >
         <DatePickerCalendar
           onCalendarClick={selectedDate => {
-            // TODO: shouldn't this return a Date instance? -> question asked in nl-ds Slack
-            const truncated = selectedDate.substring(0, 10);
-            onChange({target: {name, value: truncated}});
-            setIsOpen(false, {keepDismissed: true});
+            flushSync(() => {
+              const truncated = selectedDate.substring(0, 10);
+              onChange({target: {name, value: truncated}});
+              setIsOpen(false, {keepDismissed: true});
+            });
+            setTouched(true);
           }}
           currentDate={currentDate}
           {...calendarProps}

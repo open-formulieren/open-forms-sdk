@@ -19,17 +19,18 @@ const SelectField = ({
   options = [],
   valueProperty = 'value',
   autoSelectOnlyOption = false,
+  validateOnChange = false,
   ...props
 }) => {
   const {getFieldProps, getFieldHelpers, getFieldMeta} = useFormikContext();
   const generatedId = React.useId();
   id = id || generatedId;
 
-  const {error} = getFieldMeta(name);
+  const {error, touched} = getFieldMeta(name);
   const {value: formikValue} = getFieldProps(name);
-  const {setValue} = getFieldHelpers(name);
+  const {setValue, setTouched} = getFieldHelpers(name);
 
-  const invalid = !!error;
+  const invalid = touched && !!error;
 
   // map the formik value back to the value object for react-select
   let value = undefined;
@@ -109,12 +110,13 @@ const SelectField = ({
             const normalized = isSingle ? [newValue] : newValue;
             const rawValues = normalized.map(val => val?.[valueProperty] ?? null);
             const rawValue = isSingle ? rawValues[0] : rawValues;
-            setValue(rawValue);
+            setValue(rawValue, validateOnChange);
           }}
           value={value}
+          onBlur={() => setTouched(true)}
         />
         <HelpText>{description}</HelpText>
-        <ValidationErrors error={error} />
+        {touched && <ValidationErrors error={error} />}
       </FormField>
     </Wrapper>
   );
@@ -129,6 +131,7 @@ export const SelectFieldPropTypes = {
   disabled: PropTypes.bool,
   valueProperty: PropTypes.string,
   autoSelectOnlyOption: PropTypes.bool,
+  validateOnChange: PropTypes.bool,
 };
 
 SelectField.propTypes = {

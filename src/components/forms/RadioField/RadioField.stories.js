@@ -58,6 +58,9 @@ export const ValidationError = {
       initialErrors: {
         radioInput: 'invalid',
       },
+      initialTouched: {
+        radioInput: true,
+      },
     },
   },
   args: {

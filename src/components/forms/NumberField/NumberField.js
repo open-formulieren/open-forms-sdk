@@ -26,12 +26,12 @@ const NumberField = ({
   id = '',
   disabled = false,
 }) => {
-  const [fieldProps, {value, error}] = useField(name);
+  const [fieldProps, {value, error, touched}] = useField(name);
   const {locale} = useIntl();
   const generatedId = React.useId();
   id = id || generatedId;
 
-  const invalid = !!error;
+  const invalid = touched && !!error;
 
   // We get the decimal separator by formatting a arbitrary number, and then extracting the decimal separator
   const {decimalSeparator, thousandSeparator} = getSeparators(locale);
@@ -69,7 +69,7 @@ const NumberField = ({
           />
         </Paragraph>
         <HelpText>{description}</HelpText>
-        <ValidationErrors error={error} />
+        {touched && <ValidationErrors error={error} />}
       </UtrechtFormField>
     </Wrapper>
   );
