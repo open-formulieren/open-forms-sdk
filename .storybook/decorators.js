@@ -1,5 +1,3 @@
-import {SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
-
 /**
  * Storybook does not have a before/after cleanup cycle, and localStorage would in
  * these situations break story/test isolation.
@@ -7,6 +5,6 @@ import {SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
  * This decorator is applied to every story to reset the storage state.
  */
 export const withClearSessionStorage = Story => {
-  window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
+  window.sessionStorage.clear();
   return <Story />;
 };
