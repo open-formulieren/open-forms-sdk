@@ -8,4 +8,5 @@
  * @private
  */
 
-export {default as FormioComponent} from './FormioComponent';
+export {default as FormioComponent, getEmptyValue} from './FormioComponent';
+export {default as getSchema} from './zod-schema';

@@ -28,4 +28,6 @@ FormioEmailField.propTypes = {
   }).isRequired,
 };
 
+export const emptyValue = '';
+
 export default FormioEmailField;

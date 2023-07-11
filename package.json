@@ -53,7 +53,9 @@
     "react-select": "^5.7.3",
     "react-use": "^17.2.4",
     "state-pool": "^0.8.0",
-    "use-immer": "^0.5.1"
+    "use-immer": "^0.5.1",
+    "zod": "^3.21.4",
+    "zod-formik-adapter": "^1.2.0"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
