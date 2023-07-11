@@ -75,6 +75,7 @@ it('Summary displays logout button if isAuthenticated is true', () => {
             submission={SUBMISSION}
             onConfirm={onConfirm}
             onLogout={onLogout}
+            onClearProcessingErrors={() => {}}
           />
         </IntlProvider>
       </Wrap>
@@ -104,6 +105,7 @@ it('Summary does not display logout button if loginRequired is false', () => {
             submission={SUBMISSION}
             onConfirm={onConfirm}
             onLogout={onLogout}
+            onClearProcessingErrors={() => {}}
           />
         </IntlProvider>
       </Wrap>

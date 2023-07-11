@@ -7,7 +7,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 
 // FIXME: together with src/i18n.js, see how we can make this a dynamic import without
 // breaking the bundles/cache busting mechanisms.
-const loadCalendarLocale = locale => {
+export const loadCalendarLocale = locale => {
   switch (locale) {
     case 'nl':
       return nl;

@@ -1,4 +1,4 @@
-import {expect, jest} from '@storybook/jest';
+import {expect} from '@storybook/jest';
 import {userEvent, waitFor, within} from '@storybook/testing-library';
 import {Form, Formik} from 'formik';
 
@@ -113,6 +113,7 @@ export const WithValidationError = {
     formik: {
       initialValues: {test: '1066-10-34'},
       initialErrors: {test: 'Invalid date entered'},
+      initialTouched: {test: true},
     },
   },
 };

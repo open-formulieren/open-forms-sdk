@@ -28,7 +28,7 @@ const Form = PropTypes.shape({
   submissionAllowed: PropTypes.oneOf(['yes', 'no_with_overview', 'no_without_overview']).isRequired,
   appointmentOptions: PropTypes.shape({
     isAppointment: PropTypes.bool.isRequired,
-    supportsMultipleProducts: PropTypes.oneOf([null, true, false]).isRequired,
+    supportsMultipleProducts: PropTypes.oneOf([null, true, false]),
   }),
   literals: PropTypes.shape({
     beginText: ButtonTextLiteral.isRequired,

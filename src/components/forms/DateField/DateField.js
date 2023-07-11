@@ -33,8 +33,8 @@ const DateField = ({
   ...props
 }) => {
   const {getFieldMeta} = useFormikContext();
-  const {error} = getFieldMeta(name);
-  const invalid = !!error;
+  const {error, touched} = getFieldMeta(name);
+  const invalid = touched && !!error;
 
   const generatedId = React.useId();
   id = id || generatedId;
@@ -79,7 +79,7 @@ const DateField = ({
           {...props}
         />
         <HelpText>{description}</HelpText>
-        <ValidationErrors error={error} />
+        {touched && <ValidationErrors error={error} />}
       </FormField>
     </Wrapper>
   );

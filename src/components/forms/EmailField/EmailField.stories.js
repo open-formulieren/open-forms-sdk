@@ -53,6 +53,9 @@ export const ValidationError = {
       initialErrors: {
         email: 'invalid_email',
       },
+      initialTouched: {
+        email: true,
+      },
     },
   },
   args: {

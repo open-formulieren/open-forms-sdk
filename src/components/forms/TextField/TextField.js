@@ -18,8 +18,8 @@ export const TextField = ({
   const generatedId = React.useId();
   id = id || generatedId;
 
-  const {error} = getFieldMeta(name);
-  const invalid = !!error;
+  const {error, touched} = getFieldMeta(name);
+  const invalid = touched && !!error;
   return (
     <Wrapper>
       <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
@@ -38,7 +38,7 @@ export const TextField = ({
           />
         </Paragraph>
         <HelpText>{description}</HelpText>
-        <ValidationErrors error={error} />
+        {touched && <ValidationErrors error={error} />}
       </UtrechtFormField>
     </Wrapper>
   );
