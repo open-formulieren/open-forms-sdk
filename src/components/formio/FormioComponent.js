@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {default as DateField} from './date';
-import {default as EmailField} from './email';
-import {default as RadioField} from './radio';
-import {default as TextField} from './textfield';
+import {default as DateField, emptyValue as emptyDate} from './date';
+import {default as EmailField, emptyValue as emptyEmail} from './email';
+import {default as RadioField, emptyValue as emptyRadio} from './radio';
+import {default as TextField, emptyValue as emptyText} from './textfield';
 
 const FormioComponent = ({component}) => {
   switch (component.type) {
@@ -43,6 +43,28 @@ FormioComponent.propTypes = {
       maxLength: PropTypes.number,
     }),
   }).isRequired,
+};
+
+export const getEmptyValue = component => {
+  switch (component.type) {
+    case 'bsn':
+    case 'phoneNumber':
+    case 'textfield': {
+      return emptyText;
+    }
+    case 'email': {
+      return emptyEmail;
+    }
+    case 'date': {
+      return emptyDate;
+    }
+    case 'radio': {
+      return emptyRadio;
+    }
+    default: {
+      return '';
+    }
+  }
 };
 
 export default FormioComponent;

@@ -32,4 +32,6 @@ FormioDateField.propTypes = {
   }).isRequired,
 };
 
+export const emptyValue = '';
+
 export default FormioDateField;

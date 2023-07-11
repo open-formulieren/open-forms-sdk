@@ -30,4 +30,6 @@ FormioRadioField.propTypes = {
   }).isRequired,
 };
 
+export const emptyValue = '';
+
 export default FormioRadioField;

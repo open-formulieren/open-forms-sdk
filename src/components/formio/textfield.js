@@ -28,4 +28,6 @@ FormioTextField.propTypes = {
   }).isRequired,
 };
 
+export const emptyValue = '';
+
 export default FormioTextField;
