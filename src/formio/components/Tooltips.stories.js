@@ -9,7 +9,6 @@ export default {
     evalContext: {},
   },
   argTypes: {
-    components: {type: {name: 'array', required: true}},
     evalContext: {table: {disable: true}},
   },
   parameters: {
@@ -20,7 +19,7 @@ export default {
 export const Default = {
   render: SingleFormioComponent,
   args: {
-    key: 'cols1',
+    formioKey: 'cols1',
     type: 'columns',
     label: 'Columns 1',
     extraComponentProperties: {
@@ -60,5 +59,10 @@ export const Default = {
         },
       ],
     },
+  },
+  argTypes: {
+    formioKey: {table: {disable: true}},
+    label: {table: {disable: true}},
+    type: {table: {disable: true}},
   },
 };
