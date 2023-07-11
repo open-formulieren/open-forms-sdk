@@ -8,7 +8,9 @@ import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
 import {initialize, mswDecorator, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
+import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import 'scss/dte-theme.scss';
+import 'leaflet/dist/leaflet.css';
 // load these AFTER the community styles, which is closer in simulating the CSS loading
 // order of our own components
 import 'styles.scss';
@@ -26,6 +28,8 @@ initialize({
     url: './mockServiceWorker.js',
   },
 });
+
+fixLeafletIconUrls();
 
 // Use our custom Form.io components
 Formio.use(OpenFormsModule);
