@@ -81,13 +81,18 @@ const DateTimeDisplay = ({component, value}) => {
   );
 };
 
-const TimeDisplay = ({component, value}) => {
+const TimeDisplay = ({value}) => {
   if (!value) return <EmptyDisplay />;
-  const [hours, minutes, seconds] = value.split(':');
-  const time = new Date();
-  time.setHours(hours);
-  time.setMinutes(minutes);
-  time.setSeconds(seconds);
+  // value may be a full ISO-8601 date
+  let time = new Date(value);
+  // Invalid date (which is instanceof Date, but also NaN)
+  if (isNaN(time)) {
+    const [hours, minutes, seconds] = value.split(':');
+    time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
+    time.setSeconds(seconds);
+  }
   return <FormattedTime value={time} />;
 };
 
