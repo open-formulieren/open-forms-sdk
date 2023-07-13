@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
 
-import Anchor from 'components/Anchor';
 import FAIcon from 'components/FAIcon';
 import ComponentValueDisplay from 'components/FormStepSummary/ComponentValueDisplay';
+import Link from 'components/Link';
+import {DEBUG} from 'utils';
 import {getBEMClassName} from 'utils';
 
 const LabelValueRow = ({name, value, component}) => {
@@ -24,7 +24,7 @@ const LabelValueRow = ({name, value, component}) => {
 };
 
 LabelValueRow.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.node.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
@@ -35,9 +35,11 @@ LabelValueRow.propTypes = {
   component: PropTypes.object.isRequired,
 };
 
-const FormStepSummary = ({slug, name, data, editStepText = ''}) => {
-  const editStepUrl = `/stap/${slug}`;
-  const navigate = useNavigate();
+const FormStepSummary = ({editUrl, slug, name, data, editStepText = ''}) => {
+  if (!editUrl) {
+    if (DEBUG && !slug) console.error('Provide either a step slug or editUrl prop');
+    editUrl = `/stap/${slug}`;
+  }
 
   return (
     <div className={getBEMClassName('summary')}>
@@ -45,16 +47,10 @@ const FormStepSummary = ({slug, name, data, editStepText = ''}) => {
         <h2 className={getBEMClassName('summary__step-name')}>{name}</h2>
 
         {editStepText && (
-          <Anchor
-            href={editStepUrl}
-            onClick={event => {
-              event.preventDefault();
-              navigate(editStepUrl);
-            }}
-          >
+          <Link to={editUrl}>
             <FAIcon icon="pen-to-square" />
             {editStepText}
-          </Anchor>
+          </Link>
         )}
       </div>
 
@@ -73,9 +69,10 @@ const FormStepSummary = ({slug, name, data, editStepText = ''}) => {
 };
 
 FormStepSummary.propTypes = {
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  editStepText: PropTypes.string,
+  name: PropTypes.node.isRequired,
+  editUrl: PropTypes.string,
+  slug: PropTypes.string,
+  editStepText: PropTypes.node,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
