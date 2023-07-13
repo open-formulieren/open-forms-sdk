@@ -1,6 +1,6 @@
 import {FieldArray, Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
@@ -19,7 +19,7 @@ import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointment
 import Product from './Product';
 import SubmitRow from './SubmitRow';
 
-const schema = z
+const productSchema = z
   .array(
     z.object({
       productId: z.string(),
@@ -28,13 +28,8 @@ const schema = z
   )
   .nonempty();
 
-const getSchema = supportsMultipleProducts => {
-  let dynamicSchema = schema;
-  if (!supportsMultipleProducts) {
-    dynamicSchema = dynamicSchema.max(1);
-  }
-  return z.object({products: dynamicSchema});
-};
+const chooseSingleProductSchema = z.object({products: productSchema.max(1)});
+const chooseMultiProductSchema = z.object({products: productSchema});
 
 const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid}) => {
   const intl = useIntl();
@@ -169,10 +164,9 @@ const ChooseProductStep = ({navigateTo = null}) => {
     })
   );
 
-  const validationSchema = useMemo(
-    () => getSchema(supportsMultipleProducts),
-    [supportsMultipleProducts]
-  );
+  const validationSchema = supportsMultipleProducts
+    ? chooseMultiProductSchema
+    : chooseSingleProductSchema;
 
   return (
     <>
