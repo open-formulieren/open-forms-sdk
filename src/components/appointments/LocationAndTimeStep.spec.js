@@ -87,12 +87,12 @@ describe('The location and time step', () => {
           datetime: '',
         }
       );
-      // No location should be selected, as there are multiple options
-      await waitFor(() => {
-        expect(screen.queryByText('Open Gem')).not.toBeInTheDocument();
-        expect(screen.queryByText('Bahamas')).not.toBeInTheDocument();
-      });
     });
+    // No location should be selected, as there are multiple options
+    await waitFor(() => {
+      expect(screen.queryByText('Open Gem')).not.toBeInTheDocument();
+    });
+    expect(screen.queryByText('Bahamas')).not.toBeInTheDocument();
 
     expect(screen.getByLabelText('Date')).toBeDisabled();
     expect(screen.getByLabelText('Time')).toBeDisabled();
@@ -164,7 +164,7 @@ describe('The location and time step', () => {
     expect(await screen.findByText('Open Gem')).toBeVisible();
     await waitFor(() => {
       expect(screen.getByLabelText('Date')).not.toBeDisabled();
-      expect(screen.getByLabelText('Time')).toBeDisabled();
     });
+    expect(screen.getByLabelText('Time')).toBeDisabled();
   });
 });
