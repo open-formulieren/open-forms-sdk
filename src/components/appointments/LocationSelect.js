@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, {useCallback, useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 
@@ -19,7 +18,7 @@ const getLocations = async (baseUrl, productIds) => {
 
 const LocationSelect = ({products}) => {
   const {baseUrl} = useContext(ConfigContext);
-  const productIds = products.map(prod => prod.productId);
+  const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
   const getOptions = useCallback(
     async () => await getLocations(baseUrl, productIds),
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055

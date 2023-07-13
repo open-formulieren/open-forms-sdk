@@ -1,6 +1,5 @@
 import {format, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
-import PropTypes from 'prop-types';
 import React, {useCallback, useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 
@@ -25,13 +24,16 @@ const getDatetimes = async (baseUrl, productIds, locationId, date) => {
 
 const TimeSelect = ({products}) => {
   const {baseUrl} = useContext(ConfigContext);
-  const {values} = useFormikContext();
+  const {
+    values: {location, date},
+  } = useFormikContext();
   const calendarLocale = useCalendarLocale();
+
+  const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
 
   const getOptions = useCallback(
     async () => {
-      const productIds = products.map(prod => prod.productId);
-      const results = await getDatetimes(baseUrl, productIds, values.location, values.date);
+      const results = await getDatetimes(baseUrl, productIds, location, date);
       // Array.prototype.toSorted is too new, jest tests can't handle it yet
       return results
         .map(datetime => {
@@ -51,14 +53,14 @@ const TimeSelect = ({products}) => {
     },
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [baseUrl, calendarLocale, JSON.stringify(values)]
+    [baseUrl, calendarLocale, JSON.stringify(productIds), location, date]
   );
 
   return (
     <AsyncSelectField
       name="datetime"
       isRequired
-      disabled={!products || !products.length || !values.location || !values.date}
+      disabled={!products || !products.length || !location || !date}
       label={
         <FormattedMessage description="Appoinments: time select label" defaultMessage="Time" />
       }
