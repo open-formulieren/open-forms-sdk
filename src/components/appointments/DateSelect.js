@@ -10,6 +10,8 @@ import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {DateField} from 'components/forms';
 
+import {ProductsType} from './types';
+
 const getDates = async (baseUrl, productIds, locationId) => {
   if (!productIds.length || !locationId) return [];
   const multiParams = productIds.map(id => ({product_id: id}));
@@ -86,12 +88,7 @@ const DateSelect = ({products}) => {
 };
 
 DateSelect.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      productId: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  products: ProductsType.isRequired,
 };
 
 export default DateSelect;

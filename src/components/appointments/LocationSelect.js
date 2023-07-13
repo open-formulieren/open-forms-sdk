@@ -6,6 +6,8 @@ import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {AsyncSelectField} from 'components/forms';
 
+import {ProductsType} from './types';
+
 // TODO: use a nicer widget/form field than select
 
 const getLocations = async (baseUrl, productIds) => {
@@ -44,12 +46,7 @@ const LocationSelect = ({products}) => {
 };
 
 LocationSelect.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      productId: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  products: ProductsType.isRequired,
 };
 
 export default LocationSelect;

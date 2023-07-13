@@ -20,6 +20,7 @@ import LocationSelect from './LocationSelect';
 import {getProducts} from './ProductSelect';
 import SubmitRow from './SubmitRow';
 import TimeSelect from './TimeSelect';
+import {ProductsType} from './types';
 
 const schema = z.object({
   location: z.string(),
@@ -154,12 +155,7 @@ const ProductSummary = ({products}) => {
 };
 
 ProductSummary.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      productId: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  products: ProductsType.isRequired,
 };
 
 export default LocationAndTimeStep;

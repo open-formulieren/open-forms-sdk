@@ -9,6 +9,8 @@ import {get} from 'api';
 import {AsyncSelectField} from 'components/forms';
 import {useCalendarLocale} from 'components/forms/DateField';
 
+import {ProductsType} from './types';
+
 const getDatetimes = async (baseUrl, productIds, locationId, date) => {
   if (!productIds.length || !locationId || !date) return [];
   const multiParams = productIds.map(id => ({product_id: id}));
@@ -74,12 +76,7 @@ const TimeSelect = ({products}) => {
 };
 
 TimeSelect.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      productId: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  products: ProductsType.isRequired,
 };
 
 export default TimeSelect;
