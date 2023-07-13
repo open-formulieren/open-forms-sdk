@@ -17,14 +17,20 @@ const useDefaultCoordinates = () => {
   // GeolocationPositionError:
   // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
   if (error) {
-    return DEFAULT_LAT_LON;
+    return null;
   }
-  if (!navigator.geolocation) return DEFAULT_LAT_LON;
+  if (!navigator.geolocation) return null;
   if (loading) return null;
   return [latitude, longitude];
 };
 
-const LeaftletMap = ({markerCoordinates, onMarkerSet, zoomLevel, disabled = false}) => {
+const LeaftletMap = ({
+  markerCoordinates,
+  onMarkerSet,
+  defaultCenter = DEFAULT_LAT_LON,
+  defaultZoomLevel = MAP_DEFAULTS.zoom,
+  disabled = false,
+}) => {
   const defaultCoordinates = useDefaultCoordinates();
   const coordinates = markerCoordinates || defaultCoordinates;
 
@@ -40,7 +46,7 @@ const LeaftletMap = ({markerCoordinates, onMarkerSet, zoomLevel, disabled = fals
   return (
     <MapContainer
       center={MAP_DEFAULTS.center}
-      zoom={zoomLevel}
+      zoom={defaultZoomLevel}
       continuousWorld
       crs={MAP_DEFAULTS.crs}
       attributionControl
@@ -49,7 +55,7 @@ const LeaftletMap = ({markerCoordinates, onMarkerSet, zoomLevel, disabled = fals
       <TileLayer url={TILE_LAYERS.url} {...TILE_LAYERS.options} />
       {coordinates ? (
         <>
-          <MapView coordinates={coordinates} zoomLevel={zoomLevel} />
+          <MapView coordinates={defaultCenter} zoomLevel={defaultZoomLevel} />
           <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
         </>
       ) : null}

@@ -12,6 +12,8 @@ export default {
   decorators: [withMapLayout],
   args: {
     markerCoordinates: [52.1326332, 5.291266],
+    defaultCenter: [52.1326332, 5.291266],
+    defaultZoomLevel: 12,
     disabled: true, // TODO: ideally this would be false but firefox has an infinite loop with onMarkerSet.
   },
   parameters: {
@@ -19,4 +21,12 @@ export default {
   },
 };
 
-export const Map = {};
+export const Map = {
+  args: {
+    component: {
+      lat: 52.1326332,
+      lng: 5.291266,
+      defaultZoom: 12,
+    },
+  },
+};

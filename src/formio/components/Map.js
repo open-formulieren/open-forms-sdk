@@ -91,15 +91,12 @@ export default class Map extends Field {
     this.setValue(newLatLng, {modified: true});
   }
 
-  setAndReturnCoordinates(coordinates) {
-    this.onMarkerSet(coordinates);
-    return coordinates;
-  }
-
   renderReact() {
-    const startingPop = [this.component.lat, this.component.lng] || DEFAULT_LAT_LON;
-    const markerCoordinates =
-      this.getValue().length === 2 ? this.getValue() : this.setAndReturnCoordinates(startingPop);
+    const defaultCenter =
+      this.component.initialCenter.lat && this.component.initialCenter.lng
+        ? [this.component.initialCenter.lat, this.component.initialCenter.lng]
+        : DEFAULT_LAT_LON;
+    const markerCoordinates = this.getValue();
 
     const container = this.refs.mapContainer;
     const zoom = Number(this.component.defaultZoom);
@@ -108,8 +105,9 @@ export default class Map extends Field {
 
     this.reactRoot.render(
       <LeafletMap
-        markerCoordinates={markerCoordinates}
+        markerCoordinates={markerCoordinates || null}
         onMarkerSet={this.onMarkerSet.bind(this)}
+        defaultCenter={defaultCenter}
         zoomLevel={zoom || MAP_DEFAULTS.zoom}
       />
     );
