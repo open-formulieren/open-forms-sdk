@@ -5,6 +5,7 @@ import {ConfigContext} from 'Context';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
+import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import {RequireSession} from 'components/Sessions';
 import {flagNoActiveSubmission} from 'data/submissions';
@@ -57,7 +58,9 @@ const CreateAppointment = ({form}) => {
                     expiryDate={expiryDate}
                     onNavigate={() => resetSession()}
                   >
-                    <Outlet />
+                    <LiteralsProvider literals={form.literals}>
+                      <Outlet />
+                    </LiteralsProvider>
                   </RequireSession>
                 )}
               </ErrorBoundary>

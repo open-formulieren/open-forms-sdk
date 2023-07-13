@@ -4,6 +4,7 @@ import {Navigate, matchPath, resolvePath} from 'react-router-dom';
 import ChooseProductStep from '../ChooseProductStep';
 import ContactDetailsStep from '../ContactDetailsStep';
 import LocationAndTimeStep from '../LocationAndTimeStep';
+import Summary from './Summary';
 
 export const APPOINTMENT_STEPS = [
   {
@@ -24,7 +25,7 @@ export const APPOINTMENT_STEPS = [
   },
   {
     path: 'contactgegevens',
-    element: <ContactDetailsStep />,
+    element: <ContactDetailsStep navigateTo="../overzicht" />,
     name: defineMessage({
       description: "Appointments navbar title for 'contact details' step",
       defaultMessage: 'Contact details',
@@ -43,6 +44,10 @@ export const routes = [
     element: <Navigate replace to={APPOINTMENT_STEP_PATHS[0]} />,
   },
   ...APPOINTMENT_STEPS.map(({path, element}) => ({path, element})),
+  {
+    path: 'overzicht',
+    element: <Summary />,
+  },
 ];
 
 /**

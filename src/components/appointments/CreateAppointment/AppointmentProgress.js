@@ -38,6 +38,8 @@ const AppointmentProgress = ({title, currentStep}) => {
     };
   });
 
+  const isSummary = checkMatchesPath(currentPathname, 'overzicht');
+
   const ProgressIndicatorDisplayComponent =
     config?.displayComponents?.progressIndicator ?? ProgressIndicatorDisplay;
   return (
@@ -48,10 +50,11 @@ const AppointmentProgress = ({title, currentStep}) => {
       hasSubmission
       isStartPage={false}
       // TODO
-      isSummary={false}
+      summaryTo="../overzicht"
+      isSummary={isSummary}
       isConfirmation={false}
       isSubmissionComplete={false}
-      areApplicableStepsCompleted={false}
+      areApplicableStepsCompleted={submittedSteps.length === APPOINTMENT_STEPS.length}
       showOverview
       showConfirmation
       expanded={expanded}

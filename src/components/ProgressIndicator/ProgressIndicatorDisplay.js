@@ -105,6 +105,7 @@ const ProgressIndicatorDisplay = ({
   expanded = false,
   onExpandClick,
   sticky = true,
+  summaryTo = '/overzicht',
 }) => {
   const intl = useIntl();
   // aria-labels are passed to DOM element, which can't handle <FormattedMessage />, so we
@@ -177,7 +178,7 @@ const ProgressIndicatorDisplay = ({
           {showOverview && (
             <ProgressItem completed={isConfirmation}>
               <LinkOrSpan
-                to={'/overzicht'}
+                to={summaryTo}
                 useLink={areApplicableStepsCompleted}
                 isActive={isSummary}
                 isApplicable={areApplicableStepsCompleted}
@@ -227,6 +228,7 @@ ProgressIndicatorDisplay.propTypes = {
   onExpandClick: PropTypes.func.isRequired,
   sticky: PropTypes.bool,
   hideNonApplicableSteps: PropTypes.bool,
+  summaryTo: PropTypes.string,
 };
 
 export default ProgressIndicatorDisplay;
