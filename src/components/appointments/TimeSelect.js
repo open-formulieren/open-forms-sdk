@@ -1,7 +1,7 @@
 import {format, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import React, {useCallback, useContext} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
@@ -9,6 +9,11 @@ import {AsyncSelectField} from 'components/forms';
 import {useCalendarLocale} from 'components/forms/DateField';
 
 import {ProductsType} from './types';
+
+export const fieldLabel = defineMessage({
+  description: 'Appoinments: time select label',
+  defaultMessage: 'Time',
+});
 
 const getDatetimes = async (baseUrl, productIds, locationId, date) => {
   if (!productIds.length || !locationId || !date) return [];
@@ -23,6 +28,7 @@ const getDatetimes = async (baseUrl, productIds, locationId, date) => {
 };
 
 const TimeSelect = ({products}) => {
+  const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {
     values: {location, date},
@@ -61,9 +67,7 @@ const TimeSelect = ({products}) => {
       name="datetime"
       isRequired
       disabled={!products || !products.length || !location || !date}
-      label={
-        <FormattedMessage description="Appoinments: time select label" defaultMessage="Time" />
-      }
+      label={intl.formatMessage(fieldLabel)}
       description={
         <FormattedMessage
           description="Appoinments: time select help text"

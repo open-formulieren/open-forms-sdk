@@ -1,5 +1,5 @@
 import React, {useCallback, useContext} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {defineMessage, useIntl} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
@@ -12,6 +12,11 @@ import {ProductsType} from './types';
 
 const CACHED_LOCATIONS_KEY = 'appointment|locations';
 const CACHED_LOCATIONS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
+
+export const fieldLabel = defineMessage({
+  description: 'Appoinments: location select label',
+  defaultMessage: 'Location',
+});
 
 export const getLocations = async (baseUrl, productIds) => {
   if (!productIds.length) return [];
@@ -26,6 +31,7 @@ export const getLocations = async (baseUrl, productIds) => {
 };
 
 const LocationSelect = ({products}) => {
+  const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
   const getOptions = useCallback(
@@ -38,12 +44,7 @@ const LocationSelect = ({products}) => {
     <AsyncSelectField
       name="location"
       isRequired
-      label={
-        <FormattedMessage
-          description="Appoinments: location select label"
-          defaultMessage="Location"
-        />
-      }
+      label={intl.formatMessage(fieldLabel)}
       getOptions={getOptions}
       valueProperty="identifier"
       getOptionLabel={location => location.name}

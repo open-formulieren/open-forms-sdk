@@ -2,7 +2,7 @@ import {Paragraph} from '@utrecht/component-library-react';
 import {eachDayOfInterval, formatISO, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import React, {useContext} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -10,6 +10,11 @@ import {get} from 'api';
 import {DateField} from 'components/forms';
 
 import {ProductsType} from './types';
+
+export const fieldLabel = defineMessage({
+  description: 'Appoinments: appointment date label',
+  defaultMessage: 'Date',
+});
 
 const getDates = async (baseUrl, productIds, locationId) => {
   if (!productIds.length || !locationId) return [];
@@ -25,6 +30,7 @@ const getDates = async (baseUrl, productIds, locationId) => {
 };
 
 const DateSelect = ({products}) => {
+  const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {
     values: {location},
@@ -76,9 +82,7 @@ const DateSelect = ({products}) => {
       widget="datepicker"
       disabled={loading || !location}
       isRequired
-      label={
-        <FormattedMessage description="Appoinments: appointment date label" defaultMessage="Date" />
-      }
+      label={intl.formatMessage(fieldLabel)}
       disabledDates={disabledDays}
       minDate={minDate}
       maxDate={maxDate}
