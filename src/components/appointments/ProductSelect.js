@@ -4,9 +4,8 @@ import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
+import {getCached, setCached} from 'cache';
 import {AsyncSelectField} from 'components/forms';
-
-// TODO: replace with tanstack useQuery at some point
 
 const CACHED_PRODUCTS_KEY = 'appointment|products';
 const CACHED_PRODUCTS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
@@ -32,10 +31,10 @@ const cacheProducts = products => {
 };
 
 export const getProducts = async baseUrl => {
-  let products = getProductsFromCache();
+  let products = getCached(CACHED_PRODUCTS_KEY, CACHED_PRODUCTS_MAX_AGE_MS);
   if (products === null) {
     products = await get(`${baseUrl}appointments/products`);
-    cacheProducts(products);
+    setCached(CACHED_PRODUCTS_KEY, products);
   }
   return products;
 };

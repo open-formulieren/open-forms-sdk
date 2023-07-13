@@ -12,7 +12,7 @@
   "tabWidth": 2,
   "trailingComma": "es5",
   "useTabs": false,
-  "importOrder": ["^((api-mocks|components|data|formio|hooks|map|story-utils|types)/(.*)|(api|api-mocks|Context|errors|headers|i18n|sdk|sentry|types|utils))$", "^[./]"],
+  "importOrder": ["^((api-mocks|components|data|formio|hooks|map|story-utils|types)/(.*)|(api|api-mocks|cache|Context|errors|headers|i18n|sdk|sentry|types|utils))$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
