@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {useSessionStorage} from 'react-use';
 
+import Types from 'types';
+
 import {CreateAppointmentContext} from '../Context';
 
 const SESSION_STORAGE_KEY = 'appointment|formData';
 
-export const CreateAppointmentState = ({currentStep, children}) => {
+export const CreateAppointmentState = ({currentStep, submission, children}) => {
   const [appointmentData, setAppointmentData] = useSessionStorage(SESSION_STORAGE_KEY, {});
   const submittedSteps = Object.keys(appointmentData).filter(
     subObject => Object.keys(subObject).length
@@ -18,6 +20,7 @@ export const CreateAppointmentState = ({currentStep, children}) => {
   return (
     <CreateAppointmentContext.Provider
       value={{
+        submission,
         appointmentData: mergedAppointmentData,
         stepData: appointmentData[currentStep] || {},
         submittedSteps,
@@ -31,6 +34,7 @@ export const CreateAppointmentState = ({currentStep, children}) => {
 
 CreateAppointmentState.propTypes = {
   currentStep: PropTypes.string.isRequired,
+  submission: Types.Submission,
   children: PropTypes.node,
 };
 

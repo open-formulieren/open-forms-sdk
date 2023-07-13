@@ -24,7 +24,8 @@ import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 // resetSession();
 
 const CreateAppointment = ({form}) => {
-  const {isLoading, error, removeSubmissionFromStorage} = useGetOrCreateSubmission(form);
+  const {isLoading, error, submission, removeSubmissionFromStorage} =
+    useGetOrCreateSubmission(form);
   if (error) throw error;
 
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(() => {
@@ -43,7 +44,7 @@ const CreateAppointment = ({form}) => {
 
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <CreateAppointmentState currentStep={currentStep}>
+      <CreateAppointmentState currentStep={currentStep} submission={submission}>
         <FormDisplayComponent
           router={
             <Wrapper sessionExpired={sessionExpired} title={form.name}>

@@ -4,6 +4,7 @@ const AppointmentConfigContext = React.createContext({supportsMultipleProducts: 
 AppointmentConfigContext.displayName = 'AppointmentConfigContext';
 
 const CreateAppointmentContext = React.createContext({
+  submission: null,
   appointmentData: {},
   stepData: {},
   submittedSteps: [],
