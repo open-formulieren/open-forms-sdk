@@ -9,6 +9,8 @@ import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {DateField} from 'components/forms';
 
+import {ProductsType} from './types';
+
 const getDates = async (baseUrl, productIds, locationId) => {
   if (!productIds.length || !locationId) return [];
   const multiParams = productIds.map(id => ({product_id: id}));
@@ -22,36 +24,40 @@ const getDates = async (baseUrl, productIds, locationId) => {
   return results.sort();
 };
 
-const DateSelect = () => {
+const DateSelect = ({products}) => {
   const {baseUrl} = useContext(ConfigContext);
-  const {values} = useFormikContext();
+  const {
+    values: {location},
+  } = useFormikContext();
 
   // get the available dates from the API
+  const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
+
   const {
     loading,
     value: availableDates = [],
     error,
   } = useAsync(
-    async () => {
-      const productIds = (values.products || []).map(prod => prod.productId);
-      return await getDates(baseUrl, productIds, values.location);
-    },
+    async () => await getDates(baseUrl, productIds, location),
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
-    [baseUrl, JSON.stringify(values)]
+    [baseUrl, JSON.stringify(productIds), location]
   );
 
   if (error) {
     throw error;
   }
 
-  if (!loading && values.location && availableDates && !availableDates.length) {
+  if (!loading && location && availableDates && !availableDates.length) {
+    // TODO: add label? make this a polite warning/error/alert?
     return (
-      <Paragraph>
-        <FormattedMessage
-          description="Appoinments: message shown for no available dates at all"
-          defaultMessage="Sorry, there are no available dates for your appointment. Please try again later."
-        />
-      </Paragraph>
+      <div className="openforms-form-control">
+        <Paragraph>
+          <FormattedMessage
+            description="Appoinments: message shown for no available dates at all"
+            defaultMessage="Sorry, there are no available dates for your appointment. Please try again later."
+          />
+        </Paragraph>
+      </div>
     );
   }
 
@@ -68,7 +74,7 @@ const DateSelect = () => {
     <DateField
       name="date"
       widget="datepicker"
-      disabled={loading || !values.location}
+      disabled={loading || !location}
       isRequired
       label={
         <FormattedMessage description="Appoinments: appointment date label" defaultMessage="Date" />
@@ -80,6 +86,8 @@ const DateSelect = () => {
   );
 };
 
-DateSelect.propTypes = {};
+DateSelect.propTypes = {
+  products: ProductsType.isRequired,
+};
 
 export default DateSelect;

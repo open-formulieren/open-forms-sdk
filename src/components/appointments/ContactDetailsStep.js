@@ -1,34 +1,28 @@
-import {useFormikContext} from 'formik';
-import {default as lodashGet} from 'lodash/get';
-import React, {useContext} from 'react';
+import {Form, Formik} from 'formik';
+import PropTypes from 'prop-types';
+import React, {useContext, useMemo} from 'react';
+import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
+import {z} from 'zod';
+import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {CardTitle} from 'components/Card';
 import Loader from 'components/Loader';
-import {FormioComponent} from 'components/formio';
+import {FormioComponent, getEmptyValue, getSchema} from 'components/formio';
 import useTitle from 'hooks/useTitle';
 
-import {isStepValid as isProductStepValid} from './ChooseProductStep';
-import {isStepValid as isLocationStepValid} from './LocationAndTimeStep';
+import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
 import SubmitRow from './SubmitRow';
 
-// TODO: replace with ZOD validation, see #435
-export const isStepValid = (data, components = []) => {
-  if (!components.length) return false;
-  const hasMissingInput = components.some(component => {
-    const value = lodashGet(data, component.key);
-    return !value;
-  });
-  return isProductStepValid(data) && isLocationStepValid(data) && !hasMissingInput;
-};
-
-const ContactDetailsStep = () => {
+const ContactDetailsStep = ({navigateTo = null}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
-  const {values} = useFormikContext();
+  const {submitStep, appointmentData, stepData} = useCreateAppointmentContext();
+  const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
       description: 'Appointments: contact details step page title',
@@ -36,7 +30,9 @@ const ContactDetailsStep = () => {
     })
   );
 
-  const productIds = values.products.map(p => p.productId);
+  const products = appointmentData?.products || [];
+  const productIds = products.map(p => p.productId).sort();
+
   const {
     loading,
     value: components,
@@ -47,7 +43,17 @@ const ContactDetailsStep = () => {
   }, [baseUrl, JSON.stringify(productIds)]);
   if (error) throw error;
 
-  // TODO: hook up component.validate properties into zod schema, #435
+  const emptyValues =
+    !loading &&
+    Object.fromEntries(components.map(component => [component.key, getEmptyValue(component)]));
+
+  const validationSchema = useMemo(() => {
+    if (loading) return null;
+    const fieldSchemas = Object.fromEntries(
+      components.map(component => [component.key, getSchema(component)])
+    );
+    return z.object(fieldSchemas);
+  }, [loading, components]);
 
   return (
     <>
@@ -65,29 +71,52 @@ const ContactDetailsStep = () => {
 
       {loading && <Loader modifiers={['centered']} />}
       {!loading && (
-        <>
-          {components.map(component => (
-            <FormioComponent key={component.key} component={component} />
-          ))}
-        </>
-      )}
+        <Formik
+          initialValues={{...emptyValues, ...stepData}}
+          enableReinitialize
+          validateOnChange={false}
+          validateOnBlur
+          validateOnMount
+          validationSchema={
+            validationSchema ? toFormikValidationSchema(validationSchema) : undefined
+          }
+          onSubmit={(values, {setSubmitting}) => {
+            flushSync(() => {
+              submitStep(values);
+              setSubmitting(false);
+            });
+            if (navigateTo !== null) navigate(navigateTo);
+          }}
+        >
+          {({isValid}) => (
+            // TODO: don't do inline style
+            <Form style={{width: '100%'}}>
+              {components.map(component => (
+                <FormioComponent key={component.key} component={component} />
+              ))}
 
-      <SubmitRow
-        canSubmit={isStepValid(values, components)}
-        nextText={intl.formatMessage({
-          description: 'Appointments contact details step: next step text',
-          defaultMessage: 'To overview',
-        })}
-        previousText={intl.formatMessage({
-          description: 'Appointments contact details step: previous step text',
-          defaultMessage: 'Back to location and time',
-        })}
-        navigateBackTo="kalender"
-      />
+              <SubmitRow
+                canSubmit={!loading && validationSchema && isValid}
+                nextText={intl.formatMessage({
+                  description: 'Appointments contact details step: next step text',
+                  defaultMessage: 'To overview',
+                })}
+                previousText={intl.formatMessage({
+                  description: 'Appointments contact details step: previous step text',
+                  defaultMessage: 'Back to location and time',
+                })}
+                navigateBackTo="kalender"
+              />
+            </Form>
+          )}
+        </Formik>
+      )}
     </>
   );
 };
 
-ContactDetailsStep.propTypes = {};
+ContactDetailsStep.propTypes = {
+  navigateTo: PropTypes.string,
+};
 
 export default ContactDetailsStep;

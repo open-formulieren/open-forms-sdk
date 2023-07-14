@@ -14,6 +14,8 @@ import {mockAppointmentDatesGet} from './mocks';
 
 const waitForPosition = () => act(async () => {});
 
+const products = [{productId: 'e8e045ab', amount: 1}];
+
 const render = (comp, locationId) =>
   realRender(
     <ConfigContext.Provider
@@ -28,7 +30,6 @@ const render = (comp, locationId) =>
       <IntlProvider locale="en" messages={messagesEN}>
         <Formik
           initialValues={{
-            products: [{productId: 'e8e045ab', amount: 1}],
             location: locationId,
             date: '',
           }}
@@ -59,7 +60,7 @@ describe('The appointment date select', () => {
     const user = userEvent.setup({delay: null});
     mswServer.use(mockAppointmentDatesGet);
 
-    render(<DateSelect />, '1396f17c');
+    render(<DateSelect products={products} />, '1396f17c');
 
     const input = screen.getByLabelText('Date');
     await waitFor(() => expect(input).not.toBeDisabled());
@@ -83,7 +84,7 @@ describe('The appointment date select', () => {
     const user = userEvent.setup({delay: null});
     mswServer.use(mockAppointmentDatesGet);
 
-    render(<DateSelect />, '34000e85');
+    render(<DateSelect products={products} />, '34000e85');
 
     const input = screen.getByLabelText('Date');
     await waitFor(() => expect(input).not.toBeDisabled());

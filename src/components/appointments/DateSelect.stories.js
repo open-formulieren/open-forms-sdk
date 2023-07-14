@@ -13,7 +13,6 @@ export default {
   parameters: {
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: '1396f17c',
         date: '',
       },
@@ -21,6 +20,9 @@ export default {
     msw: {
       handlers: [mockAppointmentDatesGet],
     },
+  },
+  args: {
+    products: [{productId: 'e8e045ab', amount: 1}],
   },
 };
 
@@ -33,7 +35,6 @@ export const DisabledGaps = {
   parameters: {
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: '34000e85',
         date: '',
       },
@@ -46,7 +47,6 @@ export const NoLocationSelected = {
   parameters: {
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: '',
         date: '',
       },
@@ -65,7 +65,6 @@ export const NoDatesAvailable = {
   parameters: {
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: 'no-date',
         date: '',
       },
@@ -78,7 +77,6 @@ export const SingleDateAvailable = {
   parameters: {
     formik: {
       initialValues: {
-        products: [{productId: 'e8e045ab', amount: 1}],
         location: 'single-date',
         date: '',
       },

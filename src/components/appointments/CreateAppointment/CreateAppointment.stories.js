@@ -1,10 +1,11 @@
 import {expect} from '@storybook/jest';
 import {userEvent, waitFor, within} from '@storybook/testing-library';
-import {addDays, formatISO} from 'date-fns';
+import {addDays, format} from 'date-fns';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
+import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import {
@@ -85,8 +86,11 @@ export const HappyFlow = {
     // due to the localized appointment times.
     chromatic: {disableSnapshot: true},
   },
-  play: async ({canvasElement, step}) => {
+  play: async ({canvasElement, step, globals}) => {
+    const {locale} = globals;
     const canvas = within(canvasElement);
+
+    const calendarLocale = loadCalendarLocale(locale);
 
     await step('Wait for products to load', async () => {
       await waitFor(
@@ -110,7 +114,9 @@ export const HappyFlow = {
     });
 
     await step('Submit the product step', async () => {
-      await userEvent.click(canvas.getByRole('button', {name: 'Bevestig producten'}));
+      const button = canvas.getByRole('button', {name: 'Bevestig producten'});
+      await waitFor(() => expect(button).not.toHaveAttribute('aria-disabled', 'true'));
+      await userEvent.click(button);
     });
 
     await step('Fill out the location and time', async () => {
@@ -125,11 +131,14 @@ export const HappyFlow = {
       });
 
       // this location has a date available tomorrow (see ./mocks.js)
-      const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date'});
+      const tomorrow = format(addDays(new Date(), 1), 'P', {
+        locale: calendarLocale,
+      });
       await canvas.findByText('Datum');
       await waitFor(async () => {
         const dateInput = await canvas.findByLabelText('Datum');
         await expect(dateInput).not.toBeDisabled();
+        // FIXME: type in non-iso format
         await userEvent.type(dateInput, tomorrow);
       });
 
@@ -145,7 +154,9 @@ export const HappyFlow = {
     });
 
     await step('Submit the location and time step', async () => {
-      await userEvent.click(canvas.getByRole('button', {name: 'Naar contactgegevens'}));
+      const button = canvas.getByRole('button', {name: 'Naar contactgegevens'});
+      await waitFor(() => expect(button).not.toHaveAttribute('aria-disabled', 'true'));
+      await userEvent.click(button);
     });
   },
 };

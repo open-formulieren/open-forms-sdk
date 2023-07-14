@@ -1,6 +1,11 @@
-import {FieldArray, useFormikContext} from 'formik';
+import {FieldArray, Form, Formik} from 'formik';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
+import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {useNavigate} from 'react-router-dom';
+import {z} from 'zod';
+import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import Button from 'components/Button';
 import {CardTitle} from 'components/Card';
@@ -10,52 +15,47 @@ import useTitle from 'hooks/useTitle';
 import {getBEMClassName} from 'utils';
 
 import {AppointmentConfigContext} from './Context';
+import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
 import Product from './Product';
 import SubmitRow from './SubmitRow';
 
-const isValidProduct = ({productId, amount}) => {
-  if (!productId) return false;
-  if (amount <= 0) return false;
-  return true;
-};
-
-// TODO: replace with ZOD validation, see #435
-export const isStepValid = data => {
-  const products = data?.products;
-  if (!products || products.length <= 0) {
-    return false;
-  }
-  const allProductsComplete = products.every(isValidProduct);
-  return allProductsComplete;
-};
-
-const ChooseProductStep = () => {
-  const intl = useIntl();
-  const {values} = useFormikContext();
-  const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
-  useTitle(
-    intl.formatMessage({
-      description: 'Appointments products step page title',
-      defaultMessage: 'Product',
+const productSchema = z
+  .array(
+    z.object({
+      productId: z.string(),
+      amount: z.number().int().gte(1).finite(),
     })
-  );
+  )
+  .nonempty();
 
-  const products = values?.products || [];
+const chooseSingleProductSchema = z.object({products: productSchema.max(1)});
+const chooseMultiProductSchema = z.object({products: productSchema});
+
+const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid}) => {
+  const intl = useIntl();
+  const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
+
+  /**
+   * Decorate an arrayHelper callback to invoke the validate function.
+   *
+   * Formik supports the `validateOnChange` prop op `FieldArray`, _but that only
+   * works if `validateOnChange` is enabled on the parent `Formik`_, which is not the
+   * case here.
+   *
+   * So, we wrap the helper and invoke the validate function ourselves, and we have to
+   * do this in a particular way so that the validate runs against the new state rather
+   * than the encapsulated state in the callback or stale state due to React 18's
+   * batching - we do this by flushing the array helper synchronously.
+   */
+  const withValidate = callback => () => {
+    flushSync(callback);
+    validateForm();
+  };
+
   const numProducts = Math.max(products.length, 1);
   return (
-    <>
-      <CardTitle
-        title={
-          <FormattedMessage
-            description="Appointments products step title"
-            defaultMessage="Select your product(s)"
-          />
-        }
-        component="h2"
-        headingType="subtitle"
-        modifiers={['padded']}
-      />
-
+    // TODO: don't do inline style
+    <Form style={{width: '100%'}}>
       <FieldArray name="products">
         {arrayHelpers => (
           <div className={getBEMClassName('editgrid')}>
@@ -67,7 +67,7 @@ const ChooseProductStep = () => {
                   key={`${productId}-${index}`}
                   index={index}
                   numProducts={numProducts}
-                  onRemove={() => arrayHelpers.remove(index)}
+                  onRemove={withValidate(() => arrayHelpers.remove(index))}
                 >
                   <Product namePrefix="products" index={index} />
                 </ProductWrapper>
@@ -79,7 +79,7 @@ const ChooseProductStep = () => {
                 <Button
                   type="button"
                   variant="primary"
-                  onClick={() => arrayHelpers.push({productId: '', amount: 1})}
+                  onClick={withValidate(() => arrayHelpers.push({productId: '', amount: 1}))}
                 >
                   <FAIcon icon="plus" />
                   <FormattedMessage
@@ -94,17 +94,21 @@ const ChooseProductStep = () => {
       </FieldArray>
 
       <SubmitRow
-        canSubmit={isStepValid(values)}
+        canSubmit={isValid}
         nextText={intl.formatMessage({
           description: 'Appointments products step: next step text',
           defaultMessage: 'Confirm products',
         })}
       />
-    </>
+    </Form>
   );
 };
 
-ChooseProductStep.propTypes = {};
+ChooseProductStepFields.propTypes = {
+  values: PropTypes.object.isRequired,
+  validateForm: PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
+};
 
 const ProductWrapper = ({index, numProducts, onRemove, children}) => {
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
@@ -137,6 +141,67 @@ const ProductWrapper = ({index, numProducts, onRemove, children}) => {
       )}
     </div>
   );
+};
+
+const INITIAL_VALUES = {
+  products: [
+    {
+      productId: '',
+      amount: 1,
+    },
+  ],
+};
+
+const ChooseProductStep = ({navigateTo = null}) => {
+  const intl = useIntl();
+  const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
+  const {stepData, submitStep} = useCreateAppointmentContext();
+  const navigate = useNavigate();
+  useTitle(
+    intl.formatMessage({
+      description: 'Appointments products step page title',
+      defaultMessage: 'Product',
+    })
+  );
+
+  const validationSchema = supportsMultipleProducts
+    ? chooseMultiProductSchema
+    : chooseSingleProductSchema;
+
+  return (
+    <>
+      <CardTitle
+        title={
+          <FormattedMessage
+            description="Appointments products step title"
+            defaultMessage="Select your product(s)"
+          />
+        }
+        component="h2"
+        headingType="subtitle"
+        modifiers={['padded']}
+      />
+      <Formik
+        initialValues={{...INITIAL_VALUES, ...stepData}}
+        validateOnChange={false}
+        validateOnBlur
+        validateOnMount
+        validationSchema={toFormikValidationSchema(validationSchema)}
+        onSubmit={(values, {setSubmitting}) => {
+          flushSync(() => {
+            submitStep(values);
+            setSubmitting(false);
+          });
+          if (navigateTo !== null) navigate(navigateTo);
+        }}
+        component={ChooseProductStepFields}
+      />
+    </>
+  );
+};
+
+ChooseProductStep.propTypes = {
+  navigateTo: PropTypes.string,
 };
 
 export default ChooseProductStep;

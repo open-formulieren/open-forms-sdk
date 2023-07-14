@@ -1,4 +1,3 @@
-import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {useIntl} from 'react-intl';
@@ -7,13 +6,12 @@ import {useLocation} from 'react-router-dom';
 import {ConfigContext} from 'Context';
 import ProgressIndicatorDisplay from 'components/ProgressIndicator/ProgressIndicatorDisplay';
 
+import {useCreateAppointmentContext} from './CreateAppointmentState';
 import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 
 const AppointmentProgress = ({title, currentStep}) => {
   const config = useContext(ConfigContext);
-  const {
-    status: {submittedSteps},
-  } = useFormikContext();
+  const {submittedSteps} = useCreateAppointmentContext();
   const intl = useIntl();
   const {pathname: currentPathname} = useLocation();
 
@@ -23,17 +21,19 @@ const AppointmentProgress = ({title, currentStep}) => {
   const steps = APPOINTMENT_STEPS.map(({path, name}) => {
     const index = APPOINTMENT_STEP_PATHS.indexOf(path);
     const previousStepIndex = Math.max(index - 1, 0);
+
     const previousStepCompleted = submittedSteps.includes(
       APPOINTMENT_STEP_PATHS[previousStepIndex]
     );
+    const stepCompleted = submittedSteps.includes(path);
+
     return {
       uuid: `appointments-${path}`,
       to: path,
-      isCompleted: submittedSteps.includes(path),
+      isCompleted: stepCompleted,
       isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, path),
-      canNavigateTo:
-        submittedSteps.includes(path) || previousStepCompleted || index === currentStepIndex,
+      canNavigateTo: stepCompleted || previousStepCompleted || index === currentStepIndex,
       formDefinition: intl.formatMessage(name),
     };
   });

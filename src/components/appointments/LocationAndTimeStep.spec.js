@@ -1,6 +1,6 @@
 import {jest} from '@jest/globals';
-import {render as realRender, screen, waitFor} from '@testing-library/react';
-import {Formik} from 'formik';
+import {act, render as realRender, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
@@ -9,6 +9,7 @@ import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 
+import {CreateAppointmentContext} from './Context';
 import LocationAndTimeStep from './LocationAndTimeStep';
 import {
   mockAppointmentDatesGet,
@@ -18,6 +19,7 @@ import {
 } from './mocks';
 
 const render = (comp, initialValues) => {
+  const {products, ...stepData} = initialValues;
   const routes = [
     {
       path: '/appointments/kalender',
@@ -32,9 +34,16 @@ const render = (comp, initialValues) => {
           }}
         >
           <IntlProvider locale="en" messages={messagesEN}>
-            <Formik initialValues={initialValues} onSubmit={console.log}>
+            <CreateAppointmentContext.Provider
+              value={{
+                appointmentData: initialValues,
+                stepData,
+                submittedSteps: ['producten'],
+                submitStep: () => {},
+              }}
+            >
               {comp}
-            </Formik>
+            </CreateAppointmentContext.Provider>
           </IntlProvider>
         </ConfigContext.Provider>
       ),
@@ -60,28 +69,30 @@ beforeEach(() => {
 afterEach(() => {
   jest.runOnlyPendingTimers();
   jest.useRealTimers();
+  window.sessionStorage.clear();
 });
 
 describe('The location and time step', () => {
   it('disables date and time until a location is selected', async () => {
     mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet);
 
-    render(
-      <LocationAndTimeStep />,
-      // product with multiple locations, see ./mocks.js
-      {
-        products: [{productId: 'e8e045ab', amount: 1}],
-        location: '',
-        date: '',
-        datetime: '',
-      }
-    );
-
+    await act(async () => {
+      render(
+        <LocationAndTimeStep />,
+        // product with multiple locations, see ./mocks.js
+        {
+          products: [{productId: 'e8e045ab', amount: 1}],
+          location: '',
+          date: '',
+          datetime: '',
+        }
+      );
+    });
     // No location should be selected, as there are multiple options
     await waitFor(() => {
       expect(screen.queryByText('Open Gem')).not.toBeInTheDocument();
-      expect(screen.queryByText('Bahamas')).not.toBeInTheDocument();
     });
+    expect(screen.queryByText('Bahamas')).not.toBeInTheDocument();
 
     expect(screen.getByLabelText('Date')).toBeDisabled();
     expect(screen.getByLabelText('Time')).toBeDisabled();
@@ -100,6 +111,24 @@ describe('The location and time step', () => {
     expect(await screen.findByText('Bahamas')).toBeVisible();
     expect(screen.getByLabelText('Date')).not.toBeDisabled();
     expect(screen.getByLabelText('Time')).toBeDisabled();
+  });
+
+  it('retains focus on the date input', async () => {
+    const user = userEvent.setup({delay: null});
+    mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
+
+    render(<LocationAndTimeStep />, {
+      products: [{productId: 'e8e045ab', amount: 1}],
+      location: '34000e85',
+      date: '',
+      datetime: '',
+    });
+
+    // location Bahamas always has 'today' available
+    expect(await screen.findByText('Bahamas')).toBeVisible();
+    const dateInput = screen.getByLabelText('Date');
+    await user.type(dateInput, '6/12/2023');
+    expect(dateInput).toHaveFocus();
   });
 
   it('enables time when a location and date are selected', async () => {
@@ -135,7 +164,7 @@ describe('The location and time step', () => {
     expect(await screen.findByText('Open Gem')).toBeVisible();
     await waitFor(() => {
       expect(screen.getByLabelText('Date')).not.toBeDisabled();
-      expect(screen.getByLabelText('Time')).toBeDisabled();
     });
+    expect(screen.getByLabelText('Time')).toBeDisabled();
   });
 });
