@@ -6,7 +6,7 @@ import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 
 import LeafletMap from 'components/Map';
-import {DEFAULT_LAT_LON, MAP_DEFAULTS} from 'map/constants';
+import {DEFAULT_LAT_LNG, MAP_DEFAULTS} from 'map/constants';
 
 const Field = Formio.Components.components.field;
 
@@ -92,14 +92,14 @@ export default class Map extends Field {
   }
 
   renderReact() {
-    const defaultCenter =
-      this.component.initialCenter.lat && this.component.initialCenter.lng
-        ? [this.component.initialCenter.lat, this.component.initialCenter.lng]
-        : DEFAULT_LAT_LON;
+    const [defaultLat, defaultLon] = DEFAULT_LAT_LNG;
+    const {lat = defaultLat, lng = defaultLon} = this.component?.initialCenter || {};
+    const defaultCenter = [lat, lng];
+
     const markerCoordinates = this.getValue();
 
     const container = this.refs.mapContainer;
-    const zoom = Number(this.component.defaultZoom);
+    const zoom = this.component.defaultZoom;
     // no container node ready (yet), defer to next render cycle
     if (!container) return;
 
@@ -108,7 +108,7 @@ export default class Map extends Field {
         markerCoordinates={markerCoordinates || null}
         onMarkerSet={this.onMarkerSet.bind(this)}
         defaultCenter={defaultCenter}
-        zoomLevel={zoom || MAP_DEFAULTS.zoom}
+        defaultZoomLevel={zoom || MAP_DEFAULTS.zoom}
       />
     );
   }
