@@ -4,7 +4,7 @@ import React, {useEffect} from 'react';
 import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
 import {useGeolocation} from 'react-use';
 
-import {DEFAULT_LAT_LON, DEFAULT_ZOOM, MAP_DEFAULTS, TILE_LAYERS} from 'map/constants';
+import {DEFAULT_LAT_LNG, DEFAULT_ZOOM, MAP_DEFAULTS, TILE_LAYERS} from 'map/constants';
 import {getBEMClassName} from 'utils';
 
 const useDefaultCoordinates = () => {
@@ -17,14 +17,20 @@ const useDefaultCoordinates = () => {
   // GeolocationPositionError:
   // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
   if (error) {
-    return DEFAULT_LAT_LON;
+    return null;
   }
-  if (!navigator.geolocation) return DEFAULT_LAT_LON;
+  if (!navigator.geolocation) return null;
   if (loading) return null;
   return [latitude, longitude];
 };
 
-const LeaftletMap = ({markerCoordinates, onMarkerSet, disabled = false}) => {
+const LeaftletMap = ({
+  markerCoordinates,
+  onMarkerSet,
+  defaultCenter = DEFAULT_LAT_LNG,
+  defaultZoomLevel = DEFAULT_ZOOM,
+  disabled = false,
+}) => {
   const defaultCoordinates = useDefaultCoordinates();
   const coordinates = markerCoordinates || defaultCoordinates;
 
@@ -39,8 +45,8 @@ const LeaftletMap = ({markerCoordinates, onMarkerSet, disabled = false}) => {
 
   return (
     <MapContainer
-      center={MAP_DEFAULTS.center}
-      zoom={MAP_DEFAULTS.zoom}
+      center={defaultCenter}
+      zoom={defaultZoomLevel}
       continuousWorld
       crs={MAP_DEFAULTS.crs}
       attributionControl
