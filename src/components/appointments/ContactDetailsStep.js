@@ -10,6 +10,7 @@ import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
+import {getCached, setCached} from 'cache';
 import {CardTitle} from 'components/Card';
 import Loader from 'components/Loader';
 import {FormioComponent, getEmptyValue, getSchema} from 'components/formio';
@@ -17,6 +18,20 @@ import useTitle from 'hooks/useTitle';
 
 import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
 import SubmitRow from './SubmitRow';
+
+const CACHED_CONTACT_DETAILS_FIELDS_KEY = 'appointments|contactDetailsFields';
+const CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
+
+export const getContactDetailsFields = async (baseUrl, productIds) => {
+  const fullKey = `${CACHED_CONTACT_DETAILS_FIELDS_KEY}:${productIds.join(';')}`;
+  let components = getCached(fullKey, CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS);
+  if (components === null) {
+    const multiParams = productIds.map(id => ({product_id: id}));
+    components = await get(`${baseUrl}appointments/customer-fields`, {}, multiParams);
+    setCached(fullKey, components);
+  }
+  return components;
+};
 
 const ContactDetailsStep = ({navigateTo = null}) => {
   const intl = useIntl();
@@ -37,10 +52,10 @@ const ContactDetailsStep = ({navigateTo = null}) => {
     loading,
     value: components,
     error,
-  } = useAsync(async () => {
-    const multiParams = productIds.map(id => ({product_id: id}));
-    return await get(`${baseUrl}appointments/customer-fields`, {}, multiParams);
-  }, [baseUrl, JSON.stringify(productIds)]);
+  } = useAsync(
+    async () => await getContactDetailsFields(baseUrl, productIds),
+    [baseUrl, JSON.stringify(productIds)]
+  );
   if (error) throw error;
 
   const emptyValues =

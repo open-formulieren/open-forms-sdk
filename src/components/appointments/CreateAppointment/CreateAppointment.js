@@ -5,6 +5,7 @@ import {ConfigContext} from 'Context';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
+import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import {RequireSession} from 'components/Sessions';
 import {flagNoActiveSubmission} from 'data/submissions';
@@ -24,7 +25,8 @@ import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 // resetSession();
 
 const CreateAppointment = ({form}) => {
-  const {isLoading, error, removeSubmissionFromStorage} = useGetOrCreateSubmission(form);
+  const {isLoading, error, submission, removeSubmissionFromStorage} =
+    useGetOrCreateSubmission(form);
   if (error) throw error;
 
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(() => {
@@ -43,7 +45,7 @@ const CreateAppointment = ({form}) => {
 
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <CreateAppointmentState currentStep={currentStep}>
+      <CreateAppointmentState currentStep={currentStep} submission={submission}>
         <FormDisplayComponent
           router={
             <Wrapper sessionExpired={sessionExpired} title={form.name}>
@@ -56,7 +58,9 @@ const CreateAppointment = ({form}) => {
                     expiryDate={expiryDate}
                     onNavigate={() => resetSession()}
                   >
-                    <Outlet />
+                    <LiteralsProvider literals={form.literals}>
+                      <Outlet />
+                    </LiteralsProvider>
                   </RequireSession>
                 )}
               </ErrorBoundary>

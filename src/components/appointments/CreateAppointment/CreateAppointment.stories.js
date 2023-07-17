@@ -5,6 +5,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
+import {mockPrivacyPolicyConfigGet} from 'components/Summary/mocks';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -30,6 +31,7 @@ export default {
         mockAppointmentDatesGet,
         mockAppointmentTimesGet,
         mockAppointmentCustomerFieldsGet,
+        mockPrivacyPolicyConfigGet,
       ],
     },
   },
@@ -155,6 +157,39 @@ export const HappyFlow = {
 
     await step('Submit the location and time step', async () => {
       const button = canvas.getByRole('button', {name: 'Naar contactgegevens'});
+      await waitFor(() => expect(button).not.toHaveAttribute('aria-disabled', 'true'));
+      await userEvent.click(button);
+    });
+
+    await step('Fill out the contact details', async () => {
+      expect(await canvas.findByText('Uw gegevens')).toBeVisible();
+      await waitFor(async () => {
+        await expect(
+          canvas.getByRole('button', {name: 'Terug naar locatie en tijdstip'})
+        ).toBeVisible();
+      });
+      await waitFor(async () => {
+        await expect(await canvas.queryByRole('button', {name: 'Naar overzicht'})).toHaveAttribute(
+          'aria-disabled',
+          'true'
+        );
+      });
+      await userEvent.type(await canvas.findByLabelText('Last name'), 'Elvis');
+      await userEvent.type(canvas.getByLabelText('Dag'), '8');
+      await userEvent.type(canvas.getByLabelText('Maand'), '1');
+      await userEvent.type(canvas.getByLabelText('Jaar'), '1935');
+      await userEvent.type(canvas.getByLabelText('Email'), 'theking@elvis.com');
+      await userEvent.type(canvas.getByLabelText('Telephone'), '123456789');
+      await userEvent.type(canvas.getByLabelText('BSN'), '123456782');
+      await userEvent.click(canvas.getByLabelText('Male'));
+      // reset focus and blur to trigger validation which doesn't seem to happen
+      // automatically here...
+      await userEvent.click(canvas.getByText('Last name'));
+      await userEvent.click(document.body); // reset focus
+    });
+
+    await step('Submit the contact details step', async () => {
+      const button = canvas.getByRole('button', {name: 'Naar overzicht'});
       await waitFor(() => expect(button).not.toHaveAttribute('aria-disabled', 'true'));
       await userEvent.click(button);
     });

@@ -1,7 +1,11 @@
 import {CreateAppointmentContext} from './Context';
 
 export const withAppointmentState = (Story, {parameters}) => {
-  const {appointmentData = {}, currentStep = 'producten'} = parameters?.appointmentState;
+  const {
+    appointmentData = {},
+    currentStep = 'producten',
+    submission,
+  } = parameters?.appointmentState;
   const mergedAppointmentData = Object.keys(appointmentData).reduce(
     (accumulator, key) => ({...accumulator, ...appointmentData[key]}),
     {}
@@ -9,6 +13,7 @@ export const withAppointmentState = (Story, {parameters}) => {
   return (
     <CreateAppointmentContext.Provider
       value={{
+        submission,
         appointmentData: mergedAppointmentData,
         stepData: appointmentData[currentStep] || {},
         submittedSteps: [],
