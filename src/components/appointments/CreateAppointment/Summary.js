@@ -4,11 +4,14 @@ import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
+import {post} from 'api';
 import {CardTitle} from 'components/Card';
 import FormStepSummary from 'components/FormStepSummary';
+import Literal from 'components/Literal';
 import Loader from 'components/Loader';
 import {getPrivacyPolicyInfo} from 'components/Summary/utils';
 import SummaryConfirmation from 'components/SummaryConfirmation';
+import {ValidationError} from 'errors';
 import useTitle from 'hooks/useTitle';
 
 import {getContactDetailsFields} from '../ContactDetailsStep';
@@ -24,18 +27,55 @@ const INITIAL_PRIVACY_INFO = {
   privacyLabel: '...',
 };
 
+const createAppointment = async (baseUrl, submission, appointmentData, privacyPolicyAccepted) => {
+  const {products, location, date, datetime, ...contactDetails} = appointmentData;
+  const body = {
+    submission: submission.url,
+    products,
+    location,
+    date,
+    datetime,
+    contactDetails,
+    privacyPolicyAccepted,
+  };
+  return await post(`${baseUrl}appointments/appointments`, body);
+};
+
+const getErrorsNavigateTo = errors => {
+  const errorKeys = Object.keys(errors);
+
+  if (errorKeys.includes('products')) {
+    return 'producten';
+  }
+
+  const locationAndTimeKeys = ['date', 'datetime', 'location'];
+  if (locationAndTimeKeys.some(key => errorKeys.includes(key))) {
+    return 'kalender';
+  }
+
+  if (errorKeys.includes('contactDetails')) {
+    return 'contactgegevens';
+  }
+
+  return null;
+};
+
 const Summary = () => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const navigate = useNavigate();
-  const {appointmentData, submission} = useCreateAppointmentContext();
+  const {appointmentData, submission, setErrors} = useCreateAppointmentContext();
   const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   useTitle(
     intl.formatMessage({
       description: 'Summary page title',
       defaultMessage: 'Check and confirm',
     })
   );
+
+  // throw for unhandled submit errors
+  if (submitError) throw submitError;
 
   const {products, location, date, datetime, ...contactDetails} = appointmentData;
   const productIds = products.map(p => p.productId).sort();
@@ -127,12 +167,34 @@ const Summary = () => {
     component,
   }));
 
-  const onSubmit = event => {
+  /**
+   * Submit the appointment data to the backend.
+   */
+  const onSubmit = async event => {
     event.preventDefault();
     console.group('Submitting...');
-    console.log('Submission', submission);
-    console.log('Data', appointmentData);
-    console.groupEnd();
+    try {
+      const appointment = await createAppointment(
+        baseUrl,
+        submission,
+        appointmentData,
+        privacyPolicyAccepted
+      );
+      console.log(appointment);
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        const {initialErrors, initialTouched} = e.asFormikProps();
+        const navigateTo = getErrorsNavigateTo(initialErrors);
+        setErrors({initialErrors, initialTouched});
+        navigateTo && navigate(`../${navigateTo}`);
+        return;
+      }
+      setSubmitError(e);
+      return;
+    } finally {
+      console.groupEnd();
+    }
+    navigate('../bevestiging');
   };
 
   return (
@@ -164,13 +226,7 @@ const Summary = () => {
               />
             }
             data={productsData}
-            editStepText={
-              <FormattedMessage
-                description="Appointment overview: 'edit products' link text"
-                defaultMessage="Change {numProducts, plural, one {product} other {products}}"
-                values={{numProducts}}
-              />
-            }
+            editStepText={<Literal name="changeText" />}
           />
 
           {/* Selected location and time */}
@@ -183,12 +239,7 @@ const Summary = () => {
               />
             }
             data={locationAndTimeData}
-            editStepText={
-              <FormattedMessage
-                description="Appointment overview: 'edit location or time' link text"
-                defaultMessage="Change location or time"
-              />
-            }
+            editStepText={<Literal name="changeText" />}
           />
 
           {/* Contact details */}
@@ -201,12 +252,7 @@ const Summary = () => {
               />
             }
             data={contactDetailsData}
-            editStepText={
-              <FormattedMessage
-                description="Appointment overview: 'edit contact details' link text"
-                defaultMessage="Change contact details"
-              />
-            }
+            editStepText={<Literal name="changeText" />}
           />
 
           <SummaryConfirmation

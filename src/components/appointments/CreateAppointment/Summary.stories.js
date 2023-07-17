@@ -60,6 +60,7 @@ export default {
     // LiteralDecorator args
     confirmText: 'Confirm',
     previousText: 'Previous',
+    changeText: 'Change',
   },
 };
 
