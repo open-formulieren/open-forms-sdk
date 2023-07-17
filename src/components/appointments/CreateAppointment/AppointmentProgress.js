@@ -49,8 +49,7 @@ const AppointmentProgress = ({title, currentStep}) => {
       steps={steps}
       hasSubmission
       isStartPage={false}
-      // TODO
-      summaryTo="../overzicht"
+      summaryTo="overzicht"
       isSummary={isSummary}
       isConfirmation={false}
       isSubmissionComplete={false}
