@@ -8,12 +8,12 @@ import {post} from 'api';
  * @param  {Object} form   The relevant Open Forms form instance.
  * @return {Object}        The Submission instance.
  */
-export const createSubmission = async (baseUrl, form) => {
+export const createSubmission = async (baseUrl, form, signal) => {
   const createData = {
     form: form.url,
     formUrl: window.location.toString(),
   };
-  const submissionResponse = await post(`${baseUrl}submissions`, createData);
+  const submissionResponse = await post(`${baseUrl}submissions`, createData, signal);
   return submissionResponse.data;
 };
 

@@ -1,5 +1,5 @@
-import {useContext} from 'react';
-import {useAsync, useSessionStorage} from 'react-use';
+import {useContext, useEffect} from 'react';
+import {useAsyncFn, useSessionStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
@@ -10,13 +10,30 @@ const useGetOrCreateSubmission = form => {
   const {baseUrl} = useContext(ConfigContext);
   const [submission, setSubmission] = useSessionStorage(SESSION_STORAGE_KEY, null);
 
-  const {loading, error} = useAsync(async () => {
-    if (submission === null) {
-      const response = await createSubmission(baseUrl, form);
-      setSubmission(response.data);
-    }
-    flagActiveSubmission();
-  }, [baseUrl, form, submission]);
+  const [state, callback] = useAsyncFn(
+    async signal => {
+      if (submission == null) {
+        try {
+          const submissionData = await createSubmission(baseUrl, form, signal);
+          setSubmission(submissionData);
+        } catch (e) {
+          if (error.name !== 'AbortError') {
+            throw e;
+          }
+        }
+      }
+      flagActiveSubmission();
+    },
+    [baseUrl, form, submission]
+  );
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    callback(abortController.signal);
+    return () => abortController.abort();
+  }, [callback]);
+
+  const {loading, error} = state;
 
   return {
     isLoading: loading,
