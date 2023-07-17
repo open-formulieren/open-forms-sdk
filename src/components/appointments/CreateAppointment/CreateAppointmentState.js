@@ -31,7 +31,7 @@ export const buildContextValue = (
     {}
   );
 
-  const errorKeys = errorKeysByStep[currentStep];
+  const errorKeys = errorKeysByStep[currentStep] || [];
   const {initialTouched, initialErrors} = appointmentErrors;
 
   const stepInitialTouched = {};
