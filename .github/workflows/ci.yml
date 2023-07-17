@@ -59,9 +59,12 @@ jobs:
 
       - name: Run tests
         run: |
-          yarn test
+          yarn test --coverage
         env:
           CI: 'true'
+
+      - name: Publish coverage report
+        uses: codecov/codecov-action@v3
 
   prettier:
     name: Check frontend code formatting with prettier
