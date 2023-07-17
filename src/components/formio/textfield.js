@@ -10,7 +10,7 @@ const FormioTextField = ({
     name={key}
     label={label}
     description={description}
-    isRequired={validate.required}
+    isRequired={validate?.required ?? false}
     autoComplete={autocomplete}
   />
 );
