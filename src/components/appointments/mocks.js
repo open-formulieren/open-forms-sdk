@@ -172,6 +172,48 @@ export const mockAppointmentCustomerFieldsGet = rest.get(
   }
 );
 
+export const mockAppointmentPost = rest.post(
+  `${BASE_URL}appointments/appointments`,
+  async (req, res, ctx) => {
+    const {submission, products, date, datetime, contactDetails} = await req.json();
+    return res(
+      ctx.status(201),
+      ctx.json({
+        submission: submission.url,
+        products,
+        date,
+        datetime,
+        contactDetails,
+        statusUrl: `${BASE_URL}submissions/7165afb0-bd13-4521-8fef-5aeeeea65e3c/-token-/status`,
+      })
+    );
+  }
+);
+
+export const mockAppointmentErrorPost = rest.post(
+  `${BASE_URL}appointments/appointments`,
+  async (req, res, ctx) => {
+    return res(
+      ctx.status(400),
+      ctx.json({
+        type: 'http://localhost:8000/fouten/ValidationError/',
+        code: 'invalid',
+        title: 'Invalid input.',
+        status: 400,
+        detail: '',
+        instance: 'urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75',
+        invalidParams: [
+          {
+            name: 'contactDetails.dateOfBirth',
+            code: 'invalid',
+            reason: 'You cannot be born in the future.',
+          },
+        ],
+      })
+    );
+  }
+);
+
 export const mockAppointmentCancelPost = rest.post(
   `${BASE_URL}appointments/:uuid/cancel`,
   (req, res, ctx) => res(ctx.status(204))
