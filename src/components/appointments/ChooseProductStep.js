@@ -155,7 +155,12 @@ const INITIAL_VALUES = {
 const ChooseProductStep = ({navigateTo = null}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
-  const {stepData, submitStep} = useCreateAppointmentContext();
+  const {
+    stepData,
+    stepErrors: {initialErrors, initialTouched},
+    clearStepErrors,
+    submitStep,
+  } = useCreateAppointmentContext();
   const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
@@ -183,12 +188,14 @@ const ChooseProductStep = ({navigateTo = null}) => {
       />
       <Formik
         initialValues={{...INITIAL_VALUES, ...stepData}}
+        initialErrors={initialErrors}
+        initialTouched={initialTouched}
         validateOnChange={false}
         validateOnBlur
-        validateOnMount
         validationSchema={toFormikValidationSchema(validationSchema)}
         onSubmit={(values, {setSubmitting}) => {
           flushSync(() => {
+            clearStepErrors();
             submitStep(values);
             setSubmitting(false);
           });

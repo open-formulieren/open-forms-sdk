@@ -6,10 +6,11 @@ import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
-import {BASE_URL} from 'api-mocks';
+import {BASE_URL, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 
 import {CreateAppointmentContext} from './Context';
+import {buildContextValue} from './CreateAppointment/CreateAppointmentState';
 import LocationAndTimeStep from './LocationAndTimeStep';
 import {
   mockAppointmentDatesGet,
@@ -18,8 +19,12 @@ import {
   mockAppointmentTimesGet,
 } from './mocks';
 
-const render = (comp, initialValues) => {
+const render = initialValues => {
   const {products, ...stepData} = initialValues;
+  const appointmentContext = buildContextValue(buildSubmission(), 'kalender', {
+    producten: {products},
+    kalender: stepData,
+  });
   const routes = [
     {
       path: '/appointments/kalender',
@@ -34,15 +39,8 @@ const render = (comp, initialValues) => {
           }}
         >
           <IntlProvider locale="en" messages={messagesEN}>
-            <CreateAppointmentContext.Provider
-              value={{
-                appointmentData: initialValues,
-                stepData,
-                submittedSteps: ['producten'],
-                submitStep: () => {},
-              }}
-            >
-              {comp}
+            <CreateAppointmentContext.Provider value={appointmentContext}>
+              <LocationAndTimeStep />
             </CreateAppointmentContext.Provider>
           </IntlProvider>
         </ConfigContext.Provider>
@@ -78,7 +76,6 @@ describe('The location and time step', () => {
 
     await act(async () => {
       render(
-        <LocationAndTimeStep />,
         // product with multiple locations, see ./mocks.js
         {
           products: [{productId: 'e8e045ab', amount: 1}],
@@ -101,7 +98,7 @@ describe('The location and time step', () => {
   it('disables time until a location and date are selected', async () => {
     mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
 
-    render(<LocationAndTimeStep />, {
+    render({
       products: [{productId: 'e8e045ab', amount: 1}],
       location: '34000e85',
       date: '',
@@ -117,7 +114,7 @@ describe('The location and time step', () => {
     const user = userEvent.setup({delay: null});
     mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
 
-    render(<LocationAndTimeStep />, {
+    render({
       products: [{productId: 'e8e045ab', amount: 1}],
       location: '34000e85',
       date: '',
@@ -139,7 +136,7 @@ describe('The location and time step', () => {
       mockAppointmentTimesGet
     );
 
-    render(<LocationAndTimeStep />, {
+    render({
       products: [{productId: 'e8e045ab', amount: 1}],
       location: '34000e85',
       date: '2023-06-12', // location Bahamas always has 'today' available
@@ -154,7 +151,7 @@ describe('The location and time step', () => {
   it('autoselects location when there is only one option and enables the date field', async () => {
     mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
 
-    render(<LocationAndTimeStep />, {
+    render({
       products: [{productId: '166a5c79', amount: 1}],
       location: '',
       date: '',

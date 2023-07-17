@@ -41,6 +41,8 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
   const {
     appointmentData: {products = []},
     stepData,
+    stepErrors: {initialErrors, initialTouched},
+    clearStepErrors,
     submitStep,
   } = useCreateAppointmentContext();
   const navigate = useNavigate();
@@ -69,12 +71,14 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
 
       <Formik
         initialValues={{...INITIAL_VALUES, ...stepData}}
+        initialErrors={initialErrors}
+        initialTouched={initialTouched}
         validateOnChange={false}
         validateOnBlur
-        validateOnMount
         validationSchema={toFormikValidationSchema(schema)}
         onSubmit={(values, {setSubmitting}) => {
           flushSync(() => {
+            clearStepErrors();
             submitStep(values);
             setSubmitting(false);
           });
