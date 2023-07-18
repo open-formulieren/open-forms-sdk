@@ -14,11 +14,6 @@
     "description": "Appointments navbar title for 'location and time' step",
     "originalDefault": "Location and time"
   },
-  "/e55Zm": {
-    "defaultMessage": "Change {numProducts, plural, one {product} other {products}}",
-    "description": "Appointment overview: 'edit products' link text",
-    "originalDefault": "Change {numProducts, plural, one {product} other {products}}"
-  },
   "0j8tMq": {
     "defaultMessage": "Uitloggen",
     "description": "Log out button text",
@@ -313,11 +308,6 @@
     "description": "Select 'no options' message",
     "originalDefault": "No results found"
   },
-  "QV2f9/": {
-    "defaultMessage": "Change contact details",
-    "description": "Appointment overview: 'edit contact details' link text",
-    "originalDefault": "Change contact details"
-  },
   "Qu8SM1": {
     "defaultMessage": "Verlengen",
     "description": "Extend session button (in modal)",
@@ -505,11 +495,6 @@
     "defaultMessage": "Onze excuses - dit formulier is niet langer beschikbaar",
     "description": "'Deactivated form' error title",
     "originalDefault": "Sorry - this form is no longer available"
-  },
-  "jF7tn4": {
-    "defaultMessage": "Change location or time",
-    "description": "Appointment overview: 'edit location or time' link text",
-    "originalDefault": "Change location or time"
   },
   "jGbpQq": {
     "defaultMessage": "Download uw inzending als PDF document",

@@ -1,5 +1,6 @@
+import produce from 'immer';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {useSessionStorage} from 'react-use';
 
 import Types from 'types';
@@ -8,8 +9,20 @@ import {CreateAppointmentContext} from '../Context';
 
 const SESSION_STORAGE_KEY = 'appointment|formData';
 
-export const CreateAppointmentState = ({currentStep, submission, children}) => {
-  const [appointmentData, setAppointmentData] = useSessionStorage(SESSION_STORAGE_KEY, {});
+const errorKeysByStep = {
+  producten: ['products'],
+  kalender: ['location', 'date', 'datetime'],
+  contactgegevens: ['contactDetails'],
+};
+
+export const buildContextValue = (
+  submission,
+  currentStep,
+  appointmentData,
+  setAppointmentData = () => {},
+  appointmentErrors = {initialTouched: {}, initialErrors: {}},
+  setAppointmentErrors = () => {}
+) => {
   const submittedSteps = Object.keys(appointmentData).filter(
     subObject => Object.keys(subObject).length
   );
@@ -17,16 +30,54 @@ export const CreateAppointmentState = ({currentStep, submission, children}) => {
     (accumulator, key) => ({...accumulator, ...appointmentData[key]}),
     {}
   );
+
+  const errorKeys = errorKeysByStep[currentStep] || [];
+  const {initialTouched, initialErrors} = appointmentErrors;
+
+  const stepInitialTouched = {};
+  const stepInitialErrors = {};
+  errorKeys.forEach(key => {
+    const errors = initialErrors[key];
+    if (!errors) return;
+    stepInitialErrors[key] = errors;
+    stepInitialTouched[key] = initialTouched[key];
+  });
+
+  return {
+    submission,
+    appointmentData: mergedAppointmentData,
+    stepData: appointmentData[currentStep] || {},
+    submittedSteps,
+    submitStep: values => setAppointmentData({...appointmentData, [currentStep]: values}),
+    setErrors: setAppointmentErrors,
+    stepErrors: {initialTouched: stepInitialTouched, initialErrors: stepInitialErrors},
+    clearStepErrors: () => {
+      const newInitialErrors = produce(initialErrors, draft => {
+        errorKeys.forEach(key => delete draft[key]);
+      });
+      setAppointmentErrors({initialTouched, initialErrors: newInitialErrors});
+    },
+  };
+};
+
+export const CreateAppointmentState = ({currentStep, submission, children}) => {
+  const [appointmentData, setAppointmentData] = useSessionStorage(SESSION_STORAGE_KEY, {});
+  const [appointmentErrors, setAppointmentErrors] = useState({
+    initialTouched: {},
+    initialErrors: {},
+  });
+
+  const contextValue = buildContextValue(
+    submission,
+    currentStep,
+    appointmentData,
+    setAppointmentData,
+    appointmentErrors,
+    setAppointmentErrors
+  );
+
   return (
-    <CreateAppointmentContext.Provider
-      value={{
-        submission,
-        appointmentData: mergedAppointmentData,
-        stepData: appointmentData[currentStep] || {},
-        submittedSteps,
-        submitStep: values => setAppointmentData({...appointmentData, [currentStep]: values}),
-      }}
-    >
+    <CreateAppointmentContext.Provider value={contextValue}>
       {children}
     </CreateAppointmentContext.Provider>
   );

@@ -9,6 +9,9 @@ const CreateAppointmentContext = React.createContext({
   stepData: {},
   submittedSteps: [],
   submitStep: () => {},
+  setErrors: () => {},
+  stepErrors: {initialTouched: {}, initialErrors: {}},
+  clearStepErrors: () => {},
 });
 CreateAppointmentContext.displayName = 'CreateAppointmentContext';
 

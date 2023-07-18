@@ -8,7 +8,7 @@ const FormioRadioField = ({component: {key, label, description = '', values, val
     name={key}
     label={label}
     description={description}
-    isRequired={validate.required}
+    isRequired={validate?.required ?? false}
     options={values}
   />
 );

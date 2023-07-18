@@ -36,7 +36,13 @@ export const getContactDetailsFields = async (baseUrl, productIds) => {
 const ContactDetailsStep = ({navigateTo = null}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
-  const {submitStep, appointmentData, stepData} = useCreateAppointmentContext();
+  const {
+    submitStep,
+    appointmentData,
+    stepData,
+    stepErrors: {initialErrors, initialTouched},
+    clearStepErrors,
+  } = useCreateAppointmentContext();
   const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
@@ -88,22 +94,24 @@ const ContactDetailsStep = ({navigateTo = null}) => {
       {!loading && (
         <Formik
           initialValues={{...emptyValues, ...stepData}}
+          initialErrors={initialErrors?.contactDetails}
+          initialTouched={initialTouched?.contactDetails}
           enableReinitialize
           validateOnChange={false}
           validateOnBlur
-          validateOnMount
           validationSchema={
             validationSchema ? toFormikValidationSchema(validationSchema) : undefined
           }
           onSubmit={(values, {setSubmitting}) => {
             flushSync(() => {
+              clearStepErrors();
               submitStep(values);
               setSubmitting(false);
             });
             if (navigateTo !== null) navigate(navigateTo);
           }}
         >
-          {({isValid}) => (
+          {({isValid, dirty}) => (
             // TODO: don't do inline style
             <Form style={{width: '100%'}}>
               {components.map(component => (
@@ -111,7 +119,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
               ))}
 
               <SubmitRow
-                canSubmit={!loading && validationSchema && isValid}
+                canSubmit={dirty && !loading && validationSchema && isValid}
                 nextText={intl.formatMessage({
                   description: 'Appointments contact details step: next step text',
                   defaultMessage: 'To overview',

@@ -7,6 +7,7 @@ import {ConfigDecorator, LayoutDecorator, LiteralDecorator, withCard} from 'stor
 import {
   mockAppointmentCustomerFieldsGet,
   mockAppointmentLocationsGet,
+  mockAppointmentPost,
   mockAppointmentProductsGet,
 } from '../mocks';
 import {withAppointmentState} from '../story-utils';
@@ -53,6 +54,7 @@ export default {
         mockAppointmentProductsGet,
         mockAppointmentLocationsGet,
         mockAppointmentCustomerFieldsGet,
+        mockAppointmentPost,
       ],
     },
   },
@@ -60,6 +62,7 @@ export default {
     // LiteralDecorator args
     confirmText: 'Confirm',
     previousText: 'Previous',
+    changeText: 'Change',
   },
 };
 

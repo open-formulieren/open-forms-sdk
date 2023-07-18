@@ -31,7 +31,7 @@ const productSchema = z
 const chooseSingleProductSchema = z.object({products: productSchema.max(1)});
 const chooseMultiProductSchema = z.object({products: productSchema});
 
-const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid}) => {
+const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid, dirty}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
 
@@ -94,7 +94,7 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid
       </FieldArray>
 
       <SubmitRow
-        canSubmit={isValid}
+        canSubmit={dirty && isValid}
         nextText={intl.formatMessage({
           description: 'Appointments products step: next step text',
           defaultMessage: 'Confirm products',
@@ -108,6 +108,7 @@ ChooseProductStepFields.propTypes = {
   values: PropTypes.object.isRequired,
   validateForm: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
+  dirty: PropTypes.bool.isRequired,
 };
 
 const ProductWrapper = ({index, numProducts, onRemove, children}) => {
@@ -155,7 +156,12 @@ const INITIAL_VALUES = {
 const ChooseProductStep = ({navigateTo = null}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
-  const {stepData, submitStep} = useCreateAppointmentContext();
+  const {
+    stepData,
+    stepErrors: {initialErrors, initialTouched},
+    clearStepErrors,
+    submitStep,
+  } = useCreateAppointmentContext();
   const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
@@ -183,12 +189,14 @@ const ChooseProductStep = ({navigateTo = null}) => {
       />
       <Formik
         initialValues={{...INITIAL_VALUES, ...stepData}}
+        initialErrors={initialErrors}
+        initialTouched={initialTouched}
         validateOnChange={false}
         validateOnBlur
-        validateOnMount
         validationSchema={toFormikValidationSchema(validationSchema)}
         onSubmit={(values, {setSubmitting}) => {
           flushSync(() => {
+            clearStepErrors();
             submitStep(values);
             setSubmitting(false);
           });

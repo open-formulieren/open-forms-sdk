@@ -1,3 +1,6 @@
+import get from 'lodash/get';
+import set from 'lodash/set';
+
 // See https://stackoverflow.com/a/43595110 and https://stackoverflow.com/a/32749533
 class ExtendableError extends Error {
   constructor(message) {
@@ -31,6 +34,31 @@ export class ValidationError extends ExtendableError {
     }
 
     return errorsPerComponent;
+  }
+
+  /**
+   * Emit the validation errors into datastructures suitable for Formik.
+   *
+   * This converts the error/field names into nested objects/arrays with the appropriate
+   * error information *based on what the backend returns*. You may need to do additional
+   * mapping in your component(s) if you're adding additional wrapper datastructures.
+   *
+   * @return {Object} Object with the `initialErrors` and `initialTouched` keys/props,
+   *   derived from the error field names.
+   */
+  asFormikProps() {
+    const initialErrors = {};
+    const initialTouched = {};
+
+    this.invalidParams.forEach(err => {
+      const {name, reason} = err;
+      set(initialTouched, name, true);
+
+      const existingErrorMessage = get(initialErrors, name, '');
+      const formikError = existingErrorMessage ? [existingErrorMessage, reason].join('\n') : reason;
+      set(initialErrors, name, formikError);
+    });
+    return {initialErrors, initialTouched};
   }
 }
 

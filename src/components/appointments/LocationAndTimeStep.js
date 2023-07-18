@@ -1,7 +1,7 @@
 import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
@@ -36,11 +36,56 @@ const INITIAL_VALUES = {
   datetime: '',
 };
 
+const LocationAndTimeStepFields = ({isValid, dirty, validateForm, setErrors}) => {
+  const intl = useIntl();
+  const {
+    appointmentData: {products = []},
+    stepErrors: {initialErrors},
+  } = useCreateAppointmentContext();
+  // workaround to validate the form on mount without discarding the initialErrors.
+  // Due to the auto location select, the form is marked dirty but validation hasn't run
+  // as validateOnMount is not set. Setting validateOnMount causes initialErrors to be
+  // discarded otherwise.
+  useEffect(() => {
+    validateForm().then(() => {
+      if (!Object.keys(initialErrors).length) return;
+      setErrors(initialErrors);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    // TODO: don't do inline style
+    <Form style={{width: '100%'}}>
+      <div>
+        <LocationSelect products={products} />
+        <DateSelect products={products} />
+        <TimeSelect products={products} />
+      </div>
+
+      <SubmitRow
+        canSubmit={dirty && isValid}
+        nextText={intl.formatMessage({
+          description: 'Appointments location and time step: next step text',
+          defaultMessage: 'To contact details',
+        })}
+        previousText={intl.formatMessage({
+          description: 'Appointments location and time step: previous step text',
+          defaultMessage: 'Back to products',
+        })}
+        navigateBackTo="producten"
+      />
+    </Form>
+  );
+};
+
 const LocationAndTimeStep = ({navigateTo = null}) => {
   const intl = useIntl();
   const {
     appointmentData: {products = []},
     stepData,
+    stepErrors: {initialTouched},
+    clearStepErrors,
     submitStep,
   } = useCreateAppointmentContext();
   const navigate = useNavigate();
@@ -69,42 +114,20 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
 
       <Formik
         initialValues={{...INITIAL_VALUES, ...stepData}}
+        initialTouched={initialTouched}
         validateOnChange={false}
         validateOnBlur
-        validateOnMount
         validationSchema={toFormikValidationSchema(schema)}
         onSubmit={(values, {setSubmitting}) => {
           flushSync(() => {
+            clearStepErrors();
             submitStep(values);
             setSubmitting(false);
           });
           if (navigateTo !== null) navigate(navigateTo);
         }}
-      >
-        {({isValid}) => (
-          // TODO: don't do inline style
-          <Form style={{width: '100%'}}>
-            <div>
-              <LocationSelect products={products} />
-              <DateSelect products={products} />
-              <TimeSelect products={products} />
-            </div>
-
-            <SubmitRow
-              canSubmit={isValid}
-              nextText={intl.formatMessage({
-                description: 'Appointments location and time step: next step text',
-                defaultMessage: 'To contact details',
-              })}
-              previousText={intl.formatMessage({
-                description: 'Appointments location and time step: previous step text',
-                defaultMessage: 'Back to products',
-              })}
-              navigateBackTo="producten"
-            />
-          </Form>
-        )}
-      </Formik>
+        component={LocationAndTimeStepFields}
+      />
     </>
   );
 };
