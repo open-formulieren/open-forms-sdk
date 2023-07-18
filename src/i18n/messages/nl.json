@@ -640,7 +640,7 @@
     "originalDefault": "Failed to determine the appointment time"
   },
   "vf9+XT": {
-    "defaultMessage": "Aantal",
+    "defaultMessage": "Aantal personen",
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
   },

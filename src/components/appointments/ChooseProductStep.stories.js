@@ -42,7 +42,7 @@ export const InitialState = {
     // we expect a single initial row
     const dropdowns = canvas.getAllByRole('combobox');
     await expect(dropdowns).toHaveLength(1);
-    const amountInputs = canvas.getAllByLabelText('Aantal');
+    const amountInputs = canvas.getAllByLabelText('Aantal personen');
     await expect(amountInputs).toHaveLength(1);
 
     // there should be a button to add a row

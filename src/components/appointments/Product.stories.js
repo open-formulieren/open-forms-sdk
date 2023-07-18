@@ -61,7 +61,7 @@ export const ProductAndAmount = {
     await userEvent.click(await canvas.findByText('Rijbewijs aanvraag (Drivers license)'));
     await expect(canvas.queryByText('Paspoort aanvraag')).toBeNull();
     await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
-    const amountInput = canvas.getByLabelText('Aantal');
+    const amountInput = canvas.getByLabelText('Aantal personen');
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, '1');
     await expect(amountInput).toHaveDisplayValue('1');
