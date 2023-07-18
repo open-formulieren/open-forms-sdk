@@ -68,9 +68,11 @@ const ANALYTICS_PROVIDERS = {
     window._paq.push(['setCustomUrl', location.pathname + location.hash.substring(1)]);
     window._paq.push(['setDocumentTitle', document.title]);
     if (previousLocation)
+      // Piwik Pro seems to add the origin automatically if only a path is provided to the
+      // setCustomUrl, but not to the setReferrerUrl.
       window._paq.push([
         'setReferrerUrl',
-        previousLocation.pathname + previousLocation.hash.substring(1),
+        window.location.origin + previousLocation.pathname + previousLocation.hash.substring(1),
       ]);
     window._paq.push(['trackPageView']);
   },
