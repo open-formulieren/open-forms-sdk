@@ -85,7 +85,7 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
           if (navigateTo !== null) navigate(navigateTo);
         }}
       >
-        {({isValid}) => (
+        {({isValid, dirty}) => (
           // TODO: don't do inline style
           <Form style={{width: '100%'}}>
             <div>
@@ -95,7 +95,7 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
             </div>
 
             <SubmitRow
-              canSubmit={isValid}
+              canSubmit={dirty && isValid}
               nextText={intl.formatMessage({
                 description: 'Appointments location and time step: next step text',
                 defaultMessage: 'To contact details',

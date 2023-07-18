@@ -111,7 +111,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
             if (navigateTo !== null) navigate(navigateTo);
           }}
         >
-          {({isValid}) => (
+          {({isValid, dirty}) => (
             // TODO: don't do inline style
             <Form style={{width: '100%'}}>
               {components.map(component => (
@@ -119,7 +119,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
               ))}
 
               <SubmitRow
-                canSubmit={!loading && validationSchema && isValid}
+                canSubmit={dirty && !loading && validationSchema && isValid}
                 nextText={intl.formatMessage({
                   description: 'Appointments contact details step: next step text',
                   defaultMessage: 'To overview',
