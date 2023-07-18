@@ -135,3 +135,28 @@ export const NoMultipleProducts = {
     await canvas.findByRole('button', {name: 'Bevestig producten'});
   },
 };
+
+export const WithBackendErrors = {
+  name: 'Display backend errors',
+  parameters: {
+    appointmentState: {
+      currentStep: 'producten',
+      appointmentData: {
+        producten: {
+          products: [{productId: '166a5c79', amount: 1}],
+        },
+      },
+      appointmentErrors: {
+        initialTouched: {products: [{productId: true}]},
+        initialErrors: {products: [{productId: 'Product is sold out.'}]},
+      },
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    await expect(await canvas.findByText('Product is sold out.')).toBeVisible();
+    const submitButton = canvas.getByRole('button', {name: 'Bevestig producten'});
+    expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+  },
+};

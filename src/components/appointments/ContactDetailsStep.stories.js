@@ -67,3 +67,40 @@ export const FillOutAllFields = {
     });
   },
 };
+
+export const WithBackendErrors = {
+  name: 'Display backend errors',
+  parameters: {
+    appointmentState: {
+      currentStep: 'contactgegevens',
+      appointmentData: {
+        producten: {
+          products: [{productId: '166a5c79', amount: 1}],
+        },
+        kalender: {
+          location: '1396f17c',
+          date: TOMORROW,
+          datetime: `${TOMORROW}T08:00:00Z`,
+        },
+        contactgegevens: {
+          lastName: 'Mr. Krabs',
+        },
+      },
+      appointmentErrors: {
+        initialTouched: {contactDetails: {lastName: true}},
+        initialErrors: {
+          contactDetails: {lastName: 'Unfortunately, you are banned from making appointments.'},
+        },
+      },
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    await expect(
+      await canvas.findByText('Unfortunately, you are banned from making appointments.')
+    ).toBeVisible();
+    const submitButton = canvas.getByRole('button', {name: 'Naar overzicht'});
+    expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+  },
+};
