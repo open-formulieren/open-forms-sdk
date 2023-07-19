@@ -3,6 +3,7 @@ import {userEvent, waitFor, within} from '@storybook/testing-library';
 import {addDays, format} from 'date-fns';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
+import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
 import {mockPrivacyPolicyConfigGet} from 'components/Summary/mocks';
@@ -47,7 +48,7 @@ const Wrapper = ({form}) => {
   const routes = [
     {
       path: '/appointments/*',
-      element: <CreateAppointment form={form} />,
+      element: <CreateAppointment />,
       children: childRoutes,
     },
   ];
@@ -55,7 +56,11 @@ const Wrapper = ({form}) => {
     initialEntries: ['/appointments/'],
     initialIndex: 0,
   });
-  return <RouterProvider router={router} />;
+  return (
+    <FormContext.Provider value={form}>
+      <RouterProvider router={router} />
+    </FormContext.Provider>
+  );
 };
 
 const render = ({showProgressIndicator, supportsMultipleProducts, name}) => {

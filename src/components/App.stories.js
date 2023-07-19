@@ -1,13 +1,13 @@
 import {expect} from '@storybook/jest';
 import {waitForElementToBeRemoved, within} from '@storybook/testing-library';
-import {Outlet} from 'react-router-dom';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
+import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 import {ConfigDecorator} from 'story-utils/decorators';
 
-import App, {getRoutes} from './App';
+import App, {routes as nestedRoutes} from './App';
 
 export default {
   title: 'Private API / App',
@@ -18,6 +18,7 @@ export default {
   },
   argTypes: {
     form: {table: {disable: true}},
+    noDebug: {table: {disable: true}},
   },
   parameters: {
     msw: {
@@ -36,15 +37,19 @@ const Wrapper = ({form}) => {
   const routes = [
     {
       path: '*',
-      element: <App form={form} noDebug />,
-      children: getRoutes(form, true),
+      element: <App noDebug />,
+      children: nestedRoutes,
     },
   ];
   const router = createMemoryRouter(routes, {
     initialEntries: ['/'],
     initialIndex: 0,
   });
-  return <RouterProvider router={router} />;
+  return (
+    <FormContext.Provider value={form}>
+      <RouterProvider router={router} />
+    </FormContext.Provider>
+  );
 };
 
 const render = args => {

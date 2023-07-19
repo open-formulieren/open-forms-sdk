@@ -22,11 +22,11 @@ import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
 import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
+import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
-import Types from 'types';
 
 const initialState = {
   submission: null,
@@ -90,7 +90,8 @@ const reducer = (draft, action) => {
  * @param  {Object} options.form The form definition from the Open Forms API
  * @return {JSX}
  */
-const Form = ({form}) => {
+const Form = () => {
+  const form = useFormContext();
   const navigate = useNavigate();
   const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
   const queryParams = useQuery();
@@ -377,8 +378,6 @@ const Form = ({form}) => {
   );
 };
 
-Form.propTypes = {
-  form: Types.Form.isRequired,
-};
+Form.propTypes = {};
 
 export default Form;

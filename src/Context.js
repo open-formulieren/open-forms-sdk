@@ -1,5 +1,25 @@
 import React from 'react';
 
+const FormContext = React.createContext({
+  uuid: '',
+  name: '',
+  slug: '',
+  url: '',
+  loginRequired: false,
+  loginOptions: [],
+  maintenanceMode: false,
+  showProgressIndicator: true,
+  submissionAllowed: 'yes',
+  literals: {
+    beginText: {value: '', resolved: 'Begin'},
+    changeText: {value: '', resolved: 'Change'},
+    confirmText: {value: '', resolved: 'Confirm'},
+    previousText: {value: '', resolved: 'Previous'},
+  },
+  steps: [],
+});
+FormContext.displayName = 'FormContext';
+
 const ConfigContext = React.createContext({
   baseUrl: '',
   basePath: '',
@@ -20,4 +40,4 @@ FormioTranslations.displayName = 'FormioTranslations';
 const SubmissionContext = React.createContext({submission: null});
 SubmissionContext.displayName = 'SubmissionContext';
 
-export {ConfigContext, FormioTranslations, SubmissionContext};
+export {FormContext, ConfigContext, FormioTranslations, SubmissionContext};

@@ -9,9 +9,9 @@ import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import {RequireSession} from 'components/Sessions';
 import {flagNoActiveSubmission} from 'data/submissions';
+import useFormContext from 'hooks/useFormContext';
 import useGetOrCreateSubmission from 'hooks/useGetOrCreateSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
-import Types from 'types';
 
 import {AppointmentConfigContext} from '../Context';
 import AppointmentProgress from './AppointmentProgress';
@@ -24,7 +24,8 @@ import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 // removeSubmissionFromStorage();
 // resetSession();
 
-const CreateAppointment = ({form}) => {
+const CreateAppointment = () => {
+  const form = useFormContext();
   const {isLoading, error, submission, removeSubmissionFromStorage} =
     useGetOrCreateSubmission(form);
   if (error) throw error;
@@ -75,9 +76,7 @@ const CreateAppointment = ({form}) => {
   );
 };
 
-CreateAppointment.propTypes = {
-  form: Types.Form.isRequired,
-};
+CreateAppointment.propTypes = {};
 
 const Wrapper = ({sessionExpired = false, children, ...props}) => {
   if (sessionExpired) return <>{children}</>;
