@@ -100,6 +100,9 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, form}) => {
     }
   });
 
+  // FIXME: https://github.com/open-formulieren/open-forms/issues/3255
+  // errors (bad gateway 502, for example) appear to result in infinite loading
+  // spinners
   if (error) {
     console.error(error);
   }
