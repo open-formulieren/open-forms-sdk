@@ -323,7 +323,7 @@ const Form = ({form}) => {
               onFailure={onProcessingFailure}
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               component={SubmissionConfirmation}
-              form={form}
+              donwloadPDFText={form.submissionReportDownloadLinkTitle}
             />
           </ErrorBoundary>
         }
