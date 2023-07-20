@@ -175,16 +175,24 @@ export const mockAppointmentCustomerFieldsGet = rest.get(
 export const mockAppointmentPost = rest.post(
   `${BASE_URL}appointments/appointments`,
   async (req, res, ctx) => {
-    const {submission, products, date, datetime, contactDetails} = await req.json();
+    const {
+      submission: submissionUrl,
+      products,
+      location,
+      date,
+      datetime,
+      contactDetails,
+    } = await req.json();
     return res(
       ctx.status(201),
       ctx.json({
-        submission: submission.url,
+        submission: submissionUrl,
         products,
+        location,
         date,
         datetime,
         contactDetails,
-        statusUrl: `${BASE_URL}submissions/7165afb0-bd13-4521-8fef-5aeeeea65e3c/-token-/status`,
+        statusUrl: `${submissionUrl}/-token-/status`,
       })
     );
   }
