@@ -15,14 +15,15 @@ const errorKeysByStep = {
   contactgegevens: ['contactDetails'],
 };
 
-export const buildContextValue = (
+export const buildContextValue = ({
   submission,
   currentStep,
   appointmentData,
   setAppointmentData = () => {},
   appointmentErrors = {initialTouched: {}, initialErrors: {}},
-  setAppointmentErrors = () => {}
-) => {
+  setAppointmentErrors = () => {},
+  resetSession = () => {},
+}) => {
   const submittedSteps = Object.keys(appointmentData).filter(
     subObject => Object.keys(subObject).length
   );
@@ -57,24 +58,29 @@ export const buildContextValue = (
       });
       setAppointmentErrors({initialTouched, initialErrors: newInitialErrors});
     },
+    reset: () => {
+      setAppointmentData({});
+      resetSession();
+    },
   };
 };
 
-export const CreateAppointmentState = ({currentStep, submission, children}) => {
+export const CreateAppointmentState = ({currentStep, submission, resetSession, children}) => {
   const [appointmentData, setAppointmentData] = useSessionStorage(SESSION_STORAGE_KEY, {});
   const [appointmentErrors, setAppointmentErrors] = useState({
     initialTouched: {},
     initialErrors: {},
   });
 
-  const contextValue = buildContextValue(
+  const contextValue = buildContextValue({
     submission,
     currentStep,
     appointmentData,
     setAppointmentData,
     appointmentErrors,
-    setAppointmentErrors
-  );
+    setAppointmentErrors,
+    resetSession,
+  });
 
   return (
     <CreateAppointmentContext.Provider value={contextValue}>
@@ -86,6 +92,7 @@ export const CreateAppointmentState = ({currentStep, submission, children}) => {
 CreateAppointmentState.propTypes = {
   currentStep: PropTypes.string.isRequired,
   submission: Types.Submission,
+  resetSession: PropTypes.func.isRequired,
   children: PropTypes.node,
 };
 

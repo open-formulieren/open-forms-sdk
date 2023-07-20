@@ -6,29 +6,35 @@ import {get} from '../api';
 /**
  * Hook to poll an API endpoint
  */
-const usePoll = (url, timeout, doneCheck, onDone) => {
+const usePoll = (url, timeout, callback) => {
   const [state, setState] = useState({
     loading: true,
     error: undefined,
-    response: null,
   });
 
-  const fn = async () => {
+  const [, cancel, reset] = useTimeoutFn(async () => {
+    const response = await get(url);
+
+    // invoke the callback to process the response
     try {
-      const response = await get(url);
-      const isDone = doneCheck(response);
-      if (isDone) {
-        setState({loading: false, error: undefined, response});
-        onDone(response);
-      } else {
+      const done = callback(response);
+      if (!done) {
         reset();
+      } else {
+        cancel();
+        setState({
+          loading: false,
+          error: undefined,
+        });
       }
     } catch (err) {
-      setState({loading: false, error: err, response: null});
+      cancel();
+      setState({
+        loading: false,
+        error: err,
+      });
     }
-  };
-
-  const [, , reset] = useTimeoutFn(fn, timeout);
+  }, timeout);
 
   return state;
 };

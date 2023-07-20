@@ -20,11 +20,6 @@ const SUBMISSION_DETAILS = {
   ],
   submissionAllowed: 'yes',
   isAuthenticated: false,
-  payment: {
-    isRequired: false,
-    amount: undefined,
-    hasPaid: false,
-  },
 };
 
 /**
@@ -57,23 +52,6 @@ export const mockSubmissionProcessingStatusGet = rest.get(
         reportDownloadUrl: '#',
         paymentUrl: '',
         mainWebsiteUrl: '#',
-      })
-    )
-);
-
-export const mockSubmissionProcessingStatusPendingGet = rest.get(
-  `${BASE_URL}submissions/:uuid/:token/status`,
-  (req, res, ctx) =>
-    res(
-      ctx.json({
-        status: 'in_progress',
-        result: '',
-        errorMessage: '',
-        publicReference: '',
-        confirmationPageContent: '',
-        reportDownloadUrl: '',
-        paymentUrl: '',
-        mainWebsiteUrl: '',
       })
     )
 );

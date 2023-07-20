@@ -8,7 +8,6 @@ import FormDisplay from 'components/FormDisplay';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import {RequireSession} from 'components/Sessions';
-import {flagNoActiveSubmission} from 'data/submissions';
 import useFormContext from 'hooks/useFormContext';
 import useGetOrCreateSubmission from 'hooks/useGetOrCreateSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
@@ -18,39 +17,38 @@ import AppointmentProgress from './AppointmentProgress';
 import CreateAppointmentState from './CreateAppointmentState';
 import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 
-// TODO on submission to backend -> summary component
-// TODO: post to API endpoint, handle validation errors
-// window.sessionStorage.clearItem(storageKey);
-// removeSubmissionFromStorage();
-// resetSession();
-
 const CreateAppointment = () => {
   const form = useFormContext();
-  const {pathname: currentPathname} = useLocation();
-
-  // useMatch requires absolute paths... and react-router are NOT receptive to changing that.
-  const skipSubmissionCreation = checkMatchesPath(currentPathname, 'bevestiging');
-  const {
-    isLoading,
-    error,
-    submission,
-    clear: clearSubmission,
-  } = useGetOrCreateSubmission(form, skipSubmissionCreation);
+  const {isLoading, error, submission, removeSubmissionFromStorage} =
+    useGetOrCreateSubmission(form);
   if (error) throw error;
 
-  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(clearSubmission);
+  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(() => {
+    removeSubmissionFromStorage();
+    flagNoActiveSubmission();
+  });
 
   const config = useContext(ConfigContext);
   const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
 
+  const {pathname: currentPathname} = useLocation();
   const currentStep =
     APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
 
+  const reset = () => {
+    clearSubmission();
+    resetSession();
+  };
+
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <CreateAppointmentState currentStep={currentStep} submission={submission}>
+      <CreateAppointmentState
+        currentStep={currentStep}
+        submission={submission}
+        resetSession={reset}
+      >
         <FormDisplayComponent
           router={
             <Wrapper sessionExpired={sessionExpired} title={form.name}>
@@ -61,7 +59,7 @@ const CreateAppointment = () => {
                   <RequireSession
                     expired={sessionExpired}
                     expiryDate={expiryDate}
-                    onNavigate={() => resetSession()}
+                    onNavigate={reset}
                   >
                     <LiteralsProvider literals={form.literals}>
                       <Outlet />
@@ -83,7 +81,9 @@ const CreateAppointment = () => {
 CreateAppointment.propTypes = {};
 
 const Wrapper = ({sessionExpired = false, children, ...props}) => {
-  if (sessionExpired) return <>{children}</>;
+  const {pathname} = useLocation();
+  const isConfirmation = checkMatchesPath(pathname, 'bevestiging');
+  if (sessionExpired || isConfirmation) return <>{children}</>;
 
   return (
     <Card titleComponent="h1" modifiers={['mobile-header-hidden']} {...props}>

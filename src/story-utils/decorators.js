@@ -3,7 +3,7 @@ import {Formik} from 'formik';
 import merge from 'lodash/merge';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
-import {ConfigContext} from 'Context';
+import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {Layout, LayoutRow} from 'components/Layout';
@@ -123,3 +123,12 @@ export const withCard = (Story, {parameters: {card: cardProps = {}}}) => (
     <Story />
   </Card>
 );
+
+export const withForm = (Story, {parameters, args}) => {
+  const form = args?.form || parameters?.formContext?.form || buildForm();
+  return (
+    <FormContext.Provider value={form}>
+      <Story />
+    </FormContext.Provider>
+  );
+};

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
@@ -75,28 +75,29 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, donwloadPDFT
   });
   useTitle(pageTitle);
 
+  const [statusResponse, setStatusResponse] = useState(null);
   const genericErrorMessage = intl.formatMessage({
     description: 'Generic submission error',
     defaultMessage: 'Something went wrong while submitting the form.',
   });
 
-  const {
-    loading,
-    error,
-    response: statusResponse,
-  } = usePoll(
-    statusUrl,
-    1000,
-    response => response.status === 'done',
-    response => {
-      if (response.result === RESULT_FAILED) {
-        const errorMessage = response.errorMessage || genericErrorMessage;
-        onFailure && onFailure(errorMessage);
-      } else if (response.result === RESULT_SUCCESS) {
-        onConfirmed && onConfirmed();
+  const {loading, error} = usePoll(statusUrl, 1000, response => {
+    setStatusResponse(response);
+    switch (response.status) {
+      case 'done': {
+        if (response.result === RESULT_FAILED) {
+          const errorMessage = response.errorMessage || genericErrorMessage;
+          onFailure && onFailure(errorMessage);
+        } else if (response.result === RESULT_SUCCESS) {
+          onConfirmed && onConfirmed();
+        }
+        return true;
+      }
+      default: {
+        // nothing, it's pending/started or retrying
       }
     }
-  );
+  });
 
   // FIXME: https://github.com/open-formulieren/open-forms/issues/3255
   // errors (bad gateway 502, for example) appear to result in infinite loading

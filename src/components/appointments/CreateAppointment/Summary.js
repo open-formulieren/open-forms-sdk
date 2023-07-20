@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {createSearchParams, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -38,7 +38,8 @@ const createAppointment = async (baseUrl, submission, appointmentData, privacyPo
     contactDetails,
     privacyPolicyAccepted,
   };
-  return await post(`${baseUrl}appointments/appointments`, body);
+  const response = await post(`${baseUrl}appointments/appointments`, body);
+  return response.data;
 };
 
 const getErrorsNavigateTo = errors => {
@@ -172,15 +173,14 @@ const Summary = () => {
    */
   const onSubmit = async event => {
     event.preventDefault();
-    console.group('Submitting...');
+    let appointment;
     try {
-      const appointment = await createAppointment(
+      appointment = await createAppointment(
         baseUrl,
         submission,
         appointmentData,
         privacyPolicyAccepted
       );
-      console.log(appointment);
     } catch (e) {
       if (e instanceof ValidationError) {
         const {initialErrors, initialTouched} = e.asFormikProps();
@@ -191,10 +191,13 @@ const Summary = () => {
       }
       setSubmitError(e);
       return;
-    } finally {
-      console.groupEnd();
     }
-    navigate('../bevestiging');
+    navigate({
+      pathname: '../bevestiging',
+      search: createSearchParams({
+        statusUrl: appointment.statusUrl,
+      }).toString(),
+    });
   };
 
   return (

@@ -21,9 +21,13 @@ import {
 
 const render = initialValues => {
   const {products, ...stepData} = initialValues;
-  const appointmentContext = buildContextValue(buildSubmission(), 'kalender', {
-    producten: {products},
-    kalender: stepData,
+  const appointmentContext = buildContextValue({
+    submission: buildSubmission(),
+    currentStep: 'kalender',
+    appointmentData: {
+      producten: {products},
+      kalender: stepData,
+    },
   });
   const routes = [
     {

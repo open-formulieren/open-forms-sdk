@@ -6,6 +6,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
+import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
 import {mockPrivacyPolicyConfigGet} from 'components/Summary/mocks';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
@@ -14,6 +15,7 @@ import {
   mockAppointmentCustomerFieldsGet,
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
+  mockAppointmentPost,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
 } from '../mocks';
@@ -33,6 +35,8 @@ export default {
         mockAppointmentTimesGet,
         mockAppointmentCustomerFieldsGet,
         mockPrivacyPolicyConfigGet,
+        mockAppointmentPost,
+        mockSubmissionProcessingStatusGet,
       ],
     },
   },
@@ -197,6 +201,30 @@ export const HappyFlow = {
       const button = canvas.getByRole('button', {name: 'Naar overzicht'});
       await waitFor(() => expect(button).not.toHaveAttribute('aria-disabled', 'true'));
       await userEvent.click(button);
+    });
+
+    await step('Verify and confirm the summary data', async () => {
+      await canvas.findByText('Paspoort aanvraag');
+      await canvas.findByText('Open Gem');
+      await userEvent.click(
+        canvas.getByLabelText(
+          /I accept the privacy policy and consent to the processing of my personal data/
+        )
+      );
+      const submitButton = canvas.getByRole('button', {name: 'Confirm'});
+      await waitFor(async () => {
+        expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+      });
+      await userEvent.click(submitButton);
+    });
+
+    await step('Confirmation page', async () => {
+      await waitFor(
+        () => {
+          expect(canvas.getByText(/OF-L337/)).toBeVisible();
+        },
+        {timeout: 2000, interval: 200}
+      );
     });
   },
 };

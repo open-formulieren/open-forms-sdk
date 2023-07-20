@@ -4,6 +4,7 @@ import {Navigate, matchPath, resolvePath} from 'react-router-dom';
 import ChooseProductStep from '../ChooseProductStep';
 import ContactDetailsStep from '../ContactDetailsStep';
 import LocationAndTimeStep from '../LocationAndTimeStep';
+import Confirmation from './Confirmation';
 import Summary from './Summary';
 
 export const APPOINTMENT_STEPS = [
@@ -47,6 +48,10 @@ export const routes = [
   {
     path: 'overzicht',
     element: <Summary />,
+  },
+  {
+    path: 'bevestiging',
+    element: <Confirmation />,
   },
 ];
 
