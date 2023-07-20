@@ -8,7 +8,6 @@ import FormDisplay from 'components/FormDisplay';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import {RequireSession} from 'components/Sessions';
-import {flagNoActiveSubmission} from 'data/submissions';
 import useFormContext from 'hooks/useFormContext';
 import useGetOrCreateSubmission from 'hooks/useGetOrCreateSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
@@ -26,20 +25,24 @@ import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 
 const CreateAppointment = () => {
   const form = useFormContext();
-  const {isLoading, error, submission, removeSubmissionFromStorage} =
-    useGetOrCreateSubmission(form);
+  const {pathname: currentPathname} = useLocation();
+
+  // useMatch requires absolute paths... and react-router are NOT receptive to changing that.
+  const skipSubmissionCreation = checkMatchesPath(currentPathname, 'bevestiging');
+  const {
+    isLoading,
+    error,
+    submission,
+    clear: clearSubmission,
+  } = useGetOrCreateSubmission(form, skipSubmissionCreation);
   if (error) throw error;
 
-  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(() => {
-    removeSubmissionFromStorage();
-    flagNoActiveSubmission();
-  });
+  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(clearSubmission);
 
   const config = useContext(ConfigContext);
   const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
 
-  const {pathname: currentPathname} = useLocation();
   const currentStep =
     APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
