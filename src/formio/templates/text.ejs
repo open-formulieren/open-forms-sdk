@@ -1,14 +1,14 @@
 {% if (ctx.prefix || ctx.suffix) { %}
-<div class="group">
+<div class="{{ctx.ofPrefix}}input-container">
 {% } %}
 {% if (ctx.prefix) { %}
-<div class="prefix" ref="prefix">
+<span class="{{ctx.ofPrefix}}input-container__prefix" ref="prefix">
     {% if(ctx.prefix instanceof HTMLElement){ %}
       {{ ctx.t(ctx.prefix.outerHTML) }}
     {% } else{ %}
       {{ ctx.t(ctx.prefix) }}
     {% } %}
-</div>
+</span>
 {% } %}
 <{{ctx.input.type}}
   ref="{{ctx.input.ref ? ctx.input.ref : 'input'}}"
@@ -24,13 +24,13 @@
 <span class="wordcount" ref="wordcount"></span>
 {% } %}
 {% if (ctx.suffix) { %}
-<div class="suffix" ref="">
+<span class="{{ctx.ofPrefix}}input-container__suffix" ref="suffix">
     {% if(ctx.suffix instanceof HTMLElement){ %}
       {{ ctx.t(ctx.suffix.outerHTML) }}
     {% } else{ %}
       {{ ctx.t(ctx.suffix) }}
     {% } %}
-</div>
+</span>
 {% } %}
 {% if (ctx.prefix || ctx.suffix) { %}
 </div>

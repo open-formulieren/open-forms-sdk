@@ -1,0 +1,55 @@
+@use 'microscope-sass/lib/bem';
+@use '../mixins/prefix';
+
+.#{prefix.prefix('input-container')} {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0px;
+
+  @include bem.element('prefix') {
+    align-self: center;
+    background-color: var(--of-input-container-prefix-background-color);
+    border-style: var(--of-input-container-prefix-border-style);
+    border-color: var(--of-input-container-prefix-border-color);
+    border-width: var(--of-input-container-prefix-border-width);
+    border-start-end-radius: var(--of-input-container-prefix-border-start-end-radius);
+    border-end-end-radius: var(--of-input-container-prefix-border-end-end-radius);
+    margin-inline-start: var(--of-input-container-prefix-margin-inline-start);
+
+    sub {
+      vertical-align: baseline;
+      position: relative;
+      bottom: -0.4em;
+    }
+
+    sup {
+      vertical-align: baseline;
+      position: relative;
+      top: -0.4em;
+    }
+  }
+
+  @include bem.element('suffix') {
+    align-self: center;
+    background-color: var(--of-input-container-suffix-background-color);
+    border-style: var(--of-input-container-suffix-border-style);
+    border-color: var(--of-input-container-suffix-border-color);
+    border-width: var(--of-input-container-suffix-border-width);
+    border-start-end-radius: var(--of-input-container-suffix-border-start-end-radius);
+    border-end-end-radius: var(--of-input-container-suffix-border-end-end-radius);
+    margin-inline-start: var(--of-input-container-suffix-margin-inline-start);
+
+    sub {
+      vertical-align: baseline;
+      position: relative;
+      bottom: -0.4em;
+    }
+
+    sup {
+      vertical-align: baseline;
+      position: relative;
+      top: -0.4em;
+    }
+  }
+}
