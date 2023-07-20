@@ -20,6 +20,11 @@ const SUBMISSION_DETAILS = {
   ],
   submissionAllowed: 'yes',
   isAuthenticated: false,
+  payment: {
+    isRequired: false,
+    amount: undefined,
+    hasPaid: false,
+  },
 };
 
 /**
