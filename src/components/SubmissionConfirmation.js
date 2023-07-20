@@ -15,7 +15,6 @@ import PaymentForm from 'components/PaymentForm';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import usePoll from 'hooks/usePoll';
 import useTitle from 'hooks/useTitle';
-import Types from 'types';
 
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';
@@ -68,7 +67,7 @@ StartPayment.propTypes = {
  * @param {Function} onFailure Callback to invoke if the background processing result is failure.
  * @param {Function} onConfirmed Callback to invoke if the background processing result is success.
  */
-const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, form}) => {
+const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, donwloadPDFText}) => {
   const intl = useIntl();
   const pageTitle = intl.formatMessage({
     description: 'Confirmation page title',
@@ -100,6 +99,9 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, form}) => {
     }
   });
 
+  // FIXME: https://github.com/open-formulieren/open-forms/issues/3255
+  // errors (bad gateway 502, for example) appear to result in infinite loading
+  // spinners
   if (error) {
     console.error(error);
   }
@@ -142,7 +144,7 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, form}) => {
   const showBackToMainWebsite = mainWebsiteUrl && !paymentUrl;
 
   // Fall back to the literal message in code for backwards compatibility.
-  const linkTitle = form.submissionReportDownloadLinkTitle || (
+  const linkTitle = donwloadPDFText || (
     <FormattedMessage description="Download report PDF link title" defaultMessage="Download PDF" />
   );
 
@@ -195,7 +197,7 @@ SubmissionConfirmation.propTypes = {
   statusUrl: PropTypes.string.isRequired,
   onFailure: PropTypes.func,
   onConfirmed: PropTypes.func,
-  form: Types.Form.isRequired,
+  donwloadPDFText: PropTypes.node,
 };
 
 export default SubmissionConfirmation;

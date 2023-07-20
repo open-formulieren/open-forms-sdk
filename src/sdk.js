@@ -7,9 +7,9 @@ import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
 import {RouterProvider, createBrowserRouter, createHashRouter} from 'react-router-dom';
 
-import {ConfigContext} from 'Context';
+import {ConfigContext, FormContext} from 'Context';
 import {get} from 'api';
-import App, {getRoutes} from 'components/App';
+import App, {routes as nestedRoutes} from 'components/App';
 import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
@@ -42,6 +42,14 @@ const defaultDisplayComponents = {
   form: null,
   progressIndicator: null,
 };
+
+const routes = [
+  {
+    path: '*',
+    element: <App />,
+    children: nestedRoutes,
+  },
+];
 
 class OpenForm {
   constructor(targetNode, opts) {
@@ -109,38 +117,32 @@ class OpenForm {
 
   render() {
     const createRouter = this.useHashRouting ? createHashRouter : createBrowserRouter;
-    const router = createRouter(
-      [
-        {
-          path: '*',
-          element: <App form={this.formObject} />,
-          children: getRoutes(this.formObject),
-        },
-      ],
-      {basename: this.basePath}
-    );
+    const router = createRouter(routes, {basename: this.basePath});
 
     // render the wrapping React component
     this.root.render(
       <React.StrictMode>
-        <ConfigContext.Provider
-          value={{
-            baseUrl: this.baseUrl,
-            basePath: this.basePath,
-            baseTitle: this.baseTitle,
-            requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
-            displayComponents: this.displayComponents,
-          }}
-        >
-          <I18NErrorBoundary>
-            <I18NManager
-              languageSelectorTarget={this.languageSelectorTarget}
-              onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
-            >
-              <RouterProvider router={router} />
-            </I18NManager>
-          </I18NErrorBoundary>
-        </ConfigContext.Provider>
+        <FormContext.Provider value={this.formObject}>
+          <ConfigContext.Provider
+            value={{
+              baseUrl: this.baseUrl,
+              basePath: this.basePath,
+              baseTitle: this.baseTitle,
+              displayComponents: this.displayComponents,
+              // XXX: deprecate and refactor usage to use useFormContext?
+              requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
+            }}
+          >
+            <I18NErrorBoundary>
+              <I18NManager
+                languageSelectorTarget={this.languageSelectorTarget}
+                onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
+              >
+                <RouterProvider router={router} />
+              </I18NManager>
+            </I18NErrorBoundary>
+          </ConfigContext.Provider>
+        </FormContext.Provider>
       </React.StrictMode>
     );
   }

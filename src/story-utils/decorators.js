@@ -4,7 +4,7 @@ import merge from 'lodash/merge';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
-import {BASE_URL} from 'api-mocks';
+import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {Layout, LayoutRow} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';

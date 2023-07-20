@@ -35,3 +35,23 @@ export const mockSubmissionPost = (submission = buildSubmission()) =>
   rest.post(`${BASE_URL}submissions`, (req, res, ctx) => {
     return res(ctx.status(201), ctx.json(submission));
   });
+
+/**
+ * Simulate a succesful backend processing status without payment.
+ */
+export const mockSubmissionProcessingStatusGet = rest.get(
+  `${BASE_URL}submissions/:uuid/:token/status`,
+  (req, res, ctx) =>
+    res(
+      ctx.json({
+        status: 'done',
+        result: 'success',
+        errorMessage: '',
+        publicReference: 'OF-L337',
+        confirmationPageContent: `<p>Thank you for doing <span style="font-style: italic;">the thing</span>.`,
+        reportDownloadUrl: '#',
+        paymentUrl: '',
+        mainWebsiteUrl: '#',
+      })
+    )
+);

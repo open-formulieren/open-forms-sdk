@@ -6,6 +6,7 @@ import {ConfigContext} from 'Context';
 import {destroy} from 'api';
 import ErrorBoundary from 'components/ErrorBoundary';
 import {CosignSummary} from 'components/Summary';
+import useFormContext from 'hooks/useFormContext';
 
 import CosignDone from './CosignDone';
 
@@ -48,7 +49,8 @@ const reducer = (draft, action) => {
   }
 };
 
-const Cosign = ({...props}) => {
+const Cosign = () => {
+  const form = useFormContext();
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const navigate = useNavigate();
   const config = useContext(ConfigContext);
@@ -79,6 +81,7 @@ const Cosign = ({...props}) => {
           path="check"
           element={
             <CosignSummary
+              form={form}
               submission={state.submission}
               summaryData={state.summaryData}
               privacyInfo={state.privacyInfo}
@@ -92,7 +95,6 @@ const Cosign = ({...props}) => {
               onCosignComplete={onCosignComplete}
               onDestroySession={onDestroySession}
               onPrivacyCheckboxChange={() => dispatch({type: 'TOGGLE_PRIVACY_CHECKBOX'})}
-              {...props}
             />
           }
         />
