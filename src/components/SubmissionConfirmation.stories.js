@@ -2,8 +2,10 @@ import {expect} from '@storybook/jest';
 import {waitFor, within} from '@storybook/testing-library';
 
 import {BASE_URL} from 'api-mocks';
-import {buildForm} from 'api-mocks';
-import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
+import {
+  mockSubmissionProcessingStatusGet,
+  mockSubmissionProcessingStatusPendingGet,
+} from 'api-mocks/submissions';
 import {LayoutDecorator, withCard} from 'story-utils/decorators';
 
 import SubmissionConfirmation from './SubmissionConfirmation';
@@ -41,5 +43,13 @@ export const Success = {
     );
     expect(canvas.getByText(/OF-L337/)).toBeVisible();
     expect(args.onConfirmed).toBeCalledTimes(1);
+  },
+};
+
+export const Pending = {
+  parameters: {
+    msw: {
+      handlers: [mockSubmissionProcessingStatusPendingGet],
+    },
   },
 };

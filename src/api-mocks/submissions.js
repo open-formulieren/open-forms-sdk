@@ -60,3 +60,20 @@ export const mockSubmissionProcessingStatusGet = rest.get(
       })
     )
 );
+
+export const mockSubmissionProcessingStatusPendingGet = rest.get(
+  `${BASE_URL}submissions/:uuid/:token/status`,
+  (req, res, ctx) =>
+    res(
+      ctx.json({
+        status: 'in_progress',
+        result: '',
+        errorMessage: '',
+        publicReference: '',
+        confirmationPageContent: '',
+        reportDownloadUrl: '',
+        paymentUrl: '',
+        mainWebsiteUrl: '',
+      })
+    )
+);
