@@ -17,12 +17,6 @@ import AppointmentProgress from './AppointmentProgress';
 import CreateAppointmentState from './CreateAppointmentState';
 import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 
-// TODO on submission to backend -> summary component
-// TODO: post to API endpoint, handle validation errors
-// window.sessionStorage.clearItem(storageKey);
-// removeSubmissionFromStorage();
-// resetSession();
-
 const CreateAppointment = () => {
   const form = useFormContext();
   const {pathname: currentPathname} = useLocation();
@@ -47,9 +41,18 @@ const CreateAppointment = () => {
     APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
 
+  const reset = () => {
+    clearSubmission();
+    resetSession();
+  };
+
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <CreateAppointmentState currentStep={currentStep} submission={submission}>
+      <CreateAppointmentState
+        currentStep={currentStep}
+        submission={submission}
+        resetSession={reset}
+      >
         <FormDisplayComponent
           router={
             <Wrapper sessionExpired={sessionExpired} title={form.name}>
@@ -60,7 +63,7 @@ const CreateAppointment = () => {
                   <RequireSession
                     expired={sessionExpired}
                     expiryDate={expiryDate}
-                    onNavigate={() => resetSession()}
+                    onNavigate={reset}
                   >
                     <LiteralsProvider literals={form.literals}>
                       <Outlet />
