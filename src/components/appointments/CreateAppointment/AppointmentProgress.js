@@ -51,7 +51,6 @@ const AppointmentProgress = ({title, currentStep}) => {
     config?.displayComponents?.progressIndicator ?? ProgressIndicatorDisplay;
   return (
     <ProgressIndicatorDisplayComponent
-      // FIXME: summary and overview
       activeStepTitle={steps[currentStepIndex].formDefinition}
       formTitle={title}
       steps={steps}
