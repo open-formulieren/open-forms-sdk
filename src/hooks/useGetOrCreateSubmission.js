@@ -6,27 +6,41 @@ import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'da
 
 export const SESSION_STORAGE_KEY = 'appointment|submission';
 
-const useGetOrCreateSubmission = form => {
+const useGetOrCreateSubmission = (form, skipCreation) => {
   const {baseUrl} = useContext(ConfigContext);
   const [submission, setSubmission] = useSessionStorage(SESSION_STORAGE_KEY, null);
 
+  const clear = () => {
+    setSubmission(null);
+    flagNoActiveSubmission();
+  };
+
+  // do nothing when there is no submission and the creation must be skipped
+  const hasSubmission = submission !== null;
+  const shouldCreate = !hasSubmission && !skipCreation;
+
   const [state, callback] = useAsyncFn(
     async signal => {
-      if (submission == null) {
+      if (shouldCreate) {
         try {
-          const submissionData = await createSubmission(baseUrl, form, signal);
-          setSubmission(submissionData);
+          setSubmission(await createSubmission(baseUrl, form, signal));
         } catch (e) {
           if (error.name !== 'AbortError') {
             throw e;
           }
         }
       }
-      flagActiveSubmission();
+
+      // there either was a submission or it was just created -> flag that we have an
+      // active submission
+      if (hasSubmission || shouldCreate) {
+        flagActiveSubmission();
+      }
     },
-    [baseUrl, form, submission]
+    [baseUrl, hasSubmission, shouldCreate, form]
   );
 
+  // Ensure pending requests are cancelled when the component unmounts.
   useEffect(() => {
     const abortController = new AbortController();
     callback(abortController.signal);
@@ -35,15 +49,11 @@ const useGetOrCreateSubmission = form => {
 
   const {loading, error} = state;
 
-  return {
-    isLoading: loading,
-    error,
-    submission,
-    removeSubmissionFromStorage: () => {
-      window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
-      flagNoActiveSubmission();
-    },
-  };
+  // the useAsyncFn goes into 'loading' state whenever the callback is running, even
+  // if there is nothing to do, so we should properly reflect that in our own derived
+  // isLoading
+  const isDoingWork = shouldCreate && loading;
+  return {isLoading: isDoingWork, error, submission, clear};
 };
 
 export default useGetOrCreateSubmission;
