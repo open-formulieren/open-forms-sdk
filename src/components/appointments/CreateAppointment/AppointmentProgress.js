@@ -11,11 +11,16 @@ import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS, checkMatchesPath} from './rou
 
 const AppointmentProgress = ({title, currentStep}) => {
   const config = useContext(ConfigContext);
-  const {submittedSteps} = useCreateAppointmentContext();
+  const {submission, submittedSteps} = useCreateAppointmentContext();
   const intl = useIntl();
   const {pathname: currentPathname} = useLocation();
 
+  const isSummary = checkMatchesPath(currentPathname, 'overzicht');
+  const isConfirmation = checkMatchesPath(currentPathname, 'bevestiging');
+
   const [expanded, setExpanded] = useState(false);
+
+  const isSubmissionComplete = isConfirmation && submission === null;
 
   const currentStepIndex = APPOINTMENT_STEP_PATHS.indexOf(currentStep);
   const steps = APPOINTMENT_STEPS.map(({path, name}) => {
@@ -30,15 +35,17 @@ const AppointmentProgress = ({title, currentStep}) => {
     return {
       uuid: `appointments-${path}`,
       to: path,
-      isCompleted: stepCompleted,
+      isCompleted: stepCompleted || isSubmissionComplete,
       isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, path),
-      canNavigateTo: stepCompleted || previousStepCompleted || index === currentStepIndex,
+      canNavigateTo:
+        stepCompleted ||
+        previousStepCompleted ||
+        index === currentStepIndex ||
+        isSubmissionComplete,
       formDefinition: intl.formatMessage(name),
     };
   });
-
-  const isSummary = checkMatchesPath(currentPathname, 'overzicht');
 
   const ProgressIndicatorDisplayComponent =
     config?.displayComponents?.progressIndicator ?? ProgressIndicatorDisplay;
@@ -51,9 +58,11 @@ const AppointmentProgress = ({title, currentStep}) => {
       isStartPage={false}
       summaryTo="overzicht"
       isSummary={isSummary}
-      isConfirmation={false}
-      isSubmissionComplete={false}
-      areApplicableStepsCompleted={submittedSteps.length === APPOINTMENT_STEPS.length}
+      isConfirmation={isConfirmation}
+      isSubmissionComplete={isSubmissionComplete}
+      areApplicableStepsCompleted={
+        isSubmissionComplete || submittedSteps.length === APPOINTMENT_STEPS.length
+      }
       showOverview
       showConfirmation
       expanded={expanded}

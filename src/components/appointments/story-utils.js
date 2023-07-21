@@ -8,13 +8,12 @@ export const withAppointmentState = (Story, {parameters}) => {
     submission,
     appointmentErrors,
   } = parameters?.appointmentState;
-  const contextValue = buildContextValue(
+  const contextValue = buildContextValue({
     submission,
     currentStep,
     appointmentData,
-    () => {},
-    appointmentErrors
-  );
+    appointmentErrors,
+  });
   return (
     <CreateAppointmentContext.Provider value={contextValue}>
       <Story />

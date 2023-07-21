@@ -17,18 +17,17 @@ import AppointmentProgress from './AppointmentProgress';
 import CreateAppointmentState from './CreateAppointmentState';
 import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
 
-// TODO on submission to backend -> summary component
-// TODO: post to API endpoint, handle validation errors
-// window.sessionStorage.clearItem(storageKey);
-// removeSubmissionFromStorage();
-// resetSession();
+const useIsConfirmation = () => {
+  // useMatch requires absolute paths... and react-router are NOT receptive to changing that.
+  const {pathname} = useLocation();
+  return checkMatchesPath(pathname, 'bevestiging');
+};
 
 const CreateAppointment = () => {
   const form = useFormContext();
-  const {pathname: currentPathname} = useLocation();
+  const {pathname} = useLocation();
 
-  // useMatch requires absolute paths... and react-router are NOT receptive to changing that.
-  const skipSubmissionCreation = checkMatchesPath(currentPathname, 'bevestiging');
+  const skipSubmissionCreation = useIsConfirmation();
   const {
     isLoading,
     error,
@@ -44,12 +43,21 @@ const CreateAppointment = () => {
   const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
 
   const currentStep =
-    APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(currentPathname, step)) ||
+    APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(pathname, step)) ||
     APPOINTMENT_STEP_PATHS[0];
+
+  const reset = () => {
+    clearSubmission();
+    resetSession();
+  };
 
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <CreateAppointmentState currentStep={currentStep} submission={submission}>
+      <CreateAppointmentState
+        currentStep={currentStep}
+        submission={submission}
+        resetSession={reset}
+      >
         <FormDisplayComponent
           router={
             <Wrapper sessionExpired={sessionExpired} title={form.name}>
@@ -60,7 +68,7 @@ const CreateAppointment = () => {
                   <RequireSession
                     expired={sessionExpired}
                     expiryDate={expiryDate}
-                    onNavigate={() => resetSession()}
+                    onNavigate={reset}
                   >
                     <LiteralsProvider literals={form.literals}>
                       <Outlet />
@@ -82,7 +90,8 @@ const CreateAppointment = () => {
 CreateAppointment.propTypes = {};
 
 const Wrapper = ({sessionExpired = false, children, ...props}) => {
-  if (sessionExpired) return <>{children}</>;
+  const isConfirmation = useIsConfirmation();
+  if (sessionExpired || isConfirmation) return <>{children}</>;
 
   return (
     <Card titleComponent="h1" modifiers={['mobile-header-hidden']} {...props}>
