@@ -47,7 +47,6 @@ const useTriggerWarning = numSeconds => {
 };
 
 const RequireSession = ({expired = false, expiryDate = null, onNavigate, children}) => {
-  const {baseUrl} = useContext(ConfigContext);
   const [warningDismissed, setWarningDismissed] = useState(false);
 
   // re-render when the session is expired to show the error message
@@ -60,11 +59,11 @@ const RequireSession = ({expired = false, expiryDate = null, onNavigate, childre
   useEffect(() => {
     if (!expiryDate) {
       cancelExpiryTimeout();
-      return;
+    } else {
+      resetExpiryTimeout();
+      resetWarningTriggered();
+      setWarningDismissed(false);
     }
-    resetExpiryTimeout();
-    resetWarningTriggered();
-    setWarningDismissed(false);
     return () => {
       cancelExpiryTimeout();
     };
@@ -98,52 +97,19 @@ const RequireSession = ({expired = false, expiryDate = null, onNavigate, childre
     );
   }
 
-  // if we don't have any expiry date information, we can't show anything -> abort early.
-  if (expiryDate == null) return children;
-
   const showWarning = !warningDismissed && warningTriggered;
   const secondsToExpiry = parseInt((expiryDate - now) / 1000);
+  // ensure that the components don't get unmounted when there's no expiryDate -> do not
+  // exit early
   return (
     <>
-      <Modal
-        title={
-          <FormattedMessage
-            description="Session expiry warning title (in modal)"
-            defaultMessage="Your session will expire soon."
-          />
-        }
-        isOpen={showWarning}
-        closeModal={() => {
-          setWarningDismissed(true);
-        }}
-      >
-        <ErrorMessage modifiers={['warning']}>
-          <FormattedMessage
-            description="Session expiry warning message (in modal)"
-            defaultMessage="Your session is about to expire {delta}. Extend your session if you wish to continue."
-            values={{
-              delta: <RelativeTimeToExpiry numSeconds={secondsToExpiry} />,
-            }}
-          />
-        </ErrorMessage>
-        <Toolbar modifiers={['bottom', 'reverse']}>
-          <ToolbarList>
-            <Button
-              type="submit"
-              variant="primary"
-              onClick={async event => {
-                event.preventDefault();
-                await apiCall(`${baseUrl}ping`);
-              }}
-            >
-              <FormattedMessage
-                description="Extend session button (in modal)"
-                defaultMessage="Extend"
-              />
-            </Button>
-          </ToolbarList>
-        </Toolbar>
-      </Modal>
+      {expiryDate && (
+        <ExpiryModal
+          showWarning={showWarning}
+          secondsToExpiry={secondsToExpiry}
+          setWarningDismissed={setWarningDismissed}
+        />
+      )}
       {children}
     </>
   );
@@ -154,6 +120,57 @@ RequireSession.propTypes = {
   expiryDate: PropTypes.instanceOf(Date),
   onNavigate: PropTypes.func,
   children: PropTypes.node,
+};
+
+const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
+  const {baseUrl} = useContext(ConfigContext);
+  return (
+    <Modal
+      title={
+        <FormattedMessage
+          description="Session expiry warning title (in modal)"
+          defaultMessage="Your session will expire soon."
+        />
+      }
+      isOpen={showWarning}
+      closeModal={() => {
+        setWarningDismissed(true);
+      }}
+    >
+      <ErrorMessage modifiers={['warning']}>
+        <FormattedMessage
+          description="Session expiry warning message (in modal)"
+          defaultMessage="Your session is about to expire {delta}. Extend your session if you wish to continue."
+          values={{
+            delta: <RelativeTimeToExpiry numSeconds={secondsToExpiry} />,
+          }}
+        />
+      </ErrorMessage>
+      <Toolbar modifiers={['bottom', 'reverse']}>
+        <ToolbarList>
+          <Button
+            type="submit"
+            variant="primary"
+            onClick={async event => {
+              event.preventDefault();
+              await apiCall(`${baseUrl}ping`);
+            }}
+          >
+            <FormattedMessage
+              description="Extend session button (in modal)"
+              defaultMessage="Extend"
+            />
+          </Button>
+        </ToolbarList>
+      </Toolbar>
+    </Modal>
+  );
+};
+
+ExpiryModal.propTypes = {
+  showWarning: PropTypes.bool.isRequired,
+  secondsToExpiry: PropTypes.number.isRequired,
+  setWarningDismissed: PropTypes.func.isRequired,
 };
 
 export default RequireSession;
