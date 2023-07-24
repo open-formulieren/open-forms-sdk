@@ -2,6 +2,69 @@
 SDK Changelog
 =============
 
+1.5.0-alpha.0 (2023-07-24)
+==========================
+
+First preview release of the upcoming 1.5.0 version.
+
+.. warning:: SDK 1.5.0-alpha.0 requires at least version 2.3.0-alpha.0 of the Open
+   Formulieren API.
+
+Features
+--------
+
+* Implemented a bunch of (non-formio) form components:
+
+  * [#433] Added an input group component to split a single field in multiple user input
+    elements for better user experience.
+  * [#433] Added the input group widget for date fields (day, month, year) with
+    localization.
+  * [#465] Added the radio field component.
+
+* NL Design system improvements
+
+  * [#468] Reworked selectboxes to have NL DS markup and styling.
+  * [#475] Reworked radio inputs to have NL DS markup and styling.
+  * [#476] Reworked checkboxes to have NL DS markup and styling.
+
+* [#1892] Added tooltips to formio components.
+* [#3209] Added base tooltip styling, configurable via design tokens.
+
+* [#2471] Appointments rework - there is now a dedicated appointment flow without Form.io
+
+  .. note:: This is currently in preview to get some early feedback, but we are aware
+     of a number of issues.
+
+  * [#3066] Added contact details step, showing the required fields as exposed by the
+    backend.
+  * Appointment data submitted in any step is persisted in the session storage so that
+    it survives hard-refreshes. This also makes it possible to open multiple forms in
+    multiple browser tabs/windows.
+  * [#3067] Exposed the appointment flow in the main app routes.
+  * UI toggles between single/multi-product depending on backend support.
+  * [#435] Added client-side user input validation.
+
+* [#2175] Support initial map center and zoom level from backend configuration.
+
+Bugfixes
+--------
+
+* [#3268] Fixed Piwik Pro Referrer URL.
+
+Project maintenance
+-------------------
+
+* Bumped ``requests`` in CI tooling following security reports via @dependabot.
+* Upgraded to Storybook 7.
+* Added Amsterdam and Rotterdam (WIP) design tokens and preview themes to Storybook.
+* Added loader component to Storybook.
+* [#310] Added basic map component to Storybook.
+* Fixed (some) proptype warnings in tests.
+* [#3067] Added submission completion component to Storybook.
+* Refactored components to retrieve data via context instead of props, to make them more
+  suitable for react-router's data routers.
+
+
 1.4.0 (2023-06-21)
 ==================
 

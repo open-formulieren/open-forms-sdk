@@ -188,7 +188,7 @@
     "originalDefault": "Back to location and time"
   },
   "E3ytti": {
-    "defaultMessage": "{numProducts, plural, one {Product} other {Products}}",
+    "defaultMessage": "{numProducts, plural, one {Product} other {Producten}}",
     "description": "Appointment overview: products step title",
     "originalDefault": "{numProducts, plural, one {Product} other {Products}}"
   },
@@ -288,7 +288,7 @@
     "originalDefault": "Continue later"
   },
   "M6koTk": {
-    "defaultMessage": "Contact details",
+    "defaultMessage": "Contactgegevens",
     "description": "Appointment overview: contact details step title",
     "originalDefault": "Contact details"
   },
@@ -365,7 +365,7 @@
     "originalDefault": "Payment overview"
   },
   "X3FjL+": {
-    "defaultMessage": "Location and time",
+    "defaultMessage": "Locatie en tijdstip",
     "description": "Appointment overview: location and time step title",
     "originalDefault": "Location and time"
   },
