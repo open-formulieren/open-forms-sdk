@@ -2,6 +2,13 @@
 Changelog
 =========
 
+1.2.10 (2023-07-24)
+===================
+
+Periodic bugfix release
+
+* [#3268] Fixed Piwik Pro Referrer URL.
+
 1.2.9 (2023-06-21)
 ==================
 
