@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+1.4.1 (2023-07-24)
+==================
+
+Periodic bugfix release
+
+* [#3268] Fixed Piwik Pro Referrer URL.
+
 1.4.0 (2023-06-21)
 ==================
 
