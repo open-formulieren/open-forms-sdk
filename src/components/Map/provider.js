@@ -24,7 +24,7 @@ class OpenFormsProvider {
       return [];
     }
 
-    if (response.status != 200) return [];
+    if (response.status !== 200) return [];
 
     const searchResponse = await response.json();
 

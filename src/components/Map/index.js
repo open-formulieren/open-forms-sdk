@@ -176,6 +176,7 @@ const SearchControl = ({onMarkerSet, options}) => {
   }, [
     map,
     setMarker,
+    baseUrl,
     showMarker,
     showPopup,
     retainZoomLevel,
