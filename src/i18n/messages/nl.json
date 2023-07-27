@@ -364,6 +364,11 @@
     "description": "Payment overview title",
     "originalDefault": "Payment overview"
   },
+  "X/24FO": {
+    "defaultMessage": "Map component search button",
+    "description": "The leaflet map's search button areaLabel text.",
+    "originalDefault": "Map component search button"
+  },
   "X3FjL+": {
     "defaultMessage": "Locatie en tijdstip",
     "description": "Appointment overview: location and time step title",
@@ -394,6 +399,11 @@
     "defaultMessage": "Uw e-mailadres",
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
+  },
+  "aUpjaY": {
+    "defaultMessage": "Sorry, that address could not be found.",
+    "description": "The leaflet map's location not found message.",
+    "originalDefault": "Sorry, that address could not be found."
   },
   "abKEBH": {
     "defaultMessage": "Nee",
@@ -593,6 +603,11 @@
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
+  },
+  "sSmY1N": {
+    "defaultMessage": "Enter address, please",
+    "description": "The leaflet map's input fields placeholder message.",
+    "originalDefault": "Enter address, please"
   },
   "senRv3": {
     "defaultMessage": "U staat op het punt uw afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden.",

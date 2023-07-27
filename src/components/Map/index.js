@@ -1,11 +1,31 @@
+import {GeoSearchControl} from 'leaflet-geosearch';
 import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
+import {defineMessages, useIntl} from 'react-intl';
 import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
 import {useGeolocation} from 'react-use';
 
+import {ConfigContext} from 'Context';
 import {DEFAULT_LAT_LNG, DEFAULT_ZOOM, MAP_DEFAULTS, TILE_LAYERS} from 'map/constants';
 import {getBEMClassName} from 'utils';
+
+import OpenFormsProvider from './provider';
+
+const searchControlMessages = defineMessages({
+  buttonLabel: {
+    description: "The leaflet map's search button areaLabel text.",
+    defaultMessage: 'Map component search button',
+  },
+  searchLabel: {
+    description: "The leaflet map's input fields placeholder message.",
+    defaultMessage: 'Enter address, please',
+  },
+  notFound: {
+    description: "The leaflet map's location not found message.",
+    defaultMessage: 'Sorry, that address could not be found.',
+  },
+});
 
 const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
@@ -31,6 +51,7 @@ const LeaftletMap = ({
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
 }) => {
+  const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
   const coordinates = markerCoordinates || defaultCoordinates;
 
@@ -59,6 +80,20 @@ const LeaftletMap = ({
           <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
         </>
       ) : null}
+      <SearchControl
+        onMarkerSet={onMarkerSet}
+        options={{
+          showMarker: false,
+          showPopup: false,
+          retainZoomLevel: false,
+          animateZoom: true,
+          autoClose: false,
+          searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
+          keepResult: true,
+          updateMap: true,
+          notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
+        }}
+      />
       {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
     </MapContainer>
   );
@@ -71,20 +106,104 @@ LeaftletMap.propTypes = {
 };
 
 // Set the map view if coordinates are provided
-const MapView = ({coordinates = null, zoomLevel = DEFAULT_ZOOM}) => {
+const MapView = ({coordinates = null}) => {
   const map = useMap();
   useEffect(() => {
     if (!coordinates || coordinates.length !== 2) return;
     if (!coordinates.filter(value => isFinite(value)).length === 2) return;
-    map.setView(coordinates, zoomLevel);
-  });
+    map.setView(coordinates);
+  }, [map, coordinates]);
   // rendering is done by leaflet, so just return null
   return null;
 };
 
 MapView.propTypes = {
   coordinates: PropTypes.arrayOf(PropTypes.number),
-  zoomLevel: PropTypes.number,
+};
+
+const SearchControl = ({onMarkerSet, options}) => {
+  const {baseUrl} = useContext(ConfigContext);
+  const map = useMap();
+  const intl = useIntl();
+
+  const {
+    showMarker,
+    showPopup,
+    retainZoomLevel,
+    animateZoom,
+    autoClose,
+    searchLabel,
+    keepResult,
+    updateMap,
+    notFoundMessage,
+  } = options;
+
+  const buttonLabel = intl.formatMessage(searchControlMessages.buttonLabel);
+
+  const setMarker = useCallback(
+    result => {
+      if (result.location) {
+        onMarkerSet([result.location.y, result.location.x]);
+      }
+    },
+    [onMarkerSet]
+  );
+
+  useEffect(() => {
+    const provider = new OpenFormsProvider(baseUrl);
+    const searchControl = new GeoSearchControl({
+      provider: provider,
+      style: 'button',
+      showMarker,
+      showPopup,
+      retainZoomLevel,
+      animateZoom,
+      autoClose,
+      searchLabel,
+      keepResult,
+      updateMap,
+      notFoundMessage,
+    });
+
+    searchControl.button.setAttribute('aria-label', buttonLabel);
+    map.addControl(searchControl);
+    map.on('geosearch/showlocation', setMarker);
+
+    return () => {
+      map.off('geosearch/showlocation', setMarker);
+      map.removeControl(searchControl);
+    };
+  }, [
+    map,
+    setMarker,
+    showMarker,
+    showPopup,
+    retainZoomLevel,
+    animateZoom,
+    autoClose,
+    searchLabel,
+    keepResult,
+    updateMap,
+    notFoundMessage,
+    buttonLabel,
+  ]);
+
+  return null;
+};
+
+SearchControl.propTypes = {
+  onMarkerSet: PropTypes.func.isRequired,
+  options: PropTypes.shape({
+    showMarker: PropTypes.bool.isRequired,
+    showPopup: PropTypes.bool.isRequired,
+    retainZoomLevel: PropTypes.bool.isRequired,
+    animateZoom: PropTypes.bool.isRequired,
+    autoClose: PropTypes.bool.isRequired,
+    searchLabel: PropTypes.string.isRequired,
+    keepResult: PropTypes.bool.isRequired,
+    updateMap: PropTypes.bool.isRequired,
+    notFoundMessage: PropTypes.string.isRequired,
+  }),
 };
 
 const MarkerWrapper = ({position, onMarkerSet, ...props}) => {

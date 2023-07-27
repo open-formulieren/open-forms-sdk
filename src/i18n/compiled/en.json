@@ -553,6 +553,12 @@
       "value": "Payment overview"
     }
   ],
+  "X/24FO": [
+    {
+      "type": 0,
+      "value": "Map component search button"
+    }
+  ],
   "X3FjL+": [
     {
       "type": 0,
@@ -595,6 +601,12 @@
     {
       "type": 0,
       "value": "Your email address"
+    }
+  ],
+  "aUpjaY": [
+    {
+      "type": 0,
+      "value": "Sorry, that address could not be found."
     }
   ],
   "abKEBH": [
@@ -893,6 +905,12 @@
     {
       "type": 0,
       "value": "Suspending the form failed, please try again later"
+    }
+  ],
+  "sSmY1N": [
+    {
+      "type": 0,
+      "value": "Enter address, please"
     }
   ],
   "senRv3": [

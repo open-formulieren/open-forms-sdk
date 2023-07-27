@@ -359,6 +359,11 @@
     "description": "Payment overview title",
     "originalDefault": "Payment overview"
   },
+  "X/24FO": {
+    "defaultMessage": "Map component search button",
+    "description": "The leaflet map's search button areaLabel text.",
+    "originalDefault": "Map component search button"
+  },
   "X3FjL+": {
     "defaultMessage": "Location and time",
     "description": "Appointment overview: location and time step title",
@@ -388,6 +393,11 @@
     "defaultMessage": "Your email address",
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
+  },
+  "aUpjaY": {
+    "defaultMessage": "Sorry, that address could not be found.",
+    "description": "The leaflet map's location not found message.",
+    "originalDefault": "Sorry, that address could not be found."
   },
   "abKEBH": {
     "defaultMessage": "No",
@@ -583,6 +593,11 @@
     "defaultMessage": "Suspending the form failed, please try again later",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
+  },
+  "sSmY1N": {
+    "defaultMessage": "Enter address, please",
+    "description": "The leaflet map's input fields placeholder message.",
+    "originalDefault": "Enter address, please"
   },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
