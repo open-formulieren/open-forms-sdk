@@ -221,6 +221,12 @@
       "value": "provider"
     }
   ],
+  "BboxO6": [
+    {
+      "type": 0,
+      "value": "Use two fingers to move the map"
+    }
+  ],
   "CvRUHm": [
     {
       "type": 0,
@@ -839,6 +845,12 @@
       "value": ". Verleng uw sessie indien u door wenst te gaan."
     }
   ],
+  "nLymjB": [
+    {
+      "type": 0,
+      "value": "Use ctrl + scroll to zoom the map"
+    }
+  ],
   "nfRRDu": [
     {
       "type": 0,
@@ -861,6 +873,12 @@
     {
       "type": 0,
       "value": "Nog een product toevoegen"
+    }
+  ],
+  "ovI+W7": [
+    {
+      "type": 0,
+      "value": "Use ⌘ + scroll to zoom the map"
     }
   ],
   "qKxfrz": [

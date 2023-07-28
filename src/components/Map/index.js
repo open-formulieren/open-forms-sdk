@@ -1,4 +1,5 @@
 import {GeoSearchControl} from 'leaflet-geosearch';
+import {GestureHandling} from 'leaflet-gesture-handling';
 import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
@@ -24,6 +25,21 @@ const searchControlMessages = defineMessages({
   notFound: {
     description: "The leaflet map's location not found message.",
     defaultMessage: 'Sorry, that address could not be found.',
+  },
+});
+
+const leafletGestureHandlingText = defineMessages({
+  touch: {
+    description: 'Gesturehandeling phone touch message.',
+    defaultMessage: 'Use two fingers to move the map',
+  },
+  scroll: {
+    description: 'Gesturehandeling pc scroll message.',
+    defaultMessage: 'Use ctrl + scroll to zoom the map',
+  },
+  scrollMac: {
+    description: 'Gesturehandeling mac scroll message.',
+    defaultMessage: 'Use \u2318 + scroll to zoom the map',
   },
 });
 
@@ -72,6 +88,14 @@ const LeaftletMap = ({
       crs={MAP_DEFAULTS.crs}
       attributionControl
       className={className}
+      gestureHandlingOptions={{
+        text: {
+          touch: intl.formatMessage(leafletGestureHandlingText.touch),
+          scroll: intl.formatMessage(leafletGestureHandlingText.scroll),
+          scrollMac: intl.formatMessage(leafletGestureHandlingText.scrollMac),
+        },
+        duration: 3000,
+      }}
     >
       <TileLayer url={TILE_LAYERS.url} {...TILE_LAYERS.options} />
       {coordinates ? (
@@ -95,6 +119,7 @@ const LeaftletMap = ({
         }}
       />
       {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
+      <GestureHandlingSetter />
     </MapContainer>
   );
 };
@@ -249,6 +274,15 @@ const CaptureClick = ({setMarker}) => {
 
 CaptureClick.propTypes = {
   setMarker: PropTypes.func.isRequired,
+};
+
+const GestureHandlingSetter = () => {
+  const map = useMap();
+  useEffect(() => {
+    map.gestureHandling.enable();
+    map.addHandler('gestureHandling', GestureHandling);
+  }, [map]);
+  return null;
 };
 
 export default LeaftletMap;
