@@ -47,7 +47,7 @@ export const getDateLocaleMeta = locale => {
 };
 
 export const convertMonth = (month, toAdd) => {
-  if (!month) return '';
+  if (month === '' || month == null) return '';
   const monthNumber = parseInt(month);
   return String(monthNumber + toAdd);
 };
