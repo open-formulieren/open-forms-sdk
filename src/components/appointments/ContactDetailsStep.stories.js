@@ -101,6 +101,6 @@ export const WithBackendErrors = {
       await canvas.findByText('Unfortunately, you are banned from making appointments.')
     ).toBeVisible();
     const submitButton = canvas.getByRole('button', {name: 'Naar overzicht'});
-    expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+    expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
   },
 };

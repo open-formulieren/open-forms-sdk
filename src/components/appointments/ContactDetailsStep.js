@@ -98,7 +98,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
           initialTouched={initialTouched?.contactDetails}
           enableReinitialize
           validateOnChange={false}
-          validateOnBlur
+          validateOnBlur={false}
           validationSchema={
             validationSchema ? toFormikValidationSchema(validationSchema) : undefined
           }
@@ -119,7 +119,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
               ))}
 
               <SubmitRow
-                canSubmit={dirty && !loading && validationSchema && isValid}
+                canSubmit={!loading && validationSchema}
                 nextText={intl.formatMessage({
                   description: 'Appointments contact details step: next step text',
                   defaultMessage: 'To overview',

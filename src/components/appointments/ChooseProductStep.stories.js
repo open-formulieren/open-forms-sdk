@@ -157,6 +157,6 @@ export const WithBackendErrors = {
 
     await expect(await canvas.findByText('Product is sold out.')).toBeVisible();
     const submitButton = canvas.getByRole('button', {name: 'Bevestig producten'});
-    expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+    expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
   },
 };
