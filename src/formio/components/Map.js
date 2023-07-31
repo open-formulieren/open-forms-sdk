@@ -4,7 +4,9 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
+import {IntlProvider} from 'react-intl';
 
+import {ConfigContext} from 'Context';
 import LeafletMap from 'components/Map';
 import {DEFAULT_LAT_LNG, MAP_DEFAULTS} from 'map/constants';
 
@@ -104,12 +106,16 @@ export default class Map extends Field {
     if (!container) return;
 
     this.reactRoot.render(
-      <LeafletMap
-        markerCoordinates={markerCoordinates || null}
-        onMarkerSet={this.onMarkerSet.bind(this)}
-        defaultCenter={defaultCenter}
-        defaultZoomLevel={zoom || MAP_DEFAULTS.zoom}
-      />
+      <IntlProvider {...this.options.intl}>
+        <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
+          <LeafletMap
+            markerCoordinates={markerCoordinates || null}
+            onMarkerSet={this.onMarkerSet.bind(this)}
+            defaultCenter={defaultCenter}
+            defaultZoomLevel={zoom || MAP_DEFAULTS.zoom}
+          />
+        </ConfigContext.Provider>
+      </IntlProvider>
     );
   }
 

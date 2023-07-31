@@ -2058,6 +2058,13 @@
   resolved "https://registry.yarnpkg.com/@gemeente-denhaag/design-tokens-components/-/design-tokens-components-0.2.3-alpha.316.tgz#c4162c67588b022ab38ce846a802544d679c8030"
   integrity sha512-bduK7QD1Pq/Viou39lq3lmH1O+oOlhDlU4C7GUB0gdEAMU9mS7PGZ3L40iGhlyUe1/t6vVgoueGjuRC98Wj/Kw==
 
+"@googlemaps/js-api-loader@^1.14.3":
+  version "1.16.2"
+  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.16.2.tgz#3fe748e21243f8e8322c677a5525c569ae9cdbe9"
+  integrity sha512-psGw5u0QM6humao48Hn4lrChOM2/rA43ZCm3tKK9qQsEj1/VzqkCqnvGfEOshDbBQflydfaRovbKwZMF4AyqbA==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.10.tgz#5a3ffe32cc9306365fb3fd572596cd602d5e12d2"
@@ -9851,7 +9858,15 @@ lazy-universal-dotenv@^4.0.0:
     dotenv "^16.0.0"
     dotenv-expand "^10.0.0"
 
-leaflet@^1.7.1:
+leaflet-geosearch@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/leaflet-geosearch/-/leaflet-geosearch-3.8.0.tgz#c792a71cc3c960d9396b7c1ad9ab6a8ffdd033f3"
+  integrity sha512-YYFigq2JkqaZrgEjxWyvyQy4seh0Il9xPlG+IP2Z3+K7DrQ+bYc7qDizmxKbAn2jSNUCvokz75gXj7wXcFDB9A==
+  optionalDependencies:
+    "@googlemaps/js-api-loader" "^1.14.3"
+    leaflet "^1.6.0"
+
+leaflet@^1.6.0, leaflet@^1.7.1:
   version "1.9.4"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
   integrity sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==

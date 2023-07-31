@@ -9,7 +9,7 @@ import {PREFIX} from 'formio/constants';
 const RenderFormioForm = ({configuration, submissionData = {}, evalContext = {}}) => {
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
-  const {locale} = useIntl();
+  const intl = useIntl();
   // Similar to FormStep/index.js usage
   return (
     <Form
@@ -18,13 +18,15 @@ const RenderFormioForm = ({configuration, submissionData = {}, evalContext = {}}
       options={{
         noAlerts: true,
         baseUrl: config.baseUrl,
-        language: locale,
+        language: intl.locale,
         i18n: formioTranslations.i18n, // TODO - get this from backend/bake into build?
         evalContext: {
           ofPrefix: `${PREFIX}-`,
           requiredFieldsWithAsterisk: config.requiredFieldsWithAsterisk,
           ...evalContext,
         },
+        // custom options
+        intl,
       }}
     />
   );
