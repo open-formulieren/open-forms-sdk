@@ -6,6 +6,7 @@ import {createRoot} from 'react-dom/client';
 import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
 import {RouterProvider, createBrowserRouter, createHashRouter} from 'react-router-dom';
+import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from 'Context';
 import {get} from 'api';
@@ -133,14 +134,16 @@ class OpenForm {
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
             }}
           >
-            <I18NErrorBoundary>
-              <I18NManager
-                languageSelectorTarget={this.languageSelectorTarget}
-                onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
-              >
-                <RouterProvider router={router} />
-              </I18NManager>
-            </I18NErrorBoundary>
+            <NonceProvider nonce={CSPNonce.getValue()} cacheKey="sdk-react-select">
+              <I18NErrorBoundary>
+                <I18NManager
+                  languageSelectorTarget={this.languageSelectorTarget}
+                  onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
+                >
+                  <RouterProvider router={router} />
+                </I18NManager>
+              </I18NErrorBoundary>
+            </NonceProvider>
           </ConfigContext.Provider>
         </FormContext.Provider>
       </React.StrictMode>

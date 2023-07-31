@@ -12,6 +12,9 @@ window.onload = () => {
     baseUrl: REACT_APP_BASE_API_URL,
     formId: formId || REACT_APP_FORM_ID,
     basePath: '/',
+    // added for testing purposes - adding a real CSP breaks *a lot* of things of Create
+    // React App :(
+    CSPNonce: 'RqgbALvp8D5b3+8NuhfuKg==',
     // displayComponents,
     useHashRouting: REACT_APP_USE_HASH_ROUTING === 'true' || false,
   });
