@@ -3,7 +3,7 @@ import {userEvent, within} from '@storybook/testing-library';
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import LeafletMap from '.';
-import {mockPdokApiResponseGet} from './mocks';
+import {mockAddressSearchGet} from './mocks';
 
 const withMapLayout = Story => (
   <div className="openforms-leaflet-map" style={{maxWidth: '600px'}}>
@@ -23,7 +23,7 @@ export default {
   },
   parameters: {
     msw: {
-      handlers: [mockPdokApiResponseGet],
+      handlers: [mockAddressSearchGet],
     },
   },
 };

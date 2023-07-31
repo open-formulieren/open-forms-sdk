@@ -2,7 +2,9 @@ import {rest} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
-export const mockPdokApiResponseGet = rest.get(`${BASE_URL}geo/address-search`, (req, res, ctx) => {
+const SEARCH_ENDPOINT = `${BASE_URL}geo/address-search`;
+
+export const mockAddressSearchGet = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
   const response = [
     {
       label: 'Gemeente Utrecht',
@@ -118,50 +120,41 @@ export const mockPdokApiResponseGet = rest.get(`${BASE_URL}geo/address-search`, 
   return res(ctx.status(200), ctx.json(response));
 });
 
-export const mockPdokApiEmptyResponseGet = rest.get(
-  `${BASE_URL}geo/address-search`,
-  (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json([]));
-  }
-);
+export const mockAddressSearchNoResultsGet = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
+  return res(ctx.status(200), ctx.json([]));
+});
 
-export const mockPdokApi400ResponseGet = rest.get(
-  `${BASE_URL}geo/address-search`,
-  (req, res, ctx) => {
-    return res(
-      ctx.status(400),
-      ctx.json({
-        type: `${BASE_URL}/fouten/ValidationError/`,
-        code: 'invalid',
-        title: 'Invalid input.',
-        status: 400,
-        detail: '',
-        instance: 'urn:uuid:fe568833-f520-4fc9-8f54-37648f2b46b8',
-        invalidParams: [
-          {
-            name: 'invalidParams',
-            code: 'invalid',
-            reason: "Missing query parameter 'q'",
-          },
-        ],
-      })
-    );
-  }
-);
+export const mockAddressSearch400Get = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
+  return res(
+    ctx.status(400),
+    ctx.json({
+      type: `${BASE_URL}/fouten/ValidationError/`,
+      code: 'invalid',
+      title: 'Invalid input.',
+      status: 400,
+      detail: '',
+      instance: 'urn:uuid:fe568833-f520-4fc9-8f54-37648f2b46b8',
+      invalidParams: [
+        {
+          name: 'invalidParams',
+          code: 'invalid',
+          reason: "Missing query parameter 'q'",
+        },
+      ],
+    })
+  );
+});
 
-export const mockPdokApi403ResponseGet = rest.get(
-  `${BASE_URL}geo/address-search`,
-  (req, res, ctx) => {
-    return res(
-      ctx.status(403),
-      ctx.json({
-        type: `${BASE_URL}/fouten/PermissionDenied/`,
-        code: 'permission_denied',
-        title: 'Je hebt geen toestemming om deze actie uit te voeren.',
-        status: 403,
-        detail: 'Je hebt geen toestemming om deze actie uit te voeren.',
-        instance: 'urn:uuid:fe568833-f520-4fc9-8f54-37648f2b46b8',
-      })
-    );
-  }
-);
+export const mockAddressSearch403Get = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
+  return res(
+    ctx.status(403),
+    ctx.json({
+      type: `${BASE_URL}/fouten/PermissionDenied/`,
+      code: 'permission_denied',
+      title: 'Je hebt geen toestemming om deze actie uit te voeren.',
+      status: 403,
+      detail: 'Je hebt geen toestemming om deze actie uit te voeren.',
+      instance: 'urn:uuid:fe568833-f520-4fc9-8f54-37648f2b46b8',
+    })
+  );
+});

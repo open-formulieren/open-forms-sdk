@@ -1,4 +1,4 @@
-import {apiCall} from 'api';
+import {get} from 'api';
 
 class OpenFormsProvider {
   constructor(baseUrl) {
@@ -14,23 +14,15 @@ class OpenFormsProvider {
   }
 
   async search({query}) {
-    let response;
-    const searchParams = new URLSearchParams({q: query});
-    const url = this.endpoint + `?${searchParams}`;
-
+    let results;
     try {
-      response = await apiCall(url);
+      results = await get(this.endpoint, {q: query});
     } catch (e) {
+      // XXX: check if we can send this to Sentry
       return [];
     }
-
-    if (response.status !== 200) return [];
-
-    const searchResponse = await response.json();
-
-    if (!searchResponse) return [];
-
-    return this.parse(searchResponse);
+    if (!results) return [];
+    return this.parse(results);
   }
 }
 
