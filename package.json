@@ -46,7 +46,7 @@
     "proj4leaflet": "^1.0.2",
     "react-formio": "^4.3.0",
     "react-intl": "^6.4.4",
-    "react-leaflet": "^3.2.2",
+    "react-leaflet": "4.2.1",
     "react-modal": "3.14.3",
     "react-number-format": "^5.2.1",
     "react-router-dom": "^6.11.2",
@@ -232,7 +232,10 @@
       "!src/api-mocks/*",
       "!src/story-utils/*"
     ],
-    "coverageReporters": ["text", "cobertura"],
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
@@ -250,7 +253,7 @@
       "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "[/\\\\]node_modules[/\\\\](?!(react-leaflet|@react-leaflet)).+\\.(js|jsx|mjs|cjs|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
     "modulePaths": [
