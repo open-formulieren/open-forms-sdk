@@ -32,3 +32,14 @@ export const Number = {
     label: 'Aantal',
   },
 };
+
+export const NumberWithSuffix = {
+  render: SingleFormioComponent,
+  args: {
+    key: 'number',
+    label: 'Aantal',
+    extraComponentProperties: {
+      suffix: 'm<sup>3</sup>',
+    },
+  },
+};

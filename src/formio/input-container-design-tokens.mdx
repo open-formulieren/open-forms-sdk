@@ -1,0 +1,18 @@
+import ofTokens from '@open-formulieren/design-tokens/dist/tokens';
+import {Meta} from '@storybook/addon-docs';
+import TokensTable from 'design-token-editor/lib/esm/TokensTable';
+
+<Meta title="Form.io components / Helpers / Input group / Design tokens" />
+
+## Available design tokens
+
+Prefix and suffix are usually styled through the generic `*-affix-*` tokens, but there are some
+overrides available specifically to prefix or suffix:
+
+- `background-color`
+- `border-color`
+- `border-style`
+- `border-width`
+- border-radii properties
+
+<TokensTable container={ofTokens} limitTo="of.input-container" autoExpand />

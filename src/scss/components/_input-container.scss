@@ -1,0 +1,76 @@
+@use 'microscope-sass/lib/bem';
+@use '../mixins/prefix';
+
+$affixes: 'prefix', 'suffix';
+
+@mixin override($property, $modifier) {
+  $default: var(--of-input-container-affix-#{$property});
+  #{$property}: var(--of-input-container-#{$modifier}-#{$property}, #{$default});
+}
+
+.#{prefix.prefix('input-container')} {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--of-input-container-gap);
+
+  @include bem.element('affix') {
+    background-color: var(--of-input-container-affix-background-color);
+    border-style: var(--of-input-container-affix-border-style);
+    border-color: var(--of-input-container-affix-border-color);
+    border-width: var(--of-input-container-affix-border-width);
+    padding-inline: var(--of-input-container-affix-padding-inline);
+    padding-block: var(--of-input-container-affix-padding-block);
+    line-height: var(--of-input-container-affix-line-height);
+
+    // support superscript and subscript
+    sup,
+    sub {
+      vertical-align: baseline;
+      position: relative;
+    }
+
+    sup {
+      top: -0.4em;
+    }
+
+    sub {
+      top: 0.4em;
+    }
+
+    // allow overrides for each affix
+    @each $affix in $affixes {
+      @include bem.modifier($affix) {
+        @include override(background-color, $affix);
+        @include override(border-style, $affix);
+        @include override(border-color, $affix);
+        @include override(border-width, $affix);
+      }
+    }
+
+    // target styles for prefix/suffix for which there is no generic expression
+
+    @include bem.modifier('prefix') {
+      border-start-start-radius: var(--of-input-container-prefix-border-start-start-radius);
+      border-end-start-radius: var(--of-input-container-prefix-border-end-start-radius);
+      margin-inline-end: var(
+        --of-input-container-prefix-margin-inline-end,
+        calc(
+          -1 * var(--of-input-container-prefix-border-width, var(--of-input-container-affix-border-width))
+        )
+      );
+    }
+
+    @include bem.modifier('suffix') {
+      border-start-end-radius: var(--of-input-container-prefix-border-start-end-radius);
+      border-end-end-radius: var(--of-input-container-prefix-border-end-end-radius);
+      margin-inline-start: var(
+        --of-input-container-prefix-margin-inline-start,
+        calc(
+          -1 * var(--of-input-container-prefix-border-width, var(--of-input-container-affix-border-width))
+        )
+      );
+    }
+  }
+}
