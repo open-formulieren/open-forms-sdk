@@ -2,7 +2,7 @@
 <div class="{{ctx.ofPrefix}}input-container">
 {% } %}
 {% if (ctx.prefix) { %}
-<span class="{{ctx.ofPrefix}}input-container__prefix" ref="prefix">
+<span class="{{ctx.ofPrefix}}input-container__affix {{ctx.ofPrefix}}input-container__affix--prefix" ref="prefix">
     {% if(ctx.prefix instanceof HTMLElement){ %}
       {{ ctx.t(ctx.prefix.outerHTML) }}
     {% } else{ %}
@@ -24,7 +24,7 @@
 <span class="wordcount" ref="wordcount"></span>
 {% } %}
 {% if (ctx.suffix) { %}
-<span class="{{ctx.ofPrefix}}input-container__suffix" ref="suffix">
+<span class="{{ctx.ofPrefix}}input-container__affix {{ctx.ofPrefix}}input-container__affix--suffix" ref="suffix">
     {% if(ctx.suffix instanceof HTMLElement){ %}
       {{ ctx.t(ctx.suffix.outerHTML) }}
     {% } else{ %}
