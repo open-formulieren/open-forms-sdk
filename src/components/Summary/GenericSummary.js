@@ -1,4 +1,4 @@
-import {Formik} from 'formik';
+import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -18,7 +18,6 @@ const GenericSummary = ({
   summaryData = [],
   showPaymentInformation,
   amountToPay,
-  privacyInformation,
   editStepText,
   isLoading,
   isAuthenticated,
@@ -27,8 +26,7 @@ const GenericSummary = ({
   onLogout,
   onPrevPage = null,
 }) => {
-  const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? 'form' : 'div';
-  const wrapperProps = submissionAllowed === SUBMISSION_ALLOWED.yes ? {onSubmit: onSubmit} : {};
+  const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? Form : 'div';
 
   if (isLoading) {
     return (
@@ -43,35 +41,28 @@ const GenericSummary = ({
       {errors.map(error => (
         <ErrorMessage key={error}>{error}</ErrorMessage>
       ))}
-      <Wrapper {...wrapperProps}>
-        {summaryData.map((step, index) => (
-          <FormStepSummary
-            key={`${index}-${step.slug}`}
-            slug={step.slug}
-            name={step.name}
-            data={step.data}
-            editStepText={editStepText}
-          />
-        ))}
-
-        {showPaymentInformation && <Price price={amountToPay} />}
-
-        <Formik
-          initialValues={{privacy: false}}
-          onSubmit={(values, actions) => {
-            onSubmit(values);
-            actions.setSubmitting(false);
-          }}
-        >
-          <SummaryConfirmation
-            submissionAllowed={submissionAllowed}
-            privacy={privacyInformation}
-            onPrevPage={onPrevPage}
-          />
-        </Formik>
-
-        {isAuthenticated ? <LogoutButton onLogout={onLogout} /> : null}
-      </Wrapper>
+      <Formik
+        initialValues={{privacy: false}}
+        onSubmit={(values, actions) => {
+          onSubmit(values);
+          actions.setSubmitting(false);
+        }}
+      >
+        <Wrapper>
+          {summaryData.map((step, index) => (
+            <FormStepSummary
+              key={`${index}-${step.slug}`}
+              slug={step.slug}
+              name={step.name}
+              data={step.data}
+              editStepText={editStepText}
+            />
+          ))}
+          {showPaymentInformation && <Price price={amountToPay} />}
+          <SummaryConfirmation submissionAllowed={submissionAllowed} onPrevPage={onPrevPage} />
+          {isAuthenticated ? <LogoutButton onLogout={onLogout} /> : null}
+        </Wrapper>
+      </Formik>
     </Card>
   );
 };
@@ -98,10 +89,6 @@ GenericSummary.propTypes = {
   ),
   showPaymentInformation: PropTypes.bool,
   amountToPay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  privacyInformation: PropTypes.shape({
-    requiresPrivacyConsent: PropTypes.bool.isRequired,
-    privacyLabel: PropTypes.string.isRequired,
-  }).isRequired,
   editStepText: PropTypes.string,
   isLoading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,

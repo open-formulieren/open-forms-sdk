@@ -10,7 +10,6 @@ import {CardTitle} from 'components/Card';
 import FormStepSummary from 'components/FormStepSummary';
 import Literal from 'components/Literal';
 import Loader from 'components/Loader';
-import {getPrivacyPolicyInfo} from 'components/Summary/utils';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {ValidationError} from 'errors';
 import useTitle from 'hooks/useTitle';
@@ -22,11 +21,6 @@ import {amountLabel} from '../Product';
 import {getProducts, fieldLabel as productLabel} from '../ProductSelect';
 import {fieldLabel as timeLabel} from '../TimeSelect';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
-
-const INITIAL_PRIVACY_INFO = {
-  requiresPrivacyConsent: true,
-  privacyLabel: '...',
-};
 
 const createAppointment = async (baseUrl, submission, appointmentData, privacyPolicyAccepted) => {
   const {products, location, date, datetime, ...contactDetails} = appointmentData;
@@ -87,7 +81,6 @@ const Summary = () => {
     error,
   } = useAsync(async () => {
     const promises = [
-      getPrivacyPolicyInfo(new URL(baseUrl).origin),
       getProducts(baseUrl),
       getLocations(baseUrl, productIds),
       getContactDetailsFields(baseUrl, productIds),
@@ -97,12 +90,7 @@ const Summary = () => {
 
   if (error) throw error;
 
-  const [
-    privacyInfo = INITIAL_PRIVACY_INFO,
-    productList = [],
-    locations = [],
-    contactDetailComponents = [],
-  ] = value;
+  const [productList = [], locations = [], contactDetailComponents = []] = value;
 
   // products, as repeating group/editgrid
   let productsData = [];
@@ -260,7 +248,6 @@ const Summary = () => {
 
             <SummaryConfirmation
               submissionAllowed="yes"
-              privacy={privacyInfo}
               onPrevPage={() => navigate('../contactgegevens')}
             />
           </Form>

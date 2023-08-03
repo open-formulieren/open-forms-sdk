@@ -60,6 +60,7 @@ export const FormikDecorator = (Story, context) => {
   const initialValues = context.parameters?.formik?.initialValues || {};
   const initialErrors = context.parameters?.formik?.initialErrors || {};
   const initialTouched = context.parameters?.formik?.initialTouched || {};
+  const wrapForm = context.parameters?.formik?.wrapForm ?? true;
   return (
     <Formik
       initialValues={initialValues}
@@ -68,9 +69,13 @@ export const FormikDecorator = (Story, context) => {
       enableReinitialize
       onSubmit={(values, formikHelpers) => console.log(values, formikHelpers)}
     >
-      <form>
+      {wrapForm ? (
+        <form>
+          <Story />
+        </form>
+      ) : (
         <Story />
-      </form>
+      )}
     </Formik>
   );
 };

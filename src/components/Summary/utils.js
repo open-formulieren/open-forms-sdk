@@ -2,8 +2,6 @@ import FormioUtils from 'formiojs/utils';
 
 import {get} from 'api';
 
-import {PRIVACY_POLICY_ENDPOINT} from './constants';
-
 const shouldDisplayComponent = component => {
   // hidden components are never shown
   if (component.hidden) return false;
@@ -47,13 +45,8 @@ const getComponentChildren = component => {
   return children;
 };
 
-const getPrivacyPolicyInfo = async origin => {
-  const privacyPolicyUrl = new URL(PRIVACY_POLICY_ENDPOINT, origin);
-  return await get(privacyPolicyUrl);
-};
-
 const loadSummaryData = async submissionUrl => {
   return await get(`${submissionUrl.href}/summary`);
 };
 
-export {shouldDisplayComponent, getPrivacyPolicyInfo, loadSummaryData};
+export {shouldDisplayComponent, loadSummaryData};

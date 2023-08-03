@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from 'Context';
 import {post} from 'api';
 import {LayoutColumn} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';
@@ -14,24 +13,21 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 import Types from 'types';
 
 import GenericSummary from './GenericSummary';
-import {getPrivacyPolicyInfo, loadSummaryData} from './utils';
+import {loadSummaryData} from './utils';
 
 const CosignSummary = ({
   form,
   submission,
   summaryData,
-  privacyInfo,
   onSubmissionLoaded,
   onDataLoaded,
   onCosignComplete,
   onDestroySession,
 }) => {
   const intl = useIntl();
-  const config = useContext(ConfigContext);
 
   // The backend has added the submission to the session, but we need to load it
-  // eslint-disable-next-line
-  const [loading, setSubmissionId, removeSubmissionId] = useRecycleSubmission(
+  const [loading, , removeSubmissionId] = useRecycleSubmission(
     form,
     submission,
     onSubmissionLoaded,
@@ -42,14 +38,9 @@ const CosignSummary = ({
 
   const {loading: loadingData, error: loadingDataError} = useAsync(async () => {
     if (!submission) return;
-
     const submissionUrl = new URL(submission.url);
-
-    let promises = [loadSummaryData(submissionUrl), getPrivacyPolicyInfo(config.baseUrl)];
-
-    const [retrievedSummaryData, retrievedPrivacyInfo] = await Promise.all(promises);
-
-    onDataLoaded({privacyInfo: retrievedPrivacyInfo, summaryData: retrievedSummaryData});
+    const retrievedSummaryData = await loadSummaryData(submissionUrl);
+    onDataLoaded({summaryData: retrievedSummaryData});
   }, [submission]);
 
   if (loadingDataError) throw loadingDataError;
@@ -83,8 +74,7 @@ const CosignSummary = ({
     await destroySession();
   };
 
-  // eslint-disable-next-line
-  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(async () => {
+  const [sessionExpired, expiryDate] = useSessionTimeout(async () => {
     await destroySession();
   });
 
@@ -106,7 +96,6 @@ const CosignSummary = ({
             submissionAllowed={SUBMISSION_ALLOWED.yes}
             summaryData={summaryData}
             showPaymentInformation={false}
-            privacyInformation={privacyInfo}
             editStepText=""
             isLoading={loading || loadingData}
             isAuthenticated={true}
@@ -129,10 +118,6 @@ CosignSummary.propTypes = {
       data: PropTypes.arrayOf(PropTypes.object),
     })
   ).isRequired,
-  privacyInfo: PropTypes.shape({
-    requiresPrivacyConsent: PropTypes.bool,
-    privacyLabel: PropTypes.string,
-  }).isRequired,
   onSubmissionLoaded: PropTypes.func.isRequired,
   onDataLoaded: PropTypes.func.isRequired,
   onCosignComplete: PropTypes.func.isRequired,

@@ -25,11 +25,6 @@ afterEach(() => {
   container = null;
 });
 
-const PRIVACY = {
-  requiresPrivacyConsent: false,
-  privacyLabel: 'This is privacy',
-};
-
 const LITERALS = {
   confirmText: {value: '', resolved: 'Submit form'},
   previousText: {value: '', resolved: 'Previous step'},
@@ -51,7 +46,6 @@ it('Summary of non-submittable form, button is NOT present', () => {
       <Wrapper>
         <SummaryConfirmation
           submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
-          privacy={PRIVACY}
           onPrevPage={mockFunction}
         />
       </Wrapper>
@@ -70,11 +64,7 @@ it('Summary of submittable form, button IS present', () => {
   act(() => {
     root.render(
       <Wrapper>
-        <SummaryConfirmation
-          submissionAllowed={SUBMISSION_ALLOWED.yes}
-          privacy={PRIVACY}
-          onPrevPage={mockFunction}
-        />
+        <SummaryConfirmation submissionAllowed={SUBMISSION_ALLOWED.yes} onPrevPage={mockFunction} />
       </Wrapper>
     );
   });

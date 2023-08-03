@@ -14,22 +14,14 @@ import useTitle from 'hooks/useTitle';
 import Types from 'types';
 
 import GenericSummary from './GenericSummary';
-import {getPrivacyPolicyInfo, loadSummaryData} from './utils';
+import {loadSummaryData} from './utils';
 
 const initialState = {
-  privacy: {
-    requiresPrivacyConsent: true,
-    privacyLabel: '',
-  },
   error: '',
 };
 
 const reducer = (draft, action) => {
   switch (action.type) {
-    case 'PRIVACY_POLICY_LOADED': {
-      draft.privacy = action.payload;
-      break;
-    }
     case 'ERROR': {
       draft.error = action.payload;
       break;
@@ -62,14 +54,7 @@ const SubmissionSummary = ({
     error,
   } = useAsync(async () => {
     const submissionUrl = new URL(refreshedSubmission.url);
-
-    let promises = [loadSummaryData(submissionUrl), getPrivacyPolicyInfo(submissionUrl.origin)];
-
-    const [summaryData, privacyInfo] = await Promise.all(promises);
-
-    dispatch({type: 'PRIVACY_POLICY_LOADED', payload: privacyInfo});
-
-    return summaryData;
+    return await loadSummaryData(submissionUrl);
   }, [refreshedSubmission.url]);
 
   if (error) {
@@ -133,7 +118,6 @@ const SubmissionSummary = ({
         summaryData={summaryData}
         showPaymentInformation={paymentInfo.isRequired && !paymentInfo.hasPaid}
         amountToPay={paymentInfo.amount}
-        privacyInformation={state.privacy}
         editStepText={form.literals.changeText.resolved}
         isLoading={loading}
         isAuthenticated={refreshedSubmission.isAuthenticated}

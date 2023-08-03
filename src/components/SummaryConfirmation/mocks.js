@@ -2,10 +2,10 @@ import {rest} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
-import {PRIVACY_POLICY_ENDPOINT} from './constants';
+import {PRIVACY_POLICY_ENDPOINT} from '.';
 
 export const mockPrivacyPolicyConfigGet = rest.get(
-  `${new URL(BASE_URL).origin}${PRIVACY_POLICY_ENDPOINT}`,
+  `${BASE_URL}${PRIVACY_POLICY_ENDPOINT}`,
   (req, res, ctx) =>
     res(
       ctx.json({
