@@ -25,7 +25,6 @@ const CosignSummary = ({
   onDataLoaded,
   onCosignComplete,
   onDestroySession,
-  onPrivacyCheckboxChange,
 }) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
@@ -55,13 +54,9 @@ const CosignSummary = ({
 
   if (loadingDataError) throw loadingDataError;
 
-  const onSubmit = async event => {
-    event.preventDefault();
-
+  const onSubmit = async ({privacy: privacyPolicyAccepted}) => {
     const cosignEndpoint = new URL(`/api/v2/submissions/${submission.id}/cosign`, submission.url);
-    const response = await post(cosignEndpoint.href, {
-      privacyPolicyAccepted: privacyInfo.policyAccepted,
-    });
+    const response = await post(cosignEndpoint.href, {privacyPolicyAccepted});
 
     removeSubmissionId();
     onCosignComplete(response.data.reportDownloadUrl);
@@ -115,7 +110,6 @@ const CosignSummary = ({
             editStepText=""
             isLoading={loading || loadingData}
             isAuthenticated={true}
-            onPrivacyCheckboxChange={onPrivacyCheckboxChange}
             onSubmit={onSubmit}
             onLogout={onLogout}
           />
@@ -137,14 +131,12 @@ CosignSummary.propTypes = {
   ).isRequired,
   privacyInfo: PropTypes.shape({
     requiresPrivacyConsent: PropTypes.bool,
-    policyAccepted: PropTypes.bool,
     privacyLabel: PropTypes.string,
   }).isRequired,
   onSubmissionLoaded: PropTypes.func.isRequired,
   onDataLoaded: PropTypes.func.isRequired,
   onCosignComplete: PropTypes.func.isRequired,
   onDestroySession: PropTypes.func.isRequired,
-  onPrivacyCheckboxChange: PropTypes.func.isRequired,
 };
 
 export default CosignSummary;

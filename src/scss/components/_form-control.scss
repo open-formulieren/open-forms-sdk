@@ -59,6 +59,11 @@
 
   .#{prefix(body)} {
     display: block;
+
+    &--inline {
+      display: inline-block;
+      margin-block-start: 0;
+    }
   }
 
   &--no-asterisks {

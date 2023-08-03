@@ -1,15 +1,14 @@
-import {useState} from 'react';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import {LiteralDecorator} from 'story-utils/decorators';
+import {FormikDecorator, LiteralDecorator} from 'story-utils/decorators';
 
 import GenericSummary from './GenericSummary';
 
 export default {
   title: 'Private API / GenericSummary',
   component: GenericSummary,
-  decorators: [LiteralDecorator, withRouter],
+  decorators: [FormikDecorator, LiteralDecorator, withRouter],
   args: {
     title: 'Generic Summary',
     summaryData: [
@@ -115,6 +114,9 @@ export default {
     },
   },
   parameters: {
+    formik: {
+      initialValues: {privacy: false},
+    },
     reactRouter: {
       routePath: '/overzicht',
     },
@@ -134,14 +136,12 @@ export const Default = {
     isLoading,
     isAuthenticated,
     errors,
-    onPrivacyCheckboxChange,
     onSubmit,
     onLogout,
     onPrevPage,
     // story args
     showPreviousPageLink,
   }) => {
-    const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
     return (
       <GenericSummary
         title={title}
@@ -159,11 +159,7 @@ export const Default = {
         }}
         onLogout={onLogout}
         onPrevPage={showPreviousPageLink ? onPrevPage : null}
-        privacyInformation={{...privacyInformation, policyAccepted: privacyPolicyAccepted}}
-        onPrivacyCheckboxChange={(...args) => {
-          onPrivacyCheckboxChange(...args);
-          setPrivacyPolicyAccepted(!privacyPolicyAccepted);
-        }}
+        privacyInformation={privacyInformation}
       />
     );
   },

@@ -15,7 +15,7 @@ const FormioCheckbox = ({component: {key, label, description = '', validate = {}
 FormioCheckbox.propTypes = {
   component: PropTypes.shape({
     key: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     description: PropTypes.string,
     validate: PropTypes.shape({
       required: PropTypes.bool,

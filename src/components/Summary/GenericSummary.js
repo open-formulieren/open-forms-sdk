@@ -1,3 +1,4 @@
+import {Formik} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -22,7 +23,6 @@ const GenericSummary = ({
   isLoading,
   isAuthenticated,
   errors = [],
-  onPrivacyCheckboxChange,
   onSubmit,
   onLogout,
   onPrevPage = null,
@@ -56,12 +56,19 @@ const GenericSummary = ({
 
         {showPaymentInformation && <Price price={amountToPay} />}
 
-        <SummaryConfirmation
-          submissionAllowed={submissionAllowed}
-          privacy={privacyInformation}
-          onPrivacyCheckboxChange={onPrivacyCheckboxChange}
-          onPrevPage={onPrevPage}
-        />
+        <Formik
+          initialValues={{privacy: false}}
+          onSubmit={(values, actions) => {
+            onSubmit(values);
+            actions.setSubmitting(false);
+          }}
+        >
+          <SummaryConfirmation
+            submissionAllowed={submissionAllowed}
+            privacy={privacyInformation}
+            onPrevPage={onPrevPage}
+          />
+        </Formik>
 
         {isAuthenticated ? <LogoutButton onLogout={onLogout} /> : null}
       </Wrapper>
@@ -93,14 +100,12 @@ GenericSummary.propTypes = {
   amountToPay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   privacyInformation: PropTypes.shape({
     requiresPrivacyConsent: PropTypes.bool.isRequired,
-    policyAccepted: PropTypes.bool.isRequired,
     privacyLabel: PropTypes.string.isRequired,
   }).isRequired,
   editStepText: PropTypes.string,
   isLoading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   errors: PropTypes.arrayOf(PropTypes.string),
-  onPrivacyCheckboxChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func,

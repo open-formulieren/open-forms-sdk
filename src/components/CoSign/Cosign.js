@@ -15,7 +15,6 @@ const initialState = {
   privacyInfo: {
     requiresPrivacyConsent: true,
     privacyLabel: '',
-    policyAccepted: false,
   },
   summaryData: [],
   reportUrl: '',
@@ -31,10 +30,6 @@ const reducer = (draft, action) => {
     case 'LOADED_DATA': {
       draft.privacyInfo = action.payload.privacyInfo;
       draft.summaryData = action.payload.summaryData;
-      break;
-    }
-    case 'TOGGLE_PRIVACY_CHECKBOX': {
-      draft.privacyInfo.policyAccepted = !draft.privacyInfo.policyAccepted;
       break;
     }
     case 'COSIGN_COMPLETE': {
@@ -94,7 +89,6 @@ const Cosign = () => {
               onDataLoaded={onDataLoaded}
               onCosignComplete={onCosignComplete}
               onDestroySession={onDestroySession}
-              onPrivacyCheckboxChange={() => dispatch({type: 'TOGGLE_PRIVACY_CHECKBOX'})}
             />
           }
         />

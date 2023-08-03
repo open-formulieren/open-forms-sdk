@@ -20,7 +20,6 @@ const initialState = {
   privacy: {
     requiresPrivacyConsent: true,
     privacyLabel: '',
-    policyAccepted: false,
   },
   error: '',
 };
@@ -28,11 +27,7 @@ const initialState = {
 const reducer = (draft, action) => {
   switch (action.type) {
     case 'PRIVACY_POLICY_LOADED': {
-      draft.privacy = {...draft.privacy, ...action.payload};
-      break;
-    }
-    case 'PRIVACY_POLICY_TOGGLE': {
-      draft.privacy.policyAccepted = !draft.privacy.policyAccepted;
+      draft.privacy = action.payload;
       break;
     }
     case 'ERROR': {
@@ -81,11 +76,10 @@ const SubmissionSummary = ({
     console.error(error);
   }
 
-  const onSubmit = async event => {
-    event.preventDefault();
+  const onSubmit = async ({privacy: privacyPolicyAccepted}) => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
     try {
-      const {statusUrl} = await completeSubmission(refreshedSubmission, state.privacy);
+      const {statusUrl} = await completeSubmission(refreshedSubmission, privacyPolicyAccepted);
       onConfirm(statusUrl);
     } catch (e) {
       dispatch({type: 'ERROR', payload: e.message});
@@ -102,10 +96,8 @@ const SubmissionSummary = ({
     navigate(navigateTo);
   };
 
-  const completeSubmission = async (submission, privacy) => {
-    const response = await post(`${submission.url}/_complete`, {
-      privacyPolicyAccepted: privacy.policyAccepted,
-    });
+  const completeSubmission = async (submission, privacyPolicyAccepted) => {
+    const response = await post(`${submission.url}/_complete`, {privacyPolicyAccepted});
     if (!response.ok) {
       console.error(response.data);
       // TODO Specific error for each type of invalid data?
@@ -146,7 +138,6 @@ const SubmissionSummary = ({
         isLoading={loading}
         isAuthenticated={refreshedSubmission.isAuthenticated}
         errors={getErrors()}
-        onPrivacyCheckboxChange={e => dispatch({type: 'PRIVACY_POLICY_TOGGLE'})}
         onSubmit={onSubmit}
         onLogout={onLogout}
         onPrevPage={onPrevPage}

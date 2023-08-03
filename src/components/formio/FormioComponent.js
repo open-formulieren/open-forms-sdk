@@ -42,7 +42,7 @@ FormioComponent.propTypes = {
     type: PropTypes.oneOf(['textfield', 'email', 'date', 'phoneNumber', 'bsn', 'radio', 'checkbox'])
       .isRequired,
     key: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     validate: PropTypes.shape({
       required: PropTypes.bool,
       maxLength: PropTypes.number,

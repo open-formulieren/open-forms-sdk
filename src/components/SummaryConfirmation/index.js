@@ -1,3 +1,4 @@
+import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -9,29 +10,26 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const SummaryConfirmation = ({
   submissionAllowed,
-  privacy: {requiresPrivacyConsent, policyAccepted, privacyLabel},
-  onPrivacyCheckboxChange,
+  privacy: {requiresPrivacyConsent, privacyLabel},
   onPrevPage,
 }) => {
+  const {
+    values: {privacy: policyAccepted},
+  } = useFormikContext();
   const canSubmit = submissionAllowed === SUBMISSION_ALLOWED.yes;
 
   const displayPrivacyNotice = canSubmit && requiresPrivacyConsent;
   const submitDisabled = requiresPrivacyConsent && !policyAccepted;
   const [warningUncheckedPrivacy, setWarningUncheckedPrivacy] = useState(false);
+  if (policyAccepted && warningUncheckedPrivacy) {
+    setWarningUncheckedPrivacy(false);
+  }
 
   return (
     <>
-      {displayPrivacyNotice ? (
-        <PrivacyCheckbox
-          value={policyAccepted}
-          label={privacyLabel}
-          warning={warningUncheckedPrivacy}
-          onChange={e => {
-            setWarningUncheckedPrivacy(false);
-            onPrivacyCheckboxChange(e);
-          }}
-        />
-      ) : null}
+      {displayPrivacyNotice && (
+        <PrivacyCheckbox label={privacyLabel} showWarning={warningUncheckedPrivacy} />
+      )}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
           {!!onPrevPage && (
@@ -62,10 +60,8 @@ SummaryConfirmation.propTypes = {
   submissionAllowed: PropTypes.string.isRequired,
   privacy: PropTypes.shape({
     requiresPrivacyConsent: PropTypes.bool.isRequired,
-    policyAccepted: PropTypes.bool.isRequired,
     privacyLabel: PropTypes.string.isRequired,
   }).isRequired,
-  onPrivacyCheckboxChange: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func,
 };
 

@@ -3,12 +3,12 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
-import {CheckboxWithoutFormik} from 'components/forms';
 
 import ErrorMessage from './ErrorMessage';
 import './PrivacyCheckbox.scss';
+import {FormioComponent} from './formio';
 
-const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
+const PrivacyCheckbox = ({label, showWarning = false}) => {
   const labelBody = (
     <Body
       component="div"
@@ -16,17 +16,18 @@ const PrivacyCheckbox = ({label, value, warning = false, onChange}) => {
       dangerouslySetInnerHTML={{__html: label}}
     />
   );
+  const formioDefinition = {
+    type: 'checkbox',
+    key: 'privacy',
+    label: labelBody,
+    validate: {
+      required: true,
+    },
+  };
   return (
     <div className="openforms-privacy-checkbox">
-      <CheckboxWithoutFormik
-        name="privacy"
-        label={labelBody}
-        id="privacy"
-        isRequired
-        value={value}
-        onChange={onChange}
-      />
-      {warning && (
+      <FormioComponent component={formioDefinition} />
+      {showWarning && (
         <ErrorMessage modifiers={['warning']}>
           <FormattedMessage
             description="Warning privacy policy not checked when submitting"
@@ -46,19 +47,9 @@ PrivacyCheckbox.propTypes = {
    */
   label: PropTypes.string.isRequired,
   /**
-   * Policy accepted state.
-   */
-  value: PropTypes.bool.isRequired,
-  /**
    * Whether to display the warning or not.
    */
-  warning: PropTypes.bool,
-  /**
-   * Callback for when the checkbox is clicked/toggled.
-   *
-   * The callback receives a checkbox input change event.
-   */
-  onChange: PropTypes.func.isRequired,
+  showWarning: PropTypes.bool,
 };
 
 export default PrivacyCheckbox;
