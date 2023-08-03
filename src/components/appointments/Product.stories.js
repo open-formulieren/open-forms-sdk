@@ -39,12 +39,15 @@ export default {
     namePrefix: {table: {disable: true}},
     index: {table: {disable: true}},
   },
+  args: {
+    selectedProducts: [],
+  },
 };
 
-const render = ({productId}) => {
+const render = ({productId, selectedProducts}) => {
   const data_entry = PRODUCTS_DATA.find(prod => prod.productId === productId);
   const index = PRODUCTS_DATA.indexOf(data_entry);
-  return <Product namePrefix="products" index={index} />;
+  return <Product namePrefix="products" index={index} selectedProducts={selectedProducts} />;
 };
 
 export const ProductAndAmount = {

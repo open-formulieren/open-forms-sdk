@@ -1,3 +1,4 @@
+import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
@@ -7,7 +8,9 @@ import {get} from 'api';
 import {getCached, setCached} from 'cache';
 import {AsyncSelectField} from 'components/forms';
 
-const CACHED_PRODUCTS_KEY = 'appointment|products';
+import {ProductsType} from './types';
+
+const CACHED_PRODUCTS_KEY = 'appointment|all-products';
 const CACHED_PRODUCTS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
 
 export const fieldLabel = defineMessage({
@@ -15,7 +18,7 @@ export const fieldLabel = defineMessage({
   defaultMessage: 'Product',
 });
 
-export const getProducts = async baseUrl => {
+export const getAllProducts = async baseUrl => {
   let products = getCached(CACHED_PRODUCTS_KEY, CACHED_PRODUCTS_MAX_AGE_MS);
   if (products === null) {
     products = await get(`${baseUrl}appointments/products`);
@@ -24,10 +27,37 @@ export const getProducts = async baseUrl => {
   return products;
 };
 
-const ProductSelect = ({name}) => {
+const getProducts = async (baseUrl, selectedProducts, currentProductId) => {
+  const otherProductIds = selectedProducts
+    .map(p => p.productId)
+    .filter(productId => productId && productId !== currentProductId);
+  if (!otherProductIds.length) {
+    return await getAllProducts(baseUrl);
+  }
+
+  const uniqueIds = [...new Set(otherProductIds)].sort();
+  const cacheKey = `appointments|products|${uniqueIds.join(';')}`;
+  let products = getCached(cacheKey, CACHED_PRODUCTS_MAX_AGE_MS);
+  if (products === null) {
+    const multiParams = uniqueIds.map(id => ({product_id: id}));
+    products = await get(`${baseUrl}appointments/products`, {}, multiParams);
+    // only allow products that aren't selected yet, as these should use the amount
+    // field to order multiple.
+    products = products.filter(p => !uniqueIds.includes(p.identifier));
+    setCached(cacheKey, products);
+  }
+  return products;
+};
+
+const ProductSelect = ({name, selectedProducts}) => {
+  const {getFieldProps} = useFormikContext();
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
-  const getOptions = useCallback(async () => await getProducts(baseUrl), [baseUrl]);
+  const {value} = getFieldProps(name);
+  const getOptions = useCallback(
+    async () => await getProducts(baseUrl, selectedProducts, value),
+    [baseUrl, selectedProducts, value]
+  );
   return (
     <AsyncSelectField
       name={name}
@@ -41,5 +71,6 @@ const ProductSelect = ({name}) => {
 };
 ProductSelect.propTypes = {
   name: PropTypes.string.isRequired,
+  selectedProducts: ProductsType.isRequired,
 };
 export default ProductSelect;
