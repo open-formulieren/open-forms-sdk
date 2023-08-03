@@ -66,3 +66,16 @@ export const Radio = {
     },
   },
 };
+
+export const Checkbox = {
+  args: {
+    component: {
+      key: 'checkbox',
+      type: 'checkbox',
+      label: 'Checkbox',
+      validate: {
+        required: true,
+      },
+    },
+  },
+};
