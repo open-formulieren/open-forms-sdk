@@ -1,4 +1,5 @@
 import {addDays, formatISO} from 'date-fns';
+import isEqual from 'lodash/isEqual';
 import {rest} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
@@ -6,6 +7,7 @@ import {BASE_URL} from 'api-mocks';
 const DEFAULT_PRODUCTS = [
   {code: 'PASAAN', identifier: '166a5c79', name: 'Paspoort aanvraag'},
   {code: 'RIJAAN', identifier: 'e8e045ab', name: 'Rijbewijs aanvraag (Drivers license)'},
+  {code: 'LIMITED', identifier: 'ea04db83', name: 'Not available with drivers license'},
 ];
 
 const LOCATIONS = [
@@ -14,7 +16,7 @@ const LOCATIONS = [
     location: {identifier: '1396f17c', name: 'Open Gem'},
   },
   {
-    products: ['e8e045ab'],
+    products: ['e8e045ab', 'ea04db83'],
     location: {identifier: '34000e85', name: 'Bahamas'},
   },
 ];
@@ -25,6 +27,11 @@ const _getDate = (numDaysToAdd = 0) => {
     const newDate = numDaysToAdd ? addDays(now, numDaysToAdd) : now;
     return formatISO(newDate, {representation: 'date'});
   };
+};
+
+const isSameIds = (arr1, arr2) => {
+  const [copy1, copy2] = [[...arr1].sort(), [...arr2].sort()];
+  return isEqual(copy1, copy2);
 };
 
 const DATES = [
@@ -43,7 +50,48 @@ const DATES = [
 export const mockAppointmentProductsGet = rest.get(
   `${BASE_URL}appointments/products`,
   (req, res, ctx) => {
-    return res(ctx.json(DEFAULT_PRODUCTS));
+    let availableProductIds = [];
+    const selectedProductIds = req.url.searchParams.getAll('product_id').sort();
+    // when other products are already selected, the set of available products to select
+    // shrinks. This configuration prevents selecting product ea04db83 when product
+    // e8e045ab is selected
+    switch (selectedProductIds.join(',')) {
+      // no other products selected -> everything is available
+      case '': {
+        availableProductIds = DEFAULT_PRODUCTS.map(p => p.identifier);
+        break;
+      }
+      // passport -> allow both driver's license and "not available with driver's license"
+      case '166a5c79': {
+        availableProductIds = ['e8e045ab', 'ea04db83'];
+        break;
+      }
+      // driver's license -> allow only passport
+      case 'e8e045ab': {
+        availableProductIds = ['166a5c79'];
+        break;
+      }
+      // "not available with driver's license" -> allow no other products
+      case 'ea04db83': {
+        availableProductIds = [];
+        break;
+      }
+      // passport + driver's license -> exclude "not available with driver's license"
+      case '166a5c79,e8e045ab': {
+        availableProductIds = [];
+        break;
+      }
+      // passport + "not available with driver's license" -> allow no driver's license
+      case '166a5c79,ea04db83': {
+        availableProductIds = [];
+        break;
+      }
+      default:
+        throw new Error('Invalid querystring combination used.');
+    }
+
+    const products = DEFAULT_PRODUCTS.filter(p => availableProductIds.includes(p.identifier));
+    return res(ctx.json(products));
   }
 );
 
