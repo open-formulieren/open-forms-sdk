@@ -10,6 +10,7 @@ import {ConfigContext} from 'Context';
 import {DEFAULT_LAT_LNG, DEFAULT_ZOOM, MAP_DEFAULTS, TILE_LAYERS} from 'map/constants';
 import {getBEMClassName} from 'utils';
 
+import NearestAddress from './NearestAddress';
 import OpenFormsProvider from './provider';
 
 const searchControlMessages = defineMessages({
@@ -80,46 +81,52 @@ const LeaftletMap = ({
   const className = getBEMClassName('leaflet-map', modifiers);
 
   return (
-    <MapContainer
-      center={defaultCenter}
-      zoom={defaultZoomLevel}
-      continuousWorld
-      crs={MAP_DEFAULTS.crs}
-      attributionControl
-      className={className}
-      gestureHandling
-      gestureHandlingOptions={{
-        text: {
-          touch: intl.formatMessage(leafletGestureHandlingText.touch),
-          scroll: intl.formatMessage(leafletGestureHandlingText.scroll),
-          scrollMac: intl.formatMessage(leafletGestureHandlingText.scrollMac),
-        },
-        duration: 3000,
-      }}
-    >
-      <TileLayer url={TILE_LAYERS.url} {...TILE_LAYERS.options} />
-      {coordinates ? (
-        <>
-          <MapView coordinates={coordinates} />
-          <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
-        </>
-      ) : null}
-      <SearchControl
-        onMarkerSet={onMarkerSet}
-        options={{
-          showMarker: false,
-          showPopup: false,
-          retainZoomLevel: false,
-          animateZoom: true,
-          autoClose: false,
-          searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
-          keepResult: true,
-          updateMap: true,
-          notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
+    <>
+      <MapContainer
+        center={defaultCenter}
+        zoom={defaultZoomLevel}
+        continuousWorld
+        crs={MAP_DEFAULTS.crs}
+        attributionControl
+        className={className}
+        searchControl
+        gestureHandling
+        gestureHandlingOptions={{
+          text: {
+            touch: intl.formatMessage(leafletGestureHandlingText.touch),
+            scroll: intl.formatMessage(leafletGestureHandlingText.scroll),
+            scrollMac: intl.formatMessage(leafletGestureHandlingText.scrollMac),
+          },
+          duration: 3000,
         }}
-      />
-      {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
-    </MapContainer>
+      >
+        <TileLayer url={TILE_LAYERS.url} {...TILE_LAYERS.options} />
+        {coordinates ? (
+          <>
+            <MapView coordinates={coordinates} />
+            <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
+          </>
+        ) : null}
+        <SearchControl
+          onMarkerSet={onMarkerSet}
+          options={{
+            showMarker: false,
+            showPopup: false,
+            retainZoomLevel: false,
+            animateZoom: true,
+            autoClose: false,
+            searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
+            keepResult: true,
+            updateMap: true,
+            notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
+          }}
+        />
+        {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
+      </MapContainer>
+      {markerCoordinates && markerCoordinates.length && (
+        <NearestAddress coordinates={markerCoordinates} />
+      )}
+    </>
   );
 };
 

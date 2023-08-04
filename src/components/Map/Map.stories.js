@@ -3,7 +3,7 @@ import {userEvent, within} from '@storybook/testing-library';
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import LeafletMap from '.';
-import {mockAddressSearchGet} from './mocks';
+import {mockAddressSearchGet, mockLatLngSearchGet} from './mocks';
 
 const withMapLayout = Story => (
   <div className="openforms-leaflet-map" style={{maxWidth: '600px'}}>
@@ -23,7 +23,7 @@ export default {
   },
   parameters: {
     msw: {
-      handlers: [mockAddressSearchGet],
+      handlers: [mockAddressSearchGet, mockLatLngSearchGet],
     },
   },
 };
@@ -37,8 +37,9 @@ export const MapWithAddressSearch = {
     await userEvent.click(button);
 
     const searchField = await canvas.findByPlaceholderText('Enter address, please');
+    const searchBox = within(searchField.parentNode);
     await userEvent.type(searchField, 'Gemeente Utrecht');
-    const searchResult = await canvas.findByText('Utrecht, Utrecht, Utrecht');
+    const searchResult = await searchBox.findByText('Utrecht, Utrecht, Utrecht');
 
     await userEvent.click(searchResult);
   },

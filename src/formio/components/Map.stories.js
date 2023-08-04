@@ -1,4 +1,4 @@
-import {mockAddressSearchGet} from 'components/Map/mocks';
+import {mockAddressSearchGet, mockLatLngSearchGet} from 'components/Map/mocks';
 import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
 
@@ -33,7 +33,7 @@ export default {
   parameters: {
     controls: {sort: 'requiredFirst'},
     msw: {
-      handlers: [mockAddressSearchGet],
+      handlers: [mockAddressSearchGet, mockLatLngSearchGet],
     },
   },
 };
