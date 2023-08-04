@@ -76,7 +76,6 @@ const TimeSelect = ({products}) => {
       }
       getOptions={getOptions}
       autoSelectOnlyOption
-      validateOnChange
     />
   );
 };

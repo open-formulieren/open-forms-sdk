@@ -108,7 +108,7 @@ export const HappyFlow = {
         async () =>
           await expect(
             await canvas.queryByRole('button', {name: 'Bevestig producten'})
-          ).toHaveAttribute('aria-disabled', 'true')
+          ).not.toHaveAttribute('aria-disabled', 'true')
       );
     });
 
@@ -136,7 +136,7 @@ export const HappyFlow = {
         await expect(canvas.getByRole('button', {name: 'Terug naar producten'})).toBeVisible();
         await expect(
           await canvas.queryByRole('button', {name: 'Naar contactgegevens'})
-        ).toHaveAttribute('aria-disabled', 'true');
+        ).not.toHaveAttribute('aria-disabled', 'true');
         // location auto-filled
         await canvas.findByText('Open Gem');
       });
@@ -178,10 +178,9 @@ export const HappyFlow = {
         ).toBeVisible();
       });
       await waitFor(async () => {
-        await expect(await canvas.queryByRole('button', {name: 'Naar overzicht'})).toHaveAttribute(
-          'aria-disabled',
-          'true'
-        );
+        await expect(
+          await canvas.queryByRole('button', {name: 'Naar overzicht'})
+        ).not.toHaveAttribute('aria-disabled', 'true');
       });
       await userEvent.type(await canvas.findByLabelText('Last name'), 'Elvis');
       await userEvent.type(canvas.getByLabelText('Dag'), '8');

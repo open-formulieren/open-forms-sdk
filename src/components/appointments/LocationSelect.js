@@ -49,7 +49,6 @@ const LocationSelect = ({products}) => {
       valueProperty="identifier"
       getOptionLabel={location => location.name}
       autoSelectOnlyOption
-      validateOnChange
     />
   );
 };

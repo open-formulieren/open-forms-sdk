@@ -36,7 +36,6 @@ const ProductSelect = ({name}) => {
       getOptions={getOptions}
       valueProperty="identifier"
       getOptionLabel={product => product.name}
-      validateOnChange
     />
   );
 };

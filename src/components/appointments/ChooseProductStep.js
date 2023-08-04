@@ -94,7 +94,7 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid
       </FieldArray>
 
       <SubmitRow
-        canSubmit={dirty && isValid}
+        canSubmit
         nextText={intl.formatMessage({
           description: 'Appointments products step: next step text',
           defaultMessage: 'Confirm products',
@@ -192,7 +192,7 @@ const ChooseProductStep = ({navigateTo = null}) => {
         initialErrors={initialErrors}
         initialTouched={initialTouched}
         validateOnChange={false}
-        validateOnBlur
+        validateOnBlur={false}
         validationSchema={toFormikValidationSchema(validationSchema)}
         onSubmit={(values, {setSubmitting}) => {
           flushSync(() => {

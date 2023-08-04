@@ -73,6 +73,6 @@ export const WithBackendErrors = {
 
     await expect(await canvas.findByText('This date is not available')).toBeVisible();
     const submitButton = canvas.getByRole('button', {name: 'Naar contactgegevens'});
-    expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+    expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
   },
 };
