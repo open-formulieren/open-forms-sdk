@@ -27,6 +27,21 @@ const searchControlMessages = defineMessages({
   },
 });
 
+const leafletGestureHandlingText = defineMessages({
+  touch: {
+    description: 'Gesturehandeling phone touch message.',
+    defaultMessage: 'Use two fingers to move the map',
+  },
+  scroll: {
+    description: 'Gesturehandeling pc scroll message.',
+    defaultMessage: 'Use ctrl + scroll to zoom the map',
+  },
+  scrollMac: {
+    description: 'Gesturehandeling mac scroll message.',
+    defaultMessage: 'Use \u2318 + scroll to zoom the map',
+  },
+});
+
 const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
   const {loading, latitude, longitude, error} = useGeolocation();
@@ -72,6 +87,15 @@ const LeaftletMap = ({
       crs={MAP_DEFAULTS.crs}
       attributionControl
       className={className}
+      gestureHandling
+      gestureHandlingOptions={{
+        text: {
+          touch: intl.formatMessage(leafletGestureHandlingText.touch),
+          scroll: intl.formatMessage(leafletGestureHandlingText.scroll),
+          scrollMac: intl.formatMessage(leafletGestureHandlingText.scrollMac),
+        },
+        duration: 3000,
+      }}
     >
       <TileLayer url={TILE_LAYERS.url} {...TILE_LAYERS.options} />
       {coordinates ? (

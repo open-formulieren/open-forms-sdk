@@ -145,6 +145,11 @@
     "description": "Login button label",
     "originalDefault": "Login with {provider}"
   },
+  "BboxO6": {
+    "defaultMessage": "Use two fingers to move the map",
+    "description": "Gesturehandeling phone touch message.",
+    "originalDefault": "Use two fingers to move the map"
+  },
   "CvRUHm": {
     "defaultMessage": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar.",
     "description": "Maintenance mode message",
@@ -569,6 +574,11 @@
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
+  "nLymjB": {
+    "defaultMessage": "Use ctrl + scroll to zoom the map",
+    "description": "Gesturehandeling pc scroll message.",
+    "originalDefault": "Use ctrl + scroll to zoom the map"
+  },
   "nfRRDu": {
     "defaultMessage": "jjjj",
     "description": "Placeholder for year part of a date",
@@ -588,6 +598,11 @@
     "defaultMessage": "Nog een product toevoegen",
     "description": "Appointments: add additional product/service button text",
     "originalDefault": "Add another product"
+  },
+  "ovI+W7": {
+    "defaultMessage": "Use ⌘ + scroll to zoom the map",
+    "description": "Gesturehandeling mac scroll message.",
+    "originalDefault": "Use ⌘ + scroll to zoom the map"
   },
   "qKxfrz": {
     "defaultMessage": "Log in om het formulier mede te ondertekenen",

@@ -42,6 +42,7 @@
     "immer": "^9.0.6",
     "leaflet": "^1.7.1",
     "leaflet-geosearch": "^3.8.0",
+    "leaflet-gesture-handling": "^1.2.2",
     "microscope-sass": "^2.0.0",
     "moment": "^2.29.1",
     "proj4leaflet": "^1.0.2",
