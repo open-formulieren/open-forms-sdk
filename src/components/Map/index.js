@@ -1,5 +1,4 @@
 import {GeoSearchControl} from 'leaflet-geosearch';
-import {GestureHandling} from 'leaflet-gesture-handling';
 import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
@@ -88,6 +87,7 @@ const LeaftletMap = ({
       crs={MAP_DEFAULTS.crs}
       attributionControl
       className={className}
+      gestureHandling
       gestureHandlingOptions={{
         text: {
           touch: intl.formatMessage(leafletGestureHandlingText.touch),
@@ -119,7 +119,6 @@ const LeaftletMap = ({
         }}
       />
       {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
-      <GestureHandlingSetter />
     </MapContainer>
   );
 };
@@ -274,15 +273,6 @@ const CaptureClick = ({setMarker}) => {
 
 CaptureClick.propTypes = {
   setMarker: PropTypes.func.isRequired,
-};
-
-const GestureHandlingSetter = () => {
-  const map = useMap();
-  useEffect(() => {
-    map.gestureHandling.enable();
-    map.addHandler('gestureHandling', GestureHandling);
-  }, [map]);
-  return null;
 };
 
 export default LeaftletMap;
