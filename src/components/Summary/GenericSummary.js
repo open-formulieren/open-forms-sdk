@@ -81,7 +81,13 @@ GenericSummary.propTypes = {
       data: PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string.isRequired,
-          value: PropTypes.string.isRequired,
+          value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.object,
+            PropTypes.array,
+            PropTypes.number,
+            PropTypes.bool,
+          ]),
           component: PropTypes.object.isRequired,
         })
       ).isRequired,
