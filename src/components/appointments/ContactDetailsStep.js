@@ -119,7 +119,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
               ))}
 
               <SubmitRow
-                canSubmit={!loading && validationSchema}
+                canSubmit={Boolean(!loading && validationSchema)}
                 nextText={intl.formatMessage({
                   description: 'Appointments contact details step: next step text',
                   defaultMessage: 'To overview',

@@ -1,3 +1,4 @@
+import {Formik} from 'formik';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
@@ -24,30 +25,30 @@ afterEach(() => {
   container = null;
 });
 
-const PRIVACY = {
-  requiresPrivacyConsent: false,
-  policyAccepted: false,
-  privacyLabel: 'This is privacy',
-};
-
 const LITERALS = {
   confirmText: {value: '', resolved: 'Submit form'},
   previousText: {value: '', resolved: 'Previous step'},
 };
+
+const Wrapper = ({children}) => (
+  <LiteralsProvider literals={LITERALS}>
+    <Formik initialValues={{privacy: false}} onSubmit={jest.fn()}>
+      {children}
+    </Formik>
+  </LiteralsProvider>
+);
 
 it('Summary of non-submittable form, button is NOT present', () => {
   const mockFunction = jest.fn();
 
   act(() => {
     root.render(
-      <LiteralsProvider literals={LITERALS}>
+      <Wrapper>
         <SummaryConfirmation
           submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
-          privacy={PRIVACY}
-          onPrivacyCheckboxChange={mockFunction}
           onPrevPage={mockFunction}
         />
-      </LiteralsProvider>
+      </Wrapper>
     );
   });
 
@@ -62,14 +63,9 @@ it('Summary of submittable form, button IS present', () => {
 
   act(() => {
     root.render(
-      <LiteralsProvider literals={LITERALS}>
-        <SummaryConfirmation
-          submissionAllowed={SUBMISSION_ALLOWED.yes}
-          privacy={PRIVACY}
-          onPrivacyCheckboxChange={mockFunction}
-          onPrevPage={mockFunction}
-        />
-      </LiteralsProvider>
+      <Wrapper>
+        <SummaryConfirmation submissionAllowed={SUBMISSION_ALLOWED.yes} onPrevPage={mockFunction} />
+      </Wrapper>
     );
   });
 

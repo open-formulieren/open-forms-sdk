@@ -1,15 +1,15 @@
-import {useState} from 'react';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
+import {mockPrivacyPolicyConfigGet} from 'components/SummaryConfirmation/mocks';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import {LiteralDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, FormikDecorator, LiteralDecorator} from 'story-utils/decorators';
 
 import GenericSummary from './GenericSummary';
 
 export default {
   title: 'Private API / GenericSummary',
   component: GenericSummary,
-  decorators: [LiteralDecorator, withRouter],
+  decorators: [FormikDecorator, LiteralDecorator, withRouter, ConfigDecorator],
   args: {
     title: 'Generic Summary',
     summaryData: [
@@ -89,10 +89,6 @@ export default {
     showPaymentInformation: true,
     amountToPay: 54.05,
     showPreviousPageLink: true,
-    privacyInformation: {
-      requiresPrivacyConsent: true,
-      privacyLabel: 'This is a privacy policy example.',
-    },
     isLoading: false,
     isAuthenticated: true,
     errors: [],
@@ -115,8 +111,15 @@ export default {
     },
   },
   parameters: {
+    formik: {
+      initialValues: {privacy: false},
+      wrapForm: false,
+    },
     reactRouter: {
       routePath: '/overzicht',
+    },
+    msw: {
+      handlers: [mockPrivacyPolicyConfigGet],
     },
   },
 };
@@ -129,19 +132,16 @@ export const Default = {
     summaryData,
     showPaymentInformation,
     amountToPay,
-    privacyInformation,
     editStepText,
     isLoading,
     isAuthenticated,
     errors,
-    onPrivacyCheckboxChange,
     onSubmit,
     onLogout,
     onPrevPage,
     // story args
     showPreviousPageLink,
   }) => {
-    const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
     return (
       <GenericSummary
         title={title}
@@ -159,11 +159,6 @@ export const Default = {
         }}
         onLogout={onLogout}
         onPrevPage={showPreviousPageLink ? onPrevPage : null}
-        privacyInformation={{...privacyInformation, policyAccepted: privacyPolicyAccepted}}
-        onPrivacyCheckboxChange={(...args) => {
-          onPrivacyCheckboxChange(...args);
-          setPrivacyPolicyAccepted(!privacyPolicyAccepted);
-        }}
       />
     );
   },

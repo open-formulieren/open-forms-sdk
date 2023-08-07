@@ -9,7 +9,7 @@ import {ConfigContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {LiteralsProvider} from 'components/Literal';
-import {mockPrivacyPolicyConfigGet} from 'components/Summary/mocks';
+import {mockPrivacyPolicyConfigGet} from 'components/SummaryConfirmation/mocks';
 
 import {CreateAppointmentContext} from '../Context';
 import {
@@ -124,7 +124,7 @@ describe('The appointment summary', () => {
     renderSummary();
 
     await screen.findByText('Paspoort aanvraag');
-    const checkbox = screen.getByLabelText(
+    const checkbox = await screen.findByLabelText(
       'I accept the privacy policy and consent to the processing of my personal data.'
     );
     expect(checkbox).not.toBeChecked();
@@ -140,7 +140,7 @@ describe('The appointment summary', () => {
 
     // enable the submit button
     await screen.findByText('Paspoort aanvraag');
-    const checkbox = screen.getByLabelText(
+    const checkbox = await screen.findByLabelText(
       'I accept the privacy policy and consent to the processing of my personal data.'
     );
     await user.click(checkbox);

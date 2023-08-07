@@ -7,7 +7,7 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
 import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
-import {mockPrivacyPolicyConfigGet} from 'components/Summary/mocks';
+import {mockPrivacyPolicyConfigGet} from 'components/SummaryConfirmation/mocks';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 

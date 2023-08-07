@@ -1,7 +1,7 @@
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {buildSubmission} from 'api-mocks/submissions';
-import {mockPrivacyPolicyConfigGet} from 'components/Summary/mocks';
+import {mockPrivacyPolicyConfigGet} from 'components/SummaryConfirmation/mocks';
 import {ConfigDecorator, LayoutDecorator, LiteralDecorator, withCard} from 'story-utils/decorators';
 
 import {

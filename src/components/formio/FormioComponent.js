@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {default as Checkbox, emptyValue as emptyCheckbox} from './checkbox';
 import {default as DateField, emptyValue as emptyDate} from './date';
 import {default as EmailField, emptyValue as emptyEmail} from './email';
 import {default as RadioField, emptyValue as emptyRadio} from './radio';
@@ -22,6 +23,9 @@ const FormioComponent = ({component}) => {
     case 'radio': {
       return <RadioField component={component} />;
     }
+    case 'checkbox': {
+      return <Checkbox component={component} />;
+    }
     default: {
       return (
         <code>
@@ -35,9 +39,10 @@ const FormioComponent = ({component}) => {
 FormioComponent.propTypes = {
   // a very minimal definition of a component - this only defines the minimally expected properties.
   component: PropTypes.shape({
-    type: PropTypes.oneOf(['textfield', 'email', 'date', 'phoneNumber', 'bsn', 'radio']).isRequired,
+    type: PropTypes.oneOf(['textfield', 'email', 'date', 'phoneNumber', 'bsn', 'radio', 'checkbox'])
+      .isRequired,
     key: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     validate: PropTypes.shape({
       required: PropTypes.bool,
       maxLength: PropTypes.number,
@@ -60,6 +65,9 @@ export const getEmptyValue = component => {
     }
     case 'radio': {
       return emptyRadio;
+    }
+    case 'checkbox': {
+      return emptyCheckbox;
     }
     default: {
       return '';

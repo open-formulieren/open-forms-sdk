@@ -12,11 +12,6 @@ import CosignDone from './CosignDone';
 
 const initialState = {
   submission: null,
-  privacyInfo: {
-    requiresPrivacyConsent: true,
-    privacyLabel: '',
-    policyAccepted: false,
-  },
   summaryData: [],
   reportUrl: '',
   cosignedSubmission: null,
@@ -28,13 +23,8 @@ const reducer = (draft, action) => {
       draft.submission = action.payload;
       break;
     }
-    case 'LOADED_DATA': {
-      draft.privacyInfo = action.payload.privacyInfo;
-      draft.summaryData = action.payload.summaryData;
-      break;
-    }
-    case 'TOGGLE_PRIVACY_CHECKBOX': {
-      draft.privacyInfo.policyAccepted = !draft.privacyInfo.policyAccepted;
+    case 'LOADED_SUMMARY_DATA': {
+      draft.summaryData = action.payload;
       break;
     }
     case 'COSIGN_COMPLETE': {
@@ -54,13 +44,6 @@ const Cosign = () => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const navigate = useNavigate();
   const config = useContext(ConfigContext);
-
-  const onDataLoaded = data => {
-    dispatch({
-      type: 'LOADED_DATA',
-      payload: {privacyInfo: data.privacyInfo, summaryData: data.summaryData},
-    });
-  };
 
   const onCosignComplete = reportUrl => {
     dispatch({type: 'COSIGN_COMPLETE', payload: reportUrl});
@@ -84,17 +67,17 @@ const Cosign = () => {
               form={form}
               submission={state.submission}
               summaryData={state.summaryData}
-              privacyInfo={state.privacyInfo}
               onSubmissionLoaded={submission =>
                 dispatch({
                   type: 'SUBMISSION_LOADED',
                   payload: submission,
                 })
               }
-              onDataLoaded={onDataLoaded}
+              onDataLoaded={({summaryData}) =>
+                dispatch({type: 'LOADED_SUMMARY_DATA', payload: summaryData})
+              }
               onCosignComplete={onCosignComplete}
               onDestroySession={onDestroySession}
-              onPrivacyCheckboxChange={() => dispatch({type: 'TOGGLE_PRIVACY_CHECKBOX'})}
             />
           }
         />

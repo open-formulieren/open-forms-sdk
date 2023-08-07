@@ -1,3 +1,4 @@
+import {Form, Formik} from 'formik';
 import React, {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {createSearchParams, useNavigate} from 'react-router-dom';
@@ -9,7 +10,6 @@ import {CardTitle} from 'components/Card';
 import FormStepSummary from 'components/FormStepSummary';
 import Literal from 'components/Literal';
 import Loader from 'components/Loader';
-import {getPrivacyPolicyInfo} from 'components/Summary/utils';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {ValidationError} from 'errors';
 import useTitle from 'hooks/useTitle';
@@ -21,11 +21,6 @@ import {amountLabel} from '../Product';
 import {getProducts, fieldLabel as productLabel} from '../ProductSelect';
 import {fieldLabel as timeLabel} from '../TimeSelect';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
-
-const INITIAL_PRIVACY_INFO = {
-  requiresPrivacyConsent: true,
-  privacyLabel: '...',
-};
 
 const createAppointment = async (baseUrl, submission, appointmentData, privacyPolicyAccepted) => {
   const {products, location, date, datetime, ...contactDetails} = appointmentData;
@@ -66,7 +61,6 @@ const Summary = () => {
   const {baseUrl} = useContext(ConfigContext);
   const navigate = useNavigate();
   const {appointmentData, submission, setErrors} = useCreateAppointmentContext();
-  const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   useTitle(
     intl.formatMessage({
@@ -87,7 +81,6 @@ const Summary = () => {
     error,
   } = useAsync(async () => {
     const promises = [
-      getPrivacyPolicyInfo(new URL(baseUrl).origin),
       getProducts(baseUrl),
       getLocations(baseUrl, productIds),
       getContactDetailsFields(baseUrl, productIds),
@@ -97,12 +90,7 @@ const Summary = () => {
 
   if (error) throw error;
 
-  const [
-    privacyInfo = INITIAL_PRIVACY_INFO,
-    productList = [],
-    locations = [],
-    contactDetailComponents = [],
-  ] = value;
+  const [productList = [], locations = [], contactDetailComponents = []] = value;
 
   // products, as repeating group/editgrid
   let productsData = [];
@@ -171,8 +159,7 @@ const Summary = () => {
   /**
    * Submit the appointment data to the backend.
    */
-  const onSubmit = async event => {
-    event.preventDefault();
+  const onSubmit = async ({privacy: privacyPolicyAccepted}) => {
     let appointment;
     try {
       appointment = await createAppointment(
@@ -217,54 +204,54 @@ const Summary = () => {
       {loading ? (
         <Loader modifiers={['centered']} />
       ) : (
-        <form onSubmit={onSubmit}>
-          {/* Products overview */}
-          <FormStepSummary
-            editUrl="../producten"
-            name={
-              <FormattedMessage
-                description="Appointment overview: products step title"
-                defaultMessage="{numProducts, plural, one {Product} other {Products}}"
-                values={{numProducts}}
-              />
-            }
-            data={productsData}
-            editStepText={<Literal name="changeText" />}
-          />
+        <Formik initialValues={{privacy: false}} onSubmit={onSubmit}>
+          <Form>
+            {/* Products overview */}
+            <FormStepSummary
+              editUrl="../producten"
+              name={
+                <FormattedMessage
+                  description="Appointment overview: products step title"
+                  defaultMessage="{numProducts, plural, one {Product} other {Products}}"
+                  values={{numProducts}}
+                />
+              }
+              data={productsData}
+              editStepText={<Literal name="changeText" />}
+            />
 
-          {/* Selected location and time */}
-          <FormStepSummary
-            editUrl="../kalender"
-            name={
-              <FormattedMessage
-                description="Appointment overview: location and time step title"
-                defaultMessage="Location and time"
-              />
-            }
-            data={locationAndTimeData}
-            editStepText={<Literal name="changeText" />}
-          />
+            {/* Selected location and time */}
+            <FormStepSummary
+              editUrl="../kalender"
+              name={
+                <FormattedMessage
+                  description="Appointment overview: location and time step title"
+                  defaultMessage="Location and time"
+                />
+              }
+              data={locationAndTimeData}
+              editStepText={<Literal name="changeText" />}
+            />
 
-          {/* Contact details */}
-          <FormStepSummary
-            editUrl="../contactgegevens"
-            name={
-              <FormattedMessage
-                description="Appointment overview: contact details step title"
-                defaultMessage="Contact details"
-              />
-            }
-            data={contactDetailsData}
-            editStepText={<Literal name="changeText" />}
-          />
+            {/* Contact details */}
+            <FormStepSummary
+              editUrl="../contactgegevens"
+              name={
+                <FormattedMessage
+                  description="Appointment overview: contact details step title"
+                  defaultMessage="Contact details"
+                />
+              }
+              data={contactDetailsData}
+              editStepText={<Literal name="changeText" />}
+            />
 
-          <SummaryConfirmation
-            submissionAllowed="yes"
-            privacy={{...privacyInfo, policyAccepted: privacyPolicyAccepted}}
-            onPrivacyCheckboxChange={() => setPrivacyPolicyAccepted(!privacyPolicyAccepted)}
-            onPrevPage={() => navigate('../contactgegevens')}
-          />
-        </form>
+            <SummaryConfirmation
+              submissionAllowed="yes"
+              onPrevPage={() => navigate('../contactgegevens')}
+            />
+          </Form>
+        </Formik>
       )}
     </>
   );
