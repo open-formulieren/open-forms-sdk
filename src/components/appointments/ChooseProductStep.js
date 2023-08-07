@@ -69,7 +69,7 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid
                   numProducts={numProducts}
                   onRemove={withValidate(() => arrayHelpers.remove(index))}
                 >
-                  <Product namePrefix="products" index={index} />
+                  <Product namePrefix="products" index={index} selectedProducts={products} />
                 </ProductWrapper>
               ))}
             </div>

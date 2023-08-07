@@ -17,7 +17,7 @@ import useTitle from 'hooks/useTitle';
 import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
 import DateSelect from './DateSelect';
 import LocationSelect from './LocationSelect';
-import {getProducts} from './ProductSelect';
+import {getAllProducts} from './ProductSelect';
 import SubmitRow from './SubmitRow';
 import TimeSelect from './TimeSelect';
 import {ProductsType} from './types';
@@ -130,7 +130,7 @@ const ProductSummary = ({products}) => {
     loading,
     value: allProducts,
     error,
-  } = useAsync(async () => await getProducts(baseUrl), [baseUrl]);
+  } = useAsync(async () => await getAllProducts(baseUrl), [baseUrl]);
 
   if (!products.length) return null;
   if (error) throw error;

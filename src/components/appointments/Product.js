@@ -4,17 +4,21 @@ import {defineMessage, useIntl} from 'react-intl';
 import {NumberField} from 'components/forms';
 
 import ProductSelect from './ProductSelect';
+import {ProductsType} from './types';
 
 export const amountLabel = defineMessage({
   description: 'Appointments: product amount field label',
   defaultMessage: 'Amount',
 });
 
-const Product = ({namePrefix, index}) => {
+const Product = ({namePrefix, index, selectedProducts}) => {
   const intl = useIntl();
   return (
     <div>
-      <ProductSelect name={`${namePrefix}[${index}].productId`} />
+      <ProductSelect
+        name={`${namePrefix}[${index}].productId`}
+        selectedProducts={selectedProducts}
+      />
       <NumberField
         name={`${namePrefix}[${index}].amount`}
         label={intl.formatMessage(amountLabel)}
@@ -30,6 +34,7 @@ const Product = ({namePrefix, index}) => {
 Product.propTypes = {
   namePrefix: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  selectedProducts: ProductsType.isRequired,
 };
 
 export default Product;

@@ -23,6 +23,7 @@ export default {
   },
   args: {
     name: 'productId',
+    selectedProducts: [],
   },
   argTypes: {
     name: {table: {disable: true}},

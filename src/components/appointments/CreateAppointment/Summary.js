@@ -18,7 +18,7 @@ import {getContactDetailsFields} from '../ContactDetailsStep';
 import {fieldLabel as dateLabel} from '../DateSelect';
 import {getLocations, fieldLabel as locationLabel} from '../LocationSelect';
 import {amountLabel} from '../Product';
-import {getProducts, fieldLabel as productLabel} from '../ProductSelect';
+import {getAllProducts, fieldLabel as productLabel} from '../ProductSelect';
 import {fieldLabel as timeLabel} from '../TimeSelect';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 
@@ -81,7 +81,7 @@ const Summary = () => {
     error,
   } = useAsync(async () => {
     const promises = [
-      getProducts(baseUrl),
+      getAllProducts(baseUrl),
       getLocations(baseUrl, productIds),
       getContactDetailsFields(baseUrl, productIds),
     ];
