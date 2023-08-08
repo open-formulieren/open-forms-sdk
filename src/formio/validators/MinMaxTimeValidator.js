@@ -31,6 +31,13 @@ const MinMaxTimeValidator = {
     const minTime = moment(component.component.minTime || '00:00:00', 'HH:mm:ss').format('HH:mm');
     const maxTime = moment(component.component.maxTime || '23:59:59', 'HH:mm:ss').format('HH:mm');
 
+    const customErrorMessage = component.component.errors?.invalidTime;
+    if (customErrorMessage)
+      return component.t(customErrorMessage, {
+        minTime: minTime,
+        maxTime: maxTime,
+      });
+
     return component.t('invalid_time', {
       minTime: minTime,
       maxTime: maxTime,
