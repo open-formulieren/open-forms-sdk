@@ -142,7 +142,7 @@ const get = async (url, params = {}, multiParams = []) => {
   }
   url += `?${searchParams}`;
   const response = await apiCall(url);
-  const data = await response.json();
+  const data = response.status === 204 ? null : await response.json();
   return data;
 };
 

@@ -683,5 +683,10 @@
     "defaultMessage": "Return to main website",
     "description": "Back to main website link title",
     "originalDefault": "Return to main website"
+  },
+  "zvoXSU": {
+    "defaultMessage": "Nearest address: <address></address>",
+    "description": "Reverse geocoded address result display",
+    "originalDefault": "Nearest address: <address></address>"
   }
 }

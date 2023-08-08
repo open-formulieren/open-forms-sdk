@@ -2,9 +2,10 @@ import {rest} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
-const SEARCH_ENDPOINT = `${BASE_URL}geo/address-search`;
+const ADDRESS_SEARCH_ENDPOINT = `${BASE_URL}geo/address-search`;
+const LATLNG_SEARCH_ENDPOINT = `${BASE_URL}geo/latlng-search`;
 
-export const mockAddressSearchGet = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
+export const mockAddressSearchGet = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
   const response = [
     {
       label: 'Gemeente Utrecht',
@@ -120,11 +121,11 @@ export const mockAddressSearchGet = rest.get(SEARCH_ENDPOINT, (req, res, ctx) =>
   return res(ctx.status(200), ctx.json(response));
 });
 
-export const mockAddressSearchNoResultsGet = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
+export const mockAddressSearchNoResultsGet = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
   return res(ctx.status(200), ctx.json([]));
 });
 
-export const mockAddressSearch400Get = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
+export const mockAddressSearch400Get = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
   return res(
     ctx.status(400),
     ctx.json({
@@ -145,7 +146,7 @@ export const mockAddressSearch400Get = rest.get(SEARCH_ENDPOINT, (req, res, ctx)
   );
 });
 
-export const mockAddressSearch403Get = rest.get(SEARCH_ENDPOINT, (req, res, ctx) => {
+export const mockAddressSearch403Get = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
   return res(
     ctx.status(403),
     ctx.json({
@@ -158,3 +159,12 @@ export const mockAddressSearch403Get = rest.get(SEARCH_ENDPOINT, (req, res, ctx)
     })
   );
 });
+
+export const mockLatLngSearchGet = rest.get(LATLNG_SEARCH_ENDPOINT, (req, res, ctx) => {
+  const response = {label: 'Utrecht, Utrecht, Utrecht'};
+  return res(ctx.status(200), ctx.json(response));
+});
+
+export const mockLatLngSearchEmptyGet = rest.get(LATLNG_SEARCH_ENDPOINT, (req, res, ctx) =>
+  res(ctx.status(204))
+);
