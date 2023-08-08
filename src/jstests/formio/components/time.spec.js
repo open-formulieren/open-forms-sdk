@@ -35,6 +35,7 @@ describe('Time Component', () => {
                 expect(!!component.error).toBeFalsy();
               } else {
                 expect(!!component.error).toBeTruthy();
+                expect(component.error.message).toEqual('invalid_time');
               }
 
               if (value === invalidValues[2]) {
@@ -197,5 +198,34 @@ describe('Time Component', () => {
 
     testValidity(validValues, true);
     testValidity(invalidValues, false);
+  });
+
+  test('Time component with min/max validation and custom error', done => {
+    let formJSON = _.cloneDeep(timeForm);
+    // Note: the backend dynamically updates the configuration so that `translatedErrors` are added to
+    // `errors` in the correct language.
+    formJSON.components[0].errors = {
+      invalidTime: 'Custom error! Min time: {{ minTime }} Max time: {{ maxTime }}.',
+    };
+    formJSON.components[0].maxTime = '13:00:00';
+    formJSON.components[0].minTime = '12:00:00';
+
+    const element = document.createElement('div');
+
+    Formio.createForm(element, formJSON)
+      .then(form => {
+        form.setPristine(false);
+        const component = form.getComponent('time');
+        const changed = component.setValue('10:00');
+        expect(changed).toBeTruthy();
+
+        setTimeout(() => {
+          expect(!!component.error).toBeTruthy();
+          expect(component.error.message).toEqual('Custom error! Min time: 12:00 Max time: 13:00.');
+
+          done();
+        }, 300);
+      })
+      .catch(done);
   });
 });
