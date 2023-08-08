@@ -3,7 +3,7 @@ import {userEvent, within} from '@storybook/testing-library';
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import LeafletMap from '.';
-import {mockAddressSearchGet, mockLatLngSearchGet} from './mocks';
+import {mockAddressSearchGet, mockLatLngSearchEmptyGet, mockLatLngSearchGet} from './mocks';
 
 const withMapLayout = Story => (
   <div className="openforms-leaflet-map" style={{maxWidth: '600px'}}>
@@ -42,5 +42,13 @@ export const MapWithAddressSearch = {
     const searchResult = await searchBox.findByText('Utrecht, Utrecht, Utrecht');
 
     await userEvent.click(searchResult);
+  },
+};
+
+export const MapReverseGeoEmpty = {
+  parameters: {
+    msw: {
+      handlers: [mockAddressSearchGet, mockLatLngSearchEmptyGet],
+    },
   },
 };

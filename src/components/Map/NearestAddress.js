@@ -28,10 +28,11 @@ const NearestAddress = ({coordinates}) => {
   }, [baseUrl, lat, lng]);
   // silent failure for a non-critical part
   if (error) {
+    console.error(error);
     // XXX: see if we can send this to Sentry
     return null;
   }
-
+  if (address === null) return null;
   return (
     <div className={getBEMClassName('map-address')}>
       {loading ? (
