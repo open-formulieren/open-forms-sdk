@@ -22,7 +22,7 @@ import {getAllProducts, fieldLabel as productLabel} from '../ProductSelect';
 import {fieldLabel as timeLabel} from '../TimeSelect';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 
-const createAppointment = async (baseUrl, submission, appointmentData, privacyPolicyAccepted) => {
+const createAppointment = async (baseUrl, submission, appointmentData, declarationValues) => {
   const {products, location, date, datetime, ...contactDetails} = appointmentData;
   const body = {
     submission: submission.url,
@@ -31,7 +31,7 @@ const createAppointment = async (baseUrl, submission, appointmentData, privacyPo
     date,
     datetime,
     contactDetails,
-    privacyPolicyAccepted,
+    ...declarationValues,
   };
   const response = await post(`${baseUrl}appointments/appointments`, body);
   return response.data;
@@ -159,14 +159,14 @@ const Summary = () => {
   /**
    * Submit the appointment data to the backend.
    */
-  const onSubmit = async ({privacy: privacyPolicyAccepted}) => {
+  const onSubmit = async declarationValues => {
     let appointment;
     try {
       appointment = await createAppointment(
         baseUrl,
         submission,
         appointmentData,
-        privacyPolicyAccepted
+        declarationValues
       );
     } catch (e) {
       if (e instanceof ValidationError) {
@@ -204,7 +204,7 @@ const Summary = () => {
       {loading ? (
         <Loader modifiers={['centered']} />
       ) : (
-        <Formik initialValues={{privacy: false}} onSubmit={onSubmit}>
+        <Formik initialValues={{}} onSubmit={onSubmit}>
           <Form>
             {/* Products overview */}
             <FormStepSummary
