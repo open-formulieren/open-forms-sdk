@@ -7,7 +7,7 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
 import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
-import {mockPrivacyPolicyConfigGet} from 'components/SummaryConfirmation/mocks';
+import {mockDeclarationsConfigGet} from 'components/SummaryConfirmation/mocks';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -34,7 +34,7 @@ export default {
         mockAppointmentDatesGet,
         mockAppointmentTimesGet,
         mockAppointmentCustomerFieldsGet,
-        mockPrivacyPolicyConfigGet,
+        mockDeclarationsConfigGet(),
         mockAppointmentPost,
         mockSubmissionProcessingStatusGet,
       ],
@@ -200,6 +200,17 @@ export const HappyFlow = {
       const button = canvas.getByRole('button', {name: 'Naar overzicht'});
       await waitFor(() => expect(button).not.toHaveAttribute('aria-disabled', 'true'));
       await userEvent.click(button);
+    });
+
+    await step('Wait for the declarations to load', async () => {
+      await waitFor(
+        async () =>
+          await expect(
+            await canvas.getByLabelText(
+              /I accept the privacy policy and consent to the processing of my personal data/
+            )
+          )
+      );
     });
 
     await step('Verify and confirm the summary data', async () => {

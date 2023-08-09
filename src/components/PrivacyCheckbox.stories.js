@@ -11,17 +11,22 @@ export default {
   decorators: [FormikDecorator],
   parameters: {
     formik: {
-      initialValues: {privacy: false},
+      initialValues: {},
     },
   },
 };
 
 export const Default = {
   args: {
-    label: `<p>Ja, ik heb kennis genomen van het <a href="https://maykinmedia.nl/en/privacy/"
-      target="_blank" rel="noreferrer noopener">privacybeleid</a> en geef uitdrukkelijk
-      toestemming voor het verwerken van de door mij opgegeven gegevens.</p>`,
-    warning: false,
+    configuration: {
+      key: 'privacyPolicyAccepted',
+      type: 'checkbox',
+      label: `<p>Ja, ik heb kennis genomen van het <a href="https://maykinmedia.nl/en/privacy/"
+        target="_blank" rel="noreferrer noopener">privacybeleid</a> en geef uitdrukkelijk
+        toestemming voor het verwerken van de door mij opgegeven gegevens.</p>`,
+      validate: {required: true},
+    },
+    showWarning: false,
   },
   play: async ({args, canvasElement}) => {
     const canvas = within(canvasElement);
@@ -35,9 +40,14 @@ export const Default = {
 export const WithWarning = {
   name: 'With warning',
   args: {
-    label: `<p>Ja, ik heb kennis genomen van het <a href="https://maykinmedia.nl/en/privacy/"
-      target="_blank" rel="noreferrer noopener">privacybeleid</a> en geef uitdrukkelijk
-      toestemming voor het verwerken van de door mij opgegeven gegevens.</p>`,
+    configuration: {
+      key: 'privacyPolicyAccepted',
+      type: 'checkbox',
+      label: `<p>Ja, ik heb kennis genomen van het <a href="https://maykinmedia.nl/en/privacy/"
+        target="_blank" rel="noreferrer noopener">privacybeleid</a> en geef uitdrukkelijk
+        toestemming voor het verwerken van de door mij opgegeven gegevens.</p>`,
+      validate: {required: true},
+    },
     showWarning: true,
   },
 };

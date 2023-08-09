@@ -1,5 +1,5 @@
 import {jest} from '@jest/globals';
-import {act, render as realRender, screen, waitFor} from '@testing-library/react';
+import {render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
@@ -9,7 +9,7 @@ import {ConfigContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {LiteralsProvider} from 'components/Literal';
-import {mockPrivacyPolicyConfigGet} from 'components/SummaryConfirmation/mocks';
+import {mockDeclarationsConfigGet} from 'components/SummaryConfirmation/mocks';
 
 import {CreateAppointmentContext} from '../Context';
 import {
@@ -93,7 +93,7 @@ const renderSummary = errorHandler => {
 
 beforeEach(() => {
   mswServer.use(
-    mockPrivacyPolicyConfigGet,
+    mockDeclarationsConfigGet(),
     mockAppointmentProductsGet,
     mockAppointmentLocationsGet,
     mockAppointmentCustomerFieldsGet
@@ -120,7 +120,7 @@ describe('The appointment summary', () => {
     await screen.findByText('Male');
   });
 
-  it('disables the submit button when the privcy policy needs to be accepted', async () => {
+  it('disables the submit button when the privacy policy needs to be accepted', async () => {
     renderSummary();
 
     await screen.findByText('Paspoort aanvraag');

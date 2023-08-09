@@ -1,6 +1,9 @@
+import {expect} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
-import {mockPrivacyPolicyConfigGet} from 'components/SummaryConfirmation/mocks';
+import {mockDeclarationsConfigGet} from 'components/SummaryConfirmation/mocks';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {ConfigDecorator, FormikDecorator, LiteralDecorator} from 'story-utils/decorators';
 
@@ -118,11 +121,10 @@ export default {
     reactRouter: {
       routePath: '/overzicht',
     },
-    msw: {
-      handlers: [mockPrivacyPolicyConfigGet],
-    },
   },
 };
+
+const worker = getWorker();
 
 export const Default = {
   render: ({
@@ -142,6 +144,8 @@ export const Default = {
     // story args
     showPreviousPageLink,
   }) => {
+    worker.use(mockDeclarationsConfigGet());
+
     return (
       <GenericSummary
         title={title}
@@ -161,5 +165,198 @@ export const Default = {
         onPrevPage={showPreviousPageLink ? onPrevPage : null}
       />
     );
+  },
+};
+
+export const MultipleRequiredDeclarations = {
+  render: ({
+    // component props
+    title,
+    submissionAllowed,
+    summaryData,
+    showPaymentInformation,
+    amountToPay,
+    editStepText,
+    isLoading,
+    isAuthenticated,
+    errors,
+    onSubmit,
+    onLogout,
+    onPrevPage,
+    // story args
+    showPreviousPageLink,
+  }) => {
+    const multipleRequiredDeclarations = [
+      {
+        key: 'privacyPolicyAccepted',
+        type: 'checkbox',
+        validate: {required: true},
+        label: 'I accept the privacy policy and consent to the processing of my personal data.',
+      },
+      {
+        key: 'truthDeclarationAccepted',
+        type: 'checkbox',
+        validate: {required: true},
+        label: 'I responded very honestly.',
+      },
+    ];
+    worker.use(mockDeclarationsConfigGet(multipleRequiredDeclarations));
+
+    return (
+      <GenericSummary
+        title={title}
+        submissionAllowed={submissionAllowed}
+        summaryData={summaryData}
+        showPaymentInformation={showPaymentInformation}
+        amountToPay={amountToPay}
+        editStepText={editStepText}
+        isLoading={isLoading}
+        isAuthenticated={isAuthenticated}
+        errors={errors}
+        onSubmit={event => {
+          event.preventDefault();
+          onSubmit(event);
+        }}
+        onLogout={onLogout}
+        onPrevPage={showPreviousPageLink ? onPrevPage : null}
+      />
+    );
+  },
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    await step('Wait for the declarations to load', async () => {
+      await waitFor(
+        async () =>
+          await expect(
+            await canvas.getByLabelText(
+              /I accept the privacy policy and consent to the processing of my personal data/
+            )
+          )
+      );
+    });
+
+    await step(
+      'Verify that warnings appear if trying to submit without accepting declarations',
+      async () => {
+        const submitButton = canvas.getByRole('button', {name: 'Confirm'});
+        await waitFor(async () => {
+          expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+        });
+
+        // Clicking 'submit' without checking the declarations results in all the warnings being
+        // displayed
+        await userEvent.click(submitButton);
+        await waitFor(async () => {
+          const warnings = canvas.queryAllByText(
+            'Please check the above declaration before submitting'
+          );
+          expect(warnings).toHaveLength(2);
+        });
+
+        // Accepting the privacy policy makes one warning disappear
+        const checkboxPrivacy = canvas.getByLabelText(
+          /I accept the privacy policy and consent to the processing of my personal data/
+        );
+        await userEvent.click(checkboxPrivacy);
+        await waitFor(async () => {
+          const warnings = canvas.queryAllByText(
+            'Please check the above declaration before submitting'
+          );
+          expect(warnings).toHaveLength(1);
+        });
+
+        // Accepting the truth declaration makes the second warning disappear and the 'submit'
+        // button is no longer disabled
+        const checkboxTruth = canvas.getByLabelText('I responded very honestly.');
+        await userEvent.click(checkboxTruth);
+        await waitFor(async () => {
+          const warnings = canvas.queryAllByText(
+            'Please check the above declaration before submitting'
+          );
+          expect(warnings).toHaveLength(0);
+        });
+        await waitFor(async () => {
+          expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+        });
+      }
+    );
+  },
+};
+
+export const OnlyOneRequiredDeclaration = {
+  render: ({
+    // component props
+    title,
+    submissionAllowed,
+    summaryData,
+    showPaymentInformation,
+    amountToPay,
+    editStepText,
+    isLoading,
+    isAuthenticated,
+    errors,
+    onSubmit,
+    onLogout,
+    onPrevPage,
+    // story args
+    showPreviousPageLink,
+  }) => {
+    const multipleRequiredDeclarations = [
+      {
+        key: 'privacyPolicyAccepted',
+        type: 'checkbox',
+        validate: {required: true},
+        label: 'I accept the privacy policy and consent to the processing of my personal data.',
+      },
+      {
+        key: 'truthDeclarationAccepted',
+        type: 'checkbox',
+        validate: {required: false},
+        label: 'I responded very honestly.',
+      },
+    ];
+    worker.use(mockDeclarationsConfigGet(multipleRequiredDeclarations));
+
+    return (
+      <GenericSummary
+        title={title}
+        submissionAllowed={submissionAllowed}
+        summaryData={summaryData}
+        showPaymentInformation={showPaymentInformation}
+        amountToPay={amountToPay}
+        editStepText={editStepText}
+        isLoading={isLoading}
+        isAuthenticated={isAuthenticated}
+        errors={errors}
+        onSubmit={event => {
+          event.preventDefault();
+          onSubmit(event);
+        }}
+        onLogout={onLogout}
+        onPrevPage={showPreviousPageLink ? onPrevPage : null}
+      />
+    );
+  },
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    await step('Wait for the declarations to load', async () => {
+      await waitFor(
+        async () =>
+          await expect(
+            await canvas.getByLabelText(
+              /I accept the privacy policy and consent to the processing of my personal data/
+            )
+          )
+      );
+    });
+
+    await step('Verify that only one checkbox is visible', async () => {
+      await waitFor(async () => {
+        const checkboxTruth = canvas.queryByLabelText('I responded very honestly.');
+        expect(checkboxTruth).toBeNull();
+      });
+    });
   },
 };
