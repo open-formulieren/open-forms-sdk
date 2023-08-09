@@ -8,21 +8,19 @@ import ErrorMessage from './ErrorMessage';
 import './PrivacyCheckbox.scss';
 import {FormioComponent} from './formio';
 
-const PrivacyCheckbox = ({label, showWarning = false}) => {
+const PrivacyCheckbox = ({configuration, showWarning = false}) => {
+  if (!configuration.validate.required) return null;
+
   const labelBody = (
     <Body
       component="div"
       modifiers={['wysiwyg', 'inline']}
-      dangerouslySetInnerHTML={{__html: label}}
+      dangerouslySetInnerHTML={{__html: configuration.label}}
     />
   );
   const formioDefinition = {
-    type: 'checkbox',
-    key: 'privacy',
+    ...configuration,
     label: labelBody,
-    validate: {
-      required: true,
-    },
   };
   return (
     <div className="openforms-privacy-checkbox">
@@ -30,8 +28,8 @@ const PrivacyCheckbox = ({label, showWarning = false}) => {
       {showWarning && (
         <ErrorMessage modifiers={['warning']}>
           <FormattedMessage
-            description="Warning privacy policy not checked when submitting"
-            defaultMessage="Please accept the privacy policy before submitting"
+            description="Warning declaration not checked when submitting"
+            defaultMessage="Please check the above declaration before submitting"
           />
         </ErrorMessage>
       )}
@@ -40,12 +38,14 @@ const PrivacyCheckbox = ({label, showWarning = false}) => {
 };
 
 PrivacyCheckbox.propTypes = {
-  /**
-   * Label content displayed next to the checkbox, allows HTML.
-   *
-   * Ensure that this only contains trusted markup, as the content is NOT escaped.
-   */
-  label: PropTypes.string.isRequired,
+  configuration: PropTypes.shape({
+    type: PropTypes.oneOf(['checkbox']).isRequired,
+    key: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
+    validate: PropTypes.shape({
+      required: PropTypes.bool,
+    }),
+  }).isRequired,
   /**
    * Whether to display the warning or not.
    */

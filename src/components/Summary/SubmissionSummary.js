@@ -61,10 +61,10 @@ const SubmissionSummary = ({
     console.error(error);
   }
 
-  const onSubmit = async ({privacy: privacyPolicyAccepted}) => {
+  const onSubmit = async declarationValues => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
     try {
-      const {statusUrl} = await completeSubmission(refreshedSubmission, privacyPolicyAccepted);
+      const {statusUrl} = await completeSubmission(refreshedSubmission, declarationValues);
       onConfirm(statusUrl);
     } catch (e) {
       dispatch({type: 'ERROR', payload: e.message});
@@ -81,8 +81,8 @@ const SubmissionSummary = ({
     navigate(navigateTo);
   };
 
-  const completeSubmission = async (submission, privacyPolicyAccepted) => {
-    const response = await post(`${submission.url}/_complete`, {privacyPolicyAccepted});
+  const completeSubmission = async (submission, declarationValues) => {
+    const response = await post(`${submission.url}/_complete`, declarationValues);
     if (!response.ok) {
       console.error(response.data);
       // TODO Specific error for each type of invalid data?

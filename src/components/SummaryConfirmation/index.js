@@ -1,21 +1,51 @@
 import {useFormikContext} from 'formik';
+import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
-import {useAsync} from 'react-use';
+import React, {useContext, useEffect, useState} from 'react';
+import {useAsync, usePrevious} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
 import Button from 'components/Button';
+import DeclarationCheckboxes from 'components/DeclarationCheckboxes';
 import {Literal} from 'components/Literal';
 import Loader from 'components/Loader';
-import PrivacyCheckbox from 'components/PrivacyCheckbox';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
-export const PRIVACY_POLICY_ENDPOINT = 'config/privacy_policy_info';
+export const PRIVACY_POLICY_ENDPOINT = 'config/declarations_info_list';
 
-const getPrivacyPolicyInfo = async baseUrl => {
+const getDeclarationsInfo = async baseUrl => {
   return await get(`${baseUrl}${PRIVACY_POLICY_ENDPOINT}`);
+};
+
+const isSubmitEnabled = (loading, declarationsInfo = [], declarationsValues) => {
+  if (loading) return false;
+
+  return declarationsInfo.every(info => {
+    if (!info.validate.required) return true;
+
+    return Boolean(declarationsValues[info.key]);
+  });
+};
+
+const getDeclarationValues = (declarationsInfo = [], formikValues) => {
+  const declarationValuesAsArray = declarationsInfo
+    .map(info => {
+      if (!info.validate.required) return null;
+      return [info.key, formikValues[info.key] || false];
+    })
+    .filter(item => Array.isArray(item));
+
+  return Object.fromEntries(declarationValuesAsArray);
+};
+
+const getInitialWarningValues = declarationsValues => {
+  const warningValuesAsArray = Object.entries(declarationsValues).map(([declarationKey]) => [
+    declarationKey,
+    false,
+  ]);
+  return Object.fromEntries(warningValuesAsArray);
 };
 
 const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
@@ -24,32 +54,60 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
 
   const {
     loading,
-    value: privacyPolicyConfig = {},
+    value: declarationsInfo = [],
     error,
   } = useAsync(async () => {
-    if (!canSubmit) return undefined;
-    return await getPrivacyPolicyInfo(baseUrl);
-  }, [baseUrl, getPrivacyPolicyInfo, canSubmit]);
+    if (!canSubmit) return [];
+
+    return await getDeclarationsInfo(baseUrl);
+  }, [baseUrl, getDeclarationsInfo, canSubmit]);
+  const {values: formikValues} = useFormikContext();
+
   if (error) throw error;
 
-  const {requiresPrivacyConsent, privacyLabel} = privacyPolicyConfig;
-  const {
-    values: {privacy: policyAccepted},
-  } = useFormikContext();
+  const submitDisabled = !isSubmitEnabled(loading, declarationsInfo, formikValues);
 
-  const displayPrivacyNotice = !loading && canSubmit && requiresPrivacyConsent;
-  const submitDisabled = requiresPrivacyConsent && !policyAccepted;
-  const [warningUncheckedPrivacy, setWarningUncheckedPrivacy] = useState(false);
-  if (policyAccepted && warningUncheckedPrivacy) {
-    setWarningUncheckedPrivacy(false);
-  }
+  const [declarationsWarnings, setDeclarationWarnings] = useState(
+    getInitialWarningValues(getDeclarationValues(declarationsInfo, formikValues))
+  );
+
+  const showWarnings = formikValues => {
+    const declarationValues = getDeclarationValues(declarationsInfo, formikValues);
+
+    let updatedWarnings = {...declarationsWarnings};
+    Object.entries(declarationValues).forEach(([declarationKey, declarationValue]) => {
+      if (!declarationValue) {
+        updatedWarnings = {...updatedWarnings, [declarationKey]: true};
+      }
+    });
+    setDeclarationWarnings(updatedWarnings);
+  };
+
+  const declarationValues = getDeclarationValues(declarationsInfo, formikValues);
+  const previousDeclarationValues = usePrevious(declarationValues);
+
+  useEffect(() => {
+    if (!previousDeclarationValues || isEqual(previousDeclarationValues, declarationValues)) return;
+
+    // If the Formik values have changed, update the warnings
+    let updatedWarnings = {...declarationsWarnings};
+    Object.entries(declarationValues).forEach(([declarationKey, declarationValue]) => {
+      if (declarationValue && declarationsWarnings[declarationKey]) {
+        updatedWarnings = {...updatedWarnings, [declarationKey]: false};
+      }
+    });
+    setDeclarationWarnings(updatedWarnings);
+  }, [declarationValues, previousDeclarationValues, declarationsWarnings]);
 
   return (
     <>
-      {displayPrivacyNotice && (
-        <PrivacyCheckbox label={privacyLabel} showWarning={warningUncheckedPrivacy} />
-      )}
       {loading && <Loader />}
+      <DeclarationCheckboxes
+        loading={loading}
+        canSubmit={canSubmit}
+        declarationsInfo={declarationsInfo}
+        declarationsWarnings={declarationsWarnings}
+      />
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
           {!!onPrevPage && (
@@ -65,7 +123,7 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
               variant="primary"
               name="confirm"
               disabled={loading || submitDisabled}
-              onDisabledClick={() => !loading && setWarningUncheckedPrivacy(true)}
+              onDisabledClick={() => !loading && showWarnings(formikValues)}
             >
               <Literal name="confirmText" />
             </Button>
