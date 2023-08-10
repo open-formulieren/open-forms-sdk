@@ -3,12 +3,12 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
+import ErrorMessage from 'components/ErrorMessage';
+import {FormioComponent} from 'components/formio';
 
-import ErrorMessage from './ErrorMessage';
-import './PrivacyCheckbox.scss';
-import {FormioComponent} from './formio';
+import './DeclarationCheckbox.scss';
 
-const PrivacyCheckbox = ({configuration, showWarning = false}) => {
+const DeclarationCheckbox = ({configuration, showWarning = false}) => {
   if (!configuration.validate.required) return null;
 
   const labelBody = (
@@ -22,6 +22,7 @@ const PrivacyCheckbox = ({configuration, showWarning = false}) => {
     ...configuration,
     label: labelBody,
   };
+  // TODO: When we rework this component, change the class names
   return (
     <div className="openforms-privacy-checkbox">
       <FormioComponent component={formioDefinition} />
@@ -37,7 +38,7 @@ const PrivacyCheckbox = ({configuration, showWarning = false}) => {
   );
 };
 
-PrivacyCheckbox.propTypes = {
+DeclarationCheckbox.propTypes = {
   configuration: PropTypes.shape({
     type: PropTypes.oneOf(['checkbox']).isRequired,
     key: PropTypes.string.isRequired,
@@ -52,4 +53,4 @@ PrivacyCheckbox.propTypes = {
   showWarning: PropTypes.bool,
 };
 
-export default PrivacyCheckbox;
+export default DeclarationCheckbox;

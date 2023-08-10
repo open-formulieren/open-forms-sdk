@@ -1,0 +1,24 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
+
+import * as DeclarationCheckboxStories from './DeclarationCheckbox.stories';
+
+<Meta of={DeclarationCheckboxStories} />
+
+# Privacy Checkbox
+
+When a form is configured to require users to consent to the privacy policy, this component is
+displayed. Not checking the checkbox upon submission triggers the warning state.
+
+**Note** This component must be a child of a `<Formik>` parent.
+
+## Default
+
+<Canvas of={DeclarationCheckboxStories.Default} />
+
+## With warning
+
+<Canvas of={DeclarationCheckboxStories.WithWarning} />
+
+## Props
+
+<ArgTypes of={DeclarationCheckboxStories} />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PrivacyCheckbox from 'components/PrivacyCheckbox';
+import DeclarationCheckbox from 'components/DeclarationCheckboxes/DeclarationCheckbox';
 
 const DeclarationCheckboxes = ({loading, canSubmit, declarationsInfo, declarationsWarnings}) => {
   if (loading || !canSubmit) return null;
@@ -8,7 +8,7 @@ const DeclarationCheckboxes = ({loading, canSubmit, declarationsInfo, declaratio
   return (
     <div className="openforms-declaration-checkboxes">
       {declarationsInfo.map((info, index) => (
-        <PrivacyCheckbox
+        <DeclarationCheckbox
           key={`${index}-${info.key}`}
           configuration={info}
           showWarning={declarationsWarnings[info.key]}

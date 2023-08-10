@@ -50,7 +50,7 @@ export default {
     },
     msw: {
       handlers: [
-        mockDeclarationsConfigGet,
+        mockDeclarationsConfigGet(),
         mockAppointmentProductsGet,
         mockAppointmentLocationsGet,
         mockAppointmentCustomerFieldsGet,
