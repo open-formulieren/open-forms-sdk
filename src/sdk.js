@@ -5,7 +5,7 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
-import {RouterProvider, createBrowserRouter, createHashRouter} from 'react-router-dom';
+import {RouterProvider, createBrowserRouter, createHashRouter, resolvePath} from 'react-router-dom';
 import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from 'Context';
@@ -98,6 +98,18 @@ class OpenForm {
       pathname = pathname.slice(0, pathname.length - 1);
     }
     this.basePath = pathname;
+    this.calculateClientBaseUrl();
+  }
+
+  calculateClientBaseUrl() {
+    // calculate the client-side base URL, as this is recorded in backend calls for
+    // submissions.
+    const clientBase = resolvePath(this.basePath).pathname; // has leading slash
+    const prefix = this.useHashRouting ? window.location.pathname : ''; // may have trailing slash
+    this.clientBaseUrl = new URL(
+      this.useHashRouting ? `${prefix}#${clientBase}` : clientBase,
+      window.location.origin
+    ).href;
   }
 
   async init() {
@@ -127,6 +139,7 @@ class OpenForm {
           <ConfigContext.Provider
             value={{
               baseUrl: this.baseUrl,
+              clientBaseUrl: this.clientBaseUrl,
               basePath: this.basePath,
               baseTitle: this.baseTitle,
               displayComponents: this.displayComponents,

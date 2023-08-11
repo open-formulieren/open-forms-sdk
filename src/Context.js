@@ -22,6 +22,7 @@ FormContext.displayName = 'FormContext';
 
 const ConfigContext = React.createContext({
   baseUrl: '',
+  clientBaseUrl: window.location.href,
   basePath: '',
   baseTitle: '',
   requiredFieldsWithAsterisk: true,

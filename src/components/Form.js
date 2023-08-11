@@ -165,7 +165,7 @@ const Form = () => {
       return;
     }
 
-    const submission = await createSubmission(config.baseUrl, form);
+    const submission = await createSubmission(config.baseUrl, form, config.clientBaseUrl);
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
