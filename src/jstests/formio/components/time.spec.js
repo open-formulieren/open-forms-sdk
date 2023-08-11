@@ -205,7 +205,7 @@ describe('Time Component', () => {
     // Note: the backend dynamically updates the configuration so that `translatedErrors` are added to
     // `errors` in the correct language.
     formJSON.components[0].errors = {
-      invalidTime: 'Custom error! Min time: {{ minTime }} Max time: {{ maxTime }}.',
+      invalid_time: 'Custom error! Min time: {{ minTime }} Max time: {{ maxTime }}.',
     };
     formJSON.components[0].maxTime = '13:00:00';
     formJSON.components[0].minTime = '12:00:00';
