@@ -7,7 +7,7 @@ import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'da
 export const SESSION_STORAGE_KEY = 'appointment|submission';
 
 const useGetOrCreateSubmission = (form, skipCreation) => {
-  const {baseUrl} = useContext(ConfigContext);
+  const {baseUrl, clientBaseUrl} = useContext(ConfigContext);
   const [submission, setSubmission] = useSessionStorage(SESSION_STORAGE_KEY, null);
 
   const clear = () => {
@@ -23,7 +23,7 @@ const useGetOrCreateSubmission = (form, skipCreation) => {
     async signal => {
       if (shouldCreate) {
         try {
-          setSubmission(await createSubmission(baseUrl, form, signal));
+          setSubmission(await createSubmission(baseUrl, form, clientBaseUrl, signal));
         } catch (e) {
           if (error.name !== 'AbortError') {
             throw e;

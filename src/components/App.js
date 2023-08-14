@@ -19,7 +19,7 @@ import AppDisplay from './AppDisplay';
 
 export const routes = [
   {
-    path: 'afspraak-annuleren',
+    path: 'afspraak-annuleren/*',
     element: <ManageAppointment />,
   },
   {
@@ -56,6 +56,7 @@ const App = ({noDebug = false}) => {
   const form = useFormContext();
   const config = useContext(ConfigContext);
   const appointmentMatch = useMatch('afspraak-maken/*');
+  const appointmentCancelMatch = useMatch('afspraak-annuleren/*');
 
   const AppDisplayComponent = config?.displayComponents?.app ?? AppDisplay;
 
@@ -64,7 +65,7 @@ const App = ({noDebug = false}) => {
   const appDebug = DEBUG && !noDebug ? <AppDebug /> : null;
 
   const isAppointment = form.appointmentOptions?.isAppointment ?? false;
-  if (isAppointment && !appointmentMatch) {
+  if (isAppointment && !appointmentMatch && !appointmentCancelMatch) {
     return <Navigate replace to="../afspraak-maken" />;
   }
 

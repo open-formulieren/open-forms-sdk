@@ -112,4 +112,30 @@ describe('OpenForm', () => {
 
     expect(within(formRoot).getAllByText('English version').length).toBeGreaterThan(0);
   });
+
+  it('should correctly set the formUrl', () => {
+    mswServer.use(...apiMocks);
+    const formRoot = document.createElement('div');
+    const form = new OpenForm(formRoot, {
+      baseUrl: BASE_URL,
+      basePath: '/some-subpath/',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+    });
+
+    expect(form.clientBaseUrl).toEqual('http://localhost/some-subpath');
+  });
+
+  it('should correctly set the formUrl (hash fragment routing)', () => {
+    mswServer.use(...apiMocks);
+    window.history.pushState({}, 'Dummy title', '/some-server-side/path');
+    const formRoot = document.createElement('div');
+    const form = new OpenForm(formRoot, {
+      baseUrl: BASE_URL,
+      basePath: '/some-subpath/',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      useHashRouting: true,
+    });
+
+    expect(form.clientBaseUrl).toEqual('http://localhost/some-server-side/path#/some-subpath');
+  });
 });
