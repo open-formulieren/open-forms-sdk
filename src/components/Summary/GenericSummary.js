@@ -42,7 +42,7 @@ const GenericSummary = ({
         <ErrorMessage key={error}>{error}</ErrorMessage>
       ))}
       <Formik
-        initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
+        initialValues={{privacyPolicyAccepted: false, truthStatementAccepted: false}}
         onSubmit={(values, actions) => {
           onSubmit(values);
           actions.setSubmitting(false);

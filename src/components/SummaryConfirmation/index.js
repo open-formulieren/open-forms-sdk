@@ -1,8 +1,7 @@
 import {useFormikContext} from 'formik';
-import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
-import {useAsync, usePrevious} from 'react-use';
+import React, {useContext, useState} from 'react';
+import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
@@ -29,25 +28,6 @@ const isSubmitEnabled = (loading, statementsInfo = [], statementsValues) => {
   });
 };
 
-const getStatementValues = (statementsInfo = [], formikValues) => {
-  const statementValuesAsArray = statementsInfo
-    .map(info => {
-      if (!info.validate.required) return null;
-      return [info.key, formikValues[info.key] || false];
-    })
-    .filter(item => Array.isArray(item));
-
-  return Object.fromEntries(statementValuesAsArray);
-};
-
-const getInitialWarningValues = statementsValues => {
-  const warningValuesAsArray = Object.entries(statementsValues).map(([statementKey]) => [
-    statementKey,
-    false,
-  ]);
-  return Object.fromEntries(warningValuesAsArray);
-};
-
 const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
   const {baseUrl} = useContext(ConfigContext);
   const canSubmit = submissionAllowed === SUBMISSION_ALLOWED.yes;
@@ -67,37 +47,7 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
 
   const submitDisabled = !isSubmitEnabled(loading, statementsInfo, formikValues);
 
-  const [statementsWarnings, setStatementWarnings] = useState(
-    getInitialWarningValues(getStatementValues(statementsInfo, formikValues))
-  );
-
-  const showWarnings = formikValues => {
-    const statementValues = getStatementValues(statementsInfo, formikValues);
-
-    let updatedWarnings = {...statementsWarnings};
-    Object.entries(statementValues).forEach(([statementKey, statementValue]) => {
-      if (!statementValue) {
-        updatedWarnings = {...updatedWarnings, [statementKey]: true};
-      }
-    });
-    setStatementWarnings(updatedWarnings);
-  };
-
-  const statementValues = getStatementValues(statementsInfo, formikValues);
-  const previousStatementValues = usePrevious(statementValues);
-
-  useEffect(() => {
-    if (!previousStatementValues || isEqual(previousStatementValues, statementValues)) return;
-
-    // If the Formik values have changed, update the warnings
-    let updatedWarnings = {...statementsWarnings};
-    Object.entries(statementValues).forEach(([statementKey, statementValue]) => {
-      if (statementValue && statementsWarnings[statementKey]) {
-        updatedWarnings = {...updatedWarnings, [statementKey]: false};
-      }
-    });
-    setStatementWarnings(updatedWarnings);
-  }, [statementValues, previousStatementValues, statementsWarnings]);
+  const [showStatementWarnings, setShowStatementWarnings] = useState(false);
 
   return (
     <>
@@ -106,7 +56,7 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
         loading={loading}
         canSubmit={canSubmit}
         statementsInfo={statementsInfo}
-        statementsWarnings={statementsWarnings}
+        showWarnings={showStatementWarnings}
       />
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
@@ -123,7 +73,7 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
               variant="primary"
               name="confirm"
               disabled={loading || submitDisabled}
-              onDisabledClick={() => !loading && showWarnings(formikValues)}
+              onDisabledClick={() => !loading && setShowStatementWarnings(true)}
             >
               <Literal name="confirmText" />
             </Button>

@@ -200,7 +200,7 @@ const Summary = () => {
         <Loader modifiers={['centered']} />
       ) : (
         <Formik
-          initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
+          initialValues={{privacyPolicyAccepted: false, truthStatementAccepted: false}}
           onSubmit={onSubmit}
         >
           <Form>
