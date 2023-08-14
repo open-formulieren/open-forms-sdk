@@ -45,9 +45,9 @@ const CosignSummary = ({
 
   if (loadingDataError) throw loadingDataError;
 
-  const onSubmit = async ({privacy: privacyPolicyAccepted}) => {
+  const onSubmit = async statementValues => {
     const cosignEndpoint = new URL(`/api/v2/submissions/${submission.id}/cosign`, submission.url);
-    const response = await post(cosignEndpoint.href, {privacyPolicyAccepted});
+    const response = await post(cosignEndpoint.href, statementValues);
 
     removeSubmissionId();
     onCosignComplete(response.data.reportDownloadUrl);

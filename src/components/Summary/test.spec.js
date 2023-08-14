@@ -43,10 +43,12 @@ beforeEach(() => {
 
 afterEach(() => {
   // cleanup on exiting
-  root.unmount();
-  container.remove();
-  root = null;
-  container = null;
+  act(() => {
+    root.unmount();
+    container.remove();
+    root = null;
+    container = null;
+  });
 });
 
 const Wrap = ({children}) => (
@@ -69,15 +71,13 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   act(() => {
     root.render(
       <Wrap>
-        <IntlProvider locale="nl" messages={messagesNL}>
-          <SubmissionSummary
-            form={testForm}
-            submission={SUBMISSION}
-            onConfirm={onConfirm}
-            onLogout={onLogout}
-            onClearProcessingErrors={() => {}}
-          />
-        </IntlProvider>
+        <SubmissionSummary
+          form={testForm}
+          submission={SUBMISSION}
+          onConfirm={onConfirm}
+          onLogout={onLogout}
+          onClearProcessingErrors={() => {}}
+        />
       </Wrap>
     );
   });
@@ -99,15 +99,13 @@ it('Summary does not display logout button if loginRequired is false', () => {
   act(() => {
     root.render(
       <Wrap>
-        <IntlProvider locale="nl" messages={messagesNL}>
-          <SubmissionSummary
-            form={formLoginRequired}
-            submission={SUBMISSION}
-            onConfirm={onConfirm}
-            onLogout={onLogout}
-            onClearProcessingErrors={() => {}}
-          />
-        </IntlProvider>
+        <SubmissionSummary
+          form={formLoginRequired}
+          submission={SUBMISSION}
+          onConfirm={onConfirm}
+          onLogout={onLogout}
+          onClearProcessingErrors={() => {}}
+        />
       </Wrap>
     );
   });

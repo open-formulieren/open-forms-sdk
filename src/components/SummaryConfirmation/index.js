@@ -8,14 +8,24 @@ import {get} from 'api';
 import Button from 'components/Button';
 import {Literal} from 'components/Literal';
 import Loader from 'components/Loader';
-import PrivacyCheckbox from 'components/PrivacyCheckbox';
+import StatementCheckboxes from 'components/StatementCheckboxes';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
-export const PRIVACY_POLICY_ENDPOINT = 'config/privacy_policy_info';
+export const STATEMENTS_INFO_ENDPOINT = 'config/statements-info-list';
 
-const getPrivacyPolicyInfo = async baseUrl => {
-  return await get(`${baseUrl}${PRIVACY_POLICY_ENDPOINT}`);
+const getStatementsInfo = async baseUrl => {
+  return await get(`${baseUrl}${STATEMENTS_INFO_ENDPOINT}`);
+};
+
+const isSubmitEnabled = (loading, statementsInfo = [], statementsValues) => {
+  if (loading) return false;
+
+  return statementsInfo.every(info => {
+    if (!info.validate.required) return true;
+
+    return Boolean(statementsValues[info.key]);
+  });
 };
 
 const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
@@ -24,32 +34,27 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
 
   const {
     loading,
-    value: privacyPolicyConfig = {},
+    value: statementsInfo = [],
     error,
   } = useAsync(async () => {
-    if (!canSubmit) return undefined;
-    return await getPrivacyPolicyInfo(baseUrl);
-  }, [baseUrl, getPrivacyPolicyInfo, canSubmit]);
+    if (!canSubmit) return [];
+
+    return await getStatementsInfo(baseUrl);
+  }, [baseUrl, getStatementsInfo, canSubmit]);
+  const {values: formikValues} = useFormikContext();
+
   if (error) throw error;
 
-  const {requiresPrivacyConsent, privacyLabel} = privacyPolicyConfig;
-  const {
-    values: {privacy: policyAccepted},
-  } = useFormikContext();
+  const submitDisabled = !isSubmitEnabled(loading, statementsInfo, formikValues);
 
-  const displayPrivacyNotice = !loading && canSubmit && requiresPrivacyConsent;
-  const submitDisabled = requiresPrivacyConsent && !policyAccepted;
-  const [warningUncheckedPrivacy, setWarningUncheckedPrivacy] = useState(false);
-  if (policyAccepted && warningUncheckedPrivacy) {
-    setWarningUncheckedPrivacy(false);
-  }
+  const [showStatementWarnings, setShowStatementWarnings] = useState(false);
 
   return (
     <>
-      {displayPrivacyNotice && (
-        <PrivacyCheckbox label={privacyLabel} showWarning={warningUncheckedPrivacy} />
-      )}
       {loading && <Loader />}
+      {!loading && canSubmit && (
+        <StatementCheckboxes statementsInfo={statementsInfo} showWarnings={showStatementWarnings} />
+      )}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
           {!!onPrevPage && (
@@ -65,7 +70,7 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
               variant="primary"
               name="confirm"
               disabled={loading || submitDisabled}
-              onDisabledClick={() => !loading && setWarningUncheckedPrivacy(true)}
+              onDisabledClick={() => !loading && setShowStatementWarnings(true)}
             >
               <Literal name="confirmText" />
             </Button>
