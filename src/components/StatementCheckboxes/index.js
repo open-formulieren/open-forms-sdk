@@ -2,12 +2,10 @@ import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import StatementCheckbox from 'components/StatementCheckboxes/StatementCheckbox';
+import StatementCheckbox from './StatementCheckbox';
 
-const StatementCheckboxes = ({loading, canSubmit, statementsInfo, showWarnings}) => {
+const StatementCheckboxes = ({statementsInfo, showWarnings}) => {
   const {values: formikValues} = useFormikContext();
-
-  if (loading || !canSubmit) return null;
 
   return (
     <div className="openforms-statement-checkboxes">
@@ -23,8 +21,6 @@ const StatementCheckboxes = ({loading, canSubmit, statementsInfo, showWarnings})
 };
 
 StatementCheckboxes.propTypes = {
-  loading: PropTypes.bool,
-  canSubmit: PropTypes.bool,
   statementsInfo: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.oneOf(['checkbox']).isRequired,

@@ -52,12 +52,9 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
   return (
     <>
       {loading && <Loader />}
-      <StatementCheckboxes
-        loading={loading}
-        canSubmit={canSubmit}
-        statementsInfo={statementsInfo}
-        showWarnings={showStatementWarnings}
-      />
+      {!loading && canSubmit && (
+        <StatementCheckboxes statementsInfo={statementsInfo} showWarnings={showStatementWarnings} />
+      )}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
           {!!onPrevPage && (
