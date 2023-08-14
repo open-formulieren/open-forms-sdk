@@ -13,10 +13,10 @@ import Loader from 'components/Loader';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
-export const PRIVACY_POLICY_ENDPOINT = 'config/declarations_info_list';
+export const STATEMENTS_INFO_ENDPOINT = 'config/statements-info-list';
 
 const getDeclarationsInfo = async baseUrl => {
-  return await get(`${baseUrl}${PRIVACY_POLICY_ENDPOINT}`);
+  return await get(`${baseUrl}${STATEMENTS_INFO_ENDPOINT}`);
 };
 
 const isSubmitEnabled = (loading, declarationsInfo = [], declarationsValues) => {

@@ -204,7 +204,10 @@ const Summary = () => {
       {loading ? (
         <Loader modifiers={['centered']} />
       ) : (
-        <Formik initialValues={{}} onSubmit={onSubmit}>
+        <Formik
+          initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
+          onSubmit={onSubmit}
+        >
           <Form>
             {/* Products overview */}
             <FormStepSummary

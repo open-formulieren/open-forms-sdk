@@ -203,13 +203,10 @@ export const HappyFlow = {
     });
 
     await step('Wait for the declarations to load', async () => {
-      await waitFor(
-        async () =>
-          await expect(
-            await canvas.getByLabelText(
-              /I accept the privacy policy and consent to the processing of my personal data/
-            )
-          )
+      await expect(
+        await canvas.findByLabelText(
+          /I accept the privacy policy and consent to the processing of my personal data/
+        )
       );
     });
 

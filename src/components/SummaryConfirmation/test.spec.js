@@ -32,7 +32,10 @@ const LITERALS = {
 
 const Wrapper = ({children}) => (
   <LiteralsProvider literals={LITERALS}>
-    <Formik initialValues={{}} onSubmit={jest.fn()}>
+    <Formik
+      initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
+      onSubmit={jest.fn()}
+    >
       {children}
     </Formik>
   </LiteralsProvider>

@@ -2,7 +2,7 @@ import {rest} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
-import {PRIVACY_POLICY_ENDPOINT} from '.';
+import {STATEMENTS_INFO_ENDPOINT} from '.';
 
 const DEFAULT_DECLARATIONS = [
   {
@@ -14,4 +14,6 @@ const DEFAULT_DECLARATIONS = [
 ];
 
 export const mockDeclarationsConfigGet = (declarations = DEFAULT_DECLARATIONS) =>
-  rest.get(`${BASE_URL}${PRIVACY_POLICY_ENDPOINT}`, (req, res, ctx) => res(ctx.json(declarations)));
+  rest.get(`${BASE_URL}${STATEMENTS_INFO_ENDPOINT}`, (req, res, ctx) =>
+    res(ctx.json(declarations))
+  );
