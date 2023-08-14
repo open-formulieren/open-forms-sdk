@@ -22,7 +22,7 @@ import {getAllProducts, fieldLabel as productLabel} from '../ProductSelect';
 import {fieldLabel as timeLabel} from '../TimeSelect';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 
-const createAppointment = async (baseUrl, submission, appointmentData, declarationValues) => {
+const createAppointment = async (baseUrl, submission, appointmentData, statementValues) => {
   const {products, location, date, datetime, ...contactDetails} = appointmentData;
   const body = {
     submission: submission.url,
@@ -31,7 +31,7 @@ const createAppointment = async (baseUrl, submission, appointmentData, declarati
     date,
     datetime,
     contactDetails,
-    ...declarationValues,
+    ...statementValues,
   };
   const response = await post(`${baseUrl}appointments/appointments`, body);
   return response.data;
@@ -159,15 +159,10 @@ const Summary = () => {
   /**
    * Submit the appointment data to the backend.
    */
-  const onSubmit = async declarationValues => {
+  const onSubmit = async statementValues => {
     let appointment;
     try {
-      appointment = await createAppointment(
-        baseUrl,
-        submission,
-        appointmentData,
-        declarationValues
-      );
+      appointment = await createAppointment(baseUrl, submission, appointmentData, statementValues);
     } catch (e) {
       if (e instanceof ValidationError) {
         const {initialErrors, initialTouched} = e.asFormikProps();

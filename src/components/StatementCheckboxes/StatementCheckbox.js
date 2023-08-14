@@ -6,9 +6,9 @@ import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
 import {FormioComponent} from 'components/formio';
 
-import './DeclarationCheckbox.scss';
+import './StatementCheckbox.scss';
 
-const DeclarationCheckbox = ({configuration, showWarning = false}) => {
+const StatementCheckbox = ({configuration, showWarning = false}) => {
   if (!configuration.validate.required) return null;
 
   const labelBody = (
@@ -38,7 +38,7 @@ const DeclarationCheckbox = ({configuration, showWarning = false}) => {
   );
 };
 
-DeclarationCheckbox.propTypes = {
+StatementCheckbox.propTypes = {
   configuration: PropTypes.shape({
     type: PropTypes.oneOf(['checkbox']).isRequired,
     key: PropTypes.string.isRequired,
@@ -53,4 +53,4 @@ DeclarationCheckbox.propTypes = {
   showWarning: PropTypes.bool,
 };
 
-export default DeclarationCheckbox;
+export default StatementCheckbox;

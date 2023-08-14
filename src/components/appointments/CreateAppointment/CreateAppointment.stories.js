@@ -7,7 +7,7 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
 import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
-import {mockDeclarationsConfigGet} from 'components/SummaryConfirmation/mocks';
+import {mockStatementsConfigGet} from 'components/SummaryConfirmation/mocks';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -34,7 +34,7 @@ export default {
         mockAppointmentDatesGet,
         mockAppointmentTimesGet,
         mockAppointmentCustomerFieldsGet,
-        mockDeclarationsConfigGet(),
+        mockStatementsConfigGet(),
         mockAppointmentPost,
         mockSubmissionProcessingStatusGet,
       ],
@@ -202,7 +202,7 @@ export const HappyFlow = {
       await userEvent.click(button);
     });
 
-    await step('Wait for the declarations to load', async () => {
+    await step('Wait for the statements to load', async () => {
       await expect(
         await canvas.findByLabelText(
           /I accept the privacy policy and consent to the processing of my personal data/

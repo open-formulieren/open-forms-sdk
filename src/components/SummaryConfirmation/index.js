@@ -7,42 +7,42 @@ import {useAsync, usePrevious} from 'react-use';
 import {ConfigContext} from 'Context';
 import {get} from 'api';
 import Button from 'components/Button';
-import DeclarationCheckboxes from 'components/DeclarationCheckboxes';
 import {Literal} from 'components/Literal';
 import Loader from 'components/Loader';
+import StatementCheckboxes from 'components/StatementCheckboxes';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 export const STATEMENTS_INFO_ENDPOINT = 'config/statements-info-list';
 
-const getDeclarationsInfo = async baseUrl => {
+const getStatementsInfo = async baseUrl => {
   return await get(`${baseUrl}${STATEMENTS_INFO_ENDPOINT}`);
 };
 
-const isSubmitEnabled = (loading, declarationsInfo = [], declarationsValues) => {
+const isSubmitEnabled = (loading, statementsInfo = [], statementsValues) => {
   if (loading) return false;
 
-  return declarationsInfo.every(info => {
+  return statementsInfo.every(info => {
     if (!info.validate.required) return true;
 
-    return Boolean(declarationsValues[info.key]);
+    return Boolean(statementsValues[info.key]);
   });
 };
 
-const getDeclarationValues = (declarationsInfo = [], formikValues) => {
-  const declarationValuesAsArray = declarationsInfo
+const getStatementValues = (statementsInfo = [], formikValues) => {
+  const statementValuesAsArray = statementsInfo
     .map(info => {
       if (!info.validate.required) return null;
       return [info.key, formikValues[info.key] || false];
     })
     .filter(item => Array.isArray(item));
 
-  return Object.fromEntries(declarationValuesAsArray);
+  return Object.fromEntries(statementValuesAsArray);
 };
 
-const getInitialWarningValues = declarationsValues => {
-  const warningValuesAsArray = Object.entries(declarationsValues).map(([declarationKey]) => [
-    declarationKey,
+const getInitialWarningValues = statementsValues => {
+  const warningValuesAsArray = Object.entries(statementsValues).map(([statementKey]) => [
+    statementKey,
     false,
   ]);
   return Object.fromEntries(warningValuesAsArray);
@@ -54,59 +54,59 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
 
   const {
     loading,
-    value: declarationsInfo = [],
+    value: statementsInfo = [],
     error,
   } = useAsync(async () => {
     if (!canSubmit) return [];
 
-    return await getDeclarationsInfo(baseUrl);
-  }, [baseUrl, getDeclarationsInfo, canSubmit]);
+    return await getStatementsInfo(baseUrl);
+  }, [baseUrl, getStatementsInfo, canSubmit]);
   const {values: formikValues} = useFormikContext();
 
   if (error) throw error;
 
-  const submitDisabled = !isSubmitEnabled(loading, declarationsInfo, formikValues);
+  const submitDisabled = !isSubmitEnabled(loading, statementsInfo, formikValues);
 
-  const [declarationsWarnings, setDeclarationWarnings] = useState(
-    getInitialWarningValues(getDeclarationValues(declarationsInfo, formikValues))
+  const [statementsWarnings, setStatementWarnings] = useState(
+    getInitialWarningValues(getStatementValues(statementsInfo, formikValues))
   );
 
   const showWarnings = formikValues => {
-    const declarationValues = getDeclarationValues(declarationsInfo, formikValues);
+    const statementValues = getStatementValues(statementsInfo, formikValues);
 
-    let updatedWarnings = {...declarationsWarnings};
-    Object.entries(declarationValues).forEach(([declarationKey, declarationValue]) => {
-      if (!declarationValue) {
-        updatedWarnings = {...updatedWarnings, [declarationKey]: true};
+    let updatedWarnings = {...statementsWarnings};
+    Object.entries(statementValues).forEach(([statementKey, statementValue]) => {
+      if (!statementValue) {
+        updatedWarnings = {...updatedWarnings, [statementKey]: true};
       }
     });
-    setDeclarationWarnings(updatedWarnings);
+    setStatementWarnings(updatedWarnings);
   };
 
-  const declarationValues = getDeclarationValues(declarationsInfo, formikValues);
-  const previousDeclarationValues = usePrevious(declarationValues);
+  const statementValues = getStatementValues(statementsInfo, formikValues);
+  const previousStatementValues = usePrevious(statementValues);
 
   useEffect(() => {
-    if (!previousDeclarationValues || isEqual(previousDeclarationValues, declarationValues)) return;
+    if (!previousStatementValues || isEqual(previousStatementValues, statementValues)) return;
 
     // If the Formik values have changed, update the warnings
-    let updatedWarnings = {...declarationsWarnings};
-    Object.entries(declarationValues).forEach(([declarationKey, declarationValue]) => {
-      if (declarationValue && declarationsWarnings[declarationKey]) {
-        updatedWarnings = {...updatedWarnings, [declarationKey]: false};
+    let updatedWarnings = {...statementsWarnings};
+    Object.entries(statementValues).forEach(([statementKey, statementValue]) => {
+      if (statementValue && statementsWarnings[statementKey]) {
+        updatedWarnings = {...updatedWarnings, [statementKey]: false};
       }
     });
-    setDeclarationWarnings(updatedWarnings);
-  }, [declarationValues, previousDeclarationValues, declarationsWarnings]);
+    setStatementWarnings(updatedWarnings);
+  }, [statementValues, previousStatementValues, statementsWarnings]);
 
   return (
     <>
       {loading && <Loader />}
-      <DeclarationCheckboxes
+      <StatementCheckboxes
         loading={loading}
         canSubmit={canSubmit}
-        declarationsInfo={declarationsInfo}
-        declarationsWarnings={declarationsWarnings}
+        statementsInfo={statementsInfo}
+        statementsWarnings={statementsWarnings}
       />
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>

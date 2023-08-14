@@ -1,7 +1,7 @@
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {buildSubmission} from 'api-mocks/submissions';
-import {mockDeclarationsConfigGet} from 'components/SummaryConfirmation/mocks';
+import {mockStatementsConfigGet} from 'components/SummaryConfirmation/mocks';
 import {ConfigDecorator, LayoutDecorator, LiteralDecorator, withCard} from 'story-utils/decorators';
 
 import {
@@ -50,7 +50,7 @@ export default {
     },
     msw: {
       handlers: [
-        mockDeclarationsConfigGet(),
+        mockStatementsConfigGet(),
         mockAppointmentProductsGet,
         mockAppointmentLocationsGet,
         mockAppointmentCustomerFieldsGet,

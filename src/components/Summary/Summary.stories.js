@@ -3,7 +3,7 @@ import {userEvent, waitFor, within} from '@storybook/testing-library';
 import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
-import {mockDeclarationsConfigGet} from 'components/SummaryConfirmation/mocks';
+import {mockStatementsConfigGet} from 'components/SummaryConfirmation/mocks';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {ConfigDecorator, FormikDecorator, LiteralDecorator} from 'story-utils/decorators';
 
@@ -144,7 +144,7 @@ export const Default = {
     // story args
     showPreviousPageLink,
   }) => {
-    worker.use(mockDeclarationsConfigGet());
+    worker.use(mockStatementsConfigGet());
 
     return (
       <GenericSummary
@@ -168,7 +168,7 @@ export const Default = {
   },
 };
 
-export const MultipleRequiredDeclarations = {
+export const MultipleRequiredStatements = {
   render: ({
     // component props
     title,
@@ -186,7 +186,7 @@ export const MultipleRequiredDeclarations = {
     // story args
     showPreviousPageLink,
   }) => {
-    const multipleRequiredDeclarations = [
+    const multipleRequiredStatements = [
       {
         key: 'privacyPolicyAccepted',
         type: 'checkbox',
@@ -194,13 +194,13 @@ export const MultipleRequiredDeclarations = {
         label: 'I accept the privacy policy and consent to the processing of my personal data.',
       },
       {
-        key: 'truthDeclarationAccepted',
+        key: 'truthStatementAccepted',
         type: 'checkbox',
         validate: {required: true},
         label: 'I responded very honestly.',
       },
     ];
-    worker.use(mockDeclarationsConfigGet(multipleRequiredDeclarations));
+    worker.use(mockStatementsConfigGet(multipleRequiredStatements));
 
     return (
       <GenericSummary
@@ -225,7 +225,7 @@ export const MultipleRequiredDeclarations = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
-    await step('Wait for the declarations to load', async () => {
+    await step('Wait for the statements to load', async () => {
       await waitFor(
         async () =>
           await expect(
@@ -237,14 +237,14 @@ export const MultipleRequiredDeclarations = {
     });
 
     await step(
-      'Verify that warnings appear if trying to submit without accepting declarations',
+      'Verify that warnings appear if trying to submit without accepting statements',
       async () => {
         const submitButton = canvas.getByRole('button', {name: 'Confirm'});
         await waitFor(async () => {
           expect(submitButton).toHaveAttribute('aria-disabled', 'true');
         });
 
-        // Clicking 'submit' without checking the declarations results in all the warnings being
+        // Clicking 'submit' without checking the statements results in all the warnings being
         // displayed
         await userEvent.click(submitButton);
         await waitFor(async () => {
@@ -284,7 +284,7 @@ export const MultipleRequiredDeclarations = {
   },
 };
 
-export const OnlyOneRequiredDeclaration = {
+export const OnlyOneRequiredStatement = {
   render: ({
     // component props
     title,
@@ -302,7 +302,7 @@ export const OnlyOneRequiredDeclaration = {
     // story args
     showPreviousPageLink,
   }) => {
-    const multipleRequiredDeclarations = [
+    const multipleRequiredStatements = [
       {
         key: 'privacyPolicyAccepted',
         type: 'checkbox',
@@ -310,13 +310,13 @@ export const OnlyOneRequiredDeclaration = {
         label: 'I accept the privacy policy and consent to the processing of my personal data.',
       },
       {
-        key: 'truthDeclarationAccepted',
+        key: 'truthStatementAccepted',
         type: 'checkbox',
         validate: {required: false},
         label: 'I responded very honestly.',
       },
     ];
-    worker.use(mockDeclarationsConfigGet(multipleRequiredDeclarations));
+    worker.use(mockStatementsConfigGet(multipleRequiredStatements));
 
     return (
       <GenericSummary
@@ -341,7 +341,7 @@ export const OnlyOneRequiredDeclaration = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
-    await step('Wait for the declarations to load', async () => {
+    await step('Wait for the statements to load', async () => {
       await waitFor(
         async () =>
           await expect(

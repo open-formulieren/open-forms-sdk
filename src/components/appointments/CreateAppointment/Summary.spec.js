@@ -9,7 +9,7 @@ import {ConfigContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {LiteralsProvider} from 'components/Literal';
-import {mockDeclarationsConfigGet} from 'components/SummaryConfirmation/mocks';
+import {mockStatementsConfigGet} from 'components/SummaryConfirmation/mocks';
 
 import {CreateAppointmentContext} from '../Context';
 import {
@@ -93,7 +93,7 @@ const renderSummary = errorHandler => {
 
 beforeEach(() => {
   mswServer.use(
-    mockDeclarationsConfigGet(),
+    mockStatementsConfigGet(),
     mockAppointmentProductsGet,
     mockAppointmentLocationsGet,
     mockAppointmentCustomerFieldsGet

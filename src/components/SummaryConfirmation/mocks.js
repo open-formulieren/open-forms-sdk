@@ -4,7 +4,7 @@ import {BASE_URL} from 'api-mocks';
 
 import {STATEMENTS_INFO_ENDPOINT} from '.';
 
-const DEFAULT_DECLARATIONS = [
+const DEFAULT_STATEMENTS = [
   {
     key: 'privacyPolicyAccepted',
     type: 'checkbox',
@@ -13,7 +13,5 @@ const DEFAULT_DECLARATIONS = [
   },
 ];
 
-export const mockDeclarationsConfigGet = (declarations = DEFAULT_DECLARATIONS) =>
-  rest.get(`${BASE_URL}${STATEMENTS_INFO_ENDPOINT}`, (req, res, ctx) =>
-    res(ctx.json(declarations))
-  );
+export const mockStatementsConfigGet = (statements = DEFAULT_STATEMENTS) =>
+  rest.get(`${BASE_URL}${STATEMENTS_INFO_ENDPOINT}`, (req, res, ctx) => res(ctx.json(statements)));

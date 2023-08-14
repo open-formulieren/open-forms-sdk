@@ -3,11 +3,11 @@ import {userEvent, within} from '@storybook/testing-library';
 
 import {FormikDecorator} from 'story-utils/decorators';
 
-import DeclarationCheckbox from './DeclarationCheckbox';
+import StatementCheckbox from './StatementCheckbox';
 
 export default {
-  title: 'Pure React components / Declaration Checkbox',
-  component: DeclarationCheckbox,
+  title: 'Pure React components / Statement Checkbox',
+  component: StatementCheckbox,
   decorators: [FormikDecorator],
   parameters: {
     formik: {
