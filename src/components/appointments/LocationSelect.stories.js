@@ -1,5 +1,5 @@
 import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
@@ -51,10 +51,17 @@ export const SingleCandidate = {
     const canvas = within(canvasElement);
     await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
     await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
+
     const dropdown = canvas.getByLabelText('Locatie');
     await userEvent.click(dropdown);
     await userEvent.keyboard('[ArrowDown]');
-    await expect(await canvas.findByText('Open Gem')).toBeVisible();
+
+    // wait for locations to be loaded
+    await waitFor(async () => {
+      const textNodes = canvas.queryAllByText('Open Gem');
+      expect(textNodes.length).toBeGreaterThan(0);
+    });
+
     await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
     await userEvent.keyboard('[Escape]');
     await expect(await canvas.findByText('Open Gem')).toBeVisible();

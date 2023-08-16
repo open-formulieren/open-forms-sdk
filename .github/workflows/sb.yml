@@ -101,6 +101,13 @@ jobs:
         env:
           TZ: Europe/Amsterdam
 
+      - name: Prepare coverage for codecov
+        run: |
+          npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+
   chromatic:
     name: Visual regression test with Chromatic
     runs-on: ubuntu-latest

@@ -16,6 +16,7 @@ const config = {
     'storybook-addon-themes',
     'storybook-react-intl',
     'storybook-addon-react-router-v6',
+    '@storybook/addon-coverage',
   ],
   features: {
     interactionsDebugger: true,
