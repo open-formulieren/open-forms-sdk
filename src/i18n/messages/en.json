@@ -84,11 +84,6 @@
     "description": "Appoinments: time select label",
     "originalDefault": "Time"
   },
-  "8MZ9TV": {
-    "defaultMessage": "Please accept the privacy policy before submitting",
-    "description": "Warning privacy policy not checked when submitting",
-    "originalDefault": "Please accept the privacy policy before submitting"
-  },
   "8wgdHE": {
     "defaultMessage": "Log in on behalf of someone else",
     "description": "Log in on behalf of someone else title",
@@ -608,6 +603,11 @@
     "defaultMessage": "Suspending the form failed, please try again later",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
+  },
+  "rUdi0E": {
+    "defaultMessage": "Please check the above declaration before submitting",
+    "description": "Warning declaration not checked when submitting",
+    "originalDefault": "Please check the above declaration before submitting"
   },
   "sSmY1N": {
     "defaultMessage": "Enter address, please",

@@ -145,12 +145,6 @@
       "value": "Tijdstip"
     }
   ],
-  "8MZ9TV": [
-    {
-      "type": 0,
-      "value": "U moet akkoord gaan met het privacybeleid om door te gaan"
-    }
-  ],
   "8wgdHE": [
     {
       "type": 0,
@@ -923,6 +917,12 @@
     {
       "type": 0,
       "value": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw."
+    }
+  ],
+  "rUdi0E": [
+    {
+      "type": 0,
+      "value": "Please check the above declaration before submitting"
     }
   ],
   "sSmY1N": [
