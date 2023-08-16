@@ -13,8 +13,6 @@ import React from 'react';
 import {HelpText, ValidationErrors, Wrapper} from 'components/forms';
 import {LabelContent} from 'components/forms/Label';
 
-import './RadioField.scss';
-
 /**
  * A radio field with a set of options.
  *

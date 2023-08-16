@@ -1,7 +1,5 @@
 import {Formio} from 'react-formio';
 
-import 'components/forms/RadioField/RadioField.scss';
-
 /**
  * Extend the default radio field to modify it to our needs.
  */
