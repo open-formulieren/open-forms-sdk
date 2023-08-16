@@ -24,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: yarn
 
       - name: Build Javascript
         run: |
@@ -47,6 +48,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install
@@ -75,6 +77,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install
@@ -98,6 +101,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: yarn
           registry-url: 'https://registry.npmjs.org'
           scope: '@open-formulieren'
 
