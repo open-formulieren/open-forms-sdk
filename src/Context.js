@@ -10,6 +10,7 @@ const FormContext = React.createContext({
   maintenanceMode: false,
   showProgressIndicator: true,
   submissionAllowed: 'yes',
+  submissionStatementsConfiguration: [],
   literals: {
     beginText: {value: '', resolved: 'Begin'},
     changeText: {value: '', resolved: 'Change'},

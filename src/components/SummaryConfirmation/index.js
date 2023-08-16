@@ -1,26 +1,15 @@
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
-import {useAsync} from 'react-use';
+import React, {useState} from 'react';
 
-import {ConfigContext} from 'Context';
-import {get} from 'api';
 import Button from 'components/Button';
 import {Literal} from 'components/Literal';
-import Loader from 'components/Loader';
 import StatementCheckboxes from 'components/StatementCheckboxes';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+import useFormContext from 'hooks/useFormContext';
 
-export const STATEMENTS_INFO_ENDPOINT = 'config/statements-info-list';
-
-const getStatementsInfo = async baseUrl => {
-  return await get(`${baseUrl}${STATEMENTS_INFO_ENDPOINT}`);
-};
-
-const isSubmitEnabled = (loading, statementsInfo = [], statementsValues) => {
-  if (loading) return false;
-
+const isSubmitEnabled = (statementsInfo = [], statementsValues) => {
   return statementsInfo.every(info => {
     if (!info.validate.required) return true;
 
@@ -29,31 +18,20 @@ const isSubmitEnabled = (loading, statementsInfo = [], statementsValues) => {
 };
 
 const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
-  const {baseUrl} = useContext(ConfigContext);
+  const {submissionStatementsConfiguration = []} = useFormContext();
   const canSubmit = submissionAllowed === SUBMISSION_ALLOWED.yes;
-
-  const {
-    loading,
-    value: statementsInfo = [],
-    error,
-  } = useAsync(async () => {
-    if (!canSubmit) return [];
-
-    return await getStatementsInfo(baseUrl);
-  }, [baseUrl, getStatementsInfo, canSubmit]);
   const {values: formikValues} = useFormikContext();
-
-  if (error) throw error;
-
-  const submitDisabled = !isSubmitEnabled(loading, statementsInfo, formikValues);
-
   const [showStatementWarnings, setShowStatementWarnings] = useState(false);
+
+  const submitDisabled = !isSubmitEnabled(submissionStatementsConfiguration, formikValues);
 
   return (
     <>
-      {loading && <Loader />}
-      {!loading && canSubmit && (
-        <StatementCheckboxes statementsInfo={statementsInfo} showWarnings={showStatementWarnings} />
+      {canSubmit && (
+        <StatementCheckboxes
+          statementsInfo={submissionStatementsConfiguration}
+          showWarnings={showStatementWarnings}
+        />
       )}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
@@ -69,8 +47,8 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
               type="submit"
               variant="primary"
               name="confirm"
-              disabled={loading || submitDisabled}
-              onDisabledClick={() => !loading && setShowStatementWarnings(true)}
+              disabled={submitDisabled}
+              onDisabledClick={() => setShowStatementWarnings(true)}
             >
               <Literal name="confirmText" />
             </Button>

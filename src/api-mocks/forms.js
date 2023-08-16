@@ -1,6 +1,8 @@
 import produce from 'immer';
 import {rest} from 'msw';
 
+import {PRIVACY_POLICY_ACCEPTED} from 'components/SummaryConfirmation/mocks';
+
 import {BASE_URL, getDefaultFactory} from './base';
 
 const FORM_DEFAULTS = {
@@ -17,6 +19,7 @@ const FORM_DEFAULTS = {
   active: true,
   submissionAllowed: 'yes',
   suspensionAllowed: true,
+  submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED],
   appointmentOptions: {
     isAppointment: false,
     supportsMultipleProducts: null,

@@ -115,6 +115,12 @@
       "value": "Pay now"
     }
   ],
+  "6ysm6G": [
+    {
+      "type": 0,
+      "value": "You must declare the form to be filled out truthfully before submitting"
+    }
+  ],
   "7Fk8NY": [
     {
       "type": 1,
@@ -143,6 +149,12 @@
     {
       "type": 0,
       "value": "Time"
+    }
+  ],
+  "8MZ9TV": [
+    {
+      "type": 0,
+      "value": "Please accept the privacy policy before submitting"
     }
   ],
   "8wgdHE": [
@@ -917,12 +929,6 @@
     {
       "type": 0,
       "value": "Suspending the form failed, please try again later"
-    }
-  ],
-  "rUdi0E": [
-    {
-      "type": 0,
-      "value": "Please check the above declaration before submitting"
     }
   ],
   "sSmY1N": [
