@@ -1,5 +1,6 @@
 import {expect} from '@storybook/jest';
-import {within} from '@storybook/testing-library';
+import {userEvent, within} from '@storybook/testing-library';
+import {formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
@@ -74,5 +75,41 @@ export const WithBackendErrors = {
     await expect(await canvas.findByText('This date is not available')).toBeVisible();
     const submitButton = canvas.getByRole('button', {name: 'Naar contactgegevens'});
     expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+  },
+};
+
+const TODAY = formatISO(new Date(), {representation: 'date'});
+
+export const DependentFieldsReset = {
+  name: 'Dependent fields reset',
+  parameters: {
+    appointmentState: {
+      currentStep: 'kalender',
+      appointmentData: {
+        producten: {
+          products: [{productId: 'e8e045ab', amount: 1}],
+        },
+        kalender: {
+          location: '34000e85',
+          date: TODAY,
+          datetime: '',
+        },
+      },
+    },
+  },
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.getByLabelText('Tijdstip')).not.toBeDisabled();
+
+    await step('Change location', async () => {
+      const dropdown = canvas.getByLabelText('Locatie');
+      await userEvent.click(dropdown);
+      await userEvent.keyboard('[ArrowDown]');
+      await userEvent.click(await canvas.findByText('Open Gem'));
+    });
+
+    expect(canvas.getByLabelText('Datum')).toHaveDisplayValue('');
+    expect(canvas.getByLabelText('Tijdstip')).toBeDisabled();
   },
 };
