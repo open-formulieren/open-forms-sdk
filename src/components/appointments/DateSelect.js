@@ -1,6 +1,7 @@
 import {Paragraph} from '@utrecht/component-library-react';
 import {eachDayOfInterval, formatISO, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
@@ -29,7 +30,7 @@ const getDates = async (baseUrl, productIds, locationId) => {
   return results.sort();
 };
 
-const DateSelect = ({products}) => {
+const DateSelect = ({products, onChange}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {
@@ -86,12 +87,14 @@ const DateSelect = ({products}) => {
       disabledDates={disabledDays}
       minDate={minDate}
       maxDate={maxDate}
+      onChange={onChange}
     />
   );
 };
 
 DateSelect.propTypes = {
   products: ProductsType.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default DateSelect;
