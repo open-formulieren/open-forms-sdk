@@ -5,11 +5,10 @@ import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {Outlet, RouterProvider, createMemoryRouter} from 'react-router-dom';
 
-import {ConfigContext} from 'Context';
+import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {LiteralsProvider} from 'components/Literal';
-import {mockStatementsConfigGet} from 'components/SummaryConfirmation/mocks';
 
 import {CreateAppointmentContext} from '../Context';
 import {
@@ -88,12 +87,15 @@ const renderSummary = errorHandler => {
     initialEntries: ['/appointments/overzicht'],
     initialIndex: 0,
   });
-  realRender(<RouterProvider router={router} />);
+  realRender(
+    <FormContext.Provider value={form}>
+      <RouterProvider router={router} />
+    </FormContext.Provider>
+  );
 };
 
 beforeEach(() => {
   mswServer.use(
-    mockStatementsConfigGet(),
     mockAppointmentProductsGet,
     mockAppointmentLocationsGet,
     mockAppointmentCustomerFieldsGet

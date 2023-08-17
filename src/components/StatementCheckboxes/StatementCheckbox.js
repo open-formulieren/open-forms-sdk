@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
 import ErrorMessage from 'components/ErrorMessage';
@@ -8,7 +8,21 @@ import {FormioComponent} from 'components/formio';
 
 import './StatementCheckbox.scss';
 
+// FIXME: when the checkboxes are made generic, the warnings should be provided by the
+// backend.
+const WARNINGS = defineMessages({
+  privacyPolicyAccepted: {
+    description: 'Warning privacy policy not checked when submitting',
+    defaultMessage: 'Please accept the privacy policy before submitting',
+  },
+  truthStatementAccepted: {
+    description: 'Warning statement of truth not checked when submitting',
+    defaultMessage: 'You must declare the form to be filled out truthfully before submitting',
+  },
+});
+
 const StatementCheckbox = ({configuration, showWarning = false}) => {
+  const intl = useIntl();
   if (!configuration.validate.required) return null;
 
   const labelBody = (
@@ -28,10 +42,7 @@ const StatementCheckbox = ({configuration, showWarning = false}) => {
       <FormioComponent component={formioDefinition} />
       {showWarning && (
         <ErrorMessage modifiers={['warning']}>
-          <FormattedMessage
-            description="Warning declaration not checked when submitting"
-            defaultMessage="Please check the above declaration before submitting"
-          />
+          {intl.formatMessage(WARNINGS[configuration.key])}
         </ErrorMessage>
       )}
     </div>

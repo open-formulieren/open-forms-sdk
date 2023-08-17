@@ -7,7 +7,6 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost} from 'api-mocks/submissions';
 import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
-import {mockStatementsConfigGet} from 'components/SummaryConfirmation/mocks';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -34,7 +33,6 @@ export default {
         mockAppointmentDatesGet,
         mockAppointmentTimesGet,
         mockAppointmentCustomerFieldsGet,
-        mockStatementsConfigGet(),
         mockAppointmentPost,
         mockSubmissionProcessingStatusGet,
       ],

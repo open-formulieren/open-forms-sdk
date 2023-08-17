@@ -1,8 +1,13 @@
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {buildSubmission} from 'api-mocks/submissions';
-import {mockStatementsConfigGet} from 'components/SummaryConfirmation/mocks';
-import {ConfigDecorator, LayoutDecorator, LiteralDecorator, withCard} from 'story-utils/decorators';
+import {
+  ConfigDecorator,
+  LayoutDecorator,
+  LiteralDecorator,
+  withCard,
+  withForm,
+} from 'story-utils/decorators';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -21,6 +26,7 @@ export default {
     LayoutDecorator,
     withAppointmentState,
     LiteralDecorator,
+    withForm,
     withRouter,
     ConfigDecorator,
   ],
@@ -50,7 +56,6 @@ export default {
     },
     msw: {
       handlers: [
-        mockStatementsConfigGet(),
         mockAppointmentProductsGet,
         mockAppointmentLocationsGet,
         mockAppointmentCustomerFieldsGet,

@@ -69,6 +69,11 @@
     "description": "Start payment button",
     "originalDefault": "Pay now"
   },
+  "6ysm6G": {
+    "defaultMessage": "You must declare the form to be filled out truthfully before submitting",
+    "description": "Warning statement of truth not checked when submitting",
+    "originalDefault": "You must declare the form to be filled out truthfully before submitting"
+  },
   "7Fk8NY": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments location and time step",
