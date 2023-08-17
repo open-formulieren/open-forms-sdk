@@ -20,10 +20,12 @@ beforeEach(() => {
 
 afterEach(() => {
   // cleanup on exiting
-  root.unmount();
-  container.remove();
-  root = null;
-  container = null;
+  act(() => {
+    root.unmount();
+    container.remove();
+    root = null;
+    container = null;
+  });
 });
 
 it('Renders DigiD default error', () => {
