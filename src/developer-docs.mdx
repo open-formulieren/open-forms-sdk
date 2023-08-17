@@ -217,3 +217,72 @@ basically 'wins'. This leads to inconsistent behaviour compared to the Canvas.
 
 There is no workaround - you should do interaction testing in the Canvas rather than the Docs tab.
 This would also be a good reason to _not_ include those stories in the MDX documentation.
+
+## Handling validation errors with Zod
+
+Zod is a data parsing library which also performs validation. You use it by defining the schema that
+the data should adhere to, and pass that along to `Formik`.
+
+For invalid data, we extract the validation errors and display them at form fields. Our code sets up
+a localized error map with language-specific validation messages automatically. However - there are
+some accessibility issues that cannot be fixed automatically.
+
+For a number of messages, you would ideally include additional information, e.g. for a required
+field you want to display the message "You must provide a value for foo" rather than "This field is
+required".
+
+You can solve this by providing a localized error map for the specific schema, where you do have
+access to this meta information. See the [Zod documentation](https://zod.dev/ERROR_HANDLING) for
+more context.
+
+An example:
+
+```jsx
+import {z} from 'zod';
+import {toFormikValidationSchema} from 'zod-formik-adapter';
+import {intl} from 'react-intl';
+
+const schema = z.object({
+  businessEmail: z.string().email(),
+});
+
+const MyForm = () => {
+  const intl = useIntl();
+
+  // keep a lookup table of form field name -> label, which can be translated itself
+  const labels = {
+    businessEmail: intl.formatMessage({description: 'field label', defaultValue: 'Business email'});
+  };
+
+  // pass a custom error map relevant to this particular form via the toFormikValidationSchema
+  // parseParams
+  const errorMap = (issue, ctx) => {
+    switch (issue.code) {
+      case z.ZodIssueCode.invalid_type: {
+        if (issue.received === z.ZodParsedType.undefined) {
+          const fieldName = issue.path.join('.');
+          const message = intl.formatMessage({
+            description: 'Required field error message',
+            defaultMessage: 'You must provide a value for the {field} field.',
+          }, {
+            field: labels[fieldName],
+          });
+          return {message};
+        }
+      }
+    }
+    return {message: ctx.defaultError}; // use global schema as fallback
+  };
+
+  // render the form with the custom error map for validation
+  return (
+    <Formik
+      initialValues={{businessEmail: ''}}
+      onSubmit={console.log}
+      validationSchema={toFormikValidationSchema(schema, {errorMap})}
+    >
+      {fields}
+    </Formik>
+  );
+};
+```
