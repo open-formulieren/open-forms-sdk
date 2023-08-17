@@ -12,6 +12,7 @@ import {LayoutRow} from 'components/Layout';
 import {CreateAppointment, appointmentRoutes} from 'components/appointments';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import useFormContext from 'hooks/useFormContext';
+import useZodErrorMap from 'hooks/useZodErrorMap';
 import {I18NContext} from 'i18n';
 import {DEBUG} from 'utils';
 
@@ -57,6 +58,9 @@ const App = ({noDebug = false}) => {
   const config = useContext(ConfigContext);
   const appointmentMatch = useMatch('afspraak-maken/*');
   const appointmentCancelMatch = useMatch('afspraak-annuleren/*');
+
+  // register localized error messages in the default zod error map
+  useZodErrorMap();
 
   const AppDisplayComponent = config?.displayComponents?.app ?? AppDisplay;
 
