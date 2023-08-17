@@ -67,6 +67,12 @@
       "value": "Bedankt voor het mede-ondertekenen van deze inzending."
     }
   ],
+  "2HHJrq": [
+    {
+      "type": 0,
+      "value": "Ongeldige functie-argumenten"
+    }
+  ],
   "2I8NDW": [
     {
       "type": 0,
@@ -95,6 +101,20 @@
     {
       "type": 0,
       "value": "Afspraak annuleren mislukt"
+    }
+  ],
+  "6+1zMh": [
+    {
+      "type": 0,
+      "value": "Onbekende sleutels in object: "
+    },
+    {
+      "type": 1,
+      "value": "keys"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "61Rlys": [
@@ -145,6 +165,114 @@
       "value": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen."
     }
   ],
+  "7m53vF": [
+    {
+      "type": 0,
+      "value": "Ongeldige enumwaarde. Kreeg "
+    },
+    {
+      "type": 1,
+      "value": "received"
+    },
+    {
+      "type": 0,
+      "value": ", maar geldige waarden zijn "
+    },
+    {
+      "type": 1,
+      "value": "expected"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "8DHd4/": [
+    {
+      "type": 0,
+      "value": "Er mogen "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "options": {
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan"
+                    }
+                  ]
+                },
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "maximaal"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "inclusive"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "precies"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "exact"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "maximum"
+            },
+            {
+              "type": 0,
+              "value": " element"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "maximum"
+            },
+            {
+              "type": 0,
+              "value": " elementen"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "maximum"
+    },
+    {
+      "type": 0,
+      "value": " in de lijst zijn."
+    }
+  ],
   "8EnHAe": [
     {
       "type": 0,
@@ -155,6 +283,20 @@
     {
       "type": 0,
       "value": "U moet akkoord gaan met het privacybeleid om door te gaan"
+    }
+  ],
+  "8uBESg": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "includes"
+    },
+    {
+      "type": 0,
+      "value": "\" moet in de waarde zitten."
     }
   ],
   "8wgdHE": [
@@ -227,10 +369,22 @@
       "value": "provider"
     }
   ],
+  "BL1Ehr": [
+    {
+      "type": 0,
+      "value": "Ongeldig."
+    }
+  ],
   "BboxO6": [
     {
       "type": 0,
       "value": "Use two fingers to move the map"
+    }
+  ],
+  "COWzFp": [
+    {
+      "type": 0,
+      "value": "Het getal moet eindig zijn."
     }
   ],
   "CvRUHm": [
@@ -255,6 +409,12 @@
     {
       "type": 0,
       "value": "Inlogprobleem"
+    }
+  ],
+  "DPzDEl": [
+    {
+      "type": 0,
+      "value": "Ongeldige type return-waarde"
     }
   ],
   "DvlDIB": [
@@ -333,6 +493,20 @@
       "value": "Terug naar producten"
     }
   ],
+  "GnxsaY": [
+    {
+      "type": 0,
+      "value": "Het getal moet een veelvoud zijn van "
+    },
+    {
+      "type": 1,
+      "value": "multipleOf"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "GpGYMo": [
     {
       "type": 0,
@@ -355,6 +529,154 @@
     {
       "type": 0,
       "value": "Opslaan en later verdergaan"
+    }
+  ],
+  "HjuNEd": [
+    {
+      "type": 0,
+      "value": "Ongeldige invoer."
+    }
+  ],
+  "I6ok5N": [
+    {
+      "type": 0,
+      "value": "Ongeldig"
+    },
+    {
+      "options": {
+        "datetime": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e datumtijd"
+            }
+          ]
+        },
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": " e-mailadres"
+            }
+          ]
+        },
+        "ip": {
+          "value": [
+            {
+              "type": 0,
+              "value": " IP address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": " validation"
+            }
+          ]
+        },
+        "url": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e URL"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "validation"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "IX38II": [
+    {
+      "type": 0,
+      "value": "Er moeten "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "options": {
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "meer dan"
+                    }
+                  ]
+                },
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minimaal"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "inclusive"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "precies"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "exact"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "minimum"
+            },
+            {
+              "type": 0,
+              "value": " element"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "minimum"
+            },
+            {
+              "type": 0,
+              "value": " elementen"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "minimum"
+    },
+    {
+      "type": 0,
+      "value": " in de lijst zijn."
     }
   ],
   "IhLYXK": [
@@ -463,16 +785,50 @@
       "value": "m"
     }
   ],
+  "P194bo": [
+    {
+      "type": 0,
+      "value": "De ingevoerde waarde moet beginnen met \""
+    },
+    {
+      "type": 1,
+      "value": "startsWith"
+    },
+    {
+      "type": 0,
+      "value": "\"."
+    }
+  ],
   "PCFPnE": [
     {
       "type": 0,
       "value": "Voor dit product is betaling vereist"
     }
   ],
+  "PjYrw0": [
+    {
+      "type": 0,
+      "value": "Ongeldige invoer."
+    }
+  ],
   "QPdaOi": [
     {
       "type": 0,
       "value": "Geen beschikbare keuzes"
+    }
+  ],
+  "QtraZC": [
+    {
+      "type": 0,
+      "value": "De datum moet groter dan of gelijk aan "
+    },
+    {
+      "type": 1,
+      "value": "minimum"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
     }
   ],
   "Qu8SM1": [
@@ -509,10 +865,110 @@
       "value": "formName"
     }
   ],
+  "SLhFxw": [
+    {
+      "type": 0,
+      "value": "De ingevoerde waarde moet eindigen met \""
+    },
+    {
+      "type": 1,
+      "value": "endsWith"
+    },
+    {
+      "type": 0,
+      "value": "\"."
+    }
+  ],
   "Tip5+d": [
     {
       "type": 0,
       "value": "Volgend jaar"
+    }
+  ],
+  "Tx14Bn": [
+    {
+      "type": 0,
+      "value": "De tekst moet "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "options": {
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "meer dan"
+                    }
+                  ]
+                },
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minstens"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "inclusive"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "exact"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "exact"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "minimum"
+            },
+            {
+              "type": 0,
+              "value": " karakter"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "minimum"
+            },
+            {
+              "type": 0,
+              "value": " karakters"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "minimum"
+    },
+    {
+      "type": 0,
+      "value": " lang zijn."
     }
   ],
   "UWylpR": [
@@ -565,6 +1021,12 @@
       "value": "Betaaloverzicht"
     }
   ],
+  "WWvqcz": [
+    {
+      "type": 0,
+      "value": "Ongeldige datum"
+    }
+  ],
   "X/24FO": [
     {
       "type": 0,
@@ -577,6 +1039,20 @@
       "value": "Locatie en tijdstip"
     }
   ],
+  "XeIY+R": [
+    {
+      "type": 0,
+      "value": "De datum moet kleiner dan of gelijk aan "
+    },
+    {
+      "type": 1,
+      "value": "maximum"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
+    }
+  ],
   "YcC4PD": [
     {
       "type": 0,
@@ -587,6 +1063,20 @@
     {
       "type": 0,
       "value": "Afsluiten"
+    }
+  ],
+  "YpCkBs": [
+    {
+      "type": 0,
+      "value": "Ongeldige discriminatorwaarde - deze moet "
+    },
+    {
+      "type": 1,
+      "value": "expected"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
     }
   ],
   "ZL5313": [
@@ -675,6 +1165,12 @@
       "value": "Uw betaling is ontvangen en verwerkt."
     }
   ],
+  "cxDC/G": [
+    {
+      "type": 0,
+      "value": "Het verplichte veld is niet ingevuld."
+    }
+  ],
   "dFTtOX": [
     {
       "type": 0,
@@ -759,6 +1255,40 @@
       "value": "activeStepTitle"
     }
   ],
+  "hkZ8N1": [
+    {
+      "type": 0,
+      "value": "Ongeldige invoer."
+    }
+  ],
+  "iey7IL": [
+    {
+      "type": 0,
+      "value": "Ongeldige invoer."
+    }
+  ],
+  "ifN5vB": [
+    {
+      "type": 0,
+      "value": "\""
+    },
+    {
+      "type": 1,
+      "value": "includes"
+    },
+    {
+      "type": 0,
+      "value": "\" moet in de waarde zitten, op één of meerdere plaatsen vanaf positie "
+    },
+    {
+      "type": 1,
+      "value": "position"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "iubnaw": [
     {
       "type": 0,
@@ -795,6 +1325,28 @@
       "value": "Uw producten"
     }
   ],
+  "jnYRyz": [
+    {
+      "type": 0,
+      "value": "Verwachtte type "
+    },
+    {
+      "type": 1,
+      "value": "expected"
+    },
+    {
+      "type": 0,
+      "value": " maar kreeg "
+    },
+    {
+      "type": 1,
+      "value": "received"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "jqJgG+": [
     {
       "type": 0,
@@ -811,6 +1363,64 @@
     {
       "type": 0,
       "value": "Product"
+    }
+  ],
+  "kfPEK8": [
+    {
+      "type": 0,
+      "value": "Het getal moet "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "options": {
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "groter dan"
+                    }
+                  ]
+                },
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "groter dan of gelijk aan"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "inclusive"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "exact gelijk aan"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "exact"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "minimum"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
     }
   ],
   "l/0YVO": [
@@ -881,10 +1491,160 @@
       "value": "Nog een product toevoegen"
     }
   ],
+  "ojU6az": [
+    {
+      "type": 0,
+      "value": "BigInt moet "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "options": {
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "kleiner dan"
+                    }
+                  ]
+                },
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "kleiner dan of gelijk aan"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "inclusive"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "exact gelijk aan"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "exact"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "maximum"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
+    }
+  ],
   "ovI+W7": [
     {
       "type": 0,
       "value": "Use ⌘ + scroll to zoom the map"
+    }
+  ],
+  "pguTkQ": [
+    {
+      "type": 0,
+      "value": "Intersectie-resultaten kunnen niet samengevoegd worden."
+    }
+  ],
+  "q9AKjH": [
+    {
+      "type": 0,
+      "value": "De tekst moet "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "options": {
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan"
+                    }
+                  ]
+                },
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "maximaal"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "inclusive"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "exact"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "exact"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "maximum"
+            },
+            {
+              "type": 0,
+              "value": " karakter"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "maximum"
+            },
+            {
+              "type": 0,
+              "value": " karakters"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "maximum"
+    },
+    {
+      "type": 0,
+      "value": " lang zijn."
     }
   ],
   "qKxfrz": [
@@ -1001,6 +1761,64 @@
       "value": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen."
     }
   ],
+  "uZBPwA": [
+    {
+      "type": 0,
+      "value": "Het getal moet "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "options": {
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan"
+                    }
+                  ]
+                },
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan of gelijk aan"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "inclusive"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "exact gelijk aan"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "exact"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "maximum"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
+    }
+  ],
   "v2UpAF": [
     {
       "type": 0,
@@ -1023,6 +1841,20 @@
     {
       "type": 0,
       "value": "Aantal personen"
+    }
+  ],
+  "y31iyC": [
+    {
+      "type": 0,
+      "value": "Ongeldige letterlijke waarde, verwachtte "
+    },
+    {
+      "type": 1,
+      "value": "expected"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "yKo62N": [
