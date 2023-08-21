@@ -29,6 +29,11 @@
     "description": "Co-sign confirmation page body",
     "originalDefault": "Thank you for co-signing this submission."
   },
+  "2HHJrq": {
+    "defaultMessage": "Invalid function arguments",
+    "description": "ZOD 'invalid_arguments' error message",
+    "originalDefault": "Invalid function arguments"
+  },
   "2I8NDW": {
     "defaultMessage": "Date",
     "description": "Appoinments: appointment date label",
@@ -53,6 +58,11 @@
     "defaultMessage": "Appointment cancellation failed",
     "description": "Appointment cancellation error message",
     "originalDefault": "Appointment cancellation failed"
+  },
+  "6+1zMh": {
+    "defaultMessage": "Unrecognized key(s) in object: {keys}.",
+    "description": "ZOD 'unrecognized_keys' error message",
+    "originalDefault": "Unrecognized key(s) in object: {keys}."
   },
   "61Rlys": {
     "defaultMessage": "Check and co-sign submission",
@@ -84,6 +94,16 @@
     "description": "Maintenance mode message (for form designer)",
     "originalDefault": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
   },
+  "7m53vF": {
+    "defaultMessage": "Invalid enum value. Expected {expected}, received {received}.",
+    "description": "ZOD 'invalid_enum_value' error message",
+    "originalDefault": "Invalid enum value. Expected {expected}, received {received}."
+  },
+  "8DHd4/": {
+    "defaultMessage": "Array must contain {exact, select, true {exactly} other {{inclusive, select, true {at most} other {less than}}} } {maximum, plural, one {{maximum} item} other {{maximum} items}}.",
+    "description": "ZOD 'too_big' error message, for arrays",
+    "originalDefault": "Array must contain {exact, select, true {exactly} other {{inclusive, select, true {at most} other {less than}}} } {maximum, plural, one {{maximum} item} other {{maximum} items}}."
+  },
   "8EnHAe": {
     "defaultMessage": "Time",
     "description": "Appoinments: time select label",
@@ -93,6 +113,11 @@
     "defaultMessage": "Please accept the privacy policy before submitting",
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
+  },
+  "8uBESg": {
+    "defaultMessage": "Invalid input: must include \"{includes}\".",
+    "description": "ZOD 'invalid_string' error message, with required include",
+    "originalDefault": "Invalid input: must include \"{includes}\"."
   },
   "8wgdHE": {
     "defaultMessage": "Log in on behalf of someone else",
@@ -149,10 +174,20 @@
     "description": "Login button label",
     "originalDefault": "Login with {provider}"
   },
+  "BL1Ehr": {
+    "defaultMessage": "Invalid.",
+    "description": "ZOD 'invalid_string' error message, regex validation",
+    "originalDefault": "Invalid."
+  },
   "BboxO6": {
     "defaultMessage": "Use two fingers to move the map",
     "description": "Gesturehandeling phone touch message.",
     "originalDefault": "Use two fingers to move the map"
+  },
+  "COWzFp": {
+    "defaultMessage": "Number must be finite.",
+    "description": "ZOD 'not_finite' error message",
+    "originalDefault": "Number must be finite."
   },
   "CvRUHm": {
     "defaultMessage": "This form is currently undergoing maintenance and can not be accessed at the moment.",
@@ -173,6 +208,11 @@
     "defaultMessage": "Authentication problem",
     "description": "'Permission denied' error title",
     "originalDefault": "Authentication problem"
+  },
+  "DPzDEl": {
+    "defaultMessage": "Invalid function return type",
+    "description": "ZOD 'invalid_return_type' error message",
+    "originalDefault": "Invalid function return type"
   },
   "DvlDIB": {
     "defaultMessage": "Are you sure that you want to logout?",
@@ -214,6 +254,11 @@
     "description": "Appointments location and time step: previous step text",
     "originalDefault": "Back to products"
   },
+  "GnxsaY": {
+    "defaultMessage": "Number must be a multiple of {multipleOf}.",
+    "description": "ZOD 'not_multiple_of' error message",
+    "originalDefault": "Number must be a multiple of {multipleOf}."
+  },
   "GpGYMo": {
     "defaultMessage": "Saving the data failed, please try again later",
     "description": "Modal saving data failed message",
@@ -233,6 +278,21 @@
     "defaultMessage": "Save and resume later",
     "description": "Form save modal title",
     "originalDefault": "Save and resume later"
+  },
+  "HjuNEd": {
+    "defaultMessage": "Invalid input.",
+    "description": "ZOD 'too_big' error message, generic",
+    "originalDefault": "Invalid input."
+  },
+  "I6ok5N": {
+    "defaultMessage": "Invalid {validation, select, email {email} url {url} datetime {date and time} ip {IP address} other {validation} }.",
+    "description": "ZOD 'invalid_string' error message, validation other than regex",
+    "originalDefault": "Invalid {validation, select, email {email} url {url} datetime {date and time} ip {IP address} other {validation} }."
+  },
+  "IX38II": {
+    "defaultMessage": "Array must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} item} other {{minimum} items}}.",
+    "description": "ZOD 'too_small' error message, for arrays",
+    "originalDefault": "Array must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} item} other {{minimum} items}}."
   },
   "IhLYXK": {
     "defaultMessage": "Toggle calendar",
@@ -304,15 +364,30 @@
     "description": "Placeholder for month part of a date",
     "originalDefault": "m"
   },
+  "P194bo": {
+    "defaultMessage": "Invalid input: must start with \"{startsWith}\".",
+    "description": "ZOD 'invalid_string' error message, with startsWith",
+    "originalDefault": "Invalid input: must start with \"{startsWith}\"."
+  },
   "PCFPnE": {
     "defaultMessage": "Payment is required for this product",
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
   },
+  "PjYrw0": {
+    "defaultMessage": "Invalid input.",
+    "description": "ZOD 'too_small' error message, generic",
+    "originalDefault": "Invalid input."
+  },
   "QPdaOi": {
     "defaultMessage": "No results found",
     "description": "Select 'no options' message",
     "originalDefault": "No results found"
+  },
+  "QtraZC": {
+    "defaultMessage": "Date must be greater than or equal to {minimum}.",
+    "description": "ZOD 'too_small' error message, for dates",
+    "originalDefault": "Date must be greater than or equal to {minimum}."
   },
   "Qu8SM1": {
     "defaultMessage": "Extend",
@@ -339,10 +414,20 @@
     "description": "Form start outage title",
     "originalDefault": "Problem - {formName}"
   },
+  "SLhFxw": {
+    "defaultMessage": "Invalid input: must end with \"{endsWith}\".",
+    "description": "ZOD 'invalid_string' error message, with endsWith",
+    "originalDefault": "Invalid input: must end with \"{endsWith}\"."
+  },
   "Tip5+d": {
     "defaultMessage": "Next year",
     "description": "Calendar: next year button title",
     "originalDefault": "Next year"
+  },
+  "Tx14Bn": {
+    "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.",
+    "description": "ZOD 'too_small' error message, for strings",
+    "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
   },
   "UWylpR": {
     "defaultMessage": "This form is temporarily unavailable because of an outage with the {label} authentication service. Please try again later.",
@@ -369,6 +454,11 @@
     "description": "Payment overview title",
     "originalDefault": "Payment overview"
   },
+  "WWvqcz": {
+    "defaultMessage": "Invalid date",
+    "description": "ZOD 'invalid_date' error message",
+    "originalDefault": "Invalid date"
+  },
   "X/24FO": {
     "defaultMessage": "Map component search button",
     "description": "The leaflet map's search button areaLabel text.",
@@ -379,6 +469,11 @@
     "description": "Appointment overview: location and time step title",
     "originalDefault": "Location and time"
   },
+  "XeIY+R": {
+    "defaultMessage": "Date must be smaller than or equal to {maximum}.",
+    "description": "ZOD 'too_big' error message, for dates",
+    "originalDefault": "Date must be smaller than or equal to {maximum}."
+  },
   "YcC4PD": {
     "defaultMessage": "Choose language",
     "description": "Language selection heading",
@@ -388,6 +483,11 @@
     "defaultMessage": "Back to form start",
     "description": "return to form start button",
     "originalDefault": "Back to form start"
+  },
+  "YpCkBs": {
+    "defaultMessage": "Invalid discriminator value. Expected {expected}.",
+    "description": "ZOD 'invalid_union_discriminator' error message",
+    "originalDefault": "Invalid discriminator value. Expected {expected}."
   },
   "ZL5313": {
     "defaultMessage": "Form temporarily unavailable",
@@ -438,6 +538,11 @@
     "defaultMessage": "Your payment is received and processed.",
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
+  },
+  "cxDC/G": {
+    "defaultMessage": "The required field is not filled out.",
+    "description": "ZOD 'required' error message",
+    "originalDefault": "The required field is not filled out."
   },
   "dFTtOX": {
     "defaultMessage": "Back to form start",
@@ -499,6 +604,21 @@
     "description": "Active step accessible label in mobile progress indicator",
     "originalDefault": "Current step in form {formTitle}: {activeStepTitle}"
   },
+  "hkZ8N1": {
+    "defaultMessage": "Invalid input.",
+    "description": "ZOD 'custom' error message",
+    "originalDefault": "Invalid input."
+  },
+  "iey7IL": {
+    "defaultMessage": "Invalid input.",
+    "description": "ZOD 'invalid_union' error message",
+    "originalDefault": "Invalid input."
+  },
+  "ifN5vB": {
+    "defaultMessage": "Invalid input: must include \"{includes}\" at one or more positions greater than or equal to {position}.",
+    "description": "ZOD 'invalid_string' error message, with required include at specific position",
+    "originalDefault": "Invalid input: must include \"{includes}\" at one or more positions greater than or equal to {position}."
+  },
   "iubnaw": {
     "defaultMessage": "The email address where you will receive the resume link.",
     "description": "Form save modal email field help text",
@@ -529,6 +649,11 @@
     "description": "Product summary on appointments location and time step heading",
     "originalDefault": "Your products"
   },
+  "jnYRyz": {
+    "defaultMessage": "Expected {expected}, received {received}.",
+    "description": "ZOD 'invalid_type' error message",
+    "originalDefault": "Expected {expected}, received {received}."
+  },
   "jqJgG+": {
     "defaultMessage": "Toggle the progress status display",
     "description": "Progress step indicator toggle icon (mobile)",
@@ -543,6 +668,11 @@
     "defaultMessage": "Product",
     "description": "Appointments navbar title for 'products' step",
     "originalDefault": "Product"
+  },
+  "kfPEK8": {
+    "defaultMessage": "Number must be {exact, select, true {exactly equal to} other {{inclusive, select, true {greater than or equal to} other {greater than}}} } {minimum}.",
+    "description": "ZOD 'too_small' error message, for numbers",
+    "originalDefault": "Number must be {exact, select, true {exactly equal to} other {{inclusive, select, true {greater than or equal to} other {greater than}}} } {minimum}."
   },
   "l/0YVO": {
     "defaultMessage": "Product",
@@ -594,10 +724,25 @@
     "description": "Appointments: add additional product/service button text",
     "originalDefault": "Add another product"
   },
+  "ojU6az": {
+    "defaultMessage": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}.",
+    "description": "ZOD 'too_big' error message, for BigInt",
+    "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
+  },
   "ovI+W7": {
     "defaultMessage": "Use ⌘ + scroll to zoom the map",
     "description": "Gesturehandeling mac scroll message.",
     "originalDefault": "Use ⌘ + scroll to zoom the map"
+  },
+  "pguTkQ": {
+    "defaultMessage": "Intersection results could not be merged",
+    "description": "ZOD 'invalid_intersection_types' error message",
+    "originalDefault": "Intersection results could not be merged"
+  },
+  "q9AKjH": {
+    "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at most} other {under}}} } {maximum, plural, one {{maximum} character} other {{maximum} characters}}.",
+    "description": "ZOD 'too_big' error message, for strings",
+    "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at most} other {under}}} } {maximum, plural, one {{maximum} character} other {{maximum} characters}}."
   },
   "qKxfrz": {
     "defaultMessage": "Log in to co-sign the form",
@@ -649,6 +794,11 @@
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
   },
+  "uZBPwA": {
+    "defaultMessage": "Number must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}.",
+    "description": "ZOD 'too_big' error message, for numbers",
+    "originalDefault": "Number must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
+  },
   "v2UpAF": {
     "defaultMessage": "Failed to determine the appointment",
     "description": "Appointment cancellation missing submission ID query string parameter",
@@ -668,6 +818,11 @@
     "defaultMessage": "Amount",
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
+  },
+  "y31iyC": {
+    "defaultMessage": "Invalid literal value, expected {expected}.",
+    "description": "ZOD 'invalid_literal' error message",
+    "originalDefault": "Invalid literal value, expected {expected}."
   },
   "yKo62N": {
     "defaultMessage": "Year",
