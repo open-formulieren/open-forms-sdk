@@ -1,11 +1,10 @@
-import {act, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm, mockFormGet} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
+import {BASE_URL, buildForm} from 'api-mocks';
 import App, {routes} from 'components/App';
 
 const Wrapper = () => {
