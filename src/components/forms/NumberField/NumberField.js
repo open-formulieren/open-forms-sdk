@@ -25,6 +25,7 @@ const NumberField = ({
   description = '',
   id = '',
   disabled = false,
+  readOnly = false,
 }) => {
   const [fieldProps, {value, error, touched}] = useField(name);
   const {locale} = useIntl();
@@ -65,6 +66,7 @@ const NumberField = ({
             step={step}
             type={useNumberType ? 'number' : 'text'}
             customInput={Textbox}
+            readOnly={readOnly}
             {...separatorProps}
           />
         </Paragraph>
@@ -85,6 +87,7 @@ NumberField.propTypes = {
   description: PropTypes.node,
   id: PropTypes.string,
   disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
 };
 
 export default NumberField;

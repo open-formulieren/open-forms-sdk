@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
+import {useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 
 import {NumberField} from 'components/forms';
 
+import {AppointmentConfigContext} from './Context';
 import ProductSelect from './ProductSelect';
 import {ProductsType} from './types';
 
@@ -13,6 +15,7 @@ export const amountLabel = defineMessage({
 
 const Product = ({namePrefix, index, selectedProducts}) => {
   const intl = useIntl();
+  const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
   return (
     <div>
       <ProductSelect
@@ -26,6 +29,7 @@ const Product = ({namePrefix, index, selectedProducts}) => {
         useNumberType
         step={1}
         min={1}
+        readOnly={!supportsMultipleProducts}
       />
     </div>
   );
