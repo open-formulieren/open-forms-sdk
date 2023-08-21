@@ -20,6 +20,7 @@ const SelectField = ({
   valueProperty = 'value',
   autoSelectOnlyOption = false,
   validateOnChange = false,
+  onChange,
   ...props
 }) => {
   const {getFieldProps, getFieldHelpers, getFieldMeta} = useFormikContext();
@@ -111,6 +112,7 @@ const SelectField = ({
             const rawValues = normalized.map(val => val?.[valueProperty] ?? null);
             const rawValue = isSingle ? rawValues[0] : rawValues;
             setValue(rawValue, validateOnChange);
+            onChange?.({target: {name, value: rawValue}});
           }}
           value={value}
           onBlur={() => setTouched(true)}
@@ -132,6 +134,10 @@ export const SelectFieldPropTypes = {
   valueProperty: PropTypes.string,
   autoSelectOnlyOption: PropTypes.bool,
   validateOnChange: PropTypes.bool,
+  /**
+   * Optional additional onChange callback.
+   */
+  onChange: PropTypes.func,
 };
 
 SelectField.propTypes = {

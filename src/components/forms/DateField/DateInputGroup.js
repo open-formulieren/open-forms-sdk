@@ -109,6 +109,7 @@ const DateInputGroup = ({
   label,
   isRequired,
   onChange,
+  extraOnChange,
   disabled = false,
   showFormattedDate = false,
   autoComplete,
@@ -141,7 +142,9 @@ const DateInputGroup = ({
     const newDate = dateFromParts(year, month, day);
 
     // clear value if it's not a valid date or update it if it is valid
-    onChange({target: {name, value: newDate ?? ''}});
+    const _event = {target: {name, value: newDate ?? ''}};
+    onChange(_event);
+    extraOnChange?.(_event);
   };
 
   return (
@@ -171,6 +174,7 @@ DateInputGroup.propTypes = {
   label: PropTypes.node,
   isRequired: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  extraOnChange: PropTypes.func,
   disabled: PropTypes.bool,
   showFormattedDate: PropTypes.bool,
   autoComplete: PropTypes.string,

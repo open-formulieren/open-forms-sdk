@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {useCallback, useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 
@@ -30,7 +31,7 @@ export const getLocations = async (baseUrl, productIds) => {
   return locationList;
 };
 
-const LocationSelect = ({products}) => {
+const LocationSelect = ({products, onChange}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
@@ -49,12 +50,14 @@ const LocationSelect = ({products}) => {
       valueProperty="identifier"
       getOptionLabel={location => location.name}
       autoSelectOnlyOption
+      onChange={onChange}
     />
   );
 };
 
 LocationSelect.propTypes = {
   products: ProductsType.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default LocationSelect;

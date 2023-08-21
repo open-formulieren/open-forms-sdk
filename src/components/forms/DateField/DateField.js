@@ -30,6 +30,7 @@ const DateField = ({
   maxDate,
   disabledDates = [],
   showFormattedDate = false,
+  onChange,
   ...props
 }) => {
   const {getFieldMeta} = useFormikContext();
@@ -75,6 +76,7 @@ const DateField = ({
           id={id}
           disabled={disabled}
           invalid={invalid}
+          extraOnChange={onChange}
           {...fieldProps}
           {...props}
         />
@@ -99,6 +101,7 @@ DateField.propTypes = {
   disabledDates: PropTypes.arrayOf(PropTypes.string),
   widget: PropTypes.oneOf(WIDGETS),
   showFormattedDate: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default DateField;

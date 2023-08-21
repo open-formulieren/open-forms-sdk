@@ -15,7 +15,17 @@ import {useDateLocaleMeta} from './hooks';
 import {PART_PLACEHOLDERS} from './messages';
 import {orderByPart, parseDate} from './utils';
 
-const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarProps, ...extra}) => {
+const DatePicker = ({
+  name,
+  label,
+  isRequired,
+  onChange,
+  extraOnChange,
+  id,
+  disabled,
+  calendarProps,
+  ...extra
+}) => {
   const intl = useIntl();
   const dateLocaleMeta = useDateLocaleMeta();
   const {getFieldProps, getFieldHelpers} = useFormikContext();
@@ -80,13 +90,17 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
             // if we couldn't parse a valid date -> clear the value in the formik state
             // (hitting backspace, deleting the input value completely...)
             if (!newDate) {
-              onChange({target: {name, value: ''}});
+              const _event = {target: {name, value: ''}};
+              onChange(_event);
+              extraOnChange?.(_event);
               return;
             }
 
             // set the ISO-8601 date in the actual form state
             const enteredDate = formatISO(newDate, {representation: 'date'});
-            onChange({target: {name, value: enteredDate}});
+            const _event = {target: {name, value: enteredDate}};
+            onChange(_event);
+            extraOnChange?.(_event);
           }}
           onFocus={event => {
             onFocus(event);
@@ -120,7 +134,9 @@ const DatePicker = ({name, label, isRequired, onChange, id, disabled, calendarPr
           onCalendarClick={selectedDate => {
             flushSync(() => {
               const truncated = selectedDate.substring(0, 10);
-              onChange({target: {name, value: truncated}});
+              const event = {target: {name, value: truncated}};
+              onChange(event);
+              extraOnChange?.(event);
               setIsOpen(false, {keepDismissed: true});
             });
             setTouched(true);
@@ -138,6 +154,7 @@ DatePicker.propTypes = {
   label: PropTypes.node,
   isRequired: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  extraOnChange: PropTypes.func,
   id: PropTypes.string,
   disabled: PropTypes.bool,
   calendarProps: PropTypes.shape({

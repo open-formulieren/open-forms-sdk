@@ -1,5 +1,5 @@
 import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
-import {Form, Formik} from 'formik';
+import {Form, Formik, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {flushSync} from 'react-dom';
@@ -38,15 +38,38 @@ const INITIAL_VALUES = {
 
 const LocationAndTimeStepFields = () => {
   const intl = useIntl();
+  const {values, setFieldValue} = useFormikContext();
   const {
     appointmentData: {products = []},
   } = useCreateAppointmentContext();
+
+  const onFieldChange = event => {
+    const {name, value: newValue} = event.target;
+    const currentValue = values[name];
+
+    if (newValue === currentValue) return;
+
+    switch (name) {
+      case 'location': {
+        setFieldValue('date', '');
+        setFieldValue('datetime', '');
+        break;
+      }
+      case 'date': {
+        setFieldValue('datetime', '');
+        break;
+      }
+      default:
+        throw new Error(`Unknown field: '${name}'`);
+    }
+  };
+
   return (
     // TODO: don't do inline style
     <Form style={{width: '100%'}}>
       <div>
-        <LocationSelect products={products} />
-        <DateSelect products={products} />
+        <LocationSelect products={products} onChange={onFieldChange} />
+        <DateSelect products={products} onChange={onFieldChange} />
         <TimeSelect products={products} />
       </div>
 
