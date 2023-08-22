@@ -26,10 +26,30 @@ jobs:
           node-version-file: '.nvmrc'
           cache: yarn
 
+      - name: Extract version from git
+        id: build-args
+        run: |
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name (if present at all)
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "main" ] && VERSION=latest
+
+          # PRs result in version 'merge' -> transform that into 'latest'
+          [ "$VERSION" == "merge" ] && VERSION=latest
+
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
       - name: Build Javascript
         run: |
+          echo "Building version $REACT_APP_VERSION"
           yarn install
           yarn build
+        env:
+          REACT_APP_VERSION: ${{ steps.build-args.outputs.version }}
 
       - name: Store build artifact
         uses: actions/upload-artifact@v3
