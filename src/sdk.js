@@ -15,6 +15,7 @@ import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
 import initialiseSentry from 'sentry';
+import {getVersion} from 'utils';
 
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
@@ -37,6 +38,8 @@ Formio.libraries = {
 };
 
 fixLeafletIconUrls();
+
+const VERSION = getVersion();
 
 const defaultDisplayComponents = {
   app: null,
@@ -166,4 +169,4 @@ class OpenForm {
 
 export default OpenForm;
 export {ANALYTICS_PROVIDERS} from 'hooks/usePageViews';
-export {OpenForm, Formio, Templates, OFLibrary, OpenFormsModule};
+export {VERSION, OpenForm, Formio, Templates, OFLibrary, OpenFormsModule};

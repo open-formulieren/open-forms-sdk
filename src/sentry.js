@@ -1,6 +1,8 @@
 import * as Sentry from '@sentry/react';
 import {Integrations} from '@sentry/tracing';
 
+import {getVersion} from 'utils';
+
 const initialiseSentry = (sentryDSN, env) => {
   if (!sentryDSN) return;
 
@@ -9,6 +11,7 @@ const initialiseSentry = (sentryDSN, env) => {
     integrations: [new Integrations.BrowserTracing()],
     environment: env,
     tracesSampleRate: 1.0,
+    release: getVersion(),
   });
 };
 

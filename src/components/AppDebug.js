@@ -3,6 +3,7 @@ import {FormattedDate, FormattedRelativeTime} from 'react-intl';
 import {useGlobalState} from 'state-pool';
 
 import {sessionExpiresAt} from 'api';
+import {getVersion} from 'utils';
 
 const DebugInfo = ({label, value, children}) => (
   <div className="debug-info">
@@ -23,6 +24,7 @@ const AppDebug = () => {
         &nbsp;(
         <FormattedRelativeTime value={expiryDelta} numeric="auto" updateIntervalInSeconds={1} />)
       </DebugInfo>
+      <DebugInfo label="SDK version">{getVersion()}</DebugInfo>
     </div>
   );
 };
