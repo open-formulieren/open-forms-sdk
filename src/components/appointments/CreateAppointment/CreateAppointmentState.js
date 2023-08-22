@@ -8,7 +8,7 @@ import Types from 'types';
 
 import {CreateAppointmentContext} from '../Context';
 
-const SESSION_STORAGE_KEY = 'appointment|formData';
+export const SESSION_STORAGE_KEY = 'appointment|formData';
 
 const errorKeysByStep = {
   producten: ['products'],
