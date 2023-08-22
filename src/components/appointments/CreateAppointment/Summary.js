@@ -7,6 +7,7 @@ import {useAsync} from 'react-use';
 import {ConfigContext} from 'Context';
 import {post} from 'api';
 import {CardTitle} from 'components/Card';
+import ErrorMessage from 'components/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
 import Literal from 'components/Literal';
 import Loader from 'components/Loader';
@@ -60,7 +61,8 @@ const Summary = () => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const navigate = useNavigate();
-  const {appointmentData, submission, setErrors} = useCreateAppointmentContext();
+  const {appointmentData, submission, setErrors, processingError, setProcessingError} =
+    useCreateAppointmentContext();
   const [submitError, setSubmitError] = useState(null);
   useTitle(
     intl.formatMessage({
@@ -160,6 +162,7 @@ const Summary = () => {
    * Submit the appointment data to the backend.
    */
   const onSubmit = async statementValues => {
+    setProcessingError('');
     let appointment;
     try {
       appointment = await createAppointment(baseUrl, submission, appointmentData, statementValues);
@@ -195,6 +198,8 @@ const Summary = () => {
         headingType="subtitle"
         modifiers={['padded']}
       />
+
+      {processingError && <ErrorMessage>{processingError}</ErrorMessage>}
 
       {loading ? (
         <Loader modifiers={['centered']} />
