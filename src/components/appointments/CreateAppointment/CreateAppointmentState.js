@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {useSessionStorage} from 'react-use';
 
+import useSessionTimeout from 'hooks/useSessionTimeout';
 import Types from 'types';
 
 import {CreateAppointmentContext} from '../Context';
@@ -70,6 +71,12 @@ export const CreateAppointmentState = ({currentStep, submission, resetSession, c
   const [appointmentErrors, setAppointmentErrors] = useState({
     initialTouched: {},
     initialErrors: {},
+  });
+
+  // reset the local state if the session times out
+  useSessionTimeout(() => {
+    setAppointmentData({});
+    window.localStorage.clear();
   });
 
   const contextValue = buildContextValue({

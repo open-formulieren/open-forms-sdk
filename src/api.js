@@ -20,7 +20,7 @@ const SessionExpiresInHeader = 'X-Session-Expires-In';
 
 let sessionExpiresAt = createGlobalstate({expiry: null});
 
-const updateSesionExpiry = seconds => {
+export const updateSessionExpiry = seconds => {
   const newExpiry = new Date();
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
   sessionExpiresAt.setValue({expiry: newExpiry});
@@ -97,7 +97,7 @@ const addHeaders = (headers, method) => {
 const updateStoredHeadersValues = headers => {
   const sessionExpiry = headers.get(SessionExpiresInHeader);
   if (sessionExpiry) {
-    updateSesionExpiry(parseInt(sessionExpiry), 10);
+    updateSessionExpiry(parseInt(sessionExpiry), 10);
   }
 
   const CSRFTokenValue = headers.get(CSRFToken.headerName);
