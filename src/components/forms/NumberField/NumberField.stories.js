@@ -34,6 +34,7 @@ export const SmallNumbers = {
     useNumberType: true,
     disabled: false,
     isRequired: false,
+    readOnly: false,
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
@@ -59,6 +60,26 @@ export const Default = {
     description: 'This is a custom description for the amount field',
     disabled: false,
     isRequired: false,
+    useNumberType: false,
+    min: undefined,
+    step: undefined,
+  },
+  parameters: {
+    formik: {
+      initialValues: {amount: ''},
+    },
+  },
+};
+
+export const ReadOnly = {
+  args: {
+    name: 'amount',
+    id: 'amount',
+    label: 'Amount',
+    description: 'This is a custom description for the amount field',
+    disabled: false,
+    isRequired: false,
+    readOnly: true,
     useNumberType: false,
     min: undefined,
     step: undefined,
@@ -107,6 +128,7 @@ export const LocalisedWithDecimals = {
     description: 'This is a custom description for the amount field',
     disabled: false,
     isRequired: true,
+    readOnly: false,
   },
 };
 
@@ -133,6 +155,7 @@ export const LocalisedWithThousandSeparator = {
     description: 'This is a custom description for the amount field',
     disabled: false,
     isRequired: true,
+    readOnly: false,
   },
 };
 
@@ -157,6 +180,7 @@ export const ValidationError = {
     description: 'Description above the errors',
     disabled: false,
     isRequired: true,
+    readOnly: false,
     useNumberType: false,
     min: undefined,
     step: undefined,
@@ -181,5 +205,6 @@ export const NoAsterisks = {
     useNumberType: false,
     disabled: false,
     isRequired: true,
+    readOnly: false,
   },
 };

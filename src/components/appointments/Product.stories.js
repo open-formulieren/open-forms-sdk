@@ -3,6 +3,7 @@ import {userEvent, within} from '@storybook/testing-library';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
+import {AppointmentConfigContext} from './Context';
 import Product from './Product';
 import {mockAppointmentProductsGet} from './mocks';
 
@@ -41,13 +42,18 @@ export default {
   },
   args: {
     selectedProducts: [],
+    supportsMultipleProducts: true,
   },
 };
 
-const render = ({productId, selectedProducts}) => {
+const render = ({productId, selectedProducts, supportsMultipleProducts = true}) => {
   const data_entry = PRODUCTS_DATA.find(prod => prod.productId === productId);
-  const index = PRODUCTS_DATA.indexOf(data_entry);
-  return <Product namePrefix="products" index={index} selectedProducts={selectedProducts} />;
+  const index = supportsMultipleProducts ? PRODUCTS_DATA.indexOf(data_entry) : 0;
+  return (
+    <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
+      <Product namePrefix="products" index={index} selectedProducts={selectedProducts} />
+    </AppointmentConfigContext.Provider>
+  );
 };
 
 export const ProductAndAmount = {
@@ -68,5 +74,39 @@ export const ProductAndAmount = {
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, '1');
     await expect(amountInput).toHaveDisplayValue('1');
+  },
+};
+
+export const NoMultipleProductsSupport = {
+  name: 'No multiple products support',
+  render,
+  parameters: {
+    formik: {
+      initialValues: {
+        products: [
+          {
+            productId: '166a5c79',
+            amount: 1,
+          },
+        ],
+      },
+    },
+  },
+  args: {
+    supportsMultipleProducts: false,
+  },
+  argTypes: {
+    productId: {table: {disable: true}},
+    selectedProducts: {table: {disable: true}},
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const amountInput = canvas.getByLabelText('Aantal personen');
+    expect(amountInput).toHaveDisplayValue('1');
+    // typing does not have any effect
+    await userEvent.type(amountInput, '0');
+    expect(amountInput).toHaveDisplayValue('1');
+    expect(amountInput).toHaveAttribute('readonly', '');
   },
 };
