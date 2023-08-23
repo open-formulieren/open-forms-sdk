@@ -11,6 +11,8 @@ const CreateAppointmentContext = React.createContext({
   submitStep: () => {},
   setErrors: () => {},
   stepErrors: {initialTouched: {}, initialErrors: {}},
+  processingError: '',
+  setProcessingError: () => {},
   clearStepErrors: () => {},
   reset: () => window.sessionStorage.clear(),
 });

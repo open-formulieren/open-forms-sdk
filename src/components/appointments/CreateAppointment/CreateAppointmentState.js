@@ -8,7 +8,7 @@ import Types from 'types';
 
 import {CreateAppointmentContext} from '../Context';
 
-const SESSION_STORAGE_KEY = 'appointment|formData';
+export const SESSION_STORAGE_KEY = 'appointment|formData';
 
 const errorKeysByStep = {
   producten: ['products'],
@@ -24,6 +24,8 @@ export const buildContextValue = ({
   appointmentErrors = {initialTouched: {}, initialErrors: {}},
   setAppointmentErrors = () => {},
   resetSession = () => {},
+  processingError = '',
+  setProcessingError = () => {},
 }) => {
   const submittedSteps = Object.keys(appointmentData).filter(
     subObject => Object.keys(subObject).length
@@ -53,6 +55,8 @@ export const buildContextValue = ({
     submitStep: values => setAppointmentData({...appointmentData, [currentStep]: values}),
     setErrors: setAppointmentErrors,
     stepErrors: {initialTouched: stepInitialTouched, initialErrors: stepInitialErrors},
+    processingError,
+    setProcessingError,
     clearStepErrors: () => {
       const newInitialErrors = produce(initialErrors, draft => {
         errorKeys.forEach(key => delete draft[key]);
@@ -60,6 +64,7 @@ export const buildContextValue = ({
       setAppointmentErrors({initialTouched, initialErrors: newInitialErrors});
     },
     reset: () => {
+      setProcessingError('');
       setAppointmentData({});
       resetSession();
     },
@@ -72,6 +77,7 @@ export const CreateAppointmentState = ({currentStep, submission, resetSession, c
     initialTouched: {},
     initialErrors: {},
   });
+  const [processingError, setProcessingError] = useState('');
 
   // reset the local state if the session times out
   useSessionTimeout(() => {
@@ -87,6 +93,8 @@ export const CreateAppointmentState = ({currentStep, submission, resetSession, c
     appointmentErrors,
     setAppointmentErrors,
     resetSession,
+    processingError,
+    setProcessingError,
   });
 
   return (

@@ -9,14 +9,19 @@ import {updateSessionExpiry} from 'api';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {buildSubmission, mockSubmissionPost} from 'api-mocks/submissions';
+import {mockSubmissionProcessingStatusErrorGet} from 'api-mocks/submissions';
 import App, {routes as nestedRoutes} from 'components/App';
+import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
 
 import {
+  mockAppointmentCustomerFieldsGet,
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
+  mockAppointmentPost,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
 } from '../mocks';
+import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAppointmentState';
 
 // scrollIntoView is not not supported in Jest
 let scrollIntoViewMock = jest.fn();
@@ -30,14 +35,17 @@ const routes = [
   },
 ];
 
-const renderApp = () => {
+const renderApp = (initialRoute = '/') => {
   const form = buildForm({
     appointmentOptions: {
       isAppointment: true,
       supportsMultipleProducts: true,
     },
   });
-  const router = createMemoryRouter(routes);
+  const router = createMemoryRouter(routes, {
+    initialEntries: [initialRoute],
+    initialIndex: [0],
+  });
   render(
     <ConfigContext.Provider
       value={{
@@ -57,6 +65,14 @@ const renderApp = () => {
     </ConfigContext.Provider>
   );
 };
+
+beforeEach(() => {
+  sessionStorage.clear();
+});
+
+afterEach(() => {
+  sessionStorage.clear();
+});
 
 describe('Create appointment session expiration', () => {
   it('resets the session storage/local state', async () => {
@@ -114,5 +130,48 @@ describe('Create appointment session expiration', () => {
 
     const productDropdown = screen.getByRole('combobox');
     expect(productDropdown).toHaveDisplayValue('');
+  });
+});
+
+describe('Create appointment status checking', () => {
+  it('displays error status message on summary page', async () => {
+    mswServer.use(
+      mockAppointmentProductsGet,
+      mockAppointmentLocationsGet,
+      mockAppointmentCustomerFieldsGet,
+      mockAppointmentPost,
+      mockSubmissionProcessingStatusErrorGet
+    );
+    const user = userEvent.setup({delay: null});
+    // set the appointment data in sessionStorage
+    const submission = buildSubmission({steps: []});
+    const appointmentData = {
+      producten: {
+        products: [{productId: '166a5c79', amount: 1}],
+      },
+      kalender: {
+        location: '1396f17c',
+        date: '2023-08-22',
+        datetime: '2023-08-22T15:00:00+02:00',
+      },
+      contactgegevens: {lastName: 'Gem'},
+    };
+    sessionStorage.setItem(SUBMISSION_SESSION_STORAGE_KEY, JSON.stringify(submission));
+    sessionStorage.setItem(APPOINTMENT_SESSION_STORAGE_KEY, JSON.stringify(appointmentData));
+
+    renderApp('/afspraak-maken/overzicht');
+
+    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
+    // check all checkboxes
+    for (const checkbox of screen.getAllByRole('checkbox')) {
+      await user.click(checkbox);
+    }
+    const submitButton = screen.getByRole('button', {name: 'Confirm'});
+    expect(submitButton).not.toHaveAttribute('aria-disabled');
+    await user.click(submitButton);
+    await screen.findByText(/Processing/);
+    // wait for summary page to be rendered again
+    await screen.findByText('Check and confirm', undefined, {timeout: 2000});
+    expect(screen.getByText('Computer says no.')).toBeVisible();
   });
 });

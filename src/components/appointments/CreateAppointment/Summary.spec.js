@@ -18,22 +18,37 @@ import {
   mockAppointmentPost,
   mockAppointmentProductsGet,
 } from '../mocks';
+import {buildContextValue} from './CreateAppointmentState';
 import Summary from './Summary';
 
 const renderSummary = errorHandler => {
   const appointmentData = {
-    products: [{productId: '166a5c79', amount: 1}],
-    location: '1396f17c',
-    date: '2023-07-12',
-    datetime: `2023-07-12T08:00:00Z`,
-    lastName: 'Kundera',
-    dateOfBirth: '1929-04-01',
-    email: 'milan@kundera.cz',
-    phone: '12345678',
-    bsn: '123456782',
-    gender: 'M',
+    producten: {
+      products: [{productId: '166a5c79', amount: 1}],
+    },
+    kalender: {
+      location: '1396f17c',
+      date: '2023-07-12',
+      datetime: `2023-07-12T08:00:00Z`,
+    },
+    contactgegevens: {
+      lastName: 'Kundera',
+      dateOfBirth: '1929-04-01',
+      email: 'milan@kundera.cz',
+      phone: '12345678',
+      bsn: '123456782',
+      gender: 'M',
+    },
   };
   const form = buildForm();
+  const appointmentContext = buildContextValue({
+    submission: buildSubmission({
+      url: `${BASE_URL}submissions/64042633-a995-40c8-ad18-3e098b9527d1`,
+    }),
+    currentStep: '',
+    appointmentData: appointmentData,
+    setAppointmentErrors: errorHandler,
+  });
   const routes = [
     {
       path: '/appointments/*',
@@ -49,18 +64,7 @@ const renderSummary = errorHandler => {
         >
           <IntlProvider locale="en" messages={messagesEN}>
             <LiteralsProvider literals={form.literals}>
-              <CreateAppointmentContext.Provider
-                value={{
-                  submission: buildSubmission({
-                    url: `${BASE_URL}submissions/64042633-a995-40c8-ad18-3e098b9527d1`,
-                  }),
-                  appointmentData: appointmentData,
-                  stepData: {},
-                  submittedSteps: ['producten', 'kalender', 'contactgegevens'],
-                  submitStep: () => {},
-                  setErrors: errorHandler,
-                }}
-              >
+              <CreateAppointmentContext.Provider value={appointmentContext}>
                 <Outlet />
               </CreateAppointmentContext.Provider>
             </LiteralsProvider>
@@ -95,6 +99,7 @@ const renderSummary = errorHandler => {
 };
 
 beforeEach(() => {
+  window.sessionStorage.clear();
   mswServer.use(
     mockAppointmentProductsGet,
     mockAppointmentLocationsGet,

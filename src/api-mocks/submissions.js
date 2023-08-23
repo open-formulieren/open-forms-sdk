@@ -77,3 +77,20 @@ export const mockSubmissionProcessingStatusPendingGet = rest.get(
       })
     )
 );
+
+export const mockSubmissionProcessingStatusErrorGet = rest.get(
+  `${BASE_URL}submissions/:uuid/:token/status`,
+  (req, res, ctx) =>
+    res(
+      ctx.json({
+        status: 'done',
+        result: 'failed',
+        errorMessage: 'Computer says no.',
+        publicReference: '',
+        confirmationPageContent: '',
+        reportDownloadUrl: '',
+        paymentUrl: '',
+        mainWebsiteUrl: '',
+      })
+    )
+);
