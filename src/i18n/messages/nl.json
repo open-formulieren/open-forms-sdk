@@ -80,7 +80,7 @@
     "originalDefault": "Pay now"
   },
   "6ysm6G": {
-    "defaultMessage": "You must declare the form to be filled out truthfully before submitting",
+    "defaultMessage": "U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan",
     "description": "Warning statement of truth not checked when submitting",
     "originalDefault": "You must declare the form to be filled out truthfully before submitting"
   },
@@ -181,7 +181,7 @@
     "originalDefault": "Invalid."
   },
   "BboxO6": {
-    "defaultMessage": "Use two fingers to move the map",
+    "defaultMessage": "Gebruik twee vingers om te navigeren in de kaart",
     "description": "Gesturehandeling phone touch message.",
     "originalDefault": "Use two fingers to move the map"
   },
@@ -465,7 +465,7 @@
     "originalDefault": "Invalid date"
   },
   "X/24FO": {
-    "defaultMessage": "Map component search button",
+    "defaultMessage": "Zoeken",
     "description": "The leaflet map's search button areaLabel text.",
     "originalDefault": "Map component search button"
   },
@@ -499,6 +499,11 @@
     "description": "'Maintenance mode form' error title",
     "originalDefault": "Form temporarily unavailable"
   },
+  "ZVQeut": {
+    "defaultMessage": "Het verplichte veld {field} is niet ingevuld.",
+    "description": "Required field error message",
+    "originalDefault": "{field} is a required field."
+  },
   "ZehFnX": {
     "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
@@ -511,7 +516,7 @@
     "originalDefault": "Your email address"
   },
   "aUpjaY": {
-    "defaultMessage": "Sorry, that address could not be found.",
+    "defaultMessage": "Sorry, er zijn geen zoekresultaten voor dit adres.",
     "description": "The leaflet map's location not found message.",
     "originalDefault": "Sorry, that address could not be found."
   },
@@ -710,7 +715,7 @@
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
   "nLymjB": {
-    "defaultMessage": "Use ctrl + scroll to zoom the map",
+    "defaultMessage": "Gebruik CTRL + scroll om te zoomen in de kaart",
     "description": "Gesturehandeling pc scroll message.",
     "originalDefault": "Use ctrl + scroll to zoom the map"
   },
@@ -740,7 +745,7 @@
     "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
   },
   "ovI+W7": {
-    "defaultMessage": "Use ⌘ + scroll to zoom the map",
+    "defaultMessage": "Gebruik ⌘ + scroll om te zoomen in de kaart",
     "description": "Gesturehandeling mac scroll message.",
     "originalDefault": "Use ⌘ + scroll to zoom the map"
   },
@@ -770,7 +775,7 @@
     "originalDefault": "Suspending the form failed, please try again later"
   },
   "sSmY1N": {
-    "defaultMessage": "Enter address, please",
+    "defaultMessage": "Zoek adres",
     "description": "The leaflet map's input fields placeholder message.",
     "originalDefault": "Enter address, please"
   },
@@ -855,7 +860,7 @@
     "originalDefault": "Return to main website"
   },
   "zvoXSU": {
-    "defaultMessage": "Nearest address: <address></address>",
+    "defaultMessage": "Dichtstbijzijndste adres: <address></address>",
     "description": "Reverse geocoded address result display",
     "originalDefault": "Nearest address: <address></address>"
   }

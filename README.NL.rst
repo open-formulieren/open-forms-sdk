@@ -2,7 +2,7 @@
 Open Formulieren SDK
 ====================
 
-:Version: 1.5.0-alpha.0
+:Version: 1.5.0
 :Source: https://github.com/open-formulieren/open-forms-sdk
 :Keywords: e-Formulieren, Common Ground, FormIO, API
 
@@ -38,7 +38,7 @@ eindgebruikers als beheerders.
 Component
 =========
 
-|build-status|
+|build-status| |coverage| |storybook| |prettier|
 
 Dit component is een Javascript SDK.
 
@@ -71,3 +71,15 @@ Licensed under the `EUPL`_.
 .. |docs| image:: https://readthedocs.org/projects/open-forms/badge/?version=latest
     :target: https://open-forms.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation status
+
+.. |coverage| image:: https://codecov.io/github/open-formulieren/open-forms-sdk/branch/main/graphs/badge.svg?branch=main
+    :alt: Coverage
+    :target: https://codecov.io/gh/open-formulieren/open-forms-sdk
+
+.. |storybook| image:: https://img.shields.io/badge/docs-Storybook-FF4785?style=flat
+    :alt: Storybook
+    :target: https://open-formulieren.github.io/open-forms-sdk/
+
+.. |prettier| image:: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+    :alt: Code formatting with Prettier
+    :target: https://github.com/prettier/prettier

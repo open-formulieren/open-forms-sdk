@@ -460,7 +460,7 @@
     "originalDefault": "Invalid date"
   },
   "X/24FO": {
-    "defaultMessage": "Map component search button",
+    "defaultMessage": "Search",
     "description": "The leaflet map's search button areaLabel text.",
     "originalDefault": "Map component search button"
   },
@@ -493,6 +493,11 @@
     "defaultMessage": "Form temporarily unavailable",
     "description": "'Maintenance mode form' error title",
     "originalDefault": "Form temporarily unavailable"
+  },
+  "ZVQeut": {
+    "defaultMessage": "{field} is a required field.",
+    "description": "Required field error message",
+    "originalDefault": "{field} is a required field."
   },
   "ZehFnX": {
     "defaultMessage": "Je hebt het inloggen met {service} geannuleerd.",
@@ -760,7 +765,7 @@
     "originalDefault": "Suspending the form failed, please try again later"
   },
   "sSmY1N": {
-    "defaultMessage": "Enter address, please",
+    "defaultMessage": "Find address",
     "description": "The leaflet map's input fields placeholder message.",
     "originalDefault": "Enter address, please"
   },

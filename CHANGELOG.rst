@@ -2,6 +2,66 @@
 SDK Changelog
 =============
 
+1.5.0 (2023-08-23)
+==================
+
+New SDK minor version.
+
+We've worked on a couple of big topics in this release:
+
+* a tailored flow for appointment forms. Legacy appointments features are now
+  deprecated and will be removed in SDK 2.0.
+* improved handling of maps/geographical information.
+* various improvements for NL Design System integration, which is still an ongoing effort.
+
+.. warning:: SDK 1.5.0 requires at least version 2.3.0 of the Open Formulieren API.
+
+This release includes the changes from 1.5.0-alpha.0.
+
+Features
+--------
+
+* [#2174] Added a map search widget to find locations based on address auto-complete search.
+* [#3045] Added support for affixes in Form.io (number) fields.
+* [#2176] Added gesture handling for the map component.
+* [#3203] Added more generic support for "submission confirmation" checkboxes for the
+  user to agree to.
+* [#3332] Ensure that the list of available appointment products is retrieved with the
+  context of the already selected products.
+* [#1884] Added support for custom validation errors in the Form.io time component.
+* [#493] Added support for error message translations in new form validation library.
+* [#492] Added field-reset behaviour to dependent fields in appointment form.
+* [#3299] The amount field is now read-only when the appointment form does not support
+  multiple products.
+* [#506] Ensured that any backend processing errors during appointment creation are
+  displayed to the end user.
+* [#508] Added state checks to prevent users directly accessing nested URLs in
+  appointment forms.
+
+Bugfixes
+--------
+
+* [#515] Fixed date presentation of dates in January having an empty month.
+* [#517] Updated react-leaflet to be compatible with React 18.
+* [#3312] Fixed broken select component styling due to CSP errors.
+* [#514] Appointment form pages now always allow submit, deferring client-side
+  validation until the submit button is clicked.
+* [#3322] Fixed broken appointment cancel routes.
+* [#3327] Fixed order of style imports breaking the radio and checkbox styling in
+  production builds.
+* [#505] Added session storage cleanup to session expiry reset handler.
+
+Project maintenance
+-------------------
+
+* [#3322] Reworked calculation of "form URL" to record the public (root) URL of a form
+  during submission creation in the backend.
+* Added storybook test runner to CI configuration and coverage reporting from Storybook.
+* Updated dependencies via @dependabot.
+* Documented how to deal with non-generic validation error translations using Zod.
+* Prevent errors on test teardown due to missing ``act`` calls.
+* [#463] Added SDK version number to Javascript bundle.
+
 1.5.0-alpha.0 (2023-07-24)
 ==========================
 
