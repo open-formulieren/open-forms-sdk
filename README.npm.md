@@ -1,6 +1,8 @@
 # Open Forms SDK
 
 [![NPM package](https://img.shields.io/npm/v/@open-formulieren/sdk.svg)](https://www.npmjs.com/package/@open-formulieren/sdk)
+[![Coverage](https://codecov.io/github/open-formulieren/open-forms-sdk/branch/main/graphs/badge.svg?branch=main)](https://codecov.io/gh/open-formulieren/open-forms-sdk)
+[![Storybook](https://img.shields.io/badge/docs-Storybook-FF4785?style=flat)](https://open-formulieren.github.io/open-forms-sdk/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 
 The Open Forms SDK is the frontend to the [Open Forms backend][backend]. We publish it as both an
@@ -74,12 +76,15 @@ If you decide that using the SDK itself is sufficient, then your usage comes dow
 import OpenForm, {
   ANALYTICS_PROVIDERS,
   Formio,
-  Templates,
   OFLibrary,
   OpenFormsModule,
+  Templates,
   setCSRFToken,
-} from '@open-formulieren/sdk'; // JS API
-import '@open-formulieren/sdk/styles.css'; // import the (default) stylesheet
+} from '@open-formulieren/sdk';
+// JS API
+import '@open-formulieren/sdk/styles.css';
+
+// import the (default) stylesheet
 
 const form = new OpenForm(targetNode, options);
 form.init();
