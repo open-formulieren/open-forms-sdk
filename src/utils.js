@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import {applyPrefix} from './formio/utils';
 
 export const DEBUG = process.env.NODE_ENV === 'development';
+const {REACT_APP_VERSION} = process.env;
 
 export const getFormattedDateString = (intl, dateString) => {
   if (!dateString) return '';
@@ -22,3 +23,7 @@ export const getBEMClassName = (base, modifiers = []) => {
 
 // usage: await sleep(3000);
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+export const getVersion = () => {
+  return REACT_APP_VERSION || 'unknown';
+};
