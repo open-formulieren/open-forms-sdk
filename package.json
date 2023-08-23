@@ -138,7 +138,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@utrecht/component-library-css": "^1.0.0-alpha.526",
-    "@utrecht/component-library-react": "^1.0.0-alpha.334",
+    "@utrecht/component-library-react": "^1.0.0-alpha.353",
     "@utrecht/components": "^1.0.0-alpha.473",
     "@utrecht/design-tokens": "^1.0.0-alpha.505",
     "babel-jest": "^27.4.2",
