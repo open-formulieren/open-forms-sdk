@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+1.4.2 (2023-08-23)
+==================
+
+Periodic bugfix release
+
+* [#517] Fixed react-leaflet compatibility with React 18
+
 1.4.1 (2023-07-24)
 ==================
 
