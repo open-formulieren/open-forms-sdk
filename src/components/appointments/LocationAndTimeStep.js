@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
@@ -63,6 +63,11 @@ const LocationAndTimeStepFields = () => {
         throw new Error(`Unknown field: '${name}'`);
     }
   };
+
+  // if we don't have products in the state, redirect back to the start
+  if (!products.length) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     // TODO: don't do inline style

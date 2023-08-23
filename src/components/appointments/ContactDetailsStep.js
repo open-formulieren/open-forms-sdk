@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
@@ -58,10 +58,10 @@ const ContactDetailsStep = ({navigateTo = null}) => {
     loading,
     value: components,
     error,
-  } = useAsync(
-    async () => await getContactDetailsFields(baseUrl, productIds),
-    [baseUrl, JSON.stringify(productIds)]
-  );
+  } = useAsync(async () => {
+    if (!productIds.length) return [];
+    return await getContactDetailsFields(baseUrl, productIds);
+  }, [baseUrl, JSON.stringify(productIds)]);
   if (error) throw error;
 
   const emptyValues =
@@ -75,6 +75,11 @@ const ContactDetailsStep = ({navigateTo = null}) => {
     );
     return z.object(fieldSchemas);
   }, [loading, components]);
+
+  // if we don't have products or appointment details in the state, redirect back to the start
+  if (!products.length || !appointmentData.location || !appointmentData.datetime) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>

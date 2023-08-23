@@ -175,3 +175,23 @@ describe('Create appointment status checking', () => {
     expect(screen.getByText('Computer says no.')).toBeVisible();
   });
 });
+
+describe('The create appointment wrapper', () => {
+  it('prevents the ./kalender nested route from being accessed directly', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+
+    renderApp('/afspraak-maken/kalender');
+
+    expect(await screen.findByRole('heading', {name: 'Select your product(s)'})).toBeVisible();
+    expect(screen.queryByRole('heading', {name: 'Location and time'})).not.toBeInTheDocument();
+  });
+
+  it('prevents the ./contactgegevens nested route from being accessed directly', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+
+    renderApp('/afspraak-maken/contactgegevens');
+
+    expect(await screen.findByRole('heading', {name: 'Select your product(s)'})).toBeVisible();
+    expect(screen.queryByRole('heading', {name: 'Contact details'})).not.toBeInTheDocument();
+  });
+});
