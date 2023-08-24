@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+1.5.1 (2023-08-24)
+==================
+
+Hotfix release
+
+The truth checkbox statement error message key was not aligned with the value received
+from the backend.
+
 1.5.0 (2023-08-23)
 ==================
 
