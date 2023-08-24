@@ -217,7 +217,7 @@ export const MultipleRequiredStatements = {
         ).toBeVisible();
         expect(
           await canvas.findByText(
-            'You must declare the form to be filled out truthfully before submitting'
+            'U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan'
           )
         ).toBeVisible();
 
@@ -227,7 +227,7 @@ export const MultipleRequiredStatements = {
         );
         await userEvent.click(checkboxPrivacy);
         await canvas.findByText(
-          'You must declare the form to be filled out truthfully before submitting'
+          'U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan'
         );
         expect(
           canvas.queryByText('U moet akkoord gaan met het privacybeleid om door te gaan')
