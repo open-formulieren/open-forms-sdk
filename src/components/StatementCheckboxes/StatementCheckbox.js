@@ -15,7 +15,7 @@ const WARNINGS = defineMessages({
     description: 'Warning privacy policy not checked when submitting',
     defaultMessage: 'Please accept the privacy policy before submitting',
   },
-  truthStatementAccepted: {
+  statementOfTruthAccepted: {
     description: 'Warning statement of truth not checked when submitting',
     defaultMessage: 'You must declare the form to be filled out truthfully before submitting',
   },

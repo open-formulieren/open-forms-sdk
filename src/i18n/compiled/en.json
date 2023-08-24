@@ -1030,7 +1030,7 @@
   "X/24FO": [
     {
       "type": 0,
-      "value": "Map component search button"
+      "value": "Search"
     }
   ],
   "X3FjL+": [
@@ -1083,6 +1083,16 @@
     {
       "type": 0,
       "value": "Form temporarily unavailable"
+    }
+  ],
+  "ZVQeut": [
+    {
+      "type": 1,
+      "value": "field"
+    },
+    {
+      "type": 0,
+      "value": " is a required field."
     }
   ],
   "ZehFnX": [
@@ -1694,7 +1704,7 @@
   "sSmY1N": [
     {
       "type": 0,
-      "value": "Enter address, please"
+      "value": "Find address"
     }
   ],
   "senRv3": [
