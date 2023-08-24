@@ -125,8 +125,8 @@ export const LocalOverridePOC = {
 
     await step('Submitting without input displays errors', async () => {
       await userEvent.click(submitButton);
-      await canvas.findByText('Name is a required field.');
-      await canvas.findByText('Email address is a required field.');
+      await canvas.findByText('Het verplichte veld Name is niet ingevuld.');
+      await canvas.findByText('Het verplichte veld Email address is niet ingevuld.');
     });
 
     await step('Other validation errors fall back to global error map', async () => {

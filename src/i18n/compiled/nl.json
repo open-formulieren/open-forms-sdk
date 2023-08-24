@@ -138,7 +138,7 @@
   "6ysm6G": [
     {
       "type": 0,
-      "value": "You must declare the form to be filled out truthfully before submitting"
+      "value": "U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan"
     }
   ],
   "7Fk8NY": [
@@ -378,7 +378,7 @@
   "BboxO6": [
     {
       "type": 0,
-      "value": "Use two fingers to move the map"
+      "value": "Gebruik twee vingers om te navigeren in de kaart"
     }
   ],
   "COWzFp": [
@@ -1030,7 +1030,7 @@
   "X/24FO": [
     {
       "type": 0,
-      "value": "Map component search button"
+      "value": "Zoeken"
     }
   ],
   "X3FjL+": [
@@ -1085,6 +1085,20 @@
       "value": "Formulier tijdelijk onbeschikbaar"
     }
   ],
+  "ZVQeut": [
+    {
+      "type": 0,
+      "value": "Het verplichte veld "
+    },
+    {
+      "type": 1,
+      "value": "field"
+    },
+    {
+      "type": 0,
+      "value": " is niet ingevuld."
+    }
+  ],
   "ZehFnX": [
     {
       "type": 0,
@@ -1108,7 +1122,7 @@
   "aUpjaY": [
     {
       "type": 0,
-      "value": "Sorry, that address could not be found."
+      "value": "Sorry, er zijn geen zoekresultaten voor dit adres."
     }
   ],
   "abKEBH": [
@@ -1464,7 +1478,7 @@
   "nLymjB": [
     {
       "type": 0,
-      "value": "Use ctrl + scroll to zoom the map"
+      "value": "Gebruik CTRL + scroll om te zoomen in de kaart"
     }
   ],
   "nfRRDu": [
@@ -1552,7 +1566,7 @@
   "ovI+W7": [
     {
       "type": 0,
-      "value": "Use ⌘ + scroll to zoom the map"
+      "value": "Gebruik ⌘ + scroll om te zoomen in de kaart"
     }
   ],
   "pguTkQ": [
@@ -1694,7 +1708,7 @@
   "sSmY1N": [
     {
       "type": 0,
-      "value": "Enter address, please"
+      "value": "Zoek adres"
     }
   ],
   "senRv3": [
@@ -1884,7 +1898,7 @@
   "zvoXSU": [
     {
       "type": 0,
-      "value": "Nearest address: "
+      "value": "Dichtstbijzijndste adres: "
     },
     {
       "children": [

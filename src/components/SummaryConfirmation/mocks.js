@@ -6,7 +6,7 @@ export const PRIVACY_POLICY_ACCEPTED = {
 };
 
 export const STATEMENT_OF_TRUTH_ACCEPTED = {
-  key: 'truthStatementAccepted',
+  key: 'statementOfTruthAccepted',
   type: 'checkbox',
   validate: {required: true},
   label: 'I responded very honestly.',

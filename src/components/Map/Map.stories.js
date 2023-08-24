@@ -33,10 +33,10 @@ export const Map = {};
 export const MapWithAddressSearch = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    const button = await canvas.findByLabelText('Map component search button');
+    const button = await canvas.findByLabelText('Zoeken');
     await userEvent.click(button);
 
-    const searchField = await canvas.findByPlaceholderText('Enter address, please');
+    const searchField = await canvas.findByPlaceholderText('Zoek adres');
     const searchBox = within(searchField.parentNode);
     await userEvent.type(searchField, 'Gemeente Utrecht');
     const searchResult = await searchBox.findByText('Utrecht, Utrecht, Utrecht');
