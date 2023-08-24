@@ -10,7 +10,7 @@ const initialiseSentry = (sentryDSN, env) => {
     dsn: sentryDSN,
     integrations: [new Integrations.BrowserTracing()],
     environment: env,
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0, // we don't do APM with Sentry (yet)
     release: getVersion(),
   });
 };
