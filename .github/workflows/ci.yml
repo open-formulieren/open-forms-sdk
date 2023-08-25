@@ -47,7 +47,7 @@ jobs:
         run: |
           echo "Building version $REACT_APP_VERSION"
           yarn install
-          yarn build
+          REACT_APP_VERSION=${REACT_APP_VERSION} yarn build
         env:
           REACT_APP_VERSION: ${{ steps.build-args.outputs.version }}
 
