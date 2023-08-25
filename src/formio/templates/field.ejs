@@ -7,7 +7,7 @@
     >
 
       <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend utrecht-form-field__label">
-        <span class="utrecht-form-label utrecht-form-label--openforms-required">
+        <span class="utrecht-form-label{% if (ctx.component.validate.required){%} utrecht-form-label--openforms-required{%}%}">
           {{ ctx.t(ctx.component.label, { _userInput: true }) }}
           {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
             {{ ctx.t('(optional)') }}

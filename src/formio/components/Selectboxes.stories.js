@@ -48,3 +48,15 @@ export const Default = {
     label: 'Welke opties wilt u allemaal?',
   },
 };
+
+export const Required = {
+  render: SingleFormioComponent,
+  args: {
+    key: 'selectboxes',
+    label: 'Kunt u niet zeggen: „Wat mot je?”?',
+    extraComponentProperties: {
+      validate: {required: true},
+      values: [{label: 'Vezélf', value: 'see Westfries woordenboek'}],
+    },
+  },
+};
