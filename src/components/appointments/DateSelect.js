@@ -11,6 +11,7 @@ import {get} from 'api';
 import {DateField} from 'components/forms';
 
 import {ProductsType} from './types';
+import {prepareProductsForProductIDQuery} from './utils';
 
 export const fieldLabel = defineMessage({
   description: 'Appoinments: appointment date label',
@@ -38,7 +39,7 @@ const DateSelect = ({products, onChange}) => {
   } = useFormikContext();
 
   // get the available dates from the API
-  const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
+  const productIds = prepareProductsForProductIDQuery(products);
 
   const {
     loading,

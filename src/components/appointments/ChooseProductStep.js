@@ -31,9 +31,10 @@ const productSchema = z
 const chooseSingleProductSchema = z.object({products: productSchema.max(1)});
 const chooseMultiProductSchema = z.object({products: productSchema});
 
-const ChooseProductStepFields = ({values: {products = []}, validateForm, isValid, dirty}) => {
+const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
+  products = productSchema.parse(products);
 
   /**
    * Decorate an arrayHelper callback to invoke the validate function.
