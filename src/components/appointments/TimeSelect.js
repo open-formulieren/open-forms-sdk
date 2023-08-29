@@ -9,6 +9,7 @@ import {AsyncSelectField} from 'components/forms';
 import {useCalendarLocale} from 'components/forms/DateField';
 
 import {ProductsType} from './types';
+import {prepareProductsForProductIDQuery} from './utils';
 
 export const fieldLabel = defineMessage({
   description: 'Appoinments: time select label',
@@ -35,7 +36,7 @@ const TimeSelect = ({products}) => {
   } = useFormikContext();
   const calendarLocale = useCalendarLocale();
 
-  const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
+  const productIds = prepareProductsForProductIDQuery(products);
 
   const getOptions = useCallback(
     async () => {
