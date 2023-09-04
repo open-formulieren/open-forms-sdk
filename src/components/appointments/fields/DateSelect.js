@@ -10,8 +10,8 @@ import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {DateField} from 'components/forms';
 
-import {ProductsType} from './types';
-import {prepareProductsForProductIDQuery} from './utils';
+import {ProductsType} from '../types';
+import {prepareProductsForProductIDQuery} from '../utils';
 
 export const fieldLabel = defineMessage({
   description: 'Appoinments: appointment date label',

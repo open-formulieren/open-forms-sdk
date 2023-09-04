@@ -5,14 +5,14 @@ import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
-import LocationAndTimeStep from './LocationAndTimeStep';
 import {
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from './mocks';
-import {withAppointmentState} from './story-utils';
+} from '../mocks';
+import {withAppointmentState} from '../story-utils';
+import LocationAndTimeStep from './LocationAndTimeStep';
 
 export default {
   title: 'Private API / Appointments / Steps / 2 - Location and time',

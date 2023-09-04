@@ -3,9 +3,7 @@ import {Navigate, matchPath, resolvePath} from 'react-router-dom';
 
 import useQuery from 'hooks/useQuery';
 
-import ChooseProductStep from '../ChooseProductStep';
-import ContactDetailsStep from '../ContactDetailsStep';
-import LocationAndTimeStep from '../LocationAndTimeStep';
+import {ChooseProductStep, ContactDetailsStep, LocationAndTimeStep} from '../steps';
 import Confirmation from './Confirmation';
 import Summary from './Summary';
 

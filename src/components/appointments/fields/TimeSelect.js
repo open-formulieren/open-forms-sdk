@@ -8,8 +8,8 @@ import {get} from 'api';
 import {AsyncSelectField} from 'components/forms';
 import {useCalendarLocale} from 'components/forms/DateField';
 
-import {ProductsType} from './types';
-import {prepareProductsForProductIDQuery} from './utils';
+import {ProductsType} from '../types';
+import {prepareProductsForProductIDQuery} from '../utils';
 
 export const fieldLabel = defineMessage({
   description: 'Appoinments: time select label',

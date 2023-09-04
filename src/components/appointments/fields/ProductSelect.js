@@ -8,7 +8,7 @@ import {get} from 'api';
 import {getCached, setCached} from 'cache';
 import {AsyncSelectField} from 'components/forms';
 
-import {ProductsType} from './types';
+import {ProductsType} from '../types';
 
 const CACHED_PRODUCTS_KEY = 'appointment|all-products';
 const CACHED_PRODUCTS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes

@@ -3,8 +3,8 @@ import {userEvent, waitFor, within} from '@storybook/testing-library';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
+import {mockAppointmentLocationsGet} from '../mocks';
 import LocationSelect from './LocationSelect';
-import {mockAppointmentLocationsGet} from './mocks';
 
 export default {
   title: 'Private API / Appointments / Fields / LocationSelect',

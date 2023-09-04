@@ -4,8 +4,7 @@ import {Route, Routes} from 'react-router-dom';
 import ErrorBoundary from 'components/ErrorBoundary';
 import {LayoutColumn} from 'components/Layout';
 
-import CancelAppointment from './CancelAppointment';
-import CancelAppointmentSuccess from './CancelAppointmentSuccess';
+import {CancelAppointment, CancelAppointmentSuccess} from './cancel';
 
 // with react router v6, these routes can be hoisted into the App if we'd like to
 

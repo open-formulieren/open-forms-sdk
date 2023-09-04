@@ -8,10 +8,10 @@ import {ConfigContext} from 'Context';
 import {BASE_URL, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 
+import {CreateAppointmentContext} from '../Context';
+import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
+import {mockAppointmentProductsGet} from '../mocks';
 import ChooseProductStep from './ChooseProductStep';
-import {CreateAppointmentContext} from './Context';
-import {buildContextValue} from './CreateAppointment/CreateAppointmentState';
-import {mockAppointmentProductsGet} from './mocks';
 
 const render = () => {
   const appointmentContext = buildContextValue({

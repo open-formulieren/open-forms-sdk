@@ -4,9 +4,9 @@ import {defineMessage, useIntl} from 'react-intl';
 
 import {NumberField} from 'components/forms';
 
-import {AppointmentConfigContext} from './Context';
+import {AppointmentConfigContext} from '../Context';
+import {ProductsType} from '../types';
 import ProductSelect from './ProductSelect';
-import {ProductsType} from './types';
 
 export const amountLabel = defineMessage({
   description: 'Appointments: product amount field label',

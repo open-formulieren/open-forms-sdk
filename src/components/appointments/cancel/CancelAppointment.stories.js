@@ -3,8 +3,8 @@ import {withRouter} from 'storybook-addon-react-router-v6';
 import Card from 'components/Card';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
+import {mockAppointmentCancelErrorPost, mockAppointmentCancelPost} from '../mocks';
 import CancelAppointment from './CancelAppointment';
-import {mockAppointmentCancelErrorPost, mockAppointmentCancelPost} from './mocks';
 
 export default {
   title: 'Private API / Appointments / Cancellation / Cancel',
