@@ -195,3 +195,40 @@ describe('The create appointment wrapper', () => {
     expect(screen.queryByRole('heading', {name: 'Contact details'})).not.toBeInTheDocument();
   });
 });
+
+describe('Preselecting a product via querystring', () => {
+  it('displays the preselected product in the dropdown', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+
+    renderApp('/?product=166a5c79');
+
+    const productDropdown = await screen.findByRole('combobox');
+    expect(productDropdown).toBeVisible();
+    // and the product should be auto selected
+    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
+  });
+
+  it('does not crash on invalid product IDs', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+    const user = userEvent.setup({delay: null});
+
+    renderApp('/?product=bb72a36b-b791');
+
+    const productDropdown = await screen.findByRole('combobox');
+    expect(productDropdown).toBeVisible();
+    // nothing should be selected
+    expect(screen.queryByText('Paspoort aanvraag')).not.toBeInTheDocument();
+    expect(screen.queryByText('Rijbewijs aanvraag (Drivers license)')).not.toBeInTheDocument();
+    expect(screen.queryByText('Not available with drivers license')).not.toBeInTheDocument();
+
+    // now open the dropdown and select a product
+    await user.click(productDropdown);
+    await user.keyboard('[ArrowDown]');
+    const option = await screen.findByText('Paspoort aanvraag');
+    expect(option).toBeVisible();
+    await user.click(option);
+    expect(screen.queryByText('Rijbewijs aanvraag (Drivers license)')).not.toBeInTheDocument();
+    expect(screen.queryByText('Not available with drivers license')).not.toBeInTheDocument();
+    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
+  });
+});
