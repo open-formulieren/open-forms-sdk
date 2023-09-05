@@ -1,4 +1,5 @@
 import {FieldArray, Form, Formik} from 'formik';
+import produce from 'immer';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {flushSync} from 'react-dom';
@@ -11,6 +12,7 @@ import Button from 'components/Button';
 import {CardTitle} from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
+import useQuery from 'hooks/useQuery';
 import useTitle from 'hooks/useTitle';
 import {getBEMClassName} from 'utils';
 
@@ -170,6 +172,14 @@ const ChooseProductStep = ({navigateTo = null}) => {
       defaultMessage: 'Product',
     })
   );
+  const query = useQuery();
+  const initialProductId = query.get('product');
+
+  const initialValues = produce(INITIAL_VALUES, draft => {
+    if (initialProductId) {
+      draft.products[0].productId = initialProductId;
+    }
+  });
 
   const validationSchema = supportsMultipleProducts
     ? chooseMultiProductSchema
@@ -189,7 +199,7 @@ const ChooseProductStep = ({navigateTo = null}) => {
         modifiers={['padded']}
       />
       <Formik
-        initialValues={{...INITIAL_VALUES, ...stepData}}
+        initialValues={{...initialValues, ...stepData}}
         initialErrors={initialErrors}
         initialTouched={initialTouched}
         validateOnChange={false}

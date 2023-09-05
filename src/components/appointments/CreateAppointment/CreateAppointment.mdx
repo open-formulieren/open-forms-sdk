@@ -11,9 +11,29 @@ The create appointment UI is used when `form.appointmentOptions.isAppointment` i
 brings the user in a (mostly) fixed form step progression to select their products, appointment
 details and provide contact details.
 
-**NOTE**
+## Features
 
-This is currently under development.
+**Multi vs. single product flow**
+
+The backend exposes information whether the enabled plugin for appointments supports multi-product
+appointments or not. This drives the appointment flow - for multi-product appointments, you can add
+additional products and the list of available products is fetched while passing the already selected
+products to the backend - this allows only valid combinations to be returned.
+
+For single-product, the UI is slimmed down a little bit to remove the multi-product controls, and
+the "amount" field is fixed to the number "1".
+
+**Pre-selecting a product**
+
+You can link to the appointments flow with an optional query string parameter `product`, which
+should have the value of a valid product ID. If provided, that product will be pre-selected in the
+list of all products. Note that this only applies to the first product in the case of multi-product
+forms.
+
+For example, the following URLs will pre-select a product:
+
+- `https://example.com/appointment/?product=my-product-id`, for the regular routing
+- `https://example.com/#/appointment/?product=my-product-id`, for hash-based routing
 
 <Story of={CreateAppointmentStories.Default} />
 

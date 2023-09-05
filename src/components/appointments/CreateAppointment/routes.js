@@ -1,6 +1,8 @@
 import {defineMessage} from 'react-intl';
 import {Navigate, matchPath, resolvePath} from 'react-router-dom';
 
+import useQuery from 'hooks/useQuery';
+
 import ChooseProductStep from '../ChooseProductStep';
 import ContactDetailsStep from '../ContactDetailsStep';
 import LocationAndTimeStep from '../LocationAndTimeStep';
@@ -36,13 +38,26 @@ export const APPOINTMENT_STEPS = [
 
 export const APPOINTMENT_STEP_PATHS = APPOINTMENT_STEPS.map(s => s.path);
 
+const LandingPage = () => {
+  const query = useQuery();
+  return (
+    <Navigate
+      replace
+      to={{
+        pathname: APPOINTMENT_STEP_PATHS[0],
+        search: `?${query}`,
+      }}
+    />
+  );
+};
+
 /**
  * Route subtree for appointment forms.
  */
 export const routes = [
   {
     path: '',
-    element: <Navigate replace to={APPOINTMENT_STEP_PATHS[0]} />,
+    element: <LandingPage />,
   },
   ...APPOINTMENT_STEPS.map(({path, element}) => ({path, element})),
   {

@@ -12,6 +12,7 @@ import {LayoutRow} from 'components/Layout';
 import {CreateAppointment, appointmentRoutes} from 'components/appointments';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import useFormContext from 'hooks/useFormContext';
+import useQuery from 'hooks/useQuery';
 import useZodErrorMap from 'hooks/useZodErrorMap';
 import {I18NContext} from 'i18n';
 import {DEBUG} from 'utils';
@@ -55,6 +56,7 @@ Top level router - routing between an actual form or supporting screens.
  */
 const App = ({noDebug = false}) => {
   const form = useFormContext();
+  const query = useQuery();
   const config = useContext(ConfigContext);
   const appointmentMatch = useMatch('afspraak-maken/*');
   const appointmentCancelMatch = useMatch('afspraak-annuleren/*');
@@ -70,7 +72,15 @@ const App = ({noDebug = false}) => {
 
   const isAppointment = form.appointmentOptions?.isAppointment ?? false;
   if (isAppointment && !appointmentMatch && !appointmentCancelMatch) {
-    return <Navigate replace to="../afspraak-maken" />;
+    return (
+      <Navigate
+        replace
+        to={{
+          pathname: '../afspraak-maken',
+          search: `?${query}`,
+        }}
+      />
+    );
   }
 
   return (
