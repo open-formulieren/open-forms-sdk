@@ -9,15 +9,15 @@ import {ConfigContext} from 'Context';
 import {BASE_URL, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 
-import {CreateAppointmentContext} from './Context';
-import {buildContextValue} from './CreateAppointment/CreateAppointmentState';
-import LocationAndTimeStep from './LocationAndTimeStep';
+import {CreateAppointmentContext} from '../Context';
+import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
 import {
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from './mocks';
+} from '../mocks';
+import LocationAndTimeStep from './LocationAndTimeStep';
 
 const render = initialValues => {
   const {products, ...stepData} = initialValues;

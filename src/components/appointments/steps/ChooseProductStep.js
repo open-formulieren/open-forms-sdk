@@ -16,10 +16,10 @@ import useQuery from 'hooks/useQuery';
 import useTitle from 'hooks/useTitle';
 import {getBEMClassName} from 'utils';
 
-import {AppointmentConfigContext} from './Context';
-import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
-import Product from './Product';
-import SubmitRow from './SubmitRow';
+import {AppointmentConfigContext} from '../Context';
+import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
+import SubmitRow from '../SubmitRow';
+import {Product} from '../fields';
 
 const productSchema = z
   .array(

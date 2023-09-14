@@ -9,8 +9,8 @@ import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 
+import {mockAppointmentDatesGet} from '../mocks';
 import DateSelect from './DateSelect';
-import {mockAppointmentDatesGet} from './mocks';
 
 const waitForPosition = () => act(async () => {});
 

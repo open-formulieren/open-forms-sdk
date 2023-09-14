@@ -16,8 +16,8 @@ import Loader from 'components/Loader';
 import {FormioComponent, getEmptyValue, getSchema} from 'components/formio';
 import useTitle from 'hooks/useTitle';
 
-import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
-import SubmitRow from './SubmitRow';
+import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
+import SubmitRow from '../SubmitRow';
 
 const CACHED_CONTACT_DETAILS_FIELDS_KEY = 'appointments|contactDetailsFields';
 const CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes

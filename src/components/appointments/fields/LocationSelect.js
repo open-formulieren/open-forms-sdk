@@ -7,7 +7,7 @@ import {get} from 'api';
 import {getCached, setCached} from 'cache';
 import {AsyncSelectField} from 'components/forms';
 
-import {ProductsType} from './types';
+import {ProductsType} from '../types';
 
 // TODO: use a nicer widget/form field than select
 

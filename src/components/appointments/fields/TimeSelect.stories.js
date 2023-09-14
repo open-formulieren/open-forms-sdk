@@ -4,8 +4,8 @@ import {addDays, formatISO} from 'date-fns';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
+import {mockAppointmentTimesGet} from '../mocks';
 import TimeSelect from './TimeSelect';
-import {mockAppointmentTimesGet} from './mocks';
 
 const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date'});
 

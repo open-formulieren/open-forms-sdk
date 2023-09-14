@@ -5,9 +5,9 @@ import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
+import {mockAppointmentCustomerFieldsGet} from '../mocks';
+import {withAppointmentState} from '../story-utils';
 import ContactDetailsStep from './ContactDetailsStep';
-import {mockAppointmentCustomerFieldsGet} from './mocks';
-import {withAppointmentState} from './story-utils';
 
 const TOMORROW = formatISO(addDays(new Date(), 1), {representation: 'date'});
 

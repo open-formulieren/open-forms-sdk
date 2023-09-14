@@ -15,12 +15,12 @@ import SummaryConfirmation from 'components/SummaryConfirmation';
 import {ValidationError} from 'errors';
 import useTitle from 'hooks/useTitle';
 
-import {getContactDetailsFields} from '../ContactDetailsStep';
-import {fieldLabel as dateLabel} from '../DateSelect';
-import {getLocations, fieldLabel as locationLabel} from '../LocationSelect';
-import {amountLabel} from '../Product';
-import {getAllProducts, fieldLabel as productLabel} from '../ProductSelect';
-import {fieldLabel as timeLabel} from '../TimeSelect';
+import {fieldLabel as dateLabel} from '../fields/DateSelect';
+import {getLocations, fieldLabel as locationLabel} from '../fields/LocationSelect';
+import {amountLabel} from '../fields/Product';
+import {getAllProducts, fieldLabel as productLabel} from '../fields/ProductSelect';
+import {fieldLabel as timeLabel} from '../fields/TimeSelect';
+import {getContactDetailsFields} from '../steps/ContactDetailsStep';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 
 const createAppointment = async (baseUrl, submission, appointmentData, statementValues) => {

@@ -14,13 +14,11 @@ import {CardTitle} from 'components/Card';
 import Loader from 'components/Loader';
 import useTitle from 'hooks/useTitle';
 
-import {useCreateAppointmentContext} from './CreateAppointment/CreateAppointmentState';
-import DateSelect from './DateSelect';
-import LocationSelect from './LocationSelect';
-import {getAllProducts} from './ProductSelect';
-import SubmitRow from './SubmitRow';
-import TimeSelect from './TimeSelect';
-import {ProductsType} from './types';
+import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
+import SubmitRow from '../SubmitRow';
+import {DateSelect, LocationSelect, TimeSelect} from '../fields';
+import {getAllProducts} from '../fields/ProductSelect';
+import {ProductsType} from '../types';
 
 const schema = z.object({
   location: z.string(),

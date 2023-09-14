@@ -4,10 +4,10 @@ import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
+import {AppointmentConfigContext} from '../Context';
+import {mockAppointmentProductsGet} from '../mocks';
+import {withAppointmentState} from '../story-utils';
 import ChooseProductStep from './ChooseProductStep';
-import {AppointmentConfigContext} from './Context';
-import {mockAppointmentProductsGet} from './mocks';
-import {withAppointmentState} from './story-utils';
 
 export default {
   title: 'Private API / Appointments / Steps / 1 - Choose product',
