@@ -16,3 +16,8 @@
     @include margin(auto);
   }
 }
+
+.#{prefix(login-options__cosign)} {
+  padding: 0.6em;
+  background-color: var(--of-color-read-only-bg);
+}
