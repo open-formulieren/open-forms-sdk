@@ -52,6 +52,8 @@
   @include mobile-only {
     @include margin($grid-container-margin, $properties: (padding-top, padding-bottom));
     box-shadow: var(--of-progress-indicator-mobile-box-shadow);
+    // otherwise the bar is too short, and setting a width creates a horizontal scrollbar
+    width: unset;
 
     // style layout
     @at-root .#{prefix('layout__row')} & {
