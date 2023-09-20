@@ -1,5 +1,7 @@
 import {Formio} from 'react-formio';
 
+import MinMaxDateValidator from 'formio/validators/minMaxDateValidator';
+
 const DateTimeField = Formio.Components.components.datetime;
 
 const extractDate = value => {
@@ -11,6 +13,17 @@ const extractDate = value => {
 };
 
 class DateField extends DateTimeField {
+  constructor(component, options, data) {
+    super(component, options, data);
+
+    if (component.datePicker.minDate || component.datePicker.maxDate) {
+      component.validate.dateMinMax = true;
+    }
+
+    this.validators.push('dateMinMax');
+    this.validator.validators['dateMinMax'] = MinMaxDateValidator;
+  }
+
   get suffix() {
     // Don't show an icon
     return null;
