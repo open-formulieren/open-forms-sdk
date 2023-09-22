@@ -577,7 +577,7 @@ const FormStep = ({
 
         {
           (!isLoadingSomething && configuration) ? (
-            <form onSubmit={onReactSubmit}>
+            <form onSubmit={onReactSubmit} noValidate>
               <Form
                 ref={formRef}
                 form={configuration}
