@@ -780,7 +780,7 @@ const FormStep = ({
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
         {!isLoadingSomething && configuration ? (
-          <form onSubmit={onReactSubmit}>
+          <form onSubmit={onReactSubmit} noValidate>
             <Form
               ref={formRef}
               form={configuration}
