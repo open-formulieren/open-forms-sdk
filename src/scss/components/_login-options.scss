@@ -15,9 +15,10 @@
     @include h2;
     @include margin(auto);
   }
-}
 
-.#{prefix(login-options__cosign)} {
-  padding: 0.6em;
-  background-color: var(--of-color-read-only-bg);
+  @include bem.element('cosign') {
+    padding-block: var(--of-login-options-cosign-padding-block);
+    padding-inline: var(--of-login-options-cosign-padding-inline);
+    background-color: var(--of-login-options-cosign-background-color);
+  }
 }

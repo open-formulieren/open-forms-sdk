@@ -37,18 +37,16 @@ const LoginOptionsDisplay = ({
       )}
 
       {cosignLoginInfo && (
-        <>
-          <div className={getBEMClassName('login-options__cosign')}>
-            <h2 className={getBEMClassName('login-options__caption')}>
-              <FormattedMessage
-                description="Log in to co-sign the form title"
-                defaultMessage="Log in to co-sign the form"
-              />
-            </h2>
+        <div className={getBEMClassName('login-options__cosign')}>
+          <h2 className={getBEMClassName('login-options__caption')}>
+            <FormattedMessage
+              description="Log in to co-sign the form title"
+              defaultMessage="Log in to co-sign the form"
+            />
+          </h2>
 
-            <LoginButton key={cosignLoginInfo.identifier} option={cosignLoginInfo} />
-          </div>
-        </>
+          <LoginButton key={cosignLoginInfo.identifier} option={cosignLoginInfo} />
+        </div>
       )}
     </div>
   );
