@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+1.3.6 (2023-09-25)
+==================
+
+Periodic bugfix release
+
+* [#3385] Disabled browser validation on form.
+
 1.3.5 (2023-07-24)
 ==================
 
