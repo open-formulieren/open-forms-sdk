@@ -807,7 +807,7 @@ const FormStep = ({
               headingType="subtitle"
               modifiers={['padded']}
             />
-            <form onSubmit={onReactSubmit}>
+            <form onSubmit={onReactSubmit} noValidate>
               <Form
                 ref={formRef}
                 form={configuration}
