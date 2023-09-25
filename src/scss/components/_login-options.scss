@@ -15,4 +15,10 @@
     @include h2;
     @include margin(auto);
   }
+
+  @include bem.element('cosign') {
+    padding-block: var(--of-login-options-cosign-padding-block);
+    padding-inline: var(--of-login-options-cosign-padding-inline);
+    background-color: var(--of-login-options-cosign-background-color);
+  }
 }
