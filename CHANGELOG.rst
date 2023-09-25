@@ -2,6 +2,37 @@
 SDK Changelog
 =============
 
+1.5.2 (2023-09-25)
+==================
+
+Periodic bugfix release
+
+* [#3418] Fixed asterisk being shown on not-required selectboxes/radio fields.
+* [#3404] Fixed inaccurate amount of products being sent to the backend in appointment
+  forms.
+* [#3385] Disabled browser validation on form.
+
+1.4.3 (2023-09-25)
+==================
+
+Periodic bugfix release
+
+* [#3385] Disabled browser validation on form.
+
+1.3.6 (2023-09-25)
+==================
+
+Periodic bugfix release
+
+* [#3385] Disabled browser validation on form.
+
+1.2.11 (2023-09-25)
+===================
+
+Final bugfix release in the 1.2.x series.
+
+* [#3385] Disabled browser validation on form.
+
 1.5.1 (2023-08-24)
 ==================
 
