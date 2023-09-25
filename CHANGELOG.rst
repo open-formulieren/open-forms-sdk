@@ -2,6 +2,13 @@
 Changelog
 =========
 
+1.2.11 (2023-09-25)
+===================
+
+Final bugfix release in the 1.2.x series.
+
+* [#3385] Disabled browser validation on form.
+
 1.2.10 (2023-07-24)
 ===================
 
