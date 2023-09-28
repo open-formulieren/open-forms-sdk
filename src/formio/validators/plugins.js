@@ -2,12 +2,6 @@ import {post} from '../../api';
 
 export const pluginsAPIValidator = {
   key: `validate.backendApi`,
-  message(component) {
-    return component.t(component.errorMessage('Invalid'), {
-      field: component.errorLabel,
-      data: component.data,
-    });
-  },
   check(component, setting, value) {
     if (!value) return true;
 
@@ -21,13 +15,15 @@ export const pluginsAPIValidator = {
         return valid ? true : response.data.messages.join('<br>');
       });
     });
-    return Promise.all(promises).then(results => {
-      const anyValid = results.some(result => result === true);
+    return Promise.all(promises)
+      .then(results => {
+        const anyValid = results.some(result => result === true);
 
-      if (anyValid) return true;
+        if (anyValid) return true;
 
-      return results.join('<br>');
-    });
+        return results.join('<br>');
+      })
+      .catch(() => false);
   },
 };
 

@@ -8,16 +8,14 @@ import {BASE_URL} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {pluginsAPIValidator} from 'formio/validators/plugins';
 
-import {
-  mockDutchInValidPost,
-  mockDutchValidPost,
-  mockInternationalInValidPost,
-  mockInternationalValidPost,
-} from './mocks';
+import {phoneNumberValidations} from './mocks';
 
 describe('The OpenForms plugins validation', () => {
   test('tests expected errors are returned when phone number is invalid', async () => {
-    mswServer.use(mockDutchInValidPost, mockInternationalInValidPost);
+    mswServer.use(
+      phoneNumberValidations.mockInValidDutchPhonenumberPost,
+      phoneNumberValidations.mockInValidInternationalPhonenumberPost
+    );
 
     const component = {
       component: phoneNumberComponent,
@@ -33,7 +31,10 @@ describe('The OpenForms plugins validation', () => {
   });
 
   test('tests no errors are returned when phone number is valid', async () => {
-    mswServer.use(mockDutchValidPost, mockInternationalValidPost);
+    mswServer.use(
+      phoneNumberValidations.mockValidDutchPhonenumberPost,
+      phoneNumberValidations.mockValidInternationalPhonenumberPost
+    );
 
     const component = {
       component: phoneNumberComponent,
@@ -49,7 +50,10 @@ describe('The OpenForms plugins validation', () => {
   });
 
   test('tests no errors are returned when phone number is null', async () => {
-    mswServer.use(mockDutchValidPost, mockInternationalValidPost);
+    mswServer.use(
+      phoneNumberValidations.mockValidDutchPhonenumberPost,
+      phoneNumberValidations.mockValidInternationalPhonenumberPost
+    );
 
     const component = {
       component: phoneNumberComponent,

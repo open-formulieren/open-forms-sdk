@@ -9,7 +9,7 @@ const phoneNumberComponent = {
   },
 };
 
-const validSamples = ['630123456', '+31630123456'];
+const validSamples = ['0630123456', '+31630123456'];
 const inValidSamples = ['63012345', '+3163012345'];
 
 export {phoneNumberComponent, validSamples, inValidSamples};
