@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+1.4.4 (2023-09-29)
+==================
+
+Hotfix for WebKit based browsers
+
+* [#3511] Fixed user input "flickering" in forms with certain (backend) logic on Safari
+  & other WebKit based browsers.
+
 1.4.3 (2023-09-25)
 ==================
 
