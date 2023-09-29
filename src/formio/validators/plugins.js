@@ -1,41 +1,30 @@
 import {post} from '../../api';
 
-const errorMessageMap = {
-  'kvk-kvkNumber': 'Invalid Kvk Number',
-  'kvk-rsin': 'Invalid RSIN',
-  'kvk-branchNumber': 'Invalid Branch Number',
-  'phonenumber-international': 'Invalid international phonenumber',
-  'phonenumber-nl': 'Invalid Dutch phonenumber',
-};
+export const pluginsAPIValidator = {
+  key: `validate.backendApi`,
+  check(component, setting, value) {
+    if (!value) return true;
 
-const pluginAPIValidator = plugin => {
-  let defaultMsg = errorMessageMap[plugin];
-  // catches undefined too
-  if (defaultMsg == null) {
-    defaultMsg = 'Invalid';
-  }
+    const plugins = component.component.validate.plugins;
+    const {baseUrl} = component.currentForm?.options || component.options;
 
-  return {
-    key: `validate.${plugin}`,
-    message(component) {
-      return component.t(component.errorMessage(defaultMsg), {
-        field: component.errorLabel,
-        data: component.data,
-      });
-    },
-    check(component, setting, value) {
-      if (!value) return true;
-
-      const {baseUrl} = component.currentForm?.options || component.options;
+    const promises = plugins.map(plugin => {
       const url = `${baseUrl}validation/plugins/${plugin}`;
-      return post(url, {value})
-        .then(response => {
-          const valid = response.data.isValid;
-          return valid ? true : response.data.messages.join('<br>');
-        })
-        .catch(() => false);
-    },
-  };
+      return post(url, {value}).then(response => {
+        const valid = response.data.isValid;
+        return valid ? true : response.data.messages.join('<br>');
+      });
+    });
+    return Promise.all(promises)
+      .then(results => {
+        const anyValid = results.some(result => result === true);
+
+        if (anyValid) return true;
+
+        return results.join('<br>');
+      })
+      .catch(() => false);
+  },
 };
 
 /**
@@ -46,13 +35,9 @@ const pluginAPIValidator = plugin => {
  */
 const enableValidationPlugins = component => {
   if (Array.isArray(component.component.validate.plugins)) {
-    for (let plugin of component.component.validate.plugins) {
-      const validator = pluginAPIValidator(plugin);
-      if (validator == null) continue;
-      component.component.validateOn = 'blur';
-      component.validator.validators[plugin] = validator;
-      component.validators.push(plugin);
-    }
+    component.component.validateOn = 'blur';
+    component.validator.validators.backendApi = pluginsAPIValidator;
+    component.validators.push('backendApi');
   }
 };
 
