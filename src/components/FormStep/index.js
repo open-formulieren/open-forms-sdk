@@ -180,6 +180,7 @@ class AbortedLogicCheck extends Error {
 const initialState = {
   configuration: null,
   backendData: {},
+  formioInitialized: false,
   canSubmit: false,
   logicChecking: false,
   isFormSaveModalOpen: false,
@@ -212,6 +213,7 @@ const reducer = (draft, action) => {
       } = action.payload;
       draft.configuration = configuration;
       draft.backendData = data;
+      draft.formioInitialized = false;
       draft.canSubmit = canSubmit;
       draft.logicChecking = false;
       draft.isNavigating = false;
@@ -220,6 +222,11 @@ const reducer = (draft, action) => {
 
     case 'FORMIO_CHANGE_HANDLED': {
       draft.logicChecking = false;
+      break;
+    }
+
+    case 'FORMIO_INITIALIZED': {
+      draft.formioInitialized = true;
       break;
     }
 
@@ -305,6 +312,7 @@ const FormStep = ({
     {
       configuration,
       backendData,
+      formioInitialized,
       canSubmit,
       logicChecking,
       isFormSaveModalOpen,
@@ -708,6 +716,14 @@ const FormStep = ({
       return;
     }
 
+    // formio initialized also fires when the formio configuration changes bceause of
+    // logic, but we only tap into this hook to set the backend-loaded submission data.
+    // Once this is done, we don't want to run anything anymore.
+    // Otherwise this causes problems wich change events triggering and "bouncing" back
+    // and forth (in WebKit browsers) with the logic check via the onFormIOChange, see
+    // open-formulieren/open-forms#3511.
+    if (formioInitialized) return;
+
     // We cannot filter 'blank' values to prevent Formio validation from running, as
     // Formio will use the default values in that case which have been explicitly
     // unset. In the situation that we have invalid backend data (loading a submission
@@ -722,6 +738,7 @@ const FormStep = ({
       // for FormIO (multivalue input is one example why that's needed).
       formInstance.setSubmission({data: cloneDeep(backendData)}, {noValidate: true});
     }
+    dispatch({type: 'FORMIO_INITIALIZED'});
   };
 
   /**
