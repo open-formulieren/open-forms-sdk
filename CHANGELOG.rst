@@ -2,6 +2,41 @@
 SDK Changelog
 =============
 
+1.6.0-alpha.0 (2023-10-02)
+==========================
+
+First preview release of the upcoming 1.6.0 version.
+
+Features
+--------
+
+* [#3300] Appointments: added product pre-selection via query string parameters.
+* [#1884] Added more flexibility for custom time component validation errors.
+* [#3443] Added (custom) validation errors for date components and allow manual entering
+  of invalid dates so that validation errors are displayed instead of input being
+  discarded.
+* [#3414] Co-sign authentication buttons now have more distinctive styling (+ support
+  theming via design tokens).
+* [#3383] When using multiple backend validation plugins on a plugin, they now accept
+  the user input as soon as *any* plugin accepts it rather than *all* plugins.
+
+Bugfixes
+--------
+
+* Fixed width of progress indicator on mobile.
+* [#3419] Fixed tooltips not applying design tokens everywhere.
+* [#3385] Fixed inconsistent styles because of browser validation errors being shown
+  rather than own validation messages.
+
+Project maintenance
+-------------------
+
+* Added ``stable/1.5.x`` branch to CI configuration.
+* The SDK build artifact should now include the version number.
+* [#309] Added story for cosign component.
+* Fixed products schema proptype warning.
+* Reorganized appointments code.
+
 1.5.3 (2023-09-29)
 ==================
 
