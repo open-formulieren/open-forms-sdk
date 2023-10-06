@@ -5,6 +5,9 @@
 @import '../mixins/prefix';
 
 .#{prefix(leaflet-map)} {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   height: 400px;
   position: relative;
   z-index: 0;
