@@ -2,9 +2,6 @@
 @use '../../scss/mixins/prefix';
 
 .#{prefix.prefix('map-address')} {
-  padding-block-start: var(--of-map-address-padding-block-start, 1em);
-  padding-block-end: var(--of-map-address-padding-block-end, 1em);
-
   @include bem.element('description') {
     display: inline;
     font-style: normal;
