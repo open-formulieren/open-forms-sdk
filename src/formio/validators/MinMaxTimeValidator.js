@@ -37,8 +37,9 @@ const validateTimeBoundaries = (minBoundary, maxBoundary, timeValue) => {
 const MinMaxTimeValidator = {
   key: 'validate.timeMinMax',
   message(component) {
-    const minTime = moment(component.component.minTime || '00:00:00', 'HH:mm:ss').format('HH:mm');
-    const maxTime = moment(component.component.maxTime || '23:59:59', 'HH:mm:ss').format('HH:mm');
+    const validate = component.component?.validate || {};
+    const minTime = moment(validate?.minTime || '00:00:00', 'HH:mm:ss').format('HH:mm');
+    const maxTime = moment(validate?.maxTime || '23:59:59', 'HH:mm:ss').format('HH:mm');
 
     let errorMessage = component.component.errors?.invalid_time || 'invalid_time';
     const errorKeys = component?.openForms?.validationErrorContext?.minMaxTimeValidatorErrorKeys;
@@ -65,9 +66,10 @@ const MinMaxTimeValidator = {
   check(component, setting, value) {
     if (!value) return true;
 
+    const validate = component.component?.validate || {};
     const {isValid, errorKeys} = validateTimeBoundaries(
-      component.component.minTime,
-      component.component.maxTime,
+      validate?.minTime,
+      validate?.maxTime,
       value
     );
 

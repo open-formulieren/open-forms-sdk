@@ -2,6 +2,11 @@
 SDK Changelog
 =============
 
+1.6.0 (2023-10-??)
+==================
+
+.. warning:: SDK 1.6.0 requires at least version 2.4.0 of the Open Formulieren API.
+
 1.6.0-alpha.0 (2023-10-02)
 ==========================
 

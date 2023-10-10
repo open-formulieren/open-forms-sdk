@@ -12,8 +12,8 @@ Formio.use(OpenFormsModule);
 describe('Time Component', () => {
   test('Time component with min/max time validation', done => {
     let formJSON = _.cloneDeep(timeForm);
-    formJSON.components[0].minTime = '09:00:00';
-    formJSON.components[0].maxTime = '17:00:00';
+    formJSON.components[0].validate.minTime = '09:00:00';
+    formJSON.components[0].validate.maxTime = '17:00:00';
 
     const validValues = ['09:00:00', '10:30:00', '11:11:11'];
 
@@ -84,7 +84,7 @@ describe('Time Component', () => {
 
   test('Time component with only min time validation', done => {
     let formJSON = _.cloneDeep(timeForm);
-    formJSON.components[0].minTime = '09:00:00';
+    formJSON.components[0].validate.minTime = '09:00:00';
 
     const validValues = ['17:00:00'];
 
@@ -123,7 +123,7 @@ describe('Time Component', () => {
 
   test('Time component with only max time validation', done => {
     let formJSON = _.cloneDeep(timeForm);
-    formJSON.components[0].maxTime = '09:00:00';
+    formJSON.components[0].validate.maxTime = '09:00:00';
 
     const validValues = ['08:00:00'];
 
@@ -162,8 +162,8 @@ describe('Time Component', () => {
 
   test('Time component with min time boundary larger than max time boundary', done => {
     let formJSON = _.cloneDeep(timeForm);
-    formJSON.components[0].maxTime = '01:00:00';
-    formJSON.components[0].minTime = '08:00:00';
+    formJSON.components[0].validate.maxTime = '01:00:00';
+    formJSON.components[0].validate.minTime = '08:00:00';
 
     const validValues = ['09:00:00', '00:30:00'];
 
@@ -209,8 +209,8 @@ describe('Time Component', () => {
       minTime: 'Custom error! Min time {{ minTime }}',
       maxTime: 'Custom error! max time {{ maxTime }}',
     };
-    formJSON.components[0].maxTime = '13:00:00';
-    formJSON.components[0].minTime = '12:00:00';
+    formJSON.components[0].validate.maxTime = '13:00:00';
+    formJSON.components[0].validate.minTime = '12:00:00';
 
     const element = document.createElement('div');
 
@@ -240,8 +240,8 @@ describe('Time Component', () => {
       minTime: 'Custom error! Min time {{ minTime }}',
       maxTime: 'Custom error! max time {{ maxTime }}',
     };
-    formJSON.components[0].maxTime = '01:00:00'; // One o'clock in the night of the next day
-    formJSON.components[0].minTime = '08:00:00';
+    formJSON.components[0].validate.maxTime = '01:00:00'; // One o'clock in the night of the next day
+    formJSON.components[0].validate.minTime = '08:00:00';
 
     const element = document.createElement('div');
 
@@ -271,7 +271,7 @@ describe('Time Component', () => {
       minTime: 'Custom error! Min time {{ minTime }}',
       maxTime: 'Custom error! max time {{ maxTime }}',
     };
-    formJSON.components[0].minTime = '13:00:00';
+    formJSON.components[0].validate.minTime = '13:00:00';
 
     const element = document.createElement('div');
 
@@ -301,7 +301,7 @@ describe('Time Component', () => {
       minTime: 'Custom error! Min time {{ minTime }}',
       maxTime: 'Custom error! Max time {{ maxTime }}',
     };
-    formJSON.components[0].maxTime = '13:00:00';
+    formJSON.components[0].validate.maxTime = '13:00:00';
 
     const element = document.createElement('div');
 
@@ -329,7 +329,7 @@ describe('Time Component', () => {
     formJSON.components[0].errors = {
       invalid_time: '',
     };
-    formJSON.components[0].maxTime = '13:00:00';
+    formJSON.components[0].validate.maxTime = '13:00:00';
 
     const element = document.createElement('div');
 
