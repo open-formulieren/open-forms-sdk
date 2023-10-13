@@ -1,3 +1,4 @@
+import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {FieldArray, Form, Formik} from 'formik';
 import produce from 'immer';
 import PropTypes from 'prop-types';
@@ -8,7 +9,6 @@ import {useNavigate} from 'react-router-dom';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import Button from 'components/Button';
 import {CardTitle} from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -79,9 +79,8 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
 
             {supportsMultipleProducts && (
               <div className={getBEMClassName('editgrid__add-button')}>
-                <Button
-                  type="button"
-                  variant="primary"
+                <UtrechtButton
+                  appearance="primary-action-button"
                   onClick={withValidate(() => arrayHelpers.push({productId: '', amount: 1}))}
                 >
                   <FAIcon icon="plus" />
@@ -89,7 +88,7 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
                     description="Appointments: add additional product/service button text"
                     defaultMessage="Add another product"
                   />
-                </Button>
+                </UtrechtButton>
               </div>
             )}
           </div>
@@ -134,12 +133,12 @@ const ProductWrapper = ({index, numProducts, onRemove, children}) => {
       {numProducts > 1 && (
         <Toolbar modifiers={['reverse']}>
           <ToolbarList>
-            <Button type="button" variant="danger" onClick={onRemove}>
+            <UtrechtButton appearance="primary-action-button" hint="danger" onClick={onRemove}>
               <FormattedMessage
                 description="Appointments: remove product/service button text"
                 defaultMessage="Remove"
               />
-            </Button>
+            </UtrechtButton>
           </ToolbarList>
         </Toolbar>
       )}

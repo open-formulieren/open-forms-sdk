@@ -1,3 +1,4 @@
+import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
@@ -5,7 +6,6 @@ import {useTimeout, useTimeoutFn} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
-import Button from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 import Link from 'components/Link';
@@ -148,9 +148,9 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
       </ErrorMessage>
       <Toolbar modifiers={['bottom', 'reverse']}>
         <ToolbarList>
-          <Button
+          <UtrechtButton
             type="submit"
-            variant="primary"
+            appearance="primary-action-button"
             onClick={async event => {
               event.preventDefault();
               await apiCall(`${baseUrl}ping`);
@@ -160,7 +160,7 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
               description="Extend session button (in modal)"
               defaultMessage="Extend"
             />
-          </Button>
+          </UtrechtButton>
         </ToolbarList>
       </Toolbar>
     </Modal>

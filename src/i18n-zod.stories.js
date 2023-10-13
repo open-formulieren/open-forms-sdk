@@ -1,11 +1,11 @@
 import {userEvent, within} from '@storybook/testing-library';
 import {ButtonGroup} from '@utrecht/component-library-react';
+import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import Button from 'components/Button';
 import {EmailField, TextField} from 'components/forms';
 import useZodErrorMap from 'hooks/useZodErrorMap';
 
@@ -105,9 +105,9 @@ const AccessibleErrorsExample = ({onSubmit}) => {
           <TextField name="name" label={labels.name} />
           <EmailField name="email" label={labels.email} />
           <ButtonGroup style={{justifyContent: 'flex-end'}}>
-            <Button type="submit" variant="primary">
+            <UtrechtButton type="submit" appearance="primary-action-button">
               Submit
-            </Button>
+            </UtrechtButton>
           </ButtonGroup>
         </div>
       </Form>
