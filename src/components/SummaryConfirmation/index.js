@@ -1,8 +1,11 @@
+import {
+  Button as UtrechtButton,
+  LinkButton as UtrechtLinkButton,
+} from '@utrecht/component-library-react';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import Button from 'components/Button';
 import {Literal} from 'components/Literal';
 import StatementCheckboxes from 'components/StatementCheckboxes';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -36,22 +39,22 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
           {!!onPrevPage && (
-            <Button variant="anchor" component="a" onClick={onPrevPage}>
+            <UtrechtLinkButton onClick={onPrevPage} appearance="subtle-button">
               <Literal name="previousText" />
-            </Button>
+            </UtrechtLinkButton>
           )}
         </ToolbarList>
         <ToolbarList>
           {canSubmit ? (
-            <Button
+            <UtrechtButton
               type="submit"
-              variant="primary"
+              appearance="primary-action-button"
               name="confirm"
               disabled={submitDisabled}
               onDisabledClick={() => setShowStatementWarnings(true)}
             >
               <Literal name="confirmText" />
-            </Button>
+            </UtrechtButton>
           ) : null}
         </ToolbarList>
       </Toolbar>

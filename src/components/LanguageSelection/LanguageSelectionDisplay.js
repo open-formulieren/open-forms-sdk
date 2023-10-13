@@ -1,8 +1,6 @@
-import {ButtonGroup, Heading} from '@utrecht/component-library-react';
+import {ButtonGroup, Heading, LinkButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import {Fragment} from 'react';
-
-import Button from 'components/Button';
 
 const Spacer = () => <span aria-hidden="true">{'|'}</span>;
 
@@ -14,9 +12,7 @@ const LanguageSelectionDisplay = ({heading, headingLevel, headingId, items, onLa
     <ButtonGroup>
       {items.map(({current, label, lang, textContent}, i, a) => (
         <Fragment key={lang}>
-          <Button
-            variant="anchor"
-            component="button"
+          <LinkButton
             pressed={current}
             lang={lang}
             aria-label={label}
@@ -24,7 +20,7 @@ const LanguageSelectionDisplay = ({heading, headingLevel, headingId, items, onLa
             inline
           >
             {textContent}
-          </Button>
+          </LinkButton>
           {i + 1 < a.length ? <Spacer /> : null}
         </Fragment>
       ))}
