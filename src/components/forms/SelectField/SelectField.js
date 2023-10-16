@@ -55,6 +55,25 @@ const SelectField = ({
     [autoSelectOnlyOption, isSingle, value, JSON.stringify(options), setValue, valueProperty]
   );
 
+  // Taken from snippet posted in react-select issue:
+  // https://github.com/JedWatson/react-select/issues/3562#issuecomment-518841754
+  const handleKeyDown = evt => {
+    switch (evt.key) {
+      case 'Home':
+        evt.preventDefault();
+        if (evt.shiftKey) evt.target.selectionStart = 0;
+        else evt.target.setSelectionRange(0, 0);
+        break;
+      case 'End':
+        evt.preventDefault();
+        const len = evt.target.value.length;
+        if (evt.shiftKey) evt.target.selectionEnd = len;
+        else evt.target.setSelectionRange(len, len);
+        break;
+      // no default
+    }
+  };
+
   return (
     <Wrapper>
       <FormField invalid={invalid} className="utrecht-form-field--openforms">
@@ -105,6 +124,7 @@ const SelectField = ({
               defaultMessage="No results found"
             />
           )}
+          onKeyDown={handleKeyDown}
           {...props}
           onChange={newValue => {
             const isSingle = !Array.isArray(newValue);
