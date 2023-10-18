@@ -134,6 +134,16 @@ submodule:
 git submodule update --init
 ```
 
+Pull the additional dev dependencies:
+
+```bash
+cd design-tokens
+yarn install
+cd ..
+yarn install
+yarn start
+```
+
 Please avoid using sass-variables for design-tokens. The preferred approach is to use the CSS
 variables resulting from the design tokens build.
 
