@@ -59,8 +59,11 @@ const CosignSummary = ({
     event.preventDefault();
 
     const cosignEndpoint = new URL(`/api/v2/submissions/${submission.id}/cosign`, submission.url);
+
+    // privacy consent is not always enabled via the admin so we have to check if it is otherwise
+    // a value for privacyPolicyAccepted variable should be provided
     const response = await post(cosignEndpoint.href, {
-      privacyPolicyAccepted: privacyInfo.policyAccepted,
+      privacyPolicyAccepted: privacyInfo.policyAccepted || false,
     });
 
     removeSubmissionId();
