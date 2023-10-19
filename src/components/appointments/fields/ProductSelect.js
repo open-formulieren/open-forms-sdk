@@ -56,7 +56,8 @@ const ProductSelect = ({name, selectedProducts}) => {
   const {value} = getFieldProps(name);
   const getOptions = useCallback(
     async () => await getProducts(baseUrl, selectedProducts, value),
-    [baseUrl, selectedProducts, value]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [baseUrl, JSON.stringify(selectedProducts), value]
   );
   return (
     <AsyncSelectField
