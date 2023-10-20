@@ -70,7 +70,7 @@ const LocationAndTimeStepFields = () => {
   return (
     // TODO: don't do inline style
     <Form style={{width: '100%'}}>
-      <div>
+      <div className="openforms-form-field-container">
         <LocationSelect products={products} onChange={onFieldChange} />
         <DateSelect products={products} onChange={onFieldChange} />
         <TimeSelect products={products} />

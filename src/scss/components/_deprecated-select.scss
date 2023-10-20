@@ -11,8 +11,7 @@ $select-background-color: var(--of-select-background-color, $color-white);
 
 // Styling for the choicejs widget for the select component
 // Overwriting styles found here: https://github.com/Choices-js/Choices/blob/master/src/styles/choices.scss
-// FIXME: check impact of form-control removal
-.#{prefix(form-control--select)} {
+[ref='component'] > .utrecht-form-field.utrecht-form-field--select {
   $control-height: $grid-row-height;
   $list-hpadding: $grid-margin-2;
   $list-vpadding: $grid-margin-1;

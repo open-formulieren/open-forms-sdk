@@ -119,9 +119,11 @@ const ContactDetailsStep = ({navigateTo = null}) => {
           {({isValid, dirty}) => (
             // TODO: don't do inline style
             <Form style={{width: '100%'}}>
-              {components.map(component => (
-                <FormioComponent key={component.key} component={component} />
-              ))}
+              <div className="openforms-form-field-container">
+                {components.map(component => (
+                  <FormioComponent key={component.key} component={component} />
+                ))}
+              </div>
 
               <SubmitRow
                 canSubmit={Boolean(!loading && validationSchema)}
