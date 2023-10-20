@@ -1,4 +1,5 @@
 import {userEvent, within} from '@storybook/testing-library';
+import {ButtonGroup} from '@utrecht/component-library-react';
 import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';
 import {z} from 'zod';
@@ -102,14 +103,11 @@ const AccessibleErrorsExample = ({onSubmit}) => {
       <Form>
         <TextField name="name" label={labels.name} />
         <EmailField name="email" label={labels.email} />
-        <div
-          className="openforms-form-control"
-          style={{display: 'flex', justifyContent: 'flex-end'}}
-        >
+        <ButtonGroup style={{justifyContent: 'flex-end'}}>
           <Button type="submit" variant="primary">
             Submit
           </Button>
-        </div>
+        </ButtonGroup>
       </Form>
     </Formik>
   );

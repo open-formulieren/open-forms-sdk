@@ -1,3 +1,4 @@
+import {expect} from '@storybook/jest';
 import {userEvent, within} from '@storybook/testing-library';
 
 import {withUtrechtDocument} from 'story-utils/decorators';
@@ -14,6 +15,7 @@ export default {
         type: 'textfield',
         key: 'textfield',
         label: 'Required text field',
+        description: 'Text field description',
         validate: {
           required: true,
           pattern: '^\\d+',
@@ -39,6 +41,12 @@ export default {
         customClass: 'info',
       },
       {
+        type: 'textfield',
+        key: 'hiddenTextfield',
+        label: 'Hidden text field',
+        hidden: true,
+      },
+      {
         label: 'Submit',
         showValidations: false,
         key: 'submit1',
@@ -54,6 +62,17 @@ export default {
   },
   parameters: {
     controls: {sort: 'requiredFirst'},
+  },
+};
+
+export const Pristine = {
+  render: MultipleFormioComponents,
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.queryByText('Required text field')).toBeVisible();
+    expect(canvas.queryByText('Hidden text field')).not.toBeInTheDocument();
   },
 };
 
