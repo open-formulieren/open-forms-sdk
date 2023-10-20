@@ -1,5 +1,6 @@
+<!-- form fields which are grouped in a fieldset -->
 {% if (ctx.component.type === 'radio' || ctx.component.type === 'selectboxes') { %}
-  <div class="utrecht-form-fieldset">
+  <div class="utrecht-form-fieldset utrecht-form-fieldset--openforms">
     <fieldset
       class="utrecht-form-fieldset__fieldset utrecht-form-fieldset--html-fieldset"
       {% if (ctx.component.type === 'radio') { %}role="radiogroup"{% } %}
@@ -29,27 +30,45 @@
         </div>
       {% } %}
 
+      <div
+        ref="messageContainer"
+        class="utrecht-form-field-description utrecht-form-field-description--invalid utrecht-form-field-description--openforms-errors"
+        role="alert"
+        aria-describedby="{{ctx.id}}"></div>
+
     </fieldset>
   </div>
 
-{% } else { %}
-  <div class="utrecht-form-field utrecht-form-field--{{ctx.component.type}} utrecht-form-field--openforms">
-  {% if (!ctx.label.hidden && ctx.label.labelPosition !== 'bottom') { %}
-    {{ ctx.labelMarkup }}
-  {% } %}
-
-  {% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required) { %}
-    <label class="utrecht-form-label utrecht-form-label--openforms-required {{ctx.label.className}}"></label>
-  {% } %}
+<!-- layout/container fields -->
+{% } else if (ctx.component.type === 'form') { %}
 
   {{ctx.element}}
 
-  {% if (!ctx.label.hidden && ctx.label.labelPosition === 'bottom') { %}
-    {{ ctx.labelMarkup }}
-  {% } %}
+<!-- leaf nodes -->
+{% } else { %}
+  <div class="utrecht-form-field utrecht-form-field--{{ctx.component.type}} utrecht-form-field--openforms">
+    {% if (!ctx.label.hidden && ctx.label.labelPosition !== 'bottom') { %}
+      {{ ctx.labelMarkup }}
+    {% } %}
 
-  {% if (ctx.component.description) { %}
-    <div class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext">{{ctx.component.description}}</div>
-  {% } %}
+    {% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required) { %}
+      <label class="utrecht-form-label utrecht-form-label--openforms-required {{ctx.label.className}}"></label>
+    {% } %}
+
+    {{ctx.element}}
+
+    {% if (!ctx.label.hidden && ctx.label.labelPosition === 'bottom') { %}
+      {{ ctx.labelMarkup }}
+    {% } %}
+
+    {% if (ctx.component.description) { %}
+      <div class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext">{{ctx.component.description}}</div>
+    {% } %}
+
+    <div
+      ref="messageContainer"
+      class="utrecht-form-field-description utrecht-form-field-description--invalid utrecht-form-field-description--openforms-errors"
+      role="alert"
+      aria-describedby="{{ctx.id}}"></div>
   </div>
 {% } %}

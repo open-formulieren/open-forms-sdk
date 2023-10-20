@@ -11,6 +11,7 @@ we don't have strict BEM naming here.
 @import '../mixins/prefix';
 @import '../mixins/bootstrap';
 
+// FIXME: these class names are gone -> find different selector
 .#{prefix(form-control--file)} {
   @include body;
   @include anchor.extend-utrecht-link;

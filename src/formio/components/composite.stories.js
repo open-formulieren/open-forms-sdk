@@ -41,6 +41,24 @@ export default {
         customClass: 'info',
       },
       {
+        type: 'fieldset',
+        key: 'fieldset',
+        label: 'Fieldset label',
+        hideHeader: true,
+        components: [
+          {
+            type: 'checkbox',
+            key: 'checkbox',
+            label: 'Checkbox',
+          },
+          {
+            type: 'textfield',
+            key: 'nestedTextfield',
+            label: 'Nested text field',
+          },
+        ],
+      },
+      {
         type: 'textfield',
         key: 'hiddenTextfield',
         label: 'Hidden text field',

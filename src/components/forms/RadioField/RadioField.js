@@ -10,7 +10,7 @@ import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {HelpText, ValidationErrors, Wrapper} from 'components/forms';
+import {HelpText, ValidationErrors} from 'components/forms';
 import {LabelContent} from 'components/forms/Label';
 
 /**
@@ -36,43 +36,41 @@ export const RadioField = ({
   const invalid = touched && !!error;
   const descriptionid = `${id}-description`;
   return (
-    <Wrapper>
-      <Fieldset
-        className="utrecht-form-fieldset--openforms"
-        disabled={disabled}
-        invalid={invalid}
-        role="radiogroup"
-        aria-describedby={description ? descriptionid : undefined}
-      >
-        <FieldsetLegend className="utrecht-form-field__label">
-          <LabelContent disabled={disabled} isRequired={isRequired}>
-            {label}
-          </LabelContent>
-        </FieldsetLegend>
+    <Fieldset
+      className="utrecht-form-fieldset--openforms"
+      disabled={disabled}
+      invalid={invalid}
+      role="radiogroup"
+      aria-describedby={description ? descriptionid : undefined}
+    >
+      <FieldsetLegend className="utrecht-form-field__label">
+        <LabelContent disabled={disabled} isRequired={isRequired}>
+          {label}
+        </LabelContent>
+      </FieldsetLegend>
 
-        {options.map(({value: optionValue, label: optionLabel}, index) => (
-          <FormField key={optionValue} type="radio" className="utrecht-form-field--openforms">
-            <Field
-              as={RadioButton}
-              type="radio"
-              className="utrecht-form-field__input"
-              id={`${id}-opt-${index}`}
-              name={name}
-              value={optionValue}
-              {...inputProps}
-            />
-            <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
-              <FormLabel htmlFor={`${id}-opt-${index}`} disabled={disabled} type="radio">
-                {optionLabel}
-              </FormLabel>
-            </Paragraph>
-          </FormField>
-        ))}
+      {options.map(({value: optionValue, label: optionLabel}, index) => (
+        <FormField key={optionValue} type="radio" className="utrecht-form-field--openforms">
+          <Field
+            as={RadioButton}
+            type="radio"
+            className="utrecht-form-field__input"
+            id={`${id}-opt-${index}`}
+            name={name}
+            value={optionValue}
+            {...inputProps}
+          />
+          <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
+            <FormLabel htmlFor={`${id}-opt-${index}`} disabled={disabled} type="radio">
+              {optionLabel}
+            </FormLabel>
+          </Paragraph>
+        </FormField>
+      ))}
 
-        <HelpText id={descriptionid}>{description}</HelpText>
-        {touched && <ValidationErrors error={error} />}
-      </Fieldset>
-    </Wrapper>
+      <HelpText id={descriptionid}>{description}</HelpText>
+      {touched && <ValidationErrors error={error} />}
+    </Fieldset>
   );
 };
 

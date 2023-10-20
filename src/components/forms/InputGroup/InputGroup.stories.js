@@ -1,7 +1,7 @@
 import {FormField, FormLabel, Textbox} from '@utrecht/component-library-react';
 import {Field} from 'formik';
 
-import {SelectField, TextField, Wrapper} from 'components/forms';
+import {SelectField, TextField} from 'components/forms';
 import {FormikDecorator} from 'story-utils/decorators';
 
 import {InputGroup, InputGroupItem} from './InputGroup';
@@ -42,27 +42,25 @@ export const Basic = {
 
 export const InLargerForm = {
   render: args => (
-    <>
+    <div className="openforms-form-field-container">
       <TextField name="before" label="First field" />
 
-      <Wrapper>
-        <FormField type="text" className="utrecht-form-field--openforms">
-          <InputGroup {...args}>
-            <InputGroupItem>
-              <FormLabel htmlFor="sub1" className="openforms-input-group__label">
-                Sub 1
-              </FormLabel>
-              <Field as={Textbox} name="inputGroup[0]" id="sub1" />
-            </InputGroupItem>
-            <InputGroupItem>
-              <FormLabel htmlFor="sub2" className="openforms-input-group__label">
-                Sub 2
-              </FormLabel>
-              <Field as={Textbox} name="inputGroup[1]" id="sub2" />
-            </InputGroupItem>
-          </InputGroup>
-        </FormField>
-      </Wrapper>
+      <FormField type="text" className="utrecht-form-field--openforms">
+        <InputGroup {...args}>
+          <InputGroupItem>
+            <FormLabel htmlFor="sub1" className="openforms-input-group__label">
+              Sub 1
+            </FormLabel>
+            <Field as={Textbox} name="inputGroup[0]" id="sub1" />
+          </InputGroupItem>
+          <InputGroupItem>
+            <FormLabel htmlFor="sub2" className="openforms-input-group__label">
+              Sub 2
+            </FormLabel>
+            <Field as={Textbox} name="inputGroup[1]" id="sub2" />
+          </InputGroupItem>
+        </InputGroup>
+      </FormField>
 
       <SelectField
         name="after"
@@ -72,7 +70,7 @@ export const InLargerForm = {
         ]}
         label="Last field"
       />
-    </>
+    </div>
   ),
   args: {
     label: 'Group related inputs',

@@ -7,7 +7,7 @@ import React, {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
 
-import {HelpText, Label, ValidationErrors, Wrapper} from 'components/forms';
+import {HelpText, Label, ValidationErrors} from 'components/forms';
 
 const SelectField = ({
   name,
@@ -75,72 +75,70 @@ const SelectField = ({
   };
 
   return (
-    <Wrapper>
-      <FormField invalid={invalid} className="utrecht-form-field--openforms">
-        <Label id={id} isRequired={isRequired} disabled={disabled}>
-          {label}
-        </Label>
-        <Field
-          name={name}
-          component={Select}
-          inputId={id}
-          classNames={{
-            control: state =>
-              classNames('utrecht-select', 'utrecht-select--openforms', {
-                'utrecht-select--focus': state.isFocused,
-                'utrecht-select--focus-visible': state.isFocused,
-                'utrecht-select--disabled': disabled,
-                'utrecht-select--invalid': invalid,
-                'utrecht-select--required': isRequired,
-              }),
-            menu: () => 'rs-menu',
-            option: state =>
-              classNames('rs-menu__option', {
-                'rs-menu__option--focus': state.isFocused,
-                'rs-menu__option--visible-focus': state.isFocused,
-              }),
-            singleValue: () => 'rs-value rs-value--single',
-            multiValue: () => 'rs-value rs-value--multi',
-            noOptionsMessage: () => 'rs-no-options',
-          }}
-          styles={{
-            control: (baseStyles, state) => {
-              return omit(baseStyles, 'outline');
-            },
-          }}
-          unstyled
-          options={options}
-          getOptionValue={opt => opt[valueProperty]}
-          isDisabled={disabled}
-          loadingMessage={() => (
-            <FormattedMessage
-              description="(Async) select options loading message"
-              defaultMessage="Loading..."
-            />
-          )}
-          noOptionsMessage={() => (
-            <FormattedMessage
-              description="Select 'no options' message"
-              defaultMessage="No results found"
-            />
-          )}
-          onKeyDown={handleKeyDown}
-          {...props}
-          onChange={newValue => {
-            const isSingle = !Array.isArray(newValue);
-            const normalized = isSingle ? [newValue] : newValue;
-            const rawValues = normalized.map(val => val?.[valueProperty] ?? null);
-            const rawValue = isSingle ? rawValues[0] : rawValues;
-            setValue(rawValue, validateOnChange);
-            onChange?.({target: {name, value: rawValue}});
-          }}
-          value={value}
-          onBlur={() => setTouched(true)}
-        />
-        <HelpText>{description}</HelpText>
-        {touched && <ValidationErrors error={error} />}
-      </FormField>
-    </Wrapper>
+    <FormField invalid={invalid} className="utrecht-form-field--openforms">
+      <Label id={id} isRequired={isRequired} disabled={disabled}>
+        {label}
+      </Label>
+      <Field
+        name={name}
+        component={Select}
+        inputId={id}
+        classNames={{
+          control: state =>
+            classNames('utrecht-select', 'utrecht-select--openforms', {
+              'utrecht-select--focus': state.isFocused,
+              'utrecht-select--focus-visible': state.isFocused,
+              'utrecht-select--disabled': disabled,
+              'utrecht-select--invalid': invalid,
+              'utrecht-select--required': isRequired,
+            }),
+          menu: () => 'rs-menu',
+          option: state =>
+            classNames('rs-menu__option', {
+              'rs-menu__option--focus': state.isFocused,
+              'rs-menu__option--visible-focus': state.isFocused,
+            }),
+          singleValue: () => 'rs-value rs-value--single',
+          multiValue: () => 'rs-value rs-value--multi',
+          noOptionsMessage: () => 'rs-no-options',
+        }}
+        styles={{
+          control: (baseStyles, state) => {
+            return omit(baseStyles, 'outline');
+          },
+        }}
+        unstyled
+        options={options}
+        getOptionValue={opt => opt[valueProperty]}
+        isDisabled={disabled}
+        loadingMessage={() => (
+          <FormattedMessage
+            description="(Async) select options loading message"
+            defaultMessage="Loading..."
+          />
+        )}
+        noOptionsMessage={() => (
+          <FormattedMessage
+            description="Select 'no options' message"
+            defaultMessage="No results found"
+          />
+        )}
+        onKeyDown={handleKeyDown}
+        {...props}
+        onChange={newValue => {
+          const isSingle = !Array.isArray(newValue);
+          const normalized = isSingle ? [newValue] : newValue;
+          const rawValues = normalized.map(val => val?.[valueProperty] ?? null);
+          const rawValue = isSingle ? rawValues[0] : rawValues;
+          setValue(rawValue, validateOnChange);
+          onChange?.({target: {name, value: rawValue}});
+        }}
+        value={value}
+        onBlur={() => setTouched(true)}
+      />
+      <HelpText>{description}</HelpText>
+      {touched && <ValidationErrors error={error} />}
+    </FormField>
   );
 };
 
