@@ -1,31 +1,41 @@
 @use 'microscope-sass/lib/bem';
 @use './anchor';
 
-@import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/typography';
 
 @import '../mixins/prefix';
 
-// the html div doesn't get it's own class name, but it is part of the form-control--content
-// component
+$formio-content-variants: 'error', 'warning', 'success', 'info';
 
-.#{prefix(form-control)} {
-  @include bem.modifier('content') {
-    &:not(:first-child) {
-      @include responsive(
-        $properties: margin-top,
-        $value-mobile: $grid-margin-3,
-        $value-tablet: $grid-margin-4
-      );
-      padding-top: 0 !important;
-    }
+@mixin formio-content-variant($variant) {
+  border-inline-start-color: var(
+    --of-formio-content-#{$variant}-border-inline-start-color,
+    var(--of-color-#{$variant})
+  );
+  border-inline-start-style: var(--of-formio-content-#{$variant}-border-inline-start-style, solid);
+  border-inline-start-width: var(--of-formio-content-#{$variant}-border-inline-start-width, 4px);
+  padding-inline-start: var(--of-formio-content-#{$variant}-padding-inline-start, 16px);
+}
 
-    [ref='html'] {
-      @include wysiwyg;
-      @include body;
-      @include body--big;
-      @include anchor.extend-utrecht-link;
-      width: 100%;
+// See src/formio/components/Content.js
+.openforms-formio-content {
+  // apply all wysiwyg styling
+  // TODO: parametrize this with design tokens -> check with NL DS how to approach this
+  @include wysiwyg;
+  @include body;
+  @include body--big;
+
+  // Below this line is okay and in line with NL DS principles
+  @include anchor.extend-utrecht-link;
+  inline-size: var(--of-formio-content-inline-size, 100%);
+  max-inline-size: var(
+    --of-formio-content-max-inline-size,
+    var(--utrecht-form-field-max-inline-size)
+  );
+
+  @each $variant in $formio-content-variants {
+    @include bem.modifier($variant) {
+      @include formio-content-variant($variant);
     }
   }
 }
