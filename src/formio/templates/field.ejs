@@ -8,7 +8,7 @@
     >
 
       <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend utrecht-form-field__label">
-        <span class="utrecht-form-label{% if (ctx.component.validate.required){%} utrecht-form-label--openforms-required{%}%}">
+        <span class="utrecht-form-label{% if (ctx.component.validate.required && ctx.requiredFieldsWithAsterisk){%} utrecht-form-label--openforms-required{%}%}">
           {{ ctx.t(ctx.component.label, { _userInput: true }) }}
           {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
             {{ ctx.t('(optional)') }}
@@ -51,7 +51,7 @@
       {{ ctx.labelMarkup }}
     {% } %}
 
-    {% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required) { %}
+    {% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required && ctx.requiredFieldsWithAsterisk) { %}
       <label class="utrecht-form-label utrecht-form-label--openforms-required {{ctx.label.className}}"></label>
     {% } %}
 

@@ -25,6 +25,12 @@
   }
 }
 
+// we handle the required fields through `.utrecht-form-label--openforms-required`, so
+// disable default formio styles
+.field-required:after {
+  all: revert;
+}
+
 .#{prefix(form-control)} {
   .#{prefix(body)} {
     display: block;
@@ -32,14 +38,6 @@
     &--inline {
       display: inline-block;
       margin-block-start: 0;
-    }
-  }
-
-  &--no-asterisks {
-    .required-field:after,
-    .utrecht-form-label.utrecht-form-label--openforms-required:after {
-      // Override the asterisk
-      content: '' !important;
     }
   }
 

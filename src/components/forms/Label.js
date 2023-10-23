@@ -13,7 +13,7 @@ export const LabelContent = ({id, disabled = false, isRequired = false, type, ch
       htmlFor={id}
       disabled={disabled}
       className={classNames({
-        'utrecht-form-label--openforms-required': isRequired,
+        'utrecht-form-label--openforms-required': isRequired && requiredFieldsWithAsterisk,
         [`utrecht-form-label--${type}`]: type,
       })}
     >
