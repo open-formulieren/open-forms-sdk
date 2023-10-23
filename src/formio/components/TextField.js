@@ -91,7 +91,7 @@ class TextField extends Formio.Components.components.textfield {
 
   fieldLogic(data, row) {
     const changed = super.fieldLogic(data, row);
-    this.handleSettingLocationData(data);
+    this.handleSettingLocationData(row);
     return changed;
   }
 }
