@@ -12,6 +12,8 @@ import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useFormContext from 'hooks/useFormContext';
 
+import DisabledClickableButtonWrapper from './DisabledClickableButtonWrapper';
+
 const isSubmitEnabled = (statementsInfo = [], statementsValues) => {
   return statementsInfo.every(info => {
     if (!info.validate.required) return true;
@@ -46,15 +48,20 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
         </ToolbarList>
         <ToolbarList>
           {canSubmit ? (
-            <UtrechtButton
-              type="submit"
-              appearance="primary-action-button"
-              name="confirm"
+            <DisabledClickableButtonWrapper
               disabled={submitDisabled}
               onDisabledClick={() => setShowStatementWarnings(true)}
             >
-              <Literal name="confirmText" />
-            </UtrechtButton>
+              <UtrechtButton
+                type="submit"
+                appearance="primary-action-button"
+                name="confirm"
+                disabled={submitDisabled}
+                aria-disabled={submitDisabled}
+              >
+                <Literal name="confirmText" />
+              </UtrechtButton>
+            </DisabledClickableButtonWrapper>
           ) : null}
         </ToolbarList>
       </Toolbar>
