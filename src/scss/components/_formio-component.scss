@@ -1,4 +1,3 @@
-@use 'microscope-sass/lib/bem';
 @use '@utrecht/components/form-field/css/mixin' as form-field;
 @use '@utrecht/components/form-fieldset/css/mixin' as form-fieldset;
 
@@ -8,7 +7,7 @@
 
 // These styles are required because form.io doesn't re-render with new classnames,
 // instead it looks up the component ref and then adds the validation error classnames.
-// The (direct) child inside this node are the utrecht components that need to gain
+// The (direct) child inside this node is the utrecht component that need to get
 // the validation-error styles, so we use sass extend and include to achieve that.
 [ref='component'] {
   &.has-error,
@@ -29,25 +28,4 @@
 // disable default formio styles
 .field-required:after {
   all: revert;
-}
-
-.#{prefix(form-control)} {
-  .#{prefix(body)} {
-    display: block;
-
-    &--inline {
-      display: inline-block;
-      margin-block-start: 0;
-    }
-  }
-
-  .group {
-    display: flex;
-    align-items: center;
-  }
-
-  // Overwriting Formio style
-  .control-label--hidden {
-    position: static !important;
-  }
 }
