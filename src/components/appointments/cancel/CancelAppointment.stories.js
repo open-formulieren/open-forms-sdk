@@ -1,3 +1,5 @@
+import {expect} from '@storybook/jest';
+import {userEvent, within} from '@storybook/testing-library';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import Card from 'components/Card';
@@ -63,5 +65,12 @@ export const WithBackendValidationErrors = {
     msw: {
       handlers: [mockAppointmentCancelErrorPost],
     },
+  },
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole('button'));
+    expect(await canvas.findByText('Invalid e-mail for the submission.')).toBeVisible();
   },
 };

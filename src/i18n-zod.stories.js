@@ -101,13 +101,15 @@ const AccessibleErrorsExample = ({onSubmit}) => {
       validationSchema={toFormikValidationSchema(schema, {errorMap})}
     >
       <Form>
-        <TextField name="name" label={labels.name} />
-        <EmailField name="email" label={labels.email} />
-        <ButtonGroup style={{justifyContent: 'flex-end'}}>
-          <Button type="submit" variant="primary">
-            Submit
-          </Button>
-        </ButtonGroup>
+        <div className="openforms-form-field-container">
+          <TextField name="name" label={labels.name} />
+          <EmailField name="email" label={labels.email} />
+          <ButtonGroup style={{justifyContent: 'flex-end'}}>
+            <Button type="submit" variant="primary">
+              Submit
+            </Button>
+          </ButtonGroup>
+        </div>
       </Form>
     </Formik>
   );
