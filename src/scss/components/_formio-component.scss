@@ -1,0 +1,31 @@
+@use '@utrecht/components/form-field/css/mixin' as form-field;
+@use '@utrecht/components/form-fieldset/css/mixin' as form-fieldset;
+
+@import '~microscope-sass/lib/typography';
+
+@import '../mixins/prefix';
+
+// These styles are required because form.io doesn't re-render with new classnames,
+// instead it looks up the component ref and then adds the validation error classnames.
+// The (direct) child inside this node is the utrecht component that need to get
+// the validation-error styles, so we use sass extend and include to achieve that.
+[ref='component'] {
+  &.has-error,
+  &.formio-error-wrapper {
+    > .utrecht-form-field {
+      @extend .utrecht-form-field--invalid;
+      @include form-field.utrecht-form-field--invalid;
+    }
+
+    > .utrecht-form-fieldset {
+      @extend .utrecht-form-fieldset--invalid;
+      @include form-fieldset.utrecht-form-fieldset--invalid;
+    }
+  }
+}
+
+// we handle the required fields through `.utrecht-form-label--openforms-required`, so
+// disable default formio styles
+.field-required:after {
+  all: revert;
+}

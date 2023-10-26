@@ -27,10 +27,11 @@
 @import './scss/components/card';
 @import './scss/components/content';
 @import './scss/components/errors';
-@import './scss/components/form-control';
+@import './scss/components/formio-component';
 @import './scss/components/help-text';
 @import './scss/components/image';
 @import './scss/components/form-field';
+@import './scss/components/form-field-container';
 @import './scss/components/radio-field'; // must come after form-field due to some OF-specific overrides
 @import './scss/components/input';
 @import './scss/components/label';

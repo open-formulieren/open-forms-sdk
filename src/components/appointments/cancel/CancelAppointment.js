@@ -92,35 +92,37 @@ const CancelAppointment = () => {
               </ErrorMessage>
             )}
 
-            <Body modifiers={['big']}>
-              <FormattedMessage
-                description="Appointment cancellation body text"
-                defaultMessage={`You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill
+            <div className="openforms-form-field-container">
+              <Body modifiers={['big']}>
+                <FormattedMessage
+                  description="Appointment cancellation body text"
+                  defaultMessage={`You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill
 out your email address for verification purposes.`}
-                values={{
-                  date: <FormattedDate value={time} day="numeric" month="long" />,
-                  time: <FormattedDate value={time} hour="numeric" minute="numeric" />,
-                  b: chunks => <strong>{chunks}</strong>,
-                }}
-              />
-            </Body>
+                  values={{
+                    date: <FormattedDate value={time} day="numeric" month="long" />,
+                    time: <FormattedDate value={time} hour="numeric" minute="numeric" />,
+                    b: chunks => <strong>{chunks}</strong>,
+                  }}
+                />
+              </Body>
 
-            <EmailField
-              name="email"
-              isRequired
-              label={
-                <FormattedMessage
-                  description="Appointment cancellation email field label"
-                  defaultMessage="Your email address"
-                />
-              }
-              description={
-                <FormattedMessage
-                  description="Cancel appointment email field help text"
-                  defaultMessage="The email address where you received the appointment confirmation email."
-                />
-              }
-            />
+              <EmailField
+                name="email"
+                isRequired
+                label={
+                  <FormattedMessage
+                    description="Appointment cancellation email field label"
+                    defaultMessage="Your email address"
+                  />
+                }
+                description={
+                  <FormattedMessage
+                    description="Cancel appointment email field help text"
+                    defaultMessage="The email address where you received the appointment confirmation email."
+                  />
+                }
+              />
+            </div>
 
             <Toolbar modifiers={['bottom', 'reverse']}>
               <ToolbarList>

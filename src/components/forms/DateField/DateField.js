@@ -3,7 +3,7 @@ import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {HelpText, ValidationErrors, Wrapper} from 'components/forms';
+import {HelpText, ValidationErrors} from 'components/forms';
 
 import DateInputGroup from './DateInputGroup';
 import DatePicker from './DatePicker';
@@ -66,24 +66,22 @@ const DateField = ({
   }
 
   return (
-    <Wrapper>
-      <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
-        <Field
-          as={Widget}
-          name={name}
-          label={label}
-          isRequired={isRequired}
-          id={id}
-          disabled={disabled}
-          invalid={invalid}
-          extraOnChange={onChange}
-          {...fieldProps}
-          {...props}
-        />
-        <HelpText>{description}</HelpText>
-        {touched && <ValidationErrors error={error} />}
-      </FormField>
-    </Wrapper>
+    <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
+      <Field
+        as={Widget}
+        name={name}
+        label={label}
+        isRequired={isRequired}
+        id={id}
+        disabled={disabled}
+        invalid={invalid}
+        extraOnChange={onChange}
+        {...fieldProps}
+        {...props}
+      />
+      <HelpText>{description}</HelpText>
+      {touched && <ValidationErrors error={error} />}
+    </FormField>
   );
 };
 

@@ -17,7 +17,7 @@ const Product = ({namePrefix, index, selectedProducts}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
   return (
-    <div>
+    <div className="openforms-form-field-container">
       <ProductSelect
         name={`${namePrefix}[${index}].productId`}
         selectedProducts={selectedProducts}

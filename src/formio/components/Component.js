@@ -5,6 +5,19 @@ import {applyPrefix} from '../utils';
 
 const FormioComponent = Formio.Components.components.component;
 
+/**
+ * Build class names for 'component' component.
+ *
+ * @deprecated: these class names are no longer rendered in the templates and the CSS
+ *   overrides are removed.
+ *
+ * @todo: check impact of --$type variants in styles
+ * @todo: check impact of --multiple in styles
+ * @todo: check if any other components than content use customClass
+ * @todo: check how the --required modifier is/was used (asterisk?) & take into account
+ *   the string 'true' values!
+ * @todo: check impact of --hidden modifier
+ */
 function getClassName() {
   return classNames(
     applyPrefix('form-control'),

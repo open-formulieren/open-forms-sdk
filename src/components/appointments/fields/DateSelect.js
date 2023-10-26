@@ -58,14 +58,12 @@ const DateSelect = ({products, onChange}) => {
   if (!loading && location && availableDates && !availableDates.length) {
     // TODO: add label? make this a polite warning/error/alert?
     return (
-      <div className="openforms-form-control">
-        <Paragraph>
-          <FormattedMessage
-            description="Appoinments: message shown for no available dates at all"
-            defaultMessage="Sorry, there are no available dates for your appointment. Please try again later."
-          />
-        </Paragraph>
-      </div>
+      <Paragraph>
+        <FormattedMessage
+          description="Appoinments: message shown for no available dates at all"
+          defaultMessage="Sorry, there are no available dates for your appointment. Please try again later."
+        />
+      </Paragraph>
     );
   }
 

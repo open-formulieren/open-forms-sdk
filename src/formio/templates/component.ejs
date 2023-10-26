@@ -1,10 +1,5 @@
-<div
-    id="{{ctx.id}}"
-    class="{{ctx.classes}} {% if (!ctx.requiredFieldsWithAsterisk) { %}{{ctx.ofPrefix}}form-control--no-asterisks{% } %}"
-    {% if (ctx.styles) { %} styles="{{ctx.styles}}"{% } %} ref="component"
->
+<div id="{{ctx.id}}" class="" {% if (ctx.styles) { %} styles="{{ctx.styles}}"{% } %} ref="component">
     {% if (ctx.visible) { %}
       {{ctx.children}}
     {% } %}
-  <div ref="messageContainer" class="utrecht-form-field-description utrecht-form-field-description--invalid utrecht-form-field-description--openforms-errors" role="alert" aria-describedby="{{ctx.id}}"></div>
 </div>
