@@ -61,11 +61,39 @@ export const UtrechtDanger = {
   },
 };
 
-export const UtrechtLinkLooksLikeButton = {
+export const UtrechtLinkLooksLikeDefaultButton = {
   render,
   args: {
-    label: 'Button-like link',
+    label: 'Default',
     component: UtrechtButtonLink,
+  },
+};
+
+export const UtrechtLinkLooksLikePrimaryButton = {
+  render,
+  args: {
+    label: 'Primary',
+    component: UtrechtButtonLink,
+    appearance: 'primary-action-button',
+  },
+};
+
+export const UtrechtLinkLooksLikeSecondaryButton = {
+  render,
+  args: {
+    label: 'Secondary',
+    component: UtrechtButtonLink,
+    appearance: 'secondary-action-button',
+  },
+};
+
+export const UtrechtLinkLooksLikeDangerButton = {
+  render,
+  args: {
+    label: 'Danger',
+    component: UtrechtButtonLink,
+    appearance: 'primary-action-button',
+    hint: 'danger',
   },
 };
 
