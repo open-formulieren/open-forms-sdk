@@ -7,7 +7,7 @@ class Button extends Formio.Components.components.button {
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
-    info.attr.class = ['utrecht-button'].join(' ');
+    info.attr.class = 'utrecht-button utrecht-button--secondary-action';
     return info;
   }
 }
