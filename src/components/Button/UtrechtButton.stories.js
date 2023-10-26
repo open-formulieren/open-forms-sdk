@@ -3,8 +3,11 @@ import {
   ButtonLink as UtrechtButtonLink,
   LinkButton as UtrechtLinkButton,
 } from '@utrecht/component-library-react';
+import React from 'react';
 
 import FAIcon from '../FAIcon';
+import Loader from '../Loader';
+import ButtonWithAccessibleDisabledState from './ButtonWithAccessibleDisabledState';
 
 export default {
   title: 'Pure React components / Utrecht Button',
@@ -97,7 +100,8 @@ export const UtrechtButtonDisabled = {
   render,
   args: {
     label: 'Disabled',
-    component: UtrechtButton,
+    component: ButtonWithAccessibleDisabledState,
+    appearance: 'primary-action-button',
     disabled: true,
   },
 };

@@ -8,15 +8,17 @@
 .utrecht-button {
   @include bem.modifier('primary-action') {
     &:not(.utrecht-button--danger) {
-      // --utrecht-button-primary-action-focus-border-color is used to make the borders invisible,
-      // and the rules below to make the right/bottom borders visible
-      border-right-color: var(--of-button-primary-color-border);
-      border-bottom-color: var(--of-button-primary-color-border);
+      &:not(.utrecht-button--disabled) {
+        // --utrecht-button-primary-action-focus-border-color is used to make the borders invisible,
+        // and the rules below to make the right/bottom borders visible
+        border-right-color: var(--of-button-primary-color-border);
+        border-bottom-color: var(--of-button-primary-color-border);
 
-      &:hover,
-      &:focus-visible {
-        border-right-color: var(--of-button-primary-focus-color-border) !important;
-        border-bottom-color: var(--of-button-primary-focus-color-border) !important;
+        &:hover,
+        &:focus-visible {
+          border-right-color: var(--of-button-primary-focus-color-border) !important;
+          border-bottom-color: var(--of-button-primary-focus-color-border) !important;
+        }
       }
     }
   }
@@ -49,7 +51,18 @@
 }
 
 .utrecht-button-link {
-  @include bem.modifier('html-a') {
+  @include bem.modifier('primary-action') {
+    border-right-color: var(--of-button-primary-color-border);
+    border-bottom-color: var(--of-button-primary-color-border);
+
+    &:hover,
+    &:focus-visible {
+      border-right-color: var(--of-button-primary-focus-color-border) !important;
+      border-bottom-color: var(--of-button-primary-focus-color-border) !important;
+    }
+  }
+
+  @include bem.modifier('secondary-action') {
     border-right-color: var(--of-button-active-color-border);
     border-bottom-color: var(--of-button-active-color-border);
 

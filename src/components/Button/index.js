@@ -1,4 +1,3 @@
-import {default as Button} from './Button';
+import ButtonWithAccessibleDisabledState from './ButtonWithAccessibleDisabledState';
 
-export default Button;
-export {VARIANTS} from './Button';
+export {ButtonWithAccessibleDisabledState};

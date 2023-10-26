@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {ButtonWithAccessibleDisabledState} from 'components/Button';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
@@ -50,18 +51,18 @@ const ButtonsToolbar = ({
               </UtrechtButton>
             )}
             {showSubmitButton && (
-              <UtrechtButton
+              <ButtonWithAccessibleDisabledState
                 type="submit"
                 appearance="primary-action-button"
                 name="next"
                 disabled={!canSubmitStep}
               >
                 {isCheckingLogic ? (
-                  <Loader modifiers={['centered', 'only-child', 'small']} />
+                  <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
                 ) : (
                   <Literal name="nextText" />
                 )}
-              </UtrechtButton>
+              </ButtonWithAccessibleDisabledState>
             )}
           </ToolbarList>
         </Toolbar>

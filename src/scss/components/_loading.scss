@@ -34,6 +34,13 @@
     }
   }
 
+  @include bem.modifier('gray') {
+    @include bem.element('spinner') {
+      border-color: var(--utrecht-button-disabled-color);
+      border-top-color: var(--utrecht-button-disabled-background-color);
+    }
+  }
+
   @include bem.element('spinner') {
     border: 6px solid var(--of-color-secondary);
     border-top: 6px solid var(--of-color-primary);
