@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ButtonWithAccessibleDisabledState} from 'components/Button';
+import {OFButton} from 'components/Button';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
@@ -51,7 +51,7 @@ const ButtonsToolbar = ({
               </UtrechtButton>
             )}
             {showSubmitButton && (
-              <ButtonWithAccessibleDisabledState
+              <OFButton
                 type="submit"
                 appearance="primary-action-button"
                 name="next"
@@ -62,7 +62,7 @@ const ButtonsToolbar = ({
                 ) : (
                   <Literal name="nextText" />
                 )}
-              </ButtonWithAccessibleDisabledState>
+              </OFButton>
             )}
           </ToolbarList>
         </Toolbar>

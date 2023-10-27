@@ -7,7 +7,7 @@ import React from 'react';
 
 import FAIcon from '../FAIcon';
 import Loader from '../Loader';
-import ButtonWithAccessibleDisabledState from './ButtonWithAccessibleDisabledState';
+import OFButton from './OFButton';
 
 export default {
   title: 'Pure React components / Utrecht Button',
@@ -128,7 +128,7 @@ export const UtrechtButtonDisabled = {
   render,
   args: {
     label: 'Disabled',
-    component: ButtonWithAccessibleDisabledState,
+    component: OFButton,
     appearance: 'primary-action-button',
     disabled: true,
   },

@@ -1,3 +1,3 @@
-import ButtonWithAccessibleDisabledState from './ButtonWithAccessibleDisabledState';
+import OFButton from './OFButton';
 
-export {ButtonWithAccessibleDisabledState};
+export {OFButton};

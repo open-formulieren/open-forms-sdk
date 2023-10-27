@@ -1,18 +1,14 @@
-import {
-  Button as UtrechtButton,
-  LinkButton as UtrechtLinkButton,
-} from '@utrecht/component-library-react';
+import {LinkButton as UtrechtLinkButton} from '@utrecht/component-library-react';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {OFButton} from 'components/Button';
 import {Literal} from 'components/Literal';
 import StatementCheckboxes from 'components/StatementCheckboxes';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useFormContext from 'hooks/useFormContext';
-
-import DisabledClickableButtonWrapper from './DisabledClickableButtonWrapper';
 
 const isSubmitEnabled = (statementsInfo = [], statementsValues) => {
   return statementsInfo.every(info => {
@@ -48,20 +44,15 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
         </ToolbarList>
         <ToolbarList>
           {canSubmit ? (
-            <DisabledClickableButtonWrapper
+            <OFButton
+              type="submit"
+              appearance="primary-action-button"
+              name="confirm"
               disabled={submitDisabled}
-              onDisabledClick={() => setShowStatementWarnings(true)}
+              onClick={() => setShowStatementWarnings(true)}
             >
-              <UtrechtButton
-                type="submit"
-                appearance="primary-action-button"
-                name="confirm"
-                disabled={submitDisabled}
-                aria-disabled={submitDisabled}
-              >
-                <Literal name="confirmText" />
-              </UtrechtButton>
-            </DisabledClickableButtonWrapper>
+              <Literal name="confirmText" />
+            </OFButton>
           ) : null}
         </ToolbarList>
       </Toolbar>
