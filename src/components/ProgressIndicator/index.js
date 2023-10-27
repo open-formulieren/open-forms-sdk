@@ -86,7 +86,7 @@ const ProgressIndicator = ({
       to: step.href || `/stap/${step.slug}`,
       formDefinition: step.formDefinition,
       isCompleted: submission ? submission.steps[index].completed : false,
-      isApplicable: submission ? submission.steps[index].isApplicable : true,
+      isApplicable: submission ? submission.steps[index].isApplicable : step.isApplicable ?? true,
       isCurrent: step.slug === stepSlug,
       canNavigateTo: canNavigateToStep(index),
     }));
@@ -131,6 +131,7 @@ ProgressIndicator.propTypes = {
       slug: PropTypes.string.isRequired,
       href: PropTypes.string,
       formDefinition: PropTypes.string.isRequired,
+      isApplicable: PropTypes.bool,
     })
   ).isRequired,
   submissionAllowed: PropTypes.oneOf(Object.values(SUBMISSION_ALLOWED)).isRequired,

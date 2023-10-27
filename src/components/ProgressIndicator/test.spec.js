@@ -1,3 +1,4 @@
+import {screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -137,7 +138,7 @@ it('Form landing page, no submission present in session', () => {
   expect(progressIndicatorSteps.textContent).toContain('Bevestiging');
 });
 
-it('Progress indicator does NOT let you navigate between steps if you are NOT a form designer', () => {
+it('Progress indicator does NOT let you navigate between steps if you are NOT a form designer', async () => {
   const steps = [
     {
       slug: 'step-1',
@@ -189,20 +190,13 @@ it('Progress indicator does NOT let you navigate between steps if you are NOT a 
     );
   });
 
-  const step1 = container.getElementsByTagName('li')[1]; // Item 0 is the 'inloggen' step
-  const step3 = container.getElementsByTagName('li')[3];
-
-  const link = step1.getElementsByTagName('a')[0];
-  const disabledLink = step3.getElementsByTagName('span')[0];
-
-  expect(link).not.toBeUndefined();
-  expect(disabledLink).not.toBeUndefined();
-
-  expect(link.textContent).toContain('Step 1');
-  expect(disabledLink.textContent).toContain('Step 3');
+  expect(await screen.findByRole('link', {name: 'Step 1'})).toHaveTextContent('Step 1');
+  // span element: `generic` role:
+  expect(await screen.findByRole('generic', {name: 'Step 3'})).toHaveTextContent('Step 3');
+  expect(await screen.queryByRole('link', {name: 'Step 3'})).toBeNull();
 });
 
-it('Progress indicator DOES let you navigate between steps if you ARE a form designer', () => {
+it('Progress indicator DOES let you navigate between steps if you ARE a form designer', async () => {
   const steps = [
     {
       slug: 'step-1',
@@ -254,20 +248,11 @@ it('Progress indicator DOES let you navigate between steps if you ARE a form des
     );
   });
 
-  const step1 = container.getElementsByTagName('li')[1]; // Item 0 is the 'inloggen' step
-  const step3 = container.getElementsByTagName('li')[3];
-
-  const link1 = step1.getElementsByTagName('a')[0];
-  const link2 = step3.getElementsByTagName('a')[0];
-
-  expect(link1).not.toBeUndefined();
-  expect(link2).not.toBeUndefined();
-
-  expect(link1.textContent).toContain('Step 1');
-  expect(link2.textContent).toContain('Step 3');
+  expect(await screen.findByRole('link', {name: 'Step 1'})).toHaveTextContent('Step 1');
+  expect(await screen.findByRole('link', {name: 'Step 3'})).toHaveTextContent('Step 3');
 });
 
-it('Progress indicator DOES let you navigate between steps if you are NOT a form designer but a step is NOT applicable', () => {
+it('Progress indicator DOES let you navigate between steps if you are NOT a form designer but a step is NOT applicable', async () => {
   const steps = [
     {
       slug: 'step-1',
@@ -319,15 +304,11 @@ it('Progress indicator DOES let you navigate between steps if you are NOT a form
     );
   });
 
-  const step3 = container.getElementsByTagName('li')[3];
-
-  const link = step3.getElementsByTagName('a')[0];
-
-  expect(link).not.toBeUndefined();
-  expect(link.textContent).toContain('Step 3');
+  expect(await screen.findByRole('link', {name: 'Step 3'})).toBeDefined();
+  expect(await screen.findByRole('link', {name: 'Step 3'})).toHaveTextContent('Step 3');
 });
 
-it('Progress indicator does NOT let you navigate to the overview if a step is blocked', () => {
+it('Progress indicator does NOT let you navigate to the overview if a step is blocked', async () => {
   const steps = [
     {
       slug: 'step-1',
@@ -371,4 +352,48 @@ it('Progress indicator does NOT let you navigate to the overview if a step is bl
   expect(overviewLink).toBeUndefined();
   expect(overviewSpan).not.toBeUndefined();
   expect(overviewSpan.textContent).toContain('Overzicht');
+});
+
+it('Progress indicator takes into account default step applicability when on start page', async () => {
+  const steps = [
+    {
+      slug: 'step-1',
+      formDefinition: 'Step 1',
+      index: 0,
+      isApplicable: true,
+      url: 'http://test.nl/api/v1/forms/111/steps/111',
+      uuid: '111',
+      completed: true,
+      canSubmit: false,
+    },
+    {
+      slug: 'step-2',
+      formDefinition: 'Step 2',
+      index: 0,
+      isApplicable: false,
+      url: 'http://test.nl/api/v1/forms/111/steps/111',
+      uuid: '222',
+      completed: true,
+      canSubmit: false,
+    },
+  ];
+
+  IsFormDesigner.getValue.mockReturnValue(true);
+
+  act(() => {
+    root.render(
+      <MemoryRouter initialEntries={['/']}>
+        <IntlProvider locale="nl" messages={messagesNL}>
+          <ProgressIndicator
+            title="Test Name"
+            steps={steps}
+            submissionAllowed={SUBMISSION_ALLOWED.yes}
+          />
+        </IntlProvider>
+      </MemoryRouter>
+    );
+  });
+
+  expect(await screen.findByRole('link', {name: 'Step 1'})).toBeDefined();
+  expect(await screen.queryByRole('link', {name: 'Step 2'})).toBeNull();
 });
