@@ -682,6 +682,14 @@ const FormStep = ({
     dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: true}});
   };
 
+  const getPreviousPageHref = () => {
+    const currentStepIndex = form.steps.indexOf(formStep);
+    const previousStepIndex = findPreviousApplicableStep(currentStepIndex, submission);
+
+    const prevStepSlug = form.steps[previousStepIndex]?.slug;
+    return prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+  };
+
   /**
    * Handler to navigate back to the previous step or page
    * @param {PointerEvent} event
@@ -695,11 +703,7 @@ const FormStep = ({
 
     dispatch({type: 'NAVIGATE'});
 
-    const currentStepIndex = form.steps.indexOf(formStep);
-    const previousStepIndex = findPreviousApplicableStep(currentStepIndex, submission);
-
-    const prevStepSlug = form.steps[previousStepIndex]?.slug;
-    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+    const navigateTo = getPreviousPageHref();
     navigate(navigateTo);
   };
 
@@ -870,6 +874,7 @@ const FormStep = ({
                 onFormSave={onFormSave}
                 onLogout={onLogout}
                 onNavigatePrevPage={onPrevPage}
+                previousPage={getPreviousPageHref()}
               />
             </form>
           </>
