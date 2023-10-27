@@ -41,14 +41,14 @@ const ButtonsToolbar = ({
             {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
             need to be its own prop */}
             {canSuspendForm && (
-              <UtrechtButton
+              <OFButton
                 type="button"
                 appearance="secondary-action-button"
                 name="save"
                 onClick={onFormSave}
               >
                 <Literal name="saveText" />
-              </UtrechtButton>
+              </OFButton>
             )}
             {showSubmitButton && (
               <OFButton

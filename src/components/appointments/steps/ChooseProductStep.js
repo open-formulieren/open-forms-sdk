@@ -1,4 +1,3 @@
-import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {FieldArray, Form, Formik} from 'formik';
 import produce from 'immer';
 import PropTypes from 'prop-types';
@@ -9,6 +8,7 @@ import {useNavigate} from 'react-router-dom';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
+import {OFButton} from 'components/Button';
 import {CardTitle} from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -79,7 +79,7 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
 
             {supportsMultipleProducts && (
               <div className={getBEMClassName('editgrid__add-button')}>
-                <UtrechtButton
+                <OFButton
                   appearance="primary-action-button"
                   onClick={withValidate(() => arrayHelpers.push({productId: '', amount: 1}))}
                 >
@@ -88,7 +88,7 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
                     description="Appointments: add additional product/service button text"
                     defaultMessage="Add another product"
                   />
-                </UtrechtButton>
+                </OFButton>
               </div>
             )}
           </div>
@@ -133,12 +133,12 @@ const ProductWrapper = ({index, numProducts, onRemove, children}) => {
       {numProducts > 1 && (
         <Toolbar modifiers={['reverse']}>
           <ToolbarList>
-            <UtrechtButton appearance="primary-action-button" hint="danger" onClick={onRemove}>
+            <OFButton appearance="primary-action-button" hint="danger" onClick={onRemove}>
               <FormattedMessage
                 description="Appointments: remove product/service button text"
                 defaultMessage="Remove"
               />
-            </UtrechtButton>
+            </OFButton>
           </ToolbarList>
         </Toolbar>
       )}

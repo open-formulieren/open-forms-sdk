@@ -209,14 +209,9 @@ export const MultipleRequiredStatements = {
         const submitButton = canvas.getByRole('button', {name: 'Confirm'});
         expect(submitButton).toHaveAttribute('aria-disabled', 'true');
 
-        const submitButtonWrapper = submitButton.parentElement;
-        expect(submitButtonWrapper.classList).toContain(
-          'openforms-disabled-clickable-button__clickable-wrap'
-        );
-
         // Clicking 'submit' without checking the statements results in all the warnings being
         // displayed
-        await userEvent.click(submitButtonWrapper);
+        await userEvent.click(submitButton);
         expect(
           await canvas.findByText('U moet akkoord gaan met het privacybeleid om door te gaan')
         ).toBeVisible();
@@ -249,8 +244,7 @@ export const MultipleRequiredStatements = {
           canvas.queryByText('U moet akkoord gaan met het privacybeleid om door te gaan')
         ).toBeNull();
 
-        const updatedSubmitButton = canvas.getByRole('button', {name: 'Confirm'});
-        expect(updatedSubmitButton).toHaveAttribute('aria-disabled', 'false');
+        expect(submitButton).toHaveAttribute('aria-disabled', 'false');
       }
     );
   },

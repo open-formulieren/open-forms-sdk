@@ -1,9 +1,9 @@
-import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 
+import {OFButton} from 'components/Button';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Types from 'types';
 
@@ -15,20 +15,20 @@ const ExistingSubmissionOptions = ({form, onFormAbort}) => {
   return (
     <Toolbar modifiers={['column']}>
       <ToolbarList>
-        <UtrechtButton appearance="primary-action-button" onClick={() => navigate(firstStepRoute)}>
+        <OFButton appearance="primary-action-button" onClick={() => navigate(firstStepRoute)}>
           <FormattedMessage
             defaultMessage="Continue existing submission"
             description="Continue existing submission button label"
           />
-        </UtrechtButton>
+        </OFButton>
       </ToolbarList>
       <ToolbarList>
-        <UtrechtButton appearance="primary-action-button" hint="danger" onClick={onFormAbort}>
+        <OFButton appearance="primary-action-button" hint="danger" onClick={onFormAbort}>
           <FormattedMessage
             defaultMessage="Abort existing submission"
             description="Abort existing submission button label"
           />
-        </UtrechtButton>
+        </OFButton>
       </ToolbarList>
     </Toolbar>
   );

@@ -1,50 +1,55 @@
 import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
 
-import * as UtrechtButtonStories from './UtrechtButton.stories';
+import * as OFButtonStories from './OFButton.stories';
 
-<Meta of={UtrechtButtonStories} />
+<Meta of={OFButtonStories} />
 
 # Buttons
 
 ## Variants
 
+The Open Forms button wraps the Utrecht Button to deal with the disabled state. Currently, the
+Utrecht button sets the 'disabled attribute' on the button, but this means that it is not possible
+to tab navigate to it and screen readers will skip it. With our wrapper we set the 'aria-disabled'
+aria attribute instead.
+
 More information on the Utrecht buttons can be found
 [here](https://nl-design-system.github.io/themes/?path=/docs/button--gemeente-utrecht).
 
 <Canvas>
-  <Story of={UtrechtButtonStories.UtrechtDefault} />
-  <Story of={UtrechtButtonStories.UtrechtPrimary} />
-  <Story of={UtrechtButtonStories.UtrechtSecondary} />
-  <Story of={UtrechtButtonStories.UtrechtDanger} />
+  <Story of={OFButtonStories.UtrechtDefault} />
+  <Story of={OFButtonStories.UtrechtPrimary} />
+  <Story of={OFButtonStories.UtrechtSecondary} />
+  <Story of={OFButtonStories.UtrechtDanger} />
 </Canvas>
 
 ### Links that look like buttons
 
 <Canvas>
-  <Story of={UtrechtButtonStories.UtrechtLinkLooksLikeDefaultButton} />
-  <Story of={UtrechtButtonStories.UtrechtLinkLooksLikePrimaryButton} />
-  <Story of={UtrechtButtonStories.UtrechtLinkLooksLikeSecondaryButton} />
+  <Story of={OFButtonStories.UtrechtLinkLooksLikeDefaultButton} />
+  <Story of={OFButtonStories.UtrechtLinkLooksLikePrimaryButton} />
+  <Story of={OFButtonStories.UtrechtLinkLooksLikeSecondaryButton} />
 </Canvas>
 
 ### Button that looks like a link
 
 <Canvas>
-  <Story of={UtrechtButtonStories.UtrechtButtonLooksLikeLink} />
+  <Story of={OFButtonStories.UtrechtButtonLooksLikeLink} />
 </Canvas>
 
 ## Icon buttons
 
 <Canvas>
-  <Story of={UtrechtButtonStories.UtrechtIconButton} />
-  <Story of={UtrechtButtonStories.UtrechtIconButtonDanger} />
+  <Story of={OFButtonStories.UtrechtIconButton} />
+  <Story of={OFButtonStories.UtrechtIconButtonDanger} />
 </Canvas>
 
 ## Disabled state
 
 Passing the `disabled` prop sets the appropriate `aria-disabled` attribute.
 
-<Canvas of={UtrechtButtonStories.UtrechtButtonDisabled} />
+<Canvas of={OFButtonStories.UtrechtButtonDisabled} />
 
 ## Props
 
-<ArgTypes of={UtrechtButtonStories} />
+<ArgTypes of={OFButtonStories} />

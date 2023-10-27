@@ -1,17 +1,15 @@
 import {
-  Button as UtrechtButton,
   ButtonLink as UtrechtButtonLink,
   LinkButton as UtrechtLinkButton,
 } from '@utrecht/component-library-react';
 import React from 'react';
 
 import FAIcon from '../FAIcon';
-import Loader from '../Loader';
 import OFButton from './OFButton';
 
 export default {
-  title: 'Pure React components / Utrecht Button',
-  component: UtrechtButton,
+  title: 'Pure React components / OF Button',
+  component: OFButton,
   argTypes: {
     children: {table: {disable: true}},
   },
@@ -29,7 +27,7 @@ export const UtrechtDefault = {
   render,
   args: {
     label: 'Default',
-    component: UtrechtButton,
+    component: OFButton,
   },
 };
 
@@ -37,7 +35,7 @@ export const UtrechtPrimary = {
   render,
   args: {
     label: 'Primary',
-    component: UtrechtButton,
+    component: OFButton,
     appearance: 'primary-action-button',
   },
 };
@@ -46,7 +44,7 @@ export const UtrechtSecondary = {
   render,
   args: {
     label: 'Secondary',
-    component: UtrechtButton,
+    component: OFButton,
     appearance: 'secondary-action-button',
   },
 };
@@ -55,7 +53,7 @@ export const UtrechtDanger = {
   render,
   args: {
     label: 'Danger',
-    component: UtrechtButton,
+    component: OFButton,
     appearance: 'primary-action-button',
     hint: 'danger',
   },
@@ -109,7 +107,7 @@ export const UtrechtIconButton = {
   render,
   args: {
     label: <FAIcon icon={'pen'} />,
-    component: UtrechtButton,
+    component: OFButton,
     appearance: 'subtle-button',
   },
 };
@@ -118,7 +116,7 @@ export const UtrechtIconButtonDanger = {
   render,
   args: {
     label: <FAIcon icon={'pen'} />,
-    component: UtrechtButton,
+    component: OFButton,
     appearance: 'subtle-button',
     hint: 'danger',
   },

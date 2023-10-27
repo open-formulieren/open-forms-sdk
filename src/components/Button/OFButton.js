@@ -22,7 +22,7 @@ const OFButton = ({disabled, children, ...extraProps}) => {
 };
 
 OFButton.propTypes = {
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   children: PropTypes.node,
 };
 

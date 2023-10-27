@@ -1,4 +1,3 @@
-import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import React, {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
@@ -7,6 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import {ConfigContext} from 'Context';
 import {post} from 'api';
 import Body from 'components/Body';
+import {OFButton} from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -126,12 +126,12 @@ out your email address for verification purposes.`}
 
             <Toolbar modifiers={['bottom', 'reverse']}>
               <ToolbarList>
-                <UtrechtButton type="submit" appearance="primary-action-button">
+                <OFButton type="submit" appearance="primary-action-button">
                   <FormattedMessage
                     description="Cancel appointment submit button"
                     defaultMessage="Cancel appointment"
                   />
-                </UtrechtButton>
+                </OFButton>
               </ToolbarList>
             </Toolbar>
           </Body>

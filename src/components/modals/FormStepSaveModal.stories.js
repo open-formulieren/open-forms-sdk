@@ -1,9 +1,9 @@
 import {useArgs} from '@storybook/client-api';
-import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {rest} from 'msw';
 import React from 'react';
 
 import {BASE_URL} from 'api-mocks';
+import {OFButton} from 'components/Button';
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import {default as FormStepSaveModalComponent} from './FormStepSaveModal';
@@ -49,12 +49,9 @@ export const FormStepSaveModal = {
     const [_, updateArgs] = useArgs();
     return (
       <>
-        <UtrechtButton
-          appearance="primary-action-button"
-          onClick={() => updateArgs({isOpen: true})}
-        >
+        <OFButton appearance="primary-action-button" onClick={() => updateArgs({isOpen: true})}>
           Open Modal
-        </UtrechtButton>
+        </OFButton>
         <FormStepSaveModalComponent
           isOpen={isOpen}
           closeModal={() => {

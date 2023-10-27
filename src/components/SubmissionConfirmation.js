@@ -1,4 +1,3 @@
-import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -7,6 +6,7 @@ import {useAsync} from 'react-use';
 import {post} from 'api';
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
+import {OFButton} from 'components/Button';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FAIcon from 'components/FAIcon';
@@ -175,12 +175,12 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, donwloadPDFT
           <Toolbar modifiers={['reverse']}>
             <ToolbarList>
               <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
-                <UtrechtButton appearance="primary-action-button">
+                <OFButton appearance="primary-action-button">
                   <FormattedMessage
                     description="Back to main website link title"
                     defaultMessage="Return to main website"
                   />
-                </UtrechtButton>
+                </OFButton>
               </Anchor>
             </ToolbarList>
           </Toolbar>
