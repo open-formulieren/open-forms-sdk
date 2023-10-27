@@ -16,6 +16,7 @@
   {{attr}}="{{ctx.input.attr[attr]}}"
   {% } %}
   id="{{ctx.instance.id}}-{{ctx.component.key}}"
+  aria-labelledby="label-{{ctx.instance.id}}-{{ctx.component.key}} {{ctx.instance.id}}-{{ctx.component.key}} suffix-{{ctx.instance.id}}-{{ctx.component.key}}"
 >{{ctx.input.content}}</{{ctx.input.type}}>
 {% if (ctx.component.showCharCount) { %}
 <span class="charcount" ref="charcount"></span>
@@ -24,7 +25,7 @@
 <span class="wordcount" ref="wordcount"></span>
 {% } %}
 {% if (ctx.suffix) { %}
-<span class="{{ctx.ofPrefix}}input-container__affix {{ctx.ofPrefix}}input-container__affix--suffix" ref="suffix">
+<span class="{{ctx.ofPrefix}}input-container__affix {{ctx.ofPrefix}}input-container__affix--suffix" ref="suffix" id="suffix-{{ctx.instance.id}}-{{ctx.component.key}}">
     {% if(ctx.suffix instanceof HTMLElement){ %}
       {{ ctx.t(ctx.suffix.outerHTML) }}
     {% } else{ %}
