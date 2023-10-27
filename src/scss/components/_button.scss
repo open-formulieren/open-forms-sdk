@@ -3,73 +3,10 @@
 @import '@utrecht/components/dist/button/css/index.css';
 @import '@utrecht/components/dist/button-link/css/index.css';
 
-// TODO: can be removed once there are utrecht design tokens for the bottom/right border color
-// issue: https: //github.com/nl-design-system/utrecht/issues/1406
-.utrecht-button {
-  @include bem.modifier('primary-action') {
-    &:not(.utrecht-button--danger) {
-      &:not(.utrecht-button--disabled) {
-        // --utrecht-button-primary-action-focus-border-color is used to make the borders invisible,
-        // and the rules below to make the right/bottom borders visible
-        border-right-color: var(--of-button-primary-color-border);
-        border-bottom-color: var(--of-button-primary-color-border);
-
-        &:hover,
-        &:focus-visible {
-          border-right-color: var(--of-button-primary-focus-color-border) !important;
-          border-bottom-color: var(--of-button-primary-focus-color-border) !important;
-        }
-      }
-    }
-  }
-
-  @include bem.modifier('danger') {
-    &:not(.utrecht-button--subtle) {
-      // --utrecht-button-primary-action-danger-border-color is used to make the borders invisible,
-      // and the rules below to make the right/bottom borders visible
-      border-right-color: var(--of-button-danger-color-border);
-      border-bottom-color: var(--of-button-danger-color-border);
-
-      &:hover,
-      &:focus-visible {
-        border-right-color: var(--of-button-danger-focus-color-border) !important;
-        border-bottom-color: var(--of-button-danger-focus-color-border) !important;
-      }
-    }
-  }
-
-  @include bem.modifier('secondary-action') {
-    border-right-color: var(--of-button-active-color-border);
-    border-bottom-color: var(--of-button-active-color-border);
-
-    &:hover,
-    &:focus-visible {
-      border-right-color: var(--of-button-hover-color-border) !important;
-      border-bottom-color: var(--of-button-hover-color-border) !important;
-    }
-  }
-}
-
-.utrecht-button-link {
-  @include bem.modifier('primary-action') {
-    border-right-color: var(--of-button-primary-color-border);
-    border-bottom-color: var(--of-button-primary-color-border);
-
-    &:hover,
-    &:focus-visible {
-      border-right-color: var(--of-button-primary-focus-color-border) !important;
-      border-bottom-color: var(--of-button-primary-focus-color-border) !important;
-    }
-  }
-
-  @include bem.modifier('secondary-action') {
-    border-right-color: var(--of-button-active-color-border);
-    border-bottom-color: var(--of-button-active-color-border);
-
-    &:hover,
-    &:focus-visible {
-      border-right-color: var(--of-button-hover-color-border) !important;
-      border-bottom-color: var(--of-button-hover-color-border) !important;
-    }
+.openforms-theme {
+  .utrecht-button,
+  .utrecht-button-link {
+    border-block-start-color: transparent !important;
+    border-inline-start-color: transparent !important;
   }
 }
