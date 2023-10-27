@@ -88,7 +88,9 @@ export const TextFieldsWithLocation = {
       await waitFor(async () => {
         expect(canvas.getByLabelText('Street')).toHaveDisplayValue('Keizersgracht');
       });
-      expect(canvas.getByLabelText('City')).toHaveDisplayValue('Amsterdam');
+      await waitFor(async () => {
+        expect(canvas.getByLabelText('City')).toHaveDisplayValue('Amsterdam');
+      });
     });
   },
 };
@@ -158,7 +160,9 @@ export const TextFieldsWithLocationInEditGrid = {
       await waitFor(async () => {
         expect(canvas.getByLabelText('Street')).toHaveDisplayValue('Keizersgracht');
       });
-      expect(canvas.getByLabelText('City')).toHaveDisplayValue('Amsterdam');
+      await waitFor(async () => {
+        expect(canvas.getByLabelText('City')).toHaveDisplayValue('Amsterdam');
+      });
     });
   },
 };
