@@ -2,6 +2,16 @@
 SDK Changelog
 =============
 
+1.4.5 (2023-10-30)
+==================
+
+Periodic bugfix release
+
+* Fixed the width of the progress indicator on mobile devices.
+* [#2656] Fixed the address autofill when the fields are nested in repeating groups.
+* [#3523] Fixed not sending privacy policy information to the backend when the field is
+  not rendered.
+
 1.4.4 (2023-09-29)
 ==================
 
