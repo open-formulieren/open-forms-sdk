@@ -2,6 +2,16 @@
 SDK Changelog
 =============
 
+1.5.4 (2023-10-30)
+==================
+
+Periodic bugfix release
+
+* Fixed the width of the progress indicator on mobile devices.
+* [#3510] Fixed the closest address under the map component being overlaid on next field.
+* [#2656] Fixed the address autofill when the fields are nested in repeating groups.
+* [#546] Fixed excessive amounts of API calls firing in new appointments.
+
 1.5.3 (2023-09-29)
 ==================
 
