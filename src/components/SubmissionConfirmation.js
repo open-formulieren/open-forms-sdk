@@ -6,7 +6,7 @@ import {useAsync} from 'react-use';
 import {post} from 'api';
 import Anchor from 'components/Anchor';
 import Body from 'components/Body';
-import Button from 'components/Button';
+import {OFButton} from 'components/Button';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FAIcon from 'components/FAIcon';
@@ -175,12 +175,12 @@ const SubmissionConfirmation = ({statusUrl, onFailure, onConfirmed, donwloadPDFT
           <Toolbar modifiers={['reverse']}>
             <ToolbarList>
               <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
-                <Button type="button" variant="primary">
+                <OFButton appearance="primary-action-button">
                   <FormattedMessage
                     description="Back to main website link title"
                     defaultMessage="Return to main website"
                   />
-                </Button>
+                </OFButton>
               </Anchor>
             </ToolbarList>
           </Toolbar>

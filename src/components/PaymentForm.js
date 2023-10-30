@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import Button from 'components/Button';
+import {OFButton} from 'components/Button';
 
 const AUTOSUBMIT_AFTER = 5000;
 
@@ -31,9 +31,9 @@ const PaymentForm = ({method, url, data, autoSubmit = true}) => {
   return (
     <form ref={formRef} method={method} action={url}>
       {dataFields}
-      <Button type="submit" variant="primary">
+      <OFButton type="submit" appearance="primary-action-button">
         <FormattedMessage description="Start payment button" defaultMessage="Pay now" />
-      </Button>
+      </OFButton>
     </form>
   );
 };

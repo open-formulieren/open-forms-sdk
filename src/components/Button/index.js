@@ -1,4 +1,3 @@
-import {default as Button} from './Button';
+import OFButton from './OFButton';
 
-export default Button;
-export {VARIANTS} from './Button';
+export {OFButton};

@@ -5,7 +5,7 @@ import {useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import Button from 'components/Button';
+import {OFButton} from 'components/Button';
 import {EmailField, TextField} from 'components/forms';
 import useZodErrorMap from 'hooks/useZodErrorMap';
 
@@ -105,9 +105,9 @@ const AccessibleErrorsExample = ({onSubmit}) => {
           <TextField name="name" label={labels.name} />
           <EmailField name="email" label={labels.email} />
           <ButtonGroup style={{justifyContent: 'flex-end'}}>
-            <Button type="submit" variant="primary">
+            <OFButton type="submit" appearance="primary-action-button">
               Submit
-            </Button>
+            </OFButton>
           </ButtonGroup>
         </div>
       </Form>

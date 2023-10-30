@@ -167,7 +167,8 @@ describe('Create appointment status checking', () => {
       await user.click(checkbox);
     }
     const submitButton = screen.getByRole('button', {name: 'Confirm'});
-    expect(submitButton).not.toHaveAttribute('aria-disabled');
+    expect(submitButton).toHaveAttribute('aria-disabled', 'false');
+
     await user.click(submitButton);
     await screen.findByText(/Processing/);
     // wait for summary page to be rendered again

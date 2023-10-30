@@ -1,7 +1,8 @@
+import {LinkButton as UtrechtLinkButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Button from 'components/Button';
+import {OFButton} from 'components/Button';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
@@ -28,27 +29,37 @@ const ButtonsToolbar = ({
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
             {onNavigatePrevPage && (
-              <Button variant="anchor" onClick={onNavigatePrevPage}>
+              <UtrechtLinkButton onClick={onNavigatePrevPage} appearance="subtle-button">
                 <Literal name="previousText" />
-              </Button>
+              </UtrechtLinkButton>
             )}
           </ToolbarList>
           <ToolbarList>
             {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
             need to be its own prop */}
             {canSuspendForm && (
-              <Button type="button" variant="secondary" name="save" onClick={onFormSave}>
+              <OFButton
+                type="button"
+                appearance="secondary-action-button"
+                name="save"
+                onClick={onFormSave}
+              >
                 <Literal name="saveText" />
-              </Button>
+              </OFButton>
             )}
             {showSubmitButton && (
-              <Button type="submit" variant="primary" name="next" disabled={!canSubmitStep}>
+              <OFButton
+                type="submit"
+                appearance="primary-action-button"
+                name="next"
+                disabled={!canSubmitStep}
+              >
                 {isCheckingLogic ? (
-                  <Loader modifiers={['centered', 'only-child', 'small']} />
+                  <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
                 ) : (
                   <Literal name="nextText" />
                 )}
-              </Button>
+              </OFButton>
             )}
           </ToolbarList>
         </Toolbar>

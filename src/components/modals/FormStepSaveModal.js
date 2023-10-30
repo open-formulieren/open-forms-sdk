@@ -1,6 +1,7 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
+import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
@@ -10,7 +11,6 @@ import {useImmerReducer} from 'use-immer';
 import {ConfigContext} from 'Context';
 import {destroy, post} from 'api';
 import Body from 'components/Body';
-import Button from 'components/Button';
 import ErrorMessage from 'components/ErrorMessage';
 import Loader from 'components/Loader';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -158,12 +158,12 @@ const FormStepSaveModal = ({
 
             <Toolbar modifiers={['bottom', 'reverse']}>
               <ToolbarList>
-                <Button type="submit" variant="primary" disabled={isSaving}>
+                <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
                   <FormattedMessage
                     description="Form save modal submit button"
                     defaultMessage="Continue later"
                   />
-                </Button>
+                </UtrechtButton>
               </ToolbarList>
             </Toolbar>
           </Body>

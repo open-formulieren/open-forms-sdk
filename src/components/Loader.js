@@ -3,7 +3,7 @@ import React from 'react';
 
 import {getBEMClassName} from 'utils';
 
-export const MODIFIERS = ['centered', 'only-child', 'small'];
+export const MODIFIERS = ['centered', 'only-child', 'small', 'gray'];
 
 const Loader = ({modifiers = []}) => {
   const className = getBEMClassName('loading', modifiers);

@@ -243,7 +243,8 @@ export const MultipleRequiredStatements = {
         expect(
           canvas.queryByText('U moet akkoord gaan met het privacybeleid om door te gaan')
         ).toBeNull();
-        expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+
+        expect(submitButton).toHaveAttribute('aria-disabled', 'false');
       }
     );
   },

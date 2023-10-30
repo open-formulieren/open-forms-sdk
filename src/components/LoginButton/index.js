@@ -1,6 +1,7 @@
+import {ButtonLink as UtrechtButtonLink} from '@utrecht/component-library-react';
 import React from 'react';
 
-import Button from 'components/Button';
+import {OFButton} from 'components/Button';
 import FormattedLoginOption from 'types/FormattedLoginOption';
 import {getBEMClassName} from 'utils';
 
@@ -9,19 +10,19 @@ import LoginButtonIcon from './LoginButtonIcon';
 const LoginButton = ({option, ...extra}) => {
   let url = option.url;
   let extraProps = {...extra};
-  let component = 'a';
+  let ButtonComponent = UtrechtButtonLink;
 
   if (!url) {
     url = '#';
     extraProps = {...extraProps, type: 'submit'};
-    component = 'button';
+    ButtonComponent = OFButton;
   }
 
   return (
     <div className={getBEMClassName('login-button')}>
-      <Button variant="primary" component={component} href={url} {...extraProps}>
+      <ButtonComponent href={url} appearance="primary-action-button" {...extraProps}>
         {option.label}
-      </Button>
+      </ButtonComponent>
       <LoginButtonIcon identifier={option.identifier} logo={option.logo} />
     </div>
   );

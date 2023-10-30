@@ -3,8 +3,8 @@ import {rest} from 'msw';
 import React from 'react';
 
 import {BASE_URL} from 'api-mocks';
-import Button from 'components/Button';
-import {ConfigDecorator, DeprecatedRouterDecorator} from 'story-utils/decorators';
+import {OFButton} from 'components/Button';
+import {ConfigDecorator} from 'story-utils/decorators';
 
 import {default as FormStepSaveModalComponent} from './FormStepSaveModal';
 
@@ -49,9 +49,9 @@ export const FormStepSaveModal = {
     const [_, updateArgs] = useArgs();
     return (
       <>
-        <Button variant="primary" onClick={() => updateArgs({isOpen: true})}>
+        <OFButton appearance="primary-action-button" onClick={() => updateArgs({isOpen: true})}>
           Open Modal
-        </Button>
+        </OFButton>
         <FormStepSaveModalComponent
           isOpen={isOpen}
           closeModal={() => {

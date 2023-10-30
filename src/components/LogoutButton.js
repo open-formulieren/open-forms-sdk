@@ -2,16 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import Button from 'components/Button';
+import {OFButton} from 'components/Button';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 
 const LogoutButton = ({onLogout}) => {
   return (
     <Toolbar modifiers={['bottom', 'reverse']}>
       <ToolbarList>
-        <Button variant="danger" onClick={onLogout}>
+        <OFButton appearance="primary-action-button" hint="danger" onClick={onLogout}>
           <FormattedMessage description="Log out button text" defaultMessage="Log out" />
-        </Button>
+        </OFButton>
       </ToolbarList>
     </Toolbar>
   );

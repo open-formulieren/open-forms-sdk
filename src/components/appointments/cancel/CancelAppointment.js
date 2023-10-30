@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import {ConfigContext} from 'Context';
 import {post} from 'api';
 import Body from 'components/Body';
-import Button from 'components/Button';
+import {OFButton} from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/ErrorMessage';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -126,12 +126,12 @@ out your email address for verification purposes.`}
 
             <Toolbar modifiers={['bottom', 'reverse']}>
               <ToolbarList>
-                <Button type="submit" variant="primary">
+                <OFButton type="submit" appearance="primary-action-button">
                   <FormattedMessage
                     description="Cancel appointment submit button"
                     defaultMessage="Cancel appointment"
                   />
-                </Button>
+                </OFButton>
               </ToolbarList>
             </Toolbar>
           </Body>
