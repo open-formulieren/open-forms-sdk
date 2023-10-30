@@ -158,8 +158,11 @@ export const HappyFlow = {
       });
       await timeDropdown.focus();
       await userEvent.keyboard('[ArrowDown]');
-      const timeOption = await canvas.findByText(/[0-2]{2}:00$/);
-      await userEvent.click(timeOption);
+
+      // because of the time change (winter-summer) the regex was simplified,
+      // otherwise the localized time cannot be found and selected
+      const timeOptions = await canvas.findAllByText(/[0-2][0-9]:00$/);
+      await userEvent.click(timeOptions[0]);
     });
 
     await step('Submit the location and time step', async () => {
