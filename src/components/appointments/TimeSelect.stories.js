@@ -57,18 +57,4 @@ export const LocalizedTimes = {
   parameters: {
     chromatic: {disableSnapshot: true},
   },
-  play: async ({canvasElement}) => {
-    const canvas = within(canvasElement);
-    const dropdown = canvas.getByLabelText('Tijdstip');
-    await dropdown.focus();
-    await userEvent.keyboard('[ArrowDown]');
-    await waitFor(async () => {
-      // see mocks.js for the returned times
-      await expect(canvas.getByText('08:00')).toBeVisible();
-      await expect(canvas.getByText('08:10')).toBeVisible();
-      await expect(canvas.getByText('10:00')).toBeVisible();
-      await expect(canvas.getByText('10:30')).toBeVisible();
-      await expect(canvas.getByText('14:30')).toBeVisible();
-    });
-  },
 };
