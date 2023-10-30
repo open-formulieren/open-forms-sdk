@@ -1,7 +1,4 @@
-import {
-  Button as UtrechtButton,
-  LinkButton as UtrechtLinkButton,
-} from '@utrecht/component-library-react';
+import {LinkButton as UtrechtLinkButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
