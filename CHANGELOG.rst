@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+1.3.7 (2023-10-30)
+==================
+
+Periodic bugfix release
+
+* Fixed the width of the progress indicator on mobile devices.
+* [#2656] Fixed the address autofill when the fields are nested in repeating groups.
+
 1.3.6 (2023-09-25)
 ==================
 
