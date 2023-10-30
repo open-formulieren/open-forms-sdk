@@ -15,7 +15,7 @@
               </li>
               {% if (ctx.component.removeRow) { %}
                   <li class="{{ctx.ofPrefix}}toolbar__list-item">
-              <button class="utrecht-button utrecht-button--secondary-action utrecht-button--danger" ref="{{ctx.ref.cancelRow}}">{{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}</button>
+              <button class="utrecht-button utrecht-button--primary-action utrecht-button--danger" ref="{{ctx.ref.cancelRow}}">{{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}</button>
                   </li>
               {% } %}
               </ul>

@@ -14,22 +14,27 @@ In this version, the button component has been refactored to use the Utrecht but
 In order to maintain the same style as in previous versions, the following Utrecht design tokens
 should be set:
 
-* `--utrecht-button-secondary-action-danger-background-color` takes the value of the old `--of-button-danger-bg`
-* `--utrecht-button-secondary-action-danger-color` takes the value of the old `--of-button-danger-fg`
-* `--utrecht-button-subtle-danger-background-color`  takes the value of `--of-color-danger`
-* `--utrecht-button-subtle-danger-hover-background-color` takes the value `--of-color-bg`
-* `--utrecht-button-subtle-danger-active-background-color` takes the value of the old `--of-button-danger-active-bg`
-* `--utrecht-button-disabled-color`. This does not take the value of an old token. For the
-  Open Forms theme this is now `#ffffff`.
-* `--utrecht-button-disabled-background-color`. This does not take the value of an old token,
+* ``--utrecht-button-primary-action-focus-border-color`` has ``#000000`` (black) in the Open Forms
+  theme.
+* ``--utrecht-button-primary-action-danger-focus-border-color`` has ``#000000`` (black) in the
+  Open Forms theme.
+* ``--utrecht-button-secondary-action-danger-background-color`` takes the value of the old ``--of-button-danger-bg``
+* ``--utrecht-button-secondary-action-danger-color`` takes the value of the old ``--of-button-danger-fg``
+* ``--utrecht-button-secondary-action-focus-border-color`` takes the value of the old ``--of-color-focus-border``
+* ``--utrecht-button-subtle-danger-background-color``  takes the value of ``--of-color-danger``
+* ``--utrecht-button-subtle-danger-hover-background-color`` takes the value ``--of-color-bg``
+* ``--utrecht-button-subtle-danger-active-background-color`` takes the value of the old ``--of-button-danger-active-bg``
+* ``--utrecht-button-disabled-color``. This does not take the value of an old token. For the
+  Open Forms theme this is now ``#ffffff``.
+* ``--utrecht-button-disabled-background-color``. This does not take the value of an old token,
   the colour was previously obtained by graying out the primary button. For the Open Forms theme,
-  this is now `#a02017`.
-* `--utrecht-action-disabled-cursor`. This does not take the value of an old token. It controls
+  this is now ``#a02017``.
+* ``--utrecht-action-disabled-cursor``. This does not take the value of an old token. It controls
   the looks of the cursor when hovering a disabled button. For the Open Forms theme, this is now
-  `not-allowed`.
-* `--utrecht-action-submit-cursor`. This does not take the value of an old token. It controls the
+  ``not-allowed``.
+* ``--utrecht-action-submit-cursor``. This does not take the value of an old token. It controls the
   looks of the cursor when hovering over a submit button. For the Open Forms theme, this is now
-  `pointer`.
+  ``pointer``.
 
 
 1.6.0-alpha.0 (2023-10-02)

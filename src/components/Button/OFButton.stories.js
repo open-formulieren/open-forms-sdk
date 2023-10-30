@@ -64,6 +64,7 @@ export const UtrechtLinkLooksLikeDefaultButton = {
   args: {
     label: 'Default',
     component: UtrechtButtonLink,
+    href: '#',
   },
 };
 
@@ -72,6 +73,7 @@ export const UtrechtLinkLooksLikePrimaryButton = {
   args: {
     label: 'Primary',
     component: UtrechtButtonLink,
+    href: '#',
     appearance: 'primary-action-button',
   },
 };
@@ -81,6 +83,7 @@ export const UtrechtLinkLooksLikeSecondaryButton = {
   args: {
     label: 'Secondary',
     component: UtrechtButtonLink,
+    href: '#',
     appearance: 'secondary-action-button',
   },
 };
@@ -90,6 +93,7 @@ export const UtrechtLinkLooksLikeDangerButton = {
   args: {
     label: 'Danger',
     component: UtrechtButtonLink,
+    href: '#',
     appearance: 'primary-action-button',
     hint: 'danger',
   },
