@@ -110,3 +110,28 @@ export const WithValidationErrors = {
     await userEvent.click(canvas.getByRole('button'));
   },
 };
+
+export const WithHiddenComponent = {
+  render: MultipleFormioComponents,
+
+  args: {
+    components: [
+      {
+        type: 'textfield',
+        key: 'textfield1',
+        label: 'Field 1: visible',
+      },
+      {
+        type: 'textfield',
+        key: 'textfield2',
+        label: 'Field 2: hidden',
+        hidden: true,
+      },
+      {
+        type: 'textfield',
+        key: 'textfield3',
+        label: 'Field 3: visible',
+      },
+    ],
+  },
+};

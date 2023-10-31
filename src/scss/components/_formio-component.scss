@@ -1,3 +1,5 @@
+@use 'microscope-sass/lib/bem';
+
 @use '@utrecht/components/form-field/css/mixin' as form-field;
 @use '@utrecht/components/form-fieldset/css/mixin' as form-fieldset;
 
@@ -28,4 +30,13 @@
 // disable default formio styles
 .field-required:after {
   all: revert;
+}
+
+// we only set these class names when the component is (dynamically) hidden, as
+// otherwise the empty div causes flexbox gap to be applied before and after it,
+// messing up the spacing. See https://github.com/open-formulieren/open-forms/issues/3485
+.formio-component {
+  @include bem.modifier('hidden') {
+    display: none;
+  }
 }
