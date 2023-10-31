@@ -1,42 +1,53 @@
-<div class="{{ctx.ofPrefix}}editgrid">
-  <div class="{{ctx.ofPrefix}}editgrid__groups">
-    <ul>
-      {% ctx.rows.forEach(function(row, rowIndex) { %}
-      <div class="{{ctx.ofPrefix}}editgrid__group">
-				{% if (!!ctx.component.groupLabel) { %}<div class="{{ctx.ofPrefix}}editgrid__group-label">{{ ctx.t(ctx.component.groupLabel, { _userInput: true }) }} {{ rowIndex + 1 }}</div>{% } %}
-        <li class="{{ctx.ofPrefix}}editgrid__list" ref="{{ctx.ref.row}}">
-          {{row}}
+<div class="openforms-editgrid">
+  {% if(ctx.rows.length) { %}
+  <div>
+    {% ctx.rows.forEach(function(row, rowIndex) { %}
+      <div class="utrecht-form-fieldset openforms-editgrid__item">
+        <fieldset class="utrecht-form-fieldset__fieldset utrecht-form-fieldset--html-fieldset">
+          {% if (!!ctx.component.groupLabel) { %}
+            <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend openforms-editgrid__item-heading">
+              {{ ctx.t(ctx.component.groupLabel, { _userInput: true }) }} {{ rowIndex + 1 }}
+            </legend>
+          {% } %}
+
+          <div ref="{{ctx.ref.row}}">{{row}}</div>
 
           {% if (ctx.openRows[rowIndex] && !ctx.readOnly) { %}
-          <div class="{{ctx.ofPrefix}}editgrid__group-actions {{ctx.ofPrefix}}toolbar {{ctx.ofPrefix}}toolbar--reverse">
-              <ul class="{{ctx.ofPrefix}}toolbar__list">
-              <li class="{{ctx.ofPrefix}}toolbar__list-item">
-                <button class="utrecht-button utrecht-button--primary-action" ref="{{ctx.ref.saveRow}}">{{ctx.t(ctx.component.saveRow || 'Save', { _userInput: true })}}</button>
-              </li>
+            <p
+              class="utrecht-button-group utrecht-button-group--openforms-editgrid"
+              {% if (ctx.component.removeRow) { %}role="group"{% } %}
+            >
+
+              <button class="utrecht-button utrecht-button--primary-action" ref="{{ctx.ref.saveRow}}">
+                {{ctx.t(ctx.component.saveRow || 'Save', { _userInput: true })}}
+              </button>
+
               {% if (ctx.component.removeRow) { %}
-                  <li class="{{ctx.ofPrefix}}toolbar__list-item">
-              <button class="utrecht-button utrecht-button--primary-action utrecht-button--danger" ref="{{ctx.ref.cancelRow}}">{{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}</button>
-                  </li>
+                <button class="utrecht-button utrecht-button--primary-action utrecht-button--danger" ref="{{ctx.ref.cancelRow}}">
+                  {{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}
+                </button>
               {% } %}
-              </ul>
-          </div>
+            </p>
           {% } %}
 
           <!-- Formio needs a div with class="has-error" with inside a div with class="editgrid-row-error" -->
-          <div class="{{ctx.ofPrefix}}errors has-error">
+          <div class="openforms-errors has-error">
             <div class="editgrid-row-error">{{ctx.errors[rowIndex]}}</div>
           </div>
-        </li>
+
+        </fieldset>
       </div>
-      {% }) %}
-    </ul>
+
+    {% }) %}
   </div>
+  {% } %}
 
   {% if (!ctx.readOnly && ctx.hasAddButton) { %}
-  <div class="{{ctx.ofPrefix}}editgrid__add-button">
-    <button class="utrecht-button utrecht-button--primary-action" ref="{{ctx.ref.addRow}}">
-      <i class="{{ctx.iconClass('plus')}}"></i> {{ctx.t(ctx.component.addAnother || 'Add Another', { _userInput: true })}}
-    </button>
-  </div>
+    <p class="utrecht-button-group">
+      <button class="utrecht-button utrecht-button--primary-action" ref="{{ctx.ref.addRow}}">
+        <i class="{{ctx.iconClass('plus')}}"></i>
+        {{ctx.t(ctx.component.addAnother || 'Add Another', { _userInput: true })}}
+      </button>
+    </p>
   {% } %}
 </div>
