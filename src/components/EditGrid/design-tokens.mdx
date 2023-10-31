@@ -1,0 +1,73 @@
+import ofTokens from '@open-formulieren/design-tokens/dist/tokens';
+import {Meta} from '@storybook/addon-docs';
+import utrechtTokens from '@utrecht/design-tokens/dist/tokens';
+import TokensTable from 'design-token-editor/lib/esm/TokensTable';
+
+<Meta title="Pure React components / EditGrid" name="Design tokens" />
+
+## Available design tokens
+
+**Open Forms specific tokens**
+
+<TokensTable container={ofTokens} limitTo="of.editgrid" autoExpand />
+
+**Utrecht tokens**
+
+Under the hood, the following components & tokens are used & can be leveraged to change the
+appearance of the editgrid component.
+
+- `utrecht.button-group`
+- `utrecht.form-fieldset`
+
+## Updating your theme
+
+Before SDK 1.6, the CSS for edit grid was hardcoded. With 1.6, this is now parametrized, but there
+are no backwards compatible defaults set. To recover the original styles, use the following tokens:
+
+```json
+{
+  "of": {
+    "editgrid": {
+      "line-height": {"value": 1.5},
+      "gap": {"value": "12px"},
+
+      "item": {
+        "gap": {"value": "12px"},
+        "border": {"value": "solid 1px {of.color.border}"},
+        "padding-block-end": {"value": "24px"},
+        "padding-block-start": {"value": "24px"},
+        "padding-inline-end": {"value": "24px"},
+        "padding-inline-start": {"value": "24px"}
+      },
+
+      "item-heading": {
+        "font-family": {"value": "{of.typography.sans-serif.font-family}"},
+        "font-size": {"value": "0.875rem"},
+        "line-height": {"value": "1.2"},
+        "margin-block-end": {"value": "24px"}
+      }
+    }
+  }
+}
+```
+
+or in CSS:
+
+```css
+.your-theme {
+  --of-editgrid-item-border: solid 1px var(--of-color-border);
+  --of-editgrid-item-gap: 12px;
+  --of-editgrid-item-padding-block-end: 24px;
+  --of-editgrid-item-padding-block-start: 24px;
+  --of-editgrid-item-padding-inline-start: 24px;
+  --of-editgrid-item-padding-inline-end: 24px;
+
+  --of-editgrid-item-heading-font-family: var(--of-typography-sans-serif-font-family);
+  --of-editgrid-item-heading-font-size: 0.875rem;
+  --of-editgrid-item-heading-line-height: 1.2;
+  --of-editgrid-item-heading-margin-block-end: 24px;
+
+  --of-editgrid-line-height: 1.5;
+  --of-editgrid-gap: 12p;
+}
+```
