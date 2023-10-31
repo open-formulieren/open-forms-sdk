@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import useQuery from 'hooks/useQuery';
 
 const MAPPING_PARAMS_SERVICE = {

@@ -3,7 +3,7 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import {FormioComponent} from 'components/formio';
 
 import './StatementCheckbox.scss';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Card from 'components/Card';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
 import {LayoutColumn} from 'components/Layout';
 import Loader from 'components/Loader';

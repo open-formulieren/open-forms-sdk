@@ -4,7 +4,7 @@ import {getWorker} from 'msw-storybook-addon';
 import React, {useState} from 'react';
 import {IntlProvider} from 'react-intl';
 
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import {I18NContext} from 'i18n';
 import {ConfigDecorator} from 'story-utils/decorators';
 

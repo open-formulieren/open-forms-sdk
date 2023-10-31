@@ -4,7 +4,7 @@ import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
 import {destroy} from 'api';
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import {CosignSummary} from 'components/Summary';
 import useFormContext from 'hooks/useFormContext';
 

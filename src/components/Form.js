@@ -6,7 +6,7 @@ import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
 import {destroy} from 'api';
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';

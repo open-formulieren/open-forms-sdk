@@ -6,7 +6,7 @@ import {useAsync} from 'react-use';
 import {ConfigContext, SubmissionContext} from 'Context';
 import {get} from 'api';
 import Body from 'components/Body';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
 import LoginOptionsDisplay from 'components/LoginOptions/LoginOptionsDisplay';
 import {getLoginUrl} from 'components/utils';

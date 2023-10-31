@@ -7,7 +7,7 @@ import {useAsync} from 'react-use';
 import {ConfigContext} from 'Context';
 import {post} from 'api';
 import {CardTitle} from 'components/Card';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
 import Literal from 'components/Literal';
 import Loader from 'components/Loader';
