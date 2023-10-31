@@ -1,0 +1,23 @@
+/**
+ * Extensions on the Utrecht button-group community component.
+ */
+@use 'microscope-sass/lib/bem';
+
+@import '@utrecht/components/button-group/css/index';
+
+.utrecht-button-group {
+  // A button group used in an edit grid item
+  @include bem.modifier('openforms-editgrid') {
+    // there currently does not exist a design token in the upstream component, and
+    // the alignment is also contextual, so we opt for an open-forms extension that
+    // can be tweaked with proprietary design tokens.
+    justify-content: var(--of-button-group-editgrid-justify-content, flex-end);
+  }
+}
+
+// Reference: https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css_css-button-group--docs
+@include mobile-only {
+  .utrecht-button-group {
+    @include utrecht-button-group--vertical;
+  }
+}

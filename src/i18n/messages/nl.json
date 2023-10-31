@@ -550,6 +550,11 @@
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
+  "cKFCTI": {
+    "defaultMessage": "Nog één toevoegen",
+    "description": "Edit grid add button, default label text",
+    "originalDefault": "Add another"
+  },
   "cxDC/G": {
     "defaultMessage": "Het verplichte veld is niet ingevuld.",
     "description": "ZOD 'required' error message",

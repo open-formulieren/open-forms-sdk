@@ -10,11 +10,10 @@ import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {OFButton} from 'components/Button';
 import {CardTitle} from 'components/Card';
+import {EditGrid, EditGridButtonGroup, EditGridItem} from 'components/EditGrid';
 import FAIcon from 'components/FAIcon';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import useQuery from 'hooks/useQuery';
 import useTitle from 'hooks/useTitle';
-import {getBEMClassName} from 'utils';
 
 import {AppointmentConfigContext} from '../Context';
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
@@ -61,37 +60,34 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
     <Form style={{width: '100%'}}>
       <FieldArray name="products">
         {arrayHelpers => (
-          <div className={getBEMClassName('editgrid')}>
-            <div className={getBEMClassName('editgrid__groups')}>
-              {products.map(({productId}, index) => (
-                // blank blocks don't have a product selected yet -> so the index is added
-                // to make the key guaranteed unique
-                <ProductWrapper
-                  key={`${productId}-${index}`}
-                  index={index}
-                  numProducts={numProducts}
-                  onRemove={withValidate(() => arrayHelpers.remove(index))}
-                >
-                  <Product namePrefix="products" index={index} selectedProducts={products} />
-                </ProductWrapper>
-              ))}
-            </div>
-
-            {supportsMultipleProducts && (
-              <div className={getBEMClassName('editgrid__add-button')}>
-                <OFButton
-                  appearance="primary-action-button"
-                  onClick={withValidate(() => arrayHelpers.push({productId: '', amount: 1}))}
-                >
-                  <FAIcon icon="plus" />
-                  <FormattedMessage
-                    description="Appointments: add additional product/service button text"
-                    defaultMessage="Add another product"
-                  />
-                </OFButton>
-              </div>
-            )}
-          </div>
+          <EditGrid
+            addButtonLabel={
+              <>
+                <FAIcon icon="plus" />{' '}
+                <FormattedMessage
+                  description="Appointments: add additional product/service button text"
+                  defaultMessage="Add another product"
+                />
+              </>
+            }
+            onAddItem={
+              supportsMultipleProducts &&
+              withValidate(() => arrayHelpers.push({productId: '', amount: 1}))
+            }
+          >
+            {products.map(({productId}, index) => (
+              // blank blocks don't have a product selected yet -> so the index is added
+              // to make the key guaranteed unique
+              <ProductWrapper
+                key={`${productId}-${index}`}
+                index={index}
+                numProducts={numProducts}
+                onRemove={withValidate(() => arrayHelpers.remove(index))}
+              >
+                <Product namePrefix="products" index={index} selectedProducts={products} />
+              </ProductWrapper>
+            ))}
+          </EditGrid>
         )}
       </FieldArray>
 
@@ -118,31 +114,31 @@ const ProductWrapper = ({index, numProducts, onRemove, children}) => {
   if (!supportsMultipleProducts) {
     return <>{children}</>;
   }
+
+  const buttonRow = numProducts > 1 && (
+    <EditGridButtonGroup>
+      <OFButton appearance="primary-action-button" hint="danger" onClick={onRemove}>
+        <FormattedMessage
+          description="Appointments: remove product/service button text"
+          defaultMessage="Remove"
+        />
+      </OFButton>
+    </EditGridButtonGroup>
+  );
+
   return (
-    <div className={getBEMClassName('editgrid__group')}>
-      <div className={getBEMClassName('editgrid__group-label')}>
+    <EditGridItem
+      heading={
         <FormattedMessage
           description="Appointments: single product label/header"
           defaultMessage="Product {number}/{total}"
           values={{number: index + 1, total: numProducts}}
         />
-      </div>
-
+      }
+      buttons={buttonRow}
+    >
       {children}
-
-      {numProducts > 1 && (
-        <Toolbar modifiers={['reverse']}>
-          <ToolbarList>
-            <OFButton appearance="primary-action-button" hint="danger" onClick={onRemove}>
-              <FormattedMessage
-                description="Appointments: remove product/service button text"
-                defaultMessage="Remove"
-              />
-            </OFButton>
-          </ToolbarList>
-        </Toolbar>
-      )}
-    </div>
+    </EditGridItem>
   );
 };
 

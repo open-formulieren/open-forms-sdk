@@ -1,42 +1,54 @@
-@import '~microscope-sass/lib/color';
-@import '~microscope-sass/lib/typography';
+/**
+ * The Utrecht community components do not seem to have a ready-to-use component
+ * for the edit grid layout, so we can't shake of some custom CSS yet.
+ */
+@use 'microscope-sass/lib/bem';
 
-@import '../mixins/prefix';
+.openforms-editgrid {
+  line-height: var(--of-editgrid-line-height, var(--utrecht-document-line-height));
 
-.#{prefix(editgrid)} {
-  @include body;
+  display: flex;
+  flex-direction: column;
+  gap: var(--of-editgrid-gap);
 
-  ul {
-    padding: 0;
-  }
+  @include bem.element('item') {
+    // NL DS markup uses a field with nested fieldset element inside
+    .utrecht-form-fieldset__fieldset {
+      display: flex;
+      flex-direction: column;
+      gap: var(--of-editgrid-item-gap);
+    }
 
-  &__group {
-    padding: $grid-margin-4;
-    border-style: solid;
-    border-width: thin;
-    border-color: $color-border;
+    border: var(--of-editgrid-item-border);
+    max-inline-size: var(--of-editgrid-item-max-inline-size);
+    padding-block-end: var(--of-editgrid-item-padding-block-end);
+    padding-block-start: var(--of-editgrid-item-padding-block-start);
+    padding-inline-end: var(--of-editgrid-item-padding-inline-end);
+    padding-inline-start: var(--of-editgrid-item-padding-inline-start);
 
-    &:not(:first-child) {
-      border-top-style: none;
+    // ensure borders are 'collapsed'
+    & + .openforms-editgrid__item {
+      border-block-start: none;
     }
   }
 
-  &__group-label {
-    @include h4;
-    padding-bottom: $grid-margin-4;
-  }
-
-  &__list {
-    list-style: none;
-  }
-
-  &__group-actions {
-    padding-top: $grid-margin-2;
-  }
-
-  &__add-button {
-    display: flex;
-    width: 100%;
-    padding: $grid-margin-2 0;
+  @include bem.element('item-heading') {
+    font-family: var(
+      --of-editgrid-item-heading-font-family,
+      var(--utrecht-form-fieldset-legend-font-family, var(--utrecht-document-font-family))
+    );
+    font-size: var(
+      --of-editgrid-item-heading-font-size,
+      var(--utrecht-form-fieldset-legend-font-size)
+    );
+    line-height: var(
+      --of-editgrid-item-heading-line-height,
+      var(--utrecht-form-fieldset-legend-line-height)
+    );
+    // display: contents was considered, but that doesn't allow specifying different
+    // margins/paddings at the bottom to create extra space :(
+    // legend element doesn't care about the fieldset itself having display: flex, so we
+    // must treat this specially
+    margin-block-end: var(--of-editgrid-item-heading-margin-block-end, var(--of-editgrid-item-gap));
   }
 }

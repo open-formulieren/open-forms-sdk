@@ -1,20 +1,16 @@
-<div class="{{ctx.ofPrefix}}editgrid__row">
-    {% for (const key in ctx.flattenedComponents) { %}
-        {% if (ctx.isVisibleInRow(ctx.flattenedComponents[key])) { %}
-            <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
-        {% } %}
-    {% } %}
-
-  {% if (!ctx.self.options.readOnly) { %}
-    <div class="{{ctx.ofPrefix}}toolbar {{ctx.ofPrefix}}toolbar--reverse">
-        <ul class="{{ctx.ofPrefix}}toolbar__list">
-            <li class="{{ctx.ofPrefix}}toolbar__list-item">
-                <button class="utrecht-button utrecht-button--secondary-action editRow"><i class="{{ ctx.iconClass('edit') }}"></i></button>
-            </li>
-            <li class="{{ctx.ofPrefix}}toolbar__list-item">
-                <button class="utrecht-button utrecht-button--primary-action utrecht-button--danger removeRow"><i class="{{ ctx.iconClass('trash-can') }}"></i></button>
-            </li>
-        </ul>
-    </div>
+  {% for (const key in ctx.flattenedComponents) { %}
+      {% if (ctx.isVisibleInRow(ctx.flattenedComponents[key])) { %}
+          <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
+      {% } %}
   {% } %}
-</div>
+
+{% if (!ctx.self.options.readOnly) { %}
+  <p class="utrecht-button-group utrecht-button-group--openforms-editgrid" role="group">
+    <button class="utrecht-button utrecht-button--secondary-action editRow">
+      <i class="{{ ctx.iconClass('edit') }}"></i>
+    </button>
+    <button class="utrecht-button utrecht-button--primary-action utrecht-button--danger removeRow">
+      <i class="{{ ctx.iconClass('trash-can') }}"></i>
+    </button>
+  </p>
+{% } %}

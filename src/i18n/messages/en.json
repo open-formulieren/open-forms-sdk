@@ -544,6 +544,11 @@
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
+  "cKFCTI": {
+    "defaultMessage": "Add another",
+    "description": "Edit grid add button, default label text",
+    "originalDefault": "Add another"
+  },
   "cxDC/G": {
     "defaultMessage": "The required field is not filled out.",
     "description": "ZOD 'required' error message",
