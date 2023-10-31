@@ -21,14 +21,15 @@ should be set:
 * ``--utrecht-button-secondary-action-danger-background-color`` takes the value of the old ``--of-button-danger-bg``
 * ``--utrecht-button-secondary-action-danger-color`` takes the value of the old ``--of-button-danger-fg``
 * ``--utrecht-button-secondary-action-focus-border-color`` takes the value of the old ``--of-color-focus-border``
-* ``--utrecht-button-subtle-danger-background-color``  takes the value of ``--of-color-danger``
+* ``--utrecht-button-subtle-danger-color``  takes the value of ``--of-color-danger``
+* ``--utrecht-button-subtle-danger-background-color``  takes the value of ``--of-color-bg``
 * ``--utrecht-button-subtle-danger-hover-background-color`` takes the value ``--of-color-bg``
 * ``--utrecht-button-subtle-danger-active-background-color`` takes the value of the old ``--of-button-danger-active-bg``
 * ``--utrecht-button-disabled-color``. This does not take the value of an old token. For the
   Open Forms theme this is now ``#ffffff``.
 * ``--utrecht-button-disabled-background-color``. This does not take the value of an old token,
   the colour was previously obtained by graying out the primary button. For the Open Forms theme,
-  this is now ``#a02017``.
+  this is now ``#b0b0b0``.
 * ``--utrecht-action-disabled-cursor``. This does not take the value of an old token. It controls
   the looks of the cursor when hovering a disabled button. For the Open Forms theme, this is now
   ``not-allowed``.

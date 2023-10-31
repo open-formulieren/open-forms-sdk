@@ -10,7 +10,7 @@
     &:hover {
       // However, if the button has visible focus, apply the border color to all borders
       // otherwise it looks a bit broken.
-      &:not(:focus-visible) {
+      &:not(:focus, :focus-visible) {
         border-block-start-color: transparent;
         border-inline-start-color: transparent;
       }
