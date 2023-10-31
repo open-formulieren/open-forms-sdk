@@ -1175,6 +1175,12 @@
       "value": "Your payment is received and processed."
     }
   ],
+  "cKFCTI": [
+    {
+      "type": 0,
+      "value": "Add another"
+    }
+  ],
   "cxDC/G": [
     {
       "type": 0,
