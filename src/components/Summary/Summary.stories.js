@@ -102,6 +102,7 @@ export default {
     errors: [],
     submissionAllowed: SUBMISSION_ALLOWED.yes,
     editStepText: 'Change',
+    prevPage: 'some-previous-page',
     // formContext args
     askPrivacyConsent: true,
     askStatementOfTruth: false,
@@ -143,6 +144,7 @@ const render = ({
   isLoading,
   isAuthenticated,
   errors,
+  prevPage,
   onSubmit,
   onLogout,
   onPrevPage,
@@ -175,6 +177,7 @@ const render = ({
         isLoading={isLoading}
         isAuthenticated={isAuthenticated}
         errors={errors}
+        prevPage={prevPage}
         onSubmit={event => {
           event.preventDefault();
           onSubmit(event);

@@ -104,6 +104,7 @@ GenericSummary.propTypes = {
   isLoading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   errors: PropTypes.arrayOf(PropTypes.string),
+  prevPage: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func,

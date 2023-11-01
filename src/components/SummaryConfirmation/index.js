@@ -36,7 +36,7 @@ const SummaryConfirmation = ({submissionAllowed, prevPage, onPrevPage}) => {
       )}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
-          {!!prevPage && (
+          {!!onPrevPage && (
             <Link onClick={onPrevPage} to={prevPage}>
               <Literal name="previousText" />
             </Link>
