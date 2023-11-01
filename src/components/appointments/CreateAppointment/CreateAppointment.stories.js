@@ -131,7 +131,7 @@ export const HappyFlow = {
     await step('Fill out the location and time', async () => {
       expect(await canvas.findByText('Locatie en tijd')).toBeVisible();
       await waitFor(async () => {
-        await expect(canvas.getByText('Terug naar producten')).toBeVisible();
+        await expect(canvas.getByRole('link', {name: 'Terug naar producten'})).toBeVisible();
         await expect(
           await canvas.queryByRole('button', {name: 'Naar contactgegevens'})
         ).not.toHaveAttribute('aria-disabled', 'true');
@@ -174,7 +174,9 @@ export const HappyFlow = {
     await step('Fill out the contact details', async () => {
       expect(await canvas.findByText('Uw gegevens')).toBeVisible();
       await waitFor(async () => {
-        await expect(canvas.getByText('Terug naar locatie en tijdstip')).toBeVisible();
+        await expect(
+          canvas.getByRole('link', {name: 'Terug naar locatie en tijdstip'})
+        ).toBeVisible();
       });
       await waitFor(async () => {
         await expect(

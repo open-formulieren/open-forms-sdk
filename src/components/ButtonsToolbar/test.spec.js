@@ -2,6 +2,7 @@ import {render as renderTest, screen} from '@testing-library/react';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
+import {MemoryRouter} from 'react-router-dom';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
@@ -37,19 +38,21 @@ it('Last step of submittable form, button is present', () => {
 
   act(() => {
     root.render(
-      <ButtonsToolbar
-        literals={LITERALS}
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.yes}
-        canSuspendForm={true}
-        isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
-        onNavigatePrevPage={mockFunction}
-        onFormSave={mockFunction}
-        onLogout={mockFunction}
-      />
+      <MemoryRouter>
+        <ButtonsToolbar
+          literals={LITERALS}
+          canSubmitStep={true}
+          canSubmitForm={SUBMISSION_ALLOWED.yes}
+          canSuspendForm={true}
+          isAuthenticated={false}
+          isLastStep={true}
+          isCheckingLogic={false}
+          loginRequired={false}
+          onFormSave={mockFunction}
+          onLogout={mockFunction}
+          previousPage="#"
+        />
+      </MemoryRouter>
     );
   });
 
@@ -66,19 +69,21 @@ it('Last step of non-submittable form with overview, button is present', () => {
 
   act(() => {
     root.render(
-      <ButtonsToolbar
-        literals={LITERALS}
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
-        canSuspendForm={true}
-        isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
-        onNavigatePrevPage={mockFunction}
-        onFormSave={mockFunction}
-        onLogout={mockFunction}
-      />
+      <MemoryRouter>
+        <ButtonsToolbar
+          literals={LITERALS}
+          canSubmitStep={true}
+          canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
+          canSuspendForm={true}
+          isAuthenticated={false}
+          isLastStep={true}
+          isCheckingLogic={false}
+          loginRequired={false}
+          previousPage="#"
+          onFormSave={mockFunction}
+          onLogout={mockFunction}
+        />
+      </MemoryRouter>
     );
   });
 
@@ -95,19 +100,21 @@ it('Last step of non-submittable form without overview, button is NOT present', 
 
   act(() => {
     root.render(
-      <ButtonsToolbar
-        literals={LITERALS}
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
-        canSuspendForm={true}
-        isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
-        onNavigatePrevPage={mockFunction}
-        onFormSave={mockFunction}
-        onLogout={mockFunction}
-      />
+      <MemoryRouter>
+        <ButtonsToolbar
+          literals={LITERALS}
+          canSubmitStep={true}
+          canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+          canSuspendForm={true}
+          isAuthenticated={false}
+          isLastStep={true}
+          isCheckingLogic={false}
+          loginRequired={false}
+          previousPage="#"
+          onFormSave={mockFunction}
+          onLogout={mockFunction}
+        />
+      </MemoryRouter>
     );
   });
 
@@ -123,19 +130,21 @@ it('Non-last step of non-submittable form without overview, button IS present', 
 
   act(() => {
     root.render(
-      <ButtonsToolbar
-        literals={LITERALS}
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
-        canSuspendForm={true}
-        isAuthenticated={false}
-        isLastStep={false}
-        isCheckingLogic={false}
-        loginRequired={false}
-        onNavigatePrevPage={mockFunction}
-        onFormSave={mockFunction}
-        onLogout={mockFunction}
-      />
+      <MemoryRouter>
+        <ButtonsToolbar
+          literals={LITERALS}
+          canSubmitStep={true}
+          canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+          canSuspendForm={true}
+          isAuthenticated={false}
+          isLastStep={false}
+          isCheckingLogic={false}
+          loginRequired={false}
+          previousPage="#"
+          onFormSave={mockFunction}
+          onLogout={mockFunction}
+        />
+      </MemoryRouter>
     );
   });
 
@@ -151,19 +160,21 @@ it('Suspending form allowed, button is present', () => {
   const mockFunction = jest.fn();
 
   renderTest(
-    <ButtonsToolbar
-      literals={LITERALS}
-      canSubmitStep={true}
-      canSubmitForm={SUBMISSION_ALLOWED.yes}
-      canSuspendForm={true}
-      isAuthenticated={false}
-      isLastStep={true}
-      isCheckingLogic={false}
-      loginRequired={false}
-      onNavigatePrevPage={mockFunction}
-      onFormSave={mockFunction}
-      onLogout={mockFunction}
-    />
+    <MemoryRouter>
+      <ButtonsToolbar
+        literals={LITERALS}
+        canSubmitStep={true}
+        canSubmitForm={SUBMISSION_ALLOWED.yes}
+        canSuspendForm={true}
+        isAuthenticated={false}
+        isLastStep={true}
+        isCheckingLogic={false}
+        loginRequired={false}
+        previousPage="#"
+        onFormSave={mockFunction}
+        onLogout={mockFunction}
+      />
+    </MemoryRouter>
   );
 
   expect(screen.queryByText('Save step')).toBeInTheDocument();
@@ -173,19 +184,21 @@ it('Suspending form not allowed, button is NOT present', () => {
   const mockFunction = jest.fn();
 
   renderTest(
-    <ButtonsToolbar
-      literals={LITERALS}
-      canSubmitStep={true}
-      canSubmitForm={SUBMISSION_ALLOWED.yes}
-      canSuspendForm={false}
-      isAuthenticated={false}
-      isLastStep={true}
-      isCheckingLogic={false}
-      loginRequired={false}
-      onNavigatePrevPage={mockFunction}
-      onFormSave={mockFunction}
-      onLogout={mockFunction}
-    />
+    <MemoryRouter>
+      <ButtonsToolbar
+        literals={LITERALS}
+        canSubmitStep={true}
+        canSubmitForm={SUBMISSION_ALLOWED.yes}
+        canSuspendForm={false}
+        isAuthenticated={false}
+        isLastStep={true}
+        isCheckingLogic={false}
+        loginRequired={false}
+        previousPage="#"
+        onFormSave={mockFunction}
+        onLogout={mockFunction}
+      />
+    </MemoryRouter>
   );
 
   expect(screen.queryByText('Save step')).not.toBeInTheDocument();
