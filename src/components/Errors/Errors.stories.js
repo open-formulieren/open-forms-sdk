@@ -4,7 +4,7 @@ const ALERT_MODIFIERS = ['info', 'warning', 'error', 'ok'];
 
 export default {
   title: 'Private API / Error Message',
-  render: ({message, modifier}) => <ErrorMessage modifiers={[modifier]}>{message}</ErrorMessage>,
+  render: ({message, modifier}) => <ErrorMessage modifier={modifier}>{message}</ErrorMessage>,
   argTypes: {
     modifier: {
       options: ALERT_MODIFIERS,
