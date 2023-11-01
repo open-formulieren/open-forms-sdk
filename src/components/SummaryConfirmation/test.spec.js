@@ -1,7 +1,9 @@
+import {render as renderTest, screen} from '@testing-library/react';
 import {Formik} from 'formik';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
+import {MemoryRouter} from 'react-router-dom';
 
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -33,50 +35,51 @@ const LITERALS = {
 };
 
 const Wrapper = ({children}) => (
-  <LiteralsProvider literals={LITERALS}>
-    <Formik
-      initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
-      onSubmit={jest.fn()}
-    >
-      {children}
-    </Formik>
-  </LiteralsProvider>
+  <MemoryRouter>
+    <LiteralsProvider literals={LITERALS}>
+      <Formik
+        initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
+        onSubmit={jest.fn()}
+      >
+        {children}
+      </Formik>
+    </LiteralsProvider>
+  </MemoryRouter>
 );
 
 it('Summary of non-submittable form, button is NOT present', () => {
   const mockFunction = jest.fn();
 
-  act(() => {
-    root.render(
-      <Wrapper>
-        <SummaryConfirmation
-          submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
-          onPrevPage={mockFunction}
-        />
-      </Wrapper>
-    );
-  });
+  renderTest(
+    <Wrapper>
+      <SummaryConfirmation
+        submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
+        prevPage="some-page"
+        onPrevPage={mockFunction}
+      />
+    </Wrapper>
+  );
 
-  const buttons = container.getElementsByClassName('openforms-toolbar__list-item');
+  const buttons = screen.queryByRole('button');
 
-  expect(buttons.length).toEqual(1);
-  expect(buttons[0].textContent).toEqual('Previous step');
+  expect(buttons).toBeNull();
 });
 
 it('Summary of submittable form, button IS present', () => {
   const mockFunction = jest.fn();
 
-  act(() => {
-    root.render(
-      <Wrapper>
-        <SummaryConfirmation submissionAllowed={SUBMISSION_ALLOWED.yes} onPrevPage={mockFunction} />
-      </Wrapper>
-    );
-  });
+  renderTest(
+    <Wrapper>
+      <SummaryConfirmation
+        submissionAllowed={SUBMISSION_ALLOWED.yes}
+        prevPage="some-page"
+        onPrevPage={mockFunction}
+      />
+    </Wrapper>
+  );
 
-  const buttons = container.getElementsByClassName('openforms-toolbar__list-item');
+  const button = screen.getByRole('button');
 
-  expect(buttons.length).toEqual(2);
-  expect(buttons[0].textContent).toEqual('Previous step');
-  expect(buttons[1].textContent).toEqual('Submit form');
+  expect(button).toBeDefined();
+  expect(button.textContent).toEqual('Submit form');
 });
