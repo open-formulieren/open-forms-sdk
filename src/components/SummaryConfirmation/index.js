@@ -1,9 +1,9 @@
-import {LinkButton as UtrechtLinkButton} from '@utrecht/component-library-react';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {OFButton} from 'components/Button';
+import Link from 'components/Link';
 import {Literal} from 'components/Literal';
 import StatementCheckboxes from 'components/StatementCheckboxes';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
@@ -18,7 +18,7 @@ const isSubmitEnabled = (statementsInfo = [], statementsValues) => {
   });
 };
 
-const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
+const SummaryConfirmation = ({submissionAllowed, prevPage, onPrevPage}) => {
   const {submissionStatementsConfiguration = []} = useFormContext();
   const canSubmit = submissionAllowed === SUBMISSION_ALLOWED.yes;
   const {values: formikValues} = useFormikContext();
@@ -36,10 +36,10 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
       )}
       <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
         <ToolbarList>
-          {!!onPrevPage && (
-            <UtrechtLinkButton onClick={onPrevPage} appearance="subtle-button">
+          {!!prevPage && (
+            <Link onClick={onPrevPage} to={prevPage}>
               <Literal name="previousText" />
-            </UtrechtLinkButton>
+            </Link>
           )}
         </ToolbarList>
         <ToolbarList>
@@ -62,6 +62,7 @@ const SummaryConfirmation = ({submissionAllowed, onPrevPage}) => {
 
 SummaryConfirmation.propTypes = {
   submissionAllowed: PropTypes.string.isRequired,
+  prevPage: PropTypes.string,
   onPrevPage: PropTypes.func,
 };
 

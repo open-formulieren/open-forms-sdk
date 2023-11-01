@@ -21,6 +21,7 @@ const GenericSummary = ({
   editStepText,
   isLoading,
   isAuthenticated,
+  prevPage,
   errors = [],
   onSubmit,
   onLogout,
@@ -59,7 +60,11 @@ const GenericSummary = ({
             />
           ))}
           {showPaymentInformation && <Price price={amountToPay} />}
-          <SummaryConfirmation submissionAllowed={submissionAllowed} onPrevPage={onPrevPage} />
+          <SummaryConfirmation
+            submissionAllowed={submissionAllowed}
+            prevPage={prevPage}
+            onPrevPage={onPrevPage}
+          />
           {isAuthenticated ? <LogoutButton onLogout={onLogout} /> : null}
         </Wrapper>
       </Formik>
