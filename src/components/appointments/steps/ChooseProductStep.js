@@ -35,7 +35,7 @@ const chooseMultiProductSchema = z.object({products: productSchema});
 const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
-  products = productSchema.parse(products);
+  const selectedProductIds = products.map(p => p.productId).filter(Boolean);
 
   /**
    * Decorate an arrayHelper callback to invoke the validate function.
@@ -84,7 +84,11 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
                 numProducts={numProducts}
                 onRemove={withValidate(() => arrayHelpers.remove(index))}
               >
-                <Product namePrefix="products" index={index} selectedProducts={products} />
+                <Product
+                  namePrefix="products"
+                  index={index}
+                  selectedProductIds={selectedProductIds}
+                />
               </ProductWrapper>
             ))}
           </EditGrid>

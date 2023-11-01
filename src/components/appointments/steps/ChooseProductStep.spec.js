@@ -89,6 +89,6 @@ describe('The product selection step', () => {
     await user.click(secondDropdown);
     await user.keyboard('[ArrowDown]');
     expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
-    expect(await screen.queryByText('Not available with drivers license')).not.toBeInTheDocument();
+    expect(screen.queryByText('Not available with drivers license')).not.toBeInTheDocument();
   });
 });
