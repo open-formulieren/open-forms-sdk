@@ -18,8 +18,7 @@
 
     // approximate browser default behaviour for focus outline
     &:focus-visible {
-      border-radius: 3px;
-      border-color: transparent;
+      --utrecht-button-border-radius: 2px;
     }
   }
 }
