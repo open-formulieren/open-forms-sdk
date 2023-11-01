@@ -22,3 +22,14 @@
     }
   }
 }
+
+@include mobile-only {
+  .openforms-theme {
+    .utrecht-button,
+    .utrecht-button-link {
+      display: flex;
+      inline-size: 100%;
+      justify-content: center;
+    }
+  }
+}

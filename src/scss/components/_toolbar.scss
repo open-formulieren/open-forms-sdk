@@ -41,11 +41,6 @@
       }
       @include bem.element('list-item') {
         min-height: auto;
-
-        .#{prefix('button')}.#{prefix('button--anchor')} {
-          padding: 0;
-          justify-content: flex-start;
-        }
       }
     }
 
@@ -81,9 +76,10 @@
     @include bem.element('list-item') {
       @include margin(auto, $properties: margin-bottom, $value-mobile: $typography-margin-list);
 
-      .#{prefix('button')}:not(.#{prefix('button--image')}) {
-        width: 100%;
+      .utrecht-link {
+        display: flex;
         justify-content: center;
+        width: 100%;
       }
     }
   }
