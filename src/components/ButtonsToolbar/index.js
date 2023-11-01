@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Anchor from 'components/Anchor';
 import {OFButton} from 'components/Button';
+import Link from 'components/Link';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
@@ -29,10 +29,10 @@ const ButtonsToolbar = ({
       <LiteralsProvider literals={literals}>
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
-            {onNavigatePrevPage && (
-              <Anchor href={previousPage} onClick={onNavigatePrevPage}>
+            {previousPage && (
+              <Link to={previousPage} onClick={onNavigatePrevPage}>
                 <Literal name="previousText" />
-              </Anchor>
+              </Link>
             )}
           </ToolbarList>
           <ToolbarList>
@@ -81,7 +81,7 @@ ButtonsToolbar.propTypes = {
   onNavigatePrevPage: PropTypes.func,
   onFormSave: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
-  previousPage: PropTypes.string.isRequired,
+  previousPage: PropTypes.string,
 };
 
 export default ButtonsToolbar;
