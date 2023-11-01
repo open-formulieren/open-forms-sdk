@@ -41,17 +41,17 @@ export default {
     index: {table: {disable: true}},
   },
   args: {
-    selectedProducts: [],
+    selectedProductIds: [],
     supportsMultipleProducts: true,
   },
 };
 
-const render = ({productId, selectedProducts, supportsMultipleProducts = true}) => {
+const render = ({productId, selectedProductIds, supportsMultipleProducts = true}) => {
   const data_entry = PRODUCTS_DATA.find(prod => prod.productId === productId);
   const index = supportsMultipleProducts ? PRODUCTS_DATA.indexOf(data_entry) : 0;
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <Product namePrefix="products" index={index} selectedProducts={selectedProducts} />
+      <Product namePrefix="products" index={index} selectedProductIds={selectedProductIds} />
     </AppointmentConfigContext.Provider>
   );
 };
@@ -97,7 +97,7 @@ export const NoMultipleProductsSupport = {
   },
   argTypes: {
     productId: {table: {disable: true}},
-    selectedProducts: {table: {disable: true}},
+    selectedProductIds: {table: {disable: true}},
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);

@@ -6,21 +6,20 @@ import {NumberField} from 'components/forms';
 
 import {AppointmentConfigContext} from './Context';
 import ProductSelect from './ProductSelect';
-import {ProductsType} from './types';
 
 export const amountLabel = defineMessage({
   description: 'Appointments: product amount field label',
   defaultMessage: 'Amount',
 });
 
-const Product = ({namePrefix, index, selectedProducts}) => {
+const Product = ({namePrefix, index, selectedProductIds}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
   return (
     <div>
       <ProductSelect
         name={`${namePrefix}[${index}].productId`}
-        selectedProducts={selectedProducts}
+        selectedProductIds={selectedProductIds}
       />
       <NumberField
         name={`${namePrefix}[${index}].amount`}
@@ -38,7 +37,7 @@ const Product = ({namePrefix, index, selectedProducts}) => {
 Product.propTypes = {
   namePrefix: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  selectedProducts: ProductsType.isRequired,
+  selectedProductIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Product;

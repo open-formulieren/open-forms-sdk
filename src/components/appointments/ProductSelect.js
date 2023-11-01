@@ -8,8 +8,6 @@ import {get} from 'api';
 import {getCached, setCached} from 'cache';
 import {AsyncSelectField} from 'components/forms';
 
-import {ProductsType} from './types';
-
 const CACHED_PRODUCTS_KEY = 'appointment|all-products';
 const CACHED_PRODUCTS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
 
@@ -27,10 +25,10 @@ export const getAllProducts = async baseUrl => {
   return products;
 };
 
-const getProducts = async (baseUrl, selectedProducts, currentProductId) => {
-  const otherProductIds = selectedProducts
-    .map(p => p.productId)
-    .filter(productId => productId && productId !== currentProductId);
+const getProducts = async (baseUrl, selectedProductIds, currentProductId) => {
+  const otherProductIds = selectedProductIds.filter(
+    productId => productId && productId !== currentProductId
+  );
   if (!otherProductIds.length) {
     return await getAllProducts(baseUrl);
   }
@@ -49,15 +47,15 @@ const getProducts = async (baseUrl, selectedProducts, currentProductId) => {
   return products;
 };
 
-const ProductSelect = ({name, selectedProducts}) => {
+const ProductSelect = ({name, selectedProductIds}) => {
   const {getFieldProps} = useFormikContext();
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {value} = getFieldProps(name);
   const getOptions = useCallback(
-    async () => await getProducts(baseUrl, selectedProducts, value),
+    async () => await getProducts(baseUrl, selectedProductIds, value),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [baseUrl, JSON.stringify(selectedProducts), value]
+    [baseUrl, JSON.stringify(selectedProductIds), value]
   );
   return (
     <AsyncSelectField
@@ -72,6 +70,6 @@ const ProductSelect = ({name, selectedProducts}) => {
 };
 ProductSelect.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedProducts: ProductsType.isRequired,
+  selectedProductIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 export default ProductSelect;
