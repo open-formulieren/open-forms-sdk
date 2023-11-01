@@ -1,8 +1,8 @@
-import {LinkButton as UtrechtLinkButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {OFButton} from 'components/Button';
+import Link from 'components/Link';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
@@ -20,6 +20,7 @@ const ButtonsToolbar = ({
   onNavigatePrevPage,
   onFormSave,
   onLogout,
+  previousPage,
 }) => {
   const showSubmitButton = !(canSubmitForm === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
 
@@ -28,10 +29,10 @@ const ButtonsToolbar = ({
       <LiteralsProvider literals={literals}>
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
-            {onNavigatePrevPage && (
-              <UtrechtLinkButton onClick={onNavigatePrevPage} appearance="subtle-button">
+            {previousPage && (
+              <Link to={previousPage} onClick={onNavigatePrevPage}>
                 <Literal name="previousText" />
-              </UtrechtLinkButton>
+              </Link>
             )}
           </ToolbarList>
           <ToolbarList>
@@ -80,6 +81,7 @@ ButtonsToolbar.propTypes = {
   onNavigatePrevPage: PropTypes.func,
   onFormSave: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+  previousPage: PropTypes.string,
 };
 
 export default ButtonsToolbar;

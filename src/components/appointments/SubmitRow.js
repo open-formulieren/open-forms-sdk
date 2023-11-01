@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {useNavigate} from 'react-router';
+import {useNavigate} from 'react-router-dom';
 
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -20,6 +20,7 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
       isLastStep={false}
       isCheckingLogic={false}
       loginRequired={false}
+      previousPage={navigateBackTo ? `../${navigateBackTo}` : ''}
       onFormSave={() => {}}
       onLogout={() => {}}
       onNavigatePrevPage={navigateBackTo ? () => navigate(`../${navigateBackTo}`) : undefined}

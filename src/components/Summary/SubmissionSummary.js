@@ -71,14 +71,18 @@ const SubmissionSummary = ({
     }
   };
 
+  const getPreviousPage = () => {
+    const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
+    const prevStepSlug = form.steps[previousStepIndex]?.slug;
+    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
+    return navigateTo;
+  };
+
   const onPrevPage = event => {
     event.preventDefault();
     onClearProcessingErrors();
 
-    const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
-    const prevStepSlug = form.steps[previousStepIndex]?.slug;
-    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
-    navigate(navigateTo);
+    navigate(getPreviousPage());
   };
 
   const completeSubmission = async (submission, statementValues) => {
@@ -122,6 +126,7 @@ const SubmissionSummary = ({
         isLoading={loading}
         isAuthenticated={refreshedSubmission.isAuthenticated}
         errors={getErrors()}
+        prevPage={getPreviousPage()}
         onSubmit={onSubmit}
         onLogout={onLogout}
         onPrevPage={onPrevPage}
