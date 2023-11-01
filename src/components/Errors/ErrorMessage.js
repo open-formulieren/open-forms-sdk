@@ -1,27 +1,29 @@
+import {Alert} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Body from 'components/Body';
-import FAIcon from 'components/FAIcon';
 import useScrollIntoView from 'hooks/useScrollIntoView';
-import {getBEMClassName} from 'utils';
 
-const ErrorMessage = ({children, modifiers = ['error']}) => {
+const ICONS = {
+  error: <i className="fa fas fa-exclamation-circle" />,
+  info: <i className="fa fas fa-info-circle" />,
+  warning: <i className="fa fas fa-exclamation-triangle" />,
+  ok: <i className="fa fas fa-check-circle" />,
+};
+
+const ErrorMessage = ({children, modifier = 'error'}) => {
   const errorRef = useScrollIntoView();
   if (!children) return null;
   return (
-    <div ref={errorRef} className={getBEMClassName('alert', modifiers)}>
-      <span className={getBEMClassName('alert__icon', ['wide'])}>
-        <FAIcon icon="exclamation-circle" />
-      </span>
-      <Body component="div">{children}</Body>
-    </div>
+    <Alert type={modifier} icon={ICONS[modifier]} ref={errorRef}>
+      {children}
+    </Alert>
   );
 };
 
 ErrorMessage.propTypes = {
   children: PropTypes.node,
-  modifiers: PropTypes.arrayOf(PropTypes.string),
+  modifier: PropTypes.string,
 };
 
 export default ErrorMessage;

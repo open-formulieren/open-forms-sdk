@@ -1,44 +1,5 @@
-@use 'microscope-sass/lib/bem';
+@import '@utrecht/components/dist/alert/css/index.css';
 
-@import '../mixins/prefix';
-@import '../settings';
-
-.#{prefix('alert')} {
-  @include margin(true, $properties: padding);
-  @include margin('auto', $properties: margin-bottom);
-  display: flex;
-  justify-content: flex-start;
-
-  @include bem.modifier('info') {
-    background-color: var(--of-alert-info-bg);
-  }
-
-  @include bem.modifier('error') {
-    background-color: var(--of-alert-error-bg);
-
-    .fa-icon {
-      color: var(--of-color-danger);
-    }
-  }
-
-  @include bem.modifier('warning') {
-    background-color: var(--of-alert-warning-bg);
-
-    .fa-icon {
-      color: var(--of-color-warning);
-    }
-  }
-
-  @include bem.modifier('with-margin') {
-    margin: 1rem 0;
-  }
-
-  @include bem.element('icon') {
-    display: block;
-    width: 1em;
-
-    @include bem.modifier('wide') {
-      width: 2em;
-    }
-  }
+.utrecht-alert {
+  font-family: var(--utrecht-document-font-family);
 }
