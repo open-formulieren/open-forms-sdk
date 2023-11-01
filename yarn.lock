@@ -5138,31 +5138,30 @@
     "@typescript-eslint/types" "5.60.0"
     eslint-visitor-keys "^3.3.0"
 
-"@utrecht/component-library-css@^1.0.0-alpha.526":
-  version "1.0.0-alpha.529"
-  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.529.tgz#f4b0e7109f76f8fa1992657b1b449e35d2c49960"
-  integrity sha512-GgwWM5KBfG0cKC21kLB/fxS7cxMAYnSJCAyVprm1vtdFhlqDATkpZ8nAy9G+M6Kybz67qpuzEhjQ9n77aEIinA==
+"@utrecht/component-library-css@^1.0.0-alpha.604":
+  version "1.0.0-alpha.604"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.604.tgz#d8c53be9a103ef71cf2bb171b5ab6bb0233ecce8"
+  integrity sha512-2yAAOKxirmJVKpdHGhfh3lI4MdR46JN/W6oL+LlmRwmO84xTlJnWKqPuIcIijzjCHzggPWNl5O6zHPPlumWi4g==
 
-"@utrecht/component-library-react@^1.0.0-alpha.353":
-  version "1.0.0-alpha.353"
-  resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.353.tgz#1913089f74880532a0954717240e0e7ffb032020"
-  integrity sha512-WoJOGxUtQdDn0ysU9WYQou1MQBUIfJxEUJXMuTaRO2nxcYjv1lxto9Di+PRfDcRJr0mNKVApcxu3d8yRLFNHxQ==
+"@utrecht/component-library-react@^1.0.0-alpha.413":
+  version "1.0.0-alpha.413"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.413.tgz#42eba0303a6c07a6da2c3c375eaf9a4bd44627cc"
+  integrity sha512-FVkRn4hj30COAKsko3YipkzMhx6q25nD0huRF96pqDf5PD8S3cIJ2/o71TYmVFxnFe2kEXC8dTzrtzRy2Calbg==
   dependencies:
     clsx "1.2.1"
-    date-fns "2.30.0"
     lodash.chunk "4.2.0"
 
-"@utrecht/components@^1.0.0-alpha.473":
-  version "1.0.0-alpha.490"
-  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.490.tgz#8eedd4794c017d2c7d53e66c29d460bc50e1938e"
-  integrity sha512-cWX9e+OTjGLy00oZU7tQn/qPle+u9aFfH2zktkGxxiYaz/u8HQ36xnJMlpm9fEKST+9x0AJOT9RCYLCSgKxfNg==
+"@utrecht/components@^1.0.0-alpha.565":
+  version "1.0.0-alpha.565"
+  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.565.tgz#af5ec288882343b43e41dab3b929e8b44caac94f"
+  integrity sha512-Rs/f8YzVpeM7pXgQuTicT/rb2sYrUqAGB3rRSWq7TuvUgreENrJa9vnRytVq2I6+Z66zEuz8d2tBO0tUEijFDA==
   dependencies:
     clsx "1.2.1"
 
-"@utrecht/design-tokens@^1.0.0-alpha.505":
-  version "1.0.0-alpha.522"
-  resolved "https://registry.yarnpkg.com/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.522.tgz#ade2891d9a73b956b400674315898a7a2dd41871"
-  integrity sha512-YmOoH2eMkkTmxpUCei9Ccgcb3reWluf/9u36DDiNNwn837pjVZZz2Ldks12Vfe1Qb8wIL/Y0AT6zZ7Hwc4bCig==
+"@utrecht/design-tokens@^1.0.0-alpha.597":
+  version "1.0.0-alpha.597"
+  resolved "https://registry.yarnpkg.com/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.597.tgz#7f36889edc763a001437074d266d9b8d1fb81602"
+  integrity sha512-1DhRBv0896JkdaGiXBJL71mckrrQAZkr5CTqR5BRuHp/xbSaPtLg/JEw4uNXpsnvxZrwn1wmz/PY/wzvnBAGHw==
 
 "@vue/compiler-core@3.3.4", "@vue/compiler-core@^3.2.23":
   version "3.3.4"
@@ -7210,7 +7209,7 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-date-fns@2.30.0:
+date-fns@^2.30.0:
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
   integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
