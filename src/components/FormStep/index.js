@@ -414,7 +414,7 @@ const FormStep = ({
    *
    *   - `LOGIC_CHECK_INTERRUPTED` When there's no point/change in state to be expected by the logic
    *       check
-   *   - `BLOCK_SUBMISSION` When the the logic is checking and the form should be disabled for
+   *   - `BLOCK_SUBMISSION` When the logic is checking and the form should be disabled for
    *       submission.
    *   - `LOGIC_CHECK_DONE` When the logic check is done and the form should be enabled for
    *       submission.
@@ -751,7 +751,7 @@ const FormStep = ({
    *
    * During evaluation, the following actions are/may be dispatched:
    *
-   *   - `BLOCK_SUBMISSION` When the the form midfier by a humer (`modifiedByHuman`)  and the form
+   *   - `BLOCK_SUBMISSION` When the form was modified by a human (`modifiedByHuman`)  and the form
    *       should be disabled for submission.
    *   - `ERROR` When an error occurred while evaluating the form logic.
    *   - `FORMIO_CHANGE_HANDLED` When the change is successfully handled .
@@ -767,6 +767,7 @@ const FormStep = ({
   const onFormIOChange = async (changed, flags, modifiedByHuman) => {
     // formio form not mounted -> nothing to do
     if (!formRef.current) return;
+    if (logicChecking) return;
 
     // backend logic leads to changes in FormIO configuration, which triggers onFormIOInitialized.
     // This in turn triggers the onFormIOChange event because the submission data is set
