@@ -767,7 +767,12 @@ const FormStep = ({
   const onFormIOChange = async (changed, flags, modifiedByHuman) => {
     // formio form not mounted -> nothing to do
     if (!formRef.current) return;
-    if (logicChecking) return;
+    // Under some conditions and engines (e.g. WebKit), `onFormIOChange` can be triggered while
+    // logicChecking is currently running (that is the scheduled logic check with `setTimeout` is ongoing).
+    // While it is running, `canSubmit` is set to `false` because of the fired `BLOCK_SUBMISSION` action.
+    // We don't want to get in conflict with the current check if the change doesn't come from the user.
+    // See https://github.com/open-formulieren/open-forms/issues/3572 for an example.
+    if (!modifiedByHuman && logicChecking) return;
 
     // backend logic leads to changes in FormIO configuration, which triggers onFormIOInitialized.
     // This in turn triggers the onFormIOChange event because the submission data is set
