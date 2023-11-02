@@ -5,7 +5,6 @@ import {defineMessage, useIntl} from 'react-intl';
 import {NumberField} from 'components/forms';
 
 import {AppointmentConfigContext} from '../Context';
-import {ProductsType} from '../types';
 import ProductSelect from './ProductSelect';
 
 export const amountLabel = defineMessage({
@@ -13,14 +12,14 @@ export const amountLabel = defineMessage({
   defaultMessage: 'Amount',
 });
 
-const Product = ({namePrefix, index, selectedProducts}) => {
+const Product = ({namePrefix, index, selectedProductIds}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
   return (
     <div className="openforms-form-field-container">
       <ProductSelect
         name={`${namePrefix}[${index}].productId`}
-        selectedProducts={selectedProducts}
+        selectedProductIds={selectedProductIds}
       />
       <NumberField
         name={`${namePrefix}[${index}].amount`}
@@ -38,7 +37,7 @@ const Product = ({namePrefix, index, selectedProducts}) => {
 Product.propTypes = {
   namePrefix: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  selectedProducts: ProductsType.isRequired,
+  selectedProductIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Product;

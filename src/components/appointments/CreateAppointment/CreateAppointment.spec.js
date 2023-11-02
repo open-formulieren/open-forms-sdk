@@ -233,3 +233,25 @@ describe('Preselecting a product via querystring', () => {
     expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
   });
 });
+
+describe('Changing the product amounts', () => {
+  // regression test for https://github.com/open-formulieren/open-forms/issues/3536
+  it('does not crash when clearing the amount field to enter a value', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+    const user = userEvent.setup({delay: null});
+
+    renderApp();
+
+    const productDropdown = await screen.findByRole('combobox');
+    expect(productDropdown).toBeVisible();
+
+    const amountInput = screen.getByLabelText('Amount');
+    expect(amountInput).toBeVisible();
+    expect(amountInput).toHaveDisplayValue('1');
+
+    // clear the field value to enter a different value
+    await user.clear(amountInput);
+    await user.type(amountInput, '3');
+    expect(amountInput).toHaveDisplayValue('3');
+  });
+});
