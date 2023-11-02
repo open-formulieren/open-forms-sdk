@@ -11,6 +11,7 @@ import {NonceProvider} from 'react-select';
 import {ConfigContext, FormContext} from 'Context';
 import {get} from 'api';
 import App, {routes as nestedRoutes} from 'components/App';
+import {getRedirectParams} from 'components/routingActions';
 import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
@@ -95,24 +96,65 @@ class OpenForm {
     CSPNonce.setValue(CSPNonceValue);
     initialiseSentry(sentryDSN, sentryEnv);
 
-    // ensure that the basename has no trailing slash (for react router)
-    let pathname = basePath || window.location.pathname;
+    let pathname = this.useHashRouting ? '' : basePath || window.location.pathname;
+
     if (pathname.endsWith('/')) {
+      // ensure that the pathname has no trailing slash (for react router)
       pathname = pathname.slice(0, pathname.length - 1);
     }
-    this.basePath = pathname;
+    this.routerBasePath = pathname;
+    this.browserBasePath = this.useHashRouting ? window.location.pathname : pathname;
+    this.makeRedirect();
     this.calculateClientBaseUrl();
+  }
+
+  makeRedirect() {
+    // Perform pre-redirect based on this action: this is decoupled from the backend
+    const query = new URLSearchParams(document.location.search);
+    const action = query.get('_of_action');
+    if (action) {
+      const actionParamsQuery = query.get('_of_action_params');
+      const actionParams = actionParamsQuery ? JSON.parse(actionParamsQuery) : {};
+      query.delete('_of_action');
+      query.delete('_of_action_params');
+
+      const {path: redirectPath, query: redirectQuery = new URLSearchParams()} = getRedirectParams(
+        action,
+        actionParams
+      );
+      const newUrl = new URL(this.browserBasePath, window.location.origin);
+      if (!this.useHashRouting) {
+        newUrl.pathname += `${!newUrl.pathname.endsWith('/') ? '/' : ''}${redirectPath}`;
+        // We first append query params from the redirect action
+        for (let [key, val] of redirectQuery.entries()) {
+          newUrl.searchParams.append(key, val);
+        }
+        // And extra unrelated query params
+        for (let [key, val] of query.entries()) {
+          newUrl.searchParams.append(key, val);
+        }
+      } else {
+        // First add extra unrelated query params, before hash (`#`)
+        for (let [key, val] of query.entries()) {
+          newUrl.searchParams.append(key, val);
+        }
+
+        // Then add our custom path as the hash part. Our query parameters are added here,
+        // but are only parsed as such by react-router, e.g. location.searchParams
+        // will not include them (as per RFC). This is why unrelated query params were added before hash.
+        // TODO use query.size once we have better browser support
+        newUrl.hash = `/${redirectPath}${[...redirectQuery].length ? '?' + redirectQuery : ''}`;
+      }
+
+      window.history.replaceState(null, '', newUrl);
+    }
   }
 
   calculateClientBaseUrl() {
     // calculate the client-side base URL, as this is recorded in backend calls for
     // submissions.
-    const clientBase = resolvePath(this.basePath).pathname; // has leading slash
-    const prefix = this.useHashRouting ? window.location.pathname : ''; // may have trailing slash
-    this.clientBaseUrl = new URL(
-      this.useHashRouting ? `${prefix}#${clientBase}` : clientBase,
-      window.location.origin
-    ).href;
+    const clientBase = resolvePath(this.browserBasePath).pathname; // has leading slash
+    this.clientBaseUrl = new URL(clientBase, window.location.origin).href;
   }
 
   async init() {
@@ -133,7 +175,7 @@ class OpenForm {
 
   render() {
     const createRouter = this.useHashRouting ? createHashRouter : createBrowserRouter;
-    const router = createRouter(routes, {basename: this.basePath});
+    const router = createRouter(routes, {basename: this.routerBasePath});
 
     // render the wrapping React component
     this.root.render(
@@ -143,7 +185,7 @@ class OpenForm {
             value={{
               baseUrl: this.baseUrl,
               clientBaseUrl: this.clientBaseUrl,
-              basePath: this.basePath,
+              basePath: this.routerBasePath,
               baseTitle: this.baseTitle,
               displayComponents: this.displayComponents,
               // XXX: deprecate and refactor usage to use useFormContext?

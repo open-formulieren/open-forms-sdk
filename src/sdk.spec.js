@@ -125,17 +125,128 @@ describe('OpenForm', () => {
     expect(form.clientBaseUrl).toEqual('http://localhost/some-subpath');
   });
 
-  it('should correctly set the formUrl (hash fragment routing)', () => {
+  it("shouldn't take basepath into account (hash based routing)", () => {
     mswServer.use(...apiMocks);
-    window.history.pushState({}, 'Dummy title', '/some-server-side/path');
+    window.history.pushState({}, '', '/some-path');
     const formRoot = document.createElement('div');
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,
-      basePath: '/some-subpath/',
+      basePath: '/i-must-be-ignored',
       formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
       useHashRouting: true,
     });
 
-    expect(form.clientBaseUrl).toEqual('http://localhost/some-server-side/path#/some-subpath');
+    expect(form.clientBaseUrl).toEqual('http://localhost/some-path');
   });
+
+  it.each([
+    [
+      `/some-subpath?_of_action=afspraak-annuleren&_of_action_params=${encodeURIComponent(
+        JSON.stringify({time: '2021-07-21T12:00:00+00:00'})
+      )}`,
+      'http://localhost/some-subpath/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00',
+    ],
+    [
+      '/some-subpath?_of_action=afspraak-maken',
+      'http://localhost/some-subpath/afspraak-maken/producten', // SDK redirects to producten
+    ],
+    [
+      `/some-subpath?_of_action=cosign&_of_action_params=${encodeURIComponent(
+        JSON.stringify({submission_uuid: 'abc'})
+      )}`,
+      'http://localhost/some-subpath/cosign/check?submission_uuid=abc',
+    ],
+    [
+      `/some-subpath?_of_action=resume&_of_action_params=${encodeURIComponent(
+        JSON.stringify({next_step: 'step-1'})
+      )}`,
+      'http://localhost/some-subpath/startpagina', // SDK redirects to start page
+    ],
+  ])('should handle action redirects correctly', async (initialUrl, expected) => {
+    mswServer.use(...apiMocks);
+    const formRoot = document.createElement('div');
+    window.history.pushState(null, '', initialUrl);
+    const form = new OpenForm(formRoot, {
+      baseUrl: BASE_URL,
+      basePath: '/some-subpath',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      useHashRouting: false,
+      lang: 'nl',
+    });
+    await act(async () => await form.init());
+
+    // wait for the loader to be removed when all network requests have completed
+    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    expect(location.href).toEqual(expected);
+  });
+
+  it.each([
+    // With a base path:
+    [
+      // Omitting submission_uuid for simplicity
+      `/base-path/?_of_action=afspraak-annuleren&unrelated_q=1&_of_action_params=${encodeURIComponent(
+        JSON.stringify({time: '2021-07-21T12:00:00+00:00'})
+      )}`,
+      'http://localhost/base-path/?unrelated_q=1#/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00',
+    ],
+    [
+      '/base-path/?_of_action=afspraak-maken&unrelated_q=1',
+      'http://localhost/base-path/?unrelated_q=1#/afspraak-maken/producten',
+    ],
+    [
+      `/base-path/?_of_action=cosign&_of_action_params=${encodeURIComponent(
+        JSON.stringify({submission_uuid: 'abc'})
+      )}&unrelated_q=1`,
+      'http://localhost/base-path/?unrelated_q=1#/cosign/check?submission_uuid=abc',
+    ],
+    [
+      `/base-path/?_of_action=resume&_of_action_params=${encodeURIComponent(
+        JSON.stringify({next_step: 'step-1'})
+      )}&unrelated_q=1`,
+      'http://localhost/base-path/?unrelated_q=1#/startpagina', // SDK redirects to start page
+    ],
+    // Without a base path:
+    [
+      // Omitting submission_uuid for simplicity
+      `/?_of_action=afspraak-annuleren&unrelated_q=1&_of_action_params=${encodeURIComponent(
+        JSON.stringify({time: '2021-07-21T12:00:00+00:00'})
+      )}`,
+      'http://localhost/?unrelated_q=1#/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00',
+    ],
+    [
+      '/?_of_action=afspraak-maken&unrelated_q=1',
+      'http://localhost/?unrelated_q=1#/afspraak-maken/producten', // SDK redirects to producten
+    ],
+    [
+      `/?_of_action=cosign&_of_action_params=${encodeURIComponent(
+        JSON.stringify({submission_uuid: 'abc'})
+      )}&unrelated_q=1`,
+      'http://localhost/?unrelated_q=1#/cosign/check?submission_uuid=abc',
+    ],
+    [
+      `/?_of_action=resume&_of_action_params=${encodeURIComponent(
+        JSON.stringify({next_step: 'step-1'})
+      )}&unrelated_q=1`,
+      'http://localhost/?unrelated_q=1#/startpagina', // SDK redirects to start page
+    ],
+  ])(
+    'should handle action redirects correctly (hash based routing)',
+    async (initialUrl, expected) => {
+      mswServer.use(...apiMocks);
+      const formRoot = document.createElement('div');
+      window.history.pushState(null, '', initialUrl);
+      const form = new OpenForm(formRoot, {
+        baseUrl: BASE_URL,
+        basePath: '/i-must-be-ignored',
+        formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+        useHashRouting: true,
+        lang: 'nl',
+      });
+      await act(async () => await form.init());
+
+      // wait for the loader to be removed when all network requests have completed
+      await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+      expect(location.href).toEqual(expected);
+    }
+  );
 });
