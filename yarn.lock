@@ -2974,11 +2974,6 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@open-formulieren/design-tokens@^0.44.1":
-  version "0.44.1"
-  resolved "https://registry.yarnpkg.com/@open-formulieren/design-tokens/-/design-tokens-0.44.1.tgz#89d6b53b8c3d8acfcb839f26ffed02cab7c9cc4e"
-  integrity sha512-K9EJ8V2qEXpoqEMg9tgqgCByxdJh8M4AN4p1ag2OCgkVckAzVrO+tjZ+0KXM1einCZ2dAGK/8Km1wu1WKiKVPA==
-
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
