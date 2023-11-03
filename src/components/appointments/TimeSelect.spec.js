@@ -9,8 +9,8 @@ import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 
-import {mockAppointmentTimesGet} from '../mocks';
 import TimeSelect from './TimeSelect';
+import {mockAppointmentTimesGet} from './mocks';
 
 const products = [{productId: 'e8e045ab', amount: 1}];
 
