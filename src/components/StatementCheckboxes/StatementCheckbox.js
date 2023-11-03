@@ -41,7 +41,7 @@ const StatementCheckbox = ({configuration, showWarning = false}) => {
     <div className="openforms-privacy-checkbox">
       <FormioComponent component={formioDefinition} />
       {showWarning && (
-        <ErrorMessage modifiers={['warning']}>
+        <ErrorMessage modifier="warning">
           {intl.formatMessage(WARNINGS[configuration.key])}
         </ErrorMessage>
       )}

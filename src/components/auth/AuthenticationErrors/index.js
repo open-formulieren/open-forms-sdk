@@ -75,11 +75,12 @@ const AuthenticationErrors = ({parameters}) => {
     }
   }
 
-  return <ErrorMessage modifiers={['error', 'with-margin']}>{messagesToDisplay[0]}</ErrorMessage>;
+  return <ErrorMessage modifier="error">{messagesToDisplay[0]}</ErrorMessage>;
 };
 
 AuthenticationErrors.propTypes = {
   parameters: PropTypes.object.isRequired,
 };
 
+export {MAPPING_PARAMS_SERVICE, CANCEL_LOGIN_PARAM};
 export {AuthenticationErrors, useDetectAuthErrorMessages};

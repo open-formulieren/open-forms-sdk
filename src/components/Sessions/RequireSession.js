@@ -137,7 +137,7 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
         setWarningDismissed(true);
       }}
     >
-      <ErrorMessage modifiers={['warning']}>
+      <ErrorMessage modifier="warning">
         <FormattedMessage
           description="Session expiry warning message (in modal)"
           defaultMessage="Your session is about to expire {delta}. Extend your session if you wish to continue."
