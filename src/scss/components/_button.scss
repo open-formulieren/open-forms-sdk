@@ -15,5 +15,10 @@
         border-inline-start-color: transparent;
       }
     }
+
+    // approximate browser default behaviour for focus outline
+    &:focus-visible {
+      --utrecht-button-border-radius: 2px;
+    }
   }
 }
