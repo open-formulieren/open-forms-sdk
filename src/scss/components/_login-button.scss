@@ -3,9 +3,7 @@
 @import '~microscope-sass/lib/grid';
 @import '~microscope-sass/lib/responsive';
 
-@import '../mixins/prefix';
-
-.#{prefix(login-button)} {
+.openforms-login-button {
   display: flex;
   align-items: center;
   gap: math.div($grid-container-margin-base, 2);
@@ -14,8 +12,10 @@
 
   @include mobile-only {
     gap: 0;
-    .#{prefix(button)} {
+    .utrecht-button,
+    .utrecht-button-link {
       width: 75%;
+      justify-content: flex-start;
     }
   }
 }

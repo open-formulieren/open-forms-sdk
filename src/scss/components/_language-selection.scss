@@ -27,3 +27,11 @@
     margin-left: auto;
   }
 }
+
+@include mobile-only {
+  .utrecht-alternate-lang-nav {
+    .utrecht-button-group {
+      flex-direction: row;
+    }
+  }
+}
