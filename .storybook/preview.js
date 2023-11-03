@@ -1,16 +1,15 @@
 import '@gemeente-denhaag/design-tokens-components/dist/theme/index.css';
-import '@nl-design-system-unstable/amsterdam-design-tokens/dist/index.css';
 import '@nl-design-system-unstable/rotterdam-design-tokens/dist/index.css';
 import '@utrecht/design-tokens/dist/index.css';
 import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
 import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
+import 'leaflet/dist/leaflet.css';
+import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {initialize, mswDecorator, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
-import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import 'scss/dte-theme.scss';
-import 'leaflet/dist/leaflet.css';
 // load these AFTER the community styles, which is closer in simulating the CSS loading
 // order of our own components
 import 'styles.scss';
@@ -59,7 +58,6 @@ export default {
       target: 'root',
       list: [
         {name: 'Open Forms', class: 'openforms-theme', color: '#01689B'},
-        {name: 'Gemeente Amsterdam', class: 'amsterdam-theme', color: '#004699'},
         {name: 'Gemeente Den Haag', class: 'denhaag-theme', color: '#238541'},
         {name: 'Gemeente Rotterdam', class: 'rotterdam-theme', color: '#00811F'},
         {name: 'Gemeente Utrecht', class: 'utrecht-theme', color: '#cc0000'},

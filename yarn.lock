@@ -2936,11 +2936,6 @@
   dependencies:
     eslint-scope "5.1.1"
 
-"@nl-design-system-unstable/amsterdam-design-tokens@1.0.0-alpha.107":
-  version "1.0.0-alpha.107"
-  resolved "https://registry.yarnpkg.com/@nl-design-system-unstable/amsterdam-design-tokens/-/amsterdam-design-tokens-1.0.0-alpha.107.tgz#5b0dbff57fb9b1611dd394c2cb3e48b8d7587137"
-  integrity sha512-YTixMpGLuS9gluB73OSsFfPaiDapQI0frjgxpWtqsSpeslnwkzPhYzbEppY81nkIXrwIpScioz1/CDwBjmh9Gw==
-
 "@nl-design-system-unstable/rotterdam-design-tokens@1.0.0-alpha.100":
   version "1.0.0-alpha.100"
   resolved "https://registry.yarnpkg.com/@nl-design-system-unstable/rotterdam-design-tokens/-/rotterdam-design-tokens-1.0.0-alpha.100.tgz#db1b00b7abd50c32cbc3385c87bebac7382f1dcb"
