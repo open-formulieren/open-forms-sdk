@@ -28,3 +28,19 @@
     }
   }
 }
+
+// TODO: remove in SDK 3.0
+// Backwards compatibility layer
+.utrecht-alert {
+  @include bem.modifier('error') {
+    background-color: var(--of-alert-error-bg, var(--utrecht-alert-error-background-color));
+  }
+
+  @include bem.modifier('info') {
+    background-color: var(--of-alert-info-bg, var(--utrecht-alert-info-background-color));
+  }
+
+  @include bem.modifier('warning') {
+    background-color: var(--of-alert-warning-bg, var(--utrecht-alert-warning-background-color));
+  }
+}

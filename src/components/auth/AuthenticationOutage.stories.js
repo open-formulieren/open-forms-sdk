@@ -2,7 +2,12 @@ import AuthenticationOutage from './AuthenticationOutage';
 
 export default {
   title: 'Private API / Authentication Outage',
-  render: ({label}) => <AuthenticationOutage loginOption={{label}} />,
+  component: AuthenticationOutage,
+  args: {
+    loginOption: {
+      label: 'DigiD',
+    },
+  },
 };
 
 export const AuthenticationOutageStory = {

@@ -11,6 +11,8 @@ const ICONS = {
   ok: <i className="fa fas fa-check-circle" />,
 };
 
+const ALERT_MODIFIERS = ['info', 'warning', 'error', 'ok'];
+
 const ErrorMessage = ({children, modifier = 'error'}) => {
   const errorRef = useScrollIntoView();
   if (!children) return null;
@@ -23,7 +25,8 @@ const ErrorMessage = ({children, modifier = 'error'}) => {
 
 ErrorMessage.propTypes = {
   children: PropTypes.node,
-  modifier: PropTypes.string,
+  modifier: PropTypes.oneOf(ALERT_MODIFIERS),
 };
 
+export {ALERT_MODIFIERS};
 export default ErrorMessage;

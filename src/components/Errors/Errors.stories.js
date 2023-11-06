@@ -1,6 +1,5 @@
 import ErrorMessage from './ErrorMessage';
-
-const ALERT_MODIFIERS = ['info', 'warning', 'error', 'ok'];
+import {ALERT_MODIFIERS} from './ErrorMessage';
 
 export default {
   title: 'Private API / Error Message',
