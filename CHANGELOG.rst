@@ -37,6 +37,14 @@ should be set:
   looks of the cursor when hovering over a submit button. For the Open Forms theme, this is now
   ``pointer``.
 
+The alert component has also been refactored to use the Utrecht alert component. In order to
+maintain the same styles as in the previous version, the following Utrecht design tokens should be
+set:
+
+* ``--utrecht-alert-warning-background-color`` with the value of ``--of-alert-warning-bg``.
+* ``--utrecht-alert-info-background-color`` with the value of ``--of-alert-info-bg``.
+* ``--utrecht-alert-error-background-color`` with the value of ``--of-alert-error-bg``.
+
 1.5.4 (2023-10-30)
 ==================
 
