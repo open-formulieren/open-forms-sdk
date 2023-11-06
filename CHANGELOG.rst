@@ -37,6 +37,33 @@ should be set:
   looks of the cursor when hovering over a submit button. For the Open Forms theme, this is now
   ``pointer``.
 
+1.5.4 (2023-10-30)
+==================
+
+Periodic bugfix release
+
+* Fixed the width of the progress indicator on mobile devices.
+* [#3510] Fixed the closest address under the map component being overlaid on next field.
+* [#2656] Fixed the address autofill when the fields are nested in repeating groups.
+* [#546] Fixed excessive amounts of API calls firing in new appointments.
+
+1.4.5 (2023-10-30)
+==================
+
+Periodic bugfix release
+
+* Fixed the width of the progress indicator on mobile devices.
+* [#2656] Fixed the address autofill when the fields are nested in repeating groups.
+* [#3523] Fixed not sending privacy policy information to the backend when the field is
+  not rendered.
+
+1.3.7 (2023-10-30)
+==================
+
+Periodic bugfix release
+
+* Fixed the width of the progress indicator on mobile devices.
+* [#2656] Fixed the address autofill when the fields are nested in repeating groups.
 
 1.6.0-alpha.0 (2023-10-02)
 ==========================
