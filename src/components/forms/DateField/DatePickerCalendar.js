@@ -1,6 +1,6 @@
 // Calendar component documentation:
 // https://nl-design-system.github.io/utrecht/storybook-react/index.html?path=/docs/react-component-calendar--docs
-import {Calendar} from '@utrecht/component-library-react/dist/Calendar.mjs';
+import {Calendar} from '@utrecht/component-library-react/dist/Calendar';
 import {enGB, nl} from 'date-fns/locale';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
