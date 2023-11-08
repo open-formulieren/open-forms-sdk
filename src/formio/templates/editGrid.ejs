@@ -10,7 +10,9 @@
             </legend>
           {% } %}
 
-          <div ref="{{ctx.ref.row}}">{{row}}</div>
+          <div ref="{{ctx.ref.row}}" class="openforms-form-field-container">
+            {{row}}
+          </div>
 
           {% if (ctx.openRows[rowIndex] && !ctx.readOnly) { %}
             <p
