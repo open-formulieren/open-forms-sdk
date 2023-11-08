@@ -25,6 +25,11 @@ const Checkbox = ({
 
   return (
     <FormField type="checkbox" invalid={invalid} className="utrecht-form-field--openforms">
+      <div className="utrecht-form-field__label utrecht-form-field__label--checkbox">
+        <LabelContent id={id} isRequired={isRequired} disabled={disabled} type="checkbox">
+          {label}
+        </LabelContent>
+      </div>
       <Field
         name={name}
         as={UtrechtCheckbox}
@@ -37,11 +42,6 @@ const Checkbox = ({
         appearance="custom"
         {...inputProps}
       />
-      <div className="utrecht-form-field__label utrecht-form-field__label--checkbox">
-        <LabelContent id={id} isRequired={isRequired} disabled={disabled} type="checkbox">
-          {label}
-        </LabelContent>
-      </div>
       <HelpText>{description}</HelpText>
       {touched && <ValidationErrors error={error} />}
     </FormField>
