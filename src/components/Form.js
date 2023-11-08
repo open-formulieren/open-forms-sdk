@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
-import {Navigate, Route, Routes, useMatch, useNavigate} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation, useMatch, useNavigate} from 'react-router-dom';
 import {usePrevious} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
@@ -12,7 +12,7 @@ import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
 import PaymentOverview from 'components/PaymentOverview';
-import ProgressIndicator from 'components/ProgressIndicator';
+import ProgressIndicatorNew from 'components/ProgressIndicatorNew/index';
 import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
@@ -20,12 +20,16 @@ import SubmissionSummary from 'components/Summary';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
 import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
+import {IsFormDesigner} from 'headers';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
+
+import {STEP_LABELS, SUBMISSION_ALLOWED} from './constants';
+import {checkMatchesPath} from './utils/routes';
 
 const initialState = {
   submission: null,
@@ -97,6 +101,8 @@ const Form = () => {
   usePageViews();
   const intl = useIntl();
   const prevLocale = usePrevious(intl.locale);
+  const {pathname: currentPathname} = useLocation();
+  const stepMatch = useMatch('/stap/:step');
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -260,14 +266,118 @@ const Form = () => {
     return <Loader modifiers={['centered']} />;
   }
 
-  const progressIndicator = form.showProgressIndicator ? (
-    <ProgressIndicator
-      title={form.name}
-      steps={form.steps}
-      hideNonApplicableSteps={form.hideNonApplicableSteps}
-      submission={state.submission || state.submittedSubmission}
-      submissionAllowed={form.submissionAllowed}
-      completed={state.completed}
+  // Progress Indicator
+
+  const isSummary = checkMatchesPath(currentPathname, 'overzicht');
+  const isStep = checkMatchesPath(currentPathname, 'stap/:step');
+  const isConfirmation = checkMatchesPath(currentPathname, 'bevestiging');
+  const isStartPage = !isSummary && !isStep && !isConfirmation;
+  const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
+  const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
+  const showConfirmation = submissionAllowedSpec === SUBMISSION_ALLOWED.yes;
+  const submission = state.submission || state.submittedSubmission;
+  const hasSubmission = !!submission;
+
+  const applicableSteps = hasSubmission ? submission.steps.filter(step => step.isApplicable) : [];
+  const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
+  const applicableCompleted =
+    hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
+
+  // If any step cannot be submitted, there should NOT be an active link to the overview page.
+  const canSubmitSteps = hasSubmission
+    ? submission.steps.filter(step => !step.canSubmit).length === 0
+    : false;
+
+  // figure out the slug from the currently active step IF we're looking at a step
+  const stepSlug = stepMatch ? stepMatch.params.step : '';
+
+  // figure out the title for the mobile menu based on the state
+  let activeStepTitle;
+  if (isStartPage) {
+    activeStepTitle = STEP_LABELS.login;
+  } else if (isSummary) {
+    activeStepTitle = STEP_LABELS.overview;
+  } else if (isConfirmation) {
+    activeStepTitle = STEP_LABELS.confirmation;
+  } else {
+    const step = steps.find(step => step.slug === stepSlug);
+    activeStepTitle = step.formDefinition;
+  }
+
+  const canNavigateToStep = index => {
+    // The user can navigate to a step when:
+    // 1. All previous steps have been completed
+    // 2. The user is a form designer
+    if (IsFormDesigner.getValue()) return true;
+
+    if (!submission) return false;
+
+    const previousSteps = submission.steps.slice(0, index);
+    const previousApplicableButNotCompletedSteps = previousSteps.filter(
+      step => step.isApplicable && !step.completed
+    );
+
+    return !previousApplicableButNotCompletedSteps.length;
+  };
+
+  // prepare steps - add the fixed steps-texts as well
+  const getStepsInfo = () => {
+    return form.steps.map((step, index) => ({
+      uuid: step.uuid,
+      slug: step.slug,
+      to: `/stap/${step.slug}` || '#',
+      formDefinition: step.formDefinition,
+      isCompleted: submission ? submission.steps[index].completed : false,
+      isApplicable: submission ? submission.steps[index].isApplicable : step.isApplicable ?? true,
+      isCurrent: checkMatchesPath(currentPathname, `/stap/${step.slug}`),
+      canNavigateTo: canNavigateToStep(index),
+    }));
+  };
+
+  const updatedSteps = getStepsInfo();
+
+  updatedSteps.splice(0, 0, {
+    slug: 'startpagina',
+    to: '#',
+    formDefinition: 'Start page',
+    isCompleted: hasSubmission,
+    isApplicable: true,
+    canNavigateTo: true,
+    isCurrent: checkMatchesPath(currentPathname, 'startpagina'),
+    fixedText: STEP_LABELS.login,
+  });
+
+  if (showOverview) {
+    updatedSteps.splice(updatedSteps.length, 0, {
+      slug: 'overzicht',
+      to: 'overzicht',
+      formDefinition: 'Summary',
+      isCompleted: isConfirmation,
+      isApplicable: applicableCompleted && canSubmitSteps,
+      isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
+      fixedText: STEP_LABELS.overview,
+    });
+    const summaryPage = updatedSteps[updatedSteps.length - 1];
+    summaryPage.canNavigateTo = canNavigateToStep(updatedSteps.length - 1);
+  }
+
+  if (showConfirmation) {
+    updatedSteps.splice(updatedSteps.length, 0, {
+      slug: 'bevestiging',
+      to: 'bevestiging',
+      formDefinition: 'Confirmation',
+      isCompleted: state ? state.completed : false,
+      isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+      fixedText: STEP_LABELS.confirmation,
+    });
+  }
+
+  const progressIndicatorNew = form.showProgressIndicator ? (
+    <ProgressIndicatorNew
+      progressIndicatorTitle="Progress"
+      formTitle={form.name}
+      steps={updatedSteps}
+      activeStepTitle={activeStepTitle}
     />
   ) : null;
 
@@ -366,7 +476,7 @@ const Form = () => {
   return (
     <FormDisplayComponent
       router={router}
-      progressIndicator={progressIndicator}
+      progressIndicator={progressIndicatorNew}
       showProgressIndicator={form.showProgressIndicator}
       isPaymentOverview={!!paymentOverviewMatch}
     />
