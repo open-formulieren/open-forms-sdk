@@ -21,3 +21,9 @@
     }
   }
 }
+
+// the formio styles conflict with our NL DS components, applying double padding and
+// causing overflows, so we reset them.
+.formio-error-wrapper {
+  all: revert;
+}
