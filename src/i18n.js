@@ -8,8 +8,8 @@ import {createGlobalstate, useGlobalState} from 'state-pool';
 
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get} from 'api';
-import {logError} from 'components/ErrorBoundary';
-import ErrorMessage from 'components/ErrorMessage';
+import {logError} from 'components/Errors/ErrorBoundary';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
 
 import messagesEN from './i18n/compiled/en.json';

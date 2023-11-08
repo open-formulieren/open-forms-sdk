@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import {LayoutColumn} from 'components/Layout';
 
 import {CancelAppointment, CancelAppointmentSuccess} from './cancel';

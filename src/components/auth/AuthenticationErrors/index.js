@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import useQuery from 'hooks/useQuery';
 
 const MAPPING_PARAMS_SERVICE = {
@@ -75,11 +75,16 @@ const AuthenticationErrors = ({parameters}) => {
     }
   }
 
-  return <ErrorMessage modifiers={['error', 'with-margin']}>{messagesToDisplay[0]}</ErrorMessage>;
+  return (
+    <div className="openforms-authentication-errors">
+      <ErrorMessage modifier="error">{messagesToDisplay[0]}</ErrorMessage>
+    </div>
+  );
 };
 
 AuthenticationErrors.propTypes = {
   parameters: PropTypes.object.isRequired,
 };
 
+export {MAPPING_PARAMS_SERVICE, CANCEL_LOGIN_PARAM};
 export {AuthenticationErrors, useDetectAuthErrorMessages};

@@ -1,0 +1,21 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as ErrorsStories from './Errors.stories';
+
+<Meta of={ErrorsStories} />
+
+# Error Message
+
+The error message component uses the
+[Utrecht Alert component](https://nl-design-system.github.io/utrecht/storybook/?path=/docs/react_react-alert--docs).
+
+<Canvas>
+  <Story of={ErrorsStories.ErrorMessageOkStory} />
+  <Story of={ErrorsStories.ErrorMessageInfoStory} />
+  <Story of={ErrorsStories.ErrorMessageErrorStory} />
+  <Story of={ErrorsStories.ErrorMessageWarningStory} />
+</Canvas>
+
+## Props
+
+<ArgTypes of={ErrorsStories} />

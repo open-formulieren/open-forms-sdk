@@ -28,7 +28,7 @@ const TestComponent = ({email, number}) => {
 
   const formatted = result.error.format();
   return (
-    <div className="utrecht-document">
+    <>
       <p>Error messages should be in Dutch</p>
 
       <div>
@@ -47,7 +47,7 @@ const TestComponent = ({email, number}) => {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 

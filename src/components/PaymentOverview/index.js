@@ -5,7 +5,7 @@ import {useLocation} from 'react-router-dom';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import Link from 'components/Link';
 import useTitle from 'hooks/useTitle';
 

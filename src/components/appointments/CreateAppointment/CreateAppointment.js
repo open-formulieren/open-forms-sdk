@@ -3,7 +3,7 @@ import {Outlet, useLocation} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import Card from 'components/Card';
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';

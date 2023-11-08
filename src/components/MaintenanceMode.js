@@ -2,14 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import Body from 'components/Body';
 import Card from 'components/Card';
-import FAIcon from 'components/FAIcon';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import {IsFormDesigner} from 'headers';
-import {getBEMClassName} from 'utils';
 
 const MaintenanceModeAlert = () => {
-  const alertClassName = getBEMClassName('alert', ['info']);
   const userIsFormDesigner = IsFormDesigner.getValue();
 
   let message;
@@ -32,14 +29,7 @@ const MaintenanceModeAlert = () => {
     );
   }
 
-  return (
-    <div className={alertClassName}>
-      <span className={getBEMClassName('alert__icon')}>
-        <FAIcon icon="info" />
-      </span>
-      <Body>{message}</Body>
-    </div>
-  );
+  return <ErrorMessage modifier="info">{message}</ErrorMessage>;
 };
 
 const MaintenanceMode = ({title, asToast = false}) => {

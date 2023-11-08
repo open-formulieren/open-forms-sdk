@@ -1482,12 +1482,19 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.5.tgz#8564dd588182ce0047d55d7a75e93921107b57ec"
   integrity sha512-ecjvYlnAaZ/KVneE/OdKYBYfgXV3Ptu6zQWmgEF7vwKhQnvVS6bjMD2XYgj+SNvQ1GfK/pjgokfPkC/2CO8CuA==
   dependencies:
     regenerator-runtime "^0.13.11"
+
+"@babel/runtime@^7.21.0":
+  version "7.23.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.2.tgz#062b0ac103261d68a966c4c7baf2ae3e62ec3885"
+  integrity sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==
+  dependencies:
+    regenerator-runtime "^0.14.0"
 
 "@babel/template@^7.20.7", "@babel/template@^7.22.5", "@babel/template@^7.3.3":
   version "7.22.5"
@@ -5138,12 +5145,12 @@
     "@typescript-eslint/types" "5.60.0"
     eslint-visitor-keys "^3.3.0"
 
-"@utrecht/component-library-css@^1.0.0-alpha.526":
-  version "1.0.0-alpha.529"
-  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.529.tgz#f4b0e7109f76f8fa1992657b1b449e35d2c49960"
-  integrity sha512-GgwWM5KBfG0cKC21kLB/fxS7cxMAYnSJCAyVprm1vtdFhlqDATkpZ8nAy9G+M6Kybz67qpuzEhjQ9n77aEIinA==
+"@utrecht/component-library-css@1.0.0-alpha.604":
+  version "1.0.0-alpha.604"
+  resolved "https://registry.yarnpkg.com/@utrecht/component-library-css/-/component-library-css-1.0.0-alpha.604.tgz#d8c53be9a103ef71cf2bb171b5ab6bb0233ecce8"
+  integrity sha512-2yAAOKxirmJVKpdHGhfh3lI4MdR46JN/W6oL+LlmRwmO84xTlJnWKqPuIcIijzjCHzggPWNl5O6zHPPlumWi4g==
 
-"@utrecht/component-library-react@^1.0.0-alpha.353":
+"@utrecht/component-library-react@1.0.0-alpha.353":
   version "1.0.0-alpha.353"
   resolved "https://registry.yarnpkg.com/@utrecht/component-library-react/-/component-library-react-1.0.0-alpha.353.tgz#1913089f74880532a0954717240e0e7ffb032020"
   integrity sha512-WoJOGxUtQdDn0ysU9WYQou1MQBUIfJxEUJXMuTaRO2nxcYjv1lxto9Di+PRfDcRJr0mNKVApcxu3d8yRLFNHxQ==
@@ -5152,17 +5159,17 @@
     date-fns "2.30.0"
     lodash.chunk "4.2.0"
 
-"@utrecht/components@^1.0.0-alpha.473":
-  version "1.0.0-alpha.490"
-  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.490.tgz#8eedd4794c017d2c7d53e66c29d460bc50e1938e"
-  integrity sha512-cWX9e+OTjGLy00oZU7tQn/qPle+u9aFfH2zktkGxxiYaz/u8HQ36xnJMlpm9fEKST+9x0AJOT9RCYLCSgKxfNg==
+"@utrecht/components@1.0.0-alpha.565":
+  version "1.0.0-alpha.565"
+  resolved "https://registry.yarnpkg.com/@utrecht/components/-/components-1.0.0-alpha.565.tgz#af5ec288882343b43e41dab3b929e8b44caac94f"
+  integrity sha512-Rs/f8YzVpeM7pXgQuTicT/rb2sYrUqAGB3rRSWq7TuvUgreENrJa9vnRytVq2I6+Z66zEuz8d2tBO0tUEijFDA==
   dependencies:
     clsx "1.2.1"
 
-"@utrecht/design-tokens@^1.0.0-alpha.505":
-  version "1.0.0-alpha.522"
-  resolved "https://registry.yarnpkg.com/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.522.tgz#ade2891d9a73b956b400674315898a7a2dd41871"
-  integrity sha512-YmOoH2eMkkTmxpUCei9Ccgcb3reWluf/9u36DDiNNwn837pjVZZz2Ldks12Vfe1Qb8wIL/Y0AT6zZ7Hwc4bCig==
+"@utrecht/design-tokens@1.0.0-alpha.597":
+  version "1.0.0-alpha.597"
+  resolved "https://registry.yarnpkg.com/@utrecht/design-tokens/-/design-tokens-1.0.0-alpha.597.tgz#7f36889edc763a001437074d266d9b8d1fb81602"
+  integrity sha512-1DhRBv0896JkdaGiXBJL71mckrrQAZkr5CTqR5BRuHp/xbSaPtLg/JEw4uNXpsnvxZrwn1wmz/PY/wzvnBAGHw==
 
 "@vue/compiler-core@3.3.4", "@vue/compiler-core@^3.2.23":
   version "3.3.4"
@@ -7210,7 +7217,7 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-date-fns@2.30.0:
+date-fns@2.30.0, date-fns@^2.30.0:
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
   integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
@@ -13839,6 +13846,11 @@ regenerator-runtime@^0.13.11, regenerator-runtime@^0.13.7, regenerator-runtime@^
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
+
+regenerator-runtime@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz#5e19d68eb12d486f797e15a3c6a918f7cec5eb45"
+  integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
 
 regenerator-transform@^0.15.1:
   version "0.15.1"

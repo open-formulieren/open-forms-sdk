@@ -8,7 +8,7 @@ import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import {OFButton} from 'components/Button';
 import Card from 'components/Card';
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FAIcon from 'components/FAIcon';
 import Loader from 'components/Loader';
 import PaymentForm from 'components/PaymentForm';

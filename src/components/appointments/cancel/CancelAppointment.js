@@ -8,7 +8,7 @@ import {post} from 'api';
 import Body from 'components/Body';
 import {OFButton} from 'components/Button';
 import Card from 'components/Card';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {EmailField} from 'components/forms';
 import {ValidationError} from 'errors';

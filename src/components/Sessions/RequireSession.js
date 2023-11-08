@@ -7,7 +7,7 @@ import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
 import {OFButton} from 'components/Button';
 import Card from 'components/Card';
-import ErrorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/Errors/ErrorMessage';
 import Link from 'components/Link';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Modal from 'components/modals/Modal';
@@ -137,7 +137,7 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
         setWarningDismissed(true);
       }}
     >
-      <ErrorMessage modifiers={['warning']}>
+      <ErrorMessage modifier="warning">
         <FormattedMessage
           description="Session expiry warning message (in modal)"
           defaultMessage="Your session is about to expire {delta}. Extend your session if you wish to continue."

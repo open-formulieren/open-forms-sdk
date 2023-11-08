@@ -18,18 +18,17 @@ exports[`navigation without context displays a generic error message 1`] = `
   >
      
     <div
-      className="openforms-alert openforms-alert--error"
+      className="utrecht-alert utrecht-alert--error"
     >
-      <span
-        className="openforms-alert__icon openforms-alert__icon--wide"
+      <div
+        className="utrecht-alert__icon"
       >
         <i
-          aria-hidden="true"
-          className="fa fas fa-icon fa-exclamation-circle"
+          className="fa fas fa-exclamation-circle"
         />
-      </span>
+      </div>
       <div
-        className="openforms-body"
+        className="utrecht-alert__message"
       >
         We can't display any payment information - did you maybe get here by accident?
       </div>
@@ -60,18 +59,17 @@ exports[`on valid redirect renders an error message on failure 1`] = `
       className="openforms-body"
     >
       <div
-        className="openforms-alert openforms-alert--error"
+        className="utrecht-alert utrecht-alert--error"
       >
-        <span
-          className="openforms-alert__icon openforms-alert__icon--wide"
+        <div
+          className="utrecht-alert__icon"
         >
           <i
-            aria-hidden="true"
-            className="fa fas fa-icon fa-exclamation-circle"
+            className="fa fas fa-exclamation-circle"
           />
-        </span>
+        </div>
         <div
-          className="openforms-body"
+          className="utrecht-alert__message"
         >
           The payment has failed. If you aborted the payment, please complete payment from the confirmation email.
         </div>

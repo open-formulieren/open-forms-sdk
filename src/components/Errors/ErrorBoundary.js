@@ -4,10 +4,11 @@ import {FormattedMessage, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
-import ErrorMessage from 'components/ErrorMessage';
 import Link from 'components/Link';
 import MaintenanceMode from 'components/MaintenanceMode';
 import {DEBUG} from 'utils';
+
+import ErrorMessage from './ErrorMessage';
 
 const logError = (error, errorInfo) => {
   DEBUG && console.error(error, errorInfo);
