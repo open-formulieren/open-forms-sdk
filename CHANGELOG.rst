@@ -2,44 +2,83 @@
 SDK Changelog
 =============
 
-1.6.0 (2023-10-??)
-==================
+2.0.0-beta.0 (2023-11-06)
+=========================
 
-.. warning:: SDK 1.6.0 requires at least version 2.4.0 of the Open Formulieren API.
+💥 Breaking changes ahead!
 
-Updating stylesheets
---------------------
+We've opted to bump the major version number of the SDK due to a number of refactors
+with (potential) breaking changes to existing environments. This release was originally
+scheduled to become v1.6.0, so all the 1.6.0-alpha.0 changes are included in this
+version too.
 
-In this version, the button component has been refactored to use the Utrecht button components.
-In order to maintain the same style as in previous versions, the following Utrecht design tokens
-should be set:
+.. warning:: SDK 2.0.0 requires at least version 2.4.0 of the Open Formulieren API.
 
-* ``--utrecht-button-primary-action-focus-border-color`` has ``#000000`` (black) in the Open Forms
-  theme.
-* ``--utrecht-button-primary-action-danger-focus-border-color`` has ``#000000`` (black) in the
+Breaking changes
+----------------
+
+**Button component refactor**
+
+We've refactored all of our button component usage with the ``utrecht-button`` component
+from the NL Design System community. The design tokens that were used before to change
+the appearance of buttons no longer work, instead you must specify the equivalent
+utrecht-button design tokens. We've provided a mapping:
+
+* ``--utrecht-button-primary-action-focus-border-color`` has ``#000000`` (black) in the
   Open Forms theme.
-* ``--utrecht-button-secondary-action-danger-background-color`` takes the value of the old ``--of-button-danger-bg``
-* ``--utrecht-button-secondary-action-danger-color`` takes the value of the old ``--of-button-danger-fg``
-* ``--utrecht-button-secondary-action-focus-border-color`` takes the value of the old ``--of-color-focus-border``
-* ``--utrecht-button-subtle-danger-color``  takes the value of ``--of-color-danger``
-* ``--utrecht-button-subtle-danger-background-color``  takes the value of ``--of-color-bg``
-* ``--utrecht-button-subtle-danger-hover-background-color`` takes the value ``--of-color-bg``
-* ``--utrecht-button-subtle-danger-active-background-color`` takes the value of the old ``--of-button-danger-active-bg``
-* ``--utrecht-button-disabled-color``. This does not take the value of an old token. For the
-  Open Forms theme this is now ``#ffffff``.
-* ``--utrecht-button-disabled-background-color``. This does not take the value of an old token,
-  the colour was previously obtained by graying out the primary button. For the Open Forms theme,
-  this is now ``#b0b0b0``.
-* ``--utrecht-action-disabled-cursor``. This does not take the value of an old token. It controls
-  the looks of the cursor when hovering a disabled button. For the Open Forms theme, this is now
-  ``not-allowed``.
-* ``--utrecht-action-submit-cursor``. This does not take the value of an old token. It controls the
-  looks of the cursor when hovering over a submit button. For the Open Forms theme, this is now
-  ``pointer``.
+* ``--utrecht-button-primary-action-danger-focus-border-color`` has ``#000000`` (black)
+  in the Open Forms theme.
+* ``--utrecht-button-secondary-action-danger-background-color`` takes the value of the
+  old ``--of-button-danger-bg``.
+* ``--utrecht-button-secondary-action-danger-color`` takes the value of the old
+  ``--of-button-danger-fg``.
+* ``--utrecht-button-secondary-action-focus-border-color`` takes the value of the old
+  ``--of-color-focus-border``.
+* ``--utrecht-button-subtle-danger-color``  takes the value of ``--of-color-danger``.
+* ``--utrecht-button-subtle-danger-background-color``  takes the value of
+  ``--of-color-bg``.
+* ``--utrecht-button-subtle-danger-hover-background-color`` takes the value
+  ``--of-color-bg``.
+* ``--utrecht-button-subtle-danger-active-background-color`` takes the value of the old
+  ``--of-button-danger-active-bg``.
+* ``--utrecht-button-disabled-color``. This does not take the value of an old token. For
+  the Open Forms theme this is now ``#ffffff``.
+* ``--utrecht-button-disabled-background-color``. This does not take the value of an old
+  token, the colour was previously obtained by graying out the primary button. For the
+  Open Forms theme, this is now ``#b0b0b0``.
+* ``--utrecht-action-disabled-cursor``. This does not take the value of an old token. It
+  controls the looks of the cursor when hovering a disabled button. For the Open Forms
+  theme, this is now ``not-allowed``.
+* ``--utrecht-action-submit-cursor``. This does not take the value of an old token. It
+  controls the looks of the cursor when hovering over a submit button. For the Open
+  Forms theme, this is now ``pointer``.
+
+Additionally, in the ``.openforms-theme`` we apply some custom CSS overrides that may
+need to be replicated in your own theme since they're now scoped to our own theme
+selector.
+
+Unfortunately, setting up a backwards compatible layer was considered too complex.
+
+**Buttons that look like links**
+
+These are now actual links instead of button elements. If you have automated test
+scripts, they may fail on these links now when querying by accessible role.
+
+**Formio time component cleanup [#3531]**
+
+The time component min/max time validation is moved into the ``validate`` namespace, for
+a consistent builder configuration.
+
+Existing component definitions need to be updated: ``component.minTime`` becomes
+``component.validate.minTime``, and a similar action is needed for ``maxTime``. This is
+done automatically in the Open Forms backend, so it only requires attention if you have
+other form definition sources.
+
+**Alert component refactor**
 
 The alert component has also been refactored to use the Utrecht alert component. In order to
-maintain the same styles as in the previous version, the following Utrecht design tokens should be
-set:
+maintain the same styles as in the previous version, the following Utrecht design tokens
+should be set:
 
 * ``--utrecht-alert-warning-background-color`` with the value of ``--of-alert-warning-bg``.
 * ``--utrecht-alert-info-background-color`` with the value of ``--of-alert-info-bg``.
@@ -48,6 +87,48 @@ set:
 * ``--utrecht-alert-icon-info-color`` with the value of ``--of-color-info``.
 * ``--utrecht-alert-icon-warning-color`` with the value of ``--of-color-warning``.
 * ``--utrecht-alert-icon-ok-color`` with the value of ``--of-color-success``.
+
+We've set up a backwards compatibility layer for these design tokens, so they won't
+break just yet, but we urge you to update your themes.
+
+New features
+------------
+
+* [#437] Added support for Home/End keypresses in the select component search box to
+  move the cursor to the start/end of the input.
+
+* We're using more NL Design System components instead of rolling our own
+
+    * [#571] Removed the openforms-form-control wrapper around form fields. The
+      ``utrecht-form-field`` and ``utrecht-form-fieldset`` components already fulfill
+      this role.
+    * [#462] Replaced our own button component/variants with the ``utrecht-button``
+      component.
+    * [#454] The editgrid (repeating group) markup and styling now make better use of
+      NL DS & NL DS principles.
+    * [#464] Navigation links that used to be buttons-styled-like-a-link are now actual
+      links for correct, accessible semantics.
+    * [#467] Replaced our own alert component with the ``utrecht-alert`` component.
+
+* [#2952] Added support for steps that are initially not-applicable.
+* [#524] Improved accessible labels on number fields with suffixes.
+
+Bugfixes
+--------
+
+* [#3510] Fixed the closest address under the map component being overlaid on the next
+  field.
+* [#546] Fixed excessive amounts of API calls firing in new appointments.
+* [#2656] Fixed the address autofill when the fields are nested in repeating groups.
+* [#3485] Fixed hidden components messing with the vertical spacing between components.
+* [#3536] Fixed appointment form crashes when number field input was not a valid number.
+* [#3572] Fixed a race condition on WebKit browsers.
+
+Project maintenance
+-------------------
+
+* Fixed tests breaking due to DST change.
+* Bumped design-token-editor to latest version.
 
 1.5.4 (2023-10-30)
 ==================
@@ -240,34 +321,34 @@ Features
 
 * Implemented a bunch of (non-formio) form components:
 
-  * [#433] Added an input group component to split a single field in multiple user input
-    elements for better user experience.
-  * [#433] Added the input group widget for date fields (day, month, year) with
-    localization.
-  * [#465] Added the radio field component.
+    * [#433] Added an input group component to split a single field in multiple user input
+      elements for better user experience.
+    * [#433] Added the input group widget for date fields (day, month, year) with
+      localization.
+    * [#465] Added the radio field component.
 
 * NL Design system improvements
 
-  * [#468] Reworked selectboxes to have NL DS markup and styling.
-  * [#475] Reworked radio inputs to have NL DS markup and styling.
-  * [#476] Reworked checkboxes to have NL DS markup and styling.
+    * [#468] Reworked selectboxes to have NL DS markup and styling.
+    * [#475] Reworked radio inputs to have NL DS markup and styling.
+    * [#476] Reworked checkboxes to have NL DS markup and styling.
 
 * [#1892] Added tooltips to formio components.
 * [#3209] Added base tooltip styling, configurable via design tokens.
 
 * [#2471] Appointments rework - there is now a dedicated appointment flow without Form.io
 
-  .. note:: This is currently in preview to get some early feedback, but we are aware
-     of a number of issues.
+    .. note:: This is currently in preview to get some early feedback, but we are aware
+       of a number of issues.
 
-  * [#3066] Added contact details step, showing the required fields as exposed by the
-    backend.
-  * Appointment data submitted in any step is persisted in the session storage so that
-    it survives hard-refreshes. This also makes it possible to open multiple forms in
-    multiple browser tabs/windows.
-  * [#3067] Exposed the appointment flow in the main app routes.
-  * UI toggles between single/multi-product depending on backend support.
-  * [#435] Added client-side user input validation.
+    * [#3066] Added contact details step, showing the required fields as exposed by the
+      backend.
+    * Appointment data submitted in any step is persisted in the session storage so that
+      it survives hard-refreshes. This also makes it possible to open multiple forms in
+      multiple browser tabs/windows.
+    * [#3067] Exposed the appointment flow in the main app routes.
+    * UI toggles between single/multi-product depending on backend support.
+    * [#435] Added client-side user input validation.
 
 * [#2175] Support initial map center and zoom level from backend configuration.
 
@@ -316,12 +397,12 @@ Features
 
 * Implemented a number of form components using NL Design System for non-formio forms:
 
-  * [#3057] Text field.
-  * [#3059] Email field.
-  * [#3058] Number field, with widgets for small and large numbers and localization.
-  * [#3061, #420] Select field, with static and dynamically retrieved options.
-  * [#3060] Added a datepicker-based date field.
-  * [#442] These should all be themeable with the appropriate design tokens - see our
+    * [#3057] Text field.
+    * [#3059] Email field.
+    * [#3058] Number field, with widgets for small and large numbers and localization.
+    * [#3061, #420] Select field, with static and dynamically retrieved options.
+    * [#3060] Added a datepicker-based date field.
+    * [#442] These should all be themeable with the appropriate design tokens - see our
     storybook.
 
 * [#2471, #3062, #3063, #3065, #3067] (experimental) Started appointment form rework UX.

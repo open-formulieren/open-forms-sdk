@@ -7,7 +7,7 @@
 
 .#{prefix(toolbar)} {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   position: relative;
 
@@ -34,6 +34,7 @@
 
   @include mobile-only {
     display: block;
+    align-items: center;
 
     @include bem.modifier('compact') {
       @include bem.element('list') {
