@@ -1,13 +1,3 @@
-<input
-  ref="input"
-  id="{{ctx.instance.id}}-{{ctx.component.key}}"
-
-  {% for (var attr in ctx.input.attr) { %}
-    {{attr}}="{{ctx.input.attr[attr]}}"
-  {% } %}
-
-  {% if (ctx.checked) { %}checked=true{% } %}
->
 
 <p class="utrecht-form-field__label utrecht-form-field__label--checkbox">
   <label
@@ -20,3 +10,14 @@
     {% } %}
   </label>
 </p>
+
+<input
+  ref="input"
+  id="{{ctx.instance.id}}-{{ctx.component.key}}"
+
+  {% for (var attr in ctx.input.attr) { %}
+    {{attr}}="{{ctx.input.attr[attr]}}"
+  {% } %}
+
+  {% if (ctx.checked) { %}checked=true{% } %}
+>
