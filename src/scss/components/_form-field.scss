@@ -7,7 +7,10 @@
       background-color: var(--of-utrecht-form-field-background-color, unset);
 
       &.utrecht-form-field--invalid {
-        --of-utrecht-form-field-background-color: var(--of-alert-error-bg);
+        --of-utrecht-form-field-background-color: var(
+          --utrecht-alert-error-background-color,
+          var(--of-alert-error-bg)
+        );
         // apply padding in all dimensions for error state
         padding-inline-end: var(--utrecht-form-field-invalid-padding-inline-start);
         padding-block-start: var(--utrecht-form-field-invalid-padding-inline-start);
@@ -20,7 +23,10 @@
       background-color: var(--of-utrecht-form-field-background-color, unset);
 
       &.utrecht-form-fieldset--invalid {
-        --of-utrecht-form-field-background-color: var(--of-alert-error-bg);
+        --of-utrecht-form-field-background-color: var(
+          --utrecht-alert-error-background-color,
+          var(--of-alert-error-bg)
+        );
         // apply padding in all dimensions for error state
         padding-inline-end: var(--utrecht-form-field-invalid-padding-inline-start);
         padding-block-start: var(--utrecht-form-field-invalid-padding-inline-start);
