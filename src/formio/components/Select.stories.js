@@ -1,6 +1,9 @@
-import {withUtrechtDocument} from 'story-utils/decorators';
+import {userEvent, within} from '@storybook/testing-library';
 
-import {SingleFormioComponent} from './story-util';
+import {withUtrechtDocument} from 'story-utils/decorators';
+import {sleep} from 'utils';
+
+import {MultipleFormioComponents, SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Vanilla / Select',
@@ -47,5 +50,54 @@ export const Select = {
   args: {
     key: 'select',
     label: 'Welke optie is het meest onduidelijk?',
+  },
+};
+
+export const RequiredWithValidationError = {
+  render: MultipleFormioComponents,
+  args: {
+    components: [
+      {
+        type: 'select',
+        key: 'selectRequired',
+        label: 'Required select',
+        data: {
+          values: [
+            {
+              label: 'Optie A',
+              value: 'radioA',
+            },
+            {
+              label: 'Optie B',
+              value: 'radioB',
+            },
+            {
+              label: 'Optie C',
+              value: 'radioC',
+            },
+          ],
+        },
+        validate: {
+          required: true,
+        },
+      },
+      {
+        label: 'Check validations',
+        showValidations: true,
+        key: 'submit1',
+        type: 'button',
+        input: true,
+        action: 'notSubmit',
+      },
+    ],
+  },
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // just form.io things...
+    await sleep(100);
+
+    await userEvent.click(canvas.getByRole('button'));
   },
 };

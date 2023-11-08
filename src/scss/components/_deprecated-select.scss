@@ -21,26 +21,44 @@ $select-background-color: var(--of-select-background-color, $color-white);
   $item-hpadding: $grid-margin-1;
   $vborders: $typography-size-border;
 
-  width: 100%;
-
   // The wrapper div.
   // Style as a regular input.
   .choices {
     @include body;
-    @include border(all, $size: 1px);
     @include rows(1, min-height);
+
     position: relative;
     display: flex;
     align-items: center;
+
+    background-color: var(
+      --utrecht-select-background-color,
+      var(--utrecht-form-control-background-color, var(--of-color-bg))
+    );
+    border-bottom-width: var(--utrecht-select-border-bottom-width, 1px);
+    border-color: var(--utrecht-select-border-color, var(--of-field-border-color));
     border-radius: 0;
+    border-style: solid;
+    border-width: var(--utrecht-select-border-width, 1px);
+
     font-weight: bold;
     padding: 0 $list-hpadding;
-    width: 100%;
+
+    max-inline-size: calc(
+      var(--utrecht-select-max-inline-size, var(--utrecht-form-control-max-inline-size)) - 2 * #{$list-hpadding}
+    );
 
     .choices__list {
-      background-color: var(--of-color-bg);
-      border-color: var(--of-field-border-color);
-      color: var(--of-color-fg);
+      background-color: var(
+        --utrecht-select-background-color,
+        var(--utrecht-form-control-background-color, var(--of-color-bg))
+      );
+      border-color: var(--utrecht-select-border-color, var(--of-field-border-color));
+      color: var(--utrecht-select-color, var(--of-color-fg));
+      max-inline-size: var(
+        --utrecht-select-max-inline-size,
+        var(--utrecht-form-control-max-inline-size)
+      );
 
       .is-highlighted {
         background-color: var(--of-select-highlighted-bg);
@@ -93,7 +111,7 @@ $select-background-color: var(--of-select-background-color, $color-white);
 
   // Available choices.
   .selection + .choices__list {
-    left: 0;
+    left: -1px; // border width
   }
 
   // Items within the available choices.
