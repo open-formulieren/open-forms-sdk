@@ -1,0 +1,12 @@
+@use 'microscope-sass/lib/bem';
+
+// Extensions on NL DS component
+.utrecht-form-field {
+  @include bem.modifier('openforms') {
+    &.utrecht-form-field--checkbox {
+      &:focus-within {
+        outline: var(--of-utrecht-form-label-checkbox-focus-within-outline);
+      }
+    }
+  }
+}
