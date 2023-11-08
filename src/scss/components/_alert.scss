@@ -33,14 +33,14 @@
 // Backwards compatibility layer
 .utrecht-alert {
   @include bem.modifier('error') {
-    background-color: var(--of-alert-error-bg, var(--utrecht-alert-error-background-color));
+    background-color: var(--utrecht-alert-error-background-color, var(--of-alert-error-bg));
   }
 
   @include bem.modifier('info') {
-    background-color: var(--of-alert-info-bg, var(--utrecht-alert-info-background-color));
+    background-color: var(--utrecht-alert-info-background-color, var(--of-alert-info-bg));
   }
 
   @include bem.modifier('warning') {
-    background-color: var(--of-alert-warning-bg, var(--utrecht-alert-warning-background-color));
+    background-color: var(--utrecht-alert-warning-background-color, var(--of-alert-warning-bg));
   }
 }
