@@ -7,16 +7,7 @@ import FormDisplay from './FormDisplay';
 export default {
   title: 'Composites / Form display',
   component: FormDisplay,
-  argTypes: {
-    // showProgressIndicator: {control: 'boolean'},
-    // isPaymentOverview: {control: 'boolean'},
-    // router: {table: {disable: true}},
-    // progressIndicator: {table: {disable: true}},
-  },
   decorators: [LayoutDecorator],
-};
-
-export const Default = {
   render: args => (
     <FormDisplay
       router={
@@ -32,14 +23,22 @@ export const Default = {
       {...args}
     />
   ),
+  argTypes: {
+    router: {table: {disable: true}},
+    progressIndicator: {table: {disable: true}},
+  },
+};
+
+export const Default = {
   args: {
     showProgressIndicator: true,
     isPaymentOverview: false,
   },
-  argTypes: {
-    // showProgressIndicator: {control: 'boolean'},
-    // isPaymentOverview: {control: 'boolean'},
-    router: {table: {disable: true}},
-    progressIndicator: {table: {disable: true}},
+};
+
+export const WithoutProgressIndicator = {
+  args: {
+    showProgressIndicator: false,
+    isPaymentOverview: false,
   },
 };

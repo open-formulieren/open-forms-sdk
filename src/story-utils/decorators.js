@@ -101,19 +101,17 @@ export const LiteralDecorator = (Story, {args}) => (
   </LiteralsProvider>
 );
 
-const PaddedDiv = ({className, children}) => (
-  <div style={{padding: '1em 0'}} className={className}>
+const PaddedDiv = ({className, children, style = {}}) => (
+  <div style={{padding: '15px 0', ...style}} className={className}>
     {children}
   </div>
 );
 
 export const LayoutDecorator = Story => {
   return (
-    <Layout component={PaddedDiv}>
-      <LayoutRow>
-        <Story />
-      </LayoutRow>
-    </Layout>
+    <PaddedDiv style={{backgroundColor: '#e6e6e6', paddingInline: '15px'}}>
+      <Story />
+    </PaddedDiv>
   );
 };
 
