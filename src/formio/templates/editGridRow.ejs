@@ -1,5 +1,5 @@
   {% for (const key in ctx.flattenedComponents) { %}
-      {% if (ctx.isVisibleInRow(ctx.flattenedComponents[key])) { %}
+      {% if (ctx.isVisibleInRow(ctx.flattenedComponents[key]) && ctx.flattenedComponents[key].label) { %}
           <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
       {% } %}
   {% } %}
