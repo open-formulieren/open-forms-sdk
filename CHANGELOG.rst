@@ -2,6 +2,35 @@
 SDK Changelog
 =============
 
+1.5.5 (2023-11-09)
+==================
+
+Hotfix release
+
+* [#3536] Fixed a crash in appointments when clearing or specifying an invalid number of
+  persons for a product/service
+* [#3572] Fixed a race condition on WebKit that would cause the submit button to get
+  stuck in the disabled state.
+* [#3577] Fixed an issue with checkbox/radio buttons on WebKit that would make only the
+  label clickable and not the checkbox/radio itself.
+* [#587] Fixed a checkbox label focus outline regression.
+
+1.4.6 (2023-11-09)
+==================
+
+Hotfix release
+
+* [#3572] Fixed a race condition on WebKit that would cause the submit button to get
+  stuck in the disabled state.
+
+1.3.8 (2023-11-09)
+==================
+
+Hotfix release
+
+* [#3572] Fixed a race condition on WebKit that would cause the submit button to get
+  stuck in the disabled state.
+
 2.0.0 (2023-11-08)
 ==================
 
