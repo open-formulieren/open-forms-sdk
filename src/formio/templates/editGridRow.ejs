@@ -1,8 +1,15 @@
+<dl class="utrecht-data-list utrecht-data-list--html-dl utrecht-data-list--rows">
   {% for (const key in ctx.flattenedComponents) { %}
-      {% if (ctx.isVisibleInRow(ctx.flattenedComponents[key]) && ctx.flattenedComponents[key].label) { %}
-          <div>{{ctx.flattenedComponents[key].label}}: {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}</div>
-      {% } %}
+    {% if (ctx.isVisibleInRow(ctx.flattenedComponents[key]) && ctx.flattenedComponents[key].label) { %}
+      <div class="utrecht-data-list__item">
+        <dt class="utrecht-data-list__item-key">{{ctx.flattenedComponents[key].label}}</dt>
+        <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+          {{ ctx.getView(ctx.flattenedComponents[key], ctx.row[key]) }}
+        </dd>
+      </div>
+    {% } %}
   {% } %}
+</dl>
 
 {% if (!ctx.self.options.readOnly) { %}
   <p class="utrecht-button-group utrecht-button-group--openforms-editgrid" role="group">
