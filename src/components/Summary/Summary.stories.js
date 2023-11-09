@@ -1,5 +1,5 @@
 import {expect} from '@storybook/jest';
-import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {userEvent, within} from '@storybook/testing-library';
 import cloneDeep from 'lodash/cloneDeep';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
@@ -268,5 +268,16 @@ export const OnlyOneRequiredStatement = {
 
     const checkboxTruth = canvas.queryByLabelText('I responded very honestly.');
     expect(checkboxTruth).toBeNull();
+  },
+};
+
+export const Loading = {
+  render,
+  parameters: {
+    // loader keeps spinning indefinitely
+    chromatic: {disableSnapshot: true},
+  },
+  args: {
+    isLoading: true,
   },
 };

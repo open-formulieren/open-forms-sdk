@@ -4,7 +4,6 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {post} from 'api';
-import {LayoutColumn} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';
 import {RequireSession} from 'components/Sessions';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -84,26 +83,24 @@ const CosignSummary = ({
 
   return (
     <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
-      <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>
-        <LiteralsProvider literals={form.literals}>
-          <GenericSummary
-            title={
-              <FormattedMessage
-                description="Check overview and co-sign"
-                defaultMessage="Check and co-sign submission"
-              />
-            }
-            submissionAllowed={SUBMISSION_ALLOWED.yes}
-            summaryData={summaryData}
-            showPaymentInformation={false}
-            editStepText=""
-            isLoading={loading || loadingData}
-            isAuthenticated={true}
-            onSubmit={onSubmit}
-            onLogout={onLogout}
-          />
-        </LiteralsProvider>
-      </LayoutColumn>
+      <LiteralsProvider literals={form.literals}>
+        <GenericSummary
+          title={
+            <FormattedMessage
+              description="Check overview and co-sign"
+              defaultMessage="Check and co-sign submission"
+            />
+          }
+          submissionAllowed={SUBMISSION_ALLOWED.yes}
+          summaryData={summaryData}
+          showPaymentInformation={false}
+          editStepText=""
+          isLoading={loading || loadingData}
+          isAuthenticated={true}
+          onSubmit={onSubmit}
+          onLogout={onLogout}
+        />
+      </LiteralsProvider>
     </RequireSession>
   );
 };

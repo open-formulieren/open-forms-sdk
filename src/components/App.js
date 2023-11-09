@@ -8,7 +8,6 @@ import AppDebug from 'components/AppDebug';
 import {Cosign} from 'components/CoSign';
 import Form from 'components/Form';
 import LanguageSelection from 'components/LanguageSelection';
-import {LayoutRow} from 'components/Layout';
 import {CreateAppointment, appointmentRoutes} from 'components/appointments';
 import ManageAppointment from 'components/appointments/ManageAppointment';
 import useFormContext from 'hooks/useFormContext';
@@ -42,13 +41,7 @@ export const routes = [
 
 const LanguageSwitcher = () => {
   const {languageSelectorTarget: target} = useContext(I18NContext);
-  return target ? (
-    ReactDOM.createPortal(<LanguageSelection />, target)
-  ) : (
-    <LayoutRow>
-      <LanguageSelection />
-    </LayoutRow>
-  );
+  return target ? ReactDOM.createPortal(<LanguageSelection />, target) : <LanguageSelection />;
 };
 
 /*
