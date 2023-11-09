@@ -432,7 +432,7 @@ Features
     * [#3061, #420] Select field, with static and dynamically retrieved options.
     * [#3060] Added a datepicker-based date field.
     * [#442] These should all be themeable with the appropriate design tokens - see our
-    storybook.
+      storybook.
 
 * [#2471, #3062, #3063, #3065, #3067] (experimental) Started appointment form rework UX.
 
