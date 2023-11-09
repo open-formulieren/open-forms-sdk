@@ -10,7 +10,6 @@ import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
-import {LayoutColumn} from 'components/Layout';
 import Loader from 'components/Loader';
 import PaymentOverview from 'components/PaymentOverview';
 import ProgressIndicator from 'components/ProgressIndicator';
@@ -258,11 +257,7 @@ const Form = () => {
   }
 
   if (loading || shouldAutomaticallyRedirect) {
-    return (
-      <LayoutColumn>
-        <Loader modifiers={['centered']} />
-      </LayoutColumn>
-    );
+    return <Loader modifiers={['centered']} />;
   }
 
   const progressIndicator = form.showProgressIndicator ? (

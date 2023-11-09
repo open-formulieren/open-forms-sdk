@@ -1,7 +1,6 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import {LayoutColumn} from 'components/Layout';
 
 /**
  * Layout component to render the form container.
@@ -15,14 +14,16 @@ const FormDisplay = ({
 }) => {
   const renderProgressIndicator = progressIndicator && showProgressIndicator && !isPaymentOverview;
   return (
-    <>
-      <LayoutColumn modifiers={['mobile-order-2', 'mobile-padding-top']}>{router}</LayoutColumn>
-      {renderProgressIndicator ? (
-        <LayoutColumn modifiers={['secondary', 'mobile-order-1', 'mobile-sticky']}>
-          {progressIndicator}
-        </LayoutColumn>
-      ) : null}
-    </>
+    <div
+      className={classNames('openforms-form', {
+        'openforms-form--body-only': !renderProgressIndicator,
+      })}
+    >
+      <div className="openforms-form__body">{router}</div>
+      {renderProgressIndicator && (
+        <div className="openforms-form__progress-indicator">{progressIndicator}</div>
+      )}
+    </div>
   );
 };
 
