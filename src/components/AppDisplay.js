@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {Layout, LayoutRow} from 'components/Layout';
-
 const AppDisplay = ({router, languageSwitcher = null, appDebug = null}) => (
-  <Layout>
-    {languageSwitcher}
-    <LayoutRow>{router}</LayoutRow>
-    {appDebug && <LayoutRow>{appDebug}</LayoutRow>}
-  </Layout>
+  <div className="openforms-app">
+    {languageSwitcher && <div className="openforms-app__language-switcher">{languageSwitcher}</div>}
+    <div className="openforms-app__body">{router}</div>
+    {appDebug && <div className="openforms-app__debug">{appDebug}</div>}
+  </div>
 );
 
 AppDisplay.propTypes = {

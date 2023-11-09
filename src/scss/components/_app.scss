@@ -1,0 +1,28 @@
+@use 'microscope-sass/lib/bem';
+
+// @import instead of @use because breakpoints are defined globally
+@import 'microscope-sass/lib/responsive';
+
+/**
+ * Custom component to manage our form layout. This is the outermost element managed
+ * by the SDK.
+ *
+ * The default values are added for backwards compatibility.
+ */
+.openforms-app {
+  display: flex;
+  flex-direction: column;
+  gap: var(--of-form-gap, 0);
+  position: relative;
+
+  @include mobile-only {
+    padding-block-end: var(--of-form-mobile-padding-block-end, 15px);
+    padding-block-start: var(--of-form-mobile-padding-block-start, 0);
+    padding-inline-end: var(--of-form-mobile-padding-inline-end, 15px);
+    padding-inline-start: var(--of-form-mobile-padding-inline-start, 15px);
+  }
+
+  @include bem.element('debug') {
+    margin-block-start: 2em;
+  }
+}
