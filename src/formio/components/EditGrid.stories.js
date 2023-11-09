@@ -24,6 +24,14 @@ const defaultNested = [
     delimiter: true,
     allowNegative: false,
   },
+  {
+    key: 'content',
+    html: '<p>This is some nice content without a label</p>',
+    type: 'content',
+    input: false,
+    label: '',
+    tableView: false,
+  },
 ];
 
 export default {
