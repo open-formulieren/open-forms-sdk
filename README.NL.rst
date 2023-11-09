@@ -2,7 +2,7 @@
 Open Formulieren SDK
 ====================
 
-:Version: 1.4.5
+:Version: 1.4.6
 :Source: https://github.com/open-formulieren/open-forms-sdk
 :Keywords: e-Formulieren, Common Ground, FormIO, API
 
