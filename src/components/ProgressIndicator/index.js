@@ -6,7 +6,6 @@ import {useLocation} from 'react-router-dom';
 import Caption from 'components/Caption';
 import Card from 'components/Card';
 import List from 'components/List';
-import {STEP_LABELS} from 'components/constants';
 
 import MobileButton from './MobileButton';
 import ProgressIndicatorItem from './ProgressIndicatorItem';
