@@ -23,8 +23,9 @@
 
   // if we are not rendering in a designated portal node, ensure it's aligned to the
   // right
-  @at-root .openforms-layout__row & {
-    margin-left: auto;
+  @at-root .openforms-app__language-switcher & {
+    margin-inline-start: auto;
+    margin-block-end: var(--of-language-selection-in-app-margin-block-end);
   }
 }
 
