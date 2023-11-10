@@ -20,7 +20,6 @@ import SubmissionSummary from 'components/Summary';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
 import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
-import {IsFormDesigner} from 'headers';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
@@ -28,8 +27,8 @@ import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 
-import {STEP_LABELS, SUBMISSION_ALLOWED} from './constants';
-import {checkMatchesPath} from './utils/routes';
+import {addFixedSteps, getStepsInfo} from './ProgressIndicatorNew/utils';
+import {SUBMISSION_ALLOWED} from './constants';
 
 const initialState = {
   submission: null,
@@ -102,7 +101,11 @@ const Form = () => {
   const intl = useIntl();
   const prevLocale = usePrevious(intl.locale);
   const {pathname: currentPathname} = useLocation();
+
+  // TODO replace absolute path check with relative
   const stepMatch = useMatch('/stap/:step');
+  const summaryMatch = useMatch('/overzicht');
+  const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -268,116 +271,69 @@ const Form = () => {
 
   // Progress Indicator
 
-  const isSummary = checkMatchesPath(currentPathname, 'overzicht');
-  const isStep = checkMatchesPath(currentPathname, 'stap/:step');
-  const isConfirmation = checkMatchesPath(currentPathname, 'bevestiging');
-  const isStartPage = !isSummary && !isStep && !isConfirmation;
+  const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
   const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
   const showConfirmation = submissionAllowedSpec === SUBMISSION_ALLOWED.yes;
   const submission = state.submission || state.submittedSubmission;
-  const hasSubmission = !!submission;
+  const isCompleted = state.completed;
+  const formName = form.name;
 
-  const applicableSteps = hasSubmission ? submission.steps.filter(step => step.isApplicable) : [];
-  const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
-  const applicableCompleted =
-    hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
-
-  // If any step cannot be submitted, there should NOT be an active link to the overview page.
-  const canSubmitSteps = hasSubmission
-    ? submission.steps.filter(step => !step.canSubmit).length === 0
-    : false;
-
-  // figure out the slug from the currently active step IF we're looking at a step
+  // Figure out the slug from the currently active step IF we're looking at a step
   const stepSlug = stepMatch ? stepMatch.params.step : '';
 
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
   if (isStartPage) {
-    activeStepTitle = STEP_LABELS.login;
-  } else if (isSummary) {
-    activeStepTitle = STEP_LABELS.overview;
-  } else if (isConfirmation) {
-    activeStepTitle = STEP_LABELS.confirmation;
+    activeStepTitle = intl.formatMessage({
+      description: 'Start page title',
+      defaultMessage: 'Start page',
+    });
+  } else if (summaryMatch) {
+    activeStepTitle = intl.formatMessage({
+      description: 'Summary page title',
+      defaultMessage: 'Summary',
+    });
+  } else if (confirmationMatch) {
+    activeStepTitle = intl.formatMessage({
+      description: 'Confirmation page title',
+      defaultMessage: 'Confirmation',
+    });
   } else {
     const step = steps.find(step => step.slug === stepSlug);
     activeStepTitle = step.formDefinition;
   }
 
-  const canNavigateToStep = index => {
-    // The user can navigate to a step when:
-    // 1. All previous steps have been completed
-    // 2. The user is a form designer
-    if (IsFormDesigner.getValue()) return true;
-
-    if (!submission) return false;
-
-    const previousSteps = submission.steps.slice(0, index);
-    const previousApplicableButNotCompletedSteps = previousSteps.filter(
-      step => step.isApplicable && !step.completed
-    );
-
-    return !previousApplicableButNotCompletedSteps.length;
-  };
-
-  // prepare steps - add the fixed steps-texts as well
-  const getStepsInfo = () => {
-    return form.steps.map((step, index) => ({
-      uuid: step.uuid,
-      slug: step.slug,
-      to: `/stap/${step.slug}` || '#',
-      formDefinition: step.formDefinition,
-      isCompleted: submission ? submission.steps[index].completed : false,
-      isApplicable: submission ? submission.steps[index].isApplicable : step.isApplicable ?? true,
-      isCurrent: checkMatchesPath(currentPathname, `/stap/${step.slug}`),
-      canNavigateTo: canNavigateToStep(index),
-    }));
-  };
-
-  const updatedSteps = getStepsInfo();
-
-  updatedSteps.splice(0, 0, {
-    slug: 'startpagina',
-    to: '#',
-    formDefinition: 'Start page',
-    isCompleted: hasSubmission,
-    isApplicable: true,
-    canNavigateTo: true,
-    isCurrent: checkMatchesPath(currentPathname, 'startpagina'),
-    fixedText: STEP_LABELS.login,
+  const ariaMobileIconLabel = intl.formatMessage({
+    description: 'Progress step indicator toggle icon (mobile)',
+    defaultMessage: 'Toggle the progress status display',
   });
 
-  if (showOverview) {
-    updatedSteps.splice(updatedSteps.length, 0, {
-      slug: 'overzicht',
-      to: 'overzicht',
-      formDefinition: 'Summary',
-      isCompleted: isConfirmation,
-      isApplicable: applicableCompleted && canSubmitSteps,
-      isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
-      fixedText: STEP_LABELS.overview,
-    });
-    const summaryPage = updatedSteps[updatedSteps.length - 1];
-    summaryPage.canNavigateTo = canNavigateToStep(updatedSteps.length - 1);
-  }
+  const accessibleToggleStepsLabel = intl.formatMessage(
+    {
+      description: 'Active step accessible label in mobile progress indicator',
+      defaultMessage: 'Current step in form {formName}: {activeStepTitle}',
+    },
+    {formName, activeStepTitle}
+  );
 
-  if (showConfirmation) {
-    updatedSteps.splice(updatedSteps.length, 0, {
-      slug: 'bevestiging',
-      to: 'bevestiging',
-      formDefinition: 'Confirmation',
-      isCompleted: state ? state.completed : false,
-      isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
-      fixedText: STEP_LABELS.confirmation,
-    });
-  }
-
+  const updatedSteps = getStepsInfo(form.steps, submission, currentPathname);
+  const stepsToRender = addFixedSteps(
+    updatedSteps,
+    submission,
+    currentPathname,
+    showOverview,
+    showConfirmation,
+    isCompleted
+  );
+  debugger;
   const progressIndicatorNew = form.showProgressIndicator ? (
     <ProgressIndicatorNew
       progressIndicatorTitle="Progress"
-      formTitle={form.name}
-      steps={updatedSteps}
-      activeStepTitle={activeStepTitle}
+      formTitle={formName}
+      steps={stepsToRender}
+      ariaMobileIconLabel={ariaMobileIconLabel}
+      accessibleToggleStepsLabel={accessibleToggleStepsLabel}
     />
   ) : null;
 

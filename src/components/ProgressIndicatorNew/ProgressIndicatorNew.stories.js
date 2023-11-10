@@ -63,7 +63,8 @@ export default {
         fixedText: STEP_LABELS.overview,
       },
     ],
-    activeStepTitle: 'Stap 2',
+    ariaMobileIconLabel: 'Progress step indicator toggle icon (mobile)',
+    accessibleToggleStepsLabel: 'Current step in form Formulier: Stap 2',
   },
 };
 

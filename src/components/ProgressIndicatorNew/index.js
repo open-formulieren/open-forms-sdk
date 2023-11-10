@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 
 import Caption from 'components/Caption';
@@ -11,23 +11,15 @@ import {STEP_LABELS} from 'components/constants';
 import MobileButton from './MobileButton';
 import ProgressIndicatorItem from './ProgressIndicatorItem';
 
-const ProgressIndicatorNew = ({progressIndicatorTitle, formTitle, steps, activeStepTitle}) => {
-  const intl = useIntl();
+const ProgressIndicatorNew = ({
+  progressIndicatorTitle,
+  formTitle,
+  steps,
+  ariaMobileIconLabel,
+  accessibleToggleStepsLabel,
+}) => {
   const {pathname: currentPathname} = useLocation();
   const [expanded, setExpanded] = useState(false);
-
-  const ariaIconLabel = intl.formatMessage({
-    description: 'Progress step indicator toggle icon (mobile)',
-    defaultMessage: 'Toggle the progress status display',
-  });
-
-  const accessibleToggleStepsLabel = intl.formatMessage(
-    {
-      description: 'Active step accessible label in mobile progress indicator',
-      defaultMessage: 'Current step in form {formTitle}: {activeStepTitle}',
-    },
-    {formTitle, activeStepTitle}
-  );
 
   const modifiers = [];
   if (!expanded) {
@@ -48,7 +40,7 @@ const ProgressIndicatorNew = ({progressIndicatorTitle, formTitle, steps, activeS
     <Card blockClassName="progress-indicator" modifiers={modifiers}>
       <nav>
         <MobileButton
-          ariaIconLabel={ariaIconLabel}
+          ariaMobileIconLabel={ariaMobileIconLabel}
           accessibleToggleStepsLabel={accessibleToggleStepsLabel}
           formTitle={formTitle}
           expanded={expanded}
@@ -81,14 +73,14 @@ const ProgressIndicatorNew = ({progressIndicatorTitle, formTitle, steps, activeS
 };
 
 ProgressIndicatorNew.propTypes = {
-  progressIndicatorTitle: PropTypes.string.isRequired,
+  progressIndicatorTitle: PropTypes.string,
   formTitle: PropTypes.string,
   steps: PropTypes.arrayOf(
     PropTypes.shape({
       uuid: PropTypes.string,
-      slug: PropTypes.string.isRequired,
+      slug: PropTypes.string,
       to: PropTypes.string,
-      formDefinition: PropTypes.string.isRequired,
+      formDefinition: PropTypes.string,
       isCompleted: PropTypes.bool,
       isApplicable: PropTypes.bool,
       isCurrent: PropTypes.bool,
@@ -96,7 +88,8 @@ ProgressIndicatorNew.propTypes = {
       fixedText: PropTypes.oneOf(Object.values(STEP_LABELS)),
     })
   ).isRequired,
-  activeStepTitle: PropTypes.string,
+  ariaMobileIconLabel: PropTypes.string,
+  accessibleToggleStepsLabel: PropTypes.string,
 };
 
 export default ProgressIndicatorNew;

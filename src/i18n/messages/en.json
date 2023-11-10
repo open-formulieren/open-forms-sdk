@@ -19,6 +19,11 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
+  "1a96bc": {
+    "defaultMessage": "{progressIndicatorTitle}",
+    "description": "Title of progress indicator",
+    "originalDefault": "{progressIndicatorTitle}"
+  },
   "1hdvgS": {
     "defaultMessage": "Something went wrong while presenting the login option. Please contact the municipality.",
     "description": "Co-sign auth option not available on form",
@@ -599,6 +604,11 @@
     "description": "Appoinments: time select help text",
     "originalDefault": "Times are in your local time"
   },
+  "hFqzG6": {
+    "defaultMessage": "Current step in form {title}: {activeStepTitle}",
+    "description": "Active step accessible label in mobile progress indicator",
+    "originalDefault": "Current step in form {title}: {activeStepTitle}"
+  },
   "hHS5vj": {
     "defaultMessage": "Something went wrong while submitting the form.",
     "description": "Generic submission error",
@@ -658,6 +668,11 @@
     "defaultMessage": "Your products",
     "description": "Product summary on appointments location and time step heading",
     "originalDefault": "Your products"
+  },
+  "jdzNwf": {
+    "defaultMessage": "Current step in form {formName}: {activeStepTitle}",
+    "description": "Active step accessible label in mobile progress indicator",
+    "originalDefault": "Current step in form {formName}: {activeStepTitle}"
   },
   "jnYRyz": {
     "defaultMessage": "Expected {expected}, received {received}.",

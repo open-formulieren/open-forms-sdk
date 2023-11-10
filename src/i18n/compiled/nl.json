@@ -55,6 +55,12 @@
       "value": "Uitloggen"
     }
   ],
+  "1a96bc": [
+    {
+      "type": 1,
+      "value": "progressIndicatorTitle"
+    }
+  ],
   "1hdvgS": [
     {
       "type": 0,
@@ -1245,6 +1251,24 @@
       "value": "U wordt op dit tijdstip op de afspraak verwacht"
     }
   ],
+  "hFqzG6": [
+    {
+      "type": 0,
+      "value": "Current step in form "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "activeStepTitle"
+    }
+  ],
   "hHS5vj": [
     {
       "type": 0,
@@ -1343,6 +1367,24 @@
     {
       "type": 0,
       "value": "Uw producten"
+    }
+  ],
+  "jdzNwf": [
+    {
+      "type": 0,
+      "value": "Current step in form "
+    },
+    {
+      "type": 1,
+      "value": "formName"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "activeStepTitle"
     }
   ],
   "jnYRyz": [

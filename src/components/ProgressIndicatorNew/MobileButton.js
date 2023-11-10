@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
 
 const MobileButton = ({
-  ariaIconLabel,
+  ariaMobileIconLabel,
   accessibleToggleStepsLabel,
   formTitle,
   expanded,
@@ -20,7 +19,7 @@ const MobileButton = ({
       <FAIcon
         icon={expanded ? 'chevron-up' : 'chevron-down'}
         modifiers={['normal']}
-        aria-label={ariaIconLabel}
+        aria-label={ariaMobileIconLabel}
       />
       <span
         className={getBEMClassName('progress-indicator__form-title')}
@@ -33,11 +32,11 @@ const MobileButton = ({
 };
 
 MobileButton.propTypes = {
-  ariaIconLabel: PropTypes.string.isRequired,
-  accessibleToggleStepsLabel: PropTypes.oneOfType([PropTypes.string, FormattedMessage]),
-  formTitle: PropTypes.string.isRequired,
-  expanded: PropTypes.bool.isRequired,
-  onExpandClick: PropTypes.func.isRequired,
+  ariaMobileIconLabel: PropTypes.string,
+  accessibleToggleStepsLabel: PropTypes.string,
+  formTitle: PropTypes.string,
+  expanded: PropTypes.bool,
+  onExpandClick: PropTypes.func,
 };
 
 export default MobileButton;
