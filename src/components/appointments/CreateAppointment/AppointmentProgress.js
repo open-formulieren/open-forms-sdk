@@ -4,9 +4,8 @@ import {useIntl} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
-import ProgressIndicatorNew from 'components/ProgressIndicatorNew';
-import {addFixedSteps} from 'components/ProgressIndicatorNew/utils';
-import {STEP_LABELS} from 'components/constants';
+import ProgressIndicator from 'components/ProgressIndicator';
+import {addFixedSteps} from 'components/ProgressIndicator/utils';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
@@ -95,10 +94,10 @@ const AppointmentProgress = ({title, currentStep}) => {
     {title, activeStepTitle}
   );
 
-  const ProgressIndicatorNewComponent =
-    config?.displayComponents?.progressIndicator ?? ProgressIndicatorNew;
+  const ProgressIndicatorComponent =
+    config?.displayComponents?.progressIndicator ?? ProgressIndicator;
   return (
-    <ProgressIndicatorNewComponent
+    <ProgressIndicatorComponent
       progressIndicatorTitle="Progress"
       formTitle={title}
       steps={stepsToRender}

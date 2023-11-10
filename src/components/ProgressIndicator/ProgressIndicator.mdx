@@ -2,7 +2,7 @@ import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
 
 import ProgressIndicator from '.';
 import * as ProgressIndicatorStories from './ProgressIndicator.stories';
-import ProgressIndicatorDisplay from './ProgressIndicatorDisplay';
+import ProgressIndicatorItem from './ProgressIndicatorItem';
 
 <Meta of={ProgressIndicatorStories} />
 
@@ -12,23 +12,32 @@ The progress indicator displays the progression through a particular form's step
 
 ## Presentation
 
-The `ProgressIndicatorDisplay` component shows the different steps in a form. The style of each step
-varies depending on whether it is applicable, it is completed or it is the currently active step.
-
-<Canvas of={ProgressIndicatorStories.Display} />
+The `ProgressIndicator` component shows the different steps (`ProgressIndicatorItem`) in a form. The
+style of each step varies depending on whether it is applicable, it is completed or it is the
+currently active step.
 
 ### Props
 
-<ArgTypes of={ProgressIndicatorDisplay} />
+<ArgTypes of={ProgressIndicator} />
 
 ## Functional
 
-The `ProgressIndicator` component handles the 'smart' behaviour. It checks:
+The `Form` component handles all the 'smart' behaviour conerning the `ProgressIndicator` and how
+this is shown. All the useful props are passed through to the `ProgressIndicator` component. The
+`Form` component checks:
 
 - If the steps are currently active, completed, applicable or if a step can be clicked to navigate
   to it.
 - If the current page is the start page, the summary page or the confirmation page.
 - If all the applicable steps have been completed.
+
+The `ProgressIndicator` component passes through all the individual steps (dynamic and fixed) to the
+`ProgressIndicatorItem` component and checks:
+
+- If the container should be shown for a desktop or a mobile version.
+
+The `ProgressIndicatorItem` component renders all the steps as links or as simple texts depending on
+the props.
 
 It is responsible for rendering the `ProgressIndicatorDisplay` component.
 
@@ -39,14 +48,10 @@ passed as prop through the component.
 Note that a particular step may become not-applicable while filling out the form because of certain
 logic rules. The details of each step's status are available in `submission.steps[@index]`.
 
-<Story of={ProgressIndicatorStories.ActiveSubmission} />
-
 ## Form start
 
 On initial load, no submission is available yet, and the overview is rendered based on the form
 rather than the submission.
-
-<Story of={ProgressIndicatorStories.InitialFormLoad} />
 
 ## Props
 

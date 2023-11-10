@@ -32,11 +32,11 @@ const MobileButton = ({
 };
 
 MobileButton.propTypes = {
-  ariaMobileIconLabel: PropTypes.string,
-  accessibleToggleStepsLabel: PropTypes.string,
-  formTitle: PropTypes.string,
+  ariaMobileIconLabel: PropTypes.string.isRequired,
+  accessibleToggleStepsLabel: PropTypes.string.isRequired,
+  formTitle: PropTypes.string.isRequired,
   expanded: PropTypes.bool,
-  onExpandClick: PropTypes.func,
+  onExpandClick: PropTypes.func.isRequired,
 };
 
 export default MobileButton;

@@ -70,7 +70,7 @@ ProgressIndicatorItem.propTypes = {
   isCompleted: PropTypes.bool,
   canNavigateTo: PropTypes.bool,
   isApplicable: PropTypes.bool,
-  fixedText: PropTypes.oneOf(Object.values(STEP_LABELS)),
+  fixedText: PropTypes.string,
 };
 
 export default ProgressIndicatorItem;

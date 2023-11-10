@@ -3,7 +3,7 @@ import {withRouter} from 'storybook-addon-react-router-v6';
 import ProgressIndicatorItem from './ProgressIndicatorItem';
 
 export default {
-  title: 'Private API / ProgressIndicatorNew / ProgressIndicatorItem',
+  title: 'Private API / ProgressIndicator / ProgressIndicatorItem',
   component: ProgressIndicatorItem,
   decorators: [withRouter],
   args: {

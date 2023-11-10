@@ -12,7 +12,7 @@ import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
 import PaymentOverview from 'components/PaymentOverview';
-import ProgressIndicatorNew from 'components/ProgressIndicatorNew/index';
+import ProgressIndicator from 'components/ProgressIndicator/index';
 import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';
@@ -27,7 +27,7 @@ import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 
-import {addFixedSteps, getStepsInfo} from './ProgressIndicatorNew/utils';
+import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
 import {SUBMISSION_ALLOWED} from './constants';
 
 const initialState = {
@@ -327,8 +327,8 @@ const Form = () => {
     isCompleted
   );
   debugger;
-  const progressIndicatorNew = form.showProgressIndicator ? (
-    <ProgressIndicatorNew
+  const progressIndicator = form.showProgressIndicator ? (
+    <ProgressIndicator
       progressIndicatorTitle="Progress"
       formTitle={formName}
       steps={stepsToRender}
@@ -432,7 +432,7 @@ const Form = () => {
   return (
     <FormDisplayComponent
       router={router}
-      progressIndicator={progressIndicatorNew}
+      progressIndicator={progressIndicator}
       showProgressIndicator={form.showProgressIndicator}
       isPaymentOverview={!!paymentOverviewMatch}
     />
