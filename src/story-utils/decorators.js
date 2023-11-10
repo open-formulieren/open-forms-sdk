@@ -6,7 +6,6 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
-import {Layout, LayoutRow} from 'components/Layout';
 import {LiteralsProvider} from 'components/Literal';
 
 export const ConfigDecorator = (Story, {parameters}) => {
@@ -101,19 +100,17 @@ export const LiteralDecorator = (Story, {args}) => (
   </LiteralsProvider>
 );
 
-const PaddedDiv = ({className, children}) => (
-  <div style={{padding: '1em 0'}} className={className}>
+const PaddedDiv = ({className, children, style = {}}) => (
+  <div style={{padding: '15px 0', ...style}} className={className}>
     {children}
   </div>
 );
 
 export const LayoutDecorator = Story => {
   return (
-    <Layout component={PaddedDiv}>
-      <LayoutRow>
-        <Story />
-      </LayoutRow>
-    </Layout>
+    <PaddedDiv style={{backgroundColor: '#e6e6e6', paddingInline: '15px'}}>
+      <Story />
+    </PaddedDiv>
   );
 };
 

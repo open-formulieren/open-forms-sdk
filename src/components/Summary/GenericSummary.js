@@ -5,7 +5,6 @@ import React from 'react';
 import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
-import {LayoutColumn} from 'components/Layout';
 import Loader from 'components/Loader';
 import LogoutButton from 'components/LogoutButton';
 import Price from 'components/Price';
@@ -30,11 +29,7 @@ const GenericSummary = ({
   const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? Form : 'div';
 
   if (isLoading) {
-    return (
-      <LayoutColumn>
-        <Loader modifiers={['centered']} />
-      </LayoutColumn>
-    );
+    return <Loader modifiers={['centered']} />;
   }
 
   return (

@@ -5,14 +5,14 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import {ConfigDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import App, {routes as nestedRoutes} from './App';
 
 export default {
   title: 'Private API / App',
   component: App,
-  decorators: [ConfigDecorator],
+  decorators: [LayoutDecorator, ConfigDecorator],
   args: {
     'form.translationEnabled': true,
   },
