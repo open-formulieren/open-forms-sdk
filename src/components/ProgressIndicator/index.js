@@ -88,7 +88,7 @@ ProgressIndicator.propTypes = {
       isApplicable: PropTypes.bool,
       isCurrent: PropTypes.bool,
       canNavigateTo: PropTypes.bool,
-      fixedText: PropTypes.string,
+      fixedText: PropTypes.element,
     })
   ).isRequired,
   ariaMobileIconLabel: PropTypes.string.isRequired,

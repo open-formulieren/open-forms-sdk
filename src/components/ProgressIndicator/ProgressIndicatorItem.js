@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
 import Link from 'components/Link';
+import {STEP_LABELS} from 'components/constants';
 import {getBEMClassName} from 'utils';
 
 import CompletionMark from './CompletionMark';
@@ -69,7 +70,7 @@ ProgressIndicatorItem.propTypes = {
   isCompleted: PropTypes.bool,
   canNavigateTo: PropTypes.bool,
   isApplicable: PropTypes.bool,
-  fixedText: PropTypes.string,
+  fixedText: PropTypes.element,
 };
 
 export default ProgressIndicatorItem;

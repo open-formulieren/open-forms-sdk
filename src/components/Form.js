@@ -326,7 +326,7 @@ const Form = () => {
     showConfirmation,
     isCompleted
   );
-  debugger;
+
   const progressIndicator = form.showProgressIndicator ? (
     <ProgressIndicator
       progressIndicatorTitle="Progress"
