@@ -4,7 +4,6 @@ import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
 import Link from 'components/Link';
-import {STEP_LABELS} from 'components/constants';
 import {getBEMClassName} from 'utils';
 
 import CompletionMark from './CompletionMark';
