@@ -5,7 +5,6 @@ import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
 import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
-import 'leaflet/dist/leaflet.css';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {initialize, mswDecorator, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
