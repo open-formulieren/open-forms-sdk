@@ -5,7 +5,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {FormContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
 import {buildForm} from 'api-mocks';
-import {mockSubmissionGet, mockSubmissionPost} from 'api-mocks/submissions';
+import {mockSubmissionGet, mockSubmissionPost, mockSubmissionStepGet} from 'api-mocks/submissions';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -66,8 +66,6 @@ export default {
   parameters: {
     msw: {
       handlers: [
-        mockSubmissionGet(),
-        mockSubmissionPost(),
         mockLanguageInfoGet([
           {code: 'nl', name: 'Nederlands'},
           {code: 'en', name: 'English'},
@@ -144,17 +142,47 @@ export const TranslationDisabled = {
 export const ActiveSubmission = {
   name: 'Active submission',
   render,
+  args: {
+    steps: [
+      {
+        uuid: '9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5',
+        slug: 'step-1',
+        formDefinition: 'Step 1',
+        index: 0,
+        literals: {
+          previousText: {resolved: 'Previous', value: ''},
+          saveText: {resolved: 'Save', value: ''},
+          nextText: {resolved: 'Next', value: ''},
+        },
+        url: `${BASE_URL}forms/mock/steps/9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5`,
+        isApplicable: true,
+        completed: false,
+      },
+    ],
+  },
   argTypes: {
     hideNonApplicableSteps: {table: {disable: true}},
     submissionAllowed: {table: {disable: true}},
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        mockSubmissionPost(),
+        mockSubmissionGet(),
+        mockSubmissionStepGet(),
+        mockLanguageInfoGet([
+          {code: 'nl', name: 'Nederlands'},
+          {code: 'en', name: 'English'},
+        ]),
+        mockLanguageChoicePut,
+      ],
+    },
   },
 
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const beginButton = canvas.getByRole('button', {name: 'Begin'});
-      await userEvent.click(beginButton);
-    });
+    const beginButton = await canvas.findByRole('button', {name: 'Begin'});
+    await userEvent.click(beginButton);
   },
 };

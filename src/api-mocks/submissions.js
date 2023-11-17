@@ -41,8 +41,13 @@ export const mockSubmissionPost = (submission = buildSubmission()) =>
     return res(ctx.status(201), ctx.json(submission));
   });
 
-export const mockSubmissionGet = () =>
+export const mockSubmissionStepGet = () =>
   rest.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(SUBMISSION_DETAILS.steps[0]));
+  });
+
+export const mockSubmissionGet = () =>
+  rest.get(`${BASE_URL}submissions/:uuid`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(SUBMISSION_DETAILS));
   });
 

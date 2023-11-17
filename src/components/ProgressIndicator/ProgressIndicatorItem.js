@@ -26,7 +26,7 @@ const ProgressIndicatorItem = ({label, to, isActive, isCompleted, canNavigateTo,
         <Link
           to={to}
           placeholder={!canNavigateTo}
-          modifiers={getLinkModifiers(isActive, isApplicable, isCompleted)}
+          modifiers={canNavigateTo ? getLinkModifiers(isActive, isApplicable, isCompleted) : []}
           aria-label={label}
         >
           <FormattedMessage

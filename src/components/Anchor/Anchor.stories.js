@@ -70,3 +70,11 @@ export const Inherit = {
     label: 'Inherit',
   },
 };
+
+export const Placeholder = {
+  render,
+  args: {
+    label: 'placeholder',
+    placeholder: true,
+  },
+};

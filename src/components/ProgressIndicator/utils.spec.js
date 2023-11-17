@@ -10,16 +10,17 @@ const formSteps = [
     formDefinition: 'Step 1',
     isCompleted: false,
     isApplicable: true,
-    isCurrent: false,
+    isCurrent: true,
     canNavigateTo: true,
   },
 ];
 
 it('updates steps as expected', () => {
   const submission = buildSubmission();
-  const updatedSteps = getStepsInfo(formSteps, submission, '/start-page');
-  const stepsToRender = addFixedSteps(updatedSteps, submission, '/start-page', true, true);
+  const updatedSteps = getStepsInfo(formSteps, submission, '/stap/step-1');
+  const stepsToRender = addFixedSteps(updatedSteps, submission, '/stap/step-1', true, true);
 
+  expect(stepsToRender.length).toEqual(4);
   expect(stepsToRender[0].slug).toEqual('startpagina');
 
   expect(stepsToRender[1].uuid).toEqual('9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5');
@@ -28,7 +29,7 @@ it('updates steps as expected', () => {
   expect(stepsToRender[1].formDefinition).toEqual('Step 1');
   expect(stepsToRender[1].isCompleted).toEqual(false);
   expect(stepsToRender[1].isApplicable).toEqual(true);
-  expect(stepsToRender[1].isCurrent).toEqual(false);
+  expect(stepsToRender[1].isCurrent).toEqual(true);
   expect(stepsToRender[1].canNavigateTo).toEqual(true);
 
   expect(stepsToRender[2].slug).toEqual('overzicht');
@@ -37,10 +38,10 @@ it('updates steps as expected', () => {
 
 it('doesnt contain overview and summary when false', () => {
   const submission = buildSubmission();
-  const updatedSteps = getStepsInfo(formSteps, submission, '/start-page');
-  const stepsToRender = addFixedSteps(updatedSteps, submission, '/start-page', false, false);
+  const updatedSteps = getStepsInfo(formSteps, submission, '/stap/step-1');
+  const stepsToRender = addFixedSteps(updatedSteps, submission, '/stap/step-1', false, false);
 
-  expect(stepsToRender.length).toEqual(2);
+  expect(stepsToRender.length).toEqual(4);
 
   expect(stepsToRender[0].slug).toEqual('startpagina');
 
@@ -50,6 +51,9 @@ it('doesnt contain overview and summary when false', () => {
   expect(stepsToRender[1].formDefinition).toEqual('Step 1');
   expect(stepsToRender[1].isCompleted).toEqual(false);
   expect(stepsToRender[1].isApplicable).toEqual(true);
-  expect(stepsToRender[1].isCurrent).toEqual(false);
+  expect(stepsToRender[1].isCurrent).toEqual(true);
   expect(stepsToRender[1].canNavigateTo).toEqual(true);
+
+  expect(stepsToRender[2]).toBeFalsy();
+  expect(stepsToRender[3]).toBeFalsy();
 });
