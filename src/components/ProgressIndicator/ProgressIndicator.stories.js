@@ -1,4 +1,4 @@
-import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
+import {MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
 import {expect} from '@storybook/jest';
 import {userEvent, waitFor, within} from '@storybook/testing-library';
 import {withRouter} from 'storybook-addon-react-router-v6';
@@ -66,7 +66,7 @@ export default {
   },
   parameters: {
     viewport: {
-      viewports: INITIAL_VIEWPORTS,
+      viewports: MINIMAL_VIEWPORTS,
       defaultViewport: 'desktop',
     },
   },
@@ -78,7 +78,7 @@ export const MobileViewport = {
   name: 'Mobile version',
   parameters: {
     viewport: {
-      defaultViewport: 'iphone6',
+      defaultViewport: 'mobile1',
     },
   },
   play: async ({canvasElement}) => {
