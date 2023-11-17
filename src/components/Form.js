@@ -28,7 +28,7 @@ import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 
 import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
-import {SUBMISSION_ALLOWED} from './constants';
+import {PI_TITLE, STEP_LABELS, SUBMISSION_ALLOWED} from './constants';
 
 const initialState = {
   submission: null,
@@ -285,20 +285,11 @@ const Form = () => {
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
   if (isStartPage) {
-    activeStepTitle = intl.formatMessage({
-      description: 'Start page title',
-      defaultMessage: 'Start page',
-    });
+    activeStepTitle = intl.formatMessage(STEP_LABELS.login);
   } else if (summaryMatch) {
-    activeStepTitle = intl.formatMessage({
-      description: 'Summary page title',
-      defaultMessage: 'Summary',
-    });
+    activeStepTitle = intl.formatMessage(STEP_LABELS.overview);
   } else if (confirmationMatch) {
-    activeStepTitle = intl.formatMessage({
-      description: 'Confirmation page title',
-      defaultMessage: 'Confirmation',
-    });
+    activeStepTitle = intl.formatMessage(STEP_LABELS.confirmation);
   } else {
     const step = steps.find(step => step.slug === stepSlug);
     activeStepTitle = step.formDefinition;
@@ -317,7 +308,16 @@ const Form = () => {
     {formName, activeStepTitle}
   );
 
-  const updatedSteps = getStepsInfo(form.steps, submission, currentPathname);
+  let applicableSteps = [];
+  if (form.hideNonApplicableSteps) {
+    applicableSteps = steps.filter(step => step.isApplicable);
+  }
+
+  const updatedSteps = getStepsInfo(
+    applicableSteps.length > 0 ? applicableSteps : form.steps,
+    submission,
+    currentPathname
+  );
   const stepsToRender = addFixedSteps(
     updatedSteps,
     submission,
@@ -329,7 +329,7 @@ const Form = () => {
 
   const progressIndicator = form.showProgressIndicator ? (
     <ProgressIndicator
-      progressIndicatorTitle="Progress"
+      title={PI_TITLE}
       formTitle={formName}
       steps={stepsToRender}
       ariaMobileIconLabel={ariaMobileIconLabel}

@@ -7,13 +7,51 @@ export default {
   component: ProgressIndicatorItem,
   decorators: [withRouter],
   args: {
-    text: 'Stap 1',
-    href: '#',
+    label: 'Stap 1',
+    to: '#',
+    isActive: false,
+    isCompleted: true,
+    canNavigateTo: true,
+    isApplicable: true,
+  },
+};
+
+export const ApplicableLink = {
+  name: 'Applicable step - link',
+  component: ProgressIndicatorItem,
+  args: {
+    label: 'Stap 1',
+    to: '#',
+    isActive: false,
+    isCompleted: true,
+    canNavigateTo: true,
+    isApplicable: true,
+  },
+};
+
+export const ApplicableNoLink = {
+  name: 'Applicable step - no link',
+  component: ProgressIndicatorItem,
+  args: {
+    label: 'Stap 1',
+    to: '#',
     isActive: false,
     isCompleted: true,
     canNavigateTo: false,
     isApplicable: true,
-    fixedText: null,
+  },
+};
+
+export const NoApplicableNoLink = {
+  name: 'Not applicable step - no link',
+  component: ProgressIndicatorItem,
+  args: {
+    label: 'Stap 1',
+    to: '#',
+    isActive: false,
+    isCompleted: true,
+    canNavigateTo: false,
+    isApplicable: false,
   },
 };
 

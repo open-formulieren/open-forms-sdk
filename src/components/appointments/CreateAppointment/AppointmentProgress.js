@@ -5,10 +5,11 @@ import {useLocation} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import ProgressIndicator from 'components/ProgressIndicator';
-import {addFixedSteps} from 'components/ProgressIndicator/utils';
+import {PI_TITLE, STEP_LABELS} from 'components/constants';
+import {checkMatchesPath} from 'components/utils/routers';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';
-import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
+import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS} from './routes';
 
 const AppointmentProgress = ({title, currentStep}) => {
   const config = useContext(ConfigContext);
@@ -18,8 +19,6 @@ const AppointmentProgress = ({title, currentStep}) => {
 
   const isConfirmation = checkMatchesPath(currentPathname, 'bevestiging');
   const isSummary = checkMatchesPath(currentPathname, 'overzicht');
-  const isStartPage =
-    !isSummary && !isConfirmation && !APPOINTMENT_STEP_PATHS.includes(currentStep);
 
   const isSubmissionComplete = isConfirmation && submission === null;
   const showOverview = true;
@@ -51,32 +50,32 @@ const AppointmentProgress = ({title, currentStep}) => {
   });
 
   // Add the fixed steps to the the original steps array
-  const stepsToRender = addFixedSteps(
-    steps,
-    submission,
-    currentPathname,
-    showOverview,
-    showConfirmation,
-    isSubmissionComplete
-  );
+  const summaryStep = {
+    slug: 'overzicht',
+    to: 'overzicht',
+    formDefinition: 'Summary',
+    isCompleted: isConfirmation,
+    isApplicable: true,
+    isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
+    canNavigateTo: false,
+  };
+
+  const confirmationStep = {
+    slug: 'bevestiging',
+    to: 'bevestiging',
+    formDefinition: 'Confirmation',
+    isCompleted: isSubmissionComplete,
+    isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+  };
+
+  const finalSteps = [...steps, showOverview && summaryStep, showConfirmation && confirmationStep];
 
   // Figure out the title for the mobile menu based on the state
   let activeStepTitle;
-  if (isStartPage) {
-    activeStepTitle = intl.formatMessage({
-      description: 'Start page title',
-      defaultMessage: 'Start page',
-    });
-  } else if (isSummary) {
-    activeStepTitle = intl.formatMessage({
-      description: 'Summary page title',
-      defaultMessage: 'Summary',
-    });
+  if (isSummary) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.overview);
   } else if (isConfirmation) {
-    activeStepTitle = intl.formatMessage({
-      description: 'Confirmation page title',
-      defaultMessage: 'Confirmation',
-    });
+    activeStepTitle = intl.formatMessage(STEP_LABELS.confirmation);
   } else {
     activeStepTitle = currentStep;
   }
@@ -98,9 +97,9 @@ const AppointmentProgress = ({title, currentStep}) => {
     config?.displayComponents?.progressIndicator ?? ProgressIndicator;
   return (
     <ProgressIndicatorComponent
-      progressIndicatorTitle="Progress"
+      title={PI_TITLE}
       formTitle={title}
-      steps={stepsToRender}
+      steps={finalSteps}
       ariaMobileIconLabel={ariaMobileIconLabel}
       accessibleToggleStepsLabel={accessibleToggleStepsLabel}
     />

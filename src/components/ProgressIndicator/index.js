@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 
 import Caption from 'components/Caption';
@@ -11,20 +10,16 @@ import MobileButton from './MobileButton';
 import ProgressIndicatorItem from './ProgressIndicatorItem';
 
 const ProgressIndicator = ({
-  progressIndicatorTitle,
+  title,
   formTitle,
   steps,
   ariaMobileIconLabel,
   accessibleToggleStepsLabel,
-  sticky = true,
 }) => {
   const {pathname: currentPathname} = useLocation();
   const [expanded, setExpanded] = useState(false);
 
   const modifiers = [];
-  if (sticky) {
-    modifiers.push('sticky');
-  }
   if (!expanded) {
     modifiers.push('mobile-collapsed');
   }
@@ -49,24 +44,17 @@ const ProgressIndicator = ({
           expanded={expanded}
           onExpandClick={() => setExpanded(!expanded)}
         />
-        <Caption component="h2">
-          <FormattedMessage
-            description="Title of progress indicator"
-            defaultMessage="{progressIndicatorTitle}"
-            values={{progressIndicatorTitle}}
-          />
-        </Caption>
+        <Caption component="h2">{title}</Caption>
         <List ordered>
-          {steps.map(step => (
+          {steps.map((step, index) => (
             <ProgressIndicatorItem
-              key={step.slug || step.uuid}
-              text={step.formDefinition}
-              href={step.to}
+              key={`${step.href}-${index}`}
+              label={step.formDefinition}
+              to={step.to}
               isActive={step.isCurrent}
               isCompleted={step.isCompleted}
               canNavigateTo={step.canNavigateTo}
               isApplicable={step.isApplicable}
-              fixedText={step.fixedText}
             />
           ))}
         </List>
@@ -76,7 +64,7 @@ const ProgressIndicator = ({
 };
 
 ProgressIndicator.propTypes = {
-  progressIndicatorTitle: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   formTitle: PropTypes.string.isRequired,
   steps: PropTypes.arrayOf(
     PropTypes.shape({
@@ -88,12 +76,10 @@ ProgressIndicator.propTypes = {
       isApplicable: PropTypes.bool,
       isCurrent: PropTypes.bool,
       canNavigateTo: PropTypes.bool,
-      fixedText: PropTypes.element,
     })
   ).isRequired,
   ariaMobileIconLabel: PropTypes.string.isRequired,
   accessibleToggleStepsLabel: PropTypes.string.isRequired,
-  sticky: PropTypes.bool,
 };
 
 export default ProgressIndicator;

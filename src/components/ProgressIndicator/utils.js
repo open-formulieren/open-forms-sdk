@@ -1,5 +1,4 @@
-import {checkMatchesPath} from 'components/appointments/CreateAppointment/routes';
-import {STEP_LABELS} from 'components/constants';
+import {checkMatchesPath} from 'components/utils/routers';
 import {IsFormDesigner} from 'headers';
 
 const canNavigateToStep = (index, submission) => {
@@ -46,12 +45,7 @@ const addFixedSteps = (
   const applicableCompleted =
     hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
-  // If any step cannot be submitted, there should NOT be an active link to the overview page.
-  const canSubmitSteps = hasSubmission
-    ? submission.steps.filter(step => !step.canSubmit).length === 0
-    : false;
-
-  steps.splice(0, 0, {
+  const startPageStep = {
     slug: 'startpagina',
     to: '#',
     formDefinition: 'Start page',
@@ -59,35 +53,39 @@ const addFixedSteps = (
     isApplicable: true,
     canNavigateTo: true,
     isCurrent: checkMatchesPath(currentPathname, 'startpagina'),
-    fixedText: STEP_LABELS.login,
-  });
+  };
+
+  const summaryStep = {
+    slug: 'overzicht',
+    to: 'overzicht',
+    formDefinition: 'Summary',
+    isCompleted: isConfirmation,
+    isApplicable: true,
+    isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
+    canNavigateTo: false,
+  };
+
+  const confirmationStep = {
+    slug: 'bevestiging',
+    to: 'bevestiging',
+    formDefinition: 'Confirmation',
+    isCompleted: completed,
+    isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+  };
+
+  const finalSteps = [
+    startPageStep,
+    ...steps,
+    showOverview && summaryStep,
+    showConfirmation && confirmationStep,
+  ];
 
   if (showOverview) {
-    steps.splice(steps.length, 0, {
-      slug: 'overzicht',
-      to: 'overzicht',
-      formDefinition: 'Summary',
-      isCompleted: isConfirmation,
-      isApplicable: applicableCompleted && canSubmitSteps,
-      isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
-      fixedText: STEP_LABELS.overview,
-    });
-    const summaryPage = steps[steps.length - 1];
-    summaryPage.canNavigateTo = canNavigateToStep(steps.length - 1, submission);
+    const summaryStepIndex = finalSteps.findIndex(step => step.slug === 'overzicht');
+    finalSteps[summaryStepIndex].canNavigateTo = applicableCompleted;
   }
 
-  if (showConfirmation) {
-    steps.splice(steps.length, 0, {
-      slug: 'bevestiging',
-      to: 'bevestiging',
-      formDefinition: 'Confirmation',
-      isCompleted: completed,
-      isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
-      fixedText: STEP_LABELS.confirmation,
-    });
-  }
-
-  return steps;
+  return finalSteps;
 };
 
 export {addFixedSteps, getStepsInfo};

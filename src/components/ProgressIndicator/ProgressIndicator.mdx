@@ -22,9 +22,8 @@ currently active step.
 
 ## Functional
 
-The `Form` component handles all the 'smart' behaviour conerning the `ProgressIndicator` and how
-this is shown. All the useful props are passed through to the `ProgressIndicator` component. The
-`Form` component checks:
+The parent component must handle all the 'smart' behaviour such as constructing the list of items
+each with their individual states. The `Form` component is an example of this behaviour, it checks:
 
 - If the steps are currently active, completed, applicable or if a step can be clicked to navigate
   to it.

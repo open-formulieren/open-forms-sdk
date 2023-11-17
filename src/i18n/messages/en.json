@@ -19,11 +19,6 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
-  "1a96bc": {
-    "defaultMessage": "{progressIndicatorTitle}",
-    "description": "Title of progress indicator",
-    "originalDefault": "{progressIndicatorTitle}"
-  },
   "1hdvgS": {
     "defaultMessage": "Something went wrong while presenting the login option. Please contact the municipality.",
     "description": "Co-sign auth option not available on form",
@@ -194,6 +189,10 @@
     "description": "ZOD 'not_finite' error message",
     "originalDefault": "Number must be finite."
   },
+  "Confirmation page title": {
+    "defaultMessage": "Confirmation",
+    "originalDefault": "Confirmation"
+  },
   "CvRUHm": {
     "defaultMessage": "This form is currently undergoing maintenance and can not be accessed at the moment.",
     "description": "Maintenance mode message",
@@ -268,11 +267,6 @@
     "defaultMessage": "Saving the data failed, please try again later",
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
-  },
-  "H4n86k": {
-    "defaultMessage": "Summary",
-    "description": "Summary page title",
-    "originalDefault": "Summary"
   },
   "HGx1ny": {
     "defaultMessage": "Cancel appointment",
@@ -423,6 +417,14 @@
     "defaultMessage": "Invalid input: must end with \"{endsWith}\".",
     "description": "ZOD 'invalid_string' error message, with endsWith",
     "originalDefault": "Invalid input: must end with \"{endsWith}\"."
+  },
+  "Start page title": {
+    "defaultMessage": "Start page",
+    "originalDefault": "Start page"
+  },
+  "Summary page title": {
+    "defaultMessage": "Summary",
+    "originalDefault": "Summary"
   },
   "Tip5+d": {
     "defaultMessage": "Next year",
@@ -619,11 +621,6 @@
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
   },
-  "hR1LxA": {
-    "defaultMessage": "Current step in form {formTitle}: {activeStepTitle}",
-    "description": "Active step accessible label in mobile progress indicator",
-    "originalDefault": "Current step in form {formTitle}: {activeStepTitle}"
-  },
   "hkZ8N1": {
     "defaultMessage": "Invalid input.",
     "description": "ZOD 'custom' error message",
@@ -683,11 +680,6 @@
     "defaultMessage": "Toggle the progress status display",
     "description": "Progress step indicator toggle icon (mobile)",
     "originalDefault": "Toggle the progress status display"
-  },
-  "kH9Cpi": {
-    "defaultMessage": "Start page",
-    "description": "Start page title",
-    "originalDefault": "Start page"
   },
   "kICI8K": {
     "defaultMessage": "Product",

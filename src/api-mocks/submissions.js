@@ -41,6 +41,11 @@ export const mockSubmissionPost = (submission = buildSubmission()) =>
     return res(ctx.status(201), ctx.json(submission));
   });
 
+export const mockSubmissionGet = () =>
+  rest.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(SUBMISSION_DETAILS));
+  });
+
 /**
  * Simulate a succesful backend processing status without payment.
  */

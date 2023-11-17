@@ -1,6 +1,7 @@
+import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
+import {expect} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
 import {withRouter} from 'storybook-addon-react-router-v6';
-
-import {STEP_LABELS} from 'components/constants';
 
 import ProgressIndicator from '.';
 
@@ -9,7 +10,7 @@ export default {
   component: ProgressIndicator,
   decorators: [withRouter],
   args: {
-    progressIndicatorTitle: 'Progress',
+    title: 'Progress',
     formTitle: 'Formulier',
     steps: [
       {
@@ -20,7 +21,6 @@ export default {
         isApplicable: true,
         isCurrent: false,
         canNavigateTo: true,
-        fixedText: STEP_LABELS.login,
       },
       {
         uuid: 'd6cab0dd',
@@ -43,29 +43,51 @@ export default {
         canNavigateTo: true,
       },
       {
-        slug: 'confirmation-page',
-        to: 'confirmation-page',
-        formDefinition: 'Confirmation',
-        isCompleted: false,
-        isApplicable: false,
-        isCurrent: false,
-        canNavigateTo: true,
-        fixedText: STEP_LABELS.confirmation,
-      },
-      {
         slug: 'summary-page',
         to: 'summary-page',
         formDefinition: 'Summary',
         isCompleted: false,
-        isApplicable: false,
+        isApplicable: true,
         isCurrent: false,
-        canNavigateTo: true,
-        fixedText: STEP_LABELS.overview,
+        canNavigateTo: false,
+      },
+      {
+        slug: 'confirmation-page',
+        to: 'confirmation-page',
+        formDefinition: 'Confirmation',
+        isCompleted: false,
+        isApplicable: true,
+        isCurrent: false,
+        canNavigateTo: false,
       },
     ],
     ariaMobileIconLabel: 'Progress step indicator toggle icon (mobile)',
     accessibleToggleStepsLabel: 'Current step in form Formulier: Stap 2',
   },
+  parameters: {
+    viewport: {
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'desktop',
+    },
+  },
 };
 
 export const Default = {};
+
+export const MobileViewport = {
+  name: 'Mobile version',
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphone6',
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      const toggleButton = canvas.getByRole('button');
+      await waitFor(() => expect(toggleButton).toHaveAttribute('aria-pressed', 'false'));
+      await userEvent.click(toggleButton);
+    });
+  },
+};
