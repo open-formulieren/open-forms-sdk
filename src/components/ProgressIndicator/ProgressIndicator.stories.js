@@ -77,6 +77,8 @@ export const Default = {};
 export const MobileViewport = {
   name: 'Mobile version',
   parameters: {
+    // TODO enable viewport in chromatic
+    chromatic: {disableSnapshot: true},
     viewport: {
       defaultViewport: 'mobile1',
     },
@@ -84,10 +86,8 @@ export const MobileViewport = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const toggleButton = canvas.getByRole('button');
-      await waitFor(() => expect(toggleButton).toHaveAttribute('aria-pressed', 'false'));
-      await userEvent.click(toggleButton);
-    });
+    const toggleButton = await canvas.findByRole('button');
+    await expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
+    await userEvent.click(toggleButton);
   },
 };
