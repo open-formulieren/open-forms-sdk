@@ -8,15 +8,29 @@ import {getBEMClassName} from 'utils';
 import CompletionMark from './CompletionMark';
 
 const getLinkModifiers = (isActive, isApplicable, isCompleted) => {
-  return [
-    'inherit',
-    'hover',
-    isActive ? 'active' : undefined,
-    (isApplicable && !isCompleted) || !isApplicable ? 'muted' : undefined,
-  ].filter(mod => mod !== undefined);
+  return ['inherit', 'hover', isActive ? 'active' : undefined].filter(mod => mod !== undefined);
 };
 
-const ProgressIndicatorItem = ({label, to, isActive, isCompleted, canNavigateTo, isApplicable}) => {
+/**
+ * A single progress indicator item.
+ *
+ * Displays a link (which *may* be a placeholder depending on the `canNavigateTo` prop)
+ * to the specified route with the provided label.
+ *
+ * If the item is not applicable, the label is suffixed to mark it as such. Depending on
+ * server-side configuration, the item may be hidden alltogether (rather than showing it
+ * with the suffix).
+ *
+ * Once a step is completed, it is displayed with a completion checkmark in front of it.
+ */
+export const ProgressIndicatorItem = ({
+  label,
+  to,
+  isActive,
+  isCompleted,
+  canNavigateTo,
+  isApplicable,
+}) => {
   return (
     <div className={getBEMClassName('progress-indicator-item')}>
       <div className={getBEMClassName('progress-indicator-item__marker')}>

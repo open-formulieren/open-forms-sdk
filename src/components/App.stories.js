@@ -1,5 +1,5 @@
 import {expect} from '@storybook/jest';
-import {userEvent, waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-library';
+import {userEvent, waitForElementToBeRemoved, within} from '@storybook/testing-library';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {FormContext} from 'Context';

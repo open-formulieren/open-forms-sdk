@@ -1,6 +1,6 @@
 import {MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
 import {expect} from '@storybook/jest';
-import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {userEvent, within} from '@storybook/testing-library';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import ProgressIndicator from '.';
