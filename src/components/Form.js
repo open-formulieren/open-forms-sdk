@@ -12,7 +12,7 @@ import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
 import PaymentOverview from 'components/PaymentOverview';
-import ProgressIndicator from 'components/ProgressIndicator/index';
+import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
 import SubmissionConfirmation from 'components/SubmissionConfirmation';

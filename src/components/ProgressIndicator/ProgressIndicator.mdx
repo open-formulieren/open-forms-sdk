@@ -2,7 +2,6 @@ import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
 
 import ProgressIndicator from '.';
 import * as ProgressIndicatorStories from './ProgressIndicator.stories';
-import ProgressIndicatorItem from './ProgressIndicatorItem';
 
 <Meta of={ProgressIndicatorStories} />
 
@@ -16,9 +15,11 @@ The `ProgressIndicator` component shows the different steps (`ProgressIndicatorI
 style of each step varies depending on whether it is applicable, it is completed or it is the
 currently active step.
 
-### Props
+**Warning**
 
-<ArgTypes of={ProgressIndicator} />
+Since SDK 2.1 we've restructured the `ProgressIndicator` component - swapping out an alternative
+component now requires you to specify `progressIndicator` rather than `progressIndicatorDisplay`.
+The interface has also changed.
 
 ## Functional
 

@@ -48,8 +48,8 @@ const ProgressIndicator = ({
         <List ordered>
           {steps.map((step, index) => (
             <ProgressIndicatorItem
-              key={`${step.href}-${index}`}
-              label={step.formDefinition}
+              key={`${step.to}-${index}`}
+              label={step.label}
               to={step.to}
               isActive={step.isCurrent}
               isCompleted={step.isCompleted}
@@ -68,10 +68,8 @@ ProgressIndicator.propTypes = {
   formTitle: PropTypes.string.isRequired,
   steps: PropTypes.arrayOf(
     PropTypes.shape({
-      uuid: PropTypes.string,
-      slug: PropTypes.string,
-      to: PropTypes.string,
-      formDefinition: PropTypes.string.isRequired,
+      to: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
       isCompleted: PropTypes.bool,
       isApplicable: PropTypes.bool,
       isCurrent: PropTypes.bool,

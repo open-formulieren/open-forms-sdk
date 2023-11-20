@@ -35,8 +35,8 @@ const AppointmentProgress = ({title, currentStep}) => {
     const stepCompleted = submittedSteps.includes(path);
 
     return {
-      uuid: `appointments-${path}`,
       to: path,
+      label: intl.formatMessage(name),
       isCompleted: stepCompleted || isSubmissionComplete,
       isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, path),
@@ -45,15 +45,13 @@ const AppointmentProgress = ({title, currentStep}) => {
         previousStepCompleted ||
         index === currentStepIndex ||
         isSubmissionComplete,
-      formDefinition: intl.formatMessage(name),
     };
   });
 
   // Add the fixed steps to the the original steps array
   const summaryStep = {
-    slug: 'overzicht',
     to: 'overzicht',
-    formDefinition: 'Summary',
+    label: 'Summary',
     isCompleted: isConfirmation,
     isApplicable: true,
     isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
@@ -61,9 +59,8 @@ const AppointmentProgress = ({title, currentStep}) => {
   };
 
   const confirmationStep = {
-    slug: 'bevestiging',
     to: 'bevestiging',
-    formDefinition: 'Confirmation',
+    label: 'Confirmation',
     isCompleted: isSubmissionComplete,
     isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
   };

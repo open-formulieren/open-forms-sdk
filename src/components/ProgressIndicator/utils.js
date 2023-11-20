@@ -19,10 +19,8 @@ const canNavigateToStep = (index, submission) => {
 
 const getStepsInfo = (formSteps, submission, currentPathname) => {
   return formSteps.map((step, index) => ({
-    uuid: step.uuid,
-    slug: step.slug,
-    to: `/stap/${step.slug}` || '#',
-    formDefinition: step.formDefinition,
+    to: `/stap/${step.slug}`,
+    label: step.formDefinition,
     isCompleted: submission ? submission.steps[index].completed : false,
     isApplicable: submission ? submission.steps[index].isApplicable : step.isApplicable ?? true,
     isCurrent: checkMatchesPath(currentPathname, step.slug),
@@ -46,9 +44,8 @@ const addFixedSteps = (
     hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
   const startPageStep = {
-    slug: 'startpagina',
     to: '#',
-    formDefinition: 'Start page',
+    label: 'Start page',
     isCompleted: hasSubmission,
     isApplicable: true,
     canNavigateTo: true,
@@ -56,19 +53,17 @@ const addFixedSteps = (
   };
 
   const summaryStep = {
-    slug: 'overzicht',
     to: 'overzicht',
-    formDefinition: 'Summary',
+    label: 'Summary',
     isCompleted: isConfirmation,
     isApplicable: true,
     isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
-    canNavigateTo: false,
+    canNavigateTo: applicableCompleted,
   };
 
   const confirmationStep = {
-    slug: 'bevestiging',
     to: 'bevestiging',
-    formDefinition: 'Confirmation',
+    label: 'Confirmation',
     isCompleted: completed,
     isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
   };
@@ -79,11 +74,6 @@ const addFixedSteps = (
     showOverview && summaryStep,
     showConfirmation && confirmationStep,
   ];
-
-  if (showOverview) {
-    const summaryStepIndex = finalSteps.findIndex(step => step.slug === 'overzicht');
-    finalSteps[summaryStepIndex].canNavigateTo = applicableCompleted;
-  }
 
   return finalSteps;
 };
