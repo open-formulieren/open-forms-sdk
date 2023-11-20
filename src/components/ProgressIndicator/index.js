@@ -69,7 +69,7 @@ ProgressIndicator.propTypes = {
   steps: PropTypes.arrayOf(
     PropTypes.shape({
       to: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
+      label: PropTypes.node.isRequired,
       isCompleted: PropTypes.bool,
       isApplicable: PropTypes.bool,
       isCurrent: PropTypes.bool,

@@ -387,12 +387,6 @@
       "value": "Number must be finite."
     }
   ],
-  "Confirmation page title": [
-    {
-      "type": 0,
-      "value": "Confirmation"
-    }
-  ],
   "CvRUHm": [
     {
       "type": 0,
@@ -517,6 +511,12 @@
     {
       "type": 0,
       "value": "Saving the data failed, please try again later"
+    }
+  ],
+  "H4n86k": [
+    {
+      "type": 0,
+      "value": "Summary"
     }
   ],
   "HGx1ny": [
@@ -877,18 +877,6 @@
     {
       "type": 0,
       "value": "\"."
-    }
-  ],
-  "Start page title": [
-    {
-      "type": 0,
-      "value": "Start page"
-    }
-  ],
-  "Summary page title": [
-    {
-      "type": 0,
-      "value": "Summary"
     }
   ],
   "Tip5+d": [
@@ -1397,6 +1385,12 @@
     {
       "type": 0,
       "value": "Toggle the progress status display"
+    }
+  ],
+  "kH9Cpi": [
+    {
+      "type": 0,
+      "value": "Start page"
     }
   ],
   "kICI8K": [

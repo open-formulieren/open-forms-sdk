@@ -190,10 +190,6 @@
     "description": "ZOD 'not_finite' error message",
     "originalDefault": "Number must be finite."
   },
-  "Confirmation page title": {
-    "defaultMessage": "Confirmation",
-    "originalDefault": "Confirmation"
-  },
   "CvRUHm": {
     "defaultMessage": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar.",
     "description": "Maintenance mode message",
@@ -270,6 +266,11 @@
     "defaultMessage": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw.",
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
+  },
+  "H4n86k": {
+    "defaultMessage": "Overzicht",
+    "description": "Summary page title",
+    "originalDefault": "Summary"
   },
   "HGx1ny": {
     "defaultMessage": "Afspraak annuleren",
@@ -421,14 +422,6 @@
     "defaultMessage": "De ingevoerde waarde moet eindigen met \"{endsWith}\".",
     "description": "ZOD 'invalid_string' error message, with endsWith",
     "originalDefault": "Invalid input: must end with \"{endsWith}\"."
-  },
-  "Start page title": {
-    "defaultMessage": "Start page",
-    "originalDefault": "Start page"
-  },
-  "Summary page title": {
-    "defaultMessage": "Summary",
-    "originalDefault": "Summary"
   },
   "Tip5+d": {
     "defaultMessage": "Volgend jaar",
@@ -613,7 +606,7 @@
     "originalDefault": "Times are in your local time"
   },
   "hFqzG6": {
-    "defaultMessage": "Current step in form {title}: {activeStepTitle}",
+    "defaultMessage": "Huidige stap in formulier {title}: {activeStepTitle}",
     "description": "Active step accessible label in mobile progress indicator",
     "originalDefault": "Current step in form {title}: {activeStepTitle}"
   },
@@ -674,7 +667,7 @@
     "originalDefault": "Your products"
   },
   "jdzNwf": {
-    "defaultMessage": "Current step in form {formName}: {activeStepTitle}",
+    "defaultMessage": "Huidige stap in formulier {formName}: {activeStepTitle}",
     "description": "Active step accessible label in mobile progress indicator",
     "originalDefault": "Current step in form {formName}: {activeStepTitle}"
   },
@@ -687,6 +680,11 @@
     "defaultMessage": "Toon/verberg de voortgang in het formulier",
     "description": "Progress step indicator toggle icon (mobile)",
     "originalDefault": "Toggle the progress status display"
+  },
+  "kH9Cpi": {
+    "defaultMessage": "Startpagina",
+    "description": "Start page title",
+    "originalDefault": "Start page"
   },
   "kICI8K": {
     "defaultMessage": "Product",

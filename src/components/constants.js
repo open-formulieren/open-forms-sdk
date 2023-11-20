@@ -7,9 +7,18 @@ const SUBMISSION_ALLOWED = {
 };
 
 const STEP_LABELS = defineMessages({
-  login: {id: 'Start page title', defaultMessage: 'Start page'},
-  overview: {id: 'Summary page title', defaultMessage: 'Summary'},
-  confirmation: {id: 'Confirmation page title', defaultMessage: 'Confirmation'},
+  login: {
+    description: 'Start page title',
+    defaultMessage: 'Start page',
+  },
+  overview: {
+    description: 'Summary page title',
+    defaultMessage: 'Summary',
+  },
+  confirmation: {
+    description: 'Confirmation page title',
+    defaultMessage: 'Confirmation',
+  },
 });
 
 const START_FORM_QUERY_PARAM = '_start';

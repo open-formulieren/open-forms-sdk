@@ -387,12 +387,6 @@
       "value": "Het getal moet eindig zijn."
     }
   ],
-  "Confirmation page title": [
-    {
-      "type": 0,
-      "value": "Confirmation"
-    }
-  ],
   "CvRUHm": [
     {
       "type": 0,
@@ -517,6 +511,12 @@
     {
       "type": 0,
       "value": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw."
+    }
+  ],
+  "H4n86k": [
+    {
+      "type": 0,
+      "value": "Overzicht"
     }
   ],
   "HGx1ny": [
@@ -877,18 +877,6 @@
     {
       "type": 0,
       "value": "\"."
-    }
-  ],
-  "Start page title": [
-    {
-      "type": 0,
-      "value": "Start page"
-    }
-  ],
-  "Summary page title": [
-    {
-      "type": 0,
-      "value": "Summary"
     }
   ],
   "Tip5+d": [
@@ -1260,7 +1248,7 @@
   "hFqzG6": [
     {
       "type": 0,
-      "value": "Current step in form "
+      "value": "Huidige stap in formulier "
     },
     {
       "type": 1,
@@ -1360,7 +1348,7 @@
   "jdzNwf": [
     {
       "type": 0,
-      "value": "Current step in form "
+      "value": "Huidige stap in formulier "
     },
     {
       "type": 1,
@@ -1401,6 +1389,12 @@
     {
       "type": 0,
       "value": "Toon/verberg de voortgang in het formulier"
+    }
+  ],
+  "kH9Cpi": [
+    {
+      "type": 0,
+      "value": "Startpagina"
     }
   ],
   "kICI8K": [

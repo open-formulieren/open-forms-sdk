@@ -51,7 +51,7 @@ const AppointmentProgress = ({title, currentStep}) => {
   // Add the fixed steps to the the original steps array
   const summaryStep = {
     to: 'overzicht',
-    label: 'Summary',
+    label: intl.formatMessage(STEP_LABELS.overview),
     isCompleted: isConfirmation,
     isApplicable: true,
     isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
@@ -60,7 +60,7 @@ const AppointmentProgress = ({title, currentStep}) => {
 
   const confirmationStep = {
     to: 'bevestiging',
-    label: 'Confirmation',
+    label: intl.formatMessage(STEP_LABELS.confirmation),
     isCompleted: isSubmissionComplete,
     isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
   };

@@ -319,6 +319,7 @@ const Form = () => {
     currentPathname
   );
   const stepsToRender = addFixedSteps(
+    intl,
     updatedSteps,
     submission,
     currentPathname,

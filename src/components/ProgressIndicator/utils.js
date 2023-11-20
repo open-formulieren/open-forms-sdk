@@ -1,3 +1,4 @@
+import {STEP_LABELS} from 'components/constants';
 import {checkMatchesPath} from 'components/utils/routers';
 import {IsFormDesigner} from 'headers';
 
@@ -29,6 +30,7 @@ const getStepsInfo = (formSteps, submission, currentPathname) => {
 };
 
 const addFixedSteps = (
+  intl,
   steps,
   submission,
   currentPathname,
@@ -44,8 +46,8 @@ const addFixedSteps = (
     hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
   const startPageStep = {
-    to: '#',
-    label: 'Start page',
+    to: 'startpagina',
+    label: intl.formatMessage(STEP_LABELS.login),
     isCompleted: hasSubmission,
     isApplicable: true,
     canNavigateTo: true,
@@ -54,7 +56,7 @@ const addFixedSteps = (
 
   const summaryStep = {
     to: 'overzicht',
-    label: 'Summary',
+    label: intl.formatMessage(STEP_LABELS.overview),
     isCompleted: isConfirmation,
     isApplicable: true,
     isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
@@ -63,7 +65,7 @@ const addFixedSteps = (
 
   const confirmationStep = {
     to: 'bevestiging',
-    label: 'Confirmation',
+    label: intl.formatMessage(STEP_LABELS.confirmation),
     isCompleted: completed,
     isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
   };

@@ -189,10 +189,6 @@
     "description": "ZOD 'not_finite' error message",
     "originalDefault": "Number must be finite."
   },
-  "Confirmation page title": {
-    "defaultMessage": "Confirmation",
-    "originalDefault": "Confirmation"
-  },
   "CvRUHm": {
     "defaultMessage": "This form is currently undergoing maintenance and can not be accessed at the moment.",
     "description": "Maintenance mode message",
@@ -267,6 +263,11 @@
     "defaultMessage": "Saving the data failed, please try again later",
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
+  },
+  "H4n86k": {
+    "defaultMessage": "Summary",
+    "description": "Summary page title",
+    "originalDefault": "Summary"
   },
   "HGx1ny": {
     "defaultMessage": "Cancel appointment",
@@ -417,14 +418,6 @@
     "defaultMessage": "Invalid input: must end with \"{endsWith}\".",
     "description": "ZOD 'invalid_string' error message, with endsWith",
     "originalDefault": "Invalid input: must end with \"{endsWith}\"."
-  },
-  "Start page title": {
-    "defaultMessage": "Start page",
-    "originalDefault": "Start page"
-  },
-  "Summary page title": {
-    "defaultMessage": "Summary",
-    "originalDefault": "Summary"
   },
   "Tip5+d": {
     "defaultMessage": "Next year",
@@ -680,6 +673,11 @@
     "defaultMessage": "Toggle the progress status display",
     "description": "Progress step indicator toggle icon (mobile)",
     "originalDefault": "Toggle the progress status display"
+  },
+  "kH9Cpi": {
+    "defaultMessage": "Start page",
+    "description": "Start page title",
+    "originalDefault": "Start page"
   },
   "kICI8K": {
     "defaultMessage": "Product",
