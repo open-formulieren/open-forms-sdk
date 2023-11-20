@@ -21,8 +21,6 @@ const AppointmentProgress = ({title, currentStep}) => {
   const isSummary = checkMatchesPath(currentPathname, 'overzicht');
 
   const isSubmissionComplete = isConfirmation && submission === null;
-  const showOverview = true;
-  const showConfirmation = true;
 
   const currentStepIndex = APPOINTMENT_STEP_PATHS.indexOf(currentStep);
   const steps = APPOINTMENT_STEPS.map(({path, name}) => {
@@ -49,23 +47,23 @@ const AppointmentProgress = ({title, currentStep}) => {
   });
 
   // Add the fixed steps to the the original steps array
-  const summaryStep = {
-    to: 'overzicht',
-    label: intl.formatMessage(STEP_LABELS.overview),
-    isCompleted: isConfirmation,
-    isApplicable: true,
-    isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
-    canNavigateTo: false,
-  };
-
-  const confirmationStep = {
-    to: 'bevestiging',
-    label: intl.formatMessage(STEP_LABELS.confirmation),
-    isCompleted: isSubmissionComplete,
-    isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
-  };
-
-  const finalSteps = [...steps, showOverview && summaryStep, showConfirmation && confirmationStep];
+  const finalSteps = [
+    ...steps,
+    {
+      to: 'overzicht',
+      label: intl.formatMessage(STEP_LABELS.overview),
+      isCompleted: isConfirmation,
+      isApplicable: true,
+      isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
+      canNavigateTo: false,
+    },
+    {
+      to: 'bevestiging',
+      label: intl.formatMessage(STEP_LABELS.confirmation),
+      isCompleted: isSubmissionComplete,
+      isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+    },
+  ];
 
   // Figure out the title for the mobile menu based on the state
   let activeStepTitle;
