@@ -8,6 +8,7 @@ import FormDisplay from 'components/FormDisplay';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import {RequireSession} from 'components/Sessions';
+import {checkMatchesPath} from 'components/utils/routers';
 import useFormContext from 'hooks/useFormContext';
 import useGetOrCreateSubmission from 'hooks/useGetOrCreateSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
@@ -15,7 +16,7 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 import {AppointmentConfigContext} from '../Context';
 import AppointmentProgress from './AppointmentProgress';
 import CreateAppointmentState from './CreateAppointmentState';
-import {APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
+import {APPOINTMENT_STEP_PATHS} from './routes';
 
 const useIsConfirmation = () => {
   // useMatch requires absolute paths... and react-router are NOT receptive to changing that.

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
-import {Navigate, Route, Routes, useMatch, useNavigate} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation, useMatch, useNavigate} from 'react-router-dom';
 import {usePrevious} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
@@ -26,6 +26,9 @@ import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
+
+import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
+import {PI_TITLE, STEP_LABELS, SUBMISSION_ALLOWED} from './constants';
 
 const initialState = {
   submission: null,
@@ -97,6 +100,12 @@ const Form = () => {
   usePageViews();
   const intl = useIntl();
   const prevLocale = usePrevious(intl.locale);
+  const {pathname: currentPathname} = useLocation();
+
+  // TODO replace absolute path check with relative
+  const stepMatch = useMatch('/stap/:step');
+  const summaryMatch = useMatch('/overzicht');
+  const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
   const {steps} = form;
@@ -260,14 +269,72 @@ const Form = () => {
     return <Loader modifiers={['centered']} />;
   }
 
+  // Progress Indicator
+
+  const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
+  const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
+  const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
+  const showConfirmation = submissionAllowedSpec === SUBMISSION_ALLOWED.yes;
+  const submission = state.submission || state.submittedSubmission;
+  const isCompleted = state.completed;
+  const formName = form.name;
+
+  // Figure out the slug from the currently active step IF we're looking at a step
+  const stepSlug = stepMatch ? stepMatch.params.step : '';
+
+  // figure out the title for the mobile menu based on the state
+  let activeStepTitle;
+  if (isStartPage) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.login);
+  } else if (summaryMatch) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.overview);
+  } else if (confirmationMatch) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.confirmation);
+  } else {
+    const step = steps.find(step => step.slug === stepSlug);
+    activeStepTitle = step.formDefinition;
+  }
+
+  const ariaMobileIconLabel = intl.formatMessage({
+    description: 'Progress step indicator toggle icon (mobile)',
+    defaultMessage: 'Toggle the progress status display',
+  });
+
+  const accessibleToggleStepsLabel = intl.formatMessage(
+    {
+      description: 'Active step accessible label in mobile progress indicator',
+      defaultMessage: 'Current step in form {formName}: {activeStepTitle}',
+    },
+    {formName, activeStepTitle}
+  );
+
+  let applicableSteps = [];
+  if (form.hideNonApplicableSteps) {
+    applicableSteps = steps.filter(step => step.isApplicable);
+  }
+
+  const updatedSteps = getStepsInfo(
+    applicableSteps.length > 0 ? applicableSteps : form.steps,
+    submission,
+    currentPathname
+  );
+  const stepsToRender = addFixedSteps(
+    intl,
+    updatedSteps,
+    submission,
+    currentPathname,
+    showOverview,
+    showConfirmation,
+    isCompleted
+  );
+
   const progressIndicator = form.showProgressIndicator ? (
     <ProgressIndicator
-      title={form.name}
-      steps={form.steps}
-      hideNonApplicableSteps={form.hideNonApplicableSteps}
-      submission={state.submission || state.submittedSubmission}
-      submissionAllowed={form.submissionAllowed}
-      completed={state.completed}
+      title={PI_TITLE}
+      formTitle={formName}
+      steps={stepsToRender}
+      ariaMobileIconLabel={ariaMobileIconLabel}
+      accessibleToggleStepsLabel={accessibleToggleStepsLabel}
     />
   ) : null;
 

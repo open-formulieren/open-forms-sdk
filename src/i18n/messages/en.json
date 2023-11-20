@@ -599,6 +599,11 @@
     "description": "Appoinments: time select help text",
     "originalDefault": "Times are in your local time"
   },
+  "hFqzG6": {
+    "defaultMessage": "Current step in form {title}: {activeStepTitle}",
+    "description": "Active step accessible label in mobile progress indicator",
+    "originalDefault": "Current step in form {title}: {activeStepTitle}"
+  },
   "hHS5vj": {
     "defaultMessage": "Something went wrong while submitting the form.",
     "description": "Generic submission error",
@@ -608,11 +613,6 @@
     "defaultMessage": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
-  },
-  "hR1LxA": {
-    "defaultMessage": "Current step in form {formTitle}: {activeStepTitle}",
-    "description": "Active step accessible label in mobile progress indicator",
-    "originalDefault": "Current step in form {formTitle}: {activeStepTitle}"
   },
   "hkZ8N1": {
     "defaultMessage": "Invalid input.",
@@ -658,6 +658,11 @@
     "defaultMessage": "Your products",
     "description": "Product summary on appointments location and time step heading",
     "originalDefault": "Your products"
+  },
+  "jdzNwf": {
+    "defaultMessage": "Current step in form {formName}: {activeStepTitle}",
+    "description": "Active step accessible label in mobile progress indicator",
+    "originalDefault": "Current step in form {formName}: {activeStepTitle}"
   },
   "jnYRyz": {
     "defaultMessage": "Expected {expected}, received {received}.",

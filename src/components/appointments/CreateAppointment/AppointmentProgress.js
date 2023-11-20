@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {useIntl} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
-import ProgressIndicatorDisplay from 'components/ProgressIndicator/ProgressIndicatorDisplay';
+import ProgressIndicator from 'components/ProgressIndicator';
+import {PI_TITLE, STEP_LABELS} from 'components/constants';
+import {checkMatchesPath} from 'components/utils/routers';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';
-import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS, checkMatchesPath} from './routes';
+import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS} from './routes';
 
 const AppointmentProgress = ({title, currentStep}) => {
   const config = useContext(ConfigContext);
@@ -15,10 +17,8 @@ const AppointmentProgress = ({title, currentStep}) => {
   const intl = useIntl();
   const {pathname: currentPathname} = useLocation();
 
-  const isSummary = checkMatchesPath(currentPathname, 'overzicht');
   const isConfirmation = checkMatchesPath(currentPathname, 'bevestiging');
-
-  const [expanded, setExpanded] = useState(false);
+  const isSummary = checkMatchesPath(currentPathname, 'overzicht');
 
   const isSubmissionComplete = isConfirmation && submission === null;
 
@@ -33,8 +33,8 @@ const AppointmentProgress = ({title, currentStep}) => {
     const stepCompleted = submittedSteps.includes(path);
 
     return {
-      uuid: `appointments-${path}`,
       to: path,
+      label: intl.formatMessage(name),
       isCompleted: stepCompleted || isSubmissionComplete,
       isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, path),
@@ -43,30 +43,60 @@ const AppointmentProgress = ({title, currentStep}) => {
         previousStepCompleted ||
         index === currentStepIndex ||
         isSubmissionComplete,
-      formDefinition: intl.formatMessage(name),
     };
   });
 
-  const ProgressIndicatorDisplayComponent =
-    config?.displayComponents?.progressIndicator ?? ProgressIndicatorDisplay;
+  // Add the fixed steps to the the original steps array
+  const finalSteps = [
+    ...steps,
+    {
+      to: 'overzicht',
+      label: intl.formatMessage(STEP_LABELS.overview),
+      isCompleted: isConfirmation,
+      isApplicable: true,
+      isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
+      canNavigateTo: false,
+    },
+    {
+      to: 'bevestiging',
+      label: intl.formatMessage(STEP_LABELS.confirmation),
+      isCompleted: isSubmissionComplete,
+      isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+    },
+  ];
+
+  // Figure out the title for the mobile menu based on the state
+  let activeStepTitle;
+  if (isSummary) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.overview);
+  } else if (isConfirmation) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.confirmation);
+  } else {
+    activeStepTitle = currentStep;
+  }
+
+  const ariaMobileIconLabel = intl.formatMessage({
+    description: 'Progress step indicator toggle icon (mobile)',
+    defaultMessage: 'Toggle the progress status display',
+  });
+
+  const accessibleToggleStepsLabel = intl.formatMessage(
+    {
+      description: 'Active step accessible label in mobile progress indicator',
+      defaultMessage: 'Current step in form {title}: {activeStepTitle}',
+    },
+    {title, activeStepTitle}
+  );
+
+  const ProgressIndicatorComponent =
+    config?.displayComponents?.progressIndicator ?? ProgressIndicator;
   return (
-    <ProgressIndicatorDisplayComponent
-      activeStepTitle={steps[currentStepIndex].formDefinition}
+    <ProgressIndicatorComponent
+      title={PI_TITLE}
       formTitle={title}
-      steps={steps}
-      hasSubmission
-      isStartPage={false}
-      summaryTo="overzicht"
-      isSummary={isSummary}
-      isConfirmation={isConfirmation}
-      isSubmissionComplete={isSubmissionComplete}
-      areApplicableStepsCompleted={
-        isSubmissionComplete || submittedSteps.length === APPOINTMENT_STEPS.length
-      }
-      showOverview
-      showConfirmation
-      expanded={expanded}
-      onExpandClick={() => setExpanded(!expanded)}
+      steps={finalSteps}
+      ariaMobileIconLabel={ariaMobileIconLabel}
+      accessibleToggleStepsLabel={accessibleToggleStepsLabel}
     />
   );
 };
