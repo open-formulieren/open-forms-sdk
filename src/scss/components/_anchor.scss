@@ -72,14 +72,3 @@
     @extend .utrecht-link, .utrecht-link--openforms;
   }
 }
-
-.utrecht-link {
-  @include bem.modifier('placeholder') {
-    &:hover {
-      // there does not appear to be a design token for placeholder-hover-color,
-      // and the CSS prefers using --utrecht-link-color which incorrectly hints that
-      // the link can be used. TODO: report upstream
-      color: var(--utrecht-link-placeholder-color);
-    }
-  }
-}
