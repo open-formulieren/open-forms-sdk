@@ -14,12 +14,12 @@ const validateTimeBoundaries = (minBoundary, maxBoundary, timeValue) => {
   // Case 1: only one boundary is given
   if (!minTime || !maxTime) {
     if (minTime) return {isValid: parsedValue >= minTime, errorKeys: ['minTime']};
-    if (maxTime) return {isValid: parsedValue < maxTime, errorKeys: ['maxTime']};
+    if (maxTime) return {isValid: parsedValue <= maxTime, errorKeys: ['maxTime']};
   } else {
     // Case 2: min boundary is smaller than max boundary
     if (minTime < maxTime) {
       const isTooEarly = parsedValue < minTime;
-      const isTooLate = parsedValue >= maxTime;
+      const isTooLate = parsedValue > maxTime;
       return {
         isValid: !isTooEarly && !isTooLate,
         errorKeys: [isTooEarly ? 'minTime' : 'maxTime', 'invalid_time'],
@@ -27,7 +27,7 @@ const validateTimeBoundaries = (minBoundary, maxBoundary, timeValue) => {
     } else {
       // Case 3: min boundary is bigger than max boundary (it's the next day. For example min = 08:00, max = 01:00)
       return {
-        isValid: !(parsedValue >= maxTime && parsedValue < minTime),
+        isValid: !(parsedValue > maxTime && parsedValue < minTime), // Basically, the opposite of 01:00 < `parsedValue` < 08:00
         errorKeys: ['invalid_time'],
       };
     }

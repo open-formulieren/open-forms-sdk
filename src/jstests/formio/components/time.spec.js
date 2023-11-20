@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import React from 'react';
 import {Formio} from 'react-formio';
 
 import OpenFormsModule from 'formio/module';
+import {sleep} from 'utils';
 
 import {timeForm} from './fixtures/time';
 
@@ -10,195 +10,129 @@ import {timeForm} from './fixtures/time';
 Formio.use(OpenFormsModule);
 
 describe('Time Component', () => {
-  test('Time component with min/max time validation', done => {
+  it.each([
+    ['09:00:00', true],
+    ['10:30:00', true],
+    ['11:11:11', true],
+    ['17:00:00', true],
+    ['17:30:00', false],
+    ['08:30:00', false],
+  ])('Time component with min/max time validation', async (value, valid) => {
     let formJSON = _.cloneDeep(timeForm);
     formJSON.components[0].validate.minTime = '09:00:00';
     formJSON.components[0].validate.maxTime = '17:00:00';
 
-    const validValues = ['09:00:00', '10:30:00', '11:11:11'];
+    const element = document.createElement('div');
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
 
-    const invalidValues = ['17:00:00', '17:30:00', '08:30:00'];
-
-    const testValidity = (values, valid) => {
-      values.forEach(value => {
-        const element = document.createElement('div');
-
-        Formio.createForm(element, formJSON)
-          .then(form => {
-            form.setPristine(false);
-            const component = form.getComponent('time');
-            const changed = component.setValue(value);
-            expect(changed).toBeTruthy();
-
-            setTimeout(() => {
-              if (valid) {
-                expect(!!component.error).toBeFalsy();
-              } else {
-                expect(!!component.error).toBeTruthy();
-                expect(component.error.message).toEqual('invalid_time');
-              }
-
-              if (value === invalidValues[2]) {
-                done();
-              }
-            }, 300);
-          })
-          .catch(done);
-      });
-    };
-
-    testValidity(validValues, true);
-    testValidity(invalidValues, false);
+    const component = form.getComponent('time');
+    const changed = component.setValue(value);
+    expect(changed).toBeTruthy();
+    await sleep(300);
+    if (valid) {
+      expect(!!component.error).toBeFalsy();
+    } else {
+      expect(!!component.error).toBeTruthy();
+      expect(component.error.message).toEqual('invalid_time');
+    }
   });
 
-  test('Time component without min/max time validation', done => {
-    let formJSON = _.cloneDeep(timeForm);
+  it.each(['00:00:00', '23:59:59', '11:11:11'])(
+    'Time component without min/max time validation',
+    async value => {
+      let formJSON = _.cloneDeep(timeForm);
 
-    const validValues = ['00:00:00', '23:59:59', '11:11:11'];
+      const element = document.createElement('div');
+      const form = await Formio.createForm(element, formJSON);
+      form.setPristine(false);
 
-    const testValidity = values => {
-      values.forEach(value => {
-        const element = document.createElement('div');
+      const component = form.getComponent('time');
+      const changed = component.setValue(value);
+      await sleep(300);
 
-        Formio.createForm(element, formJSON)
-          .then(form => {
-            form.setPristine(false);
-            const component = form.getComponent('time');
-            const changed = component.setValue(value);
-            expect(changed).toBeTruthy();
+      expect(changed).toBeTruthy();
+      expect(!!component.error).toBeFalsy();
+    }
+  );
 
-            setTimeout(() => {
-              expect(!!component.error).toBeFalsy();
-
-              if (value === validValues[2]) {
-                done();
-              }
-            }, 300);
-          })
-          .catch(done);
-      });
-    };
-
-    testValidity(validValues);
-  });
-
-  test('Time component with only min time validation', done => {
+  it.each([
+    ['17:00:00', true],
+    ['08:00:00', false],
+  ])('Time component with only min time validation', async (value, valid) => {
     let formJSON = _.cloneDeep(timeForm);
     formJSON.components[0].validate.minTime = '09:00:00';
 
-    const validValues = ['17:00:00'];
+    const element = document.createElement('div');
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
 
-    const invalidValues = ['08:00:00'];
-
-    const testValidity = (values, valid) => {
-      values.forEach(value => {
-        const element = document.createElement('div');
-
-        Formio.createForm(element, formJSON)
-          .then(form => {
-            form.setPristine(false);
-            const component = form.getComponent('time');
-            const changed = component.setValue(value);
-            expect(changed).toBeTruthy();
-
-            setTimeout(() => {
-              if (valid) {
-                expect(!!component.error).toBeFalsy();
-              } else {
-                expect(!!component.error).toBeTruthy();
-              }
-
-              if (value === invalidValues[0]) {
-                done();
-              }
-            }, 300);
-          })
-          .catch(done);
-      });
-    };
-
-    testValidity(validValues, true);
-    testValidity(invalidValues, false);
+    const component = form.getComponent('time');
+    const changed = component.setValue(value);
+    expect(changed).toBeTruthy();
+    await sleep(300);
+    if (valid) {
+      expect(!!component.error).toBeFalsy();
+    } else {
+      expect(!!component.error).toBeTruthy();
+      expect(component.error.message).toEqual('invalid_time');
+    }
   });
 
-  test('Time component with only max time validation', done => {
+  it.each([
+    ['08:00:00', true],
+    ['09:00:00', true],
+    ['17:00:00', false],
+  ])('Time component with only max time validation', async (value, valid) => {
     let formJSON = _.cloneDeep(timeForm);
     formJSON.components[0].validate.maxTime = '09:00:00';
 
-    const validValues = ['08:00:00'];
+    const element = document.createElement('div');
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
 
-    const invalidValues = ['17:00:00'];
-
-    const testValidity = (values, valid) => {
-      values.forEach(value => {
-        const element = document.createElement('div');
-
-        Formio.createForm(element, formJSON)
-          .then(form => {
-            form.setPristine(false);
-            const component = form.getComponent('time');
-            const changed = component.setValue(value);
-            expect(changed).toBeTruthy();
-
-            setTimeout(() => {
-              if (valid) {
-                expect(!!component.error).toBeFalsy();
-              } else {
-                expect(!!component.error).toBeTruthy();
-              }
-
-              if (value === invalidValues[0]) {
-                done();
-              }
-            }, 300);
-          })
-          .catch(done);
-      });
-    };
-
-    testValidity(validValues, true);
-    testValidity(invalidValues, false);
+    const component = form.getComponent('time');
+    const changed = component.setValue(value);
+    expect(changed).toBeTruthy();
+    await sleep(300);
+    if (valid) {
+      expect(!!component.error).toBeFalsy();
+    } else {
+      expect(!!component.error).toBeTruthy();
+      expect(component.error.message).toEqual('invalid_time');
+    }
   });
 
-  test('Time component with min time boundary larger than max time boundary', done => {
-    let formJSON = _.cloneDeep(timeForm);
-    formJSON.components[0].validate.maxTime = '01:00:00';
-    formJSON.components[0].validate.minTime = '08:00:00';
+  it.each([
+    ['09:00:00', true],
+    ['00:30:00', true],
+    ['01:00:00', true],
+    ['08:00:00', true],
+    ['02:00:00', false],
+  ])(
+    'Time component with min time boundary larger than max time boundary',
+    async (value, valid) => {
+      let formJSON = _.cloneDeep(timeForm);
+      formJSON.components[0].validate.maxTime = '01:00:00';
+      formJSON.components[0].validate.minTime = '08:00:00';
 
-    const validValues = ['09:00:00', '00:30:00'];
+      const element = document.createElement('div');
+      const form = await Formio.createForm(element, formJSON);
+      form.setPristine(false);
 
-    const invalidValues = ['02:00:00'];
+      const component = form.getComponent('time');
+      const changed = component.setValue(value);
+      expect(changed).toBeTruthy();
 
-    const testValidity = (values, valid) => {
-      values.forEach(value => {
-        const element = document.createElement('div');
-
-        Formio.createForm(element, formJSON)
-          .then(form => {
-            form.setPristine(false);
-            const component = form.getComponent('time');
-            const changed = component.setValue(value);
-            expect(changed).toBeTruthy();
-
-            setTimeout(() => {
-              if (valid) {
-                expect(!!component.error).toBeFalsy();
-              } else {
-                expect(!!component.error).toBeTruthy();
-              }
-
-              if (value === invalidValues[0]) {
-                done();
-              }
-            }, 300);
-          })
-          .catch(done);
-      });
-    };
-
-    testValidity(validValues, true);
-    testValidity(invalidValues, false);
-  });
+      await sleep(300);
+      if (valid) {
+        expect(!!component.error).toBeFalsy();
+      } else {
+        expect(!!component.error).toBeTruthy();
+        expect(component.error.message).toEqual('invalid_time');
+      }
+    }
+  );
 
   test('Time component with both min/max and max > min validation and custom error', done => {
     let formJSON = _.cloneDeep(timeForm);
