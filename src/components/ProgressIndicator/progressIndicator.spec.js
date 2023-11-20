@@ -46,47 +46,51 @@ const renderApp = (initialRoute = '/') => {
 
 beforeEach(() => {
   sessionStorage.clear();
+  localStorage.clear();
 });
 
 afterEach(() => {
   sessionStorage.clear();
+  localStorage.clear();
 });
 
-it('renders the form and checks the expected steps', async () => {
-  mswServer.use(mockSubmissionPost(buildSubmission()));
-  const user = userEvent.setup({delay: null});
+describe('The progress indicator component', () => {
+  it('displays the available submission/form steps and hardcoded steps', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission()));
+    const user = userEvent.setup({delay: null});
 
-  renderApp();
+    renderApp();
 
-  const startFormLink = await screen.findByRole('link', {name: 'Start page'});
-  user.click(startFormLink);
+    const startFormLink = await screen.findByRole('link', {name: 'Start page'});
+    user.click(startFormLink);
 
-  const progressIndicator = await screen.findByText('Progress');
-  expect(progressIndicator).toBeVisible();
+    const progressIndicator = await screen.findByText('Progress');
+    expect(progressIndicator).toBeVisible();
 
-  const startPageItem = await screen.findByText('Start page');
-  expect(startPageItem).toBeVisible();
-  const stepPageItem = await screen.findByText('Step 1');
-  expect(stepPageItem).toBeVisible();
-  const summaryPageItem = await screen.findByText('Summary');
-  expect(summaryPageItem).toBeVisible();
-  const confirmationPageItem = await screen.findByText('Confirmation');
-  expect(confirmationPageItem).toBeVisible();
-});
+    const startPageItem = await screen.findByText('Start page');
+    expect(startPageItem).toBeVisible();
+    const stepPageItem = await screen.findByText('Step 1');
+    expect(stepPageItem).toBeVisible();
+    const summaryPageItem = await screen.findByText('Summary');
+    expect(summaryPageItem).toBeVisible();
+    const confirmationPageItem = await screen.findByText('Confirmation');
+    expect(confirmationPageItem).toBeVisible();
+  });
 
-it('component renders expected steps', async () => {
-  mswServer.use(mockSubmissionPost(buildSubmission()));
-  const user = userEvent.setup({delay: null});
+  it('renders steps in the correct order', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission()));
+    const user = userEvent.setup({delay: null});
 
-  renderApp();
+    renderApp();
 
-  const startFormLink = await screen.findByRole('link', {name: 'Start page'});
-  user.click(startFormLink);
+    const startFormLink = await screen.findByRole('link', {name: 'Start page'});
+    user.click(startFormLink);
 
-  const progressIndicatorSteps = await screen.getAllByRole('listitem');
+    const progressIndicatorSteps = screen.getAllByRole('listitem');
 
-  expect(progressIndicatorSteps[0]).toHaveTextContent('Start page');
-  expect(progressIndicatorSteps[1]).toHaveTextContent('Step 1');
-  expect(progressIndicatorSteps[2]).toHaveTextContent('Summary');
-  expect(progressIndicatorSteps[3]).toHaveTextContent('Confirmation');
+    expect(progressIndicatorSteps[0]).toHaveTextContent('Start page');
+    expect(progressIndicatorSteps[1]).toHaveTextContent('Step 1');
+    expect(progressIndicatorSteps[2]).toHaveTextContent('Summary');
+    expect(progressIndicatorSteps[3]).toHaveTextContent('Confirmation');
+  });
 });
