@@ -11,6 +11,8 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onErr
   const location = useLocation();
   const config = useContext(ConfigContext);
   const queryParams = useQuery();
+  // XXX: use sessionStorage instead of localStorage for this, so that it's scoped to
+  // a single tab/window?
   let [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
 
   // If no submissionID is in the localStorage see if one can be retrieved from the query param

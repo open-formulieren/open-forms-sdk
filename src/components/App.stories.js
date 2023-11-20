@@ -5,7 +5,12 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {FormContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
 import {buildForm} from 'api-mocks';
-import {mockSubmissionGet, mockSubmissionPost, mockSubmissionStepGet} from 'api-mocks/submissions';
+import {
+  mockSubmissionCheckLogicPost,
+  mockSubmissionGet,
+  mockSubmissionPost,
+  mockSubmissionStepGet,
+} from 'api-mocks/submissions';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -142,6 +147,15 @@ export const TranslationDisabled = {
 export const ActiveSubmission = {
   name: 'Active submission',
   render,
+  decorators: [
+    // remove the window.localStorage entry, UUID value is from `api-mocks/forms.js`.
+    // it gets set because of the play function which starts a submission.
+    Story => {
+      const key = 'e450890a-4166-410e-8d64-0a54ad30ba01';
+      window.localStorage.removeItem(key);
+      return <Story />;
+    },
+  ],
   args: {
     steps: [
       {
@@ -170,6 +184,7 @@ export const ActiveSubmission = {
         mockSubmissionPost(),
         mockSubmissionGet(),
         mockSubmissionStepGet(),
+        mockSubmissionCheckLogicPost(),
         mockLanguageInfoGet([
           {code: 'nl', name: 'Nederlands'},
           {code: 'en', name: 'English'},

@@ -27,6 +27,29 @@ const SUBMISSION_DETAILS = {
   },
 };
 
+// mock for /api/v2/submissions/{submission_uuid}/steps/{step_uuid}
+const SUBMISSION_STEP_DETAILS = {
+  id: '58aad9c3-29c7-4568-9047-3ac7ceb0f0ff',
+  slug: 'step-1',
+  formStep: {
+    index: 0,
+    configuration: {
+      components: [
+        {
+          id: 'asdiwj',
+          type: 'textfield',
+          key: 'component1',
+          label: 'Component 1',
+        },
+      ],
+    },
+  },
+  data: null,
+  isApplicable: true,
+  completed: false,
+  canSubmit: true,
+};
+
 /**
  * Return a submission object as if it would be returned from the backend API.
  * @param  {Object} overrides Key-value mapping with overrides from the defaults. These
@@ -41,14 +64,23 @@ export const mockSubmissionPost = (submission = buildSubmission()) =>
     return res(ctx.status(201), ctx.json(submission));
   });
 
-export const mockSubmissionStepGet = () =>
-  rest.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(SUBMISSION_DETAILS.steps[0]));
-  });
-
 export const mockSubmissionGet = () =>
   rest.get(`${BASE_URL}submissions/:uuid`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(SUBMISSION_DETAILS));
+  });
+
+export const mockSubmissionStepGet = () =>
+  rest.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(SUBMISSION_STEP_DETAILS));
+  });
+
+export const mockSubmissionCheckLogicPost = () =>
+  rest.post(`${BASE_URL}submissions/:uuid/steps/:uuid/_check_logic`, (req, res, ctx) => {
+    const responseData = {
+      submission: SUBMISSION_DETAILS,
+      step: SUBMISSION_STEP_DETAILS,
+    };
+    return res(ctx.status(200), ctx.json(responseData));
   });
 
 /**
