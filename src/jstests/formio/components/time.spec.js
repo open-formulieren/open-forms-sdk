@@ -15,9 +15,9 @@ describe('Time Component', () => {
     formJSON.components[0].validate.minTime = '09:00:00';
     formJSON.components[0].validate.maxTime = '17:00:00';
 
-    const validValues = ['09:00:00', '10:30:00', '11:11:11'];
+    const validValues = ['09:00:00', '10:30:00', '11:11:11', '17:00:00'];
 
-    const invalidValues = ['17:00:00', '17:30:00', '08:30:00'];
+    const invalidValues = ['17:30:00', '08:30:00'];
 
     const testValidity = (values, valid) => {
       values.forEach(value => {
@@ -125,7 +125,7 @@ describe('Time Component', () => {
     let formJSON = _.cloneDeep(timeForm);
     formJSON.components[0].validate.maxTime = '09:00:00';
 
-    const validValues = ['08:00:00'];
+    const validValues = ['08:00:00', '09:00:00'];
 
     const invalidValues = ['17:00:00'];
 
@@ -165,7 +165,7 @@ describe('Time Component', () => {
     formJSON.components[0].validate.maxTime = '01:00:00';
     formJSON.components[0].validate.minTime = '08:00:00';
 
-    const validValues = ['09:00:00', '00:30:00'];
+    const validValues = ['09:00:00', '00:30:00', '01:00:00', '08:00:00'];
 
     const invalidValues = ['02:00:00'];
 
