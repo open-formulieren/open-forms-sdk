@@ -33,10 +33,6 @@
     }
   }
 
-  @include bem.modifier('openforms-active') {
-    font-weight: bold;
-  }
-
   @include bem.modifier('openforms-inherit') {
     color: inherit;
 
