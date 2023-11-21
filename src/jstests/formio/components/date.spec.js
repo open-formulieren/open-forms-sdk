@@ -110,4 +110,38 @@ describe('Date Component', () => {
 
     done();
   });
+
+  test('Date validator: check max date AND min date', done => {
+    const component = {
+      label: 'date',
+      key: 'date',
+      type: 'date',
+      datePicker: {
+        minDate: '2023-09-01',
+        maxDate: '2023-09-08',
+      },
+      customOptions: {
+        allowInvalidPreload: true,
+      },
+      validate: {dateMinMax: true},
+    };
+
+    const componentInstance = new FormioComponent(component, {}, {});
+
+    const isValid1 = MinMaxDateValidator.check(componentInstance, {}, '2024-01-01');
+
+    expect(isValid1).toBeFalsy();
+    expect(
+      componentInstance.openForms.validationErrorContext.minMaxDateValidatorErrorKeys
+    ).toContain('maxDate');
+
+    const isValid2 = MinMaxDateValidator.check(componentInstance, {}, '2020-01-01');
+
+    expect(isValid2).toBeFalsy();
+    expect(
+      componentInstance.openForms.validationErrorContext.minMaxDateValidatorErrorKeys
+    ).toContain('minDate');
+
+    done();
+  });
 });
