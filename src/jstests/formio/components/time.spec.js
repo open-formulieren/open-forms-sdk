@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {Formio} from 'react-formio';
 
 import OpenFormsModule from 'formio/module';
+import {sleep} from 'utils';
 
 import {timeForm} from './fixtures/time';
 
@@ -28,14 +29,13 @@ describe('Time Component', () => {
     const component = form.getComponent('time');
     const changed = component.setValue(value);
     expect(changed).toBeTruthy();
-    setTimeout(() => {
-      if (valid) {
-        expect(!!component.error).toBeFalsy();
-      } else {
-        expect(!!component.error).toBeTruthy();
-        expect(component.error.message).toEqual('invalid_time');
-      }
-    }, 300);
+    await sleep(300);
+    if (valid) {
+      expect(!!component.error).toBeFalsy();
+    } else {
+      expect(!!component.error).toBeTruthy();
+      expect(component.error.message).toEqual('invalid_time');
+    }
   });
 
   it.each(['00:00:00', '23:59:59', '11:11:11'])(
@@ -71,14 +71,13 @@ describe('Time Component', () => {
     const component = form.getComponent('time');
     const changed = component.setValue(value);
     expect(changed).toBeTruthy();
-    setTimeout(() => {
-      if (valid) {
-        expect(!!component.error).toBeFalsy();
-      } else {
-        expect(!!component.error).toBeTruthy();
-        expect(component.error.message).toEqual('invalid_time');
-      }
-    }, 300);
+    await sleep(300);
+    if (valid) {
+      expect(!!component.error).toBeFalsy();
+    } else {
+      expect(!!component.error).toBeTruthy();
+      expect(component.error.message).toEqual('invalid_time');
+    }
   });
 
   it.each([
@@ -96,14 +95,13 @@ describe('Time Component', () => {
     const component = form.getComponent('time');
     const changed = component.setValue(value);
     expect(changed).toBeTruthy();
-    setTimeout(() => {
-      if (valid) {
-        expect(!!component.error).toBeFalsy();
-      } else {
-        expect(!!component.error).toBeTruthy();
-        expect(component.error.message).toEqual('invalid_time');
-      }
-    }, 300);
+    await sleep(300);
+    if (valid) {
+      expect(!!component.error).toBeFalsy();
+    } else {
+      expect(!!component.error).toBeTruthy();
+      expect(component.error.message).toEqual('invalid_time');
+    }
   });
 
   it.each([
@@ -126,14 +124,14 @@ describe('Time Component', () => {
       const component = form.getComponent('time');
       const changed = component.setValue(value);
       expect(changed).toBeTruthy();
-      setTimeout(() => {
-        if (valid) {
-          expect(!!component.error).toBeFalsy();
-        } else {
-          expect(!!component.error).toBeTruthy();
-          expect(component.error.message).toEqual('invalid_time');
-        }
-      }, 300);
+
+      await sleep(300);
+      if (valid) {
+        expect(!!component.error).toBeFalsy();
+      } else {
+        expect(!!component.error).toBeTruthy();
+        expect(component.error.message).toEqual('invalid_time');
+      }
     }
   );
 
