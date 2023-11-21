@@ -33,10 +33,6 @@
     }
   }
 
-  @include bem.modifier('openforms-active') {
-    font-weight: bold;
-  }
-
   @include bem.modifier('openforms-inherit') {
     color: inherit;
 
@@ -70,5 +66,13 @@
 @mixin extend-utrecht-link() {
   a {
     @extend .utrecht-link, .utrecht-link--openforms;
+  }
+}
+
+.openforms-theme {
+  .utrecht-link {
+    @include bem.modifier('openforms-active') {
+      font-weight: bold;
+    }
   }
 }
