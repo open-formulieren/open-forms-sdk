@@ -10,6 +10,12 @@ const validateDateBoundaries = (minBoundary, maxBoundary, value) => {
 
   const parsedValue = new Date(value);
 
+  if (minDate && maxDate) {
+    const isValid = parsedValue >= minDate && parsedValue < maxDate;
+    let errorKeys = isValid ? [] : parsedValue < minDate ? ['minDate'] : ['maxDate'];
+    return {isValid, errorKeys};
+  }
+
   if (minDate) return {isValid: parsedValue >= minDate, errorKeys: ['minDate']};
   if (maxDate) return {isValid: parsedValue < maxDate, errorKeys: ['maxDate']};
 };
