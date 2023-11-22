@@ -20,7 +20,10 @@ export const getRedirectParams = (action, actionParams) => {
     case 'afspraak-maken':
       return {path: 'afspraak-maken'};
     case 'resume':
-      return {path: `stap/${actionParams.next_step}`};
+      return {
+        path: `stap/${actionParams.step_slug}`,
+        query: new URLSearchParams({submission_uuid: actionParams.submission_uuid}),
+      };
     default:
       return {};
   }
