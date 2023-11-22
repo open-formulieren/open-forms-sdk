@@ -49,11 +49,10 @@ describe('Time Component', () => {
 
       const component = form.getComponent('time');
       const changed = component.setValue(value);
+      await sleep(300);
 
       expect(changed).toBeTruthy();
-      setTimeout(() => {
-        expect(!!component.error).toBeFalsy();
-      }, 300);
+      expect(!!component.error).toBeFalsy();
     }
   );
 
