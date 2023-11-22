@@ -8,8 +8,11 @@ import AppDebug from 'components/AppDebug';
 import {Cosign} from 'components/CoSign';
 import Form from 'components/Form';
 import LanguageSelection from 'components/LanguageSelection';
-import {CreateAppointment, appointmentRoutes} from 'components/appointments';
-import ManageAppointment from 'components/appointments/ManageAppointment';
+import {
+  CreateAppointment,
+  appointmentRoutes,
+  manageAppointmentRoutes,
+} from 'components/appointments';
 import useFormContext from 'hooks/useFormContext';
 import useQuery from 'hooks/useQuery';
 import useZodErrorMap from 'hooks/useZodErrorMap';
@@ -21,7 +24,7 @@ import AppDisplay from './AppDisplay';
 export const routes = [
   {
     path: 'afspraak-annuleren/*',
-    element: <ManageAppointment />,
+    children: manageAppointmentRoutes,
   },
   {
     path: 'afspraak-maken/*',
