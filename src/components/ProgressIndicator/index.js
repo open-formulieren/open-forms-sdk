@@ -20,7 +20,9 @@ const ProgressIndicator = ({
   const [expanded, setExpanded] = useState(false);
 
   const modifiers = [];
-  if (!expanded) {
+  if (expanded) {
+    modifiers.push('mobile-expanded');
+  } else {
     modifiers.push('mobile-collapsed');
   }
 
@@ -36,7 +38,7 @@ const ProgressIndicator = ({
 
   return (
     <Card blockClassName="progress-indicator" modifiers={modifiers}>
-      <nav>
+      <nav aria-labelledby="proress-indicator-section">
         <MobileButton
           ariaMobileIconLabel={ariaMobileIconLabel}
           accessibleToggleStepsLabel={accessibleToggleStepsLabel}
@@ -44,7 +46,9 @@ const ProgressIndicator = ({
           expanded={expanded}
           onExpandClick={() => setExpanded(!expanded)}
         />
-        <Caption component="h2">{title}</Caption>
+        <Caption id="proress-indicator-section" component="h2">
+          {title}
+        </Caption>
         <List ordered>
           {steps.map((step, index) => (
             <ProgressIndicatorItem

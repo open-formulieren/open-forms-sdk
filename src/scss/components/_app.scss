@@ -26,6 +26,10 @@
     display: flex;
   }
 
+  @include bem.element('body') {
+    flex: 1;
+  }
+
   @include bem.element('debug') {
     margin-block-start: 2em;
   }

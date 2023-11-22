@@ -3,9 +3,13 @@ import React from 'react';
 
 import {getBEMClassName} from 'utils';
 
-const Caption = ({children, component = 'caption'}) => {
+const Caption = ({children, id, component = 'caption'}) => {
   const Component = `${component}`;
-  return <Component className={getBEMClassName('caption')}>{children}</Component>;
+  return (
+    <Component id={id} className={getBEMClassName('caption')}>
+      {children}
+    </Component>
+  );
 };
 
 Caption.propTypes = {
