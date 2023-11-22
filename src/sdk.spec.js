@@ -146,10 +146,7 @@ describe('OpenForm', () => {
       )}`,
       'http://localhost/some-subpath/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00',
     ],
-    [
-      '/some-subpath?_of_action=afspraak-maken',
-      'http://localhost/some-subpath/afspraak-maken/producten', // SDK redirects to producten
-    ],
+    ['/some-subpath?_of_action=afspraak-maken', 'http://localhost/some-subpath/afspraak-maken'],
     [
       `/some-subpath?_of_action=cosign&_of_action_params=${encodeURIComponent(
         JSON.stringify({submission_uuid: 'abc'})
@@ -158,9 +155,9 @@ describe('OpenForm', () => {
     ],
     [
       `/some-subpath?_of_action=resume&_of_action_params=${encodeURIComponent(
-        JSON.stringify({next_step: 'step-1'})
+        JSON.stringify({step_slug: 'step-1', submission_uuid: 'abc'})
       )}`,
-      'http://localhost/some-subpath/startpagina', // SDK redirects to start page
+      'http://localhost/some-subpath/stap/step-1?submission_uuid=abc',
     ],
   ])('should handle action redirects correctly', async (initialUrl, expected) => {
     mswServer.use(...apiMocks);
@@ -173,10 +170,7 @@ describe('OpenForm', () => {
       useHashRouting: false,
       lang: 'nl',
     });
-    await act(async () => await form.init());
 
-    // wait for the loader to be removed when all network requests have completed
-    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
     expect(location.href).toEqual(expected);
   });
 
@@ -191,7 +185,7 @@ describe('OpenForm', () => {
     ],
     [
       '/base-path/?_of_action=afspraak-maken&unrelated_q=1',
-      'http://localhost/base-path/?unrelated_q=1#/afspraak-maken/producten',
+      'http://localhost/base-path/?unrelated_q=1#/afspraak-maken',
     ],
     [
       `/base-path/?_of_action=cosign&_of_action_params=${encodeURIComponent(
@@ -201,9 +195,9 @@ describe('OpenForm', () => {
     ],
     [
       `/base-path/?_of_action=resume&_of_action_params=${encodeURIComponent(
-        JSON.stringify({next_step: 'step-1'})
+        JSON.stringify({step_slug: 'step-1', submission_uuid: 'abc'})
       )}&unrelated_q=1`,
-      'http://localhost/base-path/?unrelated_q=1#/startpagina', // SDK redirects to start page
+      'http://localhost/base-path/?unrelated_q=1#/stap/step-1?submission_uuid=abc',
     ],
     // Without a base path:
     [
@@ -215,7 +209,7 @@ describe('OpenForm', () => {
     ],
     [
       '/?_of_action=afspraak-maken&unrelated_q=1',
-      'http://localhost/?unrelated_q=1#/afspraak-maken/producten', // SDK redirects to producten
+      'http://localhost/?unrelated_q=1#/afspraak-maken',
     ],
     [
       `/?_of_action=cosign&_of_action_params=${encodeURIComponent(
@@ -225,9 +219,9 @@ describe('OpenForm', () => {
     ],
     [
       `/?_of_action=resume&_of_action_params=${encodeURIComponent(
-        JSON.stringify({next_step: 'step-1'})
+        JSON.stringify({step_slug: 'step-1', submission_uuid: 'abc'})
       )}&unrelated_q=1`,
-      'http://localhost/?unrelated_q=1#/startpagina', // SDK redirects to start page
+      'http://localhost/?unrelated_q=1#/stap/step-1?submission_uuid=abc',
     ],
   ])(
     'should handle action redirects correctly (hash based routing)',
@@ -242,10 +236,7 @@ describe('OpenForm', () => {
         useHashRouting: true,
         lang: 'nl',
       });
-      await act(async () => await form.init());
 
-      // wait for the loader to be removed when all network requests have completed
-      await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
       expect(location.href).toEqual(expected);
     }
   );
