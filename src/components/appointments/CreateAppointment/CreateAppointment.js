@@ -52,6 +52,10 @@ const CreateAppointment = () => {
     resetSession();
   };
 
+  const progressIndicator = form.showProgressIndicator ? (
+    <AppointmentProgress title={form.name} currentStep={currentStep} />
+  ) : null;
+
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
       <CreateAppointmentState
@@ -59,30 +63,21 @@ const CreateAppointment = () => {
         submission={submission}
         resetSession={reset}
       >
-        <FormDisplayComponent
-          router={
-            <Wrapper sessionExpired={sessionExpired} title={form.name}>
-              <ErrorBoundary>
-                {isLoading ? (
-                  <Loader modifiers={['centered']} />
-                ) : (
-                  <RequireSession
-                    expired={sessionExpired}
-                    expiryDate={expiryDate}
-                    onNavigate={reset}
-                  >
-                    <LiteralsProvider literals={form.literals}>
-                      <Outlet />
-                    </LiteralsProvider>
-                  </RequireSession>
-                )}
-              </ErrorBoundary>
-            </Wrapper>
-          }
-          progressIndicator={<AppointmentProgress title={form.name} currentStep={currentStep} />}
-          showProgressIndicator={form.showProgressIndicator}
-          isPaymentOverview={false}
-        />
+        <FormDisplayComponent progressIndicator={progressIndicator}>
+          <Wrapper sessionExpired={sessionExpired} title={form.name}>
+            <ErrorBoundary>
+              {isLoading ? (
+                <Loader modifiers={['centered']} />
+              ) : (
+                <RequireSession expired={sessionExpired} expiryDate={expiryDate} onNavigate={reset}>
+                  <LiteralsProvider literals={form.literals}>
+                    <Outlet />
+                  </LiteralsProvider>
+                </RequireSession>
+              )}
+            </ErrorBoundary>
+          </Wrapper>
+        </FormDisplayComponent>
       </CreateAppointmentState>
     </AppointmentConfigContext.Provider>
   );

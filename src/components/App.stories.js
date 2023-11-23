@@ -57,8 +57,6 @@ export default {
     ],
   },
   argTypes: {
-    form: {table: {disable: true}},
-    noDebug: {table: {disable: true}},
     submissionAllowed: {
       options: Object.values(SUBMISSION_ALLOWED),
       control: {type: 'radio'},
@@ -69,6 +67,9 @@ export default {
     },
   },
   parameters: {
+    config: {
+      debug: false,
+    },
     msw: {
       handlers: [
         mockLanguageInfoGet([
@@ -85,7 +86,7 @@ const Wrapper = ({form}) => {
   const routes = [
     {
       path: '*',
-      element: <App noDebug />,
+      element: <App />,
       children: nestedRoutes,
     },
   ];
@@ -121,7 +122,7 @@ export const TranslationEnabled = {
   args: {
     'form.translationEnabled': true,
   },
-  play: async ({args, canvasElement}) => {
+  play: async ({canvasElement}) => {
     const langSelector = await within(canvasElement).findByText(/^nl$/i);
     await expect(langSelector).toBeTruthy();
   },
@@ -132,7 +133,7 @@ export const TranslationDisabled = {
   args: {
     'form.translationEnabled': false,
   },
-  play: async ({args, canvasElement}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     // wait for spinners to disappear

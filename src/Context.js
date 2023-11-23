@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {DEBUG} from 'utils';
+
 const FormContext = React.createContext({
   uuid: '',
   name: '',
@@ -33,6 +35,7 @@ const ConfigContext = React.createContext({
     progressIndicator: null,
     loginOptions: null,
   },
+  debug: DEBUG,
 });
 ConfigContext.displayName = 'ConfigContext';
 

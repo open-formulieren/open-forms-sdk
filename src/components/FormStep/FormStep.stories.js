@@ -23,6 +23,9 @@ export default {
     routerArgs: {table: {disable: true}},
   },
   parameters: {
+    config: {
+      debug: false,
+    },
     reactRouter: {
       routePath: '/stap/:step',
       routeParams: {step: 'step-1'},
@@ -40,7 +43,6 @@ const render = ({
   onStepSubmitted,
   onLogout,
   onSessionDestroyed,
-  showDebug,
   // story args
   formioConfiguration,
 }) => {
@@ -66,7 +68,6 @@ const render = ({
       onStepSubmitted={onStepSubmitted}
       onLogout={onLogout}
       onSessionDestroyed={onSessionDestroyed}
-      showDebug={showDebug}
     />
   );
 };
@@ -96,7 +97,6 @@ export const Default = {
     },
     form: buildForm(),
     submission: buildSubmission(),
-    showDebug: false,
   },
 };
 
@@ -126,6 +126,5 @@ export const SuspensionDisallowed = {
     },
     form: buildForm({suspensionAllowed: false}),
     submission: buildSubmission(),
-    showDebug: false,
   },
 };
