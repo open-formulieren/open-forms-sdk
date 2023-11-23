@@ -20,7 +20,7 @@ import {SUBMISSION_ALLOWED} from './constants';
 export default {
   title: 'Private API / App',
   component: App,
-  decorators: [LayoutDecorator, ConfigDecorator],
+  decorators: [ConfigDecorator],
   args: {
     'form.translationEnabled': true,
     submissionAllowed: SUBMISSION_ALLOWED.yes,
@@ -113,10 +113,11 @@ const render = args => {
 
 export const Default = {
   render,
+  decorators: [LayoutDecorator],
 };
 
 export const TranslationEnabled = {
-  render,
+  ...Default,
   args: {
     'form.translationEnabled': true,
   },
@@ -127,7 +128,7 @@ export const TranslationEnabled = {
 };
 
 export const TranslationDisabled = {
-  render,
+  ...Default,
   args: {
     'form.translationEnabled': false,
   },
@@ -145,8 +146,8 @@ export const TranslationDisabled = {
 };
 
 export const ActiveSubmission = {
+  ...Default,
   name: 'Active submission',
-  render,
   decorators: [
     // remove the window.localStorage entry, UUID value is from `api-mocks/forms.js`.
     // it gets set because of the play function which starts a submission.
@@ -280,12 +281,31 @@ export const SeveralStepsInMobileViewport = {
         isApplicable: true,
         completed: false,
       },
+      {
+        uuid: '03657dc1-6bb1-49cf-8113-4b663981b70f',
+        slug: 'step-9',
+        formDefinition: 'Step 9',
+        index: 0,
+        url: `${BASE_URL}forms/mock/steps/03657dc1-6bb1-49cf-8113-4b663981b70f`,
+        isApplicable: true,
+        completed: false,
+      },
+      {
+        uuid: '03657dc1-6bb1-49cf-8113-4b663981b70f',
+        slug: 'step-10',
+        formDefinition: 'Step 10',
+        index: 0,
+        url: `${BASE_URL}forms/mock/steps/03657dc1-6bb1-49cf-8113-4b663981b70f`,
+        isApplicable: true,
+        completed: false,
+      },
     ],
     ariaMobileIconLabel: 'Progress step indicator toggle icon (mobile)',
     accessibleToggleStepsLabel: 'Current step in form Formulier: Stap 2',
   },
   parameters: {
     chromatic: {disableSnapshot: true},
+    layout: 'fullscreen',
     viewport: {
       defaultViewport: 'mobile1',
     },
