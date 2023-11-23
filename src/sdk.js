@@ -95,12 +95,17 @@ class OpenForm {
     CSPNonce.setValue(CSPNonceValue);
     initialiseSentry(sentryDSN, sentryEnv);
 
-    // ensure that the basename has no trailing slash (for react router)
-    let pathname = basePath || window.location.pathname;
-    if (pathname.endsWith('/')) {
-      pathname = pathname.slice(0, pathname.length - 1);
+    if (useHashRouting) {
+      this.basePath = '';
+    } else {
+      // ensure that the basename has no trailing slash (for react router)
+      let pathname = basePath || window.location.pathname;
+      if (pathname.endsWith('/')) {
+        pathname = pathname.slice(0, pathname.length - 1);
+      }
+      this.basePath = pathname;
     }
-    this.basePath = pathname;
+
     this.calculateClientBaseUrl();
   }
 
