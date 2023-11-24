@@ -7,8 +7,12 @@ import {getBEMClassName} from 'utils';
 
 import CompletionMark from './CompletionMark';
 
-const getLinkModifiers = (isActive, isApplicable, isCompleted) => {
-  return ['inherit', 'hover', isActive ? 'active' : undefined].filter(mod => mod !== undefined);
+const getLinkModifiers = isActive => {
+  const modifiers = ['inherit', 'hover'];
+  if (isActive) {
+    modifiers.push('current');
+  }
+  return modifiers;
 };
 
 /**
@@ -40,7 +44,7 @@ export const ProgressIndicatorItem = ({
         <Link
           to={to}
           placeholder={!canNavigateTo}
-          modifiers={canNavigateTo ? getLinkModifiers(isActive, isApplicable, isCompleted) : []}
+          modifiers={canNavigateTo ? getLinkModifiers(isActive) : []}
           aria-label={label}
         >
           <FormattedMessage

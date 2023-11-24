@@ -3,13 +3,23 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const ANCHOR_MODIFIERS = ['hover', 'active', 'inherit', 'muted', 'indent'];
+export const ANCHOR_MODIFIERS = [
+  // maps to NLDS
+  'current',
+  // OF specific
+  'hover',
+  'inherit',
+];
 
 const Anchor = ({children, href, modifiers = [], ...extraProps}) => {
   // extend with our own modifiers
   const className = classNames(
     'utrecht-link--openforms', // always apply our own modifier
-    ...modifiers.map(mod => `utrecht-link--openforms-${mod}`)
+    {
+      'utrecht-link--current': modifiers.includes('current'),
+      'utrecht-link--openforms-hover': modifiers.includes('hover'),
+      'utrecht-link--openforms-inherit': modifiers.includes('inherit'),
+    }
   );
   return (
     <UtrechtLink className={className} href={href || undefined} {...extraProps}>

@@ -19,7 +19,7 @@ export default {
 };
 
 const render = ({label, ...args}) => (
-  <Anchor href="https://example.com" {...args}>
+  <Anchor href="https://example.com" target="_blank" {...args}>
     {label}
   </Anchor>
 );
@@ -39,30 +39,6 @@ export const Hover = {
   },
 };
 
-export const Active = {
-  render,
-  args: {
-    modifiers: ['active'],
-    label: 'Active',
-  },
-};
-
-export const Muted = {
-  render,
-  args: {
-    modifiers: ['muted'],
-    label: 'Muted',
-  },
-};
-
-export const Indent = {
-  render,
-  args: {
-    modifiers: ['indent'],
-    label: 'Indent',
-  },
-};
-
 export const Inherit = {
   render,
   args: {
@@ -71,10 +47,33 @@ export const Inherit = {
   },
 };
 
+/**
+ * A placeholder link indicating that the link may become available.
+ *
+ * The link is currently not active/clickable/enabled because of some state, but
+ * depending on context it may become a regular link. The `href` attribute is removed,
+ * which removes the link from the tab/focus navigation while keeping a consistent
+ * markup.
+ */
 export const Placeholder = {
   render,
   args: {
     label: 'placeholder',
     placeholder: true,
+  },
+};
+
+/**
+ * A link indicating the current page.
+ *
+ * Typically you can navigate to this link, but it will just take you to the same page.
+ * While the link is enabled and can be clicked, the styling does not *encourage* users
+ * to click it by rendering the default cursor instead.
+ */
+export const Current = {
+  render,
+  args: {
+    modifiers: ['current'],
+    label: 'Current',
   },
 };
