@@ -8,7 +8,7 @@ import {getBEMClassName} from 'utils';
 import CompletionMark from './CompletionMark';
 
 const getLinkModifiers = (isActive, isApplicable, isCompleted) => {
-  return ['inherit', 'hover', isActive ? 'active' : undefined].filter(mod => mod !== undefined);
+  return ['inherit', 'hover', isActive ? 'current' : undefined].filter(mod => mod !== undefined);
 };
 
 /**
