@@ -1,7 +1,5 @@
 @use 'microscope-sass/lib/bem';
-
-@import '~microscope-sass/lib/grid';
-@import '~microscope-sass/lib/typography';
+@use './card';
 
 @import '../mixins/prefix';
 
@@ -9,6 +7,10 @@
   .#{prefix($classname)} {
     @content;
   }
+}
+
+.openforms-progress-indicator {
+  @include card.card('progress-indicator');
 }
 
 // .#{prefix('progress-indicator')} {

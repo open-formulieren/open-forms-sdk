@@ -5,11 +5,18 @@
 
 @import '../mixins/prefix';
 
-.#{prefix('card')} {
-  @include color-background;
-  padding: $grid-margin-8;
+@mixin card($block: 'card') {
+  background-color: var(--of-#{$block}-background-color, var(--of-color-bg));
   box-sizing: border-box;
-  width: 100%;
+  padding-block-end: var(--of-#{$block}-padding-block-end, 40px);
+  padding-block-start: var(--of-#{$block}-padding-block-start, 40px);
+  padding-inline-end: var(--of-#{$block}-padding-inline-end, 40px);
+  padding-inline-start: var(--of-#{$block}-padding-inline-start, 40px);
+  inline-size: 100%;
+}
+
+.openforms-card {
+  @include card;
 
   @include bem.element('header') {
     @include bem.modifier('padded') {
