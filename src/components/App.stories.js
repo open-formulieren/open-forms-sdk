@@ -56,6 +56,7 @@ export default {
         completed: false,
       },
     ],
+    showExternalHeader: false,
   },
   argTypes: {
     submissionAllowed: {
@@ -83,7 +84,7 @@ export default {
   },
 };
 
-const Wrapper = ({form}) => {
+const Wrapper = ({form, showExternalHeader}) => {
   const routes = [
     {
       path: '*',
@@ -97,6 +98,9 @@ const Wrapper = ({form}) => {
   });
   return (
     <FormContext.Provider value={form}>
+      {showExternalHeader && (
+        <header style={{padding: '10px', textAlign: 'center'}}>External header</header>
+      )}
       <RouterProvider router={router} />
     </FormContext.Provider>
   );
@@ -111,7 +115,7 @@ const render = args => {
     hideNonApplicableSteps: args['hideNonApplicableSteps'],
     steps: args['steps'],
   });
-  return <Wrapper form={form} />;
+  return <Wrapper form={form} showExternalHeader={args.showExternalHeader} />;
 };
 
 export const Default = {
@@ -210,6 +214,7 @@ export const ActiveSubmission = {
 export const SeveralStepsInMobileViewport = {
   render,
   args: {
+    showExternalHeader: true,
     name: 'A rather long form name that overflows on mobile',
     steps: [
       {
@@ -317,7 +322,7 @@ export const SeveralStepsInMobileViewport = {
         isApplicable: true,
       },
       {
-        uuid: '03657dc1-6bb1-49cf-8113-4b663981b70f',
+        uuid: '4d4767b6-a3a4-4519-a1d3-f81e15bf829c',
         slug: 'step-9',
         formDefinition: 'Step 9',
         index: 8,
@@ -326,11 +331,11 @@ export const SeveralStepsInMobileViewport = {
           saveText: {resolved: 'Save', value: ''},
           nextText: {resolved: 'Next', value: ''},
         },
-        url: `${BASE_URL}forms/mock/steps/03657dc1-6bb1-49cf-8113-4b663981b70f`,
+        url: `${BASE_URL}forms/mock/steps/4d4767b6-a3a4-4519-a1d3-f81e15bf829c`,
         isApplicable: true,
       },
       {
-        uuid: '03657dc1-6bb1-49cf-8113-4b663981b70f',
+        uuid: '9166d9b7-baa9-429a-a19e-c0c88f2fdaa8',
         slug: 'step-10',
         formDefinition: 'Step 10',
         index: 9,
@@ -339,7 +344,33 @@ export const SeveralStepsInMobileViewport = {
           saveText: {resolved: 'Save', value: ''},
           nextText: {resolved: 'Next', value: ''},
         },
-        url: `${BASE_URL}forms/mock/steps/03657dc1-6bb1-49cf-8113-4b663981b70f`,
+        url: `${BASE_URL}forms/mock/steps/9166d9b7-baa9-429a-a19e-c0c88f2fdaa8`,
+        isApplicable: true,
+      },
+      {
+        uuid: 'c5eb8263-39e7-4e8c-a6f4-77278f50ee52',
+        slug: 'step-11',
+        formDefinition: 'Step 11',
+        index: 10,
+        literals: {
+          previousText: {resolved: 'Previous', value: ''},
+          saveText: {resolved: 'Save', value: ''},
+          nextText: {resolved: 'Next', value: ''},
+        },
+        url: `${BASE_URL}forms/mock/steps/c5eb8263-39e7-4e8c-a6f4-77278f50ee52`,
+        isApplicable: true,
+      },
+      {
+        uuid: '4f79f369-7aca-4346-9d91-5d5e628b7fb0',
+        slug: 'step-12',
+        formDefinition: 'Step 12',
+        index: 11,
+        literals: {
+          previousText: {resolved: 'Previous', value: ''},
+          saveText: {resolved: 'Save', value: ''},
+          nextText: {resolved: 'Next', value: ''},
+        },
+        url: `${BASE_URL}forms/mock/steps/4f79f369-7aca-4346-9d91-5d5e628b7fb0`,
         isApplicable: true,
       },
     ],
