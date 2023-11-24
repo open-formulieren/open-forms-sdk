@@ -40,22 +40,6 @@
       color: inherit;
     }
   }
-
-  @include bem.modifier('openforms-muted') {
-    color: var(--of-utrecht-link-muted-color, var(--of-color-fg-muted));
-
-    &:hover {
-      --of-utrecht-link-muted-color: var(--of-color-fg);
-    }
-
-    &.utrecht-link--openforms-active {
-      --of-utrecht-link-muted-color: var(--of-color-fg);
-    }
-  }
-
-  @include bem.modifier('openforms-indent') {
-    padding-left: 0.6em;
-  }
 }
 
 /**

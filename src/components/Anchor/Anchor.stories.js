@@ -19,7 +19,7 @@ export default {
 };
 
 const render = ({label, ...args}) => (
-  <Anchor href="https://example.com" {...args}>
+  <Anchor href="https://example.com" target="_blank" {...args}>
     {label}
   </Anchor>
 );
@@ -36,14 +36,6 @@ export const Hover = {
   args: {
     modifiers: ['hover'],
     label: 'Hover',
-  },
-};
-
-export const Indent = {
-  render,
-  args: {
-    modifiers: ['indent'],
-    label: 'Indent',
   },
 };
 

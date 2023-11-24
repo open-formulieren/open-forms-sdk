@@ -9,7 +9,6 @@ export const ANCHOR_MODIFIERS = [
   // OF specific
   'hover',
   'inherit',
-  'indent',
 ];
 
 const Anchor = ({children, href, modifiers = [], ...extraProps}) => {
@@ -20,7 +19,6 @@ const Anchor = ({children, href, modifiers = [], ...extraProps}) => {
       'utrecht-link--current': modifiers.includes('current'),
       'utrecht-link--openforms-hover': modifiers.includes('hover'),
       'utrecht-link--openforms-inherit': modifiers.includes('inherit'),
-      'utrecht-link--openforms-indent': modifiers.includes('indent'),
     }
   );
   return (
