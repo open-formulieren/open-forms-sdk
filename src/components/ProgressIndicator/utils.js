@@ -75,7 +75,7 @@ const addFixedSteps = (
     ...steps,
     showOverview && summaryStep,
     showConfirmation && confirmationStep,
-  ];
+  ].filter(Boolean);
 
   return finalSteps;
 };
