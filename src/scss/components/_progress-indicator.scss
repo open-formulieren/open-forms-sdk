@@ -9,6 +9,19 @@
   }
 }
 
+/**
+ * Desktop and mobile styling for the progress indicator element.
+ *
+ * The parent component (_app.scss) is responsible for re-arranging the order of
+ * elements depending on the viewport. The styles of this component are responsible for
+ * managing how it looks/behaves on mobile/non-mobile viewports:
+ *
+ * - on mobile, the element takes a navbar-like approach that can be expanded/collapsed
+ * - on desktop, it behaves like a sticky element, so that it can be placed in a sidebar
+ *
+ * TODO: remove the fallbacks/defaults after a deprecation period. Many of these
+ * design tokens here didn't exist before 2.1 and had hardcoded values.
+ */
 .openforms-progress-indicator {
   @include card.card('progress-indicator');
 
@@ -23,9 +36,58 @@
     gap: var(--of-progress-indicator-nav-gap, 20px);
   }
 
+  /**
+   * Responsive styles, mobile viewports.
+   *
+   */
   @include mobile-only {
+    // remove any padding from the container element - instead, we apply mobile padding
+    // on the button element so that it's easier to tap on mobile devices.
+    --of-progress-indicator-padding-block-end: 0;
+    --of-progress-indicator-padding-block-start: 0;
+    --of-progress-indicator-padding-inline-end: 0;
+    --of-progress-indicator-padding-inline-start: 0;
+
     @include bem.element('mobile-header') {
-      display: block;
+      // reset base/default user agent styles
+      all: unset;
+      box-shadow: var(--of-progress-indicator-mobile-box-shadow);
+      box-sizing: border-box;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: var(--of-progress-indicator-mobile-header-gap, 0);
+      inline-size: 100%;
+      max-inline-size: var(--of-progress-indicator-mobile-header-max-inline-size, 100vw);
+
+      padding-block-end: var(--of-progress-indicator-mobile-padding-block-end, 15px);
+      padding-block-start: var(--of-progress-indicator-mobile-padding-block-start, 15px);
+      padding-inline-end: var(--of-progress-indicator-mobile-padding-inline-end, 15px);
+      padding-inline-start: var(--of-progress-indicator-mobile-padding-inline-start, 15px);
+
+      // include for backwards compatibility reasons
+      color: var(--of-progress-indicator-mobile-header-color, var(--of-color-fg, inherit));
+      font-family: var(
+        --of-progress-indicator-mobile-header-font-family,
+        var(--utrecht-document-font-family, var(--of-typography-sans-serif-font-family, inherit))
+      );
+      font-size: var(--of-progress-indicator-mobile-header-font-size, 1.125rem);
+      line-height: var(--of-progress-indicator-mobile-header-line-height, 1.1333);
+
+      .fa-icon {
+        display: block;
+        flex-shrink: 0;
+        flex-basis: calc(2 * var(--of-progress-indicator-padding-mobile-inline-start, 15px));
+        text-align: center;
+      }
+    }
+
+    // TODO: provide design tokens?
+    @include bem.element('form-title') {
+      @include ellipsis;
+      font-weight: bold;
     }
 
     // Hide by default on mobile

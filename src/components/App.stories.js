@@ -22,6 +22,7 @@ export default {
   component: App,
   decorators: [ConfigDecorator],
   args: {
+    name: 'Mock form',
     'form.translationEnabled': true,
     submissionAllowed: SUBMISSION_ALLOWED.yes,
     hideNonApplicableSteps: false,
@@ -103,6 +104,7 @@ const Wrapper = ({form}) => {
 
 const render = args => {
   const form = buildForm({
+    name: args.name,
     translationEnabled: args['form.translationEnabled'],
     explanationTemplate: '<p>Toelichtingssjabloon...</p>',
     submissionAllowed: args['submissionAllowed'],
@@ -208,8 +210,7 @@ export const ActiveSubmission = {
 export const SeveralStepsInMobileViewport = {
   render,
   args: {
-    title: 'Progress',
-    formTitle: 'Formulier',
+    name: 'A rather long form name that overflows on mobile',
     steps: [
       {
         uuid: '9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5',
