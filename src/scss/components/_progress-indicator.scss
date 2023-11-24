@@ -11,10 +11,31 @@
 
 .openforms-progress-indicator {
   @include card.card('progress-indicator');
+
+  // Do not display the toggle button on non-mobile devices
+  @include bem.element('mobile-header') {
+    display: none;
+  }
+
+  @include bem.element('nav') {
+    display: flex;
+    flex-direction: column;
+    gap: var(--of-progress-indicator-nav-gap, 20px);
+  }
+
+  @include mobile-only {
+    @include bem.element('mobile-header') {
+      display: block;
+    }
+
+    // Hide by default on mobile
+    @include bem.element('nav') {
+      display: none;
+    }
+  }
 }
 
 // .#{prefix('progress-indicator')} {
-//   @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
 
 //   @include bem.element('mobile-header') {
 //     @include body;
