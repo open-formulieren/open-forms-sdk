@@ -39,14 +39,6 @@ export const Hover = {
   },
 };
 
-export const Muted = {
-  render,
-  args: {
-    modifiers: ['muted'],
-    label: 'Muted',
-  },
-};
-
 export const Indent = {
   render,
   args: {
