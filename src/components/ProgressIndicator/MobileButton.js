@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import FAIcon from 'components/FAIcon';
-import {getBEMClassName} from 'utils';
 
 const MobileButton = ({
   ariaMobileIconLabel,
@@ -12,7 +11,7 @@ const MobileButton = ({
 }) => {
   return (
     <button
-      className={getBEMClassName('progress-indicator__mobile-header')}
+      className="openforms-progress-indicator__mobile-header"
       aria-pressed={expanded ? 'true' : 'false'}
       onClick={onExpandClick}
     >
@@ -22,7 +21,7 @@ const MobileButton = ({
         aria-label={ariaMobileIconLabel}
       />
       <span
-        className={getBEMClassName('progress-indicator__form-title')}
+        className="openforms-progress-indicator__form-title"
         aria-label={accessibleToggleStepsLabel}
       >
         {formTitle}

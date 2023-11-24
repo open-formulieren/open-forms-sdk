@@ -11,79 +11,80 @@
   }
 }
 
-.#{prefix('progress-indicator')} {
-  @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
+// .#{prefix('progress-indicator')} {
+//   @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
 
-  @include bem.element('mobile-header') {
-    @include body;
-    @include body--big;
-    @include margin(-$grid-container-margin, $properties: margin-left);
+//   @include bem.element('mobile-header') {
+//     @include body;
+//     @include body--big;
+//     @include margin(-$grid-container-margin, $properties: margin-left);
 
-    // style for replacing div with a button for accessibility
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    width: calc(100% + $grid-container-margin);
+//     // style for replacing div with a button for accessibility
+//     background: none;
+//     border: none;
+//     padding: 0;
+//     cursor: pointer;
+//     width: calc(100% + $grid-container-margin);
 
-    @include show-on-mobile(flex);
+//     @include show-on-mobile(flex);
 
-    align-items: center;
+//     align-items: center;
 
-    .fa-icon {
-      display: block;
-      flex-shrink: 0;
-      flex-basis: $grid-container-margin * 2;
-      text-align: center;
-    }
-  }
+//     .fa-icon {
+//       display: block;
+//       flex-shrink: 0;
+//       flex-basis: $grid-container-margin * 2;
+//       text-align: center;
+//     }
+//   }
 
-  @include bem.element('form-title') {
-    @include ellipsis;
-    font-weight: bold;
-  }
+//   @include bem.element('form-title') {
+//     @include ellipsis;
+//     font-weight: bold;
+//   }
 
-  // mobile styling for the progress indicator
-  @include mobile-only {
-    @include margin($grid-container-margin, $properties: (padding-top, padding-bottom));
-    box-shadow: var(--of-progress-indicator-mobile-box-shadow);
-    // otherwise the bar is too short, and setting a width creates a horizontal scrollbar
-    width: unset;
+//   // mobile styling for the progress indicator
+//   @include mobile-only {
+//     @include margin($grid-container-margin, $properties: (padding-top, padding-bottom));
+//     box-shadow: var(--of-progress-indicator-mobile-box-shadow);
+//     // otherwise the bar is too short, and setting a width creates a horizontal scrollbar
+//     width: unset;
 
-    // style layout
-    @at-root .#{prefix('layout__row')} & {
-      @include margin(
-        calc(-1 * var(--of-progress-indicator-mobile-margin)),
-        $properties: (margin-left, margin-right)
-      );
-    }
+//     // style layout
+//     @at-root .#{prefix('layout__row')} & {
+//       @include margin(
+//         calc(-1 * var(--of-progress-indicator-mobile-margin)),
+//         $properties: (margin-left, margin-right)
+//       );
+//     }
 
-    @include nested('caption') {
-      @include margin(true, $properties: margin-top);
-      @include margin($grid-container-margin, $properties: margin-left);
+//     @include nested('caption') {
+//       @include margin(true, $properties: margin-top);
+//       @include margin($grid-container-margin, $properties: margin-left);
 
-      @include mobile-only {
-        display: none;
-      }
-    }
+//       @include mobile-only {
+//         display: none;
+//       }
+//     }
 
-    @include nested('list') {
-      @include margin($grid-container-margin, $properties: margin-left);
-    }
+//     @include nested('list') {
+//       @include margin($grid-container-margin, $properties: margin-left);
+//     }
 
-    @include bem.modifier('mobile-collapsed') {
-      @include nested('caption') {
-        display: none;
-      }
+//     @include bem.modifier('mobile-collapsed') {
+//       @include nested('caption') {
+//         display: none;
+//       }
 
-      @include nested('list') {
-        display: none;
-      }
-    }
-  }
-}
+//       @include nested('list') {
+//         display: none;
+//       }
+//     }
+//   }
+// }
 
-.#{prefix('progress-indicator-item')} {
+// TODO: parametrize with design tokens
+.openforms-progress-indicator-item {
   display: flex;
   justify-content: flex-start;
 
