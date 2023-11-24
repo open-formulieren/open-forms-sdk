@@ -36,7 +36,7 @@ const ProgressIndicator = ({
 
   return (
     <Card blockClassName="progress-indicator" modifiers={modifiers}>
-      <nav>
+      <nav aria-labelledby="ca10ead3-1537-41dc-b3b4-a4593740ecd9">
         <MobileButton
           ariaMobileIconLabel={ariaMobileIconLabel}
           accessibleToggleStepsLabel={accessibleToggleStepsLabel}
@@ -44,7 +44,9 @@ const ProgressIndicator = ({
           expanded={expanded}
           onExpandClick={() => setExpanded(!expanded)}
         />
-        <Caption component="h2">{title}</Caption>
+        <Caption component="h2" id="ca10ead3-1537-41dc-b3b4-a4593740ecd9">
+          {title}
+        </Caption>
         <List ordered>
           {steps.map((step, index) => (
             <ProgressIndicatorItem
