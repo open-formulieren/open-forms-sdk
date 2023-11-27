@@ -17,15 +17,25 @@
     }
   }
 
-  .openforms-button {
-    padding: 0;
-  }
-
   // if we are not rendering in a designated portal node, ensure it's aligned to the
   // right
   @at-root .openforms-app__language-switcher & {
+    --utrecht-button-group-padding-block-end: var(--of-language-selection-in-app-padding-block-end);
+    --utrecht-button-group-padding-block-start: var(
+      --of-language-selection-in-app-padding-block-start
+    );
     margin-inline-start: auto;
-    margin-block-end: var(--of-language-selection-in-app-margin-block-end);
+
+    @include mobile-only {
+      --utrecht-button-group-padding-block-end: var(
+        --of-language-selection-in-app-mobile-padding-block-end,
+        var(--of-language-selection-in-app-padding-block-end)
+      );
+      --utrecht-button-group-padding-block-start: var(
+        --of-language-selection-in-app-mobile-padding-block-start,
+        var(--of-language-selection-in-app-padding-block-start)
+      );
+    }
   }
 }
 
@@ -35,4 +45,8 @@
       flex-direction: row;
     }
   }
+}
+
+.openforms-theme {
+  --of-language-selection-in-app-mobile-padding-block-start: 15px;
 }
