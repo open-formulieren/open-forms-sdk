@@ -432,10 +432,7 @@ const Form = () => {
   );
 
   // render the form step if there's an active submission (and no summary)
-  const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
-  return (
-    <FormDisplayComponent progressIndicator={progressIndicator}>{router}</FormDisplayComponent>
-  );
+  return <FormDisplay progressIndicator={progressIndicator}>{router}</FormDisplay>;
 };
 
 Form.propTypes = {};

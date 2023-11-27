@@ -1,7 +1,6 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
 
-import {ConfigContext} from 'Context';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
@@ -39,8 +38,6 @@ const CreateAppointment = () => {
 
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(clearSubmission);
 
-  const config = useContext(ConfigContext);
-  const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
 
   const currentStep =
@@ -63,7 +60,7 @@ const CreateAppointment = () => {
         submission={submission}
         resetSession={reset}
       >
-        <FormDisplayComponent progressIndicator={progressIndicator}>
+        <FormDisplay progressIndicator={progressIndicator}>
           <Wrapper sessionExpired={sessionExpired} title={form.name}>
             <ErrorBoundary>
               {isLoading ? (
@@ -77,7 +74,7 @@ const CreateAppointment = () => {
               )}
             </ErrorBoundary>
           </Wrapper>
-        </FormDisplayComponent>
+        </FormDisplay>
       </CreateAppointmentState>
     </AppointmentConfigContext.Provider>
   );
