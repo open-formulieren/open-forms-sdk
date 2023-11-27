@@ -17,7 +17,11 @@ import 'styles.scss';
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
 
-import {utrechtDocumentDecorator, withClearSessionStorage} from './decorators';
+import {
+  utrechtDocumentDecorator,
+  withClearSessionStorage,
+  withClearSubmissionLocalStorage,
+} from './decorators';
 import {reactIntl} from './reactIntl.js';
 
 initialize({
@@ -35,7 +39,12 @@ Formio.use(OpenFormsModule);
 Templates.current = OFLibrary;
 
 export default {
-  decorators: [mswDecorator, withClearSessionStorage, utrechtDocumentDecorator],
+  decorators: [
+    mswDecorator,
+    withClearSessionStorage,
+    withClearSubmissionLocalStorage,
+    utrechtDocumentDecorator,
+  ],
   globals: {
     locale: reactIntl.defaultLocale,
     locales: {

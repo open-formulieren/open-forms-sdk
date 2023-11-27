@@ -37,11 +37,15 @@ const ProgressIndicator = ({
   }, [currentPathname]);
 
   useLayoutEffect(() => {
+    let isMounted = true;
     if (buttonRef.current) {
       const boundingBox = buttonRef.current.getBoundingClientRect();
       // the offset from top + height of the element (including padding + borders)
-      setVerticalSpaceUsed(boundingBox.bottom);
+      isMounted && setVerticalSpaceUsed(boundingBox.bottom);
     }
+    return () => {
+      isMounted = false;
+    };
   }, [buttonRef, setVerticalSpaceUsed]);
 
   const customProperties = verticalSpaceUsed

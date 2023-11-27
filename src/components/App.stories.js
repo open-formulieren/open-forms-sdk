@@ -155,16 +155,6 @@ export const TranslationDisabled = {
 export const ActiveSubmission = {
   ...Default,
   name: 'Active submission',
-  decorators: [
-    ...Default.decorators,
-    // remove the window.localStorage entry, UUID value is from `api-mocks/forms.js`.
-    // it gets set because of the play function which starts a submission.
-    Story => {
-      const key = 'e450890a-4166-410e-8d64-0a54ad30ba01';
-      window.localStorage.removeItem(key);
-      return <Story />;
-    },
-  ],
   args: {
     steps: [
       {
