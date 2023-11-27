@@ -37,6 +37,8 @@
 
   @include bem.element('body') {
     grid-area: body;
+    padding-block-end: var(--of-app-body-padding-block-end, 0);
+    padding-block-start: var(--of-app-body-padding-block-start, 0);
   }
 
   @include bem.element('progress-indicator') {
@@ -63,6 +65,17 @@
     padding-block-start: var(--of-app-mobile-padding-block-start, 0);
     padding-inline-end: var(--of-app-mobile-padding-inline-end, 15px);
     padding-inline-start: var(--of-app-mobile-padding-inline-start, 15px);
+
+    @include bem.element('body') {
+      padding-block-end: var(
+        --of-app-body-mobile-padding-block-end,
+        var(--of-app-body-padding-block-end, 0)
+      );
+      padding-block-start: var(
+        --of-app-body-mobile-padding-block-start,
+        var(--of-app-body-padding-block-start, 0)
+      );
+    }
 
     @include bem.element('progress-indicator') {
       margin-inline-end: var(--of-app-progress-indicator-mobile-margin-inline-end, -15px);
