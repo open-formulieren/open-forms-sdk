@@ -49,7 +49,6 @@ import {ValidationError} from 'errors';
 import {PREFIX} from 'formio/constants';
 import useTitle from 'hooks/useTitle';
 import Types from 'types';
-import {DEBUG} from 'utils';
 
 import hooks from '../../formio/hooks';
 
@@ -300,7 +299,6 @@ const FormStep = ({
   onStepSubmitted,
   onLogout,
   onSessionDestroyed,
-  showDebug = DEBUG,
 }) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
@@ -867,7 +865,7 @@ const FormStep = ({
                   },
                 }}
               />
-              {showDebug ? <FormStepDebug data={getCurrentFormData()} /> : null}
+              {config.debug ? <FormStepDebug data={getCurrentFormData()} /> : null}
               <ButtonsToolbar
                 literals={formStep.literals}
                 canSubmitStep={canSubmit}
@@ -906,7 +904,6 @@ FormStep.propTypes = {
   onStepSubmitted: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onSessionDestroyed: PropTypes.func.isRequired,
-  showDebug: PropTypes.bool,
 };
 
 export default FormStep;

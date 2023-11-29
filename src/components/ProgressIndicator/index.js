@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 
 import Caption from 'components/Caption';
@@ -18,10 +18,12 @@ const ProgressIndicator = ({
 }) => {
   const {pathname: currentPathname} = useLocation();
   const [expanded, setExpanded] = useState(false);
+  const [verticalSpaceUsed, setVerticalSpaceUsed] = useState(null);
+  const buttonRef = useRef(null);
 
   const modifiers = [];
-  if (!expanded) {
-    modifiers.push('mobile-collapsed');
+  if (expanded) {
+    modifiers.push('expanded');
   }
 
   // collapse the expanded progress indicator if nav occurred, see
@@ -34,17 +36,41 @@ const ProgressIndicator = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPathname]);
 
+  useLayoutEffect(() => {
+    let isMounted = true;
+    if (buttonRef.current) {
+      const boundingBox = buttonRef.current.getBoundingClientRect();
+      // the offset from top + height of the element (including padding + borders)
+      isMounted && setVerticalSpaceUsed(boundingBox.bottom);
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [buttonRef, setVerticalSpaceUsed]);
+
+  const customProperties = verticalSpaceUsed
+    ? {
+        '--_of-progress-indicator-nav-mobile-inset-block-start': `${verticalSpaceUsed}px`,
+      }
+    : undefined;
   return (
-    <Card blockClassName="progress-indicator" modifiers={modifiers}>
-      <nav>
-        <MobileButton
-          ariaMobileIconLabel={ariaMobileIconLabel}
-          accessibleToggleStepsLabel={accessibleToggleStepsLabel}
-          formTitle={formTitle}
-          expanded={expanded}
-          onExpandClick={() => setExpanded(!expanded)}
-        />
-        <Caption component="h2">{title}</Caption>
+    <Card blockClassName="progress-indicator" modifiers={modifiers} style={customProperties}>
+      <MobileButton
+        ref={buttonRef}
+        ariaMobileIconLabel={ariaMobileIconLabel}
+        accessibleToggleStepsLabel={accessibleToggleStepsLabel}
+        formTitle={formTitle}
+        expanded={expanded}
+        onExpandClick={() => setExpanded(!expanded)}
+      />
+
+      <nav
+        className="openforms-progress-indicator__nav"
+        aria-labelledby="ca10ead3-1537-41dc-b3b4-a4593740ecd9"
+      >
+        <Caption component="h2" id="ca10ead3-1537-41dc-b3b4-a4593740ecd9">
+          {title}
+        </Caption>
         <List ordered>
           {steps.map((step, index) => (
             <ProgressIndicatorItem

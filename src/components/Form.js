@@ -7,7 +7,6 @@ import {useImmerReducer} from 'use-immer';
 import {ConfigContext} from 'Context';
 import {destroy} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import FormDisplay from 'components/FormDisplay';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
@@ -27,6 +26,7 @@ import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 
+import FormDisplay from './FormDisplay';
 import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
 import {PI_TITLE, STEP_LABELS, SUBMISSION_ALLOWED} from './constants';
 
@@ -328,15 +328,18 @@ const Form = () => {
     isCompleted
   );
 
-  const progressIndicator = form.showProgressIndicator ? (
-    <ProgressIndicator
-      title={PI_TITLE}
-      formTitle={formName}
-      steps={stepsToRender}
-      ariaMobileIconLabel={ariaMobileIconLabel}
-      accessibleToggleStepsLabel={accessibleToggleStepsLabel}
-    />
-  ) : null;
+  // Show the progress indicator if enabled on the form AND we're not in the payment
+  // status/overview screen.
+  const progressIndicator =
+    form.showProgressIndicator && !paymentOverviewMatch ? (
+      <ProgressIndicator
+        title={PI_TITLE}
+        formTitle={formName}
+        steps={stepsToRender}
+        ariaMobileIconLabel={ariaMobileIconLabel}
+        accessibleToggleStepsLabel={accessibleToggleStepsLabel}
+      />
+    ) : null;
 
   // Route the correct page based on URL
   const router = (
@@ -429,15 +432,7 @@ const Form = () => {
   );
 
   // render the form step if there's an active submission (and no summary)
-  const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
-  return (
-    <FormDisplayComponent
-      router={router}
-      progressIndicator={progressIndicator}
-      showProgressIndicator={form.showProgressIndicator}
-      isPaymentOverview={!!paymentOverviewMatch}
-    />
-  );
+  return <FormDisplay progressIndicator={progressIndicator}>{router}</FormDisplay>;
 };
 
 Form.propTypes = {};

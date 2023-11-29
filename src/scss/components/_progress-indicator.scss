@@ -1,7 +1,5 @@
 @use 'microscope-sass/lib/bem';
-
-@import '~microscope-sass/lib/grid';
-@import '~microscope-sass/lib/typography';
+@use './card';
 
 @import '../mixins/prefix';
 
@@ -11,79 +9,146 @@
   }
 }
 
-.#{prefix('progress-indicator')} {
-  @extend .openforms-card; // TODO -> syntax highlighting trips on #{prefix('card')}
+/**
+ * Desktop and mobile styling for the progress indicator element.
+ *
+ * The parent component (_app.scss) is responsible for re-arranging the order of
+ * elements depending on the viewport. The styles of this component are responsible for
+ * managing how it looks/behaves on mobile/non-mobile viewports:
+ *
+ * - on mobile, the element takes a navbar-like approach that can be expanded/collapsed
+ * - on desktop, it behaves like a sticky element, so that it can be placed in a sidebar
+ *
+ * TODO: remove the fallbacks/defaults after a deprecation period. Many of these
+ * design tokens here didn't exist before 2.1 and had hardcoded values.
+ */
+.openforms-progress-indicator {
+  @include card.card('progress-indicator');
 
+  position: sticky;
+  inset-block-start: var(
+    --of-progress-indicator-inset-block-start,
+    var(--of-app-grid-column-gap, 20px)
+  );
+
+  // Do not display the toggle button on non-mobile devices
   @include bem.element('mobile-header') {
-    @include body;
-    @include body--big;
-    @include margin(-$grid-container-margin, $properties: margin-left);
-
-    // style for replacing div with a button for accessibility
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    width: calc(100% + $grid-container-margin);
-
-    @include show-on-mobile(flex);
-
-    align-items: center;
-
-    .fa-icon {
-      display: block;
-      flex-shrink: 0;
-      flex-basis: $grid-container-margin * 2;
-      text-align: center;
-    }
+    display: none;
   }
 
-  @include bem.element('form-title') {
-    @include ellipsis;
-    font-weight: bold;
+  @include bem.element('nav') {
+    display: flex;
+    flex-direction: column;
+    gap: var(--of-progress-indicator-nav-gap, 20px);
   }
 
-  // mobile styling for the progress indicator
+  /**
+   * Responsive styles, mobile viewports.
+   *
+   * The default state is collapsed, for the expanded state, see the expanded modifier
+   * styles.
+   */
   @include mobile-only {
-    @include margin($grid-container-margin, $properties: (padding-top, padding-bottom));
-    box-shadow: var(--of-progress-indicator-mobile-box-shadow);
-    // otherwise the bar is too short, and setting a width creates a horizontal scrollbar
-    width: unset;
+    // remove any padding from the container element - instead, we apply mobile padding
+    // on the button element so that it's easier to tap on mobile devices.
+    --of-progress-indicator-padding-block-end: 0;
+    --of-progress-indicator-padding-block-start: 0;
+    --of-progress-indicator-padding-inline-end: 0;
+    --of-progress-indicator-padding-inline-start: 0;
 
-    // style layout
-    @at-root .#{prefix('layout__row')} & {
-      @include margin(
-        calc(-1 * var(--of-progress-indicator-mobile-margin)),
-        $properties: (margin-left, margin-right)
+    /**
+     * The mobile-header button is visible on mobile, and while it is a button for
+     * acessibility, it should not look like one.
+     */
+    @include bem.element('mobile-header') {
+      // reset base/default user agent styles
+      all: unset;
+      box-shadow: var(--of-progress-indicator-mobile-box-shadow);
+      box-sizing: border-box;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: var(--of-progress-indicator-mobile-header-gap, 0px);
+      inline-size: 100%;
+
+      padding-block-end: var(--of-progress-indicator-mobile-padding-block-end, 15px);
+      padding-block-start: var(--of-progress-indicator-mobile-padding-block-start, 15px);
+      padding-inline-end: var(--of-progress-indicator-mobile-padding-inline-end, 15px);
+      padding-inline-start: var(--of-progress-indicator-mobile-padding-inline-start, 15px);
+
+      // include for backwards compatibility reasons
+      color: var(--of-progress-indicator-mobile-header-color, var(--of-color-fg, inherit));
+      font-family: var(
+        --of-progress-indicator-mobile-header-font-family,
+        var(--utrecht-document-font-family, var(--of-typography-sans-serif-font-family, inherit))
       );
+      font-size: var(--of-progress-indicator-mobile-header-font-size, 1.125rem);
+      line-height: var(--of-progress-indicator-mobile-header-line-height, 1.1333);
+
+      .fa-icon {
+        display: block;
+        flex-shrink: 0;
+        flex-basis: var(--of-progress-indicator-mobile-header-icon-flex-basis, 30px);
+        text-align: center;
+      }
     }
 
+    // TODO: provide design tokens?
+    @include bem.element('form-title') {
+      @include ellipsis;
+      font-weight: bold;
+    }
+
+    // Hide by default on mobile
+    @include bem.element('nav') {
+      display: none;
+    }
+
+    // Bit of a BEM violation, but the captions are due a refactor to NL DS at some
+    // point too.
     @include nested('caption') {
-      @include margin(true, $properties: margin-top);
-      @include margin($grid-container-margin, $properties: margin-left);
-
-      @include mobile-only {
-        display: none;
-      }
+      display: none;
     }
 
-    @include nested('list') {
-      @include margin($grid-container-margin, $properties: margin-left);
-    }
+    /**
+     * Appearance for the expanded variant.
+     */
+    @include bem.modifier('expanded') {
+      @include bem.element('nav') {
+        --of-list-gap: var(--of-progress-indicator-nav-mobile-list-gap, 15px);
 
-    @include bem.modifier('mobile-collapsed') {
-      @include nested('caption') {
-        display: none;
-      }
+        box-shadow: var(--of-progress-indicator-mobile-box-shadow);
+        box-sizing: border-box;
 
-      @include nested('list') {
-        display: none;
+        display: block;
+        // absolute positioning to not push the content below down, since it must be
+        // an overlay.
+        // TODO: there are future CSS features that make anchoring elements to other
+        // elements much developer-friendlier without requiring 'magic numbers'.
+        position: absolute;
+        background: var(--of-progress-indicator-background-color, var(--of-color-bg));
+
+        padding-block-end: var(--of-progress-indicator-nav-mobile-padding-block-end, 15px);
+        padding-block-start: var(--of-progress-indicator-nav-mobile-padding-block-start, 15px);
+        padding-inline-end: var(--of-progress-indicator-nav-mobile-padding-inline-end, 15px);
+        padding-inline-start: var(--of-progress-indicator-nav-mobile-padding-inline-start, 30px);
+
+        z-index: 1;
+        inline-size: 100%;
+
+        // use the entire viewport minus the block space (vertical) used by the button and potential
+        // third party elements above
+        max-block-size: calc(100dvb - var(--_of-progress-indicator-nav-mobile-inset-block-start));
+        overflow-y: auto;
       }
     }
   }
 }
 
-.#{prefix('progress-indicator-item')} {
+// TODO: parametrize with design tokens
+.openforms-progress-indicator-item {
   display: flex;
   justify-content: flex-start;
 

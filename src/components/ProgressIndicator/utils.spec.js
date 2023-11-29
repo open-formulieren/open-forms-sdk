@@ -51,7 +51,7 @@ describe('Transforming form steps and injecting fixed steps', () => {
       false
     );
 
-    expect(stepsToRender.length).toEqual(4);
+    expect(stepsToRender.length).toEqual(2);
 
     expect(stepsToRender[0].to).toEqual('startpagina');
 
@@ -61,8 +61,5 @@ describe('Transforming form steps and injecting fixed steps', () => {
     expect(stepsToRender[1].isApplicable).toEqual(true);
     expect(stepsToRender[1].isCurrent).toEqual(true);
     expect(stepsToRender[1].canNavigateTo).toEqual(true);
-
-    expect(stepsToRender[2]).toBeFalsy();
-    expect(stepsToRender[3]).toBeFalsy();
   });
 });

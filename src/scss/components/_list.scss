@@ -7,36 +7,32 @@
 @import '../mixins/prefix';
 
 .#{prefix('list')} {
-  .#{prefix('caption')} + & {
-    @include margin(true, $properties: margin-top);
-  }
-
   list-style: none;
   margin: 0;
   padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--of-list-gap, 20px);
 
   @include bem.element('item') {
     @include body;
     @include body--big;
   }
 
+  // TODO: check if this can be removed
   &:not(#{&}--compact, #{&}--extra-compact) &__item {
-    @include margin;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
   }
 
   @include bem.modifier('compact') {
-    @include bem.element('item') {
-      @include margin($value-mobile: $grid-margin-1);
-    }
+    --of-list-gap: var(--of-list-compact-gap, 8px);
   }
 
   @include bem.modifier('extra-compact') {
-    @include bem.element('item') {
-      @include margin(false);
-    }
+    --of-list-gap: var(--of-list-extra-compact-gap, 0px);
   }
 
   @include bem.modifier('dash') {

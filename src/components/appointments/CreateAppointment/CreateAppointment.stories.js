@@ -219,6 +219,13 @@ export const HappyFlow = {
           /I accept the privacy policy and consent to the processing of my personal data/
         )
       );
+
+      // test that the progress indicator displays all the expected links
+      await canvas.findByRole('link', {name: 'Product'});
+      await canvas.findByRole('link', {name: 'Afspraakdetails'});
+      await canvas.findByRole('link', {name: 'Contactgegevens'});
+      await canvas.findByRole('link', {name: 'Overzicht'});
+
       const submitButton = canvas.getByRole('button', {name: 'Confirm'});
       await waitFor(async () => {
         expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
@@ -233,6 +240,7 @@ export const HappyFlow = {
         },
         {timeout: 2000, interval: 200}
       );
+      await canvas.findByRole('link', {name: 'Bevestiging'});
     });
   },
 };

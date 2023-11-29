@@ -1,37 +1,52 @@
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {ConfigContext} from 'Context';
+import AppDebug from 'components/AppDebug';
+import AppDisplay from 'components/AppDisplay';
+import LanguageSwitcher from 'components/LanguageSwitcher';
+import useFormContext from 'hooks/useFormContext';
 
 /**
  * Layout component to render the form container.
+ *
+ * Takes in the main body and (optional) progress indicator and forwards them to the
+ * AppDisplay component, while adding in any global/skeleton nodes.
+ *
  * @return {JSX}
  */
-const FormDisplay = ({
-  router,
-  progressIndicator = null,
-  showProgressIndicator = true,
-  isPaymentOverview = false,
-}) => {
-  const renderProgressIndicator = progressIndicator && showProgressIndicator && !isPaymentOverview;
+const FormDisplay = ({children = null, progressIndicator = null, router = null}) => {
+  const {translationEnabled} = useFormContext();
+  const config = useContext(ConfigContext);
+
+  const appDebug = config.debug ? <AppDebug /> : null;
+  const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
+
+  const AppDisplayComponent = config?.displayComponents?.app ?? AppDisplay;
   return (
-    <div
-      className={classNames('openforms-form', {
-        'openforms-form--body-only': !renderProgressIndicator,
-      })}
+    <AppDisplayComponent
+      languageSwitcher={languageSwitcher}
+      progressIndicator={progressIndicator}
+      appDebug={appDebug}
     >
-      <div className="openforms-form__body">{router}</div>
-      {renderProgressIndicator && (
-        <div className="openforms-form__progress-indicator">{progressIndicator}</div>
-      )}
-    </div>
+      {children || router}
+    </AppDisplayComponent>
   );
 };
 
 FormDisplay.propTypes = {
-  router: PropTypes.node.isRequired,
+  /**
+   * Main content.
+   */
+  children: PropTypes.node,
   progressIndicator: PropTypes.node,
-  showProgressIndicator: PropTypes.bool,
-  isPaymentOverview: PropTypes.bool,
+  /**
+   * Main content.
+   *
+   * @deprecated Use children instead.
+   *
+   */
+  router: PropTypes.node,
 };
 
 export default FormDisplay;

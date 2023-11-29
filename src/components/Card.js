@@ -47,10 +47,11 @@ const Card = ({
   captionComponent,
   blockClassName = 'card',
   modifiers = [],
+  ...props
 }) => {
   const className = getBEMClassName(blockClassName, modifiers);
   return (
-    <div className={className}>
+    <div className={className} {...props}>
       {/* Emit header/title only if there is one */}
       {title ? (
         <CardTitle

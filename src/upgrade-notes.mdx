@@ -1,0 +1,91 @@
+import {Meta} from '@storybook/blocks';
+
+<Meta title="Developers / Upgrade notes / 2.1.0" />
+
+# Upgrading from 2.0.x to 2.1.x
+
+In the Open Forms SDK 2.1 we've refactor the app scaffolding to simplify the CSS and markup used,
+fix a number of bugs and add the ability to tweak the appearance through design tokens.
+
+This mostly affects used-to-be private API, but if you have or had custom CSS overrides for this,
+they are likely broken. Users that do not override the default Open Forms theme are not affected.
+
+## Summary of changes
+
+- The `.openforms-layout*` classes, markup and associated design tokens are gone
+- The outer container is now the `AppDisplay` component, with the `.openforms-app` class name and
+  associated `--of-app-*` design tokens. We now place elements using CSS grid to appropriately
+  target styling for mobile devices.
+- `FormDisplay` is now a thin wrapper around `AppDisplay` and can no longer be overridden. This
+  display configuration is still considered experimental.
+
+## Detailed changes and how to upgrade
+
+### `.utrecht-document` class and design tokens
+
+We do not create an element with the `utrecht-document` and `utrecht-document--surface` class names,
+but they are expected by the SDK. If you are embedding forms on your CMS/website, please make sure a
+parent of the form root has these class names.
+
+You can then use the following design tokens for basic styles:
+
+- `--utrecht-document-background-color`
+- `--utrecht-document-color`
+- `--utrecht-document-font-family`
+- `--utrecht-document-font-size`
+- `--utrecht-document-font-weight`
+- `--utrecht-document-line-height`
+
+These properties are inherited when not explicitly set.
+
+### App component
+
+The app component is the outer shell that creates the layout of the form body, progress indicator
+(sidebar on desktop, dropdown menu on mobile) and the language selection buttons.
+
+Currently, we have set default values for the design tokens, but they will be removed in SDK 3.0.
+
+Relevant design tokens:
+
+- `--of-app-body-padding-block-{end,start}`: additional vertical spacing for the main content
+- `--of-app-grid-column-gap`: spacing between main content and progress indicator, on devices larger
+  than mobile.
+
+**Mobile**
+
+- `--of-app-body-mobile-padding-block-{end,start}`: vertical spacing between main content and
+  progress indicator/debug information
+- `--of-app-mobile-grid-row-gap`: vertical spacing between components
+- `--of-app-mobile-padding-{block,inline}-{end,start}`: padding between content and device edges
+- `--of-app-progress-indicator-mobile-margin-inline-{end,start}`: margin for the progress indicator.
+  Setting this to the negative inline padding values above will stretch the button across the full
+  width of the screen.
+- `--of-app-progress-indicator-mobile-inset-block-start`: offset of the sticky toggle button/header
+  to the top of the screen - set to a non-zero value if your own menu should always visible in the
+  screen.
+
+### Card component
+
+The card component is used to wrap the main body content (the form fields, some modals...). It used
+to have hardcoded colors/paddings but they are now customizable through design tokens.
+
+Currently, we have set default values for the design tokens, but they may be removed in SDK 3.0.
+
+Relevant design tokens:
+
+- `--of-card-background-color`
+- `--of-card-padding-block-end`
+- `--of-card-padding-block-start`
+- `--of-card-padding-inline-end`
+- `--of-card-padding-inline-start`
+
+### Language-selection
+
+If a form supports multiple languages and you don't render the language selection into a particular
+node (provided at SDK init time), then you can control the spacing of the element using the
+following design tokens:
+
+- `--of-language-selection-in-app-padding-block-end`
+- `--of-language-selection-in-app-padding-block-start`
+- `--of-language-selection-in-app-mobile-padding-block-end`
+- `--of-language-selection-in-app-mobile-padding-block-start`

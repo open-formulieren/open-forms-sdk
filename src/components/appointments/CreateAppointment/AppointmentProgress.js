@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 import {useIntl} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 
-import {ConfigContext} from 'Context';
 import ProgressIndicator from 'components/ProgressIndicator';
 import {PI_TITLE, STEP_LABELS} from 'components/constants';
 import {checkMatchesPath} from 'components/utils/routers';
@@ -12,7 +11,6 @@ import {useCreateAppointmentContext} from './CreateAppointmentState';
 import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS} from './routes';
 
 const AppointmentProgress = ({title, currentStep}) => {
-  const config = useContext(ConfigContext);
   const {submission, submittedSteps} = useCreateAppointmentContext();
   const intl = useIntl();
   const {pathname: currentPathname} = useLocation();
@@ -55,13 +53,15 @@ const AppointmentProgress = ({title, currentStep}) => {
       isCompleted: isConfirmation,
       isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
-      canNavigateTo: false,
+      canNavigateTo: steps.every(step => step.isCompleted),
     },
     {
       to: 'bevestiging',
       label: intl.formatMessage(STEP_LABELS.confirmation),
       isCompleted: isSubmissionComplete,
+      isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+      canNavigateTo: isSubmissionComplete,
     },
   ];
 
@@ -87,11 +87,8 @@ const AppointmentProgress = ({title, currentStep}) => {
     },
     {title, activeStepTitle}
   );
-
-  const ProgressIndicatorComponent =
-    config?.displayComponents?.progressIndicator ?? ProgressIndicator;
   return (
-    <ProgressIndicatorComponent
+    <ProgressIndicator
       title={PI_TITLE}
       formTitle={title}
       steps={finalSteps}

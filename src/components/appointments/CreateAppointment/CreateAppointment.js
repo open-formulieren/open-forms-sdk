@@ -1,7 +1,6 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
 
-import {ConfigContext} from 'Context';
 import Card from 'components/Card';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
@@ -39,8 +38,6 @@ const CreateAppointment = () => {
 
   const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(clearSubmission);
 
-  const config = useContext(ConfigContext);
-  const FormDisplayComponent = config?.displayComponents?.form ?? FormDisplay;
   const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
 
   const currentStep =
@@ -52,6 +49,10 @@ const CreateAppointment = () => {
     resetSession();
   };
 
+  const progressIndicator = form.showProgressIndicator ? (
+    <AppointmentProgress title={form.name} currentStep={currentStep} />
+  ) : null;
+
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
       <CreateAppointmentState
@@ -59,30 +60,21 @@ const CreateAppointment = () => {
         submission={submission}
         resetSession={reset}
       >
-        <FormDisplayComponent
-          router={
-            <Wrapper sessionExpired={sessionExpired} title={form.name}>
-              <ErrorBoundary>
-                {isLoading ? (
-                  <Loader modifiers={['centered']} />
-                ) : (
-                  <RequireSession
-                    expired={sessionExpired}
-                    expiryDate={expiryDate}
-                    onNavigate={reset}
-                  >
-                    <LiteralsProvider literals={form.literals}>
-                      <Outlet />
-                    </LiteralsProvider>
-                  </RequireSession>
-                )}
-              </ErrorBoundary>
-            </Wrapper>
-          }
-          progressIndicator={<AppointmentProgress title={form.name} currentStep={currentStep} />}
-          showProgressIndicator={form.showProgressIndicator}
-          isPaymentOverview={false}
-        />
+        <FormDisplay progressIndicator={progressIndicator}>
+          <Wrapper sessionExpired={sessionExpired} title={form.name}>
+            <ErrorBoundary>
+              {isLoading ? (
+                <Loader modifiers={['centered']} />
+              ) : (
+                <RequireSession expired={sessionExpired} expiryDate={expiryDate} onNavigate={reset}>
+                  <LiteralsProvider literals={form.literals}>
+                    <Outlet />
+                  </LiteralsProvider>
+                </RequireSession>
+              )}
+            </ErrorBoundary>
+          </Wrapper>
+        </FormDisplay>
       </CreateAppointmentState>
     </AppointmentConfigContext.Provider>
   );

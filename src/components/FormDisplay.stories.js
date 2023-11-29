@@ -1,44 +1,46 @@
 import Body from 'components/Body';
 import Card from 'components/Card';
-import {LayoutDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import FormDisplay from './FormDisplay';
 
 export default {
   title: 'Composites / Form display',
   component: FormDisplay,
-  decorators: [LayoutDecorator],
+  decorators: [LayoutDecorator, ConfigDecorator],
   render: args => (
     <FormDisplay
-      router={
-        <Card>
-          <Body>Body for relevant route(s)</Body>
-        </Card>
-      }
       progressIndicator={
-        <Card>
-          <Body>Progress indicator</Body>
-        </Card>
+        args.showProgressIndicator ? (
+          <Card>
+            <Body>Progress indicator</Body>
+          </Card>
+        ) : null
       }
       {...args}
-    />
+    >
+      <Card>
+        <Body>Body for relevant route(s)</Body>
+      </Card>
+    </FormDisplay>
   ),
   argTypes: {
     router: {table: {disable: true}},
     progressIndicator: {table: {disable: true}},
+  },
+  parameters: {
+    config: {debug: false},
   },
 };
 
 export const Default = {
   args: {
     showProgressIndicator: true,
-    isPaymentOverview: false,
   },
 };
 
 export const WithoutProgressIndicator = {
   args: {
     showProgressIndicator: false,
-    isPaymentOverview: false,
   },
 };
