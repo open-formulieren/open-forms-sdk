@@ -53,13 +53,15 @@ const AppointmentProgress = ({title, currentStep}) => {
       isCompleted: isConfirmation,
       isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
-      canNavigateTo: false,
+      canNavigateTo: steps.every(step => step.isCompleted),
     },
     {
       to: 'bevestiging',
       label: intl.formatMessage(STEP_LABELS.confirmation),
       isCompleted: isSubmissionComplete,
+      isApplicable: true,
       isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+      canNavigateTo: isSubmissionComplete,
     },
   ];
 
