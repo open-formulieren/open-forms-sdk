@@ -31,7 +31,6 @@ const ConfigContext = React.createContext({
   requiredFieldsWithAsterisk: true,
   displayComponents: {
     app: null,
-    progressIndicator: null,
     loginOptions: null,
   },
   debug: DEBUG,
