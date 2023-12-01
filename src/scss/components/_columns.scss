@@ -1,73 +1,45 @@
 @use 'sass:math';
 
-@import '~microscope-sass/lib/grid';
-@import '~microscope-sass/lib/typography';
-
-@import '../mixins/bootstrap';
-@import '../mixins/prefix';
-
-$column-gap-size: $grid-margin-1;
-$column-half-gap-size: math.div($column-gap-size, 2);
+@import '~microscope-sass/lib/responsive';
 
 $col-sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 $col-sizes--mobile: 1, 2, 3, 4;
 
-.#{prefix(columns)} {
-  display: flex;
-  flex-direction: row;
+// A modern, NL DS compatible grid layout to lay out the columns.
+.openforms-columns {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  // default value for backwards compatibility reasons
+  column-gap: var(--of-columns-column-gap, 8px);
+  // columns should not wrap, but there's no guarantee they don't, so reserve space
+  // consistent with the rest of the UI.
+  row-gap: var(--of-columns-row-gap, var(--of-form-field-container-gap, 24px));
 
   .column {
     box-sizing: border-box;
+    grid-column: span var(--_of-columns-column-span);
+
+    @each $col-size in $col-sizes {
+      &--span-#{$col-size} {
+        --_of-columns-column-span: #{$col-size};
+      }
+    }
   }
 
   @include mobile-only {
-    flex-wrap: wrap;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: var(--of-columns-column-mobile-gap, var(--of-columns-column-gap, 8px));
+    row-gap: var(--of-columns-row-mobile-gap, var(--of-columns-row-gap, 24px));
 
     .column {
-      width: 100%;
-      flex-basis: 100%;
+      // if not configured explicitly, assume full width.
+      --_of-columns-column-span: 4;
+    }
 
-      &:not(:first-child) {
-        padding-top: $grid-margin-3;
-      }
-
-      @each $col-size in $col-sizes--mobile {
-        &--span-mobile-#{$col-size} {
-          $width: math.div($col-size, 4) * 100%;
-          width: $width;
-          max-width: $width;
-          flex-basis: $width;
-
-          &:not(:first-child) {
-            padding-top: 0;
-          }
-        }
+    @each $col-size in $col-sizes--mobile {
+      .column.column--span-mobile-#{$col-size} {
+        --_of-columns-column-span: #{$col-size};
       }
     }
-  }
-
-  @include desktop {
-    .column {
-      @each $col-size in $col-sizes {
-        &--span-#{$col-size} {
-          @include bootstrap-span(max-width, $col-size);
-        }
-      }
-    }
-  }
-
-  // ideally, we would use gap, but Opera doesn't support that yet with flexbox :(
-  // Instead, we work around it by setting paddings on the child elements and negative
-  // margins on the parent.
-  // gap: $column-gap-size;
-
-  // apply the negative margins to account for the first and last column paddings
-  margin-left: -$column-half-gap-size;
-  margin-right: -$column-half-gap-size;
-
-  > * {
-    flex: 1;
-    padding-left: $column-half-gap-size;
-    padding-right: $column-half-gap-size;
   }
 }
