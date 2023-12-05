@@ -136,6 +136,6 @@ describe('OpenForm', () => {
       useHashRouting: true,
     });
 
-    expect(form.clientBaseUrl).toEqual('http://localhost/some-server-side/path#/some-subpath');
+    expect(form.clientBaseUrl).toEqual('http://localhost/some-server-side/path#/');
   });
 });
