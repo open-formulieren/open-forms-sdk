@@ -347,6 +347,12 @@
     "description": "Step label in progress indicator",
     "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
   },
+  "LsgvKh": {
+    "defaultMessage": "Postcode",
+    "description": "Label for addressNL postcode input",
+    "isTranslated": true,
+    "originalDefault": "Postcode"
+  },
   "LwpSC/": {
     "defaultMessage": "Totaal",
     "description": "Label for the total price to pay",
@@ -377,6 +383,11 @@
     "defaultMessage": "Voor dit product is betaling vereist",
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
+  },
+  "PCv4sQ": {
+    "defaultMessage": "Huis nummer",
+    "description": "Label for addressNL houseNumber input",
+    "originalDefault": "House number"
   },
   "PjYrw0": {
     "defaultMessage": "Ongeldige invoer.",
@@ -555,6 +566,11 @@
     "description": "Edit grid add button, default label text",
     "originalDefault": "Add another"
   },
+  "cQeqG2": {
+    "defaultMessage": "huis Letter",
+    "description": "Label for addressNL houseLetter input",
+    "originalDefault": "Houser letter"
+  },
   "cxDC/G": {
     "defaultMessage": "Het verplichte veld is niet ingevuld.",
     "description": "ZOD 'required' error message",
@@ -702,6 +718,11 @@
     "description": "Appoinments: product select label",
     "isTranslated": true,
     "originalDefault": "Product"
+  },
+  "lVNV/d": {
+    "defaultMessage": "Huis nummer toevoeging",
+    "description": "Label for addressNL houseNumberAddition input",
+    "originalDefault": "House number addition"
   },
   "lY+Mza": {
     "defaultMessage": "Product",

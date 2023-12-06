@@ -1,3 +1,4 @@
+import {default as AddressNLTemplate} from './addressNL.ejs';
 import {default as ButtonTemplate} from './button.ejs';
 import {default as CheckboxTemplate} from './checkbox.ejs';
 import {default as ColumnsTemplate} from './columns.ejs';
@@ -35,6 +36,7 @@ const OFLibrary = {
   multiValueTable: {form: MultiValueTableTemplate},
   editgrid: {form: EditGridTemplate},
   editgridrow: {form: EditGridRowTemplate},
+  addressNL: {form: AddressNLTemplate},
 };
 
 export default OFLibrary;
