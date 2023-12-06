@@ -1,3 +1,4 @@
+import AddressNL from './components/AddressNL';
 import BsnField from './components/BsnField';
 import Button from './components/Button';
 import Checkbox from './components/Checkbox';
@@ -46,6 +47,7 @@ const FormIOModule = {
     postcode: PostcodeField,
     phoneNumber: PhoneNumberField,
     bsn: BsnField,
+    addressNL: AddressNL,
     file: FileField,
     map: Map,
     password: PasswordField,
