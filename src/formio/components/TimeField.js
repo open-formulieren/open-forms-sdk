@@ -29,6 +29,20 @@ class TimeField extends Time {
     ].join(' ');
     return info;
   }
+
+  getStringAsValue(value) {
+    const result = super.getStringAsValue(value);
+    if (result === 'Invalid date') return value;
+
+    return result;
+  }
+
+  getValueAsString(value) {
+    const result = super.getValueAsString(value);
+    if (result === 'Invalid date') return value;
+
+    return result;
+  }
 }
 
 export default TimeField;
