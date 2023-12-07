@@ -7,7 +7,9 @@ export default {
   decorators: [withUtrechtDocument],
   args: {
     type: 'phoneNumber',
-    extraComponentProperties: {},
+    extraComponentProperties: {
+      inputMask: null,
+    },
     evalContext: {},
   },
   argTypes: {
