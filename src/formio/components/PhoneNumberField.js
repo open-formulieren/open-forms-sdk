@@ -4,7 +4,7 @@ import enableValidationPlugins from '../validators/plugins';
 
 const PhoneNumber = Formio.Components.components.phoneNumber;
 
-const PHONE_NUMBER_REGEX = /^\+{0,1}[- 0-9]{0,}$/;
+const PHONE_NUMBER_REGEX = /^[+0-9][- 0-9]+$/;
 
 const PhoneNumberValidator = {
   key: 'validate.phoneNumber',
