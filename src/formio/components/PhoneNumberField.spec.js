@@ -70,4 +70,22 @@ describe('The phone number component', () => {
       expect(await screen.findByText('Invalid Phone Number')).toBeVisible();
     }
   );
+
+  it.each([
+    ['+316 123 456 78'],
+    ['06-12 34 56 78'],
+    ['06-12-34-56 78'], // weird but ok
+  ])('allows dashes and spaces for formatting (value: %i)', async value => {
+    const user = userEvent.setup({delay: 50});
+    const {form} = await renderForm();
+
+    const input = screen.getByLabelText('Phone number');
+    expect(input).toBeVisible();
+    await user.type(input, value);
+    expect(input).toHaveDisplayValue(value);
+
+    const component = form.getComponent('phoneNumber');
+    expect(component.getValue()).toBe(value);
+    expect(form.isValid()).toBe(true);
+  });
 });
