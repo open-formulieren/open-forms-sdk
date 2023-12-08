@@ -774,11 +774,6 @@
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
   },
-  "qf2UCG": {
-    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (optioneel)}}",
-    "description": "Form field label, field possibly optional",
-    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}"
-  },
   "r1L6Zj": {
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
@@ -858,6 +853,11 @@
     "defaultMessage": "Bevestiging mede-ondertekening",
     "description": "On succesful completion title",
     "originalDefault": "Co-sign confirmation"
+  },
+  "yXbqL6": {
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (niet verplicht)}}",
+    "description": "Form field label, field possibly optional",
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
   },
   "zQWnFh": {
     "defaultMessage": "Bent u zeker dat u wilt uitloggen en hiermee de inzending niet mede-ondertekent?",

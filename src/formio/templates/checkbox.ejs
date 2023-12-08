@@ -4,7 +4,7 @@
     for="{{ctx.instance.id}}-{{ctx.component.key}}"
     class="utrecht-form-label utrecht-form-label--checkbox {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %} {{ctx.input.labelClass}} {% if (ctx.component.validate.required && ctx.requiredFieldsWithAsterisk) { %}utrecht-form-label--openforms-required{% } %}"
   >
-    {{ctx.input.label}}{% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}&nbsp;{{ ctx.t('(optional)') }} {% } %}
+    {{ctx.input.label}}{% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}&nbsp;{{ ctx.t('(not required)') }} {% } %}
     {% if (ctx.component.tooltip) { %}
       <i ref="tooltip" class="openforms-tooltip-icon {{ctx.iconClass('question-sign')}}" data-tooltip="{{ ctx.tooltip }}"></i>
     {% } %}

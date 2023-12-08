@@ -1691,38 +1691,6 @@
       "value": "Log in om het formulier mede te ondertekenen"
     }
   ],
-  "qf2UCG": [
-    {
-      "options": {
-        "other": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            },
-            {
-              "type": 0,
-              "value": " (optioneel)"
-            }
-          ]
-        },
-        "true": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            }
-          ]
-        }
-      },
-      "type": 5,
-      "value": "withAsterisk"
-    }
-  ],
   "r1L6Zj": [
     {
       "type": 0,
@@ -1905,6 +1873,38 @@
     {
       "type": 0,
       "value": "Bevestiging mede-ondertekening"
+    }
+  ],
+  "yXbqL6": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (niet verplicht)"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "withAsterisk"
     }
   ],
   "zQWnFh": [

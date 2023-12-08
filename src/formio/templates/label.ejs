@@ -8,7 +8,7 @@
   >
     {{ ctx.t(ctx.component.label, { _userInput: true }) }}
     {% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}
-      {{ ctx.t('(optional)') }}
+      {{ ctx.t('(not required)') }}
     {% } %}
     {% if (ctx.component.tooltip) { %}
       <i ref="tooltip" class="openforms-tooltip-icon {{ctx.iconClass('question-sign')}}" data-tooltip="{{ ctx.tooltip }}"></i>

@@ -19,7 +19,7 @@ export const LabelContent = ({id, disabled = false, isRequired = false, type, ch
     >
       <FormattedMessage
         description="Form field label, field possibly optional"
-        defaultMessage="{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}"
+        defaultMessage="{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
         values={{
           withAsterisk: requiredFieldsWithAsterisk,
           label: () => children,
