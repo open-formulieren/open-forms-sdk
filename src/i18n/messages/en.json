@@ -764,11 +764,6 @@
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
   },
-  "qf2UCG": {
-    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}",
-    "description": "Form field label, field possibly optional",
-    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}"
-  },
   "r1L6Zj": {
     "defaultMessage": "Suspending the form failed, please try again later",
     "description": "Modal suspending form failed message",
@@ -848,6 +843,11 @@
     "defaultMessage": "Co-sign confirmation",
     "description": "On succesful completion title",
     "originalDefault": "Co-sign confirmation"
+  },
+  "yXbqL6": {
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}",
+    "description": "Form field label, field possibly optional",
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
   },
   "zQWnFh": {
     "defaultMessage": "Are you sure that you want to logout and not co-sign the current form submission?",
