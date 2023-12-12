@@ -2,6 +2,15 @@
 SDK Changelog
 =============
 
+1.3.9 (2023-12-12)
+==================
+
+Periodic bugfix release
+
+* [#3647] Applied a bandaid fix to Formio/momentjs turning in invalid time value into
+  the literal string 'Invalid date'. Instead, the invalid value is now kept (and the
+  validation error is still displayed).
+
 1.3.8 (2023-11-09)
 ==================
 
