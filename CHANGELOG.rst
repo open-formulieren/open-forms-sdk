@@ -2,6 +2,51 @@
 SDK Changelog
 =============
 
+1.5.6 (2023-12-12)
+==================
+
+Periodic bugfix release
+
+* [#3647] Applied a bandaid fix to Formio/momentjs turning in invalid time value into
+  the literal string 'Invalid date'. Instead, the invalid value is now kept (and the
+  validation error is still displayed).
+* Applied (a partial) fix for hash-based routing when embedding a form. Forms load
+  properly now and can be submitted, however the resume-from-backend flow still has
+  known issues for which you'll need SDK 2.1.
+
+1.4.7 (2023-12-12)
+==================
+
+Periodic bugfix release
+
+* [#3647] Applied a bandaid fix to Formio/momentjs turning in invalid time value into
+  the literal string 'Invalid date'. Instead, the invalid value is now kept (and the
+  validation error is still displayed).
+
+1.3.9 (2023-12-12)
+==================
+
+Periodic bugfix release
+
+* [#3647] Applied a bandaid fix to Formio/momentjs turning in invalid time value into
+  the literal string 'Invalid date'. Instead, the invalid value is now kept (and the
+  validation error is still displayed).
+
+2.0.1 (2023-12-08)
+==================
+
+Open Forms SDK 2.0.1 fixes some defects.
+
+* [#3612] Fixed the maximum date validation not being run when both ``min`` and ``max``
+  are specified.
+* [#3611] Fixed time component validation to allow the exact min/max value (bounds are
+  now inclusive).
+* [#607] Fixed the regular expression for phone number validation to disallow leading
+  dashes or spaces.
+* [#3647] Applied a bandaid fix to Formio/momentjs turning in invalid time value into
+  the literal string 'Invalid date'. Instead, the invalid value is now kept (and the
+  validation error is still displayed).
+
 1.5.5 (2023-11-09)
 ==================
 
