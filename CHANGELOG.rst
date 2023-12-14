@@ -2,6 +2,50 @@
 SDK Changelog
 =============
 
+2.1.0-alpha.0 (2023-12-15)
+==========================
+
+First preview release of the upcoming 2.1.0 version.
+
+Features
+--------
+
+* [#469] Repeating groups now use NL DS data-list components and appearance is
+  configurable through design tokens.
+* [3178] Reworked the layout scaffolding to support NL DS principles - appearance can
+  now be configured through design tokens.
+* [#36] Reworked the implementation of the progress indicator, you can now use existing
+  NL DS component design tokens and further tweak the appearance through custom design
+  tokens. The scrolling behaviour and text overflow/cutoff (on mobile) is now also fixed,
+  and the component is not invasive anymore when embedding the SDK in a third party CMS.
+* [#3651] Changed the optional field label suffix to more accessible language.
+
+Bugfixes
+--------
+
+* [#3576] Repeating groups summary no longer displays colons when no component label is
+  available.
+* Fixed regression in leaflet styles not being included in CSS bundle.
+* [#3362] Fixed support for backend-to-frontend server side redirects when using
+  hash-based routing.
+* [#3612] Fixed the maximum date validation not being run when both ``min`` and ``max``
+  are specified.
+* [#3611] Fixed time component validation to allow the exact min/max value (bounds are
+  now inclusive).
+* [#3450] Fixed text overflow not being properly hyphenated.
+* [#607] Fixed the regular expression for phone number validation to disallow leading
+  dashes or spaces.
+* [#3647] Applied a bandaid fix to Formio/momentjs turning in invalid time value into
+  the literal string 'Invalid date'. Instead, the invalid value is now kept (and the
+  validation error is still displayed).
+
+Project maintenance
+-------------------
+
+* Cleaned up the columns CSS.
+* Refactored routes for ``ManageAppointment``.
+* Fixed ``localStorage`` cleanup in storybook.
+
 1.5.6 (2023-12-12)
 ==================
 
