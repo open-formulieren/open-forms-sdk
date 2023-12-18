@@ -1,3 +1,4 @@
+import {parseISO} from 'date-fns';
 import set from 'lodash/set';
 
 const validateDateBoundaries = (minBoundary, maxBoundary, value) => {
@@ -8,7 +9,7 @@ const validateDateBoundaries = (minBoundary, maxBoundary, value) => {
     return {isValid: true};
   }
 
-  const parsedValue = new Date(value);
+  const parsedValue = parseISO(value, 'yyyy-MM-dd', new Date());
 
   if (minDate && maxDate) {
     const isValid = parsedValue >= minDate && parsedValue <= maxDate;
