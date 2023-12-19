@@ -99,3 +99,38 @@ export const DateWithMinField = {
     // await expect(error).not.toBeNull();
   },
 };
+
+export const DateWithMaxField = {
+  render: SingleFormioComponent,
+  args: {
+    key: 'date',
+    label: 'Datum <= 18-12-2023',
+    extraComponentProperties: {
+      format: 'dd-MM-yyyy',
+      placeholder: 'dd-mm-yyyy',
+      enableTime: false,
+      datePicker: {
+        minDate: null,
+        maxDate: '2023-12-18T00:00:00+01:00',
+      },
+      customOptions: {
+        allowInvalidPreload: true,
+      },
+      validate: {
+        dateMinMax: true,
+      },
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const dateInput = canvas.getByRole('textbox');
+
+    userEvent.type(dateInput, '19-12-2023');
+    expect(dateInput).toHaveDisplayValue('19-12-2023');
+
+    // TODO: I cannot get this to work. If you do it manually in storybook, it works... (it shows the error).
+    // const error = canvas.queryByText('maxDate');
+    // await expect(error).not.toBeNull();
+  },
+};
