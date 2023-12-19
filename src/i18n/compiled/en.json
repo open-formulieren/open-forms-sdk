@@ -879,6 +879,20 @@
       "value": "\"."
     }
   ],
+  "SvLGQJ": [
+    {
+      "type": 0,
+      "value": "This form cannot be used temporarily due to a malfunction with "
+    },
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": ". Please try again later."
+    }
+  ],
   "Tip5+d": [
     {
       "type": 0,
@@ -969,20 +983,6 @@
     {
       "type": 0,
       "value": "."
-    }
-  ],
-  "UWylpR": [
-    {
-      "type": 0,
-      "value": "This form is temporarily unavailable because of an outage with the "
-    },
-    {
-      "type": 1,
-      "value": "label"
-    },
-    {
-      "type": 0,
-      "value": " authentication service. Please try again later."
     }
   ],
   "UyEKdQ": [
