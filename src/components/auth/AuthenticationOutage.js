@@ -17,8 +17,8 @@ const AuthenticationOutage = ({loginOption}) => (
     <FormattedMessage
       description="Authentication outage message"
       defaultMessage={`
-          This form is temporarily unavailable because of an outage with the {label}
-          authentication service. Please try again later.`}
+          This form cannot be used temporarily due to a malfunction with {label}. 
+          Please try again later.`}
       values={{label: loginOption.label}}
     />
   </ErrorMessage>

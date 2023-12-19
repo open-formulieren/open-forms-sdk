@@ -423,6 +423,11 @@
     "description": "ZOD 'invalid_string' error message, with endsWith",
     "originalDefault": "Invalid input: must end with \"{endsWith}\"."
   },
+  "SvLGQJ": {
+    "defaultMessage": "Dit formulier is tijdelijk niet te gebruiken door een storing bij {label}. Probeer het later nog eens.",
+    "description": "Authentication outage message",
+    "originalDefault": "This form cannot be used temporarily due to a malfunction with {label}. Please try again later."
+  },
   "Tip5+d": {
     "defaultMessage": "Volgend jaar",
     "description": "Calendar: next year button title",
@@ -432,11 +437,6 @@
     "defaultMessage": "De tekst moet {exact, select, true {exact} other {{inclusive, select, true {minstens} other {meer dan}}} } {minimum, plural, one {{minimum} karakter} other {{minimum} karakters}} lang zijn.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
-  },
-  "UWylpR": {
-    "defaultMessage": "Dit formulier is tijdelijk niet beschikbaar wegens een storing bij de {label} authenticatieservice. Gelieve later opnieuw te proberen.",
-    "description": "Authentication outage message",
-    "originalDefault": "This form is temporarily unavailable because of an outage with the {label} authentication service. Please try again later."
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
