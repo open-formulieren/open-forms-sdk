@@ -13606,10 +13606,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-modal@3.14.3:
-  version "3.14.3"
-  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.14.3.tgz#7eb7c5ec85523e5843e2d4737cc17fc3f6aeb1c0"
-  integrity sha512-+C2KODVKyu20zHXPJxfOOcf571L1u/EpFlH+oS/3YDn8rgVE51QZuxuuIwabJ8ZFnOEHaD+r6XNjqwtxZnXO0g==
+react-modal@3.16.1:
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.16.1.tgz#34018528fc206561b1a5467fc3beeaddafb39b2b"
+  integrity sha512-VStHgI3BVcGo7OXczvnJN7yT2TWHJPDXZWyI/a0ssFNhGZWsPmB8cF0z33ewDXq4VfYMO1vXgiv/g8Nj9NDyWg==
   dependencies:
     exenv "^1.2.0"
     prop-types "^15.7.2"
@@ -14720,17 +14720,17 @@ storybook-addon-themes@^6.1.0:
     global "^4.4.0"
     memoizerific "^1.11.3"
 
-storybook-i18n@^2.0.7:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/storybook-i18n/-/storybook-i18n-2.0.8.tgz#94e1ba047cd8ad25a5f986fc6d51d5f2c054aea6"
-  integrity sha512-YJIA1XNLD+ba8H++sMtmgdbza6HgYTWDCrM1QWEPGxpwmIoqEpjXKOnHPFkUzf77VD7+2IpPNsthdmtk7E7F/w==
+storybook-i18n@2.0.13:
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/storybook-i18n/-/storybook-i18n-2.0.13.tgz#e2172c9db06bd58a02a561edc508b19a989790bd"
+  integrity sha512-p0VPL5QiHdeS3W9BvV7UnuTKw7Mj1HWLW67LK0EOoh5fpSQIchu7byfrUUe1RbCF1gT0gOOhdNuTSXMoVVoTDw==
 
-storybook-react-intl@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/storybook-react-intl/-/storybook-react-intl-2.0.2.tgz#6bdcf673cedbd8a31bf92d4e9ae4b144da5b3b79"
-  integrity sha512-8IH943JGBy8Ik2O65k3hKs9MkuxP03uoFuxBBraWK872UNERuAUil8/11+1EN/Am5pz249q1oalwDo8lpefmQg==
+storybook-react-intl@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/storybook-react-intl/-/storybook-react-intl-2.0.10.tgz#65d9bb3662eb52bc77f928ea50e7c18dd1587188"
+  integrity sha512-FtZnZaRoSmrq9Ma7ZAK3EkZUlqmDlSZj1CAyQVo0jRKKYOi2LcucnW8XcaTglN3VBv3n0p/ZiU6WrW7AvB+UZQ==
   dependencies:
-    storybook-i18n "^2.0.7"
+    storybook-i18n "2.0.13"
 
 storybook@^7.0.22:
   version "7.0.22"
@@ -15658,10 +15658,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-use-immer@^0.5.1:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/use-immer/-/use-immer-0.5.2.tgz#5f61d5662eb0df192663bb78e200521858e92499"
-  integrity sha512-aHnLa85kftWo05lqJVOy3GLXrydqu6kl0MXvo5k5OW8IoLJixa9NY/48Xdy0LlcqdakBTFLbSDZaYVPMVhYy8Q==
+use-immer@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/use-immer/-/use-immer-0.9.0.tgz#66e4e8f7ab75df45e96dfd5c56337f9fd49db9fd"
+  integrity sha512-/L+enLi0nvuZ6j4WlyK0US9/ECUtV5v9RUbtxnn5+WbtaXYUaOBoKHDNL9I5AETdurQ4rIFIj/s+Z5X80ATyKw==
 
 use-isomorphic-layout-effect@^1.1.2:
   version "1.1.2"
