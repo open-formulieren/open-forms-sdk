@@ -1,17 +1,25 @@
 import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
 
+import {mockBRKZaakgerechtigdeInvalidPost} from './AddressNL.mocks';
 import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Custom / Address NL',
   decorators: [withUtrechtDocument, ConfigDecorator],
+  parameters: {
+    msw: {
+      handlers: [mockBRKZaakgerechtigdeInvalidPost],
+    },
+  },
   args: {
     type: 'addressNL',
     key: 'addressNL',
     label: 'Address NL',
-    validate: {
-      required: false,
+    extraComponentProperties: {
+      validate: {
+        required: true,
+      },
     },
     evalContext: {},
   },
@@ -24,4 +32,16 @@ export default {
 
 export const Default = {
   render: SingleFormioComponent,
+};
+
+export const WithBRKValidation = {
+  render: SingleFormioComponent,
+  args: {
+    extraComponentProperties: {
+      validate: {
+        required: false,
+        plugins: ['brk-Zaakgerechtigde'],
+      },
+    },
+  },
 };
