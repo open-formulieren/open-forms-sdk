@@ -1,8 +1,9 @@
 /**
  * A form widget to select a location on a Leaflet map.
  */
-import {Formik} from 'formik';
-import React from 'react';
+import {Formik, useFormikContext} from 'formik';
+import {isEqual} from 'lodash';
+import React, {useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {FormattedMessage, IntlProvider} from 'react-intl';
@@ -10,15 +11,25 @@ import {FormattedMessage, IntlProvider} from 'react-intl';
 import {ConfigContext} from 'Context';
 import {TextField} from 'components/forms';
 
+import enableValidationPlugins from '../validators/plugins';
+
 const Field = Formio.Components.components.field;
 
 export default class AddressNL extends Field {
+  constructor(component, options, data) {
+    super(component, options, data);
+    enableValidationPlugins(this);
+  }
+
   static schema(...extend) {
     return Field.schema(
       {
         type: 'addressNL',
         label: 'Address NL',
+        input: true,
         key: 'addressNL',
+        defaultValue: {},
+        validateOn: 'blur',
       },
       ...extend
     );
@@ -31,6 +42,21 @@ export default class AddressNL extends Field {
       weight: 500,
       schema: AddressNL.schema(),
     };
+  }
+
+  get inputInfo() {
+    const info = super.elementInfo();
+    // Hide the input element
+    info.attr.type = 'hidden';
+    return info;
+  }
+
+  checkComponentValidity(data, dirty, row, options = {}) {
+    let updatedOptions = {...options};
+    if (this.component.validate.plugins && this.component.validate.plugins.length) {
+      updatedOptions.async = true;
+    }
+    return super.checkComponentValidity(data, dirty, row, updatedOptions);
   }
 
   get defaultSchema() {
@@ -79,69 +105,37 @@ export default class AddressNL extends Field {
     super.destroy();
   }
 
-  onMarkerSet(newLatLng) {
-    this.setValue(newLatLng, {modified: true});
+  onFormikChange(value) {
+    this.updateValue(value, {modified: true});
   }
 
   renderReact() {
-    const required = AddressNL.schema().validate.required;
+    const required = this.component.validate.required;
+
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
-        <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
-          <Formik initialValues={this.emptyValue}>
-            <>
-              <div className="openforms-columns">
-                <div className="column column--span-6 openforms-form-field-container">
-                  <TextField
-                    name="postcode"
-                    label={
-                      <FormattedMessage
-                        description="Label for addressNL postcode input"
-                        defaultMessage="Postcode"
-                      />
-                    }
-                    placeholder="1234AB"
-                    isRequired={required}
-                  />
-                </div>
-                <div className="column column--span-6 openforms-form-field-container">
-                  <TextField
-                    name="houseNumber"
-                    label={
-                      <FormattedMessage
-                        description="Label for addressNL houseNumber input"
-                        defaultMessage="House number"
-                      />
-                    }
-                    isRequired={required}
-                  />
-                </div>
-              </div>
-              <div className="openforms-columns">
-                <div className="column column--span-6 openforms-form-field-container">
-                  <TextField
-                    name="houseLetter"
-                    label={
-                      <FormattedMessage
-                        description="Label for addressNL houseLetter input"
-                        defaultMessage="Houser letter"
-                      />
-                    }
-                  />
-                </div>
-                <div className="column column--span-6 openforms-form-field-container">
-                  <TextField
-                    name="houseNumberAddition"
-                    label={
-                      <FormattedMessage
-                        description="Label for addressNL houseNumberAddition input"
-                        defaultMessage="House number addition"
-                      />
-                    }
-                  />
-                </div>
-              </div>
-            </>
+        <ConfigContext.Provider
+          value={{
+            baseUrl: this.options.baseUrl,
+            requiredFieldsWithAsterisk: this.options.evalContext.requiredFieldsWithAsterisk,
+          }}
+        >
+          <Formik
+            initialValues={this.dataValue || this.emptyValue}
+            validate={values => {
+              const errors = {};
+              if (required) {
+                if (!values.postcode) errors.postcode = 'Required';
+                if (!values.houseNumber) errors.houseNumber = 'Required';
+              }
+              return errors;
+            }}
+          >
+            <FormikAddress
+              required={required}
+              formioValues={this.dataValue || this.emptyValue}
+              setFormioValues={this.onFormikChange.bind(this)}
+            />
           </Formik>
         </ConfigContext.Provider>
       </IntlProvider>
@@ -155,3 +149,69 @@ export default class AddressNL extends Field {
     return changed;
   }
 }
+
+const FormikAddress = ({required, formioValues, setFormioValues}) => {
+  const {values} = useFormikContext();
+
+  useEffect(() => {
+    if (!isEqual(values, formioValues)) {
+      setFormioValues(values);
+    }
+  });
+
+  return (
+    <>
+      <div className="openforms-columns">
+        <div className="column column--span-6 openforms-form-field-container">
+          <TextField
+            name="postcode"
+            label={
+              <FormattedMessage
+                description="Label for addressNL postcode input"
+                defaultMessage="Postcode"
+              />
+            }
+            placeholder="1234AB"
+            isRequired={required}
+          />
+        </div>
+        <div className="column column--span-6 openforms-form-field-container">
+          <TextField
+            name="houseNumber"
+            label={
+              <FormattedMessage
+                description="Label for addressNL houseNumber input"
+                defaultMessage="House number"
+              />
+            }
+            isRequired={required}
+          />
+        </div>
+      </div>
+      <div className="openforms-columns">
+        <div className="column column--span-6 openforms-form-field-container">
+          <TextField
+            name="houseLetter"
+            label={
+              <FormattedMessage
+                description="Label for addressNL houseLetter input"
+                defaultMessage="Houser letter"
+              />
+            }
+          />
+        </div>
+        <div className="column column--span-6 openforms-form-field-container">
+          <TextField
+            name="houseNumberAddition"
+            label={
+              <FormattedMessage
+                description="Label for addressNL houseNumberAddition input"
+                defaultMessage="House number addition"
+              />
+            }
+          />
+        </div>
+      </div>
+    </>
+  );
+};
