@@ -1,9 +1,13 @@
+import {isEmpty} from 'lodash';
+
 import {post} from '../../api';
 
 export const pluginsAPIValidator = {
   key: `validate.backendApi`,
   check(component, setting, value) {
-    if (!value) return true;
+    const checkIsEmpty = component.component?.openForms?.checkIsEmptyBeforePluginValidate || false;
+    const shortCutBecauseEmpty = checkIsEmpty && isEmpty(value);
+    if (!value || shortCutBecauseEmpty) return true;
 
     const plugins = component.component.validate.plugins;
     const {baseUrl} = component.currentForm?.options || component.options;

@@ -2,6 +2,7 @@
  * A form widget to select a location on a Leaflet map.
  */
 import {Formik, useFormikContext} from 'formik';
+import FormioUtils from 'formiojs/utils';
 import {isEqual} from 'lodash';
 import React, {useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
@@ -30,6 +31,9 @@ export default class AddressNL extends Field {
         key: 'addressNL',
         defaultValue: {},
         validateOn: 'blur',
+        openForms: {
+          checkIsEmptyBeforePluginValidate: true,
+        },
       },
       ...extend
     );
@@ -107,10 +111,44 @@ export default class AddressNL extends Field {
 
   onFormikChange(value) {
     this.updateValue(value, {modified: true});
+
+    // we can shortcuts-skip validation if the subkeys that should be present aren't,
+    // validating that (probably?) doesn't make any sense.
+    // TODO: perhaps we need to wire up a client-side validator for this though, since
+    // if the component as a whole is required, so are these keys.
+    if (!value.postcode || !value.houseNumber) return;
+
+    // `enableValidationPlugins` forces the component to be validateOn = 'blur', which
+    // surpresses the validators due to onChange events.
+    // Since this is a composite event, we need to fire the blur event ourselves and
+    // schedule the validation to run.
+    // Code inspired on Formio.js' `src/components/_classes/input/Input.js`, in
+    // particular the `addFocusBlurEvents` method.
+    //
+    // XXX: this can be improved upon if we can relay formik focus/blur state to the
+    // formio component, but it seems like the events are sufficiently debounced already
+    // through some manual testing.
+    this.root.pendingBlur = FormioUtils.delay(() => {
+      this.emit('blur', this);
+      if (this.component.validateOn === 'blur') {
+        this.root.triggerChange(
+          {fromBlur: true},
+          {
+            instance: this,
+            component: this.component,
+            value: this.dataValue,
+            flags: {fromBlur: true},
+          }
+        );
+      }
+      this.root.focusedComponent = null;
+      this.root.pendingBlur = null;
+    });
   }
 
   renderReact() {
-    const required = this.component.validate.required;
+    const required = this.component?.validate?.required || false;
+    const initialValue = {...this.emptyValue, ...this.dataValue};
 
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
@@ -121,7 +159,7 @@ export default class AddressNL extends Field {
           }}
         >
           <Formik
-            initialValues={this.dataValue || this.emptyValue}
+            initialValues={initialValue}
             validate={values => {
               const errors = {};
               if (required) {
@@ -133,7 +171,7 @@ export default class AddressNL extends Field {
           >
             <FormikAddress
               required={required}
-              formioValues={this.dataValue || this.emptyValue}
+              formioValues={initialValue}
               setFormioValues={this.onFormikChange.bind(this)}
             />
           </Formik>
