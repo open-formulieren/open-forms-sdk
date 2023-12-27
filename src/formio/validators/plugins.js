@@ -7,10 +7,11 @@ export const pluginsAPIValidator = {
 
     const plugins = component.component.validate.plugins;
     const {baseUrl} = component.currentForm?.options || component.options;
+    const {submissionUuid} = component.currentForm?.options.ofContext;
 
     const promises = plugins.map(plugin => {
       const url = `${baseUrl}validation/plugins/${plugin}`;
-      return post(url, {value}).then(response => {
+      return post(url, {value, submissionUuid}).then(response => {
         const valid = response.data.isValid;
         return valid ? true : response.data.messages.join('<br>');
       });

@@ -209,6 +209,16 @@ const CoSignDisplay = ({component, value}) => {
   return <CoSignOld interactive={false} />;
 };
 
+const AddressNLDisplay = ({component, value}) => {
+  if (!value) {
+    return <EmptyDisplay />;
+  }
+
+  return `${value.postcode} ${value.houseNumber}${value.houseLetter || ''}${
+    value.houseNumberAddition || ''
+  }`;
+};
+
 const ComponentValueDisplay = ({value, component}) => {
   const {multiple = false, type} = component;
 
@@ -259,6 +269,7 @@ const TYPE_TO_COMPONENT = {
   map: MapDisplay,
   password: PasswordDisplay,
   coSign: CoSignDisplay,
+  addressNL: AddressNLDisplay,
 };
 
 export default ComponentValueDisplay;
