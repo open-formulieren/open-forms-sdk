@@ -54,6 +54,15 @@ export default {
   },
   parameters: {
     actions: {argTypesRegex: '^on[A-Z].*'},
+    viewport: {
+      // These are the viewports that are shown in Storybook
+      viewports: {
+        smallMobile: { name: "Small mobile", styles: { width: "320px", height: "568px" } },
+        largeMobile: { name: "Large mobile", styles: { width: "414px", height: "896px" } },
+        tablet: { name: "Tablet", styles: { width: "834px", height: "1112px" } },
+        desktop: { name: "Desktop", styles: { width: "1024px", height: "1000px" } },
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -85,6 +94,13 @@ export default {
         ],
       },
     },
+    chromatic: {
+      // Here we specify the viewports of which we want snapshots in Chromatic
+      modes: {
+        mobile: {viewport: "smallMobile"},
+        desktop: {viewport: "desktop"}
+      }
+    }
   },
   loaders: [mswLoader],
 };
