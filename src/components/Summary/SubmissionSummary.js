@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
+import {ConfigContext} from 'Context';
 import {post} from 'api';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -43,6 +44,7 @@ const SubmissionSummary = ({
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const navigate = useNavigate();
   const intl = useIntl();
+  const config = useContext(ConfigContext);
 
   const refreshedSubmission = useRefreshSubmission(submission);
 
@@ -92,6 +94,17 @@ const SubmissionSummary = ({
       // TODO Specific error for each type of invalid data?
       throw new Error('InvalidSubmissionData');
     } else {
+      if (config.onComplete) {
+        try {
+          config.onComplete();
+        } catch (exception) {
+          // At this point the submission is completed and removed from the session.
+          // If the callback errors, then the user will no longer be able to see the confirmation
+          // page with the submission reference.
+          console.error(exception);
+        }
+      }
+
       return response.data;
     }
   };

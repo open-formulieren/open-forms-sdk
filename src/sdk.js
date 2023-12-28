@@ -70,6 +70,7 @@ class OpenForm {
       languageSelectorTarget,
       displayComponents = {}, // TODO: document as unstable API
       useHashRouting = false,
+      onComplete = () => {},
     } = opts;
 
     this.targetNode = targetNode;
@@ -79,6 +80,7 @@ class OpenForm {
     this.lang = lang;
     this.displayComponents = {...defaultDisplayComponents, ...displayComponents};
     this.useHashRouting = useHashRouting;
+    this.onComplete = onComplete;
 
     switch (typeof languageSelectorTarget) {
       case 'string': {
@@ -192,6 +194,7 @@ class OpenForm {
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
               debug: DEBUG,
+              onComplete: this.onComplete,
             }}
           >
             <NonceProvider nonce={CSPNonce.getValue()} cacheKey="sdk-react-select">
