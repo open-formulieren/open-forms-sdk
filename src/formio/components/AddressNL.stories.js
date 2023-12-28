@@ -1,3 +1,6 @@
+import {expect} from '@storybook/jest';
+import {userEvent, waitFor, within} from '@storybook/testing-library';
+
 import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
 
@@ -32,6 +35,27 @@ export default {
 
 export const Default = {
   render: SingleFormioComponent,
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
+    userEvent.type(postcodeInput, '1234AB');
+
+    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
+    userEvent.type(houseNumberInput, '1');
+    userEvent.tab();
+
+    // No errors if the two required fields are filled:
+    let error = canvas.queryByText('Required');
+    await expect(error).toBeNull();
+
+    userEvent.clear(postcodeInput);
+    userEvent.tab();
+
+    // Error if postcode not filled:
+    error = await canvas.findByText('Required');
+    await expect(error).not.toBeNull();
+  },
 };
 
 export const WithBRKValidation = {
@@ -43,5 +67,21 @@ export const WithBRKValidation = {
         plugins: ['brk-Zaakgerechtigde'],
       },
     },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
+    userEvent.type(postcodeInput, '1234AB');
+
+    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
+    userEvent.type(houseNumberInput, '1');
+
+    userEvent.tab();
+
+    // Error if postcode not filled:
+    await waitFor(async () => {
+      expect(await canvas.findByText('User is not a zaakgerechtigde for property.')).not.toBeNull();
+    });
   },
 };

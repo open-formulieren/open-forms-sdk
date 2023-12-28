@@ -11,8 +11,7 @@ import {FormattedMessage, IntlProvider} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {TextField} from 'components/forms';
-
-import enableValidationPlugins from '../validators/plugins';
+import enableValidationPlugins from 'formio/validators/plugins';
 
 const Field = Formio.Components.components.field;
 
