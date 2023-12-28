@@ -3,6 +3,7 @@ import {userEvent, waitFor, within} from '@storybook/testing-library';
 
 import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
+import {sleep} from 'utils';
 
 import {mockBRKZaakgerechtigdeInvalidPost} from './AddressNL.mocks';
 import {SingleFormioComponent} from './story-util';
@@ -50,7 +51,9 @@ export const Default = {
     await expect(error).toBeNull();
 
     userEvent.clear(postcodeInput);
+    await sleep(300);
     userEvent.tab();
+    await sleep(300);
 
     // Error if postcode not filled:
     error = await canvas.findByText('Required');
@@ -77,7 +80,9 @@ export const WithBRKValidation = {
     const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
     userEvent.type(houseNumberInput, '1');
 
+    await sleep(300);
     userEvent.tab();
+    await sleep(300);
 
     // Error if postcode not filled:
     await waitFor(async () => {
