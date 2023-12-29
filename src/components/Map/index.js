@@ -7,7 +7,7 @@ import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leafle
 import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
-import {DEFAULT_LAT_LNG, DEFAULT_ZOOM, MAP_DEFAULTS, TILE_LAYERS_RD} from 'map/constants';
+import {DEFAULT_LAT_LNG, DEFAULT_ZOOM, MAP_DEFAULTS, TILE_LAYER_RD} from 'map/constants';
 import {getBEMClassName} from 'utils';
 
 import NearestAddress from './NearestAddress';
@@ -100,7 +100,7 @@ const LeaftletMap = ({
           duration: 3000,
         }}
       >
-        <TileLayer url={TILE_LAYERS_RD.url} {...TILE_LAYERS_RD.options} />
+        <TileLayer url={TILE_LAYER_RD.url} {...TILE_LAYER_RD.options} />
         {coordinates ? (
           <>
             <MapView coordinates={coordinates} />
