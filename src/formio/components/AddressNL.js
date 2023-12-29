@@ -197,7 +197,7 @@ const FormikAddress = ({required, formioValues, setFormioValues}) => {
   });
 
   return (
-    <>
+    <div className="formio-form">
       <div className="openforms-columns">
         <div className="column column--span-6 openforms-form-field-container">
           <TextField
@@ -249,6 +249,6 @@ const FormikAddress = ({required, formioValues, setFormioValues}) => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
