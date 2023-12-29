@@ -3008,6 +3008,13 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
+"@open-formulieren/leaflet-tools@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@open-formulieren/leaflet-tools/-/leaflet-tools-1.0.0.tgz#7b1d7c9d2dc45cf21ca75fa2b87c71c7d81b556f"
+  integrity sha512-G2Sdh+Td5iYkVQ9cEIvAiQfpV3V7HdYfQOovLJp3RVJEaXEuOc37ScYaCags5amIjjQZwJpQ+UZtjfK0IBU8pQ==
+  dependencies:
+    proj4leaflet "^1.0.2"
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
