@@ -34,7 +34,6 @@
     "@open-formulieren/leaflet-tools": "^1.0.0",
     "@sentry/react": "^6.13.2",
     "@sentry/tracing": "^6.13.2",
-    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "classnames": "^2.3.1",
     "date-fns": "^2.30.0",
     "flatpickr": "^4.6.9",
@@ -142,6 +141,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@utrecht/component-library-css": "1.0.0-alpha.604",
     "@utrecht/component-library-react": "1.0.0-alpha.353",
     "@utrecht/components": "1.0.0-alpha.565",
@@ -263,7 +263,7 @@
       "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\](?!(react-leaflet|@react-leaflet|@open-formulieren\/leaflet-tools)).+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "[/\\\\]node_modules[/\\\\](?!(react-leaflet|@react-leaflet|@open-formulieren/leaflet-tools)).+\\.(js|jsx|mjs|cjs|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
     "modulePaths": [
