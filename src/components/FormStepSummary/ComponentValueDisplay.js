@@ -214,7 +214,7 @@ const AddressNLDisplay = ({component, value}) => {
     return <EmptyDisplay />;
   }
 
-  return `${value.postcode} ${value.houseNumber}${value.houseLetter || ''}${
+  return `${value.postcode} ${value.houseNumber}${value.houseLetter || ''} ${
     value.houseNumberAddition || ''
   }`;
 };
