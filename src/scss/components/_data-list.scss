@@ -64,7 +64,7 @@
 
     @include laptop {
       @include bem.element('item') {
-        display: flex;
+        display: var(--of-utrecht-data-list-laptop-display, block);
       }
 
       @include bem.element('item-key') {
@@ -72,20 +72,4 @@
       }
     }
   }
-}
-
-// TODO: move to design tokens repository
-.openforms-theme {
-  --of-utrecht-data-list-padding-block-end: 20px;
-
-  // apply body text styling
-  --utrecht-data-list-item-key-color: var(--of-color-fg);
-  --utrecht-data-list-item-key-font-size: 1rem;
-  --utrecht-data-list-item-key-font-weight: 700;
-  --utrecht-data-list-item-key-line-height: 1.5;
-  --of-utrecht-data-list-item-key-laptop-font-weight: 400;
-
-  --utrecht-data-list-item-value-color: var(--of-color-fg);
-  --utrecht-data-list-item-value-font-size: 1rem;
-  --utrecht-data-list-item-value-line-height: 1.5;
 }

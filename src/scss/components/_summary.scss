@@ -49,14 +49,3 @@
     }
   }
 }
-
-// TODO: move to design tokens repository
-.openforms-theme {
-  --of-summary-step-name-font-size: var(--utrecht-heading-3-font-size);
-  --of-summary-step-name-line-height: var(--utrecht-heading-3-line-height, 1.17);
-  --of-summary-header-mobile-row-gap: 8px;
-  --of-summary-header-padding-block-end: 12px;
-  --of-summary-header-border-block-end-style: solid;
-  --of-summary-header-border-block-end-width: 1px;
-  --of-summary-header-border-block-end-color: var(--of-color-border);
-}
