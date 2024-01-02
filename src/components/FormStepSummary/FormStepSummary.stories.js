@@ -29,6 +29,11 @@ export default {
     ],
     editStepText: 'Edit',
   },
+  argTypes: {
+    name: {type: 'string'},
+    editStepText: {type: 'string'},
+    slug: {table: {disable: true}},
+  },
 };
 
 export const Default = {
@@ -62,5 +67,163 @@ export const NotEditable = {
     await step('No link to edit step data', () => {
       expect(canvas.queryByRole('link')).not.toBeInTheDocument();
     });
+  },
+};
+
+export const WithFieldsetAsFirstElement = {
+  name: 'Layout components: fieldset, first child',
+  args: {
+    data: [
+      {
+        name: 'A fieldset',
+        value: '',
+        component: {
+          type: 'fieldset',
+          key: 'fieldset',
+          label: 'A fieldset',
+        },
+      },
+      {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
+        },
+      },
+      {
+        name: 'Another textfield',
+        value: 'Another value',
+        component: {
+          type: 'textfield',
+          key: 'textfield2',
+          label: 'Another textfield',
+        },
+      },
+    ],
+  },
+};
+
+export const WithFieldsetNotAsFirstElement = {
+  name: 'Layout components: fieldset, not first child',
+  args: {
+    data: [
+      {
+        name: 'A number',
+        value: 3.14,
+        component: {
+          type: 'number',
+          key: 'number',
+          label: 'A number',
+        },
+      },
+      {
+        name: 'A fieldset',
+        value: '',
+        component: {
+          type: 'fieldset',
+          key: 'fieldset',
+          label: 'A fieldset',
+        },
+      },
+      {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
+        },
+      },
+      {
+        name: 'Another textfield',
+        value: 'Another value',
+        component: {
+          type: 'textfield',
+          key: 'textfield2',
+          label: 'Another textfield',
+        },
+      },
+    ],
+  },
+};
+
+export const WithEditGridAsFirstElement = {
+  name: 'Layout components: editgrid, first child',
+  args: {
+    data: [
+      {
+        name: 'A repeating group',
+        value: '',
+        component: {
+          type: 'editgrid',
+          key: 'editgrid',
+          label: 'A repeating group',
+        },
+      },
+      {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
+        },
+      },
+      {
+        name: 'Another textfield',
+        value: 'Another value',
+        component: {
+          type: 'textfield',
+          key: 'textfield2',
+          label: 'Another textfield',
+        },
+      },
+    ],
+  },
+};
+
+export const WithEditGridNotAsFirstElement = {
+  name: 'Layout components: editgrid, not first child',
+  args: {
+    data: [
+      {
+        name: 'A number',
+        value: 3.14,
+        component: {
+          type: 'number',
+          key: 'number',
+          label: 'A number',
+        },
+      },
+      {
+        name: 'A repeating group',
+        value: '',
+        component: {
+          type: 'editgrid',
+          key: 'editgrid',
+          label: 'A repeating group',
+        },
+      },
+      {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
+        },
+      },
+      {
+        name: 'Another textfield',
+        value: 'Another value',
+        component: {
+          type: 'textfield',
+          key: 'textfield2',
+          label: 'Another textfield',
+        },
+      },
+    ],
   },
 };

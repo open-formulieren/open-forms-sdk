@@ -2,6 +2,24 @@
 
 @import '~microscope-sass/lib/responsive';
 
+@mixin component-type-overrides($component-type) {
+  .utrecht-data-list__item-key {
+    font-size: var(--of-utrecht-data-list-item-key-#{$component-type}-font-size, 0.875rem);
+    font-weight: var(--of-utrecht-data-list-item-key-#{$component-type}-font-weight, 700);
+    line-height: var(--of-utrecht-data-list-item-key-#{$component-type}-line-height, 1.2);
+    margin-block-end: var(
+      --of-utrecht-data-list-item-key-#{$component-type}-margin-block-end,
+      0.5rem
+    );
+  }
+  &:not(:first-child) {
+    margin-block-start: var(
+      --of-utrecht-data-list-item-#{$component-type}-margin-block-start,
+      20px
+    );
+  }
+}
+
 /**
  * Extensions on the utrecht-data-list component.
  *
@@ -23,6 +41,15 @@
 
     @include bem.element('item') {
       gap: var(--of-utrecht-data-list-item-gap, 8px);
+
+      // Styling modifications for specific component types
+      @include bem.modifier('openforms-fieldset') {
+        @include component-type-overrides('fieldset');
+      }
+
+      @include bem.modifier('openforms-editgrid') {
+        @include component-type-overrides('editgrid');
+      }
     }
 
     @include bem.element('item-key') {

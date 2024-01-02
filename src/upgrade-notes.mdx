@@ -116,3 +116,36 @@ Relevant design tokens:
 - `--of-summary-header-border-block-end-style`
 - `--of-summary-header-border-block-end-width`
 - `--of-summary-header-border-block-end-color`
+
+**Summary row**
+
+The key/value pairs in the summary row have been migrated to use the NLDS Data List component, using
+the `.utrecht-data-list*` classes and design tokens.
+
+In the default Open Forms theme, this is backwards compatible, however if you're using your own
+theme you now need to define some design tokens to keep the existing styles ( if those aren't
+defined yet):
+
+```css
+.your-theme {
+  --of-utrecht-data-list-padding-block-end: 20px;
+
+  --utrecht-data-list-item-key-color: var(--of-color-fg); /* or an actual color value */
+  --utrecht-data-list-item-key-font-size: 1rem;
+  --utrecht-data-list-item-key-font-weight: 700;
+  --utrecht-data-list-item-key-line-height: 1.5;
+  --of-utrecht-data-list-item-key-laptop-font-weight: 400;
+
+  --utrecht-data-list-item-value-color: var(--of-color-fg); /* or an actual color value */
+  --utrecht-data-list-item-value-font-size: 1rem;
+  --utrecht-data-list-item-value-line-height: 1.5;
+}
+```
+
+Spacing tokens fall back to `--of-summary-row-spacing` or values derived from this token. We
+recommend explicitly defining the design token values:
+
+- `--of-utrecht-data-list-gap`
+- `--of-utrecht-data-list-padding-block-start`
+- `--of-utrecht-data-list-padding-block-end`
+- `--of-utrecht-data-list-item-gap`
