@@ -1,3 +1,5 @@
+import {render as renderTest, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -6,6 +8,10 @@ import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
+import {ConfigContext} from 'Context';
+import {BASE_URL} from 'api-mocks';
+import mswServer from 'api-mocks/msw-server';
+import {mockSubmissionComplete} from 'api-mocks/submissions';
 import {testForm} from 'components/FormStart/fixtures';
 import SubmissionSummary from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -111,4 +117,39 @@ it('Summary does not display logout button if loginRequired is false', () => {
   });
 
   expect(container.textContent).not.toContain('Uitloggen');
+});
+
+it('Completing submission calls callback', async () => {
+  mswServer.use(mockSubmissionComplete);
+
+  const user = userEvent.setup();
+
+  const onComplete = jest.fn();
+  const noop = () => {};
+  const submission = {...SUBMISSION, url: `${BASE_URL}submissions/111-222-333`};
+
+  useAsync.mockReturnValue({loading: false, value: []});
+  useRefreshSubmission.mockReturnValue(submission);
+
+  renderTest(
+    <ConfigContext.Provider value={{onComplete: onComplete}}>
+      <Wrap>
+        <SubmissionSummary
+          form={testForm}
+          submission={submission}
+          onConfirm={noop}
+          onLogout={noop}
+          onClearProcessingErrors={noop}
+        />
+      </Wrap>
+    </ConfigContext.Provider>
+  );
+
+  const submitButton = screen.queryByRole('button', {name: 'Confirm'});
+
+  await expect(submitButton).not.toBeNull();
+
+  await user.click(submitButton);
+
+  expect(onComplete).toHaveBeenCalled();
 });

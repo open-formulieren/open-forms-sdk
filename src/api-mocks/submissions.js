@@ -143,3 +143,13 @@ export const mockSubmissionPaymentStartGet = rest.post(
     return res(ctx.json({data: {method: 'get', action: 'https://example.com'}}));
   }
 );
+
+export const mockSubmissionComplete = rest.post(
+  `${BASE_URL}submissions/:uuid/_complete`,
+  (req, res, ctx) =>
+    res(
+      ctx.json({
+        statusUrl: 'http://example.com',
+      })
+    )
+);
