@@ -1,0 +1,64 @@
+@use 'microscope-sass/lib/bem';
+
+@import '~microscope-sass/lib/responsive';
+
+/**
+ * Extensions on the utrecht-data-list component.
+ *
+ * Reference: https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css_css-data-list--docs
+ */
+.utrecht-data-list {
+  @include bem.modifier('openforms') {
+    display: flex;
+    flex-direction: column;
+    gap: var(--of-utrecht-data-list-gap, var(--of-summary-row-spacing));
+    padding-block-start: var(
+      --of-utrecht-data-list-padding-block-start,
+      var(--of-summary-row-spacing)
+    );
+    padding-block-end: var(
+      --of-utrecht-data-list-padding-block-end,
+      calc(2 * var(--of-summary-row-spacing))
+    );
+
+    @include bem.element('item') {
+      gap: var(--of-utrecht-data-list-item-gap, 8px);
+    }
+
+    @include bem.element('item-key') {
+      overflow-wrap: break-word;
+      flex-basis: 50%;
+    }
+
+    @include bem.element('item-value') {
+      overflow-wrap: break-word;
+      flex-basis: 50%;
+    }
+
+    @include laptop {
+      @include bem.element('item') {
+        display: flex;
+      }
+
+      @include bem.element('item-key') {
+        font-weight: var(--of-utrecht-data-list-item-key-laptop-font-weight, 700);
+      }
+    }
+  }
+}
+
+// TODO: move to design tokens repository
+.openforms-theme {
+  --of-utrecht-data-list-padding-block-end: 20px;
+
+  // apply body text styling
+  --utrecht-data-list-item-key-color: var(--of-color-fg);
+  --utrecht-data-list-item-key-font-size: 1rem;
+  --utrecht-data-list-item-key-font-weight: 700;
+  --utrecht-data-list-item-key-line-height: 1.5;
+  --of-utrecht-data-list-item-key-laptop-font-weight: 400;
+
+  --utrecht-data-list-item-value-color: var(--of-color-fg);
+  --utrecht-data-list-item-value-font-size: 1rem;
+  --utrecht-data-list-item-value-line-height: 1.5;
+}
