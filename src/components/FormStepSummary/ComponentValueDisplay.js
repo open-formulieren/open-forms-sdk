@@ -210,7 +210,7 @@ const CoSignDisplay = ({component, value}) => {
 };
 
 const AddressNLDisplay = ({component, value}) => {
-  if (!value) {
+  if (!value || Object.values(value).every(v => v === '')) {
     return <EmptyDisplay />;
   }
 

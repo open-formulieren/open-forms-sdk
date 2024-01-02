@@ -8,6 +8,8 @@ import React, {useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {FormattedMessage, IntlProvider} from 'react-intl';
+import {z} from 'zod';
+import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {TextField} from 'components/forms';
@@ -148,6 +150,7 @@ export default class AddressNL extends Field {
   renderReact() {
     const required = this.component?.validate?.required || false;
     const initialValue = {...this.emptyValue, ...this.dataValue};
+    const {intl} = new IntlProvider(this.options.intl);
 
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
@@ -159,14 +162,7 @@ export default class AddressNL extends Field {
         >
           <Formik
             initialValues={initialValue}
-            validate={values => {
-              const errors = {};
-              if (required) {
-                if (!values.postcode) errors.postcode = 'Required';
-                if (!values.houseNumber) errors.houseNumber = 'Required';
-              }
-              return errors;
-            }}
+            validationSchema={toFormikValidationSchema(addressNLSchema(required, intl))}
           >
             <FormikAddress
               required={required}
@@ -186,6 +182,56 @@ export default class AddressNL extends Field {
     return changed;
   }
 }
+
+const addressNLSchema = (required, intl) => {
+  let postcodeSchema = z.string().regex(/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$/);
+  let houseNumberSchema = z.string().regex(/^\d{1,5}$/);
+  if (!required) {
+    postcodeSchema = postcodeSchema.optional();
+    houseNumberSchema = houseNumberSchema.optional();
+  }
+
+  return z
+    .object({
+      postcode: postcodeSchema,
+      houseNumber: houseNumberSchema,
+      houseLetter: z
+        .string()
+        .regex(/^[a-zA-Z]$/)
+        .optional(),
+      houseNumberAddition: z
+        .string()
+        .regex(/^([a-zA-Z0-9]){1,4}$/)
+        .optional(),
+    })
+    .superRefine((val, ctx) => {
+      if (!required) {
+        if (val.postcode && !val.houseNumber) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: intl.formatMessage({
+              descripion:
+                'ZOD error message when AddressNL postcode is provided but not houseNumber',
+              defaultMessage: 'You must provide a house number.',
+            }),
+            path: ['houseNumber'],
+          });
+        }
+
+        if (!val.postcode && val.houseNumber) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: intl.formatMessage({
+              descripion:
+                'ZOD error message when AddressNL houseNumber is provided but not postcode',
+              defaultMessage: 'You must provide a postcode.',
+            }),
+            path: ['postcode'],
+          });
+        }
+      }
+    });
+};
 
 const FormikAddress = ({required, formioValues, setFormioValues}) => {
   const {values} = useFormikContext();
@@ -208,7 +254,7 @@ const FormikAddress = ({required, formioValues, setFormioValues}) => {
                 defaultMessage="Postcode"
               />
             }
-            placeholder="1234AB"
+            placeholder="1234 AB"
             isRequired={required}
           />
         </div>
@@ -221,6 +267,7 @@ const FormikAddress = ({required, formioValues, setFormioValues}) => {
                 defaultMessage="House number"
               />
             }
+            placeholder="123"
             isRequired={required}
           />
         </div>
@@ -232,7 +279,7 @@ const FormikAddress = ({required, formioValues, setFormioValues}) => {
             label={
               <FormattedMessage
                 description="Label for addressNL houseLetter input"
-                defaultMessage="Houser letter"
+                defaultMessage="House letter"
               />
             }
           />

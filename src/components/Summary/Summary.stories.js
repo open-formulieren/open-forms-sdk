@@ -281,3 +281,31 @@ export const Loading = {
     isLoading: true,
   },
 };
+
+export const AddressNLSummary = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'address-nl',
+        name: 'Address NL',
+        data: [
+          {
+            name: 'Address NL',
+            value: {postcode: '1234AB', houseNumber: '1'},
+            component: {
+              key: 'addressNL',
+              type: 'addressNL',
+              label: 'Adress NL',
+              hidden: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await canvas.findByText('1234AB 1');
+  },
+};

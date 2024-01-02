@@ -5,17 +5,15 @@ import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
-import {mockBRKZaakgerechtigdeInvalidPost} from './AddressNL.mocks';
+import {
+  mockBRKZaakgerechtigdeInvalidPost,
+  mockBRKZaakgerechtigdeValidPost,
+} from './AddressNL.mocks';
 import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Custom / Address NL',
   decorators: [withUtrechtDocument, ConfigDecorator],
-  parameters: {
-    msw: {
-      handlers: [mockBRKZaakgerechtigdeInvalidPost],
-    },
-  },
   args: {
     type: 'addressNL',
     key: 'addressNL',
@@ -63,6 +61,11 @@ export const Default = {
 
 export const WithBRKValidation = {
   render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBRKZaakgerechtigdeValidPost],
+    },
+  },
   args: {
     extraComponentProperties: {
       validate: {
@@ -75,16 +78,49 @@ export const WithBRKValidation = {
     const canvas = within(canvasElement);
 
     const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
-    userEvent.type(postcodeInput, '1234AB');
+    await userEvent.type(postcodeInput, '1234AB');
 
     const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
-    userEvent.type(houseNumberInput, '1');
+    await userEvent.type(houseNumberInput, '1');
 
     await sleep(300);
-    userEvent.tab();
+    await userEvent.tab();
     await sleep(300);
 
-    // Error if postcode not filled:
+    await waitFor(async () => {
+      expect(await canvas.queryByText('User is not a zaakgerechtigde for property.')).toBeNull();
+    });
+  },
+};
+
+export const WithFailedBRKValidation = {
+  render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBRKZaakgerechtigdeInvalidPost],
+    },
+  },
+  args: {
+    extraComponentProperties: {
+      validate: {
+        required: false,
+        plugins: ['brk-Zaakgerechtigde'],
+      },
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
+    await userEvent.type(postcodeInput, '1234AB');
+
+    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
+    await userEvent.type(houseNumberInput, '1');
+
+    await sleep(300);
+    await userEvent.tab();
+    await sleep(300);
+
     await waitFor(async () => {
       expect(await canvas.findByText('User is not a zaakgerechtigde for property.')).not.toBeNull();
     });
