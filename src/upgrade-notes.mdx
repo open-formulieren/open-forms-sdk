@@ -89,3 +89,30 @@ following design tokens:
 - `--of-language-selection-in-app-padding-block-start`
 - `--of-language-selection-in-app-mobile-padding-block-end`
 - `--of-language-selection-in-app-mobile-padding-block-start`
+
+### Form (step) summary
+
+We've refactored our custom components to make use of NL Design System components.
+
+**Step name/title**
+
+The `h2` with classname `.openforms-summary__step-name` is now the Heading 2 component ( with
+classnames `.utrecht-heading-2.utrecht-heading-2-openforms-summary-step-name`).
+
+We have custom design tokens for the font-size and line-height that change the appearance to a
+heading 3 element (for backwards compatibility). Relevant design tokens:
+
+- `--of-summary-step-name-font-size`
+- `--of-summary-step-name-line-height`
+
+**Step header**
+
+The step header now provides design tokens for the bottom padding (space between text and border)
+and the bottom border. The default values are specified to be backwards compatible.
+
+Relevant design tokens:
+
+- `--of-summary-header-padding-block-end`
+- `--of-summary-header-border-block-end-style`
+- `--of-summary-header-border-block-end-width`
+- `--of-summary-header-border-block-end-color`

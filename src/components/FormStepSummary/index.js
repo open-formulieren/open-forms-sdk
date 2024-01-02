@@ -1,3 +1,4 @@
+import {Heading2} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -42,9 +43,9 @@ const FormStepSummary = ({editUrl, slug, name, data, editStepText = ''}) => {
   }
 
   return (
-    <div className={getBEMClassName('summary')}>
-      <div className={getBEMClassName('summary__step-header')}>
-        <h2 className={getBEMClassName('summary__step-name')}>{name}</h2>
+    <div className="openforms-summary">
+      <div className="openforms-summary__header">
+        <Heading2 className="utrecht-heading-2--openforms-summary-step-name">{name}</Heading2>
 
         {editStepText && (
           <Link to={editUrl}>
