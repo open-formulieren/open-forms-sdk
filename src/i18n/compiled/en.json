@@ -1187,16 +1187,22 @@
       "value": "Your payment is received and processed."
     }
   ],
+  "cBsrax": [
+    {
+      "type": 0,
+      "value": "House letter"
+    }
+  ],
+  "cHn60V": [
+    {
+      "type": 0,
+      "value": "You must provide a house number."
+    }
+  ],
   "cKFCTI": [
     {
       "type": 0,
       "value": "Add another"
-    }
-  ],
-  "cQeqG2": [
-    {
-      "type": 0,
-      "value": "House letter"
     }
   ],
   "cxDC/G": [
@@ -1611,6 +1617,12 @@
     {
       "type": 0,
       "value": "Use ⌘ + scroll to zoom the map"
+    }
+  ],
+  "p+11YF": [
+    {
+      "type": 0,
+      "value": "You must provide a postcode."
     }
   ],
   "pguTkQ": [

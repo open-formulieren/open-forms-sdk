@@ -1191,16 +1191,22 @@
       "value": "Uw betaling is ontvangen en verwerkt."
     }
   ],
+  "cBsrax": [
+    {
+      "type": 0,
+      "value": "House letter"
+    }
+  ],
+  "cHn60V": [
+    {
+      "type": 0,
+      "value": "You must provide a house number."
+    }
+  ],
   "cKFCTI": [
     {
       "type": 0,
       "value": "Nog één toevoegen"
-    }
-  ],
-  "cQeqG2": [
-    {
-      "type": 0,
-      "value": "Huis letter"
     }
   ],
   "cxDC/G": [
@@ -1615,6 +1621,12 @@
     {
       "type": 0,
       "value": "Gebruik ⌘ + scroll om te zoomen in de kaart"
+    }
+  ],
+  "p+11YF": [
+    {
+      "type": 0,
+      "value": "You must provide a postcode."
     }
   ],
   "pguTkQ": [

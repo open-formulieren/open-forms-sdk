@@ -554,15 +554,19 @@
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
+  "cBsrax": {
+    "defaultMessage": "House letter",
+    "description": "Label for addressNL houseLetter input",
+    "originalDefault": "House letter"
+  },
+  "cHn60V": {
+    "defaultMessage": "You must provide a house number.",
+    "originalDefault": "You must provide a house number."
+  },
   "cKFCTI": {
     "defaultMessage": "Add another",
     "description": "Edit grid add button, default label text",
     "originalDefault": "Add another"
-  },
-  "cQeqG2": {
-    "defaultMessage": "House letter",
-    "description": "Label for addressNL houseLetter input",
-    "originalDefault": "House letter"
   },
   "cxDC/G": {
     "defaultMessage": "The required field is not filled out.",
@@ -768,6 +772,10 @@
     "defaultMessage": "Use ⌘ + scroll to zoom the map",
     "description": "Gesturehandeling mac scroll message.",
     "originalDefault": "Use ⌘ + scroll to zoom the map"
+  },
+  "p+11YF": {
+    "defaultMessage": "You must provide a postcode.",
+    "originalDefault": "You must provide a postcode."
   },
   "pguTkQ": {
     "defaultMessage": "Intersection results could not be merged",

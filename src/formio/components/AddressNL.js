@@ -7,7 +7,7 @@ import {isEqual} from 'lodash';
 import React, {useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
-import {FormattedMessage, IntlProvider} from 'react-intl';
+import {FormattedMessage, IntlProvider, createIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
@@ -150,7 +150,7 @@ export default class AddressNL extends Field {
   renderReact() {
     const required = this.component?.validate?.required || false;
     const initialValue = {...this.emptyValue, ...this.dataValue};
-    const {intl} = new IntlProvider(this.options.intl);
+    const intl = createIntl(this.options.intl);
 
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
