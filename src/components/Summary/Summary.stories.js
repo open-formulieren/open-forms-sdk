@@ -309,3 +309,31 @@ export const AddressNLSummary = {
     await canvas.findByText('1234AB 1');
   },
 };
+
+export const AddressNLSummaryEmpty = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'address-nl',
+        name: 'Address NL',
+        data: [
+          {
+            name: 'Address NL',
+            value: {},
+            component: {
+              key: 'addressNL',
+              type: 'addressNL',
+              label: 'Adress NL',
+              hidden: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.queryByText('1234AB 1')).toBeNull();
+  },
+};
