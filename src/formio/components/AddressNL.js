@@ -234,10 +234,10 @@ const addressNLSchema = (required, intl) => {
 };
 
 const FormikAddress = ({required, formioValues, setFormioValues}) => {
-  const {values} = useFormikContext();
+  const {values, isValid, isValidating} = useFormikContext();
 
   useEffect(() => {
-    if (!isEqual(values, formioValues)) {
+    if (!isEqual(values, formioValues) && !isValidating && isValid) {
       setFormioValues(values);
     }
   });
