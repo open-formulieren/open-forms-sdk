@@ -1,5 +1,5 @@
 /**
- * A form widget to select a location on a Leaflet map.
+ * The addressNL component.
  */
 import {Formik, useFormikContext} from 'formik';
 import FormioUtils from 'formiojs/utils';
@@ -49,13 +49,6 @@ export default class AddressNL extends Field {
     };
   }
 
-  get inputInfo() {
-    const info = super.elementInfo();
-    // Hide the input element
-    info.attr.type = 'hidden';
-    return info;
-  }
-
   checkComponentValidity(data, dirty, row, options = {}) {
     let updatedOptions = {...options};
     if (this.component.validate.plugins && this.component.validate.plugins.length) {
@@ -90,9 +83,7 @@ export default class AddressNL extends Field {
   }
 
   /**
-   * Defer to React to actually render things - this keeps components DRY.
-   * @param  {[type]} element [description]
-   * @return {[type]}     [description]
+   * Defer to React to actually render things.
    */
   attach(element) {
     this.loadRefs(element, {
@@ -243,7 +234,7 @@ const FormikAddress = ({required, formioValues, setFormioValues}) => {
   });
 
   return (
-    <div className="formio-form">
+    <div className="openforms-form-field-container">
       <div className="openforms-columns">
         <div className="column column--span-6 openforms-form-field-container">
           <TextField

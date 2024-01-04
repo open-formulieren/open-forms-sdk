@@ -296,7 +296,7 @@ export const AddressNLSummary = {
             component: {
               key: 'addressNL',
               type: 'addressNL',
-              label: 'Adress NL',
+              label: 'Address NL',
               hidden: false,
             },
           },
@@ -307,6 +307,39 @@ export const AddressNLSummary = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     await canvas.findByText('1234AB 1');
+  },
+};
+
+export const AddressNLSummaryFull = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'address-nl',
+        name: 'Address NL',
+        data: [
+          {
+            name: 'Address NL',
+            value: {
+              postcode: '1234AB',
+              houseNumber: '1',
+              houseLetter: 'A',
+              houseNumberAddition: 'Add.',
+            },
+            component: {
+              key: 'addressNL',
+              type: 'addressNL',
+              label: 'Address NL',
+              hidden: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await canvas.findByText('1234AB 1A Add.');
   },
 };
 
@@ -324,7 +357,7 @@ export const AddressNLSummaryEmpty = {
             component: {
               key: 'addressNL',
               type: 'addressNL',
-              label: 'Adress NL',
+              label: 'Address NL',
               hidden: false,
             },
           },

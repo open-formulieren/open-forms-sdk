@@ -59,6 +59,33 @@ export const Default = {
   },
 };
 
+export const NotRequired = {
+  args: {
+    extraComponentProperties: {
+      validate: {
+        required: false,
+      },
+    },
+  },
+  render: SingleFormioComponent,
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
+    await userEvent.type(postcodeInput, '1234AB');
+    await userEvent.tab();
+    await userEvent.tab();
+    await sleep(300);
+
+    let error = canvas.queryByText('You must provide a house number.');
+    await expect(error).not.toBeNull();
+
+    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
+    await userEvent.type(houseNumberInput, '1');
+    await userEvent.clear(postcodeInput);
+  },
+};
+
 export const WithBRKValidation = {
   render: SingleFormioComponent,
   parameters: {

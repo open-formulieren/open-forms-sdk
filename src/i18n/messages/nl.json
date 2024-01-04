@@ -562,7 +562,7 @@
     "originalDefault": "Your payment is received and processed."
   },
   "cBsrax": {
-    "defaultMessage": "House letter",
+    "defaultMessage": "Huis letter",
     "description": "Label for addressNL houseLetter input",
     "originalDefault": "House letter"
   },
