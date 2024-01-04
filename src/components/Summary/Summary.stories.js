@@ -306,7 +306,7 @@ export const AddressNLSummary = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await canvas.findByText('1234AB 1');
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1234AB 1');
   },
 };
 
@@ -339,7 +339,7 @@ export const AddressNLSummaryFull = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await canvas.findByText('1234AB 1A Add.');
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1234AB 1A Add.');
   },
 };
 
@@ -367,6 +367,6 @@ export const AddressNLSummaryEmpty = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(await canvas.queryByText('1234AB 1')).toBeNull();
+    await expect(canvas.getByRole('definition')).toHaveTextContent('');
   },
 };
