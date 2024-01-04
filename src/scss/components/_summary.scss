@@ -1,35 +1,51 @@
 @use 'microscope-sass/lib/bem';
 
-@import '~microscope-sass/lib/typography';
+@import '~microscope-sass/lib/responsive';
 
-@import '../mixins/prefix';
-
-.#{prefix('summary')} {
-  &:first-child {
-    padding-top: $grid-margin-2;
+/**
+ * Open Forms extension for summary page context.
+ */
+.utrecht-heading-2 {
+  @include bem.modifier('openforms-summary-step-name') {
+    // TODO: default values for `var(...)` are for backwards compatibility, remove in
+    // SDK 3.0.
+    font-size: var(--of-summary-step-name-font-size, 1.1875rem);
+    line-height: var(--of-summary-step-name-line-height, 1.17);
+    overflow-wrap: break-word;
   }
+}
 
-  @include bem.element('step-header') {
+/**
+ * Container for the header + datalist of the summary.
+ */
+.openforms-summary {
+  // TODO: default values for `var(...)` are for backwards compatibility, remove in
+  // SDK 3.0.
+
+  @include bem.element('header') {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 100%;
-    flex-wrap: wrap;
+    column-gap: var(--of-summary-header-column-gap);
 
-    border-bottom-style: $typography-style-border;
-    border-bottom-width: $typography-size-border;
-    border-bottom-color: $color-border;
-    padding-bottom: $grid-margin-2;
+    padding-block-end: var(--of-summary-header-padding-block-end, 12px);
 
-    .fa-icon {
-      padding-right: 5px;
-    }
+    border-block-end-style: var(--of-summary-header-border-block-end-style, solid);
+    border-block-end-width: var(--of-summary-header-border-block-end-width, 1px);
+    border-block-end-color: var(--of-summary-header-border-block-end-color, var(--of-color-border));
   }
 
-  @include bem.element('step-name') {
-    @include body;
-    @include h3;
-    max-width: 100%;
-    overflow-wrap: break-word;
+  // TODO: check if there's a modifier for utrecht-link with icon instead.
+  .utrecht-link.utrecht-link--openforms .fa-icon {
+    padding-inline-end: var(--of-summary-header-link-icon-padding-inline-end, 5px);
+  }
+
+  // Responsive styling - try to keep the "edit" link inline, if the form label is too
+  // long -> wrap onto the next line.
+  @include mobile-only {
+    @include bem.element('header') {
+      flex-wrap: wrap;
+      row-gap: var(--of-summary-step-name-header-mobile-row-gap);
+    }
   }
 }
