@@ -324,7 +324,7 @@ export const AddressNLSummaryFull = {
               postcode: '1234AB',
               houseNumber: '1',
               houseLetter: 'A',
-              houseNumberAddition: 'Add.',
+              houseNumberAddition: 'Add',
             },
             component: {
               key: 'addressNL',
@@ -339,7 +339,7 @@ export const AddressNLSummaryFull = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('1234AB 1A Add.');
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1234AB 1A Add');
   },
 };
 
