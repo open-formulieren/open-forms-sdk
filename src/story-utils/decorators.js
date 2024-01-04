@@ -7,6 +7,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
+import {SubmissionStatusContext} from 'components/postCompletionViews';
 
 export const ConfigDecorator = (Story, {parameters}) => {
   const defaults = {
@@ -132,5 +133,21 @@ export const withForm = (Story, {parameters, args}) => {
     <FormContext.Provider value={form}>
       <Story />
     </FormContext.Provider>
+  );
+};
+
+export const withSubmissionPollInfo = (Story, {parameters, args}) => {
+  return (
+    <SubmissionStatusContext.Provider
+      value={{
+        publicReference: args.publicReference,
+        paymentUrl: args.paymentUrl,
+        reportDownloadUrl: args.reportDownloadUrl,
+        confirmationPageContent: args.confirmationPageContent,
+        mainWebsiteUrl: args.mainWebsiteUrl,
+      }}
+    >
+      <Story />
+    </SubmissionStatusContext.Provider>
   );
 };

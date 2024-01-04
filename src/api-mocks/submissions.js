@@ -84,7 +84,7 @@ export const mockSubmissionCheckLogicPost = () =>
   });
 
 /**
- * Simulate a succesful backend processing status without payment.
+ * Simulate a successful backend processing status without payment.
  */
 export const mockSubmissionProcessingStatusGet = rest.get(
   `${BASE_URL}submissions/:uuid/:token/status`,
@@ -97,7 +97,7 @@ export const mockSubmissionProcessingStatusGet = rest.get(
         publicReference: 'OF-L337',
         confirmationPageContent: `<p>Thank you for doing <span style="font-style: italic;">the thing</span>.`,
         reportDownloadUrl: '#',
-        paymentUrl: '',
+        paymentUrl: `${BASE_URL}payment/4b0e86a8-dc5f-41cc-b812-c89857b9355b/demo/start`,
         mainWebsiteUrl: '#',
       })
     )
@@ -135,4 +135,11 @@ export const mockSubmissionProcessingStatusErrorGet = rest.get(
         mainWebsiteUrl: '',
       })
     )
+);
+
+export const mockSubmissionPaymentStartGet = rest.post(
+  `${BASE_URL}payment/4b0e86a8-dc5f-41cc-b812-c89857b9355b/demo/start`,
+  (req, res, ctx) => {
+    return res(ctx.json({data: {method: 'get', action: 'http://example.com'}}));
+  }
 );
