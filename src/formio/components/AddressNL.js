@@ -101,14 +101,11 @@ export default class AddressNL extends Field {
     super.destroy();
   }
 
-  onFormikChange(value) {
+  onFormikChange(value, isValid) {
     this.updateValue(value, {modified: true});
 
-    // we can shortcuts-skip validation if the subkeys that should be present aren't,
-    // validating that (probably?) doesn't make any sense.
-    // TODO: perhaps we need to wire up a client-side validator for this though, since
-    // if the component as a whole is required, so are these keys.
-    if (!value.postcode || !value.houseNumber) return;
+    // we can shortcuts-skip validation if the Formik form isn't valid.
+    if (!isValid) return;
 
     // `enableValidationPlugins` forces the component to be validateOn = 'blur', which
     // surpresses the validators due to onChange events.
@@ -225,11 +222,11 @@ const addressNLSchema = (required, intl) => {
 };
 
 const FormikAddress = ({required, formioValues, setFormioValues}) => {
-  const {values} = useFormikContext();
+  const {values, isValid} = useFormikContext();
 
   useEffect(() => {
     if (!isEqual(values, formioValues)) {
-      setFormioValues(values);
+      setFormioValues(values, isValid);
     }
   });
 
