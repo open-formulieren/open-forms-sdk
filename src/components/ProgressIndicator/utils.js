@@ -35,11 +35,11 @@ const addFixedSteps = (
   submission,
   currentPathname,
   showOverview,
-  showConfirmation,
+  needsPayment,
   completed = false
 ) => {
   const hasSubmission = !!submission;
-  const isConfirmation = checkMatchesPath(currentPathname, 'bevestiging');
+  const isPayment = checkMatchesPath(currentPathname, 'betalen');
   const applicableSteps = hasSubmission ? submission.steps.filter(step => step.isApplicable) : [];
   const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
   const applicableCompleted =
@@ -57,24 +57,25 @@ const addFixedSteps = (
   const summaryStep = {
     to: 'overzicht',
     label: intl.formatMessage(STEP_LABELS.overview),
-    isCompleted: isConfirmation,
+    isCompleted: isPayment,
     isApplicable: true,
     isCurrent: checkMatchesPath(currentPathname, 'overzicht'),
     canNavigateTo: applicableCompleted,
   };
 
-  const confirmationStep = {
-    to: 'bevestiging',
-    label: intl.formatMessage(STEP_LABELS.confirmation),
-    isCompleted: completed,
-    isCurrent: checkMatchesPath(currentPathname, 'bevestiging'),
+  const paymentStep = {
+    to: 'betalen',
+    label: intl.formatMessage(STEP_LABELS.payment),
+    isCompleted: false,
+    isCurrent: isPayment,
+    canNavigateTo: completed,
   };
 
   const finalSteps = [
     startPageStep,
     ...steps,
     showOverview && summaryStep,
-    showConfirmation && confirmationStep,
+    needsPayment && paymentStep,
   ].filter(Boolean);
 
   return finalSteps;

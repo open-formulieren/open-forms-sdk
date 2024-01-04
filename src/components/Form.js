@@ -10,13 +10,12 @@ import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
-import PaymentOverview from 'components/PaymentOverview';
 import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
 import {RequireSession} from 'components/Sessions';
-import SubmissionConfirmation from 'components/SubmissionConfirmation';
 import SubmissionSummary from 'components/Summary';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
+import {ConfirmationView, StartPaymentView} from 'components/postCompletionViews';
 import {findNextApplicableStep} from 'components/utils';
 import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
@@ -105,6 +104,7 @@ const Form = () => {
   // TODO replace absolute path check with relative
   const stepMatch = useMatch('/stap/:step');
   const summaryMatch = useMatch('/overzicht');
+  const paymentMatch = useMatch('/betalen');
   const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
@@ -152,8 +152,6 @@ const Form = () => {
     },
     [intl.locale, prevLocale, removeSubmissionId, state.submission] // eslint-disable-line react-hooks/exhaustive-deps
   );
-
-  const paymentOverviewMatch = useMatch('/betaaloverzicht');
 
   /**
    * When the form is started, create a submission and add it to the state.
@@ -204,7 +202,12 @@ const Form = () => {
         processingStatusUrl,
       },
     });
-    navigate('/bevestiging');
+
+    if (form.paymentRequired && !state.submission.payment.hasPaid) {
+      navigate('/betalen');
+    } else {
+      navigate('/bevestiging');
+    }
   };
 
   const destroySession = async confirmationMessage => {
@@ -256,10 +259,11 @@ const Form = () => {
     return (
       <Navigate
         replace
-        to="/betaaloverzicht"
+        to="/bevestiging"
         state={{
           status: queryParams.get('of_payment_status'),
           userAction: queryParams.get('of_payment_action'),
+          statusUrl: queryParams.get('of_submission_status'),
         }}
       />
     );
@@ -271,13 +275,13 @@ const Form = () => {
 
   // Progress Indicator
 
-  const isStartPage = !summaryMatch && stepMatch == null && !confirmationMatch;
+  const isStartPage = !summaryMatch && stepMatch == null && !paymentMatch;
   const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
-  const showConfirmation = submissionAllowedSpec === SUBMISSION_ALLOWED.yes;
   const submission = state.submission || state.submittedSubmission;
   const isCompleted = state.completed;
   const formName = form.name;
+  const needsPayment = form.paymentRequired;
 
   // Figure out the slug from the currently active step IF we're looking at a step
   const stepSlug = stepMatch ? stepMatch.params.step : '';
@@ -288,8 +292,8 @@ const Form = () => {
     activeStepTitle = intl.formatMessage(STEP_LABELS.login);
   } else if (summaryMatch) {
     activeStepTitle = intl.formatMessage(STEP_LABELS.overview);
-  } else if (confirmationMatch) {
-    activeStepTitle = intl.formatMessage(STEP_LABELS.confirmation);
+  } else if (paymentMatch) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.payment);
   } else {
     const step = steps.find(step => step.slug === stepSlug);
     activeStepTitle = step.formDefinition;
@@ -324,14 +328,14 @@ const Form = () => {
     submission,
     currentPathname,
     showOverview,
-    showConfirmation,
+    needsPayment,
     isCompleted
   );
 
   // Show the progress indicator if enabled on the form AND we're not in the payment
-  // status/overview screen.
+  // confirmation screen.
   const progressIndicator =
-    form.showProgressIndicator && !paymentOverviewMatch ? (
+    form.showProgressIndicator && !confirmationMatch ? (
       <ProgressIndicator
         title={PI_TITLE}
         formTitle={formName}
@@ -380,7 +384,7 @@ const Form = () => {
       />
 
       <Route
-        path="bevestiging"
+        path="betalen"
         element={
           <ErrorBoundary useCard>
             <RequireSubmission
@@ -388,7 +392,7 @@ const Form = () => {
               statusUrl={state.processingStatusUrl}
               onFailure={onProcessingFailure}
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
-              component={SubmissionConfirmation}
+              component={StartPaymentView}
               donwloadPDFText={form.submissionReportDownloadLinkTitle}
             />
           </ErrorBoundary>
@@ -396,10 +400,15 @@ const Form = () => {
       />
 
       <Route
-        path="betaaloverzicht"
+        path="bevestiging"
         element={
           <ErrorBoundary useCard>
-            <PaymentOverview />
+            <ConfirmationView
+              statusUrl={state.processingStatusUrl}
+              onFailure={onProcessingFailure}
+              onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
+              downloadPDFText={form.submissionReportDownloadLinkTitle}
+            />
           </ErrorBoundary>
         }
       />
