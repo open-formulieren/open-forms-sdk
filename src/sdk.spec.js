@@ -199,6 +199,12 @@ describe('OpenForm', () => {
       )}&unrelated_q=1`,
       'http://localhost/base-path/?unrelated_q=1#/stap/step-1?submission_uuid=abc',
     ],
+    [
+      `/base-path/?_of_action=payment&_of_action_params=${encodeURIComponent(
+        JSON.stringify({of_payment_status: 'completed'})
+      )}&unrelated_q=1`,
+      'http://localhost/base-path/?unrelated_q=1#/betalen?of_payment_status=completed',
+    ],
     // Without a base path:
     [
       // Omitting submission_uuid for simplicity
@@ -222,6 +228,12 @@ describe('OpenForm', () => {
         JSON.stringify({step_slug: 'step-1', submission_uuid: 'abc'})
       )}&unrelated_q=1`,
       'http://localhost/?unrelated_q=1#/stap/step-1?submission_uuid=abc',
+    ],
+    [
+      `/?_of_action=payment&_of_action_params=${encodeURIComponent(
+        JSON.stringify({of_payment_status: 'completed'})
+      )}&unrelated_q=1`,
+      'http://localhost/?unrelated_q=1#/betalen?of_payment_status=completed',
     ],
   ])(
     'should handle action redirects correctly (hash based routing)',
