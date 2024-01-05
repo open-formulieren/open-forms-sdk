@@ -2,8 +2,7 @@
  * The addressNL component.
  */
 import {Formik, useFormikContext} from 'formik';
-import FormioUtils from 'formiojs/utils';
-import {isEqual} from 'lodash';
+import debounce from 'lodash/debounce';
 import React, {useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
@@ -114,12 +113,12 @@ export default class AddressNL extends Field {
     // Code inspired on Formio.js' `src/components/_classes/input/Input.js`, in
     // particular the `addFocusBlurEvents` method.
     //
-    // XXX: this can be improved upon if we can relay formik focus/blur state to the
-    // formio component, but it seems like the events are sufficiently debounced already
-    // through some manual testing.
-    this.root.pendingBlur = FormioUtils.delay(() => {
-      this.emit('blur', this);
-      if (this.component.validateOn === 'blur') {
+    if (this.component.validateOn === 'blur') {
+      if (this._debouncedBlur) {
+        this._debouncedBlur.cancel();
+      }
+
+      this._debouncedBlur = debounce(() => {
         this.root.triggerChange(
           {fromBlur: true},
           {
@@ -129,16 +128,16 @@ export default class AddressNL extends Field {
             flags: {fromBlur: true},
           }
         );
-      }
-      this.root.focusedComponent = null;
-      this.root.pendingBlur = null;
-    });
+      }, 50);
+
+      this._debouncedBlur();
+    }
   }
 
   renderReact() {
     const required = this.component?.validate?.required || false;
-    const initialValue = {...this.emptyValue, ...this.dataValue};
     const intl = createIntl(this.options.intl);
+    const initialValues = {...this.emptyValue, ...this.dataValue};
 
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
@@ -149,18 +148,14 @@ export default class AddressNL extends Field {
           }}
         >
           <Formik
-            initialValues={initialValue}
+            initialValues={initialValues}
             initialTouched={{
               postcode: true,
               houseNumber: true,
             }}
             validationSchema={toFormikValidationSchema(addressNLSchema(required, intl))}
           >
-            <FormikAddress
-              required={required}
-              formioValues={initialValue}
-              setFormioValues={this.onFormikChange.bind(this)}
-            />
+            <FormikAddress required={required} setFormioValues={this.onFormikChange.bind(this)} />
           </Formik>
         </ConfigContext.Provider>
       </IntlProvider>
@@ -225,13 +220,17 @@ const addressNLSchema = (required, intl) => {
     });
 };
 
-const FormikAddress = ({required, formioValues, setFormioValues}) => {
+const FormikAddress = ({required, setFormioValues}) => {
   const {values, isValid} = useFormikContext();
 
   useEffect(() => {
-    if (!isEqual(values, formioValues)) {
-      setFormioValues(values, isValid);
-    }
+    // *always* synchronize the state up, since:
+    //
+    // - we allow invalid values of a field to be saved in the backend when suspending
+    //   the form
+    // - the field values don't change, but validation change states -> this can lead
+    //   to missed backend-validation-plugin calls otherwise
+    setFormioValues(values, isValid);
   });
 
   return (
