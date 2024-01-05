@@ -150,6 +150,10 @@ export default class AddressNL extends Field {
         >
           <Formik
             initialValues={initialValue}
+            initialTouched={{
+              postcode: true,
+              houseNumber: true,
+            }}
             validationSchema={toFormikValidationSchema(addressNLSchema(required, intl))}
           >
             <FormikAddress

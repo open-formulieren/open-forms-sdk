@@ -3,7 +3,6 @@ import {userEvent, waitFor, within} from '@storybook/testing-library';
 
 import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
-import {sleep} from 'utils';
 
 import {
   mockBRKZaakgerechtigdeInvalidPost,
@@ -32,30 +31,44 @@ export default {
   },
 };
 
-export const Default = {
+export const Pristine = {
   render: SingleFormioComponent,
-  play: async ({canvasElement}) => {
+};
+
+export const ClientSideValidation = {
+  render: SingleFormioComponent,
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
-    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
-    userEvent.type(postcodeInput, '1234AB');
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    const houseNumberInput = await canvas.findByLabelText('Huis nummer');
+    const houseLetter = await canvas.findByLabelText('Huis letter');
+    const houseNumberAddition = await canvas.findByLabelText('Huis nummer toevoeging');
 
-    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
-    userEvent.type(houseNumberInput, '1');
-    userEvent.tab();
+    await step('Fill only postcode - client side validation error', async () => {
+      userEvent.type(postcodeInput, '1234AB');
+      expect(await canvas.findByText('Required')).toBeVisible();
+    });
 
-    // No errors if the two required fields are filled:
-    let error = canvas.queryByText('Required');
-    await expect(error).toBeNull();
+    await step('Fill house number field', async () => {
+      userEvent.type(houseNumberInput, '1');
 
-    userEvent.clear(postcodeInput);
-    await sleep(300);
-    userEvent.tab();
-    await sleep(300);
+      // ensure remaining fields are touched to reveal potential validation errors
+      userEvent.click(houseLetter);
+      houseLetter.blur();
+      userEvent.click(houseNumberAddition);
+      houseNumberAddition.blur();
 
-    // Error if postcode not filled:
-    error = await canvas.findByText('Required');
-    await expect(error).not.toBeNull();
+      await waitFor(() => {
+        expect(houseNumberAddition).not.toHaveFocus();
+        expect(canvas.queryByText('Required')).not.toBeInTheDocument();
+      });
+    });
+
+    await step('Clear postcode field, keep house number field', async () => {
+      userEvent.clear(postcodeInput);
+      expect(await canvas.findByText('Required')).toBeVisible();
+    });
   },
 };
 
@@ -68,25 +81,28 @@ export const NotRequired = {
     },
   },
   render: SingleFormioComponent,
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
-    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
-    await userEvent.type(postcodeInput, '1234AB');
-    await userEvent.tab();
-    await userEvent.tab();
-    await sleep(300);
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    const houseNumberInput = await canvas.findByLabelText('Huis nummer');
 
-    let error = canvas.queryByText('You must provide a house number.');
-    await expect(error).not.toBeNull();
+    await step('Enter only postcode, without house number', async () => {
+      userEvent.type(postcodeInput, '1234AB');
+      expect(await canvas.findByText('You must provide a house number.')).toBeVisible();
+    });
 
-    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
-    await userEvent.type(houseNumberInput, '1');
-    await userEvent.clear(postcodeInput);
+    await step('Enter only house number, without postcode', async () => {
+      userEvent.clear(postcodeInput);
+      userEvent.type(houseNumberInput, '1');
+      expect(await canvas.findByText('You must provide a postcode.')).toBeVisible();
+    });
   },
 };
 
-export const WithBRKValidation = {
+const EXPECTED_VALIDATION_ERROR = 'User is not a zaakgerechtigde for property.';
+
+export const WithPassingBRKValidation = {
   render: SingleFormioComponent,
   parameters: {
     msw: {
@@ -94,6 +110,9 @@ export const WithBRKValidation = {
     },
   },
   args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
     extraComponentProperties: {
       validate: {
         required: false,
@@ -101,22 +120,17 @@ export const WithBRKValidation = {
       },
     },
   },
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, args, step}) => {
     const canvas = within(canvasElement);
 
-    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
-    await userEvent.type(postcodeInput, '1234AB');
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    userEvent.type(postcodeInput, '1234AB');
 
-    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
-    await userEvent.type(houseNumberInput, '1');
+    const houseNumberInput = await canvas.findByLabelText('Huis nummer');
+    userEvent.type(houseNumberInput, '1');
 
-    await sleep(300);
-    await userEvent.tab();
-    await sleep(300);
-
-    await waitFor(async () => {
-      expect(await canvas.queryByText('User is not a zaakgerechtigde for property.')).toBeNull();
-    });
+    // this assertion is not worth much due to the async nature of the validators...
+    expect(canvas.queryByText(EXPECTED_VALIDATION_ERROR)).not.toBeInTheDocument();
   },
 };
 
@@ -128,6 +142,9 @@ export const WithFailedBRKValidation = {
     },
   },
   args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
     extraComponentProperties: {
       validate: {
         required: false,
@@ -135,21 +152,15 @@ export const WithFailedBRKValidation = {
       },
     },
   },
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, args, step}) => {
     const canvas = within(canvasElement);
 
-    const postcodeInput = await canvas.findByRole('textbox', {name: 'Postcode'});
-    await userEvent.type(postcodeInput, '1234AB');
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    userEvent.type(postcodeInput, '1234AB');
 
-    const houseNumberInput = await canvas.findByRole('textbox', {name: 'Huis nummer'});
-    await userEvent.type(houseNumberInput, '1');
-
-    await sleep(300);
-    await userEvent.tab();
-    await sleep(300);
-
-    await waitFor(async () => {
-      expect(await canvas.findByText('User is not a zaakgerechtigde for property.')).not.toBeNull();
-    });
+    const houseNumberInput = await canvas.findByLabelText('Huis nummer');
+    userEvent.type(houseNumberInput, '1');
+    houseNumberInput.blur();
+    expect(await canvas.findByText(EXPECTED_VALIDATION_ERROR)).toBeVisible();
   },
 };
