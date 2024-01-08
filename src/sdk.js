@@ -16,6 +16,7 @@ import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
 import initialiseSentry from 'sentry';
+import {DEBUG} from 'utils';
 import {getVersion} from 'utils';
 
 import OpenFormsModule from './formio/module';
@@ -190,6 +191,7 @@ class OpenForm {
               displayComponents: this.displayComponents,
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
+              debug: DEBUG,
             }}
           >
             <NonceProvider nonce={CSPNonce.getValue()} cacheKey="sdk-react-select">

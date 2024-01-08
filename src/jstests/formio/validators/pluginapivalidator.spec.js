@@ -19,8 +19,13 @@ describe('The OpenForms plugins validation', () => {
 
     const component = {
       component: phoneNumberComponent,
-      options: {
-        baseUrl: BASE_URL,
+      currentForm: {
+        options: {
+          baseUrl: BASE_URL,
+          ofContext: {
+            submissionUuid: 'dummy',
+          },
+        },
       },
     };
 
@@ -38,11 +43,15 @@ describe('The OpenForms plugins validation', () => {
 
     const component = {
       component: phoneNumberComponent,
-      options: {
-        baseUrl: BASE_URL,
+      currentForm: {
+        options: {
+          baseUrl: BASE_URL,
+          ofContext: {
+            submissionUuid: 'dummy',
+          },
+        },
       },
     };
-
     for (const sample of validSamples) {
       const result = await pluginsAPIValidator.check(component, undefined, sample);
       expect(result).toBe(true);
@@ -57,8 +66,13 @@ describe('The OpenForms plugins validation', () => {
 
     const component = {
       component: phoneNumberComponent,
-      options: {
-        baseUrl: BASE_URL,
+      currentForm: {
+        options: {
+          baseUrl: BASE_URL,
+          ofContext: {
+            submissionUuid: 'dummy',
+          },
+        },
       },
     };
 

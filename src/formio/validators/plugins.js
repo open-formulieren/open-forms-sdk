@@ -1,16 +1,22 @@
+import {isEmpty} from 'lodash';
+
 import {post} from '../../api';
 
 export const pluginsAPIValidator = {
   key: `validate.backendApi`,
   check(component, setting, value) {
-    if (!value) return true;
+    console.log('validator check method', value);
+    const checkIsEmpty = component.component?.openForms?.checkIsEmptyBeforePluginValidate || false;
+    const shortCutBecauseEmpty = checkIsEmpty && isEmpty(value);
+    if (!value || shortCutBecauseEmpty) return true;
 
     const plugins = component.component.validate.plugins;
     const {baseUrl} = component.currentForm?.options || component.options;
+    const {submissionUuid} = component.currentForm?.options.ofContext;
 
     const promises = plugins.map(plugin => {
       const url = `${baseUrl}validation/plugins/${plugin}`;
-      return post(url, {value}).then(response => {
+      return post(url, {value, submissionUuid}).then(response => {
         const valid = response.data.isValid;
         return valid ? true : response.data.messages.join('<br>');
       });

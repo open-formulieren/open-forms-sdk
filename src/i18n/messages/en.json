@@ -344,6 +344,11 @@
     "description": "Step label in progress indicator",
     "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
   },
+  "LsgvKh": {
+    "defaultMessage": "Postcode",
+    "description": "Label for addressNL postcode input",
+    "originalDefault": "Postcode"
+  },
   "LwpSC/": {
     "defaultMessage": "Total",
     "description": "Label for the total price to pay",
@@ -373,6 +378,11 @@
     "defaultMessage": "Payment is required for this product",
     "description": "Payment required info text",
     "originalDefault": "Payment is required for this product"
+  },
+  "PCv4sQ": {
+    "defaultMessage": "House number",
+    "description": "Label for addressNL houseNumber input",
+    "originalDefault": "House number"
   },
   "PjYrw0": {
     "defaultMessage": "Invalid input.",
@@ -544,6 +554,15 @@
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
+  "cBsrax": {
+    "defaultMessage": "House letter",
+    "description": "Label for addressNL houseLetter input",
+    "originalDefault": "House letter"
+  },
+  "cHn60V": {
+    "defaultMessage": "You must provide a house number.",
+    "originalDefault": "You must provide a house number."
+  },
   "cKFCTI": {
     "defaultMessage": "Add another",
     "description": "Edit grid add button, default label text",
@@ -694,6 +713,11 @@
     "description": "Appoinments: product select label",
     "originalDefault": "Product"
   },
+  "lVNV/d": {
+    "defaultMessage": "House number addition",
+    "description": "Label for addressNL houseNumberAddition input",
+    "originalDefault": "House number addition"
+  },
   "lY+Mza": {
     "defaultMessage": "Product",
     "description": "Appointments products step page title",
@@ -748,6 +772,10 @@
     "defaultMessage": "Use ⌘ + scroll to zoom the map",
     "description": "Gesturehandeling mac scroll message.",
     "originalDefault": "Use ⌘ + scroll to zoom the map"
+  },
+  "p+11YF": {
+    "defaultMessage": "You must provide a postcode.",
+    "originalDefault": "You must provide a postcode."
   },
   "pguTkQ": {
     "defaultMessage": "Intersection results could not be merged",

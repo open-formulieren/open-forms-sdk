@@ -281,3 +281,92 @@ export const Loading = {
     isLoading: true,
   },
 };
+
+export const AddressNLSummary = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'address-nl',
+        name: 'Address NL',
+        data: [
+          {
+            name: 'Address NL',
+            value: {postcode: '1234 AB', houseNumber: '1'},
+            component: {
+              key: 'addressNL',
+              type: 'addressNL',
+              label: 'Address NL',
+              hidden: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
+  },
+};
+
+export const AddressNLSummaryFull = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'address-nl',
+        name: 'Address NL',
+        data: [
+          {
+            name: 'Address NL',
+            value: {
+              postcode: '1234 AB',
+              houseNumber: '1',
+              houseLetter: 'A',
+              houseNumberAddition: 'Add',
+            },
+            component: {
+              key: 'addressNL',
+              type: 'addressNL',
+              label: 'Address NL',
+              hidden: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1A Add');
+  },
+};
+
+export const AddressNLSummaryEmpty = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'address-nl',
+        name: 'Address NL',
+        data: [
+          {
+            name: 'Address NL',
+            value: {},
+            component: {
+              key: 'addressNL',
+              type: 'addressNL',
+              label: 'Address NL',
+              hidden: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('definition')).toHaveTextContent('');
+  },
+};

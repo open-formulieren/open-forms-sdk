@@ -27,6 +27,9 @@ const RenderFormioForm = ({configuration, submissionData = {}, evalContext = {}}
         },
         // custom options
         intl,
+        ofContext: {
+          submissionUuid: '426c8d33-6dcb-4578-8208-f17071a4aebe',
+        },
       }}
     />
   );

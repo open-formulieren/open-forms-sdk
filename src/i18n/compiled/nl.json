@@ -761,6 +761,12 @@
       "value": "isApplicable"
     }
   ],
+  "LsgvKh": [
+    {
+      "type": 0,
+      "value": "Postcode"
+    }
+  ],
   "LwpSC/": [
     {
       "type": 0,
@@ -803,6 +809,12 @@
     {
       "type": 0,
       "value": "Voor dit product is betaling vereist"
+    }
+  ],
+  "PCv4sQ": [
+    {
+      "type": 0,
+      "value": "Huis nummer"
     }
   ],
   "PjYrw0": [
@@ -1179,6 +1191,18 @@
       "value": "Uw betaling is ontvangen en verwerkt."
     }
   ],
+  "cBsrax": [
+    {
+      "type": 0,
+      "value": "Huis letter"
+    }
+  ],
+  "cHn60V": [
+    {
+      "type": 0,
+      "value": "You must provide a house number."
+    }
+  ],
   "cKFCTI": [
     {
       "type": 0,
@@ -1467,6 +1491,12 @@
       "value": "Product"
     }
   ],
+  "lVNV/d": [
+    {
+      "type": 0,
+      "value": "Huis nummer toevoeging"
+    }
+  ],
   "lY+Mza": [
     {
       "type": 0,
@@ -1591,6 +1621,12 @@
     {
       "type": 0,
       "value": "Gebruik ⌘ + scroll om te zoomen in de kaart"
+    }
+  ],
+  "p+11YF": [
+    {
+      "type": 0,
+      "value": "You must provide a postcode."
     }
   ],
   "pguTkQ": [
