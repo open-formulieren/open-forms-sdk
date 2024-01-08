@@ -115,6 +115,11 @@
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
   },
+  "8cxbC6": {
+    "defaultMessage": "{field} is verplicht.",
+    "description": "Required field error message",
+    "originalDefault": "{field} is required."
+  },
   "8uBESg": {
     "defaultMessage": "\"{includes}\" moet in de waarde zitten.",
     "description": "ZOD 'invalid_string' error message, with required include",
@@ -252,6 +257,11 @@
     "description": "Appointments navbar title for 'contact details' step",
     "originalDefault": "Contact details"
   },
+  "GbPef0": {
+    "defaultMessage": "Huisnummer is verplicht.",
+    "description": "ZOD error message when AddressNL postcode is provided but not houseNumber",
+    "originalDefault": "You must provide a house number."
+  },
   "GiRKAS": {
     "defaultMessage": "Terug naar producten",
     "description": "Appointments location and time step: previous step text",
@@ -385,7 +395,7 @@
     "originalDefault": "Payment is required for this product"
   },
   "PCv4sQ": {
-    "defaultMessage": "Huis nummer",
+    "defaultMessage": "Huisnummer",
     "description": "Label for addressNL houseNumber input",
     "originalDefault": "House number"
   },
@@ -562,13 +572,9 @@
     "originalDefault": "Your payment is received and processed."
   },
   "cBsrax": {
-    "defaultMessage": "Huis letter",
+    "defaultMessage": "Huisletter",
     "description": "Label for addressNL houseLetter input",
     "originalDefault": "House letter"
-  },
-  "cHn60V": {
-    "defaultMessage": "You must provide a house number.",
-    "originalDefault": "You must provide a house number."
   },
   "cKFCTI": {
     "defaultMessage": "Nog één toevoegen",
@@ -723,8 +729,13 @@
     "isTranslated": true,
     "originalDefault": "Product"
   },
+  "lKBAu3": {
+    "defaultMessage": "Postcode is verplicht.",
+    "description": "ZOD error message when AddressNL houseNumber is provided but not postcode",
+    "originalDefault": "You must provide a postcode."
+  },
   "lVNV/d": {
-    "defaultMessage": "Huis nummer toevoeging",
+    "defaultMessage": "Huisnummertoevoeging",
     "description": "Label for addressNL houseNumberAddition input",
     "originalDefault": "House number addition"
   },
@@ -783,10 +794,6 @@
     "defaultMessage": "Gebruik ⌘ + scroll om te zoomen in de kaart",
     "description": "Gesturehandeling mac scroll message.",
     "originalDefault": "Use ⌘ + scroll to zoom the map"
-  },
-  "p+11YF": {
-    "defaultMessage": "You must provide a postcode.",
-    "originalDefault": "You must provide a postcode."
   },
   "pguTkQ": {
     "defaultMessage": "Intersectie-resultaten kunnen niet samengevoegd worden.",

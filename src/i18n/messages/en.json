@@ -114,6 +114,11 @@
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
   },
+  "8cxbC6": {
+    "defaultMessage": "{field} is required.",
+    "description": "Required field error message",
+    "originalDefault": "{field} is required."
+  },
   "8uBESg": {
     "defaultMessage": "Invalid input: must include \"{includes}\".",
     "description": "ZOD 'invalid_string' error message, with required include",
@@ -248,6 +253,11 @@
     "defaultMessage": "Contact details",
     "description": "Appointments navbar title for 'contact details' step",
     "originalDefault": "Contact details"
+  },
+  "GbPef0": {
+    "defaultMessage": "You must provide a house number.",
+    "description": "ZOD error message when AddressNL postcode is provided but not houseNumber",
+    "originalDefault": "You must provide a house number."
   },
   "GiRKAS": {
     "defaultMessage": "Back to products",
@@ -559,10 +569,6 @@
     "description": "Label for addressNL houseLetter input",
     "originalDefault": "House letter"
   },
-  "cHn60V": {
-    "defaultMessage": "You must provide a house number.",
-    "originalDefault": "You must provide a house number."
-  },
   "cKFCTI": {
     "defaultMessage": "Add another",
     "description": "Edit grid add button, default label text",
@@ -713,6 +719,11 @@
     "description": "Appoinments: product select label",
     "originalDefault": "Product"
   },
+  "lKBAu3": {
+    "defaultMessage": "You must provide a postcode.",
+    "description": "ZOD error message when AddressNL houseNumber is provided but not postcode",
+    "originalDefault": "You must provide a postcode."
+  },
   "lVNV/d": {
     "defaultMessage": "House number addition",
     "description": "Label for addressNL houseNumberAddition input",
@@ -772,10 +783,6 @@
     "defaultMessage": "Use ⌘ + scroll to zoom the map",
     "description": "Gesturehandeling mac scroll message.",
     "originalDefault": "Use ⌘ + scroll to zoom the map"
-  },
-  "p+11YF": {
-    "defaultMessage": "You must provide a postcode.",
-    "originalDefault": "You must provide a postcode."
   },
   "pguTkQ": {
     "defaultMessage": "Intersection results could not be merged",

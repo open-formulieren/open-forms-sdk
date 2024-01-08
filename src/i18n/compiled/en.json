@@ -285,6 +285,16 @@
       "value": "Please accept the privacy policy before submitting"
     }
   ],
+  "8cxbC6": [
+    {
+      "type": 1,
+      "value": "field"
+    },
+    {
+      "type": 0,
+      "value": " is required."
+    }
+  ],
   "8uBESg": [
     {
       "type": 0,
@@ -485,6 +495,12 @@
     {
       "type": 0,
       "value": "Contact details"
+    }
+  ],
+  "GbPef0": [
+    {
+      "type": 0,
+      "value": "You must provide a house number."
     }
   ],
   "GiRKAS": [
@@ -1193,12 +1209,6 @@
       "value": "House letter"
     }
   ],
-  "cHn60V": [
-    {
-      "type": 0,
-      "value": "You must provide a house number."
-    }
-  ],
   "cKFCTI": [
     {
       "type": 0,
@@ -1487,6 +1497,12 @@
       "value": "Product"
     }
   ],
+  "lKBAu3": [
+    {
+      "type": 0,
+      "value": "You must provide a postcode."
+    }
+  ],
   "lVNV/d": [
     {
       "type": 0,
@@ -1617,12 +1633,6 @@
     {
       "type": 0,
       "value": "Use ⌘ + scroll to zoom the map"
-    }
-  ],
-  "p+11YF": [
-    {
-      "type": 0,
-      "value": "You must provide a postcode."
     }
   ],
   "pguTkQ": [

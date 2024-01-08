@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import React, {useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
-import {FormattedMessage, IntlProvider, createIntl} from 'react-intl';
+import {FormattedMessage, IntlProvider, defineMessages, useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
@@ -136,7 +136,6 @@ export default class AddressNL extends Field {
 
   renderReact() {
     const required = this.component?.validate?.required || false;
-    const intl = createIntl(this.options.intl);
     const initialValues = {...this.emptyValue, ...this.dataValue};
 
     this.reactRoot.render(
@@ -147,16 +146,11 @@ export default class AddressNL extends Field {
             requiredFieldsWithAsterisk: this.options.evalContext.requiredFieldsWithAsterisk,
           }}
         >
-          <Formik
+          <AddressNLForm
             initialValues={initialValues}
-            initialTouched={{
-              postcode: true,
-              houseNumber: true,
-            }}
-            validationSchema={toFormikValidationSchema(addressNLSchema(required, intl))}
-          >
-            <FormikAddress required={required} setFormioValues={this.onFormikChange.bind(this)} />
-          </Formik>
+            required={required}
+            setFormioValues={this.onFormikChange.bind(this)}
+          />
         </ConfigContext.Provider>
       </IntlProvider>
     );
@@ -169,6 +163,17 @@ export default class AddressNL extends Field {
     return changed;
   }
 }
+
+const FIELD_LABELS = defineMessages({
+  postcode: {
+    description: 'Label for addressNL postcode input',
+    defaultMessage: 'Postcode',
+  },
+  houseNumber: {
+    description: 'Label for addressNL houseNumber input',
+    defaultMessage: 'House number',
+  },
+});
 
 const addressNLSchema = (required, intl) => {
   let postcodeSchema = z.string().regex(/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$/);
@@ -197,7 +202,7 @@ const addressNLSchema = (required, intl) => {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: intl.formatMessage({
-              descripion:
+              description:
                 'ZOD error message when AddressNL postcode is provided but not houseNumber',
               defaultMessage: 'You must provide a house number.',
             }),
@@ -209,7 +214,7 @@ const addressNLSchema = (required, intl) => {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: intl.formatMessage({
-              descripion:
+              description:
                 'ZOD error message when AddressNL houseNumber is provided but not postcode',
               defaultMessage: 'You must provide a postcode.',
             }),
@@ -218,6 +223,45 @@ const addressNLSchema = (required, intl) => {
         }
       }
     });
+};
+
+const AddressNLForm = ({initialValues, required, setFormioValues}) => {
+  const intl = useIntl();
+
+  const errorMap = (issue, ctx) => {
+    switch (issue.code) {
+      case z.ZodIssueCode.invalid_type: {
+        if (issue.received === z.ZodParsedType.undefined) {
+          const fieldName = issue.path.join('.');
+          const fieldLabel = intl.formatMessage(FIELD_LABELS[fieldName]);
+          const message = intl.formatMessage(
+            {
+              description: 'Required field error message',
+              defaultMessage: '{field} is required.',
+            },
+            {
+              field: fieldLabel,
+            }
+          );
+          return {message};
+        }
+      }
+    }
+    return {message: ctx.defaultError}; // use global schema as fallback
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      initialTouched={{
+        postcode: true,
+        houseNumber: true,
+      }}
+      validationSchema={toFormikValidationSchema(addressNLSchema(required, intl), {errorMap})}
+    >
+      <FormikAddress required={required} setFormioValues={setFormioValues} />
+    </Formik>
+  );
 };
 
 const FormikAddress = ({required, setFormioValues}) => {
@@ -242,12 +286,7 @@ const FormikAddress = ({required, setFormioValues}) => {
         <div className="column column--span-6 openforms-form-field-container">
           <TextField
             name="houseNumber"
-            label={
-              <FormattedMessage
-                description="Label for addressNL houseNumber input"
-                defaultMessage="House number"
-              />
-            }
+            label={<FormattedMessage {...FIELD_LABELS.houseNumber} />}
             placeholder="123"
             isRequired={required}
           />
@@ -299,12 +338,7 @@ const PostCodeField = ({required}) => {
   return (
     <TextField
       name="postcode"
-      label={
-        <FormattedMessage
-          description="Label for addressNL postcode input"
-          defaultMessage="Postcode"
-        />
-      }
+      label={<FormattedMessage {...FIELD_LABELS.postcode} />}
       placeholder="1234 AB"
       isRequired={required}
       onBlur={onBlur}
