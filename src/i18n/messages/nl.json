@@ -84,6 +84,11 @@
     "description": "Warning statement of truth not checked when submitting",
     "originalDefault": "You must declare the form to be filled out truthfully before submitting"
   },
+  "7+0/Hz": {
+    "defaultMessage": "Betalen",
+    "description": "On succesful completion title but payment required",
+    "originalDefault": "Betalen"
+  },
   "7Fk8NY": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments location and time step",
@@ -149,6 +154,11 @@
     "defaultMessage": "Controleer en bevestig",
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
+  },
+  "ATXTTM": {
+    "defaultMessage": "Voor dit product is betaling vereist.",
+    "description": "Payment request text",
+    "originalDefault": "A payment is required for this product."
   },
   "Aaq2GF": {
     "defaultMessage": "Sorry, er zijn geen datums beschikbaar voor uw afspraak. Probeer het later opnieuw.",
@@ -357,6 +367,11 @@
     "description": "Step label in progress indicator",
     "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
   },
+  "LiRh7j": {
+    "defaultMessage": "Bevestiging: {reference}",
+    "description": "Confirmation page title",
+    "originalDefault": "Confirmation: {reference}"
+  },
   "LsgvKh": {
     "defaultMessage": "Postcode",
     "description": "Label for addressNL postcode input",
@@ -384,15 +399,15 @@
     "isTranslated": true,
     "originalDefault": "m"
   },
+  "MJva3t": {
+    "defaultMessage": "Betalen",
+    "description": "Payment page title",
+    "originalDefault": "Payment"
+  },
   "P194bo": {
     "defaultMessage": "De ingevoerde waarde moet beginnen met \"{startsWith}\".",
     "description": "ZOD 'invalid_string' error message, with startsWith",
     "originalDefault": "Invalid input: must start with \"{startsWith}\"."
-  },
-  "PCFPnE": {
-    "defaultMessage": "Voor dit product is betaling vereist",
-    "description": "Payment required info text",
-    "originalDefault": "Payment is required for this product"
   },
   "PCv4sQ": {
     "defaultMessage": "Huisnummer",
@@ -475,11 +490,6 @@
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
   },
-  "WVmmME": {
-    "defaultMessage": "Betaaloverzicht",
-    "description": "Payment overview title",
-    "originalDefault": "Payment overview"
-  },
   "WWvqcz": {
     "defaultMessage": "Ongeldige datum",
     "description": "ZOD 'invalid_date' error message",
@@ -504,11 +514,6 @@
     "defaultMessage": "Taal kiezen",
     "description": "Language selection heading",
     "originalDefault": "Choose language"
-  },
-  "YdeY1f": {
-    "defaultMessage": "Afsluiten",
-    "description": "return to form start button",
-    "originalDefault": "Back to form start"
   },
   "YpCkBs": {
     "defaultMessage": "Ongeldige discriminatorwaarde - deze moet {expected} zijn.",
@@ -555,11 +560,6 @@
     "defaultMessage": "Uw gegevens",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
-  },
-  "bCGJi9": {
-    "defaultMessage": "Bevestiging: {reference}",
-    "description": "On succesful completion title",
-    "originalDefault": "Confirmation: {reference}"
   },
   "bgfiRG": {
     "defaultMessage": "U hebt de betaling gestart.",
@@ -610,11 +610,6 @@
     "defaultMessage": "Bevestiging",
     "description": "Confirmation page title",
     "originalDefault": "Confirmation"
-  },
-  "fwS7yY": {
-    "defaultMessage": "Betaaloverzicht",
-    "description": "Payment overview page title",
-    "originalDefault": "Payment overview"
   },
   "g1jgtg": {
     "defaultMessage": "Bevestig producten",
@@ -755,6 +750,11 @@
     "description": "Continue existing submission button label",
     "originalDefault": "Continue existing submission"
   },
+  "m1nQlh": {
+    "defaultMessage": "Uw referentie nummer is: {reference}",
+    "description": "Submission reference text",
+    "originalDefault": "Your reference number is: {reference}"
+  },
   "mMYAWl": {
     "defaultMessage": "Uw sessie staat op het punt om te vervallen {delta}. Verleng uw sessie indien u door wenst te gaan.",
     "description": "Session expiry warning message (in modal)",
@@ -834,11 +834,6 @@
     "defaultMessage": "Niet mede-ondertekend",
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
-  },
-  "tIN0Is": {
-    "defaultMessage": "We kunnen geen betaalinformatie tonen - bent u per ongeluk op deze pagina gekomen?",
-    "description": "Payment overview missing state error message",
-    "originalDefault": "We can't display any payment information - did you maybe get here by accident?"
   },
   "tUgRfj": {
     "defaultMessage": "Het uitloggen is mislukt. Probeer het later opnieuw.",
