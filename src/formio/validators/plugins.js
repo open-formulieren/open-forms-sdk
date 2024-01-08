@@ -5,7 +5,6 @@ import {post} from '../../api';
 export const pluginsAPIValidator = {
   key: `validate.backendApi`,
   check(component, setting, value) {
-    console.log('validator check method', value);
     const checkIsEmpty = component.component?.openForms?.checkIsEmptyBeforePluginValidate || false;
     const shortCutBecauseEmpty = checkIsEmpty && isEmpty(value);
     if (!value || shortCutBecauseEmpty) return true;
