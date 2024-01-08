@@ -237,17 +237,7 @@ const FormikAddress = ({required, setFormioValues}) => {
     <div className="openforms-form-field-container">
       <div className="openforms-columns">
         <div className="column column--span-6 openforms-form-field-container">
-          <TextField
-            name="postcode"
-            label={
-              <FormattedMessage
-                description="Label for addressNL postcode input"
-                defaultMessage="Postcode"
-              />
-            }
-            placeholder="1234 AB"
-            isRequired={required}
-          />
+          <PostCodeField required={required} />
         </div>
         <div className="column column--span-6 openforms-form-field-container">
           <TextField
@@ -288,5 +278,36 @@ const FormikAddress = ({required, setFormioValues}) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const PostCodeField = ({required}) => {
+  const {getFieldProps, getFieldHelpers} = useFormikContext();
+  const {value, onBlur: onBlurFormik} = getFieldProps('postcode');
+  const {setValue} = getFieldHelpers('postcode');
+
+  const onBlur = event => {
+    onBlurFormik(event);
+    // format the postcode with a space in between
+    const firstGroup = value.substring(0, 4);
+    const secondGroup = value.substring(4);
+    if (secondGroup && !secondGroup.startsWith(' ')) {
+      setValue(`${firstGroup} ${secondGroup}`);
+    }
+  };
+
+  return (
+    <TextField
+      name="postcode"
+      label={
+        <FormattedMessage
+          description="Label for addressNL postcode input"
+          defaultMessage="Postcode"
+        />
+      }
+      placeholder="1234 AB"
+      isRequired={required}
+      onBlur={onBlur}
+    />
   );
 };
