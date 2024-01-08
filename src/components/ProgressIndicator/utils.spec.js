@@ -20,7 +20,7 @@ const formSteps = [
 ];
 
 describe('Transforming form steps and injecting fixed steps', () => {
-  it('prepends start page and appends summary and confirmation steps', () => {
+  it('prepends start page and appends summary and payment steps', () => {
     const submission = buildSubmission();
     const updatedSteps = getStepsInfo(formSteps, submission, '/stap/step-1');
     const stepsToRender = addFixedSteps(intl, updatedSteps, submission, '/stap/step-1', true, true);
@@ -36,10 +36,10 @@ describe('Transforming form steps and injecting fixed steps', () => {
     expect(stepsToRender[1].canNavigateTo).toEqual(true);
 
     expect(stepsToRender[2].to).toEqual('overzicht');
-    expect(stepsToRender[3].to).toEqual('bevestiging');
+    expect(stepsToRender[3].to).toEqual('betalen');
   });
 
-  it('accepts parameters to not append summary or confirmation', () => {
+  it('accepts parameters to not append summary or payment', () => {
     const submission = buildSubmission();
     const updatedSteps = getStepsInfo(formSteps, submission, '/stap/step-1');
     const stepsToRender = addFixedSteps(

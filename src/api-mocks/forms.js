@@ -5,7 +5,7 @@ import {PRIVACY_POLICY_ACCEPTED} from 'components/SummaryConfirmation/mocks';
 
 import {BASE_URL, getDefaultFactory} from './base';
 
-const FORM_DEFAULTS = {
+export const FORM_DEFAULTS = {
   uuid: 'e450890a-4166-410e-8d64-0a54ad30ba01',
   name: 'Mock form',
   slug: 'mock',

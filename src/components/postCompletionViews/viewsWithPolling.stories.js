@@ -52,7 +52,7 @@ export const withoutPayment = {
 export const withPayment = {
   parameters: {
     reactRouter: {
-      routeState: {status: 'completed'},
+      routeState: {status: 'completed', userAction: 'accept'},
     },
   },
 };

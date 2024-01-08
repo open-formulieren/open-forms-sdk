@@ -6,6 +6,8 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
+import {getDefaultFactory} from 'api-mocks/base';
+import {FORM_DEFAULTS} from 'api-mocks/forms';
 import mswServer from 'api-mocks/msw-server';
 import {buildSubmission, mockSubmissionPost} from 'api-mocks/submissions';
 import App, {routes as nestedRoutes} from 'components/App';
@@ -18,8 +20,7 @@ const routes = [
   },
 ];
 
-const renderApp = (initialRoute = '/') => {
-  const form = buildForm();
+const renderApp = (form, initialRoute = '/') => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialRoute],
     initialIndex: [0],
@@ -55,11 +56,12 @@ afterEach(() => {
 });
 
 describe('The progress indicator component', () => {
-  it('displays the available submission/form steps and hardcoded steps', async () => {
+  it('displays the available submission/form steps and hardcoded steps (without payment)', async () => {
     mswServer.use(mockSubmissionPost(buildSubmission()));
     const user = userEvent.setup({delay: null});
+    const form = buildForm();
 
-    renderApp();
+    renderApp(form);
 
     const startFormLink = await screen.findByRole('link', {name: 'Start page'});
     user.click(startFormLink);
@@ -73,15 +75,37 @@ describe('The progress indicator component', () => {
     expect(stepPageItem).toBeVisible();
     const summaryPageItem = await screen.findByText('Summary');
     expect(summaryPageItem).toBeVisible();
-    const confirmationPageItem = await screen.findByText('Confirmation');
-    expect(confirmationPageItem).toBeVisible();
+  });
+
+  it('displays the available submission/form steps and hardcoded steps (with payment)', async () => {
+    mswServer.use(mockSubmissionPost(buildSubmission()));
+    const user = userEvent.setup({delay: null});
+    const form = getDefaultFactory({...FORM_DEFAULTS, paymentRequired: true})();
+
+    renderApp(form);
+
+    const startFormLink = await screen.findByRole('link', {name: 'Start page'});
+    user.click(startFormLink);
+
+    const progressIndicator = await screen.findByText('Progress');
+    expect(progressIndicator).toBeVisible();
+
+    const startPageItem = await screen.findByText('Start page');
+    expect(startPageItem).toBeVisible();
+    const stepPageItem = await screen.findByText('Step 1');
+    expect(stepPageItem).toBeVisible();
+    const summaryPageItem = await screen.findByText('Summary');
+    expect(summaryPageItem).toBeVisible();
+    const paymentPageItem = await screen.findByText('Payment');
+    expect(paymentPageItem).toBeVisible();
   });
 
   it('renders steps in the correct order', async () => {
     mswServer.use(mockSubmissionPost(buildSubmission()));
     const user = userEvent.setup({delay: null});
+    const form = buildForm();
 
-    renderApp();
+    renderApp(form);
 
     const startFormLink = await screen.findByRole('link', {name: 'Start page'});
     user.click(startFormLink);
@@ -91,6 +115,5 @@ describe('The progress indicator component', () => {
     expect(progressIndicatorSteps[0]).toHaveTextContent('Start page');
     expect(progressIndicatorSteps[1]).toHaveTextContent('Step 1');
     expect(progressIndicatorSteps[2]).toHaveTextContent('Summary');
-    expect(progressIndicatorSteps[3]).toHaveTextContent('Confirmation');
   });
 });
