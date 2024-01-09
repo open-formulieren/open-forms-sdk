@@ -285,6 +285,16 @@
       "value": "U moet akkoord gaan met het privacybeleid om door te gaan"
     }
   ],
+  "8cxbC6": [
+    {
+      "type": 1,
+      "value": "field"
+    },
+    {
+      "type": 0,
+      "value": " is verplicht."
+    }
+  ],
   "8uBESg": [
     {
       "type": 0,
@@ -485,6 +495,12 @@
     {
       "type": 0,
       "value": "Contactgegevens"
+    }
+  ],
+  "GbPef0": [
+    {
+      "type": 0,
+      "value": "Huisnummer is verplicht."
     }
   ],
   "GiRKAS": [
@@ -814,7 +830,7 @@
   "PCv4sQ": [
     {
       "type": 0,
-      "value": "Huis nummer"
+      "value": "Huisnummer"
     }
   ],
   "PjYrw0": [
@@ -1194,13 +1210,7 @@
   "cBsrax": [
     {
       "type": 0,
-      "value": "Huis letter"
-    }
-  ],
-  "cHn60V": [
-    {
-      "type": 0,
-      "value": "You must provide a house number."
+      "value": "Huisletter"
     }
   ],
   "cKFCTI": [
@@ -1491,10 +1501,16 @@
       "value": "Product"
     }
   ],
+  "lKBAu3": [
+    {
+      "type": 0,
+      "value": "Postcode is verplicht."
+    }
+  ],
   "lVNV/d": [
     {
       "type": 0,
-      "value": "Huis nummer toevoeging"
+      "value": "Huisnummertoevoeging"
     }
   ],
   "lY+Mza": [
@@ -1621,12 +1637,6 @@
     {
       "type": 0,
       "value": "Gebruik ⌘ + scroll om te zoomen in de kaart"
-    }
-  ],
-  "p+11YF": [
-    {
-      "type": 0,
-      "value": "You must provide a postcode."
     }
   ],
   "pguTkQ": [
