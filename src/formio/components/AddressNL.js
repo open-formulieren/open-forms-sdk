@@ -245,6 +245,10 @@ const AddressNLForm = ({initialValues, required, setFormioValues}) => {
           );
           return {message};
         }
+        break;
+      }
+      default: {
+        break;
       }
     }
     return {message: ctx.defaultError}; // use global schema as fallback
