@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 
-import {ConfirmationView} from 'components/postCompletionViews';
+import {ConfirmationView} from 'components/PostCompletionViews';
 import useFormContext from 'hooks/useFormContext';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';

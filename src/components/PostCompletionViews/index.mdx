@@ -22,6 +22,10 @@ When no payment is required, after submitting the form the user sees this view:
 
 ## `ConfirmationViewDisplay` with payment required
 
-After payment, the user is redirected to this view:
+After a successful payment, the user is redirected to this view:
 
-<Canvas of={ConfirmationStories.WithPayment} />
+<Canvas of={ConfirmationStories.WithSuccessfulPayment} />
+
+While if something went wrong or the payment was cancelled, the user sees:
+
+<Canvas of={ConfirmationStories.WithFailedPayment} />

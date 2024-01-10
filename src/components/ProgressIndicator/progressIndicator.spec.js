@@ -80,12 +80,12 @@ describe('The progress indicator component', () => {
   it('displays the available submission/form steps and hardcoded steps (with payment)', async () => {
     mswServer.use(mockSubmissionPost(buildSubmission()));
     const user = userEvent.setup({delay: null});
-    const form = getDefaultFactory({...FORM_DEFAULTS, paymentRequired: true})();
+    const form = buildForm({paymentRequired: true});
 
     renderApp(form);
 
     const startFormLink = await screen.findByRole('link', {name: 'Start page'});
-    user.click(startFormLink);
+    await user.click(startFormLink);
 
     const progressIndicator = await screen.findByText('Progress');
     expect(progressIndicator).toBeVisible();
@@ -108,7 +108,7 @@ describe('The progress indicator component', () => {
     renderApp(form);
 
     const startFormLink = await screen.findByRole('link', {name: 'Start page'});
-    user.click(startFormLink);
+    await user.click(startFormLink);
 
     const progressIndicatorSteps = screen.getAllByRole('listitem');
 

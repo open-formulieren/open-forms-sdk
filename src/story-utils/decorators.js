@@ -7,7 +7,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
-import {SubmissionStatusContext} from 'components/postCompletionViews';
+import {SubmissionStatusContext} from 'components/PostCompletionViews';
 
 export const ConfigDecorator = (Story, {parameters}) => {
   const defaults = {

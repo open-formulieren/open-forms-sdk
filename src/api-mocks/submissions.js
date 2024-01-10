@@ -138,8 +138,8 @@ export const mockSubmissionProcessingStatusErrorGet = rest.get(
 );
 
 export const mockSubmissionPaymentStartGet = rest.post(
-  `${BASE_URL}payment/4b0e86a8-dc5f-41cc-b812-c89857b9355b/demo/start`,
+  `${BASE_URL}payment/:uuid/demo/start`,
   (req, res, ctx) => {
-    return res(ctx.json({data: {method: 'get', action: 'http://example.com'}}));
+    return res(ctx.json({data: {method: 'get', action: 'https://example.com'}}));
   }
 );
