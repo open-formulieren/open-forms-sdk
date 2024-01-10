@@ -84,6 +84,11 @@
     "description": "Warning statement of truth not checked when submitting",
     "originalDefault": "You must declare the form to be filled out truthfully before submitting"
   },
+  "7+0/Hz": {
+    "defaultMessage": "Betalen",
+    "description": "On succesful completion title but payment required",
+    "originalDefault": "Betalen"
+  },
   "7Fk8NY": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments location and time step",
@@ -148,6 +153,11 @@
     "defaultMessage": "Check and confirm",
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
+  },
+  "ATXTTM": {
+    "defaultMessage": "A payment is required for this product.",
+    "description": "Payment request text",
+    "originalDefault": "A payment is required for this product."
   },
   "Aaq2GF": {
     "defaultMessage": "Sorry, there are no available dates for your appointment. Please try again later.",
@@ -354,6 +364,11 @@
     "description": "Step label in progress indicator",
     "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
   },
+  "LiRh7j": {
+    "defaultMessage": "Confirmation: {reference}",
+    "description": "Confirmation page title",
+    "originalDefault": "Confirmation: {reference}"
+  },
   "LsgvKh": {
     "defaultMessage": "Postcode",
     "description": "Label for addressNL postcode input",
@@ -379,15 +394,15 @@
     "description": "Placeholder for month part of a date",
     "originalDefault": "m"
   },
+  "MJva3t": {
+    "defaultMessage": "Payment",
+    "description": "Payment page title",
+    "originalDefault": "Payment"
+  },
   "P194bo": {
     "defaultMessage": "Invalid input: must start with \"{startsWith}\".",
     "description": "ZOD 'invalid_string' error message, with startsWith",
     "originalDefault": "Invalid input: must start with \"{startsWith}\"."
-  },
-  "PCFPnE": {
-    "defaultMessage": "Payment is required for this product",
-    "description": "Payment required info text",
-    "originalDefault": "Payment is required for this product"
   },
   "PCv4sQ": {
     "defaultMessage": "House number",
@@ -469,11 +484,6 @@
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
   },
-  "WVmmME": {
-    "defaultMessage": "Payment overview",
-    "description": "Payment overview title",
-    "originalDefault": "Payment overview"
-  },
   "WWvqcz": {
     "defaultMessage": "Invalid date",
     "description": "ZOD 'invalid_date' error message",
@@ -498,11 +508,6 @@
     "defaultMessage": "Choose language",
     "description": "Language selection heading",
     "originalDefault": "Choose language"
-  },
-  "YdeY1f": {
-    "defaultMessage": "Back to form start",
-    "description": "return to form start button",
-    "originalDefault": "Back to form start"
   },
   "YpCkBs": {
     "defaultMessage": "Invalid discriminator value. Expected {expected}.",
@@ -548,11 +553,6 @@
     "defaultMessage": "Contact details",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
-  },
-  "bCGJi9": {
-    "defaultMessage": "Confirmation: {reference}",
-    "description": "On succesful completion title",
-    "originalDefault": "Confirmation: {reference}"
   },
   "bgfiRG": {
     "defaultMessage": "You've started the payment process.",
@@ -603,11 +603,6 @@
     "defaultMessage": "Confirmation",
     "description": "Confirmation page title",
     "originalDefault": "Confirmation"
-  },
-  "fwS7yY": {
-    "defaultMessage": "Payment overview",
-    "description": "Payment overview page title",
-    "originalDefault": "Payment overview"
   },
   "g1jgtg": {
     "defaultMessage": "Confirm products",
@@ -744,6 +739,11 @@
     "description": "Continue existing submission button label",
     "originalDefault": "Continue existing submission"
   },
+  "m1nQlh": {
+    "defaultMessage": "Your reference number is: {reference}",
+    "description": "Submission reference text",
+    "originalDefault": "Your reference number is: {reference}"
+  },
   "mMYAWl": {
     "defaultMessage": "Your session is about to expire {delta}. Extend your session if you wish to continue.",
     "description": "Session expiry warning message (in modal)",
@@ -823,11 +823,6 @@
     "defaultMessage": "Not co-signed",
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
-  },
-  "tIN0Is": {
-    "defaultMessage": "We can't display any payment information - did you maybe get here by accident?",
-    "description": "Payment overview missing state error message",
-    "originalDefault": "We can't display any payment information - did you maybe get here by accident?"
   },
   "tUgRfj": {
     "defaultMessage": "Logging out failed, please try again later",

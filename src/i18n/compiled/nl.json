@@ -141,6 +141,12 @@
       "value": "U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan"
     }
   ],
+  "7+0/Hz": [
+    {
+      "type": 0,
+      "value": "Betalen"
+    }
+  ],
   "7Fk8NY": [
     {
       "type": 1,
@@ -337,6 +343,12 @@
     {
       "type": 0,
       "value": "Controleer en bevestig"
+    }
+  ],
+  "ATXTTM": [
+    {
+      "type": 0,
+      "value": "Voor dit product is betaling vereist."
     }
   ],
   "Aaq2GF": [
@@ -777,6 +789,16 @@
       "value": "isApplicable"
     }
   ],
+  "LiRh7j": [
+    {
+      "type": 0,
+      "value": "Bevestiging: "
+    },
+    {
+      "type": 1,
+      "value": "reference"
+    }
+  ],
   "LsgvKh": [
     {
       "type": 0,
@@ -807,6 +829,12 @@
       "value": "m"
     }
   ],
+  "MJva3t": [
+    {
+      "type": 0,
+      "value": "Betalen"
+    }
+  ],
   "P194bo": [
     {
       "type": 0,
@@ -819,12 +847,6 @@
     {
       "type": 0,
       "value": "\"."
-    }
-  ],
-  "PCFPnE": [
-    {
-      "type": 0,
-      "value": "Voor dit product is betaling vereist"
     }
   ],
   "PCv4sQ": [
@@ -1043,12 +1065,6 @@
       "value": "Uw betaling is ontvangen."
     }
   ],
-  "WVmmME": [
-    {
-      "type": 0,
-      "value": "Betaaloverzicht"
-    }
-  ],
   "WWvqcz": [
     {
       "type": 0,
@@ -1085,12 +1101,6 @@
     {
       "type": 0,
       "value": "Taal kiezen"
-    }
-  ],
-  "YdeY1f": [
-    {
-      "type": 0,
-      "value": "Afsluiten"
     }
   ],
   "YpCkBs": [
@@ -1185,16 +1195,6 @@
       "value": "Uw gegevens"
     }
   ],
-  "bCGJi9": [
-    {
-      "type": 0,
-      "value": "Bevestiging: "
-    },
-    {
-      "type": 1,
-      "value": "reference"
-    }
-  ],
   "bgfiRG": [
     {
       "type": 0,
@@ -1253,12 +1253,6 @@
     {
       "type": 0,
       "value": "Bevestiging"
-    }
-  ],
-  "fwS7yY": [
-    {
-      "type": 0,
-      "value": "Betaaloverzicht"
     }
   ],
   "g1jgtg": [
@@ -1531,6 +1525,16 @@
       "value": "Doorgaan met bestaande formuliergegevens"
     }
   ],
+  "m1nQlh": [
+    {
+      "type": 0,
+      "value": "Uw referentie nummer is: "
+    },
+    {
+      "type": 1,
+      "value": "reference"
+    }
+  ],
   "mMYAWl": [
     {
       "type": 0,
@@ -1793,12 +1797,6 @@
     {
       "type": 0,
       "value": "Niet mede-ondertekend"
-    }
-  ],
-  "tIN0Is": [
-    {
-      "type": 0,
-      "value": "We kunnen geen betaalinformatie tonen - bent u per ongeluk op deze pagina gekomen?"
     }
   ],
   "tUgRfj": [

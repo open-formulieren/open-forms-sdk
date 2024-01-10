@@ -1,34 +1,37 @@
 import {expect} from '@storybook/jest';
 import {waitFor, within} from '@storybook/testing-library';
+import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {BASE_URL} from 'api-mocks';
 import {
   mockSubmissionProcessingStatusGet,
   mockSubmissionProcessingStatusPendingGet,
 } from 'api-mocks/submissions';
-import {LayoutDecorator, withCard} from 'story-utils/decorators';
+import {withSubmissionPollInfo} from 'story-utils/decorators';
 
-import SubmissionConfirmation from './SubmissionConfirmation';
+import ConfirmationView from './ConfirmationView';
 
 export default {
-  title: 'Private API / SubmissionConfirmation',
-  component: SubmissionConfirmation,
-  decorators: [LayoutDecorator, withCard],
-  args: {
-    statusUrl: `${BASE_URL}submissions/4b0e86a8-dc5f-41cc-b812-c89857b9355b/-token-/status`,
-    donwloadPDFText: 'Download your details as PDF',
-  },
+  title: 'Private API / Post completion views / With Polling',
+  component: ConfirmationView,
+  decorators: [withSubmissionPollInfo, withRouter],
   argTypes: {
     statusUrl: {control: false},
+  },
+  args: {
+    statusUrl: `${BASE_URL}submissions/4b0e86a8-dc5f-41cc-b812-c89857b9355b/-token-/status`,
   },
   parameters: {
     msw: {
       handlers: [mockSubmissionProcessingStatusGet],
     },
+    reactRouter: {
+      routeState: {},
+    },
   },
 };
 
-export const Success = {
+export const withoutPayment = {
   play: async ({canvasElement, args}) => {
     const canvas = within(canvasElement);
 
@@ -43,6 +46,14 @@ export const Success = {
     );
     expect(canvas.getByText(/OF-L337/)).toBeVisible();
     expect(args.onConfirmed).toBeCalledTimes(1);
+  },
+};
+
+export const withPayment = {
+  parameters: {
+    reactRouter: {
+      routeState: {status: 'completed', userAction: 'accept'},
+    },
   },
 };
 

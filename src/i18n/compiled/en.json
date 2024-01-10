@@ -141,6 +141,12 @@
       "value": "You must declare the form to be filled out truthfully before submitting"
     }
   ],
+  "7+0/Hz": [
+    {
+      "type": 0,
+      "value": "Betalen"
+    }
+  ],
   "7Fk8NY": [
     {
       "type": 1,
@@ -337,6 +343,12 @@
     {
       "type": 0,
       "value": "Check and confirm"
+    }
+  ],
+  "ATXTTM": [
+    {
+      "type": 0,
+      "value": "A payment is required for this product."
     }
   ],
   "Aaq2GF": [
@@ -777,6 +789,16 @@
       "value": "isApplicable"
     }
   ],
+  "LiRh7j": [
+    {
+      "type": 0,
+      "value": "Confirmation: "
+    },
+    {
+      "type": 1,
+      "value": "reference"
+    }
+  ],
   "LsgvKh": [
     {
       "type": 0,
@@ -807,6 +829,12 @@
       "value": "m"
     }
   ],
+  "MJva3t": [
+    {
+      "type": 0,
+      "value": "Payment"
+    }
+  ],
   "P194bo": [
     {
       "type": 0,
@@ -819,12 +847,6 @@
     {
       "type": 0,
       "value": "\"."
-    }
-  ],
-  "PCFPnE": [
-    {
-      "type": 0,
-      "value": "Payment is required for this product"
     }
   ],
   "PCv4sQ": [
@@ -1043,12 +1065,6 @@
       "value": "Your payment has been received."
     }
   ],
-  "WVmmME": [
-    {
-      "type": 0,
-      "value": "Payment overview"
-    }
-  ],
   "WWvqcz": [
     {
       "type": 0,
@@ -1085,12 +1101,6 @@
     {
       "type": 0,
       "value": "Choose language"
-    }
-  ],
-  "YdeY1f": [
-    {
-      "type": 0,
-      "value": "Back to form start"
     }
   ],
   "YpCkBs": [
@@ -1181,16 +1191,6 @@
       "value": "Contact details"
     }
   ],
-  "bCGJi9": [
-    {
-      "type": 0,
-      "value": "Confirmation: "
-    },
-    {
-      "type": 1,
-      "value": "reference"
-    }
-  ],
   "bgfiRG": [
     {
       "type": 0,
@@ -1249,12 +1249,6 @@
     {
       "type": 0,
       "value": "Confirmation"
-    }
-  ],
-  "fwS7yY": [
-    {
-      "type": 0,
-      "value": "Payment overview"
     }
   ],
   "g1jgtg": [
@@ -1527,6 +1521,16 @@
       "value": "Continue existing submission"
     }
   ],
+  "m1nQlh": [
+    {
+      "type": 0,
+      "value": "Your reference number is: "
+    },
+    {
+      "type": 1,
+      "value": "reference"
+    }
+  ],
   "mMYAWl": [
     {
       "type": 0,
@@ -1789,12 +1793,6 @@
     {
       "type": 0,
       "value": "Not co-signed"
-    }
-  ],
-  "tIN0Is": [
-    {
-      "type": 0,
-      "value": "We can't display any payment information - did you maybe get here by accident?"
     }
   ],
   "tUgRfj": [

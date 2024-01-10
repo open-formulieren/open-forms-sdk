@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 
-import SubmissionConfirmation from 'components/SubmissionConfirmation';
+import {ConfirmationView} from 'components/PostCompletionViews';
 import useFormContext from 'hooks/useFormContext';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';
@@ -20,11 +20,11 @@ const Confirmation = () => {
   };
 
   return (
-    <SubmissionConfirmation
+    <ConfirmationView
       statusUrl={statusUrl}
       onFailure={onProcessingFailure}
       onConfirmed={reset}
-      donwloadPDFText={form.submissionReportDownloadLinkTitle}
+      downloadPDFText={form.submissionReportDownloadLinkTitle}
     />
   );
 };

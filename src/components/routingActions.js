@@ -24,6 +24,11 @@ export const getRedirectParams = (action, actionParams) => {
         path: `stap/${actionParams.step_slug}`,
         query: new URLSearchParams({submission_uuid: actionParams.submission_uuid}),
       };
+    case 'payment':
+      return {
+        path: 'betalen',
+        query: new URLSearchParams(actionParams),
+      };
     default:
       return {};
   }

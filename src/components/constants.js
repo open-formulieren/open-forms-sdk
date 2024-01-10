@@ -19,6 +19,10 @@ const STEP_LABELS = defineMessages({
     description: 'Confirmation page title',
     defaultMessage: 'Confirmation',
   },
+  payment: {
+    description: 'Payment page title',
+    defaultMessage: 'Payment',
+  },
 });
 
 const START_FORM_QUERY_PARAM = '_start';

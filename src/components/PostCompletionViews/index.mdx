@@ -1,0 +1,31 @@
+import {Canvas, Meta} from '@storybook/blocks';
+
+import * as ConfirmationStories from './ConfirmationView.stories';
+import * as PostCompletionStories from './PostCompletionView.stories';
+import * as StartPaymentStories from './StartPaymentView.stories';
+
+<Meta of={PostCompletionStories} />
+
+# Post completion views
+
+## `StartPaymentViewDisplay`
+
+This view is displayed to the user when a submission is completed and a payment is required.
+
+<Canvas of={StartPaymentStories.Default} />
+
+## `ConfirmationViewDisplay` without payment required
+
+When no payment is required, after submitting the form the user sees this view:
+
+<Canvas of={ConfirmationStories.WithoutPayment} />
+
+## `ConfirmationViewDisplay` with payment required
+
+After a successful payment, the user is redirected to this view:
+
+<Canvas of={ConfirmationStories.WithSuccessfulPayment} />
+
+While if something went wrong or the payment was cancelled, the user sees:
+
+<Canvas of={ConfirmationStories.WithFailedPayment} />
