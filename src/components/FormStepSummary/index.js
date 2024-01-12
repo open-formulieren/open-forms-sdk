@@ -10,7 +10,6 @@ import React from 'react';
 
 import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
-import {DEBUG} from 'utils';
 
 import ComponentValueDisplay from './ComponentValueDisplay';
 
@@ -41,12 +40,7 @@ LabelValueRow.propTypes = {
   component: PropTypes.object.isRequired,
 };
 
-const FormStepSummary = ({editUrl, slug, name, data, editStepText = ''}) => {
-  if (!editUrl) {
-    if (DEBUG && !slug) console.error('Provide either a step slug or editUrl prop');
-    editUrl = `/stap/${slug}`;
-  }
-
+const FormStepSummary = ({editUrl, name, data, editStepText = ''}) => {
   return (
     <div className="openforms-summary">
       <div className="openforms-summary__header">
@@ -76,8 +70,7 @@ const FormStepSummary = ({editUrl, slug, name, data, editStepText = ''}) => {
 
 FormStepSummary.propTypes = {
   name: PropTypes.node.isRequired,
-  editUrl: PropTypes.string,
-  slug: PropTypes.string,
+  editUrl: PropTypes.string.isRequired,
   editStepText: PropTypes.node,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
