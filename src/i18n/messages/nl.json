@@ -87,6 +87,7 @@
   "7+0/Hz": {
     "defaultMessage": "Betalen",
     "description": "On succesful completion title but payment required",
+    "isTranslated": true,
     "originalDefault": "Betalen"
   },
   "7Fk8NY": {
