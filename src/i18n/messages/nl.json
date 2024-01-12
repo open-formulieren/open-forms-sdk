@@ -901,7 +901,7 @@
     "originalDefault": "Return to main website"
   },
   "zvoXSU": {
-    "defaultMessage": "Dichtstbijzijndste adres: <address></address>",
+    "defaultMessage": "Adres in de buurt: <address></address>",
     "description": "Reverse geocoded address result display",
     "originalDefault": "Nearest address: <address></address>"
   }
