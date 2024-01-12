@@ -37,8 +37,8 @@ const SubmissionSummary = ({
   submission,
   processingError = '',
   onConfirm,
-  onLogout,
   onClearProcessingErrors,
+  onDestroySession,
 }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const navigate = useNavigate();
@@ -128,8 +128,8 @@ const SubmissionSummary = ({
         errors={getErrors()}
         prevPage={getPreviousPage()}
         onSubmit={onSubmit}
-        onLogout={onLogout}
         onPrevPage={onPrevPage}
+        onDestroySession={onDestroySession}
       />
     </LiteralsProvider>
   );
@@ -140,8 +140,8 @@ SubmissionSummary.propTypes = {
   submission: Types.Submission.isRequired,
   processingError: PropTypes.string,
   onConfirm: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
   onClearProcessingErrors: PropTypes.func.isRequired,
+  onDestroySession: PropTypes.func.isRequired,
 };
 
 export default SubmissionSummary;

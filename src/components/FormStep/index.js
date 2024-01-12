@@ -35,6 +35,7 @@ import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
+import AbortionButton from 'components/AbortionButton';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
@@ -47,10 +48,9 @@ import {
 } from 'components/utils';
 import {ValidationError} from 'errors';
 import {PREFIX} from 'formio/constants';
+import hooks from 'formio/hooks';
 import useTitle from 'hooks/useTitle';
 import Types from 'types';
-
-import hooks from '../../formio/hooks';
 
 /**
  * Debounce interval in milliseconds (1000ms equals 1s) to prevent excessive amount of logic checks.
@@ -287,7 +287,7 @@ const reducer = (draft, action) => {
  * @param {Object} submission
  * @param {Function} onLogicChecked
  * @param {Function} onStepSubmitted
- * @param {Function} onLogout
+ * @param {Function} onDestroySession
  * @param {Function} onSessionDestroyed
  * @throws {Error} Throws errors from state so the error boundaries can pick them up.
  * @return {React.ReactNode}
@@ -297,8 +297,8 @@ const FormStep = ({
   submission,
   onLogicChecked,
   onStepSubmitted,
-  onLogout,
   onSessionDestroyed,
+  onDestroySession,
 }) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
@@ -871,14 +871,16 @@ const FormStep = ({
                 canSubmitStep={canSubmit}
                 canSubmitForm={submission.submissionAllowed}
                 canSuspendForm={form.suspensionAllowed}
-                isAuthenticated={submission.isAuthenticated}
                 isLastStep={isLastStep(currentStepIndex, submission)}
                 isCheckingLogic={logicChecking}
                 loginRequired={form.loginRequired}
                 onFormSave={onFormSave}
-                onLogout={onLogout}
                 onNavigatePrevPage={onPrevPage}
                 previousPage={getPreviousPageHref()}
+              />
+              <AbortionButton
+                isAuthenticated={submission.isAuthenticated}
+                onDestroySession={onDestroySession}
               />
             </form>
           </>
@@ -902,8 +904,8 @@ FormStep.propTypes = {
   submission: PropTypes.object.isRequired,
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
   onSessionDestroyed: PropTypes.func.isRequired,
+  onDestroySession: PropTypes.func.isRequired,
 };
 
 export default FormStep;
