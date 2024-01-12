@@ -2,6 +2,59 @@
 SDK Changelog
 =============
 
+2.1.0 (2024-01-22)
+==================
+
+Feature release - all the changes from 2.1.0-alpha.0 are also included!
+
+New features
+------------
+
+* [#3607] Added a new component type ``addressNL``, taking postcode and house number,
+  which supports validation against the BRK. This component may replace the address
+  auto-complete (based on ``textfield``) in the future.
+
+* Updated some literals to be more accessible
+
+    * [#3690] Update texts for authentication plugin outages to be B1-level.
+    * [#619] Update texts in the map component to be B1-level.
+
+* ⚠️ We have adapted more NL Design System components for our SDK, please review the
+  `2.1.0 upgrade notes`_. If you're developing your own theme, this
+  may break some styling. Users of the default Open Forms theme (even if you tweak some
+  design tokens in the backend) are not affected.
+
+    * [#471] Refactored the ``FormStepSummary`` to make use of ``DataList`` and
+      ``Heading2`` components.
+    * [3178] Reworked the layout scaffolding to support NL DS principles - appearance
+      can now be configured through design tokens.
+    * We now expect an outer wrapper with the class name ``utrecht-document``, any CMS
+      making use of embedding should ensure this class is applied in a form container (
+      ideally you apply this to the ``html`` or ``body`` element).
+
+* [#3726] Reworked the payment and confirmation page flows - it is now more obvious that
+  the user still needs to be pay (if payment is relevant).
+* [#3778] Content components displayed on the summary do not display a name/label, to be
+  consistent with email and PDF summary.
+
+Bugfixes
+--------
+
+* [#3671] Fixed max date validation when "today" is included.
+
+Project maintenance
+-------------------
+
+* Upgraded the development tooling to Node 20 (LTS).
+* Upgraded playwright to be compatible with Debian 12.
+* Upgraded dependencies to reduce the amount of warnings during ``yarn install``.
+* [#584] Added mobile snapshots to Storybook and Chromatic configuration to run visual
+  regression tests on multiple viewports.
+* Marked the ``stable/1.3.x`` release branch as end-of-life.
+* [#614] The Leaflet Dutch coordinate system code is replaced with a reusable library.
+
+.. _2.1.0 upgrade notes: https://open-formulieren.github.io/open-forms-sdk/?path=/docs/developers-upgrade-notes-2-1-0--docs
+
 2.0.2 (2024-01-12)
 ==================
 
