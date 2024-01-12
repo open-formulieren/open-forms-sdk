@@ -823,6 +823,20 @@
       "value": "Contact details"
     }
   ],
+  "MHkO0o": [
+    {
+      "type": 0,
+      "value": "Change fields in form step '"
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "'"
+    }
+  ],
   "MJXZYI": [
     {
       "type": 0,
