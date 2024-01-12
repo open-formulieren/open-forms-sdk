@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+2.0.2 (2024-01-12)
+==================
+
+Bugfix release
+
+* [#3671] Fixed max date validation when "today" is included.
+
 2.0.1 (2023-12-08)
 ==================
 
