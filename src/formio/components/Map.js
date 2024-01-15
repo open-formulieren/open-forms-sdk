@@ -8,7 +8,7 @@ import {IntlProvider} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import LeafletMap from 'components/Map';
-import {DEFAULT_LAT_LNG, MAP_DEFAULTS} from 'map/constants';
+import {DEFAULT_LAT_LNG, DEFAULT_ZOOM} from 'map/constants';
 
 const Field = Formio.Components.components.field;
 
@@ -112,7 +112,7 @@ export default class Map extends Field {
             markerCoordinates={markerCoordinates || null}
             onMarkerSet={this.onMarkerSet.bind(this)}
             defaultCenter={defaultCenter}
-            defaultZoomLevel={zoom || MAP_DEFAULTS.zoom}
+            defaultZoomLevel={zoom || DEFAULT_ZOOM}
           />
         </ConfigContext.Provider>
       </IntlProvider>
