@@ -3,7 +3,7 @@ import {Formik} from 'formik';
 import merge from 'lodash/merge';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
-import {ConfigContext, FormContext} from 'Context';
+import {AnalyticsToolsConfigContext, ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
@@ -27,6 +27,22 @@ export const ConfigDecorator = (Story, {parameters}) => {
     <ConfigContext.Provider value={merge(defaults, fromParams)}>
       <Story />
     </ConfigContext.Provider>
+  );
+};
+
+export const AnalyticsToolsDecorator = (Story, {parameters, args}) => {
+  const defaults = {
+    govmetricSourceId: '',
+    govmetricSecureGuid: '',
+    enableGovmetricAnalytics: false,
+  };
+
+  const analyticsToolsParams = args.analyticsToolsParams;
+
+  return (
+    <AnalyticsToolsConfigContext.Provider value={merge(defaults, analyticsToolsParams)}>
+      <Story />
+    </AnalyticsToolsConfigContext.Provider>
   );
 };
 

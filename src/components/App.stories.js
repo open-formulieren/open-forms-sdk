@@ -3,7 +3,7 @@ import {userEvent, waitForElementToBeRemoved, within} from '@storybook/testing-l
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {FormContext} from 'Context';
-import {BASE_URL} from 'api-mocks';
+import {BASE_URL, mockGetAnalyticsToolConfig} from 'api-mocks';
 import {buildForm} from 'api-mocks';
 import {
   mockSubmissionCheckLogicPost,
@@ -79,6 +79,7 @@ export default {
           {code: 'en', name: 'English'},
         ]),
         mockLanguageChoicePut,
+        mockGetAnalyticsToolConfig(),
       ],
     },
   },
@@ -189,6 +190,7 @@ export const ActiveSubmission = {
           {code: 'en', name: 'English'},
         ]),
         mockLanguageChoicePut,
+        mockGetAnalyticsToolConfig(),
       ],
     },
   },

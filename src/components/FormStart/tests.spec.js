@@ -45,7 +45,7 @@ it('Form start page start if _start parameter is present', () => {
   useQuery.mockReturnValue(testLocation);
 
   const onFormStart = jest.fn();
-  const onFormAbort = jest.fn();
+  const onDestroySession = jest.fn();
 
   act(() => {
     root.render(
@@ -53,7 +53,7 @@ it('Form start page start if _start parameter is present', () => {
         <FormStart
           form={testForm}
           onFormStart={onFormStart}
-          onFormAbort={onFormAbort}
+          onDestroySession={onDestroySession}
           hasActiveSubmission={false}
         />
       </Wrap>
@@ -65,7 +65,7 @@ it('Form start page start if _start parameter is present', () => {
 
 it('Form start does not start if there are auth errors', () => {
   const onFormStart = jest.fn();
-  const onFormAbort = jest.fn();
+  const onDestroySession = jest.fn();
 
   const testQueries = {
     '_digid-message=error':
@@ -86,7 +86,7 @@ it('Form start does not start if there are auth errors', () => {
           <FormStart
             form={testForm}
             onFormStart={onFormStart}
-            onFormAbort={onFormAbort}
+            onDestroySession={onDestroySession}
             hasActiveSubmission={false}
           />
         </Wrap>
@@ -101,14 +101,14 @@ it('Form start does not start if there are auth errors', () => {
 it('Form start page does not show login buttons if an active submission is present', () => {
   useQuery.mockReturnValue(new URLSearchParams());
   const onFormStart = jest.fn();
-  const onFormAbort = jest.fn();
+  const onDestroySession = jest.fn();
 
   renderTest(
     <Wrap>
       <FormStart
         form={testForm}
         onFormStart={onFormStart}
-        onFormAbort={onFormAbort}
+        onDestroySession={onDestroySession}
         hasActiveSubmission={true}
       />
     </Wrap>,
