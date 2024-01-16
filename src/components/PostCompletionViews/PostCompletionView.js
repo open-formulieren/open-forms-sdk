@@ -17,6 +17,7 @@ const PostCompletionView = ({
   body,
   mainWebsiteUrl,
   reportDownloadUrl,
+  extraBottom,
 }) => {
   useTitle(pageTitle);
 
@@ -49,6 +50,7 @@ const PostCompletionView = ({
           </ToolbarList>
         </Toolbar>
       ) : null}
+      {extraBottom}
     </Card>
   );
 };
@@ -60,6 +62,7 @@ PostCompletionView.propTypes = {
   body: PropTypes.node,
   mainWebsiteUrl: PropTypes.string,
   reportDownloadUrl: PropTypes.string,
+  extraBottom: PropTypes.node,
 };
 
 export default PostCompletionView;
