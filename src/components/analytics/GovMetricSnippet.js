@@ -13,13 +13,13 @@ const GovMetricSnippet = () => {
   const form = useFormContext();
   const intl = useIntl();
 
+  if (!analyticsToolsConfig.enableGovmetricAnalytics) return null;
+
   const govmetricUrl = buildGovMetricUrl(
     analyticsToolsConfig.govmetricSourceId,
     form.slug,
     analyticsToolsConfig.govmetricSecureGuid
   );
-
-  if (!analyticsToolsConfig.enableGovmetricAnalytics) return null;
 
   return (
     <Toolbar modifiers={['bottom', 'reverse']}>

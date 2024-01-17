@@ -40,6 +40,7 @@ import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
   eventTriggeredBySubmitButton,
@@ -878,10 +879,14 @@ const FormStep = ({
                 onNavigatePrevPage={onPrevPage}
                 previousPage={getPreviousPageHref()}
               />
-              <AbortionButton
-                isAuthenticated={submission.isAuthenticated}
-                onDestroySession={onDestroySession}
-              />
+              <Toolbar modifiers={['bottom', 'reverse']}>
+                <ToolbarList>
+                  <AbortionButton
+                    isAuthenticated={submission.isAuthenticated}
+                    onDestroySession={onDestroySession}
+                  />
+                </ToolbarList>
+              </Toolbar>
             </form>
           </>
         ) : null}

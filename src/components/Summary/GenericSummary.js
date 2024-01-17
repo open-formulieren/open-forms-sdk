@@ -9,6 +9,7 @@ import FormStepSummary from 'components/FormStepSummary';
 import Loader from 'components/Loader';
 import Price from 'components/Price';
 import SummaryConfirmation from 'components/SummaryConfirmation';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const GenericSummary = ({
@@ -60,7 +61,14 @@ const GenericSummary = ({
             prevPage={prevPage}
             onPrevPage={onPrevPage}
           />
-          <AbortionButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
+          <Toolbar modifiers={['bottom', 'reverse']}>
+            <ToolbarList>
+              <AbortionButton
+                isAuthenticated={isAuthenticated}
+                onDestroySession={onDestroySession}
+              />
+            </ToolbarList>
+          </Toolbar>
         </Wrapper>
       </Formik>
     </Card>

@@ -4,7 +4,6 @@ import {FormattedMessage, useIntl} from 'react-intl';
 
 import {AnalyticsToolsConfigContext} from 'Context';
 import {OFButton} from 'components/Button';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {buildGovMetricUrl} from 'components/analytics/utils';
 import useFormContext from 'hooks/useFormContext';
 
@@ -31,13 +30,13 @@ const AbortionButton = ({isAuthenticated, onDestroySession}) => {
 
     await onDestroySession();
 
-    const govmetricUrl = buildGovMetricUrl(
-      analyticsToolsConfig.govmetricSourceId,
-      form.slug,
-      analyticsToolsConfig.govmetricSecureGuid
-    );
-
     if (analyticsToolsConfig.enableGovmetricAnalytics) {
+      const govmetricUrl = buildGovMetricUrl(
+        analyticsToolsConfig.govmetricSourceId,
+        form.slug,
+        analyticsToolsConfig.govmetricSecureGuid
+      );
+
       window.open(govmetricUrl);
     }
   };
@@ -54,13 +53,9 @@ const AbortionButton = ({isAuthenticated, onDestroySession}) => {
   if (!isAuthenticated && !analyticsToolsConfig.enableGovmetricAnalytics) return null;
 
   return (
-    <Toolbar modifiers={['bottom', 'reverse']}>
-      <ToolbarList>
-        <OFButton appearance="primary-action-button" hint="danger" name="abort" onClick={callback}>
-          {message}
-        </OFButton>
-      </ToolbarList>
-    </Toolbar>
+    <OFButton appearance="primary-action-button" hint="danger" name="abort" onClick={callback}>
+      {message}
+    </OFButton>
   );
 };
 
