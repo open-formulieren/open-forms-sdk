@@ -14,8 +14,11 @@ import {DEBUG} from 'utils';
 
 import ComponentValueDisplay from './ComponentValueDisplay';
 
+// Components without a label that should still be displayed
+const COMPONENTS_WITH_NO_NAME = ['content'];
+
 const LabelValueRow = ({name, value, component}) => {
-  if (!name) {
+  if (!name && !COMPONENTS_WITH_NO_NAME.includes(component.type)) {
     return null;
   }
 
