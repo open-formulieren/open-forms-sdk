@@ -26,6 +26,15 @@ export default {
         name: 'Uw gegevens',
         data: [
           {
+            name: '',
+            value: 'In this section you can enter your personal details.',
+            component: {
+              type: 'content',
+              label: 'Content',
+              key: 'content',
+            },
+          },
+          {
             name: 'Voornaam',
             value: 'John',
             component: {
@@ -62,6 +71,36 @@ export default {
         name: 'Uw partner',
         data: [
           {
+            name: 'Partner details',
+            value: null,
+            component: {
+              type: 'fieldset',
+              key: 'fieldset1',
+              label: 'Partner details',
+              hideLabel: false,
+              components: [
+                {
+                  key: 'voornaam2',
+                  type: 'textfield',
+                  label: 'Voornaam',
+                  hidden: false,
+                },
+                {
+                  key: 'achternaam2',
+                  type: 'textfield',
+                  label: 'Achternaam',
+                  hidden: false,
+                },
+                {
+                  key: 'emailAdres2',
+                  type: 'email',
+                  label: 'Email adres',
+                  hidden: false,
+                },
+              ],
+            },
+          },
+          {
             name: 'Voornaam',
             value: 'Carl',
             component: {
@@ -88,6 +127,40 @@ export default {
               key: 'emailAdres2',
               type: 'email',
               label: 'Email adres',
+              hidden: false,
+            },
+          },
+        ],
+      },
+      {
+        slug: 'uw-huisdier',
+        name: 'Uw huisdier',
+        data: [
+          {
+            name: '',
+            value: null,
+            component: {
+              type: 'fieldset',
+              key: 'fieldset2',
+              label: 'Pet details',
+              hideLabel: true,
+              components: [
+                {
+                  key: 'huisdierNaam',
+                  type: 'textfield',
+                  label: 'Huisdier naam',
+                  hidden: false,
+                },
+              ],
+            },
+          },
+          {
+            name: 'Huisdier Naam',
+            value: 'Nemo',
+            component: {
+              key: 'huisdierNaam',
+              type: 'textfield',
+              label: 'Huisdier naam',
               hidden: false,
             },
           },
@@ -191,6 +264,30 @@ const render = ({
 
 export const Default = {
   render,
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    const contentNodes = canvas.getAllByText((content, element) => {
+      return element.className.split(' ').includes('utrecht-data-list__item--openforms-content');
+    });
+
+    await expect(contentNodes.length).toEqual(1);
+
+    const contentNode = contentNodes[0];
+
+    await expect(contentNode.firstChild.textContent).toEqual('');
+
+    const fieldsetNodes = canvas.getAllByText((content, element) => {
+      return element.className.split(' ').includes('utrecht-data-list__item--openforms-fieldset');
+    });
+
+    // The fieldset with hidden label is not rendered
+    await expect(fieldsetNodes.length).toEqual(1);
+
+    const fieldsetPartnerNode = fieldsetNodes[0];
+
+    await expect(fieldsetPartnerNode.firstChild.textContent).toEqual('Partner details');
+  },
 };
 
 export const MultipleRequiredStatements = {
