@@ -1,6 +1,6 @@
 import {act, waitForElementToBeRemoved, within} from '@testing-library/react';
 
-import {BASE_URL, buildForm, mockFormGet, mockGetAnalyticsToolConfig} from 'api-mocks';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockFormGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockFormioTranslations, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 
@@ -19,7 +19,7 @@ const apiMocks = [
   mockFormGet(buildForm({translationEnabled: true})),
   mockLanguageInfoGet(LANGUAGES),
   mockFormioTranslations,
-  mockGetAnalyticsToolConfig(),
+  mockAnalyticsToolConfigGet(),
 ];
 
 describe('OpenForm', () => {
@@ -92,7 +92,7 @@ describe('OpenForm', () => {
       mockFormGet(formEN, true),
       mockLanguageInfoGet(LANGUAGES),
       mockFormioTranslations,
-      mockGetAnalyticsToolConfig()
+      mockAnalyticsToolConfigGet()
     );
 
     const form = new OpenForm(formRoot, {

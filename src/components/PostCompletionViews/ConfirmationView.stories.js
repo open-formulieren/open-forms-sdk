@@ -91,20 +91,22 @@ export const WithGovMetric = {
     confirmationPageContent: 'Your answers are submitted. Hurray!',
     mainWebsiteUrl: '#',
     downloadPDFText: 'Download a PDF of your submitted answers',
+    form: {
+      slug: 'a-test-form',
+    },
+  },
+  parameters: {
     analyticsToolsParams: {
       govmetricSourceId: '1234',
       govmetricSecureGuid: '',
       enableGovmetricAnalytics: true,
-    },
-    form: {
-      slug: 'a-test-form',
     },
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      const feedbackLink = await canvas.getByText('Give feedback');
+      const feedbackLink = await canvas.findByRole('link', {name: 'Give feedback'});
       await expect(feedbackLink).toBeVisible();
       await expect(feedbackLink.href).toEqual(
         'https://websurveys2.govmetric.com/theme/kf/1234?Q_Formid=a-test-form'

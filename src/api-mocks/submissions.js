@@ -143,15 +143,3 @@ export const mockSubmissionPaymentStartGet = rest.post(
     return res(ctx.json({data: {method: 'get', action: 'https://example.com'}}));
   }
 );
-
-export const mockGetAnalyticsToolConfig = (overrides = {}) =>
-  rest.get(`${BASE_URL}analytics/analytics_tools_config_info`, (req, res, ctx) =>
-    res(
-      ctx.json({
-        govmetricSourceId: '',
-        govmetricSecureGuid: '',
-        enableGovmetricAnalytics: false,
-        ...overrides,
-      })
-    )
-  );

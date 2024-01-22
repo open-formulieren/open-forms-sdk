@@ -18,16 +18,16 @@ export const Authenticated = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Uitloggen'});
-      await expect(abortButton).toBeVisible();
-    });
+    const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
+    await expect(abortButton).toBeVisible();
   },
 };
 
 export const GovMetricEnabled = {
   args: {
     isAuthenticated: false,
+  },
+  parameters: {
     analyticsToolsParams: {
       govmetricSourceId: '1234',
       govmetricSecureGuid: '',
@@ -47,6 +47,8 @@ export const GovMetricEnabled = {
 export const AuthenticatedAndGovmetric = {
   args: {
     isAuthenticated: true,
+  },
+  parameters: {
     analyticsToolsParams: {
       govmetricSourceId: '1234',
       govmetricSecureGuid: '',

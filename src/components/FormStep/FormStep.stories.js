@@ -5,7 +5,7 @@ import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-react-router-v6';
 import {v4 as uuid4} from 'uuid';
 
-import {buildForm, buildSubmission, mockGetAnalyticsToolConfig} from 'api-mocks';
+import {buildForm, buildSubmission} from 'api-mocks';
 import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
 
 import FormStep from '.';
@@ -157,6 +157,8 @@ export const govmetricEnabled = {
     },
     form: buildForm(),
     submission: buildSubmission(),
+  },
+  parameters: {
     analyticsToolsParams: {
       govmetricSourceId: '1234',
       govmetricSecureGuid: '',

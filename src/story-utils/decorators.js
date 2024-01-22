@@ -37,10 +37,8 @@ export const AnalyticsToolsDecorator = (Story, {parameters, args}) => {
     enableGovmetricAnalytics: false,
   };
 
-  const analyticsToolsParams = args.analyticsToolsParams;
-
   return (
-    <AnalyticsToolsConfigContext.Provider value={merge(defaults, analyticsToolsParams)}>
+    <AnalyticsToolsConfigContext.Provider value={{...defaults, ...parameters.analyticsToolsParams}}>
       <Story />
     </AnalyticsToolsConfigContext.Provider>
   );
