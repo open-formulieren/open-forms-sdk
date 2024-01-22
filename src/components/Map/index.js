@@ -85,7 +85,6 @@ const LeaftletMap = ({
       <MapContainer
         center={defaultCenter}
         zoom={defaultZoomLevel}
-        continuousWorld
         crs={CRS_RD}
         attributionControl
         className={className}
