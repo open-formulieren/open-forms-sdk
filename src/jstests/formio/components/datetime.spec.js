@@ -6,7 +6,7 @@ import MinMaxDatetimeValidator from 'formio/validators/minMaxDatetimeValidator';
 const FormioComponent = Formio.Components.components.component;
 
 describe('Datetime Component', () => {
-  test('Datetime validator: no min/max datetime', done => {
+  test('Datetime validator: no min/max datetime', () => {
     const component = {
       label: 'datetime',
       key: 'datetime',
@@ -30,11 +30,9 @@ describe('Datetime Component', () => {
     );
 
     expect(isValid).toBeTruthy();
-
-    done();
   });
 
-  test('Datetime validator: check min datetime', done => {
+  test('Datetime validator: check min datetime', () => {
     const component = {
       label: 'datetime',
       key: 'datetime',
@@ -69,11 +67,9 @@ describe('Datetime Component', () => {
     );
 
     expect(isValid2).toBeTruthy();
-
-    done();
   });
 
-  test('Datetime validator: check max datetime', done => {
+  test('Datetime validator: check max datetime', () => {
     const component = {
       label: 'datetime',
       key: 'datetime',
@@ -108,11 +104,9 @@ describe('Datetime Component', () => {
     );
 
     expect(isValid2).toBeTruthy();
-
-    done();
   });
 
-  test('Datetime validator: check max datetime including the current one', done => {
+  test('Datetime validator: check max datetime including the current one', () => {
     const component = {
       label: 'datetime',
       key: 'datetime',
@@ -136,11 +130,9 @@ describe('Datetime Component', () => {
     );
 
     expect(isValid1).toBeTruthy();
-
-    done();
   });
 
-  test('Datetime validator: error message', done => {
+  test('Datetime validator: error message', () => {
     const component = {
       label: 'datetime',
       key: 'datetime',
@@ -179,11 +171,9 @@ describe('Datetime Component', () => {
     MinMaxDatetimeValidator.message(componentInstance);
 
     expect(mockTranslation.mock.calls[2][0]).toEqual('maxDatetime');
-
-    done();
   });
 
-  test('Datetime validator: check max datetime AND min datetime', done => {
+  test('Datetime validator: check max datetime AND min datetime', () => {
     const component = {
       label: 'datetime',
       key: 'datetime',
@@ -221,7 +211,5 @@ describe('Datetime Component', () => {
     expect(
       componentInstance.openForms.validationErrorContext.minMaxDatetimeValidatorErrorKeys
     ).toContain('minDatetime');
-
-    done();
   });
 });

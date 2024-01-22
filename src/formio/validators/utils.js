@@ -8,7 +8,7 @@ export const validateBoundaries = (componentType, minBoundary, maxBoundary, valu
     return {isValid: true};
   }
 
-  const parsedValue = parseISO(value, 'yyyy-MM-dd', new Date());
+  const parsedValue = parseISO(value);
 
   let errorKeyMinValue, errorKeyMaxValue;
   if (componentType === 'date') {
