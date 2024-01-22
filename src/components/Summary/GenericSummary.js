@@ -48,7 +48,7 @@ const GenericSummary = ({
           {summaryData.map((step, index) => (
             <FormStepSummary
               key={`${index}-${step.slug}`}
-              slug={step.slug}
+              editUrl={`/stap/${step.slug}`}
               name={step.name}
               data={step.data}
               editStepText={editStepText}

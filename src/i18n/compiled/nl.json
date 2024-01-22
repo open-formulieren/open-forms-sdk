@@ -823,6 +823,20 @@
       "value": "Contactgegevens"
     }
   ],
+  "MHkO0o": [
+    {
+      "type": 0,
+      "value": "Wijzig velden in formulierstap '"
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "'"
+    }
+  ],
   "MJXZYI": [
     {
       "type": 0,

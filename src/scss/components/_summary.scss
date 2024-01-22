@@ -35,6 +35,11 @@
     border-block-end-color: var(--of-summary-header-border-block-end-color, var(--of-color-border));
   }
 
+  // accessible description
+  @include bem.element('link-description') {
+    display: none;
+  }
+
   // TODO: check if there's a modifier for utrecht-link with icon instead.
   .utrecht-link.utrecht-link--openforms .fa-icon {
     padding-inline-end: var(--of-summary-header-link-icon-padding-inline-end, 5px);

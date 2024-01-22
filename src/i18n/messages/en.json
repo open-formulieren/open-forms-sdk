@@ -389,6 +389,11 @@
     "description": "Appointment overview: contact details step title",
     "originalDefault": "Contact details"
   },
+  "MHkO0o": {
+    "defaultMessage": "Change fields in form step ''{name}''",
+    "description": "Form step change link accessible description",
+    "originalDefault": "Change fields in form step ''{name}''"
+  },
   "MJXZYI": {
     "defaultMessage": "m",
     "description": "Placeholder for month part of a date",
