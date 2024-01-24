@@ -1,25 +1,6 @@
-import {parseISO} from 'date-fns';
 import set from 'lodash/set';
 
-const validateDateBoundaries = (minBoundary, maxBoundary, value) => {
-  const minDate = minBoundary ? new Date(minBoundary) : null;
-  const maxDate = maxBoundary ? new Date(maxBoundary) : null;
-
-  if (!minDate && !maxDate) {
-    return {isValid: true};
-  }
-
-  const parsedValue = parseISO(value, 'yyyy-MM-dd', new Date());
-
-  if (minDate && maxDate) {
-    const isValid = parsedValue >= minDate && parsedValue <= maxDate;
-    let errorKeys = isValid ? [] : parsedValue < minDate ? ['minDate'] : ['maxDate'];
-    return {isValid, errorKeys};
-  }
-
-  if (minDate) return {isValid: parsedValue >= minDate, errorKeys: ['minDate']};
-  if (maxDate) return {isValid: parsedValue <= maxDate, errorKeys: ['maxDate']};
-};
+import {validateBoundaries} from './utils';
 
 const MinMaxDateValidator = {
   key: 'validate.dateMinMax',
@@ -38,7 +19,8 @@ const MinMaxDateValidator = {
   check(component, setting, value) {
     if (!value) return true;
 
-    const {isValid, errorKeys} = validateDateBoundaries(
+    const {isValid, errorKeys} = validateBoundaries(
+      component.type,
       component.component.datePicker.minDate,
       component.component.datePicker.maxDate,
       value
