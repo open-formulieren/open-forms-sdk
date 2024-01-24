@@ -35,6 +35,28 @@ describe('The OpenForms plugins validation', () => {
     }
   });
 
+  test('tests expected errors are returned when currentForm is not part of the component', async () => {
+    mswServer.use(
+      phoneNumberValidations.mockInValidDutchPhonenumberPost,
+      phoneNumberValidations.mockInValidInternationalPhonenumberPost
+    );
+
+    const component = {
+      component: phoneNumberComponent,
+      options: {
+        baseUrl: BASE_URL,
+        ofContext: {
+          submissionUuid: 'dummy',
+        },
+      },
+    };
+
+    for (const sample of inValidSamples) {
+      const result = await pluginsAPIValidator.check(component, undefined, sample);
+      expect(result).toBe('Invalid international phone number<br>Invalid dutch phone number');
+    }
+  });
+
   test('tests no errors are returned when phone number is valid', async () => {
     mswServer.use(
       phoneNumberValidations.mockValidDutchPhonenumberPost,

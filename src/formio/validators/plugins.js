@@ -11,7 +11,8 @@ export const pluginsAPIValidator = {
 
     const plugins = component.component.validate.plugins;
     const {baseUrl} = component.currentForm?.options || component.options;
-    const {submissionUuid} = component.currentForm?.options.ofContext;
+    const {submissionUuid} =
+      component.currentForm?.options?.ofContext || component.options?.ofContext;
 
     const promises = plugins.map(plugin => {
       const url = `${baseUrl}validation/plugins/${plugin}`;
