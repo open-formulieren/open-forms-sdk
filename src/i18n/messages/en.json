@@ -85,7 +85,7 @@
     "originalDefault": "You must declare the form to be filled out truthfully before submitting"
   },
   "7+0/Hz": {
-    "defaultMessage": "Betalen",
+    "defaultMessage": "Payment",
     "description": "On succesful completion title but payment required",
     "originalDefault": "Betalen"
   },
