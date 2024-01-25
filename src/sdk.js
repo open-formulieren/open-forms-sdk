@@ -155,7 +155,10 @@ class OpenForm {
     // calculate the client-side base URL, as this is recorded in backend calls for
     // submissions.
     const clientBase = resolvePath(this.browserBasePath).pathname; // has leading slash
-    this.clientBaseUrl = new URL(clientBase, window.location.origin).href;
+    this.clientBaseUrl = new URL(
+      `${clientBase}${window.location.search}`,
+      window.location.origin
+    ).href;
   }
 
   async init() {

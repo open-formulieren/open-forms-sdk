@@ -139,6 +139,20 @@ describe('OpenForm', () => {
     expect(form.clientBaseUrl).toEqual('http://localhost/some-path');
   });
 
+  it('must retain query string parameters with hash based routing', () => {
+    mswServer.use(...apiMocks);
+    window.history.pushState({}, '', '/some-path?someQuery=foo');
+    const formRoot = document.createElement('div');
+    const form = new OpenForm(formRoot, {
+      baseUrl: BASE_URL,
+      basePath: '/i-must-be-ignored',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      useHashRouting: true,
+    });
+
+    expect(form.clientBaseUrl).toEqual('http://localhost/some-path?someQuery=foo');
+  });
+
   it.each([
     [
       `/some-subpath?_of_action=afspraak-annuleren&_of_action_params=${encodeURIComponent(
