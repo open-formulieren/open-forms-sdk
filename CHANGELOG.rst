@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+2.1.1 (2024-01-25)
+==================
+
+Fixed a release blocker
+
+* [#3616] Fixed not recording query string parameters in hash-based routing embed mode
+
 2.1.0 (2024-01-25)
 ==================
 
