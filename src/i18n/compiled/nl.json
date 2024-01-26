@@ -849,6 +849,38 @@
       "value": "Betalen"
     }
   ],
+  "OnfuIr": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (not required)"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "withAsterisk"
+    }
+  ],
   "P194bo": [
     {
       "type": 0,
@@ -1931,38 +1963,6 @@
     {
       "type": 0,
       "value": "Bevestiging mede-ondertekening"
-    }
-  ],
-  "yXbqL6": [
-    {
-      "options": {
-        "other": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            },
-            {
-              "type": 0,
-              "value": " (niet verplicht)"
-            }
-          ]
-        },
-        "true": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            }
-          ]
-        }
-      },
-      "type": 5,
-      "value": "withAsterisk"
     }
   ],
   "zQWnFh": [

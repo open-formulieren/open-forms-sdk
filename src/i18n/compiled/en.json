@@ -849,6 +849,38 @@
       "value": "Payment"
     }
   ],
+  "OnfuIr": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (not required)"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "children": [
+              ],
+              "type": 8,
+              "value": "label"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "withAsterisk"
+    }
+  ],
   "P194bo": [
     {
       "type": 0,
@@ -1927,38 +1959,6 @@
     {
       "type": 0,
       "value": "Co-sign confirmation"
-    }
-  ],
-  "yXbqL6": [
-    {
-      "options": {
-        "other": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            },
-            {
-              "type": 0,
-              "value": " (not required)"
-            }
-          ]
-        },
-        "true": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            }
-          ]
-        }
-      },
-      "type": 5,
-      "value": "withAsterisk"
     }
   ],
   "zQWnFh": [
