@@ -12,8 +12,9 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
 const LoginOptions = ({form, onFormStart}) => {
   const config = useContext(ConfigContext);
 
-  const loginAsYourselfOptions = [];
-  const loginAsGemachtigdeOptions = [];
+  let loginAsYourselfOptions = [];
+  let loginAsGemachtigdeOptions = [];
+  let cosignLoginOptions = [];
 
   form.loginOptions.forEach(option => {
     let readyOption = {...option};
@@ -33,6 +34,21 @@ const LoginOptions = ({form, onFormStart}) => {
     }
   });
 
+  if (form.cosignLoginOptions) {
+    form.cosignLoginOptions.forEach(option => {
+      cosignLoginOptions.push({
+        ...option,
+        label: (
+          <FormattedMessage
+            description="Login button label"
+            defaultMessage="Login with {provider}"
+            values={{provider: option.label}}
+          />
+        ),
+      });
+    });
+  }
+
   if (!form.loginRequired) {
     loginAsYourselfOptions.push({
       identifier: 'anonymous',
@@ -51,23 +67,12 @@ const LoginOptions = ({form, onFormStart}) => {
         },
       };
 
-  let cosignInfo = form.cosignLoginInfo && {
-    ...form.cosignLoginInfo,
-    label: (
-      <FormattedMessage
-        description="Login button label"
-        defaultMessage="Login with {provider}"
-        values={{provider: form.cosignLoginInfo.label}}
-      />
-    ),
-  };
-
   return (
     <Container {...containerProps}>
       <LoginDisplayComponent
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
-        cosignLoginInfo={cosignInfo}
+        cosignLoginOptions={cosignLoginOptions}
       />
     </Container>
   );

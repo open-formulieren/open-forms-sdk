@@ -6,7 +6,6 @@ export default class Cosign extends Email {
       {
         label: 'Co-sign',
         type: 'cosign',
-        authPlugin: 'digid', // default
         input: false,
       },
       ...extend
