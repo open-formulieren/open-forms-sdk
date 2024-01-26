@@ -17,14 +17,18 @@ export const LabelContent = ({id, disabled = false, isRequired = false, type, ch
         [`utrecht-form-label--${type}`]: type,
       })}
     >
-      <FormattedMessage
-        description="Form field label, field possibly optional"
-        defaultMessage="{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}"
-        values={{
-          withAsterisk: requiredFieldsWithAsterisk,
-          label: () => children,
-        }}
-      />
+      {isRequired ? (
+        <>{children}</>
+      ) : (
+        <FormattedMessage
+          description="Form field label, field not required"
+          defaultMessage="{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
+          values={{
+            withAsterisk: requiredFieldsWithAsterisk,
+            label: () => children,
+          }}
+        />
+      )}
     </FormLabel>
   );
 };
