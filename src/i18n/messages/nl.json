@@ -410,6 +410,11 @@
     "description": "Payment page title",
     "originalDefault": "Payment"
   },
+  "OnfuIr": {
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}",
+    "description": "Form field label, field not required",
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (niet verplicht)}}"
+  },
   "P194bo": {
     "defaultMessage": "De ingevoerde waarde moet beginnen met \"{startsWith}\".",
     "description": "ZOD 'invalid_string' error message, with startsWith",
@@ -890,11 +895,6 @@
     "defaultMessage": "Bevestiging mede-ondertekening",
     "description": "On succesful completion title",
     "originalDefault": "Co-sign confirmation"
-  },
-  "yXbqL6": {
-    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (niet verplicht)}}",
-    "description": "Form field label, field possibly optional",
-    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
   },
   "zQWnFh": {
     "defaultMessage": "Bent u zeker dat u wilt uitloggen en hiermee de inzending niet mede-ondertekent?",

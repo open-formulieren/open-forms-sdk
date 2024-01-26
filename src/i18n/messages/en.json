@@ -404,6 +404,11 @@
     "description": "Payment page title",
     "originalDefault": "Payment"
   },
+  "OnfuIr": {
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}",
+    "description": "Form field label, field not required",
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
+  },
   "P194bo": {
     "defaultMessage": "Invalid input: must start with \"{startsWith}\".",
     "description": "ZOD 'invalid_string' error message, with startsWith",
@@ -878,11 +883,6 @@
     "defaultMessage": "Co-sign confirmation",
     "description": "On succesful completion title",
     "originalDefault": "Co-sign confirmation"
-  },
-  "yXbqL6": {
-    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}",
-    "description": "Form field label, field possibly optional",
-    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
   },
   "zQWnFh": {
     "defaultMessage": "Are you sure that you want to logout and not co-sign the current form submission?",
