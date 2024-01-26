@@ -364,6 +364,11 @@
     "description": "Placeholder for month part of a date",
     "originalDefault": "m"
   },
+  "OnfuIr": {
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}",
+    "description": "Form field label, field not required",
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
+  },
   "P194bo": {
     "defaultMessage": "Invalid input: must start with \"{startsWith}\".",
     "description": "ZOD 'invalid_string' error message, with startsWith",

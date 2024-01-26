@@ -368,6 +368,11 @@
     "isTranslated": true,
     "originalDefault": "m"
   },
+  "OnfuIr": {
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}",
+    "description": "Form field label, field not required",
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (niet verplicht)}}"
+  },
   "P194bo": {
     "defaultMessage": "De ingevoerde waarde moet beginnen met \"{startsWith}\".",
     "description": "ZOD 'invalid_string' error message, with startsWith",
