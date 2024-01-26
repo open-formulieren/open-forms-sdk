@@ -138,7 +138,6 @@ const FormStepSaveModal = ({
                 values={{numberOfDays: suspendFormUrlLifetime}}
               />
             </Body>
-
             <EmailField
               name="email"
               isRequired
