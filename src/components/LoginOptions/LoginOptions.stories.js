@@ -17,10 +17,11 @@ export default {
 };
 
 export const Display = {
-  render: ({loginAsYourselfOptions, loginAsGemachtigdeOptions}) => (
+  render: ({loginAsYourselfOptions, loginAsGemachtigdeOptions, cosignLoginOptions}) => (
     <LoginOptionsDisplay
       loginAsYourselfOptions={loginAsYourselfOptions}
       loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
+      cosignLoginOptions={cosignLoginOptions}
     />
   ),
   args: {
@@ -76,18 +77,26 @@ export const Display = {
         url: '#',
       },
     ],
+    cosignLoginOptions: [
+      {
+        identifier: 'digid',
+        label: 'DigiD',
+        logo: {
+          appearance: 'dark',
+          href: 'https://www.digid.nl/',
+          title: 'DigiD',
+          imageSrc: './digid.png',
+        },
+        url: '#',
+      },
+    ],
   },
 };
 
-const render = ({
-  loginRequired = false,
-  loginOptions = [],
-  cosignLoginInfo = undefined,
-  onFormStart,
-}) =>
+const render = ({loginRequired = false, loginOptions = [], cosignLoginOptions = [], onFormStart}) =>
   console.log(onFormStart) || (
     <LoginOptions
-      form={buildForm({loginRequired, loginOptions, cosignLoginInfo})}
+      form={buildForm({loginRequired, loginOptions, cosignLoginOptions})}
       onFormStart={onFormStart}
     />
   );
@@ -214,17 +223,19 @@ export const WithCoSignOption = {
         isForGemachtigde: false,
       },
     ],
-    cosignLoginInfo: {
-      identifier: 'digid',
-      label: 'DigiD',
-      url: '#',
-      logo: {
-        title: 'DigiD simulatie',
-        imageSrc: './digid.png',
-        href: 'https://www.digid.nl/',
-        appearance: 'dark',
+    cosignLoginOptions: [
+      {
+        identifier: 'digid',
+        label: 'DigiD',
+        url: '#',
+        logo: {
+          title: 'DigiD simulatie',
+          imageSrc: './digid.png',
+          href: 'https://www.digid.nl/',
+          appearance: 'dark',
+        },
+        isForGemachtigde: false,
       },
-      isForGemachtigde: false,
-    },
+    ],
   },
 };

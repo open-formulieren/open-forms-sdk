@@ -30,7 +30,7 @@ afterEach(() => {
 });
 
 it('Login not required, options wrapped in form tag', () => {
-  const form = buildForm({loginRequired: false, loginOptions: []});
+  const form = buildForm({loginRequired: false, loginOptions: [], cosignLoginOptions: []});
   const onFormStart = jest.fn(e => e.preventDefault());
 
   act(() => {
@@ -67,6 +67,7 @@ it('Login required, options not wrapped in form tag', () => {
         isForGemachtigde: false,
       },
     ],
+    cosignLoginOptions: [],
   });
   const onFormStart = jest.fn(e => e.preventDefault());
 
@@ -114,6 +115,7 @@ it('Login button has the right URL after cancelling log in', () => {
         isForGemachtigde: false,
       },
     ],
+    cosignLoginOptions: [],
   });
 
   const onFormStart = jest.fn(e => e.preventDefault());

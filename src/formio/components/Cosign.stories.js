@@ -10,7 +10,6 @@ export default {
     type: 'cosign',
     label: 'Co-signer email address',
     validateOn: 'blur',
-    authPlugin: 'digid',
     extraComponentProperties: {},
     evalContext: {},
   },
@@ -19,7 +18,6 @@ export default {
     label: {type: {required: true}},
     type: {table: {disable: true}},
     validateOn: {table: {disable: true}},
-    authPlugin: {table: {disable: true}},
     extraComponentProperties: {
       description: `Any additional Form.io component properties, recursively merged into the
         component definition.`,
