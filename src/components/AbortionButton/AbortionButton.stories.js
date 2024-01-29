@@ -1,5 +1,5 @@
 import {expect} from '@storybook/jest';
-import {waitFor, within} from '@storybook/testing-library';
+import {within} from '@storybook/testing-library';
 
 import {AnalyticsToolsDecorator} from 'story-utils/decorators';
 
@@ -37,10 +37,8 @@ export const GovMetricEnabled = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Abort submission'});
-      await expect(abortButton).toBeVisible();
-    });
+    const abortButton = await canvas.findByRole('button', {name: 'Abort submission'});
+    await expect(abortButton).toBeVisible();
   },
 };
 
@@ -58,10 +56,8 @@ export const AuthenticatedAndGovmetric = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Uitloggen'});
-      await expect(abortButton).toBeVisible();
-    });
+    const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
+    await expect(abortButton).toBeVisible();
   },
 };
 
@@ -72,9 +68,7 @@ export const NotAuthenticatedNoGovMetric = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button');
-      await expect(abortButton).toBeNull();
-    });
+    const abortButton = await canvas.queryByRole('button');
+    await expect(abortButton).toBeNull();
   },
 };

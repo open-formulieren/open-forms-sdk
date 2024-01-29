@@ -17,6 +17,7 @@ const GenericSummary = ({
   submissionAllowed,
   summaryData = [],
   showPaymentInformation,
+  showExtraToolbar,
   amountToPay,
   editStepText,
   isLoading,
@@ -61,14 +62,16 @@ const GenericSummary = ({
             prevPage={prevPage}
             onPrevPage={onPrevPage}
           />
-          <Toolbar modifiers={['bottom', 'reverse']}>
-            <ToolbarList>
-              <AbortionButton
-                isAuthenticated={isAuthenticated}
-                onDestroySession={onDestroySession}
-              />
-            </ToolbarList>
-          </Toolbar>
+          {showExtraToolbar && (
+            <Toolbar modifiers={['bottom', 'reverse']}>
+              <ToolbarList>
+                <AbortionButton
+                  isAuthenticated={isAuthenticated}
+                  onDestroySession={onDestroySession}
+                />
+              </ToolbarList>
+            </Toolbar>
+          )}
         </Wrapper>
       </Formik>
     </Card>
@@ -102,6 +105,7 @@ GenericSummary.propTypes = {
     })
   ),
   showPaymentInformation: PropTypes.bool,
+  showExtraToolbar: PropTypes.bool,
   amountToPay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   editStepText: PropTypes.string,
   isLoading: PropTypes.bool,

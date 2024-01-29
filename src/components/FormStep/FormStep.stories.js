@@ -1,5 +1,5 @@
 import {expect} from '@storybook/jest';
-import {waitFor, within} from '@storybook/testing-library';
+import {within} from '@storybook/testing-library';
 import produce from 'immer';
 import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-react-router-v6';
@@ -168,9 +168,7 @@ export const govmetricEnabled = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Abort submission'});
-      await expect(abortButton).toBeVisible();
-    });
+    const abortButton = await canvas.findByRole('button', {name: 'Abort submission'});
+    await expect(abortButton).toBeVisible();
   },
 };

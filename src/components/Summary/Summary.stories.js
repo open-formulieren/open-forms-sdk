@@ -95,6 +95,7 @@ export default {
       },
     ],
     showPaymentInformation: true,
+    showExtraToolbar: true,
     amountToPay: 54.05,
     showPreviousPageLink: true,
     isLoading: false,
@@ -139,6 +140,7 @@ const render = ({
   submissionAllowed,
   summaryData,
   showPaymentInformation,
+  showExtraToolbar,
   amountToPay,
   editStepText,
   isLoading,
@@ -172,6 +174,7 @@ const render = ({
         submissionAllowed={submissionAllowed}
         summaryData={summaryData}
         showPaymentInformation={showPaymentInformation}
+        showExtraToolbar={showExtraToolbar}
         amountToPay={amountToPay}
         editStepText={editStepText}
         isLoading={isLoading}

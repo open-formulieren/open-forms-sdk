@@ -33,7 +33,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
-import {ConfigContext, FormioTranslations} from 'Context';
+import {AnalyticsToolsConfigContext, ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
 import AbortionButton from 'components/AbortionButton';
 import ButtonsToolbar from 'components/ButtonsToolbar';
@@ -304,6 +304,7 @@ const FormStep = ({
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
+  const analyticsToolsConfig = useContext(AnalyticsToolsConfigContext);
 
   /* component state */
   const formRef = useRef(null);
@@ -819,6 +820,9 @@ const FormStep = ({
     dispatch({type: 'FORMIO_CHANGE_HANDLED'});
   };
 
+  const showExtraToolbar =
+    submission.isAuthenticated || analyticsToolsConfig.enableGovmetricAnalytics;
+
   const isLoadingSomething = loading || isNavigating;
   return (
     <>
@@ -879,14 +883,16 @@ const FormStep = ({
                 onNavigatePrevPage={onPrevPage}
                 previousPage={getPreviousPageHref()}
               />
-              <Toolbar modifiers={['bottom', 'reverse']}>
-                <ToolbarList>
-                  <AbortionButton
-                    isAuthenticated={submission.isAuthenticated}
-                    onDestroySession={onDestroySession}
-                  />
-                </ToolbarList>
-              </Toolbar>
+              {showExtraToolbar && (
+                <Toolbar modifiers={['bottom', 'reverse']}>
+                  <ToolbarList>
+                    <AbortionButton
+                      isAuthenticated={submission.isAuthenticated}
+                      onDestroySession={onDestroySession}
+                    />
+                  </ToolbarList>
+                </Toolbar>
+              )}
             </form>
           </>
         ) : null}
