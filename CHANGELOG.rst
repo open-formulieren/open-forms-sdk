@@ -2,6 +2,15 @@
 SDK Changelog
 =============
 
+2.1.2 (2024-01-25)
+==================
+
+This release fixes some defects in SDK 2.1.x
+
+* [#180] Added missing UI code for GovMetric analytics.
+* [#3805] Fixed the form field label if a field is not required and asterisks for
+  required fields are disabled.
+
 2.1.1 (2024-01-25)
 ==================
 
