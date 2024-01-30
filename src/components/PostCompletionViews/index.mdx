@@ -20,6 +20,11 @@ When no payment is required, after submitting the form the user sees this view:
 
 <Canvas of={ConfirmationStories.WithoutPayment} />
 
+In the case where GovMetric (analytics tool) is enabled, then there is an extra button to provide
+feedback about the experience of filling in the form.
+
+<Canvas of={ConfirmationStories.WithGovMetric} />
+
 ## `ConfirmationViewDisplay` with payment required
 
 After a successful payment, the user is redirected to this view:

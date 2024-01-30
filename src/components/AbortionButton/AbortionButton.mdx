@@ -1,0 +1,35 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as AbortionButtonStories from './AbortionButton.stories';
+
+<Meta of={AbortionButtonStories} />
+
+# Abortion Button
+
+The abortion button can be used to abort a submission whether the user is authenticated or not.
+
+- If the user is authenticated, then the button will have the text 'Log out' to comply with Logius
+  directives that whenever a user is logged in with DigiD a 'Log out' option must be available. When
+  GovMetric is enabled, a new window will open where the user can give feedback.
+- If the analytics tool 'GovMetric' is enabled, aborting the submission will open a new window where
+  the user can give feedback about why they decided to not fill the form until the end.
+
+<Canvas>
+  <Story of={AbortionButtonStories.Authenticated} />
+</Canvas>
+
+<Canvas>
+  <Story of={AbortionButtonStories.GovMetricEnabled} />
+</Canvas>
+
+<Canvas>
+  <Story of={AbortionButtonStories.AuthenticatedAndGovmetric} />
+</Canvas>
+
+<Canvas>
+  <Story of={AbortionButtonStories.NotAuthenticatedNoGovMetric} />
+</Canvas>
+
+## Props
+
+<ArgTypes of={AbortionButtonStories} />

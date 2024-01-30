@@ -5,7 +5,7 @@ import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm} from 'api-mocks';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
 import {getDefaultFactory} from 'api-mocks/base';
 import {FORM_DEFAULTS} from 'api-mocks/forms';
 import mswServer from 'api-mocks/msw-server';
@@ -57,7 +57,7 @@ afterEach(() => {
 
 describe('The progress indicator component', () => {
   it('displays the available submission/form steps and hardcoded steps (without payment)', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission()));
+    mswServer.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
     const user = userEvent.setup({delay: null});
     const form = buildForm();
 
@@ -78,7 +78,7 @@ describe('The progress indicator component', () => {
   });
 
   it('displays the available submission/form steps and hardcoded steps (with payment)', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission()));
+    mswServer.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
     const user = userEvent.setup({delay: null});
     const form = buildForm({paymentRequired: true});
 
@@ -101,7 +101,7 @@ describe('The progress indicator component', () => {
   });
 
   it('renders steps in the correct order', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission()));
+    mswServer.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
     const user = userEvent.setup({delay: null});
     const form = buildForm();
 
