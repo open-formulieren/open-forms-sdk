@@ -62,7 +62,7 @@ it('Summary displays logout button if isAuthenticated is true', () => {
     ...SUBMISSION,
     isAuthenticated: true,
   };
-  const onLogout = jest.fn();
+  const onDestroySession = jest.fn();
   const onConfirm = jest.fn();
 
   useAsync.mockReturnValue({loading: false, value: []});
@@ -75,7 +75,7 @@ it('Summary displays logout button if isAuthenticated is true', () => {
           form={testForm}
           submission={SUBMISSION}
           onConfirm={onConfirm}
-          onLogout={onLogout}
+          onDestroySession={onDestroySession}
           onClearProcessingErrors={() => {}}
         />
       </Wrap>
@@ -90,11 +90,11 @@ it('Summary does not display logout button if loginRequired is false', () => {
     ...testForm,
     loginRequired: false,
   };
-  const onLogout = jest.fn();
+  const onDestroySession = jest.fn();
   const onConfirm = jest.fn();
 
   useAsync.mockReturnValue({loading: false, value: []});
-  useRefreshSubmission.mockReturnValue(SUBMISSION);
+  useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});
 
   act(() => {
     root.render(
@@ -103,7 +103,7 @@ it('Summary does not display logout button if loginRequired is false', () => {
           form={formLoginRequired}
           submission={SUBMISSION}
           onConfirm={onConfirm}
-          onLogout={onLogout}
+          onDestroySession={onDestroySession}
           onClearProcessingErrors={() => {}}
         />
       </Wrap>

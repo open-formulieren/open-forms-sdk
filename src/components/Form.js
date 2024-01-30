@@ -2,10 +2,11 @@ import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {Navigate, Route, Routes, useLocation, useMatch, useNavigate} from 'react-router-dom';
 import {usePrevious} from 'react-use';
+import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
-import {ConfigContext} from 'Context';
-import {destroy} from 'api';
+import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
+import {destroy, get} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
@@ -140,6 +141,10 @@ const Form = () => {
     flagNoActiveSubmission();
   });
 
+  const {value: analyticsToolsConfigInfo, loading: loadingAnalyticsConfig} = useAsync(async () => {
+    return await get(`${config.baseUrl}analytics/analytics_tools_config_info`);
+  }, [intl.locale]);
+
   useEffect(
     () => {
       if (prevLocale === undefined) return;
@@ -210,40 +215,15 @@ const Form = () => {
     }
   };
 
-  const destroySession = async confirmationMessage => {
-    if (!window.confirm(confirmationMessage)) {
-      return;
-    }
-
+  const onDestroySession = async () => {
     await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
 
     removeSubmissionId();
+    dispatch({
+      type: 'RESET',
+      payload: initialStateFromProps,
+    });
     navigate('/');
-    // TODO: replace with a proper reset of the state instead of a page reload.
-    window.location.reload();
-  };
-
-  const onFormAbort = async event => {
-    event.preventDefault();
-
-    const confirmationQuestion = intl.formatMessage({
-      description: 'Abort confirmation prompt',
-      defaultMessage:
-        'Are you sure that you want to abort this submission? You will lose your progress if you continue.',
-    });
-
-    await destroySession(confirmationQuestion);
-  };
-
-  const onLogout = async event => {
-    event.preventDefault();
-
-    const confirmationQuestion = intl.formatMessage({
-      description: 'log out confirmation prompt',
-      defaultMessage: 'Are you sure that you want to logout?',
-    });
-
-    await destroySession(confirmationQuestion);
   };
 
   const onProcessingFailure = errorMessage => {
@@ -269,7 +249,7 @@ const Form = () => {
     );
   }
 
-  if (loading || shouldAutomaticallyRedirect) {
+  if (loading || loadingAnalyticsConfig || shouldAutomaticallyRedirect) {
     return <Loader modifiers={['centered']} />;
   }
 
@@ -358,7 +338,7 @@ const Form = () => {
               form={form}
               hasActiveSubmission={!!state.submission}
               onFormStart={onFormStart}
-              onFormAbort={onFormAbort}
+              onDestroySession={onDestroySession}
             />
           </ErrorBoundary>
         }
@@ -374,9 +354,9 @@ const Form = () => {
                 form={form}
                 processingError={state.processingError}
                 onConfirm={onSubmitForm}
-                onLogout={onLogout}
                 component={SubmissionSummary}
                 onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
+                onDestroySession={onDestroySession}
               />
             </RequireSession>
           </ErrorBoundary>
@@ -425,13 +405,13 @@ const Form = () => {
                   dispatch({type: 'SUBMISSION_LOADED', payload: submission})
                 }
                 onStepSubmitted={onStepSubmitted}
-                onLogout={onLogout}
                 onSessionDestroyed={() => {
                   resetSession();
                   navigate('/');
                   dispatch({type: 'RESET', payload: initialStateFromProps});
                 }}
                 component={FormStep}
+                onDestroySession={onDestroySession}
               />
             </RequireSession>
           </ErrorBoundary>
@@ -441,7 +421,13 @@ const Form = () => {
   );
 
   // render the form step if there's an active submission (and no summary)
-  return <FormDisplay progressIndicator={progressIndicator}>{router}</FormDisplay>;
+  return (
+    <FormDisplay progressIndicator={progressIndicator}>
+      <AnalyticsToolsConfigContext.Provider value={analyticsToolsConfigInfo}>
+        {router}
+      </AnalyticsToolsConfigContext.Provider>
+    </FormDisplay>
+  );
 };
 
 Form.propTypes = {};

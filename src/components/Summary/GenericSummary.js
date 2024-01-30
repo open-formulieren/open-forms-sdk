@@ -2,13 +2,14 @@ import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import AbortionButton from 'components/AbortionButton';
 import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
 import Loader from 'components/Loader';
-import LogoutButton from 'components/LogoutButton';
 import Price from 'components/Price';
 import SummaryConfirmation from 'components/SummaryConfirmation';
+import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const GenericSummary = ({
@@ -16,6 +17,7 @@ const GenericSummary = ({
   submissionAllowed,
   summaryData = [],
   showPaymentInformation,
+  showExtraToolbar,
   amountToPay,
   editStepText,
   isLoading,
@@ -23,7 +25,7 @@ const GenericSummary = ({
   prevPage,
   errors = [],
   onSubmit,
-  onLogout,
+  onDestroySession,
   onPrevPage = null,
 }) => {
   const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? Form : 'div';
@@ -60,7 +62,16 @@ const GenericSummary = ({
             prevPage={prevPage}
             onPrevPage={onPrevPage}
           />
-          {isAuthenticated ? <LogoutButton onLogout={onLogout} /> : null}
+          {showExtraToolbar && (
+            <Toolbar modifiers={['bottom', 'reverse']}>
+              <ToolbarList>
+                <AbortionButton
+                  isAuthenticated={isAuthenticated}
+                  onDestroySession={onDestroySession}
+                />
+              </ToolbarList>
+            </Toolbar>
+          )}
         </Wrapper>
       </Formik>
     </Card>
@@ -94,6 +105,7 @@ GenericSummary.propTypes = {
     })
   ),
   showPaymentInformation: PropTypes.bool,
+  showExtraToolbar: PropTypes.bool,
   amountToPay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   editStepText: PropTypes.string,
   isLoading: PropTypes.bool,
@@ -101,7 +113,7 @@ GenericSummary.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.string),
   prevPage: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
+  onDestroySession: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func,
 };
 

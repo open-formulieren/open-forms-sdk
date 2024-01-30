@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
+import {AnalyticsToolsConfigContext} from 'Context';
 import {post} from 'api';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -37,12 +38,13 @@ const SubmissionSummary = ({
   submission,
   processingError = '',
   onConfirm,
-  onLogout,
   onClearProcessingErrors,
+  onDestroySession,
 }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const navigate = useNavigate();
   const intl = useIntl();
+  const analyticsToolsConfig = useContext(AnalyticsToolsConfigContext);
 
   const refreshedSubmission = useRefreshSubmission(submission);
 
@@ -109,6 +111,9 @@ const SubmissionSummary = ({
     return errors;
   };
 
+  const showExtraToolbar =
+    refreshedSubmission.isAuthenticated || analyticsToolsConfig.enableGovmetricAnalytics;
+
   return (
     <LiteralsProvider literals={form.literals}>
       <GenericSummary
@@ -121,6 +126,7 @@ const SubmissionSummary = ({
         submissionAllowed={refreshedSubmission.submissionAllowed}
         summaryData={summaryData}
         showPaymentInformation={paymentInfo.isRequired && !paymentInfo.hasPaid}
+        showExtraToolbar={showExtraToolbar}
         amountToPay={paymentInfo.amount}
         editStepText={form.literals.changeText.resolved}
         isLoading={loading}
@@ -128,8 +134,8 @@ const SubmissionSummary = ({
         errors={getErrors()}
         prevPage={getPreviousPage()}
         onSubmit={onSubmit}
-        onLogout={onLogout}
         onPrevPage={onPrevPage}
+        onDestroySession={onDestroySession}
       />
     </LiteralsProvider>
   );
@@ -140,8 +146,8 @@ SubmissionSummary.propTypes = {
   submission: Types.Submission.isRequired,
   processingError: PropTypes.string,
   onConfirm: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
   onClearProcessingErrors: PropTypes.func.isRequired,
+  onDestroySession: PropTypes.func.isRequired,
 };
 
 export default SubmissionSummary;
