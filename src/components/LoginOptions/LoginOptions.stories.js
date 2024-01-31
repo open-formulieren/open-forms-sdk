@@ -89,6 +89,17 @@ export const Display = {
         },
         url: '#',
       },
+      {
+        identifier: 'eHerkenning',
+        label: 'eHerkenning',
+        logo: {
+          appearance: 'light',
+          href: 'https://www.eherkenning.nl/',
+          title: 'eHerkenning',
+          imageSrc: './eherkenning.png',
+        },
+        url: '#',
+      },
     ],
   },
 };

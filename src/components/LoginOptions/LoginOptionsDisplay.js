@@ -36,7 +36,7 @@ const LoginOptionsDisplay = ({
         </>
       )}
 
-      {cosignLoginOptions && cosignLoginOptions.length > 0 && (
+      {cosignLoginOptions?.length > 0 && (
         <div className={getBEMClassName('login-options__cosign')}>
           <h2 className={getBEMClassName('login-options__caption')}>
             <FormattedMessage

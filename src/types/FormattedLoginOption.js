@@ -8,6 +8,7 @@ const FormattedLoginOption = PropTypes.shape({
     title: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
     href: PropTypes.string,
+    appearance: PropTypes.bool,
   }),
   isForGemachtigde: PropTypes.bool,
 });

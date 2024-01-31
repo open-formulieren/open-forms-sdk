@@ -12,9 +12,9 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
 const LoginOptions = ({form, onFormStart}) => {
   const config = useContext(ConfigContext);
 
-  let loginAsYourselfOptions = [];
-  let loginAsGemachtigdeOptions = [];
-  let cosignLoginOptions = [];
+  const loginAsYourselfOptions = [];
+  const loginAsGemachtigdeOptions = [];
+  const cosignLoginOptions = [];
 
   form.loginOptions.forEach(option => {
     let readyOption = {...option};
