@@ -13,21 +13,19 @@
   color: var(--of-color-fg-muted);
 }
 
-.openforms-theme {
-  .utrecht-form-label {
-    display: block;
-    line-height: 1.333;
-    overflow-wrap: break-word; // see open-formulieren/open-forms#576
-    @include anchor.extend-utrecht-link;
-    // TODO: remove font-weight rule on 2.0, it's only here for backwards compatibility
-    font-weight: var(--utrecht-form-label-font-weight, var(--of-label-font-weight));
+.utrecht-form-label {
+  display: block;
+  line-height: 1.333;
+  overflow-wrap: break-word; // see open-formulieren/open-forms#576
+  @include anchor.extend-utrecht-link;
+  // TODO: remove font-weight rule on 2.0, it's only here for backwards compatibility
+  font-weight: var(--utrecht-form-label-font-weight, var(--of-label-font-weight));
 
-    @include bem.modifier('openforms-required') {
-      &:after {
-        content: ' *';
-        color: var(--of-color-danger);
-        z-index: 0; // otherwise this is above the progress indicator in some browsers
-      }
+  @include bem.modifier('openforms-required') {
+    &:after {
+      content: ' *';
+      color: var(--of-color-danger);
+      z-index: 0; // otherwise this is above the progress indicator in some browsers
     }
   }
 }
