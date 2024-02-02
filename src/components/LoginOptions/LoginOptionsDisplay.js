@@ -9,7 +9,7 @@ import {getBEMClassName} from 'utils';
 const LoginOptionsDisplay = ({
   loginAsYourselfOptions,
   loginAsGemachtigdeOptions,
-  cosignLoginInfo,
+  cosignLoginOptions,
 }) => {
   return (
     <div className={getBEMClassName('login-options')}>
@@ -36,7 +36,7 @@ const LoginOptionsDisplay = ({
         </>
       )}
 
-      {cosignLoginInfo && (
+      {cosignLoginOptions?.length > 0 && (
         <div className={getBEMClassName('login-options__cosign')}>
           <h2 className={getBEMClassName('login-options__caption')}>
             <FormattedMessage
@@ -45,7 +45,11 @@ const LoginOptionsDisplay = ({
             />
           </h2>
 
-          <LoginButton key={cosignLoginInfo.identifier} option={cosignLoginInfo} />
+          <div className={getBEMClassName('login-options__list')}>
+            {cosignLoginOptions.map(option => (
+              <LoginButton key={option.identifier} option={option} />
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -55,7 +59,7 @@ const LoginOptionsDisplay = ({
 LoginOptionsDisplay.propTypes = {
   loginAsYourselfOptions: PropTypes.arrayOf(FormattedLoginOption).isRequired,
   loginAsGemachtigdeOptions: PropTypes.arrayOf(FormattedLoginOption).isRequired,
-  cosignLoginInfo: FormattedLoginOption,
+  cosignLoginOptions: PropTypes.arrayOf(FormattedLoginOption),
 };
 
 export default LoginOptionsDisplay;
