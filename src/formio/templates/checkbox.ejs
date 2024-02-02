@@ -2,7 +2,7 @@
 <p class="utrecht-form-field__label utrecht-form-field__label--checkbox">
   <label
     for="{{ctx.instance.id}}-{{ctx.component.key}}"
-    class="utrecht-form-label utrecht-form-label--checkbox {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %} {{ctx.input.labelClass}} {% if (ctx.component.validate.required && ctx.requiredFieldsWithAsterisk) { %}utrecht-form-label--openforms-required{% } %}"
+    class="utrecht-form-label utrecht-form-label--checkbox utrecht-form-label--openforms {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %} {{ctx.input.labelClass}} {% if (ctx.component.validate.required && ctx.requiredFieldsWithAsterisk) { %}utrecht-form-label--openforms-required{% } %}"
   >
     {{ctx.input.label}}{% if (!ctx.component.validate.required && !ctx.requiredFieldsWithAsterisk) { %}&nbsp;{{ ctx.t('(not required)') }} {% } %}
     {% if (ctx.component.tooltip) { %}
