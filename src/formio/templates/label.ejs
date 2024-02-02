@@ -1,6 +1,6 @@
 <p class="utrecht-paragraph utrecht-form-field__label">
   <label
-    class="utrecht-form-label {{ctx.label.className}} {% if (ctx.component.validate.required && ctx.requiredFieldsWithAsterisk) { %}utrecht-form-label--openforms-required{% } %}"
+    class="utrecht-form-label utrecht-form-label--openforms {{ctx.label.className}} {% if (ctx.component.validate.required && ctx.requiredFieldsWithAsterisk) { %}utrecht-form-label--openforms-required{% } %}"
     for="{{ctx.instance.id}}-{{ctx.component.key}}"
     {% if (ctx.component.suffix) { %}
       id="label-{{ctx.instance.id}}-{{ctx.component.key}}"
