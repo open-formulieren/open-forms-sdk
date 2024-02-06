@@ -105,7 +105,7 @@ export const WithGovMetric = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const feedbackLink = await canvas.findByRole('link', {name: 'Give feedback'});
+    const feedbackLink = await canvas.findByRole('link', {name: 'Geef feedback'});
     await expect(feedbackLink).toBeVisible();
     await expect(feedbackLink.href).toEqual(
       'https://websurveys2.govmetric.com/theme/kf/1234?Q_Formid=a-test-form'

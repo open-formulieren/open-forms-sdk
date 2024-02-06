@@ -344,6 +344,11 @@
     "description": "Generic error message",
     "originalDefault": "Unfortunately something went wrong!"
   },
+  "KN0HrU": {
+    "defaultMessage": "Give feedback",
+    "description": "Feedback button label",
+    "originalDefault": "Give feedback"
+  },
   "KWP1b9": {
     "defaultMessage": "Previous month",
     "description": "Calendar: previous month button title",
@@ -478,6 +483,11 @@
     "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
+  },
+  "UDs6vL": {
+    "defaultMessage": "How do you rate this form?",
+    "description": "Feedback button title",
+    "originalDefault": "How do you rate this form?"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -843,6 +853,11 @@
     "defaultMessage": "The email address where you received the appointment confirmation email.",
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
+  },
+  "uDjl8X": {
+    "defaultMessage": "Abort submission",
+    "description": "Button label to abort submission",
+    "originalDefault": "Abort submission"
   },
   "uZBPwA": {
     "defaultMessage": "Number must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}.",

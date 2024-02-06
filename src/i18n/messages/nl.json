@@ -348,6 +348,11 @@
     "description": "Generic error message",
     "originalDefault": "Unfortunately something went wrong!"
   },
+  "KN0HrU": {
+    "defaultMessage": "Geef feedback",
+    "description": "Feedback button label",
+    "originalDefault": "Give feedback"
+  },
   "KWP1b9": {
     "defaultMessage": "Vorige maand",
     "description": "Calendar: previous month button title",
@@ -411,9 +416,9 @@
     "originalDefault": "Payment"
   },
   "OnfuIr": {
-    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}",
+    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (niet verplicht)}}",
     "description": "Form field label, field not required",
-    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (niet verplicht)}}"
+    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
   },
   "P194bo": {
     "defaultMessage": "De ingevoerde waarde moet beginnen met \"{startsWith}\".",
@@ -484,6 +489,11 @@
     "defaultMessage": "De tekst moet {exact, select, true {exact} other {{inclusive, select, true {minstens} other {meer dan}}} } {minimum, plural, one {{minimum} karakter} other {{minimum} karakters}} lang zijn.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
+  },
+  "UDs6vL": {
+    "defaultMessage": "Hoe ervaar je dit formulier?",
+    "description": "Feedback button title",
+    "originalDefault": "How do you rate this form?"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -855,6 +865,11 @@
     "defaultMessage": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen.",
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
+  },
+  "uDjl8X": {
+    "defaultMessage": "Afbreken",
+    "description": "Button label to abort submission",
+    "originalDefault": "Abort submission"
   },
   "uZBPwA": {
     "defaultMessage": "Het getal moet {exact, select, true {exact gelijk aan} other {{inclusive, select, true {minder dan of gelijk aan} other {minder dan}}} } {maximum} zijn.",
