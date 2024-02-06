@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+1.4.8 (2024-02-06)
+==================
+
+Bugfix release
+
+* [#642] Updated DigiD error message text.
+
 1.4.7 (2023-12-12)
 ==================
 
