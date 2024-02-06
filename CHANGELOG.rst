@@ -2,6 +2,38 @@
 SDK Changelog
 =============
 
+2.1.3 (2024-02-06)
+==================
+
+Bugfix release
+
+* Included missing GovMetric translations.
+* [#642] Updated DigiD error message text.
+
+2.0.3 (2024-02-06)
+==================
+
+Bugfix release
+
+* [#642] Updated DigiD error message text.
+* [#3805] Fixed the form field label if a field is not required and asterisks for
+  required fields are disabled.
+
+1.5.7 (2024-02-06)
+==================
+
+Bugfix release
+
+* [#642] Updated DigiD error message text.
+
+1.4.8 (2024-02-06)
+==================
+
+Bugfix release
+
+* [#642] Updated DigiD error message text.
+
+
 2.1.2 (2024-01-25)
 ==================
 
