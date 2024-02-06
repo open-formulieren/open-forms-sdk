@@ -67,7 +67,10 @@ it('Form start does not start if there are auth errors', () => {
 
   const testQueries = {
     '_digid-message=error':
-      'Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.',
+      'Inloggen bij deze organisatie is niet gelukt. Probeert u ' +
+      'het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo ' +
+      'controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij ' +
+      'de organisatie waar u inlogt.',
     '_digid-message=login-cancelled': 'Je hebt het inloggen met DigiD geannuleerd.',
     '_eherkenning-message=error':
       'Er is een fout opgetreden bij het inloggen met EHerkenning. Probeer het later opnieuw.',

@@ -36,7 +36,10 @@ it('Renders DigiD default error', () => {
   });
 
   expect(container.textContent).toBe(
-    'Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.'
+    'Inloggen bij deze organisatie is niet gelukt. Probeert u ' +
+      'het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo ' +
+      'controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij ' +
+      'de organisatie waar u inlogt.'
   );
 });
 
