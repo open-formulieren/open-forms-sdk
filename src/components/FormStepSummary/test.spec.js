@@ -69,7 +69,12 @@ it('Multi-value select field displayed properly', () => {
 it.each(testEmptyFields)('Empty fields (%s)', dataEntry => {
   render(
     <Wrap>
-      <FormStepSummary name="Form Step 1" slug="fs-1" editStepText="Change" data={[dataEntry]} />
+      <FormStepSummary
+        name="Form Step 1"
+        editUrl="/stap/fs-1"
+        editStepText="Change"
+        data={[dataEntry]}
+      />
     </Wrap>
   );
 
