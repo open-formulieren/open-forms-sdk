@@ -274,6 +274,11 @@
     "description": "Cancel appointment title",
     "originalDefault": "Cancel appointment"
   },
+  "HPKN5D": {
+    "defaultMessage": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt.",
+    "description": "DigiD error message. MUST BE THIS EXACT STRING!",
+    "originalDefault": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
+  },
   "HhcSoc": {
     "defaultMessage": "Save and resume later",
     "description": "Form save modal title",
@@ -604,11 +609,6 @@
     "description": "Generic submission error",
     "originalDefault": "Something went wrong while submitting the form."
   },
-  "hQRQCS": {
-    "defaultMessage": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie.",
-    "description": "DigiD error message. MUST BE THIS EXACT STRING!",
-    "originalDefault": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
-  },
   "hR1LxA": {
     "defaultMessage": "Current step in form {formTitle}: {activeStepTitle}",
     "description": "Active step accessible label in mobile progress indicator",
@@ -758,11 +758,6 @@
     "defaultMessage": "Log in to co-sign the form",
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
-  },
-  "qf2UCG": {
-    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}",
-    "description": "Form field label, field possibly optional",
-    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (optional)}}"
   },
   "r1L6Zj": {
     "defaultMessage": "Suspending the form failed, please try again later",
