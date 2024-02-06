@@ -525,6 +525,12 @@
       "value": "Afspraak annuleren"
     }
   ],
+  "HPKN5D": [
+    {
+      "type": 0,
+      "value": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
+    }
+  ],
   "HhcSoc": [
     {
       "type": 0,
@@ -798,7 +804,7 @@
             },
             {
               "type": 0,
-              "value": " (not required)"
+              "value": " (niet verplicht)"
             }
           ]
         },
@@ -1283,12 +1289,6 @@
       "value": "Er is iets fout gegaan bij het verzenden."
     }
   ],
-  "hQRQCS": [
-    {
-      "type": 0,
-      "value": "Er is een fout opgetreden in de communicatie met DigiD. Probeert u het later nogmaals. Indien deze fout blijft aanhouden, kijk dan op de website https://www.digid.nl voor de laatste informatie."
-    }
-  ],
   "hR1LxA": [
     {
       "type": 0,
@@ -1703,38 +1703,6 @@
     {
       "type": 0,
       "value": "Log in om het formulier mede te ondertekenen"
-    }
-  ],
-  "qf2UCG": [
-    {
-      "options": {
-        "other": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            },
-            {
-              "type": 0,
-              "value": " (optioneel)"
-            }
-          ]
-        },
-        "true": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            }
-          ]
-        }
-      },
-      "type": 5,
-      "value": "withAsterisk"
     }
   ],
   "r1L6Zj": [
