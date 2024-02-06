@@ -743,6 +743,12 @@
       "value": "Er ging helaas iets fout!"
     }
   ],
+  "KN0HrU": [
+    {
+      "type": 0,
+      "value": "Geef feedback"
+    }
+  ],
   "KWP1b9": [
     {
       "type": 0,
@@ -862,7 +868,7 @@
             },
             {
               "type": 0,
-              "value": " (not required)"
+              "value": " (niet verplicht)"
             }
           ]
         },
@@ -1079,6 +1085,12 @@
     {
       "type": 0,
       "value": " lang zijn."
+    }
+  ],
+  "UDs6vL": [
+    {
+      "type": 0,
+      "value": "Hoe ervaar je dit formulier?"
     }
   ],
   "UyEKdQ": [
@@ -1855,6 +1867,12 @@
     {
       "type": 0,
       "value": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen."
+    }
+  ],
+  "uDjl8X": [
+    {
+      "type": 0,
+      "value": "Afbreken"
     }
   ],
   "uZBPwA": [

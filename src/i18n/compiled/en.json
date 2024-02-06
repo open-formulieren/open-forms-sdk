@@ -743,6 +743,12 @@
       "value": "Unfortunately something went wrong!"
     }
   ],
+  "KN0HrU": [
+    {
+      "type": 0,
+      "value": "Give feedback"
+    }
+  ],
   "KWP1b9": [
     {
       "type": 0,
@@ -1079,6 +1085,12 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "UDs6vL": [
+    {
+      "type": 0,
+      "value": "How do you rate this form?"
     }
   ],
   "UyEKdQ": [
@@ -1851,6 +1863,12 @@
     {
       "type": 0,
       "value": "The email address where you received the appointment confirmation email."
+    }
+  ],
+  "uDjl8X": [
+    {
+      "type": 0,
+      "value": "Abort submission"
     }
   ],
   "uZBPwA": [
