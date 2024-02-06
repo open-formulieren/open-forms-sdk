@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+2.1.3 (2024-02-06)
+==================
+
+Bugfix release
+
+* Included missing GovMetric translations.
+* [#642] Updated DigiD error message text.
+
 2.1.2 (2024-01-25)
 ==================
 
