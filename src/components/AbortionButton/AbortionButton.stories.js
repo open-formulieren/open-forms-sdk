@@ -37,7 +37,7 @@ export const GovMetricEnabled = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const abortButton = await canvas.findByRole('button', {name: 'Abort submission'});
+    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
     await expect(abortButton).toBeVisible();
   },
 };
