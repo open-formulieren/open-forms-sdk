@@ -2,6 +2,15 @@
 SDK Changelog
 =============
 
+2.0.3 (2024-02-06)
+==================
+
+Bugfix release
+
+* [#642] Updated DigiD error message text.
+* [#3805] Fixed the form field label if a field is not required and asterisks for
+  required fields are disabled.
+
 2.0.2 (2024-01-12)
 ==================
 
