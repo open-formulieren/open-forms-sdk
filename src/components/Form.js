@@ -292,16 +292,16 @@ const Form = () => {
     {formName, activeStepTitle}
   );
 
-  let applicableSteps = [];
-  if (form.hideNonApplicableSteps) {
-    applicableSteps = steps.filter(step => step.isApplicable);
-  }
+  // process the form/submission steps information into step data that can be passed
+  // to the progress indicator.
+  // If the form is marked to not display non-applicable steps at all, filter them out.
+  const showNonApplicableSteps = !form.hideNonApplicableSteps;
+  const updatedSteps =
+    // first, process all the form steps in a format suitable for the PI
+    getStepsInfo(steps, submission, currentPathname)
+      // then, filter out the non-applicable steps if they should not be displayed
+      .filter(step => showNonApplicableSteps || step.isApplicable);
 
-  const updatedSteps = getStepsInfo(
-    applicableSteps.length > 0 ? applicableSteps : form.steps,
-    submission,
-    currentPathname
-  );
   const stepsToRender = addFixedSteps(
     intl,
     updatedSteps,
