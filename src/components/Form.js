@@ -208,7 +208,7 @@ const Form = () => {
       },
     });
 
-    if (form.paymentRequired && !state.submission.payment.hasPaid) {
+    if (submission?.payment.isRequired && !state.submission.payment.hasPaid) {
       navigate('/betalen');
     } else {
       navigate('/bevestiging');
@@ -261,7 +261,7 @@ const Form = () => {
   const submission = state.submission || state.submittedSubmission;
   const isCompleted = state.completed;
   const formName = form.name;
-  const needsPayment = form.paymentRequired;
+  const needsPayment = submission ? submission.payment.isRequired : form.paymentRequired;
 
   // Figure out the slug from the currently active step IF we're looking at a step
   const stepSlug = stepMatch ? stepMatch.params.step : '';
