@@ -24,10 +24,10 @@ export default {
       {
         to: 'first-step',
         label: 'Stap 1',
-        isCompleted: true,
-        isApplicable: true,
+        isCompleted: false,
+        isApplicable: false,
         isCurrent: false,
-        canNavigateTo: true,
+        canNavigateTo: false,
       },
       {
         to: 'second-step',

@@ -292,13 +292,28 @@ const Form = () => {
     {formName, activeStepTitle}
   );
 
-  let applicableSteps = [];
-  if (form.hideNonApplicableSteps) {
-    applicableSteps = steps.filter(step => step.isApplicable);
-  }
+  // Add slug and label to the submission steps.
+  // We need to show the items in the ProgressIndicator according to the
+  // submission data, as we may have logic rules which have been applied to them.
+  const updatedSubmissionSteps = submission?.steps.map(subStep => {
+    const updatedSubStep = {...subStep};
+
+    for (const formStep of steps) {
+      if (formStep.uuid === subStep.id) {
+        updatedSubStep['slug'] = formStep.slug;
+        updatedSubStep['formDefinition'] = formStep.formDefinition;
+      }
+    }
+    return updatedSubStep;
+  });
+
+  // Show only applicable steps when this is set in the admin.
+  let applicableSteps = form.hideNonApplicableSteps
+    ? (updatedSubmissionSteps || steps).filter(step => step.isApplicable)
+    : [];
 
   const updatedSteps = getStepsInfo(
-    applicableSteps.length > 0 ? applicableSteps : form.steps,
+    applicableSteps.length > 0 ? applicableSteps : updatedSubmissionSteps || form.steps,
     submission,
     currentPathname
   );
