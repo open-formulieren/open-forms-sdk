@@ -15,7 +15,9 @@ const canNavigateToStep = (index, submission) => {
     step => step.isApplicable && !step.completed
   );
 
-  return !previousApplicableButNotCompletedSteps.length;
+  // If a step is not applicable but we have chosen to show it, it should not be able to
+  // navigate to it.
+  return !previousApplicableButNotCompletedSteps.length && submission.steps[index].isApplicable;
 };
 
 const getStepsInfo = (formSteps, submission, currentPathname) => {
