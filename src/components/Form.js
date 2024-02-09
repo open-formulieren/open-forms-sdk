@@ -292,31 +292,16 @@ const Form = () => {
     {formName, activeStepTitle}
   );
 
-  // Add slug and label to the submission steps.
-  // We need to show the items in the ProgressIndicator according to the
-  // submission data, as we may have logic rules which have been applied to them.
-  const updatedSubmissionSteps = submission?.steps.map(subStep => {
-    const updatedSubStep = {...subStep};
+  // process the form/submission steps information into step data that can be passed
+  // to the progress indicator.
+  // If the form is marked to not display non-applicable steps at all, filter them out.
+  const showNonApplicableSteps = !form.hideNonApplicableSteps;
+  const updatedSteps =
+    // first, process all the form steps in a format suitable for the PI
+    getStepsInfo(steps, submission, currentPathname)
+      // then, filter out the non-applicable steps if they should not be displayed
+      .filter(step => showNonApplicableSteps || step.isApplicable);
 
-    for (const formStep of steps) {
-      if (formStep.uuid === subStep.id) {
-        updatedSubStep['slug'] = formStep.slug;
-        updatedSubStep['formDefinition'] = formStep.formDefinition;
-      }
-    }
-    return updatedSubStep;
-  });
-
-  // Show only applicable steps when this is set in the admin.
-  let applicableSteps = form.hideNonApplicableSteps
-    ? (updatedSubmissionSteps || steps).filter(step => step.isApplicable)
-    : [];
-
-  const updatedSteps = getStepsInfo(
-    applicableSteps.length > 0 ? applicableSteps : updatedSubmissionSteps || form.steps,
-    submission,
-    currentPathname
-  );
   const stepsToRender = addFixedSteps(
     intl,
     updatedSteps,

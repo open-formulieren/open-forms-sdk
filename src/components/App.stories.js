@@ -45,7 +45,7 @@ export default {
         uuid: '98980oi8-e5a4-4abf-b64a-76j3j3ki897',
         slug: 'step-2',
         formDefinition: 'Step 2',
-        index: 0,
+        index: 1,
         literals: {
           previousText: {resolved: 'Previous', value: ''},
           saveText: {resolved: 'Save', value: ''},
@@ -176,6 +176,40 @@ export const ActiveSubmission = {
   },
   argTypes: {
     hideNonApplicableSteps: {table: {disable: true}},
+    submissionAllowed: {table: {disable: true}},
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        mockSubmissionPost(),
+        mockSubmissionGet(),
+        mockSubmissionStepGet(),
+        mockSubmissionCheckLogicPost(),
+        mockLanguageInfoGet([
+          {code: 'nl', name: 'Nederlands'},
+          {code: 'en', name: 'English'},
+        ]),
+        mockLanguageChoicePut,
+        mockAnalyticsToolConfigGet(),
+      ],
+    },
+  },
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const beginButton = await canvas.findByRole('button', {name: 'Begin'});
+    await userEvent.click(beginButton);
+  },
+};
+
+export const NonApplicableStepActiveSubmission = {
+  ...Default,
+  name: 'Active submission with non-applicable step hidden',
+  args: {
+    hideNonApplicableSteps: true,
+  },
+  argTypes: {
     submissionAllowed: {table: {disable: true}},
   },
   parameters: {
