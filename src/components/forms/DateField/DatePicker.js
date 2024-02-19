@@ -24,6 +24,7 @@ const DatePicker = ({
   id,
   disabled,
   calendarProps,
+  className = 'utrecht-textbox--openforms',
   ...extra
 }) => {
   const intl = useIntl();
@@ -76,7 +77,7 @@ const DatePicker = ({
           ref={refs.setReference}
           name={name}
           id={id}
-          className="utrecht-textbox--openforms"
+          className={className}
           autoComplete="off"
           placeholder={placeholderParts.join(dateLocaleMeta.separator)}
           disabled={disabled}
