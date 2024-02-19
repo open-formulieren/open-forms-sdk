@@ -2,6 +2,7 @@ import React from 'react';
 import {Navigate, Outlet, useMatch} from 'react-router-dom';
 
 import {Cosign} from 'components/CoSign';
+import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import Form from 'components/Form';
 import {
   CreateAppointment,
@@ -29,7 +30,11 @@ export const routes = [
   // All the rest goes to the formio-based form flow
   {
     path: '*',
-    element: <Form />,
+    element: (
+      <ErrorBoundary useCard>
+        <Form />
+      </ErrorBoundary>
+    ),
   },
 ];
 

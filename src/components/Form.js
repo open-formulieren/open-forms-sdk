@@ -36,6 +36,7 @@ const initialState = {
   processingStatusUrl: '',
   processingError: '',
   completed: false,
+  startingError: '',
 };
 
 const reducer = (draft, action) => {
@@ -77,6 +78,10 @@ const reducer = (draft, action) => {
     case 'RESET': {
       const initialState = action.payload;
       return initialState;
+    }
+    case 'STARTING_ERROR': {
+      draft.startingError = action.payload;
+      break;
     }
     default: {
       throw new Error(`Unknown action ${action.type}`);
@@ -176,7 +181,14 @@ const Form = () => {
       return;
     }
 
-    const submission = await createSubmission(config.baseUrl, form, config.clientBaseUrl);
+    let submission;
+    try {
+      submission = await createSubmission(config.baseUrl, form, config.clientBaseUrl);
+    } catch (exc) {
+      dispatch({type: 'STARTING_ERROR', payload: exc});
+      return;
+    }
+
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
@@ -324,6 +336,8 @@ const Form = () => {
         accessibleToggleStepsLabel={accessibleToggleStepsLabel}
       />
     ) : null;
+
+  if (state.startingError) throw state.startingError;
 
   // Route the correct page based on URL
   const router = (
