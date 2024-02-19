@@ -2,6 +2,32 @@
 SDK Changelog
 =============
 
+2.2.0-alpha.0 (2023-02-19)
+==========================
+
+First preview release of the upcoming 2.2.0 version.
+
+Features
+--------
+
+* [#3680] Co-sign login now supports all authentication plugins available on the form.
+* The "required field asterisk" can now be used in themes other than the Open Forms theme.
+* [#2617] Added UI support for dynamic no-payment-required situations.
+
+Bugfixes
+--------
+
+* Added the base class ``utrecht-form-label--openforms`` on component labels where it
+  was missing so that styling can be properly isolated.
+* [#642] Updated DigiD error message text.
+* [#3835] Fixed the progress indicator displaying non-applicable steps despite the
+  being configured to hide them instead of appending a suffix.
+
+Project maintenance
+-------------------
+
+* Fixed some test warnings.
+
 2.1.3 (2024-02-06)
 ==================
 
