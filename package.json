@@ -216,7 +216,8 @@
   },
   "resolutions": {
     "state-pool/immer": "9.0.21",
-    "react-formio/formiojs": "4.13.12"
+    "react-formio/formiojs": "4.13.12",
+    "jackspeak": "2.1.1"
   },
   "babel": {
     "presets": [
