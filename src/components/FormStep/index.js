@@ -35,7 +35,7 @@ import {useImmerReducer} from 'use-immer';
 
 import {AnalyticsToolsConfigContext, ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
-import AbortionButton from 'components/AbortionButton';
+import AbortButton from 'components/AbortButton';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
@@ -886,7 +886,7 @@ const FormStep = ({
               {showExtraToolbar && (
                 <Toolbar modifiers={['bottom', 'reverse']}>
                   <ToolbarList>
-                    <AbortionButton
+                    <AbortButton
                       isAuthenticated={submission.isAuthenticated}
                       onDestroySession={onDestroySession}
                     />
