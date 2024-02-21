@@ -1,0 +1,18 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as ExistingSubmissionOptionsStories from './ExistingSubmissionOptions.stories';
+
+<Meta of={ExistingSubmissionOptionsStories} />
+
+# Existing submission options
+
+When the user is filling in a form and they are in the first step, if they navigate to the previous
+page, then they see this component.
+
+<Canvas>
+  <Story of={ExistingSubmissionOptionsStories.Default} />
+</Canvas>
+
+## Props
+
+<ArgTypes of={ExistingSubmissionOptionsStories} />
