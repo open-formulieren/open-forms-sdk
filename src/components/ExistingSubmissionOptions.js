@@ -1,30 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 
+import AbortButton from 'components/AbortButton';
 import {OFButton} from 'components/Button';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Types from 'types';
 
-const ExistingSubmissionOptions = ({form, onDestroySession}) => {
+const ExistingSubmissionOptions = ({form, onDestroySession, isAuthenticated}) => {
   const navigate = useNavigate();
-  const intl = useIntl();
 
   const firstStepRoute = `/stap/${form.steps[0].slug}`;
-  const confirmationMessage = intl.formatMessage({
-    description: 'Abort confirmation prompt',
-    defaultMessage:
-      'Are you sure that you want to abort this submission? You will lose your progress if you continue.',
-  });
-
-  const onFormAbort = async event => {
-    event.preventDefault();
-
-    if (!window.confirm(confirmationMessage)) return;
-
-    await onDestroySession();
-  };
 
   return (
     <Toolbar modifiers={['column']}>
@@ -37,12 +24,7 @@ const ExistingSubmissionOptions = ({form, onDestroySession}) => {
         </OFButton>
       </ToolbarList>
       <ToolbarList>
-        <OFButton appearance="primary-action-button" hint="danger" onClick={onFormAbort}>
-          <FormattedMessage
-            defaultMessage="Abort existing submission"
-            description="Abort existing submission button label"
-          />
-        </OFButton>
+        <AbortButton onDestroySession={onDestroySession} isAuthenticated={isAuthenticated} />
       </ToolbarList>
     </Toolbar>
   );
@@ -51,6 +33,7 @@ const ExistingSubmissionOptions = ({form, onDestroySession}) => {
 ExistingSubmissionOptions.propTypes = {
   form: Types.Form.isRequired,
   onDestroySession: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default ExistingSubmissionOptions;

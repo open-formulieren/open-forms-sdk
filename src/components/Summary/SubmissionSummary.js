@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
@@ -109,9 +109,6 @@ const SubmissionSummary = ({
     return errors;
   };
 
-  const showExtraToolbar =
-    refreshedSubmission.isAuthenticated || analyticsToolsConfig.enableGovmetricAnalytics;
-
   return (
     <LiteralsProvider literals={form.literals}>
       <GenericSummary
@@ -124,7 +121,6 @@ const SubmissionSummary = ({
         submissionAllowed={refreshedSubmission.submissionAllowed}
         summaryData={summaryData}
         showPaymentInformation={paymentInfo.isRequired && !paymentInfo.hasPaid}
-        showExtraToolbar={showExtraToolbar}
         amountToPay={paymentInfo.amount}
         editStepText={form.literals.changeText.resolved}
         isLoading={loading}

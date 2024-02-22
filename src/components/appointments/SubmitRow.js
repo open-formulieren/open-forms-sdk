@@ -7,6 +7,7 @@ import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}) => {
   const navigate = useNavigate();
+
   return (
     <ButtonsToolbar
       literals={{
@@ -20,10 +21,11 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
       isLastStep={false}
       isCheckingLogic={false}
       loginRequired={false}
+      hideAbortButton={true}
       previousPage={navigateBackTo ? `../${navigateBackTo}` : ''}
       onFormSave={() => {}}
-      onLogout={() => {}}
       onNavigatePrevPage={navigateBackTo ? () => navigate(`../${navigateBackTo}`) : undefined}
+      onDestroySession={() => {}}
     />
   );
 };

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import AbortButton from 'components/AbortButton';
 import {OFButton} from 'components/Button';
 import Link from 'components/Link';
 import {Literal, LiteralsProvider} from 'components/Literal';
@@ -15,9 +16,12 @@ const ButtonsToolbar = ({
   canSuspendForm,
   isLastStep,
   isCheckingLogic,
+  isAuthenticated,
+  hideAbortButton,
   onNavigatePrevPage,
   onFormSave,
   previousPage,
+  onDestroySession,
 }) => {
   const showSubmitButton = !(canSubmitForm === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
 
@@ -61,6 +65,13 @@ const ButtonsToolbar = ({
             )}
           </ToolbarList>
         </Toolbar>
+        {!hideAbortButton && (
+          <Toolbar modifiers={['bottom', 'reverse']}>
+            <ToolbarList>
+              <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
+            </ToolbarList>
+          </Toolbar>
+        )}
       </LiteralsProvider>
     </>
   );
@@ -73,9 +84,12 @@ ButtonsToolbar.propTypes = {
   canSuspendForm: PropTypes.bool.isRequired,
   isLastStep: PropTypes.bool.isRequired,
   isCheckingLogic: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  hideAbortButton: PropTypes.bool,
   onNavigatePrevPage: PropTypes.func,
   onFormSave: PropTypes.func.isRequired,
   previousPage: PropTypes.string,
+  onDestroySession: PropTypes.func.isRequired,
 };
 
 export default ButtonsToolbar;

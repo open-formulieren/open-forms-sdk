@@ -50,8 +50,6 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
     />
   );
 
-  if (!isAuthenticated && !analyticsToolsConfig.enableGovmetricAnalytics) return null;
-
   return (
     <OFButton appearance="primary-action-button" hint="danger" name="abort" onClick={callback}>
       {message}

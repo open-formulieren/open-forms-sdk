@@ -350,7 +350,7 @@ const Form = () => {
           <ErrorBoundary useCard>
             <FormStart
               form={form}
-              hasActiveSubmission={!!state.submission}
+              submission={state.submission}
               onFormStart={onFormStart}
               onDestroySession={onDestroySession}
             />

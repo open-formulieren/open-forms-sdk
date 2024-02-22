@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {post} from 'api';
@@ -23,8 +23,6 @@ const CosignSummary = ({
   onCosignComplete,
   onDestroySession,
 }) => {
-  const intl = useIntl();
-
   // The backend has added the submission to the session, but we need to load it
   const [loading, , removeSubmissionId] = useRecycleSubmission(
     form,
@@ -52,29 +50,8 @@ const CosignSummary = ({
     onCosignComplete(response.data.reportDownloadUrl);
   };
 
-  const destroySession = async () => {
-    removeSubmissionId();
-    onDestroySession();
-  };
-
-  const onLogout = async event => {
-    event.preventDefault();
-
-    const confirmationMessage = intl.formatMessage({
-      description: 'log out confirmation prompt on co-sign page',
-      defaultMessage:
-        'Are you sure that you want to logout and not co-sign the current form submission?',
-    });
-
-    if (!window.confirm(confirmationMessage)) {
-      return;
-    }
-
-    await destroySession();
-  };
-
   const [sessionExpired, expiryDate] = useSessionTimeout(async () => {
-    await destroySession();
+    await onDestroySession();
   });
 
   if (!(loading || loadingData) && !summaryData) {
@@ -98,7 +75,7 @@ const CosignSummary = ({
           isLoading={loading || loadingData}
           isAuthenticated={true}
           onSubmit={onSubmit}
-          onLogout={onLogout}
+          onDestroySession={onDestroySession}
         />
       </LiteralsProvider>
     </RequireSession>
