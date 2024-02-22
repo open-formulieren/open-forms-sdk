@@ -4,12 +4,11 @@
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
 
-import {ConfigContext} from 'Context';
-import {destroy, post} from 'api';
+import {post} from 'api';
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
@@ -51,10 +50,8 @@ const FormStepSaveModal = ({
   onSessionDestroyed,
   suspendFormUrl,
   suspendFormUrlLifetime,
-  submissionId,
 }) => {
   const intl = useIntl();
-  const config = useContext(ConfigContext);
 
   const [{errorMessage, isSaving}, dispatch] = useImmerReducer(reducer, initialState);
 
@@ -91,25 +88,10 @@ const FormStepSaveModal = ({
       });
       return;
     }
-    try {
-      // Destroy throws an exception if the API is not successful
-      await destroy(`${config.baseUrl}authentication/${submissionId}/session`);
-    } catch (e) {
-      actions.setSubmitting(false);
-      dispatch({
-        type: 'API_ERROR',
-        payload: {
-          feedback: intl.formatMessage({
-            description: 'Modal logging out failed message',
-            defaultMessage: 'Logging out failed, please try again later',
-          }),
-        },
-      });
-      return;
-    }
 
     actions.setSubmitting(false);
     dispatch({type: 'SAVE_SUCCEEDED'});
+
     onSessionDestroyed();
   };
 
@@ -196,10 +178,6 @@ FormStepSaveModal.propTypes = {
    * Backend API endpoint to suspend the submission.
    */
   suspendFormUrl: PropTypes.string.isRequired,
-  /**
-   * Backend ID of the submission, used to construct API endpoint URLs.
-   */
-  submissionId: PropTypes.string.isRequired,
   /**
    * Duration that the resume URL is valid for, in days.
    */

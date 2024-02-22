@@ -419,11 +419,6 @@ const Form = () => {
                   dispatch({type: 'SUBMISSION_LOADED', payload: submission})
                 }
                 onStepSubmitted={onStepSubmitted}
-                onSessionDestroyed={() => {
-                  resetSession();
-                  navigate('/');
-                  dispatch({type: 'RESET', payload: initialStateFromProps});
-                }}
                 component={FormStep}
                 onDestroySession={onDestroySession}
               />

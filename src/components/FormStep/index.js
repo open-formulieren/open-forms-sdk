@@ -293,14 +293,7 @@ const reducer = (draft, action) => {
  * @throws {Error} Throws errors from state so the error boundaries can pick them up.
  * @return {React.ReactNode}
  */
-const FormStep = ({
-  form,
-  submission,
-  onLogicChecked,
-  onStepSubmitted,
-  onSessionDestroyed,
-  onDestroySession,
-}) => {
+const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroySession}) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
@@ -901,7 +894,7 @@ const FormStep = ({
         isOpen={isFormSaveModalOpen}
         closeModal={closeFormStepSaveModal}
         onSaveConfirm={onSaveConfirm}
-        onSessionDestroyed={onSessionDestroyed}
+        onSessionDestroyed={onDestroySession}
         suspendFormUrl={`${submission.url}/_suspend`}
         suspendFormUrlLifetime={form.resumeLinkLifetime}
         submissionId={submission.id}
@@ -915,7 +908,6 @@ FormStep.propTypes = {
   submission: PropTypes.object.isRequired,
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
-  onSessionDestroyed: PropTypes.func.isRequired,
   onDestroySession: PropTypes.func.isRequired,
 };
 
