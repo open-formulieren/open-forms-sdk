@@ -1,8 +1,8 @@
 import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
 
-import * as AbortionButtonStories from './AbortionButton.stories';
+import * as AbortButtonStories from './AbortButton.stories';
 
-<Meta of={AbortionButtonStories} />
+<Meta of={AbortButtonStories} />
 
 # Abortion Button
 
@@ -15,21 +15,21 @@ The abortion button can be used to abort a submission whether the user is authen
   the user can give feedback about why they decided to not fill the form until the end.
 
 <Canvas>
-  <Story of={AbortionButtonStories.Authenticated} />
+  <Story of={AbortButtonStories.Authenticated} />
 </Canvas>
 
 <Canvas>
-  <Story of={AbortionButtonStories.GovMetricEnabled} />
+  <Story of={AbortButtonStories.GovMetricEnabled} />
 </Canvas>
 
 <Canvas>
-  <Story of={AbortionButtonStories.AuthenticatedAndGovmetric} />
+  <Story of={AbortButtonStories.AuthenticatedAndGovmetric} />
 </Canvas>
 
 <Canvas>
-  <Story of={AbortionButtonStories.NotAuthenticatedNoGovMetric} />
+  <Story of={AbortButtonStories.NotAuthenticatedNoGovMetric} />
 </Canvas>
 
 ## Props
 
-<ArgTypes of={AbortionButtonStories} />
+<ArgTypes of={AbortButtonStories} />

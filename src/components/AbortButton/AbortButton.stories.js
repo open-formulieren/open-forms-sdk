@@ -3,11 +3,11 @@ import {within} from '@storybook/testing-library';
 
 import {AnalyticsToolsDecorator} from 'story-utils/decorators';
 
-import AbortionButton from './AbortionButton';
+import AbortButton from './AbortButton';
 
 export default {
   title: 'Private API / Abortion button',
-  component: AbortionButton,
+  component: AbortButton,
   decorators: [AnalyticsToolsDecorator],
 };
 

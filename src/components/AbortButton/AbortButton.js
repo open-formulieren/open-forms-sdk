@@ -7,7 +7,7 @@ import {OFButton} from 'components/Button';
 import {buildGovMetricUrl} from 'components/analytics/utils';
 import useFormContext from 'hooks/useFormContext';
 
-const AbortionButton = ({isAuthenticated, onDestroySession}) => {
+const AbortButton = ({isAuthenticated, onDestroySession}) => {
   const intl = useIntl();
   const analyticsToolsConfig = useContext(AnalyticsToolsConfigContext);
   const form = useFormContext();
@@ -59,8 +59,8 @@ const AbortionButton = ({isAuthenticated, onDestroySession}) => {
   );
 };
 
-AbortionButton.propTypes = {
+AbortButton.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   onDestroySession: PropTypes.func.isRequired,
 };
-export default AbortionButton;
+export default AbortButton;
