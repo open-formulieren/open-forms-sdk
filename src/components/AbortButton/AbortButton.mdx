@@ -4,9 +4,9 @@ import * as AbortButtonStories from './AbortButton.stories';
 
 <Meta of={AbortButtonStories} />
 
-# Abortion Button
+# Abort Button
 
-The abortion button can be used to abort a submission whether the user is authenticated or not.
+The abort button can be used to abort a submission whether the user is authenticated or not.
 
 - If the user is authenticated, then the button will have the text 'Log out' to comply with Logius
   directives that whenever a user is logged in with DigiD a 'Log out' option must be available. When
@@ -19,15 +19,15 @@ The abortion button can be used to abort a submission whether the user is authen
 </Canvas>
 
 <Canvas>
-  <Story of={AbortButtonStories.GovMetricEnabled} />
+  <Story of={AbortButtonStories.Anonymous} />
+</Canvas>
+
+<Canvas>
+  <Story of={AbortButtonStories.AnonymousAndGovMetric} />
 </Canvas>
 
 <Canvas>
   <Story of={AbortButtonStories.AuthenticatedAndGovmetric} />
-</Canvas>
-
-<Canvas>
-  <Story of={AbortButtonStories.NotAuthenticatedNoGovMetric} />
 </Canvas>
 
 ## Props

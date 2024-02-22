@@ -47,12 +47,15 @@ const render = ({
   onDestroySession,
   // story args
   formioConfiguration,
+  isAuthenticated,
 }) => {
   // force mutation/re-render by using different step URLs every time
   submission = produce(submission, draftSubmission => {
     for (const step of draftSubmission.steps) {
       step.url = `${draftSubmission.url}/steps/${uuid4()}`;
     }
+
+    submission.isAuthenticated = isAuthenticated;
   });
   const submissionStepDetailBody = getSubmissionStepDetail({
     formioConfiguration: formioConfiguration,
@@ -100,6 +103,12 @@ export const Default = {
     form: buildForm(),
     submission: buildSubmission(),
   },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    await expect(abortButton).toBeVisible();
+  },
 };
 
 export const SuspensionDisallowed = {
@@ -128,6 +137,41 @@ export const SuspensionDisallowed = {
     },
     form: buildForm({suspensionAllowed: false}),
     submission: buildSubmission(),
+  },
+};
+
+export const Authenticated = {
+  render,
+  args: {
+    isAuthenticated: true,
+    formioConfiguration: {
+      display: 'form',
+      components: [
+        {
+          type: 'textfield',
+          key: 'text1',
+          label: 'Simple text field',
+          description: 'A help text for the text field',
+        },
+        {
+          type: 'radio',
+          key: 'radio1',
+          label: 'Radio choices',
+          values: [
+            {value: 'option1', label: 'Option1'},
+            {value: 'option2', label: 'Option2'},
+          ],
+        },
+      ],
+    },
+    form: buildForm(),
+    submission: buildSubmission(),
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
+    await expect(abortButton).toBeVisible();
   },
 };
 

@@ -23,7 +23,19 @@ export const Authenticated = {
   },
 };
 
-export const GovMetricEnabled = {
+export const Anonymous = {
+  args: {
+    isAuthenticated: false,
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    await expect(abortButton).toBeVisible();
+  },
+};
+
+export const AnonymousAndGovMetric = {
   args: {
     isAuthenticated: false,
   },
@@ -58,17 +70,5 @@ export const AuthenticatedAndGovmetric = {
 
     const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
     await expect(abortButton).toBeVisible();
-  },
-};
-
-export const NotAuthenticatedNoGovMetric = {
-  args: {
-    isAuthenticated: false,
-  },
-  play: async ({canvasElement}) => {
-    const canvas = within(canvasElement);
-
-    const abortButton = await canvas.queryByRole('button');
-    await expect(abortButton).toBeNull();
   },
 };
