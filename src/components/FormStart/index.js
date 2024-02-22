@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
+import {useAsync} from 'react-use';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
@@ -44,14 +45,13 @@ const FormStart = ({form, hasActiveSubmission, onFormStart, onDestroySession}) =
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
   const authErrors = useDetectAuthErrorMessages();
-  const [error, setError] = useState(null);
   const hasAuthErrors = !!outagePluginId || !!authErrors;
 
   const onFormStartCalledRef = useRef(false);
 
   useTitle(form.name);
 
-  useEffect(() => {
+  useAsync(async () => {
     // if it's already called, do not call it again as this creates 'infite' cycles.
     // This component is re-mounted/re-rendered because of parent component state changes,
     // while the start marker is still in the querystring. Therefore, once we have called
@@ -61,24 +61,11 @@ const FormStart = ({form, hasActiveSubmission, onFormStart, onDestroySession}) =
       return;
     }
 
-    const startForm = async () => {
-      try {
-        await onFormStart();
-      } catch (e) {
-        setError(e);
-      }
-    };
-
     if (doStart && !hasAuthErrors) {
-      startForm();
+      await onFormStart();
       onFormStartCalledRef.current = true;
     }
   }, [doStart, hasAuthErrors, onFormStart]);
-
-  // let errors bubble up to the error boundaries
-  if (error) {
-    throw error;
-  }
 
   // do not re-render the login options while we're redirecting
   if (doStart && !hasAuthErrors) {
