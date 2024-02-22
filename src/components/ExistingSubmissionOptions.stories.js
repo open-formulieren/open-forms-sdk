@@ -19,11 +19,28 @@ export default {
 };
 
 export const Default = {
+  args: {
+    isAuthenticated: false,
+  },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Opnieuw starten'});
+      const abortButton = await canvas.queryByRole('button', {name: 'Afbreken'});
+      await expect(abortButton).toBeVisible();
+    });
+  },
+};
+
+export const Authenticated = {
+  args: {
+    isAuthenticated: true,
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      const abortButton = await canvas.queryByRole('button', {name: 'Uitloggen'});
       await expect(abortButton).toBeVisible();
     });
   },

@@ -50,12 +50,7 @@ it('Form start page start if _start parameter is present', () => {
   act(() => {
     root.render(
       <Wrap>
-        <FormStart
-          form={testForm}
-          onFormStart={onFormStart}
-          onDestroySession={onDestroySession}
-          hasActiveSubmission={false}
-        />
+        <FormStart form={testForm} onFormStart={onFormStart} onDestroySession={onDestroySession} />
       </Wrap>
     );
   });
@@ -90,7 +85,6 @@ it('Form start does not start if there are auth errors', () => {
             form={testForm}
             onFormStart={onFormStart}
             onDestroySession={onDestroySession}
-            hasActiveSubmission={false}
           />
         </Wrap>
       );
@@ -112,12 +106,12 @@ it('Form start page does not show login buttons if an active submission is prese
         form={testForm}
         onFormStart={onFormStart}
         onDestroySession={onDestroySession}
-        hasActiveSubmission={true}
+        submission={{id: 'tralala', isAuthenticated: false}}
       />
     </Wrap>,
     container
   );
 
   expect(screen.queryByRole('button', {name: 'Continue existing submission'})).toBeInTheDocument();
-  expect(screen.queryByRole('button', {name: 'Abort existing submission'})).toBeInTheDocument();
+  expect(screen.queryByRole('button', {name: 'Abort submission'})).toBeInTheDocument();
 });

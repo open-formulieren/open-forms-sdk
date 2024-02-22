@@ -27,6 +27,7 @@ const SUBMISSION = {
     amount: '',
     hasPaid: false,
   },
+  isAuthenticated: false,
 };
 
 jest.mock('react-use');
@@ -111,4 +112,28 @@ it('Summary does not display logout button if loginRequired is false', () => {
   });
 
   expect(container.textContent).not.toContain('Uitloggen');
+});
+
+it('Summary displays abort button if isAuthenticated is false', () => {
+  const onDestroySession = jest.fn();
+  const onConfirm = jest.fn();
+
+  useAsync.mockReturnValue({loading: false, value: []});
+  useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});
+
+  act(() => {
+    root.render(
+      <Wrap>
+        <SubmissionSummary
+          form={testForm}
+          submission={SUBMISSION}
+          onConfirm={onConfirm}
+          onDestroySession={onDestroySession}
+          onClearProcessingErrors={() => {}}
+        />
+      </Wrap>
+    );
+  });
+
+  expect(container.textContent).toContain('Afbreken');
 });

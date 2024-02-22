@@ -43,19 +43,15 @@ const render = ({
   submission,
   onLogicChecked,
   onStepSubmitted,
-  onSessionDestroyed,
   onDestroySession,
   // story args
   formioConfiguration,
-  isAuthenticated,
 }) => {
   // force mutation/re-render by using different step URLs every time
   submission = produce(submission, draftSubmission => {
     for (const step of draftSubmission.steps) {
       step.url = `${draftSubmission.url}/steps/${uuid4()}`;
     }
-
-    submission.isAuthenticated = isAuthenticated;
   });
   const submissionStepDetailBody = getSubmissionStepDetail({
     formioConfiguration: formioConfiguration,
@@ -71,7 +67,6 @@ const render = ({
       submission={submission}
       onLogicChecked={onLogicChecked}
       onStepSubmitted={onStepSubmitted}
-      onSessionDestroyed={onSessionDestroyed}
       onDestroySession={onDestroySession}
     />
   );
@@ -143,7 +138,6 @@ export const SuspensionDisallowed = {
 export const Authenticated = {
   render,
   args: {
-    isAuthenticated: true,
     formioConfiguration: {
       display: 'form',
       components: [
@@ -165,7 +159,7 @@ export const Authenticated = {
       ],
     },
     form: buildForm(),
-    submission: buildSubmission(),
+    submission: buildSubmission({isAuthenticated: true}),
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);

@@ -5,7 +5,6 @@ import {useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
-import {AnalyticsToolsConfigContext} from 'Context';
 import {post} from 'api';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -44,7 +43,6 @@ const SubmissionSummary = ({
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const navigate = useNavigate();
   const intl = useIntl();
-  const analyticsToolsConfig = useContext(AnalyticsToolsConfigContext);
 
   const refreshedSubmission = useRefreshSubmission(submission);
 

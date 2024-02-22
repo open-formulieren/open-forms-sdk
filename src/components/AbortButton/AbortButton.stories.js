@@ -6,7 +6,7 @@ import {AnalyticsToolsDecorator} from 'story-utils/decorators';
 import AbortButton from './AbortButton';
 
 export default {
-  title: 'Private API / Abortion button',
+  title: 'Private API / Abort button',
   component: AbortButton,
   decorators: [AnalyticsToolsDecorator],
 };
