@@ -209,6 +209,10 @@ const CoSignDisplay = ({component, value}) => {
   return <CoSignOld interactive={false} />;
 };
 
+const ContentDisplay = ({component, value}) => {
+  return <span dangerouslySetInnerHTML={{__html: component.html}} />;
+};
+
 const ComponentValueDisplay = ({value, component}) => {
   const {multiple = false, type} = component;
 
@@ -259,6 +263,7 @@ const TYPE_TO_COMPONENT = {
   map: MapDisplay,
   password: PasswordDisplay,
   coSign: CoSignDisplay,
+  content: ContentDisplay,
 };
 
 export default ComponentValueDisplay;
