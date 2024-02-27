@@ -51,6 +51,10 @@
       {{ ctx.labelMarkup }}
     {% } %}
 
+    {% if (ctx.component.description) { %}
+      <div class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext">{{ctx.component.description}}</div>
+    {% } %}
+
     {% if (ctx.label.hidden && ctx.label.className && ctx.component.validate.required && ctx.requiredFieldsWithAsterisk) { %}
       <label class="utrecht-form-label utrecht-form-label--openforms utrecht-form-label--openforms-required {{ctx.label.className}}"></label>
     {% } %}
@@ -61,14 +65,10 @@
       {{ ctx.labelMarkup }}
     {% } %}
 
-    {% if (ctx.component.description) { %}
-      <div class="utrecht-form-field-description utrecht-form-field-description--openforms-helptext">{{ctx.component.description}}</div>
-    {% } %}
-
     <div
       ref="messageContainer"
       class="utrecht-form-field-description utrecht-form-field-description--invalid utrecht-form-field-description--openforms-errors"
       role="alert"
       aria-describedby="{{ctx.id}}"></div>
-  </div>
+    </div>
 {% } %}
