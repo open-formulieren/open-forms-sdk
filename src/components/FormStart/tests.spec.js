@@ -6,6 +6,7 @@ import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
 
+import {buildSubmission} from 'api-mocks';
 import useQuery from 'hooks/useQuery';
 
 import FormStart from '.';
@@ -106,7 +107,7 @@ it('Form start page does not show login buttons if an active submission is prese
         form={testForm}
         onFormStart={onFormStart}
         onDestroySession={onDestroySession}
-        submission={{id: 'tralala', isAuthenticated: false}}
+        submission={buildSubmission({isAuthenticated: false})}
       />
     </Wrap>,
     container

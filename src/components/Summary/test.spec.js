@@ -1,3 +1,4 @@
+import {render as renderTest, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -121,19 +122,17 @@ it('Summary displays abort button if isAuthenticated is false', () => {
   useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});
 
-  act(() => {
-    root.render(
-      <Wrap>
-        <SubmissionSummary
-          form={testForm}
-          submission={SUBMISSION}
-          onConfirm={onConfirm}
-          onDestroySession={onDestroySession}
-          onClearProcessingErrors={() => {}}
-        />
-      </Wrap>
-    );
-  });
+  renderTest(
+    <Wrap>
+      <SubmissionSummary
+        form={testForm}
+        submission={SUBMISSION}
+        onConfirm={onConfirm}
+        onDestroySession={onDestroySession}
+        onClearProcessingErrors={() => {}}
+      />
+    </Wrap>
+  );
 
-  expect(container.textContent).toContain('Afbreken');
+  expect(screen.queryByRole('button', {name: 'Afbreken'})).toBeInTheDocument();
 });

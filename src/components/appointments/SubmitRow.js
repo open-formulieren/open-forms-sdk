@@ -21,7 +21,7 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
       isLastStep={false}
       isCheckingLogic={false}
       loginRequired={false}
-      hideAbortButton={true}
+      hideAbortButton
       previousPage={navigateBackTo ? `../${navigateBackTo}` : ''}
       onFormSave={() => {}}
       onNavigatePrevPage={navigateBackTo ? () => navigate(`../${navigateBackTo}`) : undefined}
