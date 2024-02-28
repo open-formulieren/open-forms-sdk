@@ -10,7 +10,10 @@ class ContentComponent extends Formio.Components.components.content {
     super.init();
     const {customClass = ''} = this.component;
     // upstream template is broken (?) and doesn't actually call this.className
-    this.component.className = getBEMClassName('formio-content', customClass ? [customClass] : []);
+    this.component.className = getBEMClassName(
+      'formio-content utrecht-html',
+      customClass ? [customClass] : []
+    );
   }
 }
 

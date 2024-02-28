@@ -1,3 +1,5 @@
+import '@utrecht/component-library-css/dist/html.css';
+
 import {withUtrechtDocument} from 'story-utils/decorators';
 
 import {SingleFormioComponent} from './story-util';
