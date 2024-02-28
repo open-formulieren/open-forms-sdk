@@ -32,6 +32,7 @@ export default {
               type: 'content',
               label: 'Content',
               key: 'content',
+              html: '<i>In this section you can enter your personal details.</i>',
             },
           },
           {
