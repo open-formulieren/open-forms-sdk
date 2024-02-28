@@ -168,11 +168,10 @@ export default {
       },
     ],
     showPaymentInformation: true,
-    showExtraToolbar: true,
     amountToPay: 54.05,
     showPreviousPageLink: true,
     isLoading: false,
-    isAuthenticated: true,
+    isAuthenticated: false,
     errors: [],
     submissionAllowed: SUBMISSION_ALLOWED.yes,
     editStepText: 'Change',
@@ -213,7 +212,6 @@ const render = ({
   submissionAllowed,
   summaryData,
   showPaymentInformation,
-  showExtraToolbar,
   amountToPay,
   editStepText,
   isLoading,
@@ -221,8 +219,8 @@ const render = ({
   errors,
   prevPage,
   onSubmit,
-  onLogout,
   onPrevPage,
+  onDestroySession,
   // story args
   showPreviousPageLink,
   askPrivacyConsent,
@@ -247,7 +245,6 @@ const render = ({
         submissionAllowed={submissionAllowed}
         summaryData={summaryData}
         showPaymentInformation={showPaymentInformation}
-        showExtraToolbar={showExtraToolbar}
         amountToPay={amountToPay}
         editStepText={editStepText}
         isLoading={isLoading}
@@ -258,8 +255,8 @@ const render = ({
           event.preventDefault();
           onSubmit(event);
         }}
-        onLogout={onLogout}
         onPrevPage={showPreviousPageLink ? onPrevPage : null}
+        onDestroySession={onDestroySession}
       />
     </FormContext.Provider>
   );
@@ -290,6 +287,22 @@ export const Default = {
     const fieldsetPartnerNode = fieldsetNodes[0];
 
     await expect(fieldsetPartnerNode.firstChild.textContent).toEqual('Partner details');
+
+    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    await expect(abortButton).toBeVisible();
+  },
+};
+
+export const Authenticated = {
+  render,
+  args: {
+    isAuthenticated: true,
+  },
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
+    await expect(abortButton).toBeVisible();
   },
 };
 

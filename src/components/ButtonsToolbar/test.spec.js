@@ -1,7 +1,9 @@
 import {render as renderTest, screen} from '@testing-library/react';
+import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {act} from 'react-dom/test-utils';
+import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
 
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -33,12 +35,18 @@ const LITERALS = {
   previousText: {value: '', resolved: 'Previous step'},
 };
 
+const Wrap = ({children}) => (
+  <IntlProvider locale="nl" messages={messagesNL}>
+    <MemoryRouter>{children}</MemoryRouter>
+  </IntlProvider>
+);
+
 it('Last step of submittable form, button is present', () => {
   const mockFunction = jest.fn();
 
   act(() => {
     root.render(
-      <MemoryRouter>
+      <Wrap>
         <ButtonsToolbar
           literals={LITERALS}
           canSubmitStep={true}
@@ -49,19 +57,20 @@ it('Last step of submittable form, button is present', () => {
           isCheckingLogic={false}
           loginRequired={false}
           onFormSave={mockFunction}
-          onLogout={mockFunction}
+          onDestroySession={mockFunction}
           previousPage="#"
         />
-      </MemoryRouter>
+      </Wrap>
     );
   });
 
   const buttons = container.getElementsByClassName('openforms-toolbar__list-item');
 
-  expect(buttons.length).toEqual(3);
+  expect(buttons.length).toEqual(4);
   expect(buttons[0].textContent).toEqual('Previous step');
   expect(buttons[1].textContent).toEqual('Save step');
   expect(buttons[2].textContent).toEqual('Next step');
+  expect(buttons[3].textContent).toEqual('Afbreken');
 });
 
 it('Last step of non-submittable form with overview, button is present', () => {
@@ -69,7 +78,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
 
   act(() => {
     root.render(
-      <MemoryRouter>
+      <Wrap>
         <ButtonsToolbar
           literals={LITERALS}
           canSubmitStep={true}
@@ -81,18 +90,19 @@ it('Last step of non-submittable form with overview, button is present', () => {
           loginRequired={false}
           previousPage="#"
           onFormSave={mockFunction}
-          onLogout={mockFunction}
+          onDestroySession={mockFunction}
         />
-      </MemoryRouter>
+      </Wrap>
     );
   });
 
   const buttons = container.getElementsByClassName('openforms-toolbar__list-item');
 
-  expect(buttons.length).toEqual(3);
+  expect(buttons.length).toEqual(4);
   expect(buttons[0].textContent).toEqual('Previous step');
   expect(buttons[1].textContent).toEqual('Save step');
   expect(buttons[2].textContent).toEqual('Next step');
+  expect(buttons[3].textContent).toEqual('Afbreken');
 });
 
 it('Last step of non-submittable form without overview, button is NOT present', () => {
@@ -100,7 +110,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
 
   act(() => {
     root.render(
-      <MemoryRouter>
+      <Wrap>
         <ButtonsToolbar
           literals={LITERALS}
           canSubmitStep={true}
@@ -112,17 +122,18 @@ it('Last step of non-submittable form without overview, button is NOT present', 
           loginRequired={false}
           previousPage="#"
           onFormSave={mockFunction}
-          onLogout={mockFunction}
+          onDestroySession={mockFunction}
         />
-      </MemoryRouter>
+      </Wrap>
     );
   });
 
   const buttons = container.getElementsByClassName('openforms-toolbar__list-item');
 
-  expect(buttons.length).toEqual(2);
+  expect(buttons.length).toEqual(3);
   expect(buttons[0].textContent).toEqual('Previous step');
   expect(buttons[1].textContent).toEqual('Save step');
+  expect(buttons[2].textContent).toEqual('Afbreken');
 });
 
 it('Non-last step of non-submittable form without overview, button IS present', () => {
@@ -130,7 +141,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
 
   act(() => {
     root.render(
-      <MemoryRouter>
+      <Wrap>
         <ButtonsToolbar
           literals={LITERALS}
           canSubmitStep={true}
@@ -142,25 +153,26 @@ it('Non-last step of non-submittable form without overview, button IS present', 
           loginRequired={false}
           previousPage="#"
           onFormSave={mockFunction}
-          onLogout={mockFunction}
+          onDestroySession={mockFunction}
         />
-      </MemoryRouter>
+      </Wrap>
     );
   });
 
   const buttons = container.getElementsByClassName('openforms-toolbar__list-item');
 
-  expect(buttons.length).toEqual(3);
+  expect(buttons.length).toEqual(4);
   expect(buttons[0].textContent).toEqual('Previous step');
   expect(buttons[1].textContent).toEqual('Save step');
   expect(buttons[2].textContent).toEqual('Next step');
+  expect(buttons[3].textContent).toEqual('Afbreken');
 });
 
 it('Suspending form allowed, button is present', () => {
   const mockFunction = jest.fn();
 
   renderTest(
-    <MemoryRouter>
+    <Wrap>
       <ButtonsToolbar
         literals={LITERALS}
         canSubmitStep={true}
@@ -172,9 +184,9 @@ it('Suspending form allowed, button is present', () => {
         loginRequired={false}
         previousPage="#"
         onFormSave={mockFunction}
-        onLogout={mockFunction}
+        onDestroySession={mockFunction}
       />
-    </MemoryRouter>
+    </Wrap>
   );
 
   expect(screen.queryByText('Save step')).toBeInTheDocument();
@@ -184,7 +196,7 @@ it('Suspending form not allowed, button is NOT present', () => {
   const mockFunction = jest.fn();
 
   renderTest(
-    <MemoryRouter>
+    <Wrap>
       <ButtonsToolbar
         literals={LITERALS}
         canSubmitStep={true}
@@ -196,9 +208,9 @@ it('Suspending form not allowed, button is NOT present', () => {
         loginRequired={false}
         previousPage="#"
         onFormSave={mockFunction}
-        onLogout={mockFunction}
+        onDestroySession={mockFunction}
       />
-    </MemoryRouter>
+    </Wrap>
   );
 
   expect(screen.queryByText('Save step')).not.toBeInTheDocument();

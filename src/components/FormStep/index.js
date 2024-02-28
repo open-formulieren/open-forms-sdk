@@ -33,14 +33,12 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
-import {AnalyticsToolsConfigContext, ConfigContext, FormioTranslations} from 'Context';
+import {ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
-import AbortButton from 'components/AbortButton';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
   eventTriggeredBySubmitButton,
@@ -289,22 +287,13 @@ const reducer = (draft, action) => {
  * @param {Function} onLogicChecked
  * @param {Function} onStepSubmitted
  * @param {Function} onDestroySession
- * @param {Function} onSessionDestroyed
  * @throws {Error} Throws errors from state so the error boundaries can pick them up.
  * @return {React.ReactNode}
  */
-const FormStep = ({
-  form,
-  submission,
-  onLogicChecked,
-  onStepSubmitted,
-  onSessionDestroyed,
-  onDestroySession,
-}) => {
+const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroySession}) => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
-  const analyticsToolsConfig = useContext(AnalyticsToolsConfigContext);
 
   /* component state */
   const formRef = useRef(null);
@@ -820,9 +809,6 @@ const FormStep = ({
     dispatch({type: 'FORMIO_CHANGE_HANDLED'});
   };
 
-  const showExtraToolbar =
-    submission.isAuthenticated || analyticsToolsConfig.enableGovmetricAnalytics;
-
   const isLoadingSomething = loading || isNavigating;
   return (
     <>
@@ -876,23 +862,15 @@ const FormStep = ({
                 canSubmitStep={canSubmit}
                 canSubmitForm={submission.submissionAllowed}
                 canSuspendForm={form.suspensionAllowed}
+                isAuthenticated={submission.isAuthenticated}
                 isLastStep={isLastStep(currentStepIndex, submission)}
                 isCheckingLogic={logicChecking}
                 loginRequired={form.loginRequired}
                 onFormSave={onFormSave}
                 onNavigatePrevPage={onPrevPage}
                 previousPage={getPreviousPageHref()}
+                onDestroySession={onDestroySession}
               />
-              {showExtraToolbar && (
-                <Toolbar modifiers={['bottom', 'reverse']}>
-                  <ToolbarList>
-                    <AbortButton
-                      isAuthenticated={submission.isAuthenticated}
-                      onDestroySession={onDestroySession}
-                    />
-                  </ToolbarList>
-                </Toolbar>
-              )}
             </form>
           </>
         ) : null}
@@ -901,7 +879,7 @@ const FormStep = ({
         isOpen={isFormSaveModalOpen}
         closeModal={closeFormStepSaveModal}
         onSaveConfirm={onSaveConfirm}
-        onSessionDestroyed={onSessionDestroyed}
+        onSessionDestroyed={onDestroySession}
         suspendFormUrl={`${submission.url}/_suspend`}
         suspendFormUrlLifetime={form.resumeLinkLifetime}
         submissionId={submission.id}
@@ -915,7 +893,6 @@ FormStep.propTypes = {
   submission: PropTypes.object.isRequired,
   onLogicChecked: PropTypes.func.isRequired,
   onStepSubmitted: PropTypes.func.isRequired,
-  onSessionDestroyed: PropTypes.func.isRequired,
   onDestroySession: PropTypes.func.isRequired,
 };
 

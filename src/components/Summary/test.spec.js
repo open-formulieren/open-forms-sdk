@@ -1,3 +1,4 @@
+import {render as renderTest, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -27,6 +28,7 @@ const SUBMISSION = {
     amount: '',
     hasPaid: false,
   },
+  isAuthenticated: false,
 };
 
 jest.mock('react-use');
@@ -111,4 +113,26 @@ it('Summary does not display logout button if loginRequired is false', () => {
   });
 
   expect(container.textContent).not.toContain('Uitloggen');
+});
+
+it('Summary displays abort button if isAuthenticated is false', () => {
+  const onDestroySession = jest.fn();
+  const onConfirm = jest.fn();
+
+  useAsync.mockReturnValue({loading: false, value: []});
+  useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});
+
+  renderTest(
+    <Wrap>
+      <SubmissionSummary
+        form={testForm}
+        submission={SUBMISSION}
+        onConfirm={onConfirm}
+        onDestroySession={onDestroySession}
+        onClearProcessingErrors={() => {}}
+      />
+    </Wrap>
+  );
+
+  expect(screen.queryByRole('button', {name: 'Afbreken'})).toBeInTheDocument();
 });

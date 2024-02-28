@@ -350,7 +350,7 @@ const Form = () => {
           <ErrorBoundary useCard>
             <FormStart
               form={form}
-              hasActiveSubmission={!!state.submission}
+              submission={state.submission}
               onFormStart={onFormStart}
               onDestroySession={onDestroySession}
             />
@@ -419,11 +419,6 @@ const Form = () => {
                   dispatch({type: 'SUBMISSION_LOADED', payload: submission})
                 }
                 onStepSubmitted={onStepSubmitted}
-                onSessionDestroyed={() => {
-                  resetSession();
-                  navigate('/');
-                  dispatch({type: 'RESET', payload: initialStateFromProps});
-                }}
                 component={FormStep}
                 onDestroySession={onDestroySession}
               />
