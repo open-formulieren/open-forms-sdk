@@ -55,7 +55,7 @@ export const Display = {
           appearance: 'light',
           href: 'https://www.eherkenning.nl/',
           title: 'eIDAS',
-          imageSrc: './eidas.svg',
+          imageSrc: './eidas.png',
         },
         url: '#',
       },
@@ -148,7 +148,7 @@ export const Functional = {
         url: '#',
         logo: {
           title: 'eIDAS',
-          imageSrc: './eidas.svg',
+          imageSrc: './eidas.png',
           href: 'https://digital-strategy.ec.europa.eu/en/policies/eu-trust-mark',
           appearance: 'light',
         },
