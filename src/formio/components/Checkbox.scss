@@ -12,26 +12,27 @@
         --of-utrecht-form-field-checkbox-background-color,
         var(--of-checkbox-bg)
       );
-
+      background-color: var(--_of-utrecht-form-field-checkbox-background-color);
+      --_of-checkbox-label-shift: calc(
+        var(--of-utrecht-form-label-checkbox-padding-block-start) + var(--utrecht-checkbox-size)
+      );
+      // TODO add these tokens below to this repo https://github.com/open-formulieren/design-tokens#readme
+      padding-block-start: var(--of-utrecht-form-field-checkbox-padding-block-start, 12px);
+      padding-block-end: var(--of-utrecht-form-field-checkbox-padding-block-end, 12px);
+      padding-inline-start: var(--of-utrecht-form-field-checkbox-padding-inline-start, 12px);
+      padding-inline-end: var(--of-utrecht-form-field-checkbox-padding-inline-end, 12px);
       & + & {
         margin-block-start: var(--of-utrecht-form-field-checkbox-margin-block-start);
       }
 
       .utrecht-custom-checkbox,
       .utrecht-checkbox--custom {
-        margin-block-start: var(--of-utrecht-form-label-checkbox-padding-block-start);
-        margin-inline-start: var(--of-utrecht-form-label-checkbox-padding-inline-start);
-
         &:focus ~ .utrecht-form-field__label--checkbox {
           outline: var(--of-utrecht-form-label-checkbox-focus-within-outline);
         }
       }
 
       .utrecht-form-field__label {
-        background-color: var(--_of-utrecht-form-field-checkbox-background-color);
-        --_of-checkbox-label-shift: calc(
-          var(--of-utrecht-form-label-checkbox-padding-block-start) + var(--utrecht-checkbox-size)
-        );
         padding-inline-start: var(--_of-checkbox-label-shift);
         margin-inline-start: calc(var(--_of-checkbox-label-shift) * -1);
       }
