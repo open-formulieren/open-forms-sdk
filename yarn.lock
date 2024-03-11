@@ -2143,7 +2143,7 @@
     tslib "^2.1.0"
     typescript "^4.5"
 
-"@formio/bootstrap3@^2.12.0":
+"@formio/bootstrap3@^2.12.0", "@formio/bootstrap3@^2.12.2":
   version "2.12.3"
   resolved "https://registry.yarnpkg.com/@formio/bootstrap3/-/bootstrap3-2.12.3.tgz#afb3a91773161d77515628f8e9a031aa5104adc6"
   integrity sha512-/jod5STUSz9wLnniCCZwKvqigLrzHt4jDZ07VUxmnqg1IcPcJKNX1UrY7tBAYWa2lWJ/p1j4bSerC6UWjbdYDQ==
@@ -9141,6 +9141,47 @@ formiojs@4.13.12, formiojs@^4.9.0:
   integrity sha512-JMSr3C0nqlnXlWk+bJNRbGxxHEb/kXuZRfCgNSRUrYa7jOFbzMhNgZkoKh+wbHUJHQk4OooQ3EeIRuC2l2BnhA==
   dependencies:
     "@formio/bootstrap3" "^2.12.0"
+    "@formio/choices.js" "^9.0.1"
+    "@formio/semantic" "^2.6.0"
+    "@formio/vanilla-text-mask" "^5.1.1"
+    autocompleter "^6.1.2"
+    browser-cookies "^1.2.0"
+    compare-versions "^3.6.0"
+    core-js "^3.18.1"
+    custom-event-polyfill "^1.0.7"
+    dialog-polyfill "^0.5.6"
+    dompurify "^2.3.3"
+    downloadjs "^1.4.7"
+    dragula "^3.7.3"
+    eventemitter3 "^4.0.7"
+    fast-deep-equal "^3.1.3"
+    fast-json-patch "^3.1.0"
+    fetch-ponyfill "^7.1.0"
+    i18next "~20.4.0"
+    idb "^6.1.4"
+    ismobilejs "^1.1.1"
+    json-logic-js "^2.0.0"
+    jstimezonedetect "^1.0.7"
+    jwt-decode "^3.1.2"
+    lodash "^4.17.21"
+    moment "^2.29.1"
+    moment-timezone "^0.5.33"
+    native-promise-only "^0.8.1"
+    quill "^2.0.0-dev.3"
+    resize-observer-polyfill "^1.5.1"
+    signature_pad "^2.3.2"
+    string-hash "^1.1.3"
+    text-mask-addons "^3.8.0"
+    tooltip.js "^1.3.3"
+    uuid "^8.3.2"
+    vanilla-picker "^2.11.2"
+
+formiojs@4.13.13:
+  version "4.13.13"
+  resolved "https://registry.yarnpkg.com/formiojs/-/formiojs-4.13.13.tgz#c71f4909f63670ab95395f427e58802bb7614ad2"
+  integrity sha512-h+kRDhicjYtalr+ux9/9fKk/RxPRBy+oxIeaxBrZNabU19n+WDuSMQT31K+6JV2qTM/QPHJcWmcI8mm25CluwQ==
+  dependencies:
+    "@formio/bootstrap3" "^2.12.2"
     "@formio/choices.js" "^9.0.1"
     "@formio/semantic" "^2.6.0"
     "@formio/vanilla-text-mask" "^5.1.1"

@@ -38,7 +38,7 @@
     "date-fns": "^2.30.0",
     "flatpickr": "^4.6.9",
     "formik": "^2.2.9",
-    "formiojs": "4.13.12",
+    "formiojs": "4.13.13",
     "ibantools": "^3.3.0",
     "immer": "^9.0.6",
     "leaflet": "^1.9.4",
