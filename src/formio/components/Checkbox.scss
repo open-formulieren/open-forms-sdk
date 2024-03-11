@@ -27,7 +27,8 @@
         }
       }
 
-      .utrecht-form-field__label {
+      .utrecht-form-field__label,
+      .utrecht-form-description--openforms {
         background-color: var(--_of-utrecht-form-field-checkbox-background-color);
         --_of-checkbox-label-shift: calc(
           var(--of-utrecht-form-label-checkbox-padding-block-start) + var(--utrecht-checkbox-size)
@@ -47,6 +48,14 @@
         --utrecht-form-field-label-margin-block-end: var(
           --of-utrecht-form-field-checkbox-label-margin-block-end
         );
+      }
+
+      .utrecht-form-description--openforms {
+        padding-inline-start: calc(
+          var(--_of-checkbox-label-shift) +
+            var(--of-utrecht-form-label-checkbox-padding-inline-start)
+        );
+        padding-block-end: var(--of-utrecht-form-label-radio-padding-block-end);
       }
     }
   }
