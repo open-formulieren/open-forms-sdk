@@ -22,5 +22,12 @@
     checked=true
     {% } %}
   >
+  {% if (item.description) { %}
+    <div class="utrecht-description utrecht-form-description--openforms">
+        <p class="utrecht-form-field-description utrecht-form-field__description">
+          {{ item.description }}
+        </p>
+    </div>
+  {% } %}
 </div>
 {% }) %}

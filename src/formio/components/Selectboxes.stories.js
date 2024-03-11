@@ -16,6 +16,7 @@ export default {
         {
           label: 'Optie B',
           value: 'selectB',
+          description: 'Description optie B'
         },
         {
           label:
