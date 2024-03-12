@@ -1,1 +1,4 @@
-export {default as RequireSession} from './RequireSession';
+import SessionExpired from './SessionExpired';
+import SessionTrackerModal from './SessionTrackerModal';
+
+export {SessionExpired, SessionTrackerModal};

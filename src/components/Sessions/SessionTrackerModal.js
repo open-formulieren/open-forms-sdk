@@ -6,9 +6,7 @@ import {useTimeout, useTimeoutFn} from 'react-use';
 import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
 import {OFButton} from 'components/Button';
-import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import Link from 'components/Link';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Modal from 'components/modals/Modal';
 
@@ -46,7 +44,7 @@ const useTriggerWarning = numSeconds => {
   ];
 };
 
-const RequireSession = ({expired = false, expiryDate = null, onNavigate, children}) => {
+const SessionTrackerModal = ({expiryDate = null, children}) => {
   const [warningDismissed, setWarningDismissed] = useState(false);
 
   // re-render when the session is expired to show the error message
@@ -70,33 +68,6 @@ const RequireSession = ({expired = false, expiryDate = null, onNavigate, childre
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiryDate]);
 
-  if (expired) {
-    return (
-      <Card
-        title={
-          <FormattedMessage
-            description="Session expired card title"
-            defaultMessage="Your session has expired"
-          />
-        }
-      >
-        <ErrorMessage>
-          <FormattedMessage
-            description="Session expired error message"
-            defaultMessage="Your session has expired. Click <link>here</link> to restart."
-            values={{
-              link: chunks => (
-                <Link onClick={onNavigate} to="/">
-                  {chunks}
-                </Link>
-              ),
-            }}
-          />
-        </ErrorMessage>
-      </Card>
-    );
-  }
-
   const showWarning = !warningDismissed && warningTriggered;
   const secondsToExpiry = parseInt((expiryDate - now) / 1000);
   // ensure that the components don't get unmounted when there's no expiryDate -> do not
@@ -115,10 +86,8 @@ const RequireSession = ({expired = false, expiryDate = null, onNavigate, childre
   );
 };
 
-RequireSession.propTypes = {
-  expired: PropTypes.bool,
+SessionTrackerModal.propTypes = {
   expiryDate: PropTypes.instanceOf(Date),
-  onNavigate: PropTypes.func,
   children: PropTypes.node,
 };
 
@@ -173,4 +142,4 @@ ExpiryModal.propTypes = {
   setWarningDismissed: PropTypes.func.isRequired,
 };
 
-export default RequireSession;
+export default SessionTrackerModal;

@@ -79,11 +79,8 @@ export const CreateAppointmentState = ({currentStep, submission, resetSession, c
   });
   const [processingError, setProcessingError] = useState('');
 
-  // reset the local state if the session times out
-  useSessionTimeout(() => {
-    setAppointmentData({});
-    window.localStorage.clear();
-  });
+  // check if the session is expired
+  useSessionTimeout();
 
   const contextValue = buildContextValue({
     submission,
