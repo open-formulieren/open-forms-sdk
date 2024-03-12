@@ -71,8 +71,9 @@ const ChooseProductStepFields = ({values: {products = []}, validateForm}) => {
               </>
             }
             onAddItem={
-              supportsMultipleProducts &&
-              withValidate(() => arrayHelpers.push({productId: '', amount: 1}))
+              supportsMultipleProducts
+                ? withValidate(() => arrayHelpers.push({productId: '', amount: 1}))
+                : undefined
             }
           >
             {products.map(({productId}, index) => (

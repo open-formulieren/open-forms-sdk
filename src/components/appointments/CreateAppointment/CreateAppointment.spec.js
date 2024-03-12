@@ -2,6 +2,7 @@ import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
+import ReactModal from 'react-modal';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
@@ -67,6 +68,8 @@ const renderApp = (initialRoute = '/') => {
 };
 
 beforeEach(() => {
+  // silence some warnings in tests when the modal opens
+  ReactModal.setAppElement(document.documentElement);
   sessionStorage.clear();
 });
 
@@ -110,9 +113,7 @@ describe('Create appointment session expiration', () => {
 
     // now finally let the session timeout in 1s
     act(() => updateSessionExpiry(1));
-    await waitFor(async () => {
-      await screen.findByText('Your session has expired');
-    });
+    await screen.findByText('Your session has expired', undefined, {timeout: 2000});
 
     // and click the link to restart...
     const restartLink = await screen.findByRole('link', {name: 'here'});

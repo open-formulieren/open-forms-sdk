@@ -6,7 +6,7 @@ import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormDisplay from 'components/FormDisplay';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
-import {RequireSession} from 'components/Sessions';
+import {SessionTrackerModal} from 'components/Sessions';
 import {checkMatchesPath} from 'components/utils/routers';
 import useFormContext from 'hooks/useFormContext';
 import useGetOrCreateSubmission from 'hooks/useGetOrCreateSubmission';
@@ -36,7 +36,7 @@ const CreateAppointment = () => {
   } = useGetOrCreateSubmission(form, skipSubmissionCreation);
   if (error) throw error;
 
-  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(clearSubmission);
+  const [, expiryDate, resetSession] = useSessionTimeout();
 
   const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
 
@@ -55,36 +55,36 @@ const CreateAppointment = () => {
 
   return (
     <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <CreateAppointmentState
-        currentStep={currentStep}
-        submission={submission}
-        resetSession={reset}
-      >
-        <FormDisplay progressIndicator={progressIndicator}>
-          <Wrapper sessionExpired={sessionExpired} title={form.name}>
-            <ErrorBoundary>
-              {isLoading ? (
-                <Loader modifiers={['centered']} />
-              ) : (
-                <RequireSession expired={sessionExpired} expiryDate={expiryDate} onNavigate={reset}>
+      <SessionTrackerModal expiryDate={expiryDate}>
+        <CreateAppointmentState
+          currentStep={currentStep}
+          submission={submission}
+          resetSession={reset}
+        >
+          <FormDisplay progressIndicator={progressIndicator}>
+            <Wrapper title={form.name}>
+              <ErrorBoundary>
+                {isLoading ? (
+                  <Loader modifiers={['centered']} />
+                ) : (
                   <LiteralsProvider literals={form.literals}>
                     <Outlet />
                   </LiteralsProvider>
-                </RequireSession>
-              )}
-            </ErrorBoundary>
-          </Wrapper>
-        </FormDisplay>
-      </CreateAppointmentState>
+                )}
+              </ErrorBoundary>
+            </Wrapper>
+          </FormDisplay>
+        </CreateAppointmentState>
+      </SessionTrackerModal>
     </AppointmentConfigContext.Provider>
   );
 };
 
 CreateAppointment.propTypes = {};
 
-const Wrapper = ({sessionExpired = false, children, ...props}) => {
+const Wrapper = ({children, ...props}) => {
   const isConfirmation = useIsConfirmation();
-  if (sessionExpired || isConfirmation) return <>{children}</>;
+  if (isConfirmation) return <>{children}</>;
 
   return (
     <Card titleComponent="h1" modifiers={['mobile-header-hidden']} {...props}>

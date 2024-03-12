@@ -1,0 +1,49 @@
+import React, {useContext, useEffect} from 'react';
+import {FormattedMessage} from 'react-intl';
+
+import {ConfigContext} from 'Context';
+import Card from 'components/Card';
+import ErrorMessage from 'components/Errors/ErrorMessage';
+import Link from 'components/Link';
+import {flagNoActiveSubmission} from 'data/submissions';
+import useSessionTimeout from 'hooks/useSessionTimeout';
+
+const SessionExpired = () => {
+  const config = useContext(ConfigContext);
+  const [expired, expiryDate, reset] = useSessionTimeout();
+
+  /* istanbul ignore next */
+  if (!config.debug && !expired) {
+    throw new Error("The session isn't expired");
+  }
+
+  useEffect(() => {
+    flagNoActiveSubmission();
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    if (expiryDate !== null) reset();
+  });
+
+  return (
+    <Card
+      title={
+        <FormattedMessage
+          description="Session expired card title"
+          defaultMessage="Your session has expired"
+        />
+      }
+    >
+      <ErrorMessage>
+        <FormattedMessage
+          description="Session expired error message"
+          defaultMessage="Your session has expired. Click <link>here</link> to restart."
+          values={{
+            link: chunks => <Link to="/">{chunks}</Link>,
+          }}
+        />
+      </ErrorMessage>
+    </Card>
+  );
+};
+
+export default SessionExpired;

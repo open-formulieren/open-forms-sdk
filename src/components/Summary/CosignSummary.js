@@ -5,7 +5,7 @@ import {useAsync} from 'react-use';
 
 import {post} from 'api';
 import {LiteralsProvider} from 'components/Literal';
-import {RequireSession} from 'components/Sessions';
+import {SessionTrackerModal} from 'components/Sessions';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
@@ -50,8 +50,13 @@ const CosignSummary = ({
     onCosignComplete(response.data.reportDownloadUrl);
   };
 
-  const [sessionExpired, expiryDate] = useSessionTimeout(async () => {
-    await onDestroySession();
+  const destroySession = async () => {
+    removeSubmissionId();
+    onDestroySession();
+  };
+
+  const [, expiryDate] = useSessionTimeout(async () => {
+    await destroySession();
   });
 
   if (!(loading || loadingData) && !summaryData) {
@@ -59,7 +64,7 @@ const CosignSummary = ({
   }
 
   return (
-    <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+    <SessionTrackerModal expiryDate={expiryDate}>
       <LiteralsProvider literals={form.literals}>
         <GenericSummary
           title={
@@ -78,7 +83,7 @@ const CosignSummary = ({
           onDestroySession={onDestroySession}
         />
       </LiteralsProvider>
-    </RequireSession>
+    </SessionTrackerModal>
   );
 };
 

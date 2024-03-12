@@ -14,7 +14,7 @@ import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
-import {RequireSession} from 'components/Sessions';
+import {SessionTrackerModal} from 'components/Sessions';
 import SubmissionSummary from 'components/Summary';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
@@ -122,7 +122,6 @@ const Form = () => {
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
 
   const onSubmissionLoaded = (submission, next = '') => {
-    if (sessionExpired) return;
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
@@ -140,11 +139,7 @@ const Form = () => {
     onSubmissionLoaded
   );
 
-  const [sessionExpired, expiryDate, resetSession] = useSessionTimeout(() => {
-    removeSubmissionId();
-    dispatch({type: 'DESTROY_SUBMISSION'});
-    flagNoActiveSubmission();
-  });
+  const [, expiryDate, resetSession] = useSessionTimeout();
 
   const {value: analyticsToolsConfigInfo, loading: loadingAnalyticsConfig} = useAsync(async () => {
     return await get(`${config.baseUrl}analytics/analytics_tools_config_info`);
@@ -362,7 +357,7 @@ const Form = () => {
         path="overzicht"
         element={
           <ErrorBoundary useCard>
-            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+            <SessionTrackerModal expiryDate={expiryDate}>
               <RequireSubmission
                 submission={state.submission}
                 form={form}
@@ -372,7 +367,7 @@ const Form = () => {
                 onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
                 onDestroySession={onDestroySession}
               />
-            </RequireSession>
+            </SessionTrackerModal>
           </ErrorBoundary>
         }
       />
@@ -411,7 +406,7 @@ const Form = () => {
         path="stap/:step"
         element={
           <ErrorBoundary useCard>
-            <RequireSession expired={sessionExpired} expiryDate={expiryDate}>
+            <SessionTrackerModal expiryDate={expiryDate}>
               <RequireSubmission
                 form={form}
                 submission={state.submission}
@@ -422,7 +417,7 @@ const Form = () => {
                 component={FormStep}
                 onDestroySession={onDestroySession}
               />
-            </RequireSession>
+            </SessionTrackerModal>
           </ErrorBoundary>
         }
       />
