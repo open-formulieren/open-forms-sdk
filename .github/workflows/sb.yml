@@ -28,12 +28,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: yarn
+          cache: npm
 
       - name: Build Storybook docs
         run: |
-          yarn install
-          yarn build:storybook
+          npm ci
+          npm run build:storybook
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
@@ -73,12 +73,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: yarn
+          cache: npm
 
       # Reference: https://storybook.js.org/docs/react/writing-tests/test-runner#run-against-non-deployed-storybooks
       - name: Set up test environment
         run: |
-          yarn install
+          npm ci
           npx playwright install --with-deps
 
       - name: Download build artifact
@@ -97,7 +97,7 @@ jobs:
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server storybook-static --port 6006 --quiet" \
-            "npx wait-on -l http://127.0.0.1:6006 && yarn test:storybook"
+            "npx wait-on -l http://127.0.0.1:6006 && npm run test:storybook"
         env:
           TZ: Europe/Amsterdam
 
