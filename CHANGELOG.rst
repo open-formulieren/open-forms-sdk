@@ -2,6 +2,27 @@
 SDK Changelog
 =============
 
+2.1.4 (2024-03-14)
+==================
+
+Bugfix release
+
+* [#3845] Fixed WYSIWYG content missing styling in summary page.
+
+2.0.4 (2024-03-14)
+==================
+
+Bugfix release
+
+* [#3845] Fixed WYSIWYG content missing styling in summary page.
+
+1.5.8 (2024-03-14)
+==================
+
+Bugfix release
+
+* [#3845] Fixed WYSIWYG content missing styling in summary page.
+
 2.2.0-alpha.0 (2023-02-19)
 ==========================
 
