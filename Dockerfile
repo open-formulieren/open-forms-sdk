@@ -20,7 +20,7 @@ RUN npm ci
 COPY . ./
 
 # build SDK bundle
-RUN npm run build
+RUN npm run build:design-tokens && npm run build
 
 # Stage 2 -- serve static build with nginx
 FROM nginxinc/nginx-unprivileged:${NGINX_VERSION}

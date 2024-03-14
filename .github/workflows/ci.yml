@@ -49,6 +49,7 @@ jobs:
         run: |
           echo "Building version $REACT_APP_VERSION"
           npm ci
+          npm run build:design-tokens
           REACT_APP_VERSION=${REACT_APP_VERSION} npm run build
         env:
           REACT_APP_VERSION: ${{ steps.build-args.outputs.version }}

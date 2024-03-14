@@ -35,7 +35,7 @@ jobs:
       - name: Build Storybook docs
         run: |
           npm ci
-          npm run build:storybook
+          npm run build:design-tokens && npm run build:storybook
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
