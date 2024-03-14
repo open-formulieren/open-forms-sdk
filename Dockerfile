@@ -13,14 +13,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ARG SDK_VERSION=latest
 
 # install dependencies
-COPY yarn.lock package.json ./
-RUN yarn install
+COPY package-lock.json package.json ./
+RUN npm ci
 
 # copy source code & config
 COPY . ./
 
 # build SDK bundle
-RUN yarn run build
+RUN npm run build
 
 # Stage 2 -- serve static build with nginx
 FROM nginxinc/nginx-unprivileged:${NGINX_VERSION}
