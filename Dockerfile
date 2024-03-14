@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ARG SDK_VERSION=latest
 
 # install dependencies
-COPY package-lock.json package.json ./
+COPY .npmrc package-lock.json package.json ./
 RUN npm ci
 
 # copy source code & config
