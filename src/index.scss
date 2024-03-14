@@ -1,9 +1,9 @@
-// Note: the styles here are only relevant in dev mode with `yarn start`
+// Note: the styles here are only relevant in dev mode with `npm start`
 @import '~microscope-sass/lib/color';
 @import '~microscope-sass/lib/responsive';
 @import 'scss/settings';
 
-// Only for dev with 'yarn start'!
+// Only for dev with 'npm start'!
 body {
   margin-block-end: 24px;
   margin-block-start: 24px;
