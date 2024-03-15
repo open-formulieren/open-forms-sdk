@@ -31,6 +31,7 @@
     "@formio/protected-eval": "^1.2.1",
     "@fortawesome/fontawesome-free": "6.4.0",
     "@open-formulieren/design-tokens": "^0.52.1",
+    "@open-formulieren/formiojs": "^4.13.14",
     "@open-formulieren/leaflet-tools": "^1.0.0",
     "@sentry/react": "^6.13.2",
     "@sentry/tracing": "^6.13.2",
@@ -38,7 +39,6 @@
     "date-fns": "^2.30.0",
     "flatpickr": "^4.6.9",
     "formik": "^2.2.9",
-    "formiojs": "4.13.12",
     "ibantools": "^3.3.0",
     "immer": "^9.0.6",
     "leaflet": "^1.9.4",
@@ -218,7 +218,7 @@
     "state-pool": {
       "immer": "9.0.21"
     },
-    "formiojs": "4.13.12"
+    "formiojs": "npm:@open-formulieren/formiojs@4.13.14"
   },
   "babel": {
     "presets": [
