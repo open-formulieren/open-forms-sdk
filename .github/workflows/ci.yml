@@ -21,10 +21,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: yarn
+          cache: npm
 
       - name: Extract version from git
         id: build-args
@@ -46,8 +48,9 @@ jobs:
       - name: Build Javascript
         run: |
           echo "Building version $REACT_APP_VERSION"
-          yarn install
-          REACT_APP_VERSION=${REACT_APP_VERSION} yarn build
+          npm ci
+          npm run build:design-tokens
+          REACT_APP_VERSION=${REACT_APP_VERSION} npm run build
         env:
           REACT_APP_VERSION: ${{ steps.build-args.outputs.version }}
 
@@ -65,13 +68,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: yarn
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
       - name: Download build artifact
         uses: actions/download-artifact@v3
@@ -81,7 +86,7 @@ jobs:
 
       - name: Run tests
         run: |
-          yarn test --coverage
+          npm test --coverage
         env:
           CI: 'true'
 
@@ -94,16 +99,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: yarn
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
       - name: Run prettier linter
-        run: yarn checkformat
+        run: npm run checkformat
 
   publish:
     name: Publish the NPM package
@@ -118,15 +125,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: yarn
+          cache: npm
           registry-url: 'https://registry.npmjs.org'
           scope: '@open-formulieren'
 
       - name: Install dependencies
-        run: yarn
+        run: npm ci
 
       - name: Download build artifact
         uses: actions/download-artifact@v3
@@ -137,12 +146,12 @@ jobs:
       - name: Publish package to NPM
         run: |
           mv README.npm.md README.md
-          yarn prepare-package
+          npm run prepare-package
 
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-          yarn publish --access public --new-version=$VERSION
+          npm publish --access public --new-version=$VERSION
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -153,6 +162,8 @@ jobs:
     steps:
       # This will include the updated OAS (if updated) from the update-oas job.
       - uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Set tag
         id: vars

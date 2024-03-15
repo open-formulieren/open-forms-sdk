@@ -68,7 +68,7 @@ document links back to the page you are currently reading).
 
 ### NodeJS environment
 
-- We use the `yarn` package manager
+- We use the `npm` package manager
 - The compatible NodeJS version is specified in `.nvmrc`, we recommend using
   [`nvm`](https://github.com/nvm-sh/nvm)
 
@@ -78,7 +78,7 @@ When your developing components in isolation without backend interation, it is o
 this by using storybook.
 
 ```bash
-yarn storybook
+npm run storybook
 ```
 
 Storybook is both a documentation and development tool. Using the `play` interaction testing is
@@ -115,7 +115,7 @@ in the backend environment.
 To start the development server
 
 ```bash
-yarn start
+npm start
 ```
 
 This should open the browser automatically, alternatively navigate to `http://localhost:3000`.
@@ -138,10 +138,10 @@ Pull the additional dev dependencies:
 
 ```bash
 cd design-tokens
-yarn install
+npm install
 cd ..
-yarn install
-yarn start
+npm install
+npm start
 ```
 
 Please avoid using sass-variables for design-tokens. The preferred approach is to use the CSS
@@ -158,8 +158,8 @@ The actual translations are managed right before a new version is released.
 Commands:
 
 ```bash
-yarn makemessages
-yarn compilemessages
+npm run makemessages
+npm run compilemessages
 ```
 
 ### Code-style
@@ -171,8 +171,8 @@ augmented with prettier. Either configure your editor or `git` pre-commit hooks 
 formatting with prettier:
 
 ```
-yarn checkformat  # to lint
-yarn format  # to reformat (writes files)
+npm run checkformat  # to lint
+npm run format  # to reformat (writes files)
 ```
 
 **Import style**

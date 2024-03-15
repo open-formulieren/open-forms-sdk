@@ -4,6 +4,7 @@ Dockerfile
 
 # local dependencies
 /node_modules/
+/design-tokens/node_modules/
 
 # local build results
 /build/

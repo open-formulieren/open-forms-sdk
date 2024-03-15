@@ -66,8 +66,8 @@
     "react-dom": "^18.0.0"
   },
   "scripts": {
-    "start": "yarn build:design-tokens && node scripts/start.js",
-    "build": "node scripts/build.js && yarn build:esm",
+    "start": "npm run build:design-tokens && node scripts/start.js",
+    "build": "node scripts/build.js && npm run build:esm",
     "build:esm": "rimraf dist/esm && NODE_ENV=production babel --no-babelrc --config-file ./.babelrc.esm-build --ignore 'src/**/*.spec.js','src/**/fixtures/**','src/setupTests.js','src/reportWebVitals.js' src --out-dir dist/esm",
     "test": "TZ=Europe/Amsterdam node scripts/test.js",
     "test:storybook": "test-storybook --coverage",
@@ -75,9 +75,9 @@
     "prepare-package": "node scripts/prepare-package.js",
     "makemessages-en": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages-nl": "formatjs extract 'src/**/*.js' --format scripts/i18n-formatter.js --out-file src/i18n/messages/nl.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
-    "makemessages": "yarn run makemessages-nl && yarn run makemessages-en",
+    "makemessages": "npm run makemessages-nl && npm run makemessages-en",
     "compilemessages": "formatjs compile-folder --ast src/i18n/messages src/i18n/compiled",
-    "build:design-tokens": "yarn workspace @open-formulieren/design-tokens run build",
+    "build:design-tokens": "npm run build --workspace=design-tokens",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build --webpack-stats-json",
     "format": "prettier --write 'src/**/*.{js,scss,mdx}'",
@@ -214,10 +214,11 @@
     "workbox-webpack-plugin": "^6.4.1",
     "yargs": "^17.1.1"
   },
-  "resolutions": {
-    "state-pool/immer": "9.0.21",
-    "react-formio/formiojs": "4.13.12",
-    "jackspeak": "2.1.1"
+  "overrides": {
+    "state-pool": {
+      "immer": "9.0.21"
+    },
+    "formiojs": "4.13.12"
   },
   "babel": {
     "presets": [
