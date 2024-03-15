@@ -24,10 +24,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -38,7 +38,7 @@ jobs:
           npm run build:design-tokens && npm run build:storybook
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./storybook-static
 
@@ -59,10 +59,10 @@ jobs:
     steps:
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v1
+        uses: actions/configure-pages@v4
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
 
   tests:
     name: Run Storybook tests
@@ -71,10 +71,10 @@ jobs:
       - storybook
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -86,7 +86,7 @@ jobs:
           npx playwright install --with-deps
 
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: github-pages
           path: ./storybook-static
@@ -110,7 +110,9 @@ jobs:
           npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   chromatic:
     name: Visual regression test with Chromatic
@@ -123,12 +125,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # 👈 Required to retrieve git history
 
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: github-pages
           path: ./storybook-static
@@ -140,7 +142,7 @@ jobs:
         working-directory: ./storybook-static
 
       - name: Publish to Chromatic for visual regression tests
-        uses: chromaui/action@v1
+        uses: chromaui/action@latest
         if: github.event.pull_request.draft == false || github.event.push
         with:
           autoAcceptChanges: main
