@@ -4,7 +4,7 @@ const {MINIMAL_VIEWPORTS} = require('@storybook/addon-viewport');
 const DEFAULT_VIEWPORT_SIZE = {width: 1280, height: 720};
 
 module.exports = {
-  async preRender(page, story) {
+  async preVisit(page, story) {
     const context = await getStoryContext(page, story);
     const viewportName = context.parameters?.viewport?.defaultViewport;
     const viewportParameter = MINIMAL_VIEWPORTS[viewportName];

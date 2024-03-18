@@ -12,6 +12,7 @@ export default {
   decorators: [FormikDecorator],
   args: {
     widget: 'datepicker',
+    onChange: undefined,
   },
   argTypes: {
     showFormattedDate: {table: {disable: true}},

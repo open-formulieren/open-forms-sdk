@@ -1,7 +1,7 @@
 import {expect} from '@storybook/test';
 import {fn, userEvent, waitFor, within} from '@storybook/test';
 import {getWorker} from 'msw-storybook-addon';
-import React, {useState} from 'react';
+import React from 'react';
 import {IntlProvider} from 'react-intl';
 
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
@@ -35,6 +35,9 @@ export default {
   title: 'Composites / Language Selection',
   component: LanguageSelection,
   decorators: [I18NDecorator, ConfigDecorator],
+  args: {
+    onLanguageChangeDone: fn(),
+  },
   argTypes: {
     heading: {control: 'text'},
   },

@@ -18,6 +18,9 @@ export default {
       },
     },
   },
+  args: {
+    onChange: undefined,
+  },
 };
 
 export const Static = {

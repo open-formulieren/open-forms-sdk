@@ -1,5 +1,5 @@
 import {expect} from '@storybook/test';
-import {waitFor, within} from '@storybook/test';
+import {fn, waitFor, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {BASE_URL} from 'api-mocks';
@@ -20,6 +20,8 @@ export default {
   },
   args: {
     statusUrl: `${BASE_URL}submissions/4b0e86a8-dc5f-41cc-b812-c89857b9355b/-token-/status`,
+    onFailure: fn(),
+    onConfirmed: fn(),
   },
   parameters: {
     msw: {

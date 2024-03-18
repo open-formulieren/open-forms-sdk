@@ -34,7 +34,7 @@ export const Default = {
     await expect(canvas.getByText('This is a custom description')).toBeVisible();
     // Check if clicking on the label focuses the input
     const label = canvas.getByText('test');
-    userEvent.click(label);
+    await userEvent.click(label);
     await expect(canvas.getByRole('textbox')).toHaveFocus();
   },
 };

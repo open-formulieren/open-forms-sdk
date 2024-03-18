@@ -38,7 +38,7 @@ export const Default = {
     ).toBeVisible();
     // Check if clicking on the label focuses the input
     const label = canvas.getByText('Email');
-    userEvent.click(label);
+    await userEvent.click(label);
     await expect(canvas.getByRole('textbox')).toHaveFocus();
   },
 };

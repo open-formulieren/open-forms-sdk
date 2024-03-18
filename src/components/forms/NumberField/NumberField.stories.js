@@ -98,27 +98,27 @@ export const LocalisedWithDecimals = {
     const input = canvas.getByLabelText('Amount');
 
     // Assert that you're not able to type letters
-    userEvent.click(input);
-    userEvent.type(input, 'abc');
+    await userEvent.click(input);
+    await userEvent.type(input, 'abc');
     await expect(input).toHaveDisplayValue('4');
     // Assert that clicking on the label focuses the input
     const label = canvas.getByText('Amount');
-    userEvent.click(label);
+    await userEvent.click(label);
     await expect(canvas.getByRole('textbox')).toHaveFocus();
 
     // Assert that you're able to provide a negative number
-    userEvent.clear(input);
-    userEvent.type(input, '-1');
+    await userEvent.clear(input);
+    await userEvent.type(input, '-1');
     await expect(input).toHaveDisplayValue('-1');
 
     // Assert that you're able to provide a decimal number
-    userEvent.clear(input);
-    userEvent.type(input, '1.5');
+    await userEvent.clear(input);
+    await userEvent.type(input, '1.5');
     await expect(input).toHaveDisplayValue('1,5');
 
     // Assert that you're able to provide a decimal number with comma
-    userEvent.clear(input);
-    userEvent.type(input, '-2,3');
+    await userEvent.clear(input);
+    await userEvent.type(input, '-2,3');
     await expect(input).toHaveDisplayValue('-2,3');
   },
   args: {
@@ -139,13 +139,13 @@ export const LocalisedWithThousandSeparator = {
     const input = canvas.getByLabelText('Amount');
 
     // Assert that you're not able to type letters
-    userEvent.click(input);
-    userEvent.type(input, 'abc');
+    await userEvent.click(input);
+    await userEvent.type(input, 'abc');
     await expect(input).toHaveDisplayValue('4');
 
     // Assert that you're able to provide a large number, formatted with thousand separator
-    userEvent.clear(input);
-    userEvent.type(input, '10000');
+    await userEvent.clear(input);
+    await userEvent.type(input, '10000');
     await expect(input).toHaveDisplayValue('10.000');
   },
   args: {

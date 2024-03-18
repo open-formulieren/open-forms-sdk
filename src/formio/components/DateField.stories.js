@@ -56,7 +56,7 @@ export const DateField = {
 
     const dateInput = canvas.getByRole('textbox');
 
-    userEvent.type(dateInput, '06-06-2006');
+    await userEvent.type(dateInput, '06-06-2006');
     expect(dateInput).toHaveDisplayValue('06-06-2006');
 
     const error = canvas.queryByText('minDate');
@@ -91,7 +91,7 @@ export const DateWithMinField = {
 
     const dateInput = canvas.getByRole('textbox');
 
-    userEvent.type(dateInput, '06-06-2006');
+    await userEvent.type(dateInput, '06-06-2006');
     expect(dateInput).toHaveDisplayValue('06-06-2006');
 
     // TODO: I cannot get this to work. If you do it manually in storybook, it works... (it shows the error).
@@ -126,7 +126,7 @@ export const DateWithMaxField = {
 
     const dateInput = canvas.getByRole('textbox');
 
-    userEvent.type(dateInput, '19-12-2023');
+    await userEvent.type(dateInput, '19-12-2023');
     expect(dateInput).toHaveDisplayValue('19-12-2023');
 
     // TODO: I cannot get this to work. If you do it manually in storybook, it works... (it shows the error).
