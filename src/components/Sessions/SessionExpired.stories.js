@@ -15,10 +15,12 @@ const render = args => {
     return () => {
       sessionExpiresAt.setValue({expiry: null});
     };
-  });
+  }, []);
+
   if (!expired) {
     return 'Waiting for expiry...';
   }
+
   return <SessionExpired {...args} />;
 };
 
