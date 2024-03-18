@@ -1,5 +1,5 @@
-import {expect} from '@storybook/jest';
-import {userEvent, waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {userEvent, waitFor, waitForElementToBeRemoved, within} from '@storybook/test';
 
 import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
 

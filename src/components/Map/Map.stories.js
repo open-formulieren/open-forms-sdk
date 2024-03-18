@@ -1,4 +1,4 @@
-import {userEvent, within} from '@storybook/testing-library';
+import {userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 

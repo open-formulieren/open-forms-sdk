@@ -17,6 +17,7 @@ const config = {
     'storybook-react-intl',
     'storybook-addon-react-router-v6',
     '@storybook/addon-coverage',
+    '@storybook/addon-webpack5-compiler-babel'
   ],
   features: {
     interactionsDebugger: true,

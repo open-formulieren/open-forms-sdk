@@ -1,5 +1,5 @@
-import {expect} from '@storybook/jest';
-import {waitFor, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {waitFor, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-react-router-v6';
 
 import {buildForm} from 'api-mocks';

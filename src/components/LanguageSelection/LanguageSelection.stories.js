@@ -1,5 +1,5 @@
-import {expect} from '@storybook/jest';
-import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {fn, userEvent, waitFor, within} from '@storybook/test';
 import {getWorker} from 'msw-storybook-addon';
 import React, {useState} from 'react';
 import {IntlProvider} from 'react-intl';
@@ -71,9 +71,7 @@ export const Display = {
         current: false,
       },
     ],
-  },
-  argTypes: {
-    onLanguageChange: {action: true},
+    onLanguageChange: fn(),
   },
   play: async ({args, canvasElement}) => {
     const canvas = within(canvasElement);
@@ -96,7 +94,6 @@ const render = ({languages, wrapInErrorBoundary, ...args}) => {
 
 const functionalArgTypes = {
   onLanguageChangeDone: {
-    action: true,
     table: {disable: true},
   },
 };
@@ -106,6 +103,7 @@ export const Functional = {
   args: {
     wrapInErrorBoundary: false,
     languages: DEFAULT_LANGUAGES,
+    onLanguageChange: fn(),
   },
   argTypes: functionalArgTypes,
   parameters: {
@@ -134,6 +132,7 @@ export const UnavailableLanguage = {
   args: {
     wrapInErrorBoundary: true,
     languages: DEFAULT_LANGUAGES,
+    onLanguageChange: fn(),
   },
   argTypes: {
     ...functionalArgTypes,

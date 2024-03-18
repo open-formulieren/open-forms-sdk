@@ -1,5 +1,5 @@
-import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {userEvent, within} from '@storybook/test';
 import {useCallback} from 'react';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';

@@ -1,5 +1,5 @@
-import {expect} from '@storybook/jest';
-import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {userEvent, waitFor, within} from '@storybook/test';
 
 import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';
