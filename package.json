@@ -200,7 +200,7 @@
     "semver": "^7.3.5",
     "source-map-loader": "^3.0.0",
     "storybook": "^8.0.0",
-    "storybook-addon-react-router-v6": "^2.0.12",
+    "storybook-addon-remix-react-router": "^3.0.0",
     "storybook-addon-themes": "^6.1.0",
     "storybook-react-intl": "^3.0.1",
     "style-loader": "^3.3.1",

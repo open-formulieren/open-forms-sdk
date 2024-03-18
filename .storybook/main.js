@@ -15,9 +15,9 @@ const config = {
     '@storybook/addon-interactions',
     'storybook-addon-themes',
     'storybook-react-intl',
-    'storybook-addon-react-router-v6',
+    'storybook-addon-remix-react-router',
     '@storybook/addon-coverage',
-    '@storybook/addon-webpack5-compiler-babel'
+    '@storybook/addon-webpack5-compiler-babel',
   ],
   features: {
     interactionsDebugger: true,

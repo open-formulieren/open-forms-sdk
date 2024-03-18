@@ -1,7 +1,7 @@
 import {expect} from '@storybook/test';
 import {userEvent, within} from '@storybook/test';
 import cloneDeep from 'lodash/cloneDeep';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
@@ -202,7 +202,7 @@ export default {
       wrapForm: false,
     },
     reactRouter: {
-      routePath: '/overzicht',
+      routing: '/overzicht',
     },
   },
 };

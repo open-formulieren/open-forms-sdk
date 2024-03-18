@@ -2,7 +2,7 @@ import {expect} from '@storybook/test';
 import {within} from '@storybook/test';
 import produce from 'immer';
 import {getWorker} from 'msw-storybook-addon';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';
 
 import {buildForm, buildSubmission} from 'api-mocks';
@@ -29,8 +29,10 @@ export default {
       debug: false,
     },
     reactRouter: {
-      routePath: '/stap/:step',
-      routeParams: {step: 'step-1'},
+      location: {
+        pathParams: {step: 'step-1'},
+      },
+      routing: '/stap/:step',
     },
   },
 };

@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {sessionExpiresAt} from 'api';
 import useSessionTimeout from 'hooks/useSessionTimeout';
@@ -21,6 +21,7 @@ const render = args => {
   }
   return <SessionExpired {...args} />;
 };
+
 export default {
   title: 'Views / Session Expired',
   component: SessionExpired,
@@ -30,10 +31,11 @@ export default {
       debug: false, // force false in local dev-mode
     },
     reactRouter: {
-      routePath: '/sessie-verlopen',
+      routing: '/sessie-verlopen',
     },
   },
 };
+
 export const Default = {
   name: 'Session Expired',
   render,
