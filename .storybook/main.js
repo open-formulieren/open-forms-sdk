@@ -20,7 +20,6 @@ const config = {
   ],
   features: {
     interactionsDebugger: true,
-    storyStoreV7: true,
     buildStoriesJson: true,
   },
 
