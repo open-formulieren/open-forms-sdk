@@ -133,18 +133,32 @@ export const DismissAndReopenWithClick = {
 export const TabNavigateToNestedInput = {
   name: 'Tab navigate to widget input',
   render: () => <FloatingWidgetExample />,
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
-    const reference = canvas.getByTestId('reference');
-    await userEvent.click(reference);
-    await expect(canvas.getByRole('dialog')).toBeVisible();
-    const widgetInput = await canvas.findByTestId('widget-input');
-    expect(widgetInput).toBeVisible();
-    expect(widgetInput).not.toHaveFocus();
-    await userEvent.tab();
-    await expect(canvas.getByRole('dialog')).toBeVisible();
-    expect(await canvas.findByTestId('widget-input')).toBeVisible();
-    await waitForFocus(canvas.getByTestId('widget-input'));
+
+    await step('open widget', async () => {
+      const reference = canvas.getByTestId('reference');
+      await userEvent.click(reference);
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+
+      const widgetInput = await canvas.findByTestId('widget-input');
+      expect(widgetInput).toBeVisible();
+      // reference still needs to have focus after the widget is opened
+      expect(reference).toHaveFocus();
+    });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
+
+    await step('focus input inside widget', async () => {
+      await userEvent.tab();
+      // widget still open and input (still) visible
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      const widgetInput = await canvas.findByTestId('widget-input');
+      expect(widgetInput).toBeVisible();
+      // tabbing should have moved the focus from reference to content
+      expect(widgetInput).toHaveFocus();
+    });
   },
 };
 
@@ -177,46 +191,39 @@ export const FocusOtherInputClosesWidget = {
       expect(reference).toHaveFocus(); // because it was clicked
     });
 
+    // tests are flaky on CI... :(
+    await sleep(50);
+
     await step('focus widget input', async () => {
       const widgetInput = await canvas.findByTestId('widget-input');
       expect(widgetInput).toBeVisible();
-      console.group('widget input / before');
-      console.log(document.activeElement);
-      console.groupEnd();
       await userEvent.tab();
-      console.group('widget input / after tab');
-      console.log(document.activeElement);
-      console.groupEnd();
-      await sleep(100);
-      console.group('widget input / after sleep');
-      console.log(document.activeElement);
-      console.groupEnd();
-      await waitForFocus(canvas.getByTestId('widget-input'));
+      expect(widgetInput).toHaveFocus();
     });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
 
     await step('focus button', async () => {
       const button = await canvas.findByRole('button');
       expect(button).toBeVisible();
-      console.group('button / before');
-      console.log(document.activeElement);
-      console.groupEnd();
       await userEvent.tab();
-      console.group('button / after tab');
-      console.log(document.activeElement);
-      console.groupEnd();
-      await sleep(100);
-      console.group('button / after sleep');
-      console.log(document.activeElement);
-      console.groupEnd();
-      await waitForFocus(canvas.getByRole('button'));
+      expect(button).toHaveFocus();
     });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
 
     await step('Focus input outside widget', async () => {
       await userEvent.tab();
       await waitFor(() => {
         expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
       });
-      await waitForFocus(canvas.getByTestId('other-input'));
     });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
+
+    expect(canvas.getByTestId('other-input')).toHaveFocus();
   },
 };
