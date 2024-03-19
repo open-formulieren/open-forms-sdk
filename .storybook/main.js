@@ -13,7 +13,7 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    'storybook-addon-themes',
+    'storybook-addon-theme-provider',
     'storybook-react-intl',
     'storybook-addon-remix-react-router',
     '@storybook/addon-coverage',
