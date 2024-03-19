@@ -1,5 +1,5 @@
 import {expect} from '@storybook/test';
-import {userEvent, within} from '@storybook/test';
+import {fn, userEvent, within} from '@storybook/test';
 import cloneDeep from 'lodash/cloneDeep';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
@@ -183,6 +183,9 @@ export default {
     // LiteralDecorator args
     confirmText: 'Confirm',
     previousText: 'Previous',
+    onSubmit: fn(),
+    onDestroySession: fn(),
+    onPrevPage: fn(),
   },
   argTypes: {
     submissionAllowed: {
