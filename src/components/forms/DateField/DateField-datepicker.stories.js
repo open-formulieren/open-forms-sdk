@@ -1,5 +1,5 @@
-import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {userEvent, within} from '@storybook/test';
 import {addDays, subDays} from 'date-fns';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
@@ -12,6 +12,7 @@ export default {
   decorators: [FormikDecorator],
   args: {
     widget: 'datepicker',
+    onChange: undefined,
   },
   argTypes: {
     showFormattedDate: {table: {disable: true}},

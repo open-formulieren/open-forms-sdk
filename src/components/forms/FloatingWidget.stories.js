@@ -1,7 +1,11 @@
-import {expect} from '@storybook/jest';
-import {userEvent, waitFor, waitForElementToBeRemoved, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {userEvent, waitFor, within} from '@storybook/test';
+
+import {sleep} from 'utils';
 
 import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
+
+const waitForPosition = () => act(async () => {});
 
 export default {
   title: 'Private API / FloatingWidget',
@@ -129,16 +133,32 @@ export const DismissAndReopenWithClick = {
 export const TabNavigateToNestedInput = {
   name: 'Tab navigate to widget input',
   render: () => <FloatingWidgetExample />,
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
-    const reference = canvas.getByTestId('reference');
-    await userEvent.click(reference);
-    await expect(canvas.getByRole('dialog')).toBeVisible();
-    const widgetInput = canvas.getByTestId('widget-input');
-    await expect(widgetInput).not.toHaveFocus();
-    await userEvent.tab();
-    await expect(canvas.getByRole('dialog')).toBeVisible();
-    await expect(widgetInput).toHaveFocus();
+
+    await step('open widget', async () => {
+      const reference = canvas.getByTestId('reference');
+      await userEvent.click(reference);
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+
+      const widgetInput = await canvas.findByTestId('widget-input');
+      expect(widgetInput).toBeVisible();
+      // reference still needs to have focus after the widget is opened
+      expect(reference).toHaveFocus();
+    });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
+
+    await step('focus input inside widget', async () => {
+      await userEvent.tab();
+      // widget still open and input (still) visible
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      const widgetInput = await canvas.findByTestId('widget-input');
+      expect(widgetInput).toBeVisible();
+      // tabbing should have moved the focus from reference to content
+      expect(widgetInput).toHaveFocus();
+    });
   },
 };
 
@@ -161,17 +181,49 @@ export const SubmitWidgetClosesWidget = {
 export const FocusOtherInputClosesWidget = {
   name: 'Focus other input closes widget',
   render: () => <FloatingWidgetExample />,
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
-    const reference = canvas.getByTestId('reference');
-    await userEvent.click(reference);
-    await expect(canvas.getByRole('dialog')).toBeVisible();
-    await userEvent.tab();
-    await expect(canvas.getByTestId('widget-input')).toHaveFocus();
-    await userEvent.tab();
-    await expect(canvas.getByRole('button')).toHaveFocus();
-    await userEvent.tab();
-    await expect(canvas.getByTestId('other-input')).toHaveFocus();
-    await waitForElementToBeRemoved(() => canvas.queryByRole('dialog'));
+
+    await step('open widget', async () => {
+      const reference = canvas.getByTestId('reference');
+      await userEvent.click(reference);
+      await expect(canvas.getByRole('dialog')).toBeVisible();
+      expect(reference).toHaveFocus(); // because it was clicked
+    });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
+
+    await step('focus widget input', async () => {
+      const widgetInput = await canvas.findByTestId('widget-input');
+      expect(widgetInput).toBeVisible();
+      await userEvent.tab();
+      expect(widgetInput).toHaveFocus();
+    });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
+
+    await step('focus button', async () => {
+      const button = await canvas.findByRole('button');
+      expect(button).toBeVisible();
+      await userEvent.tab();
+      expect(button).toHaveFocus();
+    });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
+
+    await step('Focus input outside widget', async () => {
+      await userEvent.tab();
+      await waitFor(() => {
+        expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
+      });
+    });
+
+    // tests are flaky on CI... :(
+    await sleep(50);
+
+    expect(canvas.getByTestId('other-input')).toHaveFocus();
   },
 };

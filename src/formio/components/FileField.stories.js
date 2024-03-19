@@ -1,8 +1,9 @@
-import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {userEvent, within} from '@storybook/test';
 import {getWorker} from 'msw-storybook-addon';
 
 import {withUtrechtDocument} from 'story-utils/decorators';
+import {sleep} from 'utils';
 
 import {
   UPLOAD_URL,
@@ -126,6 +127,7 @@ export const OneAllowedFileType = {
     filePattern: {table: {disable: true}},
   },
   play: async ({canvasElement}) => {
+    await sleep(200); // formio needs time to bind click events...
     const canvas = within(canvasElement);
     // Click on browse to make the input node injected in the dom
     const browseLink = canvas.getByRole('link', {name: 'browse'});
@@ -135,10 +137,10 @@ export const OneAllowedFileType = {
     // Upload a file of the wrong type
     const file = new File(['not-a-pdf'], 'not-a-pdf.png', {type: 'image/png'});
     const inputfile = document.querySelectorAll('.openforms-file-upload-input');
-    await userEvent.upload(inputfile[0], file);
+    await userEvent.upload(inputfile[0], file, {applyAccept: false});
 
     // Check that the error message is there
-    const errorMessage = canvas.getByText(
+    const errorMessage = await canvas.findByText(
       'The uploaded file is not of an allowed type. It must be: .pdf.'
     );
     await expect(errorMessage).toBeVisible();
@@ -163,6 +165,7 @@ export const MultipleAllowedFileTypes = {
     filePattern: {table: {disable: true}},
   },
   play: async ({canvasElement}) => {
+    await sleep(200); // formio needs time to bind click events...
     const canvas = within(canvasElement);
     // Click on browse to make the input node injected in the dom
     const browseLink = canvas.getByRole('link', {name: 'browse'});
@@ -171,10 +174,10 @@ export const MultipleAllowedFileTypes = {
     // Upload a file of the wrong type
     const file = new File(['not-a-pdf-or-png'], 'not-a-pdf-or-png.txt', {type: 'text/plain'});
     const inputfile = document.querySelectorAll('.openforms-file-upload-input');
-    await userEvent.upload(inputfile[0], file);
+    await userEvent.upload(inputfile[0], file, {applyAccept: false});
 
     // Check that the error message is there
-    const errorMessage = canvas.getByText(
+    const errorMessage = await canvas.findByText(
       'The uploaded file is not of an allowed type. It must be: .pdf or .png.'
     );
     await expect(errorMessage).toBeVisible();

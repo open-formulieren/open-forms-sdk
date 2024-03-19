@@ -1,6 +1,6 @@
-import {expect} from '@storybook/jest';
-import {within} from '@storybook/testing-library';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {expect} from '@storybook/test';
+import {within} from '@storybook/test';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {AnalyticsToolsDecorator, withForm, withSubmissionPollInfo} from 'story-utils/decorators';
 
@@ -15,7 +15,7 @@ export default {
   },
   parameters: {
     reactRouter: {
-      routeState: {},
+      location: {state: {}},
     },
   },
 };
@@ -41,9 +41,11 @@ export const WithSuccessfulPayment = {
   },
   parameters: {
     reactRouter: {
-      routeState: {
-        status: 'completed',
-        userAction: 'accept',
+      location: {
+        state: {
+          status: 'completed',
+          userAction: 'accept',
+        },
       },
     },
   },
@@ -65,9 +67,11 @@ export const WithFailedPayment = {
   },
   parameters: {
     reactRouter: {
-      routeState: {
-        status: 'failed',
-        userAction: 'exception',
+      location: {
+        state: {
+          status: 'failed',
+          userAction: 'exception',
+        },
       },
     },
   },

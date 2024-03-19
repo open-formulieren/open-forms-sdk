@@ -1,6 +1,6 @@
-import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {expect} from '@storybook/test';
+import {userEvent, within} from '@storybook/test';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import Card from 'components/Card';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
@@ -17,9 +17,11 @@ export default {
 export const Default = {
   parameters: {
     reactRouter: {
-      searchParams: {
-        time: '2023-06-13T10:00:00+02:00',
-        submission_uuid: '999c6769-bc2e-43d6-a2e0-5bf104f5130e',
+      location: {
+        searchParams: {
+          time: '2023-06-13T10:00:00+02:00',
+          submission_uuid: '999c6769-bc2e-43d6-a2e0-5bf104f5130e',
+        },
       },
     },
     msw: {
@@ -46,8 +48,10 @@ export const MissingSubmissionUUIDParameter = {
   ),
   parameters: {
     reactRouter: {
-      searchParams: {
-        time: '2023-06-13T10:00:00+02:00',
+      location: {
+        searchParams: {
+          time: '2023-06-13T10:00:00+02:00',
+        },
       },
     },
   },
@@ -57,9 +61,11 @@ export const WithBackendValidationErrors = {
   name: 'Backend validation errors',
   parameters: {
     reactRouter: {
-      searchParams: {
-        time: '2023-06-13T10:00:00+02:00',
-        submission_uuid: '999c6769-bc2e-43d6-a2e0-5bf104f5130e',
+      location: {
+        searchParams: {
+          time: '2023-06-13T10:00:00+02:00',
+          submission_uuid: '999c6769-bc2e-43d6-a2e0-5bf104f5130e',
+        },
       },
     },
     msw: {

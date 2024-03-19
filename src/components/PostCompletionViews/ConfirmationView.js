@@ -60,7 +60,7 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
   const body = (
     <>
       {paymentStatus && (
-        <Body>
+        <Body component="div">
           <Wrapper>{intl.formatMessage(paymentStatusMessage)}</Wrapper>
         </Body>
       )}

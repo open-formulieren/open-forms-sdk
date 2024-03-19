@@ -1,6 +1,6 @@
-import {expect} from '@storybook/jest';
-import {waitFor, within} from '@storybook/testing-library';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {expect} from '@storybook/test';
+import {fn, waitFor, within} from '@storybook/test';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {BASE_URL} from 'api-mocks';
 import {
@@ -20,13 +20,15 @@ export default {
   },
   args: {
     statusUrl: `${BASE_URL}submissions/4b0e86a8-dc5f-41cc-b812-c89857b9355b/-token-/status`,
+    onFailure: fn(),
+    onConfirmed: fn(),
   },
   parameters: {
     msw: {
       handlers: [mockSubmissionProcessingStatusGet],
     },
     reactRouter: {
-      routeState: {},
+      location: {state: {}},
     },
   },
 };
@@ -52,7 +54,9 @@ export const withoutPayment = {
 export const withPayment = {
   parameters: {
     reactRouter: {
-      routeState: {status: 'completed', userAction: 'accept'},
+      location: {
+        state: {status: 'completed', userAction: 'accept'},
+      },
     },
   },
 };

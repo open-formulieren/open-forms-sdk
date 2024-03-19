@@ -9,6 +9,7 @@ import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {initialize, mswDecorator, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
 import 'scss/dte-theme.scss';
+import {withThemeProvider} from 'storybook-addon-theme-provider';
 // load these AFTER the community styles, which is closer in simulating the CSS loading
 // order of our own components
 import 'styles.scss';
@@ -23,6 +24,7 @@ import {
   withClearSubmissionLocalStorage,
 } from './decorators';
 import {reactIntl} from './reactIntl.js';
+import ThemeProvider from './theme';
 
 initialize({
   onUnhandledRequest: 'bypass',
@@ -40,27 +42,52 @@ Templates.current = OFLibrary;
 
 export default {
   decorators: [
+    withThemeProvider(ThemeProvider),
     mswDecorator,
     withClearSessionStorage,
     withClearSubmissionLocalStorage,
     utrechtDocumentDecorator,
   ],
   globals: {
+    // react-intl
     locale: reactIntl.defaultLocale,
     locales: {
       nl: 'Nederlands',
       en: 'English',
     },
+    // themes
+    selectedTheme: 'Open Forms', // default
+    themes: [
+      {
+        name: 'Open Forms',
+        color: '#01689B',
+        themeObject: {className: 'openforms-theme'},
+      },
+      {
+        name: 'Gemeente Den Haag',
+        color: '#238541',
+        themeObject: {className: 'denhaag-theme'},
+      },
+      {
+        name: 'Gemeente Rotterdam',
+        color: '#00811F',
+        themeObject: {className: 'rotterdam-theme'},
+      },
+      {
+        name: 'Gemeente Utrecht',
+        color: '#cc0000',
+        themeObject: {className: 'utrecht-theme'},
+      },
+    ],
   },
   parameters: {
-    actions: {argTypesRegex: '^on[A-Z].*'},
     viewport: {
       // These are the viewports that are shown in Storybook
       viewports: {
-        smallMobile: { name: "Small mobile", styles: { width: "320px", height: "568px" } },
-        largeMobile: { name: "Large mobile", styles: { width: "414px", height: "896px" } },
-        tablet: { name: "Tablet", styles: { width: "834px", height: "1112px" } },
-        desktop: { name: "Desktop", styles: { width: "1024px", height: "1000px" } },
+        smallMobile: {name: 'Small mobile', styles: {width: '320px', height: '568px'}},
+        largeMobile: {name: 'Large mobile', styles: {width: '414px', height: '896px'}},
+        tablet: {name: 'Tablet', styles: {width: '834px', height: '1112px'}},
+        desktop: {name: 'Desktop', styles: {width: '1024px', height: '1000px'}},
       },
     },
     controls: {
@@ -70,16 +97,6 @@ export default {
       },
     },
     reactIntl,
-    themes: {
-      default: 'Open Forms',
-      target: 'root',
-      list: [
-        {name: 'Open Forms', class: 'openforms-theme', color: '#01689B'},
-        {name: 'Gemeente Den Haag', class: 'denhaag-theme', color: '#238541'},
-        {name: 'Gemeente Rotterdam', class: 'rotterdam-theme', color: '#00811F'},
-        {name: 'Gemeente Utrecht', class: 'utrecht-theme', color: '#cc0000'},
-      ],
-    },
     options: {
       storySort: {
         method: 'alphabetical',
@@ -97,10 +114,10 @@ export default {
     chromatic: {
       // Here we specify the viewports of which we want snapshots in Chromatic
       modes: {
-        mobile: {viewport: "smallMobile"},
-        desktop: {viewport: "desktop"}
-      }
-    }
+        mobile: {viewport: 'smallMobile'},
+        desktop: {viewport: 'desktop'},
+      },
+    },
   },
   loaders: [mswLoader],
 };

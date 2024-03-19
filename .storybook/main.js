@@ -13,14 +13,14 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    'storybook-addon-themes',
+    'storybook-addon-theme-provider',
     'storybook-react-intl',
-    'storybook-addon-react-router-v6',
+    'storybook-addon-remix-react-router',
     '@storybook/addon-coverage',
+    '@storybook/addon-webpack5-compiler-babel',
   ],
   features: {
     interactionsDebugger: true,
-    storyStoreV7: true,
     buildStoriesJson: true,
   },
 

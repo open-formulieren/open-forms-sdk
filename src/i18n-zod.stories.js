@@ -1,4 +1,4 @@
-import {userEvent, within} from '@storybook/testing-library';
+import {userEvent, within} from '@storybook/test';
 import {ButtonGroup} from '@utrecht/component-library-react';
 import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';

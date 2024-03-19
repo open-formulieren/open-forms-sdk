@@ -1,5 +1,5 @@
-import {expect} from '@storybook/jest';
-import {userEvent, waitFor, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {userEvent, waitFor, within} from '@storybook/test';
 
 import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
@@ -46,17 +46,17 @@ export const ClientSideValidation = {
     const houseNumberAddition = await canvas.findByLabelText('Huisnummertoevoeging');
 
     await step('Fill only postcode - client side validation error', async () => {
-      userEvent.type(postcodeInput, '1234AB');
+      await userEvent.type(postcodeInput, '1234AB');
       expect(await canvas.findByText('Huisnummer is verplicht.')).toBeVisible();
     });
 
     await step('Fill house number field', async () => {
-      userEvent.type(houseNumberInput, '1');
+      await userEvent.type(houseNumberInput, '1');
 
       // ensure remaining fields are touched to reveal potential validation errors
-      userEvent.click(houseLetter);
+      await userEvent.click(houseLetter);
       houseLetter.blur();
-      userEvent.click(houseNumberAddition);
+      await userEvent.click(houseNumberAddition);
       houseNumberAddition.blur();
 
       await waitFor(() => {
@@ -66,7 +66,7 @@ export const ClientSideValidation = {
     });
 
     await step('Clear postcode field, keep house number field', async () => {
-      userEvent.clear(postcodeInput);
+      await userEvent.clear(postcodeInput);
       expect(await canvas.findByText('Postcode is verplicht.')).toBeVisible();
     });
   },
@@ -88,13 +88,13 @@ export const NotRequired = {
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
 
     await step('Enter only postcode, without house number', async () => {
-      userEvent.type(postcodeInput, '1234AB');
+      await userEvent.type(postcodeInput, '1234AB');
       expect(await canvas.findByText('Huisnummer is verplicht.')).toBeVisible();
     });
 
     await step('Enter only house number, without postcode', async () => {
-      userEvent.clear(postcodeInput);
-      userEvent.type(houseNumberInput, '1');
+      await userEvent.clear(postcodeInput);
+      await userEvent.type(houseNumberInput, '1');
       expect(await canvas.findByText('Postcode is verplicht.')).toBeVisible();
     });
   },
@@ -124,10 +124,10 @@ export const WithPassingBRKValidation = {
     const canvas = within(canvasElement);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
-    userEvent.type(postcodeInput, '1234AB');
+    await userEvent.type(postcodeInput, '1234AB');
 
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
-    userEvent.type(houseNumberInput, '1');
+    await userEvent.type(houseNumberInput, '1');
 
     // this assertion is not worth much due to the async nature of the validators...
     // expect(canvas.queryByText(EXPECTED_VALIDATION_ERROR)).not.toBeInTheDocument();

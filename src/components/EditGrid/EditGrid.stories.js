@@ -1,3 +1,5 @@
+import {fn} from '@storybook/test';
+
 import Body from 'components/Body';
 import {OFButton} from 'components/Button';
 
@@ -11,6 +13,7 @@ export default {
     onAddItem: {control: false},
   },
   args: {
+    onAddItem: fn(),
     children: (
       <>
         <EditGridItem

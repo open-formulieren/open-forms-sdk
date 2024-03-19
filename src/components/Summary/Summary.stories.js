@@ -1,7 +1,7 @@
-import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
+import {expect} from '@storybook/test';
+import {fn, userEvent, within} from '@storybook/test';
 import cloneDeep from 'lodash/cloneDeep';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
@@ -183,6 +183,9 @@ export default {
     // LiteralDecorator args
     confirmText: 'Confirm',
     previousText: 'Previous',
+    onSubmit: fn(),
+    onDestroySession: fn(),
+    onPrevPage: fn(),
   },
   argTypes: {
     submissionAllowed: {
@@ -202,7 +205,7 @@ export default {
       wrapForm: false,
     },
     reactRouter: {
-      routePath: '/overzicht',
+      routing: '/overzicht',
     },
   },
 };

@@ -1,4 +1,4 @@
-import {userEvent, within} from '@storybook/testing-library';
+import {userEvent, within} from '@storybook/test';
 
 import {withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';

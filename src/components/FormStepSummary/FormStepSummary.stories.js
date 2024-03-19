@@ -1,6 +1,6 @@
-import {expect} from '@storybook/jest';
-import {userEvent, within} from '@storybook/testing-library';
-import {withRouter} from 'storybook-addon-react-router-v6';
+import {expect} from '@storybook/test';
+import {userEvent, within} from '@storybook/test';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import FormStepSummary from '.';
 
@@ -10,7 +10,7 @@ export default {
   decorators: [withRouter],
   parameters: {
     reactRouter: {
-      routePath: '/overzicht',
+      routing: '/overzicht',
     },
   },
   args: {
