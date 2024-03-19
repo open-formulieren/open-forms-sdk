@@ -81,7 +81,6 @@ export default {
     ],
   },
   parameters: {
-    actions: {argTypesRegex: '^on[A-Z].*'},
     viewport: {
       // These are the viewports that are shown in Storybook
       viewports: {
