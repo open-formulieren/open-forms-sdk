@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+2.1.5 (2024-03-19)
+==================
+
+Hotfix release
+
+* [#3835] Backport of the fix to main for broken progress indicator
+  when steps are marked as initially not-applicable
+
 2.1.4 (2024-03-14)
 ==================
 
