@@ -1,5 +1,5 @@
 import {expect} from '@storybook/test';
-import {userEvent, waitFor, waitForElementToBeRemoved, within} from '@storybook/test';
+import {userEvent, waitFor, within} from '@storybook/test';
 
 import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
 
@@ -172,6 +172,8 @@ export const FocusOtherInputClosesWidget = {
     await expect(canvas.getByRole('button')).toHaveFocus();
     await userEvent.tab();
     await expect(canvas.getByTestId('other-input')).toHaveFocus();
-    await waitForElementToBeRemoved(() => canvas.queryByRole('dialog'));
+    await waitFor(() => {
+      expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   },
 };

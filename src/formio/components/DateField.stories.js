@@ -2,8 +2,26 @@ import {expect} from '@storybook/test';
 import {userEvent, within} from '@storybook/test';
 
 import {withUtrechtDocument} from 'story-utils/decorators';
+import {sleep} from 'utils';
 
 import {SingleFormioComponent} from './story-util';
+
+/**
+ * Flatpickr/formio take some time to initialize, so wait until the DOM node is
+ * injected into the document.
+ *
+ * We can't use `expect(...).toBeInTheDocument()` because we can't make a query
+ * understood by testing-library, and passing DOM nodes (or null in this case) throws
+ * errors that are not suppressed by waitFor
+ */
+const waitForFlatpickr = async node => {
+  let calendarNode;
+  for (let i = 0; i < 20; i++) {
+    calendarNode = node.querySelector('.flatpickr-calendar');
+    if (calendarNode !== null) return;
+    await sleep(100);
+  }
+};
 
 export default {
   title: 'Form.io components / Custom / DateField',
@@ -53,15 +71,16 @@ export const DateField = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
+    await waitForFlatpickr(canvasElement);
 
     const dateInput = canvas.getByRole('textbox');
 
     await userEvent.type(dateInput, '06-06-2006');
     expect(dateInput).toHaveDisplayValue('06-06-2006');
+    dateInput.blur();
 
     const error = canvas.queryByText('minDate');
     await expect(error).toBeNull();
-    // This test succeeds, but the value is not displayed in storybook... Mystery
   },
 };
 
@@ -88,15 +107,15 @@ export const DateWithMinField = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
+    await waitForFlatpickr(canvasElement);
 
     const dateInput = canvas.getByRole('textbox');
 
     await userEvent.type(dateInput, '06-06-2006');
     expect(dateInput).toHaveDisplayValue('06-06-2006');
+    dateInput.blur();
 
-    // TODO: I cannot get this to work. If you do it manually in storybook, it works... (it shows the error).
-    // const error = canvas.queryByText('minDate');
-    // await expect(error).not.toBeNull();
+    expect(await canvas.findByText('minDate')).toBeVisible();
   },
 };
 
@@ -123,14 +142,14 @@ export const DateWithMaxField = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
+    await waitForFlatpickr(canvasElement);
 
     const dateInput = canvas.getByRole('textbox');
 
     await userEvent.type(dateInput, '19-12-2023');
     expect(dateInput).toHaveDisplayValue('19-12-2023');
+    dateInput.blur();
 
-    // TODO: I cannot get this to work. If you do it manually in storybook, it works... (it shows the error).
-    // const error = canvas.queryByText('maxDate');
-    // await expect(error).not.toBeNull();
+    expect(await canvas.findByText('maxDate')).toBeVisible();
   },
 };

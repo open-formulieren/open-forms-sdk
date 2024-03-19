@@ -1,6 +1,5 @@
 import {mockAddressSearchGet, mockLatLngSearchGet} from 'components/Map/mocks';
-import {withUtrechtDocument} from 'story-utils/decorators';
-import {ConfigDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
 
 import {SingleFormioComponent} from './story-util';
 
@@ -38,6 +37,7 @@ export default {
   },
 };
 
-export const Map = {
+export const Default = {
+  name: 'Map',
   render: SingleFormioComponent,
 };
