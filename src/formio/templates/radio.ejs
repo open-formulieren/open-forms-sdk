@@ -21,6 +21,15 @@
     {% if (ctx.value && (ctx.value === item.value || (typeof ctx.value === 'object' && ctx.value.hasOwnProperty(item.value) && ctx.value[item.value]))) { %}
     checked=true
     {% } %}
+
+    {% if (item.description) { %}
+    aria-describedby="{{ctx.id}}{{ctx.row}}-{{item.value}}-description"
+    {% } %}
   >
+  {% if (item.description) { %}
+    <div class="utrecht-description utrecht-form-description--openforms" id="{{ctx.id}}{{ctx.row}}-{{item.value}}-description">
+        {{ item.description }}
+    </div>
+  {% } %}
 </div>
 {% }) %}

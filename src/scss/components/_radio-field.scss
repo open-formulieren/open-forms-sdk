@@ -30,6 +30,11 @@
         );
       }
 
+      .utrecht-form-description--openforms {
+        padding-inline-start: var(--of-utrecht-form-label-radio-padding-inline-start);
+        padding-block-end: var(--of-utrecht-form-label-radio-padding-block-end);
+      }
+
       &:focus-within {
         outline: var(--of-utrecht-form-label-radio-focus-within-outline);
       }
