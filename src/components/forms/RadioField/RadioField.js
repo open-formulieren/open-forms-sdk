@@ -61,7 +61,12 @@ export const RadioField = ({
             {...inputProps}
           />
           <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
-            <FormLabel htmlFor={`${id}-opt-${index}`} disabled={disabled} type="radio">
+            <FormLabel
+              htmlFor={`${id}-opt-${index}`}
+              disabled={disabled}
+              type="radio"
+              className="utrecht-form-label--openforms"
+            >
               {optionLabel}
             </FormLabel>
           </Paragraph>
