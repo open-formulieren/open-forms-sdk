@@ -2,6 +2,40 @@
 SDK Changelog
 =============
 
+2.2.0 (2023-03-22)
+==================
+
+Feature release - all the changes from 2.2.0-alpha.0 are also included!
+
+New features
+------------
+
+* [#3855] Added better error handling on submission start, e.g. crashes because of a DMN
+  backend being down.
+* [#3791] The abort button is now consistently applied through all variants of
+  authenticated/non-authenticated form submissions, turning into a "logout" button
+  when relevant.
+* [#3957] Updated to the new eIDAS logo.
+* [#483] Added support for descriptions in addition to the label for radio and
+  selectboxes options.
+
+Bugfixes
+--------
+
+* [#654] Fixed a styling regression in radio/selectboxes.
+
+Project maintenance
+-------------------
+
+* [#650] Replaced the Yarn package manager with ``npm``.
+* Upgraded a number of dependencies to their latest available versions.
+* [#662] Upgraded to Storybook 8.
+* [#645] The session expiry notice is now its own route, making cleanup easier.
+* Bumped github actions to their latest versions.
+* Replaced Formiojs with a fork to address Formio CDN referencess to vulnerable versions
+  of WYSIWYG libraries. Note that this was not deemed a security concern by us, since
+  Internet Explorer is required which is end of life.
+
 2.1.4 (2024-03-14)
 ==================
 
