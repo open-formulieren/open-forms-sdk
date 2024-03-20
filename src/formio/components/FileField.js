@@ -13,7 +13,7 @@ const addCSRFToken = xhr => {
   }
 };
 
-const CSRFEnabledUrl = formio => {
+const CSRFEnabledUrl = function (formio) {
   const defaultUrlStorage = formioUrlStorage(formio);
 
   // Taken and modified from Formio's formiojs/providers/storage/url.js
