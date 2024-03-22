@@ -945,12 +945,6 @@
       "value": "Extend"
     }
   ],
-  "R0CpY1": [
-    {
-      "type": 0,
-      "value": "Abort existing submission"
-    }
-  ],
   "RJ+0F/": [
     {
       "type": 0,
@@ -1853,12 +1847,6 @@
       "value": "Not co-signed"
     }
   ],
-  "tUgRfj": [
-    {
-      "type": 0,
-      "value": "Logging out failed, please try again later"
-    }
-  ],
   "tohkCS": [
     {
       "type": 0,
@@ -1977,12 +1965,6 @@
     {
       "type": 0,
       "value": "Co-sign confirmation"
-    }
-  ],
-  "zQWnFh": [
-    {
-      "type": 0,
-      "value": "Are you sure that you want to logout and not co-sign the current form submission?"
     }
   ],
   "zkdWYe": [

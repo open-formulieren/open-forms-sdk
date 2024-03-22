@@ -456,11 +456,6 @@
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
   },
-  "R0CpY1": {
-    "defaultMessage": "Opnieuw starten",
-    "description": "Abort existing submission button label",
-    "originalDefault": "Abort existing submission"
-  },
   "RJ+0F/": {
     "defaultMessage": "Ja",
     "description": "'True' display",
@@ -856,11 +851,6 @@
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
   },
-  "tUgRfj": {
-    "defaultMessage": "Het uitloggen is mislukt. Probeer het later opnieuw.",
-    "description": "Modal logging out failed message",
-    "originalDefault": "Logging out failed, please try again later"
-  },
   "tohkCS": {
     "defaultMessage": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen.",
     "description": "Cancel appointment email field help text",
@@ -910,11 +900,6 @@
     "defaultMessage": "Bevestiging mede-ondertekening",
     "description": "On succesful completion title",
     "originalDefault": "Co-sign confirmation"
-  },
-  "zQWnFh": {
-    "defaultMessage": "Bent u zeker dat u wilt uitloggen en hiermee de inzending niet mede-ondertekent?",
-    "description": "log out confirmation prompt on co-sign page",
-    "originalDefault": "Are you sure that you want to logout and not co-sign the current form submission?"
   },
   "zkdWYe": {
     "defaultMessage": "Terug naar de website",

@@ -449,11 +449,6 @@
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
   },
-  "R0CpY1": {
-    "defaultMessage": "Abort existing submission",
-    "description": "Abort existing submission button label",
-    "originalDefault": "Abort existing submission"
-  },
   "RJ+0F/": {
     "defaultMessage": "Yes",
     "description": "'True' display",
@@ -844,11 +839,6 @@
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
   },
-  "tUgRfj": {
-    "defaultMessage": "Logging out failed, please try again later",
-    "description": "Modal logging out failed message",
-    "originalDefault": "Logging out failed, please try again later"
-  },
   "tohkCS": {
     "defaultMessage": "The email address where you received the appointment confirmation email.",
     "description": "Cancel appointment email field help text",
@@ -898,11 +888,6 @@
     "defaultMessage": "Co-sign confirmation",
     "description": "On succesful completion title",
     "originalDefault": "Co-sign confirmation"
-  },
-  "zQWnFh": {
-    "defaultMessage": "Are you sure that you want to logout and not co-sign the current form submission?",
-    "description": "log out confirmation prompt on co-sign page",
-    "originalDefault": "Are you sure that you want to logout and not co-sign the current form submission?"
   },
   "zkdWYe": {
     "defaultMessage": "Return to main website",
