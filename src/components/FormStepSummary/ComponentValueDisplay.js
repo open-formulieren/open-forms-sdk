@@ -223,6 +223,10 @@ const ContentDisplay = ({component, value}) => {
   return <span dangerouslySetInnerHTML={{__html: component.html}} />;
 };
 
+const FieldsetDisplay = ({component, value}) => {
+  return <EmptyDisplay />;
+};
+
 const ComponentValueDisplay = ({value, component}) => {
   const {multiple = false, type} = component;
 
@@ -275,6 +279,7 @@ const TYPE_TO_COMPONENT = {
   coSign: CoSignDisplay,
   addressNL: AddressNLDisplay,
   content: ContentDisplay,
+  fieldset: FieldsetDisplay,
 };
 
 export default ComponentValueDisplay;
