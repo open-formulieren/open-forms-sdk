@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {within} from '@storybook/test';
+import {expect, fn, within} from '@storybook/test';
 import produce from 'immer';
 import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
@@ -19,6 +18,11 @@ export default {
   title: 'Private API / FormStep',
   component: FormStep,
   decorators: [ConfigDecorator, withRouter, AnalyticsToolsDecorator],
+  args: {
+    onLogicChecked: fn(),
+    onStepSubmitted: fn(),
+    onDestroySession: fn(),
+  },
   argTypes: {
     submission: {control: false},
     form: {control: false},
