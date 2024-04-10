@@ -64,8 +64,8 @@ const FormStart = ({form, submission, onFormStart, onDestroySession}) => {
     }
 
     if (doStart && !hasAuthErrors) {
-      await onFormStart();
       onFormStartCalledRef.current = true;
+      await onFormStart();
     }
   }, [doStart, hasAuthErrors, onFormStart]);
 
