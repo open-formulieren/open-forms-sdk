@@ -49,10 +49,20 @@
     "description": "Appointments: select location and time step title",
     "originalDefault": "Location and time"
   },
+  "4ASssJ": {
+    "defaultMessage": "Rode smiley (negatief)",
+    "description": "GovMetric red face alt text",
+    "originalDefault": "Red smiley (negative)"
+  },
   "4IX8hk": {
     "defaultMessage": "Opties ophalen...",
     "description": "(Async) select options loading message",
     "originalDefault": "Loading..."
+  },
+  "4gPdgK": {
+    "defaultMessage": "Slecht",
+    "description": "GovMetric rating text",
+    "originalDefault": "Bad"
   },
   "5uh2hS": {
     "defaultMessage": "Afspraak annuleren mislukt",
@@ -268,6 +278,11 @@
     "description": "Appointments navbar title for 'contact details' step",
     "originalDefault": "Contact details"
   },
+  "EISVpZ": {
+    "defaultMessage": "Beoordeel dit formulier als 'goed'",
+    "description": "Feedback face title - Good",
+    "originalDefault": "Rate this form as 'Good'"
+  },
   "GbPef0": {
     "defaultMessage": "Huisnummer is verplicht.",
     "description": "ZOD error message when AddressNL postcode is provided but not houseNumber",
@@ -354,11 +369,6 @@
     "description": "Generic error message",
     "originalDefault": "Unfortunately something went wrong!"
   },
-  "KN0HrU": {
-    "defaultMessage": "Geef feedback",
-    "description": "Feedback button label",
-    "originalDefault": "Give feedback"
-  },
   "KWP1b9": {
     "defaultMessage": "Vorige maand",
     "description": "Calendar: previous month button title",
@@ -394,6 +404,11 @@
     "defaultMessage": "Totaal",
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
+  },
+  "M+pwu8": {
+    "defaultMessage": "Beoordeel dit formulier als 'matig'",
+    "description": "Feedback face title - Average",
+    "originalDefault": "Rate this form as 'average'"
   },
   "M/8TYr": {
     "defaultMessage": "Later verdergaan",
@@ -476,10 +491,20 @@
     "description": "ZOD 'invalid_string' error message, with endsWith",
     "originalDefault": "Invalid input: must end with \"{endsWith}\"."
   },
+  "SMTPE1": {
+    "defaultMessage": "Groene smiley (positief)",
+    "description": "GovMetric green face alt text",
+    "originalDefault": "Green smiley (good)"
+  },
   "SvLGQJ": {
     "defaultMessage": "Dit formulier is tijdelijk niet te gebruiken door een storing bij {label}. Probeer het later nog eens.",
     "description": "Authentication outage message",
     "originalDefault": "This form cannot be used temporarily due to a malfunction with {label}. Please try again later."
+  },
+  "TYWa2i": {
+    "defaultMessage": "Goed",
+    "description": "GovMetric rating text",
+    "originalDefault": "Good"
   },
   "Tip5+d": {
     "defaultMessage": "Volgend jaar",
@@ -490,11 +515,6 @@
     "defaultMessage": "De tekst moet {exact, select, true {exact} other {{inclusive, select, true {minstens} other {meer dan}}} } {minimum, plural, one {{minimum} karakter} other {{minimum} karakters}} lang zijn.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
-  },
-  "UDs6vL": {
-    "defaultMessage": "Hoe ervaar je dit formulier?",
-    "description": "Feedback button title",
-    "originalDefault": "How do you rate this form?"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -511,6 +531,11 @@
     "defaultMessage": "Uw betaling is ontvangen.",
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
+  },
+  "WKH4HC": {
+    "defaultMessage": "Oranje smiley (neutraal)",
+    "description": "GovMetric orange face alt text",
+    "originalDefault": "Orange smiley (neutral)"
   },
   "WWvqcz": {
     "defaultMessage": "Ongeldige datum",
@@ -662,6 +687,11 @@
     "defaultMessage": "Ongeldige invoer.",
     "description": "ZOD 'custom' error message",
     "originalDefault": "Invalid input."
+  },
+  "ie+hkb": {
+    "defaultMessage": "Matig",
+    "description": "GovMetric rating text",
+    "originalDefault": "Average"
   },
   "iey7IL": {
     "defaultMessage": "Ongeldige invoer.",
@@ -885,6 +915,11 @@
     "defaultMessage": "Aantal personen",
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
+  },
+  "wwsWUp": {
+    "defaultMessage": "Wat vindt u van dit formulier?",
+    "description": "GovMetric snippet header",
+    "originalDefault": "How do you rate this form?"
   },
   "y31iyC": {
     "defaultMessage": "Ongeldige letterlijke waarde, verwachtte {expected}.",
