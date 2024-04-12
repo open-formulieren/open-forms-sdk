@@ -10,4 +10,10 @@ const buildGovMetricUrl = (govmetricSourceId, formSlug, govmetricSecureGuid) => 
   return govmetricStopknop.href;
 };
 
-export {buildGovMetricUrl};
+const govMetricURLWithRating = (govMetricUrl, ratingId) => {
+  const url = new URL(govMetricUrl);
+  url.searchParams.append('Q_RATINGID', ratingId);
+  return url.href;
+};
+
+export {buildGovMetricUrl, govMetricURLWithRating};
