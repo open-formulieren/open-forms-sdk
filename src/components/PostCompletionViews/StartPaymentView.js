@@ -11,8 +11,7 @@ import StatusUrlPoller, {SubmissionStatusContext} from './StatusUrlPoller';
 
 const StartPaymentViewDisplay = ({downloadPDFText}) => {
   const intl = useIntl();
-  const {publicReference, paymentUrl, reportDownloadUrl, mainWebsiteUrl} =
-    useContext(SubmissionStatusContext);
+  const {publicReference, paymentUrl, reportDownloadUrl} = useContext(SubmissionStatusContext);
 
   const body = (
     <>
@@ -50,7 +49,6 @@ const StartPaymentViewDisplay = ({downloadPDFText}) => {
         />
       }
       body={body}
-      mainWebsiteUrl={mainWebsiteUrl}
       reportDownloadUrl={reportDownloadUrl}
     />
   );
