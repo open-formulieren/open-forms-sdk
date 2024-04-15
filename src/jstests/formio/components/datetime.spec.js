@@ -1,7 +1,7 @@
 import set from 'lodash/set';
 import {Formio} from 'react-formio';
 
-import MinMaxDatetimeValidator from 'formio/validators/minMaxDatetimeValidator';
+import {MinMaxDatetimeValidator} from 'formio/validators/minMaxDateAndDatetimeValidator';
 
 const FormioComponent = Formio.Components.components.component;
 

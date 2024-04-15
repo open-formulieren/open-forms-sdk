@@ -1,6 +1,6 @@
 import {Formio} from 'react-formio';
 
-import MinMaxDateValidator from 'formio/validators/minMaxDateValidator';
+import {MinMaxDateValidator} from 'formio/validators/minMaxDateAndDatetimeValidator';
 
 const DateTimeField = Formio.Components.components.datetime;
 
