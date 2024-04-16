@@ -86,7 +86,7 @@ jobs:
 
       - name: Run tests
         run: |
-          npm test --coverage
+          npm test -- --coverage
         env:
           CI: 'true'
 
