@@ -37,7 +37,8 @@ const GovMetricSnippet = () => {
               description: 'Feedback face title - Good',
               defaultMessage: "Rate this form as 'Good'",
             })}
-            rel="nofollow"
+            target="_blank"
+            rel="nofollow noreferrer"
           >
             <img
               src="https://websurveys2.govmetric.com/imgs/smileys/medium/Good.png"
@@ -59,7 +60,8 @@ const GovMetricSnippet = () => {
               description: 'Feedback face title - Average',
               defaultMessage: "Rate this form as 'average'",
             })}
-            rel="nofollow"
+            target="_blank"
+            rel="nofollow noreferrer"
           >
             <img
               src="https://websurveys2.govmetric.com/imgs/smileys/medium/Average.png"
@@ -78,7 +80,8 @@ const GovMetricSnippet = () => {
             href={govMetricURLWithRating(govmetricUrl, '4')}
             className="gm_sidebar_anchor"
             title="Beoordeel deze formulier als slecht"
-            rel="nofollow"
+            target="_blank"
+            rel="nofollow noreferrer"
           >
             <img
               src="https://websurveys2.govmetric.com/imgs/smileys/medium/Poor.png"
