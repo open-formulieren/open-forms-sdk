@@ -2,7 +2,15 @@
 SDK Changelog
 =============
 
-2.2.0 (2023-03-22)
+2.2.1 (2024-04-16)
+==================
+
+Bugfix release
+
+* [#4082] Fixed duplicate creation of submissions when starting a form after authenticating.
+* [#4172] Fixed the minimum date for a date field incorrectly saying the input is invalid.
+
+2.2.0 (2024-03-22)
 ==================
 
 Feature release - all the changes from 2.2.0-alpha.0 are also included!
@@ -57,7 +65,7 @@ Bugfix release
 
 * [#3845] Fixed WYSIWYG content missing styling in summary page.
 
-2.2.0-alpha.0 (2023-02-19)
+2.2.0-alpha.0 (2024-02-19)
 ==========================
 
 First preview release of the upcoming 2.2.0 version.

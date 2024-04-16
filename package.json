@@ -1,6 +1,6 @@
 {
   "name": "@open-formulieren/sdk",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "private": true,
   "main": "dist/open-forms-sdk.js",
   "exports": {
