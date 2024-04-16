@@ -1,8 +1,8 @@
 import {parseISO} from 'date-fns';
 
 export const validateBoundaries = (componentType, minBoundary, maxBoundary, value) => {
-  const parsedMinBoundary = minBoundary ? new Date(minBoundary) : null;
-  const parsedMaxBoundary = maxBoundary ? new Date(maxBoundary) : null;
+  const parsedMinBoundary = minBoundary ? parseISO(minBoundary) : null;
+  const parsedMaxBoundary = maxBoundary ? parseISO(maxBoundary) : null;
 
   if (!parsedMinBoundary && !parsedMaxBoundary) {
     return {isValid: true};
