@@ -17,7 +17,7 @@ const PostCompletionView = ({
   body,
   mainWebsiteUrl,
   reportDownloadUrl,
-  extraBottom,
+  extraBody,
 }) => {
   useTitle(pageTitle);
 
@@ -36,8 +36,10 @@ const PostCompletionView = ({
         </Anchor>
       </Body>
 
+      {extraBody}
+
       {mainWebsiteUrl ? (
-        <Toolbar modifiers={['reverse']}>
+        <Toolbar>
           <ToolbarList>
             <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
               <OFButton appearance="primary-action-button">
@@ -50,7 +52,6 @@ const PostCompletionView = ({
           </ToolbarList>
         </Toolbar>
       ) : null}
-      {extraBottom}
     </Card>
   );
 };
@@ -62,7 +63,7 @@ PostCompletionView.propTypes = {
   body: PropTypes.node,
   mainWebsiteUrl: PropTypes.string,
   reportDownloadUrl: PropTypes.string,
-  extraBottom: PropTypes.node,
+  extraBody: PropTypes.node,
 };
 
 export default PostCompletionView;

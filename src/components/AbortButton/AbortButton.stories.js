@@ -41,8 +41,8 @@ export const AnonymousAndGovMetric = {
   },
   parameters: {
     analyticsToolsParams: {
-      govmetricSourceId: '1234',
-      govmetricSecureGuid: '',
+      govmetricSourceIdFormAborted: '1234',
+      govmetricSecureGuidFormAborted: '',
       enableGovmetricAnalytics: true,
     },
   },
@@ -60,8 +60,8 @@ export const AuthenticatedAndGovmetric = {
   },
   parameters: {
     analyticsToolsParams: {
-      govmetricSourceId: '1234',
-      govmetricSecureGuid: '',
+      govmetricSourceIdFormAborted: '1234',
+      govmetricSecureGuidFormAborted: '',
       enableGovmetricAnalytics: true,
     },
   },

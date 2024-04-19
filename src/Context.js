@@ -24,8 +24,10 @@ const FormContext = React.createContext({
 FormContext.displayName = 'FormContext';
 
 const AnalyticsToolsConfigContext = React.createContext({
-  govmetricSourceId: '',
-  govmetricSecureGuid: '',
+  govmetricSourceIdFormFinished: '',
+  govmetricSourceIdFormAborted: '',
+  govmetricSecureGuidFormFinished: '',
+  govmetricSecureGuidFormAborted: '',
   enableGovmetricAnalytics: false,
 });
 

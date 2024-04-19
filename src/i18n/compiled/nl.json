@@ -91,10 +91,22 @@
       "value": "Locatie en tijd"
     }
   ],
+  "4ASssJ": [
+    {
+      "type": 0,
+      "value": "Rode smiley (negatief)"
+    }
+  ],
   "4IX8hk": [
     {
       "type": 0,
       "value": "Opties ophalen..."
+    }
+  ],
+  "4gPdgK": [
+    {
+      "type": 0,
+      "value": "Slecht"
     }
   ],
   "5uh2hS": [
@@ -509,6 +521,12 @@
       "value": "Contactgegevens"
     }
   ],
+  "EISVpZ": [
+    {
+      "type": 0,
+      "value": "Beoordeel dit formulier als 'goed'"
+    }
+  ],
   "GbPef0": [
     {
       "type": 0,
@@ -749,12 +767,6 @@
       "value": "Er ging helaas iets fout!"
     }
   ],
-  "KN0HrU": [
-    {
-      "type": 0,
-      "value": "Geef feedback"
-    }
-  ],
   "KWP1b9": [
     {
       "type": 0,
@@ -821,6 +833,12 @@
     {
       "type": 0,
       "value": "Totaal"
+    }
+  ],
+  "M+pwu8": [
+    {
+      "type": 0,
+      "value": "Beoordeel dit formulier als 'matig'"
     }
   ],
   "M/8TYr": [
@@ -981,6 +999,12 @@
       "value": "\"."
     }
   ],
+  "SMTPE1": [
+    {
+      "type": 0,
+      "value": "Groene smiley (positief)"
+    }
+  ],
   "SvLGQJ": [
     {
       "type": 0,
@@ -993,6 +1017,12 @@
     {
       "type": 0,
       "value": ". Probeer het later nog eens."
+    }
+  ],
+  "TYWa2i": [
+    {
+      "type": 0,
+      "value": "Goed"
     }
   ],
   "Tip5+d": [
@@ -1087,12 +1117,6 @@
       "value": " lang zijn."
     }
   ],
-  "UDs6vL": [
-    {
-      "type": 0,
-      "value": "Hoe ervaar je dit formulier?"
-    }
-  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1121,6 +1145,12 @@
     {
       "type": 0,
       "value": "Uw betaling is ontvangen."
+    }
+  ],
+  "WKH4HC": [
+    {
+      "type": 0,
+      "value": "Oranje smiley (neutraal)"
     }
   ],
   "WWvqcz": [
@@ -1359,6 +1389,12 @@
     {
       "type": 0,
       "value": "Ongeldige invoer."
+    }
+  ],
+  "ie+hkb": [
+    {
+      "type": 0,
+      "value": "Matig"
     }
   ],
   "iey7IL": [
@@ -1943,6 +1979,12 @@
     {
       "type": 0,
       "value": "Aantal personen"
+    }
+  ],
+  "wwsWUp": [
+    {
+      "type": 0,
+      "value": "Wat vindt u van dit formulier?"
     }
   ],
   "y31iyC": [

@@ -91,10 +91,22 @@
       "value": "Location and time"
     }
   ],
+  "4ASssJ": [
+    {
+      "type": 0,
+      "value": "Red smiley (negative)"
+    }
+  ],
   "4IX8hk": [
     {
       "type": 0,
       "value": "Loading..."
+    }
+  ],
+  "4gPdgK": [
+    {
+      "type": 0,
+      "value": "Bad"
     }
   ],
   "5uh2hS": [
@@ -509,6 +521,12 @@
       "value": "Contact details"
     }
   ],
+  "EISVpZ": [
+    {
+      "type": 0,
+      "value": "Rate this form as 'Good'"
+    }
+  ],
   "GbPef0": [
     {
       "type": 0,
@@ -749,12 +767,6 @@
       "value": "Unfortunately something went wrong!"
     }
   ],
-  "KN0HrU": [
-    {
-      "type": 0,
-      "value": "Give feedback"
-    }
-  ],
   "KWP1b9": [
     {
       "type": 0,
@@ -821,6 +833,12 @@
     {
       "type": 0,
       "value": "Total"
+    }
+  ],
+  "M+pwu8": [
+    {
+      "type": 0,
+      "value": "Rate this form as 'average'"
     }
   ],
   "M/8TYr": [
@@ -981,6 +999,12 @@
       "value": "\"."
     }
   ],
+  "SMTPE1": [
+    {
+      "type": 0,
+      "value": "Green smiley (good)"
+    }
+  ],
   "SvLGQJ": [
     {
       "type": 0,
@@ -993,6 +1017,12 @@
     {
       "type": 0,
       "value": ". Please try again later."
+    }
+  ],
+  "TYWa2i": [
+    {
+      "type": 0,
+      "value": "Good"
     }
   ],
   "Tip5+d": [
@@ -1087,12 +1117,6 @@
       "value": "."
     }
   ],
-  "UDs6vL": [
-    {
-      "type": 0,
-      "value": "How do you rate this form?"
-    }
-  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1121,6 +1145,12 @@
     {
       "type": 0,
       "value": "Your payment has been received."
+    }
+  ],
+  "WKH4HC": [
+    {
+      "type": 0,
+      "value": "Orange smiley (neutral)"
     }
   ],
   "WWvqcz": [
@@ -1355,6 +1385,12 @@
     {
       "type": 0,
       "value": "Invalid input."
+    }
+  ],
+  "ie+hkb": [
+    {
+      "type": 0,
+      "value": "Average"
     }
   ],
   "iey7IL": [
@@ -1939,6 +1975,12 @@
     {
       "type": 0,
       "value": "Amount"
+    }
+  ],
+  "wwsWUp": [
+    {
+      "type": 0,
+      "value": "How do you rate this form?"
     }
   ],
   "y31iyC": [

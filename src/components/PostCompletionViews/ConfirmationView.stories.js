@@ -101,7 +101,7 @@ export const WithGovMetric = {
   },
   parameters: {
     analyticsToolsParams: {
-      govmetricSourceId: '1234',
+      govmetricSourceIdFormFinished: '1234',
       govmetricSecureGuid: '',
       enableGovmetricAnalytics: true,
     },
@@ -109,10 +109,14 @@ export const WithGovMetric = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const feedbackLink = await canvas.findByRole('link', {name: 'Geef feedback'});
-    await expect(feedbackLink).toBeVisible();
-    await expect(feedbackLink.href).toEqual(
-      'https://websurveys2.govmetric.com/theme/kf/1234?Q_Formid=a-test-form'
+    const lists = await canvas.getAllByRole('list');
+    const facesList = lists[0]; // The buttons toolbar is also a list
+
+    const faces = within(facesList).getAllByRole('link');
+
+    await expect(faces.length).toEqual(3);
+    await expect(faces[0].href).toEqual(
+      'https://websurveys2.govmetric.com/theme/kf/1234?Q_Formid=a-test-form&Q_RATINGID=3'
     );
   },
 };
