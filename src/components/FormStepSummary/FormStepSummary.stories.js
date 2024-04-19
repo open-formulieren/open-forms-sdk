@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {userEvent, within} from '@storybook/test';
+import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import FormStepSummary from '.';

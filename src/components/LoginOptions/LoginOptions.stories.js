@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {userEvent, waitFor, within} from '@storybook/test';
+import {expect, userEvent, waitFor, within} from '@storybook/test';
 
 import {buildForm} from 'api-mocks';
 import {LiteralDecorator} from 'story-utils/decorators';

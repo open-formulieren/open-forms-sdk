@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {userEvent, waitFor, within} from '@storybook/test';
+import {expect, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';

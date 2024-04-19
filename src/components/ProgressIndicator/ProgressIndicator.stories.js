@@ -1,6 +1,5 @@
 import {MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
-import {expect} from '@storybook/test';
-import {userEvent, within} from '@storybook/test';
+import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import ProgressIndicator from '.';

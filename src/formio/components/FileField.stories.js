@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {userEvent, within} from '@storybook/test';
+import {expect, userEvent, within} from '@storybook/test';
 import {getWorker} from 'msw-storybook-addon';
 
 import {withUtrechtDocument} from 'story-utils/decorators';

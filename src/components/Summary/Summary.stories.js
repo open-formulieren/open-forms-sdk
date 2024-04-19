@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {fn, userEvent, within} from '@storybook/test';
+import {expect, fn, userEvent, within} from '@storybook/test';
 import cloneDeep from 'lodash/cloneDeep';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
