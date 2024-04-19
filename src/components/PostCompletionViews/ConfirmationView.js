@@ -89,7 +89,7 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
       body={body}
       mainWebsiteUrl={mainWebsiteUrl}
       reportDownloadUrl={reportDownloadUrl}
-      extraBottom={<GovMetricSnippet />}
+      extraBody={<GovMetricSnippet />}
     />
   );
 };

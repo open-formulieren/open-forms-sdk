@@ -49,10 +49,20 @@
     "description": "Appointments: select location and time step title",
     "originalDefault": "Location and time"
   },
+  "4ASssJ": {
+    "defaultMessage": "Red smiley (negative)",
+    "description": "GovMetric red face alt text",
+    "originalDefault": "Red smiley (negative)"
+  },
   "4IX8hk": {
     "defaultMessage": "Loading...",
     "description": "(Async) select options loading message",
     "originalDefault": "Loading..."
+  },
+  "4gPdgK": {
+    "defaultMessage": "Bad",
+    "description": "GovMetric rating text",
+    "originalDefault": "Bad"
   },
   "5uh2hS": {
     "defaultMessage": "Appointment cancellation failed",
@@ -264,6 +274,11 @@
     "description": "Appointments navbar title for 'contact details' step",
     "originalDefault": "Contact details"
   },
+  "EISVpZ": {
+    "defaultMessage": "Rate this form as 'Good'",
+    "description": "Feedback face title - Good",
+    "originalDefault": "Rate this form as 'Good'"
+  },
   "GbPef0": {
     "defaultMessage": "You must provide a house number.",
     "description": "ZOD error message when AddressNL postcode is provided but not houseNumber",
@@ -349,11 +364,6 @@
     "description": "Generic error message",
     "originalDefault": "Unfortunately something went wrong!"
   },
-  "KN0HrU": {
-    "defaultMessage": "Give feedback",
-    "description": "Feedback button label",
-    "originalDefault": "Give feedback"
-  },
   "KWP1b9": {
     "defaultMessage": "Previous month",
     "description": "Calendar: previous month button title",
@@ -388,6 +398,11 @@
     "defaultMessage": "Total",
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
+  },
+  "M+pwu8": {
+    "defaultMessage": "Rate this form as 'average'",
+    "description": "Feedback face title - Average",
+    "originalDefault": "Rate this form as 'average'"
   },
   "M/8TYr": {
     "defaultMessage": "Continue later",
@@ -469,10 +484,20 @@
     "description": "ZOD 'invalid_string' error message, with endsWith",
     "originalDefault": "Invalid input: must end with \"{endsWith}\"."
   },
+  "SMTPE1": {
+    "defaultMessage": "Green smiley (good)",
+    "description": "GovMetric green face alt text",
+    "originalDefault": "Green smiley (good)"
+  },
   "SvLGQJ": {
     "defaultMessage": "This form cannot be used temporarily due to a malfunction with {label}. Please try again later.",
     "description": "Authentication outage message",
     "originalDefault": "This form cannot be used temporarily due to a malfunction with {label}. Please try again later."
+  },
+  "TYWa2i": {
+    "defaultMessage": "Good",
+    "description": "GovMetric rating text",
+    "originalDefault": "Good"
   },
   "Tip5+d": {
     "defaultMessage": "Next year",
@@ -483,11 +508,6 @@
     "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
-  },
-  "UDs6vL": {
-    "defaultMessage": "How do you rate this form?",
-    "description": "Feedback button title",
-    "originalDefault": "How do you rate this form?"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -503,6 +523,11 @@
     "defaultMessage": "Your payment has been received.",
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
+  },
+  "WKH4HC": {
+    "defaultMessage": "Orange smiley (neutral)",
+    "description": "GovMetric orange face alt text",
+    "originalDefault": "Orange smiley (neutral)"
   },
   "WWvqcz": {
     "defaultMessage": "Invalid date",
@@ -653,6 +678,11 @@
     "defaultMessage": "Invalid input.",
     "description": "ZOD 'custom' error message",
     "originalDefault": "Invalid input."
+  },
+  "ie+hkb": {
+    "defaultMessage": "Average",
+    "description": "GovMetric rating text",
+    "originalDefault": "Average"
   },
   "iey7IL": {
     "defaultMessage": "Invalid input.",
@@ -873,6 +903,11 @@
     "defaultMessage": "Amount",
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
+  },
+  "wwsWUp": {
+    "defaultMessage": "How do you rate this form?",
+    "description": "GovMetric snippet header",
+    "originalDefault": "How do you rate this form?"
   },
   "y31iyC": {
     "defaultMessage": "Invalid literal value, expected {expected}.",

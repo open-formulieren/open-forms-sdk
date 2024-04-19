@@ -32,9 +32,9 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
 
     if (analyticsToolsConfig.enableGovmetricAnalytics) {
       const govmetricUrl = buildGovMetricUrl(
-        analyticsToolsConfig.govmetricSourceId,
+        analyticsToolsConfig.govmetricSourceIdFormAborted,
         form.slug,
-        analyticsToolsConfig.govmetricSecureGuid
+        analyticsToolsConfig.govmetricSecureGuidFormAborted
       );
 
       window.open(govmetricUrl);
