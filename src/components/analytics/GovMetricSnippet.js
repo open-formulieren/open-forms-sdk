@@ -1,3 +1,6 @@
+import govmetricAverageImg from 'img/govmetric/average.png';
+import govmetricGoodImg from 'img/govmetric/good.png';
+import govmetricPoorImg from 'img/govmetric/poor.png';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -41,7 +44,8 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="https://websurveys2.govmetric.com/imgs/smileys/medium/Good.png"
+              src={govmetricGoodImg}
+              width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric green face alt text',
                 defaultMessage: 'Green smiley (good)',
@@ -64,7 +68,8 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="https://websurveys2.govmetric.com/imgs/smileys/medium/Average.png"
+              src={govmetricAverageImg}
+              width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric orange face alt text',
                 defaultMessage: 'Orange smiley (neutral)',
@@ -84,7 +89,8 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="https://websurveys2.govmetric.com/imgs/smileys/medium/Poor.png"
+              src={govmetricPoorImg}
+              width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric red face alt text',
                 defaultMessage: 'Red smiley (negative)',
