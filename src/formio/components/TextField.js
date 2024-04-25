@@ -25,7 +25,8 @@ class TextField extends Formio.Components.components.textfield {
       'utrecht-textbox',
       'utrecht-textbox--html-input',
       'utrecht-textbox--openforms',
-    ].join(' ');
+      this.component.customClass
+    ].filter(Boolean).join(' ');
     return info;
   }
 
