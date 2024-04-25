@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import debounce from 'lodash/debounce';
 import {Formio} from 'react-formio';
 
@@ -22,9 +23,12 @@ class TextField extends Formio.Components.components.textfield {
     const info = super.inputInfo;
     // apply NLDS CSS classes
     info.attr.class = [
-      'utrecht-textbox',
-      'utrecht-textbox--html-input',
-      'utrecht-textbox--openforms',
+      clsx(
+        'utrecht-textbox',
+        'utrecht-textbox--html-input',
+        'utrecht-textbox--openforms',
+        this.component.customClass
+      ),
     ].join(' ');
     return info;
   }
