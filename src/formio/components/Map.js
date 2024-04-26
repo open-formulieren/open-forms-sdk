@@ -78,8 +78,10 @@ export default class Map extends Field {
       mapContainer: 'single',
     });
     return super.attach(element).then(() => {
-      this.reactRoot = createRoot(this.refs.mapContainer);
-      this.renderReact();
+      if (this.refs.mapContainer) {
+        this.reactRoot = createRoot(this.refs.mapContainer);
+        this.renderReact();
+      }
     });
   }
 
