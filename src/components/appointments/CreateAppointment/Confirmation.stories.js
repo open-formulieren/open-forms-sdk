@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {waitFor, within} from '@storybook/test';
+import {expect, waitFor, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {BASE_URL} from 'api-mocks';

@@ -1,11 +1,8 @@
-import {expect} from '@storybook/test';
-import {userEvent, waitFor, within} from '@storybook/test';
+import {expect, userEvent, waitFor, within} from '@storybook/test';
 
 import {sleep} from 'utils';
 
 import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
-
-const waitForPosition = () => act(async () => {});
 
 export default {
   title: 'Private API / FloatingWidget',

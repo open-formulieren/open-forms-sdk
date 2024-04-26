@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {fn, userEvent, waitFor, within} from '@storybook/test';
+import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {getWorker} from 'msw-storybook-addon';
 import React from 'react';
 import {IntlProvider} from 'react-intl';
