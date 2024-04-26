@@ -41,7 +41,8 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="https://websurveys2.govmetric.com/imgs/smileys/medium/Good.png"
+              src="./govmetric/good.png"
+              width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric green face alt text',
                 defaultMessage: 'Green smiley (good)',
@@ -64,7 +65,8 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="https://websurveys2.govmetric.com/imgs/smileys/medium/Average.png"
+              src="./govmetric/average.png"
+              width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric orange face alt text',
                 defaultMessage: 'Orange smiley (neutral)',
@@ -84,7 +86,8 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="https://websurveys2.govmetric.com/imgs/smileys/medium/Poor.png"
+              src="./govmetric/poor.png"
+              width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric red face alt text',
                 defaultMessage: 'Red smiley (negative)',
