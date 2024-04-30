@@ -27,7 +27,7 @@ describe('Date Component', () => {
 
     expect(isValid1).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDateValidatorErrorKeys
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
     ).toContain('minDate');
 
     const isValid2 = MinMaxDateValidator.check(componentInstance, {}, '2024-01-01');
@@ -58,7 +58,7 @@ describe('Date Component', () => {
 
     expect(isValid1).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDateValidatorErrorKeys
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
     ).toContain('maxDate');
 
     const isValid2 = MinMaxDateValidator.check(componentInstance, {}, '2020-01-01');
@@ -105,6 +105,9 @@ describe('Date Component', () => {
         allowInvalidPreload: true,
       },
       validate: {dateMinMax: true},
+      errors: {
+        minDate: 'Custom error message for minDate',
+      },
     };
 
     const mockTranslation = jest.fn((message, values) => message);
@@ -112,25 +115,25 @@ describe('Date Component', () => {
     const componentInstance = new FormioComponent(component, {}, {});
     componentInstance.t = mockTranslation;
 
-    MinMaxDateValidator.message(componentInstance);
-
-    expect(mockTranslation.mock.calls[0][0]).toEqual('invalidDate');
-
-    set(componentInstance, 'openForms.validationErrorContext.minMaxDateValidatorErrorKeys', [
-      'minDate',
-    ]);
+    set(
+      componentInstance,
+      'openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey',
+      'minDate'
+    );
 
     MinMaxDateValidator.message(componentInstance);
 
-    expect(mockTranslation.mock.calls[1][0]).toEqual('minDate');
+    expect(mockTranslation.mock.calls[0][0]).toEqual('Custom error message for minDate');
 
-    set(componentInstance, 'openForms.validationErrorContext.minMaxDateValidatorErrorKeys', [
-      'maxDate',
-    ]);
+    set(
+      componentInstance,
+      'openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey',
+      'maxDate'
+    );
 
     MinMaxDateValidator.message(componentInstance);
 
-    expect(mockTranslation.mock.calls[2][0]).toEqual('maxDate');
+    expect(mockTranslation.mock.calls[1][0]).toEqual('maxDate');
 
     done();
   });
@@ -156,14 +159,14 @@ describe('Date Component', () => {
 
     expect(isValid1).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDateValidatorErrorKeys
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
     ).toContain('maxDate');
 
     const isValid2 = MinMaxDateValidator.check(componentInstance, {}, '2020-01-01');
 
     expect(isValid2).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDateValidatorErrorKeys
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
     ).toContain('minDate');
 
     done();
