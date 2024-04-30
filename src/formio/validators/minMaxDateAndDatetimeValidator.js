@@ -2,7 +2,7 @@ import set from 'lodash/set';
 
 import {validateBoundaries} from './utils';
 
-const createValidator = (key, invalidKey) => {
+const createValidator = key => {
   return {
     key,
     message(component) {
@@ -11,9 +11,7 @@ const createValidator = (key, invalidKey) => {
 
       const errorKey =
         component.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey;
-      const componentErrorMessages = component.component.errors;
-      const errorMessage =
-        componentErrorMessages[errorKey] || componentErrorMessages[invalidKey] || errorKey;
+      const errorMessage = component.errorMessage(errorKey);
 
       return component.t(errorMessage, {
         minDate: minDate,
@@ -41,8 +39,5 @@ const createValidator = (key, invalidKey) => {
   };
 };
 
-export const MinMaxDateValidator = createValidator('validate.dateMinMax', 'invalid_date');
-export const MinMaxDatetimeValidator = createValidator(
-  'validate.datetimeMinMax',
-  'invalid_datetime'
-);
+export const MinMaxDateValidator = createValidator('validate.dateMinMax');
+export const MinMaxDatetimeValidator = createValidator('validate.datetimeMinMax');
