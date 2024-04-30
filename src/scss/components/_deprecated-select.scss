@@ -68,7 +68,6 @@ $select-background-color: var(--of-select-background-color, $color-white);
 
   // The wrapper containing the select, results, and input.
   .selection {
-    @include rows(1);
     display: flex;
     align-items: center;
     flex-wrap: wrap; // Allow flex to wrap.
@@ -89,10 +88,15 @@ $select-background-color: var(--of-select-background-color, $color-white);
     border-color: var(--of-color-primary);
     display: inline-flex;
     align-items: center;
-    height: $item-height;
+    min-height: $item-height;
     font-size: $item-height * 0.6;
     margin: $item-margin;
     padding: 0 $item-hpadding !important;
+    word-break: break-word;
+  }
+
+  .selection .choices__item.choices__item--selectable {
+    white-space: normal !important;
   }
 
   .selection .choices__item .choices_button {

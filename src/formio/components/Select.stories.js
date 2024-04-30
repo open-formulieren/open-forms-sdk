@@ -101,3 +101,33 @@ export const RequiredWithValidationError = {
     await userEvent.click(canvas.getByRole('button'));
   },
 };
+
+export const MultilineOptions = {
+  render: SingleFormioComponent,
+  args: {
+    type: 'select',
+    key: 'select',
+    extraComponentProperties: {
+      data: {
+        values: [
+          {
+            label: 'A really really really really really long label for the first option A',
+            value: 'radioA',
+          },
+          {
+            label: 'Another really really really really really long label for option B',
+            value: 'radioB',
+          },
+          {
+            label: 'ThisIsAStringWithoutAnyWhitespacesButItShouldBeSplitAnyway',
+            value: 'radioC',
+          },
+        ],
+      },
+      multiple: true,
+    },
+    submissionData: {
+      select: ['radioA', 'radioB', 'radioC'],
+    },
+  },
+};
