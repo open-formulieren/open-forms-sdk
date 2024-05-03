@@ -2,6 +2,21 @@
 SDK Changelog
 =============
 
+2.3.0-alpha.0 (2024-05-01)
+==========================
+
+First preview release of the upcoming 2.3.0 version.
+
+* [#4009] Fixed fieldset components accidentally displaying a value in the summary.
+* [#4082] Fixed multiple submissions being created when starting a form.
+* [#4172] Fixed a crash when validating a date against a minimum/maximum date.
+* [#4130] Forms requiring payment no longer offer the user to go back to the main page.
+* [#4115, #4208] Support different kinds of GovMetric feedback (aborting the form vs. completing the form).
+* [#4201] Fixed a crash when a map component is hidden.
+* [#4222] Fixed being able to circumvent the maximum number of files limit.
+* [#4220] Fixed "optional" translation for radio and selectboxes components.
+* [#4207] Fixed styling overflow for select dropdown.
+
 2.2.1 (2024-04-16)
 ==================
 
