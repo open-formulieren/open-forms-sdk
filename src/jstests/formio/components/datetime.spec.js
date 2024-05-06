@@ -154,6 +154,9 @@ describe('Datetime Component', () => {
 
     const componentInstance = new FormioComponent(component, {}, {});
     componentInstance.t = mockTranslation;
+    componentInstance.options.intl = {
+      formatDate: jest.fn((date, options) => 'formatted date'),
+    };
 
     set(
       componentInstance,
