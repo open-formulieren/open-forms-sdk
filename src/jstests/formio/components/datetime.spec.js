@@ -1,7 +1,7 @@
 import set from 'lodash/set';
 import {Formio} from 'react-formio';
 
-import MinMaxDatetimeValidator from 'formio/validators/minMaxDatetimeValidator';
+import {MinMaxDatetimeValidator} from 'formio/validators/minMaxDateAndDatetimeValidator';
 
 const FormioComponent = Formio.Components.components.component;
 
@@ -57,8 +57,8 @@ describe('Datetime Component', () => {
 
     expect(isValid1).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDatetimeValidatorErrorKeys
-    ).toContain('minDatetime');
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
+    ).toContain('minDate');
 
     const isValid2 = MinMaxDatetimeValidator.check(
       componentInstance,
@@ -94,8 +94,8 @@ describe('Datetime Component', () => {
 
     expect(isValid1).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDatetimeValidatorErrorKeys
-    ).toContain('maxDatetime');
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
+    ).toContain('maxDate');
 
     const isValid2 = MinMaxDatetimeValidator.check(
       componentInstance,
@@ -145,32 +145,38 @@ describe('Datetime Component', () => {
         allowInvalidPreload: true,
       },
       validate: {datetimeMinMax: true},
+      errors: {
+        minDate: 'Custom error message for minDate',
+      },
     };
 
     const mockTranslation = jest.fn((message, values) => message);
 
     const componentInstance = new FormioComponent(component, {}, {});
     componentInstance.t = mockTranslation;
+    componentInstance.options.intl = {
+      formatDate: jest.fn((date, options) => 'formatted date'),
+    };
+
+    set(
+      componentInstance,
+      'openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey',
+      'minDate'
+    );
 
     MinMaxDatetimeValidator.message(componentInstance);
 
-    expect(mockTranslation.mock.calls[0][0]).toEqual('invalidDatetime');
+    expect(mockTranslation.mock.calls[0][0]).toEqual('Custom error message for minDate');
 
-    set(componentInstance, 'openForms.validationErrorContext.minMaxDatetimeValidatorErrorKeys', [
-      'minDatetime',
-    ]);
-
-    MinMaxDatetimeValidator.message(componentInstance);
-
-    expect(mockTranslation.mock.calls[1][0]).toEqual('minDatetime');
-
-    set(componentInstance, 'openForms.validationErrorContext.minMaxDatetimeValidatorErrorKeys', [
-      'maxDatetime',
-    ]);
+    set(
+      componentInstance,
+      'openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey',
+      'maxDate'
+    );
 
     MinMaxDatetimeValidator.message(componentInstance);
 
-    expect(mockTranslation.mock.calls[2][0]).toEqual('maxDatetime');
+    expect(mockTranslation.mock.calls[1][0]).toEqual('maxDate');
   });
 
   test('Datetime validator: check max datetime AND min datetime', () => {
@@ -198,8 +204,8 @@ describe('Datetime Component', () => {
 
     expect(isValid1).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDatetimeValidatorErrorKeys
-    ).toContain('maxDatetime');
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
+    ).toContain('maxDate');
 
     const isValid2 = MinMaxDatetimeValidator.check(
       componentInstance,
@@ -209,7 +215,7 @@ describe('Datetime Component', () => {
 
     expect(isValid2).toBeFalsy();
     expect(
-      componentInstance.openForms.validationErrorContext.minMaxDatetimeValidatorErrorKeys
-    ).toContain('minDatetime');
+      componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
+    ).toContain('minDate');
   });
 });
