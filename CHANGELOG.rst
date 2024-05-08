@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+2.2.2 (2024-05-08)
+==================
+
+Bugfix release
+
+* [#4115] Support different kinds of GovMetric feedback (aborting the form vs. completing the form).
+
 2.2.1 (2024-04-16)
 ==================
 
