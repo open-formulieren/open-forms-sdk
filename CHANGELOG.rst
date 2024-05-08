@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+2.0.5 (2024-05-08)
+==================
+
+Bugfix release
+
+* [#4172] Fixed the minimum date for a date field incorrectly saying the input is invalid.
+
 2.0.4 (2024-03-14)
 ==================
 
