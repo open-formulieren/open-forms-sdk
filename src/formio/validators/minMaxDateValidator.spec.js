@@ -9,8 +9,7 @@ test.each([
 ])(
   'validateDateBoundaries with datetimes, min: $min, max: $max, value: $value (valid)',
   ({min, max, value}) => {
-    const {isValid} = validateDateBoundaries('date', min, max, value);
-
+    const {isValid} = validateDateBoundaries(min, max, value);
     expect(isValid).toBe(true);
   }
 );
@@ -23,7 +22,7 @@ test.each([
 ])(
   'validateDateBoundaries with datetimes, min: $min, max: $max, value: $value (invalid)',
   ({min, max, value}) => {
-    const {isValid} = validateDateBoundaries('date', min, max, value);
+    const {isValid} = validateDateBoundaries(min, max, value);
 
     expect(isValid).toBe(false);
   }
@@ -37,7 +36,7 @@ test.each([
 ])(
   'validateDateBoundaries with dates, min: $min, max: $max, value: $value (valid)',
   ({min, max, value}) => {
-    const {isValid} = validateDateBoundaries('date', min, max, value);
+    const {isValid} = validateDateBoundaries(min, max, value);
 
     expect(isValid).toBe(true);
   }
@@ -49,7 +48,7 @@ test.each([
 ])(
   'validateDateBoundaries with dates, min: $min, max: $max, value: $value (invalid)',
   ({min, max, value}) => {
-    const {isValid} = validateDateBoundaries('date', min, max, value);
+    const {isValid} = validateDateBoundaries(min, max, value);
 
     expect(isValid).toBe(false);
   }
