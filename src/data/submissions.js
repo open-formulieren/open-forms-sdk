@@ -9,10 +9,11 @@ import {post} from 'api';
  * @param  {String} formUrl The client-side URL hosting the form entrypoint.
  * @return {Object}        The Submission instance.
  */
-export const createSubmission = async (baseUrl, form, formUrl, signal) => {
+export const createSubmission = async (baseUrl, form, formUrl, signal, anonymous = false) => {
   const createData = {
     form: form.url,
     formUrl,
+    anonymous,
   };
   const submissionResponse = await post(`${baseUrl}submissions`, createData, signal);
   return submissionResponse.data;

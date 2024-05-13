@@ -63,7 +63,7 @@ const LoginOptions = ({form, onFormStart}) => {
     : {
         onSubmit: e => {
           e.preventDefault();
-          onFormStart(e);
+          onFormStart(e, true);
         },
       };
 
