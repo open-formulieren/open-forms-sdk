@@ -251,7 +251,8 @@
     ],
     "coverageReporters": [
       "text",
-      "cobertura"
+      "cobertura",
+      "html"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
