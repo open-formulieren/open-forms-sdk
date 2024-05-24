@@ -1,4 +1,4 @@
-import {render, screen, waitForElementToBeRemoved} from '@testing-library/react';
+import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
@@ -7,12 +7,14 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
-import {mockSubmissionPost} from 'api-mocks/submissions';
+import {mockSubmissionPost, mockSubmissionStepGet} from 'api-mocks/submissions';
 import {routes} from 'components/App';
 
-const Wrapper = ({form}) => {
+import {START_FORM_QUERY_PARAM} from './constants';
+
+const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
   const router = createMemoryRouter(routes, {
-    initialEntries: ['/startpagina'],
+    initialEntries: [initialEntry],
     initialIndex: 0,
   });
 
@@ -20,7 +22,7 @@ const Wrapper = ({form}) => {
     <ConfigContext.Provider
       value={{
         baseUrl: BASE_URL,
-        // clientBaseUrl: 'http://localhost/',
+        clientBaseUrl: 'http://localhost/',
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
@@ -36,28 +38,43 @@ const Wrapper = ({form}) => {
   );
 };
 
-describe('Start form', () => {
-  it('Start form anonymously', async () => {
-    const user = userEvent.setup();
-    mswServer.use(mockSubmissionPost(), mockAnalyticsToolConfigGet());
-    let startSubmissionRequest;
-    mswServer.events.on('request:match', async request => {
-      if (request.method === 'POST' && request.url.pathname.endsWith('/api/v2/submissions')) {
-        startSubmissionRequest = request;
-      }
-    });
-    // form with only anonymous login option
-    const form = buildForm({loginOptions: [], loginRequired: false});
-
-    render(<Wrapper form={form} />);
-
-    await waitForElementToBeRemoved(() => screen.getByRole('status'));
-
-    const startButton = screen.getByRole('button', {name: 'Begin'});
-    await user.click(startButton);
-
-    expect(startSubmissionRequest).not.toBeUndefined();
-    const requestBody = await startSubmissionRequest.json();
-    expect(requestBody.anonymous).toBe(true);
+test('Start form anonymously', async () => {
+  const user = userEvent.setup();
+  mswServer.use(mockSubmissionPost(), mockAnalyticsToolConfigGet());
+  let startSubmissionRequest;
+  mswServer.events.on('request:match', async request => {
+    if (request.method === 'POST' && request.url.pathname.endsWith('/api/v2/submissions')) {
+      startSubmissionRequest = request;
+    }
   });
+  // form with only anonymous login option
+  const form = buildForm({loginOptions: [], loginRequired: false});
+
+  render(<Wrapper form={form} />);
+
+  await waitForElementToBeRemoved(() => screen.getByRole('status'));
+
+  const startButton = screen.getByRole('button', {name: 'Begin'});
+  await user.click(startButton);
+
+  expect(startSubmissionRequest).not.toBeUndefined();
+  const requestBody = await startSubmissionRequest.json();
+  expect(requestBody.anonymous).toBe(true);
+});
+
+test('Start form as if authenticated from the backend', async () => {
+  mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
+  let startSubmissionRequest;
+  mswServer.events.on('request:match', async request => {
+    if (request.method === 'POST' && request.url.pathname.endsWith('/api/v2/submissions')) {
+      startSubmissionRequest = request;
+    }
+  });
+  render(<Wrapper initialEntry={`/startpagina?${START_FORM_QUERY_PARAM}=1`} />);
+
+  await waitFor(() => {
+    expect(startSubmissionRequest).not.toBeUndefined();
+  });
+  const requestBody = await startSubmissionRequest.json();
+  expect(requestBody.anonymous).toBe(false);
 });
