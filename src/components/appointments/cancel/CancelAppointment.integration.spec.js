@@ -5,7 +5,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
-import App, {routes} from 'components/App';
+import {routes} from 'components/App';
 
 const Wrapper = () => {
   const form = buildForm({

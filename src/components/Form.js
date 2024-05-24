@@ -164,7 +164,7 @@ const Form = () => {
    * @param  {Event} event The DOM event, could be a button click or a custom event.
    * @return {Void}
    */
-  const onFormStart = async event => {
+  const onFormStart = async (event, anonymous = false) => {
     event && event.preventDefault();
 
     // required to get rid of the error message saying the session is expired - once
@@ -178,7 +178,13 @@ const Form = () => {
 
     let submission;
     try {
-      submission = await createSubmission(config.baseUrl, form, config.clientBaseUrl);
+      submission = await createSubmission(
+        config.baseUrl,
+        form,
+        config.clientBaseUrl,
+        null,
+        anonymous
+      );
     } catch (exc) {
       dispatch({type: 'STARTING_ERROR', payload: exc});
       return;
