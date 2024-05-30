@@ -1,3 +1,6 @@
+import govmetricAverageImg from 'img/govmetric/average.png';
+import govmetricGoodImg from 'img/govmetric/good.png';
+import govmetricPoorImg from 'img/govmetric/poor.png';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -41,7 +44,7 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="./govmetric/good.png"
+              src={govmetricGoodImg}
               width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric green face alt text',
@@ -65,7 +68,7 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="./govmetric/average.png"
+              src={govmetricAverageImg}
               width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric orange face alt text',
@@ -86,7 +89,7 @@ const GovMetricSnippet = () => {
             rel="nofollow noreferrer"
           >
             <img
-              src="./govmetric/poor.png"
+              src={govmetricPoorImg}
               width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric red face alt text',
