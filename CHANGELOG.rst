@@ -2,6 +2,20 @@
 SDK Changelog
 =============
 
+2.2.3 (2024-06-14)
+==================
+
+Bugfix release
+
+* [#4328] Fixed the Govmetric smiley images not rendering.
+
+2.2.2 (2024-05-08)
+==================
+
+Bugfix release
+
+* [#4115] Support different kinds of GovMetric feedback (aborting the form vs. completing the form).
+
 2.3.0-alpha.0 (2024-05-01)
 ==========================
 
