@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+2.2.3 (2024-06-14)
+==================
+
+Bugfix release
+
+* [#4328] Fixed the Govmetric smiley images not rendering.
+
 2.2.2 (2024-05-08)
 ==================
 
