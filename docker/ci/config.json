@@ -11,10 +11,6 @@
     {
       "gitRef": "stable/2.1.x",
       "tag": null
-    },
-    {
-      "gitRef": "stable/2.0.x",
-      "tag": null
     }
   ]
 }
