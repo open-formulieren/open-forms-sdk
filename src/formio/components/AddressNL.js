@@ -20,6 +20,9 @@ export default class AddressNL extends Field {
   constructor(component, options, data) {
     super(component, options, data);
     enableValidationPlugins(this);
+    // the edit grid renderRow otherwise wraps the result of getValueAsString in a
+    // readonly input...
+    this.component.template = 'hack';
   }
 
   static schema(...extend) {
@@ -161,6 +164,19 @@ export default class AddressNL extends Field {
     // re-render if the value is set, which may be because of existing submission data
     changed && this.renderReact();
     return changed;
+  }
+
+  // Called in the representation of an edit grid
+  getValueAsString(value, options) {
+    if (!value || !Object.keys(value).length) return '';
+    const {postcode, houseNumber, houseLetter, houseNumberAddition, streetName, city} = value;
+    return `
+        <address>
+          ${postcode} ${houseNumber}${houseLetter} ${houseNumberAddition}
+          <br>
+          ${streetName} ${city}
+        </address>
+    `;
   }
 }
 
