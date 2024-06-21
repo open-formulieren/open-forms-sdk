@@ -229,6 +229,11 @@
     "description": "Appointments: remove product/service button text",
     "originalDefault": "Remove"
   },
+  "DEetjI": {
+    "defaultMessage": "Street name",
+    "description": "Label for addressNL streetName read only result",
+    "originalDefault": "Street name"
+  },
   "DK2ewv": {
     "defaultMessage": "Authentication problem",
     "description": "'Permission denied' error title",
@@ -823,6 +828,11 @@
     "defaultMessage": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}.",
     "description": "ZOD 'too_big' error message, for BigInt",
     "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
+  },
+  "osSl3z": {
+    "defaultMessage": "City",
+    "description": "Label for addressNL city read only result",
+    "originalDefault": "City"
   },
   "ovI+W7": {
     "defaultMessage": "Use ⌘ + scroll to zoom the map",

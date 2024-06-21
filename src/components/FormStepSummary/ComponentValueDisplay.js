@@ -214,9 +214,14 @@ const AddressNLDisplay = ({component, value}) => {
     return <EmptyDisplay />;
   }
 
-  return `${value.postcode} ${value.houseNumber}${value.houseLetter || ''} ${
-    value.houseNumberAddition || ''
-  }`;
+  return (
+    <>
+      {value.streetName} {value.houseNumber}
+      {value.houseLetter} {value.houseNumberAddition}
+      <br />
+      {value.postcode} {value.city}
+    </>
+  );
 };
 
 const ContentDisplay = ({component, value}) => {

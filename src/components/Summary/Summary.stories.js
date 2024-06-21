@@ -422,7 +422,7 @@ export const AddressNLSummary = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1 1234 AB');
   },
 };
 
@@ -441,6 +441,8 @@ export const AddressNLSummaryFull = {
               houseNumber: '1',
               houseLetter: 'A',
               houseNumberAddition: 'Add',
+              city: 'Amsterdam',
+              streetName: 'Keizersgracht',
             },
             component: {
               key: 'addressNL',
@@ -455,7 +457,9 @@ export const AddressNLSummaryFull = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1A Add');
+    await expect(canvas.getByRole('definition')).toHaveTextContent(
+      'Keizersgracht 1A Add1234 AB Amsterdam'
+    );
   },
 };
 

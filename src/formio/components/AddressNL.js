@@ -3,7 +3,7 @@
  */
 import {Formik, useFormikContext} from 'formik';
 import debounce from 'lodash/debounce';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {FormattedMessage, IntlProvider, defineMessages, useIntl} from 'react-intl';
@@ -11,6 +11,7 @@ import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
+import {get} from 'api';
 import {TextField} from 'components/forms';
 import enableValidationPlugins from 'formio/validators/plugins';
 
@@ -20,6 +21,9 @@ export default class AddressNL extends Field {
   constructor(component, options, data) {
     super(component, options, data);
     enableValidationPlugins(this);
+    // the edit grid renderRow otherwise wraps the result of getValueAsString in a
+    // readonly input...
+    this.component.template = 'hack';
   }
 
   static schema(...extend) {
@@ -31,6 +35,7 @@ export default class AddressNL extends Field {
         key: 'addressNL',
         defaultValue: {},
         validateOn: 'blur',
+        deriveAddress: false,
         openForms: {
           checkIsEmptyBeforePluginValidate: true,
         },
@@ -66,6 +71,9 @@ export default class AddressNL extends Field {
       houseNumber: '',
       houseLetter: '',
       houseNumberAddition: '',
+      city: '',
+      streetName: '',
+      secretStreetCity: '',
     };
   }
 
@@ -149,6 +157,7 @@ export default class AddressNL extends Field {
           <AddressNLForm
             initialValues={initialValues}
             required={required}
+            deriveAddress={this.component.deriveAddress}
             setFormioValues={this.onFormikChange.bind(this)}
           />
         </ConfigContext.Provider>
@@ -161,6 +170,19 @@ export default class AddressNL extends Field {
     // re-render if the value is set, which may be because of existing submission data
     changed && this.renderReact();
     return changed;
+  }
+
+  // Called in the representation of an edit grid
+  getValueAsString(value, options) {
+    if (!value || !Object.keys(value).length) return '';
+    const {postcode, houseNumber, houseLetter, houseNumberAddition, streetName, city} = value;
+    return `
+        <address>
+          ${postcode} ${houseNumber}${houseLetter} ${houseNumberAddition}
+          <br>
+          ${streetName || ''} ${city || ''}
+        </address>
+    `;
   }
 }
 
@@ -225,7 +247,7 @@ const addressNLSchema = (required, intl) => {
     });
 };
 
-const AddressNLForm = ({initialValues, required, setFormioValues}) => {
+const AddressNLForm = ({initialValues, required, deriveAddress, setFormioValues}) => {
   const intl = useIntl();
 
   const errorMap = (issue, ctx) => {
@@ -263,13 +285,18 @@ const AddressNLForm = ({initialValues, required, setFormioValues}) => {
       }}
       validationSchema={toFormikValidationSchema(addressNLSchema(required, intl), {errorMap})}
     >
-      <FormikAddress required={required} setFormioValues={setFormioValues} />
+      <FormikAddress
+        required={required}
+        setFormioValues={setFormioValues}
+        deriveAddress={deriveAddress}
+      />
     </Formik>
   );
 };
 
-const FormikAddress = ({required, setFormioValues}) => {
-  const {values, isValid} = useFormikContext();
+const FormikAddress = ({required, setFormioValues, deriveAddress}) => {
+  const {values, isValid, setFieldValue} = useFormikContext();
+  const {baseUrl} = useContext(ConfigContext);
 
   useEffect(() => {
     // *always* synchronize the state up, since:
@@ -281,19 +308,30 @@ const FormikAddress = ({required, setFormioValues}) => {
     setFormioValues(values, isValid);
   });
 
+  const autofillAddress = async () => {
+    if (!deriveAddress) return;
+    if (!values.postcode || !values.houseNumber) return;
+
+    const params = {
+      postcode: values['postcode'],
+      house_number: values['houseNumber'],
+    };
+
+    const data = await get(`${baseUrl}geo/address-autocomplete`, params);
+
+    setFieldValue('city', data['city']);
+    setFieldValue('streetName', data['streetName']);
+    setFieldValue('secretStreetCity', data['secretStreetCity']);
+  };
+
   return (
     <div className="openforms-form-field-container">
       <div className="openforms-columns">
         <div className="column column--span-6 openforms-form-field-container">
-          <PostCodeField required={required} />
+          <PostCodeField required={required} autoFillAddress={autofillAddress} />
         </div>
         <div className="column column--span-6 openforms-form-field-container">
-          <TextField
-            name="houseNumber"
-            label={<FormattedMessage {...FIELD_LABELS.houseNumber} />}
-            placeholder="123"
-            isRequired={required}
-          />
+          <HouseNumberField required={required} autoFillAddress={autofillAddress} />
         </div>
       </div>
       <div className="openforms-columns">
@@ -319,24 +357,54 @@ const FormikAddress = ({required, setFormioValues}) => {
             }
           />
         </div>
+        {deriveAddress && (
+          <>
+            <div className="column column--span-6 openforms-form-field-container">
+              <TextField
+                name="city"
+                label={
+                  <FormattedMessage
+                    description="Label for addressNL city read only result"
+                    defaultMessage="City"
+                  />
+                }
+                disabled
+              />
+            </div>
+            <div className="column column--span-6 openforms-form-field-container">
+              <TextField
+                name="streetName"
+                label={
+                  <FormattedMessage
+                    description="Label for addressNL streetName read only result"
+                    defaultMessage="Street name"
+                  />
+                }
+                disabled
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 };
 
-const PostCodeField = ({required}) => {
-  const {getFieldProps, getFieldHelpers} = useFormikContext();
-  const {value, onBlur: onBlurFormik} = getFieldProps('postcode');
-  const {setValue} = getFieldHelpers('postcode');
+const PostCodeField = ({required, autoFillAddress}) => {
+  const {values, setFieldValue, getFieldProps} = useFormikContext();
+  const {onBlur: onBlurFormik} = getFieldProps('postcode');
+  const postcode = values['postcode'];
 
   const onBlur = event => {
     onBlurFormik(event);
     // format the postcode with a space in between
-    const firstGroup = value.substring(0, 4);
-    const secondGroup = value.substring(4);
+    const firstGroup = postcode.substring(0, 4);
+    const secondGroup = postcode.substring(4);
     if (secondGroup && !secondGroup.startsWith(' ')) {
-      setValue(`${firstGroup} ${secondGroup}`);
+      setFieldValue('postcode', `${firstGroup} ${secondGroup}`);
     }
+
+    autoFillAddress();
   };
 
   return (
@@ -344,6 +412,26 @@ const PostCodeField = ({required}) => {
       name="postcode"
       label={<FormattedMessage {...FIELD_LABELS.postcode} />}
       placeholder="1234 AB"
+      isRequired={required}
+      onBlur={onBlur}
+    />
+  );
+};
+
+const HouseNumberField = ({required, autoFillAddress}) => {
+  const {getFieldProps} = useFormikContext();
+  const {onBlur: onBlurFormik} = getFieldProps('houseNumber');
+
+  const onBlur = event => {
+    onBlurFormik(event);
+    autoFillAddress();
+  };
+
+  return (
+    <TextField
+      name="houseNumber"
+      label={<FormattedMessage {...FIELD_LABELS.houseNumber} />}
+      placeholder="123"
       isRequired={required}
       onBlur={onBlur}
     />
