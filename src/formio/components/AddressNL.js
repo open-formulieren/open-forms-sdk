@@ -179,8 +179,7 @@ export default class AddressNL extends Field {
     return `
         <address>
           ${postcode} ${houseNumber}${houseLetter} ${houseNumberAddition}
-          <br>
-          ${streetName || ''} ${city || ''}
+          ${streetName && city ? `<br>${streetName} ${city}` : ''}
         </address>
     `;
   }

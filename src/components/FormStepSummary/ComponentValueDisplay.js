@@ -214,13 +214,26 @@ const AddressNLDisplay = ({component, value}) => {
     return <EmptyDisplay />;
   }
 
+  if (component.deriveAddress) {
+    return (
+      <address>
+        {value.streetName} {value.houseNumber}
+        {value.houseLetter} {value.houseNumberAddition}
+        {value.postcode && value.city && (
+          <>
+            <br />
+            {value.postcode} {value.city}
+          </>
+        )}
+      </address>
+    );
+  }
+
   return (
-    <>
-      {value.streetName} {value.houseNumber}
+    <address>
+      {value.postcode} {value.houseNumber}
       {value.houseLetter} {value.houseNumberAddition}
-      <br />
-      {value.postcode} {value.city}
-    </>
+    </address>
   );
 };
 

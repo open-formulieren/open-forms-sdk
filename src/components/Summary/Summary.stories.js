@@ -422,7 +422,7 @@ export const AddressNLSummary = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('1 1234 AB');
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
   },
 };
 
@@ -449,6 +449,7 @@ export const AddressNLSummaryFull = {
               type: 'addressNL',
               label: 'Address NL',
               hidden: false,
+              deriveAddress: true,
             },
           },
         ],
