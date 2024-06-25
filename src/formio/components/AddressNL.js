@@ -15,7 +15,11 @@ import {get} from 'api';
 import {TextField} from 'components/forms';
 import enableValidationPlugins from 'formio/validators/plugins';
 
+<<<<<<< HEAD
 import './AddressNL.scss';
+=======
+import {ValidationError} from './../../errors';
+>>>>>>> init
 
 const Field = Formio.Components.components.field;
 
@@ -155,6 +159,7 @@ export default class AddressNL extends Field {
           value={{
             baseUrl: this.options.baseUrl,
             requiredFieldsWithAsterisk: this.options.evalContext.requiredFieldsWithAsterisk,
+            component: this.component,
           }}
         >
           <AddressNLForm
@@ -390,6 +395,10 @@ const PostCodeField = ({required, autoFillAddress}) => {
   const {onBlur: onBlurFormik} = getFieldProps('postcode');
   const postcode = values['postcode'];
 
+  const {component} = useContext(ConfigContext);
+
+  const postcodePattern = new RegExp(component.openForms.validate.postcode.pattern);
+
   const onBlur = event => {
     onBlurFormik(event);
     // format the postcode with a space in between
@@ -402,6 +411,11 @@ const PostCodeField = ({required, autoFillAddress}) => {
     autoFillAddress();
   };
 
+  const validate = data => {
+    postcodePattern.exec(data);
+    if (!postcodePattern.test(data)) throw new ValidationError('incorrect', {});
+  };
+
   return (
     <TextField
       name="postcode"
@@ -409,6 +423,7 @@ const PostCodeField = ({required, autoFillAddress}) => {
       placeholder="1234 AB"
       isRequired={required}
       onBlur={onBlur}
+      validate={validate}
     />
   );
 };
