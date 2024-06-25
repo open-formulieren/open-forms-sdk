@@ -29,6 +29,10 @@ const AnalyticsToolsConfigContext = React.createContext({
   govmetricSecureGuidFormFinished: '',
   govmetricSecureGuidFormAborted: '',
   enableGovmetricAnalytics: false,
+  expointsOrganizationName: '',
+  expointsConfigUuid: '',
+  expointsUseTestMode: false,
+  enableExpointsAnalytics: false,
 });
 
 const ConfigContext = React.createContext({

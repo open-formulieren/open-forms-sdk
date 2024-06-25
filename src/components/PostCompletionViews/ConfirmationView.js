@@ -5,7 +5,7 @@ import {useLocation} from 'react-router-dom';
 
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import {GovMetricSnippet} from 'components/analytics';
+import {ExpointsSnippet, GovMetricSnippet} from 'components/analytics';
 
 import PostCompletionView from './PostCompletionView';
 import StatusUrlPoller, {SubmissionStatusContext} from './StatusUrlPoller';
@@ -89,7 +89,12 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
       body={body}
       mainWebsiteUrl={mainWebsiteUrl}
       reportDownloadUrl={reportDownloadUrl}
-      extraBody={<GovMetricSnippet />}
+      extraBody={
+        <>
+          <GovMetricSnippet />
+          <ExpointsSnippet />
+        </>
+      }
     />
   );
 };

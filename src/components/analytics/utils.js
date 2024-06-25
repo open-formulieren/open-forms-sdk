@@ -16,4 +16,8 @@ const govMetricURLWithRating = (govMetricUrl, ratingId) => {
   return url.href;
 };
 
-export {buildGovMetricUrl, govMetricURLWithRating};
+const buildExpointsUrl = expointsOrganizationName => {
+  return `https://${expointsOrganizationName}.expoints.nl`;
+};
+
+export {buildGovMetricUrl, govMetricURLWithRating, buildExpointsUrl};
