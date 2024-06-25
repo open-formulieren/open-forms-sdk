@@ -79,6 +79,11 @@
     "description": "Check overview and co-sign",
     "originalDefault": "Check and co-sign submission"
   },
+  "65+QTM": {
+    "defaultMessage": "Email address",
+    "description": "Label for 'email' field",
+    "originalDefault": "Email address"
+  },
   "6GNK65": {
     "defaultMessage": "There was an authentication and/or permission problem.",
     "description": "Authentication error message",
@@ -358,11 +363,6 @@
     "defaultMessage": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email.",
     "description": "payment failed status",
     "originalDefault": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
-  },
-  "Jrb2Iv": {
-    "defaultMessage": "Your email address",
-    "description": "Form save modal email field label",
-    "originalDefault": "Your email address"
   },
   "KMs17v": {
     "defaultMessage": "Unfortunately something went wrong!",
@@ -803,6 +803,11 @@
     "defaultMessage": "Use ctrl + scroll to zoom the map",
     "description": "Gesturehandeling pc scroll message.",
     "originalDefault": "Use ctrl + scroll to zoom the map"
+  },
+  "nayldd": {
+    "defaultMessage": "Invalid {field}.",
+    "description": "Invalid field value message",
+    "originalDefault": "Invalid {field}."
   },
   "nfRRDu": {
     "defaultMessage": "yyyy",
