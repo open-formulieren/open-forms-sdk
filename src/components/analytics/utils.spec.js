@@ -1,4 +1,4 @@
-import {buildGovMetricUrl} from './utils';
+import {buildExpointsUrl, buildGovMetricUrl} from './utils';
 
 describe('Test analytics utils', () => {
   test('Test build URL without GUID', () => {
@@ -13,5 +13,11 @@ describe('Test analytics utils', () => {
     expect(url).toEqual(
       'https://websurveys2.govmetric.com/theme/kf/1234?Q_Formid=form-slug&GUID=4321'
     );
+  });
+
+  test('Test build Expoints URL', () => {
+    const url = buildExpointsUrl('demodam');
+
+    expect(url).toEqual('https://demodam.expoints.nl');
   });
 });
