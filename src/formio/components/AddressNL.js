@@ -3,7 +3,7 @@
  */
 import {Formik, useFormikContext} from 'formik';
 import debounce from 'lodash/debounce';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {FormattedMessage, IntlProvider, defineMessages, useIntl} from 'react-intl';
@@ -13,6 +13,8 @@ import {toFormikValidationSchema} from 'zod-formik-adapter';
 import {ConfigContext} from 'Context';
 import {TextField} from 'components/forms';
 import enableValidationPlugins from 'formio/validators/plugins';
+
+import {ValidationError} from './../../errors';
 
 const Field = Formio.Components.components.field;
 
@@ -144,6 +146,7 @@ export default class AddressNL extends Field {
           value={{
             baseUrl: this.options.baseUrl,
             requiredFieldsWithAsterisk: this.options.evalContext.requiredFieldsWithAsterisk,
+            component: this.component,
           }}
         >
           <AddressNLForm
@@ -328,6 +331,9 @@ const PostCodeField = ({required}) => {
   const {getFieldProps, getFieldHelpers} = useFormikContext();
   const {value, onBlur: onBlurFormik} = getFieldProps('postcode');
   const {setValue} = getFieldHelpers('postcode');
+  const {component} = useContext(ConfigContext);
+
+  const postcodePattern = new RegExp(component.openForms.validate.postcode.pattern);
 
   const onBlur = event => {
     onBlurFormik(event);
@@ -339,6 +345,11 @@ const PostCodeField = ({required}) => {
     }
   };
 
+  const validate = data => {
+    postcodePattern.exec(data);
+    if (!postcodePattern.test(data)) throw new ValidationError('incorrect', {});
+  };
+
   return (
     <TextField
       name="postcode"
@@ -346,6 +357,7 @@ const PostCodeField = ({required}) => {
       placeholder="1234 AB"
       isRequired={required}
       onBlur={onBlur}
+      validate={validate}
     />
   );
 };
