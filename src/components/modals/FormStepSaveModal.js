@@ -29,8 +29,8 @@ const emailValidationSchema = z.object({
 
 const FIELD_LABELS = defineMessages({
   email: {
-    description: "Label for 'email' field",
-    defaultMessage: 'Email address',
+    description: 'Form save modal email field label',
+    defaultMessage: 'Your email address',
   },
 });
 
@@ -74,19 +74,23 @@ const FormStepSaveModal = ({
   const [{errorMessage, isSaving}, dispatch] = useImmerReducer(reducer, initialState);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen && errorMessage) {
       dispatch({
         type: 'REMOVE_ERROR_MESSAGE',
       });
     }
-  });
+  }, [dispatch, isOpen, errorMessage]);
 
   const errorMap = (issue, ctx) => {
+    const fieldLabelDefinition = FIELD_LABELS[issue.path.join('.')];
+    if (!fieldLabelDefinition) {
+      return {message: ctx.defaultError}; // use global schema as fallback
+    }
+    const fieldLabel = intl.formatMessage(fieldLabelDefinition);
+
     switch (issue.code) {
       case z.ZodIssueCode.invalid_type: {
         if (issue.received === z.ZodParsedType.undefined) {
-          const fieldName = issue.path.join('.');
-          const fieldLabel = intl.formatMessage(FIELD_LABELS[fieldName]);
           const message = intl.formatMessage(
             {
               description: 'Required field error message',
@@ -100,19 +104,20 @@ const FormStepSaveModal = ({
         }
         break;
       }
-      case z.ZodIssueCode.invalid_string && issue.validation === 'email': {
-        const fieldName = issue.path.join('.');
-        const fieldLabel = intl.formatMessage(FIELD_LABELS[fieldName]);
-        const message = intl.formatMessage(
-          {
-            description: 'Invalid field value message',
-            defaultMessage: 'Invalid {field}.',
-          },
-          {
-            field: fieldLabel,
-          }
-        );
-        return {message};
+      case z.ZodIssueCode.invalid_string: {
+        if (issue.validation === 'email') {
+          const message = intl.formatMessage(
+            {
+              description: 'Invalid email validation error',
+              defaultMessage: "{field} must be a valid email address, like 'willem@example.com'.",
+            },
+            {
+              field: fieldLabel,
+            }
+          );
+          return {message};
+        }
+        break;
       }
       default: {
         break;
@@ -182,7 +187,7 @@ const FormStepSaveModal = ({
         validationSchema={toFormikValidationSchema(emailValidationSchema, {errorMap})}
       >
         {props => (
-          <Body component="form" onSubmit={props.handleSubmit}>
+          <Body component="form" onSubmit={props.handleSubmit} noValidate>
             {isSaving ? <Loader modifiers={['centered']} /> : null}
 
             {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
