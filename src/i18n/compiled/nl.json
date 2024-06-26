@@ -135,12 +135,6 @@
       "value": "Controle en mede-ondertekenen inzending"
     }
   ],
-  "65+QTM": [
-    {
-      "type": 0,
-      "value": "Email address"
-    }
-  ],
   "6GNK65": [
     {
       "type": 0,
@@ -765,6 +759,12 @@
     {
       "type": 0,
       "value": "De betaling is mislukt. Indien u de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien."
+    }
+  ],
+  "Jrb2Iv": [
+    {
+      "type": 0,
+      "value": "Uw e-mailadres"
     }
   ],
   "KMs17v": [
@@ -1649,20 +1649,6 @@
       "value": "Gebruik CTRL + scroll om te zoomen in de kaart"
     }
   ],
-  "nayldd": [
-    {
-      "type": 0,
-      "value": "Invalid "
-    },
-    {
-      "type": 1,
-      "value": "field"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "nfRRDu": [
     {
       "type": 0,
@@ -1755,6 +1741,16 @@
     {
       "type": 0,
       "value": "Gebruik ⌘ + scroll om te zoomen in de kaart"
+    }
+  ],
+  "pMkaJD": [
+    {
+      "type": 1,
+      "value": "field"
+    },
+    {
+      "type": 0,
+      "value": " moet een geldig e-mailadres zijn, zoals 'willem@example.com' bijvoorbeeld."
     }
   ],
   "pguTkQ": [

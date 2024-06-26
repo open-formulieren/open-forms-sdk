@@ -135,12 +135,6 @@
       "value": "Check and co-sign submission"
     }
   ],
-  "65+QTM": [
-    {
-      "type": 0,
-      "value": "Email address"
-    }
-  ],
   "6GNK65": [
     {
       "type": 0,
@@ -765,6 +759,12 @@
     {
       "type": 0,
       "value": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
+    }
+  ],
+  "Jrb2Iv": [
+    {
+      "type": 0,
+      "value": "Your email address"
     }
   ],
   "KMs17v": [
@@ -1645,20 +1645,6 @@
       "value": "Use ctrl + scroll to zoom the map"
     }
   ],
-  "nayldd": [
-    {
-      "type": 0,
-      "value": "Invalid "
-    },
-    {
-      "type": 1,
-      "value": "field"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "nfRRDu": [
     {
       "type": 0,
@@ -1751,6 +1737,16 @@
     {
       "type": 0,
       "value": "Use ⌘ + scroll to zoom the map"
+    }
+  ],
+  "pMkaJD": [
+    {
+      "type": 1,
+      "value": "field"
+    },
+    {
+      "type": 0,
+      "value": " must be a valid email address, like 'willem@example.com'."
     }
   ],
   "pguTkQ": [
