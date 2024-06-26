@@ -839,6 +839,11 @@
     "description": "Gesturehandeling mac scroll message.",
     "originalDefault": "Use ⌘ + scroll to zoom the map"
   },
+  "pMkaJD": {
+    "defaultMessage": "{field} must be a valid email address, like 'willem@example.com'.",
+    "description": "Invalid email validation error",
+    "originalDefault": "{field} must be a valid email address, like 'willem@example.com'."
+  },
   "pguTkQ": {
     "defaultMessage": "Intersection results could not be merged",
     "description": "ZOD 'invalid_intersection_types' error message",

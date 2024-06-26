@@ -1743,6 +1743,16 @@
       "value": "Gebruik ⌘ + scroll om te zoomen in de kaart"
     }
   ],
+  "pMkaJD": [
+    {
+      "type": 1,
+      "value": "field"
+    },
+    {
+      "type": 0,
+      "value": " moet een geldig e-mailadres zijn, zoals 'willem@example.com' bijvoorbeeld."
+    }
+  ],
   "pguTkQ": [
     {
       "type": 0,

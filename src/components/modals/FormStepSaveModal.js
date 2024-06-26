@@ -4,9 +4,11 @@
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import React, {useEffect} from 'react';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
+import {z} from 'zod';
+import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {post} from 'api';
 import Body from 'components/Body';
@@ -21,6 +23,17 @@ const initialState = {
   isSaving: false,
 };
 
+const emailValidationSchema = z.object({
+  email: z.string().email(),
+});
+
+const FIELD_LABELS = defineMessages({
+  email: {
+    description: 'Form save modal email field label',
+    defaultMessage: 'Your email address',
+  },
+});
+
 const reducer = (draft, action) => {
   switch (action.type) {
     case 'START_SAVE': {
@@ -32,6 +45,10 @@ const reducer = (draft, action) => {
       const {feedback} = action.payload;
       draft.errorMessage = feedback;
       draft.isSaving = false;
+      break;
+    }
+    case 'REMOVE_ERROR_MESSAGE': {
+      draft.errorMessage = '';
       break;
     }
     case 'SAVE_SUCCEEDED': {
@@ -50,18 +67,73 @@ const FormStepSaveModal = ({
   onSessionDestroyed,
   suspendFormUrl,
   suspendFormUrlLifetime,
+  ...props
 }) => {
   const intl = useIntl();
 
   const [{errorMessage, isSaving}, dispatch] = useImmerReducer(reducer, initialState);
+
+  useEffect(() => {
+    if (!isOpen && errorMessage) {
+      dispatch({
+        type: 'REMOVE_ERROR_MESSAGE',
+      });
+    }
+  }, [dispatch, isOpen, errorMessage]);
+
+  const errorMap = (issue, ctx) => {
+    const fieldLabelDefinition = FIELD_LABELS[issue.path.join('.')];
+    if (!fieldLabelDefinition) {
+      return {message: ctx.defaultError}; // use global schema as fallback
+    }
+    const fieldLabel = intl.formatMessage(fieldLabelDefinition);
+
+    switch (issue.code) {
+      case z.ZodIssueCode.invalid_type: {
+        if (issue.received === z.ZodParsedType.undefined) {
+          const message = intl.formatMessage(
+            {
+              description: 'Required field error message',
+              defaultMessage: '{field} is required.',
+            },
+            {
+              field: fieldLabel,
+            }
+          );
+          return {message};
+        }
+        break;
+      }
+      case z.ZodIssueCode.invalid_string: {
+        if (issue.validation === 'email') {
+          const message = intl.formatMessage(
+            {
+              description: 'Invalid email validation error',
+              defaultMessage: "{field} must be a valid email address, like 'willem@example.com'.",
+            },
+            {
+              field: fieldLabel,
+            }
+          );
+          return {message};
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return {message: ctx.defaultError}; // use global schema as fallback
+  };
 
   const onSubmit = async ({email}, actions) => {
     if (isSaving) return;
 
     dispatch({type: 'START_SAVE'});
 
-    const saveResponse = await onSaveConfirm();
-    if (!saveResponse.ok) {
+    try {
+      await onSaveConfirm();
+    } catch (e) {
       actions.setSubmitting(false);
       dispatch({
         type: 'API_ERROR',
@@ -74,8 +146,10 @@ const FormStepSaveModal = ({
       });
       return;
     }
-    const suspendResponse = await post(suspendFormUrl, {email});
-    if (!suspendResponse.ok) {
+
+    try {
+      await post(suspendFormUrl, {email});
+    } catch (e) {
       actions.setSubmitting(false);
       dispatch({
         type: 'API_ERROR',
@@ -105,10 +179,15 @@ const FormStepSaveModal = ({
       }
       isOpen={isOpen}
       closeModal={closeModal}
+      {...props}
     >
-      <Formik initialValues={{email: ''}} onSubmit={onSubmit}>
+      <Formik
+        initialValues={{email: ''}}
+        onSubmit={onSubmit}
+        validationSchema={toFormikValidationSchema(emailValidationSchema, {errorMap})}
+      >
         {props => (
-          <Body component="form" onSubmit={props.handleSubmit}>
+          <Body component="form" onSubmit={props.handleSubmit} noValidate>
             {isSaving ? <Loader modifiers={['centered']} /> : null}
 
             {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
@@ -123,12 +202,7 @@ const FormStepSaveModal = ({
             <EmailField
               name="email"
               isRequired
-              label={
-                <FormattedMessage
-                  description="Form save modal email field label"
-                  defaultMessage="Your email address"
-                />
-              }
+              label={intl.formatMessage(FIELD_LABELS.email)}
               description={
                 <FormattedMessage
                   description="Form save modal email field help text"

@@ -26,6 +26,7 @@ const Modal = ({
   closeModal,
   contentModifiers = [],
   children,
+  ...props
 }) => {
   usePreventScroll(isOpen);
   const intl = useIntl();
@@ -35,6 +36,7 @@ const Modal = ({
       onRequestClose={closeModal}
       className={getBEMClassName('react-modal__content', contentModifiers)}
       overlayClassName={getBEMClassName('react-modal__overlay')}
+      {...props}
     >
       <header className={getBEMClassName('react-modal__header')}>
         {title ? <Title className={getBEMClassName('react-modal__title')}>{title}</Title> : null}
