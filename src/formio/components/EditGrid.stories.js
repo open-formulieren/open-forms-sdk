@@ -1,5 +1,10 @@
-import {withUtrechtDocument} from 'story-utils/decorators';
+import {expect, userEvent, waitFor, within} from '@storybook/test';
 
+import {withUtrechtDocument} from 'story-utils/decorators';
+import {ConfigDecorator} from 'story-utils/decorators';
+import {sleep} from 'utils';
+
+import {mockBAGDataGet, mockBAGNoDataGet} from './AddressNL.mocks';
 import {SingleFormioComponent} from './story-util';
 
 const defaultNested = [
@@ -113,5 +118,153 @@ export const WithData = {
         bedrag: '15000000',
       },
     ],
+  },
+};
+
+export const AddressNLWithData = {
+  render: SingleFormioComponent,
+  decorators: [ConfigDecorator],
+  parameters: {
+    msw: {
+      handlers: [mockBAGDataGet],
+    },
+  },
+  args: {
+    type: 'editgrid',
+    groupLabel: '',
+    maxLength: null,
+    extraComponentProperties: {
+      hideLabel: false,
+      components: [
+        {
+          type: 'addressNL',
+          key: 'addressNL',
+          label: 'Address NL',
+          validate: {
+            required: false,
+          },
+          deriveAddress: true,
+        },
+      ],
+      inlineEdit: false,
+      description: 'Repeating group for Address NL component',
+      disableAddingRemovingRows: false,
+      addAnother: 'Nog één toevoegen',
+      saveRow: 'Opslaan',
+      removeRow: 'Annuleren',
+    },
+    evalContext: {},
+  },
+  argTypes: {
+    key: {type: {required: true}},
+    label: {type: {required: true}},
+    type: {table: {disable: true}},
+  },
+
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    // needed for formio
+    await sleep(100);
+
+    const addButton = await canvas.findByRole('button', {name: 'Nog één toevoegen'});
+    await userEvent.click(addButton);
+
+    await step('Fill out postcode and number', async () => {
+      const postcodeInput = await canvas.findByLabelText('Postcode');
+      await userEvent.type(postcodeInput, '1234AB');
+      const houseNumberInput = await canvas.findByLabelText('Huisnummer');
+      await userEvent.type(houseNumberInput, '1');
+    });
+
+    userEvent.tab();
+
+    await step('Check that street and city are autofilled', async () => {
+      await waitFor(async () => {
+        expect(canvas.getByLabelText('Street name')).toHaveDisplayValue('Keizersgracht');
+      });
+      await waitFor(async () => {
+        expect(canvas.getByLabelText('City')).toHaveDisplayValue('Amsterdam');
+      });
+    });
+
+    await sleep(100);
+
+    const saveButton = await canvas.findByRole('button', {name: 'Opslaan'});
+    await userEvent.click(saveButton);
+  },
+};
+
+export const AddressNLWithNoData = {
+  render: SingleFormioComponent,
+  decorators: [ConfigDecorator],
+  parameters: {
+    msw: {
+      handlers: [mockBAGNoDataGet],
+    },
+  },
+  args: {
+    type: 'editgrid',
+    groupLabel: '',
+    maxLength: null,
+    extraComponentProperties: {
+      hideLabel: false,
+      components: [
+        {
+          type: 'addressNL',
+          key: 'addressNL',
+          label: 'Address NL',
+          validate: {
+            required: false,
+          },
+          deriveAddress: true,
+        },
+      ],
+      inlineEdit: false,
+      description: 'Repeating group for Address NL component',
+      disableAddingRemovingRows: false,
+      addAnother: 'Nog één toevoegen',
+      saveRow: 'Opslaan',
+      removeRow: 'Annuleren',
+    },
+    evalContext: {},
+  },
+  argTypes: {
+    key: {type: {required: true}},
+    label: {type: {required: true}},
+    type: {table: {disable: true}},
+  },
+
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    // needed for formio
+    await sleep(100);
+
+    const addButton = await canvas.findByRole('button', {name: 'Nog één toevoegen'});
+    await userEvent.click(addButton);
+
+    await step('Fill out postcode and number', async () => {
+      const postcodeInput = await canvas.findByLabelText('Postcode');
+      await userEvent.type(postcodeInput, '1234AB');
+      const houseNumberInput = await canvas.findByLabelText('Huisnummer');
+      await userEvent.type(houseNumberInput, '1');
+    });
+
+    userEvent.tab();
+
+    await step('Check that no street and city are present', async () => {
+      await waitFor(async () => {
+        expect(canvas.getByLabelText('Street name')).toHaveDisplayValue('');
+      });
+      await waitFor(async () => {
+        expect(canvas.getByLabelText('City')).toHaveDisplayValue('');
+      });
+    });
+
+    await sleep(100);
+
+    const saveButton = await canvas.findByRole('button', {name: 'Opslaan'});
+    await userEvent.click(saveButton);
   },
 };

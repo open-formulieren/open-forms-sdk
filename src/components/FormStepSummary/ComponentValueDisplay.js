@@ -214,9 +214,27 @@ const AddressNLDisplay = ({component, value}) => {
     return <EmptyDisplay />;
   }
 
-  return `${value.postcode} ${value.houseNumber}${value.houseLetter || ''} ${
-    value.houseNumberAddition || ''
-  }`;
+  if (component.deriveAddress) {
+    return (
+      <address>
+        {value.streetName} {value.houseNumber}
+        {value.houseLetter} {value.houseNumberAddition}
+        {value.postcode && value.city && (
+          <>
+            <br />
+            {value.postcode} {value.city}
+          </>
+        )}
+      </address>
+    );
+  }
+
+  return (
+    <address>
+      {value.postcode} {value.houseNumber}
+      {value.houseLetter} {value.houseNumberAddition}
+    </address>
+  );
 };
 
 const ContentDisplay = ({component, value}) => {

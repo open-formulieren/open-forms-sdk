@@ -23,3 +23,21 @@ export const mockBRKZaakgerechtigdeInvalidPost = rest.post(
     return res(ctx.json(body));
   }
 );
+
+export const mockBAGDataGet = rest.get(`${BASE_URL}geo/address-autocomplete`, (req, res, ctx) => {
+  const body = {
+    streetName: 'Keizersgracht',
+    city: 'Amsterdam',
+    secretStreetCity: '',
+  };
+  return res(ctx.status(200), ctx.json(body));
+});
+
+export const mockBAGNoDataGet = rest.get(`${BASE_URL}geo/address-autocomplete`, (req, res, ctx) => {
+  const body = {
+    streetName: '',
+    city: '',
+    secretStreetCity: '',
+  };
+  return res(ctx.status(200), ctx.json(body));
+});

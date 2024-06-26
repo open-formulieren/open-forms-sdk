@@ -441,12 +441,15 @@ export const AddressNLSummaryFull = {
               houseNumber: '1',
               houseLetter: 'A',
               houseNumberAddition: 'Add',
+              city: 'Amsterdam',
+              streetName: 'Keizersgracht',
             },
             component: {
               key: 'addressNL',
               type: 'addressNL',
               label: 'Address NL',
               hidden: false,
+              deriveAddress: true,
             },
           },
         ],
@@ -455,7 +458,9 @@ export const AddressNLSummaryFull = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1A Add');
+    await expect(canvas.getByRole('definition')).toHaveTextContent(
+      'Keizersgracht 1A Add1234 AB Amsterdam'
+    );
   },
 };
 

@@ -4,6 +4,8 @@ import {withUtrechtDocument} from 'story-utils/decorators';
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import {
+  mockBAGDataGet,
+  mockBAGNoDataGet,
   mockBRKZaakgerechtigdeInvalidPost,
   mockBRKZaakgerechtigdeValidPost,
 } from './AddressNL.mocks';
@@ -180,4 +182,82 @@ export const WithFailedBRKValidation = {
   //     expect(canvas.getByText(EXPECTED_VALIDATION_ERROR)).toBeVisible();
   //   });
   // },
+};
+
+export const WithDeriveCityStreetNameWithData = {
+  render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBAGDataGet],
+    },
+  },
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      validate: {
+        required: false,
+      },
+      deriveAddress: true,
+    },
+  },
+  play: async ({canvasElement, args, step}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    await userEvent.type(postcodeInput, '1234AB');
+
+    const houseNumberInput = await canvas.findByLabelText('Huisnummer');
+    await userEvent.type(houseNumberInput, '1');
+
+    const city = await canvas.findByLabelText('City');
+    const streetName = await canvas.findByLabelText('Street name');
+
+    await userEvent.tab();
+
+    await waitFor(() => {
+      expect(city.value).toBe('Amsterdam');
+      expect(streetName.value).toBe('Keizersgracht');
+    });
+  },
+};
+
+export const WithDeriveCityStreetNameNoData = {
+  render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBAGNoDataGet],
+    },
+  },
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      validate: {
+        required: false,
+      },
+      deriveAddress: true,
+    },
+  },
+  play: async ({canvasElement, args, step}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    await userEvent.type(postcodeInput, '1234AB');
+
+    const houseNumberInput = await canvas.findByLabelText('Huisnummer');
+    await userEvent.type(houseNumberInput, '1');
+
+    const city = await canvas.findByLabelText('City');
+    const streetName = await canvas.findByLabelText('Street name');
+
+    await userEvent.tab();
+
+    await waitFor(() => {
+      expect(city.value).toBe('');
+      expect(streetName.value).toBe('');
+    });
+  },
 };
