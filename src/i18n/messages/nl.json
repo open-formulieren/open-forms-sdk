@@ -233,7 +233,7 @@
     "originalDefault": "Remove"
   },
   "DEetjI": {
-    "defaultMessage": "Street name",
+    "defaultMessage": "Straatnaam",
     "description": "Label for addressNL streetName read only result",
     "originalDefault": "Street name"
   },
@@ -842,7 +842,7 @@
     "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
   },
   "osSl3z": {
-    "defaultMessage": "City",
+    "defaultMessage": "Stad",
     "description": "Label for addressNL city read only result",
     "originalDefault": "City"
   },
