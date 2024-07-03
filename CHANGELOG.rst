@@ -2,6 +2,53 @@
 SDK Changelog
 =============
 
+2.3.0 (2024-07-09)
+==================
+
+Feature release - this changelog also includes the changes from the alpha release.
+
+.. warning:: SDK 2.3.0 requires the backend API version 2.7.0 or newer.
+
+New features
+------------
+
+* [#4115, #4208] Support different kinds of GovMetric feedback (aborting the form vs.
+  completing the form).
+* [#3993] The ``addressNL`` component can now derive street name/city from postcode and
+  house number.
+* [#4423] The ``addressNL`` component now supports single column layout mode too, in
+  addition to the existing double column layout.
+
+Bugfixes
+--------
+
+* [#4382] Fixed the "pause modal" not being submittable after validation errors and
+  added better validation.
+* [#4328] Fixed the Govmetric smiley images not rendering.
+* [#4199] Fixed starting submissions anonymously while already logged in. Before, the
+  existing authentication metadata was added as if you started the form with login.
+* [#4158] Fixed custom error messages not being picked up for datetime, date and time
+  components.
+* [#4009] Fixed fieldset components accidentally displaying a value in the summary.
+* [#4082] Fixed multiple submissions being created when starting a form.
+* [#4172] Fixed a crash when validating a date against a minimum/maximum date.
+* [#4130] Forms requiring payment no longer offer the user to go back to the main page.
+* [#4201] Fixed a crash when a map component is hidden.
+* [#4222] Fixed being able to circumvent the maximum number of files limit.
+* [#4220] Fixed "optional" translation for radio and selectboxes components.
+* [#4207] Fixed styling overflow for select dropdown.
+
+Project maintenance
+-------------------
+
+* Dropped support for SDk 2.0 and older.
+
+Deprecations
+------------
+
+* Location autofill in textfield components is deprecated and will be removed in SDK
+  3.0. Instead, use the ``addressNL`` component.
+
 2.2.3 (2024-06-14)
 ==================
 
