@@ -261,3 +261,39 @@ export const WithDeriveCityStreetNameNoData = {
     });
   },
 };
+
+export const RenderedInSingleColumn = {
+  render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBAGDataGet],
+    },
+  },
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      deriveAddress: true,
+      layout: 'singleColumn',
+    },
+  },
+};
+
+export const RenderedInDoubleColumn = {
+  render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBAGDataGet],
+    },
+  },
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      deriveAddress: true,
+      layout: 'doubleColumn',
+    },
+  },
+};

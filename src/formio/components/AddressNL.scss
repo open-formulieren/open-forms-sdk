@@ -1,0 +1,19 @@
+@use 'microscope-sass/lib/bem';
+
+// @import instead of @use because breakpoints are defined globally
+@import 'microscope-sass/lib/responsive';
+
+.openforms-addressnl {
+  display: grid;
+  grid-template-columns: var(--_of-addressnl-grid-template-columns, 1fr);
+  grid-column-gap: var(--of-addressnl-column-gap, 8px);
+  grid-row-gap: var(--of-addressnl-row-gap, var(--of-form-field-container-gap, 24px));
+
+  @include bem.modifier('double-column') {
+    --_of-addressnl-grid-template-columns: 1fr 1fr;
+
+    @include mobile-only {
+      grid-template-columns: 1fr;
+    }
+  }
+}
