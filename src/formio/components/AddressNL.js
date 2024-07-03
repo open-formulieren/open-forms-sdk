@@ -15,6 +15,8 @@ import {get} from 'api';
 import {TextField} from 'components/forms';
 import enableValidationPlugins from 'formio/validators/plugins';
 
+import './AddressNL.scss';
+
 const Field = Formio.Components.components.field;
 
 export default class AddressNL extends Field {
@@ -36,6 +38,7 @@ export default class AddressNL extends Field {
         defaultValue: {},
         validateOn: 'blur',
         deriveAddress: false,
+        layout: 'doubleColumn',
         openForms: {
           checkIsEmptyBeforePluginValidate: true,
         },
@@ -158,6 +161,7 @@ export default class AddressNL extends Field {
             initialValues={initialValues}
             required={required}
             deriveAddress={this.component.deriveAddress}
+            layout={this.component.layout}
             setFormioValues={this.onFormikChange.bind(this)}
           />
         </ConfigContext.Provider>
@@ -246,7 +250,7 @@ const addressNLSchema = (required, intl) => {
     });
 };
 
-const AddressNLForm = ({initialValues, required, deriveAddress, setFormioValues}) => {
+const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormioValues}) => {
   const intl = useIntl();
 
   const errorMap = (issue, ctx) => {
@@ -288,14 +292,16 @@ const AddressNLForm = ({initialValues, required, deriveAddress, setFormioValues}
         required={required}
         setFormioValues={setFormioValues}
         deriveAddress={deriveAddress}
+        layout={layout}
       />
     </Formik>
   );
 };
 
-const FormikAddress = ({required, setFormioValues, deriveAddress}) => {
+const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
   const {values, isValid, setFieldValue} = useFormikContext();
   const {baseUrl} = useContext(ConfigContext);
+  const useColumns = layout === 'doubleColumn';
 
   useEffect(() => {
     // *always* synchronize the state up, since:
@@ -324,67 +330,57 @@ const FormikAddress = ({required, setFormioValues, deriveAddress}) => {
   };
 
   return (
-    <div className="openforms-form-field-container">
-      <div className="openforms-columns">
-        <div className="column column--span-6 openforms-form-field-container">
-          <PostCodeField required={required} autoFillAddress={autofillAddress} />
-        </div>
-        <div className="column column--span-6 openforms-form-field-container">
-          <HouseNumberField required={required} autoFillAddress={autofillAddress} />
-        </div>
-      </div>
-      <div className="openforms-columns">
-        <div className="column column--span-6 openforms-form-field-container">
+    <div
+      className={
+        useColumns
+          ? 'openforms-addressnl openforms-addressnl--double-column'
+          : 'openforms-addressnl openforms-addressnl--single-column'
+      }
+    >
+      <PostCodeField required={required} autoFillAddress={autofillAddress} />
+      <HouseNumberField required={required} autoFillAddress={autofillAddress} />
+      <TextField
+        name="houseLetter"
+        label={
+          <FormattedMessage
+            description="Label for addressNL houseLetter input"
+            defaultMessage="House letter"
+          />
+        }
+      />
+      <TextField
+        name="houseNumberAddition"
+        label={
+          <FormattedMessage
+            description="Label for addressNL houseNumberAddition input"
+            defaultMessage="House number addition"
+          />
+        }
+      />
+      {deriveAddress && (
+        <>
           <TextField
-            name="houseLetter"
+            name="streetName"
             label={
               <FormattedMessage
-                description="Label for addressNL houseLetter input"
-                defaultMessage="House letter"
+                description="Label for addressNL streetName read only result"
+                defaultMessage="Street name"
               />
             }
+            disabled
           />
-        </div>
-        <div className="column column--span-6 openforms-form-field-container">
           <TextField
-            name="houseNumberAddition"
+            name="city"
             label={
               <FormattedMessage
-                description="Label for addressNL houseNumberAddition input"
-                defaultMessage="House number addition"
+                description="Label for addressNL city read only result"
+                defaultMessage="City"
               />
             }
+            disabled
           />
-        </div>
-        {deriveAddress && (
-          <>
-            <div className="column column--span-6 openforms-form-field-container">
-              <TextField
-                name="city"
-                label={
-                  <FormattedMessage
-                    description="Label for addressNL city read only result"
-                    defaultMessage="City"
-                  />
-                }
-                disabled
-              />
-            </div>
-            <div className="column column--span-6 openforms-form-field-container">
-              <TextField
-                name="streetName"
-                label={
-                  <FormattedMessage
-                    description="Label for addressNL streetName read only result"
-                    defaultMessage="Street name"
-                  />
-                }
-                disabled
-              />
-            </div>
-          </>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 };
