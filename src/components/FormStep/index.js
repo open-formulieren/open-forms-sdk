@@ -850,6 +850,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
                   ofContext: {
                     form: form,
                     submissionUuid: submission.id,
+                    submissionUrl: submission.url,
                     saveStepData: async () =>
                       await submitStepData(submissionStep.url, {...getCurrentFormData()}),
                     displayComponents: config.displayComponents,

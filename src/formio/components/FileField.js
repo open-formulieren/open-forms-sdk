@@ -123,6 +123,7 @@ const CSRFEnabledUrl = function (formio) {
             [fileKey]: file,
             name,
             dir,
+            submission: file.submission,
           },
           options,
           progressCallback,
@@ -211,9 +212,16 @@ class FileField extends Formio.Components.components.file {
     let hasTypeErrors = false;
     let statuses = [];
 
+    const submissionUrl = this.options?.ofContext?.submissionUrl;
+
     // Issue #3040 - Overwriting code from the super, in order to update the error message for wrong
     // file types, so that it doesn't show the (escaped) MIME type to the user.
     Array.prototype.forEach.call(files, file => {
+      // add the submission URL so we can process that in the actual upload for security
+      // reasons. Formio doesn't have a better or obvious mechanism how to send additional
+      // data.
+      file.submission = submissionUrl;
+
       const fileUpload = {
         originalName: file.name,
         name: FormioUtils.uniqueName(
