@@ -426,6 +426,35 @@ export const AddressNLSummary = {
   },
 };
 
+export const AddressNLSummaryWithoutCityFound = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'address-nl',
+        name: 'Address NL',
+        data: [
+          {
+            name: 'Address NL',
+            value: {postcode: '1234 AB', houseNumber: '1'},
+            component: {
+              key: 'addressNL',
+              type: 'addressNL',
+              label: 'Address NL',
+              hidden: false,
+              deriveAddress: true,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
+  },
+};
+
 export const AddressNLSummaryFull = {
   render,
   args: {
