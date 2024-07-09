@@ -201,8 +201,20 @@ const FIELD_LABELS = defineMessages({
 });
 
 const addressNLSchema = (required, intl) => {
-  let postcodeSchema = z.string().regex(/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$/);
-  let houseNumberSchema = z.string().regex(/^\d{1,5}$/);
+  let postcodeSchema = z.string().regex(/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$/, {
+    message: intl.formatMessage({
+      description:
+        'ZOD error message when AddressNL postcode does not match the postcode regular expression',
+      defaultMessage: 'Postcode must be four digits followed by two letters (e.g. 1234 AB).',
+    }),
+  });
+  let houseNumberSchema = z.string().regex(/^\d{1,5}$/, {
+    message: intl.formatMessage({
+      description:
+        'ZOD error message when AddressNL house number does not match the house number regular expression',
+      defaultMessage: 'House number must be a number with up to five digits (e.g. 456).',
+    }),
+  });
   if (!required) {
     postcodeSchema = postcodeSchema.optional();
     houseNumberSchema = houseNumberSchema.optional();
@@ -214,11 +226,23 @@ const addressNLSchema = (required, intl) => {
       houseNumber: houseNumberSchema,
       houseLetter: z
         .string()
-        .regex(/^[a-zA-Z]$/)
+        .regex(/^[a-zA-Z]$/, {
+          message: intl.formatMessage({
+            description:
+              'ZOD error message when AddressNL house letter does not match the house letter regular expression',
+            defaultMessage: 'House letter must be a single letter.',
+          }),
+        })
         .optional(),
       houseNumberAddition: z
         .string()
-        .regex(/^([a-zA-Z0-9]){1,4}$/)
+        .regex(/^([a-zA-Z0-9]){1,4}$/, {
+          message: intl.formatMessage({
+            description:
+              'ZOD error message when AddressNL house number addition does not match the house number addition regular expression',
+            defaultMessage: 'House number addition must be up to four letters and digits.',
+          }),
+        })
         .optional(),
     })
     .superRefine((val, ctx) => {
