@@ -155,6 +155,7 @@ export default class AddressNL extends Field {
           value={{
             baseUrl: this.options.baseUrl,
             requiredFieldsWithAsterisk: this.options.evalContext.requiredFieldsWithAsterisk,
+            component: this.component,
           }}
         >
           <AddressNLForm
@@ -200,14 +201,30 @@ const FIELD_LABELS = defineMessages({
   },
 });
 
-const addressNLSchema = (required, intl) => {
-  let postcodeSchema = z.string().regex(/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$/, {
-    message: intl.formatMessage({
+const addressNLSchema = (required, intl, {postcode = {}, city = {}}) => {
+  // Optionally use a user-supplied pattern/regex for more fine grained pattern
+  // validation, and if a custom error message was supplied, use it.
+  const postcodeRegex = postcode?.pattern
+    ? new RegExp(postcode.pattern)
+    : /^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$/;
+  const postcodeErrorMessage =
+    postcode?.errorMessage ??
+    intl.formatMessage({
       description:
         'ZOD error message when AddressNL postcode does not match the postcode regular expression',
       defaultMessage: 'Postcode must be four digits followed by two letters (e.g. 1234 AB).',
-    }),
-  });
+    });
+  let postcodeSchema = z.string().regex(postcodeRegex, {message: postcodeErrorMessage});
+
+  const {pattern: cityPattern = '', errorMessage: cityErrorMessage = ''} = city;
+  let citySchema = z.string();
+  if (cityPattern) {
+    citySchema = citySchema.regex(
+      new RegExp(cityPattern),
+      cityErrorMessage ? {message: cityErrorMessage} : undefined
+    );
+  }
+
   let houseNumberSchema = z.string().regex(/^\d{1,5}$/, {
     message: intl.formatMessage({
       description:
@@ -223,6 +240,7 @@ const addressNLSchema = (required, intl) => {
   return z
     .object({
       postcode: postcodeSchema,
+      city: citySchema.optional(),
       houseNumber: houseNumberSchema,
       houseLetter: z
         .string()
@@ -277,6 +295,18 @@ const addressNLSchema = (required, intl) => {
 const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormioValues}) => {
   const intl = useIntl();
 
+  const {
+    component: {
+      openForms: {components: nestedComponents},
+    },
+  } = useContext(ConfigContext);
+  const {postcode, city} = nestedComponents || {};
+
+  const postcodePattern = postcode?.validate?.pattern;
+  const postcodeError = postcode?.translatedErrors[intl.locale].pattern;
+  const cityPattern = city?.validate?.pattern;
+  const cityError = city?.translatedErrors[intl.locale].pattern;
+
   const errorMap = (issue, ctx) => {
     switch (issue.code) {
       case z.ZodIssueCode.invalid_type: {
@@ -309,8 +339,21 @@ const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormi
       initialTouched={{
         postcode: true,
         houseNumber: true,
+        city: true,
       }}
-      validationSchema={toFormikValidationSchema(addressNLSchema(required, intl), {errorMap})}
+      validationSchema={toFormikValidationSchema(
+        addressNLSchema(required, intl, {
+          postcode: {
+            pattern: postcodePattern,
+            errorMessage: postcodeError,
+          },
+          city: {
+            pattern: cityPattern,
+            errorMessage: cityError,
+          },
+        }),
+        {errorMap}
+      )}
     >
       <FormikAddress
         required={required}
