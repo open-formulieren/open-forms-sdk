@@ -22,6 +22,16 @@ export default {
       validate: {
         required: true,
       },
+      ofComponents: {
+        postcode: {
+          validate: {pattern: '1015 [a-zA-Z]{2}'},
+          translatedErrors: {
+            nl: {
+              pattern: 'De postcode moet beginnen met 1015',
+            },
+          },
+        },
+      },
     },
     evalContext: {},
   },
@@ -200,6 +210,16 @@ export const WithDeriveCityStreetNameWithData = {
         required: false,
       },
       deriveAddress: true,
+      ofComponents: {
+        city: {
+          validate: {pattern: 'Amsterdam'},
+          translatedErrors: {
+            nl: {
+              pattern: 'De stad moet Amsterdam zijn',
+            },
+          },
+        },
+      },
     },
   },
   play: async ({canvasElement, args, step}) => {
@@ -220,6 +240,59 @@ export const WithDeriveCityStreetNameWithData = {
       expect(city.value).toBe('Amsterdam');
       expect(streetName.value).toBe('Keizersgracht');
     });
+  },
+};
+
+export const WithDeriveCityStreetNameWithDataIncorrectCity = {
+  render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBAGDataGet],
+    },
+  },
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      validate: {
+        required: false,
+      },
+      deriveAddress: true,
+      ofComponents: {
+        city: {
+          validate: {pattern: 'Rotterdam'},
+          translatedErrors: {
+            nl: {
+              pattern: 'De stad moet Rotterdam zijn',
+            },
+          },
+        },
+      },
+    },
+  },
+  play: async ({canvasElement, args, step}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    await userEvent.type(postcodeInput, '1234AB');
+
+    const houseNumberInput = await canvas.findByLabelText('Huisnummer');
+    await userEvent.type(houseNumberInput, '1');
+
+    const city = await canvas.findByLabelText('Stad');
+    const streetName = await canvas.findByLabelText('Straatnaam');
+
+    await userEvent.tab();
+
+    await waitFor(() => {
+      expect(city.value).toBe('Amsterdam');
+      expect(streetName.value).toBe('Keizersgracht');
+    });
+
+    await userEvent.tab();
+
+    await canvas.findByText('De stad moet Rotterdam zijn');
   },
 };
 
