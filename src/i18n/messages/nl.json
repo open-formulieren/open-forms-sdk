@@ -166,6 +166,11 @@
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
   },
+  "AM6xqd": {
+    "defaultMessage": "Huisnummer moet een nummer zijn met maximaal 5 cijfers (bijv. 456).",
+    "description": "ZOD error message when AddressNL house number does not match the house number regular expression",
+    "originalDefault": "House number must be a number with up to five digits (e.g. 456)."
+  },
   "ATXTTM": {
     "defaultMessage": "Voor dit product is betaling vereist.",
     "description": "Payment request text",
@@ -287,6 +292,11 @@
     "defaultMessage": "Beoordeel dit formulier als 'goed'",
     "description": "Feedback face title - Good",
     "originalDefault": "Rate this form as 'Good'"
+  },
+  "EPQl+D": {
+    "defaultMessage": "Huisnummertoevoeging moet bestaan uit maximaal vier letters en cijfers.",
+    "description": "ZOD error message when AddressNL house number addition does not match the house number addition regular expression",
+    "originalDefault": "House number addition must be up to four letters and digits."
   },
   "GbPef0": {
     "defaultMessage": "Huisnummer is verplicht.",
@@ -688,6 +698,11 @@
     "description": "Generic submission error",
     "originalDefault": "Something went wrong while submitting the form."
   },
+  "hWv0yN": {
+    "defaultMessage": "Huisletter moet een enkele letter zijn.",
+    "description": "ZOD error message when AddressNL house letter does not match the house letter regular expression",
+    "originalDefault": "House letter must be a single letter."
+  },
   "hkZ8N1": {
     "defaultMessage": "Ongeldige invoer.",
     "description": "ZOD 'custom' error message",
@@ -875,6 +890,11 @@
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
+  },
+  "rUsmvU": {
+    "defaultMessage": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB).",
+    "description": "ZOD error message when AddressNL postcode does not match the postcode regular expression",
+    "originalDefault": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
   },
   "sSmY1N": {
     "defaultMessage": "Zoek adres",
