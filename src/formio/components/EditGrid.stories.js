@@ -181,10 +181,10 @@ export const AddressNLWithData = {
 
     await step('Check that street and city are autofilled', async () => {
       await waitFor(async () => {
-        expect(canvas.getByLabelText('Street name')).toHaveDisplayValue('Keizersgracht');
+        expect(canvas.getByLabelText('Straatnaam')).toHaveDisplayValue('Keizersgracht');
       });
       await waitFor(async () => {
-        expect(canvas.getByLabelText('City')).toHaveDisplayValue('Amsterdam');
+        expect(canvas.getByLabelText('Stad')).toHaveDisplayValue('Amsterdam');
       });
     });
 
@@ -255,10 +255,10 @@ export const AddressNLWithNoData = {
 
     await step('Check that no street and city are present', async () => {
       await waitFor(async () => {
-        expect(canvas.getByLabelText('Street name')).toHaveDisplayValue('');
+        expect(canvas.getByLabelText('Straatnaam')).toHaveDisplayValue('');
       });
       await waitFor(async () => {
-        expect(canvas.getByLabelText('City')).toHaveDisplayValue('');
+        expect(canvas.getByLabelText('Stad')).toHaveDisplayValue('');
       });
     });
 
