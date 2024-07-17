@@ -117,6 +117,10 @@ const Form = () => {
   const {steps} = form;
   const config = useContext(ConfigContext);
 
+  // This has to do with a data reference if it is provided by the external party
+  // It will be used in the backend for retrieving additional information from the API
+  const initialDataReference = queryParams?.get('initial_data_reference');
+
   // load the state management/reducer
   const initialStateFromProps = {...initialState, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
@@ -183,6 +187,7 @@ const Form = () => {
         form,
         config.clientBaseUrl,
         null,
+        initialDataReference,
         anonymous
       );
     } catch (exc) {
