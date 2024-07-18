@@ -78,3 +78,22 @@ test('Start form as if authenticated from the backend', async () => {
   const requestBody = await startSubmissionRequest.json();
   expect(requestBody.anonymous).toBe(false);
 });
+
+test('Start form with object reference query param', async () => {
+  mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
+  let startSubmissionRequest;
+  mswServer.events.on('request:match', async request => {
+    if (request.method === 'POST' && request.url.pathname.endsWith('/api/v2/submissions')) {
+      startSubmissionRequest = request;
+    }
+  });
+  render(
+    <Wrapper initialEntry={`/startpagina?${START_FORM_QUERY_PARAM}=1&initial_data_reference=foo`} />
+  );
+
+  await waitFor(() => {
+    expect(startSubmissionRequest).not.toBeUndefined();
+  });
+  const requestBody = await startSubmissionRequest.json();
+  expect(requestBody.initialDataReference).toBe('foo');
+});
