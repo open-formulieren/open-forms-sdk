@@ -5,7 +5,7 @@
     "originalDefault": "Completed"
   },
   "+DxzBU": {
-    "defaultMessage": "Vul hieronder uw e-mailadres in. U krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar u de link opent. De link blijft maximaal {numberOfDays, plural, one {1 dag} other {{numberOfDays} dagen}} actief.",
+    "defaultMessage": "Vul hieronder je e-mailadres in. Je krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar je de link opent. De link blijft maximaal {numberOfDays, plural, one {1 dag} other {{numberOfDays} dagen}} actief.",
     "description": "Form save modal body text",
     "originalDefault": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
   },
@@ -80,7 +80,7 @@
     "originalDefault": "Check and co-sign submission"
   },
   "6GNK65": {
-    "defaultMessage": "U moet ingelogd zijn voor deze actie.",
+    "defaultMessage": "Je moet ingelogd zijn voor deze actie.",
     "description": "Authentication error message",
     "originalDefault": "There was an authentication and/or permission problem."
   },
@@ -90,7 +90,7 @@
     "originalDefault": "Pay now"
   },
   "6ysm6G": {
-    "defaultMessage": "U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan",
+    "defaultMessage": "Je moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan",
     "description": "Warning statement of truth not checked when submitting",
     "originalDefault": "You must declare the form to be filled out truthfully before submitting"
   },
@@ -107,7 +107,7 @@
     "originalDefault": "{name}: {amount}x"
   },
   "7kd6yw": {
-    "defaultMessage": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen.",
+    "defaultMessage": "Dit formulier is momenteel in onderhoud. Als medewerker kun je dit formulier wel invullen.",
     "description": "Maintenance mode message (for form designer)",
     "originalDefault": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual."
   },
@@ -127,7 +127,7 @@
     "originalDefault": "Time"
   },
   "8MZ9TV": {
-    "defaultMessage": "U moet akkoord gaan met het privacybeleid om door te gaan",
+    "defaultMessage": "Je moet akkoord gaan met het privacybeleid om door te gaan",
     "description": "Warning privacy policy not checked when submitting",
     "originalDefault": "Please accept the privacy policy before submitting"
   },
@@ -147,7 +147,7 @@
     "originalDefault": "Log in on behalf of someone else"
   },
   "94yVWJ": {
-    "defaultMessage": "Indien u de taal verandert, dan moet u opnieuw beginnen met het formulier in te vullen. Bent u zeker dat u wilt doorgaan?",
+    "defaultMessage": "Indien je de taal verandert, dan moet je opnieuw beginnen met het formulier in te vullen. Ben je zeker dat je wilt doorgaan?",
     "description": "change language prompt",
     "originalDefault": "Changing the language will require you to restart the form. Are you sure you want to continue?"
   },
@@ -177,7 +177,7 @@
     "originalDefault": "A payment is required for this product."
   },
   "Aaq2GF": {
-    "defaultMessage": "Sorry, er zijn geen datums beschikbaar voor uw afspraak. Probeer het later opnieuw.",
+    "defaultMessage": "Sorry, er zijn geen datums beschikbaar voor je afspraak. Probeer het later opnieuw.",
     "description": "Appoinments: message shown for no available dates at all",
     "originalDefault": "Sorry, there are no available dates for your appointment. Please try again later."
   },
@@ -253,7 +253,7 @@
     "originalDefault": "Invalid function return type"
   },
   "DvlDIB": {
-    "defaultMessage": "Bent u zeker dat uw wilt uitloggen?",
+    "defaultMessage": "Ben je zeker dat je wil uitloggen?",
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
   },
@@ -279,7 +279,7 @@
     "originalDefault": "{numProducts, plural, one {Product} other {Products}}"
   },
   "E4h5vK": {
-    "defaultMessage": "Download uw inzending als PDF document",
+    "defaultMessage": "Download je inzending als PDF document",
     "description": "Download report PDF link title",
     "originalDefault": "Download PDF"
   },
@@ -370,12 +370,12 @@
     "originalDefault": "Close"
   },
   "JB/IBw": {
-    "defaultMessage": "De betaling is mislukt. Indien u de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien.",
+    "defaultMessage": "De betaling is mislukt. Indien je de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien.",
     "description": "payment failed status",
     "originalDefault": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
   },
   "Jrb2Iv": {
-    "defaultMessage": "Uw e-mailadres",
+    "defaultMessage": "Je e-mailadres",
     "description": "Form save modal email field label",
     "originalDefault": "Your email address"
   },
@@ -543,7 +543,7 @@
     "originalDefault": "Cancel appointment"
   },
   "VrbdRk": {
-    "defaultMessage": "Uw betaling is ontvangen.",
+    "defaultMessage": "De betaling is ontvangen.",
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
   },
@@ -599,7 +599,7 @@
     "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
   },
   "a8QRYP": {
-    "defaultMessage": "Uw e-mailadres",
+    "defaultMessage": "Je e-mailadres",
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
   },
@@ -614,22 +614,22 @@
     "originalDefault": "No"
   },
   "abtbgK": {
-    "defaultMessage": "Uw sessie is verlopen. Klik <link>hier</link> om opnieuw te beginnen.",
+    "defaultMessage": "Je sessie is verlopen. Klik <link>hier</link> om opnieuw te beginnen.",
     "description": "Session expired error message",
     "originalDefault": "Your session has expired. Click <link>here</link> to restart."
   },
   "ay8sO5": {
-    "defaultMessage": "Uw gegevens",
+    "defaultMessage": "Je gegevens",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
   },
   "bgfiRG": {
-    "defaultMessage": "U hebt de betaling gestart.",
+    "defaultMessage": "Je hebt de betaling gestart.",
     "description": "payment started status",
     "originalDefault": "You've started the payment process."
   },
   "bu0CcW": {
-    "defaultMessage": "Uw betaling is ontvangen en verwerkt.",
+    "defaultMessage": "De betaling is ontvangen en verwerkt.",
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
@@ -654,7 +654,7 @@
     "originalDefault": "Back to form start"
   },
   "eO6Ysb": {
-    "defaultMessage": "Uw betaling wordt momenteel verwerkt.",
+    "defaultMessage": "De betaling wordt momenteel verwerkt.",
     "description": "payment processing status",
     "originalDefault": "Your payment is currently processing."
   },
@@ -664,7 +664,7 @@
     "originalDefault": "Processing..."
   },
   "fWjfVm": {
-    "defaultMessage": "Een moment geduld alstublieft. Uw inzending wordt verwerkt.",
+    "defaultMessage": "Een moment geduld alstublieft. De inzending wordt verwerkt.",
     "description": "Checking background processing status body",
     "originalDefault": "Please hold on while we're processing your submission."
   },
@@ -684,7 +684,7 @@
     "originalDefault": "Check and confirm"
   },
   "gUyAAs": {
-    "defaultMessage": "U wordt op dit tijdstip op de afspraak verwacht",
+    "defaultMessage": "Je wordt op dit tijdstip op de afspraak verwacht",
     "description": "Appoinments: time select help text",
     "originalDefault": "Times are in your local time"
   },
@@ -724,7 +724,7 @@
     "originalDefault": "Invalid input: must include \"{includes}\" at one or more positions greater than or equal to {position}."
   },
   "iubnaw": {
-    "defaultMessage": "Het e-mailadres waarop u de link ontvangt om het formulier te hervatten.",
+    "defaultMessage": "Het e-mailadres waarop je de link ontvangt om het formulier te hervatten.",
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
@@ -734,12 +734,12 @@
     "originalDefault": "Sorry - this form is no longer available"
   },
   "jGbpQq": {
-    "defaultMessage": "Download uw inzending als PDF document",
+    "defaultMessage": "Download je inzending als PDF document",
     "description": "Download report PDF link title",
     "originalDefault": "Download PDF report of the submission"
   },
   "jYh8Nr": {
-    "defaultMessage": "Uw afspraak is geannuleerd",
+    "defaultMessage": "Je afspraak is geannuleerd",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
   },
@@ -749,7 +749,7 @@
     "originalDefault": "Location and time"
   },
   "jbireK": {
-    "defaultMessage": "Uw producten",
+    "defaultMessage": "Jouw producten",
     "description": "Product summary on appointments location and time step heading",
     "originalDefault": "Your products"
   },
@@ -807,7 +807,7 @@
     "originalDefault": "Product"
   },
   "lq29t6": {
-    "defaultMessage": "Bent u zeker dat u deze formulierinzending wilt afbreken? U verliest alle voortgang als u bevestigt.",
+    "defaultMessage": "Ben je zeker dat je deze formulierinzending wilt afbreken? Je verliest alle voortgang als je bevestigt.",
     "description": "Abort confirmation prompt",
     "originalDefault": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
   },
@@ -817,12 +817,12 @@
     "originalDefault": "Continue existing submission"
   },
   "m1nQlh": {
-    "defaultMessage": "Uw referentie nummer is: {reference}",
+    "defaultMessage": "Je referentie nummer is: {reference}",
     "description": "Submission reference text",
     "originalDefault": "Your reference number is: {reference}"
   },
   "mMYAWl": {
-    "defaultMessage": "Uw sessie staat op het punt om te vervallen {delta}. Verleng uw sessie indien u door wenst te gaan.",
+    "defaultMessage": "Je sessie staat op het punt om te vervallen {delta}. Verleng de sessie indien je door wenst te gaan.",
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
@@ -837,7 +837,7 @@
     "originalDefault": "yyyy"
   },
   "nwQjsz": {
-    "defaultMessage": "Uw sessie vervalt binnenkort.",
+    "defaultMessage": "Je sessie vervalt binnenkort.",
     "description": "Session expiry warning title (in modal)",
     "originalDefault": "Your session will expire soon."
   },
@@ -902,7 +902,7 @@
     "originalDefault": "Enter address, please"
   },
   "senRv3": {
-    "defaultMessage": "U staat op het punt uw afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden.",
+    "defaultMessage": "Je staat op het punt je afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul je e-mailadres in ter controle.",
     "description": "Appointment cancellation body text",
     "originalDefault": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes."
   },
@@ -917,7 +917,7 @@
     "originalDefault": "Not co-signed"
   },
   "tohkCS": {
-    "defaultMessage": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen.",
+    "defaultMessage": "Het e-mailadres waarop je de bevestigingsmail van de afspraak heeft ontvangen.",
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
   },
@@ -952,7 +952,7 @@
     "originalDefault": "Amount"
   },
   "wwsWUp": {
-    "defaultMessage": "Wat vindt u van dit formulier?",
+    "defaultMessage": "Wat vind je van dit formulier?",
     "description": "GovMetric snippet header",
     "originalDefault": "How do you rate this form?"
   },
