@@ -2,6 +2,16 @@
 SDK Changelog
 =============
 
+2.4.0-alpha.0 (2024-08-09)
+==========================
+
+First preview release of the upcoming 2.4.0 version.
+
+* Updated dependencies to latest security releases.
+* [#4397] Added support for an 'initial data reference' parameter so that form fields
+  can be pre-populated from existing data.
+* [#4515] Updated Dutch translations from formal to informal variant.
+
 2.3.1 (2024-07-09)
 ==================
 
