@@ -71,7 +71,9 @@ $select-background-color: var(--of-select-background-color, $color-white);
     display: flex;
     align-items: center;
     flex-wrap: wrap; // Allow flex to wrap.
-    max-inline-size: calc(100% - 44px); // leave 44px space for the "Clear" button and the expanded icon
+    max-inline-size: calc(
+      100% - 44px
+    ); // leave 44px space for the "Clear" button and the expanded icon
   }
 
   // Selected choices.
