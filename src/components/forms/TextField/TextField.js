@@ -12,6 +12,7 @@ export const TextField = ({
   description = '',
   id = '',
   disabled = false,
+  alwaysShowErrors = false,
   ...inputProps
 }) => {
   const {getFieldMeta} = useFormikContext();
@@ -37,7 +38,7 @@ export const TextField = ({
         />
       </Paragraph>
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {(alwaysShowErrors || touched) && <ValidationErrors error={error} />}
     </UtrechtFormField>
   );
 };

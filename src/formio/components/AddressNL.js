@@ -155,6 +155,7 @@ export default class AddressNL extends Field {
           value={{
             baseUrl: this.options.baseUrl,
             requiredFieldsWithAsterisk: this.options.evalContext.requiredFieldsWithAsterisk,
+            component: this.component,
           }}
         >
           <AddressNLForm
@@ -323,8 +324,10 @@ const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormi
 };
 
 const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
+  const intl = useIntl();
   const {values, isValid, setFieldValue} = useFormikContext();
   const {baseUrl} = useContext(ConfigContext);
+  const {component} = useContext(ConfigContext);
   const useColumns = layout === 'doubleColumn';
 
   useEffect(() => {
@@ -336,6 +339,18 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
     //   to missed backend-validation-plugin calls otherwise
     setFormioValues(values, isValid);
   });
+
+  const validateCity = data => {
+    const cityPattern = new RegExp(component.ofComponents?.city?.validate?.pattern);
+
+    if (!cityPattern || !data) return;
+
+    let error;
+    if (!cityPattern.test(data)) {
+      error = component.ofComponents.city.translatedErrors[intl.locale].pattern;
+    }
+    return error;
+  };
 
   const autofillAddress = async () => {
     if (!deriveAddress) return;
@@ -401,6 +416,8 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
                 defaultMessage="City"
               />
             }
+            validate={validateCity}
+            alwaysShowErrors={true}
             disabled
           />
         </>
@@ -410,9 +427,12 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
 };
 
 const PostCodeField = ({required, autoFillAddress}) => {
+  const intl = useIntl();
   const {values, setFieldValue, getFieldProps} = useFormikContext();
   const {onBlur: onBlurFormik} = getFieldProps('postcode');
   const postcode = values['postcode'];
+
+  const {component} = useContext(ConfigContext);
 
   const onBlur = event => {
     onBlurFormik(event);
@@ -426,6 +446,18 @@ const PostCodeField = ({required, autoFillAddress}) => {
     autoFillAddress();
   };
 
+  const validate = data => {
+    const postcodePattern = new RegExp(component.ofComponents?.postcode?.validate?.pattern);
+
+    if (!postcodePattern) return;
+
+    let error;
+    if (!postcodePattern.test(data)) {
+      error = component.ofComponents.postcode.translatedErrors[intl.locale].pattern;
+    }
+    return error;
+  };
+
   return (
     <TextField
       name="postcode"
@@ -433,6 +465,7 @@ const PostCodeField = ({required, autoFillAddress}) => {
       placeholder="1234 AB"
       isRequired={required}
       onBlur={onBlur}
+      validate={validate}
     />
   );
 };
