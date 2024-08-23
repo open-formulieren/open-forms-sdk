@@ -32,3 +32,30 @@ export const Email = {
     label: 'E-mailadres',
   },
 };
+
+export const EmailWithVerification = {
+  render: SingleFormioComponent,
+  args: {
+    key: 'email',
+    label: 'Email address requiring verification',
+    extraComponentProperties: {
+      openForms: {
+        requireVerification: true,
+      },
+    },
+  },
+};
+
+export const MultipleEmailWithVerification = {
+  render: SingleFormioComponent,
+  args: {
+    key: 'email',
+    label: 'Email address requiring verification',
+    extraComponentProperties: {
+      multiple: true,
+      openForms: {
+        requireVerification: true,
+      },
+    },
+  },
+};

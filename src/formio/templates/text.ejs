@@ -38,3 +38,9 @@
 {% if (ctx.prefix || ctx.suffix) { %}
 </div>
 {% } %}
+
+{% if (ctx.component?.openForms?.requireVerification) { %}
+<button ref="verify-button" class="utrecht-button utrecht-button--primary-action">
+  {{ctx.t('Verify')}}
+</button>
+{% } %}
