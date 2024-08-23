@@ -571,6 +571,12 @@
       "value": "Huisnummertoevoeging moet bestaan uit maximaal vier letters en cijfers."
     }
   ],
+  "EZ7myd": [
+    {
+      "type": 0,
+      "value": "Email address verification"
+    }
+  ],
   "GbPef0": [
     {
       "type": 0,

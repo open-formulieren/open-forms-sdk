@@ -304,6 +304,11 @@
     "description": "ZOD error message when AddressNL house number addition does not match the house number addition regular expression",
     "originalDefault": "House number addition must be up to four letters and digits."
   },
+  "EZ7myd": {
+    "defaultMessage": "Email address verification",
+    "description": "Email verification modal title",
+    "originalDefault": "Email address verification"
+  },
   "GbPef0": {
     "defaultMessage": "You must provide a house number.",
     "description": "ZOD error message when AddressNL postcode is provided but not houseNumber",

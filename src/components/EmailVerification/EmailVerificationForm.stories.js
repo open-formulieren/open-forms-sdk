@@ -3,7 +3,7 @@ import {expect, userEvent, within} from '@storybook/test';
 import {BASE_URL} from 'api-mocks';
 import {ConfigDecorator} from 'story-utils/decorators';
 
-import EmailVerificationForm from './EmailVerificationForm';
+import {EmailVerificationForm} from '.';
 import {mockEmailVerificationPost} from './mocks';
 
 export default {

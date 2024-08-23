@@ -571,6 +571,12 @@
       "value": "House number addition must be up to four letters and digits."
     }
   ],
+  "EZ7myd": [
+    {
+      "type": 0,
+      "value": "Email address verification"
+    }
+  ],
   "GbPef0": [
     {
       "type": 0,
