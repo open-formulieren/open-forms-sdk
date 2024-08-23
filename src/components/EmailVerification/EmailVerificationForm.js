@@ -78,6 +78,11 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress}) => {
                 <SendCodeButton
                   isSending={codeSending}
                   onSendCode={async () => {
+                    if (!emailAddress) {
+                      // TODO: proper handling
+                      alert('no email set');
+                      return;
+                    }
                     setCodeSending(true);
                     try {
                       await createVerification(baseUrl, {

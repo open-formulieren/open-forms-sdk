@@ -37,6 +37,7 @@ import {ConfigContext, FormioTranslations} from 'Context';
 import {get, post, put} from 'api';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
+import {EmailVerificationModal} from 'components/EmailVerification';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
@@ -184,6 +185,11 @@ const initialState = {
   isFormSaveModalOpen: false,
   isNavigating: false,
   error: null,
+  emailVerificationModal: {
+    isOpen: false,
+    componentKey: '',
+    emailAddress: '',
+  },
 };
 
 /**
@@ -274,6 +280,19 @@ const reducer = (draft, action) => {
       break;
     }
 
+    case 'VERIFY_EMAIL': {
+      const {componentKey, emailAddress} = action.payload;
+      draft.emailVerificationModal.isOpen = true;
+      draft.emailVerificationModal.componentKey = componentKey;
+      draft.emailVerificationModal.emailAddress = emailAddress;
+      break;
+    }
+
+    case 'CLOSE_EMAIL_VERIFICATION_MODAL': {
+      draft.emailVerificationModal = initialState.emailVerificationModal;
+      break;
+    }
+
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -307,6 +326,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
       isFormSaveModalOpen,
       isNavigating,
       error,
+      emailVerificationModal,
     },
     dispatch,
   ] = useImmerReducer(reducer, initialState);
@@ -854,6 +874,11 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
                     saveStepData: async () =>
                       await submitStepData(submissionStep.url, {...getCurrentFormData()}),
                     displayComponents: config.displayComponents,
+                    verifyEmailCallback: ({key, email}) =>
+                      dispatch({
+                        type: 'VERIFY_EMAIL',
+                        payload: {componentKey: key, emailAddress: email},
+                      }),
                   },
                 }}
               />
@@ -884,6 +909,13 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
         suspendFormUrl={`${submission.url}/_suspend`}
         suspendFormUrlLifetime={form.resumeLinkLifetime}
         submissionId={submission.id}
+      />
+      <EmailVerificationModal
+        isOpen={emailVerificationModal.isOpen}
+        closeModal={() => dispatch({type: 'CLOSE_EMAIL_VERIFICATION_MODAL'})}
+        submissionUrl={submission.url}
+        componentKey={emailVerificationModal.componentKey}
+        emailAddress={emailVerificationModal.emailAddress}
       />
     </>
   );
