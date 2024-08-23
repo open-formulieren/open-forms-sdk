@@ -37,6 +37,27 @@ class Email extends Formio.Components.components.email {
     // ... and we finally restore the type to email.
     input.setAttribute('type', 'email');
   }
+
+  attach(element) {
+    this.loadRefs(element, {
+      verifyButton: 'multiple',
+    });
+    return super.attach(element);
+  }
+
+  attachElement(element, index) {
+    const promise = super.attachElement(element, index);
+
+    const verifyButton = this.refs.verifyButton[index];
+    this.addEventListener(verifyButton, 'click', () => {
+      const key = this.component.key;
+      const email = this.getValueAt(index) || '';
+      const callback = this.options.ofContext?.verifyEmailCallback;
+      callback && callback({key, email});
+    });
+
+    return promise;
+  }
 }
 
 export default Email;

@@ -1,3 +1,5 @@
+import {fn} from '@storybook/test';
+
 import {withUtrechtDocument} from 'story-utils/decorators';
 
 import {SingleFormioComponent} from './story-util';
@@ -43,6 +45,9 @@ export const EmailWithVerification = {
         requireVerification: true,
       },
     },
+    ofContext: {
+      verifyEmailCallback: fn(),
+    },
   },
 };
 
@@ -56,6 +61,9 @@ export const MultipleEmailWithVerification = {
       openForms: {
         requireVerification: true,
       },
+    },
+    ofContext: {
+      verifyEmailCallback: fn(),
     },
   },
 };
