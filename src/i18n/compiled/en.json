@@ -55,6 +55,26 @@
       "value": "Log out"
     }
   ],
+  "1+Q55M": [
+    {
+      "type": 0,
+      "value": "You are verifying the email address "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "emailAddress"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": ". First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it."
+    }
+  ],
   "1hdvgS": [
     {
       "type": 0,
@@ -107,6 +127,12 @@
     {
       "type": 0,
       "value": "Bad"
+    }
+  ],
+  "4tPKAs": [
+    {
+      "type": 0,
+      "value": "Verify"
     }
   ],
   "5uh2hS": [
@@ -981,6 +1007,12 @@
       "value": "Extend"
     }
   ],
+  "R7k4JC": [
+    {
+      "type": 0,
+      "value": "Enter the six-character code"
+    }
+  ],
   "RJ+0F/": [
     {
       "type": 0,
@@ -1451,6 +1483,12 @@
       "value": "The email address where you will receive the resume link."
     }
   ],
+  "ixMIBJ": [
+    {
+      "type": 0,
+      "value": "What would you like to do?"
+    }
+  ],
   "jAZped": [
     {
       "type": 0,
@@ -1609,6 +1647,12 @@
       "value": "You must provide a postcode."
     }
   ],
+  "lQY+Zm": [
+    {
+      "type": 0,
+      "value": "Enter the verification code"
+    }
+  ],
   "lVNV/d": [
     {
       "type": 0,
@@ -1619,6 +1663,12 @@
     {
       "type": 0,
       "value": "Product"
+    }
+  ],
+  "lmWBQT": [
+    {
+      "type": 0,
+      "value": "The code is exactly six characters long and consists of only uppercase letters and numbers."
     }
   ],
   "lq29t6": [
@@ -1865,6 +1915,12 @@
       "value": "Log in to co-sign the form"
     }
   ],
+  "qyWfE+": [
+    {
+      "type": 0,
+      "value": "Receive a verification code"
+    }
+  ],
   "r1L6Zj": [
     {
       "type": 0,
@@ -1875,6 +1931,12 @@
     {
       "type": 0,
       "value": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
+    }
+  ],
+  "riuSfc": [
+    {
+      "type": 0,
+      "value": "Send code"
     }
   ],
   "sSmY1N": [

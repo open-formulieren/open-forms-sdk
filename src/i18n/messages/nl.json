@@ -19,6 +19,11 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
+  "1+Q55M": {
+    "defaultMessage": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it.",
+    "description": "Email verification modal body text",
+    "originalDefault": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it."
+  },
   "1hdvgS": {
     "defaultMessage": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
     "description": "Co-sign auth option not available on form",
@@ -63,6 +68,11 @@
     "defaultMessage": "Slecht",
     "description": "GovMetric rating text",
     "originalDefault": "Bad"
+  },
+  "4tPKAs": {
+    "defaultMessage": "Verify",
+    "description": "Email verification: verify code button text",
+    "originalDefault": "Verify"
   },
   "5uh2hS": {
     "defaultMessage": "Afspraak annuleren mislukt",
@@ -486,6 +496,11 @@
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
   },
+  "R7k4JC": {
+    "defaultMessage": "Enter the six-character code",
+    "description": "Email verification: code input field label",
+    "originalDefault": "Enter the six-character code"
+  },
   "RJ+0F/": {
     "defaultMessage": "Ja",
     "description": "'True' display",
@@ -728,6 +743,11 @@
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
+  "ixMIBJ": {
+    "defaultMessage": "What would you like to do?",
+    "description": "Email verification mode selection label",
+    "originalDefault": "What would you like to do?"
+  },
   "jAZped": {
     "defaultMessage": "Onze excuses - dit formulier is niet langer beschikbaar",
     "description": "'Deactivated form' error title",
@@ -795,6 +815,11 @@
     "description": "ZOD error message when AddressNL houseNumber is provided but not postcode",
     "originalDefault": "You must provide a postcode."
   },
+  "lQY+Zm": {
+    "defaultMessage": "Enter the verification code",
+    "description": "Email verification mode selection: enter code label",
+    "originalDefault": "Enter the verification code"
+  },
   "lVNV/d": {
     "defaultMessage": "Huisnummertoevoeging",
     "description": "Label for addressNL houseNumberAddition input",
@@ -805,6 +830,11 @@
     "description": "Appointments products step page title",
     "isTranslated": true,
     "originalDefault": "Product"
+  },
+  "lmWBQT": {
+    "defaultMessage": "The code is exactly six characters long and consists of only uppercase letters and numbers.",
+    "description": "Email verification: code input field description",
+    "originalDefault": "The code is exactly six characters long and consists of only uppercase letters and numbers."
   },
   "lq29t6": {
     "defaultMessage": "Ben je zeker dat je deze formulierinzending wilt afbreken? Je verliest alle voortgang als je bevestigt.",
@@ -886,6 +916,11 @@
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
   },
+  "qyWfE+": {
+    "defaultMessage": "Receive a verification code",
+    "description": "Email verification mode selection: send code label",
+    "originalDefault": "Receive a verification code"
+  },
   "r1L6Zj": {
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
@@ -895,6 +930,11 @@
     "defaultMessage": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB).",
     "description": "ZOD error message when AddressNL postcode does not match the postcode regular expression",
     "originalDefault": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
+  },
+  "riuSfc": {
+    "defaultMessage": "Send code",
+    "description": "Email verification: send code button text",
+    "originalDefault": "Send code"
   },
   "sSmY1N": {
     "defaultMessage": "Zoek adres",
