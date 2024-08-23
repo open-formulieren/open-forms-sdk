@@ -18,6 +18,7 @@ import 'styles.scss';
 // ensure NL locale is included
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
+import {withModalDecorator} from 'story-utils/decorators';
 
 import {
   utrechtDocumentDecorator,
@@ -51,6 +52,7 @@ export default {
     mswDecorator,
     withClearSessionStorage,
     withClearSubmissionLocalStorage,
+    withModalDecorator,
     utrechtDocumentDecorator,
   ],
   globals: {
