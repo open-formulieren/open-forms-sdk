@@ -1,11 +1,14 @@
-import {expect, fn, userEvent, within} from '@storybook/test';
+import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import produce from 'immer';
 import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';
 
 import {buildForm, buildSubmission} from 'api-mocks';
-import {mockEmailVerificationPost} from 'components/EmailVerification/mocks';
+import {
+  mockEmailVerificationPost,
+  mockEmailVerificationVerifyCodePost,
+} from 'components/EmailVerification/mocks';
 import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
@@ -68,7 +71,8 @@ const render = ({
   worker.use(
     mockSubmissionStepGet(submissionStepDetailBody),
     mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
-    mockEmailVerificationPost
+    mockEmailVerificationPost,
+    mockEmailVerificationVerifyCodePost
   );
   return (
     <FormStep
@@ -253,6 +257,12 @@ export const EmailVerification = {
     const modal = await canvas.findByRole('dialog');
     expect(modal).toBeVisible();
     await userEvent.click(within(modal).getByRole('button', {name: 'Send code'}));
-    expect(await within(modal).findByLabelText('Enter the six-character code')).toBeVisible();
+    const codeInput = await within(modal).findByLabelText('Enter the six-character code');
+    expect(codeInput).toBeVisible();
+
+    await userEvent.type(codeInput, 'ABCD12');
+    const submitButton = within(modal).getByRole('button', {name: 'Verify'});
+    await userEvent.click(submitButton);
+    expect(await within(modal).findByText(/The email address has now been verified/)).toBeVisible();
   },
 };

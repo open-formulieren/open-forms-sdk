@@ -4,7 +4,7 @@ import {BASE_URL} from 'api-mocks';
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import {EmailVerificationForm} from '.';
-import {mockEmailVerificationPost} from './mocks';
+import {mockEmailVerificationPost, mockEmailVerificationVerifyCodePost} from './mocks';
 
 export default {
   title: 'Private API / Email verification / Modal content',
@@ -17,7 +17,7 @@ export default {
   },
   parameters: {
     msw: {
-      handlers: [mockEmailVerificationPost],
+      handlers: [mockEmailVerificationPost, mockEmailVerificationVerifyCodePost],
     },
   },
 };
