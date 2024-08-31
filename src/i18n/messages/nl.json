@@ -267,6 +267,11 @@
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
   },
+  "Dvt0Fv": {
+    "defaultMessage": "The email address has now been verified. You can close this window and continue with the rest of the form.",
+    "description": "Text displayed after successful email verification",
+    "originalDefault": "The email address has now been verified. You can close this window and continue with the rest of the form."
+  },
   "DxbUkA": {
     "defaultMessage": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
     "description": "Auth error message",
