@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
+import Body from 'components/Body';
 import Modal from 'components/modals/Modal';
 
 import EmailVerificationForm from './EmailVerificationForm';
@@ -12,24 +13,31 @@ const EmailVerificationModal = ({
   submissionUrl,
   componentKey,
   emailAddress,
-}) => (
-  <Modal
-    title={
-      <FormattedMessage
-        description="Email verification modal title"
-        defaultMessage="Email address verification"
-      />
-    }
-    isOpen={isOpen}
-    closeModal={closeModal}
-  >
-    <EmailVerificationForm
-      submissionUrl={submissionUrl}
-      componentKey={componentKey}
-      emailAddress={emailAddress}
-    />
-  </Modal>
-);
+}) => {
+  const [isVerified, setIsVerified] = useState(false);
+  return (
+    <Modal
+      title={
+        <FormattedMessage
+          description="Email verification modal title"
+          defaultMessage="Email address verification"
+        />
+      }
+      isOpen={isOpen}
+      closeModal={closeModal}
+    >
+      {!isVerified && (
+        <EmailVerificationForm
+          submissionUrl={submissionUrl}
+          componentKey={componentKey}
+          emailAddress={emailAddress}
+          onVerified={() => setIsVerified(true)}
+        />
+      )}
+      <div aria-live="polite">{isVerified && <VerificationSuccess />}</div>
+    </Modal>
+  );
+};
 
 EmailVerificationModal.propTypes = {
   /**
@@ -46,5 +54,15 @@ EmailVerificationModal.propTypes = {
   componentKey: PropTypes.string.isRequired,
   emailAddress: PropTypes.string.isRequired,
 };
+
+const VerificationSuccess = () => (
+  <Body modifiers={['big']}>
+    <FormattedMessage
+      description="Text displayed after successful email verification"
+      defaultMessage={`The email address has now been verified. You can close this
+      window and continue with the rest of the form.`}
+    />
+  </Body>
+);
 
 export default EmailVerificationModal;
