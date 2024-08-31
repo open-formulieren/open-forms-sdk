@@ -46,8 +46,14 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
       onVerified();
     } catch (e) {
       if (e instanceof ValidationError) {
-        // TODO: set in formik state
-        console.error(e.invalidParams);
+        const errors = {};
+        e.invalidParams.forEach(({name, reason}) => {
+          // TODO: replace newlines with proper solution...
+          const hasErrorAlready = !!errors[name];
+          if (!hasErrorAlready) errors[name] = '';
+          errors[name] += `${hasErrorAlready ? '\n' : ''}${reason}`;
+        });
+        helpers.setErrors(errors);
       } else {
         throw e;
       }

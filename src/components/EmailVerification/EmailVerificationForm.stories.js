@@ -35,3 +35,17 @@ export const Flow = {
     await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
   },
 };
+
+export const InvalidCodeFlow = {
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByRole('button', {name: 'Send code'}));
+    const codeInput = await canvas.findByLabelText('Enter the six-character code');
+    expect(codeInput).toBeVisible();
+    await userEvent.type(codeInput, 'FAILME'); // mock returns validation error
+    await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
+
+    expect(await canvas.findByText('Not a valid verification code')).toBeVisible();
+  },
+};
