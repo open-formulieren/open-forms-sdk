@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import Body from 'components/Body';
@@ -15,6 +15,12 @@ const EmailVerificationModal = ({
   emailAddress,
 }) => {
   const [isVerified, setIsVerified] = useState(false);
+
+  useEffect(() => {
+    // once the modal closes, reset the internal state
+    if (!isOpen && isVerified) setIsVerified(false);
+  }, [isOpen, isVerified, setIsVerified]);
+
   return (
     <Modal
       title={

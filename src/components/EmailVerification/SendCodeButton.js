@@ -7,7 +7,6 @@ import {ConfigContext} from 'Context';
 import {post} from 'api';
 import {OFButton} from 'components/Button';
 import Loader from 'components/Loader';
-import {ValidationError} from 'errors';
 
 const createVerification = async (baseUrl, {submissionUrl, componentKey, emailAddress}) => {
   await post(`${baseUrl}submissions/email-verifications`, {
@@ -17,7 +16,7 @@ const createVerification = async (baseUrl, {submissionUrl, componentKey, emailAd
   });
 };
 
-const SendCodeButton = ({submissionUrl, componentKey, emailAddress}) => {
+const SendCodeButton = ({submissionUrl, componentKey, emailAddress, onError}) => {
   const {baseUrl} = useContext(ConfigContext);
   const [isSending, setIsSending] = useState(false);
   const {setFieldValue} = useFormikContext();
@@ -34,13 +33,7 @@ const SendCodeButton = ({submissionUrl, componentKey, emailAddress}) => {
             emailAddress,
           });
         } catch (e) {
-          if (e instanceof ValidationError) {
-            // TODO: set in formik state
-            console.error(e.invalidParams);
-          } else {
-            // TODO: catch and display error instead, now it's (silently) suppressed
-            throw e;
-          }
+          onError(e);
         } finally {
           setIsSending(false);
         }
@@ -65,6 +58,7 @@ SendCodeButton.propTypes = {
   submissionUrl: PropTypes.string.isRequired,
   componentKey: PropTypes.string.isRequired,
   emailAddress: PropTypes.string.isRequired,
+  onError: PropTypes.func.isRequired,
 };
 
 export default SendCodeButton;
