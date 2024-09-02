@@ -6,8 +6,8 @@
     div[ref='element'],
     .openforms-multi-value-row__input {
       display: flex;
-      flex-direction: row;
-      gap: var(--of-utrecht-form-field-with-button-gap, 20px);
+      flex-direction: column;
+      gap: var(--of-utrecht-form-field-with-button-gap, 10px);
     }
   }
 }
