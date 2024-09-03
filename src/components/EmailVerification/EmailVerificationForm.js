@@ -67,7 +67,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
 
   return (
     <Formik initialValues={{mode: 'sendCode', code: ''}} onSubmit={onSubmit}>
-      {({handleSubmit, values: {mode}}) =>
+      {({handleSubmit, values: {mode}, setFieldValue}) =>
         error ? (
           <Body component="div">
             <DisplayError error={error} />
@@ -107,6 +107,9 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
                       defaultMessage="The code is exactly six characters long and consists of only uppercase letters and numbers."
                     />
                   }
+                  onChange={event => {
+                    setFieldValue('code', event.target.value.toUpperCase());
+                  }}
                 />
               )}
             </div>

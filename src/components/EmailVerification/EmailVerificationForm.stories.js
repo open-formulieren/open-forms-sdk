@@ -37,7 +37,8 @@ export const HappyFlow = {
     await userEvent.click(await canvas.findByRole('button', {name: 'Send code'}));
     const codeInput = await canvas.findByLabelText('Enter the six-character code');
     expect(codeInput).toBeVisible();
-    await userEvent.type(codeInput, 'ABCD12');
+    await userEvent.type(codeInput, 'abcd12');
+    expect(codeInput).toHaveValue('ABCD12'); // automatically convert to uppercase
     await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
   },
 };
