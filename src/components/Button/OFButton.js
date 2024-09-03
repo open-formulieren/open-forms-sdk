@@ -9,7 +9,10 @@ const OFButton = ({disabled, children, ...extraProps}) => {
   if (disabled) otherProps.className = 'utrecht-button--disabled';
 
   const onClick = event => {
-    if (disabled) event.preventDefault();
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
 
     if (onClickHandler) onClickHandler(event);
   };
