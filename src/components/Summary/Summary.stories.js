@@ -332,11 +332,11 @@ export const MultipleRequiredStatements = {
         // displayed
         await userEvent.click(submitButton);
         expect(
-          await canvas.findByText('U moet akkoord gaan met het privacybeleid om door te gaan')
+          await canvas.findByText('Je moet akkoord gaan met het privacybeleid om door te gaan')
         ).toBeVisible();
         expect(
           await canvas.findByText(
-            'U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan'
+            'Je moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan'
           )
         ).toBeVisible();
 
@@ -346,10 +346,10 @@ export const MultipleRequiredStatements = {
         );
         await userEvent.click(checkboxPrivacy);
         await canvas.findByText(
-          'U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan'
+          'Je moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan'
         );
         expect(
-          canvas.queryByText('U moet akkoord gaan met het privacybeleid om door te gaan')
+          canvas.queryByText('Je moet akkoord gaan met het privacybeleid om door te gaan')
         ).toBeNull();
 
         // Accepting the truth declaration makes the second warning disappear and the 'submit'
@@ -357,10 +357,10 @@ export const MultipleRequiredStatements = {
         const checkboxTruth = canvas.getByLabelText('I responded very honestly.');
         await userEvent.click(checkboxTruth);
         expect(
-          canvas.queryByText('U moet akkoord gaan met het privacybeleid om door te gaan')
+          canvas.queryByText('Je moet akkoord gaan met het privacybeleid om door te gaan')
         ).toBeNull();
         expect(
-          canvas.queryByText('U moet akkoord gaan met het privacybeleid om door te gaan')
+          canvas.queryByText('Je moet akkoord gaan met het privacybeleid om door te gaan')
         ).toBeNull();
 
         expect(submitButton).toHaveAttribute('aria-disabled', 'false');

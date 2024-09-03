@@ -8,7 +8,7 @@
   "+DxzBU": [
     {
       "type": 0,
-      "value": "Vul hieronder uw e-mailadres in. U krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar u de link opent. De link blijft maximaal "
+      "value": "Vul hieronder je e-mailadres in. Je krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar je de link opent. De link blijft maximaal "
     },
     {
       "offset": 0,
@@ -138,7 +138,7 @@
   "6GNK65": [
     {
       "type": 0,
-      "value": "U moet ingelogd zijn voor deze actie."
+      "value": "Je moet ingelogd zijn voor deze actie."
     }
   ],
   "6sTcEM": [
@@ -150,7 +150,7 @@
   "6ysm6G": [
     {
       "type": 0,
-      "value": "U moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan"
+      "value": "Je moet verklaren dat het formulier naar waarheid ingevuld is om door te gaan"
     }
   ],
   "7+0/Hz": [
@@ -180,7 +180,7 @@
   "7kd6yw": [
     {
       "type": 0,
-      "value": "Dit formulier is momenteel in onderhoud. Als medewerker kunt u dit formulier wel invullen."
+      "value": "Dit formulier is momenteel in onderhoud. Als medewerker kun je dit formulier wel invullen."
     }
   ],
   "7m53vF": [
@@ -300,7 +300,7 @@
   "8MZ9TV": [
     {
       "type": 0,
-      "value": "U moet akkoord gaan met het privacybeleid om door te gaan"
+      "value": "Je moet akkoord gaan met het privacybeleid om door te gaan"
     }
   ],
   "8cxbC6": [
@@ -336,7 +336,7 @@
   "94yVWJ": [
     {
       "type": 0,
-      "value": "Indien u de taal verandert, dan moet u opnieuw beginnen met het formulier in te vullen. Bent u zeker dat u wilt doorgaan?"
+      "value": "Indien je de taal verandert, dan moet je opnieuw beginnen met het formulier in te vullen. Ben je zeker dat je wilt doorgaan?"
     }
   ],
   "9AU8U0": [
@@ -372,7 +372,7 @@
   "Aaq2GF": [
     {
       "type": 0,
-      "value": "Sorry, er zijn geen datums beschikbaar voor uw afspraak. Probeer het later opnieuw."
+      "value": "Sorry, er zijn geen datums beschikbaar voor je afspraak. Probeer het later opnieuw."
     }
   ],
   "AlDZqS": [
@@ -466,7 +466,7 @@
   "DvlDIB": [
     {
       "type": 0,
-      "value": "Bent u zeker dat uw wilt uitloggen?"
+      "value": "Ben je zeker dat je wil uitloggen?"
     }
   ],
   "DxbUkA": [
@@ -524,7 +524,7 @@
   "E4h5vK": [
     {
       "type": 0,
-      "value": "Download uw inzending als PDF document"
+      "value": "Download je inzending als PDF document"
     }
   ],
   "EBUHP+": [
@@ -770,13 +770,13 @@
   "JB/IBw": [
     {
       "type": 0,
-      "value": "De betaling is mislukt. Indien u de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien."
+      "value": "De betaling is mislukt. Indien je de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien."
     }
   ],
   "Jrb2Iv": [
     {
       "type": 0,
-      "value": "Uw e-mailadres"
+      "value": "Je e-mailadres"
     }
   ],
   "KMs17v": [
@@ -1162,7 +1162,7 @@
   "VrbdRk": [
     {
       "type": 0,
-      "value": "Uw betaling is ontvangen."
+      "value": "De betaling is ontvangen."
     }
   ],
   "WKH4HC": [
@@ -1260,7 +1260,7 @@
   "a8QRYP": [
     {
       "type": 0,
-      "value": "Uw e-mailadres"
+      "value": "Je e-mailadres"
     }
   ],
   "aUpjaY": [
@@ -1278,7 +1278,7 @@
   "abtbgK": [
     {
       "type": 0,
-      "value": "Uw sessie is verlopen. Klik "
+      "value": "Je sessie is verlopen. Klik "
     },
     {
       "children": [
@@ -1298,19 +1298,19 @@
   "ay8sO5": [
     {
       "type": 0,
-      "value": "Uw gegevens"
+      "value": "Je gegevens"
     }
   ],
   "bgfiRG": [
     {
       "type": 0,
-      "value": "U hebt de betaling gestart."
+      "value": "Je hebt de betaling gestart."
     }
   ],
   "bu0CcW": [
     {
       "type": 0,
-      "value": "Uw betaling is ontvangen en verwerkt."
+      "value": "De betaling is ontvangen en verwerkt."
     }
   ],
   "cBsrax": [
@@ -1340,7 +1340,7 @@
   "eO6Ysb": [
     {
       "type": 0,
-      "value": "Uw betaling wordt momenteel verwerkt."
+      "value": "De betaling wordt momenteel verwerkt."
     }
   ],
   "ertoXR": [
@@ -1352,7 +1352,7 @@
   "fWjfVm": [
     {
       "type": 0,
-      "value": "Een moment geduld alstublieft. Uw inzending wordt verwerkt."
+      "value": "Een moment geduld alstublieft. De inzending wordt verwerkt."
     }
   ],
   "fgRQ+z": [
@@ -1376,7 +1376,7 @@
   "gUyAAs": [
     {
       "type": 0,
-      "value": "U wordt op dit tijdstip op de afspraak verwacht"
+      "value": "Je wordt op dit tijdstip op de afspraak verwacht"
     }
   ],
   "hFqzG6": [
@@ -1452,7 +1452,7 @@
   "iubnaw": [
     {
       "type": 0,
-      "value": "Het e-mailadres waarop u de link ontvangt om het formulier te hervatten."
+      "value": "Het e-mailadres waarop je de link ontvangt om het formulier te hervatten."
     }
   ],
   "jAZped": [
@@ -1464,13 +1464,13 @@
   "jGbpQq": [
     {
       "type": 0,
-      "value": "Download uw inzending als PDF document"
+      "value": "Download je inzending als PDF document"
     }
   ],
   "jYh8Nr": [
     {
       "type": 0,
-      "value": "Uw afspraak is geannuleerd"
+      "value": "Je afspraak is geannuleerd"
     }
   ],
   "jbeaEq": [
@@ -1482,7 +1482,7 @@
   "jbireK": [
     {
       "type": 0,
-      "value": "Uw producten"
+      "value": "Jouw producten"
     }
   ],
   "jdzNwf": [
@@ -1628,7 +1628,7 @@
   "lq29t6": [
     {
       "type": 0,
-      "value": "Bent u zeker dat u deze formulierinzending wilt afbreken? U verliest alle voortgang als u bevestigt."
+      "value": "Ben je zeker dat je deze formulierinzending wilt afbreken? Je verliest alle voortgang als je bevestigt."
     }
   ],
   "lxjglE": [
@@ -1640,7 +1640,7 @@
   "m1nQlh": [
     {
       "type": 0,
-      "value": "Uw referentie nummer is: "
+      "value": "Je referentie nummer is: "
     },
     {
       "type": 1,
@@ -1650,7 +1650,7 @@
   "mMYAWl": [
     {
       "type": 0,
-      "value": "Uw sessie staat op het punt om te vervallen "
+      "value": "Je sessie staat op het punt om te vervallen "
     },
     {
       "type": 1,
@@ -1658,7 +1658,7 @@
     },
     {
       "type": 0,
-      "value": ". Verleng uw sessie indien u door wenst te gaan."
+      "value": ". Verleng de sessie indien je door wenst te gaan."
     }
   ],
   "nLymjB": [
@@ -1676,7 +1676,7 @@
   "nwQjsz": [
     {
       "type": 0,
-      "value": "Uw sessie vervalt binnenkort."
+      "value": "Je sessie vervalt binnenkort."
     }
   ],
   "oMvPQU": [
@@ -1890,7 +1890,7 @@
   "senRv3": [
     {
       "type": 0,
-      "value": "U staat op het punt uw afspraak op "
+      "value": "Je staat op het punt je afspraak op "
     },
     {
       "children": [
@@ -1918,7 +1918,7 @@
     },
     {
       "type": 0,
-      "value": " te annuleren. Vul uw e-mailadres in voor verificatiedoeleinden."
+      "value": " te annuleren. Vul je e-mailadres in ter controle."
     }
   ],
   "svhHKB": [
@@ -1936,7 +1936,7 @@
   "tohkCS": [
     {
       "type": 0,
-      "value": "Het e-mailadres waarop u de bevestigingsmail van de afspraak heeft ontvangen."
+      "value": "Het e-mailadres waarop je de bevestigingsmail van de afspraak heeft ontvangen."
     }
   ],
   "uDjl8X": [
@@ -2030,7 +2030,7 @@
   "wwsWUp": [
     {
       "type": 0,
-      "value": "Wat vindt u van dit formulier?"
+      "value": "Wat vind je van dit formulier?"
     }
   ],
   "y31iyC": [

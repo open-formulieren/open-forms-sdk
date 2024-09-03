@@ -106,13 +106,13 @@ export const FormStepSaveModalWithErrors = {
     await userEvent.click(openModalButton);
 
     const modal = await canvas.findByRole('dialog');
-    const emailInput = within(modal).getByLabelText('Uw e-mailadres');
+    const emailInput = within(modal).getByLabelText('Je e-mailadres');
 
     const submitButton = canvas.getByRole('button', {name: 'Later verdergaan'});
 
     await step('Test empty value', async () => {
       await userEvent.click(submitButton);
-      const emptyErrorMessage = await within(modal).findByText('Uw e-mailadres is verplicht.');
+      const emptyErrorMessage = await within(modal).findByText('Je e-mailadres is verplicht.');
       expect(emptyErrorMessage).toBeVisible();
     });
 
@@ -120,7 +120,7 @@ export const FormStepSaveModalWithErrors = {
       await userEvent.type(emailInput, 'invalid');
       await userEvent.click(submitButton);
       const invalidErrorMessage = await within(modal).findByText(
-        "Uw e-mailadres moet een geldig e-mailadres zijn, zoals 'willem@example.com' bijvoorbeeld."
+        "Je e-mailadres moet een geldig e-mailadres zijn, zoals 'willem@example.com' bijvoorbeeld."
       );
       expect(invalidErrorMessage).toBeVisible();
     });
@@ -151,7 +151,7 @@ export const FormStepSaveModalMultipleSubmits = {
     await userEvent.click(openModalButton);
 
     const modal = await canvas.findByRole('dialog');
-    const emailInput = within(modal).getByLabelText('Uw e-mailadres');
+    const emailInput = within(modal).getByLabelText('Je e-mailadres');
 
     const backendErrorMsg = 'Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.';
 
@@ -172,7 +172,7 @@ export const FormStepSaveModalMultipleSubmits = {
     await userEvent.click(openModalButton);
 
     const modal2 = await canvas.findByRole('dialog');
-    const emailInput2 = within(modal2).getByLabelText('Uw e-mailadres');
+    const emailInput2 = within(modal2).getByLabelText('Je e-mailadres');
 
     // make sure the previous backend error is not shown any more
     expect(within(modal2).queryByText(backendErrorMsg)).not.toBeInTheDocument();
@@ -181,7 +181,7 @@ export const FormStepSaveModalMultipleSubmits = {
       expect(emailInput2).toHaveDisplayValue('');
       const submitButton2 = canvas.getByRole('button', {name: 'Later verdergaan', type: 'submit'});
       await userEvent.click(submitButton2);
-      const invalidErrorMessage = await within(modal2).findByText('Uw e-mailadres is verplicht.');
+      const invalidErrorMessage = await within(modal2).findByText('Je e-mailadres is verplicht.');
       expect(invalidErrorMessage).toBeVisible();
     });
   },

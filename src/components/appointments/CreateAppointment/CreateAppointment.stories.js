@@ -171,7 +171,7 @@ export const HappyFlow = {
     });
 
     await step('Fill out the contact details', async () => {
-      expect(await canvas.findByText('Uw gegevens')).toBeVisible();
+      expect(await canvas.findByText('Je gegevens')).toBeVisible();
       await waitFor(async () => {
         await expect(
           canvas.getByRole('link', {name: 'Terug naar locatie en tijdstip'})

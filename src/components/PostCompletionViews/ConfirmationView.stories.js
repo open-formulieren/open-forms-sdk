@@ -52,7 +52,7 @@ export const WithSuccessfulPayment = {
     const canvas = within(canvasElement);
 
     expect(canvas.getByText('Bevestiging: OF-1234')).toBeVisible();
-    expect(canvas.getByText('Uw betaling is ontvangen.')).toBeVisible();
+    expect(canvas.getByText('De betaling is ontvangen.')).toBeVisible();
   },
 };
 
