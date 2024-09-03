@@ -1,3 +1,5 @@
+import {fn} from '@storybook/test';
+
 import {withUtrechtDocument} from 'story-utils/decorators';
 
 import {SingleFormioComponent} from './story-util';
@@ -30,5 +32,38 @@ export const Email = {
   args: {
     key: 'email',
     label: 'E-mailadres',
+  },
+};
+
+export const EmailWithVerification = {
+  render: SingleFormioComponent,
+  args: {
+    key: 'email',
+    label: 'Email address requiring verification',
+    extraComponentProperties: {
+      openForms: {
+        requireVerification: true,
+      },
+    },
+    ofContext: {
+      verifyEmailCallback: fn(),
+    },
+  },
+};
+
+export const MultipleEmailWithVerification = {
+  render: SingleFormioComponent,
+  args: {
+    key: 'email',
+    label: 'Email address requiring verification',
+    extraComponentProperties: {
+      multiple: true,
+      openForms: {
+        requireVerification: true,
+      },
+    },
+    ofContext: {
+      verifyEmailCallback: fn(),
+    },
   },
 };

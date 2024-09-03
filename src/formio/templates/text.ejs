@@ -38,3 +38,19 @@
 {% if (ctx.prefix || ctx.suffix) { %}
 </div>
 {% } %}
+
+{% if (ctx.component?.openForms?.requireVerification) { %}
+
+<div class="utrecht-alert utrecht-alert--warning">
+  <div class="utrecht-alert__icon">
+    <i class="fa fas fa-exclamation-triangle"></i>
+  </div>
+  <div class="utrecht-alert__message">
+    {{ctx.t('You must verify this email address to continue.')}}
+  </div>
+</div>
+
+<button ref="verifyButton" class="utrecht-button utrecht-button--primary-action">
+  {{ctx.t('Verify')}}
+</button>
+{% } %}

@@ -1,11 +1,16 @@
-import {expect, fn, within} from '@storybook/test';
+import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import produce from 'immer';
 import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';
 
 import {buildForm, buildSubmission} from 'api-mocks';
+import {
+  mockEmailVerificationPost,
+  mockEmailVerificationVerifyCodePost,
+} from 'components/EmailVerification/mocks';
 import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
+import {sleep} from 'utils';
 
 import FormStep from '.';
 import {
@@ -65,7 +70,9 @@ const render = ({
   worker.resetHandlers();
   worker.use(
     mockSubmissionStepGet(submissionStepDetailBody),
-    mockSubmissionLogicCheckPost(submission, submissionStepDetailBody)
+    mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
+    mockEmailVerificationPost,
+    mockEmailVerificationVerifyCodePost
   );
   return (
     <FormStep
@@ -214,5 +221,48 @@ export const govmetricEnabled = {
 
     const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
     await expect(abortButton).toBeVisible();
+  },
+};
+
+export const EmailVerification = {
+  render,
+  args: {
+    formioConfiguration: {
+      display: 'form',
+      components: [
+        {
+          type: 'email',
+          key: 'email',
+          label: 'Email address',
+          description: 'Email component requiring verification',
+          openForms: {
+            requireVerification: true,
+          },
+        },
+      ],
+    },
+    form: buildForm(),
+    submission: buildSubmission(),
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // Formio...
+    await sleep(500);
+
+    const emailInput = await canvas.findByLabelText('Email address');
+    await userEvent.type(emailInput, 'openforms@example.com');
+    await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
+
+    const modal = await canvas.findByRole('dialog');
+    expect(modal).toBeVisible();
+    await userEvent.click(within(modal).getByRole('button', {name: 'Send code'}));
+    const codeInput = await within(modal).findByLabelText('Enter the six-character code');
+    expect(codeInput).toBeVisible();
+
+    await userEvent.type(codeInput, 'ABCD12');
+    const submitButton = within(modal).getByRole('button', {name: 'Verify'});
+    await userEvent.click(submitButton);
+    expect(await within(modal).findByText(/The email address has now been verified/)).toBeVisible();
   },
 };

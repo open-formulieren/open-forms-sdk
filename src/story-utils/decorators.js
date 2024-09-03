@@ -8,6 +8,7 @@ import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
 import {SubmissionStatusContext} from 'components/PostCompletionViews';
+import {ModalContext} from 'components/modals/Modal';
 
 export const ConfigDecorator = (Story, {parameters}) => {
   const defaults = {
@@ -165,3 +166,15 @@ export const withSubmissionPollInfo = (Story, {parameters, args}) => {
     </SubmissionStatusContext.Provider>
   );
 };
+
+export const withModalDecorator = Story => (
+  <ModalContext.Provider
+    value={{
+      // only for storybook integration, do not use this in real apps!
+      parentSelector: () => document.getElementById('storybook-root'),
+      ariaHideApp: false,
+    }}
+  >
+    <Story />
+  </ModalContext.Provider>
+);

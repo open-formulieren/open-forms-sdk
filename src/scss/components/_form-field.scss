@@ -1,5 +1,17 @@
 @use 'microscope-sass/lib/bem';
 
+// Proper alignment of verify button and email input
+.utrecht-form-field {
+  @include bem.modifier('has-button') {
+    div[ref='element'],
+    .openforms-multi-value-row__input {
+      display: flex;
+      flex-direction: column;
+      gap: var(--of-utrecht-form-field-with-button-gap, 10px);
+    }
+  }
+}
+
 // Overrides of the utrecht form field styles for our own theme
 .openforms-theme {
   .utrecht-form-field {

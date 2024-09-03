@@ -39,14 +39,18 @@ class ErrorBoundary extends React.Component {
       return children;
     }
 
-    const ErrorComponent = ERROR_TYPE_MAP[error.name] || GenericError;
-    const Wrapper = useCard ? Card : 'div';
-    return <ErrorComponent wrapper={Wrapper} error={error} />;
+    return <DisplayError useCard={useCard} error={error} />;
   }
 }
 
 ErrorBoundary.propTypes = {
   useCard: PropTypes.bool,
+};
+
+const DisplayError = ({error, useCard = false}) => {
+  const ErrorComponent = ERROR_TYPE_MAP[error.name] || GenericError;
+  const Wrapper = useCard ? Card : 'div';
+  return <ErrorComponent wrapper={Wrapper} error={error} />;
 };
 
 const GenericError = ({wrapper: Wrapper, error}) => {
@@ -156,5 +160,5 @@ const ERROR_TYPE_MAP = {
   ServiceUnavailable: ServiceUnavailableError,
 };
 
-export {logError};
+export {logError, DisplayError};
 export default ErrorBoundary;

@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React, {createContext, useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import ReactModal from 'react-modal';
 
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
+
+export const ModalContext = createContext({});
+ModalContext.displayName = 'ModalContext';
 
 const usePreventScroll = open => {
   useEffect(() => {
@@ -30,12 +33,15 @@ const Modal = ({
 }) => {
   usePreventScroll(isOpen);
   const intl = useIntl();
+  const {parentSelector, ariaHideApp} = useContext(ModalContext);
   return (
     <ReactModal
       isOpen={isOpen}
       onRequestClose={closeModal}
       className={getBEMClassName('react-modal__content', contentModifiers)}
       overlayClassName={getBEMClassName('react-modal__overlay')}
+      parentSelector={parentSelector}
+      ariaHideApp={ariaHideApp}
       {...props}
     >
       <header className={getBEMClassName('react-modal__header')}>

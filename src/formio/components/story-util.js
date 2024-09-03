@@ -6,7 +6,12 @@ import {useIntl} from 'react-intl';
 import {ConfigContext, FormioTranslations} from 'Context';
 import {PREFIX} from 'formio/constants';
 
-const RenderFormioForm = ({configuration, submissionData = {}, evalContext = {}}) => {
+const RenderFormioForm = ({
+  configuration,
+  submissionData = {},
+  evalContext = {},
+  ofContext = {},
+}) => {
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
   const intl = useIntl();
@@ -29,6 +34,7 @@ const RenderFormioForm = ({configuration, submissionData = {}, evalContext = {}}
         intl,
         ofContext: {
           submissionUuid: '426c8d33-6dcb-4578-8208-f17071a4aebe',
+          ...ofContext,
         },
       }}
     />
@@ -43,6 +49,7 @@ export const SingleFormioComponent = ({
   extraComponentProperties = {},
   submissionData = {},
   evalContext = {},
+  ofContext = {},
 }) => {
   // in case this is used as a react component, allow using an alias, because React
   // reserves the key 'prop'
@@ -53,13 +60,15 @@ export const SingleFormioComponent = ({
       configuration={{type: 'form', components: [component]}}
       submissionData={submissionData}
       evalContext={evalContext}
+      ofContext={ofContext}
     />
   );
 };
 
-export const MultipleFormioComponents = ({components, evalContext = {}}) => (
+export const MultipleFormioComponents = ({components, evalContext = {}, ofContext = {}}) => (
   <RenderFormioForm
     configuration={{type: 'form', components: components}}
     evalContext={evalContext}
+    ofContext={ofContext}
   />
 );
