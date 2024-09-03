@@ -318,6 +318,11 @@
     "description": "Email verification modal title",
     "originalDefault": "Email address verification"
   },
+  "FDy8nr": {
+    "defaultMessage": "The verification code may only contain letters (A-Z) and numbers (0-9).",
+    "description": "Validation error message for verification code pattern",
+    "originalDefault": "The verification code may only contain letters (A-Z) and numbers (0-9)."
+  },
   "GbPef0": {
     "defaultMessage": "Huisnummer is verplicht.",
     "description": "ZOD error message when AddressNL postcode is provided but not houseNumber",
@@ -657,6 +662,11 @@
     "defaultMessage": "De betaling is ontvangen en verwerkt.",
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
+  },
+  "c0Ry9H": {
+    "defaultMessage": "The verification code must contain exactly six characters.",
+    "description": "Validation error message for verification codes with length != 6",
+    "originalDefault": "The verification code must contain exactly six characters."
   },
   "cBsrax": {
     "defaultMessage": "Huisletter",

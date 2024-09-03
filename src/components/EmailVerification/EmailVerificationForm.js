@@ -2,7 +2,9 @@ import {Link as UtrechtLink} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {z} from 'zod';
+import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {post} from 'api';
@@ -28,7 +30,28 @@ const submitVerificationCode = async (
   });
 };
 
+const getValidationSchema = intl =>
+  z.object({
+    code: z
+      .string()
+      .length(
+        6,
+        intl.formatMessage({
+          description: 'Validation error message for verification codes with length != 6',
+          defaultMessage: 'The verification code must contain exactly six characters.',
+        })
+      )
+      .regex(
+        /[A-Z0-9]{6}/,
+        intl.formatMessage({
+          description: 'Validation error message for verification code pattern',
+          defaultMessage: 'The verification code may only contain letters (A-Z) and numbers (0-9).',
+        })
+      ),
+  });
+
 const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVerified}) => {
+  const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const [error, setError] = useState(null);
 
@@ -66,7 +89,11 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
   };
 
   return (
-    <Formik initialValues={{mode: 'sendCode', code: ''}} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{mode: 'sendCode', code: ''}}
+      validationSchema={toFormikValidationSchema(getValidationSchema(intl))}
+      onSubmit={onSubmit}
+    >
       {({handleSubmit, values: {mode}, setFieldValue}) =>
         error ? (
           <Body component="div">
