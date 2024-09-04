@@ -10,6 +10,7 @@ import {destroy, get} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
+import IntroductionPage from 'components/IntroductionPage';
 import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
@@ -114,7 +115,7 @@ const Form = () => {
   const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
-  const {steps} = form;
+  const {steps, introductionPageContent = ''} = form;
   const config = useContext(ConfigContext);
 
   // This has to do with a data reference if it is provided by the external party
@@ -348,7 +349,12 @@ const Form = () => {
   // Route the correct page based on URL
   const router = (
     <Routes>
-      <Route path="" element={<Navigate replace to="startpagina" />} />
+      <Route
+        path=""
+        element={<Navigate replace to={introductionPageContent ? 'introductie' : 'startpagina'} />}
+      />
+
+      <Route path="introductie" element={<IntroductionPage />} />
 
       <Route
         path="startpagina"

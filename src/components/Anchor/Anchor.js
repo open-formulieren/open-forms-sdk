@@ -11,7 +11,13 @@ export const ANCHOR_MODIFIERS = [
   'inherit',
 ];
 
-const Anchor = ({children, href, modifiers = [], ...extraProps}) => {
+const Anchor = ({
+  children,
+  href,
+  modifiers = [],
+  component: Component = UtrechtLink,
+  ...extraProps
+}) => {
   // extend with our own modifiers
   const className = classNames(
     'utrecht-link--openforms', // always apply our own modifier
@@ -22,9 +28,9 @@ const Anchor = ({children, href, modifiers = [], ...extraProps}) => {
     }
   );
   return (
-    <UtrechtLink className={className} href={href || undefined} {...extraProps}>
+    <Component className={className} href={href || undefined} {...extraProps}>
       {children}
-    </UtrechtLink>
+    </Component>
   );
 };
 

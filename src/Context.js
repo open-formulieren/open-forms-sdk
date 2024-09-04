@@ -7,6 +7,7 @@ const FormContext = React.createContext({
   name: '',
   slug: '',
   url: '',
+  introductionPageContent: '',
   loginRequired: false,
   loginOptions: [],
   maintenanceMode: false,
