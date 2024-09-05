@@ -33,8 +33,51 @@
   }
 
   @include bem.modifier(wysiwyg) {
+    // TODO: remove this in favour of extending NL DS components, but that will be
+    // breaking changes...
     @include wysiwyg;
     @include anchor.extend-utrecht-link;
+
+    h2 {
+      @extend .utrecht-heading-2;
+    }
+
+    h3 {
+      @extend .utrecht-heading-3;
+    }
+
+    p {
+      @extend .utrecht-paragraph, .utrecht-paragraph--distanced;
+      // TODO: copied over from utrecht-paragraph because @include wyiwyg overrides stuff.
+      font-size: var(--utrecht-paragraph-font-size, var(--utrecht-document-font-size, inherit));
+      font-weight: var(--utrecht-paragraph-font-weight, inherit);
+      line-height: var(
+        --utrecht-paragraph-line-height,
+        var(--utrecht-document-line-height, inherit)
+      );
+    }
+
+    ul {
+      @extend .utrecht-unordered-list, .utrecht-unordered-list--distanced;
+
+      li {
+        // TODO: later, breaking change
+        // @extend .utrecht-unordered-list__item;
+        margin-block-end: var(--utrecht-unordered-list-item-margin-block-end);
+        margin-block-start: var(--utrecht-unordered-list-item-margin-block-start);
+      }
+    }
+
+    ol {
+      @extend .utrecht-ordered-list, .utrecht-ordered-list--distanced;
+
+      li {
+        // TODO: later, breaking change
+        // @extend .utrecht-ordered-list__item;
+        margin-block-end: var(--utrecht-ordered-list-item-margin-block-end);
+        margin-block-start: var(--utrecht-ordered-list-item-margin-block-start);
+      }
+    }
   }
 
   @include bem.modifier(inline) {
