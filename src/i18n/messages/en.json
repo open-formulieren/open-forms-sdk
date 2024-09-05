@@ -864,6 +864,11 @@
     "description": "Session expiry warning message (in modal)",
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
+  "n1vyJM": {
+    "defaultMessage": "Introduction",
+    "description": "introduction page title",
+    "originalDefault": "Introduction"
+  },
   "nLymjB": {
     "defaultMessage": "Use ctrl + scroll to zoom the map",
     "description": "Gesturehandeling pc scroll message.",
@@ -963,6 +968,11 @@
     "defaultMessage": "Not co-signed",
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
+  },
+  "tMO7aH": {
+    "defaultMessage": "Continue ➜",
+    "description": "Button text for link to continue from introduction page to start page",
+    "originalDefault": "Continue ➜"
   },
   "tohkCS": {
     "defaultMessage": "The email address where you received the appointment confirmation email.",
