@@ -38,7 +38,8 @@ const addFixedSteps = (
   currentPathname,
   showOverview,
   needsPayment,
-  completed = false
+  completed = false,
+  hasIntroduction = false
 ) => {
   const hasSubmission = !!submission;
   const isPayment = checkMatchesPath(currentPathname, 'betalen');
@@ -46,6 +47,15 @@ const addFixedSteps = (
   const applicableAndCompletedSteps = applicableSteps.filter(step => step.completed);
   const applicableCompleted =
     hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
+
+  const introductionPageStep = {
+    to: 'introductie',
+    label: intl.formatMessage(STEP_LABELS.introduction),
+    isCompleted: true,
+    isApplicable: true,
+    canNavigateTo: true,
+    isCurrent: checkMatchesPath(currentPathname, 'introductie'),
+  };
 
   const startPageStep = {
     to: 'startpagina',
@@ -74,6 +84,7 @@ const addFixedSteps = (
   };
 
   const finalSteps = [
+    hasIntroduction && introductionPageStep,
     startPageStep,
     ...steps,
     showOverview && summaryStep,

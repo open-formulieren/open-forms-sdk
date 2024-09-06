@@ -7,6 +7,10 @@ const SUBMISSION_ALLOWED = {
 };
 
 const STEP_LABELS = defineMessages({
+  introduction: {
+    description: 'introduction page title',
+    defaultMessage: 'Introduction',
+  },
   login: {
     description: 'Start page title',
     defaultMessage: 'Start page',

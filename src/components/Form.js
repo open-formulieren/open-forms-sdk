@@ -10,6 +10,7 @@ import {destroy, get} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
+import IntroductionPage from 'components/IntroductionPage';
 import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
@@ -108,13 +109,14 @@ const Form = () => {
   const {pathname: currentPathname} = useLocation();
 
   // TODO replace absolute path check with relative
+  const introductionMatch = useMatch('/introductie');
   const stepMatch = useMatch('/stap/:step');
   const summaryMatch = useMatch('/overzicht');
   const paymentMatch = useMatch('/betalen');
   const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
-  const {steps} = form;
+  const {steps, introductionPageContent = ''} = form;
   const config = useContext(ConfigContext);
 
   // This has to do with a data reference if it is provided by the external party
@@ -273,7 +275,8 @@ const Form = () => {
 
   // Progress Indicator
 
-  const isStartPage = !summaryMatch && stepMatch == null && !paymentMatch;
+  const isIntroductionPage = !!introductionMatch;
+  const isStartPage = !isIntroductionPage && !summaryMatch && stepMatch == null && !paymentMatch;
   const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
   const submission = state.submission || state.submittedSubmission;
@@ -286,7 +289,9 @@ const Form = () => {
 
   // figure out the title for the mobile menu based on the state
   let activeStepTitle;
-  if (isStartPage) {
+  if (isIntroductionPage) {
+    activeStepTitle = intl.formatMessage(STEP_LABELS.introduction);
+  } else if (isStartPage) {
     activeStepTitle = intl.formatMessage(STEP_LABELS.login);
   } else if (summaryMatch) {
     activeStepTitle = intl.formatMessage(STEP_LABELS.overview);
@@ -327,7 +332,8 @@ const Form = () => {
     currentPathname,
     showOverview,
     needsPayment,
-    isCompleted
+    isCompleted,
+    !!form.introductionPageContent
   );
 
   // Show the progress indicator if enabled on the form AND we're not in the payment
@@ -348,7 +354,12 @@ const Form = () => {
   // Route the correct page based on URL
   const router = (
     <Routes>
-      <Route path="" element={<Navigate replace to="startpagina" />} />
+      <Route
+        path=""
+        element={<Navigate replace to={introductionPageContent ? 'introductie' : 'startpagina'} />}
+      />
+
+      <Route path="introductie" element={<IntroductionPage />} />
 
       <Route
         path="startpagina"

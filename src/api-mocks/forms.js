@@ -44,6 +44,7 @@ export const FORM_DEFAULTS = {
       url: `${BASE_URL}forms/mock/steps/9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5`,
     },
   ],
+  introductionPageContent: '',
   explanationTemplate: '',
   requiredFieldsWithAsterisk: true,
   resumeLinkLifetime: 7,
