@@ -7,6 +7,7 @@ const ModeField = () => {
   return (
     <RadioField
       name="mode"
+      isRequired
       label={intl.formatMessage({
         description: 'Email verification mode selection label',
         defaultMessage: 'What would you like to do?',

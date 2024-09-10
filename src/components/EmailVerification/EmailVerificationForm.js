@@ -121,6 +121,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
               {mode === 'enterCode' && (
                 <TextField
                   name="code"
+                  isRequired
                   label={
                     <FormattedMessage
                       description="Email verification: code input field label"

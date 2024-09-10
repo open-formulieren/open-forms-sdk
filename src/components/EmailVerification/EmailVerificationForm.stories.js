@@ -85,3 +85,12 @@ export const ArbitraryVerificationErrorFlow = {
     expect(await canvas.findByText('No permission to perform this action.')).toBeVisible();
   },
 };
+
+export const NoAsterisks = {
+  name: 'No asterisk for required fields',
+  parameters: {
+    config: {
+      requiredFieldsWithAsterisk: false,
+    },
+  },
+};
