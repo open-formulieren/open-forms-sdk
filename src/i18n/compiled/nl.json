@@ -589,6 +589,12 @@
       "value": "The verification code may only contain letters (A-Z) and numbers (0-9)."
     }
   ],
+  "FrFeZj": [
+    {
+      "type": 0,
+      "value": "You haven't entered an email address yet."
+    }
+  ],
   "GbPef0": [
     {
       "type": 0,

@@ -323,6 +323,11 @@
     "description": "Validation error message for verification code pattern",
     "originalDefault": "The verification code may only contain letters (A-Z) and numbers (0-9)."
   },
+  "FrFeZj": {
+    "defaultMessage": "You haven't entered an email address yet.",
+    "description": "Email verification modal: warning that no email is specified",
+    "originalDefault": "You haven't entered an email address yet."
+  },
   "GbPef0": {
     "defaultMessage": "Huisnummer is verplicht.",
     "description": "ZOD error message when AddressNL postcode is provided but not houseNumber",
