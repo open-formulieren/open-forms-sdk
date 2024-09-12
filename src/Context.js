@@ -12,6 +12,7 @@ const FormContext = React.createContext({
   loginOptions: [],
   maintenanceMode: false,
   showProgressIndicator: true,
+  showSummaryProgress: false,
   submissionAllowed: 'yes',
   submissionStatementsConfiguration: [],
   literals: {

@@ -40,6 +40,7 @@ import Card, {CardTitle} from 'components/Card';
 import {EmailVerificationModal} from 'components/EmailVerification';
 import FormStepDebug from 'components/FormStepDebug';
 import Loader from 'components/Loader';
+import SummaryProgress from 'components/SummaryProgress';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
   eventTriggeredBySubmitButton,
@@ -830,11 +831,22 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
   };
 
   const isLoadingSomething = loading || isNavigating;
+
+  // Summary progress
+  const applicableSteps = submission.steps.filter(step => step.isApplicable === true);
+  const currentSubmissionStepIndex = applicableSteps.indexOf(submissionStep);
+
   return (
     <>
       <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
+        {!isLoadingSomething && form.showSummaryProgress && (
+          <SummaryProgress
+            current={currentSubmissionStepIndex + 1}
+            total={applicableSteps.length}
+          />
+        )}
         {!isLoadingSomething && configuration ? (
           <>
             <CardTitle

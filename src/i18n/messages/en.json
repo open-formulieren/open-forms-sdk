@@ -754,6 +754,11 @@
     "description": "ZOD 'invalid_string' error message, with required include at specific position",
     "originalDefault": "Invalid input: must include \"{includes}\" at one or more positions greater than or equal to {position}."
   },
+  "ijV760": {
+    "defaultMessage": "Step {current} of {total}",
+    "description": "Summary progress label",
+    "originalDefault": "Step {current} of {total}"
+  },
   "iubnaw": {
     "defaultMessage": "The email address where you will receive the resume link.",
     "description": "Form save modal email field help text",
