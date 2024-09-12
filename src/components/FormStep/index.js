@@ -286,6 +286,8 @@ const reducer = (draft, action) => {
       draft.emailVerificationModal.isOpen = true;
       draft.emailVerificationModal.componentKey = componentKey;
       draft.emailVerificationModal.emailAddress = emailAddress;
+      // otherwise remains in blocked state from backend validation errors
+      draft.canSubmit = true;
       break;
     }
 
@@ -886,11 +888,17 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
                     saveStepData: async () =>
                       await submitStepData(submissionStep.url, {...getCurrentFormData()}),
                     displayComponents: config.displayComponents,
-                    verifyEmailCallback: ({key, email}) =>
+                    verifyEmailCallback: ({key, email}) => {
+                      // clear the errors from the component
+                      const formInstance = formRef.current.formio;
+                      const component = formInstance.getComponent(key);
+                      component.setCustomValidity('');
+
                       dispatch({
                         type: 'VERIFY_EMAIL',
                         payload: {componentKey: key, emailAddress: email},
-                      }),
+                      });
+                    },
                   },
                 }}
               />

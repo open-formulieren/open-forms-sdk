@@ -17,6 +17,7 @@ import {
   getSubmissionStepDetail,
   mockSubmissionLogicCheckPost,
   mockSubmissionStepGet,
+  mockSubmissionValidatePost,
 } from './mocks';
 
 export default {
@@ -57,6 +58,7 @@ const render = ({
   onDestroySession,
   // story args
   formioConfiguration,
+  validationErrors = undefined,
 }) => {
   // force mutation/re-render by using different step URLs every time
   submission = produce(submission, draftSubmission => {
@@ -71,6 +73,7 @@ const render = ({
   worker.use(
     mockSubmissionStepGet(submissionStepDetailBody),
     mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
+    mockSubmissionValidatePost(validationErrors),
     mockEmailVerificationPost,
     mockEmailVerificationVerifyCodePost
   );
@@ -290,5 +293,129 @@ export const SummaryProgressNotVisible = {
     const canvas = within(canvasElement);
 
     expect(canvas.queryByText(/Step 1 of 1/)).toBeNull();
+  },
+};
+
+export const EmailVerificationNotDone = {
+  render,
+  args: {
+    formioConfiguration: {
+      display: 'form',
+      components: [
+        {
+          type: 'email',
+          key: 'email',
+          label: 'Email address',
+          description: 'Email component requiring verification',
+          openForms: {
+            requireVerification: true,
+          },
+        },
+      ],
+    },
+    form: buildForm(),
+    submission: buildSubmission(),
+    validationErrors: {
+      email: 'Email is not verified',
+    },
+  },
+
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    // Formio...
+    await sleep(500);
+
+    await step('Enter email address', async () => {
+      const emailInput = await canvas.findByLabelText('Email address');
+      await userEvent.type(emailInput, 'openforms@example.com');
+    });
+
+    // wait for the logic check to complete, as it interferes with the submit button
+    // disabled/enabled state
+    await sleep(1000 + 500); // 1000ms debounce + some extra time
+
+    const submitButton = await canvas.findByRole('button', {name: 'Next'});
+
+    await step('attempt to submit the step', async () => {
+      await userEvent.click(submitButton);
+      expect(await canvas.findByText('Email is not verified')).toBeVisible();
+      await waitFor(() => {
+        expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+      });
+    });
+
+    await step('verify email address', async () => {
+      await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
+
+      const modal = await canvas.findByRole('dialog');
+      expect(modal).toBeVisible();
+      await userEvent.click(within(modal).getByRole('button', {name: 'Send code'}));
+      const codeInput = await within(modal).findByLabelText('Enter the six-character code');
+      expect(codeInput).toBeVisible();
+
+      await userEvent.type(codeInput, 'ABCD12');
+      const submitButton = within(modal).getByRole('button', {name: 'Verify'});
+      await userEvent.click(submitButton);
+      expect(
+        await within(modal).findByText(/The email address has now been verified/)
+      ).toBeVisible();
+      // close modal
+      await userEvent.click(within(modal).getByRole('button', {name: 'Sluiten'}));
+    });
+
+    await waitFor(() => {
+      expect(submitButton).toHaveAttribute('aria-disabled', 'false');
+    });
+  },
+};
+
+export const BackendValidationError = {
+  render,
+  args: {
+    formioConfiguration: {
+      display: 'form',
+      components: [
+        {
+          type: 'textfield',
+          key: 'text1',
+          label: 'Simple text field',
+        },
+      ],
+    },
+    form: buildForm(),
+    submission: buildSubmission(),
+    validationErrors: {
+      text1: 'Server side validation error',
+    },
+  },
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // Formio needs some time to properly initialize...
+    await sleep(500);
+
+    // wait for the logic check to complete, as it interferes with the submit button
+    // disabled/enabled state
+    await sleep(1000 + 200); // 1000ms debounce + some extra time
+
+    // Once submitted and server side validation errors are displayed, the submit
+    // button remains disabled until the input is corrected.
+    const submitButton = await canvas.findByRole('button', {name: 'Next'});
+    await userEvent.click(submitButton);
+    expect(await canvas.findByText('Server side validation error')).toBeVisible();
+    await waitFor(() => {
+      expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    // check that modifying the input enables the submit button again
+    await userEvent.type(canvas.getByLabelText('Simple text field'), 'Foo');
+    await waitFor(
+      () => {
+        expect(submitButton).toHaveAttribute('aria-disabled', 'false');
+      },
+      {timeout: 2000}
+    );
   },
 };
