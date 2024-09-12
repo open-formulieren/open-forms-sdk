@@ -296,6 +296,80 @@ export const SummaryProgressNotVisible = {
   },
 };
 
+export const EmailVerificationNotDone = {
+  render,
+  args: {
+    formioConfiguration: {
+      display: 'form',
+      components: [
+        {
+          type: 'email',
+          key: 'email',
+          label: 'Email address',
+          description: 'Email component requiring verification',
+          openForms: {
+            requireVerification: true,
+          },
+        },
+      ],
+    },
+    form: buildForm(),
+    submission: buildSubmission(),
+    validationErrors: {
+      email: 'Email is not verified',
+    },
+  },
+
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    // Formio...
+    await sleep(500);
+
+    await step('Enter email address', async () => {
+      const emailInput = await canvas.findByLabelText('Email address');
+      await userEvent.type(emailInput, 'openforms@example.com');
+    });
+
+    // wait for the logic check to complete, as it interferes with the submit button
+    // disabled/enabled state
+    await sleep(1000 + 500); // 1000ms debounce + some extra time
+
+    const submitButton = await canvas.findByRole('button', {name: 'Next'});
+
+    await step('attempt to submit the step', async () => {
+      await userEvent.click(submitButton);
+      expect(await canvas.findByText('Email is not verified')).toBeVisible();
+      await waitFor(() => {
+        expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+      });
+    });
+
+    await step('verify email address', async () => {
+      await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
+
+      const modal = await canvas.findByRole('dialog');
+      expect(modal).toBeVisible();
+      await userEvent.click(within(modal).getByRole('button', {name: 'Send code'}));
+      const codeInput = await within(modal).findByLabelText('Enter the six-character code');
+      expect(codeInput).toBeVisible();
+
+      await userEvent.type(codeInput, 'ABCD12');
+      const submitButton = within(modal).getByRole('button', {name: 'Verify'});
+      await userEvent.click(submitButton);
+      expect(
+        await within(modal).findByText(/The email address has now been verified/)
+      ).toBeVisible();
+      // close modal
+      await userEvent.click(within(modal).getByRole('button', {name: 'Sluiten'}));
+    });
+
+    await waitFor(() => {
+      expect(submitButton).toHaveAttribute('aria-disabled', 'false');
+    });
+  },
+};
+
 export const BackendValidationError = {
   render,
   args: {
