@@ -17,6 +17,7 @@ import {
   getSubmissionStepDetail,
   mockSubmissionLogicCheckPost,
   mockSubmissionStepGet,
+  mockSubmissionValidatePost,
 } from './mocks';
 
 export default {
@@ -57,6 +58,7 @@ const render = ({
   onDestroySession,
   // story args
   formioConfiguration,
+  validationErrors = undefined,
 }) => {
   // force mutation/re-render by using different step URLs every time
   submission = produce(submission, draftSubmission => {
@@ -71,6 +73,7 @@ const render = ({
   worker.use(
     mockSubmissionStepGet(submissionStepDetailBody),
     mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
+    mockSubmissionValidatePost(validationErrors),
     mockEmailVerificationPost,
     mockEmailVerificationVerifyCodePost
   );
@@ -290,5 +293,55 @@ export const SummaryProgressNotVisible = {
     const canvas = within(canvasElement);
 
     expect(canvas.queryByText(/Step 1 of 1/)).toBeNull();
+  },
+};
+
+export const BackendValidationError = {
+  render,
+  args: {
+    formioConfiguration: {
+      display: 'form',
+      components: [
+        {
+          type: 'textfield',
+          key: 'text1',
+          label: 'Simple text field',
+        },
+      ],
+    },
+    form: buildForm(),
+    submission: buildSubmission(),
+    validationErrors: {
+      text1: 'Server side validation error',
+    },
+  },
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // Formio needs some time to properly initialize...
+    await sleep(500);
+
+    // wait for the logic check to complete, as it interferes with the submit button
+    // disabled/enabled state
+    await sleep(1000 + 200); // 1000ms debounce + some extra time
+
+    // Once submitted and server side validation errors are displayed, the submit
+    // button remains disabled until the input is corrected.
+    const submitButton = await canvas.findByRole('button', {name: 'Next'});
+    await userEvent.click(submitButton);
+    expect(await canvas.findByText('Server side validation error')).toBeVisible();
+    await waitFor(() => {
+      expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    // check that modifying the input enables the submit button again
+    await userEvent.type(canvas.getByLabelText('Simple text field'), 'Foo');
+    await waitFor(
+      () => {
+        expect(submitButton).toHaveAttribute('aria-disabled', 'false');
+      },
+      {timeout: 2000}
+    );
   },
 };

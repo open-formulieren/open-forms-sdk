@@ -39,3 +39,31 @@ export const mockSubmissionLogicCheckPost = (submission, step) => {
     }
   );
 };
+
+export const mockSubmissionValidatePost = (errors = undefined) => {
+  return rest.post(
+    `${BASE_URL}submissions/:submissionUuid/steps/:stepUuid/validate`,
+    (req, res, ctx) => {
+      if (!errors) {
+        return res(ctx.status(204));
+      }
+
+      const invalidParams = Object.entries(errors).map(([name, error]) => ({
+        name: `data.${name}`,
+        code: 'invalid',
+        reason: error,
+      }));
+
+      const body = {
+        type: 'http://localhost:8000/fouten/ValidationError/',
+        code: 'invalid',
+        title: 'Invalid input.',
+        status: 400,
+        detail: '',
+        instance: 'urn:uuid:a3a9701b-3fa6-444b-a777-bcb43960440a',
+        invalidParams: invalidParams,
+      };
+      return res(ctx.status(400), ctx.json(body));
+    }
+  );
+};
