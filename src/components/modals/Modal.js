@@ -54,6 +54,12 @@ const Modal = ({
             defaultMessage: 'Close',
           })}
           onClick={closeModal}
+          noAriaHidden
+          role="button"
+          aria-label={intl.formatMessage({
+            description: 'Modal close icon title',
+            defaultMessage: 'Close',
+          })}
         />
       </header>
       {children}
