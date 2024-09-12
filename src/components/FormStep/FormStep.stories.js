@@ -266,3 +266,29 @@ export const EmailVerification = {
     expect(await within(modal).findByText(/The email address has now been verified/)).toBeVisible();
   },
 };
+
+export const SummaryProgressVisible = {
+  render,
+  args: {
+    form: buildForm({showSummaryProgress: true}),
+    submission: buildSubmission(),
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    expect(await canvas.findByText(/Step 1 of 1/)).toBeVisible();
+  },
+};
+
+export const SummaryProgressNotVisible = {
+  render,
+  args: {
+    form: buildForm(),
+    submission: buildSubmission(),
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.queryByText(/Step 1 of 1/)).toBeNull();
+  },
+};

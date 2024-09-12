@@ -1,0 +1,21 @@
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+
+import SummaryProgress from '.';
+import * as SummaryProgressStories from './SummaryProgress.stories';
+
+<Meta of={SummaryProgressStories} />
+
+# Summary progress
+
+The summary progress displays a short summary of the steps, including the number of the current step
+and the number of the total steps of the form. The total number of the steps is updated accordingly
+when there are logic rules which may define in a different way the steps through the form
+submission.
+
+## Form start
+
+On initial load, no submission is available yet, and the summary is not visible.
+
+## Props
+
+<ArgTypes of={SummaryProgress} />

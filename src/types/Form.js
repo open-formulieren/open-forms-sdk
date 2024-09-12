@@ -25,6 +25,7 @@ const Form = PropTypes.shape({
   url: PropTypes.string.isRequired,
   maintenanceMode: PropTypes.bool.isRequired,
   showProgressIndicator: PropTypes.bool.isRequired,
+  showSummaryProgress: PropTypes.bool.isRequired,
   submissionAllowed: PropTypes.oneOf(['yes', 'no_with_overview', 'no_without_overview']).isRequired,
   appointmentOptions: PropTypes.shape({
     isAppointment: PropTypes.bool.isRequired,

@@ -1511,6 +1511,24 @@
       "value": "."
     }
   ],
+  "ijV760": [
+    {
+      "type": 0,
+      "value": "Step "
+    },
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
   "iubnaw": [
     {
       "type": 0,

@@ -15,6 +15,7 @@ export const FORM_DEFAULTS = {
   cosignLoginInfo: undefined,
   product: '',
   showProgressIndicator: true,
+  showSummaryProgress: false,
   maintenanceMode: false,
   active: true,
   submissionAllowed: 'yes',
