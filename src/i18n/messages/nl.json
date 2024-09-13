@@ -20,7 +20,7 @@
     "originalDefault": "Log out"
   },
   "1+Q55M": {
-    "defaultMessage": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it.",
+    "defaultMessage": "Om door te gaan moet je jouw e-mailadres <link>{emailAddress}</link> bevestigen. We sturen je eerst een bevestigingscode naar dit e-mailadres. Vervolgens moet je deze bevestigingscode hier invoeren.",
     "description": "Email verification modal body text",
     "originalDefault": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it."
   },
@@ -70,7 +70,7 @@
     "originalDefault": "Bad"
   },
   "4tPKAs": {
-    "defaultMessage": "Verify",
+    "defaultMessage": "Bevestigen",
     "description": "Email verification: verify code button text",
     "originalDefault": "Verify"
   },
@@ -268,7 +268,7 @@
     "originalDefault": "Are you sure that you want to logout?"
   },
   "Dvt0Fv": {
-    "defaultMessage": "The email address has now been verified. You can close this window and continue with the rest of the form.",
+    "defaultMessage": "Je e-mailadres is bevestigd. Je kan dit bericht sluiten en doorgaan met de rest van het formulier.",
     "description": "Text displayed after successful email verification",
     "originalDefault": "The email address has now been verified. You can close this window and continue with the rest of the form."
   },
@@ -314,17 +314,17 @@
     "originalDefault": "House number addition must be up to four letters and digits."
   },
   "EZ7myd": {
-    "defaultMessage": "Email address verification",
+    "defaultMessage": "E-mailadres bevestigen",
     "description": "Email verification modal title",
     "originalDefault": "Email address verification"
   },
   "FDy8nr": {
-    "defaultMessage": "The verification code may only contain letters (A-Z) and numbers (0-9).",
+    "defaultMessage": "De bevestigingscode bestaat uit hoofdletters (A-Z) en getallen (0-9).",
     "description": "Validation error message for verification code pattern",
     "originalDefault": "The verification code may only contain letters (A-Z) and numbers (0-9)."
   },
   "FrFeZj": {
-    "defaultMessage": "You haven't entered an email address yet.",
+    "defaultMessage": "Je hebt nog geen e-mailadres ingevuld.",
     "description": "Email verification modal: warning that no email is specified",
     "originalDefault": "You haven't entered an email address yet."
   },
@@ -517,7 +517,7 @@
     "originalDefault": "Extend"
   },
   "R7k4JC": {
-    "defaultMessage": "Enter the six-character code",
+    "defaultMessage": "Voer de bevestigingscode in",
     "description": "Email verification: code input field label",
     "originalDefault": "Enter the six-character code"
   },
@@ -669,7 +669,7 @@
     "originalDefault": "Your payment is received and processed."
   },
   "c0Ry9H": {
-    "defaultMessage": "The verification code must contain exactly six characters.",
+    "defaultMessage": "De bevestigingscode moet precies zes tekens lang zijn.",
     "description": "Validation error message for verification codes with length != 6",
     "originalDefault": "The verification code must contain exactly six characters."
   },
@@ -764,7 +764,7 @@
     "originalDefault": "Invalid input: must include \"{includes}\" at one or more positions greater than or equal to {position}."
   },
   "ijV760": {
-    "defaultMessage": "Step {current} of {total}",
+    "defaultMessage": "Stap {current} van {total}",
     "description": "Summary progress label",
     "originalDefault": "Step {current} of {total}"
   },
@@ -774,7 +774,7 @@
     "originalDefault": "The email address where you will receive the resume link."
   },
   "ixMIBJ": {
-    "defaultMessage": "What would you like to do?",
+    "defaultMessage": "Wat wil je doen?",
     "description": "Email verification mode selection label",
     "originalDefault": "What would you like to do?"
   },
@@ -846,7 +846,7 @@
     "originalDefault": "You must provide a postcode."
   },
   "lQY+Zm": {
-    "defaultMessage": "Enter the verification code",
+    "defaultMessage": "Een bevestigingscode invullen",
     "description": "Email verification mode selection: enter code label",
     "originalDefault": "Enter the verification code"
   },
@@ -862,7 +862,7 @@
     "originalDefault": "Product"
   },
   "lmWBQT": {
-    "defaultMessage": "The code is exactly six characters long and consists of only uppercase letters and numbers.",
+    "defaultMessage": "De bevestigingscode is precies zes tekens lang en bestaat uit hoofdletters en getallen.",
     "description": "Email verification: code input field description",
     "originalDefault": "The code is exactly six characters long and consists of only uppercase letters and numbers."
   },
@@ -887,7 +887,7 @@
     "originalDefault": "Your session is about to expire {delta}. Extend your session if you wish to continue."
   },
   "n1vyJM": {
-    "defaultMessage": "Introduction",
+    "defaultMessage": "Introductie",
     "description": "introduction page title",
     "originalDefault": "Introduction"
   },
@@ -952,7 +952,7 @@
     "originalDefault": "Log in to co-sign the form"
   },
   "qyWfE+": {
-    "defaultMessage": "Receive a verification code",
+    "defaultMessage": "Een bevestigingscode ontvangen",
     "description": "Email verification mode selection: send code label",
     "originalDefault": "Receive a verification code"
   },
@@ -967,7 +967,7 @@
     "originalDefault": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
   },
   "riuSfc": {
-    "defaultMessage": "Send code",
+    "defaultMessage": "Verstuur code",
     "description": "Email verification: send code button text",
     "originalDefault": "Send code"
   },
@@ -992,7 +992,7 @@
     "originalDefault": "Not co-signed"
   },
   "tMO7aH": {
-    "defaultMessage": "Continue ➜",
+    "defaultMessage": "Doorgaan ➜",
     "description": "Button text for link to continue from introduction page to start page",
     "originalDefault": "Continue ➜"
   },
