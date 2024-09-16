@@ -259,14 +259,14 @@ export const EmailVerification = {
 
     const modal = await canvas.findByRole('dialog');
     expect(modal).toBeVisible();
-    await userEvent.click(within(modal).getByRole('button', {name: 'Send code'}));
-    const codeInput = await within(modal).findByLabelText('Enter the six-character code');
+    await userEvent.click(within(modal).getByRole('button', {name: 'Verstuur code'}));
+    const codeInput = await within(modal).findByLabelText('Voer de bevestigingscode in');
     expect(codeInput).toBeVisible();
 
     await userEvent.type(codeInput, 'ABCD12');
-    const submitButton = within(modal).getByRole('button', {name: 'Verify'});
+    const submitButton = within(modal).getByRole('button', {name: 'Bevestigen'});
     await userEvent.click(submitButton);
-    expect(await within(modal).findByText(/The email address has now been verified/)).toBeVisible();
+    expect(await within(modal).findByText(/Je e-mailadres is bevestigd/)).toBeVisible();
   },
 };
 
@@ -324,16 +324,14 @@ export const EmailVerificationNotDone = {
 
       const modal = await canvas.findByRole('dialog');
       expect(modal).toBeVisible();
-      await userEvent.click(within(modal).getByRole('button', {name: 'Send code'}));
-      const codeInput = await within(modal).findByLabelText('Enter the six-character code');
+      await userEvent.click(within(modal).getByRole('button', {name: 'Verstuur code'}));
+      const codeInput = await within(modal).findByLabelText('Voer de bevestigingscode in');
       expect(codeInput).toBeVisible();
 
       await userEvent.type(codeInput, 'ABCD12');
-      const submitButton = within(modal).getByRole('button', {name: 'Verify'});
+      const submitButton = within(modal).getByRole('button', {name: 'Bevestigen'});
       await userEvent.click(submitButton);
-      expect(
-        await within(modal).findByText(/The email address has now been verified/)
-      ).toBeVisible();
+      expect(await within(modal).findByText(/Je e-mailadres is bevestigd/)).toBeVisible();
       // close modal
       await userEvent.click(within(modal).getByRole('button', {name: 'Sluiten'}));
     });
@@ -403,7 +401,7 @@ export const SummaryProgressVisible = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    expect(await canvas.findByText(/Step 1 of 1/)).toBeVisible();
+    expect(await canvas.findByText(/Stap 1 van 1/)).toBeVisible();
   },
 };
 
@@ -416,6 +414,6 @@ export const SummaryProgressNotVisible = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.queryByText(/Step 1 of 1/)).toBeNull();
+    expect(canvas.queryByText(/Stap 1 van 1/)).toBeNull();
   },
 };

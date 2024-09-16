@@ -34,12 +34,12 @@ export const HappyFlow = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(await canvas.findByRole('button', {name: 'Send code'}));
-    const codeInput = await canvas.findByLabelText('Enter the six-character code');
+    await userEvent.click(await canvas.findByRole('button', {name: 'Verstuur code'}));
+    const codeInput = await canvas.findByLabelText('Voer de bevestigingscode in');
     expect(codeInput).toBeVisible();
     await userEvent.type(codeInput, 'abcd12');
     expect(codeInput).toHaveValue('ABCD12'); // automatically convert to uppercase
-    await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
+    await userEvent.click(canvas.getByRole('button', {name: 'Bevestigen'}));
   },
 };
 
@@ -53,7 +53,7 @@ export const ArbitrarySendCodeErrorFlow = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(await canvas.findByRole('button', {name: 'Send code'}));
+    await userEvent.click(await canvas.findByRole('button', {name: 'Verstuur code'}));
     expect(await canvas.findByText('No permission to perform this action.')).toBeVisible();
   },
 };
@@ -62,11 +62,11 @@ export const InvalidCodeFlow = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(await canvas.findByRole('button', {name: 'Send code'}));
-    const codeInput = await canvas.findByLabelText('Enter the six-character code');
+    await userEvent.click(await canvas.findByRole('button', {name: 'Verstuur code'}));
+    const codeInput = await canvas.findByLabelText('Voer de bevestigingscode in');
     expect(codeInput).toBeVisible();
     await userEvent.type(codeInput, 'FAILME'); // mock returns validation error
-    await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
+    await userEvent.click(canvas.getByRole('button', {name: 'Bevestigen'}));
 
     expect(await canvas.findByText('Not a valid verification code')).toBeVisible();
   },
@@ -76,11 +76,11 @@ export const ArbitraryVerificationErrorFlow = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(await canvas.findByRole('button', {name: 'Send code'}));
-    const codeInput = await canvas.findByLabelText('Enter the six-character code');
+    await userEvent.click(await canvas.findByRole('button', {name: 'Verstuur code'}));
+    const codeInput = await canvas.findByLabelText('Voer de bevestigingscode in');
     expect(codeInput).toBeVisible();
     await userEvent.type(codeInput, 'NOPERM'); // mock returns 403
-    await userEvent.click(canvas.getByRole('button', {name: 'Verify'}));
+    await userEvent.click(canvas.getByRole('button', {name: 'Bevestigen'}));
 
     expect(await canvas.findByText('No permission to perform this action.')).toBeVisible();
   },
