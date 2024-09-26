@@ -135,9 +135,10 @@ const SelectField = ({
         }}
         value={value}
         onBlur={() => setTouched(true)}
+        aria-describedby={invalid ? `${id}-error-message` : undefined}
       />
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} inputId={id} />}
     </FormField>
   );
 };

@@ -66,11 +66,12 @@ const NumberField = ({
           type={useNumberType ? 'number' : 'text'}
           customInput={Textbox}
           readOnly={readOnly}
+          aria-describedby={invalid ? `${id}-error-message` : undefined}
           {...separatorProps}
         />
       </Paragraph>
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} inputId={id} />}
     </UtrechtFormField>
   );
 };

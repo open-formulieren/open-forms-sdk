@@ -33,11 +33,12 @@ export const TextField = ({
           className="utrecht-textbox--openforms"
           disabled={disabled}
           invalid={invalid}
+          aria-describedby={invalid ? `${id}-error-message` : undefined}
           {...inputProps}
         />
       </Paragraph>
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} inputId={id} />}
     </UtrechtFormField>
   );
 };
