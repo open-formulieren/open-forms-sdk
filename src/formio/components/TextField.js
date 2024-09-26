@@ -29,6 +29,13 @@ class TextField extends Formio.Components.components.textfield {
     return info;
   }
 
+  checkValidity(data, dirty, row, silentCheck) {
+    const validity = super.checkValidity(data, dirty, row, silentCheck);
+    console.log({data, dirty, row, validity});
+    // info.attr['aria-describedby'] = '';
+    return validity;
+  }
+
   checkComponentValidity(data, dirty, row, options = {}) {
     let updatedOptions = {...options};
     if (this.component.validate.plugins && this.component.validate.plugins.length) {

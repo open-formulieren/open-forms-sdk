@@ -40,10 +40,11 @@ const Checkbox = ({
         invalid={invalid}
         required={isRequired}
         appearance="custom"
+        aria-describedby={invalid ? `${id}-error-message` : undefined}
         {...inputProps}
       />
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} inputId={id} />}
     </FormField>
   );
 };
