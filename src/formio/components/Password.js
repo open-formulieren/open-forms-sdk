@@ -1,5 +1,7 @@
 import {Formio} from 'react-formio';
 
+import {setErrorAttributes} from '../utils';
+
 /**
  * Extend the default password field to modify it to our needs.
  *
@@ -15,6 +17,11 @@ class Password extends Formio.Components.components.password {
       'utrecht-textbox--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 }
 

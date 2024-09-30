@@ -2,6 +2,7 @@ import {maskInput} from '@formio/vanilla-text-mask';
 import {set} from 'lodash';
 import {Formio} from 'react-formio';
 
+import {setErrorAttributes} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 /**
@@ -30,6 +31,11 @@ class Number extends Formio.Components.components.number {
       updatedOptions.async = true;
     }
     return super.checkComponentValidity(data, dirty, row, updatedOptions);
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   // Issue OF#1351

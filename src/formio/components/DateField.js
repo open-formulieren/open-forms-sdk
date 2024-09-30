@@ -2,6 +2,8 @@ import {Formio} from 'react-formio';
 
 import {MinMaxDateValidator} from 'formio/validators/minMaxDateAndDatetimeValidator';
 
+import {setErrorAttributes} from '../utils';
+
 const DateTimeField = Formio.Components.components.datetime;
 
 const extractDate = value => {
@@ -38,6 +40,12 @@ class DateField extends DateTimeField {
       'utrecht-textbox--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    const targetElements = [this.element.querySelector('input:not([type="hidden"])')];
+    setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+    return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 
   beforeSubmit() {
