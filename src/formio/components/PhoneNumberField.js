@@ -1,5 +1,6 @@
 import {Formio} from 'formiojs';
 
+import {setErrorAttributes} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 const PhoneNumber = Formio.Components.components.phoneNumber;
@@ -42,6 +43,11 @@ class PhoneNumberField extends PhoneNumber {
       'utrecht-textbox--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   checkComponentValidity(data, dirty, row, options = {}) {

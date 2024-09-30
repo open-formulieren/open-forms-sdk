@@ -1,5 +1,7 @@
 import {Formio} from 'react-formio';
 
+import {setErrorAttributes} from '../utils';
+
 /**
  * Extend the default email field to modify it to our needs.
  */
@@ -14,6 +16,11 @@ class Email extends Formio.Components.components.email {
       'utrecht-textbox--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   restoreCaretPosition() {

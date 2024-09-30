@@ -2,6 +2,8 @@ import {Formio} from 'react-formio';
 
 import MinMaxTimeValidator from 'formio/validators/MinMaxTimeValidator';
 
+import {setErrorAttributes} from '../utils';
+
 const Time = Formio.Components.components.time;
 
 class TimeField extends Time {
@@ -28,6 +30,11 @@ class TimeField extends Time {
       'utrecht-textbox--openforms-time',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   getStringAsValue(value) {
