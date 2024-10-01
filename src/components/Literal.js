@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = import.meta.MODE === 'development';
 
 const LiteralContext = React.createContext();
 LiteralContext.displayName = 'LiteralContext';

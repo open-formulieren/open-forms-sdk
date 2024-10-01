@@ -67,9 +67,10 @@
     "react-dom": "^18.0.0"
   },
   "scripts": {
-    "start": "npm run build:design-tokens && node scripts/start.js",
-    "build": "node scripts/build.js && npm run build:esm",
+    "start": "npm run build:design-tokens && vite",
+    "build": "vite build && npm run build:esm",
     "build:esm": "rimraf dist/esm && NODE_ENV=production babel --no-babelrc --config-file ./.babelrc.esm-build --ignore 'src/**/*.spec.js','src/**/fixtures/**','src/setupTests.js','src/reportWebVitals.js' src --out-dir dist/esm",
+    "serve": "vite preview",
     "test": "TZ=Europe/Amsterdam node scripts/test.js",
     "test:storybook": "test-storybook --coverage",
     "clean": "rimraf dist/*",
