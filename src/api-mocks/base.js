@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep';
 import set from 'lodash/set';
 
-export const BASE_URL = import.meta.env.VITE_BASE_API_URL || 'http://localhost:8000/api/v2/';
+export const BASE_URL = process.env.REACT_APP_BASE_API_URL || 'http://localhost:8000/api/v2/';
 
 /**
  * Create a function to build an object from a default with optional overrides.
