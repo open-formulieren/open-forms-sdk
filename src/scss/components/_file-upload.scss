@@ -5,8 +5,8 @@ we don't have strict BEM naming here.
 @use 'sass:math';
 @use './anchor';
 
-@import '~microscope-sass/lib/typography';
-@import '~microscope-sass/lib/responsive';
+@import 'microscope-sass/lib/typography';
+@import 'microscope-sass/lib/responsive';
 
 @import '../mixins/prefix';
 @import '../mixins/bootstrap';

@@ -1,8 +1,8 @@
 @use 'sass:math' as math;
 
-@import '~microscope-sass/lib/grid';
-@import '~microscope-sass/lib/typography';
-@import '~microscope-sass/lib/responsive';
+@import 'microscope-sass/lib/grid';
+@import 'microscope-sass/lib/typography';
+@import 'microscope-sass/lib/responsive';
 
 @import '../mixins/prefix';
 

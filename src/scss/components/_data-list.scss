@@ -1,6 +1,6 @@
 @use 'microscope-sass/lib/bem';
 
-@import '~microscope-sass/lib/responsive';
+@import 'microscope-sass/lib/responsive';
 
 @mixin component-type-overrides($component-type) {
   .utrecht-data-list__item-key {
