@@ -3,6 +3,7 @@ import React, {createContext, useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import ReactModal from 'react-modal';
 
+import {OFButton} from 'components/Button';
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
 
@@ -46,21 +47,21 @@ const Modal = ({
     >
       <header className={getBEMClassName('react-modal__header')}>
         {title ? <Title className={getBEMClassName('react-modal__title')}>{title}</Title> : null}
-        <FAIcon
-          icon="close"
-          extraClassName={getBEMClassName('react-modal__close')}
+        <OFButton
+          appearance="subtle-button"
+          onClick={closeModal}
+          className={getBEMClassName('react-modal__close')}
           title={intl.formatMessage({
             description: 'Modal close icon title',
             defaultMessage: 'Close',
           })}
-          onClick={closeModal}
-          noAriaHidden
-          role="button"
           aria-label={intl.formatMessage({
             description: 'Modal close icon title',
             defaultMessage: 'Close',
           })}
-        />
+        >
+          <FAIcon icon="close" />
+        </OFButton>
       </header>
       {children}
     </ReactModal>
