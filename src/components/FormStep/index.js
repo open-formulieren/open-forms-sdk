@@ -39,7 +39,9 @@ import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
 import {EmailVerificationModal} from 'components/EmailVerification';
 import FormStepDebug from 'components/FormStepDebug';
+import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
+import PreviousLink from 'components/PreviousLink';
 import SummaryProgress from 'components/SummaryProgress';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
@@ -838,10 +840,13 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
   const applicableSteps = submission.steps.filter(step => step.isApplicable === true);
   const currentSubmissionStepIndex = applicableSteps.indexOf(submissionStep);
 
+  const previousPage = getPreviousPageHref();
   return (
-    <>
+    <LiteralsProvider literals={formStep.literals}>
       <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
+
+        {previousPage && <PreviousLink to={previousPage} onClick={onPrevPage} position="start" />}
 
         {!isLoadingSomething && form.showSummaryProgress && (
           <SummaryProgress
@@ -914,7 +919,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
                 loginRequired={form.loginRequired}
                 onFormSave={onFormSave}
                 onNavigatePrevPage={onPrevPage}
-                previousPage={getPreviousPageHref()}
+                previousPage={previousPage}
                 onDestroySession={onDestroySession}
               />
             </form>
@@ -937,7 +942,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
         componentKey={emailVerificationModal.componentKey}
         emailAddress={emailVerificationModal.emailAddress}
       />
-    </>
+    </LiteralsProvider>
   );
 };
 

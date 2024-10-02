@@ -3,9 +3,9 @@ import React from 'react';
 
 import AbortButton from 'components/AbortButton';
 import {OFButton} from 'components/Button';
-import Link from 'components/Link';
 import {Literal, LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
+import PreviousLink from 'components/PreviousLink';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
@@ -31,9 +31,7 @@ const ButtonsToolbar = ({
         <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
           <ToolbarList>
             {previousPage && (
-              <Link to={previousPage} onClick={onNavigatePrevPage}>
-                <Literal name="previousText" />
-              </Link>
+              <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />
             )}
           </ToolbarList>
           <ToolbarList>

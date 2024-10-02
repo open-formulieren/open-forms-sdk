@@ -1,0 +1,17 @@
+@use 'microscope-sass/lib/bem';
+
+.openforms-previous-link {
+  @include bem.modifier('start') {
+    margin-block-end: 20px;
+    display: var(--of-previous-link-display-start, none);
+  }
+
+  @include bem.modifier('end') {
+    display: var(--of-previous-link-display-end, inline);
+  }
+
+  @include bem.element('icon') {
+    display: var(--of-previous-link-icon-display, none);
+    margin-inline-end: 10px;
+  }
+}
