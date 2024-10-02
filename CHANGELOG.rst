@@ -2,6 +2,40 @@
 SDK Changelog
 =============
 
+2.4.0 (2024-10-02)
+==================
+
+Feature release
+
+There are no changes compared to the beta version. Continue reading for the full
+changelog, which includes the alpha and beta release notes.
+
+.. warning:: SDK 2.4.0 requires the backend API version 2.8.0 or newer.
+
+New features
+------------
+
+* [#4542] Email address components now support a verification flow to prove ownership of
+  and access to the provided email address.
+* [#4545] Added an optional introduction page before the form start page.
+* [#4543] You can now optionally enable a short progress summary for a form, describing
+  the current step number and total step count.
+* [#4515] Updated Dutch translations from formal to informal variant.
+* [#4397] Added support for an 'initial data reference' parameter so that form fields
+  can be pre-populated from existing data.
+
+Bugfixes
+--------
+
+* Fixed the click action not being properly suppressed on disabled buttons.
+* Fixed the modal close button/icon not being accessible.
+
+Project maintenance
+-------------------
+
+* Improved the handling of modals in Storybook.
+* Bumped some libraries for their latest security fixes.
+
 2.4.0-beta.0 (2024-09-16)
 ==========================
 
