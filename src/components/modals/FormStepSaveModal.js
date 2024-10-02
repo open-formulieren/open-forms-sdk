@@ -209,6 +209,7 @@ const FormStepSaveModal = ({
                   defaultMessage="The email address where you will receive the resume link."
                 />
               }
+              autocomplete="email"
             />
 
             <Toolbar modifiers={['bottom', 'reverse']}>
