@@ -5,6 +5,7 @@ export default {
   component: _Loader,
   args: {
     modifiers: [],
+    withoutTranslation: true,
   },
   argTypes: {
     modifiers: {
