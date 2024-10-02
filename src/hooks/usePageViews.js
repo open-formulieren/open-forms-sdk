@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = import.meta.env.MODE === 'development';
 
 function usePrevious(value) {
   const ref = useRef({
