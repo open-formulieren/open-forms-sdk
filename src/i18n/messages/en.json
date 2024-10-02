@@ -684,6 +684,11 @@
     "description": "return to form start link after 403",
     "originalDefault": "Back to form start"
   },
+  "eAmrdi": {
+    "defaultMessage": "Loading...",
+    "description": "Loading content text",
+    "originalDefault": "Loading..."
+  },
   "eO6Ysb": {
     "defaultMessage": "Your payment is currently processing.",
     "description": "payment processing status",
