@@ -9,6 +9,17 @@ export default {
 };
 
 export const Feedback = {
+  args: {
+    useOverrides: false,
+    sharedBackgroundColorInfo: '#D9EBF7',
+    sharedBackgroundColorWarning: '#FFF3CD',
+    sharedBackgroundColorDanger: '#F8D7DA',
+    sharedBackgroundColorSuccess: '#DDFFDD',
+    sharedColorInfo: '#007BC7',
+    sharedColorWarning: '#E17000',
+    sharedColorDanger: '#D52B1E',
+    sharedColorSuccess: 'green',
+  },
   parameters: {
     formik: {
       initialValues: {
@@ -23,7 +34,22 @@ export const Feedback = {
     },
   },
   render: args => (
-    <table>
+    <table
+      style={
+        args.useOverrides
+          ? {
+              '--utrecht-alert-icon-info-color': args.sharedColorInfo,
+              '--utrecht-alert-icon-warning-color': args.sharedColorWarning,
+              '--utrecht-alert-icon-error-color': args.sharedColorDanger,
+              '--utrecht-alert-icon-ok-color': args.sharedColorSuccess,
+              '--utrecht-alert-info-background-color': args.sharedBackgroundColorInfo,
+              '--utrecht-alert-warning-background-color': args.sharedBackgroundColorWarning,
+              '--utrecht-alert-error-background-color': args.sharedBackgroundColorDanger,
+              '--utrecht-alert-ok-background-color': args.sharedBackgroundColorSuccess,
+            }
+          : undefined
+      }
+    >
       <thead>
         <tr>
           <th style={{inlineSize: '15%', textAlign: 'start'}}>Component</th>
