@@ -115,6 +115,34 @@ describe('OpenForm', () => {
     expect(within(formRoot).getAllByText('English version').length).toBeGreaterThan(0);
   });
 
+  it('should call the onLanguageChange callback on language change', async () => {
+    mswServer.use(...apiMocks);
+    const formRoot = document.createElement('div');
+    const target = document.createElement('div');
+    const onLanguageChangeMock = jest.fn();
+
+    const form = new OpenForm(formRoot, {
+      baseUrl: BASE_URL,
+      basePath: '',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      languageSelectorTarget: target,
+      lang: 'nl',
+      onLanguageChange: onLanguageChangeMock,
+    });
+
+    await act(async () => await form.init());
+
+    // wait for the loader to be removed when all network requests have completed
+    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    expect(target).not.toBeEmptyDOMElement();
+
+    await act(async () => {
+      await form.onLanguageChangeDone('en');
+    });
+
+    expect(onLanguageChangeMock).toBeCalledWith('en');
+  });
+
   it('should correctly set the formUrl', () => {
     mswServer.use(...apiMocks);
     const formRoot = document.createElement('div');
