@@ -22,6 +22,18 @@ export default {
       validate: {
         required: true,
       },
+      openForms: {
+        components: {
+          postcode: {
+            validate: {pattern: '1015 [a-zA-Z]{2}'},
+            translatedErrors: {
+              nl: {
+                pattern: 'De postcode moet beginnen met 1015',
+              },
+            },
+          },
+        },
+      },
     },
     evalContext: {},
   },
@@ -200,6 +212,106 @@ export const WithDeriveCityStreetNameWithData = {
         required: false,
       },
       deriveAddress: true,
+      openForms: {
+        components: {
+          city: {
+            validate: {pattern: 'Amsterdam'},
+            translatedErrors: {
+              nl: {
+                pattern: 'De stad moet Amsterdam zijn',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  play: async ({canvasElement, args, step}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    await userEvent.type(postcodeInput, '1234AB');
+
+    const houseNumberInput = await canvas.findByLabelText('Huisnummer');
+    await userEvent.type(houseNumberInput, '1');
+
+    const city = await canvas.findByLabelText('Stad');
+    const streetName = await canvas.findByLabelText('Straatnaam');
+
+    await userEvent.tab();
+
+    await waitFor(() => {
+      expect(city).toHaveValue('Amsterdam');
+      expect(streetName).toHaveValue('Keizersgracht');
+    });
+  },
+};
+
+export const IncorrectPostcode = {
+  render: SingleFormioComponent,
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      validate: {
+        required: false,
+      },
+      deriveAddress: true,
+      openForms: {
+        components: {
+          postcode: {
+            validate: {pattern: '1017 [A-Za-z]{2}'},
+            translatedErrors: {
+              nl: {
+                pattern: 'De postcode moet 1017 XX zijn',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  play: async ({canvasElement, args, step}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    await userEvent.type(postcodeInput, '1234 AB');
+
+    await userEvent.tab();
+
+    await canvas.findByText('De postcode moet 1017 XX zijn');
+  },
+};
+
+export const WithDeriveCityStreetNameWithDataIncorrectCity = {
+  render: SingleFormioComponent,
+  parameters: {
+    msw: {
+      handlers: [mockBAGDataGet],
+    },
+  },
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      validate: {
+        required: false,
+      },
+      deriveAddress: true,
+      openForms: {
+        components: {
+          city: {
+            validate: {pattern: 'Rotterdam'},
+            translatedErrors: {
+              nl: {
+                pattern: 'De stad moet Rotterdam zijn',
+              },
+            },
+          },
+        },
+      },
     },
   },
   play: async ({canvasElement, args, step}) => {
@@ -220,6 +332,10 @@ export const WithDeriveCityStreetNameWithData = {
       expect(city.value).toBe('Amsterdam');
       expect(streetName.value).toBe('Keizersgracht');
     });
+
+    await userEvent.tab();
+
+    await canvas.findByText('De stad moet Rotterdam zijn');
   },
 };
 
