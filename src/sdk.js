@@ -70,6 +70,7 @@ class OpenForm {
       languageSelectorTarget,
       displayComponents = {}, // TODO: document as unstable API
       useHashRouting = false,
+      onLanguageChange,
     } = opts;
 
     this.targetNode = targetNode;
@@ -79,6 +80,7 @@ class OpenForm {
     this.lang = lang;
     this.displayComponents = {...defaultDisplayComponents, ...displayComponents};
     this.useHashRouting = useHashRouting;
+    this.onLanguageChange = typeof onLanguageChange === 'function' ? onLanguageChange : undefined;
 
     switch (typeof languageSelectorTarget) {
       case 'string': {
@@ -173,6 +175,10 @@ class OpenForm {
   }
 
   async onLanguageChangeDone(newLanguagecode) {
+    if (this.onLanguageChange) {
+      this.onLanguageChange(newLanguagecode);
+      return;
+    }
     this.formObject = await get(this.url);
     this.render();
   }
