@@ -909,7 +909,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
               />
               {config.debug ? <FormStepDebug data={getCurrentFormData()} /> : null}
               <ButtonsToolbar
-                literals={formStep.literals}
                 canSubmitStep={canSubmit}
                 canSubmitForm={submission.submissionAllowed}
                 canSuspendForm={form.suspensionAllowed}

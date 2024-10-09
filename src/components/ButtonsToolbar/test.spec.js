@@ -6,6 +6,7 @@ import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
 
+import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 import ButtonsToolbar from './index';
@@ -37,7 +38,9 @@ const LITERALS = {
 
 const Wrap = ({children}) => (
   <IntlProvider locale="nl" messages={messagesNL}>
-    <MemoryRouter>{children}</MemoryRouter>
+    <MemoryRouter>
+      <LiteralsProvider literals={LITERALS}>{children}</LiteralsProvider>
+    </MemoryRouter>
   </IntlProvider>
 );
 
@@ -48,7 +51,6 @@ it('Last step of submittable form, button is present', () => {
     root.render(
       <Wrap>
         <ButtonsToolbar
-          literals={LITERALS}
           canSubmitStep={true}
           canSubmitForm={SUBMISSION_ALLOWED.yes}
           canSuspendForm={true}
@@ -80,7 +82,6 @@ it('Last step of non-submittable form with overview, button is present', () => {
     root.render(
       <Wrap>
         <ButtonsToolbar
-          literals={LITERALS}
           canSubmitStep={true}
           canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
           canSuspendForm={true}
@@ -112,7 +113,6 @@ it('Last step of non-submittable form without overview, button is NOT present', 
     root.render(
       <Wrap>
         <ButtonsToolbar
-          literals={LITERALS}
           canSubmitStep={true}
           canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
           canSuspendForm={true}
@@ -143,7 +143,6 @@ it('Non-last step of non-submittable form without overview, button IS present', 
     root.render(
       <Wrap>
         <ButtonsToolbar
-          literals={LITERALS}
           canSubmitStep={true}
           canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
           canSuspendForm={true}
@@ -174,7 +173,6 @@ it('Suspending form allowed, button is present', () => {
   renderTest(
     <Wrap>
       <ButtonsToolbar
-        literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
         canSuspendForm={true}
@@ -198,7 +196,6 @@ it('Suspending form not allowed, button is NOT present', () => {
   renderTest(
     <Wrap>
       <ButtonsToolbar
-        literals={LITERALS}
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
         canSuspendForm={false}
