@@ -1,17 +1,22 @@
 @use 'microscope-sass/lib/bem';
 
 .openforms-previous-link {
+  flex-direction: row;
+  column-gap: 8px;
+
   @include bem.modifier('start') {
     margin-block-end: 20px;
+    // NOTE: usually block elements should not define margins, but this is done deliberately
+    // See https://github.com/open-formulieren/open-forms-sdk/pull/718#discussion_r1791617060 for
+    // more discussion context.
     display: var(--of-previous-link-display-start, none);
   }
 
   @include bem.modifier('end') {
-    display: var(--of-previous-link-display-end, inline);
+    display: var(--of-previous-link-display-end, inline-flex);
   }
 
   @include bem.element('icon') {
     display: var(--of-previous-link-icon-display, none);
-    margin-inline-end: 10px;
   }
 }

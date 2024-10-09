@@ -13,17 +13,15 @@ const PreviousLink = ({to, onClick, position}) => {
     [`openforms-previous-link--${position}`]: position,
   });
   return (
-    <span className={className}>
-      <Link to={to} onClick={onClick}>
-        <FAIcon icon="arrow-left-long" extraClassName="openforms-previous-link__icon" />
-        <Literal name="previousText" />
-      </Link>
-    </span>
+    <Link to={to} onClick={onClick} className={className}>
+      <FAIcon icon="arrow-left-long" extraClassName="openforms-previous-link__icon" />
+      <Literal name="previousText" />
+    </Link>
   );
 };
 
 PreviousLink.propTypes = {
-  to: PropTypes.string,
+  to: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   position: PropTypes.oneOf(VARIANTS),
 };

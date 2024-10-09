@@ -22,15 +22,18 @@ const IntroductionPage = () => {
         dangerouslySetInnerHTML={{__html: introductionPageContent}}
       />
 
-      <span className="openforms-start-link">
-        <Link to="/startpagina" component={ButtonLink} appearance="primary-action-button">
-          <FormattedMessage
-            description="Button text for link to continue from introduction page to start page"
-            defaultMessage="Continue"
-          />
-          <FAIcon icon="arrow-right-long" extraClassName="openforms-start-link--icon" />
-        </Link>
-      </span>
+      <Link
+        to="/startpagina"
+        component={ButtonLink}
+        appearance="primary-action-button"
+        className="openforms-start-link"
+      >
+        <FormattedMessage
+          description="Button text for link to continue from introduction page to start page"
+          defaultMessage="Continue"
+        />
+        <FAIcon icon="arrow-right-long" />
+      </Link>
     </Card>
   );
 };

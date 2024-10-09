@@ -1,7 +1,7 @@
 @use 'microscope-sass/lib/bem';
 
 .openforms-start-link {
-  @include bem.element('icon') {
-    margin-inline-start: 10px;
-  }
+  display: inline-flex;
+  flex-direction: row;
+  column-gap: 8px;
 }
