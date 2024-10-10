@@ -292,7 +292,8 @@ class FileField extends Formio.Components.components.file {
   }
 
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
-    const targetElements = [this.element.querySelector('[ref="fileBrowse"]')];
+    const input = this.element.querySelector('[ref="fileBrowse"]');
+    const targetElements = input ? [input] : [];
     setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
