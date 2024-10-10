@@ -6,6 +6,7 @@ import {Navigate} from 'react-router-dom';
 import {FormContext} from 'Context';
 import Body from 'components/Body';
 import Card from 'components/Card';
+import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
 
 const IntroductionPage = () => {
@@ -21,11 +22,17 @@ const IntroductionPage = () => {
         dangerouslySetInnerHTML={{__html: introductionPageContent}}
       />
 
-      <Link to="/startpagina" component={ButtonLink} appearance="primary-action-button">
+      <Link
+        to="/startpagina"
+        component={ButtonLink}
+        appearance="primary-action-button"
+        className="openforms-start-link"
+      >
         <FormattedMessage
           description="Button text for link to continue from introduction page to start page"
-          defaultMessage="Continue ➜"
+          defaultMessage="Continue"
         />
+        <FAIcon icon="arrow-right-long" />
       </Link>
     </Card>
   );

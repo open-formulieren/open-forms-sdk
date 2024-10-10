@@ -3,14 +3,13 @@ import React from 'react';
 
 import AbortButton from 'components/AbortButton';
 import {OFButton} from 'components/Button';
-import Link from 'components/Link';
-import {Literal, LiteralsProvider} from 'components/Literal';
+import {Literal} from 'components/Literal';
 import Loader from 'components/Loader';
+import PreviousLink from 'components/PreviousLink';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const ButtonsToolbar = ({
-  literals,
   canSubmitStep,
   canSubmitForm,
   canSuspendForm,
@@ -27,58 +26,53 @@ const ButtonsToolbar = ({
 
   return (
     <>
-      <LiteralsProvider literals={literals}>
-        <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
+      <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
+        <ToolbarList>
+          {previousPage && (
+            <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />
+          )}
+        </ToolbarList>
+        <ToolbarList>
+          {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
+          need to be its own prop */}
+          {canSuspendForm && (
+            <OFButton
+              type="button"
+              appearance="secondary-action-button"
+              name="save"
+              onClick={onFormSave}
+            >
+              <Literal name="saveText" />
+            </OFButton>
+          )}
+          {showSubmitButton && (
+            <OFButton
+              type="submit"
+              appearance="primary-action-button"
+              name="next"
+              disabled={!canSubmitStep}
+            >
+              {isCheckingLogic ? (
+                <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
+              ) : (
+                <Literal name="nextText" />
+              )}
+            </OFButton>
+          )}
+        </ToolbarList>
+      </Toolbar>
+      {!hideAbortButton && (
+        <Toolbar modifiers={['bottom', 'reverse']}>
           <ToolbarList>
-            {previousPage && (
-              <Link to={previousPage} onClick={onNavigatePrevPage}>
-                <Literal name="previousText" />
-              </Link>
-            )}
-          </ToolbarList>
-          <ToolbarList>
-            {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
-            need to be its own prop */}
-            {canSuspendForm && (
-              <OFButton
-                type="button"
-                appearance="secondary-action-button"
-                name="save"
-                onClick={onFormSave}
-              >
-                <Literal name="saveText" />
-              </OFButton>
-            )}
-            {showSubmitButton && (
-              <OFButton
-                type="submit"
-                appearance="primary-action-button"
-                name="next"
-                disabled={!canSubmitStep}
-              >
-                {isCheckingLogic ? (
-                  <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
-                ) : (
-                  <Literal name="nextText" />
-                )}
-              </OFButton>
-            )}
+            <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
           </ToolbarList>
         </Toolbar>
-        {!hideAbortButton && (
-          <Toolbar modifiers={['bottom', 'reverse']}>
-            <ToolbarList>
-              <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
-            </ToolbarList>
-          </Toolbar>
-        )}
-      </LiteralsProvider>
+      )}
     </>
   );
 };
 
 ButtonsToolbar.propTypes = {
-  literals: PropTypes.object,
   canSubmitStep: PropTypes.bool.isRequired,
   canSubmitForm: PropTypes.string.isRequired,
   canSuspendForm: PropTypes.bool.isRequired,
