@@ -8,11 +8,13 @@ import Body from 'components/Body';
 import Card from 'components/Card';
 import Link from 'components/Link';
 
-const IntroductionPage = () => {
+const IntroductionPage = ({extraParams = {}}) => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
   if (!introductionPageContent) {
     return <Navigate replace to="startpagina" />;
   }
+  let startUrl = '/startpagina';
+  if (extraParams) startUrl = `${startUrl}?${new URLSearchParams(extraParams).toString()}`;
   return (
     <Card title={name}>
       <Body
@@ -21,7 +23,7 @@ const IntroductionPage = () => {
         dangerouslySetInnerHTML={{__html: introductionPageContent}}
       />
 
-      <Link to="/startpagina" component={ButtonLink} appearance="primary-action-button">
+      <Link to={startUrl} component={ButtonLink} appearance="primary-action-button">
         <FormattedMessage
           description="Button text for link to continue from introduction page to start page"
           defaultMessage="Continue ➜"

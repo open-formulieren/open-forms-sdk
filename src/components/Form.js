@@ -359,7 +359,11 @@ const Form = () => {
         element={<Navigate replace to={introductionPageContent ? 'introductie' : 'startpagina'} />}
       />
 
-      <Route path="introductie" element={<IntroductionPage />} />
+      <Route
+        path="introductie"
+        // Ensure the initialDataReference is preserved when continuing to the Form start
+        element={<IntroductionPage extraParams={{initial_data_reference: initialDataReference}} />}
+      />
 
       <Route
         path="startpagina"
@@ -370,6 +374,7 @@ const Form = () => {
               submission={state.submission}
               onFormStart={onFormStart}
               onDestroySession={onDestroySession}
+              initialDataReference={initialDataReference}
             />
           </ErrorBoundary>
         }
