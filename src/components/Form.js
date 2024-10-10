@@ -350,6 +350,8 @@ const Form = () => {
     ) : null;
 
   if (state.startingError) throw state.startingError;
+  const extraStartUrlParams = {};
+  if (initialDataReference) extraStartUrlParams.initial_data_reference = initialDataReference;
 
   // Route the correct page based on URL
   const router = (
@@ -359,7 +361,11 @@ const Form = () => {
         element={<Navigate replace to={introductionPageContent ? 'introductie' : 'startpagina'} />}
       />
 
-      <Route path="introductie" element={<IntroductionPage />} />
+      <Route
+        path="introductie"
+        // Ensure the initialDataReference is preserved when continuing to the Form start
+        element={<IntroductionPage extraParams={extraStartUrlParams} />}
+      />
 
       <Route
         path="startpagina"
@@ -370,6 +376,7 @@ const Form = () => {
               submission={state.submission}
               onFormStart={onFormStart}
               onDestroySession={onDestroySession}
+              initialDataReference={initialDataReference}
             />
           </ErrorBoundary>
         }
