@@ -35,6 +35,7 @@ export const RadioField = ({
   const {error, touched} = getFieldMeta(name);
   const invalid = touched && !!error;
   const descriptionid = `${id}-description`;
+  const errorMessageId = invalid ? `${id}-error-message` : undefined;
   return (
     <Fieldset
       className="utrecht-form-fieldset--openforms"
@@ -58,6 +59,7 @@ export const RadioField = ({
             id={`${id}-opt-${index}`}
             name={name}
             value={optionValue}
+            aria-describedby={errorMessageId}
             {...inputProps}
           />
           <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
@@ -74,7 +76,7 @@ export const RadioField = ({
       ))}
 
       <HelpText id={descriptionid}>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} id={errorMessageId} />}
     </Fieldset>
   );
 };

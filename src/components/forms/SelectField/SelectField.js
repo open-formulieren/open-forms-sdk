@@ -32,6 +32,7 @@ const SelectField = ({
   const {setValue, setTouched} = getFieldHelpers(name);
 
   const invalid = touched && !!error;
+  const errorMessageId = invalid ? `${id}-error-message` : undefined;
 
   // map the formik value back to the value object for react-select
   let value = undefined;
@@ -135,9 +136,10 @@ const SelectField = ({
         }}
         value={value}
         onBlur={() => setTouched(true)}
+        aria-describedby={errorMessageId}
       />
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} id={errorMessageId} />}
     </FormField>
   );
 };

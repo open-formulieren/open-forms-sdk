@@ -46,6 +46,7 @@ export const ProgressIndicatorItem = ({
           placeholder={!canNavigateTo}
           modifiers={canNavigateTo ? getLinkModifiers(isActive) : []}
           aria-label={label}
+          aria-current={isActive ? 'step' : undefined}
         >
           <FormattedMessage
             description="Step label in progress indicator"

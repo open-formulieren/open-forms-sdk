@@ -22,6 +22,7 @@ const Checkbox = ({
 
   const {error, touched} = getFieldMeta(name);
   const invalid = touched && !!error;
+  const errorMessageId = invalid ? `${id}-error-message` : undefined;
 
   return (
     <FormField type="checkbox" invalid={invalid} className="utrecht-form-field--openforms">
@@ -40,10 +41,11 @@ const Checkbox = ({
         invalid={invalid}
         required={isRequired}
         appearance="custom"
+        aria-describedby={errorMessageId}
         {...inputProps}
       />
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} id={errorMessageId} />}
     </FormField>
   );
 };

@@ -46,6 +46,7 @@ const NumberField = ({
         thousandSeparator,
         decimalScale: isInteger ? undefined : 2,
       };
+  const errorMessageId = invalid ? `${id}-error-message` : undefined;
 
   return (
     <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
@@ -66,11 +67,12 @@ const NumberField = ({
           type={useNumberType ? 'number' : 'text'}
           customInput={Textbox}
           readOnly={readOnly}
+          aria-describedby={errorMessageId}
           {...separatorProps}
         />
       </Paragraph>
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} id={errorMessageId} />}
     </UtrechtFormField>
   );
 };

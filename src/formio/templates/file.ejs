@@ -6,10 +6,10 @@
         {% if (!ctx.disabled) { %}
           <div class="col-md-1"></div>
         {% } %}
-        <div class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}"><strong>{{ctx.t('File Name')}}</strong></div>
-        <div class="col-md-2"><strong>{{ctx.t('Size')}}</strong></div>
+        <div id="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-name" class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}"><b>{{ctx.t('File Name')}}</b></div>
+        <div id="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-size" class="col-md-2"><b>{{ctx.t('Size')}}</b></div>
         {% if (ctx.self.hasTypes) { %}
-          <div class="col-md-2"><strong>{{ctx.t('Type')}}</strong></div>
+          <div id="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-type" class="col-md-2"><b>{{ctx.t('Type')}}</b></div>
         {% } %}
       </div>
     </li>
@@ -18,30 +18,33 @@
         <div class="row">
           {% if (!ctx.disabled) { %}
             <div class="col-md-1">
-              <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}}">
-                <i class="{{ctx.iconClass('trash-can')}}"></i>
+              <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}} {{file.originalName || file.name}}">
+                <i class="{{ctx.iconClass('trash-can')}}" aria-hidden="true"></i>
               </button>
             </div>
           {% } %}
-          <div class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}">
+          <div class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-name">
             {% if (ctx.component.uploadOnly) { %}
               {{{file.originalName || file.name}}}
             {% } else { %}
               <a href="{{file.url || '#'}}" target="_blank" ref="fileLink" class="utrecht-link utrecht-link--openforms"> {{{file.originalName || file.name}}}</a>
             {% } %}
           </div>
-          <div class="col-md-2">{{ctx.fileSize(file.size)}}</div>
-          {% if (ctx.self.hasTypes && !ctx.disabled) { %}
-            <div class="col-md-2">
-              <select class="file-type" ref="fileType">
-                {% ctx.component.fileTypes.map(function(type) { %}
-                  <option class="test" value="{{ type.value }}" {% if (type.label === file.fileType) { %}selected="selected"{% } %}>{{ type.label }}</option>
-                {% }); %}
-              </select>
+          <div class="col-md-2" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-size">
+            {{ctx.fileSize(file.size)}}
+          </div>
+          {% if (ctx.self.hasTypes) { %}
+            <div class="col-md-2" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-type">
+              {% if (!ctx.disabled) { %}
+                <select class="file-type" ref="fileType">
+                  {% ctx.component.fileTypes.map(function(type) { %}
+                    <option class="test" value="{{ type.value }}" {% if (type.label === file.fileType) { %}selected="selected"{% } %}>{{ type.label }}</option>
+                  {% }); %}
+                </select>
+              {% } else { %}
+                {{file.fileType}}
+              {% } %}
             </div>
-          {% } %}
-          {% if (ctx.self.hasTypes && ctx.disabled) { %}
-          <div class="col-md-2">{{file.fileType}}</div>
           {% } %}
         </div>
       </li>
@@ -83,7 +86,7 @@
 
         {{ctx.t('or')}}
 
-        <a href="#" ref="fileBrowse" class="browse" class="utrecht-link utrecht-link--openforms">{{ctx.t('browse')}}</a>
+        <a id="{{ctx.instance.id}}-{{ctx.component.key}}" href="#" ref="fileBrowse" class="browse utrecht-link utrecht-link--openforms">{{ctx.t('browse')}}</a>
 
         {% if (ctx.component.multiple) { %}
           {{ctx.t('to attach files.')}}
