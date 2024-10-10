@@ -9,7 +9,7 @@ import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
-const LoginOptions = ({form, onFormStart}) => {
+const LoginOptions = ({form, onFormStart, initialDataReference}) => {
   const config = useContext(ConfigContext);
 
   const loginAsYourselfOptions = [];
@@ -18,7 +18,7 @@ const LoginOptions = ({form, onFormStart}) => {
 
   form.loginOptions.forEach(option => {
     let readyOption = {...option};
-    readyOption.url = getLoginUrl(option);
+    readyOption.url = getLoginUrl(option, {initialDataReference: initialDataReference});
     readyOption.label = (
       <FormattedMessage
         description="Login button label"

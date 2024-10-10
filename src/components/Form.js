@@ -370,6 +370,7 @@ const Form = () => {
               submission={state.submission}
               onFormStart={onFormStart}
               onDestroySession={onDestroySession}
+              initialDataReference={initialDataReference}
             />
           </ErrorBoundary>
         }
