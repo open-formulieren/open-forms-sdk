@@ -18,8 +18,8 @@
         <div class="row">
           {% if (!ctx.disabled) { %}
             <div class="col-md-1">
-              <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}}">
-                <i class="{{ctx.iconClass('trash-can')}}"></i>
+              <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}} {{{file.originalName || file.name}}}">
+                <i class="{{ctx.iconClass('trash-can')}}" aria-hidden="true"></i>
               </button>
             </div>
           {% } %}

@@ -17,7 +17,7 @@ const ErrorMessage = ({children, modifier = 'error'}) => {
   const errorRef = useScrollIntoView();
   if (!children) return null;
   return (
-    <Alert type={modifier} icon={ICONS[modifier]} ref={errorRef}>
+    <Alert type={modifier} icon={ICONS[modifier]} ref={errorRef} role="alert">
       {children}
     </Alert>
   );
