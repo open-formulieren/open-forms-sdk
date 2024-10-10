@@ -15,33 +15,28 @@ we don't have strict BEM naming here.
   @include body;
   @include anchor.extend-utrecht-link;
 
-  .table {
-    width: 100%;
-    margin-block-end: 20px;
-    border-collapse: collapse;
+  .list-group {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    @include margin(auto);
 
-    &__header {
-      border-bottom: solid 1px var(--of-color-border);
+    .list-group-header {
+      @include hide-on-mobile(block);
+
+      .row {
+        border-bottom: solid 1px var(--of-color-border);
+      }
     }
 
-    &__column {
-      text-align: left;
-
-      &--1 {
-        @include bootstrap-span(width, 1);
-      }
-
-      &--2 {
-        @include bootstrap-span(width, 2);
-      }
-
-      &--7 {
-        @include bootstrap-span(width, 7);
-      }
-
-      &--9 {
-        @include bootstrap-span(width, 9);
-      }
+    .list-group-item {
+      @include responsive(
+        padding-top,
+        $grid-margin-1,
+        $grid-margin-1,
+        $grid-margin-1,
+        $grid-margin-1
+      );
     }
   }
 
@@ -49,6 +44,31 @@ we don't have strict BEM naming here.
     display: flex;
     align-items: center;
 
+    .col-md-1 {
+      @include bootstrap-span(width, 1);
+      @include mobile-only {
+        flex-grow: 1;
+      }
+    }
+    .col-md-2 {
+      @include bootstrap-span(width, 2);
+      @include mobile-only {
+        flex-grow: 2;
+      }
+    }
+    .col-md-7 {
+      @include bootstrap-span(width, 7);
+      @include mobile-only {
+        flex-grow: 1;
+      }
+    }
+    .col-md-9 {
+      @include bootstrap-span(width, 9);
+      @include mobile-only {
+        flex-grow: 5;
+      }
+      overflow-wrap: break-word;
+    }
     .col-sm-2 {
       @include bootstrap-span(width, 2);
     }

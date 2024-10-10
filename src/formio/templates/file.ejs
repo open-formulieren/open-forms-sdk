@@ -1,53 +1,55 @@
 {%/* taken from https://github.com/formio/formio.js/blob/v4.12.7/src/templates/bootstrap/file/form.ejs */%}
 {% if (!ctx.self.imageUpload) { %}
-<table class="table">
-  <thead class="table__header">
-    <tr>
-      {% if (!ctx.disabled) { %}
-        <th class="table__column table__column--1"></th>
-      {% } %}
-      <th class="table__column table__column--{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}">{{ctx.t('File Name')}}</th>
-      <th class="table__column table__column--2">{{ctx.t('Size')}}</th>
-      {% if (ctx.self.hasTypes) { %}
-        <th class="table__column table__column--2">{{ctx.t('Type')}}</th>
-      {% } %}
-    </tr>
-  </thead>
-  <tbody>
-    {% ctx.files.forEach(function(file) { %}
-      <tr>
+  <ul class="list-group list-group-striped">
+    <li class="list-group-item list-group-header hidden-xs hidden-sm">
+      <div class="row">
         {% if (!ctx.disabled) { %}
-          <td>
-            <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}}">
-              <i class="{{ctx.iconClass('trash-can')}}"></i>
-            </button>
-          </td>
+          <div class="col-md-1"></div>
         {% } %}
-        <td>
-          {% if (ctx.component.uploadOnly) { %}
-            {{{file.originalName || file.name}}}
-          {% } else { %}
-            <a href="{{file.url || '#'}}" target="_blank" ref="fileLink" class="utrecht-link utrecht-link--openforms"> {{{file.originalName || file.name}}}</a>
+        <div id="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-name" class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}"><b>{{ctx.t('File Name')}}</b></div>
+        <div id="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-size" class="col-md-2"><b>{{ctx.t('Size')}}</b></div>
+        {% if (ctx.self.hasTypes) { %}
+          <div id="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-type" class="col-md-2"><b>{{ctx.t('Type')}}</b></div>
+        {% } %}
+      </div>
+    </li>
+    {% ctx.files.forEach(function(file) { %}
+      <li class="list-group-item">
+        <div class="row">
+          {% if (!ctx.disabled) { %}
+            <div class="col-md-1">
+              <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}} {{file.originalName || file.name}}">
+                <i class="{{ctx.iconClass('trash-can')}}" aria-hidden="true"></i>
+              </button>
+            </div>
           {% } %}
-        </td>
-        <td>{{ctx.fileSize(file.size)}}</td>
-        {% if (ctx.self.hasTypes && !ctx.disabled) { %}
-          <td>
-            <select class="file-type" ref="fileType">
-              {% ctx.component.fileTypes.map(function(type) { %}
-                <option class="test" value="{{ type.value }}" {% if (type.label === file.fileType) { %}selected="selected"{% } %}>{{ type.label }}</option>
-              {% }); %}
-            </select>
-          </td>
-        {% } %}
-        {% if (ctx.self.hasTypes && ctx.disabled) { %}
-          <td>{{file.fileType}}</td>
-        {% } %}
+          <div class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-name">
+            {% if (ctx.component.uploadOnly) { %}
+              {{{file.originalName || file.name}}}
+            {% } else { %}
+              <a href="{{file.url || '#'}}" target="_blank" ref="fileLink" class="utrecht-link utrecht-link--openforms"> {{{file.originalName || file.name}}}</a>
+            {% } %}
+          </div>
+          <div class="col-md-2" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-size">
+            {{ctx.fileSize(file.size)}}
+          </div>
+          {% if (ctx.self.hasTypes) { %}
+            <div class="col-md-2" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}__file-list-header--file-type">
+              {% if (!ctx.disabled) { %}
+                <select class="file-type" ref="fileType">
+                  {% ctx.component.fileTypes.map(function(type) { %}
+                    <option class="test" value="{{ type.value }}" {% if (type.label === file.fileType) { %}selected="selected"{% } %}>{{ type.label }}</option>
+                  {% }); %}
+                </select>
+              {% } else { %}
+                {{file.fileType}}
+              {% } %}
+            </div>
+          {% } %}
         </div>
-      </tr>
+      </li>
     {% }) %}
-  </tbody>
-</table>
+  </ul>
 {% } else { %}
   <div>
     {% ctx.files.forEach(function(file) { %}
