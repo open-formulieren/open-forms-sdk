@@ -43,7 +43,8 @@ class DateField extends DateTimeField {
   }
 
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
-    const targetElements = [this.element.querySelector('input:not([type="hidden"])')];
+    const inputClone = this.element.querySelector('input:not([type="hidden"])');
+    const targetElements = inputClone ? [inputClone] : [];
     setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
