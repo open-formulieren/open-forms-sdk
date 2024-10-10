@@ -11,7 +11,7 @@ EmailField.propTypes = {
   description: PropTypes.node,
   id: PropTypes.string,
   disabled: PropTypes.bool,
-  autocomplete: PropTypes.string,
+  autocomplete: PropTypes.oneOf(['email']),
 };
 
 export default EmailField;

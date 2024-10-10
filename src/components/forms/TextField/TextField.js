@@ -20,6 +20,7 @@ export const TextField = ({
 
   const {error, touched} = getFieldMeta(name);
   const invalid = touched && !!error;
+  const errorMessageId = invalid ? `${id}-error-message` : undefined;
   return (
     <UtrechtFormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
       <Label id={id} isRequired={isRequired} disabled={disabled}>
@@ -33,12 +34,12 @@ export const TextField = ({
           className="utrecht-textbox--openforms"
           disabled={disabled}
           invalid={invalid}
-          aria-describedby={invalid ? `${id}-error-message` : undefined}
+          aria-describedby={errorMessageId}
           {...inputProps}
         />
       </Paragraph>
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} inputId={id} />}
+      {touched && <ValidationErrors error={error} id={errorMessageId} />}
     </UtrechtFormField>
   );
 };

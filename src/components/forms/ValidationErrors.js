@@ -2,11 +2,11 @@ import {FormFieldDescription} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ValidationErrors = ({error = '', inputId = ''}) => {
+const ValidationErrors = ({error = '', id = ''}) => {
   if (!error) return null;
   return (
     <FormFieldDescription
-      id={`${inputId}-error-message`}
+      id={id}
       invalid
       className="utrecht-form-field-description--openforms-errors"
     >
@@ -17,7 +17,7 @@ const ValidationErrors = ({error = '', inputId = ''}) => {
 
 ValidationErrors.propTypes = {
   error: PropTypes.string,
-  inputId: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default ValidationErrors;

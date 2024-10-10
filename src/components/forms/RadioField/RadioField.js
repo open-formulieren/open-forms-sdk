@@ -35,7 +35,7 @@ export const RadioField = ({
   const {error, touched} = getFieldMeta(name);
   const invalid = touched && !!error;
   const descriptionid = `${id}-description`;
-  // @TODO check aria descriptions with screen reader... Is it still usable, with the description and error messages?
+  const errorMessageId = invalid ? `${id}-error-message` : undefined;
   return (
     <Fieldset
       className="utrecht-form-fieldset--openforms"
@@ -59,7 +59,7 @@ export const RadioField = ({
             id={`${id}-opt-${index}`}
             name={name}
             value={optionValue}
-            aria-describedby={invalid ? `${id}-error-message` : undefined}
+            aria-describedby={errorMessageId}
             {...inputProps}
           />
           <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
@@ -76,7 +76,7 @@ export const RadioField = ({
       ))}
 
       <HelpText id={descriptionid}>{description}</HelpText>
-      {touched && <ValidationErrors error={error} inputId={id} />}
+      {touched && <ValidationErrors error={error} id={errorMessageId} />}
     </Fieldset>
   );
 };
