@@ -30,8 +30,14 @@ class DateTimeField extends DateTimeFormio {
   }
 
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
-    const targetElements = [this.element.querySelector('input:not([type="hidden"])')];
-    setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+    const inputClone = this.element.querySelector('input:not([type="hidden"])');
+    const targetElements = inputClone ? [inputClone] : [];
+
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+    }
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 

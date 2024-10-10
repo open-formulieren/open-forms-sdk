@@ -34,7 +34,11 @@ class Number extends Formio.Components.components.number {
   }
 
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
-    setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    }
     return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 

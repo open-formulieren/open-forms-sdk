@@ -45,7 +45,12 @@ class DateField extends DateTimeField {
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
     const inputClone = this.element.querySelector('input:not([type="hidden"])');
     const targetElements = inputClone ? [inputClone] : [];
-    setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+    }
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 
