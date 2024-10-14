@@ -5,7 +5,8 @@
   {% if (!ctx.disabled) { %}
   <td class="{{ctx.ofPrefix}}multi-value-row__remove">
     <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" title="{{ctx.t('Remove')}}" ref="removeRow">
-      <i class="{{ctx.iconClass('trash-can')}}"></i>
+      <i class="{{ctx.iconClass('trash-can')}}" aria-hidden="true"></i>
+      <span class="sr-only">{{ctx.t('Remove')}}</span>
     </button>
   </td>
   {% } %}
