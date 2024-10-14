@@ -1,4 +1,3 @@
-import {expect} from '@storybook/test';
 import {screen} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import _ from 'lodash';
@@ -10,28 +9,27 @@ import OpenFormsModule from 'formio/module';
 // Use our custom components
 Formio.use(OpenFormsModule);
 
-const timeForm = {
+const numberForm = {
   type: 'form',
   components: [
     {
-      key: 'time',
-      type: 'time',
-      input: true,
-      label: 'Time',
-      inputType: 'text',
+      key: 'number',
+      type: 'number',
+      label: 'Number',
+      validate: {
+        required: true,
+      },
     },
   ],
 };
 
-const multipleTimeForm = {
+const multipleNumberForm = {
   type: 'form',
   components: [
     {
-      key: 'time',
-      type: 'time',
-      input: true,
-      label: 'Time',
-      inputType: 'text',
+      key: 'number',
+      type: 'number',
+      label: 'Multiple number',
       multiple: true,
       validate: {
         required: true,
@@ -48,50 +46,46 @@ const renderForm = async formConfig => {
   return {form, container};
 };
 
-describe('The time component', () => {
+describe('The number component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
   });
 
-  test('Time component with invalid time', async () => {
+  test('Single number component with valid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(timeForm);
+    const {form} = await renderForm(numberForm);
 
-    const input = screen.getByLabelText('Time');
+    const input = screen.getByLabelText('Number');
+
     expect(input).toBeVisible();
-    await user.type(input, '25:00');
-    expect(input).toHaveDisplayValue('25:00');
 
-    expect(form.isValid()).toBe(false);
+    await user.type(input, '6');
+
+    expect(form.isValid()).toBeTruthy();
   });
 
-  test('Time component with invalid time has descriptive aria tags', async () => {
+  test('Single number component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(timeForm);
+    const {form} = await renderForm(numberForm);
 
-    const input = screen.getByLabelText('Time');
-    expect(input).toBeVisible();
+    const input = screen.getByLabelText('Number');
 
-    // Valid time input
-    await user.type(input, '12:00');
-    expect(form.isValid()).toBeTruthy();
-
-    // Invalid time input
+    // Trigger validation
+    await user.type(input, '6');
     await user.clear(input);
-    await user.type(input, '25:00');
+    await user.tab({shift: true});
 
-    // Expect the invalid time input to have aria-describedby and aria-invalid
+    // Input is invalid and should have aria-describedby and aria-invalid
     expect(input.className.includes('is-invalid')).toBeTruthy();
     expect(input.hasAttribute('aria-describedby')).toBeTruthy();
     expect(input.hasAttribute('aria-invalid')).toBeTruthy();
     expect(input.getAttribute('aria-invalid')).toBeTruthy();
     expect(form.isValid()).toBeFalsy();
 
-    // Change time input to a valid time
-    await user.clear(input);
-    await user.type(input, '12:00');
+    await user.type(input, '6');
+    await user.tab({shift: true});
 
-    // Expect the valid time input to not have aria-describedby and aria-invalid
+    // Input is again valid and without aria-describedby and aria-invalid
     expect(input.className.includes('is-invalid')).toBeFalsy();
     expect(input.hasAttribute('aria-describedby')).toBeFalsy();
     expect(input.hasAttribute('aria-invalid')).toBeFalsy();
@@ -99,51 +93,59 @@ describe('The time component', () => {
   });
 });
 
-describe('The time component multiple', () => {
+describe('The multiple number component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
   });
 
-  test('Multiple time component with valid input', async () => {
+  test('Multiple number component with valid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleNumberForm);
 
-    const multipleInput = screen.getByLabelText('Time');
+    const input = screen.getByLabelText('Multiple number');
 
-    expect(multipleInput).toBeVisible();
+    expect(input).toBeVisible();
 
-    await user.type(multipleInput, '12:00');
+    await user.type(input, '6');
 
     expect(form.isValid()).toBeTruthy();
   });
 
-  test('Multiple time component with invalid input', async () => {
+  test('Multiple number component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleNumberForm);
 
-    const input = screen.getByLabelText('Time');
+    const input = screen.getByLabelText('Multiple number');
 
     // Trigger validation
-    await user.type(input, '25:00');
+    await user.type(input, '6');
+    await user.clear(input);
     await user.tab({shift: true});
 
     // The field is invalid, and shouldn't have the aria-describedby or aria-invalid tags
     expect(input.className.includes('is-invalid')).toBeTruthy();
     expect(input.hasAttribute('aria-describedby')).toBeFalsy();
     expect(input.hasAttribute('aria-invalid')).toBeFalsy();
-
     expect(form.isValid()).toBeFalsy();
+
+    await user.type(input, '6');
+    await user.tab({shift: true});
+
+    // The field is again valid
+    expect(input.className.includes('is-invalid')).toBeFalsy();
+    expect(form.isValid()).toBeTruthy();
   });
 
-  test('Required multiple time without inputs', async () => {
+  test('Multiple number without inputs', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleNumberForm);
 
-    const input = screen.getByLabelText('Time');
+    const input = screen.getByLabelText('Multiple number');
     const component = getComponent(input);
 
     // Trigger validation
-    await user.type(input, '25:00');
+    await user.type(input, '6');
+    await user.clear(input);
     await user.tab({shift: true});
 
     // Remove input
@@ -154,17 +156,17 @@ describe('The time component multiple', () => {
     expect(form.isValid()).toBeFalsy();
   });
 
-  test('Multiple time with one valid and one invalid input', async () => {
+  test('Multiple number with one valid and one invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleNumberForm);
 
     await user.click(screen.getByRole('button', {name: 'Add Another'}));
 
     const inputs = screen.getAllByRole('textbox');
     expect(inputs).toHaveLength(2);
 
-    await user.type(inputs[0], '12:00');
-    await user.type(inputs[1], '12:00');
+    await user.type(inputs[0], '6');
+    await user.type(inputs[1], '12');
     await user.tab({shift: true});
 
     // The Both inputs are valid
@@ -173,7 +175,6 @@ describe('The time component multiple', () => {
     expect(form.isValid()).toBeTruthy();
 
     await user.clear(inputs[0]);
-    await user.type(inputs[0], '25:00');
     await user.tab({shift: true});
 
     // Both inputs are now marked as invalid
@@ -181,8 +182,7 @@ describe('The time component multiple', () => {
     expect(inputs[1].className.includes('is-invalid')).toBeTruthy();
     expect(form.isValid()).toBeFalsy();
 
-    await user.clear(inputs[0]);
-    await user.type(inputs[0], '12:00');
+    await user.type(inputs[0], '3');
     await user.tab({shift: true});
 
     // Both inputs are again valid
