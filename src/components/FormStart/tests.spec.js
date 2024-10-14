@@ -10,7 +10,7 @@ import {buildSubmission} from 'api-mocks';
 import useQuery from 'hooks/useQuery';
 
 import FormStart from '.';
-import {testForm} from './fixtures';
+import {testForm, testLoginForm} from './fixtures';
 
 jest.mock('hooks/useQuery');
 let scrollIntoViewMock = jest.fn();
@@ -115,4 +115,27 @@ it('Form start page does not show login buttons if an active submission is prese
 
   expect(screen.queryByRole('button', {name: 'Continue existing submission'})).toBeInTheDocument();
   expect(screen.queryByRole('button', {name: 'Abort submission'})).toBeInTheDocument();
+});
+
+it('Form start page with initial_data_reference', () => {
+  useQuery.mockReturnValue(new URLSearchParams());
+  const onFormStart = jest.fn();
+  const onDestroySession = jest.fn();
+
+  renderTest(
+    <Wrap>
+      <FormStart
+        form={testLoginForm}
+        onFormStart={onFormStart}
+        onDestroySession={onDestroySession}
+        initialDataReference="1234"
+      />
+    </Wrap>,
+    container
+  );
+  const loginLink = screen.getByRole('link', {name: 'Login with DigiD'});
+  expect(loginLink).toHaveAttribute(
+    'href',
+    'https://openforms.nl/auth/form-name/digid/start?initial_data_reference=1234&next=http%3A%2F%2Flocalhost%2F%3F_start%3D1'
+  );
 });
