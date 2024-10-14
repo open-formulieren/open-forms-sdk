@@ -49,7 +49,7 @@ class DateField extends DateTimeField {
     // setErrorAttributes cannot be done for a `multiple` component
     // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
     if (!this.component.multiple) {
-      setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+      setErrorAttributes(targetElements, hasErrors, hasMessages, this.refs.messageContainer.id);
     }
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }

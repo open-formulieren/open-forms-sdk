@@ -49,7 +49,7 @@ class PhoneNumberField extends PhoneNumber {
     // setErrorAttributes cannot be done for a `multiple` component
     // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
     if (!this.component.multiple) {
-      setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+      setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
     }
     return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }

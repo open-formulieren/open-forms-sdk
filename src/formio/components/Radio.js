@@ -18,7 +18,7 @@ class Radio extends Formio.Components.components.radio {
   }
 
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
-    setErrorAttributes(elements, hasErrors, hasMessages, this.element);
+    setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
     return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 }

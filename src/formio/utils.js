@@ -14,24 +14,21 @@ const escapeHtml = source => {
   return pre.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&apos;').replace(/&/g, '&amp;');
 };
 
-const setErrorAttributes = (elements, hasErrors, hasMessages, parentElement) => {
+const setErrorAttributes = (elements, hasErrors, hasMessages, messageContainerId) => {
   // Update the attributes 'aria-invalid' and 'aria-describedby' using hasErrors
   elements.forEach(element => {
-    const errorMessageElementId = parentElement.querySelector('[ref="messageContainer"]')?.id;
     let ariaDescriptions = (element.getAttribute('aria-describedby') || '')
       .split(' ')
       .filter(description => !!description);
 
-    if (hasErrors && hasMessages && !ariaDescriptions.includes(errorMessageElementId)) {
+    if (hasErrors && hasMessages && !ariaDescriptions.includes(messageContainerId)) {
       // The input has an error, but the error message isn't yet part of the ariaDescriptions
-      ariaDescriptions.push(errorMessageElementId);
+      ariaDescriptions.push(messageContainerId);
     }
 
-    if (!hasErrors && ariaDescriptions.includes(errorMessageElementId)) {
+    if (!hasErrors && ariaDescriptions.includes(messageContainerId)) {
       // The input doesn't have an error, but the error message is still a part of the ariaDescriptions
-      ariaDescriptions = ariaDescriptions.filter(
-        description => description !== errorMessageElementId
-      );
+      ariaDescriptions = ariaDescriptions.filter(description => description !== messageContainerId);
     }
 
     if (ariaDescriptions.length > 0) {

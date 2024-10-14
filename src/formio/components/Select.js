@@ -19,7 +19,7 @@ class Select extends Formio.Components.components.select {
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
     const inputClone = this.element.querySelector('input:not([type="hidden"])');
     const targetElements = inputClone ? [inputClone] : [];
-    setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+    setErrorAttributes(targetElements, hasErrors, hasMessages, this.refs.messageContainer.id);
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 

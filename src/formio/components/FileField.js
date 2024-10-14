@@ -294,7 +294,7 @@ class FileField extends Formio.Components.components.file {
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
     const input = this.refs.fileBrowse;
     const targetElements = input ? [input] : [];
-    setErrorAttributes(targetElements, hasErrors, hasMessages, this.element);
+    setErrorAttributes(targetElements, hasErrors, hasMessages, this.refs.messageContainer.id);
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 
