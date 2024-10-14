@@ -9,7 +9,7 @@ import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
-const LoginOptions = ({form, onFormStart}) => {
+const LoginOptions = ({form, onFormStart, extraParams = {}}) => {
   const config = useContext(ConfigContext);
 
   const loginAsYourselfOptions = [];
@@ -18,7 +18,7 @@ const LoginOptions = ({form, onFormStart}) => {
 
   form.loginOptions.forEach(option => {
     let readyOption = {...option};
-    readyOption.url = getLoginUrl(option);
+    readyOption.url = getLoginUrl(option, extraParams);
     readyOption.label = (
       <FormattedMessage
         description="Login button label"
@@ -81,6 +81,7 @@ const LoginOptions = ({form, onFormStart}) => {
 LoginOptions.propTypes = {
   form: Types.Form.isRequired,
   onFormStart: PropTypes.func.isRequired,
+  extraParams: PropTypes.object,
 };
 
 export default LoginOptions;

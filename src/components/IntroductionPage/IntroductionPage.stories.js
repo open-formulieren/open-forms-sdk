@@ -1,3 +1,4 @@
+import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildForm} from 'api-mocks';
@@ -47,4 +48,16 @@ export default {
 
 export const Default = {
   name: 'IntroductionPage',
+};
+
+export const IntroductionPageWithInitialDataReference = {
+  name: 'IntroductionPage with initial data reference',
+  args: {
+    extraParams: {initial_data_reference: '1234'},
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    const continueLink = canvas.getByRole('link', {name: 'Continue'});
+    await expect(continueLink).toHaveAttribute('href', '/startpagina?initial_data_reference=1234');
+  },
 };

@@ -41,7 +41,7 @@ const FormStartMessage = ({form}) => {
  * This is shown when the form is initially loaded and provides the explicit user
  * action to start the form, or present the login button (DigiD, eHerkenning...)
  */
-const FormStart = ({form, submission, onFormStart, onDestroySession}) => {
+const FormStart = ({form, submission, onFormStart, onDestroySession, initialDataReference}) => {
   const hasActiveSubmission = !!submission;
   const isAuthenticated = hasActiveSubmission && submission.isAuthenticated;
   const doStart = useStartSubmission();
@@ -121,7 +121,11 @@ const FormStart = ({form, submission, onFormStart, onDestroySession}) => {
             isAuthenticated={isAuthenticated}
           />
         ) : (
-          <LoginOptions form={form} onFormStart={onFormStart} />
+          <LoginOptions
+            form={form}
+            onFormStart={onFormStart}
+            extraParams={{initial_data_reference: initialDataReference}}
+          />
         )}
       </Card>
     </LiteralsProvider>

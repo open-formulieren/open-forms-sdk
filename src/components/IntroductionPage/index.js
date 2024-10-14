@@ -9,11 +9,13 @@ import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
 
-const IntroductionPage = () => {
+const IntroductionPage = ({extraParams = {}}) => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
   if (!introductionPageContent) {
     return <Navigate replace to="startpagina" />;
   }
+  let startUrl = '/startpagina';
+  if (extraParams) startUrl = `${startUrl}?${new URLSearchParams(extraParams).toString()}`;
   return (
     <Card title={name}>
       <Body
@@ -23,7 +25,7 @@ const IntroductionPage = () => {
       />
 
       <Link
-        to="/startpagina"
+        to={startUrl}
         component={ButtonLink}
         appearance="primary-action-button"
         className="openforms-start-link"
