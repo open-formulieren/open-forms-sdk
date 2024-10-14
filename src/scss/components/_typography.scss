@@ -20,6 +20,12 @@
   @include h2(auto);
 }
 
+.#{prefix('content')} {
+  @include bem.modifier('bold') {
+    font-weight: 700;
+  }
+}
+
 .#{prefix(body)} {
   @include body(auto);
   clear: both;
