@@ -25,6 +25,11 @@ $formio-content-variants: 'error', 'warning', 'success', 'info';
   @include body;
   @include body--big;
 
+  // In case of large, view breaking, content like; images, tables, etc.
+  overflow-wrap: break-word;
+  hyphens: auto;
+  overflow: auto;
+
   // Below this line is okay and in line with NL DS principles
   @include anchor.extend-utrecht-link;
   inline-size: var(--of-formio-content-inline-size, 100%);
