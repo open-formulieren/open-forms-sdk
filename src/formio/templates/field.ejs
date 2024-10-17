@@ -34,7 +34,7 @@
         ref="messageContainer"
         class="utrecht-form-field-description utrecht-form-field-description--invalid utrecht-form-field-description--openforms-errors"
         role="alert"
-        aria-describedby="{{ctx.id}}"></div>
+        id="{{ctx.instance.id}}-{{ctx.component.key}}-error-message"></div>
 
     </fieldset>
   </div>
@@ -73,6 +73,6 @@
       ref="messageContainer"
       class="utrecht-form-field-description utrecht-form-field-description--invalid utrecht-form-field-description--openforms-errors"
       role="alert"
-      aria-describedby="{{ctx.id}}"></div>
+      id="{{ctx.instance.id}}-{{ctx.component.key}}-error-message"></div>
   </div>
 {% } %}

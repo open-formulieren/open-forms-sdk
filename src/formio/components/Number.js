@@ -2,6 +2,7 @@ import {maskInput} from '@formio/vanilla-text-mask';
 import {set} from 'lodash';
 import {Formio} from 'react-formio';
 
+import {setErrorAttributes} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 /**
@@ -30,6 +31,15 @@ class Number extends Formio.Components.components.number {
       updatedOptions.async = true;
     }
     return super.checkComponentValidity(data, dirty, row, updatedOptions);
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    }
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   // Issue OF#1351

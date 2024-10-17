@@ -2,6 +2,8 @@ import {Formio} from 'react-formio';
 
 import {MinMaxDateValidator} from 'formio/validators/minMaxDateAndDatetimeValidator';
 
+import {setErrorAttributes} from '../utils';
+
 const DateTimeField = Formio.Components.components.datetime;
 
 const extractDate = value => {
@@ -38,6 +40,18 @@ class DateField extends DateTimeField {
       'utrecht-textbox--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    const inputClone = this.element.querySelector('input:not([type="hidden"])');
+    const targetElements = inputClone ? [inputClone] : [];
+
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(targetElements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    }
+    return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 
   beforeSubmit() {

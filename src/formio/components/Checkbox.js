@@ -1,5 +1,6 @@
 import {Formio} from 'react-formio';
 
+import {setErrorAttributes} from '../utils';
 import './Checkbox.scss';
 
 /**
@@ -16,6 +17,11 @@ class Checkbox extends Formio.Components.components.checkbox {
       'utrecht-form-field__input',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 }
 
