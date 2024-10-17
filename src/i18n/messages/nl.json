@@ -693,6 +693,11 @@
     "description": "return to form start link after 403",
     "originalDefault": "Back to form start"
   },
+  "eAmrdi": {
+    "defaultMessage": "Laden...",
+    "description": "Loading content text",
+    "originalDefault": "Loading..."
+  },
   "eO6Ysb": {
     "defaultMessage": "De betaling wordt momenteel verwerkt.",
     "description": "payment processing status",
