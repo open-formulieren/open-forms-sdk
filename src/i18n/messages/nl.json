@@ -649,9 +649,9 @@
     "originalDefault": "No"
   },
   "abtbgK": {
-    "defaultMessage": "Je sessie is verlopen. Klik <link>hier</link> om opnieuw te beginnen.",
+    "defaultMessage": "Je sessie is verlopen. <link>Klik hier om opnieuw te beginnen</link>.",
     "description": "Session expired error message",
-    "originalDefault": "Your session has expired. Click <link>here</link> to restart."
+    "originalDefault": "Your session has expired. <link>Click here to restart</link>."
   },
   "ay8sO5": {
     "defaultMessage": "Je gegevens",

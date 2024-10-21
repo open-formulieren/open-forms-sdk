@@ -116,7 +116,7 @@ describe('Create appointment session expiration', () => {
     await screen.findByText('Your session has expired', undefined, {timeout: 2000});
 
     // and click the link to restart...
-    const restartLink = await screen.findByRole('link', {name: 'here'});
+    const restartLink = await screen.findByRole('link', {name: 'Click here to restart'});
     await user.click(restartLink);
 
     // Here, take this if you need to figure out which keys are present

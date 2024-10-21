@@ -640,9 +640,9 @@
     "originalDefault": "No"
   },
   "abtbgK": {
-    "defaultMessage": "Your session has expired. Click <link>here</link> to restart.",
+    "defaultMessage": "Your session has expired. <link>Click here to restart</link>.",
     "description": "Session expired error message",
-    "originalDefault": "Your session has expired. Click <link>here</link> to restart."
+    "originalDefault": "Your session has expired. <link>Click here to restart</link>."
   },
   "ay8sO5": {
     "defaultMessage": "Contact details",

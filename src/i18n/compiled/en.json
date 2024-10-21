@@ -1330,13 +1330,13 @@
   "abtbgK": [
     {
       "type": 0,
-      "value": "Your session has expired. Click "
+      "value": "Your session has expired. "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "here"
+          "value": "Click here to restart"
         }
       ],
       "type": 8,
@@ -1344,7 +1344,7 @@
     },
     {
       "type": 0,
-      "value": " to restart."
+      "value": "."
     }
   ],
   "ay8sO5": [

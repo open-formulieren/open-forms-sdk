@@ -36,7 +36,7 @@ const SessionExpired = () => {
       <ErrorMessage>
         <FormattedMessage
           description="Session expired error message"
-          defaultMessage="Your session has expired. Click <link>here</link> to restart."
+          defaultMessage="Your session has expired. <link>Click here to restart</link>."
           values={{
             link: chunks => <Link to="/">{chunks}</Link>,
           }}
