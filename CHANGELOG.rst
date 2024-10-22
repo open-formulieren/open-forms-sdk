@@ -10,6 +10,12 @@ Periodic bugfix release
 * [#4600] Added an ``onLanguageChange`` hook for container pages so they can manage
   their translated content on language changes if needed.
 
+2.3.3 (2024-10-22)
+==================
+
+The published 2.3.2 version was broken and missing a number of fixes, this is rectified
+in 2.3.3.
+
 2.3.2 (2024-10-22)
 ==================
 
