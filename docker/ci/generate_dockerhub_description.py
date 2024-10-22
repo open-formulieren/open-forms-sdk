@@ -129,7 +129,7 @@ class SupportedTag:
 
     @property
     def dockerfile_url(self) -> str:
-        return f"https://github.com/open-formulieren/open-forms/blob/{self.git_ref}/Dockerfile"
+        return f"https://github.com/open-formulieren/open-forms-sdk/blob/{self.git_ref}/Dockerfile"
 
 
 if __name__ == "__main__":
