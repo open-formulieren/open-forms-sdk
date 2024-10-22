@@ -100,7 +100,7 @@ const SubmissionSummary = ({
     description: 'Summary page title',
     defaultMessage: 'Check and confirm',
   });
-  useTitle(pageTitle);
+  useTitle(pageTitle, form.name);
 
   const getErrors = () => {
     let errors = [];
