@@ -2,12 +2,15 @@
 SDK Changelog
 =============
 
-2.3.0 (2024-07-09)
+2.3.1 (2024-07-09)
 ==================
 
 Feature release - this changelog also includes the changes from the alpha release.
 
 .. warning:: SDK 2.3.0 requires the backend API version 2.7.0 or newer.
+
+.. note:: Version 2.3.0 does not exist - a beta build was accidentally released to npm
+   as 2.3.0.
 
 New features
 ------------

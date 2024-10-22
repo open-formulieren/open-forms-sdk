@@ -164,6 +164,11 @@
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
   },
+  "AM6xqd": {
+    "defaultMessage": "House number must be a number with up to five digits (e.g. 456).",
+    "description": "ZOD error message when AddressNL house number does not match the house number regular expression",
+    "originalDefault": "House number must be a number with up to five digits (e.g. 456)."
+  },
   "ATXTTM": {
     "defaultMessage": "A payment is required for this product.",
     "description": "Payment request text",
@@ -283,6 +288,11 @@
     "defaultMessage": "Rate this form as 'Good'",
     "description": "Feedback face title - Good",
     "originalDefault": "Rate this form as 'Good'"
+  },
+  "EPQl+D": {
+    "defaultMessage": "House number addition must be up to four letters and digits.",
+    "description": "ZOD error message when AddressNL house number addition does not match the house number addition regular expression",
+    "originalDefault": "House number addition must be up to four letters and digits."
   },
   "GbPef0": {
     "defaultMessage": "You must provide a house number.",
@@ -679,6 +689,11 @@
     "description": "Generic submission error",
     "originalDefault": "Something went wrong while submitting the form."
   },
+  "hWv0yN": {
+    "defaultMessage": "House letter must be a single letter.",
+    "description": "ZOD error message when AddressNL house letter does not match the house letter regular expression",
+    "originalDefault": "House letter must be a single letter."
+  },
   "hkZ8N1": {
     "defaultMessage": "Invalid input.",
     "description": "ZOD 'custom' error message",
@@ -863,6 +878,11 @@
     "defaultMessage": "Suspending the form failed, please try again later",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
+  },
+  "rUsmvU": {
+    "defaultMessage": "Postcode must be four digits followed by two letters (e.g. 1234 AB).",
+    "description": "ZOD error message when AddressNL postcode does not match the postcode regular expression",
+    "originalDefault": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
   },
   "sSmY1N": {
     "defaultMessage": "Find address",

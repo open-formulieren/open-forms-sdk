@@ -357,6 +357,12 @@
       "value": "Check and confirm"
     }
   ],
+  "AM6xqd": [
+    {
+      "type": 0,
+      "value": "House number must be a number with up to five digits (e.g. 456)."
+    }
+  ],
   "ATXTTM": [
     {
       "type": 0,
@@ -531,6 +537,12 @@
     {
       "type": 0,
       "value": "Rate this form as 'Good'"
+    }
+  ],
+  "EPQl+D": [
+    {
+      "type": 0,
+      "value": "House number addition must be up to four letters and digits."
     }
   ],
   "GbPef0": [
@@ -1387,6 +1399,12 @@
       "value": "Something went wrong while submitting the form."
     }
   ],
+  "hWv0yN": [
+    {
+      "type": 0,
+      "value": "House letter must be a single letter."
+    }
+  ],
   "hkZ8N1": [
     {
       "type": 0,
@@ -1851,6 +1869,12 @@
     {
       "type": 0,
       "value": "Suspending the form failed, please try again later"
+    }
+  ],
+  "rUsmvU": [
+    {
+      "type": 0,
+      "value": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
     }
   ],
   "sSmY1N": [

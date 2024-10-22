@@ -357,6 +357,12 @@
       "value": "Controleer en bevestig"
     }
   ],
+  "AM6xqd": [
+    {
+      "type": 0,
+      "value": "Huisnummer moet een nummer zijn met maximaal 5 cijfers (bijv. 456)."
+    }
+  ],
   "ATXTTM": [
     {
       "type": 0,
@@ -531,6 +537,12 @@
     {
       "type": 0,
       "value": "Beoordeel dit formulier als 'goed'"
+    }
+  ],
+  "EPQl+D": [
+    {
+      "type": 0,
+      "value": "Huisnummertoevoeging moet bestaan uit maximaal vier letters en cijfers."
     }
   ],
   "GbPef0": [
@@ -1391,6 +1403,12 @@
       "value": "Er is iets fout gegaan bij het verzenden."
     }
   ],
+  "hWv0yN": [
+    {
+      "type": 0,
+      "value": "Huisletter moet een enkele letter zijn."
+    }
+  ],
   "hkZ8N1": [
     {
       "type": 0,
@@ -1855,6 +1873,12 @@
     {
       "type": 0,
       "value": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw."
+    }
+  ],
+  "rUsmvU": [
+    {
+      "type": 0,
+      "value": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB)."
     }
   ],
   "sSmY1N": [
