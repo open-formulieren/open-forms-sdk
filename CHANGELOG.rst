@@ -2,6 +2,23 @@
 SDK Changelog
 =============
 
+2.5.0-alpha.0 (2024-10-23)
+==========================
+
+First preview release of the upcoming 2.5.0 version.
+
+New features
+------------
+
+* [#4544] Added design tokens for configuring the position of the previous page link.
+  You can now choose if the link should be at the top, the bottom or both. By default
+  this is shown at the bottom. The ability to add an icon has been added as well.
+
+Bugfixes
+--------
+
+* [#4398] Fixed the initial data reference not properly being passed to the backend.
+
 2.4.1 (2024-10-22)
 ==================
 
