@@ -1,24 +1,26 @@
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
 export const UPLOAD_URL = `${BASE_URL}formio/fileupload`;
 const TEMP_FILE_URL = `${BASE_URL}submissions/files`;
 
-export const mockFileUploadPost = rest.post(UPLOAD_URL, (req, res, ctx) => {
+export const mockFileUploadPost = http.post(UPLOAD_URL, async ({request}) => {
+  const formData = await request.formData();
+  const file = formData.get('file');
   const body = {
     url: `${TEMP_FILE_URL}/c91173a5-7a62-40f3-8373-7c5ba83dfb17`,
-    name: req.body.file.name,
-    size: req.body.file.size,
+    name: file.name,
+    size: file.size,
   };
-  return res(ctx.status(200), ctx.json(body));
+  return HttpResponse.json(body);
 });
 
-export const mockFileUploadDelete = rest.delete(`${TEMP_FILE_URL}/:uuid`, (req, res, ctx) => {
-  return res(ctx.status(204));
+export const mockFileUploadDelete = http.delete(`${TEMP_FILE_URL}/:uuid`, () => {
+  return new HttpResponse(null, {status: 204});
 });
 
 export const mockFileUploadErrorPost = (errors = []) =>
-  rest.post(UPLOAD_URL, (req, res, ctx) => {
-    return res(ctx.status(400), ctx.text(errors.join(' ')));
+  http.post(UPLOAD_URL, () => {
+    return new HttpResponse(errors.join(' '), {status: 400});
   });

@@ -1,6 +1,6 @@
 import {useArgs} from '@storybook/preview-api';
 import {expect, userEvent, within} from '@storybook/test';
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 import React from 'react';
 
 import {BASE_URL} from 'api-mocks';
@@ -9,18 +9,17 @@ import {ConfigDecorator} from 'story-utils/decorators';
 
 import {default as FormStepSaveModalComponent} from './FormStepSaveModal';
 
-const mockSuspendFormPOST = rest.post(`${BASE_URL}submissions/:uuid/_suspend`, (req, res, ctx) =>
-  res(ctx.json({ok: true}))
+const mockSuspendFormPOST = http.post(`${BASE_URL}submissions/:uuid/_suspend`, () =>
+  HttpResponse.json({ok: true})
 );
 
-const mockSuspendFormPOSTError = rest.post(
-  `${BASE_URL}submissions/:uuid/_suspend`,
-  (req, res, ctx) => res(ctx.status(400))
+const mockSuspendFormPOSTError = http.post(`${BASE_URL}submissions/:uuid/_suspend`, () =>
+  HttpResponse.json({}, {status: 400})
 );
 
-const mockDestroySessionDELETE = rest.delete(
+const mockDestroySessionDELETE = http.delete(
   `${BASE_URL}authentication/:uuid/session`,
-  (req, res, ctx) => res(ctx.status(204))
+  () => new HttpResponse(null, {status: 204})
 );
 
 const render = ({

@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {PRIVACY_POLICY_ACCEPTED} from 'components/SummaryConfirmation/mocks';
 
@@ -66,18 +66,21 @@ export const FORM_DEFAULTS = {
 export const buildForm = getDefaultFactory(FORM_DEFAULTS);
 
 export const mockFormGet = (formDetail = buildForm(), once = false) =>
-  rest.get(`${BASE_URL}forms/:uuid`, (req, res, ctx) => {
-    // update with request details for consistent response
-    const uuid = req.url.pathname.split('/').slice(-1)[0];
-    formDetail = produce(formDetail, draft => {
-      draft.url = req.url.href;
-      draft.uuid = uuid;
-      for (const step of draft.steps) {
-        step.url = `${draft.url}/steps/${step.uuid}`;
-      }
-    });
-    if (once) {
-      res = res.once;
-    }
-    return res(ctx.json(formDetail));
-  });
+  http.get(
+    `${BASE_URL}forms/:uuid`,
+    ({request}) => {
+      const url = new URL(request.url);
+
+      // update with request details for consistent response
+      const uuid = url.pathname.split('/').slice(-1)[0];
+      formDetail = produce(formDetail, draft => {
+        draft.url = url.href;
+        draft.uuid = uuid;
+        for (const step of draft.steps) {
+          step.url = `${draft.url}/steps/${step.uuid}`;
+        }
+      });
+      return HttpResponse.json(formDetail);
+    },
+    {once: once}
+  );

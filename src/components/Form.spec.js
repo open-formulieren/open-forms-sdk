@@ -54,10 +54,11 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
 
 test('Start form anonymously', async () => {
   const user = userEvent.setup();
-  mswServer.use(mockSubmissionPost(), mockAnalyticsToolConfigGet());
+  mswServer.use(mockSubmissionPost(), mockAnalyticsToolConfigGet(), mockSubmissionStepGet);
   let startSubmissionRequest;
-  mswServer.events.on('request:match', async request => {
-    if (request.method === 'POST' && request.url.pathname.endsWith('/api/v2/submissions')) {
+  mswServer.events.on('request:match', async ({request}) => {
+    const url = new URL(request.url);
+    if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
       startSubmissionRequest = request;
     }
   });
@@ -79,8 +80,9 @@ test('Start form anonymously', async () => {
 test('Start form as if authenticated from the backend', async () => {
   mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
   let startSubmissionRequest;
-  mswServer.events.on('request:match', async request => {
-    if (request.method === 'POST' && request.url.pathname.endsWith('/api/v2/submissions')) {
+  mswServer.events.on('request:match', async ({request}) => {
+    const url = new URL(request.url);
+    if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
       startSubmissionRequest = request;
     }
   });
@@ -96,8 +98,9 @@ test('Start form as if authenticated from the backend', async () => {
 test('Start form with object reference query param', async () => {
   mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
   let startSubmissionRequest;
-  mswServer.events.on('request:match', async request => {
-    if (request.method === 'POST' && request.url.pathname.endsWith('/api/v2/submissions')) {
+  mswServer.events.on('request:match', async ({request}) => {
+    const url = new URL(request.url);
+    if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
       startSubmissionRequest = request;
     }
   });

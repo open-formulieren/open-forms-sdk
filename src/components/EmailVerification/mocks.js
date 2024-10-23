@@ -1,30 +1,29 @@
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
-export const mockEmailVerificationPost = rest.post(
+export const mockEmailVerificationPost = http.post(
   `${BASE_URL}submissions/email-verifications`,
-  async (req, res, ctx) => {
-    const {componentKey, email} = await req.json();
-    return res(ctx.json({componentKey, email}));
+  async ({request}) => {
+    const {componentKey, email} = await request.json();
+    return HttpResponse.json({componentKey, email});
   }
 );
 
-export const mockEmailVerificationErrorPost = rest.post(
+export const mockEmailVerificationErrorPost = http.post(
   `${BASE_URL}submissions/email-verifications`,
-  async (req, res, ctx) => {
-    return res(
-      ctx.status(403),
-      ctx.json({
+  () =>
+    HttpResponse.json(
+      {
         type: 'PermissonDenied',
         code: 'permission_denied',
         title: 'Permission denied',
         status: 403,
         detail: 'No permission to perform this action.',
         instance: 'urn:5678',
-      })
-    );
-  }
+      },
+      {status: 403}
+    )
 );
 
 const codeToStatus = {
@@ -52,14 +51,14 @@ const statusToBody = {
   },
 };
 
-export const mockEmailVerificationVerifyCodePost = rest.post(
+export const mockEmailVerificationVerifyCodePost = http.post(
   `${BASE_URL}submissions/email-verifications/verify`,
-  async (req, res, ctx) => {
-    const {componentKey, email, code} = await req.json();
+  async ({request}) => {
+    const {componentKey, email, code} = await request.json();
 
     const statusCode = codeToStatus?.[code] ?? 200;
 
     const responseData = statusCode === 200 ? {componentKey, email} : statusToBody[statusCode];
-    return res(ctx.status(statusCode), ctx.json(responseData));
+    return HttpResponse.json(responseData, {status: statusCode});
   }
 );

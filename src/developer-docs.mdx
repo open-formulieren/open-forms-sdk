@@ -207,17 +207,6 @@ export const Template = args => {
 };
 ```
 
-**Story interaction on docs page**
-
-Putting multiple stories on the Docs page does not play well with API mocks, see the
-[upstream issue](https://github.com/mswjs/msw-storybook-addon/issues/83).
-
-Summarized - all stories share the same service worker and the last story to register a mock/handler
-basically 'wins'. This leads to inconsistent behaviour compared to the Canvas.
-
-There is no workaround - you should do interaction testing in the Canvas rather than the Docs tab.
-This would also be a good reason to _not_ include those stories in the MDX documentation.
-
 ## Handling validation errors with Zod
 
 Zod is a data parsing library which also performs validation. You use it by defining the schema that

@@ -1,43 +1,43 @@
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
-export const mockBRKZaakgerechtigdeValidPost = rest.post(
+export const mockBRKZaakgerechtigdeValidPost = http.post(
   `${BASE_URL}validation/plugins/brk-Zaakgerechtigde`,
-  (req, res, ctx) => {
+  () => {
     const body = {
       isValid: true,
       messages: [],
     };
-    return res(ctx.json(body));
+    return HttpResponse.json(body);
   }
 );
 
-export const mockBRKZaakgerechtigdeInvalidPost = rest.post(
+export const mockBRKZaakgerechtigdeInvalidPost = http.post(
   `${BASE_URL}validation/plugins/brk-Zaakgerechtigde`,
-  (req, res, ctx) => {
+  () => {
     const body = {
       isValid: false,
       messages: ['User is not a zaakgerechtigde for property.'],
     };
-    return res(ctx.json(body));
+    return HttpResponse.json(body);
   }
 );
 
-export const mockBAGDataGet = rest.get(`${BASE_URL}geo/address-autocomplete`, (req, res, ctx) => {
+export const mockBAGDataGet = http.get(`${BASE_URL}geo/address-autocomplete`, () => {
   const body = {
     streetName: 'Keizersgracht',
     city: 'Amsterdam',
     secretStreetCity: '',
   };
-  return res(ctx.status(200), ctx.json(body));
+  return HttpResponse.json(body);
 });
 
-export const mockBAGNoDataGet = rest.get(`${BASE_URL}geo/address-autocomplete`, (req, res, ctx) => {
+export const mockBAGNoDataGet = http.get(`${BASE_URL}geo/address-autocomplete`, () => {
   const body = {
     streetName: '',
     city: '',
     secretStreetCity: '',
   };
-  return res(ctx.status(200), ctx.json(body));
+  return HttpResponse.json(body);
 });
