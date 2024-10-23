@@ -55,38 +55,6 @@ export default {
     withModalDecorator,
     utrechtDocumentDecorator,
   ],
-  globals: {
-    // react-intl
-    locale: reactIntl.defaultLocale,
-    locales: {
-      nl: 'Nederlands',
-      en: 'English',
-    },
-    // themes
-    selectedTheme: 'Open Forms', // default
-    themes: [
-      {
-        name: 'Open Forms',
-        color: '#01689B',
-        themeObject: {className: 'openforms-theme'},
-      },
-      {
-        name: 'Gemeente Den Haag',
-        color: '#238541',
-        themeObject: {className: 'denhaag-theme'},
-      },
-      {
-        name: 'Gemeente Rotterdam',
-        color: '#00811F',
-        themeObject: {className: 'rotterdam-theme'},
-      },
-      {
-        name: 'Gemeente Utrecht',
-        color: '#cc0000',
-        themeObject: {className: 'utrecht-theme'},
-      },
-    ],
-  },
   parameters: {
     viewport: {
       // These are the viewports that are shown in Storybook
@@ -127,4 +95,36 @@ export default {
     },
   },
   loaders: [mswLoader],
+  initialGlobals: {
+    // react-intl
+    locale: reactIntl.defaultLocale,
+    locales: {
+      nl: 'Nederlands',
+      en: 'English',
+    },
+    // themes
+    selectedTheme: 'Open Forms', // default
+    themes: [
+      {
+        name: 'Open Forms',
+        color: '#01689B',
+        themeObject: {className: 'openforms-theme'},
+      },
+      {
+        name: 'Gemeente Den Haag',
+        color: '#238541',
+        themeObject: {className: 'denhaag-theme'},
+      },
+      {
+        name: 'Gemeente Rotterdam',
+        color: '#00811F',
+        themeObject: {className: 'rotterdam-theme'},
+      },
+      {
+        name: 'Gemeente Utrecht',
+        color: '#cc0000',
+        themeObject: {className: 'utrecht-theme'},
+      },
+    ],
+  },
 };
