@@ -41,13 +41,10 @@ const render = (comp, locationId) =>
   );
 
 beforeEach(() => {
-  jest.useFakeTimers();
-  jest.setSystemTime(new Date('2023-06-12T14:00:00Z'));
-  // Jest 28+
-  // jest.useFakeTimers({
-  //   advanceTimers: true,
-  //   now: new Date('2023-06-12T14:00:00Z'),
-  // });
+  jest.useFakeTimers({
+    advanceTimers: true,
+    now: new Date('2023-06-12T14:00:00Z'),
+  });
 });
 
 afterEach(() => {
