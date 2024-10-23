@@ -12,6 +12,12 @@ import {routes} from 'components/App';
 
 import {START_FORM_QUERY_PARAM} from './constants';
 
+window.scrollTo = jest.fn();
+
+afterAll(() => {
+  jest.clearAllMocks();
+});
+
 const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialEntry],
