@@ -911,6 +911,11 @@
     "description": "Session expired card title",
     "originalDefault": "Your session has expired"
   },
+  "oNJr0I": {
+    "defaultMessage": "Doorgaan",
+    "description": "Button text for link to continue from introduction page to start page",
+    "originalDefault": "Continue"
+  },
   "oTz7XX": {
     "defaultMessage": "Nog een product toevoegen",
     "description": "Appointments: add additional product/service button text",
@@ -990,11 +995,6 @@
     "defaultMessage": "Niet mede-ondertekend",
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
-  },
-  "tMO7aH": {
-    "defaultMessage": "Doorgaan ➜",
-    "description": "Button text for link to continue from introduction page to start page",
-    "originalDefault": "Continue ➜"
   },
   "tohkCS": {
     "defaultMessage": "Het e-mailadres waarop je de bevestigingsmail van de afspraak heeft ontvangen.",

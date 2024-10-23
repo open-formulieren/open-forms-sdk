@@ -1789,6 +1789,12 @@
       "value": "Sessie verlopen"
     }
   ],
+  "oNJr0I": [
+    {
+      "type": 0,
+      "value": "Doorgaan"
+    }
+  ],
   "oTz7XX": [
     {
       "type": 0,
@@ -2047,12 +2053,6 @@
     {
       "type": 0,
       "value": "Niet mede-ondertekend"
-    }
-  ],
-  "tMO7aH": [
-    {
-      "type": 0,
-      "value": "Doorgaan ➜"
     }
   ],
   "tohkCS": [

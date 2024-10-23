@@ -899,6 +899,11 @@
     "description": "Session expired card title",
     "originalDefault": "Your session has expired"
   },
+  "oNJr0I": {
+    "defaultMessage": "Continue",
+    "description": "Button text for link to continue from introduction page to start page",
+    "originalDefault": "Continue"
+  },
   "oTz7XX": {
     "defaultMessage": "Add another product",
     "description": "Appointments: add additional product/service button text",
@@ -978,11 +983,6 @@
     "defaultMessage": "Not co-signed",
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
-  },
-  "tMO7aH": {
-    "defaultMessage": "Continue ➜",
-    "description": "Button text for link to continue from introduction page to start page",
-    "originalDefault": "Continue ➜"
   },
   "tohkCS": {
     "defaultMessage": "The email address where you received the appointment confirmation email.",
