@@ -14,6 +14,14 @@ import {START_FORM_QUERY_PARAM} from './constants';
 
 window.scrollTo = jest.fn();
 
+beforeEach(() => {
+  localStorage.clear();
+});
+
+afterEach(() => {
+  localStorage.clear();
+});
+
 afterAll(() => {
   jest.clearAllMocks();
 });
