@@ -90,7 +90,7 @@
 
         {{ctx.t('or')}}
 
-        <a id="{{ctx.instance.id}}-{{ctx.component.key}}" href="#" ref="fileBrowse" class="browse utrecht-link utrecht-link--openforms">{{ctx.t('browse')}}</a>
+        <a id="{{ctx.instance.id}}-{{ctx.component.key}}" href="#" ref="fileBrowse" class="browse utrecht-link utrecht-link--openforms">{{ctx.t('uploadFile', {fileFieldLabel: ctx.component.label})}}</a>
 
         {% if (ctx.component.multiple) { %}
           {{ctx.t('to attach files.')}}

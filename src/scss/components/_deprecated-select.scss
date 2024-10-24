@@ -48,6 +48,13 @@ $select-background-color: var(--of-select-background-color, $color-white);
       var(--utrecht-select-max-inline-size, var(--utrecht-form-control-max-inline-size)) - 2 * #{$list-hpadding}
     );
 
+    &:focus-within {
+      outline-color: var(--utrecht-focus-outline-color, revert);
+      outline-offset: var(--utrecht-focus-outline-offset, revert);
+      outline-style: var(--utrecht-focus-outline-style, revert);
+      outline-width: var(--utrecht-focus-outline-width, revert);
+    }
+
     .choices__list {
       background-color: var(
         --utrecht-select-background-color,

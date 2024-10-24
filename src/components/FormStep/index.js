@@ -353,7 +353,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
   const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
 
-  useTitle(formStep.formDefinition);
+  useTitle(formStep.formDefinition, form.name);
 
   /**
    * Fetches the form step data from the backend.

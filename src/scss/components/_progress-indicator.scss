@@ -87,6 +87,13 @@
       font-size: var(--of-progress-indicator-mobile-header-font-size, 1.125rem);
       line-height: var(--of-progress-indicator-mobile-header-line-height, 1.1333);
 
+      &:focus {
+        outline-color: var(--utrecht-focus-outline-color, revert);
+        outline-offset: var(--utrecht-focus-outline-offset, revert);
+        outline-style: var(--utrecht-focus-outline-style, revert);
+        outline-width: var(--utrecht-focus-outline-width, revert);
+      }
+
       .fa-icon {
         display: block;
         flex-shrink: 0;
