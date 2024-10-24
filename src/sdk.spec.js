@@ -1,4 +1,4 @@
-import {act, waitForElementToBeRemoved, within} from '@testing-library/react';
+import {act, waitFor, waitForElementToBeRemoved, within} from '@testing-library/react';
 
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockFormGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
@@ -38,7 +38,8 @@ describe('OpenForm', () => {
     await act(async () => await form.init());
 
     // wait for the loader to be removed when all network requests have completed
-    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+
     expect(target).not.toBeEmptyDOMElement();
   });
 
@@ -61,7 +62,8 @@ describe('OpenForm', () => {
     await act(async () => await form.init());
 
     // wait for the loader to be removed when all network requests have completed
-    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+
     expect(target).not.toBeEmptyDOMElement();
   });
 
@@ -78,7 +80,8 @@ describe('OpenForm', () => {
     await act(async () => await form.init());
 
     // wait for the loader to be removed when all network requests have completed
-    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+
     expect(formRoot.textContent).not.toContain('Loading');
   });
 
@@ -105,7 +108,8 @@ describe('OpenForm', () => {
     await act(async () => await form.init());
 
     // wait for the loader to be removed when all network requests have completed
-    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+
     expect(within(formRoot).getAllByText('Nederlandse versie').length).toBeGreaterThan(0);
 
     await act(async () => {
@@ -133,7 +137,8 @@ describe('OpenForm', () => {
     await act(async () => await form.init());
 
     // wait for the loader to be removed when all network requests have completed
-    await waitForElementToBeRemoved(() => within(formRoot).getByRole('status'));
+    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+
     expect(target).not.toBeEmptyDOMElement();
 
     await act(async () => {

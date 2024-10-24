@@ -59,13 +59,10 @@ const render = initialValues => {
 };
 
 beforeEach(() => {
-  jest.useFakeTimers();
-  jest.setSystemTime(new Date('2023-06-12T14:00:00Z'));
-  // Jest 28+
-  // jest.useFakeTimers({
-  //   advanceTimers: true,
-  //   now: new Date('2023-06-12T14:00:00Z'),
-  // });
+  jest.useFakeTimers({
+    advanceTimers: true,
+    now: new Date('2023-06-12T14:00:00Z'),
+  });
 });
 
 afterEach(() => {
@@ -116,7 +113,12 @@ describe('The location and time step', () => {
 
   it('retains focus on the date input', async () => {
     const user = userEvent.setup({delay: null});
-    mswServer.use(mockAppointmentProductsGet, mockAppointmentLocationsGet, mockAppointmentDatesGet);
+    mswServer.use(
+      mockAppointmentProductsGet,
+      mockAppointmentLocationsGet,
+      mockAppointmentDatesGet,
+      mockAppointmentTimesGet
+    );
 
     render({
       products: [{productId: 'e8e045ab', amount: 1}],

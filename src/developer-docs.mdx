@@ -192,7 +192,7 @@ There are some known limitations related to mocking, with possible workarounds d
 
 There is no dedicated add-on panel to manage mock responses. Instead, you can rely on story args to
 dynamically change response data. To achieve this, you need to configure the worker as part of the
-story template, for example:
+story render function, for example:
 
 ```jsx
 import {getWorker} from 'msw-storybook-addon';
@@ -201,22 +201,11 @@ import {myMockFactory} from './mocks';
 
 export const worker = getWorker();
 
-export const Template = args => {
-  worker.use(myMockFactory(args.someArg));
-  return <MyComponent />;
+const render = ({someMockArg, ...args}) => {
+  worker.use(myMockFactory(someMockArg));
+  return <MyComponent {...args} />;
 };
 ```
-
-**Story interaction on docs page**
-
-Putting multiple stories on the Docs page does not play well with API mocks, see the
-[upstream issue](https://github.com/mswjs/msw-storybook-addon/issues/83).
-
-Summarized - all stories share the same service worker and the last story to register a mock/handler
-basically 'wins'. This leads to inconsistent behaviour compared to the Canvas.
-
-There is no workaround - you should do interaction testing in the Canvas rather than the Docs tab.
-This would also be a good reason to _not_ include those stories in the MDX documentation.
 
 ## Handling validation errors with Zod
 

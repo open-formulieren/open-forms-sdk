@@ -1,11 +1,11 @@
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
 const ADDRESS_SEARCH_ENDPOINT = `${BASE_URL}geo/address-search`;
 const LATLNG_SEARCH_ENDPOINT = `${BASE_URL}geo/latlng-search`;
 
-export const mockAddressSearchGet = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
+export const mockAddressSearchGet = http.get(ADDRESS_SEARCH_ENDPOINT, () => {
   const response = [
     {
       label: 'Gemeente Utrecht',
@@ -118,17 +118,16 @@ export const mockAddressSearchGet = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res,
       },
     },
   ];
-  return res(ctx.status(200), ctx.json(response));
+  return HttpResponse.json(response);
 });
 
-export const mockAddressSearchNoResultsGet = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
-  return res(ctx.status(200), ctx.json([]));
-});
+export const mockAddressSearchNoResultsGet = http.get(ADDRESS_SEARCH_ENDPOINT, () =>
+  HttpResponse.json([])
+);
 
-export const mockAddressSearch400Get = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
-  return res(
-    ctx.status(400),
-    ctx.json({
+export const mockAddressSearch400Get = http.get(ADDRESS_SEARCH_ENDPOINT, () =>
+  HttpResponse.json(
+    {
       type: `${BASE_URL}/fouten/ValidationError/`,
       code: 'invalid',
       title: 'Invalid input.',
@@ -142,29 +141,30 @@ export const mockAddressSearch400Get = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, r
           reason: "Missing query parameter 'q'",
         },
       ],
-    })
-  );
-});
+    },
+    {status: 400}
+  )
+);
 
-export const mockAddressSearch403Get = rest.get(ADDRESS_SEARCH_ENDPOINT, (req, res, ctx) => {
-  return res(
-    ctx.status(403),
-    ctx.json({
+export const mockAddressSearch403Get = http.get(ADDRESS_SEARCH_ENDPOINT, () =>
+  HttpResponse.json(
+    {
       type: `${BASE_URL}/fouten/PermissionDenied/`,
       code: 'permission_denied',
       title: 'Je hebt geen toestemming om deze actie uit te voeren.',
       status: 403,
       detail: 'Je hebt geen toestemming om deze actie uit te voeren.',
       instance: 'urn:uuid:fe568833-f520-4fc9-8f54-37648f2b46b8',
-    })
-  );
-});
+    },
+    {status: 403}
+  )
+);
 
-export const mockLatLngSearchGet = rest.get(LATLNG_SEARCH_ENDPOINT, (req, res, ctx) => {
-  const response = {label: 'Utrecht, Utrecht, Utrecht'};
-  return res(ctx.status(200), ctx.json(response));
-});
+export const mockLatLngSearchGet = http.get(LATLNG_SEARCH_ENDPOINT, () =>
+  HttpResponse.json({label: 'Utrecht, Utrecht, Utrecht'})
+);
 
-export const mockLatLngSearchEmptyGet = rest.get(LATLNG_SEARCH_ENDPOINT, (req, res, ctx) =>
-  res(ctx.status(204))
+export const mockLatLngSearchEmptyGet = http.get(
+  LATLNG_SEARCH_ENDPOINT,
+  () => new HttpResponse(null, {status: 204})
 );

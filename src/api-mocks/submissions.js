@@ -1,4 +1,4 @@
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL, getDefaultFactory} from './base';
 
@@ -69,86 +69,77 @@ const SUBMISSION_STEP_DETAILS = {
 export const buildSubmission = getDefaultFactory(SUBMISSION_DETAILS);
 
 export const mockSubmissionPost = (submission = buildSubmission()) =>
-  rest.post(`${BASE_URL}submissions`, (req, res, ctx) => {
-    return res(ctx.status(201), ctx.json(submission));
+  http.post(`${BASE_URL}submissions`, () => {
+    return HttpResponse.json(submission, {status: 201});
   });
 
 export const mockSubmissionGet = () =>
-  rest.get(`${BASE_URL}submissions/:uuid`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(SUBMISSION_DETAILS));
+  http.get(`${BASE_URL}submissions/:uuid`, () => {
+    return HttpResponse.json(SUBMISSION_DETAILS, {status: 200});
   });
 
 export const mockSubmissionStepGet = () =>
-  rest.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(SUBMISSION_STEP_DETAILS));
+  http.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, () => {
+    return HttpResponse.json(SUBMISSION_STEP_DETAILS, {status: 200});
   });
 
 export const mockSubmissionCheckLogicPost = () =>
-  rest.post(`${BASE_URL}submissions/:uuid/steps/:uuid/_check_logic`, (req, res, ctx) => {
+  http.post(`${BASE_URL}submissions/:uuid/steps/:uuid/_check_logic`, () => {
     const responseData = {
       submission: SUBMISSION_DETAILS,
       step: SUBMISSION_STEP_DETAILS,
     };
-    return res(ctx.status(200), ctx.json(responseData));
+    return HttpResponse.json(responseData, {status: 200});
   });
 
 /**
  * Simulate a successful backend processing status without payment.
  */
-export const mockSubmissionProcessingStatusGet = rest.get(
+export const mockSubmissionProcessingStatusGet = http.get(
   `${BASE_URL}submissions/:uuid/:token/status`,
-  (req, res, ctx) =>
-    res(
-      ctx.json({
-        status: 'done',
-        result: 'success',
-        errorMessage: '',
-        publicReference: 'OF-L337',
-        confirmationPageContent: `<p>Thank you for doing <span style="font-style: italic;">the thing</span>.`,
-        reportDownloadUrl: '#',
-        paymentUrl: `${BASE_URL}payment/4b0e86a8-dc5f-41cc-b812-c89857b9355b/demo/start`,
-        mainWebsiteUrl: '#',
-      })
-    )
+  () =>
+    HttpResponse.json({
+      status: 'done',
+      result: 'success',
+      errorMessage: '',
+      publicReference: 'OF-L337',
+      confirmationPageContent: `<p>Thank you for doing <span style="font-style: italic;">the thing</span>.`,
+      reportDownloadUrl: '#',
+      paymentUrl: `${BASE_URL}payment/4b0e86a8-dc5f-41cc-b812-c89857b9355b/demo/start`,
+      mainWebsiteUrl: '#',
+    })
 );
 
-export const mockSubmissionProcessingStatusPendingGet = rest.get(
+export const mockSubmissionProcessingStatusPendingGet = http.get(
   `${BASE_URL}submissions/:uuid/:token/status`,
-  (req, res, ctx) =>
-    res(
-      ctx.json({
-        status: 'in_progress',
-        result: '',
-        errorMessage: '',
-        publicReference: '',
-        confirmationPageContent: '',
-        reportDownloadUrl: '',
-        paymentUrl: '',
-        mainWebsiteUrl: '',
-      })
-    )
+  () =>
+    HttpResponse.json({
+      status: 'in_progress',
+      result: '',
+      errorMessage: '',
+      publicReference: '',
+      confirmationPageContent: '',
+      reportDownloadUrl: '',
+      paymentUrl: '',
+      mainWebsiteUrl: '',
+    })
 );
 
-export const mockSubmissionProcessingStatusErrorGet = rest.get(
+export const mockSubmissionProcessingStatusErrorGet = http.get(
   `${BASE_URL}submissions/:uuid/:token/status`,
-  (req, res, ctx) =>
-    res(
-      ctx.json({
-        status: 'done',
-        result: 'failed',
-        errorMessage: 'Computer says no.',
-        publicReference: '',
-        confirmationPageContent: '',
-        reportDownloadUrl: '',
-        paymentUrl: '',
-        mainWebsiteUrl: '',
-      })
-    )
+  () =>
+    HttpResponse.json({
+      status: 'done',
+      result: 'failed',
+      errorMessage: 'Computer says no.',
+      publicReference: '',
+      confirmationPageContent: '',
+      reportDownloadUrl: '',
+      paymentUrl: '',
+      mainWebsiteUrl: '',
+    })
 );
 
-export const mockSubmissionPaymentStartGet = rest.post(
-  `${BASE_URL}payment/:uuid/demo/start`,
-  (req, res, ctx) => {
-    return res(ctx.json({data: {method: 'get', action: 'https://example.com'}}));
-  }
+export const mockSubmissionPaymentStartGet = http.post(`${BASE_URL}payment/:uuid/demo/start`, () =>
+  HttpResponse.json({data: {method: 'get', action: 'https://example.com'}})
 );

@@ -1,4 +1,4 @@
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
@@ -9,24 +9,22 @@ export const DEFAULT_LANGUAGES = [
 ];
 
 export const mockLanguageInfoGet = (languages = DEFAULT_LANGUAGES, current = 'nl') =>
-  rest.get(`${BASE_URL}i18n/info`, (req, res, ctx) => {
-    return res(
-      ctx.json({
-        languages: languages,
-        current: current,
-      })
-    );
-  });
+  http.get(`${BASE_URL}i18n/info`, () =>
+    HttpResponse.json({
+      languages: languages,
+      current: current,
+    })
+  );
 
-export const mockLanguageChoicePut = rest.put(`${BASE_URL}i18n/language`, (req, res, ctx) => {
-  return res(ctx.status(204));
-});
+export const mockLanguageChoicePut = http.put(
+  `${BASE_URL}i18n/language`,
+  () => new HttpResponse(null, {status: 204})
+);
 
 export const mockInvalidLanguageChoicePut = (lang = 'fy') =>
-  rest.put(`${BASE_URL}i18n/language`, (req, res, ctx) => {
-    return res(
-      ctx.status(400),
-      ctx.json({
+  http.put(`${BASE_URL}i18n/language`, () =>
+    HttpResponse.json(
+      {
         type: 'http://localhost:8000/fouten/ValidationError/',
         code: 'invalid',
         title: 'Invalid input.',
@@ -40,9 +38,10 @@ export const mockInvalidLanguageChoicePut = (lang = 'fy') =>
             reason: `"${lang}" is not a valid choice.`,
           },
         ],
-      })
-    );
-  });
+      },
+      {status: 400}
+    )
+  );
 
 const FORMIO_TRANSLATIONS = {
   nl: {
@@ -55,15 +54,15 @@ const FORMIO_TRANSLATIONS = {
   },
 };
 
-export const mockFormioTranslations = rest.get(`${BASE_URL}i18n/formio/:lang`, (req, res, ctx) => {
-  const {lang} = req.params;
+export const mockFormioTranslations = http.get(`${BASE_URL}i18n/formio/:lang`, ({params}) => {
+  const {lang} = params;
   const translations = FORMIO_TRANSLATIONS[lang];
-  return res(ctx.json(translations));
+  return HttpResponse.json(translations);
 });
 
-export const mockFormioTranslationsServiceUnavailable = rest.get(
+export const mockFormioTranslationsServiceUnavailable = http.get(
   `${BASE_URL}i18n/formio/:lang`,
-  (req, res, ctx) => {
+  () => {
     const errBody = {
       type: `${BASE_URL}fouten/ServiceUnavailable/`,
       code: 'service_unavailable',
@@ -72,6 +71,6 @@ export const mockFormioTranslationsServiceUnavailable = rest.get(
       detail: 'Service is not available.',
       instance: 'urn:uuid:60b443e3-b847-424b-aed0-23820fc2a48d',
     };
-    return res(ctx.status(503), ctx.json(errBody));
+    return HttpResponse.json(errBody, {status: 503});
   }
 );

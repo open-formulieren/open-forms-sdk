@@ -6,7 +6,7 @@ import 'design-token-editor/lib/css/root.css';
 import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
-import {initialize, mswDecorator, mswLoader} from 'msw-storybook-addon';
+import {initialize, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
 import {setAppElement} from 'react-modal';
 import 'scss/dte-theme.scss';
@@ -49,44 +49,11 @@ Templates.current = OFLibrary;
 export default {
   decorators: [
     withThemeProvider(ThemeProvider),
-    mswDecorator,
     withClearSessionStorage,
     withClearSubmissionLocalStorage,
     withModalDecorator,
     utrechtDocumentDecorator,
   ],
-  globals: {
-    // react-intl
-    locale: reactIntl.defaultLocale,
-    locales: {
-      nl: 'Nederlands',
-      en: 'English',
-    },
-    // themes
-    selectedTheme: 'Open Forms', // default
-    themes: [
-      {
-        name: 'Open Forms',
-        color: '#01689B',
-        themeObject: {className: 'openforms-theme'},
-      },
-      {
-        name: 'Gemeente Den Haag',
-        color: '#238541',
-        themeObject: {className: 'denhaag-theme'},
-      },
-      {
-        name: 'Gemeente Rotterdam',
-        color: '#00811F',
-        themeObject: {className: 'rotterdam-theme'},
-      },
-      {
-        name: 'Gemeente Utrecht',
-        color: '#cc0000',
-        themeObject: {className: 'utrecht-theme'},
-      },
-    ],
-  },
   parameters: {
     viewport: {
       // These are the viewports that are shown in Storybook
@@ -127,4 +94,36 @@ export default {
     },
   },
   loaders: [mswLoader],
+  initialGlobals: {
+    // react-intl
+    locale: reactIntl.defaultLocale,
+    locales: {
+      nl: 'Nederlands',
+      en: 'English',
+    },
+    // themes
+    selectedTheme: 'Open Forms', // default
+    themes: [
+      {
+        name: 'Open Forms',
+        color: '#01689B',
+        themeObject: {className: 'openforms-theme'},
+      },
+      {
+        name: 'Gemeente Den Haag',
+        color: '#238541',
+        themeObject: {className: 'denhaag-theme'},
+      },
+      {
+        name: 'Gemeente Rotterdam',
+        color: '#00811F',
+        themeObject: {className: 'rotterdam-theme'},
+      },
+      {
+        name: 'Gemeente Utrecht',
+        color: '#cc0000',
+        themeObject: {className: 'utrecht-theme'},
+      },
+    ],
+  },
 };

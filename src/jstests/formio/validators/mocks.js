@@ -1,4 +1,4 @@
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
@@ -6,31 +6,19 @@ const INTERNATIONAL_VALIDATION_ENDPOINT = `${BASE_URL}validation/plugins/phonenu
 const DUTCH_VALIDATION_ENDPOINT = `${BASE_URL}validation/plugins/phonenumber-nl`;
 
 export const phoneNumberValidations = {
-  mockValidInternationalPhonenumberPost: rest.post(
-    INTERNATIONAL_VALIDATION_ENDPOINT,
-    async (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json({isValid: true, messages: []}));
-    }
+  mockValidInternationalPhonenumberPost: http.post(INTERNATIONAL_VALIDATION_ENDPOINT, () =>
+    HttpResponse.json({isValid: true, messages: []})
   ),
 
-  mockInValidInternationalPhonenumberPost: rest.post(
-    INTERNATIONAL_VALIDATION_ENDPOINT,
-    async (req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json({isValid: false, messages: ['Invalid international phone number']})
-      );
-    }
+  mockInValidInternationalPhonenumberPost: http.post(INTERNATIONAL_VALIDATION_ENDPOINT, () =>
+    HttpResponse.json({isValid: false, messages: ['Invalid international phone number']})
   ),
 
-  mockValidDutchPhonenumberPost: rest.post(DUTCH_VALIDATION_ENDPOINT, async (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({isValid: true, messages: []}));
-  }),
+  mockValidDutchPhonenumberPost: http.post(DUTCH_VALIDATION_ENDPOINT, async () =>
+    HttpResponse.json({isValid: true, messages: []})
+  ),
 
-  mockInValidDutchPhonenumberPost: rest.post(DUTCH_VALIDATION_ENDPOINT, async (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({isValid: false, messages: ['Invalid dutch phone number']})
-    );
-  }),
+  mockInValidDutchPhonenumberPost: http.post(DUTCH_VALIDATION_ENDPOINT, async (req, res, ctx) =>
+    HttpResponse.json({isValid: false, messages: ['Invalid dutch phone number']})
+  ),
 };

@@ -1,6 +1,5 @@
 import {addDays, formatISO} from 'date-fns';
-import isEqual from 'lodash/isEqual';
-import {rest} from 'msw';
+import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
@@ -29,11 +28,6 @@ const _getDate = (numDaysToAdd = 0) => {
   };
 };
 
-const isSameIds = (arr1, arr2) => {
-  const [copy1, copy2] = [[...arr1].sort(), [...arr2].sort()];
-  return isEqual(copy1, copy2);
-};
-
 const DATES = [
   {
     location: '1396f17c',
@@ -47,11 +41,12 @@ const DATES = [
   },
 ];
 
-export const mockAppointmentProductsGet = rest.get(
+export const mockAppointmentProductsGet = http.get(
   `${BASE_URL}appointments/products`,
-  (req, res, ctx) => {
+  ({request}) => {
     let availableProductIds = [];
-    const selectedProductIds = req.url.searchParams.getAll('product_id').sort();
+    const url = new URL(request.url);
+    const selectedProductIds = url.searchParams.getAll('product_id').sort();
     // when other products are already selected, the set of available products to select
     // shrinks. This configuration prevents selecting product ea04db83 when product
     // e8e045ab is selected
@@ -91,64 +86,61 @@ export const mockAppointmentProductsGet = rest.get(
     }
 
     const products = DEFAULT_PRODUCTS.filter(p => availableProductIds.includes(p.identifier));
-    return res(ctx.json(products));
+    return HttpResponse.json(products);
   }
 );
 
-export const mockAppointmentLocationsGet = rest.get(
+export const mockAppointmentLocationsGet = http.get(
   `${BASE_URL}appointments/locations`,
-  (req, res, ctx) => {
-    const productIds = req.url.searchParams.getAll('product_id');
+  ({request}) => {
+    const url = new URL(request.url);
+    const productIds = url.searchParams.getAll('product_id');
     const locations = LOCATIONS.filter(config =>
       productIds.every(productId => config.products.includes(productId))
     ).map(config => config.location);
-    return res(ctx.json(locations));
+    return HttpResponse.json(locations);
   }
 );
 
-export const mockAppointmentDatesGet = rest.get(
-  `${BASE_URL}appointments/dates`,
-  (req, res, ctx) => {
-    const locationId = req.url.searchParams.get('location_id');
-    let result = [];
-    switch (locationId) {
-      case 'no-date': {
-        result = [];
-        break;
-      }
-      case 'single-date': {
-        result = [{date: _getDate(1)()}];
-        break;
-      }
-      default: {
-        const {dates} = DATES.find(d => d.location === locationId);
-        result = dates.map(d => ({date: d()}));
-      }
+export const mockAppointmentDatesGet = http.get(`${BASE_URL}appointments/dates`, ({request}) => {
+  const url = new URL(request.url);
+  const locationId = url.searchParams.get('location_id');
+  let result = [];
+  switch (locationId) {
+    case 'no-date': {
+      result = [];
+      break;
     }
-    return res(ctx.json(result));
+    case 'single-date': {
+      result = [{date: _getDate(1)()}];
+      break;
+    }
+    default: {
+      const {dates} = DATES.find(d => d.location === locationId);
+      result = dates.map(d => ({date: d()}));
+    }
   }
-);
+  return HttpResponse.json(result);
+});
 
-export const mockAppointmentTimesGet = rest.get(
-  `${BASE_URL}appointments/times`,
-  (req, res, ctx) => {
-    const date = req.url.searchParams.get('date');
-    // ensure we can handle datetimes with timezone information in varying formats.
-    // Ideally, the API returns UTC, but the UI needs to display localized times.
-    const times = [
-      `${date}T08:00:00Z`,
-      `${date}T08:30:00Z`,
-      `${date}T06:00:00Z`,
-      `${date}T06:10:00Z`,
-      `${date}T14:30:00+02:00`,
-    ].map(datetime => ({time: datetime}));
-    return res(ctx.json(times));
-  }
-);
+export const mockAppointmentTimesGet = http.get(`${BASE_URL}appointments/times`, ({request}) => {
+  const url = new URL(request.url);
+  const date = url.searchParams.get('date');
+  // ensure we can handle datetimes with timezone information in varying formats.
+  // Ideally, the API returns UTC, but the UI needs to display localized times.
+  const times = [
+    `${date}T08:00:00Z`,
+    `${date}T08:30:00Z`,
+    `${date}T06:00:00Z`,
+    `${date}T06:10:00Z`,
+    `${date}T14:30:00+02:00`,
+  ].map(datetime => ({time: datetime}));
+  return HttpResponse.json(times);
+});
 
-export const mockAppointmentCustomerFieldsGet = rest.get(
+export const mockAppointmentCustomerFieldsGet = http.get(
   `${BASE_URL}appointments/customer-fields`,
-  (req, res, ctx) => {
+  () => {
     // all possible field types from the backend
     const fields = [
       {
@@ -216,13 +208,13 @@ export const mockAppointmentCustomerFieldsGet = rest.get(
         ],
       },
     ];
-    return res(ctx.json(fields));
+    return HttpResponse.json(fields);
   }
 );
 
-export const mockAppointmentPost = rest.post(
+export const mockAppointmentPost = http.post(
   `${BASE_URL}appointments/appointments`,
-  async (req, res, ctx) => {
+  async ({request}) => {
     const {
       submission: submissionUrl,
       products,
@@ -230,10 +222,9 @@ export const mockAppointmentPost = rest.post(
       date,
       datetime,
       contactDetails,
-    } = await req.json();
-    return res(
-      ctx.status(201),
-      ctx.json({
+    } = await request.json();
+    return HttpResponse.json(
+      {
         submission: submissionUrl,
         products,
         location,
@@ -241,46 +232,43 @@ export const mockAppointmentPost = rest.post(
         datetime,
         contactDetails,
         statusUrl: `${submissionUrl}/-token-/status`,
-      })
+      },
+      {status: 201}
     );
   }
 );
 
-export const mockAppointmentErrorPost = rest.post(
-  `${BASE_URL}appointments/appointments`,
-  async (req, res, ctx) => {
-    return res(
-      ctx.status(400),
-      ctx.json({
-        type: 'http://localhost:8000/fouten/ValidationError/',
-        code: 'invalid',
-        title: 'Invalid input.',
-        status: 400,
-        detail: '',
-        instance: 'urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75',
-        invalidParams: [
-          {
-            name: 'contactDetails.dateOfBirth',
-            code: 'invalid',
-            reason: 'You cannot be born in the future.',
-          },
-        ],
-      })
-    );
-  }
-);
+export const mockAppointmentErrorPost = http.post(`${BASE_URL}appointments/appointments`, () => {
+  return HttpResponse.json(
+    {
+      type: 'http://localhost:8000/fouten/ValidationError/',
+      code: 'invalid',
+      title: 'Invalid input.',
+      status: 400,
+      detail: '',
+      instance: 'urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75',
+      invalidParams: [
+        {
+          name: 'contactDetails.dateOfBirth',
+          code: 'invalid',
+          reason: 'You cannot be born in the future.',
+        },
+      ],
+    },
+    {status: 400}
+  );
+});
 
-export const mockAppointmentCancelPost = rest.post(
+export const mockAppointmentCancelPost = http.post(
   `${BASE_URL}appointments/:uuid/cancel`,
-  (req, res, ctx) => res(ctx.status(204))
+  () => new HttpResponse(null, {status: 204})
 );
 
-export const mockAppointmentCancelErrorPost = rest.post(
+export const mockAppointmentCancelErrorPost = http.post(
   `${BASE_URL}appointments/:uuid/cancel`,
   (req, res, ctx) =>
-    res(
-      ctx.status(400),
-      ctx.json({
+    HttpResponse.json(
+      {
         type: 'http://localhost:8000/fouten/ValidationError/',
         code: 'invalid',
         title: 'Invalid input.',
@@ -294,6 +282,7 @@ export const mockAppointmentCancelErrorPost = rest.post(
             reason: 'Invalid e-mail for the submission.',
           },
         ],
-      })
+      },
+      {status: 400}
     )
 );

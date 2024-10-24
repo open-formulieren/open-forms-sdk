@@ -57,7 +57,7 @@ export const IntroductionPageWithInitialDataReference = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    const continueLink = canvas.getByRole('link', {name: 'Continue'});
+    const continueLink = canvas.getByRole('link', {name: 'Doorgaan'});
     await expect(continueLink).toHaveAttribute('href', '/startpagina?initial_data_reference=1234');
   },
 };

@@ -88,8 +88,6 @@ const config = {
       watchOptions,
     };
   },
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: {},
 };
 export default config;

@@ -1,4 +1,4 @@
-import {expect, userEvent, waitFor, within} from '@storybook/test';
+import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {Form, Formik} from 'formik';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
@@ -60,8 +60,10 @@ export const ISO8601 = {
   parameters: {
     formik: {disable: true},
   },
+  args: {
+    onSubmit: fn(),
+  },
   argTypes: {
-    onSubmit: {action: true},
     widget: {table: {disable: true}},
     showFormattedDate: {table: {disable: true}},
     description: {table: {disable: true}},
