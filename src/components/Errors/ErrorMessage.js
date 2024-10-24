@@ -11,13 +11,20 @@ const ICONS = {
   ok: <i className="fa fas fa-check-circle" />,
 };
 
+const ARIA_TAGS = {
+  error: {role: 'alert'},
+  warning: {role: 'alert'},
+  info: {role: 'status', 'aria-live': 'polite'},
+  ok: {role: 'status', 'aria-live': 'polite'},
+};
+
 const ALERT_MODIFIERS = ['info', 'warning', 'error', 'ok'];
 
 const ErrorMessage = ({children, modifier = 'error'}) => {
   const errorRef = useScrollIntoView();
   if (!children) return null;
   return (
-    <Alert type={modifier} icon={ICONS[modifier]} ref={errorRef} role="alert">
+    <Alert type={modifier} icon={ICONS[modifier]} ref={errorRef} {...ARIA_TAGS[modifier]}>
       {children}
     </Alert>
   );
