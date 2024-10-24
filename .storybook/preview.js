@@ -6,7 +6,7 @@ import 'design-token-editor/lib/css/root.css';
 import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
-import {initialize, mswDecorator, mswLoader} from 'msw-storybook-addon';
+import {initialize, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
 import {setAppElement} from 'react-modal';
 import 'scss/dte-theme.scss';
@@ -49,7 +49,6 @@ Templates.current = OFLibrary;
 export default {
   decorators: [
     withThemeProvider(ThemeProvider),
-    mswDecorator,
     withClearSessionStorage,
     withClearSubmissionLocalStorage,
     withModalDecorator,
