@@ -1,4 +1,4 @@
-import {expect, userEvent, waitFor, within} from '@storybook/test';
+import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 
 import {buildForm} from 'api-mocks';
 import {LiteralDecorator} from 'story-utils/decorators';
@@ -103,13 +103,17 @@ export const Display = {
   },
 };
 
-const render = ({loginRequired = false, loginOptions = [], cosignLoginOptions = [], onFormStart}) =>
-  console.log(onFormStart) || (
-    <LoginOptions
-      form={buildForm({loginRequired, loginOptions, cosignLoginOptions})}
-      onFormStart={onFormStart}
-    />
-  );
+const render = ({
+  loginRequired = false,
+  loginOptions = [],
+  cosignLoginOptions = [],
+  onFormStart,
+}) => (
+  <LoginOptions
+    form={buildForm({loginRequired, loginOptions, cosignLoginOptions})}
+    onFormStart={onFormStart}
+  />
+);
 
 export const Functional = {
   render,
@@ -178,9 +182,7 @@ export const Functional = {
         isForGemachtigde: true,
       },
     ],
-  },
-  argTypes: {
-    onFormStart: {action: true},
+    onFormStart: fn(),
   },
   play: async ({args, canvasElement}) => {
     const canvas = within(canvasElement);
