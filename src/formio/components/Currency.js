@@ -3,6 +3,8 @@ import FormioUtils from 'formiojs/utils';
 import _, {set} from 'lodash';
 import {Formio} from 'react-formio';
 
+import {setErrorAttributes} from '../utils';
+
 /**
  * Extend the default text field to modify it to our needs.
  */
@@ -77,6 +79,11 @@ class Currency extends Formio.Components.components.currency {
       'utrecht-textbox--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   // Issue OF#1351

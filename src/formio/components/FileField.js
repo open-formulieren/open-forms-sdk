@@ -4,7 +4,7 @@ import {Formio} from 'react-formio';
 
 import {CSRFToken} from 'headers';
 
-import {applyPrefix} from '../utils';
+import {applyPrefix, setErrorAttributes} from '../utils';
 
 const addCSRFToken = xhr => {
   const csrfTokenValue = CSRFToken.getValue();
@@ -289,6 +289,13 @@ class FileField extends Formio.Components.components.file {
     if (file.type === 'image/heif') return true;
 
     return super.validatePattern(file, val);
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    const input = this.refs.fileBrowse;
+    const targetElements = input ? [input] : [];
+    setErrorAttributes(targetElements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 
   checkComponentValidity(data, dirty, row, options = {}) {

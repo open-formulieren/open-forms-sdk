@@ -1,6 +1,6 @@
 import {Formio} from 'react-formio';
 
-import {escapeHtml} from '../utils';
+import {escapeHtml, setErrorAttributes} from '../utils';
 
 /**
  * Extend the default text field to modify it to our needs.
@@ -15,6 +15,15 @@ class TextArea extends Formio.Components.components.textarea {
       'utrecht-textarea--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    }
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   renderElement(value, index) {

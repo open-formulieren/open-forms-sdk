@@ -6,10 +6,10 @@
         {% if (!ctx.disabled) { %}
           <div class="col-md-1"></div>
         {% } %}
-        <div class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}"><strong>{{ctx.t('File Name')}}</strong></div>
-        <div class="col-md-2"><strong>{{ctx.t('Size')}}</strong></div>
+        <div id="{{ctx.instance.id}}-{{ctx.component.key}}-file-list-header-filename" class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %} openforms-content openforms-content--bold">{{ctx.t('File Name')}}</div>
+        <div id="{{ctx.instance.id}}-{{ctx.component.key}}-file-list-header-filesize" class="col-md-2 openforms-content openforms-content--bold">{{ctx.t('Size')}}</div>
         {% if (ctx.self.hasTypes) { %}
-          <div class="col-md-2"><strong>{{ctx.t('Type')}}</strong></div>
+          <div id="{{ctx.instance.id}}-{{ctx.component.key}}-file-list-header-filetype" class="col-md-2 openforms-content openforms-content--bold">{{ctx.t('Type')}}</div>
         {% } %}
       </div>
     </li>
@@ -19,29 +19,33 @@
           {% if (!ctx.disabled) { %}
             <div class="col-md-1">
               <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}}">
-                <i class="{{ctx.iconClass('trash-can')}}"></i>
+                <i class="{{ctx.iconClass('trash-can')}}" aria-hidden="true"></i>
+                <span class="sr-only">{{ctx.t('removeFileMessage', {fileName: file.originalName || file.name})}}</span>
               </button>
             </div>
           {% } %}
-          <div class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}">
+          <div class="col-md-{% if (ctx.self.hasTypes) { %}7{% } else { %}9{% } %}" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}-file-list-header-filename">
             {% if (ctx.component.uploadOnly) { %}
               {{{file.originalName || file.name}}}
             {% } else { %}
               <a href="{{file.url || '#'}}" target="_blank" ref="fileLink" class="utrecht-link utrecht-link--openforms"> {{{file.originalName || file.name}}}</a>
             {% } %}
           </div>
-          <div class="col-md-2">{{ctx.fileSize(file.size)}}</div>
-          {% if (ctx.self.hasTypes && !ctx.disabled) { %}
-            <div class="col-md-2">
-              <select class="file-type" ref="fileType">
-                {% ctx.component.fileTypes.map(function(type) { %}
-                  <option class="test" value="{{ type.value }}" {% if (type.label === file.fileType) { %}selected="selected"{% } %}>{{ type.label }}</option>
-                {% }); %}
-              </select>
+          <div class="col-md-2" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}-file-list-header-filesize">
+            {{ctx.fileSize(file.size)}}
+          </div>
+          {% if (ctx.self.hasTypes) { %}
+            <div class="col-md-2" aria-labelledby="{{ctx.instance.id}}-{{ctx.component.key}}-file-list-header-filetype">
+              {% if (!ctx.disabled) { %}
+                <select class="file-type" ref="fileType">
+                  {% ctx.component.fileTypes.map(function(type) { %}
+                    <option class="test" value="{{ type.value }}" {% if (type.label === file.fileType) { %}selected="selected"{% } %}>{{ type.label }}</option>
+                  {% }); %}
+                </select>
+              {% } else { %}
+                {{file.fileType}}
+              {% } %}
             </div>
-          {% } %}
-          {% if (ctx.self.hasTypes && ctx.disabled) { %}
-          <div class="col-md-2">{{file.fileType}}</div>
           {% } %}
         </div>
       </li>
@@ -54,7 +58,10 @@
         <span>
           <img ref="fileImage" src="" alt="{{{file.originalName || file.name}}}" style="width:{{ctx.component.imageSize}}px">
           {% if (!ctx.disabled) { %}
-            <i class="{{ctx.iconClass('trash-can')}}" ref="removeLink"></i>
+            <button type="button" class="utrecht-button utrecht-button--subtle utrecht-button--danger" ref="removeLink" title="{{ctx.t('Remove')}}">
+              <i class="{{ctx.iconClass('trash-can')}}" aria-hidden="true"></i>
+              <span class="sr-only">{{ctx.t('removeFileMessage', {fileName: file.originalName || file.name})}}</span>
+            </button>
           {% } %}
         </span>
       </div>
@@ -64,12 +71,12 @@
 {% if (!ctx.disabled && ((ctx.component.multiple && (!ctx.component.maxNumberOfFiles || ctx.files.length < ctx.component.maxNumberOfFiles)) || !ctx.files.length)) { %}
   {% if (ctx.self.useWebViewCamera) { %}
     <div class="fileSelector">
-      <button class="btn btn-primary {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="galleryButton"><i class="fa fa-book"></i> {{ctx.t('Gallery')}}</button>
-      <button class="btn btn-primary {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="cameraButton"><i class="fa fa-camera"></i> {{ctx.t('Camera')}}</button>
+      <button class="btn btn-primary {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="galleryButton"><i class="fa fa-book" aria-hidden="true"></i> {{ctx.t('Gallery')}}</button>
+      <button class="btn btn-primary {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="cameraButton"><i class="fa fa-camera" aria-hidden="true"></i> {{ctx.t('Camera')}}</button>
     </div>
   {% } else if (!ctx.self.cameraMode) { %}
     <div class="fileSelector" ref="fileDrop" {{ctx.fileDropHidden ? 'hidden' : ''}}>
-      <i class="{{ctx.iconClass('cloud-upload')}}"></i>
+      <i class="{{ctx.iconClass('cloud-upload')}}" aria-hidden="true"></i>
 
         {% if (ctx.component.multiple) { %}
           {{ctx.t('Drop files,')}}
@@ -78,12 +85,12 @@
         {% } %}
 
         {% if (ctx.self.imageUpload) { %}
-          <a href="#" ref="toggleCameraMode" class="utrecht-link utrecht-link--openforms"><i class="fa fa-camera"></i> {{ctx.t('Use Camera,')}}</a>
+          <a href="#" ref="toggleCameraMode" class="utrecht-link utrecht-link--openforms"><i class="fa fa-camera" aria-hidden="true"></i> {{ctx.t('Use Camera,')}}</a>
         {% } %}
 
         {{ctx.t('or')}}
 
-        <a href="#" ref="fileBrowse" class="browse" class="utrecht-link utrecht-link--openforms">{{ctx.t('browse')}}</a>
+        <a id="{{ctx.instance.id}}-{{ctx.component.key}}" href="#" ref="fileBrowse" class="browse utrecht-link utrecht-link--openforms">{{ctx.t('browse')}}</a>
 
         {% if (ctx.component.multiple) { %}
           {{ctx.t('to attach files.')}}
@@ -99,7 +106,7 @@
     <div>
       <video class="video" autoplay="true" ref="videoPlayer"></video>
     </div>
-    <button class="btn btn-primary {{ctx.ofPrefix}}-button {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="takePictureButton"><i class="fa fa-camera"></i> {{ctx.t('Take Picture')}}</button>
+    <button class="btn btn-primary {{ctx.ofPrefix}}-button {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="takePictureButton"><i class="fa fa-camera" aria-hidden="true"></i> {{ctx.t('Take Picture')}}</button>
     <button class="btn btn-primary {{ctx.ofPrefix}}-button {{ctx.ofPrefix}}-button--primary utrecht-button utrecht-button--html-button utrecht-button--primary-action" ref="toggleCameraMode">{{ctx.t('Switch to file upload')}}</button>
   {% } %}
 {% } %}
@@ -111,7 +118,10 @@
       </div>
     </div>
     <div class="row">
-			<i class="{{ctx.iconClass('trash-can')}}" ref="fileStatusRemove" title="{{ctx.t('remove')}}"></i>
+      <a role="button" ref="fileStatusRemove" title="{{ctx.t('Remove')}}" href="#">
+        <i class="{{ctx.iconClass('trash-can')}}" aria-hidden="true"></i>
+        <span class="sr-only">{{ctx.t('removeFileMessage', {fileName: status.originalName})}}</span>
+      </a>
       <div class="fileSize col-form-label col-sm-2 text-right">{{ctx.fileSize(status.size)}}</div>
     </div>
     {% if (status.status === 'progress') { %}

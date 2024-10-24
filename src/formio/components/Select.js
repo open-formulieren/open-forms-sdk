@@ -1,7 +1,7 @@
 import isObject from 'lodash/isObject';
 import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
+import {applyPrefix, setErrorAttributes} from '../utils';
 
 /**
  * Extend the default select field to modify it to our needs.
@@ -14,6 +14,13 @@ class Select extends Formio.Components.components.select {
       ' '
     );
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    const inputClone = this.element.querySelector('input:not([type="hidden"])');
+    const targetElements = inputClone ? [inputClone] : [];
+    setErrorAttributes(targetElements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
 
   setValue(value, flags = {}) {

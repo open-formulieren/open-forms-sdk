@@ -64,6 +64,7 @@ const DateField = ({
       break;
     }
   }
+  const errorMessageId = invalid ? `${id}-error-message` : undefined;
 
   return (
     <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
@@ -76,11 +77,12 @@ const DateField = ({
         disabled={disabled}
         invalid={invalid}
         extraOnChange={onChange}
+        aria-describedby={errorMessageId}
         {...fieldProps}
         {...props}
       />
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} />}
+      {touched && <ValidationErrors error={error} id={errorMessageId} />}
     </FormField>
   );
 };

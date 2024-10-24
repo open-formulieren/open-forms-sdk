@@ -1,6 +1,8 @@
 import {electronicFormatIBAN, isValidIBAN} from 'ibantools';
 import {Formio} from 'react-formio';
 
+import {setErrorAttributes} from '../utils';
+
 const TextField = Formio.Components.components.textfield;
 
 const IbanValidator = {
@@ -48,5 +50,14 @@ export default class IBANField extends TextField {
       'utrecht-textbox--openforms',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    }
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 }

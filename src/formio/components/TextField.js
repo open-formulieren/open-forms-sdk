@@ -2,6 +2,7 @@ import debounce from 'lodash/debounce';
 import {Formio} from 'react-formio';
 
 import {get} from '../../api';
+import {setErrorAttributes} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
@@ -35,6 +36,15 @@ class TextField extends Formio.Components.components.textfield {
       updatedOptions.async = true;
     }
     return super.checkComponentValidity(data, dirty, row, updatedOptions);
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    }
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   /**

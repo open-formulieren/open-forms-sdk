@@ -2,6 +2,8 @@ import {Formio} from 'react-formio';
 
 import MinMaxTimeValidator from 'formio/validators/MinMaxTimeValidator';
 
+import {setErrorAttributes} from '../utils';
+
 const Time = Formio.Components.components.time;
 
 class TimeField extends Time {
@@ -28,6 +30,15 @@ class TimeField extends Time {
       'utrecht-textbox--openforms-time',
     ].join(' ');
     return info;
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    // setErrorAttributes cannot be done for a `multiple` component
+    // https://github.com/open-formulieren/open-forms-sdk/pull/717#issuecomment-2405060364
+    if (!this.component.multiple) {
+      setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    }
+    return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 
   getStringAsValue(value) {
