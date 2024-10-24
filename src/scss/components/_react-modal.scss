@@ -55,10 +55,18 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
     overflow: auto;
   }
 
-  &__close {
+  &__close.utrecht-button {
     position: absolute;
-    top: $modal-close-icon-offset;
-    right: $modal-close-icon-offset;
+    display: inline-block;
+    top: calc(
+      $modal-close-icon-offset - var(--utrecht-button-padding-block-start) -
+        var(--_utrecht-button-border-width)
+    );
+    right: calc(
+      $modal-close-icon-offset - var(--utrecht-button-padding-inline-end) -
+        var(--_utrecht-button-border-width)
+    );
+    inline-size: auto;
     cursor: pointer;
     opacity: 0.5;
     font-size: 150%;

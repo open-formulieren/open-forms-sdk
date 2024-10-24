@@ -66,7 +66,7 @@ const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) =
     };
   }, [baseUrl, languageCode]);
 
-  if (loading) return <Loader modifiers={['centered']} />;
+  if (loading) return <Loader modifiers={['centered']} withoutTranslation />;
 
   if (error) {
     throw error;
