@@ -192,7 +192,7 @@ There are some known limitations related to mocking, with possible workarounds d
 
 There is no dedicated add-on panel to manage mock responses. Instead, you can rely on story args to
 dynamically change response data. To achieve this, you need to configure the worker as part of the
-story template, for example:
+story render function, for example:
 
 ```jsx
 import {getWorker} from 'msw-storybook-addon';
@@ -201,9 +201,9 @@ import {myMockFactory} from './mocks';
 
 export const worker = getWorker();
 
-export const Template = args => {
-  worker.use(myMockFactory(args.someArg));
-  return <MyComponent />;
+const render = ({someMockArg, ...args}) => {
+  worker.use(myMockFactory(someMockArg));
+  return <MyComponent {...args} />;
 };
 ```
 
