@@ -22,6 +22,7 @@ import PostcodeField from './components/PostcodeField';
 import Radio from './components/Radio';
 import Select from './components/Select';
 import Selectboxes from './components/Selectboxes';
+import SoftRequiredErrors from './components/SoftRequiredErrors';
 import TextArea from './components/TextArea';
 import TextField from './components/TextField';
 import TimeField from './components/TimeField';
@@ -55,6 +56,7 @@ const FormIOModule = {
     coSign: CoSignOld,
     cosign: Cosign,
     editgrid: EditGrid,
+    softRequiredErrors: SoftRequiredErrors,
   },
   providers: {
     storage: {url: CSRFEnabledUrl},
