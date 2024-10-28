@@ -129,7 +129,7 @@ export const OneAllowedFileType = {
     await sleep(200); // formio needs time to bind click events...
     const canvas = within(canvasElement);
     // Click on browse to make the input node injected in the dom
-    const browseLink = canvas.getByRole('link', {name: 'uploadFile'});
+    const browseLink = canvas.getByRole('link', {name: 'browseFile'});
     // This opens the file dialog, but without it the input node is not injected into the DOM
     await userEvent.click(browseLink);
 
@@ -167,7 +167,7 @@ export const MultipleAllowedFileTypes = {
     await sleep(200); // formio needs time to bind click events...
     const canvas = within(canvasElement);
     // Click on browse to make the input node injected in the dom
-    const browseLink = canvas.getByRole('link', {name: 'uploadFile'});
+    const browseLink = canvas.getByRole('link', {name: 'browseFile'});
     await userEvent.click(browseLink);
 
     // Upload a file of the wrong type

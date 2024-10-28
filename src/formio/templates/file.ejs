@@ -90,7 +90,7 @@
 
         {{ctx.t('or')}}
 
-        <a id="{{ctx.instance.id}}-{{ctx.component.key}}" href="#" ref="fileBrowse" class="browse utrecht-link utrecht-link--openforms">{{ctx.t('uploadFile', {fileFieldLabel: ctx.component.label})}}</a>
+        <a id="{{ctx.instance.id}}-{{ctx.component.key}}" href="#" ref="fileBrowse" class="browse utrecht-link utrecht-link--openforms" aria-label="{% if (ctx.component.multiple) { %} {{ctx.t('browseFiles', {fileFieldLabel: ctx.component.label})}} {% } else { %} {{ctx.t('browseFile', {fileFieldLabel: ctx.component.label})}} {% } %}">{{ctx.t('browse')}}</a>
 
         {% if (ctx.component.multiple) { %}
           {{ctx.t('to attach files.')}}
