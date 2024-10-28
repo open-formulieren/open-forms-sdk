@@ -1,3 +1,4 @@
+import FormioUtils from 'formiojs/utils';
 import {Formio} from 'react-formio';
 
 const FormioContentField = Formio.Components.components.content;
@@ -20,7 +21,20 @@ class SoftRequiredErrors extends FormioContentField {
   }
 
   get content() {
-    const missingFieldLabels = ['Foo', 'Bar'];
+    // figure out which components use soft required validation
+    const softRequiredComponents = [];
+    FormioUtils.eachComponent(this.root.components, component => {
+      if (component.component.openForms?.softRequired) {
+        softRequiredComponents.push(component);
+      }
+    });
+
+    const missingFieldLabels = [];
+    // check which components have an empty value
+    for (const component of softRequiredComponents) {
+      const isEmpty = component.isEmpty();
+      if (isEmpty) missingFieldLabels.push(component.label);
+    }
 
     if (!missingFieldLabels.length) return '';
 

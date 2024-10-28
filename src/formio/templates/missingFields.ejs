@@ -1,4 +1,7 @@
-<ul class="utrecht-unordered-list">
+<span class="sr-only" id="{{ctx.id}}-missing-fields-header">
+  {{ ctx.t('Empty fields') }}
+</span>
+<ul class="utrecht-unordered-list" aria-labelledby="{{ctx.id}}-missing-fields-header">
 {% for (const label of ctx.labels) { %}
   <li class="utrecht-unordered-list__item">{{ label }}</li>
 {% } %}
