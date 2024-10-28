@@ -4,7 +4,7 @@ import {Formio} from 'react-formio';
 
 import {CSRFToken} from 'headers';
 
-import {applyPrefix, setErrorAttributes} from '../utils';
+import {applyPrefix, linkToSoftRequiredDisplay, setErrorAttributes} from '../utils';
 
 const addCSRFToken = xhr => {
   const csrfTokenValue = CSRFToken.getValue();
@@ -291,9 +291,13 @@ class FileField extends Formio.Components.components.file {
     return super.validatePattern(file, val);
   }
 
-  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+  _getTargetElements() {
     const input = this.refs.fileBrowse;
-    const targetElements = input ? [input] : [];
+    return input ? [input] : [];
+  }
+
+  setErrorClasses(elements, dirty, hasErrors, hasMessages) {
+    const targetElements = this._getTargetElements();
     setErrorAttributes(targetElements, hasErrors, hasMessages, this.refs.messageContainer.id);
     return super.setErrorClasses(targetElements, dirty, hasErrors, hasMessages);
   }
@@ -313,7 +317,12 @@ class FileField extends Formio.Components.components.file {
       return false;
     }
 
-    return super.checkComponentValidity(data, dirty, row, options);
+    const result = super.checkComponentValidity(data, dirty, row, options);
+
+    const targetElements = this._getTargetElements();
+    linkToSoftRequiredDisplay(targetElements, this);
+
+    return result;
   }
 
   deleteFile(fileInfo) {

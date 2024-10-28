@@ -39,9 +39,11 @@ class SoftRequiredErrors extends FormioContentField {
     if (!missingFieldLabels.length) return '';
 
     const missingFieldsMarkup = this.renderTemplate('missingFields', {labels: missingFieldLabels});
-    return this.interpolate(this.component.html, {
+    const content = this.interpolate(this.component.html, {
       missingFields: missingFieldsMarkup,
     });
+
+    return `<div id="${this.id}-content">${content}</div>`;
   }
 }
 

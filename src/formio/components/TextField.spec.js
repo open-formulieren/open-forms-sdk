@@ -185,3 +185,61 @@ describe('The mutiple text component', () => {
     expect(form.isValid()).toBeTruthy();
   });
 });
+
+// This is not officially supported yet... but due to the generic implementation it
+// works. It is/was intended for file fields only at first.
+describe('Textfield with soft required validation', () => {
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  test('The softRequiredErrors component is linked', async () => {
+    const user = userEvent.setup({delay: 50});
+    const FORM = {
+      type: 'form',
+      components: [
+        {
+          type: 'textfield',
+          key: 'textfield',
+          label: 'Text',
+          validate: {required: false},
+          openForms: {softRequired: true},
+        },
+        {
+          id: 'softReq123',
+          type: 'softRequiredErrors',
+          key: 'softRequiredErrors',
+          html: `{{ missingFields }}`,
+        },
+      ],
+    };
+    const {form} = await renderForm(FORM);
+
+    const input = screen.getByLabelText('Text');
+
+    // Trigger validation
+    await user.type(input, 'foo');
+    await user.clear(input);
+    // Lose focus of input
+    await user.tab({shift: true});
+
+    // Input is invalid and should have aria-describedby and aria-invalid
+    expect(input).not.toHaveClass('is-invalid');
+    expect(input).toHaveAttribute('aria-describedby');
+    expect(input).not.toHaveAttribute('aria-invalid', 'true');
+    expect(form.isValid()).toBeTruthy();
+
+    // check that it points to a real div
+    const expectedDiv = document.getElementById(input.getAttribute('aria-describedby'));
+    expect(expectedDiv).not.toBeNull();
+
+    await user.type(input, 'foo');
+    await user.tab({shift: true});
+
+    // Input is again valid and without aria-describedby and aria-invalid
+    expect(input).not.toHaveClass('is-invalid');
+    expect(input).not.toHaveAttribute('aria-describedby');
+    expect(input).not.toHaveAttribute('aria-invalid');
+    expect(form.isValid()).toBeTruthy();
+  });
+});

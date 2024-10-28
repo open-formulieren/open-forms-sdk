@@ -2,7 +2,7 @@ import debounce from 'lodash/debounce';
 import {Formio} from 'react-formio';
 
 import {get} from '../../api';
-import {setErrorAttributes} from '../utils';
+import {linkToSoftRequiredDisplay, setErrorAttributes} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
 const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
@@ -35,7 +35,11 @@ class TextField extends Formio.Components.components.textfield {
     if (this.component.validate.plugins && this.component.validate.plugins.length) {
       updatedOptions.async = true;
     }
-    return super.checkComponentValidity(data, dirty, row, updatedOptions);
+    const result = super.checkComponentValidity(data, dirty, row, updatedOptions);
+
+    linkToSoftRequiredDisplay(this.refs.input, this);
+
+    return result;
   }
 
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
