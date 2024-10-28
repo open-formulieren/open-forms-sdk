@@ -43,7 +43,20 @@ class SoftRequiredErrors extends FormioContentField {
       missingFields: missingFieldsMarkup,
     });
 
-    return `<div id="${this.id}-content">${content}</div>`;
+    return `
+      <div
+        id="${this.id}-content"
+        class="utrecht-alert utrecht-alert--warning openforms-soft-required-errors"
+        role="status"
+      >
+        <div class="utrecht-alert__icon">
+          <i class="fa fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="utrecht-alert__message">
+          ${content}
+        </div>
+      </div>
+    `;
   }
 }
 
