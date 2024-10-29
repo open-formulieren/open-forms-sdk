@@ -269,7 +269,9 @@
     ],
     "testEnvironment": "jest-fixed-jsdom",
     "testEnvironmentOptions": {
-      "customExportConditions": [""]
+      "customExportConditions": [
+        ""
+      ]
     },
     "transform": {
       "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
