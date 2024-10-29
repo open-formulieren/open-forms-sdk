@@ -17,6 +17,7 @@
   @include bem.modifier('openforms') {
     display: block;
     line-height: 1.333;
+    hyphens: auto;
     overflow-wrap: break-word; // see open-formulieren/open-forms#576
     @include anchor.extend-utrecht-link;
     // TODO: remove font-weight rule on 2.0, it's only here for backwards compatibility

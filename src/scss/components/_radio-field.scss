@@ -7,6 +7,7 @@
   @include bem.modifier('openforms') {
     &.utrecht-form-field--radio {
       background-color: var(--of-utrecht-form-field-radio-background-color, var(--of-checkbox-bg));
+      grid-template-columns: var(--utrecht-checkbox-size) minmax(0, 100fr);
 
       & + & {
         margin-block-start: var(--of-utrecht-form-field-radio-margin-block-start);

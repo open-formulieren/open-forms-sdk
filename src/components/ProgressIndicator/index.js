@@ -5,6 +5,7 @@ import {useLocation} from 'react-router-dom';
 import Caption from 'components/Caption';
 import Card from 'components/Card';
 import List from 'components/List';
+import useWindowResize from 'hooks/useWindowResize';
 
 import MobileButton from './MobileButton';
 import ProgressIndicatorItem from './ProgressIndicatorItem';
@@ -19,6 +20,7 @@ const ProgressIndicator = ({
   const {pathname: currentPathname} = useLocation();
   const [expanded, setExpanded] = useState(false);
   const [verticalSpaceUsed, setVerticalSpaceUsed] = useState(null);
+  const [resizeCounter, setResizeCounter] = useState(0);
   const buttonRef = useRef(null);
 
   const modifiers = [];
@@ -46,7 +48,10 @@ const ProgressIndicator = ({
     return () => {
       isMounted = false;
     };
-  }, [buttonRef, setVerticalSpaceUsed]);
+  }, [buttonRef, setVerticalSpaceUsed, resizeCounter]);
+  useWindowResize(() => {
+    setResizeCounter(prev => prev + 1);
+  });
 
   const customProperties = verticalSpaceUsed
     ? {

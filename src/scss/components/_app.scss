@@ -12,7 +12,12 @@
 .openforms-app {
   display: grid;
   grid-column-gap: var(--of-app-grid-column-gap, 20px);
-  grid-template-columns: 2fr 1fr;
+
+  // https://stackoverflow.com/a/63609468 sizes like 1fr won't work here.
+  // With possible page breaking content (i.e. wysiwyg content)
+  // this could cause the page to grow and break outside the container.
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
   grid-template-areas:
     'lang-switcher lang-switcher'
     'body          progress-indicator'

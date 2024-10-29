@@ -5,6 +5,8 @@
 // Extensions of the utrecht-form-field component, scoped to our own theme.
 .openforms-theme {
   .utrecht-form-field-description {
+    hyphens: auto;
+    overflow-wrap: break-word;
     @include bem.modifier('openforms-helptext') {
       --_border-left-width: var(--of-utrecht-form-field-description-border-left-width);
       line-height: var(--of-utrecht-form-field-description-line-height, 1.5);
