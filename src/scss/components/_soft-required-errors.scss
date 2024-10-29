@@ -1,0 +1,17 @@
+@use 'microscope-sass/lib/bem';
+
+@import '~microscope-sass/lib/typography';
+
+.openforms-soft-required-errors {
+  // apply all wysiwyg styling
+  // TODO: parametrize this with design tokens -> check with NL DS how to approach this
+  @include wysiwyg;
+
+  // unset, takes the utrecht-alert--warning by default, but can be overridden if desired
+  color: var(--of-soft-required-errors-color);
+  background-color: var(--of-soft-required-errors-background-color);
+
+  @include bem.element('missing-fields') {
+    font-weight: var(--of-soft-required-errors-missing-fields-font-weight, 600);
+  }
+}
