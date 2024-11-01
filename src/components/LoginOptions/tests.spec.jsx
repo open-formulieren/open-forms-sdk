@@ -1,56 +1,56 @@
-import {fireEvent} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {createRoot} from 'react-dom/client';
-import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
+import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildForm} from 'api-mocks';
 import {LiteralsProvider} from 'components/Literal';
 
 import LoginOptions from './index';
 
-let container = null;
-let root = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-  root = createRoot(container);
-});
+const Wrapper = ({form, onFormStart}) => {
+  const router = createMemoryRouter(
+    [
+      {
+        path: '/',
+        element: <LoginOptions form={form} onFormStart={onFormStart} />,
+      },
+    ],
+    {
+      initialEntries: ['/'],
+      initialIndex: 0,
+    }
+  );
 
-afterEach(() => {
-  // cleanup on exiting
-  act(() => {
-    root.unmount();
-    container.remove();
-    root = null;
-    container = null;
-  });
-});
+  return (
+    <IntlProvider locale="nl" messages={messagesNL}>
+      <LiteralsProvider literals={{beginText: {resolved: 'Begin Form'}}}>
+        <RouterProvider router={router} />
+      </LiteralsProvider>
+    </IntlProvider>
+  );
+};
 
-it('Login not required, options wrapped in form tag', () => {
+it('Login not required, options wrapped in form tag', async () => {
+  const user = userEvent.setup();
   const form = buildForm({loginRequired: false, loginOptions: [], cosignLoginOptions: []});
   const onFormStart = jest.fn(e => e.preventDefault());
 
-  act(() => {
-    root.render(
-      <LiteralsProvider literals={{beginText: {resolved: 'Begin Form'}}}>
-        <LoginOptions form={form} onFormStart={onFormStart} />
-      </LiteralsProvider>
-    );
-  });
+  render(<Wrapper form={form} onFormStart={onFormStart} />);
 
-  expect(container.firstChild.nodeName).toEqual('FORM');
-  const anonymousStartButton = container.getElementsByTagName('button')[0];
-  expect(anonymousStartButton).not.toBeUndefined();
+  expect(await screen.findByTestId('start-form')).toBeInTheDocument();
 
-  fireEvent.click(anonymousStartButton);
+  const anonymousStartButton = screen.getByRole('button', {name: 'Begin Form'});
+  expect(anonymousStartButton).toBeVisible();
+
+  await user.click(anonymousStartButton);
 
   expect(onFormStart).toHaveBeenCalled();
 });
 
-it('Login required, options not wrapped in form tag', () => {
+it('Login required, options not wrapped in form tag', async () => {
   const form = buildForm({
     loginRequired: true,
     loginOptions: [
@@ -77,28 +77,22 @@ it('Login required, options not wrapped in form tag', () => {
     href: 'https://open-forms.nl/digid-form/',
   };
 
-  act(() => {
-    root.render(
-      <IntlProvider locale="nl" messages={messagesNL}>
-        <LoginOptions form={form} onFormStart={onFormStart} />
-      </IntlProvider>
-    );
-  });
+  render(<Wrapper form={form} onFormStart={onFormStart} />);
 
   const expectedUrl = new URL(form.loginOptions[0].url);
   expectedUrl.searchParams.set('next', 'https://open-forms.nl/digid-form/?_start=1');
 
-  expect(container.firstChild.nodeName).toEqual('DIV');
-  const anonymousStartButton = container.getElementsByTagName('button')[0];
-  expect(anonymousStartButton).toBeUndefined();
+  const digidLoginLink = await screen.findByRole('link', {name: 'Inloggen met DigiD'});
+  expect(digidLoginLink).toBeVisible();
+  expect(digidLoginLink.href).toEqual(expectedUrl.toString());
 
-  const digidLoginButton = container.getElementsByTagName('a')[0];
-  expect(digidLoginButton.href).toEqual(expectedUrl.toString());
+  expect(screen.queryByTestId('start-form')).not.toBeInTheDocument();
+  expect(screen.queryAllByRole('button')).toHaveLength(0);
 
   window.location = location;
 });
 
-it('Login button has the right URL after cancelling log in', () => {
+it('Login button has the right URL after cancelling log in', async () => {
   const form = buildForm({
     loginRequired: true,
     loginOptions: [
@@ -126,23 +120,14 @@ it('Login button has the right URL after cancelling log in', () => {
     href: 'https://open-forms.nl/digid-form/?_start=1&_digid-message=login-cancelled',
   };
 
-  act(() => {
-    root.render(
-      <IntlProvider locale="nl" messages={messagesNL}>
-        <LoginOptions form={form} onFormStart={onFormStart} />
-      </IntlProvider>
-    );
-  });
+  render(<Wrapper form={form} onFormStart={onFormStart} />);
 
   const expectedUrl = new URL(form.loginOptions[0].url);
   expectedUrl.searchParams.set('next', 'https://open-forms.nl/digid-form/?_start=1');
 
-  expect(container.firstChild.nodeName).toEqual('DIV');
-  const anonymousStartButton = container.getElementsByTagName('button')[0];
-  expect(anonymousStartButton).toBeUndefined();
-
-  const digidLoginButton = container.getElementsByTagName('a')[0];
-  expect(digidLoginButton.href).toEqual(expectedUrl.toString());
+  const digidLoginLink = await screen.findByRole('link', {name: 'Inloggen met DigiD'});
+  expect(digidLoginLink).toBeVisible();
+  expect(digidLoginLink.href).toEqual(expectedUrl.toString());
 
   window.location = location;
 });
