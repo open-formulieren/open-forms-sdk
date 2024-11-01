@@ -9,6 +9,7 @@ import {CosignSummary} from 'components/Summary';
 import useFormContext from 'hooks/useFormContext';
 
 import CosignDone from './CosignDone';
+import CosignStart from './CosignStart';
 
 const initialState = {
   submission: null,
@@ -60,6 +61,7 @@ const Cosign = () => {
   return (
     <ErrorBoundary useCard>
       <Routes>
+        <Route path="start" element={<CosignStart />} />
         <Route
           path="check"
           element={

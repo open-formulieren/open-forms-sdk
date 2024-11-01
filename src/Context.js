@@ -10,6 +10,7 @@ const FormContext = React.createContext({
   introductionPageContent: '',
   loginRequired: false,
   loginOptions: [],
+  cosignLoginOptions: [],
   maintenanceMode: false,
   showProgressIndicator: true,
   showSummaryProgress: false,
