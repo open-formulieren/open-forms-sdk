@@ -24,9 +24,8 @@ const isLastStep = (currentStepIndex, submission) => {
   return currentStepIndex === submission.steps.length - 1;
 };
 
-const getLoginUrl = (loginOption, extraParams = {}) => {
+const getLoginUrl = (loginOption, extraParams = {}, extraNextParams = {}) => {
   if (loginOption.url === '#') return loginOption.url;
-
   const nextUrl = new URL(window.location.href);
 
   const queryParams = Array.from(nextUrl.searchParams.keys());
@@ -39,6 +38,7 @@ const getLoginUrl = (loginOption, extraParams = {}) => {
   if (!loginUrl.searchParams.has('coSignSubmission')) {
     nextUrl.searchParams.set(START_FORM_QUERY_PARAM, '1');
   }
+  Object.entries(extraNextParams).map(([key, value]) => nextUrl.searchParams.set(key, value));
   loginUrl.searchParams.set('next', nextUrl.toString());
   return loginUrl.toString();
 };

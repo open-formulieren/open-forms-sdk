@@ -124,7 +124,7 @@ const FormStart = ({form, submission, onFormStart, onDestroySession, initialData
           <LoginOptions
             form={form}
             onFormStart={onFormStart}
-            extraParams={{initial_data_reference: initialDataReference}}
+            extraNextParams={{initial_data_reference: initialDataReference}}
           />
         )}
       </Card>
