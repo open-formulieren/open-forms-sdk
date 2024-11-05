@@ -112,6 +112,6 @@ it('Form start page with initial_data_reference', async () => {
   const loginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
   expect(loginLink).toHaveAttribute(
     'href',
-    'https://openforms.nl/auth/form-name/digid/start?initial_data_reference=1234&next=http%3A%2F%2Flocalhost%2F%3F_start%3D1'
+    'https://openforms.nl/auth/form-name/digid/start?next=http%3A%2F%2Flocalhost%2F%3F_start%3D1%26initial_data_reference%3D1234'
   );
 });
