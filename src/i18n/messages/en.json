@@ -124,6 +124,11 @@
     "description": "ZOD 'invalid_enum_value' error message",
     "originalDefault": "Invalid enum value. Expected {expected}, received {received}."
   },
+  "7v8PR6": {
+    "defaultMessage": "Your session has expired. <link>Click here to restart</link>.",
+    "description": "Session expired error message",
+    "originalDefault": "Your session has expired. <link>Click here to restart</link>."
+  },
   "8DHd4/": {
     "defaultMessage": "Array must contain {exact, select, true {exactly} other {{inclusive, select, true {at most} other {less than}}} } {maximum, plural, one {{maximum} item} other {{maximum} items}}.",
     "description": "ZOD 'too_big' error message, for arrays",
@@ -429,6 +434,11 @@
     "description": "Step label in progress indicator",
     "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
   },
+  "LSB7FE": {
+    "defaultMessage": "Did you receive an email with a request to cosign? Start the cosigning by logging in.",
+    "description": "Cosign start explanation message",
+    "originalDefault": "Did you receive an email with a request to cosign? Start the cosigning by logging in."
+  },
   "LiRh7j": {
     "defaultMessage": "Confirmation: {reference}",
     "description": "Confirmation page title",
@@ -638,11 +648,6 @@
     "defaultMessage": "No",
     "description": "'False' display",
     "originalDefault": "No"
-  },
-  "abtbgK": {
-    "defaultMessage": "Your session has expired. <link>Click here to restart</link>.",
-    "description": "Session expired error message",
-    "originalDefault": "Your session has expired. <link>Click here to restart</link>."
   },
   "ay8sO5": {
     "defaultMessage": "Contact details",

@@ -10,7 +10,7 @@ import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
-const LoginOptions = ({form, onFormStart, extraNextParams = {}}) => {
+const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOptions = true}) => {
   const config = useContext(ConfigContext);
   const queryParams = useQuery();
 
@@ -79,6 +79,7 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}}) => {
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
         cosignLoginOptions={cosignLoginOptions}
+        isolateCosignOptions={isolateCosignOptions}
       />
     </Container>
   );
@@ -89,6 +90,7 @@ LoginOptions.propTypes = {
   onFormStart: PropTypes.func.isRequired,
   extraParams: PropTypes.object,
   extraNextParams: PropTypes.object,
+  isolateCosignOptions: PropTypes.bool,
 };
 
 export default LoginOptions;

@@ -61,7 +61,8 @@ const CosignStart = () => {
         <Body>
           <FormattedMessage
             description="Cosign start explanation message"
-            defaultMessage="Please log in to continue."
+            defaultMessage={`Did you receive an email with a request to cosign?
+            Start the cosigning by logging in.`}
           />
         </Body>
 
@@ -71,6 +72,7 @@ const CosignStart = () => {
           // dummy - we don't actually start a new submission, but the next URL is baked
           // into the login URLs.
           onFormStart={() => {}}
+          isolateCosignOptions={false}
         />
       </Card>
     </LiteralsProvider>
