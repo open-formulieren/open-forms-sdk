@@ -71,6 +71,14 @@ class Select extends Formio.Components.components.select {
     }
     super.beforeSubmit();
   }
+
+  normalizeSingleValue(value) {
+    // Fix for https://github.com/open-formulieren/open-forms/issues/4772
+    // ensure the datatype is always set to string to avoid formio casting it to other
+    // types (such as integer)
+    this.component.dataType = 'string';
+    return super.normalizeSingleValue(value);
+  }
 }
 
 export default Select;
