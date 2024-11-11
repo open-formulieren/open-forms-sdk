@@ -6,7 +6,7 @@ import {withForm} from 'story-utils/decorators';
 import CosignStart from './CosignStart';
 
 export default {
-  title: 'Private API / Cosign / Start',
+  title: 'Views / Cosign / Start',
   component: CosignStart,
   decorators: [withForm, withRouter],
   parameters: {
