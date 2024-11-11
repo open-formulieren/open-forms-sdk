@@ -11,6 +11,7 @@ const RenderFormioForm = ({
   submissionData = {},
   evalContext = {},
   ofContext = {},
+  onSubmit = () => {},
 }) => {
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
@@ -20,6 +21,7 @@ const RenderFormioForm = ({
     <Form
       form={configuration}
       submission={{data: submissionData}}
+      onSubmit={onSubmit}
       options={{
         noAlerts: true,
         baseUrl: config.baseUrl,
@@ -50,6 +52,7 @@ export const SingleFormioComponent = ({
   submissionData = {},
   evalContext = {},
   ofContext = {},
+  onSubmit = () => {},
 }) => {
   // in case this is used as a react component, allow using an alias, because React
   // reserves the key 'prop'
@@ -61,14 +64,21 @@ export const SingleFormioComponent = ({
       submissionData={submissionData}
       evalContext={evalContext}
       ofContext={ofContext}
+      onSubmit={onSubmit}
     />
   );
 };
 
-export const MultipleFormioComponents = ({components, evalContext = {}, ofContext = {}}) => (
+export const MultipleFormioComponents = ({
+  components,
+  evalContext = {},
+  ofContext = {},
+  onSubmit = () => {},
+}) => (
   <RenderFormioForm
     configuration={{type: 'form', components: components}}
     evalContext={evalContext}
     ofContext={ofContext}
+    onSubmit={onSubmit}
   />
 );
