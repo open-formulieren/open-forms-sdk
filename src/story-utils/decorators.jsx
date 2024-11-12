@@ -158,6 +158,7 @@ export const withSubmissionPollInfo = (Story, {parameters, args}) => {
         publicReference: args.publicReference,
         paymentUrl: args.paymentUrl,
         reportDownloadUrl: args.reportDownloadUrl,
+        confirmationPageTitle: args.confirmationPageTitle,
         confirmationPageContent: args.confirmationPageContent,
         mainWebsiteUrl: args.mainWebsiteUrl,
       }}

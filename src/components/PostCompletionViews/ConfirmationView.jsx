@@ -44,8 +44,13 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
   const paymentStatus = location?.state?.status;
   const userAction = location?.state?.userAction;
 
-  const {publicReference, reportDownloadUrl, confirmationPageContent, mainWebsiteUrl} =
-    useContext(SubmissionStatusContext);
+  const {
+    publicReference,
+    reportDownloadUrl,
+    confirmationPageTitle,
+    confirmationPageContent,
+    mainWebsiteUrl,
+  } = useContext(SubmissionStatusContext);
 
   const paymentStatusMessage = STATUS_MESSAGES[paymentStatus];
   let Wrapper = React.Fragment;
@@ -80,11 +85,13 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
         defaultMessage: 'Confirmation',
       })}
       header={
-        <FormattedMessage
-          description="Confirmation page title"
-          defaultMessage="Confirmation: {reference}"
-          values={{reference: publicReference}}
-        />
+        confirmationPageTitle || (
+          <FormattedMessage
+            description="Confirmation page title"
+            defaultMessage="Confirmation: {reference}"
+            values={{reference: publicReference}}
+          />
+        )
       }
       body={body}
       mainWebsiteUrl={mainWebsiteUrl}

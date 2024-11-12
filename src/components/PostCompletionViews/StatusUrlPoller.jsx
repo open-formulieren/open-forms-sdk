@@ -11,7 +11,14 @@ import usePoll from 'hooks/usePoll';
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';
 
-const SubmissionStatusContext = React.createContext();
+const SubmissionStatusContext = React.createContext({
+  publicReference: '',
+  paymentUrl: '',
+  reportDownloadUrl: '',
+  confirmationPageTitle: '',
+  confirmationPageContent: '',
+  mainWebsiteUrl: '',
+});
 SubmissionStatusContext.displayName = 'SubmissionStatusContext';
 
 const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
@@ -74,6 +81,7 @@ const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
     paymentUrl,
     publicReference,
     reportDownloadUrl,
+    confirmationPageTitle,
     confirmationPageContent,
     mainWebsiteUrl,
   } = statusResponse;
@@ -88,6 +96,7 @@ const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
         publicReference,
         paymentUrl,
         reportDownloadUrl,
+        confirmationPageTitle,
         confirmationPageContent,
         mainWebsiteUrl,
       }}
