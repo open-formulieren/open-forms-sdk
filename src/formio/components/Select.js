@@ -7,6 +7,14 @@ import {applyPrefix} from '../utils';
  * Extend the default select field to modify it to our needs.
  */
 class Select extends Formio.Components.components.select {
+  constructor(component, options, data) {
+    super(component, options, data);
+    // Fix for https://github.com/open-formulieren/open-forms/issues/4772
+    // ensure the datatype is always set to string to avoid formio casting it to other
+    // types (such as integer)
+    component.dataType = 'string';
+  }
+
   get inputInfo() {
     const info = super.inputInfo;
     // change the default CSS classes
