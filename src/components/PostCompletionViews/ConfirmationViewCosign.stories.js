@@ -17,6 +17,17 @@ export default {
       <p>Your request is not yet complete.</p>
       <h2>Cosigning required</h2>
       <p>
+        You can start the cosigning immediately by clicking the button below.
+      </p>
+      <p>
+        <a href="./start-cosign">
+          <button type="button" class="utrecht-button utrecht-button--primary-action">
+            Cosign now
+          </button>
+        </a>
+      </p>
+      <h3>Alternative instructions</h3>
+      <p>
         We've sent an email with a cosign request to
         <a href="mailto:info@example.com">info@example.com</a>. Once the submission has
         been cosigned we will start processing your request.
