@@ -1,6 +1,6 @@
 @use 'microscope-sass/lib/bem';
 
-@import '~microscope-sass/lib/typography';
+@import 'microscope-sass/lib/typography';
 
 .signature-pad-body {
   @include margin(auto, $value-mobile: 0.5em);

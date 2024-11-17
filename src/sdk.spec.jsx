@@ -4,7 +4,7 @@ import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockFormGet} from 'api-
 import mswServer from 'api-mocks/msw-server';
 import {mockFormioTranslations, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
 
-import {OpenForm} from './sdk.js';
+import {OpenForm} from './sdk';
 
 // scrollIntoView is not supported in Jest
 let scrollIntoViewMock = jest.fn();
