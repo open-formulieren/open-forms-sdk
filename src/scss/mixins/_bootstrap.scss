@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-@import '~microscope-sass/lib/grid';
+@import 'microscope-sass/lib/grid';
 
 $bootstrap-ratio-mobile: math.div(12, $grid-columns-mobile);
 $bootstrap-ratio-tablet: math.div(12, $grid-columns-tablet);
