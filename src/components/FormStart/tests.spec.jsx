@@ -115,3 +115,26 @@ it('Form start page with initial_data_reference', async () => {
     'https://openforms.nl/auth/form-name/digid/start?next=http%3A%2F%2Flocalhost%2F%3F_start%3D1%26initial_data_reference%3D1234'
   );
 });
+
+it('Form start page without initial_data_reference', async () => {
+  useQuery.mockReturnValue(new URLSearchParams());
+  const onFormStart = jest.fn();
+  const onDestroySession = jest.fn();
+
+  render(
+    <Wrap>
+      <FormStart
+        form={testLoginForm}
+        onFormStart={onFormStart}
+        onDestroySession={onDestroySession}
+        initialDataReference={null}
+      />
+    </Wrap>
+  );
+
+  const loginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
+  expect(loginLink).toHaveAttribute(
+    'href',
+    'https://openforms.nl/auth/form-name/digid/start?next=http%3A%2F%2Flocalhost%2F%3F_start%3D1'
+  );
+});

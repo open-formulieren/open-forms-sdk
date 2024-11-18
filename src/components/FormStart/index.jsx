@@ -105,6 +105,10 @@ const FormStart = ({form, submission, onFormStart, onDestroySession, initialData
     );
   }
 
+  const extraNextParams = initialDataReference
+    ? {initial_data_reference: initialDataReference}
+    : {};
+
   return (
     <LiteralsProvider literals={form.literals}>
       <Card title={form.name}>
@@ -121,11 +125,7 @@ const FormStart = ({form, submission, onFormStart, onDestroySession, initialData
             isAuthenticated={isAuthenticated}
           />
         ) : (
-          <LoginOptions
-            form={form}
-            onFormStart={onFormStart}
-            extraNextParams={{initial_data_reference: initialDataReference}}
-          />
+          <LoginOptions form={form} onFormStart={onFormStart} extraNextParams={extraNextParams} />
         )}
       </Card>
     </LiteralsProvider>
