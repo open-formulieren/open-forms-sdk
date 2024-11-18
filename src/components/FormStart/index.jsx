@@ -125,7 +125,13 @@ const FormStart = ({form, submission, onFormStart, onDestroySession, initialData
             isAuthenticated={isAuthenticated}
           />
         ) : (
-          <LoginOptions form={form} onFormStart={onFormStart} extraNextParams={extraNextParams} />
+          <LoginOptions
+            // if cosign allows links in emails, we don't need to display the cosign
+            // login options, so strip them out
+            form={form.cosignHasLinkInEmail ? {...form, cosignLoginOptions: []} : form}
+            onFormStart={onFormStart}
+            extraNextParams={extraNextParams}
+          />
         )}
       </Card>
     </LiteralsProvider>

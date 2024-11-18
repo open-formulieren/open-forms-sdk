@@ -126,6 +126,11 @@
     "description": "ZOD 'invalid_enum_value' error message",
     "originalDefault": "Invalid enum value. Expected {expected}, received {received}."
   },
+  "7v8PR6": {
+    "defaultMessage": "Your session has expired. <link>Click here to restart</link>.",
+    "description": "Session expired error message",
+    "originalDefault": "Your session has expired. <link>Click here to restart</link>."
+  },
   "8DHd4/": {
     "defaultMessage": "Er mogen {exact, select, true {precies} other {{inclusive, select, true {maximaal} other {minder dan}}} } {maximum, plural, one {{maximum} element} other {{maximum} elementen}} in de lijst zijn.",
     "description": "ZOD 'too_big' error message, for arrays",
@@ -434,6 +439,11 @@
     "description": "Step label in progress indicator",
     "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
   },
+  "LSB7FE": {
+    "defaultMessage": "Heb je een e-mail ontvangen om mede te ondertekenen? Start het mede-ondertekenen door in te loggen.",
+    "description": "Cosign start explanation message",
+    "originalDefault": "Did you receive an email with a request to cosign? Start the cosigning by logging in."
+  },
   "LiRh7j": {
     "defaultMessage": "Bevestiging: {reference}",
     "description": "Confirmation page title",
@@ -647,11 +657,6 @@
     "defaultMessage": "Nee",
     "description": "'False' display",
     "originalDefault": "No"
-  },
-  "abtbgK": {
-    "defaultMessage": "Je sessie is verlopen. <link>Klik hier om opnieuw te beginnen</link>.",
-    "description": "Session expired error message",
-    "originalDefault": "Your session has expired. <link>Click here to restart</link>."
   },
   "ay8sO5": {
     "defaultMessage": "Je gegevens",

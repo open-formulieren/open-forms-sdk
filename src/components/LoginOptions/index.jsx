@@ -4,13 +4,15 @@ import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import Literal from 'components/Literal';
-import {getLoginUrl} from 'components/utils';
+import {getCosignLoginUrl, getLoginUrl} from 'components/utils';
+import useQuery from 'hooks/useQuery';
 import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
-const LoginOptions = ({form, onFormStart, extraNextParams = {}}) => {
+const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOptions = true}) => {
   const config = useContext(ConfigContext);
+  const queryParams = useQuery();
 
   const loginAsYourselfOptions = [];
   const loginAsGemachtigdeOptions = [];
@@ -35,9 +37,12 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}}) => {
   });
 
   if (form.cosignLoginOptions) {
+    const cosignCode = queryParams.get('code');
     form.cosignLoginOptions.forEach(option => {
+      const loginUrl = getCosignLoginUrl(option, cosignCode ? {code: cosignCode} : undefined);
       cosignLoginOptions.push({
         ...option,
+        url: loginUrl,
         label: (
           <FormattedMessage
             description="Login button label"
@@ -65,6 +70,7 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}}) => {
           e.preventDefault();
           onFormStart(e, true);
         },
+        'data-testid': 'start-form',
       };
 
   return (
@@ -73,6 +79,7 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}}) => {
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
         cosignLoginOptions={cosignLoginOptions}
+        isolateCosignOptions={isolateCosignOptions}
       />
     </Container>
   );
@@ -83,6 +90,7 @@ LoginOptions.propTypes = {
   onFormStart: PropTypes.func.isRequired,
   extraParams: PropTypes.object,
   extraNextParams: PropTypes.object,
+  isolateCosignOptions: PropTypes.bool,
 };
 
 export default LoginOptions;

@@ -7,6 +7,12 @@
  */
 export const getRedirectParams = (action, actionParams) => {
   switch (action) {
+    case 'cosign-init': {
+      return {
+        path: 'cosign/start',
+        query: new URLSearchParams(actionParams),
+      };
+    }
     case 'cosign':
       return {
         path: 'cosign/check',

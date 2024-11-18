@@ -43,6 +43,14 @@ const getLoginUrl = (loginOption, extraParams = {}, extraNextParams = {}) => {
   return loginUrl.toString();
 };
 
+const getCosignLoginUrl = (loginOption, extraParams = {}) => {
+  const loginUrl = new URL(loginOption.url);
+  const nextUrl = new URL(loginUrl.searchParams.get('next'));
+  Object.entries(extraParams).forEach(([key, value]) => nextUrl.searchParams.set(key, value));
+  loginUrl.searchParams.set('next', nextUrl.toString());
+  return loginUrl.toString();
+};
+
 const getLoginRedirectUrl = form => {
   // Automatically redirect the user to a specific login option (if configured)
   if (form.autoLoginAuthenticationBackend) {
@@ -72,5 +80,6 @@ export {
   isLastStep,
   getLoginRedirectUrl,
   getLoginUrl,
+  getCosignLoginUrl,
   eventTriggeredBySubmitButton,
 };

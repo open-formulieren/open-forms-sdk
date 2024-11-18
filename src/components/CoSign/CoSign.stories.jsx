@@ -1,7 +1,7 @@
 import CosignDone from './CosignDone';
 
 export default {
-  title: 'Views / Co-sign done',
+  title: 'Views / Cosign / Done',
   component: CosignDone,
   args: {
     reportDownloadUrl: '#',
@@ -9,5 +9,5 @@ export default {
 };
 
 export const CoSignDone = {
-  name: 'Co-sign done',
+  name: 'CosignDone',
 };

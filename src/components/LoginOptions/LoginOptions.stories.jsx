@@ -1,4 +1,5 @@
 import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
+import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildForm} from 'api-mocks';
 import {LiteralDecorator} from 'story-utils/decorators';
@@ -9,7 +10,10 @@ import LoginOptionsDisplay from './LoginOptionsDisplay';
 export default {
   title: 'Composites / Login Options',
   component: LoginOptions,
-  decorators: [LiteralDecorator],
+  decorators: [LiteralDecorator, withRouter],
+  args: {
+    onFormStart: fn(),
+  },
   argTypes: {
     form: {table: {disable: true}},
   },
@@ -239,7 +243,7 @@ export const WithCoSignOption = {
       {
         identifier: 'digid',
         label: 'DigiD',
-        url: '#',
+        url: 'http://localhost:8000/auth/digid/?next=http://localhost:3000/form?_start=1',
         logo: {
           title: 'DigiD simulatie',
           imageSrc: './digid.png',

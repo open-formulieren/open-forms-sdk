@@ -42,7 +42,7 @@ const PostCompletionView = ({
         <Toolbar>
           <ToolbarList>
             <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
-              <OFButton appearance="primary-action-button">
+              <OFButton appearance="secondary-action-button">
                 <FormattedMessage
                   description="Back to main website link title"
                   defaultMessage="Return to main website"
