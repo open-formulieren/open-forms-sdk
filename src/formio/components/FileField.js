@@ -234,6 +234,14 @@ class FileField extends Formio.Components.components.file {
         message: this.t('Processing file. Please wait...'),
       };
 
+      if (file.name.startsWith(' ')) {
+        fileUpload.status = 'error';
+        fileUpload.message = this.t(
+          'The name of the uploaded file cannot start with a whitespace.'
+        );
+        hasTypeErrors = true;
+      }
+
       if (this.component.filePattern && !this.validatePattern(file, this.component.filePattern)) {
         fileUpload.status = 'error';
         fileUpload.message = this.t(
