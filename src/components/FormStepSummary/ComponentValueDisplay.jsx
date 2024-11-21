@@ -192,16 +192,6 @@ const MapDisplay = ({component, value}) => {
   return <Map markerCoordinates={value} disabled />;
 };
 
-const PasswordDisplay = ({component, value}) => {
-  if (!value) {
-    return <EmptyDisplay />;
-  }
-
-  return Array.from(value)
-    .map(() => '*')
-    .join('');
-};
-
 const CoSignDisplay = ({component, value}) => {
   if (!value) {
     return <EmptyDisplay />;
@@ -291,7 +281,6 @@ const TYPE_TO_COMPONENT = {
   number: NumberDisplay,
   currency: CurrencyDisplay,
   map: MapDisplay,
-  password: PasswordDisplay,
   coSign: CoSignDisplay,
   addressNL: AddressNLDisplay,
   content: ContentDisplay,

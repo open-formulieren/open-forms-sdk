@@ -16,7 +16,6 @@ import IBANField from './components/IBANField';
 import LicensePlateField from './components/LicensePlateField';
 import Map from './components/Map';
 import {default as NumberComponent} from './components/Number';
-import PasswordField from './components/Password';
 import PhoneNumberField from './components/PhoneNumberField';
 import PostcodeField from './components/PostcodeField';
 import Radio from './components/Radio';
@@ -51,7 +50,6 @@ const FormIOModule = {
     addressNL: AddressNL,
     file: FileField,
     map: Map,
-    password: PasswordField,
     licenseplate: LicensePlateField,
     coSign: CoSignOld,
     cosign: Cosign,
