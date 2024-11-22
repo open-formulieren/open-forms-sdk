@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+2.3.4 (2024-11-22)
+==================
+
+Periodic bugfix release
+
+* [#4772] Fixed select component with integer values.
+
 2.3.3 (2024-10-22)
 ==================
 
