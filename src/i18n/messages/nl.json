@@ -127,7 +127,7 @@
     "originalDefault": "Invalid enum value. Expected {expected}, received {received}."
   },
   "7v8PR6": {
-    "defaultMessage": "Your session has expired. <link>Click here to restart</link>.",
+    "defaultMessage": "Je sessie is verlopen. <link>Klik hier om opnieuw te beginnen</link>.",
     "description": "Session expired error message",
     "originalDefault": "Your session has expired. <link>Click here to restart</link>."
   },
