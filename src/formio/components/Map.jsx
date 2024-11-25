@@ -115,6 +115,7 @@ export default class Map extends Field {
             onMarkerSet={this.onMarkerSet.bind(this)}
             defaultCenter={defaultCenter}
             defaultZoomLevel={zoom || DEFAULT_ZOOM}
+            tileUrl={this.component.url}
           />
         </ConfigContext.Provider>
       </IntlProvider>
