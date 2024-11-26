@@ -66,9 +66,9 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOpt
   const containerProps = form.loginRequired
     ? {}
     : {
-        onSubmit: e => {
+        onSubmit: async e => {
           e.preventDefault();
-          onFormStart(e, true);
+          await onFormStart(e, true);
         },
         'data-testid': 'start-form',
       };

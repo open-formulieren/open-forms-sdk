@@ -2,7 +2,7 @@ import {userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 
-import LeafletMap from '.';
+import LeafletMap from './index';
 import {mockAddressSearchGet, mockLatLngSearchEmptyGet, mockLatLngSearchGet} from './mocks';
 
 const withMapLayout = Story => (

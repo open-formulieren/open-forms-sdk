@@ -24,8 +24,8 @@ import {
 } from '../mocks';
 import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAppointmentState';
 
-// scrollIntoView is not not supported in Jest
-let scrollIntoViewMock = jest.fn();
+// scrollIntoView is not not supported in jest-dom
+let scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const routes = [

@@ -6,7 +6,7 @@ import {MinMaxDateValidator} from 'formio/validators/minMaxDateAndDatetimeValida
 const FormioComponent = Formio.Components.components.component;
 
 describe('Date Component', () => {
-  test('Date validator: check min date', done => {
+  test('Date validator: check min date', () => {
     const component = {
       label: 'date',
       key: 'date',
@@ -33,11 +33,9 @@ describe('Date Component', () => {
     const isValid2 = MinMaxDateValidator.check(componentInstance, {}, '2024-01-01');
 
     expect(isValid2).toBeTruthy();
-
-    done();
   });
 
-  test('Date validator: check max date', done => {
+  test('Date validator: check max date', () => {
     const component = {
       label: 'date',
       key: 'date',
@@ -64,11 +62,9 @@ describe('Date Component', () => {
     const isValid2 = MinMaxDateValidator.check(componentInstance, {}, '2020-01-01');
 
     expect(isValid2).toBeTruthy();
-
-    done();
   });
 
-  test('Date validator: check max date including the current one', done => {
+  test('Date validator: check max date including the current one', () => {
     const component = {
       label: 'date',
       key: 'date',
@@ -88,11 +84,9 @@ describe('Date Component', () => {
     const isValid1 = MinMaxDateValidator.check(componentInstance, {}, '2023-09-08');
 
     expect(isValid1).toBeTruthy();
-
-    done();
   });
 
-  test('Date validator: error message', done => {
+  test('Date validator: error message', () => {
     const component = {
       label: 'date',
       key: 'date',
@@ -110,12 +104,12 @@ describe('Date Component', () => {
       },
     };
 
-    const mockTranslation = jest.fn((message, values) => message);
+    const mockTranslation = vi.fn((message, values) => message);
 
     const componentInstance = new FormioComponent(component, {}, {});
     componentInstance.t = mockTranslation;
     componentInstance.options.intl = {
-      formatDate: jest.fn((date, options) => 'formatted date'),
+      formatDate: vi.fn((date, options) => 'formatted date'),
     };
 
     set(
@@ -137,11 +131,9 @@ describe('Date Component', () => {
     MinMaxDateValidator.message(componentInstance);
 
     expect(mockTranslation.mock.calls[1][0]).toEqual('maxDate');
-
-    done();
   });
 
-  test('Date validator: check max date AND min date', done => {
+  test('Date validator: check max date AND min date', () => {
     const component = {
       label: 'date',
       key: 'date',
@@ -171,7 +163,5 @@ describe('Date Component', () => {
     expect(
       componentInstance.openForms.validationErrorContext.minMaxDateAndDatetimeValidatorErrorKey
     ).toContain('minDate');
-
-    done();
   });
 });

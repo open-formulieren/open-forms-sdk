@@ -12,7 +12,7 @@ import {
 import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
-import FormStep from '.';
+import FormStep from './index';
 import {
   getSubmissionStepDetail,
   mockSubmissionLogicCheckPost,

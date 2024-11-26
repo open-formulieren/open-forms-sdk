@@ -39,7 +39,7 @@ const Wrapper = ({children}) => (
     <LiteralsProvider literals={LITERALS}>
       <Formik
         initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
-        onSubmit={jest.fn()}
+        onSubmit={vi.fn()}
       >
         {children}
       </Formik>
@@ -48,7 +48,7 @@ const Wrapper = ({children}) => (
 );
 
 it('Summary of non-submittable form, button is NOT present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   renderTest(
     <Wrapper>
@@ -66,7 +66,7 @@ it('Summary of non-submittable form, button is NOT present', () => {
 });
 
 it('Summary of submittable form, button IS present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   renderTest(
     <Wrapper>

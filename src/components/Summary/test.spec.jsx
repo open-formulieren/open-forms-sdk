@@ -31,8 +31,8 @@ const SUBMISSION = {
   isAuthenticated: false,
 };
 
-jest.mock('react-use');
-jest.mock('hooks/useRefreshSubmission');
+vi.mock('react-use');
+vi.mock('hooks/useRefreshSubmission');
 
 let container = null;
 let root = null;
@@ -64,8 +64,8 @@ it('Summary displays logout button if isAuthenticated is true', () => {
     ...SUBMISSION,
     isAuthenticated: true,
   };
-  const onDestroySession = jest.fn();
-  const onConfirm = jest.fn();
+  const onDestroySession = vi.fn();
+  const onConfirm = vi.fn();
 
   useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue(submissionIsAuthenticated);
@@ -92,8 +92,8 @@ it('Summary does not display logout button if loginRequired is false', () => {
     ...testForm,
     loginRequired: false,
   };
-  const onDestroySession = jest.fn();
-  const onConfirm = jest.fn();
+  const onDestroySession = vi.fn();
+  const onConfirm = vi.fn();
 
   useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});
@@ -116,8 +116,8 @@ it('Summary does not display logout button if loginRequired is false', () => {
 });
 
 it('Summary displays abort button if isAuthenticated is false', () => {
-  const onDestroySession = jest.fn();
-  const onConfirm = jest.fn();
+  const onDestroySession = vi.fn();
+  const onConfirm = vi.fn();
 
   useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});

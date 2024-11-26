@@ -3,6 +3,7 @@ import {Formio} from 'react-formio';
 
 import LicensePlateField from 'formio/components/LicensePlateField';
 import OpenFormsModule from 'formio/module';
+import {sleep} from 'utils';
 
 import {licenseplate} from './fixtures/licenseplate';
 
@@ -10,45 +11,36 @@ import {licenseplate} from './fixtures/licenseplate';
 Formio.use(OpenFormsModule);
 
 describe('License plate Component', () => {
-  test('License plate component validation', done => {
+  test.each([
+    // valid values
+    ['GF-CP-51', true],
+    ['123-123-123', true],
+    ['J-206-FV', true],
+    // invalid values
+    ['123123123', false],
+    ['- - -', false],
+    ['abcabcabc', false],
+  ])('License plate component validation (%s, valid: %s)', async (value, valid) => {
     const formJSON = _.cloneDeep(licenseplate);
     const componentSchema = LicensePlateField.schema();
 
     formJSON.components[0].validate.pattern = componentSchema.validate.pattern;
     formJSON.components[0].errors.pattern = componentSchema.errors.pattern;
 
-    const validValues = ['GF-CP-51', '123-123-123', 'J-206-FV'];
+    const element = document.createElement('div');
 
-    const invalidValues = ['123123123', '- - -', 'abcabcabc'];
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
+    const component = form.getComponent('licenseplate');
+    component.setValue(value);
 
-    const testValidity = (values, valid) => {
-      values.forEach(value => {
-        const element = document.createElement('div');
+    await sleep(300);
 
-        Formio.createForm(element, formJSON)
-          .then(form => {
-            form.setPristine(false);
-            const component = form.getComponent('licenseplate');
-            component.setValue(value);
-
-            setTimeout(() => {
-              if (valid) {
-                expect(!!component.error).toBeFalsy();
-              } else {
-                expect(!!component.error).toBeTruthy();
-                expect(component.error.message).toEqual('Invalid Dutch license plate');
-              }
-
-              if (value === invalidValues[2]) {
-                done();
-              }
-            }, 300);
-          })
-          .catch(done);
-      });
-    };
-
-    testValidity(validValues, true);
-    testValidity(invalidValues, false);
+    if (valid) {
+      expect(!!component.error).toBeFalsy();
+    } else {
+      expect(!!component.error).toBeTruthy();
+      expect(component.error.message).toEqual('Invalid Dutch license plate');
+    }
   });
 });

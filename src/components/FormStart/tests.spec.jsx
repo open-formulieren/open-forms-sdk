@@ -7,11 +7,11 @@ import {MemoryRouter} from 'react-router-dom';
 import {buildSubmission} from 'api-mocks';
 import useQuery from 'hooks/useQuery';
 
-import FormStart from '.';
 import {testForm, testLoginForm} from './fixtures';
+import FormStart from './index';
 
-jest.mock('hooks/useQuery');
-let scrollIntoViewMock = jest.fn();
+vi.mock('hooks/useQuery');
+let scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const Wrap = ({children}) => (
@@ -24,8 +24,8 @@ it('Form start page start if _start parameter is present', async () => {
   const testLocation = new URLSearchParams('?_start=1');
   useQuery.mockReturnValue(testLocation);
 
-  const onFormStart = jest.fn();
-  const onDestroySession = jest.fn();
+  const onFormStart = vi.fn();
+  const onDestroySession = vi.fn();
 
   render(
     <Wrap>
@@ -55,8 +55,8 @@ it.each([
 ])(
   'Form start does not start if there are auth errors / %s',
   async (testQuery, expectedMessage) => {
-    const onFormStart = jest.fn();
-    const onDestroySession = jest.fn();
+    const onFormStart = vi.fn();
+    const onDestroySession = vi.fn();
 
     const testLocation = new URLSearchParams(`?_start=1&${testQuery}`);
     useQuery.mockReturnValue(testLocation);
@@ -74,8 +74,8 @@ it.each([
 
 it('Form start page does not show login buttons if an active submission is present', async () => {
   useQuery.mockReturnValue(new URLSearchParams());
-  const onFormStart = jest.fn();
-  const onDestroySession = jest.fn();
+  const onFormStart = vi.fn();
+  const onDestroySession = vi.fn();
 
   render(
     <Wrap>
@@ -95,8 +95,8 @@ it('Form start page does not show login buttons if an active submission is prese
 
 it('Form start page with initial_data_reference', async () => {
   useQuery.mockReturnValue(new URLSearchParams());
-  const onFormStart = jest.fn();
-  const onDestroySession = jest.fn();
+  const onFormStart = vi.fn();
+  const onDestroySession = vi.fn();
 
   render(
     <Wrap>
@@ -118,8 +118,8 @@ it('Form start page with initial_data_reference', async () => {
 
 it('Form start page without initial_data_reference', async () => {
   useQuery.mockReturnValue(new URLSearchParams());
-  const onFormStart = jest.fn();
-  const onDestroySession = jest.fn();
+  const onFormStart = vi.fn();
+  const onDestroySession = vi.fn();
 
   render(
     <Wrap>

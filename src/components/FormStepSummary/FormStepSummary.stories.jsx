@@ -1,7 +1,7 @@
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import FormStepSummary from '.';
+import FormStepSummary from './index';
 
 export default {
   title: 'Private API / FormStepSummary',

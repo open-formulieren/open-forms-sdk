@@ -4,8 +4,8 @@ import {withRouter} from 'storybook-addon-remix-react-router';
 import {buildForm} from 'api-mocks';
 import {LiteralDecorator} from 'story-utils/decorators';
 
-import LoginOptions from '.';
 import LoginOptionsDisplay from './LoginOptionsDisplay';
+import LoginOptions from './index';
 
 export default {
   title: 'Composites / Login Options',

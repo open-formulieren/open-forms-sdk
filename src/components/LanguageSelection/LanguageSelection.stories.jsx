@@ -7,7 +7,7 @@ import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import {I18NContext} from 'i18n';
 import {ConfigDecorator} from 'story-utils/decorators';
 
-import {LanguageSelection, LanguageSelectionDisplay} from '.';
+import {LanguageSelection, LanguageSelectionDisplay} from './index';
 import {
   DEFAULT_LANGUAGES,
   mockInvalidLanguageChoicePut,

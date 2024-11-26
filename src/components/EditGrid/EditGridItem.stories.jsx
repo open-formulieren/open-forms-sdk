@@ -1,7 +1,7 @@
 import Body from 'components/Body';
 import {OFButton} from 'components/Button';
 
-import {EditGridButtonGroup, EditGridItem as EditGridItemComponent} from '.';
+import {EditGridButtonGroup, EditGridItem as EditGridItemComponent} from './index';
 
 export default {
   title: 'Pure React components / EditGrid / Item',

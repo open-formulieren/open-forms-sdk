@@ -1,4 +1,3 @@
-import {jest} from '@jest/globals';
 import {act, render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
@@ -59,15 +58,10 @@ const render = initialValues => {
 };
 
 beforeEach(() => {
-  jest.useFakeTimers({
-    advanceTimers: true,
-    now: new Date('2023-06-12T14:00:00Z'),
-  });
+  vi.setSystemTime(new Date('2023-06-12T14:00:00Z'));
 });
 
 afterEach(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
   window.sessionStorage.clear();
 });
 
@@ -112,7 +106,7 @@ describe('The location and time step', () => {
   });
 
   it('retains focus on the date input', async () => {
-    const user = userEvent.setup({delay: null});
+    const user = userEvent.setup();
     mswServer.use(
       mockAppointmentProductsGet,
       mockAppointmentLocationsGet,

@@ -1,4 +1,4 @@
-import Anchor, {ANCHOR_MODIFIERS} from '.';
+import Anchor, {ANCHOR_MODIFIERS} from './index';
 
 export default {
   title: 'Pure React components / Anchor',

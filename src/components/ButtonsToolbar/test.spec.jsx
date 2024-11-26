@@ -45,7 +45,7 @@ const Wrap = ({children}) => (
 );
 
 it('Last step of submittable form, button is present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   act(() => {
     root.render(
@@ -76,7 +76,7 @@ it('Last step of submittable form, button is present', () => {
 });
 
 it('Last step of non-submittable form with overview, button is present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   act(() => {
     root.render(
@@ -107,7 +107,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
 });
 
 it('Last step of non-submittable form without overview, button is NOT present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   act(() => {
     root.render(
@@ -137,7 +137,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
 });
 
 it('Non-last step of non-submittable form without overview, button IS present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   act(() => {
     root.render(
@@ -168,7 +168,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
 });
 
 it('Suspending form allowed, button is present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   renderTest(
     <Wrap>
@@ -191,7 +191,7 @@ it('Suspending form allowed, button is present', () => {
 });
 
 it('Suspending form not allowed, button is NOT present', () => {
-  const mockFunction = jest.fn();
+  const mockFunction = vi.fn();
 
   renderTest(
     <Wrap>

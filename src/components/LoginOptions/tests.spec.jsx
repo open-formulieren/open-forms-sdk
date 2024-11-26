@@ -36,7 +36,7 @@ const Wrapper = ({form, onFormStart}) => {
 it('Login not required, options wrapped in form tag', async () => {
   const user = userEvent.setup();
   const form = buildForm({loginRequired: false, loginOptions: [], cosignLoginOptions: []});
-  const onFormStart = jest.fn(e => e.preventDefault());
+  const onFormStart = vi.fn(e => e.preventDefault());
 
   render(<Wrapper form={form} onFormStart={onFormStart} />);
 
@@ -69,7 +69,7 @@ it('Login required, options not wrapped in form tag', async () => {
     ],
     cosignLoginOptions: [],
   });
-  const onFormStart = jest.fn(e => e.preventDefault());
+  const onFormStart = vi.fn(e => e.preventDefault());
 
   const {location} = window;
   delete window.location;
@@ -112,7 +112,7 @@ it('Login button has the right URL after cancelling log in', async () => {
     cosignLoginOptions: [],
   });
 
-  const onFormStart = jest.fn(e => e.preventDefault());
+  const onFormStart = vi.fn(e => e.preventDefault());
 
   const {location} = window;
   delete window.location;
