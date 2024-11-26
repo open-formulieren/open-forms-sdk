@@ -43,6 +43,7 @@
     "ibantools": "^3.3.0",
     "immer": "^9.0.6",
     "leaflet": "^1.9.4",
+    "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^3.8.0",
     "leaflet-gesture-handling": "^1.2.2",
     "microscope-sass": "^2.0.0",
