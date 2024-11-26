@@ -1,9 +1,13 @@
+import * as Leaflet from 'leaflet';
+import 'leaflet-draw/dist/leaflet.draw.css';
 import {GeoSearchControl} from 'leaflet-geosearch';
+import 'leaflet/dist/leaflet.css';
 import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
+import {FeatureGroup, MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
+import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -67,18 +71,23 @@ const LeaftletMap = ({
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
 }) => {
+  const ref = useRef();
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
   const coordinates = markerCoordinates || defaultCoordinates;
 
-  const onWrapperMarkerSet = coordinates => {
-    const coordinatesChanged = !isEqual(markerCoordinates, coordinates);
-    if (!coordinatesChanged) return;
-    onMarkerSet(coordinates);
-  };
-
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
+
+  const onFeatureCreate = event => {
+    // Limit the amount of shapes to 1
+    const newLayer = event.layer;
+    ref.current?.clearLayers();
+    ref.current?.addLayer(newLayer);
+
+    const geo = ref.current?.toGeoJSON();
+    onMarkerSet(geo.features[0]);
+  };
 
   return (
     <>
@@ -100,12 +109,25 @@ const LeaftletMap = ({
         }}
       >
         <TileLayer {...TILE_LAYER_RD} />
-        {coordinates ? (
-          <>
-            <MapView coordinates={coordinates} />
-            <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
-          </>
-        ) : null}
+        <FeatureGroup ref={ref}>
+          <EditControl
+            position="topright"
+            onCreated={onFeatureCreate}
+            edit={{
+              edit: false,
+              remove: false,
+            }}
+            draw={{
+              rectangle: false,
+              circle: true,
+              polyline: true,
+              polygon: true,
+              marker: true,
+              circlemarker: false,
+            }}
+          />
+        </FeatureGroup>
+        {coordinates && <MapView coordinates={defaultCoordinates} />}
         <SearchControl
           onMarkerSet={onMarkerSet}
           options={{
