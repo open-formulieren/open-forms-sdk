@@ -1,33 +1,11 @@
-import {render as renderTest, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Formik} from 'formik';
-import React from 'react';
-import {createRoot} from 'react-dom/client';
-import {act} from 'react-dom/test-utils';
 import {MemoryRouter} from 'react-router-dom';
 
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 import SummaryConfirmation from './index';
-
-let container = null;
-let root = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-  root = createRoot(container);
-});
-
-afterEach(() => {
-  // cleanup on exiting
-  act(() => {
-    root.unmount();
-    container.remove();
-    root = null;
-    container = null;
-  });
-});
 
 const LITERALS = {
   confirmText: {value: '', resolved: 'Submit form'},
@@ -49,8 +27,7 @@ const Wrapper = ({children}) => (
 
 it('Summary of non-submittable form, button is NOT present', () => {
   const mockFunction = vi.fn();
-
-  renderTest(
+  render(
     <Wrapper>
       <SummaryConfirmation
         submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
@@ -67,8 +44,7 @@ it('Summary of non-submittable form, button is NOT present', () => {
 
 it('Summary of submittable form, button IS present', () => {
   const mockFunction = vi.fn();
-
-  renderTest(
+  render(
     <Wrapper>
       <SummaryConfirmation
         submissionAllowed={SUBMISSION_ALLOWED.yes}

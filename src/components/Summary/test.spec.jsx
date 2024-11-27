@@ -1,8 +1,6 @@
-import {render as renderTest, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import React from 'react';
-import {createRoot} from 'react-dom/client';
-import {act} from 'react-dom/test-utils';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
 import {useAsync} from 'react-use';
@@ -34,25 +32,6 @@ const SUBMISSION = {
 vi.mock('react-use');
 vi.mock('hooks/useRefreshSubmission');
 
-let container = null;
-let root = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-  root = createRoot(container);
-});
-
-afterEach(() => {
-  // cleanup on exiting
-  act(() => {
-    root.unmount();
-    container.remove();
-    root = null;
-    container = null;
-  });
-});
-
 const Wrap = ({children}) => (
   <IntlProvider locale="nl" messages={messagesNL}>
     <MemoryRouter>{children}</MemoryRouter>
@@ -70,21 +49,19 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue(submissionIsAuthenticated);
 
-  act(() => {
-    root.render(
-      <Wrap>
-        <SubmissionSummary
-          form={testForm}
-          submission={SUBMISSION}
-          onConfirm={onConfirm}
-          onDestroySession={onDestroySession}
-          onClearProcessingErrors={() => {}}
-        />
-      </Wrap>
-    );
-  });
+  render(
+    <Wrap>
+      <SubmissionSummary
+        form={testForm}
+        submission={SUBMISSION}
+        onConfirm={onConfirm}
+        onDestroySession={onDestroySession}
+        onClearProcessingErrors={() => {}}
+      />
+    </Wrap>
+  );
 
-  expect(container.textContent).toContain('Uitloggen');
+  expect(screen.getByRole('button', {name: 'Uitloggen'})).toBeVisible();
 });
 
 it('Summary does not display logout button if loginRequired is false', () => {
@@ -98,21 +75,19 @@ it('Summary does not display logout button if loginRequired is false', () => {
   useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});
 
-  act(() => {
-    root.render(
-      <Wrap>
-        <SubmissionSummary
-          form={formLoginRequired}
-          submission={SUBMISSION}
-          onConfirm={onConfirm}
-          onDestroySession={onDestroySession}
-          onClearProcessingErrors={() => {}}
-        />
-      </Wrap>
-    );
-  });
+  render(
+    <Wrap>
+      <SubmissionSummary
+        form={formLoginRequired}
+        submission={SUBMISSION}
+        onConfirm={onConfirm}
+        onDestroySession={onDestroySession}
+        onClearProcessingErrors={() => {}}
+      />
+    </Wrap>
+  );
 
-  expect(container.textContent).not.toContain('Uitloggen');
+  expect(screen.queryByRole('button', {name: 'Uitloggen'})).toBeNull();
 });
 
 it('Summary displays abort button if isAuthenticated is false', () => {
@@ -122,7 +97,7 @@ it('Summary displays abort button if isAuthenticated is false', () => {
   useAsync.mockReturnValue({loading: false, value: []});
   useRefreshSubmission.mockReturnValue({...SUBMISSION, isAuthenticated: false});
 
-  renderTest(
+  render(
     <Wrap>
       <SubmissionSummary
         form={testForm}
