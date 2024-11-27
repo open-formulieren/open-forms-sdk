@@ -3,7 +3,7 @@ import {fn} from '@storybook/test';
 import Body from 'components/Body';
 import {OFButton} from 'components/Button';
 
-import {EditGrid, EditGridButtonGroup, EditGridItem} from '.';
+import {EditGrid, EditGridButtonGroup, EditGridItem} from './index';
 
 export default {
   title: 'Pure React components / EditGrid / EditGrid',

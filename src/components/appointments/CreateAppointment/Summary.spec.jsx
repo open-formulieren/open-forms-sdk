@@ -1,4 +1,3 @@
-import {jest} from '@jest/globals';
 import {render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
@@ -164,7 +163,7 @@ describe('The appointment summary', () => {
   it('processes backend validation errors', async () => {
     mswServer.use(mockAppointmentErrorPost);
     const user = userEvent.setup({delay: null});
-    const errorHandler = jest.fn();
+    const errorHandler = vi.fn();
 
     renderSummary(errorHandler);
 

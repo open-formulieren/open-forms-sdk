@@ -1,4 +1,4 @@
-import {act, waitFor, waitForElementToBeRemoved, within} from '@testing-library/react';
+import {act, waitFor, within} from '@testing-library/react';
 
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockFormGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
@@ -6,8 +6,8 @@ import {mockFormioTranslations, mockLanguageInfoGet} from 'components/LanguageSe
 
 import {OpenForm} from './sdk';
 
-// scrollIntoView is not supported in Jest
-let scrollIntoViewMock = jest.fn();
+// scrollIntoView is not supported in jest-dom
+let scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const LANGUAGES = [
@@ -123,7 +123,7 @@ describe('OpenForm', () => {
     mswServer.use(...apiMocks);
     const formRoot = document.createElement('div');
     const target = document.createElement('div');
-    const onLanguageChangeMock = jest.fn();
+    const onLanguageChangeMock = vi.fn();
 
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,

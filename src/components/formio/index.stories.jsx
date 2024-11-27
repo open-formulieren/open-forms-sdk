@@ -1,6 +1,6 @@
 import {FormikDecorator} from 'story-utils/decorators';
 
-import {FormioComponent} from '.';
+import {FormioComponent} from './index';
 
 export default {
   title: 'Private API / Formio',

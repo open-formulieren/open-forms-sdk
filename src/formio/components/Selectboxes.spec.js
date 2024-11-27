@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {screen} from '@testing-library/dom';
+import {screen, waitFor} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import _ from 'lodash';
 import {Formio} from 'react-formio';
@@ -84,7 +83,9 @@ describe('The selectboxes component', () => {
     await user.click(selectboxB);
 
     // All checkboxes are again marked as valid and without aria-describedby and aria-invalid
-    expect(selectboxA).not.toHaveClass('is-invalid');
+    await waitFor(() => {
+      expect(selectboxA).not.toHaveClass('is-invalid');
+    });
     expect(selectboxA).not.toHaveAttribute('aria-describedby');
     expect(selectboxA).not.toHaveAttribute('aria-invalid');
     expect(selectboxB).not.toHaveClass('is-invalid');

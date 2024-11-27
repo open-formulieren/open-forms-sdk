@@ -4,7 +4,7 @@ import {withRouter} from 'storybook-addon-remix-react-router';
 import {buildForm} from 'api-mocks';
 import {withForm} from 'story-utils/decorators';
 
-import IntroductionPage from '.';
+import IntroductionPage from './index';
 
 const DEFAULT_CONTENT = `
   <h2>Voorwaarden</h2>

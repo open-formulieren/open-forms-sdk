@@ -23,16 +23,12 @@ const mapForm = {
 };
 
 describe('Map component', () => {
-  test('Hidden map component', done => {
+  test('Hidden map component', async () => {
     let formJSON = _.cloneDeep(mapForm);
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
-      .then(form => {
-        form.setPristine(false);
-        done();
-      })
-      .catch(done);
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
   });
 });

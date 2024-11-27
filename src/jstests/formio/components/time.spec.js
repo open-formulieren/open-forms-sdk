@@ -134,7 +134,7 @@ describe('Time Component', () => {
     }
   );
 
-  test('Time component with both min/max and max > min validation and custom error', done => {
+  test('Time component with both min/max and max > min validation and custom error', async () => {
     let formJSON = _.cloneDeep(timeForm);
     // Note: the backend dynamically updates the configuration so that `translatedErrors` are added to
     // `errors` in the correct language.
@@ -148,24 +148,18 @@ describe('Time Component', () => {
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
-      .then(form => {
-        form.setPristine(false);
-        const component = form.getComponent('time');
-        const changed = component.setValue('10:00');
-        expect(changed).toBeTruthy();
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
+    const component = form.getComponent('time');
+    const changed = component.setValue('10:00');
+    expect(changed).toBeTruthy();
 
-        setTimeout(() => {
-          expect(!!component.error).toBeTruthy();
-          expect(component.error.message).toEqual('Custom error! Min time 12:00');
-
-          done();
-        }, 300);
-      })
-      .catch(done);
+    await sleep(300);
+    expect(!!component.error).toBeTruthy();
+    expect(component.error.message).toEqual('Custom error! Min time 12:00');
   });
 
-  test('Time component with both min/max and max < min validation and custom error', done => {
+  test('Time component with both min/max and max < min validation and custom error', async () => {
     let formJSON = _.cloneDeep(timeForm);
     // Note: the backend dynamically updates the configuration so that `translatedErrors` are added to
     // `errors` in the correct language.
@@ -179,24 +173,18 @@ describe('Time Component', () => {
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
-      .then(form => {
-        form.setPristine(false);
-        const component = form.getComponent('time');
-        const changed = component.setValue('07:00');
-        expect(changed).toBeTruthy();
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
+    const component = form.getComponent('time');
+    const changed = component.setValue('07:00');
+    expect(changed).toBeTruthy();
 
-        setTimeout(() => {
-          expect(!!component.error).toBeTruthy();
-          expect(component.error.message).toEqual('Custom error! Min time: 08:00 Max time: 01:00.');
-
-          done();
-        }, 300);
-      })
-      .catch(done);
+    await sleep(300);
+    expect(!!component.error).toBeTruthy();
+    expect(component.error.message).toEqual('Custom error! Min time: 08:00 Max time: 01:00.');
   });
 
-  test('Time component with only min and custom error', done => {
+  test('Time component with only min and custom error', async () => {
     let formJSON = _.cloneDeep(timeForm);
     // Note: the backend dynamically updates the configuration so that `translatedErrors` are added to
     // `errors` in the correct language.
@@ -209,24 +197,18 @@ describe('Time Component', () => {
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
-      .then(form => {
-        form.setPristine(false);
-        const component = form.getComponent('time');
-        const changed = component.setValue('10:00');
-        expect(changed).toBeTruthy();
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
+    const component = form.getComponent('time');
+    const changed = component.setValue('10:00');
+    expect(changed).toBeTruthy();
 
-        setTimeout(() => {
-          expect(!!component.error).toBeTruthy();
-          expect(component.error.message).toEqual('Custom error! Min time 13:00');
-
-          done();
-        }, 300);
-      })
-      .catch(done);
+    await sleep(300);
+    expect(!!component.error).toBeTruthy();
+    expect(component.error.message).toEqual('Custom error! Min time 13:00');
   });
 
-  test('Time component with only max and custom error', done => {
+  test('Time component with only max and custom error', async () => {
     let formJSON = _.cloneDeep(timeForm);
     // Note: the backend dynamically updates the configuration so that `translatedErrors` are added to
     // `errors` in the correct language.
@@ -239,24 +221,18 @@ describe('Time Component', () => {
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
-      .then(form => {
-        form.setPristine(false);
-        const component = form.getComponent('time');
-        const changed = component.setValue('14:00');
-        expect(changed).toBeTruthy();
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
+    const component = form.getComponent('time');
+    const changed = component.setValue('14:00');
+    expect(changed).toBeTruthy();
 
-        setTimeout(() => {
-          expect(!!component.error).toBeTruthy();
-          expect(component.error.message).toEqual('Custom error! Max time 13:00');
-
-          done();
-        }, 300);
-      })
-      .catch(done);
+    await sleep(300);
+    expect(!!component.error).toBeTruthy();
+    expect(component.error.message).toEqual('Custom error! Max time 13:00');
   });
 
-  test('Time component with empty string error', done => {
+  test('Time component with empty string error', async () => {
     let formJSON = _.cloneDeep(timeForm);
     // Note: the backend dynamically updates the configuration so that `translatedErrors` are added to
     // `errors` in the correct language.
@@ -267,20 +243,14 @@ describe('Time Component', () => {
 
     const element = document.createElement('div');
 
-    Formio.createForm(element, formJSON)
-      .then(form => {
-        form.setPristine(false);
-        const component = form.getComponent('time');
-        const changed = component.setValue('14:00');
-        expect(changed).toBeTruthy();
+    const form = await Formio.createForm(element, formJSON);
+    form.setPristine(false);
+    const component = form.getComponent('time');
+    const changed = component.setValue('14:00');
+    expect(changed).toBeTruthy();
 
-        setTimeout(() => {
-          expect(!!component.error).toBeTruthy();
-          expect(component.error.message).toEqual('invalid_time');
-
-          done();
-        }, 300);
-      })
-      .catch(done);
+    await sleep(300);
+    expect(!!component.error).toBeTruthy();
+    expect(component.error.message).toEqual('invalid_time');
   });
 });

@@ -3,7 +3,7 @@ import {fn} from '@storybook/test';
 import {BASE_URL} from 'api-mocks';
 import {ConfigDecorator} from 'story-utils/decorators';
 
-import {EmailVerificationModal} from '.';
+import {EmailVerificationModal} from './index';
 import {mockEmailVerificationPost, mockEmailVerificationVerifyCodePost} from './mocks';
 
 export default {

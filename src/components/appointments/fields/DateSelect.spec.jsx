@@ -1,4 +1,3 @@
-import {jest} from '@jest/globals';
 import {act, render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {Formik} from 'formik';
@@ -41,20 +40,12 @@ const render = (comp, locationId) =>
   );
 
 beforeEach(() => {
-  jest.useFakeTimers({
-    advanceTimers: true,
-    now: new Date('2023-06-12T14:00:00Z'),
-  });
-});
-
-afterEach(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
+  vi.setSystemTime(new Date('2023-06-12T14:00:00Z'));
 });
 
 describe('The appointment date select', () => {
   it('disables dates before and after the available dates range', async () => {
-    const user = userEvent.setup({delay: null});
+    const user = userEvent.setup();
     mswServer.use(mockAppointmentDatesGet);
 
     render(<DateSelect products={products} />, '1396f17c');

@@ -4,7 +4,7 @@ import {withRouter} from 'storybook-addon-remix-react-router';
 import {BASE_URL} from 'api-mocks';
 import {ConfigDecorator} from 'story-utils/decorators';
 
-import {EmailVerificationForm} from '.';
+import {EmailVerificationForm} from './index';
 import {
   mockEmailVerificationErrorPost,
   mockEmailVerificationPost,

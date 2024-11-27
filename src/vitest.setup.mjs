@@ -6,10 +6,10 @@ import '@testing-library/jest-dom';
 
 import mswServer from 'api-mocks/msw-server';
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-
-globalThis.ResizeObserver = require('resize-observer-polyfill');
-
-beforeAll(() => mswServer.listen());
+beforeAll(() =>
+  mswServer.listen({
+    onUnhandledRequest: 'error',
+  })
+);
 afterEach(() => mswServer.resetHandlers());
 afterAll(() => mswServer.close());

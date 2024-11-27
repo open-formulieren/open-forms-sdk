@@ -12,7 +12,7 @@ import {routes} from 'components/App';
 
 import {START_FORM_QUERY_PARAM} from './constants';
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();
 
 beforeEach(() => {
   localStorage.clear();
@@ -23,7 +23,7 @@ afterEach(() => {
 });
 
 afterAll(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
@@ -54,7 +54,7 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
 
 test('Start form anonymously', async () => {
   const user = userEvent.setup();
-  mswServer.use(mockSubmissionPost(), mockAnalyticsToolConfigGet(), mockSubmissionStepGet);
+  mswServer.use(mockSubmissionPost(), mockAnalyticsToolConfigGet(), mockSubmissionStepGet());
   let startSubmissionRequest;
   mswServer.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
