@@ -2,6 +2,43 @@
 SDK Changelog
 =============
 
+2.5.0-alpha.1 (2024-11-27)
+==========================
+
+Second preview release of the upcoming 2.5.0 version.
+
+New features
+------------
+
+* [#4320] Improved the user experience for forms with cosign
+    - The confirmation page content is now dynamically provided by the API.
+    - Tweaked the texts displayed in various points in the cosign process.
+    - Cosign login options are now only displayed if the cosign request email does not use direct links.
+      When direct links are used, the cosigner is directly taken to the cosign page without having to
+      manually enter codes.
+* [#4546] It's now possible to "soft-require" file uploads. Soft-required uploads show a warning message when
+  no file has been uploaded, but don't block the step submission or form progress.
+* [#4718] Improved accessibility when using an increased zoom level.
+* [#4720] Improved navigation and visibility accessibility.
+* [#4717] Improvement accessibility of the loader, modal components, alerts and file upload buttons.
+* [#4716] Improved the accessibility of form fields and associated error messages.
+
+Project maintenance
+-------------------
+
+* Ensured prettier checks jsx files.
+* [#4849] Ensured .jsx files are picked up for translation as well.
+* [#3283] Removed password Formio component.
+* Fixed button stories/documentation page.
+* [#4320] Updated stories and UX of completion view.
+* Renamed .js files to .jsx.
+* Removed old tilde prefix in SCSS imports.
+* [#724] Upgraded to Jest 29 because of MSW requirements.
+* Updated story after translations update.
+* Upgraded to MSW 2.5.
+* Updated actions with explicit mocks.
+* Upgraded to Storybook 8.3.6.
+
 2.4.2 (2024-11-22)
 ==================
 
