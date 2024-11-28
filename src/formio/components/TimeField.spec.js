@@ -1,5 +1,4 @@
-import {expect} from '@storybook/test';
-import {screen} from '@testing-library/dom';
+import {screen, waitFor} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import _ from 'lodash';
 import {Formio} from 'react-formio';
@@ -81,7 +80,9 @@ describe('The time component', () => {
     await user.type(input, '25:00');
 
     // Expect the invalid time input to have aria-describedby and aria-invalid
-    expect(input).toHaveClass('is-invalid');
+    await waitFor(() => {
+      expect(input).toHaveClass('is-invalid');
+    });
     expect(input).toHaveAttribute('aria-describedby');
     expect(input).toHaveAttribute('aria-invalid', 'true');
     expect(form.isValid()).toBeFalsy();
@@ -91,7 +92,9 @@ describe('The time component', () => {
     await user.type(input, '12:00');
 
     // Expect the valid time input to not have aria-describedby and aria-invalid
-    expect(input).not.toHaveClass('is-invalid');
+    await waitFor(() => {
+      expect(input).not.toHaveClass('is-invalid');
+    });
     expect(input).not.toHaveAttribute('aria-describedby');
     expect(input).not.toHaveAttribute('aria-invalid');
     expect(form.isValid()).toBeTruthy();
@@ -127,7 +130,9 @@ describe('The time component multiple', () => {
     await user.tab({shift: true});
 
     // The field is invalid, and shouldn't have the aria-describedby or aria-invalid tags
-    expect(input).toHaveClass('is-invalid');
+    await waitFor(() => {
+      expect(input).toHaveClass('is-invalid');
+    });
     expect(input).not.toHaveAttribute('aria-describedby');
     expect(input).not.toHaveAttribute('aria-invalid');
 
@@ -149,7 +154,9 @@ describe('The time component multiple', () => {
     const [removeButton] = screen.getAllByRole('button');
     await user.click(removeButton);
 
-    expect(component).toHaveClass('has-error');
+    await waitFor(() => {
+      expect(component).toHaveClass('has-error');
+    });
     expect(form.isValid()).toBeFalsy();
   });
 
@@ -167,7 +174,9 @@ describe('The time component multiple', () => {
     await user.tab({shift: true});
 
     // The Both inputs are valid
-    expect(inputs[0]).not.toHaveClass('is-invalid');
+    await waitFor(() => {
+      expect(inputs[0]).not.toHaveClass('is-invalid');
+    });
     expect(inputs[1]).not.toHaveClass('is-invalid');
     expect(form.isValid()).toBeTruthy();
 
@@ -176,7 +185,9 @@ describe('The time component multiple', () => {
     await user.tab({shift: true});
 
     // Both inputs are now marked as invalid
-    expect(inputs[0]).toHaveClass('is-invalid');
+    await waitFor(() => {
+      expect(inputs[0]).toHaveClass('is-invalid');
+    });
     expect(inputs[1]).toHaveClass('is-invalid');
     expect(form.isValid()).toBeFalsy();
 
@@ -185,7 +196,9 @@ describe('The time component multiple', () => {
     await user.tab({shift: true});
 
     // Both inputs are again valid
-    expect(inputs[0]).not.toHaveClass('is-invalid');
+    await waitFor(() => {
+      expect(inputs[0]).not.toHaveClass('is-invalid');
+    });
     expect(inputs[1]).not.toHaveClass('is-invalid');
     expect(form.isValid()).toBeTruthy();
   });
