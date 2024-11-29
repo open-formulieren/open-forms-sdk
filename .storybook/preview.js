@@ -25,7 +25,7 @@ import {
   withClearSessionStorage,
   withClearSubmissionLocalStorage,
 } from './decorators';
-import {reactIntl} from './reactIntl.js';
+import {reactIntl} from './reactIntl.mjs';
 import ThemeProvider from './theme';
 
 initialize({
