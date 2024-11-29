@@ -1,5 +1,9 @@
 import {StorybookConfig} from '@storybook/react-vite';
 
+// https://github.com/storybookjs/storybook/issues/26291 vite-plugin-istanbul is
+// still causing CommonJS warnings, which is because of @storybook/addon-coverage,
+// see https://github.com/storybookjs/storybook/issues/26291#issuecomment-2378399131
+
 const config: StorybookConfig = {
   core: {
     disableTelemetry: true,
