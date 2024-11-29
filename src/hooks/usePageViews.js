@@ -2,8 +2,7 @@ import {useContext, useEffect, useRef} from 'react';
 import {useLocation} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
-
-const isDev = process.env.NODE_ENV === 'development';
+import {DEBUG} from 'utils';
 
 function usePrevious(value) {
   const ref = useRef({
@@ -25,7 +24,7 @@ function usePrevious(value) {
 
 const ANALYTICS_PROVIDERS = {
   debug: async location =>
-    isDev &&
+    DEBUG &&
     console.log(
       `Tracking navigation to ${window.location.origin + location.pathname}${location.hash}`
     ),
