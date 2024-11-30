@@ -7,6 +7,26 @@ import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
 import {coverageConfigDefaults} from 'vitest/config';
 
+// inspired on https://dev.to/koistya/using-ejs-with-vite-48id and
+// https://github.com/difelice/ejs-loader/blob/master/index.js
+const ejsPlugin = () => ({
+  name: 'compile-ejs',
+  async transform(_, id) {
+    const options = {
+      variable: 'ctx',
+      evaluate: /\{%([\s\S]+?)%\}/g,
+      interpolate: /\{\{([\s\S]+?)\}\}/g,
+      escape: /\{\{\{([\s\S]+?)\}\}\}/g,
+    };
+    if (id.endsWith('.ejs')) {
+      const src = await readFile(id, 'utf-8');
+      // @ts-ignore
+      const code = lodashTemplate(src, options);
+      return `export default ${code}`;
+    }
+  },
+});
+
 export default defineConfig({
   base: '/',
   plugins: [
@@ -17,26 +37,13 @@ export default defineConfig({
     // file extension to .jsx/.tsx
     react({babel: {babelrc: true}}),
     jsconfigPaths(),
-
-    // inspired on https://dev.to/koistya/using-ejs-with-vite-48id and
-    // https://github.com/difelice/ejs-loader/blob/master/index.js
-    {
-      name: 'compile-ejs',
-      async transform(_, id) {
-        const options = {
-          variable: 'ctx',
-          evaluate: /\{%([\s\S]+?)%\}/g,
-          interpolate: /\{\{([\s\S]+?)\}\}/g,
-          escape: /\{\{\{([\s\S]+?)\}\}\}/g,
-        };
-        if (id.endsWith('.ejs')) {
-          const src = await readFile(id, 'utf-8');
-          const code = lodashTemplate(src, options);
-          return `export default ${code}`;
-        }
-      },
-    },
+    ejsPlugin(),
   ],
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
   test: {
     environment: 'jsdom',
     environmentOptions: {
