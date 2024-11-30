@@ -22,7 +22,22 @@ const ejsPlugin = () => ({
       const src = await readFile(id, 'utf-8');
       // @ts-ignore
       const code = lodashTemplate(src, options);
-      return `export default ${code}`;
+      return {code: `export default ${code}`, map: null};
+    }
+  },
+});
+
+const cjsTokens = () => ({
+  name: 'process-cjs-tokens',
+  async transform(src, id) {
+    if (
+      id.endsWith('/design-tokens/dist/tokens.js') ||
+      id.endsWith('node_modules/@utrecht/design-tokens/dist/tokens.cjs')
+    ) {
+      return {
+        code: src.replace('module.exports = ', 'export default '),
+        map: null,
+      };
     }
   },
 });
@@ -37,13 +52,9 @@ export default defineConfig({
     // file extension to .jsx/.tsx
     react({babel: {babelrc: true}}),
     jsconfigPaths(),
+    cjsTokens(),
     ejsPlugin(),
   ],
-  build: {
-    commonjsOptions: {
-      transformMixedEsModules: true,
-    },
-  },
   test: {
     environment: 'jsdom',
     environmentOptions: {
