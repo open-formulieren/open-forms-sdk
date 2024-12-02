@@ -2,7 +2,6 @@
 // https://vitejs.dev/config/
 import react from '@vitejs/plugin-react';
 import lodashTemplate from 'lodash/template';
-import {readFile} from 'node:fs/promises';
 import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
 import {coverageConfigDefaults} from 'vitest/config';
@@ -11,7 +10,7 @@ import {coverageConfigDefaults} from 'vitest/config';
 // https://github.com/difelice/ejs-loader/blob/master/index.js
 const ejsPlugin = () => ({
   name: 'compile-ejs',
-  async transform(_, id) {
+  async transform(src: string, id: string) {
     const options = {
       variable: 'ctx',
       evaluate: /\{%([\s\S]+?)%\}/g,
@@ -19,7 +18,6 @@ const ejsPlugin = () => ({
       escape: /\{\{\{([\s\S]+?)\}\}\}/g,
     };
     if (id.endsWith('.ejs')) {
-      const src = await readFile(id, 'utf-8');
       // @ts-ignore
       const code = lodashTemplate(src, options);
       return {code: `export default ${code}`, map: null};
