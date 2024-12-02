@@ -56,6 +56,13 @@ export default defineConfig({
     cjsTokens(),
     ejsPlugin(),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        charset: false,
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     environmentOptions: {
