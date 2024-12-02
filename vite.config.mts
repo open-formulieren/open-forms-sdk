@@ -59,6 +59,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
+        additionalData: `$fa-font-path: '@fortawesome/fontawesome-free/webfonts/';`,
         charset: false,
       },
     },

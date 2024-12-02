@@ -1,10 +1,17 @@
 // Open Forms SDK styles
 // TODO: we should see if we can re-use even smaller bits to shed dead weight and
 // reduce the bundle size
+$fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @use '@fortawesome/fontawesome-free/scss/fontawesome';
-@use '@fortawesome/fontawesome-free/scss/brands';
-@use '@fortawesome/fontawesome-free/scss/regular';
-@use '@fortawesome/fontawesome-free/scss/solid';
+@use '@fortawesome/fontawesome-free/scss/brands' with (
+  $fa-font-path: $fa-font-path
+);
+@use '@fortawesome/fontawesome-free/scss/regular' with (
+  $fa-font-path: $fa-font-path
+);
+@use '@fortawesome/fontawesome-free/scss/solid' with (
+  $fa-font-path: $fa-font-path
+);
 @use 'flatpickr/dist/flatpickr.min';
 @use 'formiojs/dist/formio.form';
 @use 'leaflet/dist/leaflet';
