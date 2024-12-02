@@ -57,7 +57,7 @@ class TextField extends Formio.Components.components.textfield {
   get setLocationData() {
     if (!this._debouncedSetLocationData) {
       this._debouncedSetLocationData = debounce((postcode, house_number, key) => {
-        get(`${this.options.baseUrl}location/get-street-name-and-city`, {postcode, house_number})
+        get(`${this.options.baseUrl}geo/address-autocomplete`, {postcode, house_number})
           .then(result => {
             if (result[key]) {
               this.setValue(result[key]);
