@@ -43,7 +43,8 @@ const cjsTokens = () => ({
 });
 
 export default defineConfig({
-  base: '/',
+  base: './',
+  publicDir: false,
   plugins: [
     // BIG DISCLAIMER - Vite only processes files with the .jsx or .tsx extension with
     // babel, and changing this configuration is... cumbersome and comes with a performance
