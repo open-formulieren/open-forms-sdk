@@ -1,4 +1,3 @@
-import {MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
@@ -56,11 +55,6 @@ export default {
     ariaMobileIconLabel: 'Progress step indicator toggle icon (mobile)',
     accessibleToggleStepsLabel: 'Current step in form Formulier: Stap 2',
   },
-  parameters: {
-    viewport: {
-      viewports: MINIMAL_VIEWPORTS,
-    },
-  },
 };
 
 export const Default = {};
@@ -68,10 +62,13 @@ export const Default = {};
 export const MobileViewport = {
   name: 'Mobile version',
   parameters: {
-    // TODO enable viewport in chromatic
-    chromatic: {disableSnapshot: true},
     viewport: {
-      defaultViewport: 'mobile1',
+      defaultViewport: 'smallMobile',
+    },
+    chromatic: {
+      modes: {
+        desktop: {disable: true},
+      },
     },
   },
   play: async ({canvasElement}) => {
@@ -81,4 +78,5 @@ export const MobileViewport = {
     await expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
     await userEvent.click(toggleButton);
   },
+  tags: ['!test'],
 };

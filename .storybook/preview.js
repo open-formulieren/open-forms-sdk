@@ -26,6 +26,7 @@ import {
   withClearSessionStorage,
   withClearSubmissionLocalStorage,
 } from './decorators';
+import {allModes} from './modes.mjs';
 import {reactIntl} from './reactIntl.mjs';
 import ThemeProvider from './theme';
 
@@ -91,8 +92,8 @@ export default {
     chromatic: {
       // Here we specify the viewports of which we want snapshots in Chromatic
       modes: {
-        mobile: {viewport: 'smallMobile'},
-        desktop: {viewport: 'desktop'},
+        mobile: allModes.smallMobile,
+        desktop: allModes.desktop,
       },
     },
   },
