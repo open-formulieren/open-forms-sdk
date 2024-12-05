@@ -29,11 +29,6 @@
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
-  "1vvlWB": {
-    "defaultMessage": "Thank you for co-signing this submission.",
-    "description": "Co-sign confirmation page body",
-    "originalDefault": "Thank you for co-signing this submission."
-  },
   "2HHJrq": {
     "defaultMessage": "Invalid function arguments",
     "description": "ZOD 'invalid_arguments' error message",
@@ -519,6 +514,11 @@
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
   },
+  "R+5xuY": {
+    "defaultMessage": "Cosign confirmation",
+    "description": "Cosign done page title",
+    "originalDefault": "Cosign confirmation"
+  },
   "R7k4JC": {
     "defaultMessage": "Enter the six-character code",
     "description": "Email verification: code input field label",
@@ -618,6 +618,11 @@
     "defaultMessage": "Invalid discriminator value. Expected {expected}.",
     "description": "ZOD 'invalid_union_discriminator' error message",
     "originalDefault": "Invalid discriminator value. Expected {expected}."
+  },
+  "ZJoaby": {
+    "defaultMessage": "<p>Thank you for cosigning. We have received your \"{formName}\" submission. {confirmationEmailEnabled, select, true {You will receive a confirmation email.} other {} }</p> <p>Do not forget to download your summary, we do not send it via email.</p>",
+    "description": "Cosign confirmation page body",
+    "originalDefault": "<p>Thank you for cosigning. We have received your \"{formName}\" submission. {confirmationEmailEnabled, select, true {You will receive a confirmation email.} other {} }</p> <p>Do not forget to download your summary, we do not send it via email.</p>"
   },
   "ZL5313": {
     "defaultMessage": "Form temporarily unavailable",
@@ -1043,11 +1048,6 @@
     "defaultMessage": "Year",
     "description": "Date input group: year label",
     "originalDefault": "Year"
-  },
-  "yW2uhj": {
-    "defaultMessage": "Co-sign confirmation",
-    "description": "On succesful completion title",
-    "originalDefault": "Co-sign confirmation"
   },
   "zkdWYe": {
     "defaultMessage": "Return to main website",

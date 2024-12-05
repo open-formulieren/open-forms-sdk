@@ -1,3 +1,4 @@
+import {Paragraph} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -6,22 +7,36 @@ import Anchor from 'components/Anchor';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
+import useFormContext from 'hooks/useFormContext';
 
 const CosignDone = ({reportDownloadUrl}) => {
+  const {name, sendConfirmationEmail} = useFormContext();
+
   return (
     <Card
       title={
         <FormattedMessage
-          description="On succesful completion title"
-          defaultMessage="Co-sign confirmation"
+          description="Cosign done page title"
+          defaultMessage="Cosign confirmation"
         />
       }
     >
       {/* TODO Make text configurable */}
       <Body component="div" modifiers={['wysiwyg']}>
         <FormattedMessage
-          description="Co-sign confirmation page body"
-          defaultMessage="Thank you for co-signing this submission."
+          description="Cosign confirmation page body"
+          defaultMessage={`<p>Thank you for cosigning. We have received your "{formName}"
+          submission. {confirmationEmailEnabled, select,
+            true {You will receive a confirmation email.}
+            other {}
+          }</p>
+          <p>Do not forget to download your summary, we do not send it via email.</p>
+          `}
+          values={{
+            p: chunk => <Paragraph>{chunk}</Paragraph>,
+            formName: name,
+            confirmationEmailEnabled: sendConfirmationEmail,
+          }}
         />
       </Body>
 

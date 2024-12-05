@@ -81,12 +81,6 @@
       "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
     }
   ],
-  "1vvlWB": [
-    {
-      "type": 0,
-      "value": "Bedankt voor het mede-ondertekenen van deze inzending."
-    }
-  ],
   "2HHJrq": [
     {
       "type": 0,
@@ -158,7 +152,7 @@
   "61Rlys": [
     {
       "type": 0,
-      "value": "Controle en mede-ondertekenen inzending"
+      "value": "Controle en medeondertekenen inzending"
     }
   ],
   "6GNK65": [
@@ -234,13 +228,13 @@
   "7v8PR6": [
     {
       "type": 0,
-      "value": "Your session has expired. "
+      "value": "Je sessie is verlopen. "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Click here to restart"
+          "value": "Klik hier om opnieuw te beginnen"
         }
       ],
       "type": 8,
@@ -436,7 +430,7 @@
   "Ao+97J": [
     {
       "type": 0,
-      "value": "Er is iets fout gegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op."
+      "value": "Er is iets fout gegaan bij het medeondertekenen. Neem alstublieft contact met ons op."
     }
   ],
   "AustF4": [
@@ -904,7 +898,7 @@
   "LSB7FE": [
     {
       "type": 0,
-      "value": "Heb je een e-mail ontvangen om mede te ondertekenen? Start het mede-ondertekenen door in te loggen."
+      "value": "Heb je een e-mail ontvangen om mede te ondertekenen? Start het medeondertekenen door in te loggen."
     }
   ],
   "LiRh7j": [
@@ -1055,6 +1049,12 @@
     {
       "type": 0,
       "value": "Verlengen"
+    }
+  ],
+  "R+5xuY": [
+    {
+      "type": 0,
+      "value": "Bevestiging medeondertekenen"
     }
   ],
   "R7k4JC": [
@@ -1303,6 +1303,58 @@
     {
       "type": 0,
       "value": " zijn."
+    }
+  ],
+  "ZJoaby": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Bedankt voor het medeondertekenen. Wij hebben je inzending \""
+        },
+        {
+          "type": 1,
+          "value": "formName"
+        },
+        {
+          "type": 0,
+          "value": "\" ontvangen. "
+        },
+        {
+          "options": {
+            "other": {
+              "value": [
+              ]
+            },
+            "true": {
+              "value": [
+                {
+                  "type": 0,
+                  "value": "Je ontvangt per mail een bevestiging."
+                }
+              ]
+            }
+          },
+          "type": 5,
+          "value": "confirmationEmailEnabled"
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Vergeet niet je aanvraag te downloaden, deze versturen wij niet per mail."
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "ZL5313": [
@@ -2064,7 +2116,7 @@
   "tBQ8TL": [
     {
       "type": 0,
-      "value": "Niet mede-ondertekend"
+      "value": "Niet medeondertekend"
     }
   ],
   "tohkCS": [
@@ -2185,12 +2237,6 @@
     {
       "type": 0,
       "value": "Jaar"
-    }
-  ],
-  "yW2uhj": [
-    {
-      "type": 0,
-      "value": "Bevestiging mede-ondertekening"
     }
   ],
   "zkdWYe": [
