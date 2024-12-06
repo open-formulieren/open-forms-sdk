@@ -779,6 +779,11 @@
     "description": "Email verification mode selection label",
     "originalDefault": "What would you like to do?"
   },
+  "j8vJ0Q": {
+    "defaultMessage": "Sorry - this form has reached the maximum submission limit",
+    "description": "'Maximum submissions' error title",
+    "originalDefault": "Sorry - this form has reached the maximum submission limit"
+  },
   "jAZped": {
     "defaultMessage": "Sorry - this form is no longer available",
     "description": "'Deactivated form' error title",
@@ -1003,6 +1008,11 @@
     "defaultMessage": "Abort submission",
     "description": "Button label to abort submission",
     "originalDefault": "Abort submission"
+  },
+  "uPtko4": {
+    "defaultMessage": "Unfortunately, this form is no longer available for submissions.",
+    "description": "Maximum form submissions error message",
+    "originalDefault": "Unfortunately, this form is no longer available for submissions."
   },
   "uZBPwA": {
     "defaultMessage": "Number must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}.",

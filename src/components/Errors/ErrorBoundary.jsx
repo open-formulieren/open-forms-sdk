@@ -136,21 +136,44 @@ const UnprocessableEntityError = ({wrapper: Wrapper, error}) => {
 UnprocessableEntityError.propTypes = GenericError.propTypes;
 
 const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
-  if (error.code !== 'form-maintenance') {
+  if (!['form-maintenance', 'form-maximum-submissions'].includes(error.code)) {
     return <GenericError wrapper={Wrapper} error={error} />;
   }
 
   // handle maintenance mode forms
-  return (
-    <MaintenanceMode
-      title={
-        <FormattedMessage
-          description="'Maintenance mode form' error title"
-          defaultMessage="Form temporarily unavailable"
-        />
-      }
-    />
-  );
+  if (error.code === 'form-maintenance') {
+    return (
+      <MaintenanceMode
+        title={
+          <FormattedMessage
+            description="'Maintenance mode form' error title"
+            defaultMessage="Form temporarily unavailable"
+          />
+        }
+      />
+    );
+  }
+
+  // handle submission limit forms
+  if (error.code === 'form-maximum-submissions') {
+    return (
+      <Wrapper
+        title={
+          <FormattedMessage
+            description="'Maximum submissions' error title"
+            defaultMessage="Sorry - this form has reached the maximum submission limit"
+          />
+        }
+      >
+        <ErrorMessage>
+          <FormattedMessage
+            description="Maximum form submissions error message"
+            defaultMessage="Unfortunately, this form is no longer available for submissions."
+          />
+        </ErrorMessage>
+      </Wrapper>
+    );
+  }
 };
 
 // map the type of error to the component to render
