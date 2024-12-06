@@ -29,11 +29,6 @@
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
-  "1vvlWB": {
-    "defaultMessage": "Bedankt voor het mede-ondertekenen van deze inzending.",
-    "description": "Co-sign confirmation page body",
-    "originalDefault": "Thank you for co-signing this submission."
-  },
   "2HHJrq": {
     "defaultMessage": "Ongeldige functie-argumenten",
     "description": "ZOD 'invalid_arguments' error message",
@@ -85,7 +80,7 @@
     "originalDefault": "Unrecognized key(s) in object: {keys}."
   },
   "61Rlys": {
-    "defaultMessage": "Controle en mede-ondertekenen inzending",
+    "defaultMessage": "Controle en medeondertekenen inzending",
     "description": "Check overview and co-sign",
     "originalDefault": "Check and co-sign submission"
   },
@@ -207,7 +202,7 @@
     "originalDefault": "Progress"
   },
   "Ao+97J": {
-    "defaultMessage": "Er is iets fout gegaan bij het mede-ondertekenen. Neem alstublieft contact met ons op.",
+    "defaultMessage": "Er is iets fout gegaan bij het medeondertekenen. Neem alstublieft contact met ons op.",
     "description": "Co-signed without representation fallback message",
     "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
   },
@@ -440,7 +435,7 @@
     "originalDefault": "{isApplicable, select, false {{label} (n/a)} other {{label}} }"
   },
   "LSB7FE": {
-    "defaultMessage": "Heb je een e-mail ontvangen om mede te ondertekenen? Start het mede-ondertekenen door in te loggen.",
+    "defaultMessage": "Heb je een e-mail ontvangen om mede te ondertekenen? Start het medeondertekenen door in te loggen.",
     "description": "Cosign start explanation message",
     "originalDefault": "Did you receive an email with a request to cosign? Start the cosigning by logging in."
   },
@@ -525,6 +520,11 @@
     "defaultMessage": "Verlengen",
     "description": "Extend session button (in modal)",
     "originalDefault": "Extend"
+  },
+  "R+5xuY": {
+    "defaultMessage": "Bevestiging medeondertekenen",
+    "description": "Cosign done page title",
+    "originalDefault": "Cosign confirmation"
   },
   "R7k4JC": {
     "defaultMessage": "Voer de bevestigingscode in",
@@ -626,6 +626,11 @@
     "defaultMessage": "Ongeldige discriminatorwaarde - deze moet {expected} zijn.",
     "description": "ZOD 'invalid_union_discriminator' error message",
     "originalDefault": "Invalid discriminator value. Expected {expected}."
+  },
+  "ZJoaby": {
+    "defaultMessage": "<p>Bedankt voor het medeondertekenen. Wij hebben je inzending \"{formName}\" ontvangen. {confirmationEmailEnabled, select, true {Je ontvangt per mail een bevestiging.} other {} }</p> <p>Vergeet niet je aanvraag te downloaden, deze versturen wij niet per mail.</p>",
+    "description": "Cosign confirmation page body",
+    "originalDefault": "<p>Thank you for cosigning. We have received your \"{formName}\" submission. {confirmationEmailEnabled, select, true {You will receive a confirmation email.} other {} }</p> <p>Do not forget to download your summary, we do not send it via email.</p>"
   },
   "ZL5313": {
     "defaultMessage": "Formulier tijdelijk onbeschikbaar",
@@ -1002,7 +1007,7 @@
     "originalDefault": "To contact details"
   },
   "tBQ8TL": {
-    "defaultMessage": "Niet mede-ondertekend",
+    "defaultMessage": "Niet medeondertekend",
     "description": "Not co-signed (summary) message",
     "originalDefault": "Not co-signed"
   },
@@ -1055,11 +1060,6 @@
     "defaultMessage": "Jaar",
     "description": "Date input group: year label",
     "originalDefault": "Year"
-  },
-  "yW2uhj": {
-    "defaultMessage": "Bevestiging mede-ondertekening",
-    "description": "On succesful completion title",
-    "originalDefault": "Co-sign confirmation"
   },
   "zkdWYe": {
     "defaultMessage": "Terug naar de website",

@@ -15,6 +15,7 @@ const FormContext = React.createContext({
   showProgressIndicator: true,
   showSummaryProgress: false,
   submissionAllowed: 'yes',
+  sendConfirmationEmail: true,
   submissionStatementsConfiguration: [],
   literals: {
     beginText: {value: '', resolved: 'Begin'},

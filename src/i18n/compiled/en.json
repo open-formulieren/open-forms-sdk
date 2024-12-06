@@ -81,12 +81,6 @@
       "value": "Something went wrong while presenting the login option. Please contact the municipality."
     }
   ],
-  "1vvlWB": [
-    {
-      "type": 0,
-      "value": "Thank you for co-signing this submission."
-    }
-  ],
   "2HHJrq": [
     {
       "type": 0,
@@ -1057,6 +1051,12 @@
       "value": "Extend"
     }
   ],
+  "R+5xuY": [
+    {
+      "type": 0,
+      "value": "Cosign confirmation"
+    }
+  ],
   "R7k4JC": [
     {
       "type": 0,
@@ -1303,6 +1303,58 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "ZJoaby": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Thank you for cosigning. We have received your \""
+        },
+        {
+          "type": 1,
+          "value": "formName"
+        },
+        {
+          "type": 0,
+          "value": "\" submission. "
+        },
+        {
+          "options": {
+            "other": {
+              "value": [
+              ]
+            },
+            "true": {
+              "value": [
+                {
+                  "type": 0,
+                  "value": "You will receive a confirmation email."
+                }
+              ]
+            }
+          },
+          "type": 5,
+          "value": "confirmationEmailEnabled"
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Do not forget to download your summary, we do not send it via email."
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "ZL5313": [
@@ -2181,12 +2233,6 @@
     {
       "type": 0,
       "value": "Year"
-    }
-  ],
-  "yW2uhj": [
-    {
-      "type": 0,
-      "value": "Co-sign confirmation"
     }
   ],
   "zkdWYe": [

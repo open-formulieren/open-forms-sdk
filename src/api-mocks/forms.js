@@ -20,6 +20,7 @@ export const FORM_DEFAULTS = {
   active: true,
   submissionAllowed: 'yes',
   suspensionAllowed: true,
+  sendConfirmationEmail: true,
   submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED],
   appointmentOptions: {
     isAppointment: false,
