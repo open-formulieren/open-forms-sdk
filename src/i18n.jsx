@@ -1,5 +1,5 @@
-// ensure flatpickr locales are included in bundle
-import 'flatpickr/dist/l10n/nl.js';
+import flatpickr from 'flatpickr';
+import {Dutch} from 'flatpickr/dist/l10n/nl.js';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {IntlProvider, createIntl, createIntlCache} from 'react-intl';
@@ -14,6 +14,9 @@ import Loader from 'components/Loader';
 
 import messagesEN from './i18n/compiled/en.json';
 import messagesNL from './i18n/compiled/nl.json';
+
+// ensure flatpickr locales are included in bundle
+flatpickr.l10ns.nl = Dutch;
 
 const currentLanguage = createGlobalstate('nl');
 
