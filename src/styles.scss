@@ -1,18 +1,25 @@
 // Open Forms SDK styles
 // TODO: we should see if we can re-use even smaller bits to shed dead weight and
 // reduce the bundle size
-@import '@fortawesome/fontawesome-free/scss/fontawesome';
-@import '@fortawesome/fontawesome-free/scss/brands';
-@import '@fortawesome/fontawesome-free/scss/regular';
-@import '@fortawesome/fontawesome-free/scss/solid';
-@import 'flatpickr/dist/flatpickr.min.css';
-@import 'formiojs/dist/formio.form.css';
-@import 'leaflet/dist/leaflet';
+$fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
+@use '@fortawesome/fontawesome-free/scss/fontawesome';
+@use '@fortawesome/fontawesome-free/scss/brands' with (
+  $fa-font-path: $fa-font-path
+);
+@use '@fortawesome/fontawesome-free/scss/regular' with (
+  $fa-font-path: $fa-font-path
+);
+@use '@fortawesome/fontawesome-free/scss/solid' with (
+  $fa-font-path: $fa-font-path
+);
+@use 'flatpickr/dist/flatpickr.min';
+@use 'formiojs/dist/formio.form';
+@use 'leaflet/dist/leaflet';
 
 // output the design tokens under the .openforms-theme classname
-@import '@open-formulieren/design-tokens/dist/index';
+@use '@open-formulieren/design-tokens/dist/index';
 
-@import './scss/nl-design-system-community.scss';
+@use './scss/nl-design-system-community.scss';
 
 @import './scss/settings';
 

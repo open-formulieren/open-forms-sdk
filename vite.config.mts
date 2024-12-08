@@ -2,13 +2,47 @@
 // https://vitejs.dev/config/
 import react from '@vitejs/plugin-react';
 import lodashTemplate from 'lodash/template';
-import {readFile} from 'node:fs/promises';
 import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
 import {coverageConfigDefaults} from 'vitest/config';
 
+// inspired on https://dev.to/koistya/using-ejs-with-vite-48id and
+// https://github.com/difelice/ejs-loader/blob/master/index.js
+const ejsPlugin = () => ({
+  name: 'compile-ejs',
+  async transform(src: string, id: string) {
+    const options = {
+      variable: 'ctx',
+      evaluate: /\{%([\s\S]+?)%\}/g,
+      interpolate: /\{\{([\s\S]+?)\}\}/g,
+      escape: /\{\{\{([\s\S]+?)\}\}\}/g,
+    };
+    if (id.endsWith('.ejs')) {
+      // @ts-ignore
+      const code = lodashTemplate(src, options);
+      return {code: `export default ${code}`, map: null};
+    }
+  },
+});
+
+const cjsTokens = () => ({
+  name: 'process-cjs-tokens',
+  async transform(src, id) {
+    if (
+      id.endsWith('/design-tokens/dist/tokens.js') ||
+      id.endsWith('node_modules/@utrecht/design-tokens/dist/tokens.cjs')
+    ) {
+      return {
+        code: src.replace('module.exports = ', 'export default '),
+        map: null,
+      };
+    }
+  },
+});
+
 export default defineConfig({
-  base: '/',
+  base: './',
+  publicDir: false,
   plugins: [
     // BIG DISCLAIMER - Vite only processes files with the .jsx or .tsx extension with
     // babel, and changing this configuration is... cumbersome and comes with a performance
@@ -17,26 +51,17 @@ export default defineConfig({
     // file extension to .jsx/.tsx
     react({babel: {babelrc: true}}),
     jsconfigPaths(),
-
-    // inspired on https://dev.to/koistya/using-ejs-with-vite-48id and
-    // https://github.com/difelice/ejs-loader/blob/master/index.js
-    {
-      name: 'compile-ejs',
-      async transform(_, id) {
-        const options = {
-          variable: 'ctx',
-          evaluate: /\{%([\s\S]+?)%\}/g,
-          interpolate: /\{\{([\s\S]+?)\}\}/g,
-          escape: /\{\{\{([\s\S]+?)\}\}\}/g,
-        };
-        if (id.endsWith('.ejs')) {
-          const src = await readFile(id, 'utf-8');
-          const code = lodashTemplate(src, options);
-          return `export default ${code}`;
-        }
+    cjsTokens(),
+    ejsPlugin(),
+  ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `$fa-font-path: '@fortawesome/fontawesome-free/webfonts/';`,
+        charset: false,
       },
     },
-  ],
+  },
   test: {
     environment: 'jsdom',
     environmentOptions: {

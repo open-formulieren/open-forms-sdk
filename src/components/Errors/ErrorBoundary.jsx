@@ -6,6 +6,7 @@ import Body from 'components/Body';
 import Card from 'components/Card';
 import Link from 'components/Link';
 import MaintenanceMode from 'components/MaintenanceMode';
+import {PermissionDenied, ServiceUnavailable, UnprocessableEntity} from 'errors';
 import {DEBUG} from 'utils';
 
 import ErrorMessage from './ErrorMessage';
@@ -48,7 +49,8 @@ ErrorBoundary.propTypes = {
 };
 
 const DisplayError = ({error, useCard = false}) => {
-  const ErrorComponent = ERROR_TYPE_MAP[error.name] || GenericError;
+  const errorCls = error.constructor;
+  const ErrorComponent = ERROR_TYPE_MAP[errorCls] || GenericError;
   const Wrapper = useCard ? Card : 'div';
   return <ErrorComponent wrapper={Wrapper} error={error} />;
 };
@@ -153,11 +155,11 @@ const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
   );
 };
 
-// map the type of error to the component to render
+// map the error class to the component to render it
 const ERROR_TYPE_MAP = {
-  PermissionDenied: PermissionDeniedError,
-  UnprocessableEntity: UnprocessableEntityError,
-  ServiceUnavailable: ServiceUnavailableError,
+  [PermissionDenied]: PermissionDeniedError,
+  [UnprocessableEntity]: UnprocessableEntityError,
+  [ServiceUnavailable]: ServiceUnavailableError,
 };
 
 export {logError, DisplayError};

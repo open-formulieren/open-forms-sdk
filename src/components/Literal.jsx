@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+import {DEBUG} from 'utils';
 
 const LiteralContext = React.createContext();
 LiteralContext.displayName = 'LiteralContext';
@@ -24,7 +24,7 @@ const EMPTY_LITERAL = {resolved: ''};
 const Literal = ({name}) => {
   const literals = useContext(LiteralContext);
   const value = (literals[name] || EMPTY_LITERAL).resolved;
-  if (isDevelopment && !value) {
+  if (DEBUG && !value) {
     console.warn(`Literal ${name} not found!`);
   }
   return value;

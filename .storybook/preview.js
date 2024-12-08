@@ -5,6 +5,7 @@ import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
 import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
+import lodash from 'lodash';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {initialize, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
@@ -25,8 +26,11 @@ import {
   withClearSessionStorage,
   withClearSubmissionLocalStorage,
 } from './decorators';
-import {reactIntl} from './reactIntl.js';
+import {allModes} from './modes.mjs';
+import {reactIntl} from './reactIntl.mjs';
 import ThemeProvider from './theme';
+
+window._ = lodash;
 
 initialize({
   onUnhandledRequest: 'bypass',
@@ -88,8 +92,8 @@ export default {
     chromatic: {
       // Here we specify the viewports of which we want snapshots in Chromatic
       modes: {
-        mobile: {viewport: 'smallMobile'},
-        desktop: {viewport: 'desktop'},
+        mobile: allModes.smallMobile,
+        desktop: allModes.desktop,
       },
     },
   },

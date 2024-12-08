@@ -403,7 +403,6 @@ export const SeveralStepsInMobileViewport = {
     accessibleToggleStepsLabel: 'Current step in form Formulier: Stap 2',
   },
   parameters: {
-    chromatic: {disableSnapshot: true}, // TODO: set up viewports in chromatic
     layout: 'fullscreen', // removes padding in canvas
     viewport: {
       defaultViewport: 'mobile1',
