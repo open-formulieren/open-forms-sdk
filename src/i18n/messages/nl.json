@@ -1021,6 +1021,11 @@
     "description": "Button label to abort submission",
     "originalDefault": "Abort submission"
   },
+  "uPtko4": {
+    "defaultMessage": "Unfortunately, this form is no longer available for submissions.",
+    "description": "Maximum form submissions error message",
+    "originalDefault": "Unfortunately, this form is no longer available for submissions."
+  },
   "uZBPwA": {
     "defaultMessage": "Het getal moet {exact, select, true {exact gelijk aan} other {{inclusive, select, true {minder dan of gelijk aan} other {minder dan}}} } {maximum} zijn.",
     "description": "ZOD 'too_big' error message, for numbers",

@@ -113,6 +113,8 @@ const render = args => {
     explanationTemplate: '<p>Toelichtingssjabloon...</p>',
     submissionAllowed: args['submissionAllowed'],
     hideNonApplicableSteps: args['hideNonApplicableSteps'],
+    submissionMaximumAllowed: args['form.submissionMaximumAllowed'],
+    submissionCounter: args['form.submissionCounter'],
     steps: args['steps'],
   });
   return <Wrapper form={form} showExternalHeader={args.showExternalHeader} />;
@@ -407,5 +409,23 @@ export const SeveralStepsInMobileViewport = {
     viewport: {
       defaultViewport: 'mobile1',
     },
+  },
+};
+
+export const MaximumSubmissionsReached = {
+  render,
+  decorators: [LayoutDecorator],
+  args: {
+    'form.submissionMaximumAllowed': 1,
+    'form.submissionCounter': 1,
+  },
+};
+
+export const MaximumSubmissionsNotReached = {
+  render,
+  decorators: [LayoutDecorator],
+  args: {
+    'form.submissionMaximumAllowed': 2,
+    'form.submissionCounter': 1,
   },
 };
