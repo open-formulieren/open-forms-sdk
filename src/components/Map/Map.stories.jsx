@@ -52,3 +52,10 @@ export const MapReverseGeoEmpty = {
     },
   },
 };
+
+export const MapWithAerialPhotoBackground = {
+  args: {
+    tileLayerUrl:
+      'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_orthoHR/EPSG:28992/{z}/{x}/{y}.png',
+  },
+};
