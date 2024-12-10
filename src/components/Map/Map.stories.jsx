@@ -16,7 +16,14 @@ export default {
   component: LeafletMap,
   decorators: [withMapLayout, ConfigDecorator],
   args: {
-    markerCoordinates: [52.1326332, 5.291266],
+    geoJsonFeature: {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'Point',
+        coordinates: [5.291266, 52.1326332],
+      },
+    },
     defaultCenter: [52.1326332, 5.291266],
     defaultZoomLevel: 12,
     disabled: false,
