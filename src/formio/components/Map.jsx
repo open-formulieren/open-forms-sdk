@@ -114,6 +114,7 @@ export default class Map extends Field {
             onGeoJsonFeatureSet={this.onGeoJsonSet.bind(this)}
             defaultCenter={defaultCenter}
             defaultZoomLevel={zoom || DEFAULT_ZOOM}
+            interactions={this.component?.interactions}
             tileLayerUrl={this.component.tileLayerUrl}
           />
         </ConfigContext.Provider>

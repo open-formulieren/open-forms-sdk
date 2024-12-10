@@ -10,7 +10,13 @@ import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
-import {CRS_RD, DEFAULT_LAT_LNG, DEFAULT_ZOOM, TILE_LAYER_RD} from 'map/constants';
+import {
+  CRS_RD,
+  DEFAULT_INTERACTIONS,
+  DEFAULT_LAT_LNG,
+  DEFAULT_ZOOM,
+  TILE_LAYER_RD,
+} from 'map/constants';
 import {getBEMClassName} from 'utils';
 
 import NearestAddress from './NearestAddress';
@@ -69,6 +75,7 @@ const LeaftletMap = ({
   defaultCenter = DEFAULT_LAT_LNG,
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
+  interactions = DEFAULT_INTERACTIONS,
   tileLayerUrl = TILE_LAYER_RD.url,
 }) => {
   const featureGroupRef = useRef();
@@ -127,10 +134,10 @@ const LeaftletMap = ({
             }}
             draw={{
               rectangle: false,
-              circle: true,
-              polyline: true,
-              polygon: true,
-              marker: true,
+              circle: false,
+              polyline: !!interactions?.polyline,
+              polygon: !!interactions?.polygon,
+              marker: !!interactions?.marker,
               circlemarker: false,
             }}
           />
@@ -184,6 +191,11 @@ LeaftletMap.propTypes = {
     ]).isRequired,
   }),
   onGeoJsonFeatureSet: PropTypes.func,
+  interactions: PropTypes.shape({
+    polyline: PropTypes.bool,
+    polygon: PropTypes.bool,
+    marker: PropTypes.bool,
+  }),
   disabled: PropTypes.bool,
   tileLayerUrl: PropTypes.string,
 };
