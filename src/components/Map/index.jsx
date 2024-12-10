@@ -69,6 +69,15 @@ const useDefaultCoordinates = () => {
   return [latitude, longitude];
 };
 
+const getCoordinates = geoJsonFeature => {
+  if (!geoJsonFeature) {
+    return null;
+  }
+
+  const center = Leaflet.geoJSON(geoJsonFeature).getBounds().getCenter();
+  return [center.lat, center.lng];
+};
+
 const LeaftletMap = ({
   geoJsonFeature,
   onGeoJsonFeatureSet,
@@ -80,7 +89,8 @@ const LeaftletMap = ({
   const featureGroupRef = useRef();
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
-  const coordinates = defaultCoordinates;
+  const geoJsonCoordinates = getCoordinates(geoJsonFeature);
+  const coordinates = geoJsonCoordinates ?? defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
@@ -141,11 +151,7 @@ const LeaftletMap = ({
             }}
           />
         </FeatureGroup>
-        {coordinates ? (
-          <>
-            <MapView coordinates={coordinates} />
-          </>
-        ) : null}
+        {coordinates && <MapView coordinates={coordinates} />}
         <SearchControl
           onMarkerSet={onSearchMarkerSet}
           options={{
@@ -162,9 +168,9 @@ const LeaftletMap = ({
         />
         {/*{disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}*/}
       </MapContainer>
-      {/*{markerCoordinates && markerCoordinates.length && (*/}
-      {/*  <NearestAddress coordinates={markerCoordinates} />*/}
-      {/*)}*/}
+      {geoJsonCoordinates && geoJsonCoordinates.length && (
+        <NearestAddress coordinates={geoJsonCoordinates} />
+      )}
     </>
   );
 };
