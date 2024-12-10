@@ -4,6 +4,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
+import FormMaximumSubmissions from 'components/FormMaximumSubmissions';
 import Link from 'components/Link';
 import MaintenanceMode from 'components/MaintenanceMode';
 import {PermissionDenied, ServiceUnavailable, UnprocessableEntity} from 'errors';
@@ -138,21 +139,28 @@ const UnprocessableEntityError = ({wrapper: Wrapper, error}) => {
 UnprocessableEntityError.propTypes = GenericError.propTypes;
 
 const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
-  if (error.code !== 'form-maintenance') {
+  if (!['form-maintenance', 'form-maximum-submissions'].includes(error.code)) {
     return <GenericError wrapper={Wrapper} error={error} />;
   }
 
   // handle maintenance mode forms
-  return (
-    <MaintenanceMode
-      title={
-        <FormattedMessage
-          description="'Maintenance mode form' error title"
-          defaultMessage="Form temporarily unavailable"
-        />
-      }
-    />
-  );
+  if (error.code === 'form-maintenance') {
+    return (
+      <MaintenanceMode
+        title={
+          <FormattedMessage
+            description="'Maintenance mode form' error title"
+            defaultMessage="Form temporarily unavailable"
+          />
+        }
+      />
+    );
+  }
+
+  // handle submission limit forms
+  if (error.code === 'form-maximum-submissions') {
+    return <FormMaximumSubmissions />;
+  }
 };
 
 // map the error class to the component to render it
