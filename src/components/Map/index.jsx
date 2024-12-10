@@ -1,9 +1,8 @@
 import {GeoSearchControl} from 'leaflet-geosearch';
-import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import {useCallback, useContext, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
+import {MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -72,12 +71,6 @@ const LeaftletMap = ({
   const defaultCoordinates = useDefaultCoordinates();
   const coordinates = markerCoordinates || defaultCoordinates;
 
-  const onWrapperMarkerSet = coordinates => {
-    const coordinatesChanged = !isEqual(markerCoordinates, coordinates);
-    if (!coordinatesChanged) return;
-    onMarkerSet(coordinates);
-  };
-
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
 
@@ -104,7 +97,6 @@ const LeaftletMap = ({
         {coordinates ? (
           <>
             <MapView coordinates={coordinates} />
-            <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
           </>
         ) : null}
         <SearchControl
@@ -121,7 +113,7 @@ const LeaftletMap = ({
             notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
           }}
         />
-        {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
+        {/*{disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}*/}
       </MapContainer>
       {markerCoordinates && markerCoordinates.length && (
         <NearestAddress coordinates={markerCoordinates} />
@@ -239,24 +231,6 @@ SearchControl.propTypes = {
   }),
 };
 
-const MarkerWrapper = ({position, onMarkerSet, ...props}) => {
-  const shouldSetMarker = !!(position && position.length === 2);
-
-  useEffect(() => {
-    if (!shouldSetMarker) return;
-    if (!onMarkerSet) return;
-    onMarkerSet(position);
-  });
-
-  // only render a marker if we explicitly have a marker
-  return shouldSetMarker ? <Marker position={position} {...props} /> : null;
-};
-
-MarkerWrapper.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  onMarkerSet: PropTypes.func,
-};
-
 const DisabledMapControls = () => {
   const map = useMap();
   useEffect(() => {
@@ -269,18 +243,6 @@ const DisabledMapControls = () => {
     if (map.tap) map.tap.disable();
   }, [map]);
   return null;
-};
-
-const CaptureClick = ({setMarker}) => {
-  useMapEvent('click', event => {
-    const newLatLng = [event.latlng.lat, event.latlng.lng];
-    setMarker(newLatLng);
-  });
-  return null;
-};
-
-CaptureClick.propTypes = {
-  setMarker: PropTypes.func.isRequired,
 };
 
 export default LeaftletMap;
