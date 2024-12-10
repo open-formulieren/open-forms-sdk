@@ -1,8 +1,12 @@
+import * as Leaflet from 'leaflet';
+import 'leaflet-draw/dist/leaflet.draw.css';
 import {GeoSearchControl} from 'leaflet-geosearch';
+import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -60,19 +64,38 @@ const useDefaultCoordinates = () => {
 };
 
 const LeaftletMap = ({
-  markerCoordinates,
-  onMarkerSet,
+  geoJsonFeature,
+  onGeoJsonFeatureSet,
   defaultCenter = DEFAULT_LAT_LNG,
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
   tileLayerUrl = TILE_LAYER_RD.url,
 }) => {
+  const featureGroupRef = useRef();
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
-  const coordinates = markerCoordinates || defaultCoordinates;
+  const coordinates = defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
+
+  const onFeatureCreate = event => {
+    // Remove the old layers and add the new one.
+    // This limits the amount of features to 1
+    const newLayer = event.layer;
+    featureGroupRef.current?.clearLayers();
+    featureGroupRef.current?.addLayer(newLayer);
+
+    onGeoJsonFeatureSet(featureGroupRef.current?.toGeoJSON());
+  };
+
+  useEffect(() => {
+    if (!featureGroupRef.current) {
+      return;
+    }
+    featureGroupRef.current?.clearLayers();
+    Leaflet.geoJSON(geoJsonFeature).addTo(featureGroupRef.current);
+  }, [geoJsonFeature, featureGroupRef.current]);
 
   return (
     <>
@@ -94,13 +117,31 @@ const LeaftletMap = ({
         }}
       >
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
+        <FeatureGroup ref={featureGroupRef}>
+          <EditControl
+            position="topright"
+            onCreated={onFeatureCreate}
+            edit={{
+              edit: false,
+              remove: false,
+            }}
+            draw={{
+              rectangle: false,
+              circle: true,
+              polyline: true,
+              polygon: true,
+              marker: true,
+              circlemarker: false,
+            }}
+          />
+        </FeatureGroup>
         {coordinates ? (
           <>
             <MapView coordinates={coordinates} />
           </>
         ) : null}
         <SearchControl
-          onMarkerSet={onMarkerSet}
+          onMarkerSet={() => console.log('TODO')}
           options={{
             showMarker: false,
             showPopup: false,
@@ -115,16 +156,34 @@ const LeaftletMap = ({
         />
         {/*{disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}*/}
       </MapContainer>
-      {markerCoordinates && markerCoordinates.length && (
-        <NearestAddress coordinates={markerCoordinates} />
-      )}
+      {/*{markerCoordinates && markerCoordinates.length && (*/}
+      {/*  <NearestAddress coordinates={markerCoordinates} />*/}
+      {/*)}*/}
     </>
   );
 };
 
 LeaftletMap.propTypes = {
-  markerCoordinates: PropTypes.arrayOf(PropTypes.number),
-  onMarkerSet: PropTypes.func,
+  geoJsonFeature: PropTypes.shape({
+    type: PropTypes.oneOf(['Feature']).isRequired,
+    properties: PropTypes.object,
+    geometry: PropTypes.oneOfType([
+      PropTypes.shape({
+        type: PropTypes.oneOf(['Point']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(['LineString']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(['Polygon']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)))
+          .isRequired,
+      }),
+    ]).isRequired,
+  }),
+  onGeoJsonFeatureSet: PropTypes.func,
   disabled: PropTypes.bool,
   tileLayerUrl: PropTypes.string,
 };
