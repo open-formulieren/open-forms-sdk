@@ -135,39 +135,43 @@ const LeaftletMap = ({
       >
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
         <FeatureGroup ref={featureGroupRef}>
-          <EditControl
-            position="topright"
-            onCreated={onFeatureCreate}
-            edit={{
-              edit: false,
-              remove: false,
-            }}
-            draw={{
-              rectangle: false,
-              circle: false,
-              polyline: !!interactions?.polyline,
-              polygon: !!interactions?.polygon,
-              marker: !!interactions?.marker,
-              circlemarker: false,
-            }}
-          />
+          {!disabled && (
+            <EditControl
+              position="topright"
+              onCreated={onFeatureCreate}
+              edit={{
+                edit: false,
+                remove: false,
+              }}
+              draw={{
+                rectangle: false,
+                circle: false,
+                polyline: !!interactions?.polyline,
+                polygon: !!interactions?.polygon,
+                marker: !!interactions?.marker,
+                circlemarker: false,
+              }}
+            />
+          )}
         </FeatureGroup>
         {coordinates && <MapView coordinates={coordinates} />}
-        <SearchControl
-          onMarkerSet={onSearchMarkerSet}
-          options={{
-            showMarker: false,
-            showPopup: false,
-            retainZoomLevel: false,
-            animateZoom: true,
-            autoClose: false,
-            searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
-            keepResult: true,
-            updateMap: true,
-            notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
-          }}
-        />
-        {/*{disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}*/}
+        {!disabled && (
+          <SearchControl
+            onMarkerSet={onSearchMarkerSet}
+            options={{
+              showMarker: false,
+              showPopup: false,
+              retainZoomLevel: false,
+              animateZoom: true,
+              autoClose: false,
+              searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
+              keepResult: true,
+              updateMap: true,
+              notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
+            }}
+          />
+        )}
+        {disabled && <DisabledMapControls />}
       </MapContainer>
       {geoJsonCoordinates && geoJsonCoordinates.length && (
         <NearestAddress coordinates={geoJsonCoordinates} />
