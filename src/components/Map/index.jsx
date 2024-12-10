@@ -86,22 +86,22 @@ const LeaftletMap = ({
   const className = getBEMClassName('leaflet-map', modifiers);
 
   const onFeatureCreate = event => {
-    // Remove the old layers and add the new one.
-    // This limits the amount of features to 1
-    const newLayer = event.layer;
-    featureGroupRef.current?.clearLayers();
-    featureGroupRef.current?.addLayer(newLayer);
+    onGeoJsonFeatureSet(event.layer.toGeoJSON());
+  };
 
-    onGeoJsonFeatureSet(featureGroupRef.current?.toGeoJSON());
+  const onSearchMarkerSet = event => {
+    onGeoJsonFeatureSet(event.marker.toGeoJSON());
   };
 
   useEffect(() => {
     if (!featureGroupRef.current) {
       return;
     }
+    // Remove the old layers and add the new one.
+    // This limits the amount of features to 1
     featureGroupRef.current?.clearLayers();
-    Leaflet.geoJSON(geoJsonFeature).addTo(featureGroupRef.current);
-  }, [geoJsonFeature, featureGroupRef.current]);
+    featureGroupRef.current?.addLayer(Leaflet.geoJSON(geoJsonFeature));
+  });
 
   return (
     <>
@@ -147,7 +147,7 @@ const LeaftletMap = ({
           </>
         ) : null}
         <SearchControl
-          onMarkerSet={() => console.log('TODO')}
+          onMarkerSet={onSearchMarkerSet}
           options={{
             showMarker: false,
             showPopup: false,
@@ -234,15 +234,6 @@ const SearchControl = ({onMarkerSet, options}) => {
 
   const buttonLabel = intl.formatMessage(searchControlMessages.buttonLabel);
 
-  const setMarker = useCallback(
-    result => {
-      if (result.location) {
-        onMarkerSet([result.location.y, result.location.x]);
-      }
-    },
-    [onMarkerSet]
-  );
-
   useEffect(() => {
     const provider = new OpenFormsProvider(baseUrl);
     const searchControl = new GeoSearchControl({
@@ -261,15 +252,15 @@ const SearchControl = ({onMarkerSet, options}) => {
 
     searchControl.button.setAttribute('aria-label', buttonLabel);
     map.addControl(searchControl);
-    map.on('geosearch/showlocation', setMarker);
+    map.on('geosearch/showlocation', onMarkerSet);
 
     return () => {
-      map.off('geosearch/showlocation', setMarker);
+      map.off('geosearch/showlocation', onMarkerSet);
       map.removeControl(searchControl);
     };
   }, [
     map,
-    setMarker,
+    onMarkerSet,
     baseUrl,
     showMarker,
     showPopup,
