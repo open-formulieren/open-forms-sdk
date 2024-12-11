@@ -97,7 +97,13 @@ const LeaftletMap = ({
   const className = getBEMClassName('leaflet-map', modifiers);
 
   const onFeatureCreate = event => {
-    onGeoJsonFeatureSet(event.layer.toGeoJSON());
+    const json = event.layer.toGeoJSON();
+    // GeoJson doesn't differentiate circles from markers.
+    // So when we create a circle, we have to add its features manually
+    if (event.layer instanceof Leaflet.Circle) {
+      json.properties.radius = event.layer.getRadius();
+    }
+    onGeoJsonFeatureSet(json);
   };
 
   const onSearchMarkerSet = event => {
@@ -111,7 +117,20 @@ const LeaftletMap = ({
     // Remove the old layers and add the new one.
     // This limits the amount of features to 1
     featureGroupRef.current?.clearLayers();
-    featureGroupRef.current?.addLayer(Leaflet.geoJSON(geoJsonFeature));
+    featureGroupRef.current?.addLayer(
+      Leaflet.geoJSON(geoJsonFeature, {
+        pointToLayer: (feature, latlng) => {
+          // GeoJson isn't known with circles. So when draw a Point type,
+          // we need to manually create a marker or a circle.
+          // Otherwise, it would always be a marker.
+          if (feature.properties.radius) {
+            return new Leaflet.Circle(latlng, feature.properties.radius);
+          } else {
+            return new Leaflet.Marker(latlng);
+          }
+        },
+      })
+    );
   });
 
   return (
@@ -183,7 +202,10 @@ const LeaftletMap = ({
 LeaftletMap.propTypes = {
   geoJsonFeature: PropTypes.shape({
     type: PropTypes.oneOf(['Feature']).isRequired,
-    properties: PropTypes.object,
+    properties: PropTypes.shape({
+      // This should only be used for Point geometry that represents a circle
+      radius: PropTypes.number,
+    }),
     geometry: PropTypes.oneOfType([
       PropTypes.shape({
         type: PropTypes.oneOf(['Point']).isRequired,
