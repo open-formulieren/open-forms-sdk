@@ -1,4 +1,5 @@
-import {userEvent, within} from '@storybook/test';
+import {expect, fn, userEvent, within} from '@storybook/test';
+import {useState} from 'react';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 
@@ -11,12 +12,33 @@ const withMapLayout = Story => (
   </div>
 );
 
+const StorybookLeafletMap = props => {
+  const [geoJson, setGeoJson] = useState(props?.geoJsonFeature);
+  const handleGeoJsonChange = args => {
+    if (props?.onGeoJsonFeatureSet) {
+      props?.onGeoJsonFeatureSet(args);
+    }
+    setGeoJson(args);
+  };
+  return (
+    <LeafletMap {...props} geoJsonFeature={geoJson} onGeoJsonFeatureSet={handleGeoJsonChange} />
+  );
+};
+
 export default {
   title: 'Private API / Map',
   component: LeafletMap,
   decorators: [withMapLayout, ConfigDecorator],
+  render: StorybookLeafletMap,
   args: {
-    markerCoordinates: [52.1326332, 5.291266],
+    geoJsonFeature: {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'Point',
+        coordinates: [5.291266, 52.1326332],
+      },
+    },
     defaultCenter: [52.1326332, 5.291266],
     defaultZoomLevel: 12,
     disabled: false,
@@ -50,5 +72,51 @@ export const MapReverseGeoEmpty = {
     msw: {
       handlers: [mockAddressSearchGet, mockLatLngSearchEmptyGet],
     },
+  },
+};
+
+export const MapWithInteractions = {
+  args: {
+    geoJsonFeature: undefined,
+    interactions: {
+      circle: true,
+      polygon: true,
+      polyline: true,
+      marker: true,
+    },
+    onGeoJsonFeatureSet: fn(),
+  },
+  parameters: {
+    msw: {
+      handlers: [mockAddressSearchGet, mockLatLngSearchEmptyGet],
+    },
+  },
+  play: async ({canvasElement, step, args}) => {
+    const canvas = within(canvasElement);
+    const map = canvasElement.querySelector('.leaflet-pane.leaflet-map-pane');
+
+    await step('All interactions are available', async () => {
+      expect(await canvas.findByTitle('Draw a marker')).toBeVisible();
+      expect(await canvas.findByTitle('Draw a circle')).toBeVisible();
+      expect(await canvas.findByTitle('Draw a polygon')).toBeVisible();
+      expect(await canvas.findByTitle('Draw a polyline')).toBeVisible();
+    });
+
+    await step('Draw a marker', async () => {
+      const markerButton = await canvas.findByTitle('Draw a marker');
+      await userEvent.click(markerButton);
+
+      await userEvent.click(map, {x: 100, y: 100});
+
+      expect(await canvas.findByRole('button', {name: 'Marker'})).toBeVisible();
+      expect(args.onGeoJsonFeatureSet).toBeCalledWith({
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Point',
+          coordinates: [4.839249, 52.387153],
+        },
+      });
+    });
   },
 };

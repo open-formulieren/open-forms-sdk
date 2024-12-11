@@ -1,13 +1,22 @@
+import * as Leaflet from 'leaflet';
+import 'leaflet-draw/dist/leaflet.draw.css';
 import {GeoSearchControl} from 'leaflet-geosearch';
-import isEqual from 'lodash/isEqual';
+import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
+import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
-import {CRS_RD, DEFAULT_LAT_LNG, DEFAULT_ZOOM, TILE_LAYER_RD} from 'map/constants';
+import {
+  CRS_RD,
+  DEFAULT_INTERACTIONS,
+  DEFAULT_LAT_LNG,
+  DEFAULT_ZOOM,
+  TILE_LAYER_RD,
+} from 'map/constants';
 import {getBEMClassName} from 'utils';
 
 import NearestAddress from './NearestAddress';
@@ -60,25 +69,68 @@ const useDefaultCoordinates = () => {
   return [latitude, longitude];
 };
 
+const getCoordinates = geoJsonFeature => {
+  if (!geoJsonFeature) {
+    return null;
+  }
+
+  const center = Leaflet.geoJSON(geoJsonFeature).getBounds().getCenter();
+  return [center.lat, center.lng];
+};
+
 const LeaftletMap = ({
-  markerCoordinates,
-  onMarkerSet,
+  geoJsonFeature,
+  onGeoJsonFeatureSet,
   defaultCenter = DEFAULT_LAT_LNG,
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
+  interactions = DEFAULT_INTERACTIONS,
 }) => {
+  const featureGroupRef = useRef();
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
-  const coordinates = markerCoordinates || defaultCoordinates;
-
-  const onWrapperMarkerSet = coordinates => {
-    const coordinatesChanged = !isEqual(markerCoordinates, coordinates);
-    if (!coordinatesChanged) return;
-    onMarkerSet(coordinates);
-  };
+  const geoJsonCoordinates = getCoordinates(geoJsonFeature);
+  const coordinates = geoJsonCoordinates ?? defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
+
+  const onFeatureCreate = event => {
+    const json = event.layer.toGeoJSON();
+    // GeoJson doesn't differentiate circles from markers.
+    // So when we create a circle, we have to add its features manually
+    if (event.layer instanceof Leaflet.Circle) {
+      json.properties.radius = event.layer.getRadius();
+    }
+    onGeoJsonFeatureSet(json);
+  };
+
+  const onSearchMarkerSet = event => {
+    onGeoJsonFeatureSet(event.marker.toGeoJSON());
+  };
+
+  useEffect(() => {
+    if (!featureGroupRef.current) {
+      return;
+    }
+    // Remove the old layers and add the new one.
+    // This limits the amount of features to 1
+    featureGroupRef.current?.clearLayers();
+    featureGroupRef.current?.addLayer(
+      Leaflet.geoJSON(geoJsonFeature, {
+        pointToLayer: (feature, latlng) => {
+          // GeoJson isn't known with circles. So when draw a Point type,
+          // we need to manually create a marker or a circle.
+          // Otherwise, it would always be a marker.
+          if (feature.properties.radius) {
+            return new Leaflet.Circle(latlng, feature.properties.radius);
+          } else {
+            return new Leaflet.Marker(latlng);
+          }
+        },
+      })
+    );
+  });
 
   return (
     <>
@@ -100,38 +152,82 @@ const LeaftletMap = ({
         }}
       >
         <TileLayer {...TILE_LAYER_RD} />
-        {coordinates ? (
-          <>
-            <MapView coordinates={coordinates} />
-            <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
-          </>
-        ) : null}
-        <SearchControl
-          onMarkerSet={onMarkerSet}
-          options={{
-            showMarker: false,
-            showPopup: false,
-            retainZoomLevel: false,
-            animateZoom: true,
-            autoClose: false,
-            searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
-            keepResult: true,
-            updateMap: true,
-            notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
-          }}
-        />
-        {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
+        <FeatureGroup ref={featureGroupRef}>
+          {!disabled && (
+            <EditControl
+              position="topright"
+              onCreated={onFeatureCreate}
+              edit={{
+                edit: false,
+                remove: false,
+              }}
+              draw={{
+                rectangle: false,
+                circle: !!interactions?.circle,
+                polyline: !!interactions?.polyline,
+                polygon: !!interactions?.polygon,
+                marker: !!interactions?.marker,
+                circlemarker: false,
+              }}
+            />
+          )}
+        </FeatureGroup>
+        {coordinates && <MapView coordinates={coordinates} />}
+        {!disabled && (
+          <SearchControl
+            onMarkerSet={onSearchMarkerSet}
+            options={{
+              showMarker: false,
+              showPopup: false,
+              retainZoomLevel: false,
+              animateZoom: true,
+              autoClose: false,
+              searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
+              keepResult: true,
+              updateMap: true,
+              notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
+            }}
+          />
+        )}
+        {disabled && <DisabledMapControls />}
       </MapContainer>
-      {markerCoordinates && markerCoordinates.length && (
-        <NearestAddress coordinates={markerCoordinates} />
+      {geoJsonCoordinates && geoJsonCoordinates.length && (
+        <NearestAddress coordinates={geoJsonCoordinates} />
       )}
     </>
   );
 };
 
 LeaftletMap.propTypes = {
-  markerCoordinates: PropTypes.arrayOf(PropTypes.number),
-  onMarkerSet: PropTypes.func,
+  geoJsonFeature: PropTypes.shape({
+    type: PropTypes.oneOf(['Feature']).isRequired,
+    properties: PropTypes.shape({
+      // This should only be used for Point geometry that represents a circle
+      radius: PropTypes.number,
+    }),
+    geometry: PropTypes.oneOfType([
+      PropTypes.shape({
+        type: PropTypes.oneOf(['Point']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(['LineString']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(['Polygon']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)))
+          .isRequired,
+      }),
+    ]).isRequired,
+  }),
+  onGeoJsonFeatureSet: PropTypes.func,
+  interactions: PropTypes.shape({
+    circle: PropTypes.bool,
+    polyline: PropTypes.bool,
+    polygon: PropTypes.bool,
+    marker: PropTypes.bool,
+  }),
   disabled: PropTypes.bool,
 };
 
@@ -170,15 +266,6 @@ const SearchControl = ({onMarkerSet, options}) => {
 
   const buttonLabel = intl.formatMessage(searchControlMessages.buttonLabel);
 
-  const setMarker = useCallback(
-    result => {
-      if (result.location) {
-        onMarkerSet([result.location.y, result.location.x]);
-      }
-    },
-    [onMarkerSet]
-  );
-
   useEffect(() => {
     const provider = new OpenFormsProvider(baseUrl);
     const searchControl = new GeoSearchControl({
@@ -197,15 +284,15 @@ const SearchControl = ({onMarkerSet, options}) => {
 
     searchControl.button.setAttribute('aria-label', buttonLabel);
     map.addControl(searchControl);
-    map.on('geosearch/showlocation', setMarker);
+    map.on('geosearch/showlocation', onMarkerSet);
 
     return () => {
-      map.off('geosearch/showlocation', setMarker);
+      map.off('geosearch/showlocation', onMarkerSet);
       map.removeControl(searchControl);
     };
   }, [
     map,
-    setMarker,
+    onMarkerSet,
     baseUrl,
     showMarker,
     showPopup,
@@ -237,24 +324,6 @@ SearchControl.propTypes = {
   }),
 };
 
-const MarkerWrapper = ({position, onMarkerSet, ...props}) => {
-  const shouldSetMarker = !!(position && position.length === 2);
-
-  useEffect(() => {
-    if (!shouldSetMarker) return;
-    if (!onMarkerSet) return;
-    onMarkerSet(position);
-  });
-
-  // only render a marker if we explicitly have a marker
-  return shouldSetMarker ? <Marker position={position} {...props} /> : null;
-};
-
-MarkerWrapper.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  onMarkerSet: PropTypes.func,
-};
-
 const DisabledMapControls = () => {
   const map = useMap();
   useEffect(() => {
@@ -267,18 +336,6 @@ const DisabledMapControls = () => {
     if (map.tap) map.tap.disable();
   }, [map]);
   return null;
-};
-
-const CaptureClick = ({setMarker}) => {
-  useMapEvent('click', event => {
-    const newLatLng = [event.latlng.lat, event.latlng.lng];
-    setMarker(newLatLng);
-  });
-  return null;
-};
-
-CaptureClick.propTypes = {
-  setMarker: PropTypes.func.isRequired,
 };
 
 export default LeaftletMap;
