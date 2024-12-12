@@ -66,6 +66,7 @@ const LeaftletMap = ({
   defaultCenter = DEFAULT_LAT_LNG,
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
+  tileLayerUrl = TILE_LAYER_RD.url,
 }) => {
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
@@ -99,7 +100,7 @@ const LeaftletMap = ({
           duration: 3000,
         }}
       >
-        <TileLayer {...TILE_LAYER_RD} />
+        <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
         {coordinates ? (
           <>
             <MapView coordinates={coordinates} />
@@ -133,6 +134,7 @@ LeaftletMap.propTypes = {
   markerCoordinates: PropTypes.arrayOf(PropTypes.number),
   onMarkerSet: PropTypes.func,
   disabled: PropTypes.bool,
+  tileLayerUrl: PropTypes.string,
 };
 
 // Set the map view if coordinates are provided

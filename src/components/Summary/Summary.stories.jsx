@@ -496,3 +496,37 @@ export const AddressNLSummaryEmpty = {
     await expect(canvas.getByRole('definition')).toHaveTextContent('');
   },
 };
+
+export const MapSummary = {
+  render,
+  args: {
+    summaryData: [
+      {
+        slug: 'maps',
+        name: 'Maps',
+        data: [
+          {
+            name: 'Map with default tile layer',
+            value: [52.1326332, 5.291266],
+            component: {
+              key: 'map',
+              type: 'map',
+              label: 'Map with default tile layer',
+            },
+          },
+          {
+            name: 'Map with custom tile layer',
+            value: [52.1326332, 5.291266],
+            component: {
+              key: 'map',
+              type: 'map',
+              label: 'Map with custom tile layer',
+              tileLayerUrl:
+                'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_orthoHR/EPSG:28992/{z}/{x}/{y}.png',
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
