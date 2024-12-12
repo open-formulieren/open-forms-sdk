@@ -268,3 +268,93 @@ export const AddressNLWithNoData = {
     await userEvent.click(saveButton);
   },
 };
+
+export const WithLayoutComponents = {
+  render,
+  args: {
+    key: 'editgrid',
+    label: 'Nested layout components',
+    extraComponentProperties: {
+      hideLabel: false,
+      components: [
+        {
+          type: 'textfield',
+          key: 'text',
+          label: 'A text field',
+        },
+        {
+          type: 'content',
+          key: 'test1',
+          input: false,
+          label: 'WYSIWYG content',
+          html: '<p>Bonjour</p>',
+        },
+        {
+          type: 'fieldset',
+          key: 'level2Group',
+          label: 'Nested fieldset',
+          hideHeader: true,
+          components: [
+            {
+              type: 'textfield',
+              key: 'nestedText',
+              label: 'Nested text',
+            },
+          ],
+        },
+        {
+          type: 'columns',
+          key: 'columns',
+          label: 'Nested columns',
+          columns: [
+            {
+              size: 6,
+              components: [{type: 'number', key: 'number1', label: 'Number 1'}],
+            },
+            {
+              size: 6,
+              components: [{type: 'number', key: 'number2', label: 'Number 2'}],
+            },
+          ],
+        },
+      ],
+      inlineEdit: false,
+      disableAddingRemovingRows: false,
+      addAnother: 'Nog één toevoegen',
+      saveRow: 'Bevestigen',
+      removeRow: 'Verwijderen',
+    },
+
+    data: [
+      {
+        text: 'Some text field value',
+        nestedText: 'Nested text field value',
+        number1: 42,
+        number2: 420,
+      },
+    ],
+  },
+
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+
+    // we expect the input element labels and values to be displayed
+    expect(await canvas.findByText('A text field')).toBeVisible();
+    expect(await canvas.findByText('Some text field value')).toBeVisible();
+
+    expect(await canvas.findByText('Nested text')).toBeVisible();
+    expect(await canvas.findByText('Nested text field value')).toBeVisible();
+
+    expect(await canvas.findByText('Number 1')).toBeVisible();
+    expect(await canvas.findByText('42', {exact: true})).toBeVisible();
+
+    expect(await canvas.findByText('Number 2')).toBeVisible();
+    expect(await canvas.findByText('420', {exact: true})).toBeVisible();
+
+    await step('Layout component labels not shown', () => {
+      expect(canvas.queryByText('WYSIWYG content')).not.toBeInTheDocument();
+      expect(canvas.queryByText('Nested fieldset')).not.toBeInTheDocument();
+      expect(canvas.queryByText('Nested columns')).not.toBeInTheDocument();
+    });
+  },
+};
