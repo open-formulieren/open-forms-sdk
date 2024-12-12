@@ -29,7 +29,7 @@ export const mockSubmissionStepGet = body =>
   http.get(`${BASE_URL}submissions/:submissionUuid/steps/:stepUuid`, () => HttpResponse.json(body));
 
 export const mockSubmissionLogicCheckPost = (submission, step) => {
-  return http.post(`${BASE_URL}submissions/:submissionUuid/steps/:stepUuid/_check_logic`, () =>
+  return http.post(`${BASE_URL}submissions/:submissionUuid/steps/:stepUuid/_check-logic`, () =>
     HttpResponse.json({submission, step})
   );
 };

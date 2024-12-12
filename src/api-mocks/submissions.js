@@ -84,7 +84,7 @@ export const mockSubmissionStepGet = () =>
   });
 
 export const mockSubmissionCheckLogicPost = () =>
-  http.post(`${BASE_URL}submissions/:uuid/steps/:uuid/_check_logic`, () => {
+  http.post(`${BASE_URL}submissions/:uuid/steps/:uuid/_check-logic`, () => {
     const responseData = {
       submission: SUBMISSION_DETAILS,
       step: SUBMISSION_STEP_DETAILS,
