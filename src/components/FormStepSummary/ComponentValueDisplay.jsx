@@ -189,7 +189,7 @@ const MapDisplay = ({component, value}) => {
     return <EmptyDisplay />;
   }
 
-  return <Map markerCoordinates={value} disabled />;
+  return <Map geoJsonFeature={value} disabled />;
 };
 
 const CoSignDisplay = ({component, value}) => {
