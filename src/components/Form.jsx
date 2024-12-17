@@ -350,16 +350,18 @@ const Form = () => {
     ) : null;
 
   if (state.startingError) throw state.startingError;
+
+  let startPageUrl = introductionPageContent ? 'introductie' : 'startpagina';
   const extraStartUrlParams = {};
-  if (initialDataReference) extraStartUrlParams.initial_data_reference = initialDataReference;
+  if (initialDataReference) {
+    extraStartUrlParams.initial_data_reference = initialDataReference;
+    startPageUrl = `${startPageUrl}?${new URLSearchParams(extraStartUrlParams).toString()}`;
+  }
 
   // Route the correct page based on URL
   const router = (
     <Routes>
-      <Route
-        path=""
-        element={<Navigate replace to={introductionPageContent ? 'introductie' : 'startpagina'} />}
-      />
+      <Route path="" element={<Navigate replace to={startPageUrl} />} />
 
       <Route
         path="introductie"
