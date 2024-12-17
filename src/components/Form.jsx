@@ -148,7 +148,7 @@ const Form = () => {
   const [, expiryDate, resetSession] = useSessionTimeout();
 
   const {value: analyticsToolsConfigInfo, loading: loadingAnalyticsConfig} = useAsync(async () => {
-    return await get(`${config.baseUrl}analytics/analytics_tools_config_info`);
+    return await get(`${config.baseUrl}analytics/analytics-tools-config-info`);
   }, [intl.locale]);
 
   useEffect(

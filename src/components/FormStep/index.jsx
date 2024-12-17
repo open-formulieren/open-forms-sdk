@@ -136,7 +136,7 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
 };
 
 /**
- * Submits the form step data to the backend in order te evaluate its logic using the _check_Logic
+ * Submits the form step data to the backend in order te evaluate its logic using the _check-logic
  * endpoint.
  * @param {string} stepUrl
  * @param {Object} data The current form data.
@@ -146,7 +146,7 @@ const getCustomValidationHook = (stepUrl, onBackendError) => {
  * @return {Promise}
  */
 const doLogicCheck = async (stepUrl, data, invalidKeys = [], signal) => {
-  const url = `${stepUrl}/_check_logic`;
+  const url = `${stepUrl}/_check-logic`;
   // filter out the invalid keys so we only send valid (client-side) input data to the
   // backend to evaluate logic.
   let dataForLogicCheck = invalidKeys.length ? omit(data, invalidKeys) : data;
@@ -407,7 +407,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
   };
 
   /**
-   * Check whether a current logic using the _check_Logic endpoint should be cancelled.
+   * Check whether a current logic using the _check-logic endpoint should be cancelled.
    * @throws {AbortedLogicCheck} Throws an AbortedLogicCheck if the current logic check should be
    *   aborted
    * @param {*} signal
