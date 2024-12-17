@@ -1022,7 +1022,7 @@
     "originalDefault": "Abort submission"
   },
   "uPtko4": {
-    "defaultMessage": "Unfortunately, this form is no longer available for submissions.",
+    "defaultMessage": "Onze excuses - dit formulier heeft het maximale aantal inzendingen bereikt en is daarom niet langer beschikbaar.",
     "description": "Maximum form submissions error message",
     "originalDefault": "Unfortunately, this form is no longer available for submissions."
   },
