@@ -56,17 +56,6 @@ const RouterStoryWrapper = ({route = '', children}) => {
   );
 };
 
-export const DeprecatedRouterDecorator = (Story, {args: {routerArgs = {}}}) => {
-  const {route, ...rest} = routerArgs;
-  return (
-    <MemoryRouter {...rest}>
-      <RouterStoryWrapper route={route}>
-        <Story />
-      </RouterStoryWrapper>
-    </MemoryRouter>
-  );
-};
-
 export const FormikDecorator = (Story, context) => {
   const isDisabled = context.parameters?.formik?.disable ?? false;
   if (isDisabled) {
