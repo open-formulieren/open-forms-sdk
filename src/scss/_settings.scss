@@ -279,7 +279,9 @@ $typography-style-border: solid !default;
 @font-face {
   font-family: 'Fira Sans';
   src: url('../fonts/fira-sans-v11-latin-regular.eot');
-  src: local(''), url('../fonts/fira-sans-v11-latin-regular.eot?#iefix') format('eot'),
+  src:
+    local(''),
+    url('../fonts/fira-sans-v11-latin-regular.eot?#iefix') format('eot'),
     url('../fonts/fira-sans-v11-latin-regular.ttf') format('truetype'),
     url('../fonts/fira-sans-v11-latin-regular.woff') format('woff');
   font-weight: normal;
@@ -289,7 +291,9 @@ $typography-style-border: solid !default;
 @font-face {
   font-family: 'Fira Sans';
   src: url('../fonts/fira-sans-v11-latin-700.eot');
-  src: local(''), url('../fonts/fira-sans-v11-latin-700.eot?#iefix') format('eot'),
+  src:
+    local(''),
+    url('../fonts/fira-sans-v11-latin-700.eot?#iefix') format('eot'),
     url('../fonts/fira-sans-v11-latin-700.ttf') format('truetype'),
     url('../fonts/fira-sans-v11-latin-700.woff') format('woff');
   font-weight: bold;
@@ -299,7 +303,9 @@ $typography-style-border: solid !default;
 @font-face {
   font-family: 'Fira Sans';
   src: url('../fonts/fira-sans-v11-latin-italic.eot');
-  src: local(''), url('../fonts/fira-sans-v11-latin-italic.eot?#iefix') format('eot'),
+  src:
+    local(''),
+    url('../fonts/fira-sans-v11-latin-italic.eot?#iefix') format('eot'),
     url('../fonts/fira-sans-v11-latin-italic.ttf') format('truetype'),
     url('../fonts/fira-sans-v11-latin-italic.woff') format('woff');
   font-weight: normal;

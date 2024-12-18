@@ -46,7 +46,9 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
     background: $modal-background;
     border: solid 1px #eee;
     outline: none;
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 20%);
+    box-shadow:
+      0 4px 8px 0 rgb(0 0 0 / 20%),
+      0 6px 20px 0 rgb(0 0 0 / 20%);
 
     @include responsive(width, $value-mobile: 90vw, $value-tablet: null, $value-laptop: 50vw);
     @include responsive(min-height, $value-mobile: 20vh, $value-tablet: null, $value-laptop: 30vh);
