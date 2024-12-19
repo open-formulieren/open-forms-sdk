@@ -91,7 +91,7 @@ export default class Map extends Field {
     super.destroy();
   }
 
-  onMarkerSet(newLatLng) {
+  onGeoJsonSet(newLatLng) {
     this.setValue(newLatLng, {modified: true});
   }
 
@@ -100,7 +100,7 @@ export default class Map extends Field {
     const {lat = defaultLat, lng = defaultLon} = this.component?.initialCenter || {};
     const defaultCenter = [lat, lng];
 
-    const markerCoordinates = this.getValue();
+    const geoJsonFeature = this.getValue();
 
     const container = this.refs.mapContainer;
     const zoom = this.component.defaultZoom;
@@ -111,10 +111,11 @@ export default class Map extends Field {
       <IntlProvider {...this.options.intl}>
         <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
           <LeafletMap
-            markerCoordinates={markerCoordinates || null}
-            onMarkerSet={this.onMarkerSet.bind(this)}
+            geoJsonFeature={geoJsonFeature || null}
+            onGeoJsonFeatureSet={this.onGeoJsonSet.bind(this)}
             defaultCenter={defaultCenter}
             defaultZoomLevel={zoom || DEFAULT_ZOOM}
+            interactions={this.component?.interactions}
             tileLayerUrl={this.component.tileLayerUrl}
           />
         </ConfigContext.Provider>
