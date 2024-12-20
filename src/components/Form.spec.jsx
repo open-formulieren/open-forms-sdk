@@ -40,7 +40,6 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
-        displayComponents: {},
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>

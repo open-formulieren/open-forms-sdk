@@ -21,7 +21,6 @@ const render = (comp, locationId) =>
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
-        displayComponents: {},
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>

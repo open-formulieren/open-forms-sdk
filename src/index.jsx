@@ -17,7 +17,6 @@ window.onload = () => {
     // added for testing purposes - adding a real CSP breaks *a lot* of things of Create
     // React App :(
     CSPNonce: 'RqgbALvp8D5b3+8NuhfuKg==',
-    // displayComponents,
     useHashRouting: USE_HASH_ROUTING === 'true' || false,
   });
   form.init();

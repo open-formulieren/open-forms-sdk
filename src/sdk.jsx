@@ -43,12 +43,6 @@ fixLeafletIconUrls();
 
 const VERSION = getVersion();
 
-const defaultDisplayComponents = {
-  app: null,
-  form: null,
-  progressIndicator: null,
-};
-
 const routes = [
   {
     path: '*',
@@ -68,7 +62,6 @@ class OpenForm {
       sentryDSN,
       sentryEnv = '',
       languageSelectorTarget,
-      displayComponents = {}, // TODO: document as unstable API
       useHashRouting = false,
       onLanguageChange,
     } = opts;
@@ -78,7 +71,6 @@ class OpenForm {
     this.formId = formId;
     this.formObject = null;
     this.lang = lang;
-    this.displayComponents = {...defaultDisplayComponents, ...displayComponents};
     this.useHashRouting = useHashRouting;
     this.onLanguageChange = typeof onLanguageChange === 'function' ? onLanguageChange : undefined;
 
@@ -197,7 +189,6 @@ class OpenForm {
               clientBaseUrl: this.clientBaseUrl,
               basePath: this.routerBasePath,
               baseTitle: this.baseTitle,
-              displayComponents: this.displayComponents,
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
               debug: DEBUG,
