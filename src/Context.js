@@ -41,10 +41,6 @@ const ConfigContext = React.createContext({
   basePath: '',
   baseTitle: '',
   requiredFieldsWithAsterisk: true,
-  displayComponents: {
-    app: null,
-    loginOptions: null,
-  },
   debug: DEBUG,
 });
 ConfigContext.displayName = 'ConfigContext';

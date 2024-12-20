@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {ConfigContext} from 'Context';
 import Literal from 'components/Literal';
 import {getCosignLoginUrl, getLoginUrl} from 'components/utils';
 import useQuery from 'hooks/useQuery';
@@ -11,7 +10,6 @@ import Types from 'types';
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
 const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOptions = true}) => {
-  const config = useContext(ConfigContext);
   const queryParams = useQuery();
 
   const loginAsYourselfOptions = [];
@@ -61,7 +59,6 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOpt
     });
   }
 
-  const LoginDisplayComponent = config?.displayComponents?.loginOptions ?? LoginOptionsDisplay;
   const Container = form.loginRequired ? React.Fragment : 'form';
   const containerProps = form.loginRequired
     ? {}
@@ -75,7 +72,7 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOpt
 
   return (
     <Container {...containerProps}>
-      <LoginDisplayComponent
+      <LoginOptionsDisplay
         loginAsYourselfOptions={loginAsYourselfOptions}
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
         cosignLoginOptions={cosignLoginOptions}

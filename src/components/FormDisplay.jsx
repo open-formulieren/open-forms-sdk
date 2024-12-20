@@ -22,15 +22,14 @@ const FormDisplay = ({children = null, progressIndicator = null, router = null})
   const appDebug = config.debug ? <AppDebug /> : null;
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
 
-  const AppDisplayComponent = config?.displayComponents?.app ?? AppDisplay;
   return (
-    <AppDisplayComponent
+    <AppDisplay
       languageSwitcher={languageSwitcher}
       progressIndicator={progressIndicator}
       appDebug={appDebug}
     >
       {children || router}
-    </AppDisplayComponent>
+    </AppDisplay>
   );
 };
 

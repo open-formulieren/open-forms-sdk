@@ -892,7 +892,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
                     submissionUrl: submission.url,
                     saveStepData: async () =>
                       await submitStepData(submissionStep.url, {...getCurrentFormData()}),
-                    displayComponents: config.displayComponents,
                     verifyEmailCallback: ({key, email}) => {
                       // clear the errors from the component
                       const formInstance = formRef.current.formio;

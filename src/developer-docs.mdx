@@ -99,9 +99,7 @@ Scan the existing stories for real usage of these patterns.
 
 ### What to put in MDX?
 
-Any useful context/documentation for developers working with the components, or for third parties
-intending to override the components (e.g. the display components for complex/smart components that
-implement behaviour).
+Any useful context/documentation for developers working with the components.
 
 The separation between stories in CSF format and documentation in MDX is quite nice because it
 allows you to document stories that you want to lock-in (through visual regression testing or
@@ -112,7 +110,6 @@ Typical elements in the MDX page are:
 
 - Meta element for storybook
 - A quick summary of what the component is and does, when to use it or not
-- If relevant, the existence and props of the related `Display` presentation component
 - The props of the component, introspected via its `propTypes` by Storybook
 - Relevant stories to illustrate some textual documentation, e.g. how validation errors are handled
   in form field components.
@@ -179,7 +176,7 @@ would see a folder structure like:
 MyComponent
 ├── index.js
 ├── mocks.js
-├── MyComponentDisplay.js
+├── MyComponent.jsx
 ├── MyComponent.stories.js
 └── MyComponent.mdx
 ```

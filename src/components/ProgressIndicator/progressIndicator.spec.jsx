@@ -33,7 +33,6 @@ const renderApp = (form, initialRoute = '/') => {
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
-        displayComponents: {},
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>

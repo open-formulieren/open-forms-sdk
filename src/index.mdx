@@ -31,16 +31,6 @@ One of the major goals of the SDK is that it can adapt itself to the theme of yo
 through the use of "design tokens", following the principles of
 [NL Design System](https://www.nldesignsystem.nl/).
 
-**Modifying layout using custom 'display components'**
-
-For more complex layout changes that cannot be achieved purely through design tokens, we wantto
-provide sufficient controls to replace our default components with your own custom components. This
-should not require duplicating/managing any SDK-specific state - only pure React components are
-allowed (pure = purely prop-driven).
-
-This override mechanism is also opt-in on a per-component basis - e.g. if a display component is not
-specified, the default version of the SDK is used.
-
 **The SDK implements all the necessary API interaction and state management**
 
 Developers focusing on design/layout should not need knowledge of the backend API, nor the

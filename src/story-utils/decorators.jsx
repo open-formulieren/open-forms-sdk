@@ -16,12 +16,6 @@ export const ConfigDecorator = (Story, {parameters}) => {
     basePath: '',
     baseTitle: '',
     requiredFieldsWithAsterisk: true,
-    displayComponents: {
-      app: null,
-      form: null,
-      progressIndicator: null,
-      loginOptions: null,
-    },
   };
   const fromParams = parameters?.config || {};
   return (
