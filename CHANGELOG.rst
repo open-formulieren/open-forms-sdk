@@ -2,6 +2,75 @@
 SDK Changelog
 =============
 
+2.5.0 (2024-12-20)
+==================
+
+Feature release
+
+There are additional changes compared to the alpha versions. Continue reading for the full
+changelog, which includes the alpha versions release notes.
+
+.. warning:: SDK 2.5.0 requires the backend API version 3.0.0 or newer.
+
+New features
+------------
+
+
+* [#4321] Added the ability to make a form unavailable when submission limit has been reached.
+* [#2173] Added the ability to select custom background maps.
+* [#4320] Improved the user experience for forms with cosign
+    - The confirmation page content is now dynamically provided by the API.
+    - Tweaked the texts displayed in various points in the cosign process.
+    - Cosign login options are now only displayed if the cosign request email does not use direct links.
+      When direct links are used, the cosigner is directly taken to the cosign page without having to
+      manually enter codes.
+* [#4546] It's now possible to "soft-require" file uploads. Soft-required uploads show a warning message when
+  no file has been uploaded, but don't block the step submission or form progress.
+* [#4718] Improved accessibility when using an increased zoom level.
+* [#4720] Improved navigation and visibility accessibility.
+* [#4717] Improvement accessibility of the loader, modal components, alerts and file upload buttons.
+* [#4716] Improved the accessibility of form fields and associated error messages.
+* [#4420] Added pattern validation for AddressNL subfields.
+* [#4544] Added design tokens for configuring the position of the previous page link.
+  You can now choose if the link should be at the top, the bottom or both. By default
+  this is shown at the bottom. The ability to add an icon has been added as well.
+
+Bugfixes
+--------
+
+* [#4918] Fixed redirects to take into account the query parameters.
+* [#4809] Fixed layout components in edit grid row summary.
+* [#4398] Fixed the initial data reference not properly being passed to the backend.
+* [#4600] Added an ``onLanguageChange`` hook for container pages so they can manage
+  their translated content on language changes if needed.
+
+Project maintenance
+-------------------
+
+* [#4920] Updated Dutch translations.
+* Deleted deprecated router decorator.
+* [#3283] Updated API endpoints to use consistent casing.
+* Upgraded to design-token-editor 0.6.0.
+* [#3283] Updated the deprecated address endpoint.
+* Upgraded dependencies.
+* [#429] Updated all React tests to testing-library.
+* Upgraded to Storybook 8.4.
+* Ensured prettier checks jsx files.
+* [#4849] Ensured .jsx files are picked up for translation as well.
+* [#3283] Removed password Formio component.
+* [#4320] Updated stories and UX of completion view.
+* Renamed .js files to .jsx.
+* Removed old tilde prefix in SCSS imports.
+* Updated stories after translations updates.
+* Updated developer docs about mocking in stories.
+* Upgraded to MSW 2.5 
+* Upgraded to Storybook 8.3.6.
+* [#724] Upgraded to Jest 29 because of MSW requirements.
+* Cleaned up test errors/warnings due to missing mocks.
+* [#4777] Updated Dutch translations.
+* Updated Docker Hub config file.
+
+
 2.5.0-alpha.1 (2024-11-27)
 ==========================
 
