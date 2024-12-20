@@ -1,5 +1,5 @@
 import {maskInput} from '@formio/vanilla-text-mask';
-import {set} from 'lodash';
+import set from 'lodash/set';
 import {Formio} from 'react-formio';
 
 import {setErrorAttributes} from '../utils';
