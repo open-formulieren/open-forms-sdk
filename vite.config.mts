@@ -1,12 +1,69 @@
 /// <reference types="vitest/config" />
 // https://vitejs.dev/config/
 import react from '@vitejs/plugin-react';
+import type {OutputOptions} from 'rollup';
 import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
 import {coverageConfigDefaults} from 'vitest/config';
 
 import {cjsTokens, ejsPlugin} from './build/plugins.mjs';
 import {packageRegexes} from './build/utils.mjs';
+
+// type definition for our custom envvars
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      BUILD_TARGET: 'umd' | 'esm';
+    }
+  }
+}
+
+const buildTarget = process.env.BUILD_TARGET || 'umd';
+
+/**
+ * Rollup output options for ESM build, which is what we package in the NPM package
+ * under the 'esm' subdirectory.
+ *
+ * The ESM package is experimental. Known issues:
+ * @fixme
+ *
+ * - the react-intl translations are not distributed yet (also broken in CRA/babel build!)
+ */
+const esmOutput = {
+  dir: 'dist-vite/esm',
+  format: 'esm',
+  preserveModules: true,
+  preserveModulesRoot: 'src',
+  entryFileNames: '[name].js',
+  assetFileNames: ({name}) => {
+    if (name?.endsWith('.css')) {
+      return '[name].[ext]';
+    }
+    return 'static/media/[name].[hash:8].[ext]';
+  },
+} satisfies OutputOptions;
+
+/**
+ * Rollup output options for UMD bundle, included in the NPM package but
+ * the primary distribution mechanism is in a Docker image.
+ *
+ * @todo - optimize with bundle splitting/chunk management.
+ */
+const umdOutput = {
+  dir: 'dist-vite',
+  format: 'umd',
+  exports: 'named',
+  name: 'OpenForms',
+  generatedCode: 'es2015',
+  entryFileNames: 'open-forms-sdk.js',
+  assetFileNames: ({name}) => {
+    if (name === 'style.css') {
+      return 'open-forms-sdk.css';
+    }
+    return 'static/media/[name].[hash:8].[ext]';
+  },
+  inlineDynamicImports: true,
+} satisfies OutputOptions;
 
 export default defineConfig({
   base: './',
@@ -24,26 +81,15 @@ export default defineConfig({
   ],
   build: {
     target: 'modules', // the default
-    outDir: 'dist-vite',
     assetsInlineLimit: 8 * 1024, // 8 KiB
     cssCodeSplit: false,
+    sourcemap: buildTarget !== 'esm',
+    outDir: 'dist-vite/umd',
     rollupOptions: {
       input: 'src/sdk.jsx',
-      external: packageRegexes,
-      output: {
-        dir: 'dist-vite/esm',
-        format: 'esm',
-        preserveModules: true,
-        preserveModulesRoot: 'src',
-        entryFileNames: '[name].js',
-        assetFileNames: ({name}) => {
-          if (name?.endsWith('.css')) {
-            return '[name].[ext]';
-          }
-          return 'static/media/[name].[hash:8].[ext]';
-        },
-        sourcemap: false,
-      },
+      // do not externalize anything in UMD build - bundle everything
+      external: buildTarget === 'esm' ? packageRegexes : undefined,
+      output: buildTarget === 'esm' ? esmOutput : umdOutput,
       preserveEntrySignatures: 'strict',
     },
   },
