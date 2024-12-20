@@ -1,60 +1,12 @@
 /// <reference types="vitest/config" />
 // https://vitejs.dev/config/
 import react from '@vitejs/plugin-react';
-import lodashTemplate from 'lodash/template';
 import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
 import {coverageConfigDefaults} from 'vitest/config';
 
-import {dependencies, peerDependencies} from './package.json';
-
-const externalPackages = [
-  ...Object.keys(dependencies || {}),
-  ...Object.keys(peerDependencies || {}),
-  'formiojs',
-  'lodash',
-  '@formio/vanilla-text-mask',
-  '@babel/runtime',
-  '@utrecht/component-library-react',
-];
-
-// Creating regexes of the packages to make sure subpaths of the
-// packages are also treated as external
-const regexesOfPackages = externalPackages.map(packageName => new RegExp(`^${packageName}(/.*)?`));
-
-// inspired on https://dev.to/koistya/using-ejs-with-vite-48id and
-// https://github.com/difelice/ejs-loader/blob/master/index.js
-const ejsPlugin = () => ({
-  name: 'compile-ejs',
-  async transform(src: string, id: string) {
-    const options = {
-      variable: 'ctx',
-      evaluate: /\{%([\s\S]+?)%\}/g,
-      interpolate: /\{\{([\s\S]+?)\}\}/g,
-      escape: /\{\{\{([\s\S]+?)\}\}\}/g,
-    };
-    if (id.endsWith('.ejs')) {
-      // @ts-ignore
-      const code = lodashTemplate(src, options);
-      return {code: `export default ${code}`, map: null};
-    }
-  },
-});
-
-const cjsTokens = () => ({
-  name: 'process-cjs-tokens',
-  async transform(src, id) {
-    if (
-      id.endsWith('/design-tokens/dist/tokens.js') ||
-      id.endsWith('node_modules/@utrecht/design-tokens/dist/tokens.cjs')
-    ) {
-      return {
-        code: src.replace('module.exports = ', 'export default '),
-        map: null,
-      };
-    }
-  },
-});
+import {cjsTokens, ejsPlugin} from './build/plugins.mjs';
+import {packageRegexes} from './build/utils.mjs';
 
 export default defineConfig({
   base: './',
@@ -77,7 +29,7 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       input: 'src/sdk.jsx',
-      external: regexesOfPackages,
+      external: packageRegexes,
       output: {
         dir: 'dist-vite/esm',
         format: 'esm',
