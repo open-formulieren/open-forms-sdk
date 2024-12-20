@@ -6,6 +6,22 @@ import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
 import {coverageConfigDefaults} from 'vitest/config';
 
+import {dependencies, peerDependencies} from './package.json';
+
+const externalPackages = [
+  ...Object.keys(dependencies || {}),
+  ...Object.keys(peerDependencies || {}),
+  'formiojs',
+  'lodash',
+  '@formio/vanilla-text-mask',
+  '@babel/runtime',
+  '@utrecht/component-library-react',
+];
+
+// Creating regexes of the packages to make sure subpaths of the
+// packages are also treated as external
+const regexesOfPackages = externalPackages.map(packageName => new RegExp(`^${packageName}(/.*)?`));
+
 // inspired on https://dev.to/koistya/using-ejs-with-vite-48id and
 // https://github.com/difelice/ejs-loader/blob/master/index.js
 const ejsPlugin = () => ({
@@ -54,6 +70,31 @@ export default defineConfig({
     cjsTokens(),
     ejsPlugin(),
   ],
+  build: {
+    target: 'modules', // the default
+    outDir: 'dist-vite',
+    assetsInlineLimit: 8 * 1024, // 8 KiB
+    cssCodeSplit: false,
+    rollupOptions: {
+      input: 'src/sdk.jsx',
+      external: regexesOfPackages,
+      output: {
+        dir: 'dist-vite/esm',
+        format: 'esm',
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+        entryFileNames: '[name].js',
+        assetFileNames: ({name}) => {
+          if (name?.endsWith('.css')) {
+            return '[name].[ext]';
+          }
+          return 'static/media/[name].[hash:8].[ext]';
+        },
+        sourcemap: false,
+      },
+      preserveEntrySignatures: 'strict',
+    },
+  },
   css: {
     preprocessorOptions: {
       scss: {
