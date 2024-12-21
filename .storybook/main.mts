@@ -1,4 +1,4 @@
-import {StorybookConfig} from '@storybook/react-vite';
+import type {StorybookConfig} from '@storybook/react-vite';
 
 // https://github.com/storybookjs/storybook/issues/26291 vite-plugin-istanbul is
 // still causing CommonJS warnings, which is because of @storybook/addon-coverage,

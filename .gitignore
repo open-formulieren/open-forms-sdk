@@ -17,8 +17,8 @@
 
 # production
 /storybook-static
-/build
 /dist
+/dist-vite
 /lib
 /esm
 *.tgz
