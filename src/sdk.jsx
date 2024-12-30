@@ -1,5 +1,6 @@
 import ProtectedEval from '@formio/protected-eval';
 import 'flatpickr';
+import lodash from 'lodash';
 import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -22,6 +23,11 @@ import {getVersion} from 'utils';
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
 import './styles.scss';
+
+// lodash must be bundled for Formio templates to work properly...
+if (typeof window !== 'undefined') {
+  window._ = lodash;
+}
 
 // use protected eval to not rely on unsafe-eval (CSP)
 Formio.use(ProtectedEval);
