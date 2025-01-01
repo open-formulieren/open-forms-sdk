@@ -206,6 +206,7 @@
     "uri-js": "^4.4.1",
     "vite": "^6.0.5",
     "vite-jsconfig-paths": "^2.0.1",
+    "vite-plugin-eslint2": "^5.0.3",
     "vite-plugin-svgr": "^4.3.0",
     "vitest": "^2.1.8",
     "webpack": "^5.64.4",

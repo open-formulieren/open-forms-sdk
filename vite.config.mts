@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import type {OutputOptions} from 'rollup';
 import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
+import eslint from 'vite-plugin-eslint2';
 import {coverageConfigDefaults} from 'vitest/config';
 
 import {cjsTokens, ejsPlugin} from './build/plugins.mjs';
@@ -76,6 +77,9 @@ export default defineConfig({
     // file extension to .jsx/.tsx
     react({babel: {babelrc: true}}),
     jsconfigPaths(),
+    eslint({
+      build: true,
+    }),
     cjsTokens(),
     ejsPlugin(),
   ],
