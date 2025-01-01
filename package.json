@@ -83,7 +83,8 @@
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build --webpack-stats-json",
     "format": "prettier --write 'src/**/*.{js,jsx,scss,mdx}'",
-    "checkformat": "prettier --check 'src/**/*.{js,jsx,scss,mdx}'"
+    "checkformat": "prettier --check 'src/**/*.{js,jsx,scss,mdx}'",
+    "lint": "eslint src"
   },
   "workspaces": [
     "design-tokens"
