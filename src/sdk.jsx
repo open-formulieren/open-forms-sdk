@@ -30,9 +30,11 @@ if (typeof window !== 'undefined') {
 }
 
 // use protected eval to not rely on unsafe-eval (CSP)
+// eslint-disable-next-line react-hooks/rules-of-hooks
 Formio.use(ProtectedEval);
 
 // use custom component overrides
+// eslint-disable-next-line react-hooks/rules-of-hooks
 Formio.use(OpenFormsModule);
 // use our own template library
 Templates.current = OFLibrary;

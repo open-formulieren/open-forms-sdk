@@ -1,11 +1,6 @@
 import _ from 'lodash';
 import {Formio} from 'react-formio';
 
-// Use our custom components
-import OpenFormsModule from 'formio/module';
-
-Formio.use(OpenFormsModule);
-
 const mapForm = {
   type: 'form',
   components: [

@@ -1,13 +1,9 @@
 import _ from 'lodash';
 import {Formio} from 'react-formio';
 
-import OpenFormsModule from 'formio/module';
 import {sleep} from 'utils';
 
 import {timeForm} from './fixtures/time';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 describe('Time Component', () => {
   it.each([

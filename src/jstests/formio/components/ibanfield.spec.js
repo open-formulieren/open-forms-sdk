@@ -1,13 +1,9 @@
 import _ from 'lodash';
 import {Formio} from 'react-formio';
 
-import OpenFormsModule from 'formio/module';
 import {sleep} from 'utils';
 
 import {iban, twoComponentForm} from './fixtures/iban';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 describe('IBAN Component', () => {
   test.each([

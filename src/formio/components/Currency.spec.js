@@ -3,11 +3,6 @@ import userEvent from '@testing-library/user-event';
 import _ from 'lodash';
 import {Formio} from 'react-formio';
 
-import OpenFormsModule from 'formio/module';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
-
 const currencyForm = {
   type: 'form',
   components: [

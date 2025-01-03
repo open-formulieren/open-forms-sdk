@@ -1,7 +1,7 @@
 import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
-import {MemoryRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 import {AnalyticsToolsConfigContext, ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';

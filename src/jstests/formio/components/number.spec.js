@@ -1,12 +1,7 @@
 import _ from 'lodash';
 import {Formio} from 'react-formio';
 
-import OpenFormsModule from 'formio/module';
-
 import {numberForm} from './fixtures/number';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 describe('Number Component', () => {
   test('#2903 - Emptying number component results in null value in data', async () => {

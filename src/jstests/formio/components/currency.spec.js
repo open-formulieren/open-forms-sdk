@@ -1,12 +1,7 @@
 import _ from 'lodash';
 import {Formio} from 'react-formio';
 
-import OpenFormsModule from 'formio/module';
-
 import {currencyForm} from './fixtures/currency';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 describe('Currency Component', () => {
   test('Currency component with 0 decimalLimit formatted correctly', async () => {

@@ -2,12 +2,8 @@ import cloneDeep from 'lodash/cloneDeep';
 import {Formio} from 'react-formio';
 
 import {BASE_URL} from 'api-mocks';
-import OpenFormsModule from 'formio/module';
 
 import {editgridForm} from './fixtures/editgrid';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 describe('EditGrid Component', () => {
   test('Unsaved row raises error', async () => {
