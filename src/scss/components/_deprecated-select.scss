@@ -45,7 +45,8 @@ $select-background-color: var(--of-select-background-color, $color-white);
     padding: 0 $list-hpadding;
 
     max-inline-size: calc(
-      var(--utrecht-select-max-inline-size, var(--utrecht-form-control-max-inline-size)) - 2 * #{$list-hpadding}
+      var(--utrecht-select-max-inline-size, var(--utrecht-form-control-max-inline-size)) - 2 *
+        #{$list-hpadding}
     );
 
     &:focus-within {

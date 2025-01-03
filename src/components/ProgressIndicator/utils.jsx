@@ -25,7 +25,7 @@ const getStepsInfo = (formSteps, submission, currentPathname) => {
     to: `/stap/${step.slug}`,
     label: step.formDefinition,
     isCompleted: submission ? submission.steps[index].completed : false,
-    isApplicable: submission ? submission.steps[index].isApplicable : step.isApplicable ?? true,
+    isApplicable: submission ? submission.steps[index].isApplicable : (step.isApplicable ?? true),
     isCurrent: checkMatchesPath(currentPathname, step.slug),
     canNavigateTo: canNavigateToStep(index, submission),
   }));
