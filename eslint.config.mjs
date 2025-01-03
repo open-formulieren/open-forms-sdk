@@ -1,5 +1,6 @@
 import pluginJs from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import hooksPlugin from 'eslint-plugin-react-hooks';
 import globals from 'globals';
@@ -46,6 +47,7 @@ const config = [
     },
   },
   // React-specific linting
+  jsxA11y.flatConfigs.recommended,
   {
     ...reactPlugin.configs.flat.recommended,
     rules: {
