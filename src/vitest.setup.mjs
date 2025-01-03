@@ -6,17 +6,17 @@ import '@testing-library/jest-dom';
 import {Formio} from 'react-formio';
 
 import mswServer from 'api-mocks/msw-server';
-// Use our custom components
-import OpenFormsModule from 'formio/module';
 
-beforeAll(() => {
+beforeAll(async () => {
   // set up HTTP mocks
   mswServer.listen({
     onUnhandledRequest: 'error',
   });
 
-  // ensure our custom Formio module is registered
-  Formio.use(OpenFormsModule);
+  // Use our custom components by registering the custom Formio module.
+  // The import must be dynamic, otherwise vi.mock fails in tests...
+  const OpenFormsModule = await import('formio/module');
+  Formio.use(OpenFormsModule.default);
 });
 afterEach(() => mswServer.resetHandlers());
 afterAll(() => mswServer.close());
