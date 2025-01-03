@@ -6,7 +6,7 @@ import {
   Heading2,
 } from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
-import React, {useId} from 'react';
+import {useId} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';

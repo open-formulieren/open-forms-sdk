@@ -88,9 +88,18 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-  prettier:
-    name: Check frontend code formatting with prettier
+  linting:
+    name: Lint code (${{ matrix.tool.name }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        tool:
+          - name: Prettier
+            script: checkformat
+          - name: ESLint
+            script: lint
 
     steps:
       - uses: actions/checkout@v4
@@ -104,8 +113,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run prettier linter
-        run: npm run checkformat
+      - name: Run ${{ matrix.tool.name }} linter
+        run: npm run ${{ matrix.tool.script }}
 
   publish:
     name: Publish the NPM package
@@ -113,7 +122,7 @@ jobs:
     needs:
       - build
       - tests
-      - prettier
+      - linting
 
     # do not publish in forks or non-tag pushes
     if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'open-formulieren'

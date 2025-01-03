@@ -3,14 +3,10 @@ import {Formio} from 'react-formio';
 
 import {BASE_URL} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
-import OpenFormsModule from 'formio/module';
 import {sleep} from 'utils';
 
 import {addressPrefillForm} from './fixtures/textfield';
 import {mockLocationGet} from './textfield.mocks';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 describe('TextField Component', () => {
   test('Address prefill city', async () => {

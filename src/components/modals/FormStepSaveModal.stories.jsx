@@ -1,7 +1,7 @@
+// eslint-disable-next-line import/named
 import {useArgs} from '@storybook/preview-api';
 import {expect, userEvent, within} from '@storybook/test';
 import {HttpResponse, http} from 'msw';
-import React from 'react';
 
 import {BASE_URL} from 'api-mocks';
 import {OFButton} from 'components/Button';
@@ -22,7 +22,7 @@ const mockDestroySessionDELETE = http.delete(
   () => new HttpResponse(null, {status: 204})
 );
 
-const render = ({
+const Render = ({
   isOpen,
   closeModal,
   submissionId,
@@ -30,7 +30,7 @@ const render = ({
   onSessionDestroyed,
   onSaveConfirm,
 }) => {
-  const [_, updateArgs] = useArgs();
+  const [, updateArgs] = useArgs();
   return (
     <>
       <OFButton appearance="primary-action-button" onClick={() => updateArgs({isOpen: true})}>
@@ -63,7 +63,7 @@ const render = ({
 export default {
   title: 'Private API / FormStepSaveModal',
   component: FormStepSaveModalComponent,
-  render,
+  render: Render,
   decorators: [ConfigDecorator],
   parameters: {
     controls: {

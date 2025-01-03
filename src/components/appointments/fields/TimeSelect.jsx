@@ -1,6 +1,6 @@
 import {format, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
-import React, {useCallback, useContext} from 'react';
+import {useCallback, useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 
 import {ConfigContext} from 'Context';

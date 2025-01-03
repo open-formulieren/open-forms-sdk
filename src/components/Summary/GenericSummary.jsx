@@ -1,6 +1,5 @@
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import AbortButton from 'components/AbortButton';
 import Card from 'components/Card';

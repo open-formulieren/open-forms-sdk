@@ -1,7 +1,6 @@
 import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
-import {MemoryRouter, Route, Routes} from 'react-router-dom';
 
 import {AnalyticsToolsConfigContext, ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
@@ -25,7 +24,7 @@ export const ConfigDecorator = (Story, {parameters}) => {
   );
 };
 
-export const AnalyticsToolsDecorator = (Story, {parameters, args}) => {
+export const AnalyticsToolsDecorator = (Story, {parameters}) => {
   const defaults = {
     govmetricSourceId: '',
     govmetricSecureGuid: '',
@@ -36,17 +35,6 @@ export const AnalyticsToolsDecorator = (Story, {parameters, args}) => {
     <AnalyticsToolsConfigContext.Provider value={{...defaults, ...parameters.analyticsToolsParams}}>
       <Story />
     </AnalyticsToolsConfigContext.Provider>
-  );
-};
-
-const RouterStoryWrapper = ({route = '', children}) => {
-  if (!route) {
-    return <>{children}</>;
-  }
-  return (
-    <Routes>
-      <Route path={route} element={children} />
-    </Routes>
   );
 };
 
@@ -134,7 +122,7 @@ export const withForm = (Story, {parameters, args}) => {
   );
 };
 
-export const withSubmissionPollInfo = (Story, {parameters, args}) => {
+export const withSubmissionPollInfo = (Story, {args}) => {
   return (
     <SubmissionStatusContext.Provider
       value={{

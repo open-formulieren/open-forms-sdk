@@ -1,4 +1,4 @@
-import {act, render as realRender, screen, waitFor} from '@testing-library/react';
+import {act, render as realRender, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {Formik} from 'formik';
 import messagesEN from 'i18n/compiled/en.json';

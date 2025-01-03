@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import {default as Checkbox, emptyValue as emptyCheckbox} from './checkbox';
 import {default as DateField, emptyValue as emptyDate} from './date';

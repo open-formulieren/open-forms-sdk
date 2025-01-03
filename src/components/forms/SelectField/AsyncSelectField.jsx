@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 import {useAsync} from 'react-use';
 
 import SelectField, {SelectFieldPropTypes} from './SelectField';

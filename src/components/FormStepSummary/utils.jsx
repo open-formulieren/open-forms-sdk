@@ -1,5 +1,4 @@
 import {Utils as FormioUtils} from 'formiojs';
-import React from 'react';
 
 const getComponentLabel = component => {
   if (component === undefined) {

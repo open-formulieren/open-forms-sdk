@@ -1,7 +1,7 @@
 import {FormLabel, Paragraph, Textbox} from '@utrecht/component-library-react';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {forwardRef, useId, useState} from 'react';
+import {forwardRef, useId, useState} from 'react';
 import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 
 import {InputGroup, InputGroupItem} from 'components/forms';
@@ -21,6 +21,8 @@ const DatePartInput = forwardRef(({name, value, onChange, ...props}, ref) => (
     {...props}
   />
 ));
+
+DatePartInput.displayName = 'DatePartInput';
 
 DatePartInput.propTypes = {
   name: PropTypes.oneOf(['day', 'month', 'year']).isRequired,

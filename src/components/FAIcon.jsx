@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 // not all icons need to be seen by assistive technologies.
 const FAIcon = ({

@@ -65,12 +65,13 @@ const SelectField = ({
         if (evt.shiftKey) evt.target.selectionStart = 0;
         else evt.target.setSelectionRange(0, 0);
         break;
-      case 'End':
+      case 'End': {
         evt.preventDefault();
         const len = evt.target.value.length;
         if (evt.shiftKey) evt.target.selectionEnd = len;
         else evt.target.setSelectionRange(len, len);
         break;
+      }
       // no default
     }
   };
@@ -104,7 +105,7 @@ const SelectField = ({
           noOptionsMessage: () => 'rs-no-options',
         }}
         styles={{
-          control: (baseStyles, state) => {
+          control: baseStyles => {
             return omit(baseStyles, 'outline');
           },
         }}

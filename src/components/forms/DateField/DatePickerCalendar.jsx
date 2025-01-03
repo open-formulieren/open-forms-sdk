@@ -2,7 +2,6 @@
 // https://nl-design-system.github.io/utrecht/storybook-react/index.html?path=/docs/react-component-calendar--docs
 import {Calendar} from '@utrecht/component-library-react';
 import {enGB, nl} from 'date-fns/locale';
-import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 // FIXME: together with src/i18n.js, see how we can make this a dynamic import without

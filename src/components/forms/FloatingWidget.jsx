@@ -37,7 +37,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 
 import {getBEMClassName} from 'utils';
 

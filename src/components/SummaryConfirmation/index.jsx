@@ -1,6 +1,6 @@
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 import {OFButton} from 'components/Button';
 import Link from 'components/Link';

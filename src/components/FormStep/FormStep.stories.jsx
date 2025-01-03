@@ -1,5 +1,5 @@
 import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
-import produce from 'immer';
+import {produce} from 'immer';
 import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';

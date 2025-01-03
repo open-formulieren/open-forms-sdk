@@ -6,11 +6,7 @@ import _ from 'lodash';
 import {Formio} from 'react-formio';
 
 import {getComponentNode} from 'formio/components/jest-util';
-import OpenFormsModule from 'formio/module';
 import {sleep} from 'utils';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 const dateForm = {
   type: 'form',

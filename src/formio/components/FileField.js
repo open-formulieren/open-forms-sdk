@@ -49,7 +49,7 @@ const CSRFEnabledUrl = function (formio) {
           }
 
           // Get the url of the file.
-          let respUrl = respData.hasOwnProperty('url')
+          let respUrl = Object.prototype.hasOwnProperty.call(respData, 'url')
             ? respData.url
             : `${xhr.responseURL}/${name}`;
 

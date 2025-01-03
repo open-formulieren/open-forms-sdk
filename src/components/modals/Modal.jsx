@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {createContext, useContext, useEffect} from 'react';
+import {createContext, useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import ReactModal from 'react-modal';
 

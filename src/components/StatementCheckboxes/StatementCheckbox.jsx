@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import Body from 'components/Body';

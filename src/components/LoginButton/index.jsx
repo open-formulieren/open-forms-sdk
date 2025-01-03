@@ -1,5 +1,4 @@
 import {ButtonLink as UtrechtButtonLink} from '@utrecht/component-library-react';
-import React from 'react';
 
 import {OFButton} from 'components/Button';
 import FormattedLoginOption from 'types/FormattedLoginOption';

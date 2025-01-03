@@ -14,6 +14,7 @@
 # testing
 /coverage
 /.nyc_output
+.eslintcache
 
 # production
 /storybook-static

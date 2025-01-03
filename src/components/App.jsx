@@ -1,4 +1,3 @@
-import React from 'react';
 import {Navigate, Outlet, useMatch} from 'react-router-dom';
 
 import {Cosign} from 'components/CoSign';

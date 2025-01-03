@@ -226,7 +226,7 @@ const TEST_CASES = [
   },
   // remaining special cases
   {
-    schema: z.custom(v => false),
+    schema: z.custom(() => false),
     label: 'custom',
     value: null,
     message: 'Invalid input.',
@@ -279,7 +279,7 @@ describe('Localized global zod error map (EN)', () => {
       .function()
       .args(z.string())
       .returns(z.string())
-      .implement(x => null);
+      .implement(() => null);
     try {
       strIdentity('foo');
     } catch (e) {
@@ -320,7 +320,7 @@ describe('Localized global zod error map (NL)', () => {
       .function()
       .args(z.string())
       .returns(z.string())
-      .implement(x => null);
+      .implement(() => null);
     try {
       strIdentity('foo');
     } catch (e) {

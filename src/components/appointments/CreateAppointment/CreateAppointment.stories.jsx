@@ -4,8 +4,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
-import {mockSubmissionPost} from 'api-mocks/submissions';
-import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
+import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 

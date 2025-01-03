@@ -5,10 +5,6 @@ import _ from 'lodash';
 import {Formio} from 'react-formio';
 
 import {getComponentNode} from 'formio/components/jest-util';
-import OpenFormsModule from 'formio/module';
-
-// Use our custom components
-Formio.use(OpenFormsModule);
 
 const textareaForm = {
   type: 'form',

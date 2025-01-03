@@ -1,4 +1,4 @@
-import produce from 'immer';
+import {produce} from 'immer';
 import {HttpResponse, http} from 'msw';
 
 import {PRIVACY_POLICY_ACCEPTED} from 'components/SummaryConfirmation/mocks';

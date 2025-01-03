@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {getLoginUrl} from './index';
 
 it('Login URL contains "next" URL with "_start" parameter', () => {

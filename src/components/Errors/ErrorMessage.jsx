@@ -1,6 +1,5 @@
 import {Alert} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import useScrollIntoView from 'hooks/useScrollIntoView';
 

@@ -1,5 +1,5 @@
 import {Formik} from 'formik';
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 

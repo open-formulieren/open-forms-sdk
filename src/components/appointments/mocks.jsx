@@ -266,7 +266,7 @@ export const mockAppointmentCancelPost = http.post(
 
 export const mockAppointmentCancelErrorPost = http.post(
   `${BASE_URL}appointments/:uuid/cancel`,
-  (req, res, ctx) =>
+  () =>
     HttpResponse.json(
       {
         type: 'http://localhost:8000/fouten/ValidationError/',

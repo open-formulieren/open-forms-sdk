@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import Body from 'components/Body';

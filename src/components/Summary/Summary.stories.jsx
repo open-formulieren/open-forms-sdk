@@ -267,7 +267,7 @@ const render = ({
 
 export const Default = {
   render,
-  play: async ({canvasElement, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     const contentNodes = canvas.getAllByText((content, element) => {
@@ -301,7 +301,7 @@ export const Authenticated = {
   args: {
     isAuthenticated: true,
   },
-  play: async ({canvasElement, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
@@ -351,7 +351,7 @@ export const OnlyOneRequiredStatement = {
     askPrivacyConsent: true,
     askStatementOfTruth: false,
   },
-  play: async ({canvasElement, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     await canvas.findByLabelText(

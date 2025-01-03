@@ -1,7 +1,7 @@
 import {Link as UtrechtLink} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';

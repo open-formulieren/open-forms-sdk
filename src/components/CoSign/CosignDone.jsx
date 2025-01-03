@@ -1,6 +1,5 @@
 import {Paragraph} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import Anchor from 'components/Anchor';

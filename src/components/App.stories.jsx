@@ -2,8 +2,7 @@ import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/t
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {FormContext} from 'Context';
-import {BASE_URL, mockAnalyticsToolConfigGet} from 'api-mocks';
-import {buildForm} from 'api-mocks';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
 import {
   mockSubmissionCheckLogicPost,
   mockSubmissionGet,

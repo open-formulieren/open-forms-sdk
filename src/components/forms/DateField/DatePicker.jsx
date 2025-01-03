@@ -2,7 +2,7 @@ import {Paragraph, Textbox} from '@utrecht/component-library-react';
 import {formatISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {flushSync} from 'react-dom';
 import {useIntl} from 'react-intl';
 

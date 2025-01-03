@@ -1,7 +1,6 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
-import {ConfigDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
 
 import {
   mockBAGDataGet,
@@ -133,7 +132,7 @@ export const WithPassingBRKValidation = {
       },
     },
   },
-  play: async ({canvasElement, args, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
@@ -226,7 +225,7 @@ export const WithDeriveCityStreetNameWithData = {
       },
     },
   },
-  play: async ({canvasElement, args, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
@@ -272,7 +271,7 @@ export const IncorrectPostcode = {
       },
     },
   },
-  play: async ({canvasElement, args, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
@@ -314,7 +313,7 @@ export const WithDeriveCityStreetNameWithDataIncorrectCity = {
       },
     },
   },
-  play: async ({canvasElement, args, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
@@ -357,7 +356,7 @@ export const WithDeriveCityStreetNameNoData = {
       deriveAddress: true,
     },
   },
-  play: async ({canvasElement, args, step}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');

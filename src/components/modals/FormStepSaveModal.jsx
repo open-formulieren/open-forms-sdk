@@ -4,7 +4,7 @@
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useImmerReducer} from 'use-immer';
 import {z} from 'zod';

@@ -17,8 +17,7 @@ import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
 import initialiseSentry from 'sentry';
-import {DEBUG} from 'utils';
-import {getVersion} from 'utils';
+import {DEBUG, getVersion} from 'utils';
 
 import OpenFormsModule from './formio/module';
 import OFLibrary from './formio/templates';
@@ -30,9 +29,11 @@ if (typeof window !== 'undefined') {
 }
 
 // use protected eval to not rely on unsafe-eval (CSP)
+// eslint-disable-next-line react-hooks/rules-of-hooks
 Formio.use(ProtectedEval);
 
 // use custom component overrides
+// eslint-disable-next-line react-hooks/rules-of-hooks
 Formio.use(OpenFormsModule);
 // use our own template library
 Templates.current = OFLibrary;

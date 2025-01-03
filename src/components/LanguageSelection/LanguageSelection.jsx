@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 import {useGlobalState} from 'state-pool';

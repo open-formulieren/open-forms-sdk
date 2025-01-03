@@ -56,7 +56,7 @@ const CosignStart = () => {
       <Card title={form.name}>
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
-        {!!authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
+        {authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
 
         <Body>
           <FormattedMessage

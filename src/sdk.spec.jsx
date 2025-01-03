@@ -212,7 +212,7 @@ describe('OpenForm', () => {
     mswServer.use(...apiMocks);
     const formRoot = document.createElement('div');
     window.history.pushState(null, '', initialUrl);
-    const form = new OpenForm(formRoot, {
+    new OpenForm(formRoot, {
       baseUrl: BASE_URL,
       basePath: '/some-subpath',
       formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
@@ -290,7 +290,7 @@ describe('OpenForm', () => {
       mswServer.use(...apiMocks);
       const formRoot = document.createElement('div');
       window.history.pushState(null, '', initialUrl);
-      const form = new OpenForm(formRoot, {
+      new OpenForm(formRoot, {
         baseUrl: BASE_URL,
         basePath: '/i-must-be-ignored',
         formId: '81a22589-abce-4147-a2a3-62e9a56685aa',

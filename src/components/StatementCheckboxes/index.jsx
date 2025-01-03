@@ -1,6 +1,5 @@
 import {useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import StatementCheckbox from './StatementCheckbox';
 
