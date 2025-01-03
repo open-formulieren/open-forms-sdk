@@ -1,6 +1,7 @@
 import pluginJs from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import reactPlugin from 'eslint-plugin-react';
 import hooksPlugin from 'eslint-plugin-react-hooks';
 import globals from 'globals';
@@ -70,6 +71,7 @@ const config = [
     plugins: {'react-hooks': hooksPlugin},
     rules: hooksPlugin.configs.recommended.rules,
   },
+  prettierRecommended,
   // Storybook stories
   {
     files: ['**/*.stories.{js,jsx}'],
