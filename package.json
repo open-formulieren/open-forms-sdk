@@ -89,24 +89,6 @@
   "workspaces": [
     "design-tokens"
   ],
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "plugin:prettier/recommended"
-    ],
-    "rules": {
-      "react/style-prop-object": [
-        "error",
-        {
-          "allow": [
-            "FormattedNumber",
-            "FormattedDateParts",
-            "FormattedRelativeTime"
-          ]
-        }
-      ]
-    }
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
