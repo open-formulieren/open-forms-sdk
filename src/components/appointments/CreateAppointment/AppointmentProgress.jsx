@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 import {useIntl} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 

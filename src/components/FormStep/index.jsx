@@ -26,7 +26,7 @@ import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
-import React, {useContext, useRef} from 'react';
+import {useContext, useRef} from 'react';
 import {Form} from 'react-formio';
 import {useIntl} from 'react-intl';
 import {useNavigate, useParams} from 'react-router-dom';

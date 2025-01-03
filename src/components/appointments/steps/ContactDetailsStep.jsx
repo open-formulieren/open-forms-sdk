@@ -1,6 +1,6 @@
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router-dom';
@@ -116,29 +116,27 @@ const ContactDetailsStep = ({navigateTo = null}) => {
             if (navigateTo !== null) navigate(navigateTo);
           }}
         >
-          {({isValid, dirty}) => (
-            // TODO: don't do inline style
-            <Form style={{width: '100%'}}>
-              <div className="openforms-form-field-container">
-                {components.map(component => (
-                  <FormioComponent key={component.key} component={component} />
-                ))}
-              </div>
+          {/* TODO: don't do inline style */}
+          <Form style={{width: '100%'}}>
+            <div className="openforms-form-field-container">
+              {components.map(component => (
+                <FormioComponent key={component.key} component={component} />
+              ))}
+            </div>
 
-              <SubmitRow
-                canSubmit={Boolean(!loading && validationSchema)}
-                nextText={intl.formatMessage({
-                  description: 'Appointments contact details step: next step text',
-                  defaultMessage: 'To overview',
-                })}
-                previousText={intl.formatMessage({
-                  description: 'Appointments contact details step: previous step text',
-                  defaultMessage: 'Back to location and time',
-                })}
-                navigateBackTo="kalender"
-              />
-            </Form>
-          )}
+            <SubmitRow
+              canSubmit={Boolean(!loading && validationSchema)}
+              nextText={intl.formatMessage({
+                description: 'Appointments contact details step: next step text',
+                defaultMessage: 'To overview',
+              })}
+              previousText={intl.formatMessage({
+                description: 'Appointments contact details step: previous step text',
+                defaultMessage: 'Back to location and time',
+              })}
+              navigateBackTo="kalender"
+            />
+          </Form>
         </Formik>
       )}
     </>

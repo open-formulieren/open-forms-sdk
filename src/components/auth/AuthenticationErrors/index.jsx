@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 import {useIntl} from 'react-intl';
 
 import ErrorMessage from 'components/Errors/ErrorMessage';
@@ -46,7 +45,7 @@ const AuthenticationErrors = ({parameters}) => {
         );
         break;
       }
-      default:
+      default: {
         let errorMessage;
         switch (parameter) {
           case '_digid-message': {
@@ -73,6 +72,7 @@ const AuthenticationErrors = ({parameters}) => {
         }
         messagesToDisplay.push(errorMessage);
         break;
+      }
     }
   }
 

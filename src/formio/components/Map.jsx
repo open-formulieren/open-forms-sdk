@@ -1,7 +1,6 @@
 /**
  * A form widget to select a location on a Leaflet map.
  */
-import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {IntlProvider} from 'react-intl';

@@ -1,6 +1,5 @@
 import {Heading} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import Caption from 'components/Caption';
 import {getBEMClassName} from 'utils';

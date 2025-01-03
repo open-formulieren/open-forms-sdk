@@ -14,7 +14,7 @@ import {humanFileSize} from './utils';
 
 const EmptyDisplay = () => '';
 
-const DefaultDisplay = ({component, value}) => {
+const DefaultDisplay = ({value}) => {
   if (value == null) return '';
   if (value === '') return <EmptyDisplay />;
   return value.toString();
@@ -27,7 +27,7 @@ const SignatureDisplay = ({component, value}) => {
   return <Image src={value} alt={component.key} />;
 };
 
-const CheckboxDisplay = ({component, value}) => {
+const CheckboxDisplay = ({value}) => {
   if (value) {
     return <FormattedMessage description="'True' display" defaultMessage="Yes" />;
   }
@@ -61,7 +61,7 @@ const SelectDisplay = ({component, value}) => {
   return obj ? obj.label : value;
 };
 
-const DateDisplay = ({component, value}) => {
+const DateDisplay = ({value}) => {
   if (!value) return <EmptyDisplay />;
   const [year, month, day] = value.split('-');
   const date = new Date();
@@ -69,7 +69,7 @@ const DateDisplay = ({component, value}) => {
   return <FormattedDate value={date} />;
 };
 
-const DateTimeDisplay = ({component, value}) => {
+const DateTimeDisplay = ({value}) => {
   if (!value) return <EmptyDisplay />;
   const datetime = Date.parse(value);
   return (
@@ -192,7 +192,7 @@ const MapDisplay = ({component, value}) => {
   return <Map markerCoordinates={value} disabled tileLayerUrl={component.tileLayerUrl} />;
 };
 
-const CoSignDisplay = ({component, value}) => {
+const CoSignDisplay = ({value}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
@@ -225,11 +225,11 @@ const AddressNLDisplay = ({component, value}) => {
   );
 };
 
-const ContentDisplay = ({component, value}) => {
+const ContentDisplay = ({component}) => {
   return <span dangerouslySetInnerHTML={{__html: component.html}} />;
 };
 
-const FieldsetDisplay = ({component, value}) => {
+const FieldsetDisplay = () => {
   return <EmptyDisplay />;
 };
 
@@ -244,8 +244,8 @@ const ComponentValueDisplay = ({value, component}) => {
 
   if (multiple) {
     const values = Array.isArray(value) ? value : [value];
-    const renderedValues = values.map(componentValue => (
-      <Formatter component={component} value={componentValue} />
+    const renderedValues = values.map((componentValue, index) => (
+      <Formatter key={index} component={component} value={componentValue} />
     ));
 
     return (

@@ -1,7 +1,7 @@
 import {FormLabel, Paragraph} from '@utrecht/component-library-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from 'Context';

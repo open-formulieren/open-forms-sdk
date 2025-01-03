@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';

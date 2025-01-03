@@ -1,7 +1,7 @@
 import {GeoSearchControl} from 'leaflet-geosearch';
 import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
 import {useGeolocation} from 'react-use';

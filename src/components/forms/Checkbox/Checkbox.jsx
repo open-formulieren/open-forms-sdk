@@ -1,7 +1,7 @@
 import {FormField, Checkbox as UtrechtCheckbox} from '@utrecht/component-library-react';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useId} from 'react';
+import {useId} from 'react';
 
 import {HelpText, ValidationErrors} from 'components/forms';
 

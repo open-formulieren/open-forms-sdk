@@ -1,6 +1,5 @@
 import {Fieldset, FieldsetLegend, Paragraph} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import {LabelContent} from 'components/forms/Label';
 

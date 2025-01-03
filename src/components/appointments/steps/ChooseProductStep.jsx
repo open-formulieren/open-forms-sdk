@@ -1,7 +1,7 @@
 import {FieldArray, Form, Formik} from 'formik';
-import produce from 'immer';
+import {produce} from 'immer';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useNavigate} from 'react-router-dom';

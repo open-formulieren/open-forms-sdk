@@ -1,7 +1,7 @@
 import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import {Form, Formik, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router-dom';

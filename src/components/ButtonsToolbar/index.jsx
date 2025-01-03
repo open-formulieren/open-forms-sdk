@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import AbortButton from 'components/AbortButton';
 import {OFButton} from 'components/Button';

@@ -3,7 +3,7 @@
  */
 import {Formik, useFormikContext} from 'formik';
 import debounce from 'lodash/debounce';
-import React, {useContext, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {FormattedMessage, IntlProvider, defineMessages, useIntl} from 'react-intl';
@@ -178,7 +178,7 @@ export default class AddressNL extends Field {
   }
 
   // Called in the representation of an edit grid
-  getValueAsString(value, options) {
+  getValueAsString(value) {
     if (!value || !Object.keys(value).length) return '';
     const {postcode, houseNumber, houseLetter, houseNumberAddition, streetName, city} = value;
     return `

@@ -1,7 +1,6 @@
 import {Link as UtrechtLink} from '@utrecht/component-library-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 export const ANCHOR_MODIFIERS = [
   // maps to NLDS

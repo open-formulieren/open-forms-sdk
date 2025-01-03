@@ -150,12 +150,12 @@ describe('Datetime Component', () => {
       },
     };
 
-    const mockTranslation = vi.fn((message, values) => message);
+    const mockTranslation = vi.fn(message => message);
 
     const componentInstance = new FormioComponent(component, {}, {});
     componentInstance.t = mockTranslation;
     componentInstance.options.intl = {
-      formatDate: vi.fn((date, options) => 'formatted date'),
+      formatDate: vi.fn(() => 'formatted date'),
     };
 
     set(

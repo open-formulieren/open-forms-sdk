@@ -94,7 +94,7 @@ const trackPageView = (location, previousLocation) => {
  * Ensure that the current page view is sent to the (supported) analytics tool(s).
  * @return {Void}
  */
-const usePageViews = async () => {
+const usePageViews = () => {
   const {basePath} = useContext(ConfigContext);
   const location = useLocation();
   const previousLocation = usePrevious(location);

@@ -13,7 +13,10 @@ const config = [
       },
     },
     languageOptions: {
-      globals: globals.browser,
+      globals: {
+        ...globals.builtin,
+        ...globals.browser,
+      },
     },
   },
   // Standard JS rules
@@ -23,7 +26,7 @@ const config = [
     settings: {
       'import/resolver': {
         node: {
-          extensions: ['.js', '.jsx', '.mjs'],
+          extensions: ['.js', '.jsx', '.mjs', '.json'],
           moduleDirectory: ['src', 'node_modules'],
         },
       },

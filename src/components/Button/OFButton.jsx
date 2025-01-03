@@ -1,6 +1,5 @@
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 // Temporary until the aria-disabled is set on the Utrecht button
 const OFButton = ({disabled, children, ...extraProps}) => {

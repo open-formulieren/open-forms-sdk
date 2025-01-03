@@ -1,6 +1,6 @@
-import produce from 'immer';
+import {produce} from 'immer';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {useSessionStorage} from 'react-use';
 
 import useSessionTimeout from 'hooks/useSessionTimeout';

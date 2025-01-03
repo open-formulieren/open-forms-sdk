@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useRef} from 'react';
+import {useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
 
@@ -116,7 +116,7 @@ const FormStart = ({form, submission, onFormStart, onDestroySession, initialData
         {form.submissionLimitReached ? <FormMaximumSubmissions /> : null}
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
-        {!!authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
+        {authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
 
         <FormStartMessage form={form} />
 

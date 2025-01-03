@@ -1,6 +1,5 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import messagesEN from 'i18n/compiled/en.json';
-import React from 'react';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
 

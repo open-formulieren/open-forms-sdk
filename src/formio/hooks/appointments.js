@@ -44,7 +44,7 @@ const urlTemplateFactory = (path, getQuery) => {
     return `${instance.options.baseUrl}${path}?${query.toString()}`;
   };
   // monkeypatch this stuff, as Formio calls it and expects a string... sigh
-  url.startsWith = arg => false;
+  url.startsWith = () => false;
   return url;
 };
 

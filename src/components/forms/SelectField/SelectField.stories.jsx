@@ -91,11 +91,12 @@ const delay = async delay => await new Promise(resolve => setTimeout(resolve, de
 
 export const Async = {
   name: 'Async',
-  render: ({getOptionsDelay, dynamicOptions, ...args}) => {
+  render: function Render({getOptionsDelay, dynamicOptions, ...args}) {
+    const serializedOptions = JSON.stringify(dynamicOptions);
     const getOptions = useCallback(async () => {
       await delay(getOptionsDelay);
-      return dynamicOptions;
-    }, [JSON.stringify(dynamicOptions), getOptionsDelay]);
+      return JSON.parse(serializedOptions);
+    }, [serializedOptions, getOptionsDelay]);
     return <AsyncSelectField {...args} getOptions={getOptions} />;
   },
   args: {

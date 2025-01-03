@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 
 import Caption from 'components/Caption';

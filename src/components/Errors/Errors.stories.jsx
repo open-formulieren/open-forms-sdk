@@ -1,5 +1,4 @@
-import ErrorMessage from './ErrorMessage';
-import {ALERT_MODIFIERS} from './ErrorMessage';
+import ErrorMessage, {ALERT_MODIFIERS} from './ErrorMessage';
 
 export default {
   title: 'Private API / Error Message',

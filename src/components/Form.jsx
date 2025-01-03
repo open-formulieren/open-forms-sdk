@@ -1,8 +1,7 @@
-import React, {useContext, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {Navigate, Route, Routes, useLocation, useMatch, useNavigate} from 'react-router-dom';
-import {usePrevious} from 'react-use';
-import {useAsync} from 'react-use';
+import {useAsync, usePrevious} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
 import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
@@ -17,7 +16,12 @@ import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
 import {SessionTrackerModal} from 'components/Sessions';
 import SubmissionSummary from 'components/Summary';
-import {START_FORM_QUERY_PARAM} from 'components/constants';
+import {
+  PI_TITLE,
+  START_FORM_QUERY_PARAM,
+  STEP_LABELS,
+  SUBMISSION_ALLOWED,
+} from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
 import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
@@ -29,7 +33,6 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 
 import FormDisplay from './FormDisplay';
 import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
-import {PI_TITLE, STEP_LABELS, SUBMISSION_ALLOWED} from './constants';
 
 const initialState = {
   submission: null,

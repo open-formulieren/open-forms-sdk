@@ -36,6 +36,8 @@ const Link = React.forwardRef(
   }
 );
 
+Link.displayName = 'Link';
+
 // Prop types deliberately unspecified, please use the typescript definitions of
 // react-router-dom instead.
 

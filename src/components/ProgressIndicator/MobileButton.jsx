@@ -28,6 +28,8 @@ const MobileButton = forwardRef(
   }
 );
 
+MobileButton.displayName = 'MobileButton';
+
 MobileButton.propTypes = {
   ariaMobileIconLabel: PropTypes.string.isRequired,
   accessibleToggleStepsLabel: PropTypes.string.isRequired,

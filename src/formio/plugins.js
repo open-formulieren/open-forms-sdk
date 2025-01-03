@@ -4,7 +4,7 @@ const UNSAFE_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE'];
 
 const AddFetchAuth = {
   priority: 0,
-  requestOptions: (options, url) => {
+  requestOptions: options => {
     options.credentials = 'include';
     if (UNSAFE_METHODS.includes(options.method)) {
       const csrfTokenValue = CSRFToken.getValue();

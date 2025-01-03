@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
 
@@ -23,7 +23,7 @@ const getCosignStatus = async (baseUrl, submissionUuid) => {
   return await get(endpoint);
 };
 
-const CoSignAuthentication = ({form, submissionUuid, saveStepData, authPlugin}) => {
+const CoSignAuthentication = ({form, submissionUuid, authPlugin}) => {
   const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
   if (!loginOption) {
     return (
@@ -62,7 +62,6 @@ CoSignAuthentication.propTypes = {
   form: Types.Form.isRequired,
   submissionUuid: PropTypes.string.isRequired,
   authPlugin: PropTypes.string.isRequired,
-  saveStepData: PropTypes.func.isRequired,
 };
 
 const CoSignOld = ({
@@ -96,9 +95,6 @@ const CoSignOld = ({
     return <Loader modifiers={['small']} />;
   }
   const {coSigned, representation} = coSignState;
-
-  if (interactive && !coSigned) {
-  }
 
   if (!coSigned) {
     if (!interactive) {

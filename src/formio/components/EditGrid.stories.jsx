@@ -1,7 +1,6 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
-import {ConfigDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {mockBAGDataGet, mockBAGNoDataGet} from './AddressNL.mocks';

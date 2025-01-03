@@ -27,7 +27,7 @@ export const Default = {
     },
     showWarning: false,
   },
-  play: async ({args, canvasElement}) => {
+  play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
     expect(checkbox).not.toBeChecked();

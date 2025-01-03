@@ -12,6 +12,7 @@ let DEBUG = false;
 
 // Support both CRA and Vite for the time being.
 try {
+  // eslint-disable-next-line no-undef
   env = process.env;
   // it's legacy create-react-app
   DEBUG = env.NODE_ENV === 'development';

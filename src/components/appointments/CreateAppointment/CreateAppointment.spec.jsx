@@ -9,8 +9,11 @@ import {ConfigContext, FormContext} from 'Context';
 import {updateSessionExpiry} from 'api';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
-import {buildSubmission, mockSubmissionPost} from 'api-mocks/submissions';
-import {mockSubmissionProcessingStatusErrorGet} from 'api-mocks/submissions';
+import {
+  buildSubmission,
+  mockSubmissionPost,
+  mockSubmissionProcessingStatusErrorGet,
+} from 'api-mocks/submissions';
 import App, {routes as nestedRoutes} from 'components/App';
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
 

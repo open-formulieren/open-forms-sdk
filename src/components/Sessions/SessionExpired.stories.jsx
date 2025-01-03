@@ -7,7 +7,7 @@ import {ConfigDecorator} from 'story-utils/decorators';
 
 import SessionExpired from './SessionExpired';
 
-const render = args => {
+const Render = args => {
   const [expired] = useSessionTimeout(null);
   useEffect(() => {
     const now = new Date();
@@ -40,5 +40,5 @@ export default {
 
 export const Default = {
   name: 'Session Expired',
-  render,
+  render: Render,
 };

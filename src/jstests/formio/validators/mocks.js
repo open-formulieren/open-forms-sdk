@@ -18,7 +18,7 @@ export const phoneNumberValidations = {
     HttpResponse.json({isValid: true, messages: []})
   ),
 
-  mockInValidDutchPhonenumberPost: http.post(DUTCH_VALIDATION_ENDPOINT, async (req, res, ctx) =>
+  mockInValidDutchPhonenumberPost: http.post(DUTCH_VALIDATION_ENDPOINT, async () =>
     HttpResponse.json({isValid: false, messages: ['Invalid dutch phone number']})
   ),
 };

@@ -1,6 +1,5 @@
 import {render, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
-import React from 'react';
 import {IntlProvider} from 'react-intl';
 
 import {AuthenticationErrors} from './index';

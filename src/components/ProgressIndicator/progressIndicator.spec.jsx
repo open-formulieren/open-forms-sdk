@@ -6,8 +6,6 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
-import {getDefaultFactory} from 'api-mocks/base';
-import {FORM_DEFAULTS} from 'api-mocks/forms';
 import mswServer from 'api-mocks/msw-server';
 import {buildSubmission, mockSubmissionPost} from 'api-mocks/submissions';
 import App, {routes as nestedRoutes} from 'components/App';

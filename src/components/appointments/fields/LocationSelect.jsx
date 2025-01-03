@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext} from 'react';
+import {useCallback, useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 
 import {ConfigContext} from 'Context';

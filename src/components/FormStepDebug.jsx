@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 
 /**
  * Debug component to visualize Form Step developer information.

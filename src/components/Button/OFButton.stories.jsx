@@ -2,7 +2,6 @@ import {
   ButtonLink as UtrechtButtonLink,
   LinkButton as UtrechtLinkButton,
 } from '@utrecht/component-library-react';
-import React from 'react';
 
 import FAIcon from '../FAIcon';
 import OFButton from './OFButton';
