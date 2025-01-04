@@ -90,7 +90,6 @@ export const MenuOpen = {
 const delay = async delay => await new Promise(resolve => setTimeout(resolve, delay));
 
 export const Async = {
-  name: 'Async',
   render: function Render({getOptionsDelay, dynamicOptions, ...args}) {
     const serializedOptions = JSON.stringify(dynamicOptions);
     const getOptions = useCallback(async () => {

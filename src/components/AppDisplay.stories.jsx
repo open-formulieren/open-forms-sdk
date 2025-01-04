@@ -1,6 +1,6 @@
 import Body from 'components/Body';
 
-import AppDisplay from './AppDisplay';
+import {AppDisplay} from './AppDisplay';
 
 export default {
   title: 'Composites / App display',

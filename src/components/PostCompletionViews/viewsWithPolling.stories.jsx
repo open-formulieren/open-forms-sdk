@@ -32,7 +32,7 @@ export default {
   },
 };
 
-export const withoutPayment = {
+export const WithoutPayment = {
   play: async ({canvasElement, args}) => {
     const canvas = within(canvasElement);
 
@@ -50,7 +50,7 @@ export const withoutPayment = {
   },
 };
 
-export const withPayment = {
+export const WithPayment = {
   parameters: {
     reactRouter: {
       location: {

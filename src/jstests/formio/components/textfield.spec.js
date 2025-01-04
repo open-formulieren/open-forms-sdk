@@ -55,6 +55,7 @@ describe('TextField Component', () => {
     componentCity.setValue('Amsterdam');
 
     componentCity.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     componentCity.setLocationData; // access the getter so the debounced method is created
     componentCity._debouncedSetLocationData.flush();
     await sleep(300);
@@ -107,6 +108,7 @@ describe('TextField Component', () => {
     componentStreet.setValue('Beautiful Street');
 
     componentStreet.handleSettingLocationData({postcode: '0000AA', houseNumber: '0'});
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     componentStreet.setLocationData; // access the getter so the debounced method is created
     componentStreet._debouncedSetLocationData.flush();
     await sleep(300);

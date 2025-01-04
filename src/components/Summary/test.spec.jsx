@@ -5,7 +5,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {testForm} from 'components/FormStart/fixtures';
-import SubmissionSummary from 'components/Summary';
+import {SubmissionSummary} from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 
