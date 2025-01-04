@@ -51,7 +51,6 @@ import {
 } from 'components/utils';
 import {ValidationError} from 'errors';
 import {PREFIX} from 'formio/constants';
-import hooks from 'formio/hooks';
 import useTitle from 'hooks/useTitle';
 import Types from 'types';
 
@@ -879,7 +878,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
                     requiredFieldsWithAsterisk: config.requiredFieldsWithAsterisk,
                   },
                   hooks: {
-                    ...hooks,
                     customValidation: getCustomValidationHook(submissionStep.url, error =>
                       dispatch({type: 'ERROR', payload: error})
                     ),
