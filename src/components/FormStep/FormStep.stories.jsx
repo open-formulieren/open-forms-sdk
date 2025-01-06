@@ -117,7 +117,7 @@ export const Default = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    const abortButton = await canvas.findByRole('button', {name: 'Annuleren'});
     await expect(abortButton).toBeVisible();
   },
 };
@@ -222,7 +222,7 @@ export const govmetricEnabled = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    const abortButton = await canvas.findByRole('button', {name: 'Annuleren'});
     await expect(abortButton).toBeVisible();
   },
 };

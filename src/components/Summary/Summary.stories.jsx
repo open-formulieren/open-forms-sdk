@@ -291,7 +291,7 @@ export const Default = {
 
     await expect(fieldsetPartnerNode.firstChild.textContent).toEqual('Partner details');
 
-    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    const abortButton = await canvas.findByRole('button', {name: 'Annuleren'});
     await expect(abortButton).toBeVisible();
   },
 };

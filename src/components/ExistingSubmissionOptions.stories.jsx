@@ -25,7 +25,7 @@ export const Default = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Afbreken'});
+      const abortButton = await canvas.queryByRole('button', {name: 'Annuleren'});
       await expect(abortButton).toBeVisible();
     });
   },

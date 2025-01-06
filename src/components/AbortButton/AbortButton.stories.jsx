@@ -29,7 +29,7 @@ export const Anonymous = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    const abortButton = await canvas.findByRole('button', {name: 'Annuleren'});
     await expect(abortButton).toBeVisible();
   },
 };
@@ -48,7 +48,7 @@ export const AnonymousAndGovMetric = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const abortButton = await canvas.findByRole('button', {name: 'Afbreken'});
+    const abortButton = await canvas.findByRole('button', {name: 'Annuleren'});
     await expect(abortButton).toBeVisible();
   },
 };

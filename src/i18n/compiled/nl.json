@@ -461,6 +461,12 @@
       "value": "Gebruik twee vingers om te navigeren in de kaart"
     }
   ],
+  "C7jQ09": [
+    {
+      "type": 0,
+      "value": "Annuleren"
+    }
+  ],
   "COWzFp": [
     {
       "type": 0,
@@ -1247,6 +1253,12 @@
       "value": "De betaling is ontvangen."
     }
   ],
+  "WDiVaT": [
+    {
+      "type": 0,
+      "value": "Ben je zeker dat je deze formulierinzending wilt annuleren? Je verliest alle voortgang als je bevestigt."
+    }
+  ],
   "WKH4HC": [
     {
       "type": 0,
@@ -1787,12 +1799,6 @@
       "value": "De bevestigingscode is precies zes tekens lang en bestaat uit hoofdletters en getallen."
     }
   ],
-  "lq29t6": [
-    {
-      "type": 0,
-      "value": "Ben je zeker dat je deze formulierinzending wilt afbreken? Je verliest alle voortgang als je bevestigt."
-    }
-  ],
   "lxjglE": [
     {
       "type": 0,
@@ -2123,12 +2129,6 @@
     {
       "type": 0,
       "value": "Het e-mailadres waarop je de bevestigingsmail van de afspraak heeft ontvangen."
-    }
-  ],
-  "uDjl8X": [
-    {
-      "type": 0,
-      "value": "Afbreken"
     }
   ],
   "uPtko4": [

@@ -461,6 +461,12 @@
       "value": "Use two fingers to move the map"
     }
   ],
+  "C7jQ09": [
+    {
+      "type": 0,
+      "value": "Cancel submission"
+    }
+  ],
   "COWzFp": [
     {
       "type": 0,
@@ -1247,6 +1253,12 @@
       "value": "Your payment has been received."
     }
   ],
+  "WDiVaT": [
+    {
+      "type": 0,
+      "value": "Are you sure that you want to cancel this submission? You will lose your progress if you continue."
+    }
+  ],
   "WKH4HC": [
     {
       "type": 0,
@@ -1783,12 +1795,6 @@
       "value": "The code is exactly six characters long and consists of only uppercase letters and numbers."
     }
   ],
-  "lq29t6": [
-    {
-      "type": 0,
-      "value": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
-    }
-  ],
   "lxjglE": [
     {
       "type": 0,
@@ -2119,12 +2125,6 @@
     {
       "type": 0,
       "value": "The email address where you received the appointment confirmation email."
-    }
-  ],
-  "uDjl8X": [
-    {
-      "type": 0,
-      "value": "Abort submission"
     }
   ],
   "uPtko4": [
