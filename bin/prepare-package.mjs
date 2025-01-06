@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
+import path from 'path';
 
-const paths = require('../config/paths');
+const APP_DIRECTORY = fs.realpathSync(process.cwd());
+const PACKAGE_JSON_PATH = path.resolve(APP_DIRECTORY, 'package.json');
 
-const packageJson = JSON.parse(fs.readFileSync(paths.appPackageJson, 'utf-8'));
+const packageJson = JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH, 'utf-8'));
 
 // make package.json modifications to be able to publish the package. Workspaces require
 // private=true, but to publish it, it must be private=false. While publishing the
@@ -13,4 +15,4 @@ const packageJson = JSON.parse(fs.readFileSync(paths.appPackageJson, 'utf-8'));
 packageJson.private = false;
 
 const stringified = JSON.stringify(packageJson, null, 2) + '\n';
-fs.writeFileSync(paths.appPackageJson, stringified);
+fs.writeFileSync(PACKAGE_JSON_PATH, stringified);
