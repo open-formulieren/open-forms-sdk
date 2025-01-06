@@ -2,7 +2,7 @@ import {expect, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
-import RadioField from './RadioField';
+import {RadioField} from './RadioField';
 
 export default {
   title: 'Pure React Components / Forms / RadioField',

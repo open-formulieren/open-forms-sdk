@@ -17,7 +17,7 @@ const useSessionTimeout = onTimeout => {
   const sessionMatch = useMatch('/sessie-verlopen');
 
   const handleExpired = useCallback(() => {
-    onTimeout && onTimeout();
+    if (onTimeout) onTimeout();
     if (!sessionMatch) navigate('/sessie-verlopen');
   }, [onTimeout, navigate, sessionMatch]);
 

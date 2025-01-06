@@ -64,7 +64,7 @@ class Email extends Formio.Components.components.email {
       const key = this.component.key;
       const email = this.getValueAt(index) || '';
       const callback = this.options.ofContext?.verifyEmailCallback;
-      callback && callback({key, email});
+      if (callback) callback({key, email});
     });
 
     return promise;

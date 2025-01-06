@@ -2,7 +2,7 @@ import {expect, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
-import TextField from './TextField';
+import {TextField} from './TextField';
 
 export default {
   title: 'Pure React Components / Forms / TextField',

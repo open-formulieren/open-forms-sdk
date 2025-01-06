@@ -44,7 +44,7 @@ const CSRFEnabledUrl = function (formio) {
           try {
             respData = typeof xhr.response === 'string' ? JSON.parse(xhr.response) : {};
             respData = respData && respData.data ? respData.data : respData;
-          } catch (err) {
+          } catch {
             respData = {};
           }
 

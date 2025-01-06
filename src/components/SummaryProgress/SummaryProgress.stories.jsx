@@ -1,6 +1,6 @@
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import SummaryProgress from './index';
+import {SummaryProgress} from './index';
 
 export default {
   title: 'Private API / SummaryProgress',

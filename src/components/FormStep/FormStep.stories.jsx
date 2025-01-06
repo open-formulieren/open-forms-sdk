@@ -185,7 +185,7 @@ export const Authenticated = {
   },
 };
 
-export const govmetricEnabled = {
+export const GovmetricEnabled = {
   name: 'GovMetric enabled',
   render,
   args: {
