@@ -69,6 +69,9 @@ const umdOutput = {
 export default defineConfig({
   base: './',
   publicDir: false,
+  server: {
+    port: 3000,
+  },
   plugins: [
     // BIG DISCLAIMER - Vite only processes files with the .jsx or .tsx extension with
     // babel, and changing this configuration is... cumbersome and comes with a performance

@@ -67,7 +67,7 @@
     "react-dom": "^18.0.0"
   },
   "scripts": {
-    "start": "npm run build:design-tokens && node scripts/start.js",
+    "start": "npm run build:design-tokens && vite",
     "build": "node scripts/build.js && npm run build:esm",
     "build:esm": "rimraf dist/esm && NODE_ENV=production babel --no-babelrc --config-file ./.babelrc.esm-build --ignore 'src/**/*.spec.js','src/**/fixtures/**','src/setupTests.js','src/reportWebVitals.js' src --out-dir dist/esm",
     "build:vite": "BUILD_TARGET=umd vite build && BUILD_TARGET=esm vite build",
