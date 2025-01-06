@@ -7,5 +7,4 @@ Dockerfile
 /design-tokens/node_modules/
 
 # local build results
-/build/
 /dist/
