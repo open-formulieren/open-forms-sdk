@@ -18,9 +18,9 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
         defaultMessage: 'Are you sure that you want to logout?',
       })
     : intl.formatMessage({
-        description: 'Abort confirmation prompt',
+        description: 'Cancel confirmation prompt',
         defaultMessage:
-          'Are you sure that you want to abort this submission? You will lose your progress if you continue.',
+          'Are you sure that you want to cancel this submission? You will lose your progress if you continue.',
       });
 
   const callback = async event => {
@@ -45,8 +45,8 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
     <FormattedMessage description="Log out button text" defaultMessage="Log out" />
   ) : (
     <FormattedMessage
-      description="Button label to abort submission"
-      defaultMessage="Abort submission"
+      description="Button label to cancel submission"
+      defaultMessage="Cancel submission"
     />
   );
 

@@ -45,7 +45,7 @@ it('Last step of submittable form, button is present', () => {
   expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
   expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
   expect(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Afbreken'})).toBeVisible();
+  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
 it('Last step of non-submittable form with overview, button is present', () => {
@@ -71,7 +71,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
   expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
   expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
   expect(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Afbreken'})).toBeVisible();
+  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
 it('Last step of non-submittable form without overview, button is NOT present', () => {
@@ -97,7 +97,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
   expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
   expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
   expect(screen.queryByRole('button', {name: 'Next step'})).not.toBeInTheDocument();
-  expect(screen.getByRole('button', {name: 'Afbreken'})).toBeVisible();
+  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
 it('Non-last step of non-submittable form without overview, button IS present', () => {
@@ -123,7 +123,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
   expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
   expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
   expect(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Afbreken'})).toBeVisible();
+  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
 it('Suspending form allowed, button is present', () => {

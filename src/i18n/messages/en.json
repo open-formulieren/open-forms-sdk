@@ -224,6 +224,11 @@
     "description": "Gesturehandeling phone touch message.",
     "originalDefault": "Use two fingers to move the map"
   },
+  "C7jQ09": {
+    "defaultMessage": "Cancel submission",
+    "description": "Button label to cancel submission",
+    "originalDefault": "Cancel submission"
+  },
   "COWzFp": {
     "defaultMessage": "Number must be finite.",
     "description": "ZOD 'not_finite' error message",
@@ -584,6 +589,11 @@
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
   },
+  "WDiVaT": {
+    "defaultMessage": "Are you sure that you want to cancel this submission? You will lose your progress if you continue.",
+    "description": "Cancel confirmation prompt",
+    "originalDefault": "Are you sure that you want to cancel this submission? You will lose your progress if you continue."
+  },
   "WKH4HC": {
     "defaultMessage": "Orange smiley (neutral)",
     "description": "GovMetric orange face alt text",
@@ -869,11 +879,6 @@
     "description": "Email verification: code input field description",
     "originalDefault": "The code is exactly six characters long and consists of only uppercase letters and numbers."
   },
-  "lq29t6": {
-    "defaultMessage": "Are you sure that you want to abort this submission? You will lose your progress if you continue.",
-    "description": "Abort confirmation prompt",
-    "originalDefault": "Are you sure that you want to abort this submission? You will lose your progress if you continue."
-  },
   "lxjglE": {
     "defaultMessage": "Continue existing submission",
     "description": "Continue existing submission button label",
@@ -1003,11 +1008,6 @@
     "defaultMessage": "The email address where you received the appointment confirmation email.",
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
-  },
-  "uDjl8X": {
-    "defaultMessage": "Abort submission",
-    "description": "Button label to abort submission",
-    "originalDefault": "Abort submission"
   },
   "uPtko4": {
     "defaultMessage": "Unfortunately, this form is no longer available for submissions.",

@@ -108,5 +108,5 @@ it('Summary displays abort button if isAuthenticated is false', () => {
     </Wrap>
   );
 
-  expect(screen.queryByRole('button', {name: 'Afbreken'})).toBeInTheDocument();
+  expect(screen.queryByRole('button', {name: 'Annuleren'})).toBeInTheDocument();
 });

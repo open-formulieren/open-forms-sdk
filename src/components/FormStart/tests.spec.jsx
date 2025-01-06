@@ -89,7 +89,7 @@ it('Form start page does not show login buttons if an active submission is prese
 
   const continueButton = await screen.findByRole('button', {name: 'Continue existing submission'});
   expect(continueButton).toBeInTheDocument();
-  expect(screen.queryByRole('button', {name: 'Abort submission'})).toBeInTheDocument();
+  expect(screen.queryByRole('button', {name: 'Cancel submission'})).toBeInTheDocument();
 });
 
 it('Form start page with initial_data_reference', async () => {
