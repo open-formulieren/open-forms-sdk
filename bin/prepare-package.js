@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 
 const fs = require('fs');
@@ -11,5 +12,5 @@ const packageJson = JSON.parse(fs.readFileSync(paths.appPackageJson, 'utf-8'));
 // package, we do not use workspaces.
 packageJson.private = false;
 
-const stringified = JSON.stringify(packageJson, null, 2) + "\n";
+const stringified = JSON.stringify(packageJson, null, 2) + '\n';
 fs.writeFileSync(paths.appPackageJson, stringified);
