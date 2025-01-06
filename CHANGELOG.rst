@@ -2,6 +2,82 @@
 SDK Changelog
 =============
 
+3.0.0 (2025-01-06)
+==================
+
+Feature release
+
+There are additional changes compared to the alpha versions. Continue reading for the full
+changelog, which includes the alpha versions release notes.
+
+.. warning:: SDK 3.0.0 requires the backend API version 3.0.0 or newer.
+
+New features
+------------
+
+* [#4984] Changed "abort" button's text to "cancel". 
+* [#4321] Forms can now have a submission limit. The SDK displays appropriate messages when this limit
+  is reached.
+* [#2173] The map component now supports using a different background/tile layer.
+* [#4320] Improved the user experience for forms with cosign
+    - The confirmation page content is now dynamically provided by the API.
+    - Tweaked the texts displayed in various points in the cosign process.
+    - Cosign login options are now only displayed if the cosign request email does not use direct links.
+      When direct links are used, the cosigner is directly taken to the cosign page without having to
+      manually enter codes.
+* [#4546] It's now possible to "soft-require" file uploads. Soft-required uploads show a warning message when
+  no file has been uploaded, but don't block the step submission or form progress.
+* [#4718] Improved accessibility when using an increased zoom level.
+* [#4720] Improved navigation and visibility accessibility.
+* [#4717] Improvement accessibility of the loader, modal components, alerts and file upload buttons.
+* [#4716] Improved the accessibility of form fields and associated error messages.
+* [#4420] Added pattern validation for AddressNL subfields.
+* [#4544] Added design tokens for configuring the position of the previous page link.
+  You can now choose if the link should be at the top, the bottom or both. By default
+  this is shown at the bottom. The ability to add an icon has been added as well.
+
+Bugfixes
+--------
+
+* [#4918] Fixed redirects to take into account the query parameters.
+* [#4809] Fixed layout components in edit grid row summary.
+* [#4398] Fixed the initial data reference not properly being passed to the backend.
+* [#4600] Added an ``onLanguageChange`` hook for container pages so they can manage
+  their translated content on language changes if needed.
+
+Project maintenance
+-------------------
+
+* Removed legacy appointment code.
+* [#724] Set up ESLint in CI.
+* Upgraded to Vite 6.
+* Dropped support for custom display components.
+* [#4920] Updated Dutch translations.
+* Deleted deprecated router decorator.
+* [#3283] Updated API endpoints to use consistent casing.
+* Upgraded to design-token-editor 0.6.0.
+* [#3283] Updated the deprecated address endpoint.
+* Prepare build toolchain to use Vite instead of CRA - we'll switch over once 3.0.0 is
+  released to Docker Hub and NPM.
+  - Renamed .js files to .jsx.
+  - Removed old tilde prefix in SCSS imports.
+  - Added a parallel Vite-based build.
+  - Migrated test runner from Jest to Vitest.
+  - Migrated storybook builder from webpack to Vite.
+* Upgraded dependencies.
+  - Upgraded to Storybook 8.4.
+  - Upgraded to MSW 2.5
+  - [#724] Upgraded to Jest 29 because of MSW requirements.
+* [#429] Updated all React tests to testing-library.
+* Ensured prettier checks jsx files.
+* [#4849] Ensured .jsx files are picked up for translation as well.
+* [#3283] Removed password Formio component.
+* [#4320] Updated stories and UX of completion view.
+* Updated stories after translations updates.
+* Updated developer docs about mocking in stories.
+* Cleaned up test errors/warnings due to missing mocks.
+* Updated Docker Hub config file.
+
 2.5.0-alpha.1 (2024-11-27)
 ==========================
 
