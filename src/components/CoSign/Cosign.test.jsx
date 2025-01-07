@@ -1,5 +1,4 @@
 import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
@@ -7,7 +6,11 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
-import {mockSubmissionPost, mockSubmissionStepGet} from 'api-mocks/submissions';
+import {
+  mockSubmissionGet,
+  mockSubmissionStepGet,
+  mockSubmissionSummaryGet,
+} from 'api-mocks/submissions';
 
 import Cosign from './Cosign';
 import {default as nestedRoutes} from './routes';
@@ -60,10 +63,9 @@ const routes = [
   },
 ];
 
-const Wrapper = () => {
+const Wrapper = ({relativeUrl}) => {
   const router = createMemoryRouter(routes, {
-    initialEntries: ['/cosign/start'],
-    initialIndex: 0,
+    initialEntries: [`/cosign/${relativeUrl}`],
   });
   return (
     <ConfigContext.Provider
@@ -85,7 +87,18 @@ const Wrapper = () => {
 };
 
 test('Cosign start route renders start/login page', async () => {
-  render(<Wrapper />);
+  render(<Wrapper relativeUrl="start" />);
 
   expect(await screen.findByRole('link', {name: 'Login with DigiD Cosign'})).toBeVisible();
+});
+
+test('Load submission summary after backend authentication', async () => {
+  mswServer.use(mockSubmissionGet(), mockSubmissionSummaryGet());
+
+  // the submission ID is taken from the query params
+  render(<Wrapper relativeUrl="check?submission_uuid=458b29ae-5baa-4132-a0d7-8c7071b8152a" />);
+
+  await screen.findByRole('heading', {name: 'Check and co-sign submission', level: 1});
+  // wait for summary to load from the backend
+  await screen.findByText('Compnent 1 value');
 });
