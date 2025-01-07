@@ -3,14 +3,16 @@ import React, {useContext} from 'react';
 
 const CosignContext = React.createContext({
   reportDownloadUrl: '',
+  onCosignComplete: () => {},
 });
 
 CosignContext.displayName = 'CosignContext';
 
-const CosignProvider = ({reportDownloadUrl = '', children}) => (
+const CosignProvider = ({reportDownloadUrl, onCosignComplete, children}) => (
   <CosignContext.Provider
     value={{
       reportDownloadUrl,
+      onCosignComplete,
     }}
   >
     {children}
@@ -18,7 +20,8 @@ const CosignProvider = ({reportDownloadUrl = '', children}) => (
 );
 
 CosignProvider.propTypes = {
-  reportDownloadUrl: PropTypes.string,
+  reportDownloadUrl: PropTypes.string.isRequired,
+  onCosignComplete: PropTypes.func.isRequired,
 };
 
 const useCosignContext = () => useContext(CosignContext);
