@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Outlet, Route, Routes, useNavigate} from 'react-router-dom';
 import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext} from 'Context';
@@ -8,8 +8,7 @@ import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import {CosignSummary} from 'components/Summary';
 import useFormContext from 'hooks/useFormContext';
 
-import CosignDone from './CosignDone';
-import CosignStart from './CosignStart';
+import {CosignProvider} from './Context';
 
 const initialState = {
   submission: null,
@@ -60,31 +59,32 @@ const Cosign = () => {
 
   return (
     <ErrorBoundary useCard>
-      <Routes>
-        {/*<Route path="start" element={<CosignStart />} />*/}
-        <Route
-          path="check"
-          element={
-            <CosignSummary
-              form={form}
-              submission={state.submission}
-              summaryData={state.summaryData}
-              onSubmissionLoaded={submission =>
-                dispatch({
-                  type: 'SUBMISSION_LOADED',
-                  payload: submission,
-                })
-              }
-              onDataLoaded={({summaryData}) =>
-                dispatch({type: 'LOADED_SUMMARY_DATA', payload: summaryData})
-              }
-              onCosignComplete={onCosignComplete}
-              onDestroySession={onDestroySession}
-            />
-          }
-        />
-        <Route path="done" element={<CosignDone reportDownloadUrl={state.reportUrl} />} />
-      </Routes>
+      <CosignProvider reportDownloadUrl={state.reportUrl}>
+        <Outlet />
+        <Routes>
+          <Route
+            path="check"
+            element={
+              <CosignSummary
+                form={form}
+                submission={state.submission}
+                summaryData={state.summaryData}
+                onSubmissionLoaded={submission =>
+                  dispatch({
+                    type: 'SUBMISSION_LOADED',
+                    payload: submission,
+                  })
+                }
+                onDataLoaded={({summaryData}) =>
+                  dispatch({type: 'LOADED_SUMMARY_DATA', payload: summaryData})
+                }
+                onCosignComplete={onCosignComplete}
+                onDestroySession={onDestroySession}
+              />
+            }
+          />
+        </Routes>
+      </CosignProvider>
     </ErrorBoundary>
   );
 };
