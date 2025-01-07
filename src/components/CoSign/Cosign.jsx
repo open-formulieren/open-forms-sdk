@@ -61,7 +61,7 @@ const Cosign = () => {
   return (
     <ErrorBoundary useCard>
       <Routes>
-        <Route path="start" element={<CosignStart />} />
+        {/*<Route path="start" element={<CosignStart />} />*/}
         <Route
           path="check"
           element={
