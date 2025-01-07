@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+2.4.3 (2025-01-07)
+==================
+
+Periodic bugfix release
+
+* Bumped dompurify to 2.5.4+
+
 2.4.2 (2024-11-22)
 ==================
 
