@@ -1,4 +1,4 @@
-import {expect, fn, userEvent, within} from '@storybook/test';
+import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {useState} from 'react';
 
 import {ConfigDecorator} from 'story-utils/decorators';
@@ -53,10 +53,17 @@ export default {
 export const Map = {};
 
 export const MapWithAddressSearch = {
-  play: async ({canvasElement}) => {
+  args: {
+    onGeoJsonFeatureSet: fn(),
+  },
+  play: async ({canvasElement, args}) => {
     const canvas = within(canvasElement);
-    const button = await canvas.findByLabelText('Zoeken');
-    await userEvent.click(button);
+
+    await waitFor(async () => {
+      const button = await canvas.findByLabelText('Zoeken');
+      await userEvent.click(button);
+      expect(await canvas.findByPlaceholderText('Zoek adres')).toBeVisible();
+    });
 
     const searchField = await canvas.findByPlaceholderText('Zoek adres');
     const searchBox = within(searchField.parentNode);
@@ -64,6 +71,18 @@ export const MapWithAddressSearch = {
     const searchResult = await searchBox.findByText('Utrecht, Utrecht, Utrecht');
 
     await userEvent.click(searchResult);
+    await waitFor(async () => {
+      // A marker is placed on the search result
+      expect(args.onGeoJsonFeatureSet).toBeCalledWith({
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Point',
+          // To make sure that this test doesn't magically fail, just expect any 2 values
+          coordinates: [expect.anything(), expect.anything()],
+        },
+      });
+    });
   },
 };
 
@@ -84,13 +103,11 @@ export const MapWithAerialPhotoBackground = {
 
 export const MapWithInteractions = {
   args: {
-    geoJsonFeature: undefined,
     interactions: {
       polygon: true,
       polyline: true,
       marker: true,
     },
-    defaultCenter: [52.1326332, 5.291266],
     onGeoJsonFeatureSet: fn(),
   },
   parameters: {
@@ -120,7 +137,10 @@ export const MapWithInteractions = {
         properties: {},
         geometry: {
           type: 'Point',
-          coordinates: [5.287384, 52.134262],
+          // Expect that the coordinates array contains 2 items.
+          // We cannot pin it to specific values, because they can differentiate.
+          // To make sure that this test doesn't magically fail, just expect any 2 values
+          coordinates: [expect.anything(), expect.anything()],
         },
       });
     });

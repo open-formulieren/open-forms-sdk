@@ -507,7 +507,10 @@ export const MapSummary = {
         data: [
           {
             name: 'Map with default tile layer',
-            value: [52.1326332, 5.291266],
+            value: {
+              type: 'Point',
+              coordinates: [5.291266, 52.1326332],
+            },
             component: {
               key: 'map',
               type: 'map',
@@ -516,7 +519,10 @@ export const MapSummary = {
           },
           {
             name: 'Map with custom tile layer',
-            value: [52.1326332, 5.291266],
+            value: {
+              type: 'Point',
+              coordinates: [5.291266, 52.1326332],
+            },
             component: {
               key: 'map',
               type: 'map',
