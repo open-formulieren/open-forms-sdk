@@ -42,7 +42,7 @@ import FormStepDebug from 'components/FormStepDebug';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
-import SummaryProgress from 'components/SummaryProgress';
+import {SummaryProgress} from 'components/SummaryProgress';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
   eventTriggeredBySubmitButton,
@@ -668,7 +668,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
     // and then renders the errors in the form. If this is not caught, the step will be submitted anyway
     try {
       await formInstance.submit();
-    } catch (e) {
+    } catch {
       // Submitting the form step failed
       dispatch({type: 'BLOCK_SUBMISSION'});
     }

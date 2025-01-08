@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
-import Literal from 'components/Literal';
+import {Literal} from 'components/Literal';
 
 const VARIANTS = ['start', 'end'];
 

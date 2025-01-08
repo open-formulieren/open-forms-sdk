@@ -86,7 +86,7 @@ export default class Map extends Field {
 
   destroy() {
     const container = this.refs.mapContainer;
-    container && this.reactRoot.unmount();
+    if (container) this.reactRoot.unmount();
     super.destroy();
   }
 
@@ -124,7 +124,7 @@ export default class Map extends Field {
   setValue(value, flags = {}) {
     const changed = super.setValue(value, flags);
     // re-render if the value is set, which may be because of existing submission data
-    changed && this.renderReact();
+    if (changed) this.renderReact();
     return changed;
   }
 }

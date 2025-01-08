@@ -133,7 +133,7 @@ const FormStepSaveModal = ({
 
     try {
       await onSaveConfirm();
-    } catch (e) {
+    } catch {
       actions.setSubmitting(false);
       dispatch({
         type: 'API_ERROR',
@@ -149,7 +149,7 @@ const FormStepSaveModal = ({
 
     try {
       await post(suspendFormUrl, {email});
-    } catch (e) {
+    } catch {
       actions.setSubmitting(false);
       dispatch({
         type: 'API_ERROR',

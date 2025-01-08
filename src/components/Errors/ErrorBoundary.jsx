@@ -13,7 +13,7 @@ import {DEBUG} from 'utils';
 import ErrorMessage from './ErrorMessage';
 
 const logError = (error, errorInfo) => {
-  DEBUG && console.error(error, errorInfo);
+  if (DEBUG) console.error(error, errorInfo);
 };
 
 class ErrorBoundary extends React.Component {

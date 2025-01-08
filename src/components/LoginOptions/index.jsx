@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import Literal from 'components/Literal';
+import {Literal} from 'components/Literal';
 import {getCosignLoginUrl, getLoginUrl} from 'components/utils';
 import useQuery from 'hooks/useQuery';
 import Types from 'types';

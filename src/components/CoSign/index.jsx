@@ -88,7 +88,7 @@ const CoSignOld = ({
   );
 
   // log errors to the console if any
-  error && console.error(error);
+  if (error) console.error(error);
 
   // while loading, display spinner
   if (loading) {

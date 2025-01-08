@@ -26,14 +26,7 @@ const getLinkModifiers = isActive => {
  *
  * Once a step is completed, it is displayed with a completion checkmark in front of it.
  */
-export const ProgressIndicatorItem = ({
-  label,
-  to,
-  isActive,
-  isCompleted,
-  canNavigateTo,
-  isApplicable,
-}) => {
+const ProgressIndicatorItem = ({label, to, isActive, isCompleted, canNavigateTo, isApplicable}) => {
   return (
     <div className={getBEMClassName('progress-indicator-item')}>
       <div className={getBEMClassName('progress-indicator-item__marker')}>

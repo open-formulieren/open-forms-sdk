@@ -107,7 +107,7 @@ export default class AddressNL extends Field {
 
   destroy() {
     const container = this.refs.addressNLContainer;
-    container && this.reactRoot.unmount();
+    if (container) this.reactRoot.unmount();
     super.destroy();
   }
 
@@ -173,7 +173,7 @@ export default class AddressNL extends Field {
   setValue(value, flags = {}) {
     const changed = super.setValue(value, flags);
     // re-render if the value is set, which may be because of existing submission data
-    changed && this.renderReact();
+    if (changed) this.renderReact();
     return changed;
   }
 

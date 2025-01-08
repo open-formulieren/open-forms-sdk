@@ -43,7 +43,7 @@ const ProgressIndicator = ({
     if (buttonRef.current) {
       const boundingBox = buttonRef.current.getBoundingClientRect();
       // the offset from top + height of the element (including padding + borders)
-      isMounted && setVerticalSpaceUsed(boundingBox.bottom);
+      if (isMounted) setVerticalSpaceUsed(boundingBox.bottom);
     }
     return () => {
       isMounted = false;

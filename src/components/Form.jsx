@@ -15,7 +15,7 @@ import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews
 import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
 import {SessionTrackerModal} from 'components/Sessions';
-import SubmissionSummary from 'components/Summary';
+import {SubmissionSummary} from 'components/Summary';
 import {
   PI_TITLE,
   START_FORM_QUERY_PARAM,
@@ -174,7 +174,7 @@ const Form = () => {
    * @return {Void}
    */
   const onFormStart = async (event, anonymous = false) => {
-    event && event.preventDefault();
+    if (event) event.preventDefault();
 
     // required to get rid of the error message saying the session is expired - once
     // you start a new submission, any previous call history should be discarded.

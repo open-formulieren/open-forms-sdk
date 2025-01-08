@@ -13,7 +13,7 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 
 import {AppointmentConfigContext} from '../Context';
 import AppointmentProgress from './AppointmentProgress';
-import CreateAppointmentState from './CreateAppointmentState';
+import {CreateAppointmentState} from './CreateAppointmentState';
 import {APPOINTMENT_STEP_PATHS} from './routes';
 
 const useIsConfirmation = () => {
