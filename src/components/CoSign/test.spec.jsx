@@ -4,7 +4,7 @@ import {IntlProvider} from 'react-intl';
 
 import {testLoginForm} from 'components/FormStart/fixtures';
 
-import {CoSignAuthentication} from './index';
+import {CoSignAuthentication} from './CoSignOld';
 
 it('CoSign component constructs the right auth URL', () => {
   // Control the location that the test will use

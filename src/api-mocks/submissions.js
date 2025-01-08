@@ -92,6 +92,26 @@ export const mockSubmissionCheckLogicPost = () =>
     return HttpResponse.json(responseData, {status: 200});
   });
 
+export const mockSubmissionSummaryGet = () =>
+  http.get(`${BASE_URL}submissions/:uuid/summary`, () =>
+    HttpResponse.json(
+      [
+        {
+          slug: SUBMISSION_STEP_DETAILS.slug,
+          name: SUBMISSION_DETAILS.steps[0].name,
+          data: [
+            {
+              name: SUBMISSION_STEP_DETAILS.formStep.configuration.components[0].label,
+              value: 'Compnent 1 value',
+              component: SUBMISSION_STEP_DETAILS.formStep.configuration.components[0],
+            },
+          ],
+        },
+      ],
+      {status: 200}
+    )
+  );
+
 /**
  * Simulate a successful backend processing status without payment.
  */

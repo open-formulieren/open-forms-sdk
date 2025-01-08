@@ -1,6 +1,6 @@
 import {Navigate, Outlet, useMatch} from 'react-router-dom';
 
-import {Cosign} from 'components/CoSign';
+import {Cosign, cosignRoutes} from 'components/CoSign';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import Form from 'components/Form';
 import SessionExpired from 'components/Sessions/SessionExpired';
@@ -26,6 +26,7 @@ export const routes = [
   {
     path: 'cosign/*',
     element: <Cosign />,
+    children: cosignRoutes,
   },
   {
     path: 'sessie-verlopen',
