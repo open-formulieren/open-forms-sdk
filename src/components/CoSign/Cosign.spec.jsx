@@ -6,11 +6,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
-import {
-  mockSubmissionGet,
-  mockSubmissionStepGet,
-  mockSubmissionSummaryGet,
-} from 'api-mocks/submissions';
+import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
 
 import Cosign from './Cosign';
 import {default as nestedRoutes} from './routes';
