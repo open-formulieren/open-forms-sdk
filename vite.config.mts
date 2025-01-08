@@ -31,7 +31,7 @@ const buildTarget = process.env.BUILD_TARGET || 'umd';
  * - the react-intl translations are not distributed yet (also broken in CRA/babel build!)
  */
 const esmOutput = {
-  dir: 'dist-vite/esm',
+  dir: 'dist/esm',
   format: 'esm',
   preserveModules: true,
   preserveModulesRoot: 'src',
@@ -51,7 +51,7 @@ const esmOutput = {
  * @todo - optimize with bundle splitting/chunk management.
  */
 const umdOutput = {
-  dir: 'dist-vite',
+  dir: 'dist',
   format: 'umd',
   exports: 'named',
   name: 'OpenForms',
@@ -69,6 +69,9 @@ const umdOutput = {
 export default defineConfig({
   base: './',
   publicDir: false,
+  server: {
+    port: 3000,
+  },
   plugins: [
     // BIG DISCLAIMER - Vite only processes files with the .jsx or .tsx extension with
     // babel, and changing this configuration is... cumbersome and comes with a performance
@@ -88,7 +91,7 @@ export default defineConfig({
     assetsInlineLimit: 8 * 1024, // 8 KiB
     cssCodeSplit: false,
     sourcemap: buildTarget !== 'esm',
-    outDir: 'dist-vite/umd',
+    outDir: 'dist/umd',
     rollupOptions: {
       input: 'src/sdk.jsx',
       // do not externalize anything in UMD build - bundle everything
