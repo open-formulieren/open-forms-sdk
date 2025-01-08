@@ -1,5 +1,6 @@
 /// <reference types="vitest/config" />
 // https://vitejs.dev/config/
+import replace from '@rollup/plugin-replace';
 import react from '@vitejs/plugin-react';
 import type {OutputOptions} from 'rollup';
 import {defineConfig} from 'vite';
@@ -85,6 +86,18 @@ export default defineConfig({
     }),
     cjsTokens(),
     ejsPlugin(),
+    // @formio/protected-eval requires js-interpeter (a forked version), which includes
+    // this['Interpreter'] = Interpreter. When this is bundled, it becomes a strict module
+    // and 'this' doesn't point to the window object, but is undefined, and causes the SDK
+    // to crash.
+    replace({
+      preventAssignment: false,
+      include: ['**/node_modules/js-interpreter/interpreter.js'],
+      delimiters: ['', ''],
+      values: {
+        "this\['Interpreter'\]": "window['Interpreter']",
+      },
+    }),
   ],
   build: {
     target: 'modules', // the default
