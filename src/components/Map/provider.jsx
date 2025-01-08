@@ -17,7 +17,7 @@ class OpenFormsProvider {
     let results;
     try {
       results = await get(this.endpoint, {q: query});
-    } catch (e) {
+    } catch {
       // XXX: check if we can send this to Sentry
       return [];
     }

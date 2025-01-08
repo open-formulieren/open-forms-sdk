@@ -49,7 +49,7 @@ export default class CoSignOld extends Field {
 
   destroy() {
     const container = this.refs.coSignContainer;
-    container && this.reactRoot.unmount();
+    if (container) this.reactRoot.unmount();
     super.destroy();
   }
 

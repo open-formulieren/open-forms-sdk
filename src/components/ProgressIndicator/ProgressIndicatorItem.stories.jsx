@@ -1,6 +1,6 @@
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ProgressIndicatorItem} from './ProgressIndicatorItem';
+import ProgressIndicatorItem from './ProgressIndicatorItem';
 
 export default {
   title: 'Private API / ProgressIndicator / ProgressIndicatorItem',

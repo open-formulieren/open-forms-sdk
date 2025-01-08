@@ -41,9 +41,9 @@ const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
     response => {
       if (response.result === RESULT_FAILED) {
         const errorMessage = response.errorMessage || genericErrorMessage;
-        onFailure && onFailure(errorMessage);
+        if (onFailure) onFailure(errorMessage);
       } else if (response.result === RESULT_SUCCESS) {
-        onConfirmed && onConfirmed();
+        if (onConfirmed) onConfirmed();
       }
     }
   );

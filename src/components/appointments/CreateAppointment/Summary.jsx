@@ -9,7 +9,7 @@ import {post} from 'api';
 import {CardTitle} from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
-import Literal from 'components/Literal';
+import {Literal} from 'components/Literal';
 import Loader from 'components/Loader';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {ValidationError} from 'errors';
@@ -171,7 +171,7 @@ const Summary = () => {
         const {initialErrors, initialTouched} = e.asFormikProps();
         const navigateTo = getErrorsNavigateTo(initialErrors);
         setErrors({initialErrors, initialTouched});
-        navigateTo && navigate(`../${navigateTo}`);
+        if (navigateTo) navigate(`../${navigateTo}`);
         return;
       }
       setSubmitError(e);

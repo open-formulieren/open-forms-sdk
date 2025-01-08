@@ -72,16 +72,16 @@ const useFloatingWidget = () => {
 
   const onClick = () => {
     const isFocused = context.refs.reference.current === document.activeElement;
-    isFocused && !isOpen && manageOpen(true);
+    if (isFocused && !isOpen) manageOpen(true);
   };
 
   const onKeyDown = event => {
     referenceProps?.onKeyDown?.(event);
-    event.key !== 'Tab' && manageOpen(false);
+    if (event.key !== 'Tab') manageOpen(false);
   };
 
   const onFocus = () => {
-    !isOpen && !keepClosed.current && manageOpen(true);
+    if (!isOpen && !keepClosed.current) manageOpen(true);
     if (keepClosed.current) {
       keepClosed.current = false;
     }

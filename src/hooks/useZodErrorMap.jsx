@@ -102,6 +102,7 @@ export const makeZodErrorMap = intl => {
               {includes: issue.validation.includes}
             );
 
+            // eslint-disable-next-line max-depth
             if (typeof issue.validation.position === 'number') {
               message = intl.formatMessage(
                 {
