@@ -1,14 +1,24 @@
+import {fn} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildForm} from 'api-mocks';
 import {withForm} from 'story-utils/decorators';
 
+import {CosignProvider} from './Context';
 import CosignDone from './CosignDone';
 
 export default {
   title: 'Views / Cosign / Done',
   component: CosignDone,
-  decorators: [withForm, withRouter],
+  decorators: [
+    (Story, {args}) => (
+      <CosignProvider reportDownloadUrl={args.reportDownloadUrl} onCosignComplete={fn()}>
+        <Story />
+      </CosignProvider>
+    ),
+    withForm,
+    withRouter,
+  ],
   args: {
     reportDownloadUrl: '#',
   },
