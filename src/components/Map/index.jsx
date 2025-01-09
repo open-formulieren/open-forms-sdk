@@ -2,7 +2,7 @@ import * as Leaflet from 'leaflet';
 import {GeoSearchControl} from 'leaflet-geosearch';
 import PropTypes from 'prop-types';
 import {useContext, useEffect, useRef} from 'react';
-import {defineMessages, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
@@ -20,36 +20,11 @@ import {getBEMClassName} from 'utils';
 import NearestAddress from './NearestAddress';
 import './map.scss';
 import OpenFormsProvider from './provider';
-
-const searchControlMessages = defineMessages({
-  buttonLabel: {
-    description: "The leaflet map's search button areaLabel text.",
-    defaultMessage: 'Map component search button',
-  },
-  searchLabel: {
-    description: "The leaflet map's input fields placeholder message.",
-    defaultMessage: 'Enter address, please',
-  },
-  notFound: {
-    description: "The leaflet map's location not found message.",
-    defaultMessage: 'Sorry, that address could not be found.',
-  },
-});
-
-const leafletGestureHandlingText = defineMessages({
-  touch: {
-    description: 'Gesturehandeling phone touch message.',
-    defaultMessage: 'Use two fingers to move the map',
-  },
-  scroll: {
-    description: 'Gesturehandeling pc scroll message.',
-    defaultMessage: 'Use ctrl + scroll to zoom the map',
-  },
-  scrollMac: {
-    description: 'Gesturehandeling mac scroll message.',
-    defaultMessage: 'Use \u2318 + scroll to zoom the map',
-  },
-});
+import {
+  applyLeafletTranslations,
+  leafletGestureHandlingText,
+  searchControlMessages,
+} from './translations';
 
 const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
@@ -94,6 +69,8 @@ const LeaftletMap = ({
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
+
+  applyLeafletTranslations(intl);
 
   const onFeatureCreate = event => {
     updateGeoJsonFeature(event.layer);
