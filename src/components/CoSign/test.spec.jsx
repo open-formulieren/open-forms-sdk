@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
 
-import {testLoginForm} from 'components/FormStart/fixtures';
+import {buildForm} from 'api-mocks';
 
 import {CoSignAuthentication} from './CoSignOld';
 
@@ -14,10 +14,27 @@ it('CoSign component constructs the right auth URL', () => {
     href: 'https://openforms.nl/form-name/step/step-name',
   };
 
+  const form = buildForm({
+    loginOptions: [
+      {
+        identifier: 'digid',
+        label: 'DigiD',
+        url: 'https://openforms.nl/auth/form-name/digid/start',
+        logo: {
+          title: 'DigiD',
+          imageSrc: 'https://openforms.nl/static/img/digid-46x46.71ea68346bbb.png',
+          href: 'https://www.digid.nl/',
+          appearance: 'dark',
+        },
+        isForGemachtigde: false,
+      },
+    ],
+  });
+
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
       <CoSignAuthentication
-        form={testLoginForm}
+        form={form}
         submissionUuid="111-222-333"
         authPlugin="digid"
         saveStepData={() => {}}
