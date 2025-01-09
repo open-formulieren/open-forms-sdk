@@ -4,7 +4,7 @@ import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
-import {testForm} from 'components/FormStart/fixtures';
+import {buildForm} from 'api-mocks';
 import {SubmissionSummary} from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
@@ -51,7 +51,7 @@ it('Summary displays logout button if isAuthenticated is true', () => {
   render(
     <Wrap>
       <SubmissionSummary
-        form={testForm}
+        form={buildForm()}
         submission={SUBMISSION}
         onConfirm={onConfirm}
         onDestroySession={onDestroySession}
@@ -64,10 +64,7 @@ it('Summary displays logout button if isAuthenticated is true', () => {
 });
 
 it('Summary does not display logout button if loginRequired is false', () => {
-  const formLoginRequired = {
-    ...testForm,
-    loginRequired: false,
-  };
+  const formLoginRequired = buildForm({loginRequired: false});
   const onDestroySession = vi.fn();
   const onConfirm = vi.fn();
 
@@ -99,7 +96,7 @@ it('Summary displays abort button if isAuthenticated is false', () => {
   render(
     <Wrap>
       <SubmissionSummary
-        form={testForm}
+        form={buildForm()}
         submission={SUBMISSION}
         onConfirm={onConfirm}
         onDestroySession={onDestroySession}
