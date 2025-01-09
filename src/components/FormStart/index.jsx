@@ -20,6 +20,7 @@ import AuthenticationOutage, {
 } from 'components/auth/AuthenticationOutage';
 import {UnprocessableEntity} from 'errors';
 import {IsFormDesigner} from 'headers';
+import useInitialDataReference from 'hooks/useInitialDataReference';
 import useStartSubmission from 'hooks/useStartSubmission';
 import useTitle from 'hooks/useTitle';
 import Types from 'types';
@@ -42,7 +43,7 @@ const FormStartMessage = ({form}) => {
  * This is shown when the form is initially loaded and provides the explicit user
  * action to start the form, or present the login button (DigiD, eHerkenning...)
  */
-const FormStart = ({form, submission, onFormStart, onDestroySession, initialDataReference}) => {
+const FormStart = ({form, submission, onFormStart, onDestroySession}) => {
   const hasActiveSubmission = !!submission;
   const isAuthenticated = hasActiveSubmission && submission.isAuthenticated;
   const doStart = useStartSubmission();
@@ -69,6 +70,8 @@ const FormStart = ({form, submission, onFormStart, onDestroySession, initialData
       await onFormStart();
     }
   }, [doStart, hasAuthErrors, onFormStart]);
+
+  const {initialDataReference} = useInitialDataReference();
 
   // do not re-render the login options while we're redirecting
   if (doStart && !hasAuthErrors) {
