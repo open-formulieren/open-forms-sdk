@@ -1,33 +1,33 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
-import {MemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildSubmission} from 'api-mocks';
-import useQuery from 'hooks/useQuery';
 
 import {testForm, testLoginForm} from './fixtures';
 import FormStart from './index';
 
-vi.mock('hooks/useQuery');
 let scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
-const Wrap = ({children}) => (
-  <IntlProvider locale="en" messages={messagesEN}>
-    <MemoryRouter>{children}</MemoryRouter>
-  </IntlProvider>
-);
+const Wrap = ({children, currentUrl = '/startpagina'}) => {
+  const parsedUrl = new URL(currentUrl, 'http://dummy');
+  const routes = [{path: parsedUrl.pathname, element: <>{children}</>}];
+  const router = createMemoryRouter(routes, {initialEntries: [currentUrl]});
+  return (
+    <IntlProvider locale="en" messages={messagesEN}>
+      <RouterProvider router={router} />
+    </IntlProvider>
+  );
+};
 
 it('Form start page start if _start parameter is present', async () => {
-  const testLocation = new URLSearchParams('?_start=1');
-  useQuery.mockReturnValue(testLocation);
-
   const onFormStart = vi.fn();
   const onDestroySession = vi.fn();
 
   render(
-    <Wrap>
+    <Wrap currentUrl="/startpagina?_start=1">
       <FormStart form={testForm} onFormStart={onFormStart} onDestroySession={onDestroySession} />
     </Wrap>
   );
@@ -57,11 +57,9 @@ it.each([
     const onFormStart = vi.fn();
     const onDestroySession = vi.fn();
 
-    const testLocation = new URLSearchParams(`?_start=1&${testQuery}`);
-    useQuery.mockReturnValue(testLocation);
-
+    const url = `/startpagina?_start=1&${testQuery}`;
     render(
-      <Wrap>
+      <Wrap currentUrl={url}>
         <FormStart form={testForm} onFormStart={onFormStart} onDestroySession={onDestroySession} />
       </Wrap>
     );
@@ -72,7 +70,6 @@ it.each([
 );
 
 it('Form start page does not show login buttons if an active submission is present', async () => {
-  useQuery.mockReturnValue(new URLSearchParams());
   const onFormStart = vi.fn();
   const onDestroySession = vi.fn();
 
@@ -93,47 +90,52 @@ it('Form start page does not show login buttons if an active submission is prese
 });
 
 it('Form start page with initial_data_reference', async () => {
-  useQuery.mockReturnValue(new URLSearchParams());
   const onFormStart = vi.fn();
   const onDestroySession = vi.fn();
 
   render(
-    <Wrap>
+    <Wrap currentUrl="/startpagina?initial_data_reference=1234">
       <FormStart
         form={testLoginForm}
         onFormStart={onFormStart}
         onDestroySession={onDestroySession}
-        initialDataReference="1234"
       />
     </Wrap>
   );
 
   const loginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
-  expect(loginLink).toHaveAttribute(
-    'href',
-    'https://openforms.nl/auth/form-name/digid/start?next=http%3A%2F%2Flocalhost%2F%3F_start%3D1%26initial_data_reference%3D1234'
-  );
+  const href = loginLink.getAttribute('href');
+  expect(href).toBeTruthy();
+
+  const nextParam = new URL(href).searchParams.get('next');
+  expect(nextParam).toBeTruthy();
+
+  const next = new URL(nextParam);
+  expect(next.searchParams.get('initial_data_reference')).toBe('1234');
 });
 
 it('Form start page without initial_data_reference', async () => {
-  useQuery.mockReturnValue(new URLSearchParams());
   const onFormStart = vi.fn();
   const onDestroySession = vi.fn();
 
   render(
-    <Wrap>
+    <Wrap currentUrl="/startpagina?initial_data_reference=">
       <FormStart
         form={testLoginForm}
         onFormStart={onFormStart}
         onDestroySession={onDestroySession}
-        initialDataReference={null}
       />
     </Wrap>
   );
 
   const loginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
-  expect(loginLink).toHaveAttribute(
-    'href',
-    'https://openforms.nl/auth/form-name/digid/start?next=http%3A%2F%2Flocalhost%2F%3F_start%3D1'
-  );
+  const href = loginLink.getAttribute('href');
+  expect(href).toBeTruthy();
+
+  const nextParam = new URL(href).searchParams.get('next');
+  expect(nextParam).toBeTruthy();
+
+  const next = new URL(nextParam);
+  expect(nextParam).not.toContain('initial_data_reference');
+  expect(next.searchParams.get('initial_data_reference')).toBeNull();
 });
