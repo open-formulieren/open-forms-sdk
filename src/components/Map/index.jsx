@@ -1,47 +1,30 @@
+import * as Leaflet from 'leaflet';
 import {GeoSearchControl} from 'leaflet-geosearch';
-import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import {useCallback, useContext, useEffect} from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {MapContainer, Marker, TileLayer, useMap, useMapEvent} from 'react-leaflet';
+import {useContext, useEffect, useRef} from 'react';
+import {useIntl} from 'react-intl';
+import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
-import {CRS_RD, DEFAULT_LAT_LNG, DEFAULT_ZOOM, TILE_LAYER_RD} from 'map/constants';
+import {
+  CRS_RD,
+  DEFAULT_INTERACTIONS,
+  DEFAULT_LAT_LNG,
+  DEFAULT_ZOOM,
+  TILE_LAYER_RD,
+} from 'map/constants';
 import {getBEMClassName} from 'utils';
 
 import NearestAddress from './NearestAddress';
+import './map.scss';
 import OpenFormsProvider from './provider';
-
-const searchControlMessages = defineMessages({
-  buttonLabel: {
-    description: "The leaflet map's search button areaLabel text.",
-    defaultMessage: 'Map component search button',
-  },
-  searchLabel: {
-    description: "The leaflet map's input fields placeholder message.",
-    defaultMessage: 'Enter address, please',
-  },
-  notFound: {
-    description: "The leaflet map's location not found message.",
-    defaultMessage: 'Sorry, that address could not be found.',
-  },
-});
-
-const leafletGestureHandlingText = defineMessages({
-  touch: {
-    description: 'Gesturehandeling phone touch message.',
-    defaultMessage: 'Use two fingers to move the map',
-  },
-  scroll: {
-    description: 'Gesturehandeling pc scroll message.',
-    defaultMessage: 'Use ctrl + scroll to zoom the map',
-  },
-  scrollMac: {
-    description: 'Gesturehandeling mac scroll message.',
-    defaultMessage: 'Use \u2318 + scroll to zoom the map',
-  },
-});
+import {
+  applyLeafletTranslations,
+  leafletGestureHandlingText,
+  searchControlMessages,
+} from './translations';
 
 const useDefaultCoordinates = () => {
   // FIXME: can't call hooks conditionally
@@ -60,26 +43,63 @@ const useDefaultCoordinates = () => {
   return [latitude, longitude];
 };
 
+const getCoordinates = geoJsonFeature => {
+  if (!geoJsonFeature) {
+    return null;
+  }
+
+  const center = Leaflet.geoJSON(geoJsonFeature).getBounds().getCenter();
+  return [center.lat, center.lng];
+};
+
 const LeaftletMap = ({
-  markerCoordinates,
-  onMarkerSet,
+  geoJsonFeature,
+  onGeoJsonFeatureSet,
   defaultCenter = DEFAULT_LAT_LNG,
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
+  interactions = DEFAULT_INTERACTIONS,
   tileLayerUrl = TILE_LAYER_RD.url,
 }) => {
+  const featureGroupRef = useRef();
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
-  const coordinates = markerCoordinates || defaultCoordinates;
-
-  const onWrapperMarkerSet = coordinates => {
-    const coordinatesChanged = !isEqual(markerCoordinates, coordinates);
-    if (!coordinatesChanged) return;
-    onMarkerSet(coordinates);
-  };
+  const geoJsonCoordinates = getCoordinates(geoJsonFeature);
+  const coordinates = geoJsonCoordinates ?? defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
+
+  applyLeafletTranslations(intl);
+
+  const onFeatureCreate = event => {
+    updateGeoJsonFeature(event.layer);
+  };
+
+  const onFeatureDelete = () => {
+    // The value `null` is needed to make sure that Formio actually updates the value.
+    // node_modules/formiojs/components/_classes/component/Component.js:2528
+    onGeoJsonFeatureSet(null);
+  };
+
+  const onSearchMarkerSet = event => {
+    updateGeoJsonFeature(event.marker);
+  };
+
+  const updateGeoJsonFeature = newFeatureLayer => {
+    if (featureGroupRef.current) {
+      const newFeatureLayerId = newFeatureLayer._leaflet_id;
+      const layers = featureGroupRef.current?.getLayers();
+      // Limit the amount of features to 1, by removing the previous layer
+      if (layers.length > 1) {
+        const oldLayerId = layers
+          .map(layer => layer._leaflet_id)
+          .filter(layerId => layerId !== newFeatureLayerId);
+        featureGroupRef.current?.removeLayer(oldLayerId[0]);
+      }
+    }
+    onGeoJsonFeatureSet(newFeatureLayer.toGeoJSON());
+  };
 
   return (
     <>
@@ -101,38 +121,78 @@ const LeaftletMap = ({
         }}
       >
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
-        {coordinates ? (
-          <>
-            <MapView coordinates={coordinates} />
-            <MarkerWrapper position={coordinates} onMarkerSet={onWrapperMarkerSet} />
-          </>
-        ) : null}
-        <SearchControl
-          onMarkerSet={onMarkerSet}
-          options={{
-            showMarker: false,
-            showPopup: false,
-            retainZoomLevel: false,
-            animateZoom: true,
-            autoClose: false,
-            searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
-            keepResult: true,
-            updateMap: true,
-            notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
-          }}
-        />
-        {disabled ? <DisabledMapControls /> : <CaptureClick setMarker={onMarkerSet} />}
+        <FeatureGroup ref={featureGroupRef}>
+          {!disabled && (
+            <EditControl
+              position="topright"
+              onCreated={onFeatureCreate}
+              onDeleted={onFeatureDelete}
+              edit={{
+                edit: false,
+              }}
+              draw={{
+                rectangle: false,
+                circle: false,
+                polyline: !!interactions?.polyline,
+                polygon: !!interactions?.polygon,
+                marker: !!interactions?.marker,
+                circlemarker: false,
+              }}
+            />
+          )}
+        </FeatureGroup>
+        {coordinates && <MapView coordinates={coordinates} />}
+        {!disabled && (
+          <SearchControl
+            onMarkerSet={onSearchMarkerSet}
+            options={{
+              showMarker: false,
+              showPopup: false,
+              retainZoomLevel: false,
+              animateZoom: true,
+              autoClose: false,
+              searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
+              keepResult: true,
+              updateMap: true,
+              notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
+            }}
+          />
+        )}
+        {disabled && <DisabledMapControls />}
       </MapContainer>
-      {markerCoordinates && markerCoordinates.length && (
-        <NearestAddress coordinates={markerCoordinates} />
+      {geoJsonCoordinates && geoJsonCoordinates.length && (
+        <NearestAddress coordinates={geoJsonCoordinates} />
       )}
     </>
   );
 };
 
 LeaftletMap.propTypes = {
-  markerCoordinates: PropTypes.arrayOf(PropTypes.number),
-  onMarkerSet: PropTypes.func,
+  geoJsonFeature: PropTypes.shape({
+    type: PropTypes.oneOf(['Feature']).isRequired,
+    properties: PropTypes.object,
+    geometry: PropTypes.oneOfType([
+      PropTypes.shape({
+        type: PropTypes.oneOf(['Point']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(['LineString']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(['Polygon']).isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)))
+          .isRequired,
+      }),
+    ]).isRequired,
+  }),
+  onGeoJsonFeatureSet: PropTypes.func,
+  interactions: PropTypes.shape({
+    polyline: PropTypes.bool,
+    polygon: PropTypes.bool,
+    marker: PropTypes.bool,
+  }),
   disabled: PropTypes.bool,
   tileLayerUrl: PropTypes.string,
 };
@@ -172,15 +232,6 @@ const SearchControl = ({onMarkerSet, options}) => {
 
   const buttonLabel = intl.formatMessage(searchControlMessages.buttonLabel);
 
-  const setMarker = useCallback(
-    result => {
-      if (result.location) {
-        onMarkerSet([result.location.y, result.location.x]);
-      }
-    },
-    [onMarkerSet]
-  );
-
   useEffect(() => {
     const provider = new OpenFormsProvider(baseUrl);
     const searchControl = new GeoSearchControl({
@@ -199,15 +250,15 @@ const SearchControl = ({onMarkerSet, options}) => {
 
     searchControl.button.setAttribute('aria-label', buttonLabel);
     map.addControl(searchControl);
-    map.on('geosearch/showlocation', setMarker);
+    map.on('geosearch/showlocation', onMarkerSet);
 
     return () => {
-      map.off('geosearch/showlocation', setMarker);
+      map.off('geosearch/showlocation', onMarkerSet);
       map.removeControl(searchControl);
     };
   }, [
     map,
-    setMarker,
+    onMarkerSet,
     baseUrl,
     showMarker,
     showPopup,
@@ -239,24 +290,6 @@ SearchControl.propTypes = {
   }),
 };
 
-const MarkerWrapper = ({position, onMarkerSet, ...props}) => {
-  const shouldSetMarker = !!(position && position.length === 2);
-
-  useEffect(() => {
-    if (!shouldSetMarker) return;
-    if (!onMarkerSet) return;
-    onMarkerSet(position);
-  });
-
-  // only render a marker if we explicitly have a marker
-  return shouldSetMarker ? <Marker position={position} {...props} /> : null;
-};
-
-MarkerWrapper.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  onMarkerSet: PropTypes.func,
-};
-
 const DisabledMapControls = () => {
   const map = useMap();
   useEffect(() => {
@@ -269,18 +302,6 @@ const DisabledMapControls = () => {
     if (map.tap) map.tap.disable();
   }, [map]);
   return null;
-};
-
-const CaptureClick = ({setMarker}) => {
-  useMapEvent('click', event => {
-    const newLatLng = [event.latlng.lat, event.latlng.lng];
-    setMarker(newLatLng);
-  });
-  return null;
-};
-
-CaptureClick.propTypes = {
-  setMarker: PropTypes.func.isRequired,
 };
 
 export default LeaftletMap;

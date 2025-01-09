@@ -43,10 +43,28 @@
       "value": "."
     }
   ],
+  "+KBbXH": [
+    {
+      "type": 0,
+      "value": "Click to start drawing shape"
+    }
+  ],
+  "+W79Dr": [
+    {
+      "type": 0,
+      "value": "Click to continue drawing line"
+    }
+  ],
   "+uwsgF": [
     {
       "type": 0,
       "value": "Location and time"
+    }
+  ],
+  "/yX9Xl": [
+    {
+      "type": 0,
+      "value": "Cancel drawing"
     }
   ],
   "0j8tMq": [
@@ -79,6 +97,12 @@
     {
       "type": 0,
       "value": "Something went wrong while presenting the login option. Please contact the municipality."
+    }
+  ],
+  "2D6ubj": [
+    {
+      "type": 0,
+      "value": "Line"
     }
   ],
   "2HHJrq": [
@@ -117,6 +141,12 @@
       "value": "Loading..."
     }
   ],
+  "4ZOmtU": [
+    {
+      "type": 0,
+      "value": "Save changes"
+    }
+  ],
   "4gPdgK": [
     {
       "type": 0,
@@ -127,6 +157,12 @@
     {
       "type": 0,
       "value": "Verify"
+    }
+  ],
+  "4ui8R+": [
+    {
+      "type": 0,
+      "value": "Click last point to finish line"
     }
   ],
   "5uh2hS": [
@@ -153,6 +189,12 @@
     {
       "type": 0,
       "value": "Check and co-sign submission"
+    }
+  ],
+  "62SBjV": [
+    {
+      "type": 0,
+      "value": "Shape (polygon)"
     }
   ],
   "6GNK65": [
@@ -449,6 +491,12 @@
       "value": "provider"
     }
   ],
+  "B/W1uC": [
+    {
+      "type": 0,
+      "value": "Remove shapes"
+    }
+  ],
   "BL1Ehr": [
     {
       "type": 0,
@@ -477,6 +525,12 @@
     {
       "type": 0,
       "value": "This form is currently undergoing maintenance and can not be accessed at the moment."
+    }
+  ],
+  "D6TdPW": [
+    {
+      "type": 0,
+      "value": "Click map to place marker"
     }
   ],
   "DBTNgI": [
@@ -665,6 +719,18 @@
       "value": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
     }
   ],
+  "HY6Irs": [
+    {
+      "type": 0,
+      "value": "Cancel changes"
+    }
+  ],
+  "HgLr1F": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "HhcSoc": [
     {
       "type": 0,
@@ -675,6 +741,12 @@
     {
       "type": 0,
       "value": "Invalid input."
+    }
+  ],
+  "Hkq6NE": [
+    {
+      "type": 0,
+      "value": "Finish drawing"
     }
   ],
   "I6ok5N": [
@@ -973,6 +1045,12 @@
       "value": "Payment"
     }
   ],
+  "N2sZnS": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
   "OnfuIr": [
     {
       "options": {
@@ -1005,6 +1083,12 @@
       "value": "withAsterisk"
     }
   ],
+  "Op4orj": [
+    {
+      "type": 0,
+      "value": "No shapes to remove"
+    }
+  ],
   "P194bo": [
     {
       "type": 0,
@@ -1029,6 +1113,12 @@
     {
       "type": 0,
       "value": "Invalid input."
+    }
+  ],
+  "Q6/Lj7": [
+    {
+      "type": 0,
+      "value": "Remove last drawn point"
     }
   ],
   "QPdaOi": [
@@ -1223,6 +1313,12 @@
       "value": "."
     }
   ],
+  "U5+FHP": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1295,6 +1391,12 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "Y3jHZm": [
+    {
+      "type": 0,
+      "value": "Remove last point"
     }
   ],
   "YcC4PD": [
@@ -1423,6 +1525,12 @@
       "value": "Contact details"
     }
   ],
+  "bRtoG6": [
+    {
+      "type": 0,
+      "value": "Remove all"
+    }
+  ],
   "bgfiRG": [
     {
       "type": 0,
@@ -1465,6 +1573,12 @@
       "value": "Back to form start"
     }
   ],
+  "dNGw+S": [
+    {
+      "type": 0,
+      "value": "Click to continue drawing shape"
+    }
+  ],
   "eAmrdi": [
     {
       "type": 0,
@@ -1481,6 +1595,12 @@
     {
       "type": 0,
       "value": "Processing..."
+    }
+  ],
+  "fJVa0u": [
+    {
+      "type": 0,
+      "value": "Marker"
     }
   ],
   "fWjfVm": [
@@ -2075,6 +2195,12 @@
       "value": "Find address"
     }
   ],
+  "sYb+eZ": [
+    {
+      "type": 0,
+      "value": "Remove all shapes"
+    }
+  ],
   "senRv3": [
     {
       "type": 0,
@@ -2215,10 +2341,22 @@
       "value": "Amount"
     }
   ],
+  "vfKvuS": [
+    {
+      "type": 0,
+      "value": "Click first point to finish shape"
+    }
+  ],
   "wwsWUp": [
     {
       "type": 0,
       "value": "How do you rate this form?"
+    }
+  ],
+  "xh+7Vv": [
+    {
+      "type": 0,
+      "value": "Finish"
     }
   ],
   "y31iyC": [
@@ -2245,6 +2383,12 @@
     {
       "type": 0,
       "value": "Return to main website"
+    }
+  ],
+  "zpHAro": [
+    {
+      "type": 0,
+      "value": "Click to start drawing line"
     }
   ],
   "zvoXSU": [
