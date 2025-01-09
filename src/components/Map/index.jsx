@@ -97,22 +97,33 @@ const LeaftletMap = ({
   const className = getBEMClassName('leaflet-map', modifiers);
 
   const onFeatureCreate = event => {
-    onGeoJsonFeatureSet(event.layer.toGeoJSON());
+    updateGeoJsonFeature(event.layer);
+  };
+
+  const onFeatureDelete = () => {
+    // The value `null` is needed to make sure that Formio actually updates the value.
+    // node_modules/formiojs/components/_classes/component/Component.js:2528
+    onGeoJsonFeatureSet(null);
   };
 
   const onSearchMarkerSet = event => {
-    onGeoJsonFeatureSet(event.marker.toGeoJSON());
+    updateGeoJsonFeature(event.marker);
   };
 
-  useEffect(() => {
-    if (!featureGroupRef.current) {
-      return;
+  const updateGeoJsonFeature = newFeatureLayer => {
+    if (featureGroupRef.current) {
+      const newFeatureLayerId = newFeatureLayer._leaflet_id;
+      const layers = featureGroupRef.current?.getLayers();
+      // Limit the amount of features to 1, by removing the previous layer
+      if (layers.length > 1) {
+        const oldLayerId = layers
+          .map(layer => layer._leaflet_id)
+          .filter(layerId => layerId !== newFeatureLayerId);
+        featureGroupRef.current?.removeLayer(oldLayerId[0]);
+      }
     }
-    // Remove the old layers and add the new one.
-    // This limits the amount of features to 1
-    featureGroupRef.current?.clearLayers();
-    featureGroupRef.current?.addLayer(Leaflet.geoJSON(geoJsonFeature));
-  });
+    onGeoJsonFeatureSet(newFeatureLayer.toGeoJSON());
+  };
 
   return (
     <>
@@ -139,9 +150,9 @@ const LeaftletMap = ({
             <EditControl
               position="topright"
               onCreated={onFeatureCreate}
+              onDeleted={onFeatureDelete}
               edit={{
                 edit: false,
-                remove: false,
               }}
               draw={{
                 rectangle: false,
