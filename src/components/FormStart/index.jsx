@@ -20,6 +20,7 @@ import AuthenticationOutage, {
 } from 'components/auth/AuthenticationOutage';
 import {UnprocessableEntity} from 'errors';
 import {IsFormDesigner} from 'headers';
+import useFormContext from 'hooks/useFormContext';
 import useInitialDataReference from 'hooks/useInitialDataReference';
 import useStartSubmission from 'hooks/useStartSubmission';
 import useTitle from 'hooks/useTitle';
@@ -43,7 +44,8 @@ const FormStartMessage = ({form}) => {
  * This is shown when the form is initially loaded and provides the explicit user
  * action to start the form, or present the login button (DigiD, eHerkenning...)
  */
-const FormStart = ({form, submission, onFormStart, onDestroySession}) => {
+const FormStart = ({submission, onFormStart, onDestroySession}) => {
+  const form = useFormContext();
   const hasActiveSubmission = !!submission;
   const isAuthenticated = hasActiveSubmission && submission.isAuthenticated;
   const doStart = useStartSubmission();
@@ -144,7 +146,6 @@ const FormStart = ({form, submission, onFormStart, onDestroySession}) => {
 };
 
 FormStart.propTypes = {
-  form: Types.Form.isRequired,
   submission: Types.Submission,
   onFormStart: PropTypes.func.isRequired,
   onDestroySession: PropTypes.func.isRequired,
