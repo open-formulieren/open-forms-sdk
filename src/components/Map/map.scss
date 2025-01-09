@@ -1,0 +1,16 @@
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet-draw/dist/leaflet.draw.css';
+
+.leaflet-container .leaflet-draw-actions {
+  // Make sure all action bars are the same height
+  a,
+  &.leaflet-draw-actions-top a,
+  &.leaflet-draw-actions-bottom a {
+    height: 30px;
+    line-height: 30px;
+  }
+
+  a {
+    color: #fff;
+  }
+}

@@ -1,7 +1,5 @@
 import * as Leaflet from 'leaflet';
-import 'leaflet-draw/dist/leaflet.draw.css';
 import {GeoSearchControl} from 'leaflet-geosearch';
-import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
 import {useContext, useEffect, useRef} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
@@ -20,6 +18,7 @@ import {
 import {getBEMClassName} from 'utils';
 
 import NearestAddress from './NearestAddress';
+import './map.scss';
 import OpenFormsProvider from './provider';
 
 const searchControlMessages = defineMessages({
