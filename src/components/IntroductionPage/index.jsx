@@ -8,14 +8,17 @@ import Body from 'components/Body';
 import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
+import useInitialDataReference from 'hooks/useInitialDataReference';
 
-const IntroductionPage = ({extraParams = {}}) => {
+const IntroductionPage = () => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
+  const {addInitialDataReference} = useInitialDataReference();
+
+  const startPageUrl = addInitialDataReference('startpagina');
   if (!introductionPageContent) {
-    return <Navigate replace to="startpagina" />;
+    return <Navigate replace to={startPageUrl} />;
   }
-  let startUrl = '/startpagina';
-  if (extraParams) startUrl = `${startUrl}?${new URLSearchParams(extraParams).toString()}`;
+
   return (
     <Card title={name}>
       <Body
@@ -25,7 +28,7 @@ const IntroductionPage = ({extraParams = {}}) => {
       />
 
       <Link
-        to={startUrl}
+        to={startPageUrl}
         component={ButtonLink}
         appearance="primary-action-button"
         className="openforms-start-link"

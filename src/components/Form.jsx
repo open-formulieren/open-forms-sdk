@@ -17,7 +17,6 @@ import {destroy, get} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
-import IntroductionPage from 'components/IntroductionPage';
 import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
@@ -127,7 +126,7 @@ const Form = () => {
   const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
-  const {steps, introductionPageContent = ''} = form;
+  const {steps} = form;
   const config = useContext(ConfigContext);
 
   // This has to do with a data reference if it is provided by the external party
@@ -362,22 +361,9 @@ const Form = () => {
 
   if (state.startingError) throw state.startingError;
 
-  let startPageUrl = introductionPageContent ? 'introductie' : 'startpagina';
-  const extraStartUrlParams = {};
-  if (initialDataReference) {
-    extraStartUrlParams.initial_data_reference = initialDataReference;
-    startPageUrl = `${startPageUrl}?${new URLSearchParams(extraStartUrlParams).toString()}`;
-  }
-
   // Route the correct page based on URL
   const router = (
     <Routes>
-      <Route
-        path="introductie"
-        // Ensure the initialDataReference is preserved when continuing to the Form start
-        element={<IntroductionPage extraParams={extraStartUrlParams} />}
-      />
-
       <Route
         path="startpagina"
         element={
