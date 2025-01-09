@@ -44,7 +44,7 @@ export default class Map extends Field {
   }
 
   get emptyValue() {
-    return '';
+    return undefined;
   }
 
   /**
@@ -90,8 +90,8 @@ export default class Map extends Field {
     super.destroy();
   }
 
-  onGeoJsonSet(newLatLng) {
-    this.setValue(newLatLng, {modified: true});
+  onGeoJsonSet(newGeoJson) {
+    this.setValue(newGeoJson, {modified: true});
   }
 
   renderReact() {
@@ -123,6 +123,11 @@ export default class Map extends Field {
   }
 
   setValue(value, flags = {}) {
+    if (value === null) {
+      // The `resetValue` flag is needed to allow the setting of `undefined` or `null` values.
+      // node_modules/formiojs/components/_classes/component/Component.js:2526
+      flags.resetValue = true;
+    }
     const changed = super.setValue(value, flags);
     // re-render if the value is set, which may be because of existing submission data
     if (changed) this.renderReact();
