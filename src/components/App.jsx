@@ -2,7 +2,7 @@ import {Navigate, Outlet, useMatch} from 'react-router-dom';
 
 import {Cosign, cosignRoutes} from 'components/CoSign';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import Form from 'components/Form';
+import Form, {formRoutes} from 'components/Form';
 import SessionExpired from 'components/Sessions/SessionExpired';
 import {
   CreateAppointment,
@@ -44,6 +44,7 @@ export const routes = [
         <Form />
       </ErrorBoundary>
     ),
+    children: formRoutes,
   },
 ];
 

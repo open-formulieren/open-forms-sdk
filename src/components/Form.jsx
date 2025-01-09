@@ -1,6 +1,14 @@
 import {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
-import {Navigate, Route, Routes, useLocation, useMatch, useNavigate} from 'react-router-dom';
+import {
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useMatch,
+  useNavigate,
+} from 'react-router-dom';
 import {useAsync, usePrevious} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
@@ -364,8 +372,6 @@ const Form = () => {
   // Route the correct page based on URL
   const router = (
     <Routes>
-      <Route path="" element={<Navigate replace to={startPageUrl} />} />
-
       <Route
         path="introductie"
         // Ensure the initialDataReference is preserved when continuing to the Form start
@@ -462,6 +468,7 @@ const Form = () => {
   return (
     <FormDisplay progressIndicator={progressIndicator}>
       <AnalyticsToolsConfigContext.Provider value={analyticsToolsConfigInfo}>
+        <Outlet />
         {router}
       </AnalyticsToolsConfigContext.Provider>
     </FormDisplay>
@@ -471,3 +478,4 @@ const Form = () => {
 Form.propTypes = {};
 
 export default Form;
+export {default as formRoutes} from './formRoutes';
