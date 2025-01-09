@@ -3,21 +3,35 @@ import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
-import {buildSubmission} from 'api-mocks';
+import {FormContext} from 'Context';
+import {buildForm, buildSubmission} from 'api-mocks';
 
-import {testForm, testLoginForm} from './fixtures';
 import FormStart from './index';
 
 let scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
-const Wrap = ({children, currentUrl = '/startpagina'}) => {
+beforeEach(() => {
+  localStorage.clear();
+});
+
+afterEach(() => {
+  localStorage.clear();
+});
+
+afterAll(() => {
+  vi.clearAllMocks();
+});
+
+const Wrap = ({form = buildForm(), children, currentUrl = '/startpagina'}) => {
   const parsedUrl = new URL(currentUrl, 'http://dummy');
   const routes = [{path: parsedUrl.pathname, element: <>{children}</>}];
   const router = createMemoryRouter(routes, {initialEntries: [currentUrl]});
   return (
     <IntlProvider locale="en" messages={messagesEN}>
-      <RouterProvider router={router} />
+      <FormContext.Provider value={form}>
+        <RouterProvider router={router} />
+      </FormContext.Provider>
     </IntlProvider>
   );
 };
@@ -28,7 +42,7 @@ it('Form start page start if _start parameter is present', async () => {
 
   render(
     <Wrap currentUrl="/startpagina?_start=1">
-      <FormStart form={testForm} onFormStart={onFormStart} onDestroySession={onDestroySession} />
+      <FormStart onFormStart={onFormStart} onDestroySession={onDestroySession} />
     </Wrap>
   );
 
@@ -60,12 +74,12 @@ it.each([
     const url = `/startpagina?_start=1&${testQuery}`;
     render(
       <Wrap currentUrl={url}>
-        <FormStart form={testForm} onFormStart={onFormStart} onDestroySession={onDestroySession} />
+        <FormStart onFormStart={onFormStart} onDestroySession={onDestroySession} />
       </Wrap>
     );
 
     expect(await screen.findByText(expectedMessage)).toBeVisible();
-    expect(onFormStart).toHaveBeenCalledTimes(0);
+    expect(onFormStart).not.toHaveBeenCalled();
   }
 );
 
@@ -76,7 +90,6 @@ it('Form start page does not show login buttons if an active submission is prese
   render(
     <Wrap>
       <FormStart
-        form={testForm}
         onFormStart={onFormStart}
         onDestroySession={onDestroySession}
         submission={buildSubmission({isAuthenticated: false})}
@@ -92,14 +105,26 @@ it('Form start page does not show login buttons if an active submission is prese
 it('Form start page with initial_data_reference', async () => {
   const onFormStart = vi.fn();
   const onDestroySession = vi.fn();
+  const form = buildForm({
+    loginOptions: [
+      {
+        identifier: 'digid',
+        label: 'DigiD',
+        url: 'https://openforms.nl/auth/form-name/digid/start',
+        logo: {
+          title: 'DigiD',
+          imageSrc: 'https://openforms.nl/static/img/digid-46x46.71ea68346bbb.png',
+          href: 'https://www.digid.nl/',
+          appearance: 'dark',
+        },
+        isForGemachtigde: false,
+      },
+    ],
+  });
 
   render(
-    <Wrap currentUrl="/startpagina?initial_data_reference=1234">
-      <FormStart
-        form={testLoginForm}
-        onFormStart={onFormStart}
-        onDestroySession={onDestroySession}
-      />
+    <Wrap form={form} currentUrl="/startpagina?initial_data_reference=1234">
+      <FormStart onFormStart={onFormStart} onDestroySession={onDestroySession} />
     </Wrap>
   );
 
@@ -117,14 +142,26 @@ it('Form start page with initial_data_reference', async () => {
 it('Form start page without initial_data_reference', async () => {
   const onFormStart = vi.fn();
   const onDestroySession = vi.fn();
+  const form = buildForm({
+    loginOptions: [
+      {
+        identifier: 'digid',
+        label: 'DigiD',
+        url: 'https://openforms.nl/auth/form-name/digid/start',
+        logo: {
+          title: 'DigiD',
+          imageSrc: 'https://openforms.nl/static/img/digid-46x46.71ea68346bbb.png',
+          href: 'https://www.digid.nl/',
+          appearance: 'dark',
+        },
+        isForGemachtigde: false,
+      },
+    ],
+  });
 
   render(
-    <Wrap currentUrl="/startpagina?initial_data_reference=">
-      <FormStart
-        form={testLoginForm}
-        onFormStart={onFormStart}
-        onDestroySession={onDestroySession}
-      />
+    <Wrap form={form} currentUrl="/startpagina?initial_data_reference=">
+      <FormStart onFormStart={onFormStart} onDestroySession={onDestroySession} />
     </Wrap>
   );
 
