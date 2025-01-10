@@ -19,9 +19,16 @@ const AppDebug = () => {
     <div className="debug-info-container" title="Debug information (only available in dev)">
       <DebugInfo label="Current locale" value={locale} />
       <DebugInfo label="Session expires at">
-        <FormattedDate value={expiry} hour="numeric" minute="numeric" second="numeric" />
-        &nbsp;(
-        <FormattedRelativeTime value={expiryDelta} numeric="auto" updateIntervalInSeconds={1} />)
+        {expiry ? (
+          <>
+            <FormattedDate value={expiry} hour="numeric" minute="numeric" second="numeric" />
+            &nbsp;(
+            <FormattedRelativeTime value={expiryDelta} numeric="auto" updateIntervalInSeconds={1} />
+            )
+          </>
+        ) : (
+          '-'
+        )}
       </DebugInfo>
       <DebugInfo label="SDK version">{getVersion()}</DebugInfo>
     </div>
