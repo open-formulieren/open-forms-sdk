@@ -6,22 +6,19 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {buildForm} from 'api-mocks';
 import {LiteralsProvider} from 'components/Literal';
+import {START_FORM_QUERY_PARAM} from 'components/constants';
 
 import LoginOptions from './index';
 
-const Wrapper = ({form, onFormStart}) => {
-  const router = createMemoryRouter(
-    [
-      {
-        path: '/',
-        element: <LoginOptions form={form} onFormStart={onFormStart} />,
-      },
-    ],
+const Wrapper = ({form, onFormStart, currentUrl = '/'}) => {
+  const parsedUrl = new URL(currentUrl, 'http://dummy');
+  const routes = [
     {
-      initialEntries: ['/'],
-      initialIndex: 0,
-    }
-  );
+      path: parsedUrl.pathname,
+      element: <LoginOptions form={form} onFormStart={onFormStart} />,
+    },
+  ];
+  const router = createMemoryRouter(routes, {initialEntries: [currentUrl]});
 
   return (
     <IntlProvider locale="nl" messages={messagesNL}>
@@ -35,7 +32,7 @@ const Wrapper = ({form, onFormStart}) => {
 it('Login not required, options wrapped in form tag', async () => {
   const user = userEvent.setup();
   const form = buildForm({loginRequired: false, loginOptions: [], cosignLoginOptions: []});
-  const onFormStart = vi.fn(e => e.preventDefault());
+  const onFormStart = vi.fn();
 
   render(<Wrapper form={form} onFormStart={onFormStart} />);
 
@@ -46,7 +43,7 @@ it('Login not required, options wrapped in form tag', async () => {
 
   await user.click(anonymousStartButton);
 
-  expect(onFormStart).toHaveBeenCalled();
+  expect(onFormStart).toHaveBeenCalledWith({isAnonymous: true});
 });
 
 it('Login required, options not wrapped in form tag', async () => {
@@ -68,27 +65,22 @@ it('Login required, options not wrapped in form tag', async () => {
     ],
     cosignLoginOptions: [],
   });
-  const onFormStart = vi.fn(e => e.preventDefault());
-
-  const {location} = window;
-  delete window.location;
-  window.location = {
-    href: 'https://open-forms.nl/digid-form/',
-  };
+  const onFormStart = vi.fn();
 
   render(<Wrapper form={form} onFormStart={onFormStart} />);
 
-  const expectedUrl = new URL(form.loginOptions[0].url);
-  expectedUrl.searchParams.set('next', 'https://open-forms.nl/digid-form/?_start=1');
-
   const digidLoginLink = await screen.findByRole('link', {name: 'Inloggen met DigiD'});
   expect(digidLoginLink).toBeVisible();
-  expect(digidLoginLink.href).toEqual(expectedUrl.toString());
+  const loginHref = new URL(digidLoginLink.getAttribute('href'));
+  expect(loginHref.origin).toBe('https://open-forms.nl');
+  expect(loginHref.pathname).toBe('/auth/form-slug/digid/start');
+
+  const nextUrl = new URL(loginHref.searchParams.get('next'));
+  expect(nextUrl.pathname).toBe('/');
+  expect(nextUrl.searchParams.get(START_FORM_QUERY_PARAM)).not.toBeNull();
 
   expect(screen.queryByTestId('start-form')).not.toBeInTheDocument();
   expect(screen.queryAllByRole('button')).toHaveLength(0);
-
-  window.location = location;
 });
 
 it('Login button has the right URL after cancelling log in', async () => {
@@ -110,23 +102,26 @@ it('Login button has the right URL after cancelling log in', async () => {
     ],
     cosignLoginOptions: [],
   });
+  const onFormStart = vi.fn();
 
-  const onFormStart = vi.fn(e => e.preventDefault());
+  render(
+    <Wrapper
+      form={form}
+      onFormStart={onFormStart}
+      currentUrl="/?_start=1&_digid-message=login-cancelled"
+    />
+  );
 
-  const {location} = window;
-  delete window.location;
-  window.location = {
-    href: 'https://open-forms.nl/digid-form/?_start=1&_digid-message=login-cancelled',
-  };
-
-  render(<Wrapper form={form} onFormStart={onFormStart} />);
-
-  const expectedUrl = new URL(form.loginOptions[0].url);
-  expectedUrl.searchParams.set('next', 'https://open-forms.nl/digid-form/?_start=1');
+  expect(onFormStart).not.toHaveBeenCalled();
 
   const digidLoginLink = await screen.findByRole('link', {name: 'Inloggen met DigiD'});
   expect(digidLoginLink).toBeVisible();
-  expect(digidLoginLink.href).toEqual(expectedUrl.toString());
+  const loginHref = new URL(digidLoginLink.getAttribute('href'));
+  expect(loginHref.origin).toBe('https://open-forms.nl');
+  expect(loginHref.pathname).toBe('/auth/form-slug/digid/start');
 
-  window.location = location;
+  const nextUrl = new URL(loginHref.searchParams.get('next'));
+  expect(nextUrl.pathname).toBe('/');
+  expect(nextUrl.searchParams.get(START_FORM_QUERY_PARAM)).not.toBeNull();
+  expect(nextUrl.searchParams.get('_digid-message')).toBeNull();
 });
