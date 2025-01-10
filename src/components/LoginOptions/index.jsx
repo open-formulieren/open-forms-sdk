@@ -65,7 +65,7 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOpt
     : {
         onSubmit: async e => {
           e.preventDefault();
-          await onFormStart(e, true);
+          await onFormStart({isAnonymous: true});
         },
         'data-testid': 'start-form',
       };

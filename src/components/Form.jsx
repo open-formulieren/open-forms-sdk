@@ -1,4 +1,5 @@
-import {useContext, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import React, {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {
   Navigate,
@@ -15,7 +16,6 @@ import {useImmerReducer} from 'use-immer';
 import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
 import {destroy, get} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
@@ -30,13 +30,14 @@ import {
   SUBMISSION_ALLOWED,
 } from 'components/constants';
 import {findNextApplicableStep} from 'components/utils';
-import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
+import {flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
+import Types from 'types';
 
 import FormDisplay from './FormDisplay';
 import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
@@ -129,10 +130,6 @@ const Form = () => {
   const {steps} = form;
   const config = useContext(ConfigContext);
 
-  // This has to do with a data reference if it is provided by the external party
-  // It will be used in the backend for retrieving additional information from the API
-  const initialDataReference = queryParams?.get('initial_data_reference');
-
   // load the state management/reducer
   const initialStateFromProps = {...initialState, step: steps[0]};
   const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
@@ -155,7 +152,7 @@ const Form = () => {
     onSubmissionLoaded
   );
 
-  const [, expiryDate, resetSession] = useSessionTimeout();
+  const [, expiryDate] = useSessionTimeout();
 
   const {value: analyticsToolsConfigInfo, loading: loadingAnalyticsConfig} = useAsync(async () => {
     return await get(`${config.baseUrl}analytics/analytics-tools-config-info`);
@@ -174,48 +171,13 @@ const Form = () => {
     [intl.locale, prevLocale, removeSubmissionId, state.submission] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  /**
-   * When the form is started, create a submission and add it to the state.
-   *
-   * @param  {Event} event The DOM event, could be a button click or a custom event.
-   * @return {Void}
-   */
-  const onFormStart = async (event, anonymous = false) => {
-    if (event) event.preventDefault();
-
-    // required to get rid of the error message saying the session is expired - once
-    // you start a new submission, any previous call history should be discarded.
-    resetSession();
-
-    if (state.submission != null) {
-      onSubmissionLoaded(state.submission);
-      return;
-    }
-
-    let submission;
-    try {
-      submission = await createSubmission(
-        config.baseUrl,
-        form,
-        config.clientBaseUrl,
-        null,
-        initialDataReference,
-        anonymous
-      );
-    } catch (exc) {
-      dispatch({type: 'STARTING_ERROR', payload: exc});
-      return;
-    }
-
+  const onSubmissionObtained = submission => {
     dispatch({
       type: 'SUBMISSION_LOADED',
       payload: submission,
     });
     flagActiveSubmission();
     setSubmissionId(submission.id);
-    // navigate to the first step
-    const firstStepRoute = `/stap/${form.steps[0].slug}`;
-    navigate(firstStepRoute);
   };
 
   const onStepSubmitted = async formStep => {
@@ -365,21 +327,6 @@ const Form = () => {
   const router = (
     <Routes>
       <Route
-        path="startpagina"
-        element={
-          <ErrorBoundary useCard>
-            <FormStart
-              form={form}
-              submission={state.submission}
-              onFormStart={onFormStart}
-              onDestroySession={onDestroySession}
-              initialDataReference={initialDataReference}
-            />
-          </ErrorBoundary>
-        }
-      />
-
-      <Route
         path="overzicht"
         element={
           <ErrorBoundary useCard>
@@ -454,8 +401,14 @@ const Form = () => {
   return (
     <FormDisplay progressIndicator={progressIndicator}>
       <AnalyticsToolsConfigContext.Provider value={analyticsToolsConfigInfo}>
-        <Outlet />
-        {router}
+        <SubmissionProvider
+          submission={state.submission}
+          onSubmissionObtained={onSubmissionObtained}
+          onDestroySession={onDestroySession}
+        >
+          <Outlet />
+          {router}
+        </SubmissionProvider>
       </AnalyticsToolsConfigContext.Provider>
     </FormDisplay>
   );
@@ -463,5 +416,30 @@ const Form = () => {
 
 Form.propTypes = {};
 
+const SubmissionContext = React.createContext({
+  submission: null,
+  onSubmissionObtained: () => {},
+  onDestroySession: () => {},
+});
+
+const SubmissionProvider = ({
+  submission = null,
+  onSubmissionObtained,
+  onDestroySession,
+  children,
+}) => (
+  <SubmissionContext.Provider value={{submission, onSubmissionObtained, onDestroySession}}>
+    {children}
+  </SubmissionContext.Provider>
+);
+
+SubmissionProvider.propTypes = {
+  submission: Types.Submission,
+  onSubmissionObtained: PropTypes.func.isRequired,
+  onDestroySession: PropTypes.func.isRequired,
+};
+
+const useSubmissionContext = () => useContext(SubmissionContext);
+
 export default Form;
-export {default as formRoutes} from './formRoutes';
+export {useSubmissionContext, SubmissionProvider};
