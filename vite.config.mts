@@ -67,7 +67,7 @@ const umdOutput = {
   inlineDynamicImports: true,
 } satisfies OutputOptions;
 
-export default defineConfig({
+export default defineConfig(({mode}) => ({
   base: './',
   publicDir: false,
   server: {
@@ -83,6 +83,7 @@ export default defineConfig({
     jsconfigPaths(),
     eslint({
       build: true,
+      emitErrorAsWarning: mode === 'development',
     }),
     cjsTokens(),
     ejsPlugin(),
@@ -143,4 +144,4 @@ export default defineConfig({
       reporter: ['text', 'cobertura', 'html'],
     },
   },
-});
+}));

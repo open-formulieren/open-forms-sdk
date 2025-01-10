@@ -2,6 +2,7 @@ import {useContext, useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from 'Context';
+import AppDebug from 'components/AppDebug';
 import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Link from 'components/Link';
@@ -25,24 +26,27 @@ const SessionExpired = () => {
   });
 
   return (
-    <Card
-      title={
-        <FormattedMessage
-          description="Session expired card title"
-          defaultMessage="Your session has expired"
-        />
-      }
-    >
-      <ErrorMessage>
-        <FormattedMessage
-          description="Session expired error message"
-          defaultMessage="Your session has expired. <link>Click here to restart</link>."
-          values={{
-            link: chunks => <Link to="/">{chunks}</Link>,
-          }}
-        />
-      </ErrorMessage>
-    </Card>
+    <>
+      <Card
+        title={
+          <FormattedMessage
+            description="Session expired card title"
+            defaultMessage="Your session has expired"
+          />
+        }
+      >
+        <ErrorMessage>
+          <FormattedMessage
+            description="Session expired error message"
+            defaultMessage="Your session has expired. <link>Click here to restart</link>."
+            values={{
+              link: chunks => <Link to="/">{chunks}</Link>,
+            }}
+          />
+        </ErrorMessage>
+      </Card>
+      {config.debug && <AppDebug />}
+    </>
   );
 };
 
