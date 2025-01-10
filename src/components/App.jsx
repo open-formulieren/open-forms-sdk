@@ -2,13 +2,14 @@ import {Navigate, Outlet, useMatch} from 'react-router-dom';
 
 import {Cosign, cosignRoutes} from 'components/CoSign';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import Form, {formRoutes} from 'components/Form';
+import Form from 'components/Form';
 import SessionExpired from 'components/Sessions/SessionExpired';
 import {
   CreateAppointment,
   appointmentRoutes,
   manageAppointmentRoutes,
 } from 'components/appointments';
+import formRoutes from 'components/formRoutes';
 import useFormContext from 'hooks/useFormContext';
 import useQuery from 'hooks/useQuery';
 import useZodErrorMap from 'hooks/useZodErrorMap';

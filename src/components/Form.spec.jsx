@@ -51,6 +51,7 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
   );
 };
 
+// TODO: move to/merge with FormStart tests
 test('Start form anonymously', async () => {
   const user = userEvent.setup();
   mswServer.use(mockSubmissionPost(), mockAnalyticsToolConfigGet(), mockSubmissionStepGet());
@@ -76,6 +77,7 @@ test('Start form anonymously', async () => {
   expect(requestBody.anonymous).toBe(true);
 });
 
+// TODO: move to/merge with FormStart tests
 test('Start form as if authenticated from the backend', async () => {
   mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
   let startSubmissionRequest;
@@ -94,6 +96,7 @@ test('Start form as if authenticated from the backend', async () => {
   expect(requestBody.anonymous).toBe(false);
 });
 
+// TODO: move to/merge with FormStart tests
 test('Start form with object reference query param', async () => {
   mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
   let startSubmissionRequest;
