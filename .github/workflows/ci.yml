@@ -47,12 +47,13 @@ jobs:
 
       - name: Build Javascript
         run: |
-          echo "Building version $REACT_APP_VERSION"
+          echo "Building version $VITE_VERSION"
           npm ci
           npm run build:design-tokens
-          REACT_APP_VERSION=${REACT_APP_VERSION} npm run build
+          VITE_VERSION=${VITE_VERSION} npm run build
         env:
-          REACT_APP_VERSION: ${{ steps.build-args.outputs.version }}
+          VITE_VERSION: ${{ steps.build-args.outputs.version }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Store build artifact
         uses: actions/upload-artifact@v4

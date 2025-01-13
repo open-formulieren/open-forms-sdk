@@ -1,5 +1,6 @@
 /// <reference types="vitest/config" />
 // https://vitejs.dev/config/
+import {codecovVitePlugin} from '@codecov/vite-plugin';
 import replace from '@rollup/plugin-replace';
 import react from '@vitejs/plugin-react';
 import type {OutputOptions} from 'rollup';
@@ -97,6 +98,12 @@ export default defineConfig({
       values: {
         "this\['Interpreter'\]": "window['Interpreter']",
       },
+    }),
+    // must be last!
+    codecovVitePlugin({
+      enableBundleAnalysis: buildTarget === 'umd' && process.env.CODECOV_TOKEN !== undefined,
+      bundleName: '@open-formulieren/sdk',
+      uploadToken: process.env.CODECOV_TOKEN,
     }),
   ],
   build: {
