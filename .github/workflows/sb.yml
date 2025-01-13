@@ -110,9 +110,10 @@ jobs:
           npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: storybook
 
   chromatic:
     name: Visual regression test with Chromatic
