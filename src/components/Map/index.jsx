@@ -3,7 +3,7 @@ import {GeoSearchControl} from 'leaflet-geosearch';
 import PropTypes from 'prop-types';
 import {useContext, useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
-import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {FeatureGroup, GeoJSON, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
@@ -43,18 +43,18 @@ const useDefaultCoordinates = () => {
   return [latitude, longitude];
 };
 
-const getCoordinates = geoJsonFeature => {
-  if (!geoJsonFeature) {
+const getCoordinates = geoJsonGeometry => {
+  if (!geoJsonGeometry) {
     return null;
   }
 
-  const center = Leaflet.geoJSON(geoJsonFeature).getBounds().getCenter();
+  const center = Leaflet.geoJSON(geoJsonGeometry).getBounds().getCenter();
   return [center.lat, center.lng];
 };
 
 const LeaftletMap = ({
-  geoJsonFeature,
-  onGeoJsonFeatureSet,
+  geoJsonGeometry,
+  onGeoJsonGeometrySet,
   defaultCenter = DEFAULT_LAT_LNG,
   defaultZoomLevel = DEFAULT_ZOOM,
   disabled = false,
@@ -64,7 +64,7 @@ const LeaftletMap = ({
   const featureGroupRef = useRef();
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
-  const geoJsonCoordinates = getCoordinates(geoJsonFeature);
+  const geoJsonCoordinates = getCoordinates(geoJsonGeometry);
   const coordinates = geoJsonCoordinates ?? defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
@@ -73,20 +73,20 @@ const LeaftletMap = ({
   applyLeafletTranslations(intl);
 
   const onFeatureCreate = event => {
-    updateGeoJsonFeature(event.layer);
+    updateGeoJsonGeometry(event.layer);
   };
 
   const onFeatureDelete = () => {
     // The value `null` is needed to make sure that Formio actually updates the value.
     // node_modules/formiojs/components/_classes/component/Component.js:2528
-    onGeoJsonFeatureSet(null);
+    onGeoJsonGeometrySet(null);
   };
 
   const onSearchMarkerSet = event => {
-    updateGeoJsonFeature(event.marker);
+    updateGeoJsonGeometry(event.marker);
   };
 
-  const updateGeoJsonFeature = newFeatureLayer => {
+  const updateGeoJsonGeometry = newFeatureLayer => {
     if (featureGroupRef.current) {
       const newFeatureLayerId = newFeatureLayer._leaflet_id;
       const layers = featureGroupRef.current?.getLayers();
@@ -100,7 +100,7 @@ const LeaftletMap = ({
         });
       }
     }
-    onGeoJsonFeatureSet(newFeatureLayer.toGeoJSON());
+    onGeoJsonGeometrySet(newFeatureLayer.toGeoJSON().geometry);
   };
 
   return (
@@ -142,6 +142,7 @@ const LeaftletMap = ({
               }}
             />
           )}
+          {geoJsonGeometry && <GeoJSON data={geoJsonGeometry} />}
         </FeatureGroup>
         {coordinates && <MapView coordinates={coordinates} />}
         {!disabled && (
@@ -170,26 +171,22 @@ const LeaftletMap = ({
 };
 
 LeaftletMap.propTypes = {
-  geoJsonFeature: PropTypes.shape({
-    type: PropTypes.oneOf(['Feature']).isRequired,
-    properties: PropTypes.object,
-    geometry: PropTypes.oneOfType([
-      PropTypes.shape({
-        type: PropTypes.oneOf(['Point']).isRequired,
-        coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      }),
-      PropTypes.shape({
-        type: PropTypes.oneOf(['LineString']).isRequired,
-        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-      }),
-      PropTypes.shape({
-        type: PropTypes.oneOf(['Polygon']).isRequired,
-        coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)))
-          .isRequired,
-      }),
-    ]).isRequired,
-  }),
-  onGeoJsonFeatureSet: PropTypes.func,
+  geoJsonGeometry: PropTypes.oneOfType([
+    PropTypes.shape({
+      type: PropTypes.oneOf(['Point']).isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+    }),
+    PropTypes.shape({
+      type: PropTypes.oneOf(['LineString']).isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+    }),
+    PropTypes.shape({
+      type: PropTypes.oneOf(['Polygon']).isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)))
+        .isRequired,
+    }),
+  ]),
+  onGeoJsonGeometrySet: PropTypes.func,
   interactions: PropTypes.shape({
     polyline: PropTypes.bool,
     polygon: PropTypes.bool,

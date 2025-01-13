@@ -13,15 +13,15 @@ const withMapLayout = Story => (
 );
 
 const StorybookLeafletMap = props => {
-  const [geoJson, setGeoJson] = useState(props?.geoJsonFeature);
+  const [geoJson, setGeoJson] = useState(props?.geoJsonGeometry);
   const handleGeoJsonChange = args => {
-    if (props?.onGeoJsonFeatureSet) {
-      props?.onGeoJsonFeatureSet(args);
+    if (props?.onGeoJsonGeometrySet) {
+      props?.onGeoJsonGeometrySet(args);
     }
     setGeoJson(args);
   };
   return (
-    <LeafletMap {...props} geoJsonFeature={geoJson} onGeoJsonFeatureSet={handleGeoJsonChange} />
+    <LeafletMap {...props} geoJsonGeometry={geoJson} onGeoJsonGeometrySet={handleGeoJsonChange} />
   );
 };
 
@@ -31,13 +31,9 @@ export default {
   decorators: [withMapLayout, ConfigDecorator],
   render: StorybookLeafletMap,
   args: {
-    geoJsonFeature: {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'Point',
-        coordinates: [5.291266, 52.1326332],
-      },
+    geoJsonGeometry: {
+      type: 'Point',
+      coordinates: [5.291266, 52.1326332],
     },
     defaultCenter: [52.1326332, 5.291266],
     defaultZoomLevel: 12,
@@ -54,7 +50,7 @@ export const Map = {};
 
 export const MapWithAddressSearch = {
   args: {
-    onGeoJsonFeatureSet: fn(),
+    onGeoJsonGeometrySet: fn(),
   },
   play: async ({canvasElement, args}) => {
     const canvas = within(canvasElement);
@@ -73,14 +69,10 @@ export const MapWithAddressSearch = {
     await userEvent.click(searchResult);
     await waitFor(async () => {
       // A marker is placed on the search result
-      expect(args.onGeoJsonFeatureSet).toBeCalledWith({
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'Point',
-          // To make sure that this test doesn't magically fail, just expect any 2 values
-          coordinates: [expect.anything(), expect.anything()],
-        },
+      expect(args.onGeoJsonGeometrySet).toBeCalledWith({
+        type: 'Point',
+        // To make sure that this test doesn't magically fail, just expect any 2 values
+        coordinates: [expect.anything(), expect.anything()],
       });
     });
   },
@@ -108,7 +100,7 @@ export const MapWithInteractions = {
       polyline: true,
       marker: true,
     },
-    onGeoJsonFeatureSet: fn(),
+    onGeoJsonGeometrySet: fn(),
   },
   parameters: {
     msw: {
@@ -120,28 +112,25 @@ export const MapWithInteractions = {
     const map = canvasElement.querySelector('.leaflet-pane.leaflet-map-pane');
 
     await step('All interactions are available', async () => {
-      expect(await canvas.findByTitle('Draw a marker')).toBeVisible();
-      expect(await canvas.findByTitle('Draw a polygon')).toBeVisible();
-      expect(await canvas.findByTitle('Draw a polyline')).toBeVisible();
+      expect(await canvas.findByTitle('Pin/punt')).toBeVisible();
+      expect(await canvas.findByTitle('Veelhoek (polygoon)')).toBeVisible();
+      expect(await canvas.findByTitle('Lijn')).toBeVisible();
     });
 
     await step('Draw a marker', async () => {
-      const markerButton = await canvas.findByTitle('Draw a marker');
+      const markerButton = await canvas.findByTitle('Pin/punt');
       await userEvent.click(markerButton);
 
       await userEvent.click(map, {x: 100, y: 100});
 
+      // This 'button' is the placed marker on the map
       expect(await canvas.findByRole('button', {name: 'Marker'})).toBeVisible();
-      expect(args.onGeoJsonFeatureSet).toBeCalledWith({
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'Point',
-          // Expect that the coordinates array contains 2 items.
-          // We cannot pin it to specific values, because they can differentiate.
-          // To make sure that this test doesn't magically fail, just expect any 2 values
-          coordinates: [expect.anything(), expect.anything()],
-        },
+      expect(args.onGeoJsonGeometrySet).toBeCalledWith({
+        type: 'Point',
+        // Expect that the coordinates array contains 2 items.
+        // We cannot pin it to specific values, because they can differentiate.
+        // To make sure that this test doesn't magically fail, just expect any 2 values
+        coordinates: [expect.anything(), expect.anything()],
       });
     });
   },
