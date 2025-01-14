@@ -9,6 +9,7 @@ import {
   appointmentRoutes,
   manageAppointmentRoutes,
 } from 'components/appointments';
+import formRoutes from 'components/formRoutes';
 import useFormContext from 'hooks/useFormContext';
 import useQuery from 'hooks/useQuery';
 import useZodErrorMap from 'hooks/useZodErrorMap';
@@ -44,6 +45,7 @@ export const routes = [
         <Form />
       </ErrorBoundary>
     ),
+    children: formRoutes,
   },
 ];
 

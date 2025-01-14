@@ -41,8 +41,10 @@ export default {
   title: 'Views / IntroductionPage',
   component: IntroductionPage,
   decorators: [withForm, withRouter],
-  args: {
-    form: buildForm({introductionPageContent: DEFAULT_CONTENT}),
+  parameters: {
+    formContext: {
+      form: buildForm({introductionPageContent: DEFAULT_CONTENT}),
+    },
   },
 };
 
@@ -52,8 +54,12 @@ export const Default = {
 
 export const IntroductionPageWithInitialDataReference = {
   name: 'IntroductionPage with initial data reference',
-  args: {
-    extraParams: {initial_data_reference: '1234'},
+  parameters: {
+    reactRouter: {
+      location: {
+        searchParams: {initial_data_reference: '1234'},
+      },
+    },
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
