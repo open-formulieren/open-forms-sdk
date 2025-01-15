@@ -16,7 +16,6 @@ import {useImmerReducer} from 'use-immer';
 import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
 import {destroy, get} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
@@ -357,19 +356,6 @@ const Form = () => {
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               downloadPDFText={form.submissionReportDownloadLinkTitle}
             />
-          </ErrorBoundary>
-        }
-      />
-
-      <Route
-        path="stap/:step"
-        element={
-          <ErrorBoundary useCard>
-            <SessionTrackerModal>
-              <RequireSubmission retrieveSubmissionFromContext>
-                <FormStep />
-              </RequireSubmission>
-            </SessionTrackerModal>
           </ErrorBoundary>
         }
       />
