@@ -321,13 +321,13 @@ const Form = () => {
           <ErrorBoundary useCard>
             <SessionTrackerModal expiryDate={expiryDate}>
               <RequireSubmission
-                submission={state.submission}
-                form={form}
+                retrieveSubmissionFromContext
                 processingError={state.processingError}
                 onConfirm={onSubmitForm}
                 component={SubmissionSummary}
                 onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
                 onDestroySession={onDestroySession}
+                form={form}
               />
             </SessionTrackerModal>
           </ErrorBoundary>
@@ -369,7 +369,9 @@ const Form = () => {
         element={
           <ErrorBoundary useCard>
             <SessionTrackerModal expiryDate={expiryDate}>
-              <RequireSubmission submission={state.submission} component={FormStep} />
+              <RequireSubmission retrieveSubmissionFromContext>
+                <FormStep />
+              </RequireSubmission>
             </SessionTrackerModal>
           </ErrorBoundary>
         }
