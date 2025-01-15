@@ -23,7 +23,7 @@ const StartPaymentViewDisplay = ({downloadPDFText}) => {
         />
       </Body>
 
-      <Body>
+      <Body component="div">
         <FormattedMessage
           description="Payment request text"
           defaultMessage="A payment is required for this product."
