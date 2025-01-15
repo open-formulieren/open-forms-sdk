@@ -35,7 +35,6 @@ import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
-import useSessionTimeout from 'hooks/useSessionTimeout';
 import Types from 'types';
 
 import FormDisplay from './FormDisplay';
@@ -150,8 +149,6 @@ const Form = () => {
     state.submission,
     onSubmissionLoaded
   );
-
-  const [, expiryDate] = useSessionTimeout();
 
   const {value: analyticsToolsConfigInfo, loading: loadingAnalyticsConfig} = useAsync(async () => {
     return await get(`${config.baseUrl}analytics/analytics-tools-config-info`);
@@ -319,7 +316,7 @@ const Form = () => {
         path="overzicht"
         element={
           <ErrorBoundary useCard>
-            <SessionTrackerModal expiryDate={expiryDate}>
+            <SessionTrackerModal>
               <RequireSubmission
                 retrieveSubmissionFromContext
                 processingError={state.processingError}
@@ -368,7 +365,7 @@ const Form = () => {
         path="stap/:step"
         element={
           <ErrorBoundary useCard>
-            <SessionTrackerModal expiryDate={expiryDate}>
+            <SessionTrackerModal>
               <RequireSubmission retrieveSubmissionFromContext>
                 <FormStep />
               </RequireSubmission>
