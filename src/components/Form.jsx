@@ -29,7 +29,6 @@ import {
   STEP_LABELS,
   SUBMISSION_ALLOWED,
 } from 'components/constants';
-import {findNextApplicableStep} from 'components/utils';
 import {flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
@@ -178,16 +177,6 @@ const Form = () => {
     });
     flagActiveSubmission();
     setSubmissionId(submission.id);
-  };
-
-  const onStepSubmitted = async formStep => {
-    const currentStepIndex = form.steps.indexOf(formStep);
-
-    const nextStepIndex = findNextApplicableStep(currentStepIndex, state.submission);
-    const nextStep = form.steps[nextStepIndex]; // will be undefined if it's the last step
-
-    const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
-    navigate(nextUrl);
   };
 
   const onSubmitForm = processingStatusUrl => {
@@ -380,16 +369,7 @@ const Form = () => {
         element={
           <ErrorBoundary useCard>
             <SessionTrackerModal expiryDate={expiryDate}>
-              <RequireSubmission
-                form={form}
-                submission={state.submission}
-                onLogicChecked={submission =>
-                  dispatch({type: 'SUBMISSION_LOADED', payload: submission})
-                }
-                onStepSubmitted={onStepSubmitted}
-                component={FormStep}
-                onDestroySession={onDestroySession}
-              />
+              <RequireSubmission submission={state.submission} component={FormStep} />
             </SessionTrackerModal>
           </ErrorBoundary>
         }

@@ -24,7 +24,6 @@
 import cloneDeep from 'lodash/cloneDeep';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-import PropTypes from 'prop-types';
 import {useContext, useRef} from 'react';
 import {Form} from 'react-formio';
 import {useIntl} from 'react-intl';
@@ -37,6 +36,7 @@ import {get} from 'api';
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
 import {EmailVerificationModal} from 'components/EmailVerification';
+import {useSubmissionContext} from 'components/Form';
 import FormStepDebug from 'components/FormStepDebug';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
@@ -45,12 +45,13 @@ import {SummaryProgress} from 'components/SummaryProgress';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
   eventTriggeredBySubmitButton,
+  findNextApplicableStep,
   findPreviousApplicableStep,
   isLastStep,
 } from 'components/utils';
 import {PREFIX} from 'formio/constants';
+import useFormContext from 'hooks/useFormContext';
 import useTitle from 'hooks/useTitle';
-import Types from 'types';
 
 import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
 
@@ -200,19 +201,23 @@ const reducer = (draft, action) => {
 };
 
 /**
- * Form step React component, uses (Form.io) Form component internally.*
- * @param {Types.Form} form
- * @param {Object} submission
- * @param {Function} onLogicChecked
- * @param {Function} onStepSubmitted
- * @param {Function} onDestroySession
+ * Form step React component, uses (Form.io) Form component internally.
+ *
+ * Retrieves the formio configuration from the backend and manages the submission state.
+ * Change events in the form trigger logic checks to the backend, which may update the
+ * form state itself again. When the formio form is submitted, the step data is
+ * validated and persisted to the backend, then the form navigates to the next step
+ * or summary page.
+ *
  * @throws {Error} Throws errors from state so the error boundaries can pick them up.
  * @return {React.ReactNode}
  */
-const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroySession}) => {
+const FormStep = () => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
   const formioTranslations = useContext(FormioTranslations);
+  const form = useFormContext();
+  const {submission, onSubmissionObtained, onDestroySession} = useSubmissionContext();
 
   /* component state */
   const formRef = useRef(null);
@@ -405,7 +410,7 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
       previouslyCheckedData.current = cloneDeep(data);
 
       // report back to parent component
-      onLogicChecked(submission, step);
+      onSubmissionObtained(submission);
 
       // we can't just dispatch this, because Formio keeps references to DOM nodes
       // which expire when the component re-renders, and that gives React
@@ -498,9 +503,15 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
     }
 
     // This will reload the submission
-    const {submission: updatedSubmission, step} = await doLogicCheck(submissionStep.url, data);
-    onLogicChecked(updatedSubmission, step); // report back to parent component
-    onStepSubmitted(formStep);
+    const {submission: updatedSubmission} = await doLogicCheck(submissionStep.url, data);
+    onSubmissionObtained(updatedSubmission); // report back to parent component
+
+    // navigate to the next page (either the next step or the overview)
+    const currentStepIndex = form.steps.indexOf(formStep);
+    const nextStepIndex = findNextApplicableStep(currentStepIndex, submission);
+    const nextStep = form.steps[nextStepIndex]; // will be undefined if it's the last step
+    const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
+    navigate(nextUrl);
   };
 
   /**
@@ -838,12 +849,6 @@ const FormStep = ({form, submission, onLogicChecked, onStepSubmitted, onDestroyS
   );
 };
 
-FormStep.propTypes = {
-  form: Types.Form,
-  submission: PropTypes.object.isRequired,
-  onLogicChecked: PropTypes.func.isRequired,
-  onStepSubmitted: PropTypes.func.isRequired,
-  onDestroySession: PropTypes.func.isRequired,
-};
+FormStep.propTypes = {};
 
 export default FormStep;
