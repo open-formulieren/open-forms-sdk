@@ -73,9 +73,9 @@ export const mockSubmissionPost = (submission = buildSubmission()) =>
     return HttpResponse.json(submission, {status: 201});
   });
 
-export const mockSubmissionGet = () =>
+export const mockSubmissionGet = (submission = buildSubmission()) =>
   http.get(`${BASE_URL}submissions/:uuid`, () => {
-    return HttpResponse.json(SUBMISSION_DETAILS, {status: 200});
+    return HttpResponse.json(submission, {status: 200});
   });
 
 export const mockSubmissionStepGet = () =>
