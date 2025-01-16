@@ -41,12 +41,13 @@ const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
     response => {
       if (response.result === RESULT_FAILED) {
         const errorMessage = response.errorMessage || genericErrorMessage;
-        if (onFailure) onFailure(errorMessage);
+        onFailure?.(errorMessage);
       } else if (response.result === RESULT_SUCCESS) {
-        if (onConfirmed) onConfirmed();
+        onConfirmed?.();
       }
     }
   );
+  if (error) throw error;
 
   if (loading) {
     return (
@@ -71,10 +72,9 @@ const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
 
   // FIXME: https://github.com/open-formulieren/open-forms/issues/3255
   // errors (bad gateway 502, for example) appear to result in infinite loading
-  // spinners
-  if (error) {
-    console.error(error);
-  }
+  // spinners. Throwing during rendering will at least make it bubble up to the nearest
+  // error boundary.
+  if (error) throw error;
 
   const {
     result,
