@@ -12,13 +12,23 @@ import {findPreviousApplicableStep} from 'components/utils';
 import useFormContext from 'hooks/useFormContext';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
-import Types from 'types';
 
 import GenericSummary from './GenericSummary';
 import {loadSummaryData} from './utils';
 
 const initialState = {
   error: '',
+};
+
+const completeSubmission = async (submission, statementValues) => {
+  const response = await post(`${submission.url}/_complete`, statementValues);
+  if (!response.ok) {
+    console.error(response.data);
+    // TODO Specific error for each type of invalid data?
+    throw new Error('InvalidSubmissionData');
+  } else {
+    return response.data;
+  }
 };
 
 const reducer = (draft, action) => {
@@ -53,10 +63,8 @@ const SubmissionSummary = ({processingError = '', onConfirm, onClearProcessingEr
     const submissionUrl = new URL(refreshedSubmission.url);
     return await loadSummaryData(submissionUrl);
   }, [refreshedSubmission.url]);
-
-  if (error) {
-    console.error(error);
-  }
+  // throw to nearest error boundary
+  if (error) throw error;
 
   const onSubmit = async statementValues => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
@@ -80,17 +88,6 @@ const SubmissionSummary = ({processingError = '', onConfirm, onClearProcessingEr
     onClearProcessingErrors();
 
     navigate(getPreviousPage());
-  };
-
-  const completeSubmission = async (submission, statementValues) => {
-    const response = await post(`${submission.url}/_complete`, statementValues);
-    if (!response.ok) {
-      console.error(response.data);
-      // TODO Specific error for each type of invalid data?
-      throw new Error('InvalidSubmissionData');
-    } else {
-      return response.data;
-    }
   };
 
   const pageTitle = intl.formatMessage({
