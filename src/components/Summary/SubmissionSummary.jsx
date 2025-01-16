@@ -5,9 +5,11 @@ import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
 import {post} from 'api';
+import {useSubmissionContext} from 'components/Form';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {findPreviousApplicableStep} from 'components/utils';
+import useFormContext from 'hooks/useFormContext';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
 import Types from 'types';
@@ -31,14 +33,10 @@ const reducer = (draft, action) => {
   }
 };
 
-const SubmissionSummary = ({
-  form,
-  submission,
-  processingError = '',
-  onConfirm,
-  onClearProcessingErrors,
-  onDestroySession,
-}) => {
+const SubmissionSummary = ({processingError = '', onConfirm, onClearProcessingErrors}) => {
+  const form = useFormContext();
+  const {submission, onDestroySession} = useSubmissionContext();
+
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const navigate = useNavigate();
   const intl = useIntl();
@@ -135,12 +133,9 @@ const SubmissionSummary = ({
 };
 
 SubmissionSummary.propTypes = {
-  form: Types.Form.isRequired,
-  submission: Types.Submission.isRequired,
   processingError: PropTypes.string,
   onConfirm: PropTypes.func.isRequired,
   onClearProcessingErrors: PropTypes.func.isRequired,
-  onDestroySession: PropTypes.func.isRequired,
 };
 
 export default SubmissionSummary;

@@ -7,14 +7,23 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
+import {SubmissionProvider} from 'components/Form';
 import {SubmissionSummary} from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
-const Wrap = ({form, children}) => {
+const Wrapper = ({form, submission}) => {
   const routes = [
     {
       path: '/overzicht',
-      element: children,
+      element: (
+        <SubmissionProvider
+          submission={submission}
+          onSubmissionObtained={vi.fn()}
+          onDestroySession={vi.fn()}
+        >
+          <SubmissionSummary onConfirm={vi.fn()} onClearProcessingErrors={vi.fn()} />
+        </SubmissionProvider>
+      ),
     },
   ];
   const router = createMemoryRouter(routes, {
@@ -48,20 +57,8 @@ test.each([true, false])(
       isAuthenticated: true,
     });
     mswServer.use(mockSubmissionGet(submissionIsAuthenticated), mockSubmissionSummaryGet());
-    const onDestroySession = vi.fn();
-    const onConfirm = vi.fn();
 
-    render(
-      <Wrap form={form}>
-        <SubmissionSummary
-          form={form}
-          submission={submissionIsAuthenticated}
-          onConfirm={onConfirm}
-          onDestroySession={onDestroySession}
-          onClearProcessingErrors={() => {}}
-        />
-      </Wrap>
-    );
+    render(<Wrapper form={form} submission={submissionIsAuthenticated} />);
 
     const logoutButton = await screen.findByRole('button', {name: 'Uitloggen'});
     expect(logoutButton).toBeVisible();
@@ -70,25 +67,13 @@ test.each([true, false])(
 
 test('Summary when isAuthenticated and loginRequired are false', async () => {
   const form = buildForm({loginRequired: false});
-  const submissionIsAuthenticated = buildSubmission({
+  const submissionNotAuthenticated = buildSubmission({
     submissionAllowed: SUBMISSION_ALLOWED.yes,
     isAuthenticated: false,
   });
-  mswServer.use(mockSubmissionGet(submissionIsAuthenticated), mockSubmissionSummaryGet());
-  const onDestroySession = vi.fn();
-  const onConfirm = vi.fn();
+  mswServer.use(mockSubmissionGet(submissionNotAuthenticated), mockSubmissionSummaryGet());
 
-  render(
-    <Wrap form={form}>
-      <SubmissionSummary
-        form={form}
-        submission={submissionIsAuthenticated}
-        onConfirm={onConfirm}
-        onDestroySession={onDestroySession}
-        onClearProcessingErrors={() => {}}
-      />
-    </Wrap>
-  );
+  render(<Wrapper form={form} submission={submissionNotAuthenticated} />);
 
   // we expect an abort button instead of log out
   const cancelButton = await screen.findByRole('button', {name: 'Annuleren'});
