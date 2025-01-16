@@ -112,6 +112,13 @@ export const mockSubmissionSummaryGet = () =>
     )
   );
 
+export const mockSubmissionCompletePost = () =>
+  http.post(`${BASE_URL}submissions/:uuid/_complete`, () =>
+    HttpResponse.json({
+      statusUrl: `${BASE_URL}submissions/${SUBMISSION_DETAILS.id}/super-random-token/status`,
+    })
+  );
+
 /**
  * Simulate a successful backend processing status without payment.
  */
