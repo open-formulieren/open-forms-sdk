@@ -318,12 +318,10 @@ const Form = () => {
             <SessionTrackerModal>
               <RequireSubmission
                 retrieveSubmissionFromContext
+                component={SubmissionSummary}
                 processingError={state.processingError}
                 onConfirm={onSubmitForm}
-                component={SubmissionSummary}
                 onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
-                onDestroySession={onDestroySession}
-                form={form}
               />
             </SessionTrackerModal>
           </ErrorBoundary>

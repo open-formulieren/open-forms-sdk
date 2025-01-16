@@ -1,26 +1,45 @@
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitForElementToBeRemoved} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
+import {BASE_URL, buildForm, buildSubmission, mockAnalyticsToolConfigGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
-import {mockSubmissionPost, mockSubmissionStepGet} from 'api-mocks/submissions';
+import {
+  mockSubmissionCompletePost,
+  mockSubmissionGet,
+  mockSubmissionPost,
+  mockSubmissionProcessingStatusErrorGet,
+  mockSubmissionStepGet,
+  mockSubmissionSummaryGet,
+} from 'api-mocks/submissions';
 import {routes} from 'components/App';
+import {SUBMISSION_ALLOWED} from 'components/constants';
 
 window.scrollTo = vi.fn();
+
+beforeAll(() => {
+  vi.stubGlobal('jest', {
+    advanceTimersByTime: vi.advanceTimersByTime.bind(vi),
+  });
+});
 
 beforeEach(() => {
   localStorage.clear();
 });
 
 afterEach(() => {
+  if (vi.isFakeTimers()) {
+    vi.runOnlyPendingTimers();
+    vi.useRealTimers();
+  }
   localStorage.clear();
 });
 
 afterAll(() => {
+  vi.unstubAllGlobals();
   vi.clearAllMocks();
 });
 
@@ -128,4 +147,47 @@ test('Navigation through form without introduction page', async () => {
   expect(stepTitle).toBeVisible();
   const formInput = await screen.findByLabelText('Component 1');
   expect(formInput).toBeVisible();
+});
+
+test('Submitting the form with failing background processing', async () => {
+  const user = userEvent.setup({
+    advanceTimers: vi.advanceTimersByTime,
+  });
+  // The summary page submits the form and needs to trigger the appropriate redirects.
+  // When the status check reports failure, we need to be redirected back to the summary
+  // page for a retry.
+  const form = buildForm({loginRequired: false, submissionStatementsConfiguration: []});
+  const submission = buildSubmission({
+    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    payment: {
+      isRequired: false,
+      amount: undefined,
+      hasPaid: false,
+    },
+    MARKER: true,
+  });
+  mswServer.use(
+    mockAnalyticsToolConfigGet(),
+    mockSubmissionGet(submission),
+    mockSubmissionSummaryGet(),
+    mockSubmissionCompletePost(),
+    mockSubmissionProcessingStatusErrorGet
+  );
+
+  render(<Wrapper form={form} initialEntry={`/overzicht?submission_uuid=${submission.id}`} />);
+
+  expect(await screen.findByRole('heading', {name: 'Check and confirm'})).toBeVisible();
+
+  // confirm the submission and complete it
+  vi.useFakeTimers();
+  await user.click(screen.getByRole('button', {name: 'Confirm'}));
+  expect(await screen.findByRole('heading', {name: 'Processing...'})).toBeVisible();
+  const loader = await screen.findByRole('status');
+  vi.runOnlyPendingTimers();
+  vi.useRealTimers();
+  await waitForElementToBeRemoved(loader);
+
+  // due to the error we get redirected back to the summary page.
+  expect(await screen.findByRole('heading', {name: 'Check and confirm'})).toBeVisible();
+  expect(screen.getByText('Computer says no.')).toBeVisible();
 });
