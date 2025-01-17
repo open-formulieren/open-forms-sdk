@@ -1,4 +1,4 @@
-import {expect, fn, waitFor, within} from '@storybook/test';
+import {expect, fn, waitForElementToBeRemoved, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {BASE_URL} from 'api-mocks';
@@ -18,7 +18,6 @@ export default {
     statusUrl: {control: false},
   },
   args: {
-    statusUrl: `${BASE_URL}submissions/4b0e86a8-dc5f-41cc-b812-c89857b9355b/-token-/status`,
     onFailure: fn(),
     onConfirmed: fn(),
   },
@@ -27,7 +26,11 @@ export default {
       handlers: [mockSubmissionProcessingStatusGet],
     },
     reactRouter: {
-      location: {state: {}},
+      location: {
+        state: {
+          statusUrl: `${BASE_URL}submissions/4b0e86a8-dc5f-41cc-b812-c89857b9355b/-token-/status`,
+        },
+      },
     },
   },
 };
@@ -36,15 +39,10 @@ export const WithoutPayment = {
   play: async ({canvasElement, args}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(
-      async () => {
-        expect(canvas.getByRole('button', {name: 'Terug naar de website'})).toBeVisible();
-      },
-      {
-        timeout: 2000,
-        interval: 100,
-      }
-    );
+    const loader = await canvas.findByRole('status');
+    await waitForElementToBeRemoved(loader, {timeout: 2000, interval: 100});
+
+    expect(canvas.getByRole('button', {name: 'Terug naar de website'})).toBeVisible();
     expect(canvas.getByText(/OF-L337/)).toBeVisible();
     expect(args.onConfirmed).toBeCalledTimes(1);
   },

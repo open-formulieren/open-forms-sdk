@@ -29,6 +29,7 @@ export default {
   args: {
     onSubmissionObtained: fn(),
     onDestroySession: fn(),
+    removeSubmissionId: fn(),
   },
   argTypes: {
     submission: {control: false},
@@ -56,6 +57,7 @@ const render = ({
   submission,
   onSubmissionObtained,
   onDestroySession,
+  removeSubmissionId,
   // story args
   formioConfiguration,
   validationErrors = undefined,
@@ -83,6 +85,7 @@ const render = ({
         submission={submission}
         onSubmissionObtained={onSubmissionObtained}
         onDestroySession={onDestroySession}
+        removeSubmissionId={removeSubmissionId}
       >
         <FormStep />
       </SubmissionProvider>

@@ -177,6 +177,7 @@ const Summary = () => {
       setSubmitError(e);
       return;
     }
+    // TODO: store details in sessionStorage instead, to survive hard refreshes
     navigate({
       pathname: '../bevestiging',
       search: createSearchParams({

@@ -20,7 +20,6 @@ const Confirmation = () => {
 
   return (
     <ConfirmationView
-      statusUrl={statusUrl}
       onFailure={onProcessingFailure}
       onConfirmed={reset}
       downloadPDFText={form.submissionReportDownloadLinkTitle}

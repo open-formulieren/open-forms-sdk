@@ -9,6 +9,7 @@ import {
   useLocation,
   useMatch,
   useNavigate,
+  useSearchParams,
 } from 'react-router-dom';
 import {useAsync, usePrevious} from 'react-use';
 import {useImmerReducer} from 'use-immer';
@@ -32,7 +33,6 @@ import {flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
-import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import Types from 'types';
 
@@ -42,7 +42,6 @@ import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
 const initialState = {
   submission: null,
   submittedSubmission: null,
-  processingStatusUrl: '',
   completed: false,
   startingError: '',
 };
@@ -59,7 +58,6 @@ const reducer = (draft, action) => {
       return {
         ...initialState,
         submittedSubmission: action.payload.submission,
-        processingStatusUrl: action.payload.processingStatusUrl,
       };
     }
     case 'PROCESSING_FAILED': {
@@ -102,7 +100,7 @@ const Form = () => {
   const form = useFormContext();
   const navigate = useNavigate();
   const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
-  const queryParams = useQuery();
+  const [params] = useSearchParams();
   usePageViews();
   const intl = useIntl();
   const prevLocale = usePrevious(intl.locale);
@@ -167,21 +165,13 @@ const Form = () => {
     setSubmissionId(submission.id);
   };
 
-  const onSubmitForm = processingStatusUrl => {
-    removeSubmissionId();
+  const onSubmitForm = () => {
     dispatch({
       type: 'SUBMITTED',
       payload: {
         submission: state.submission,
-        processingStatusUrl,
       },
     });
-
-    if (submission?.payment.isRequired && !state.submission.payment.hasPaid) {
-      navigate('/betalen');
-    } else {
-      navigate('/bevestiging');
-    }
   };
 
   const onDestroySession = async () => {
@@ -202,15 +192,16 @@ const Form = () => {
 
   // handle redirect from payment provider to render appropriate page and include the
   // params as state for the next component.
-  if (queryParams.get('of_payment_status')) {
+  if (params.get('of_payment_status')) {
+    // TODO: store details in sessionStorage instead, to survive hard refreshes
     return (
       <Navigate
         replace
         to="/bevestiging"
         state={{
-          status: queryParams.get('of_payment_status'),
-          userAction: queryParams.get('of_payment_action'),
-          statusUrl: queryParams.get('of_submission_status'),
+          status: params.get('of_payment_status'),
+          userAction: params.get('of_payment_action'),
+          statusUrl: params.get('of_submission_status'),
         }}
       />
     );
@@ -322,7 +313,6 @@ const Form = () => {
           <ErrorBoundary useCard>
             <RequireSubmission
               submission={state.submittedSubmission}
-              statusUrl={state.processingStatusUrl}
               onFailure={onProcessingFailure}
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               component={StartPaymentView}
@@ -337,7 +327,6 @@ const Form = () => {
         element={
           <ErrorBoundary useCard>
             <ConfirmationView
-              statusUrl={state.processingStatusUrl}
               onFailure={onProcessingFailure}
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               downloadPDFText={form.submissionReportDownloadLinkTitle}
@@ -356,6 +345,7 @@ const Form = () => {
           submission={state.submission}
           onSubmissionObtained={onSubmissionObtained}
           onDestroySession={onDestroySession}
+          removeSubmissionId={removeSubmissionId}
         >
           <Outlet />
           {router}
@@ -371,23 +361,42 @@ const SubmissionContext = React.createContext({
   submission: null,
   onSubmissionObtained: () => {},
   onDestroySession: () => {},
+  removeSubmissionId: () => {},
 });
 
 const SubmissionProvider = ({
   submission = null,
   onSubmissionObtained,
   onDestroySession,
+  removeSubmissionId,
   children,
 }) => (
-  <SubmissionContext.Provider value={{submission, onSubmissionObtained, onDestroySession}}>
+  <SubmissionContext.Provider
+    value={{submission, onSubmissionObtained, onDestroySession, removeSubmissionId}}
+  >
     {children}
   </SubmissionContext.Provider>
 );
 
 SubmissionProvider.propTypes = {
+  /**
+   * The submission currently being filled out / submitted / viewed. It must exist in
+   * the backend session.
+   */
   submission: Types.Submission,
+  /**
+   * Callback for when a submission was (re-)loaded to store it in the state.
+   */
   onSubmissionObtained: PropTypes.func.isRequired,
+  /**
+   * Callback for when an abort/logout/stop button is clicked which terminates the
+   * form submission / session.
+   */
   onDestroySession: PropTypes.func.isRequired,
+  /**
+   * Callback to remove the submission reference (it's ID) from the local storage.
+   */
+  removeSubmissionId: PropTypes.func.isRequired,
 };
 
 const useSubmissionContext = () => useContext(SubmissionContext);

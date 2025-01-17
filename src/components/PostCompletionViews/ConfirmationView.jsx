@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useSearchParams} from 'react-router-dom';
 
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import {GovMetricSnippet} from 'components/analytics';
+import {DEBUG} from 'utils';
 
 import PostCompletionView from './PostCompletionView';
 import StatusUrlPoller, {SubmissionStatusContext} from './StatusUrlPoller';
@@ -105,7 +106,17 @@ ConfirmationViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const ConfirmationView = ({statusUrl, onFailure, onConfirmed, downloadPDFText}) => {
+const ConfirmationView = ({onFailure, onConfirmed, downloadPDFText}) => {
+  // TODO: take statusUrl from session storage instead of router state / query params,
+  // which is the best tradeoff between security and convenience (state doesn't survive
+  // hard refreshes, query params is prone to accidental information leaking)
+  const location = useLocation();
+  const [params] = useSearchParams();
+  const statusUrl = params.get('statusUrl') ?? location.state?.statusUrl;
+  if (DEBUG && !statusUrl)
+    throw new Error(
+      'You must pass the status URL via the router state (preferably) or query params.'
+    );
   return (
     <StatusUrlPoller statusUrl={statusUrl} onFailure={onFailure} onConfirmed={onConfirmed}>
       <ConfirmationViewDisplay downloadPDFText={downloadPDFText} />
@@ -114,7 +125,6 @@ const ConfirmationView = ({statusUrl, onFailure, onConfirmed, downloadPDFText}) 
 };
 
 ConfirmationView.propTypes = {
-  statusUrl: PropTypes.string,
   onFailure: PropTypes.func,
   onConfirmed: PropTypes.func,
   downloadPDFText: PropTypes.node,

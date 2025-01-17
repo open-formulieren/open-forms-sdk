@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {useLocation} from 'react-router-dom';
 
 import Body from 'components/Body';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
+import {DEBUG} from 'utils';
 
 import PostCompletionView from './PostCompletionView';
 import {StartPayment} from './StartPayment';
@@ -58,7 +60,10 @@ StartPaymentViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const StartPaymentView = ({statusUrl, onFailure, onConfirmed, downloadPDFText}) => {
+const StartPaymentView = ({onFailure, onConfirmed, downloadPDFText}) => {
+  const location = useLocation();
+  const statusUrl = location.state?.statusUrl;
+  if (DEBUG && !statusUrl) throw new Error('You must pass the status URL via the route state.');
   return (
     <StatusUrlPoller statusUrl={statusUrl} onFailure={onFailure} onConfirmed={onConfirmed}>
       <StartPaymentViewDisplay downloadPDFText={downloadPDFText} />
@@ -67,7 +72,6 @@ const StartPaymentView = ({statusUrl, onFailure, onConfirmed, downloadPDFText}) 
 };
 
 StartPaymentView.propTypes = {
-  statusUrl: PropTypes.string,
   onFailure: PropTypes.func,
   onConfirmed: PropTypes.func,
   downloadPDFText: PropTypes.node,

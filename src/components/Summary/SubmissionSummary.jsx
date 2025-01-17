@@ -32,7 +32,7 @@ const SubmissionSummary = ({onConfirm}) => {
   const navigate = useNavigate();
   const intl = useIntl();
   const form = useFormContext();
-  const {submission, onDestroySession} = useSubmissionContext();
+  const {submission, onDestroySession, removeSubmissionId} = useSubmissionContext();
   const refreshedSubmission = useRefreshSubmission(submission);
 
   const [submitError, setSubmitError] = useState('');
@@ -58,12 +58,29 @@ const SubmissionSummary = ({onConfirm}) => {
 
   const onSubmit = async statementValues => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
+    let statusUrl;
     try {
-      const {statusUrl} = await completeSubmission(refreshedSubmission, statementValues);
-      onConfirm(statusUrl);
+      const responseData = await completeSubmission(refreshedSubmission, statementValues);
+      statusUrl = responseData.statusUrl;
     } catch (e) {
       setSubmitError(e.message);
+      return;
     }
+
+    onConfirm();
+
+    // the completion went through, proceed to redirect to the next page and set up
+    // the necessary state.
+    const needsPayment =
+      refreshedSubmission.payment.isRequired && !refreshedSubmission.payment.hasPaid;
+    const nextUrl = needsPayment ? '/betalen' : '/bevestiging';
+    removeSubmissionId();
+    navigate(nextUrl, {
+      state: {
+        submission: refreshedSubmission,
+        statusUrl,
+      },
+    });
   };
 
   const getPreviousPage = () => {

@@ -52,6 +52,7 @@ const Wrap = ({
               onSubmissionObtained?.();
             }}
             onDestroySession={() => {}}
+            removeSubmissionId={vi.fn()}
           >
             <RouterProvider router={router} />
           </SubmissionProvider>
