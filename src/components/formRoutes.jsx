@@ -5,6 +5,7 @@ import FormStep from 'components/FormStep';
 import IntroductionPage from 'components/IntroductionPage';
 import RequireSubmission from 'components/RequireSubmission';
 import {SessionTrackerModal} from 'components/Sessions';
+import {SubmissionSummary} from 'components/Summary';
 
 const formRoutes = [
   {
@@ -30,6 +31,18 @@ const formRoutes = [
         <SessionTrackerModal>
           <RequireSubmission retrieveSubmissionFromContext>
             <FormStep />
+          </RequireSubmission>
+        </SessionTrackerModal>
+      </ErrorBoundary>
+    ),
+  },
+  {
+    path: 'overzicht',
+    element: (
+      <ErrorBoundary useCard>
+        <SessionTrackerModal>
+          <RequireSubmission retrieveSubmissionFromContext>
+            <SubmissionSummary />
           </RequireSubmission>
         </SessionTrackerModal>
       </ErrorBoundary>

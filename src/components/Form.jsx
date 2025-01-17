@@ -21,8 +21,6 @@ import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
 import RequireSubmission from 'components/RequireSubmission';
-import {SessionTrackerModal} from 'components/Sessions';
-import {SubmissionSummary} from 'components/Summary';
 import {
   PI_TITLE,
   START_FORM_QUERY_PARAM,
@@ -278,17 +276,6 @@ const Form = () => {
   // Route the correct page based on URL
   const router = (
     <Routes>
-      <Route
-        path="overzicht"
-        element={
-          <ErrorBoundary useCard>
-            <SessionTrackerModal>
-              <RequireSubmission retrieveSubmissionFromContext component={SubmissionSummary} />
-            </SessionTrackerModal>
-          </ErrorBoundary>
-        }
-      />
-
       <Route
         path="betalen"
         element={
