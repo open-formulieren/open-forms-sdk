@@ -3,6 +3,7 @@ import FormLandingPage from 'components/FormLandingPage';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
 import IntroductionPage from 'components/IntroductionPage';
+import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import RequireSubmission from 'components/RequireSubmission';
 import {SessionTrackerModal} from 'components/Sessions';
 import {SubmissionSummary} from 'components/Summary';
@@ -45,6 +46,24 @@ const formRoutes = [
             <SubmissionSummary />
           </RequireSubmission>
         </SessionTrackerModal>
+      </ErrorBoundary>
+    ),
+  },
+  {
+    path: 'betalen',
+    element: (
+      <ErrorBoundary useCard>
+        <RequireSubmission retrieveSubmissionFromContext>
+          <StartPaymentView returnTo="/overzicht" />
+        </RequireSubmission>
+      </ErrorBoundary>
+    ),
+  },
+  {
+    path: 'bevestiging',
+    element: (
+      <ErrorBoundary useCard>
+        <ConfirmationView returnTo="/overzicht" />
       </ErrorBoundary>
     ),
   },

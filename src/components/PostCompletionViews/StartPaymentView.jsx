@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import Body from 'components/Body';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
+import useFormContext from 'hooks/useFormContext';
 import {DEBUG} from 'utils';
 
 import PostCompletionView from './PostCompletionView';
@@ -60,24 +61,37 @@ StartPaymentViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const StartPaymentView = ({onFailure, downloadPDFText}) => {
-  const {statusUrl, submission} = useLocation().state || {};
-  if (DEBUG) {
-    if (!statusUrl) throw new Error('You must pass the status URL via the route state.');
-    if (!submission) {
-      throw new Error('You must pass the submitted submission via the router state.');
-    }
-  }
+const StartPaymentView = ({returnTo, onFailure}) => {
+  const form = useFormContext();
+  const navigate = useNavigate();
+  const {statusUrl} = useLocation().state || {};
+  if (DEBUG && !statusUrl) throw new Error('You must pass the status URL via the route state.');
   return (
-    <StatusUrlPoller statusUrl={statusUrl} onFailure={error => onFailure(submission, error)}>
-      <StartPaymentViewDisplay downloadPDFText={downloadPDFText} />
+    <StatusUrlPoller
+      statusUrl={statusUrl}
+      onFailure={error => {
+        onFailure(error);
+        if (returnTo) {
+          const newState = {...(location.state || {}), errorMessage: error};
+          navigate(returnTo, {state: newState});
+        }
+      }}
+    >
+      <StartPaymentViewDisplay downloadPDFText={form.submissionReportDownloadLinkTitle} />
     </StatusUrlPoller>
   );
 };
 
 StartPaymentView.propTypes = {
+  /**
+   * Location to navigate to on failure.
+   */
+  returnTo: PropTypes.string,
+  /**
+   * Optional callback to invoke when processing failed.
+   * @deprecated
+   */
   onFailure: PropTypes.func,
-  downloadPDFText: PropTypes.node,
 };
 
 export default StartPaymentView;

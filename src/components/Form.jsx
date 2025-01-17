@@ -4,8 +4,6 @@ import {useIntl} from 'react-intl';
 import {
   Navigate,
   Outlet,
-  Route,
-  Routes,
   useLocation,
   useMatch,
   useNavigate,
@@ -16,11 +14,8 @@ import {useImmerReducer} from 'use-immer';
 
 import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
 import {destroy, get} from 'api';
-import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import Loader from 'components/Loader';
-import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
-import RequireSubmission from 'components/RequireSubmission';
 import {
   PI_TITLE,
   START_FORM_QUERY_PARAM,
@@ -47,12 +42,6 @@ const reducer = (draft, action) => {
       // keep the submission instance in the state and set the current step to the
       // first step of the form.
       draft.submission = action.payload;
-      break;
-    }
-    case 'PROCESSING_FAILED': {
-      // put the submission back in the state so we can re-submit
-      const {submission} = action.payload;
-      draft.submission = submission;
       break;
     }
     case 'DESTROY_SUBMISSION': {
@@ -158,11 +147,6 @@ const Form = () => {
     navigate('/');
   };
 
-  const onProcessingFailure = (submission, errorMessage) => {
-    dispatch({type: 'PROCESSING_FAILED', payload: {submission}});
-    navigate('/overzicht', {state: {errorMessage}});
-  };
-
   // handle redirect from payment provider to render appropriate page and include the
   // params as state for the next component.
   if (params.get('of_payment_status')) {
@@ -184,13 +168,15 @@ const Form = () => {
     return <Loader modifiers={['centered']} />;
   }
 
+  const submissionFromRouterState = routerState?.submission ?? null;
+  const submission = state.submission || submissionFromRouterState;
+
   // Progress Indicator
 
   const isIntroductionPage = !!introductionMatch;
   const isStartPage = !isIntroductionPage && !summaryMatch && stepMatch == null && !paymentMatch;
   const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
-  const submission = state.submission || (!!paymentMatch && routerState.submission) || null;
   const formName = form.name;
   const needsPayment = submission ? submission.payment.isRequired : form.paymentRequired;
 
@@ -262,37 +248,6 @@ const Form = () => {
       />
     ) : null;
 
-  // Route the correct page based on URL
-  const router = (
-    <Routes>
-      <Route
-        path="betalen"
-        element={
-          <ErrorBoundary useCard>
-            <RequireSubmission
-              retrieveSubmissionFromContext
-              onFailure={onProcessingFailure}
-              component={StartPaymentView}
-              donwloadPDFText={form.submissionReportDownloadLinkTitle}
-            />
-          </ErrorBoundary>
-        }
-      />
-
-      <Route
-        path="bevestiging"
-        element={
-          <ErrorBoundary useCard>
-            <ConfirmationView
-              onFailure={onProcessingFailure}
-              downloadPDFText={form.submissionReportDownloadLinkTitle}
-            />
-          </ErrorBoundary>
-        }
-      />
-    </Routes>
-  );
-
   // render the form step if there's an active submission (and no summary)
   return (
     <FormDisplay progressIndicator={progressIndicator}>
@@ -304,7 +259,6 @@ const Form = () => {
           removeSubmissionId={removeSubmissionId}
         >
           <Outlet />
-          {router}
         </SubmissionProvider>
       </AnalyticsToolsConfigContext.Provider>
     </FormDisplay>
