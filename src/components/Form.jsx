@@ -43,7 +43,6 @@ const initialState = {
   submission: null,
   submittedSubmission: null,
   processingStatusUrl: '',
-  processingError: '',
   completed: false,
   startingError: '',
 };
@@ -64,19 +63,12 @@ const reducer = (draft, action) => {
       };
     }
     case 'PROCESSING_FAILED': {
-      // set the error message in the state
-      draft.processingError = action.payload;
-      // put the submission back in the state as well, so we can re-submit
+      // put the submission back in the state so we can re-submit
       draft.submission = draft.submittedSubmission;
       break;
     }
     case 'PROCESSING_SUCCEEDED': {
-      draft.processingError = null;
       draft.completed = true;
-      break;
-    }
-    case 'CLEAR_PROCESSING_ERROR': {
-      draft.processingError = '';
       break;
     }
     case 'DESTROY_SUBMISSION': {
@@ -204,10 +196,8 @@ const Form = () => {
   };
 
   const onProcessingFailure = errorMessage => {
-    // TODO: provide generic fallback message in case no explicit
-    // message is shown
     dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
-    navigate('/overzicht');
+    navigate('/overzicht', {state: {errorMessage}});
   };
 
   // handle redirect from payment provider to render appropriate page and include the
@@ -319,9 +309,7 @@ const Form = () => {
               <RequireSubmission
                 retrieveSubmissionFromContext
                 component={SubmissionSummary}
-                processingError={state.processingError}
                 onConfirm={onSubmitForm}
-                onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
               />
             </SessionTrackerModal>
           </ErrorBoundary>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 
@@ -43,11 +43,12 @@ const reducer = (draft, action) => {
   }
 };
 
-const SubmissionSummary = ({processingError = '', onConfirm, onClearProcessingErrors}) => {
+const SubmissionSummary = ({onConfirm}) => {
   const form = useFormContext();
   const {submission, onDestroySession} = useSubmissionContext();
 
   const [state, dispatch] = useImmerReducer(reducer, initialState);
+  const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -85,8 +86,6 @@ const SubmissionSummary = ({processingError = '', onConfirm, onClearProcessingEr
 
   const onPrevPage = event => {
     event.preventDefault();
-    onClearProcessingErrors();
-
     navigate(getPreviousPage());
   };
 
@@ -98,6 +97,7 @@ const SubmissionSummary = ({processingError = '', onConfirm, onClearProcessingEr
 
   const getErrors = () => {
     let errors = [];
+    const processingError = location.state?.errorMessage;
     if (processingError) errors.push(processingError);
     if (state.error) errors.push(state.error);
     return errors;
@@ -130,9 +130,7 @@ const SubmissionSummary = ({processingError = '', onConfirm, onClearProcessingEr
 };
 
 SubmissionSummary.propTypes = {
-  processingError: PropTypes.string,
   onConfirm: PropTypes.func.isRequired,
-  onClearProcessingErrors: PropTypes.func.isRequired,
 };
 
 export default SubmissionSummary;
