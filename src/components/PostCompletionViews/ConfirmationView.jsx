@@ -107,7 +107,7 @@ ConfirmationViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const ConfirmationView = ({returnTo, onFailure, onConfirmed}) => {
+const ConfirmationView = ({returnTo, onConfirmed}) => {
   const form = useFormContext();
   // TODO: take statusUrl from session storage instead of router state / query params,
   // which is the best tradeoff between security and convenience (state doesn't survive
@@ -127,7 +127,6 @@ const ConfirmationView = ({returnTo, onFailure, onConfirmed}) => {
     <StatusUrlPoller
       statusUrl={statusUrl}
       onFailure={error => {
-        onFailure?.(error);
         if (returnTo) {
           const newState = {...(location.state || {}), errorMessage: error};
           navigate(returnTo, {state: newState});
@@ -145,11 +144,6 @@ ConfirmationView.propTypes = {
    * Location to navigate to on failure.
    */
   returnTo: PropTypes.string,
-  /**
-   * Optional callback to invoke when processing failed.
-   * @deprecated
-   */
-  onFailure: PropTypes.func,
   /**
    * Optional callback to invoke when processing was successful.
    * @deprecated

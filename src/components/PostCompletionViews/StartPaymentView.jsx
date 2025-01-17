@@ -61,7 +61,7 @@ StartPaymentViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const StartPaymentView = ({returnTo, onFailure}) => {
+const StartPaymentView = ({returnTo}) => {
   const form = useFormContext();
   const navigate = useNavigate();
   const {statusUrl} = useLocation().state || {};
@@ -70,7 +70,6 @@ const StartPaymentView = ({returnTo, onFailure}) => {
     <StatusUrlPoller
       statusUrl={statusUrl}
       onFailure={error => {
-        onFailure(error);
         if (returnTo) {
           const newState = {...(location.state || {}), errorMessage: error};
           navigate(returnTo, {state: newState});
@@ -87,11 +86,6 @@ StartPaymentView.propTypes = {
    * Location to navigate to on failure.
    */
   returnTo: PropTypes.string,
-  /**
-   * Optional callback to invoke when processing failed.
-   * @deprecated
-   */
-  onFailure: PropTypes.func,
 };
 
 export default StartPaymentView;
