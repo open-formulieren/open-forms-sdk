@@ -16,7 +16,6 @@ import {useImmerReducer} from 'use-immer';
 import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
 import {destroy, get} from 'api';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import FormStep from 'components/FormStep';
 import Loader from 'components/Loader';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import ProgressIndicator from 'components/ProgressIndicator';
@@ -29,14 +28,12 @@ import {
   STEP_LABELS,
   SUBMISSION_ALLOWED,
 } from 'components/constants';
-import {findNextApplicableStep} from 'components/utils';
 import {flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
 import useQuery from 'hooks/useQuery';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
-import useSessionTimeout from 'hooks/useSessionTimeout';
 import Types from 'types';
 
 import FormDisplay from './FormDisplay';
@@ -152,8 +149,6 @@ const Form = () => {
     onSubmissionLoaded
   );
 
-  const [, expiryDate] = useSessionTimeout();
-
   const {value: analyticsToolsConfigInfo, loading: loadingAnalyticsConfig} = useAsync(async () => {
     return await get(`${config.baseUrl}analytics/analytics-tools-config-info`);
   }, [intl.locale]);
@@ -178,16 +173,6 @@ const Form = () => {
     });
     flagActiveSubmission();
     setSubmissionId(submission.id);
-  };
-
-  const onStepSubmitted = async formStep => {
-    const currentStepIndex = form.steps.indexOf(formStep);
-
-    const nextStepIndex = findNextApplicableStep(currentStepIndex, state.submission);
-    const nextStep = form.steps[nextStepIndex]; // will be undefined if it's the last step
-
-    const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
-    navigate(nextUrl);
   };
 
   const onSubmitForm = processingStatusUrl => {
@@ -330,15 +315,15 @@ const Form = () => {
         path="overzicht"
         element={
           <ErrorBoundary useCard>
-            <SessionTrackerModal expiryDate={expiryDate}>
+            <SessionTrackerModal>
               <RequireSubmission
-                submission={state.submission}
-                form={form}
+                retrieveSubmissionFromContext
                 processingError={state.processingError}
                 onConfirm={onSubmitForm}
                 component={SubmissionSummary}
                 onClearProcessingErrors={() => dispatch({type: 'CLEAR_PROCESSING_ERROR'})}
                 onDestroySession={onDestroySession}
+                form={form}
               />
             </SessionTrackerModal>
           </ErrorBoundary>
@@ -371,26 +356,6 @@ const Form = () => {
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               downloadPDFText={form.submissionReportDownloadLinkTitle}
             />
-          </ErrorBoundary>
-        }
-      />
-
-      <Route
-        path="stap/:step"
-        element={
-          <ErrorBoundary useCard>
-            <SessionTrackerModal expiryDate={expiryDate}>
-              <RequireSubmission
-                form={form}
-                submission={state.submission}
-                onLogicChecked={submission =>
-                  dispatch({type: 'SUBMISSION_LOADED', payload: submission})
-                }
-                onStepSubmitted={onStepSubmitted}
-                component={FormStep}
-                onDestroySession={onDestroySession}
-              />
-            </SessionTrackerModal>
           </ErrorBoundary>
         }
       />

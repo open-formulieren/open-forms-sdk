@@ -9,8 +9,10 @@ import {OFButton} from 'components/Button';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Modal from 'components/modals/Modal';
+import useSessionTimeout from 'hooks/useSessionTimeout';
 
 const WARN_SESSION_TIMEOUT_FACTOR = 0.9; // once 90% of the session expiry time has passed, show a warning
+const TEN_HOURS_MS = 10 * 3600 * 1000; // ten hours in miliseconds
 
 const RelativeTimeToExpiry = ({numSeconds}) => {
   // more than 24 hours -> don't bother
@@ -22,17 +24,17 @@ RelativeTimeToExpiry.propTypes = {
   numSeconds: PropTypes.number.isRequired,
 };
 
-const useTriggerWarning = numSeconds => {
+const useTriggerWarning = ms => {
   let timeout;
 
   const [showWarning, setShowWarning] = useState(false);
 
   // no time available
-  if (numSeconds == null) {
-    timeout = 10 * 3600 * 1000; // 10 hours as a fallback
+  if (ms == null) {
+    timeout = TEN_HOURS_MS; // 10 hours as a fallback
   } else {
     // re-render WARN_SESSION_TIMEOUT_FACTOR before the session expires to show a warning
-    timeout = WARN_SESSION_TIMEOUT_FACTOR * numSeconds * 1000;
+    timeout = WARN_SESSION_TIMEOUT_FACTOR * ms;
   }
   const reset = useTimeoutFn(() => setShowWarning(true), timeout)[2];
   return [
@@ -44,14 +46,25 @@ const useTriggerWarning = numSeconds => {
   ];
 };
 
-const SessionTrackerModal = ({expiryDate = null, children}) => {
+const SessionTrackerModal = ({expiryDate = null, onTimeout, children}) => {
+  // support grabbing the expiry date from the hook instead of the prop
+  const [, hookExpiryDate] = useSessionTimeout(onTimeout);
+  if (expiryDate == null) {
+    expiryDate = hookExpiryDate;
+  }
+
   const [warningDismissed, setWarningDismissed] = useState(false);
 
   // re-render when the session is expired to show the error message
   const now = new Date();
-  const timeToExpiryInMS = expiryDate ? Math.max(expiryDate - now, 0) : 1000 * 3600 * 10; // 10 hour fallback in case there's no date
+  const _timeToExpiryInMS = expiryDate ? Math.max(expiryDate - now, 0) : TEN_HOURS_MS; // 10 hour fallback in case there's no date
+  // Limit to max 10 hours, because funny things happen once you go > 25 days where the
+  // callback executes immediately which results in infinite render loops. Shouldn't
+  // matter for prod environments where session timeouts are typically < 1 hour, but in
+  // dev this can easily lead to a frozen browser.
+  const timeToExpiryInMS = Math.min(_timeToExpiryInMS, TEN_HOURS_MS);
   const [, cancelExpiryTimeout, resetExpiryTimeout] = useTimeout(timeToExpiryInMS);
-  const [warningTriggered, resetWarningTriggered] = useTriggerWarning(timeToExpiryInMS / 1000);
+  const [warningTriggered, resetWarningTriggered] = useTriggerWarning(timeToExpiryInMS);
 
   // reset if a new timeout date is received
   useEffect(() => {
@@ -88,6 +101,7 @@ const SessionTrackerModal = ({expiryDate = null, children}) => {
 
 SessionTrackerModal.propTypes = {
   expiryDate: PropTypes.instanceOf(Date),
+  onTimeout: PropTypes.func,
   children: PropTypes.node,
 };
 

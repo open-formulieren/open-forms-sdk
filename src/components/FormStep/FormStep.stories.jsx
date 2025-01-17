@@ -4,11 +4,13 @@ import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';
 
+import {FormContext} from 'Context';
 import {buildForm, buildSubmission} from 'api-mocks';
 import {
   mockEmailVerificationPost,
   mockEmailVerificationVerifyCodePost,
 } from 'components/EmailVerification/mocks';
+import {SubmissionProvider} from 'components/Form';
 import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
@@ -25,8 +27,7 @@ export default {
   component: FormStep,
   decorators: [ConfigDecorator, withRouter, AnalyticsToolsDecorator],
   args: {
-    onLogicChecked: fn(),
-    onStepSubmitted: fn(),
+    onSubmissionObtained: fn(),
     onDestroySession: fn(),
   },
   argTypes: {
@@ -53,8 +54,7 @@ const render = ({
   // component props
   form,
   submission,
-  onLogicChecked,
-  onStepSubmitted,
+  onSubmissionObtained,
   onDestroySession,
   // story args
   formioConfiguration,
@@ -78,13 +78,15 @@ const render = ({
     mockEmailVerificationVerifyCodePost
   );
   return (
-    <FormStep
-      form={form}
-      submission={submission}
-      onLogicChecked={onLogicChecked}
-      onStepSubmitted={onStepSubmitted}
-      onDestroySession={onDestroySession}
-    />
+    <FormContext.Provider value={form}>
+      <SubmissionProvider
+        submission={submission}
+        onSubmissionObtained={onSubmissionObtained}
+        onDestroySession={onDestroySession}
+      >
+        <FormStep />
+      </SubmissionProvider>
+    </FormContext.Provider>
   );
 };
 
