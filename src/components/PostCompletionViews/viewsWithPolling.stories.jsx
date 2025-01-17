@@ -11,7 +11,7 @@ import {withSubmissionPollInfo} from 'story-utils/decorators';
 import ConfirmationView from './ConfirmationView';
 
 export default {
-  title: 'Private API / Post completion views / With Polling',
+  title: 'Views / Post completion views / With Polling',
   component: ConfirmationView,
   decorators: [withSubmissionPollInfo, withRouter],
   argTypes: {

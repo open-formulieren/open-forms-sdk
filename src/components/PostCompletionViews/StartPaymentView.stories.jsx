@@ -10,7 +10,7 @@ import {withSubmissionPollInfo} from 'story-utils/decorators';
 import {StartPaymentViewDisplay} from './StartPaymentView';
 
 export default {
-  title: 'Private API / Post completion views / Start payment',
+  title: 'Views / Post completion views / Start payment',
   component: StartPaymentViewDisplay,
   decorators: [withSubmissionPollInfo],
   args: {
