@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
+import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
-import {useImmerReducer} from 'use-immer';
 
 import {post} from 'api';
 import {useSubmissionContext} from 'components/Form';
@@ -16,10 +16,6 @@ import useTitle from 'hooks/useTitle';
 import GenericSummary from './GenericSummary';
 import {loadSummaryData} from './utils';
 
-const initialState = {
-  error: '',
-};
-
 const completeSubmission = async (submission, statementValues) => {
   const response = await post(`${submission.url}/_complete`, statementValues);
   if (!response.ok) {
@@ -31,28 +27,21 @@ const completeSubmission = async (submission, statementValues) => {
   }
 };
 
-const reducer = (draft, action) => {
-  switch (action.type) {
-    case 'ERROR': {
-      draft.error = action.payload;
-      break;
-    }
-    default: {
-      throw new Error(`Unknown action ${action.type}`);
-    }
-  }
-};
-
 const SubmissionSummary = ({onConfirm}) => {
-  const form = useFormContext();
-  const {submission, onDestroySession} = useSubmissionContext();
-
-  const [state, dispatch] = useImmerReducer(reducer, initialState);
   const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
-
+  const form = useFormContext();
+  const {submission, onDestroySession} = useSubmissionContext();
   const refreshedSubmission = useRefreshSubmission(submission);
+
+  const [submitError, setSubmitError] = useState('');
+
+  const pageTitle = intl.formatMessage({
+    description: 'Summary page title',
+    defaultMessage: 'Check and confirm',
+  });
+  useTitle(pageTitle, form.name);
 
   const paymentInfo = refreshedSubmission.payment;
 
@@ -73,7 +62,7 @@ const SubmissionSummary = ({onConfirm}) => {
       const {statusUrl} = await completeSubmission(refreshedSubmission, statementValues);
       onConfirm(statusUrl);
     } catch (e) {
-      dispatch({type: 'ERROR', payload: e.message});
+      setSubmitError(e.message);
     }
   };
 
@@ -89,19 +78,7 @@ const SubmissionSummary = ({onConfirm}) => {
     navigate(getPreviousPage());
   };
 
-  const pageTitle = intl.formatMessage({
-    description: 'Summary page title',
-    defaultMessage: 'Check and confirm',
-  });
-  useTitle(pageTitle, form.name);
-
-  const getErrors = () => {
-    let errors = [];
-    const processingError = location.state?.errorMessage;
-    if (processingError) errors.push(processingError);
-    if (state.error) errors.push(state.error);
-    return errors;
-  };
+  const errorMessages = [location.state?.errorMessage, submitError].filter(Boolean);
 
   return (
     <LiteralsProvider literals={form.literals}>
@@ -119,7 +96,7 @@ const SubmissionSummary = ({onConfirm}) => {
         editStepText={form.literals.changeText.resolved}
         isLoading={loading}
         isAuthenticated={refreshedSubmission.isAuthenticated}
-        errors={getErrors()}
+        errors={errorMessages}
         prevPage={getPreviousPage()}
         onSubmit={onSubmit}
         onPrevPage={onPrevPage}
