@@ -12,6 +12,7 @@ import {
   mockSubmissionGet,
   mockSubmissionPost,
   mockSubmissionProcessingStatusErrorGet,
+  mockSubmissionProcessingStatusGet,
   mockSubmissionStepGet,
   mockSubmissionSummaryGet,
 } from 'api-mocks/submissions';
@@ -190,4 +191,44 @@ test('Submitting the form with failing background processing', async () => {
   // due to the error we get redirected back to the summary page.
   expect(await screen.findByRole('heading', {name: 'Check and confirm'})).toBeVisible();
   expect(screen.getByText('Computer says no.')).toBeVisible();
+});
+
+test('Submitting form with payment requirement', async () => {
+  const user = userEvent.setup({
+    advanceTimers: vi.advanceTimersByTime,
+  });
+  // The summary page submits the form and needs to trigger the appropriate redirects.
+  // When the status check reports failure, we need to be redirected back to the summary
+  // page for a retry.
+  const form = buildForm({loginRequired: false, submissionStatementsConfiguration: []});
+  const submission = buildSubmission({
+    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    payment: {
+      isRequired: true,
+      amount: '42.69',
+      hasPaid: false,
+    },
+    MARKER: true,
+  });
+  mswServer.use(
+    mockAnalyticsToolConfigGet(),
+    mockSubmissionGet(submission),
+    mockSubmissionSummaryGet(),
+    mockSubmissionCompletePost(),
+    mockSubmissionProcessingStatusGet
+  );
+
+  render(<Wrapper form={form} initialEntry={`/overzicht?submission_uuid=${submission.id}`} />);
+  expect(await screen.findByRole('heading', {name: 'Check and confirm'})).toBeVisible();
+
+  // confirm the submission and complete it
+  vi.useFakeTimers();
+  await user.click(screen.getByRole('button', {name: 'Confirm'}));
+  expect(await screen.findByRole('heading', {name: 'Processing...'})).toBeVisible();
+  const loader = await screen.findByRole('status');
+  vi.runOnlyPendingTimers();
+  vi.useRealTimers();
+  await waitForElementToBeRemoved(loader);
+
+  expect(await screen.findByText('A payment is required for this product.')).toBeVisible();
 });

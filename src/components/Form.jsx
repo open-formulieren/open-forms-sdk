@@ -97,7 +97,7 @@ const Form = () => {
   usePageViews();
   const intl = useIntl();
   const prevLocale = usePrevious(intl.locale);
-  const {pathname: currentPathname} = useLocation();
+  const {pathname: currentPathname, state: routerState} = useLocation();
 
   // TODO replace absolute path check with relative
   const introductionMatch = useMatch('/introductie');
@@ -201,7 +201,7 @@ const Form = () => {
   const isStartPage = !isIntroductionPage && !summaryMatch && stepMatch == null && !paymentMatch;
   const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
-  const submission = state.submission || state.submittedSubmission;
+  const submission = state.submission || (!!paymentMatch && routerState.submission) || null;
   const isCompleted = state.completed;
   const formName = form.name;
   const needsPayment = submission ? submission.payment.isRequired : form.paymentRequired;
@@ -281,7 +281,7 @@ const Form = () => {
         element={
           <ErrorBoundary useCard>
             <RequireSubmission
-              submission={state.submittedSubmission}
+              retrieveSubmissionFromContext
               onFailure={onProcessingFailure}
               onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               component={StartPaymentView}
