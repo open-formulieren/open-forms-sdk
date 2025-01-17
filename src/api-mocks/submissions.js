@@ -167,6 +167,6 @@ export const mockSubmissionProcessingStatusErrorGet = http.get(
     })
 );
 
-export const mockSubmissionPaymentStartGet = http.post(`${BASE_URL}payment/:uuid/demo/start`, () =>
-  HttpResponse.json({data: {method: 'get', action: 'https://example.com'}})
-);
+export const mockSubmissionPaymentStartPost = (
+  data = {type: 'get', url: 'https://example.com', data: {}}
+) => http.post(`${BASE_URL}payment/:uuid/demo/start`, () => HttpResponse.json(data));

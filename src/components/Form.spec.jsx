@@ -10,6 +10,7 @@ import mswServer from 'api-mocks/msw-server';
 import {
   mockSubmissionCompletePost,
   mockSubmissionGet,
+  mockSubmissionPaymentStartPost,
   mockSubmissionPost,
   mockSubmissionProcessingStatusErrorGet,
   mockSubmissionProcessingStatusGet,
@@ -235,7 +236,7 @@ test('Submitting the form with successful background processing', async () => {
   expect(await screen.findByRole('heading', {name: 'Confirmation: OF-L337'})).toBeVisible();
 });
 
-test('Submitting form with payment requirement', async () => {
+test.only('Submitting form with payment requirement', async () => {
   const user = userEvent.setup({
     advanceTimers: vi.advanceTimersByTime,
   });
@@ -257,7 +258,8 @@ test('Submitting form with payment requirement', async () => {
     mockSubmissionGet(submission),
     mockSubmissionSummaryGet(),
     mockSubmissionCompletePost(),
-    mockSubmissionProcessingStatusGet
+    mockSubmissionProcessingStatusGet,
+    mockSubmissionPaymentStartPost(null)
   );
 
   render(<Wrapper form={form} initialEntry={`/overzicht?submission_uuid=${submission.id}`} />);

@@ -2,7 +2,7 @@ import {expect, waitFor, within} from '@storybook/test';
 
 import {BASE_URL} from 'api-mocks';
 import {
-  mockSubmissionPaymentStartGet,
+  mockSubmissionPaymentStartPost,
   mockSubmissionProcessingStatusGet,
 } from 'api-mocks/submissions';
 import {withSubmissionPollInfo} from 'story-utils/decorators';
@@ -21,7 +21,7 @@ export default {
   },
   parameters: {
     msw: {
-      handlers: [mockSubmissionProcessingStatusGet, mockSubmissionPaymentStartGet],
+      handlers: [mockSubmissionProcessingStatusGet, mockSubmissionPaymentStartPost()],
     },
   },
 };
