@@ -60,7 +60,7 @@ StartPaymentViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const StartPaymentView = ({onFailure, onConfirmed, downloadPDFText}) => {
+const StartPaymentView = ({onFailure, downloadPDFText}) => {
   const {statusUrl, submission} = useLocation().state || {};
   if (DEBUG) {
     if (!statusUrl) throw new Error('You must pass the status URL via the route state.');
@@ -69,11 +69,7 @@ const StartPaymentView = ({onFailure, onConfirmed, downloadPDFText}) => {
     }
   }
   return (
-    <StatusUrlPoller
-      statusUrl={statusUrl}
-      onFailure={error => onFailure(submission, error)}
-      onConfirmed={onConfirmed}
-    >
+    <StatusUrlPoller statusUrl={statusUrl} onFailure={error => onFailure(submission, error)}>
       <StartPaymentViewDisplay downloadPDFText={downloadPDFText} />
     </StatusUrlPoller>
   );
@@ -81,7 +77,6 @@ const StartPaymentView = ({onFailure, onConfirmed, downloadPDFText}) => {
 
 StartPaymentView.propTypes = {
   onFailure: PropTypes.func,
-  onConfirmed: PropTypes.func,
   downloadPDFText: PropTypes.node,
 };
 

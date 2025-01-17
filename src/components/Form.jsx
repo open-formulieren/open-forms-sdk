@@ -39,7 +39,6 @@ import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
 
 const initialState = {
   submission: null,
-  completed: false,
 };
 
 const reducer = (draft, action) => {
@@ -54,10 +53,6 @@ const reducer = (draft, action) => {
       // put the submission back in the state so we can re-submit
       const {submission} = action.payload;
       draft.submission = submission;
-      break;
-    }
-    case 'PROCESSING_SUCCEEDED': {
-      draft.completed = true;
       break;
     }
     case 'DESTROY_SUBMISSION': {
@@ -196,7 +191,6 @@ const Form = () => {
   const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
   const submission = state.submission || (!!paymentMatch && routerState.submission) || null;
-  const isCompleted = state.completed;
   const formName = form.name;
   const needsPayment = submission ? submission.payment.isRequired : form.paymentRequired;
 
@@ -241,6 +235,9 @@ const Form = () => {
       // then, filter out the non-applicable steps if they should not be displayed
       .filter(step => showNonApplicableSteps || step.isApplicable);
 
+  // the statusUrl is put in the router state once the summary page is confirmed and the
+  // submission is completed.
+  const isCompleted = !!routerState?.statusUrl;
   const stepsToRender = addFixedSteps(
     intl,
     updatedSteps,
@@ -275,7 +272,6 @@ const Form = () => {
             <RequireSubmission
               retrieveSubmissionFromContext
               onFailure={onProcessingFailure}
-              onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               component={StartPaymentView}
               donwloadPDFText={form.submissionReportDownloadLinkTitle}
             />
@@ -289,7 +285,6 @@ const Form = () => {
           <ErrorBoundary useCard>
             <ConfirmationView
               onFailure={onProcessingFailure}
-              onConfirmed={() => dispatch({type: 'PROCESSING_SUCCEEDED'})}
               downloadPDFText={form.submissionReportDownloadLinkTitle}
             />
           </ErrorBoundary>

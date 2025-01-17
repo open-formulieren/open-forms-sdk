@@ -236,7 +236,7 @@ test('Submitting the form with successful background processing', async () => {
   expect(await screen.findByRole('heading', {name: 'Confirmation: OF-L337'})).toBeVisible();
 });
 
-test.only('Submitting form with payment requirement', async () => {
+test('Submitting form with payment requirement', async () => {
   const user = userEvent.setup({
     advanceTimers: vi.advanceTimersByTime,
   });
