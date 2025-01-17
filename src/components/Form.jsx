@@ -54,15 +54,10 @@ const reducer = (draft, action) => {
       draft.submission = action.payload;
       break;
     }
-    case 'SUBMITTED': {
-      return {
-        ...initialState,
-        submittedSubmission: action.payload.submission,
-      };
-    }
     case 'PROCESSING_FAILED': {
       // put the submission back in the state so we can re-submit
-      draft.submission = draft.submittedSubmission;
+      const {submission} = action.payload;
+      draft.submission = submission;
       break;
     }
     case 'PROCESSING_SUCCEEDED': {
@@ -165,15 +160,6 @@ const Form = () => {
     setSubmissionId(submission.id);
   };
 
-  const onSubmitForm = () => {
-    dispatch({
-      type: 'SUBMITTED',
-      payload: {
-        submission: state.submission,
-      },
-    });
-  };
-
   const onDestroySession = async () => {
     await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
 
@@ -185,8 +171,8 @@ const Form = () => {
     navigate('/');
   };
 
-  const onProcessingFailure = errorMessage => {
-    dispatch({type: 'PROCESSING_FAILED', payload: errorMessage});
+  const onProcessingFailure = (submission, errorMessage) => {
+    dispatch({type: 'PROCESSING_FAILED', payload: {submission}});
     navigate('/overzicht', {state: {errorMessage}});
   };
 
@@ -297,11 +283,7 @@ const Form = () => {
         element={
           <ErrorBoundary useCard>
             <SessionTrackerModal>
-              <RequireSubmission
-                retrieveSubmissionFromContext
-                component={SubmissionSummary}
-                onConfirm={onSubmitForm}
-              />
+              <RequireSubmission retrieveSubmissionFromContext component={SubmissionSummary} />
             </SessionTrackerModal>
           </ErrorBoundary>
         }

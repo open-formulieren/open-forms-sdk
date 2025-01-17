@@ -13,7 +13,7 @@ const Confirmation = () => {
   const statusUrl = params.get('statusUrl');
   if (!statusUrl) throw new Error('Missing statusUrl param');
 
-  const onProcessingFailure = errorMessage => {
+  const onProcessingFailure = (submission, errorMessage) => {
     setProcessingError(errorMessage);
     navigate('../overzicht');
   };

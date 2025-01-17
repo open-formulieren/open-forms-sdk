@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router-dom';
@@ -27,7 +26,7 @@ const completeSubmission = async (submission, statementValues) => {
   }
 };
 
-const SubmissionSummary = ({onConfirm}) => {
+const SubmissionSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
@@ -66,8 +65,6 @@ const SubmissionSummary = ({onConfirm}) => {
       setSubmitError(e.message);
       return;
     }
-
-    onConfirm();
 
     // the completion went through, proceed to redirect to the next page and set up
     // the necessary state.
@@ -123,8 +120,6 @@ const SubmissionSummary = ({onConfirm}) => {
   );
 };
 
-SubmissionSummary.propTypes = {
-  onConfirm: PropTypes.func.isRequired,
-};
+SubmissionSummary.propTypes = {};
 
 export default SubmissionSummary;

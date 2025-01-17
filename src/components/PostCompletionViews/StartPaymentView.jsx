@@ -61,11 +61,19 @@ StartPaymentViewDisplay.propTypes = {
 };
 
 const StartPaymentView = ({onFailure, onConfirmed, downloadPDFText}) => {
-  const location = useLocation();
-  const statusUrl = location.state?.statusUrl;
-  if (DEBUG && !statusUrl) throw new Error('You must pass the status URL via the route state.');
+  const {statusUrl, submission} = useLocation().state || {};
+  if (DEBUG) {
+    if (!statusUrl) throw new Error('You must pass the status URL via the route state.');
+    if (!submission) {
+      throw new Error('You must pass the submitted submission via the router state.');
+    }
+  }
   return (
-    <StatusUrlPoller statusUrl={statusUrl} onFailure={onFailure} onConfirmed={onConfirmed}>
+    <StatusUrlPoller
+      statusUrl={statusUrl}
+      onFailure={error => onFailure(submission, error)}
+      onConfirmed={onConfirmed}
+    >
       <StartPaymentViewDisplay downloadPDFText={downloadPDFText} />
     </StatusUrlPoller>
   );

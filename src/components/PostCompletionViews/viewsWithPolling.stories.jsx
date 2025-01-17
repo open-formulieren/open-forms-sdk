@@ -1,7 +1,7 @@
 import {expect, fn, waitForElementToBeRemoved, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {BASE_URL} from 'api-mocks';
+import {BASE_URL, buildSubmission} from 'api-mocks';
 import {
   mockSubmissionProcessingStatusGet,
   mockSubmissionProcessingStatusPendingGet,
@@ -29,6 +29,7 @@ export default {
       location: {
         state: {
           statusUrl: `${BASE_URL}submissions/4b0e86a8-dc5f-41cc-b812-c89857b9355b/-token-/status`,
+          submission: buildSubmission(),
         },
       },
     },

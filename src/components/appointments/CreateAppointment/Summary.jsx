@@ -178,12 +178,17 @@ const Summary = () => {
       return;
     }
     // TODO: store details in sessionStorage instead, to survive hard refreshes
-    navigate({
-      pathname: '../bevestiging',
-      search: createSearchParams({
-        statusUrl: appointment.statusUrl,
-      }).toString(),
-    });
+    navigate(
+      {
+        pathname: '../bevestiging',
+        search: createSearchParams({
+          statusUrl: appointment.statusUrl,
+        }).toString(),
+      },
+      {
+        state: {submission},
+      }
+    );
   };
 
   return (

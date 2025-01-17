@@ -113,12 +113,25 @@ const ConfirmationView = ({onFailure, onConfirmed, downloadPDFText}) => {
   const location = useLocation();
   const [params] = useSearchParams();
   const statusUrl = params.get('statusUrl') ?? location.state?.statusUrl;
-  if (DEBUG && !statusUrl)
-    throw new Error(
-      'You must pass the status URL via the router state (preferably) or query params.'
-    );
+  const submittedSubmission = location.state?.submission;
+
+  if (DEBUG) {
+    if (!statusUrl) {
+      throw new Error(
+        'You must pass the status URL via the router state (preferably) or query params.'
+      );
+    }
+    if (!submittedSubmission) {
+      throw new Error('You must pass the submitted submission via the router state.');
+    }
+  }
+
   return (
-    <StatusUrlPoller statusUrl={statusUrl} onFailure={onFailure} onConfirmed={onConfirmed}>
+    <StatusUrlPoller
+      statusUrl={statusUrl}
+      onFailure={error => onFailure(submittedSubmission, error)}
+      onConfirmed={onConfirmed}
+    >
       <ConfirmationViewDisplay downloadPDFText={downloadPDFText} />
     </StatusUrlPoller>
   );

@@ -22,7 +22,7 @@ const Wrapper = ({form, submission}) => {
           onDestroySession={vi.fn()}
           removeSubmissionId={vi.fn()}
         >
-          <SubmissionSummary onConfirm={vi.fn()} onClearProcessingErrors={vi.fn()} />
+          <SubmissionSummary />
         </SubmissionProvider>
       ),
     },
