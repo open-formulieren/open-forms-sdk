@@ -39,9 +39,7 @@ import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
 
 const initialState = {
   submission: null,
-  submittedSubmission: null,
   completed: false,
-  startingError: '',
 };
 
 const reducer = (draft, action) => {
@@ -70,10 +68,6 @@ const reducer = (draft, action) => {
     case 'RESET': {
       const initialState = action.payload;
       return initialState;
-    }
-    case 'STARTING_ERROR': {
-      draft.startingError = action.payload;
-      break;
     }
     default: {
       throw new Error(`Unknown action ${action.type}`);
@@ -270,8 +264,6 @@ const Form = () => {
         accessibleToggleStepsLabel={accessibleToggleStepsLabel}
       />
     ) : null;
-
-  if (state.startingError) throw state.startingError;
 
   // Route the correct page based on URL
   const router = (
