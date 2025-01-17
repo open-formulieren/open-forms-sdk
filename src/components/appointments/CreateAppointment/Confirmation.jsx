@@ -6,12 +6,10 @@ import {useCreateAppointmentContext} from './CreateAppointmentState';
 
 const Confirmation = () => {
   const [params] = useSearchParams();
-  const {reset, setProcessingError} = useCreateAppointmentContext();
+  const {reset} = useCreateAppointmentContext();
   const statusUrl = params.get('statusUrl');
   if (!statusUrl) throw new Error('Missing statusUrl param');
-  return (
-    <ConfirmationView returnTo="../overzicht" onFailure={setProcessingError} onConfirmed={reset} />
-  );
+  return <ConfirmationView returnTo="../overzicht" onConfirmed={reset} />;
 };
 
 Confirmation.propTypes = {};

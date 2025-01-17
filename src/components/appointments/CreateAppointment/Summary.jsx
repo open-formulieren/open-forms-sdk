@@ -1,7 +1,7 @@
 import {Form, Formik} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {createSearchParams, useNavigate} from 'react-router-dom';
+import {createSearchParams, useLocation, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -60,9 +60,10 @@ const getErrorsNavigateTo = errors => {
 const Summary = () => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
+  const {state: routerState} = useLocation();
   const navigate = useNavigate();
-  const {appointmentData, submission, setErrors, processingError, setProcessingError} =
-    useCreateAppointmentContext();
+  const {appointmentData, submission, setErrors} = useCreateAppointmentContext();
+  const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   useTitle(
     intl.formatMessage({
@@ -162,7 +163,7 @@ const Summary = () => {
    * Submit the appointment data to the backend.
    */
   const onSubmit = async statementValues => {
-    setProcessingError('');
+    setSubmitting(true);
     let appointment;
     try {
       appointment = await createAppointment(baseUrl, submission, appointmentData, statementValues);
@@ -176,6 +177,8 @@ const Summary = () => {
       }
       setSubmitError(e);
       return;
+    } finally {
+      setSubmitting(false);
     }
     // TODO: store details in sessionStorage instead, to survive hard refreshes
     navigate(
@@ -191,6 +194,7 @@ const Summary = () => {
     );
   };
 
+  const processingError = submitting ? '' : routerState?.errorMessage;
   return (
     <>
       <CardTitle

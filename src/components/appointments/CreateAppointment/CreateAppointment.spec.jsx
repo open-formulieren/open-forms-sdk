@@ -177,6 +177,14 @@ describe('Create appointment status checking', () => {
     // wait for summary page to be rendered again
     await screen.findByText('Check and confirm', undefined, {timeout: 2000});
     expect(screen.getByText('Computer says no.')).toBeVisible();
+
+    // submitting again causes error message to vanish
+    for (const checkbox of screen.getAllByRole('checkbox')) {
+      await user.click(checkbox);
+    }
+    const submitButton2 = screen.getByRole('button', {name: 'Confirm'});
+    await user.click(submitButton2);
+    expect(screen.queryByText('Computer says no.')).toBeNull();
   });
 });
 

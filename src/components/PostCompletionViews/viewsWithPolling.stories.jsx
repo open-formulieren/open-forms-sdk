@@ -18,7 +18,6 @@ export default {
     statusUrl: {control: false},
   },
   args: {
-    onFailure: fn(),
     onConfirmed: fn(),
   },
   parameters: {
