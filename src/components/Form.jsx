@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {
   Navigate,
@@ -10,7 +10,6 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import {useAsync, usePrevious} from 'react-use';
-import {useImmerReducer} from 'use-immer';
 
 import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
 import {destroy, get} from 'api';
@@ -31,33 +30,6 @@ import Types from 'types';
 
 import FormDisplay from './FormDisplay';
 import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
-
-const initialState = {
-  submission: null,
-};
-
-const reducer = (draft, action) => {
-  switch (action.type) {
-    case 'SUBMISSION_LOADED': {
-      // keep the submission instance in the state and set the current step to the
-      // first step of the form.
-      draft.submission = action.payload;
-      break;
-    }
-    case 'DESTROY_SUBMISSION': {
-      return {
-        ...initialState,
-      };
-    }
-    case 'RESET': {
-      const initialState = action.payload;
-      return initialState;
-    }
-    default: {
-      throw new Error(`Unknown action ${action.type}`);
-    }
-  }
-};
 
 /**
  * An OpenForms form.
@@ -85,28 +57,24 @@ const Form = () => {
   const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
-  const {steps} = form;
   const config = useContext(ConfigContext);
 
   // load the state management/reducer
-  const initialStateFromProps = {...initialState, step: steps[0]};
-  const [state, dispatch] = useImmerReducer(reducer, initialStateFromProps);
+  const submissionFromRouterState = routerState?.submission;
+  const [submission, setSubmission] = useState(null);
+  if (submission == null && submissionFromRouterState != null) {
+    setSubmission(submissionFromRouterState);
+  }
 
-  const onSubmissionLoaded = (submission, next = '') => {
-    dispatch({
-      type: 'SUBMISSION_LOADED',
-      payload: submission,
-    });
+  const onSubmissionLoaded = submission => {
+    setSubmission(submission);
     flagActiveSubmission();
-    // navigate to the first step
-    const firstStepRoute = `/stap/${form.steps[0].slug}`;
-    navigate(next ? next : firstStepRoute);
   };
 
   // if there is an active submission still, re-load that (relevant for hard-refreshes)
   const [loading, setSubmissionId, removeSubmissionId] = useRecycleSubmission(
     form,
-    state.submission,
+    submission,
     onSubmissionLoaded
   );
 
@@ -117,33 +85,21 @@ const Form = () => {
   useEffect(
     () => {
       if (prevLocale === undefined) return;
-      if (intl.locale !== prevLocale && state.submission) {
+      if (intl.locale !== prevLocale && submission) {
         removeSubmissionId();
-        dispatch({type: 'DESTROY_SUBMISSION'});
+        setSubmission(null);
         flagNoActiveSubmission();
         navigate(`/?${START_FORM_QUERY_PARAM}=1`);
       }
     },
-    [intl.locale, prevLocale, removeSubmissionId, state.submission] // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [intl.locale, prevLocale, removeSubmissionId, submission]
   );
 
-  const onSubmissionObtained = submission => {
-    dispatch({
-      type: 'SUBMISSION_LOADED',
-      payload: submission,
-    });
-    flagActiveSubmission();
-    setSubmissionId(submission.id);
-  };
-
   const onDestroySession = async () => {
-    await destroy(`${config.baseUrl}authentication/${state.submission.id}/session`);
-
+    await destroy(`${config.baseUrl}authentication/${submission.id}/session`);
     removeSubmissionId();
-    dispatch({
-      type: 'RESET',
-      payload: initialStateFromProps,
-    });
+    setSubmission(null);
     navigate('/');
   };
 
@@ -168,14 +124,11 @@ const Form = () => {
     return <Loader modifiers={['centered']} />;
   }
 
-  const submissionFromRouterState = routerState?.submission ?? null;
-  const submission = state.submission || submissionFromRouterState;
-
   // Progress Indicator
 
   const isIntroductionPage = !!introductionMatch;
   const isStartPage = !isIntroductionPage && !summaryMatch && stepMatch == null && !paymentMatch;
-  const submissionAllowedSpec = state.submission?.submissionAllowed ?? form.submissionAllowed;
+  const submissionAllowedSpec = submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
   const formName = form.name;
   const needsPayment = submission ? submission.payment.isRequired : form.paymentRequired;
@@ -194,7 +147,7 @@ const Form = () => {
   } else if (paymentMatch) {
     activeStepTitle = intl.formatMessage(STEP_LABELS.payment);
   } else {
-    const step = steps.find(step => step.slug === stepSlug);
+    const step = form.steps.find(step => step.slug === stepSlug);
     activeStepTitle = step.formDefinition;
   }
 
@@ -217,7 +170,7 @@ const Form = () => {
   const showNonApplicableSteps = !form.hideNonApplicableSteps;
   const updatedSteps =
     // first, process all the form steps in a format suitable for the PI
-    getStepsInfo(steps, submission, currentPathname)
+    getStepsInfo(form.steps, submission, currentPathname)
       // then, filter out the non-applicable steps if they should not be displayed
       .filter(step => showNonApplicableSteps || step.isApplicable);
 
@@ -253,8 +206,11 @@ const Form = () => {
     <FormDisplay progressIndicator={progressIndicator}>
       <AnalyticsToolsConfigContext.Provider value={analyticsToolsConfigInfo}>
         <SubmissionProvider
-          submission={state.submission}
-          onSubmissionObtained={onSubmissionObtained}
+          submission={submission}
+          onSubmissionObtained={submission => {
+            onSubmissionLoaded(submission);
+            setSubmissionId(submission.id);
+          }}
           onDestroySession={onDestroySession}
           removeSubmissionId={removeSubmissionId}
         >
