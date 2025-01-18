@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
-import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
+import {useLocation, useSearchParams} from 'react-router-dom';
 
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
@@ -107,13 +107,12 @@ ConfirmationViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const ConfirmationView = ({returnTo, onConfirmed}) => {
+const ConfirmationView = ({onFailureNavigateTo, onConfirmed}) => {
   const form = useFormContext();
   // TODO: take statusUrl from session storage instead of router state / query params,
   // which is the best tradeoff between security and convenience (state doesn't survive
   // hard refreshes, query params is prone to accidental information leaking)
   const location = useLocation();
-  const navigate = useNavigate();
   const [params] = useSearchParams();
   const statusUrl = params.get('statusUrl') ?? location.state?.statusUrl;
 
@@ -126,12 +125,7 @@ const ConfirmationView = ({returnTo, onConfirmed}) => {
   return (
     <StatusUrlPoller
       statusUrl={statusUrl}
-      onFailure={error => {
-        if (returnTo) {
-          const newState = {...(location.state || {}), errorMessage: error};
-          navigate(returnTo, {state: newState});
-        }
-      }}
+      onFailureNavigateTo={onFailureNavigateTo}
       onConfirmed={onConfirmed}
     >
       <ConfirmationViewDisplay downloadPDFText={form.submissionReportDownloadLinkTitle} />
@@ -143,7 +137,7 @@ ConfirmationView.propTypes = {
   /**
    * Location to navigate to on failure.
    */
-  returnTo: PropTypes.string,
+  onFailureNavigateTo: PropTypes.string,
   /**
    * Optional callback to invoke when processing was successful.
    * @deprecated

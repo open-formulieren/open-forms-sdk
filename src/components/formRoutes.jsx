@@ -54,7 +54,7 @@ const formRoutes = [
     element: (
       <ErrorBoundary useCard>
         <RequireSubmission retrieveSubmissionFromContext>
-          <StartPaymentView returnTo="/overzicht" />
+          <StartPaymentView onFailureNavigateTo="/overzicht" />
         </RequireSubmission>
       </ErrorBoundary>
     ),
@@ -63,7 +63,7 @@ const formRoutes = [
     path: 'bevestiging',
     element: (
       <ErrorBoundary useCard>
-        <ConfirmationView returnTo="/overzicht" />
+        <ConfirmationView onFailureNavigateTo="/overzicht" />
       </ErrorBoundary>
     ),
   },

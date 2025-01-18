@@ -9,7 +9,7 @@ const Confirmation = () => {
   const {reset} = useCreateAppointmentContext();
   const statusUrl = params.get('statusUrl');
   if (!statusUrl) throw new Error('Missing statusUrl param');
-  return <ConfirmationView returnTo="../overzicht" onConfirmed={reset} />;
+  return <ConfirmationView onFailureNavigateTo="../overzicht" onConfirmed={reset} />;
 };
 
 Confirmation.propTypes = {};

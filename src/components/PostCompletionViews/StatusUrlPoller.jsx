@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
@@ -21,9 +21,10 @@ const SubmissionStatusContext = React.createContext({
 });
 SubmissionStatusContext.displayName = 'SubmissionStatusContext';
 
-const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
+const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}) => {
   const intl = useIntl();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const genericErrorMessage = intl.formatMessage({
     description: 'Generic submission error',
@@ -35,13 +36,14 @@ const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
     error,
     response: statusResponse,
   } = usePoll(
-    statusUrl || location?.state?.statusUrl,
+    statusUrl,
     1000,
     response => response.status === 'done',
     response => {
       if (response.result === RESULT_FAILED) {
         const errorMessage = response.errorMessage || genericErrorMessage;
-        onFailure?.(errorMessage);
+        const newState = {...(location.state || {}), errorMessage};
+        navigate(onFailureNavigateTo, {state: newState});
       } else if (response.result === RESULT_SUCCESS) {
         onConfirmed?.();
       }
@@ -107,8 +109,17 @@ const StatusUrlPoller = ({statusUrl, onFailure, onConfirmed, children}) => {
 };
 
 StatusUrlPoller.propTypes = {
-  statusUrl: PropTypes.string,
-  onFailure: PropTypes.func,
+  /**
+   * Backend status URL to poll for status checks.
+   */
+  statusUrl: PropTypes.string.isRequired,
+  /**
+   * Route to navigate to if the status check reports failure.
+   *
+   * The route state will be extended with `errorMessage` property retrieved from the
+   * backend processing.
+   */
+  onFailureNavigateTo: PropTypes.string.isRequired,
   onConfirmed: PropTypes.func,
   children: PropTypes.node,
 };
