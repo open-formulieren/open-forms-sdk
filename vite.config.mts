@@ -145,6 +145,7 @@ export default defineConfig(({mode}) => ({
         'src/**/*.d.ts',
         'src/**/*.stories.{js,jsx,ts,tsx}',
         'src/api-mocks/*',
+        'src/**/mocks.{js,jsx}',
         'src/story-utils/*',
         ...coverageConfigDefaults.exclude,
       ],
