@@ -8,24 +8,23 @@ import {IsFormDesigner} from 'headers';
 import useFormContext from 'hooks/useFormContext';
 
 /**
- * Higher order component to enforce there is an active submission in the state.
+ * Wrapper component to enforce there is an active submission in the state.
  *
- * If there is no submission, the user is forcibly redirected to the start of the form.
+ * If there is no submission, the user is forcibly redirected to the start of the form,
+ * or an error is thrown if the form is temporarily unavailable. Ensure you wrap the
+ * component in an error boundary that can handle these.
  *
- * Provide either the component or children prop to render the actual content. The
- * `component` prop is deprecated in favour of specifying explicit elements.
+ * The submission is taken from the context set via the `SubmissionProvider` component.
+ * Pass the content to render if there's a submission/session via the `children` prop,
+ * e.g.:
+ *
+ *     <RequireSubmission>
+ *       <MyProtectedView />
+ *     </RequireSubmission>
  */
-const RequireSubmission = ({
-  retrieveSubmissionFromContext = false,
-  submission: submissionFromProps,
-  children,
-  component: Component,
-  ...props
-}) => {
+const RequireSubmission = ({children}) => {
   const {maintenanceMode} = useFormContext();
-  const {submission: submissionFromContext} = useSubmissionContext();
-
-  const submission = retrieveSubmissionFromContext ? submissionFromContext : submissionFromProps;
+  const {submission} = useSubmissionContext();
 
   const userIsFormDesigner = IsFormDesigner.getValue();
   if (!userIsFormDesigner && maintenanceMode) {
@@ -44,25 +43,13 @@ const RequireSubmission = ({
   return (
     <>
       {userIsFormDesigner && maintenanceMode && <MaintenanceMode />}
-      {children ?? <Component submission={submission} {...props} />}
+      {children}
     </>
   );
 };
 
 RequireSubmission.propTypes = {
-  retrieveSubmissionFromContext: PropTypes.bool,
-  /**
-   * Submission (or null-ish) to test if there's an active submission.
-   * @deprecated - grab it from the context via `retrieveSubmissionFromContext` instead.
-   */
-  submission: PropTypes.object,
-  children: PropTypes.node,
-  /**
-   * Component to render with the provided props. If children are provided, those get
-   * priority.
-   * @deprecated
-   */
-  component: PropTypes.elementType,
+  children: PropTypes.node.isRequired,
 };
 
 export default RequireSubmission;

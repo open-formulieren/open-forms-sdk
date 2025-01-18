@@ -30,7 +30,7 @@ const formRoutes = [
     element: (
       <ErrorBoundary useCard>
         <SessionTrackerModal>
-          <RequireSubmission retrieveSubmissionFromContext>
+          <RequireSubmission>
             <FormStep />
           </RequireSubmission>
         </SessionTrackerModal>
@@ -42,7 +42,7 @@ const formRoutes = [
     element: (
       <ErrorBoundary useCard>
         <SessionTrackerModal>
-          <RequireSubmission retrieveSubmissionFromContext>
+          <RequireSubmission>
             <SubmissionSummary />
           </RequireSubmission>
         </SessionTrackerModal>
@@ -53,7 +53,7 @@ const formRoutes = [
     path: 'betalen',
     element: (
       <ErrorBoundary useCard>
-        <RequireSubmission retrieveSubmissionFromContext>
+        <RequireSubmission>
           <StartPaymentView onFailureNavigateTo="/overzicht" />
         </RequireSubmission>
       </ErrorBoundary>
