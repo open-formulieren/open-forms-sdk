@@ -7,7 +7,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
-import {SubmissionProvider} from 'components/Form';
+import SubmissionProvider from 'components/SubmissionProvider';
 import {SubmissionSummary} from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 

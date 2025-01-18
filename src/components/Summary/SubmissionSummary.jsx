@@ -4,8 +4,8 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
 
 import {post} from 'api';
-import {useSubmissionContext} from 'components/Form';
 import {LiteralsProvider} from 'components/Literal';
+import {useSubmissionContext} from 'components/SubmissionProvider';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {findPreviousApplicableStep} from 'components/utils';
 import useFormContext from 'hooks/useFormContext';

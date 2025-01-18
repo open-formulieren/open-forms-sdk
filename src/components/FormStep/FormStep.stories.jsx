@@ -10,7 +10,7 @@ import {
   mockEmailVerificationPost,
   mockEmailVerificationVerifyCodePost,
 } from 'components/EmailVerification/mocks';
-import {SubmissionProvider} from 'components/Form';
+import SubmissionProvider from 'components/SubmissionProvider';
 import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 

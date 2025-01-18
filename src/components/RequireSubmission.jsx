@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import {Navigate} from 'react-router-dom';
 
-import {useSubmissionContext} from 'components/Form';
 import MaintenanceMode from 'components/MaintenanceMode';
+import {useSubmissionContext} from 'components/SubmissionProvider';
 import {ServiceUnavailable} from 'errors';
 import {IsFormDesigner} from 'headers';
 import useFormContext from 'hooks/useFormContext';

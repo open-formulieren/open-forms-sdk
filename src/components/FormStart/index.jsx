@@ -7,12 +7,12 @@ import {ConfigContext} from 'Context';
 import Body from 'components/Body';
 import Card from 'components/Card';
 import ExistingSubmissionOptions from 'components/ExistingSubmissionOptions';
-import {useSubmissionContext} from 'components/Form';
 import FormMaximumSubmissions from 'components/FormMaximumSubmissions';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LoginOptions from 'components/LoginOptions';
 import MaintenanceMode from 'components/MaintenanceMode';
+import {useSubmissionContext} from 'components/SubmissionProvider';
 import {
   AuthenticationErrors,
   useDetectAuthErrorMessages,

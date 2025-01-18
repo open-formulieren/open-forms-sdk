@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {
   Navigate,
@@ -15,6 +14,7 @@ import {ConfigContext} from 'Context';
 import {destroy} from 'api';
 import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
+import SubmissionProvider from 'components/SubmissionProvider';
 import AnalyticsToolsConfigProvider from 'components/analytics/AnalyticsToolConfigProvider';
 import {
   PI_TITLE,
@@ -27,7 +27,6 @@ import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
-import Types from 'types';
 
 import FormDisplay from './FormDisplay';
 import {addFixedSteps, getStepsInfo} from './ProgressIndicator/utils';
@@ -221,49 +220,4 @@ const Form = () => {
 
 Form.propTypes = {};
 
-const SubmissionContext = React.createContext({
-  submission: null,
-  onSubmissionObtained: () => {},
-  onDestroySession: () => {},
-  removeSubmissionId: () => {},
-});
-
-const SubmissionProvider = ({
-  submission = null,
-  onSubmissionObtained,
-  onDestroySession,
-  removeSubmissionId,
-  children,
-}) => (
-  <SubmissionContext.Provider
-    value={{submission, onSubmissionObtained, onDestroySession, removeSubmissionId}}
-  >
-    {children}
-  </SubmissionContext.Provider>
-);
-
-SubmissionProvider.propTypes = {
-  /**
-   * The submission currently being filled out / submitted / viewed. It must exist in
-   * the backend session.
-   */
-  submission: Types.Submission,
-  /**
-   * Callback for when a submission was (re-)loaded to store it in the state.
-   */
-  onSubmissionObtained: PropTypes.func.isRequired,
-  /**
-   * Callback for when an abort/logout/stop button is clicked which terminates the
-   * form submission / session.
-   */
-  onDestroySession: PropTypes.func.isRequired,
-  /**
-   * Callback to remove the submission reference (it's ID) from the local storage.
-   */
-  removeSubmissionId: PropTypes.func.isRequired,
-};
-
-const useSubmissionContext = () => useContext(SubmissionContext);
-
 export default Form;
-export {useSubmissionContext, SubmissionProvider};
