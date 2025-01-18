@@ -17,13 +17,8 @@ import {loadSummaryData} from './utils';
 
 const completeSubmission = async (submission, statementValues) => {
   const response = await post(`${submission.url}/_complete`, statementValues);
-  if (!response.ok) {
-    console.error(response.data);
-    // TODO Specific error for each type of invalid data?
-    throw new Error('InvalidSubmissionData');
-  } else {
-    return response.data;
-  }
+  const {statusUrl} = response.data;
+  return statusUrl;
 };
 
 const SubmissionSummary = () => {
@@ -59,8 +54,7 @@ const SubmissionSummary = () => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
     let statusUrl;
     try {
-      const responseData = await completeSubmission(refreshedSubmission, statementValues);
-      statusUrl = responseData.statusUrl;
+      statusUrl = await completeSubmission(refreshedSubmission, statementValues);
     } catch (e) {
       setSubmitError(e.message);
       return;
