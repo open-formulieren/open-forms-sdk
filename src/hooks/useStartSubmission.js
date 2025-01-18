@@ -1,10 +1,10 @@
+import {useSearchParams} from 'react-router-dom';
+
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 
-import useQuery from './useQuery';
-
 const useStartSubmission = () => {
-  const query = useQuery();
-  return !!query.get(START_FORM_QUERY_PARAM);
+  const [params] = useSearchParams();
+  return !!params.get(START_FORM_QUERY_PARAM);
 };
 
 export default useStartSubmission;

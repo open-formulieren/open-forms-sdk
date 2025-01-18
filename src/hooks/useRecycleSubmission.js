@@ -1,22 +1,21 @@
 import {useContext} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useSearchParams} from 'react-router-dom';
 import {useAsync, useLocalStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
-import useQuery from 'hooks/useQuery';
 
 const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onError = () => {}) => {
   const location = useLocation();
   const config = useContext(ConfigContext);
-  const queryParams = useQuery();
+  const [params] = useSearchParams();
   // XXX: use sessionStorage instead of localStorage for this, so that it's scoped to
   // a single tab/window?
   let [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
 
   // If no submissionID is in the localStorage see if one can be retrieved from the query param
   if (!submissionId) {
-    submissionId = queryParams.get('submission_uuid');
+    submissionId = params.get('submission_uuid');
   }
 
   const url = submissionId ? `${config.baseUrl}submissions/${submissionId}` : null;

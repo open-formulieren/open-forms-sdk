@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
@@ -12,7 +12,6 @@ import {OFButton} from 'components/Button';
 import {CardTitle} from 'components/Card';
 import {EditGrid, EditGridButtonGroup, EditGridItem} from 'components/EditGrid';
 import FAIcon from 'components/FAIcon';
-import useQuery from 'hooks/useQuery';
 import useTitle from 'hooks/useTitle';
 
 import {AppointmentConfigContext} from '../Context';
@@ -172,8 +171,8 @@ const ChooseProductStep = ({navigateTo = null}) => {
       defaultMessage: 'Product',
     })
   );
-  const query = useQuery();
-  const initialProductId = query.get('product');
+  const [params] = useSearchParams();
+  const initialProductId = params.get('product');
 
   const initialValues = produce(INITIAL_VALUES, draft => {
     if (initialProductId) {

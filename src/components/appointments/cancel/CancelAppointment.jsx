@@ -1,7 +1,7 @@
 import {Formik} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 
 import {ConfigContext} from 'Context';
 import {post} from 'api';
@@ -12,18 +12,17 @@ import ErrorMessage from 'components/Errors/ErrorMessage';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {EmailField} from 'components/forms';
 import {ValidationError} from 'errors';
-import useQuery from 'hooks/useQuery';
 
 const CancelAppointment = () => {
   const {baseUrl} = useContext(ConfigContext);
   const navigate = useNavigate();
-  const queryParams = useQuery();
+  const [params] = useSearchParams();
 
   const [failed, setFailed] = useState(false);
 
   // validate the necessary information to know which submission we are dealing with
-  const timeParam = queryParams.get('time');
-  const submissionId = queryParams.get('submission_uuid');
+  const timeParam = params.get('time');
+  const submissionId = params.get('submission_uuid');
 
   // input validation - show error message if people are messing with URLs rather
   // than crashing hard.

@@ -1,7 +1,5 @@
 import {defineMessage} from 'react-intl';
-import {Navigate} from 'react-router-dom';
-
-import useQuery from 'hooks/useQuery';
+import {Navigate, useSearchParams} from 'react-router-dom';
 
 import {ChooseProductStep, ContactDetailsStep, LocationAndTimeStep} from '../steps';
 import Confirmation from './Confirmation';
@@ -37,13 +35,13 @@ export const APPOINTMENT_STEPS = [
 export const APPOINTMENT_STEP_PATHS = APPOINTMENT_STEPS.map(s => s.path);
 
 const LandingPage = () => {
-  const query = useQuery();
+  const [params] = useSearchParams();
   return (
     <Navigate
       replace
       to={{
         pathname: APPOINTMENT_STEP_PATHS[0],
-        search: `?${query}`,
+        search: `?${params}`,
       }}
     />
   );

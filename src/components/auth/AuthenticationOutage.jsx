@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
+import {useSearchParams} from 'react-router-dom';
 
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import useQuery from 'hooks/useQuery';
 
 const AUTHENTICATION_OUTAGE_QUERY_PARAM = 'of-auth-problem';
 
 export const useDetectAuthenticationOutage = () => {
-  const query = useQuery();
-  return query.get(AUTHENTICATION_OUTAGE_QUERY_PARAM);
+  const [params] = useSearchParams();
+  return params.get(AUTHENTICATION_OUTAGE_QUERY_PARAM);
 };
 
 const AuthenticationOutage = ({loginOption}) => (

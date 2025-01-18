@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
+import {useSearchParams} from 'react-router-dom';
 
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import useQuery from 'hooks/useQuery';
 
 const MAPPING_PARAMS_SERVICE = {
   '_digid-message': 'DigiD',
@@ -13,11 +13,11 @@ const MAPPING_PARAMS_SERVICE = {
 const CANCEL_LOGIN_PARAM = 'login-cancelled';
 
 const useDetectAuthErrorMessages = () => {
-  const query = useQuery();
+  const [params] = useSearchParams();
 
   let parameters = {};
 
-  for (const [key, value] of query.entries()) {
+  for (const [key, value] of params.entries()) {
     if (key in MAPPING_PARAMS_SERVICE) {
       parameters[key] = value;
       return parameters;

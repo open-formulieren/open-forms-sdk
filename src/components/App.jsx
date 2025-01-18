@@ -1,4 +1,4 @@
-import {Navigate, Outlet, useMatch} from 'react-router-dom';
+import {Navigate, Outlet, useMatch, useSearchParams} from 'react-router-dom';
 
 import {Cosign, cosignRoutes} from 'components/CoSign';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
@@ -11,7 +11,6 @@ import {
 } from 'components/appointments';
 import formRoutes from 'components/formRoutes';
 import useFormContext from 'hooks/useFormContext';
-import useQuery from 'hooks/useQuery';
 import useZodErrorMap from 'hooks/useZodErrorMap';
 
 export const routes = [
@@ -54,7 +53,7 @@ Top level router - routing between an actual form or supporting screens.
  */
 const App = () => {
   const form = useFormContext();
-  const query = useQuery();
+  const [params] = useSearchParams();
   const appointmentMatch = useMatch('afspraak-maken/*');
   const appointmentCancelMatch = useMatch('afspraak-annuleren/*');
   const isSessionExpiryMatch = useMatch('sessie-verlopen');
@@ -69,7 +68,7 @@ const App = () => {
         replace
         to={{
           pathname: '../afspraak-maken',
-          search: `?${query}`,
+          search: `?${params}`,
         }}
       />
     );
