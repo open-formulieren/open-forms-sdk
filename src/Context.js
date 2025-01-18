@@ -27,14 +27,6 @@ const FormContext = React.createContext({
 });
 FormContext.displayName = 'FormContext';
 
-const AnalyticsToolsConfigContext = React.createContext({
-  govmetricSourceIdFormFinished: '',
-  govmetricSourceIdFormAborted: '',
-  govmetricSecureGuidFormFinished: '',
-  govmetricSecureGuidFormAborted: '',
-  enableGovmetricAnalytics: false,
-});
-
 const ConfigContext = React.createContext({
   baseUrl: '',
   clientBaseUrl: window.location.href,
@@ -51,10 +43,4 @@ FormioTranslations.displayName = 'FormioTranslations';
 const SubmissionContext = React.createContext({submission: null});
 SubmissionContext.displayName = 'SubmissionContext';
 
-export {
-  FormContext,
-  ConfigContext,
-  FormioTranslations,
-  SubmissionContext,
-  AnalyticsToolsConfigContext,
-};
+export {FormContext, ConfigContext, FormioTranslations, SubmissionContext};

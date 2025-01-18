@@ -9,12 +9,13 @@ import {
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
-import {useAsync, usePrevious} from 'react-use';
+import {usePrevious} from 'react-use';
 
-import {AnalyticsToolsConfigContext, ConfigContext} from 'Context';
-import {destroy, get} from 'api';
+import {ConfigContext} from 'Context';
+import {destroy} from 'api';
 import Loader from 'components/Loader';
 import ProgressIndicator from 'components/ProgressIndicator';
+import AnalyticsToolsConfigProvider from 'components/analytics/AnalyticsToolConfigProvider';
 import {
   PI_TITLE,
   START_FORM_QUERY_PARAM,
@@ -72,15 +73,12 @@ const Form = () => {
   };
 
   // if there is an active submission still, re-load that (relevant for hard-refreshes)
+  // TODO: should probably move to the router loader
   const [loading, setSubmissionId, removeSubmissionId] = useRecycleSubmission(
     form,
     submission,
     onSubmissionLoaded
   );
-
-  const {value: analyticsToolsConfigInfo, loading: loadingAnalyticsConfig} = useAsync(async () => {
-    return await get(`${config.baseUrl}analytics/analytics-tools-config-info`);
-  }, [intl.locale]);
 
   useEffect(
     () => {
@@ -120,7 +118,7 @@ const Form = () => {
     );
   }
 
-  if (loading || loadingAnalyticsConfig || shouldAutomaticallyRedirect) {
+  if (loading || shouldAutomaticallyRedirect) {
     return <Loader modifiers={['centered']} />;
   }
 
@@ -204,7 +202,7 @@ const Form = () => {
   // render the form step if there's an active submission (and no summary)
   return (
     <FormDisplay progressIndicator={progressIndicator}>
-      <AnalyticsToolsConfigContext.Provider value={analyticsToolsConfigInfo}>
+      <AnalyticsToolsConfigProvider>
         <SubmissionProvider
           submission={submission}
           onSubmissionObtained={submission => {
@@ -216,7 +214,7 @@ const Form = () => {
         >
           <Outlet />
         </SubmissionProvider>
-      </AnalyticsToolsConfigContext.Provider>
+      </AnalyticsToolsConfigProvider>
     </FormDisplay>
   );
 };
