@@ -17,8 +17,8 @@ import {
   mockSubmissionStepGet,
   mockSubmissionSummaryGet,
 } from 'api-mocks/submissions';
-import {routes} from 'components/App';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+import routes from 'routes';
 
 window.scrollTo = vi.fn();
 

@@ -32,6 +32,7 @@ export const APPOINTMENT_STEPS = [
 
 export const APPOINTMENT_STEP_PATHS = APPOINTMENT_STEPS.map(s => s.path);
 
+// TODO: replace with loader that redirects at the route level
 export const LandingPage = () => {
   const [params] = useSearchParams();
   return (

@@ -14,7 +14,7 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 import {AppointmentConfigContext} from '../Context';
 import AppointmentProgress from './AppointmentProgress';
 import {CreateAppointmentState} from './CreateAppointmentState';
-import {APPOINTMENT_STEP_PATHS} from './routes';
+import {APPOINTMENT_STEP_PATHS} from './steps';
 
 const useIsConfirmation = () => {
   // useMatch requires absolute paths... and react-router are NOT receptive to changing that.

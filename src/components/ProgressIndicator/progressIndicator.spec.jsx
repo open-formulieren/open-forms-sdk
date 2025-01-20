@@ -8,15 +8,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {buildSubmission, mockSubmissionPost} from 'api-mocks/submissions';
-import App, {routes as nestedRoutes} from 'components/App';
-
-const routes = [
-  {
-    path: '*',
-    element: <App />,
-    children: nestedRoutes,
-  },
-];
+import routes from 'routes';
 
 const renderApp = (form, initialRoute = '/') => {
   const router = createMemoryRouter(routes, {

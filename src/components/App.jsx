@@ -1,48 +1,7 @@
 import {Navigate, Outlet, useMatch, useSearchParams} from 'react-router-dom';
 
-import {Cosign} from 'components/CoSign';
-import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import Form from 'components/Form';
-import SessionExpired from 'components/Sessions/SessionExpired';
-import {CreateAppointment} from 'components/appointments';
 import useFormContext from 'hooks/useFormContext';
 import useZodErrorMap from 'hooks/useZodErrorMap';
-import {cosignRoutes, createAppointmentRoutes, formRoutes, manageAppointmentRoutes} from 'routes';
-
-export const routes = [
-  {
-    path: 'afspraak-annuleren/*',
-    children: manageAppointmentRoutes,
-  },
-  {
-    path: 'afspraak-maken/*',
-    element: <CreateAppointment />,
-    children: createAppointmentRoutes,
-  },
-  {
-    path: 'cosign/*',
-    element: <Cosign />,
-    children: cosignRoutes,
-  },
-  {
-    path: 'sessie-verlopen',
-    element: (
-      <ErrorBoundary useCard>
-        <SessionExpired />
-      </ErrorBoundary>
-    ),
-  },
-  // All the rest goes to the formio-based form flow
-  {
-    path: '*',
-    element: (
-      <ErrorBoundary useCard>
-        <Form />
-      </ErrorBoundary>
-    ),
-    children: formRoutes,
-  },
-];
 
 /*
 Top level router - routing between an actual form or supporting screens.

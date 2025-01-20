@@ -14,8 +14,8 @@ import {
   mockSubmissionPost,
   mockSubmissionProcessingStatusErrorGet,
 } from 'api-mocks/submissions';
-import App, {routes as nestedRoutes} from 'components/App';
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
+import routes from 'routes';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -30,14 +30,6 @@ import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAp
 // scrollIntoView is not not supported in jest-dom
 let scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
-
-const routes = [
-  {
-    path: '*',
-    element: <App />,
-    children: nestedRoutes,
-  },
-];
 
 const renderApp = (initialRoute = '/') => {
   const form = buildForm({
