@@ -2,8 +2,6 @@ import {defineMessage} from 'react-intl';
 import {Navigate, useSearchParams} from 'react-router-dom';
 
 import {ChooseProductStep, ContactDetailsStep, LocationAndTimeStep} from '../steps';
-import Confirmation from './Confirmation';
-import Summary from './Summary';
 
 export const APPOINTMENT_STEPS = [
   {
@@ -34,7 +32,7 @@ export const APPOINTMENT_STEPS = [
 
 export const APPOINTMENT_STEP_PATHS = APPOINTMENT_STEPS.map(s => s.path);
 
-const LandingPage = () => {
+export const LandingPage = () => {
   const [params] = useSearchParams();
   return (
     <Navigate
@@ -46,22 +44,3 @@ const LandingPage = () => {
     />
   );
 };
-
-/**
- * Route subtree for appointment forms.
- */
-export const routes = [
-  {
-    path: '',
-    element: <LandingPage />,
-  },
-  ...APPOINTMENT_STEPS.map(({path, element}) => ({path, element})),
-  {
-    path: 'overzicht',
-    element: <Summary />,
-  },
-  {
-    path: 'bevestiging',
-    element: <Confirmation />,
-  },
-];

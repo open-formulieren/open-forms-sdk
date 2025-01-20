@@ -7,9 +7,9 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
+import {cosignRoutes} from 'routes';
 
 import Cosign from './Cosign';
-import {default as nestedRoutes} from './routes';
 
 beforeEach(() => {
   localStorage.clear();
@@ -55,7 +55,7 @@ const routes = [
   {
     path: '/cosign/*',
     element: <Cosign />,
-    children: nestedRoutes,
+    children: cosignRoutes,
   },
 ];
 

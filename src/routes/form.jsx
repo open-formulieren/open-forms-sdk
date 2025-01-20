@@ -8,7 +8,7 @@ import RequireSubmission from 'components/RequireSubmission';
 import {SessionTrackerModal} from 'components/Sessions';
 import {SubmissionSummary} from 'components/Summary';
 
-const formRoutes = [
+const routes = [
   {
     path: '',
     element: <FormLandingPage />,
@@ -69,4 +69,4 @@ const formRoutes = [
   },
 ];
 
-export default formRoutes;
+export default routes;

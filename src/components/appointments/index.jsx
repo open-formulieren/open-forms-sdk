@@ -1,2 +1,1 @@
-export {default as CreateAppointment, routes as appointmentRoutes} from './CreateAppointment';
-export {routes as manageAppointmentRoutes} from './ManageAppointment';
+export {default as CreateAppointment} from './CreateAppointment';

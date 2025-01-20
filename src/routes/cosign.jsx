@@ -1,6 +1,6 @@
-import CosignCheck from './CosignCheck';
-import CosignDone from './CosignDone';
-import CosignStart from './CosignStart';
+import CosignCheck from 'components/CoSign/CosignCheck';
+import CosignDone from 'components/CoSign/CosignDone';
+import CosignStart from 'components/CoSign/CosignStart';
 
 const routes = [
   {

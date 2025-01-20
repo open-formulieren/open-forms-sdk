@@ -1,17 +1,13 @@
 import {Navigate, Outlet, useMatch, useSearchParams} from 'react-router-dom';
 
-import {Cosign, cosignRoutes} from 'components/CoSign';
+import {Cosign} from 'components/CoSign';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import Form from 'components/Form';
 import SessionExpired from 'components/Sessions/SessionExpired';
-import {
-  CreateAppointment,
-  appointmentRoutes,
-  manageAppointmentRoutes,
-} from 'components/appointments';
-import formRoutes from 'components/formRoutes';
+import {CreateAppointment} from 'components/appointments';
 import useFormContext from 'hooks/useFormContext';
 import useZodErrorMap from 'hooks/useZodErrorMap';
+import {cosignRoutes, createAppointmentRoutes, formRoutes, manageAppointmentRoutes} from 'routes';
 
 export const routes = [
   {
@@ -21,7 +17,7 @@ export const routes = [
   {
     path: 'afspraak-maken/*',
     element: <CreateAppointment />,
-    children: appointmentRoutes,
+    children: createAppointmentRoutes,
   },
   {
     path: 'cosign/*',
