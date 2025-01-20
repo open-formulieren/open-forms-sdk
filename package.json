@@ -68,7 +68,10 @@
   },
   "scripts": {
     "start": "npm run build:design-tokens && vite",
-    "build": "BUILD_TARGET=umd vite build && BUILD_TARGET=esm vite build",
+    "build": "npm run build:umd && npm run build:esm && npm run build:esm-bundle",
+    "build:umd": "BUILD_TARGET=umd vite build",
+    "build:esm": "BUILD_TARGET=esm vite build",
+    "build:esm-bundle": "BUILD_TARGET=esm-bundle vite build",
     "test": "TZ=Europe/Amsterdam vitest",
     "test:storybook": "test-storybook --coverage",
     "prepare-package": "node bin/prepare-package.mjs",

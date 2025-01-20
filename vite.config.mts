@@ -16,7 +16,7 @@ import {packageRegexes} from './build/utils.mjs';
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      BUILD_TARGET: 'umd' | 'esm';
+      BUILD_TARGET: 'umd' | 'esm' | 'esm-bundle';
     }
   }
 }
@@ -46,11 +46,25 @@ const esmOutput = {
   },
 } satisfies OutputOptions;
 
+const esmBundleOutput = {
+  dir: 'dist',
+  format: 'esm',
+  preserveModules: false,
+  entryFileNames: 'open-forms-sdk.mjs',
+  assetFileNames: ({name}) => {
+    if (name === 'style.css') {
+      return 'open-forms-sdk.css';
+    }
+    return 'static/media/[name].[hash:8].[ext]';
+  },
+  inlineDynamicImports: false,
+} satisfies OutputOptions;
+
 /**
  * Rollup output options for UMD bundle, included in the NPM package but
  * the primary distribution mechanism is in a Docker image.
  *
- * @todo - optimize with bundle splitting/chunk management.
+ * @deprecated - it's better to use the ESM bundle which has separate chunks.
  */
 const umdOutput = {
   dir: 'dist',
@@ -67,6 +81,21 @@ const umdOutput = {
   },
   inlineDynamicImports: true,
 } satisfies OutputOptions;
+
+const getOutput = (buildTarget: typeof process.env.BUILD_TARGET): OutputOptions => {
+  switch (buildTarget) {
+    case 'esm-bundle': {
+      return esmBundleOutput;
+    }
+    case 'esm': {
+      return esmOutput;
+    }
+    case 'umd':
+    default: {
+      return umdOutput;
+    }
+  }
+};
 
 export default defineConfig(({mode}) => ({
   base: './',
@@ -100,9 +129,24 @@ export default defineConfig(({mode}) => ({
         "this\['Interpreter'\]": "window['Interpreter']",
       },
     }),
+    /**
+     * Plugin to ignore (S)CSS when bundling to UMD bundle target, since we use the ESM
+     * bundle to generate these.
+     *
+     * @todo Remove this when we drop the UMD bundle entirely (in 4.0?)
+     */
+    {
+      name: 'ignore-styles-esm-bundle',
+      transform(code, id) {
+        if (buildTarget === 'umd' && (id.endsWith('.css') || id.endsWith('scss'))) {
+          // skip processing
+          return {code: '', map: null};
+        }
+      },
+    },
     // must be last!
     codecovVitePlugin({
-      enableBundleAnalysis: buildTarget === 'umd' && process.env.CODECOV_TOKEN !== undefined,
+      enableBundleAnalysis: buildTarget !== 'esm' && process.env.CODECOV_TOKEN !== undefined,
       bundleName: '@open-formulieren/sdk',
       uploadToken: process.env.CODECOV_TOKEN,
     }),
@@ -112,12 +156,14 @@ export default defineConfig(({mode}) => ({
     assetsInlineLimit: 8 * 1024, // 8 KiB
     cssCodeSplit: false,
     sourcemap: buildTarget !== 'esm',
-    outDir: 'dist/umd',
+    outDir: 'dist',
+    // we write the .mjs file to the same directory
+    emptyOutDir: buildTarget !== 'esm-bundle',
     rollupOptions: {
       input: 'src/sdk.jsx',
       // do not externalize anything in UMD build - bundle everything
       external: buildTarget === 'esm' ? packageRegexes : undefined,
-      output: buildTarget === 'esm' ? esmOutput : umdOutput,
+      output: getOutput(buildTarget),
       preserveEntrySignatures: 'strict',
     },
   },
