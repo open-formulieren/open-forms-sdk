@@ -49,7 +49,6 @@ const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}
       }
     }
   );
-  if (error) throw error;
 
   if (loading) {
     return (
@@ -79,7 +78,6 @@ const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}
   if (error) throw error;
 
   const {
-    result,
     paymentUrl,
     publicReference,
     reportDownloadUrl,
@@ -87,10 +85,6 @@ const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}
     confirmationPageContent,
     mainWebsiteUrl,
   } = statusResponse;
-
-  if (result === RESULT_FAILED) {
-    throw new Error('Failure should have been handled in the onFailure prop.');
-  }
 
   return (
     <SubmissionStatusContext.Provider

@@ -8,7 +8,7 @@ import useFormContext from 'hooks/useFormContext';
 
 const AbortButton = ({isAuthenticated, onDestroySession}) => {
   const intl = useIntl();
-  const analyticsToolsConfig = useAnalyticsToolsConfig;
+  const analyticsToolsConfig = useAnalyticsToolsConfig();
   const form = useFormContext();
 
   const confirmationMessage = isAuthenticated

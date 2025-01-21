@@ -232,7 +232,7 @@ test('Submitting the form with successful background processing', async () => {
   vi.useRealTimers();
   await waitForElementToBeRemoved(loader);
 
-  // due to the error we get redirected back to the summary page.
+  // on success, the summary page must display the reference obtained from the backend
   expect(await screen.findByRole('heading', {name: 'Confirmation: OF-L337'})).toBeVisible();
 });
 

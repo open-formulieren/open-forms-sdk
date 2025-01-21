@@ -22,7 +22,7 @@ const AnalyticsToolsConfigProvider = ({children}) => {
 
   const {value} = useAsync(async () => {
     return await get(`${baseUrl}analytics/analytics-tools-config-info`);
-  }, [locale]);
+  }, [baseUrl, locale]);
 
   return (
     <AnalyticsToolsConfigContext.Provider value={value}>
