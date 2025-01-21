@@ -9,7 +9,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionPost} from 'api-mocks/submissions';
-import {SubmissionProvider} from 'components/Form';
+import SubmissionProvider from 'components/SubmissionProvider';
 
 import FormStart from './index';
 
@@ -52,6 +52,7 @@ const Wrap = ({
               onSubmissionObtained?.();
             }}
             onDestroySession={() => {}}
+            removeSubmissionId={vi.fn()}
           >
             <RouterProvider router={router} />
           </SubmissionProvider>

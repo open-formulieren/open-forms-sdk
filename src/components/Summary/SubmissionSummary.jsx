@@ -1,49 +1,41 @@
-import PropTypes from 'prop-types';
+import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {useAsync} from 'react-use';
-import {useImmerReducer} from 'use-immer';
 
 import {post} from 'api';
 import {LiteralsProvider} from 'components/Literal';
+import {useSubmissionContext} from 'components/SubmissionProvider';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {findPreviousApplicableStep} from 'components/utils';
+import useFormContext from 'hooks/useFormContext';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
-import Types from 'types';
 
 import GenericSummary from './GenericSummary';
 import {loadSummaryData} from './utils';
 
-const initialState = {
-  error: '',
+const completeSubmission = async (submission, statementValues) => {
+  const response = await post(`${submission.url}/_complete`, statementValues);
+  const {statusUrl} = response.data;
+  return statusUrl;
 };
 
-const reducer = (draft, action) => {
-  switch (action.type) {
-    case 'ERROR': {
-      draft.error = action.payload;
-      break;
-    }
-    default: {
-      throw new Error(`Unknown action ${action.type}`);
-    }
-  }
-};
-
-const SubmissionSummary = ({
-  form,
-  submission,
-  processingError = '',
-  onConfirm,
-  onClearProcessingErrors,
-  onDestroySession,
-}) => {
-  const [state, dispatch] = useImmerReducer(reducer, initialState);
+const SubmissionSummary = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
-
+  const form = useFormContext();
+  const {submission, onDestroySession, removeSubmissionId} = useSubmissionContext();
   const refreshedSubmission = useRefreshSubmission(submission);
+
+  const [submitError, setSubmitError] = useState('');
+
+  const pageTitle = intl.formatMessage({
+    description: 'Summary page title',
+    defaultMessage: 'Check and confirm',
+  });
+  useTitle(pageTitle, form.name);
 
   const paymentInfo = refreshedSubmission.payment;
 
@@ -55,19 +47,31 @@ const SubmissionSummary = ({
     const submissionUrl = new URL(refreshedSubmission.url);
     return await loadSummaryData(submissionUrl);
   }, [refreshedSubmission.url]);
-
-  if (error) {
-    console.error(error);
-  }
+  // throw to nearest error boundary
+  if (error) throw error;
 
   const onSubmit = async statementValues => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
+    let statusUrl;
     try {
-      const {statusUrl} = await completeSubmission(refreshedSubmission, statementValues);
-      onConfirm(statusUrl);
+      statusUrl = await completeSubmission(refreshedSubmission, statementValues);
     } catch (e) {
-      dispatch({type: 'ERROR', payload: e.message});
+      setSubmitError(e.message);
+      return;
     }
+
+    // the completion went through, proceed to redirect to the next page and set up
+    // the necessary state.
+    const needsPayment =
+      refreshedSubmission.payment.isRequired && !refreshedSubmission.payment.hasPaid;
+    const nextUrl = needsPayment ? '/betalen' : '/bevestiging';
+    removeSubmissionId();
+    navigate(nextUrl, {
+      state: {
+        submission: refreshedSubmission,
+        statusUrl,
+      },
+    });
   };
 
   const getPreviousPage = () => {
@@ -79,34 +83,10 @@ const SubmissionSummary = ({
 
   const onPrevPage = event => {
     event.preventDefault();
-    onClearProcessingErrors();
-
     navigate(getPreviousPage());
   };
 
-  const completeSubmission = async (submission, statementValues) => {
-    const response = await post(`${submission.url}/_complete`, statementValues);
-    if (!response.ok) {
-      console.error(response.data);
-      // TODO Specific error for each type of invalid data?
-      throw new Error('InvalidSubmissionData');
-    } else {
-      return response.data;
-    }
-  };
-
-  const pageTitle = intl.formatMessage({
-    description: 'Summary page title',
-    defaultMessage: 'Check and confirm',
-  });
-  useTitle(pageTitle, form.name);
-
-  const getErrors = () => {
-    let errors = [];
-    if (processingError) errors.push(processingError);
-    if (state.error) errors.push(state.error);
-    return errors;
-  };
+  const errorMessages = [location.state?.errorMessage, submitError].filter(Boolean);
 
   return (
     <LiteralsProvider literals={form.literals}>
@@ -124,7 +104,7 @@ const SubmissionSummary = ({
         editStepText={form.literals.changeText.resolved}
         isLoading={loading}
         isAuthenticated={refreshedSubmission.isAuthenticated}
-        errors={getErrors()}
+        errors={errorMessages}
         prevPage={getPreviousPage()}
         onSubmit={onSubmit}
         onPrevPage={onPrevPage}
@@ -134,13 +114,6 @@ const SubmissionSummary = ({
   );
 };
 
-SubmissionSummary.propTypes = {
-  form: Types.Form.isRequired,
-  submission: Types.Submission.isRequired,
-  processingError: PropTypes.string,
-  onConfirm: PropTypes.func.isRequired,
-  onClearProcessingErrors: PropTypes.func.isRequired,
-  onDestroySession: PropTypes.func.isRequired,
-};
+SubmissionSummary.propTypes = {};
 
 export default SubmissionSummary;

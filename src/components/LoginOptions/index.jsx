@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import {useSearchParams} from 'react-router-dom';
 
 import {Literal} from 'components/Literal';
 import {getCosignLoginUrl, getLoginUrl} from 'components/utils';
-import useQuery from 'hooks/useQuery';
 import Types from 'types';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 
 const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOptions = true}) => {
-  const queryParams = useQuery();
+  const [params] = useSearchParams();
 
   const loginAsYourselfOptions = [];
   const loginAsGemachtigdeOptions = [];
@@ -35,7 +35,7 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOpt
   });
 
   if (form.cosignLoginOptions) {
-    const cosignCode = queryParams.get('code');
+    const cosignCode = params.get('code');
     form.cosignLoginOptions.forEach(option => {
       const loginUrl = getCosignLoginUrl(option, cosignCode ? {code: cosignCode} : undefined);
       cosignLoginOptions.push({

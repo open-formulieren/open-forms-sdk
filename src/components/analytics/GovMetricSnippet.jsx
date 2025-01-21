@@ -1,17 +1,16 @@
 import govmetricAverageImg from 'img/govmetric/average.png';
 import govmetricGoodImg from 'img/govmetric/good.png';
 import govmetricPoorImg from 'img/govmetric/poor.png';
-import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {AnalyticsToolsConfigContext} from 'Context';
 import useFormContext from 'hooks/useFormContext';
 
+import {useAnalyticsToolsConfig} from './AnalyticsToolConfigProvider';
 import {buildGovMetricUrl, govMetricURLWithRating} from './utils';
 
 const GovMetricSnippet = () => {
   const {enableGovmetricAnalytics, govmetricSourceIdFormFinished, govmetricSecureGuidFormFinished} =
-    useContext(AnalyticsToolsConfigContext);
+    useAnalyticsToolsConfig();
   const form = useFormContext();
   const intl = useIntl();
 

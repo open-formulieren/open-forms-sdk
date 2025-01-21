@@ -7,7 +7,7 @@ import {PI_TITLE, STEP_LABELS} from 'components/constants';
 import {checkMatchesPath} from 'components/utils/routers';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';
-import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS} from './routes';
+import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS} from './steps';
 
 const AppointmentProgress = ({title, currentStep}) => {
   const {submission, submittedSteps} = useCreateAppointmentContext();

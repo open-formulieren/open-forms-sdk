@@ -10,9 +10,10 @@ import {
   mockSubmissionStepGet,
 } from 'api-mocks/submissions';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
+import routes from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
-import App, {routes as nestedRoutes} from './App';
+import App from './App';
 import {SUBMISSION_ALLOWED} from './constants';
 
 export default {
@@ -84,13 +85,6 @@ export default {
 };
 
 const Wrapper = ({form, showExternalHeader}) => {
-  const routes = [
-    {
-      path: '*',
-      element: <App />,
-      children: nestedRoutes,
-    },
-  ];
   const router = createMemoryRouter(routes, {
     initialEntries: ['/'],
     initialIndex: 0,

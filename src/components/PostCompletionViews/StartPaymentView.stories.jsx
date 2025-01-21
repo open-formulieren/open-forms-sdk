@@ -2,7 +2,7 @@ import {expect, waitFor, within} from '@storybook/test';
 
 import {BASE_URL} from 'api-mocks';
 import {
-  mockSubmissionPaymentStartGet,
+  mockSubmissionPaymentStartPost,
   mockSubmissionProcessingStatusGet,
 } from 'api-mocks/submissions';
 import {withSubmissionPollInfo} from 'story-utils/decorators';
@@ -10,7 +10,7 @@ import {withSubmissionPollInfo} from 'story-utils/decorators';
 import {StartPaymentViewDisplay} from './StartPaymentView';
 
 export default {
-  title: 'Private API / Post completion views / Start payment',
+  title: 'Views / Post completion views / Start payment',
   component: StartPaymentViewDisplay,
   decorators: [withSubmissionPollInfo],
   args: {
@@ -21,7 +21,7 @@ export default {
   },
   parameters: {
     msw: {
-      handlers: [mockSubmissionProcessingStatusGet, mockSubmissionPaymentStartGet],
+      handlers: [mockSubmissionProcessingStatusGet, mockSubmissionPaymentStartPost()],
     },
   },
 };

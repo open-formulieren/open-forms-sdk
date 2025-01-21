@@ -11,11 +11,11 @@ import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from 'Context';
 import {get} from 'api';
-import App, {routes as nestedRoutes} from 'components/App';
 import {getRedirectParams} from 'components/routingActions';
 import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
+import routes from 'routes';
 import initialiseSentry from 'sentry';
 import {DEBUG, getVersion} from 'utils';
 
@@ -49,14 +49,6 @@ Formio.libraries = {
 fixLeafletIconUrls();
 
 const VERSION = getVersion();
-
-const routes = [
-  {
-    path: '*',
-    element: <App />,
-    children: nestedRoutes,
-  },
-];
 
 class OpenForm {
   constructor(targetNode, opts) {

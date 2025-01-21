@@ -6,6 +6,7 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
+import {createAppointmentRoutes} from 'routes/appointments';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import {
@@ -16,7 +17,7 @@ import {
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
 } from '../mocks';
-import CreateAppointment, {routes as childRoutes} from './';
+import CreateAppointment from './';
 
 export default {
   title: 'Private API / Appointments / CreateForm',
@@ -49,7 +50,7 @@ const Wrapper = ({form}) => {
     {
       path: '/appointments/*',
       element: <CreateAppointment />,
-      children: childRoutes,
+      children: createAppointmentRoutes,
     },
   ];
   const router = createMemoryRouter(routes, {

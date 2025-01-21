@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
+import {useLocation} from 'react-router-dom';
 
 import Link from 'components/Link';
 import {getBEMClassName} from 'utils';
@@ -27,6 +28,7 @@ const getLinkModifiers = isActive => {
  * Once a step is completed, it is displayed with a completion checkmark in front of it.
  */
 const ProgressIndicatorItem = ({label, to, isActive, isCompleted, canNavigateTo, isApplicable}) => {
+  const location = useLocation();
   return (
     <div className={getBEMClassName('progress-indicator-item')}>
       <div className={getBEMClassName('progress-indicator-item__marker')}>
@@ -35,6 +37,7 @@ const ProgressIndicatorItem = ({label, to, isActive, isCompleted, canNavigateTo,
       <div className={getBEMClassName('progress-indicator-item__label')}>
         <Link
           to={to}
+          state={location.state}
           placeholder={!canNavigateTo}
           modifiers={canNavigateTo ? getLinkModifiers(isActive) : []}
           aria-label={label}

@@ -1,31 +1,15 @@
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useSearchParams} from 'react-router-dom';
 
 import {ConfirmationView} from 'components/PostCompletionViews';
-import useFormContext from 'hooks/useFormContext';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 
 const Confirmation = () => {
-  const form = useFormContext();
   const [params] = useSearchParams();
-  const navigate = useNavigate();
-  const {reset, setProcessingError} = useCreateAppointmentContext();
+  const {reset} = useCreateAppointmentContext();
   const statusUrl = params.get('statusUrl');
   if (!statusUrl) throw new Error('Missing statusUrl param');
-
-  const onProcessingFailure = errorMessage => {
-    setProcessingError(errorMessage);
-    navigate('../overzicht');
-  };
-
-  return (
-    <ConfirmationView
-      statusUrl={statusUrl}
-      onFailure={onProcessingFailure}
-      onConfirmed={reset}
-      downloadPDFText={form.submissionReportDownloadLinkTitle}
-    />
-  );
+  return <ConfirmationView onFailureNavigateTo="../overzicht" onConfirmed={reset} />;
 };
 
 Confirmation.propTypes = {};

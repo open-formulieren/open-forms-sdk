@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {useLocation} from 'react-router-dom';
 
 import Body from 'components/Body';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
+import useFormContext from 'hooks/useFormContext';
+import {DEBUG} from 'utils';
 
 import PostCompletionView from './PostCompletionView';
 import {StartPayment} from './StartPayment';
@@ -58,19 +61,22 @@ StartPaymentViewDisplay.propTypes = {
   downloadPDFText: PropTypes.node,
 };
 
-const StartPaymentView = ({statusUrl, onFailure, onConfirmed, downloadPDFText}) => {
+const StartPaymentView = ({onFailureNavigateTo}) => {
+  const form = useFormContext();
+  const {statusUrl} = useLocation().state || {};
+  if (DEBUG && !statusUrl) throw new Error('You must pass the status URL via the route state.');
   return (
-    <StatusUrlPoller statusUrl={statusUrl} onFailure={onFailure} onConfirmed={onConfirmed}>
-      <StartPaymentViewDisplay downloadPDFText={downloadPDFText} />
+    <StatusUrlPoller statusUrl={statusUrl} onFailureNavigateTo={onFailureNavigateTo}>
+      <StartPaymentViewDisplay downloadPDFText={form.submissionReportDownloadLinkTitle} />
     </StatusUrlPoller>
   );
 };
 
 StartPaymentView.propTypes = {
-  statusUrl: PropTypes.string,
-  onFailure: PropTypes.func,
-  onConfirmed: PropTypes.func,
-  downloadPDFText: PropTypes.node,
+  /**
+   * Location to navigate to on failure.
+   */
+  onFailureNavigateTo: PropTypes.string,
 };
 
 export default StartPaymentView;

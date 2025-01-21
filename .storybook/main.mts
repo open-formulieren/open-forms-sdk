@@ -17,7 +17,6 @@ const config: StorybookConfig = {
     'storybook-react-intl',
     'storybook-addon-remix-react-router',
     '@storybook/addon-coverage',
-    '@storybook/addon-webpack5-compiler-babel',
   ],
   framework: {
     name: '@storybook/react-vite',

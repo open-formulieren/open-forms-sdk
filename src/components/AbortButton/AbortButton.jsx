@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
-import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {AnalyticsToolsConfigContext} from 'Context';
 import {OFButton} from 'components/Button';
+import {useAnalyticsToolsConfig} from 'components/analytics/AnalyticsToolConfigProvider';
 import {buildGovMetricUrl} from 'components/analytics/utils';
 import useFormContext from 'hooks/useFormContext';
 
 const AbortButton = ({isAuthenticated, onDestroySession}) => {
   const intl = useIntl();
-  const analyticsToolsConfig = useContext(AnalyticsToolsConfigContext);
+  const analyticsToolsConfig = useAnalyticsToolsConfig();
   const form = useFormContext();
 
   const confirmationMessage = isAuthenticated

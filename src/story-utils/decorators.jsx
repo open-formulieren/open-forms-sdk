@@ -2,11 +2,12 @@ import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
 
-import {AnalyticsToolsConfigContext, ConfigContext, FormContext} from 'Context';
+import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
 import {SubmissionStatusContext} from 'components/PostCompletionViews';
+import {AnalyticsToolsConfigContext} from 'components/analytics/AnalyticsToolConfigProvider';
 import {ModalContext} from 'components/modals/Modal';
 
 export const ConfigDecorator = (Story, {parameters}) => {
@@ -26,8 +27,10 @@ export const ConfigDecorator = (Story, {parameters}) => {
 
 export const AnalyticsToolsDecorator = (Story, {parameters}) => {
   const defaults = {
-    govmetricSourceId: '',
-    govmetricSecureGuid: '',
+    govmetricSourceIdFormFinished: '',
+    govmetricSourceIdFormAborted: '',
+    govmetricSecureGuidFormFinished: '',
+    govmetricSecureGuidFormAborted: '',
     enableGovmetricAnalytics: false,
   };
 

@@ -1,11 +1,7 @@
 import {defineMessage} from 'react-intl';
-import {Navigate} from 'react-router-dom';
-
-import useQuery from 'hooks/useQuery';
+import {Navigate, useSearchParams} from 'react-router-dom';
 
 import {ChooseProductStep, ContactDetailsStep, LocationAndTimeStep} from '../steps';
-import Confirmation from './Confirmation';
-import Summary from './Summary';
 
 export const APPOINTMENT_STEPS = [
   {
@@ -36,34 +32,16 @@ export const APPOINTMENT_STEPS = [
 
 export const APPOINTMENT_STEP_PATHS = APPOINTMENT_STEPS.map(s => s.path);
 
-const LandingPage = () => {
-  const query = useQuery();
+// TODO: replace with loader that redirects at the route level
+export const LandingPage = () => {
+  const [params] = useSearchParams();
   return (
     <Navigate
       replace
       to={{
         pathname: APPOINTMENT_STEP_PATHS[0],
-        search: `?${query}`,
+        search: `?${params}`,
       }}
     />
   );
 };
-
-/**
- * Route subtree for appointment forms.
- */
-export const routes = [
-  {
-    path: '',
-    element: <LandingPage />,
-  },
-  ...APPOINTMENT_STEPS.map(({path, element}) => ({path, element})),
-  {
-    path: 'overzicht',
-    element: <Summary />,
-  },
-  {
-    path: 'bevestiging',
-    element: <Confirmation />,
-  },
-];

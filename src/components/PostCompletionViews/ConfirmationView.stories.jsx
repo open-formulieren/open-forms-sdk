@@ -6,7 +6,7 @@ import {AnalyticsToolsDecorator, withForm, withSubmissionPollInfo} from 'story-u
 import {ConfirmationViewDisplay} from './ConfirmationView';
 
 export default {
-  title: 'Private API / Post completion views / Confirmation view',
+  title: 'Views / Post completion views / Confirmation view',
   component: ConfirmationViewDisplay,
   decorators: [withForm, AnalyticsToolsDecorator, withSubmissionPollInfo, withRouter],
   argTypes: {

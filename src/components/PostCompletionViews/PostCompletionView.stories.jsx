@@ -3,7 +3,7 @@ import Body from 'components/Body';
 import PostCompletionView from './PostCompletionView';
 
 export default {
-  title: 'Private API / Post completion views ',
+  title: 'Views / Post completion views ',
   component: PostCompletionView,
   render: ({body, ...args}) => <PostCompletionView {...args} body={<Body>{body}</Body>} />,
 };
