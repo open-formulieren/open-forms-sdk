@@ -1,4 +1,5 @@
 @use 'microscope-sass/lib/bem';
+@use 'leaflet-draw/dist/leaflet.draw.css';
 @import 'leaflet-geosearch/dist/geosearch.css';
 @import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 
@@ -14,5 +15,13 @@
 
   @include bem.modifier('disabled') {
     cursor: default;
+  }
+
+  .leaflet-draw-actions {
+    a {
+      height: 30px;
+      line-height: 30px;
+      color: #fff;
+    }
   }
 }

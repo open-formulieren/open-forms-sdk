@@ -18,7 +18,6 @@ import {
 import {getBEMClassName} from 'utils';
 
 import NearestAddress from './NearestAddress';
-import './map.scss';
 import OpenFormsProvider from './provider';
 import {
   applyLeafletTranslations,
@@ -70,7 +69,9 @@ const LeaftletMap = ({
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
 
-  applyLeafletTranslations(intl);
+  useEffect(() => {
+    applyLeafletTranslations(intl);
+  }, [intl]);
 
   const onFeatureCreate = event => {
     updateGeoJsonGeometry(event.layer);
@@ -87,18 +88,19 @@ const LeaftletMap = ({
   };
 
   const updateGeoJsonGeometry = newFeatureLayer => {
-    if (featureGroupRef.current) {
-      const newFeatureLayerId = newFeatureLayer._leaflet_id;
-      const layers = featureGroupRef.current?.getLayers();
-      // Limit the amount of features to 1, by removing the previous layer
-      if (layers.length > 1) {
-        const oldLayerIds = layers
-          .map(layer => layer._leaflet_id)
-          .filter(layerId => layerId !== newFeatureLayerId);
-        oldLayerIds.forEach(oldLayerId => {
-          featureGroupRef.current?.removeLayer(oldLayerId);
-        });
-      }
+    const featureGroup = featureGroupRef.current;
+    if (featureGroup) {
+      const newLayerId = featureGroup.getLayerId(newFeatureLayer);
+
+      featureGroup.eachLayer(layer => {
+        const layerId = featureGroup.getLayerId(layer);
+
+        // Remove all layers that aren't the newly added layer
+        // Ensuring that only 1 layer/shape will be present at any time
+        if (layerId !== newLayerId) {
+          featureGroup.removeLayer(layer);
+        }
+      });
     }
     onGeoJsonGeometrySet(newFeatureLayer.toGeoJSON().geometry);
   };
