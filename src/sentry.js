@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import {Integrations} from '@sentry/tracing';
 
 import {getVersion} from 'utils';
 
@@ -8,9 +7,8 @@ const initialiseSentry = (sentryDSN, env) => {
 
   Sentry.init({
     dsn: sentryDSN,
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [],
     environment: env,
-    tracesSampleRate: 0, // we don't do APM with Sentry (yet)
     release: getVersion(),
   });
 };
