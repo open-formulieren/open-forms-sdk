@@ -185,6 +185,10 @@ export default defineConfig(({mode}) => ({
       },
     },
     globals: true, // for compatibility with jest
+    // See https://vitest.dev/guide/migration.html#fake-timers-defaults
+    fakeTimers: {
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    },
     setupFiles: ['./src/vitest.setup.mjs'],
     coverage: {
       provider: 'istanbul',
