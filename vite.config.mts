@@ -2,6 +2,7 @@
 // https://vitejs.dev/config/
 import {codecovVitePlugin} from '@codecov/vite-plugin';
 import replace from '@rollup/plugin-replace';
+import {sentryVitePlugin} from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import type {OutputOptions} from 'rollup';
 import {defineConfig} from 'vite';
@@ -146,6 +147,16 @@ export default defineConfig(({mode}) => ({
         }
       },
     },
+    sentryVitePlugin({
+      bundleSizeOptimizations: {
+        excludeDebugStatements: true,
+        excludeTracing: true,
+        excludeReplayCanvas: true,
+        excludeReplayShadowDom: true,
+        excludeReplayIframe: true,
+        excludeReplayWorker: true,
+      },
+    }),
     // must be last!
     codecovVitePlugin({
       enableBundleAnalysis: buildTarget !== 'esm' && process.env.CODECOV_TOKEN !== undefined,
