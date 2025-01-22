@@ -16,12 +16,13 @@ import {packageRegexes} from './build/utils.mjs';
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      BUILD_TARGET: 'umd' | 'esm' | 'esm-bundle';
+      BUILD_TARGET: 'umd' | 'esm' | 'esm-bundle' | undefined;
     }
   }
 }
 
 const buildTarget = process.env.BUILD_TARGET || 'umd';
+const buildTargetDefined = process.env.BUILD_TARGET !== undefined;
 
 /**
  * Rollup output options for ESM build, which is what we package in the NPM package
@@ -138,6 +139,7 @@ export default defineConfig(({mode}) => ({
     {
       name: 'ignore-styles-esm-bundle',
       transform(code, id) {
+        if (!buildTargetDefined) return;
         if (buildTarget === 'umd' && (id.endsWith('.css') || id.endsWith('scss'))) {
           // skip processing
           return {code: '', map: null};
