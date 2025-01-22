@@ -33,7 +33,7 @@
     "@open-formulieren/design-tokens": "^0.55.0",
     "@open-formulieren/formiojs": "^4.13.14",
     "@open-formulieren/leaflet-tools": "^1.0.0",
-    "@sentry/react": "^6.13.2",
+    "@sentry/react": "^8.50.0",
     "@storybook/test": "^8.4.7",
     "classnames": "^2.3.1",
     "date-fns": "^2.30.0",
