@@ -10,7 +10,7 @@ import {
   mockSubmissionStepGet,
 } from 'api-mocks/submissions';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import routes, {FUTURE_FLAGS} from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import App from './App';
@@ -95,7 +95,7 @@ const Wrapper = ({form, showExternalHeader}) => {
       {showExternalHeader && (
         <header style={{padding: '10px', textAlign: 'center'}}>External header</header>
       )}
-      <RouterProvider router={router} />
+      <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
     </FormContext.Provider>
   );
 };

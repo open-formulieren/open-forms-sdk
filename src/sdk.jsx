@@ -15,7 +15,7 @@ import {getRedirectParams} from 'components/routingActions';
 import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
-import routes, {FUTURE_FLAGS} from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import initialiseSentry from 'sentry';
 import {DEBUG, getVersion} from 'utils';
 
@@ -199,7 +199,7 @@ class OpenForm {
                   languageSelectorTarget={this.languageSelectorTarget}
                   onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
                 >
-                  <RouterProvider router={router} />
+                  <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
                 </I18NManager>
               </I18NErrorBoundary>
             </NonceProvider>

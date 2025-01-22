@@ -10,7 +10,7 @@ import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionPost} from 'api-mocks/submissions';
 import SubmissionProvider from 'components/SubmissionProvider';
-import {FUTURE_FLAGS} from 'routes';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 import FormStart from './index';
 
@@ -55,7 +55,7 @@ const Wrap = ({
             onDestroySession={() => {}}
             removeSubmissionId={vi.fn()}
           >
-            <RouterProvider router={router} />
+            <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
           </SubmissionProvider>
         </FormContext.Provider>
       </IntlProvider>

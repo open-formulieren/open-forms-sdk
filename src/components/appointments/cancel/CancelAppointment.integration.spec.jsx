@@ -5,7 +5,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
-import routes, {FUTURE_FLAGS} from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 const Wrapper = () => {
   const form = buildForm({
@@ -32,7 +32,7 @@ const Wrapper = () => {
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

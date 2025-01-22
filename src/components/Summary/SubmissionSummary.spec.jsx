@@ -10,7 +10,7 @@ import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions
 import SubmissionProvider from 'components/SubmissionProvider';
 import {SubmissionSummary} from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import {FUTURE_FLAGS} from 'routes';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 const Wrapper = ({form, submission}) => {
   const routes = [
@@ -44,7 +44,7 @@ const Wrapper = ({form, submission}) => {
     >
       <IntlProvider locale="nl" messages={messagesNL}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

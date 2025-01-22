@@ -7,7 +7,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
-import {FUTURE_FLAGS} from 'routes';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import cosignRoutes from 'routes/cosign';
 
 import Cosign from './Cosign';
@@ -82,7 +82,7 @@ const Wrapper = ({relativeUrl}) => {
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={TEST_FORM}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

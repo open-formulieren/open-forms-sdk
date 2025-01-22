@@ -15,7 +15,7 @@ import {
   mockSubmissionProcessingStatusErrorGet,
 } from 'api-mocks/submissions';
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
-import routes, {FUTURE_FLAGS} from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -55,7 +55,7 @@ const renderApp = (initialRoute = '/') => {
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -177,7 +177,9 @@ describe('Create appointment status checking', () => {
     }
     const submitButton2 = screen.getByRole('button', {name: 'Confirm'});
     await user.click(submitButton2);
-    expect(screen.queryByText('Computer says no.')).toBeNull();
+    await waitFor(() => {
+      expect(screen.queryByText('Computer says no.')).toBeNull();
+    });
   });
 });
 

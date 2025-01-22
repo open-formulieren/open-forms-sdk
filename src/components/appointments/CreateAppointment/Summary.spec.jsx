@@ -8,7 +8,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {LiteralsProvider} from 'components/Literal';
-import {FUTURE_FLAGS} from 'routes';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 import {CreateAppointmentContext} from '../Context';
 import {
@@ -98,7 +98,7 @@ const renderSummary = errorHandler => {
   });
   realRender(
     <FormContext.Provider value={form}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
     </FormContext.Provider>
   );
 };
