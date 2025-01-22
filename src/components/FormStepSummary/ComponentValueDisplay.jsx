@@ -189,7 +189,7 @@ const MapDisplay = ({component, value}) => {
     return <EmptyDisplay />;
   }
 
-  return <Map markerCoordinates={value} disabled tileLayerUrl={component.tileLayerUrl} />;
+  return <Map geoJsonGeometry={value} disabled tileLayerUrl={component.tileLayerUrl} />;
 };
 
 const CoSignDisplay = ({value}) => {

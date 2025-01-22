@@ -43,10 +43,28 @@
       "value": " actief."
     }
   ],
+  "+KBbXH": [
+    {
+      "type": 0,
+      "value": "Klik om een veelhoek (polygoon) te tekenen"
+    }
+  ],
+  "+W79Dr": [
+    {
+      "type": 0,
+      "value": "Klik om verder te tekenen"
+    }
+  ],
   "+uwsgF": [
     {
       "type": 0,
       "value": "Afspraakdetails"
+    }
+  ],
+  "/yX9Xl": [
+    {
+      "type": 0,
+      "value": "Tekeningen annuleren"
     }
   ],
   "0j8tMq": [
@@ -79,6 +97,12 @@
     {
       "type": 0,
       "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
+    }
+  ],
+  "2D6ubj": [
+    {
+      "type": 0,
+      "value": "Lijn"
     }
   ],
   "2HHJrq": [
@@ -117,6 +141,12 @@
       "value": "Opties ophalen..."
     }
   ],
+  "4ZOmtU": [
+    {
+      "type": 0,
+      "value": "Wijzigingen opslaan"
+    }
+  ],
   "4gPdgK": [
     {
       "type": 0,
@@ -127,6 +157,12 @@
     {
       "type": 0,
       "value": "Bevestigen"
+    }
+  ],
+  "4ui8R+": [
+    {
+      "type": 0,
+      "value": "Klik het laatste punt om de lijn te voltooien"
     }
   ],
   "5uh2hS": [
@@ -153,6 +189,12 @@
     {
       "type": 0,
       "value": "Controle en medeondertekenen inzending"
+    }
+  ],
+  "62SBjV": [
+    {
+      "type": 0,
+      "value": "Veelhoek (polygoon)"
     }
   ],
   "6GNK65": [
@@ -449,6 +491,12 @@
       "value": "provider"
     }
   ],
+  "B/W1uC": [
+    {
+      "type": 0,
+      "value": "Verwijder vormen"
+    }
+  ],
   "BL1Ehr": [
     {
       "type": 0,
@@ -477,6 +525,12 @@
     {
       "type": 0,
       "value": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar."
+    }
+  ],
+  "D6TdPW": [
+    {
+      "type": 0,
+      "value": "Klik op de kaart om een pin/punt te plaatsen"
     }
   ],
   "DBTNgI": [
@@ -665,6 +719,18 @@
       "value": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
     }
   ],
+  "HY6Irs": [
+    {
+      "type": 0,
+      "value": "Wijzigingen annuleren"
+    }
+  ],
+  "HgLr1F": [
+    {
+      "type": 0,
+      "value": "Annuleer"
+    }
+  ],
   "HhcSoc": [
     {
       "type": 0,
@@ -675,6 +741,12 @@
     {
       "type": 0,
       "value": "Ongeldige invoer."
+    }
+  ],
+  "Hkq6NE": [
+    {
+      "type": 0,
+      "value": "Tekening voltooien"
     }
   ],
   "I6ok5N": [
@@ -973,6 +1045,12 @@
       "value": "Betalen"
     }
   ],
+  "N2sZnS": [
+    {
+      "type": 0,
+      "value": "Opslaan"
+    }
+  ],
   "OnfuIr": [
     {
       "options": {
@@ -1005,6 +1083,12 @@
       "value": "withAsterisk"
     }
   ],
+  "Op4orj": [
+    {
+      "type": 0,
+      "value": "Geen vormen om te verwijderen"
+    }
+  ],
   "P194bo": [
     {
       "type": 0,
@@ -1029,6 +1113,12 @@
     {
       "type": 0,
       "value": "Ongeldige invoer."
+    }
+  ],
+  "Q6/Lj7": [
+    {
+      "type": 0,
+      "value": "Verwijder het laatst getekende punt"
     }
   ],
   "QPdaOi": [
@@ -1223,6 +1313,12 @@
       "value": " lang zijn."
     }
   ],
+  "U5+FHP": [
+    {
+      "type": 0,
+      "value": "Annuleer"
+    }
+  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1295,6 +1391,12 @@
     {
       "type": 0,
       "value": " zijn."
+    }
+  ],
+  "Y3jHZm": [
+    {
+      "type": 0,
+      "value": "Verwijder laatste punt"
     }
   ],
   "YcC4PD": [
@@ -1427,6 +1529,12 @@
       "value": "Je gegevens"
     }
   ],
+  "bRtoG6": [
+    {
+      "type": 0,
+      "value": "Verwijder alles"
+    }
+  ],
   "bgfiRG": [
     {
       "type": 0,
@@ -1469,6 +1577,12 @@
       "value": "Terug naar begin"
     }
   ],
+  "dNGw+S": [
+    {
+      "type": 0,
+      "value": "Klik om verder te tekenen"
+    }
+  ],
   "eAmrdi": [
     {
       "type": 0,
@@ -1485,6 +1599,12 @@
     {
       "type": 0,
       "value": "Bezig..."
+    }
+  ],
+  "fJVa0u": [
+    {
+      "type": 0,
+      "value": "Pin/punt"
     }
   ],
   "fWjfVm": [
@@ -2079,6 +2199,12 @@
       "value": "Zoek adres"
     }
   ],
+  "sYb+eZ": [
+    {
+      "type": 0,
+      "value": "Verwijder alle vormen van de kaart"
+    }
+  ],
   "senRv3": [
     {
       "type": 0,
@@ -2219,10 +2345,22 @@
       "value": "Aantal personen"
     }
   ],
+  "vfKvuS": [
+    {
+      "type": 0,
+      "value": "Klik op het eerste punt, om de veelhoek te voltooien"
+    }
+  ],
   "wwsWUp": [
     {
       "type": 0,
       "value": "Wat vind je van dit formulier?"
+    }
+  ],
+  "xh+7Vv": [
+    {
+      "type": 0,
+      "value": "Voltooi"
     }
   ],
   "y31iyC": [
@@ -2249,6 +2387,12 @@
     {
       "type": 0,
       "value": "Terug naar de website"
+    }
+  ],
+  "zpHAro": [
+    {
+      "type": 0,
+      "value": "Klik om een lijk te tekenen"
     }
   ],
   "zvoXSU": [
