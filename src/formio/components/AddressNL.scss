@@ -3,6 +3,16 @@
 // @import instead of @use because breakpoints are defined globally
 @import 'microscope-sass/lib/responsive';
 
+// This is a temporary solution because dealing with Formio for that is a pain. It will
+// be properly addressed in the new renderer.
+.utrecht-form-field--addressNL
+  > .utrecht-form-field__label
+  > .utrecht-form-label--openforms-required {
+  &:after {
+    content: none;
+  }
+}
+
 .openforms-addressnl {
   display: grid;
   grid-template-columns: var(--_of-addressnl-grid-template-columns, 1fr);
@@ -16,4 +26,8 @@
       grid-template-columns: 1fr;
     }
   }
+}
+
+.openforms-summary address {
+  font-style: normal;
 }
