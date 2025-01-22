@@ -6,6 +6,7 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
+import {FUTURE_FLAGS} from 'routes';
 import {createAppointmentRoutes} from 'routes/appointments';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -48,14 +49,20 @@ export default {
 const Wrapper = ({form}) => {
   const routes = [
     {
-      path: '/appointments/*',
-      element: <CreateAppointment />,
-      children: createAppointmentRoutes,
+      path: '/appointments',
+      children: [
+        {
+          path: '*',
+          element: <CreateAppointment />,
+          children: createAppointmentRoutes,
+        },
+      ],
     },
   ];
   const router = createMemoryRouter(routes, {
     initialEntries: ['/appointments/'],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
   return (
     <FormContext.Provider value={form}>

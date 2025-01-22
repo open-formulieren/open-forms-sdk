@@ -8,12 +8,13 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {buildSubmission, mockSubmissionPost} from 'api-mocks/submissions';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS} from 'routes';
 
 const renderApp = (form, initialRoute = '/') => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialRoute],
     initialIndex: [0],
+    future: FUTURE_FLAGS,
   });
   render(
     <ConfigContext.Provider

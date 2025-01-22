@@ -18,7 +18,7 @@ import {
   mockSubmissionSummaryGet,
 } from 'api-mocks/submissions';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS} from 'routes';
 
 window.scrollTo = vi.fn();
 
@@ -49,6 +49,7 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialEntry],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
 
   return (

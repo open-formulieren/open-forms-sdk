@@ -15,7 +15,7 @@ import {
   mockSubmissionProcessingStatusErrorGet,
 } from 'api-mocks/submissions';
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS} from 'routes';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -41,6 +41,7 @@ const renderApp = (initialRoute = '/') => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialRoute],
     initialIndex: [0],
+    future: FUTURE_FLAGS,
   });
   render(
     <ConfigContext.Provider

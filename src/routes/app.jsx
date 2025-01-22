@@ -24,18 +24,33 @@ const routes = [
     element: <App />,
     children: [
       {
-        path: 'afspraak-annuleren/*',
-        children: manageAppointmentRoutes,
+        path: 'afspraak-annuleren',
+        children: [
+          {
+            path: '*',
+            children: manageAppointmentRoutes,
+          },
+        ],
       },
       {
-        path: 'afspraak-maken/*',
-        element: <CreateAppointment />,
-        children: createAppointmentRoutes,
+        path: 'afspraak-maken',
+        children: [
+          {
+            path: '*',
+            element: <CreateAppointment />,
+            children: createAppointmentRoutes,
+          },
+        ],
       },
       {
-        path: 'cosign/*',
-        element: <Cosign />,
-        children: cosignRoutes,
+        path: 'cosign',
+        children: [
+          {
+            path: '*',
+            element: <Cosign />,
+            children: cosignRoutes,
+          },
+        ],
       },
       {
         path: 'sessie-verlopen',

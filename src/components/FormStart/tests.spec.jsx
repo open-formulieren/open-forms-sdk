@@ -10,6 +10,7 @@ import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionPost} from 'api-mocks/submissions';
 import SubmissionProvider from 'components/SubmissionProvider';
+import {FUTURE_FLAGS} from 'routes';
 
 import FormStart from './index';
 
@@ -31,7 +32,7 @@ const Wrap = ({
     {path: parsedUrl.pathname, element: <FormStart />},
     {path: '/stap/:slug', element: <h1>Step page</h1>},
   ];
-  const router = createMemoryRouter(routes, {initialEntries: [currentUrl]});
+  const router = createMemoryRouter(routes, {initialEntries: [currentUrl], future: FUTURE_FLAGS});
   const [submission, setSubmission] = useState(initialSubmission);
   return (
     <ConfigContext.Provider

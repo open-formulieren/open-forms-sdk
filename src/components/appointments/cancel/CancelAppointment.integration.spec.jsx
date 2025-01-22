@@ -5,7 +5,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS} from 'routes';
 
 const Wrapper = () => {
   const form = buildForm({
@@ -19,6 +19,7 @@ const Wrapper = () => {
       '/afspraak-annuleren?time=2023-08-31T07:35:00Z&submission_uuid=bc38ca5e-4efd-4d9d-a3df-8cf5be7f0726',
     ],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
   return (
     <ConfigContext.Provider

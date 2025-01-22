@@ -7,6 +7,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {buildForm} from 'api-mocks';
 import {LiteralsProvider} from 'components/Literal';
 import {START_FORM_QUERY_PARAM} from 'components/constants';
+import {FUTURE_FLAGS} from 'routes';
 
 import LoginOptions from './index';
 
@@ -18,7 +19,7 @@ const Wrapper = ({form, onFormStart, currentUrl = '/'}) => {
       element: <LoginOptions form={form} onFormStart={onFormStart} />,
     },
   ];
-  const router = createMemoryRouter(routes, {initialEntries: [currentUrl]});
+  const router = createMemoryRouter(routes, {initialEntries: [currentUrl], future: FUTURE_FLAGS});
 
   return (
     <IntlProvider locale="nl" messages={messagesNL}>

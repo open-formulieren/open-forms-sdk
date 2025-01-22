@@ -10,6 +10,7 @@ import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions
 import SubmissionProvider from 'components/SubmissionProvider';
 import {SubmissionSummary} from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+import {FUTURE_FLAGS} from 'routes';
 
 const Wrapper = ({form, submission}) => {
   const routes = [
@@ -29,6 +30,7 @@ const Wrapper = ({form, submission}) => {
   ];
   const router = createMemoryRouter(routes, {
     initialEntries: ['/overzicht'],
+    future: FUTURE_FLAGS,
   });
   return (
     <ConfigContext.Provider

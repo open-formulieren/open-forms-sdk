@@ -7,6 +7,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router-dom';
 import {ConfigContext} from 'Context';
 import {BASE_URL, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
+import {FUTURE_FLAGS} from 'routes';
 
 import {CreateAppointmentContext} from '../Context';
 import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
@@ -43,6 +44,7 @@ const render = () => {
   const router = createMemoryRouter(routes, {
     initialEntries: ['/appointments/producten'],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
   realRender(<RouterProvider router={router} />);
 };

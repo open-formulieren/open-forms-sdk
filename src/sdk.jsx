@@ -15,7 +15,7 @@ import {getRedirectParams} from 'components/routingActions';
 import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS} from 'routes';
 import initialiseSentry from 'sentry';
 import {DEBUG, getVersion} from 'utils';
 
@@ -176,7 +176,7 @@ class OpenForm {
 
   render() {
     const createRouter = this.useHashRouting ? createHashRouter : createBrowserRouter;
-    const router = createRouter(routes, {basename: this.routerBasePath});
+    const router = createRouter(routes, {basename: this.routerBasePath, future: FUTURE_FLAGS});
 
     // render the wrapping React component
     this.root.render(

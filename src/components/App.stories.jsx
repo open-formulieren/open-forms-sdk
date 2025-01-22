@@ -10,7 +10,7 @@ import {
   mockSubmissionStepGet,
 } from 'api-mocks/submissions';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS} from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import App from './App';
@@ -88,6 +88,7 @@ const Wrapper = ({form, showExternalHeader}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: ['/'],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
   return (
     <FormContext.Provider value={form}>

@@ -7,6 +7,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
+import {FUTURE_FLAGS} from 'routes';
 import cosignRoutes from 'routes/cosign';
 
 import Cosign from './Cosign';
@@ -53,15 +54,21 @@ const TEST_FORM = buildForm({
 
 const routes = [
   {
-    path: '/cosign/*',
-    element: <Cosign />,
-    children: cosignRoutes,
+    path: '/cosign',
+    children: [
+      {
+        path: '*',
+        element: <Cosign />,
+        children: cosignRoutes,
+      },
+    ],
   },
 ];
 
 const Wrapper = ({relativeUrl}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [`/cosign/${relativeUrl}`],
+    future: FUTURE_FLAGS,
   });
   return (
     <ConfigContext.Provider
