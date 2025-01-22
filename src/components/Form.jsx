@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
-import {Navigate, Outlet, useLocation, useNavigate, useSearchParams} from 'react-router-dom';
+import {Navigate, Outlet, useLocation, useNavigate, useSearchParams} from 'react-router';
 import {usePrevious} from 'react-use';
 
 import {ConfigContext} from 'Context';

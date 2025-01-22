@@ -1,5 +1,5 @@
 import {useIntl} from 'react-intl';
-import {matchPath, useLocation, useMatch} from 'react-router-dom';
+import {matchPath, useLocation, useMatch} from 'react-router';
 
 import ProgressIndicator from 'components/ProgressIndicator';
 import {addFixedSteps, getStepsInfo} from 'components/ProgressIndicator/utils';

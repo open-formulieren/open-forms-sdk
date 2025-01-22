@@ -1,4 +1,4 @@
-import {Outlet, useLocation} from 'react-router-dom';
+import {Outlet, useLocation} from 'react-router';
 
 import Card from 'components/Card';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';

@@ -1,7 +1,7 @@
 import {ButtonLink} from '@utrecht/component-library-react';
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {Navigate} from 'react-router-dom';
+import {Navigate} from 'react-router';
 
 import {FormContext} from 'Context';
 import Body from 'components/Body';

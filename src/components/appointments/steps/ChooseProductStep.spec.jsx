@@ -2,7 +2,7 @@ import {render as realRender, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
-import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL, buildSubmission} from 'api-mocks';

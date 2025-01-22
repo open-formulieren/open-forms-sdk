@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 
 import ButtonsToolbar from 'components/ButtonsToolbar';
 import {LiteralsProvider} from 'components/Literal';

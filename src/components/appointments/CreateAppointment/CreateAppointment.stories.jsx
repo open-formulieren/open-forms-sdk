@@ -1,6 +1,6 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 import {addDays, format} from 'date-fns';
-import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';

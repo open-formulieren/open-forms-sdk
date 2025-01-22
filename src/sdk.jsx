@@ -6,7 +6,8 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
-import {RouterProvider, createBrowserRouter, createHashRouter, resolvePath} from 'react-router-dom';
+import {createBrowserRouter, createHashRouter, resolvePath} from 'react-router';
+import {RouterProvider} from 'react-router/dom';
 import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from 'Context';

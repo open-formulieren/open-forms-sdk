@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import {useLocation, useSearchParams} from 'react-router-dom';
+import {useLocation, useSearchParams} from 'react-router';
 import {useAsync, useLocalStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';

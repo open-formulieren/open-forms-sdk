@@ -1,5 +1,5 @@
 import {useCallback, useEffect} from 'react';
-import {useMatch, useNavigate} from 'react-router-dom';
+import {useMatch, useNavigate} from 'react-router';
 import {useUpdate} from 'react-use';
 import {useGlobalState} from 'state-pool';
 

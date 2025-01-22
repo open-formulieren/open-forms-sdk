@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {Navigate} from 'react-router-dom';
+import {Navigate} from 'react-router';
 
 import MaintenanceMode from 'components/MaintenanceMode';
 import {useSubmissionContext} from 'components/SubmissionProvider';

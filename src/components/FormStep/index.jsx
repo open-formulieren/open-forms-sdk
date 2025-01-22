@@ -27,7 +27,7 @@ import isEqual from 'lodash/isEqual';
 import {useContext, useRef} from 'react';
 import {Form} from 'react-formio';
 import {useIntl} from 'react-intl';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router';
 import {useAsync} from 'react-use';
 import {useImmerReducer} from 'use-immer';
 

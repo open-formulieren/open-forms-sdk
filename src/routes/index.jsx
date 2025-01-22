@@ -1,13 +1,5 @@
 export {default} from './app';
 
-export const FUTURE_FLAGS = {
-  v7_relativeSplatPath: true,
-  v7_fetcherPersist: true,
-  v7_normalizeFormMethod: true,
-  v7_partialHydration: true,
-  v7_skipActionErrorRevalidation: true,
-};
-
-export const PROVIDER_FUTURE_FLAGS = {
-  v7_startTransition: true,
-};
+// Keep the constants around for when we inevitably have to ugprade to React Router v8
+export const FUTURE_FLAGS = {};
+export const PROVIDER_FUTURE_FLAGS = {};

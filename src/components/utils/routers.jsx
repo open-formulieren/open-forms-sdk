@@ -1,4 +1,4 @@
-import {matchPath, resolvePath} from 'react-router-dom';
+import {matchPath, resolvePath} from 'react-router';
 
 /**
  * Check if a given relative path from the routes matches the current location.

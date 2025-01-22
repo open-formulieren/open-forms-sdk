@@ -1,7 +1,7 @@
 import {Form, Formik} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {createSearchParams, useLocation, useNavigate} from 'react-router-dom';
+import {createSearchParams, useLocation, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
