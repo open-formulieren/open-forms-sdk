@@ -3,7 +3,7 @@ import {GeoSearchControl} from 'leaflet-geosearch';
 import PropTypes from 'prop-types';
 import {useContext, useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
-import {FeatureGroup, GeoJSON, MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
@@ -88,22 +88,23 @@ const LeaftletMap = ({
   };
 
   const updateGeoJsonGeometry = newFeatureLayer => {
-    const featureGroup = featureGroupRef.current;
-    if (featureGroup) {
-      const newLayerId = featureGroup.getLayerId(newFeatureLayer);
-
-      featureGroup.eachLayer(layer => {
-        const layerId = featureGroup.getLayerId(layer);
-
-        // Remove all layers that aren't the newly added layer
-        // Ensuring that only 1 layer/shape will be present at any time
-        if (layerId !== newLayerId) {
-          featureGroup.removeLayer(layer);
-        }
-      });
-    }
+    // Remove all existing shapes from the map, ensuring that shapes are only added through
+    // `geoJsonGeometry` changes.
+    featureGroupRef.current?.clearLayers();
     onGeoJsonGeometrySet(newFeatureLayer.toGeoJSON().geometry);
   };
+
+  useEffect(() => {
+    // Remove all shapes from the map.
+    // Only `geoJsonGeometry` should be shown on the map.
+    featureGroupRef.current?.clearLayers();
+    if (!geoJsonGeometry) {
+      return;
+    }
+    // Add the current `geoJsonGeometry` as shape
+    const layer = Leaflet.GeoJSON.geometryToLayer(geoJsonGeometry);
+    featureGroupRef.current?.addLayer(layer);
+  }, [geoJsonGeometry]);
 
   return (
     <>
@@ -144,7 +145,6 @@ const LeaftletMap = ({
               }}
             />
           )}
-          {geoJsonGeometry && <GeoJSON data={geoJsonGeometry} />}
         </FeatureGroup>
         {coordinates && <MapView coordinates={coordinates} />}
         {!disabled && (
@@ -188,7 +188,7 @@ LeaftletMap.propTypes = {
         .isRequired,
     }),
   ]),
-  onGeoJsonGeometrySet: PropTypes.func,
+  onGeoJsonGeometrySet: PropTypes.func.isRequired,
   interactions: PropTypes.shape({
     polyline: PropTypes.bool,
     polygon: PropTypes.bool,
