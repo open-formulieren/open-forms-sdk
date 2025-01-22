@@ -124,7 +124,11 @@ export const Functional = {
     await userEvent.click(frysk_button);
     // wait for PUT api call to have completed and loading state to be resolved
     await waitFor(() => canvas.findByText(/^fy$/i));
-    await expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(1); // change once
+    // change once
+    await waitFor(() => {
+      expect(args.onLanguageChangeDone).toHaveBeenCalled();
+    });
+    expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(1);
   },
 };
 
