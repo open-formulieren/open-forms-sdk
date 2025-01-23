@@ -100,14 +100,16 @@ export default class AddressNL extends Field {
       addressNLContainer: 'single',
     });
     return super.attach(element).then(() => {
-      this.reactRoot = createRoot(this.refs.addressNLContainer);
-      this.renderReact();
+      if (!this.component?.hidden) {
+        this.reactRoot = createRoot(this.refs.addressNLContainer);
+        this.renderReact();
+      }
     });
   }
 
   destroy() {
     const container = this.refs.addressNLContainer;
-    if (container) this.reactRoot.unmount();
+    if (!this.component?.hidden && container) this.reactRoot.unmount();
     super.destroy();
   }
 
@@ -146,6 +148,9 @@ export default class AddressNL extends Field {
   }
 
   renderReact() {
+    if (this.component?.hidden) {
+      return;
+    }
     const required = this.component?.validate?.required || false;
     const initialValues = {...this.emptyValue, ...this.dataValue};
 
