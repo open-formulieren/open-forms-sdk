@@ -12,9 +12,6 @@ import {logError} from 'components/Errors/ErrorBoundary';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
 
-import messagesEN from './i18n/compiled/en.json';
-import messagesNL from './i18n/compiled/nl.json';
-
 // ensure flatpickr locales are included in bundle
 flatpickr.l10ns.nl = Dutch;
 
@@ -24,13 +21,23 @@ const setLanguage = langCode => {
   currentLanguage.setValue(langCode);
 };
 
-const loadLocaleData = locale => {
+const loadLocaleData = async locale => {
+  let localeToLoad;
   switch (locale) {
-    case 'nl':
-      return messagesNL;
-    default:
-      return messagesEN;
+    case 'nl': {
+      localeToLoad = 'nl';
+      break;
+    }
+    case 'en':
+    // in case (accidentally) a locale is set that we don't ship translations for yet,
+    // fall back to English.
+    // eslint-disable-next-line no-fallthrough
+    default: {
+      localeToLoad = 'en';
+    }
   }
+  const messages = await import(`./i18n/compiled/${localeToLoad}.json`);
+  return messages.default;
 };
 
 /*
@@ -38,8 +45,8 @@ Functionality to localize messages in a locale outside of the usual React lifecy
  */
 const cache = createIntlCache();
 
-const formatMessageForLocale = (locale, msg) => {
-  const messages = loadLocaleData(locale);
+const formatMessageForLocale = async (locale, msg) => {
+  const messages = await loadLocaleData(locale);
   const intl = createIntl({locale, messages}, cache);
   return intl.formatMessage(msg);
 };

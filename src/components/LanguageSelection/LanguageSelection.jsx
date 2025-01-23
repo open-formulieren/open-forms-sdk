@@ -65,7 +65,7 @@ const LanguageSelection = ({heading = DEFAULT_HEADING, headingLevel = 2}) => {
     // or if an update is being processed.
     if (updatingLanguage || languageCode === locale) return;
 
-    const confirmationQuestion = formatMessageForLocale(languageCode, changeLanguagePrompt);
+    const confirmationQuestion = await formatMessageForLocale(languageCode, changeLanguagePrompt);
 
     // only prompt to confirm if there is an active submission
     if (submissionState.hasSubmission && !window.confirm(confirmationQuestion)) {

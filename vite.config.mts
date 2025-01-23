@@ -148,6 +148,14 @@ export default defineConfig(({mode}) => ({
       },
     },
     sentryVitePlugin({
+      silent: mode === 'development',
+      release: {
+        create: false,
+        inject: false,
+      },
+      sourcemaps: {
+        disable: true,
+      },
       bundleSizeOptimizations: {
         excludeDebugStatements: true,
         excludeTracing: true,
@@ -156,6 +164,7 @@ export default defineConfig(({mode}) => ({
         excludeReplayIframe: true,
         excludeReplayWorker: true,
       },
+      telemetry: false,
     }),
     // must be last!
     codecovVitePlugin({
