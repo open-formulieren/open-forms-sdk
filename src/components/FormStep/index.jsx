@@ -48,9 +48,9 @@ import {
   findPreviousApplicableStep,
   isLastStep,
 } from 'components/utils';
-import {PREFIX} from 'formio/constants';
 import useFormContext from 'hooks/useFormContext';
 import useTitle from 'hooks/useTitle';
+import {PREFIX} from 'utils';
 
 import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
 

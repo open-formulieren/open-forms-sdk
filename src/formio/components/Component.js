@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
+import {applyPrefix} from 'utils';
 
 const FormioComponent = Formio.Components.components.component;
 

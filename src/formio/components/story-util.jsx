@@ -4,7 +4,7 @@ import {Form} from 'react-formio';
 import {useIntl} from 'react-intl';
 
 import {ConfigContext, FormioTranslations} from 'Context';
-import {PREFIX} from 'formio/constants';
+import {PREFIX} from 'utils';
 
 const RenderFormioForm = ({
   configuration,

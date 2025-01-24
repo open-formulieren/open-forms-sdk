@@ -3,8 +3,9 @@ import FormioUtils from 'formiojs/utils';
 import {Formio} from 'react-formio';
 
 import {CSRFToken} from 'headers';
+import {applyPrefix} from 'utils';
 
-import {applyPrefix, linkToSoftRequiredDisplay, setErrorAttributes} from '../utils';
+import {linkToSoftRequiredDisplay, setErrorAttributes} from '../utils';
 
 const addCSRFToken = xhr => {
   const csrfTokenValue = CSRFToken.getValue();
