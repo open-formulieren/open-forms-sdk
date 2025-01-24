@@ -1,8 +1,4 @@
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
-import Confirmation from 'components/appointments/CreateAppointment/Confirmation';
-import Summary from 'components/appointments/CreateAppointment/Summary';
-import {APPOINTMENT_STEPS, LandingPage} from 'components/appointments/CreateAppointment/steps';
-import {CancelAppointment, CancelAppointmentSuccess} from 'components/appointments/cancel';
 
 /**
  * Route subtree for appointment forms.
@@ -10,32 +6,94 @@ import {CancelAppointment, CancelAppointmentSuccess} from 'components/appointmen
 const createAppointmentRoutes = [
   {
     path: '',
-    element: <LandingPage />,
+    lazy: async () => {
+      const {LandingPage} = await import('components/appointments');
+      return {element: <LandingPage />};
+    },
   },
-  ...APPOINTMENT_STEPS.map(({path, element}) => ({path, element})),
+  {
+    path: 'producten',
+    lazy: async () => {
+      const {ChooseProductStep} = await import('components/appointments');
+      return {element: <ChooseProductStep navigateTo="../kalender" />};
+    },
+  },
+  {
+    path: 'kalender',
+    lazy: async () => {
+      const {LocationAndTimeStep} = await import('components/appointments');
+      return {element: <LocationAndTimeStep navigateTo="../contactgegevens" />};
+    },
+  },
+  {
+    path: 'contactgegevens',
+    lazy: async () => {
+      const {ContactDetailsStep} = await import('components/appointments');
+      return {element: <ContactDetailsStep navigateTo="../overzicht" />};
+    },
+  },
   {
     path: 'overzicht',
-    element: <Summary />,
+    lazy: async () => {
+      const {Summary} = await import('components/appointments');
+      return {element: <Summary />};
+    },
   },
   {
     path: 'bevestiging',
-    element: <Confirmation />,
+    lazy: async () => {
+      const {Confirmation} = await import('components/appointments');
+      return {element: <Confirmation />};
+    },
   },
 ];
 
 const manageAppointmentRoutes = [
   {
     path: '',
-    element: (
-      <ErrorBoundary>
-        <CancelAppointment />
-      </ErrorBoundary>
-    ),
+    lazy: async () => {
+      const {CancelAppointment} = await import('components/appointments');
+      return {
+        element: (
+          <ErrorBoundary>
+            <CancelAppointment />
+          </ErrorBoundary>
+        ),
+      };
+    },
   },
   {
     path: 'succes',
-    element: <CancelAppointmentSuccess />,
+    lazy: async () => {
+      const {CancelAppointmentSuccess} = await import('components/appointments');
+      return {element: <CancelAppointmentSuccess />};
+    },
   },
 ];
 
-export {createAppointmentRoutes, manageAppointmentRoutes};
+const appointmentRoutes = [
+  {
+    path: 'afspraak-annuleren',
+    children: [
+      {
+        path: '*',
+        children: manageAppointmentRoutes,
+      },
+    ],
+  },
+  {
+    path: 'afspraak-maken',
+    children: [
+      {
+        path: '*',
+        children: createAppointmentRoutes,
+        lazy: async () => {
+          const {CreateAppointment} = await import('components/appointments');
+          return {element: <CreateAppointment />};
+        },
+      },
+    ],
+  },
+];
+
+export default appointmentRoutes;
