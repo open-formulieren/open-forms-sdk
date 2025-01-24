@@ -1,5 +1,3 @@
-import {Utils as FormioUtils} from 'formiojs';
-
 const getComponentLabel = component => {
   if (component === undefined) {
     // If no component is found then just return an empty string
@@ -39,21 +37,4 @@ const humanFileSize = size => {
   return {size: newSize, unit};
 };
 
-// Duplicate code from Open Forms Admin
-const isChildOfEditGrid = (component, configuration) => {
-  // Get all edit grids in the configuration
-  let editGrids = [];
-  FormioUtils.eachComponent(configuration.components, configComponent => {
-    if (configComponent.type === 'editgrid') editGrids.push(configComponent);
-  });
-
-  // Check if our component is in the editgrid
-  for (const editGrid of editGrids) {
-    const foundComponent = FormioUtils.getComponent(editGrid.components, component.key, true);
-    if (foundComponent) return true;
-  }
-
-  return false;
-};
-
-export {getComponentLabel, humanFileSize, isChildOfEditGrid};
+export {getComponentLabel, humanFileSize};
