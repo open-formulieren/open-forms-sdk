@@ -11,7 +11,7 @@ import useSessionTimeout from 'hooks/useSessionTimeout';
 import Types from 'types';
 
 import GenericSummary from './GenericSummary';
-import {loadSummaryData} from './utils';
+import {loadSummaryData} from './data';
 
 const CosignSummary = ({
   form,

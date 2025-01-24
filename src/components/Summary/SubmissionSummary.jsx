@@ -13,7 +13,7 @@ import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
 
 import GenericSummary from './GenericSummary';
-import {loadSummaryData} from './utils';
+import {loadSummaryData} from './data';
 
 const completeSubmission = async (submission, statementValues) => {
   const response = await post(`${submission.url}/_complete`, statementValues);
