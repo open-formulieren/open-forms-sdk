@@ -1,5 +1,4 @@
 import 'flatpickr';
-import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import ReactModal from 'react-modal';
@@ -17,8 +16,6 @@ import initialiseSentry from 'sentry';
 import {DEBUG, getVersion} from 'utils';
 
 import './styles.scss';
-
-fixLeafletIconUrls();
 
 // asynchronously 'pre-load' our formio initialization so that this can be split off
 // from the main bundle into a separate chunk.
