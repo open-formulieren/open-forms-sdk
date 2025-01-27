@@ -1,6 +1,6 @@
 import {useCallback, useContext, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';

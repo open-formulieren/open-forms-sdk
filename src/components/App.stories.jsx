@@ -1,5 +1,5 @@
 import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/test';
-import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {FormContext} from 'Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
@@ -10,7 +10,7 @@ import {
   mockSubmissionStepGet,
 } from 'api-mocks/submissions';
 import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import App from './App';
@@ -88,13 +88,14 @@ const Wrapper = ({form, showExternalHeader}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: ['/'],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
   return (
     <FormContext.Provider value={form}>
       {showExternalHeader && (
         <header style={{padding: '10px', textAlign: 'center'}}>External header</header>
       )}
-      <RouterProvider router={router} />
+      <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
     </FormContext.Provider>
   );
 };

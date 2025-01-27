@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
 import {post} from 'api';

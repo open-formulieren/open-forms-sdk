@@ -49,7 +49,7 @@ const addFixedSteps = (
     hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
   const introductionPageStep = {
-    to: 'introductie',
+    to: '../introductie',
     label: intl.formatMessage(STEP_LABELS.introduction),
     isCompleted: true,
     isApplicable: true,
@@ -58,7 +58,7 @@ const addFixedSteps = (
   };
 
   const startPageStep = {
-    to: 'startpagina',
+    to: '../startpagina',
     label: intl.formatMessage(STEP_LABELS.login),
     isCompleted: hasSubmission,
     isApplicable: true,
@@ -67,7 +67,7 @@ const addFixedSteps = (
   };
 
   const summaryStep = {
-    to: 'overzicht',
+    to: '../overzicht',
     label: intl.formatMessage(STEP_LABELS.overview),
     isCompleted: isPayment,
     isApplicable: true,
@@ -76,7 +76,7 @@ const addFixedSteps = (
   };
 
   const paymentStep = {
-    to: 'betalen',
+    to: '../betalen',
     label: intl.formatMessage(STEP_LABELS.payment),
     isCompleted: false,
     isCurrent: isPayment,

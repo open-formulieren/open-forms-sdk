@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {useSearchParams} from 'react-router-dom';
+import {useSearchParams} from 'react-router';
 
 import ErrorMessage from 'components/Errors/ErrorMessage';
 

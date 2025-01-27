@@ -6,7 +6,8 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
-import {RouterProvider, createBrowserRouter, createHashRouter, resolvePath} from 'react-router-dom';
+import {createBrowserRouter, createHashRouter, resolvePath} from 'react-router';
+import {RouterProvider} from 'react-router/dom';
 import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from 'Context';
@@ -15,7 +16,7 @@ import {getRedirectParams} from 'components/routingActions';
 import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import initialiseSentry from 'sentry';
 import {DEBUG, getVersion} from 'utils';
 
@@ -176,7 +177,7 @@ class OpenForm {
 
   render() {
     const createRouter = this.useHashRouting ? createHashRouter : createBrowserRouter;
-    const router = createRouter(routes, {basename: this.routerBasePath});
+    const router = createRouter(routes, {basename: this.routerBasePath, future: FUTURE_FLAGS});
 
     // render the wrapping React component
     this.root.render(
@@ -199,7 +200,7 @@ class OpenForm {
                   languageSelectorTarget={this.languageSelectorTarget}
                   onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
                 >
-                  <RouterProvider router={router} />
+                  <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
                 </I18NManager>
               </I18NErrorBoundary>
             </NonceProvider>

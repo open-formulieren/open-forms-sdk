@@ -1,4 +1,4 @@
-import {useSearchParams} from 'react-router-dom';
+import {useSearchParams} from 'react-router';
 
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 

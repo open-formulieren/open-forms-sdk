@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
-import {useLocation, useSearchParams} from 'react-router-dom';
+import {useLocation, useSearchParams} from 'react-router';
 
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';

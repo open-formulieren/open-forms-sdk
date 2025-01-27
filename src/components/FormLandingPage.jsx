@@ -1,4 +1,4 @@
-import {Navigate} from 'react-router-dom';
+import {Navigate} from 'react-router';
 
 import useFormContext from 'hooks/useFormContext';
 import useInitialDataReference from 'hooks/useInitialDataReference';

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import ReactModal from 'react-modal';
-import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from 'Context';
 import {updateSessionExpiry} from 'api';
@@ -15,7 +15,7 @@ import {
   mockSubmissionProcessingStatusErrorGet,
 } from 'api-mocks/submissions';
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -41,6 +41,7 @@ const renderApp = (initialRoute = '/') => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialRoute],
     initialIndex: [0],
+    future: FUTURE_FLAGS,
   });
   render(
     <ConfigContext.Provider
@@ -54,7 +55,7 @@ const renderApp = (initialRoute = '/') => {
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -176,7 +177,9 @@ describe('Create appointment status checking', () => {
     }
     const submitButton2 = screen.getByRole('button', {name: 'Confirm'});
     await user.click(submitButton2);
-    expect(screen.queryByText('Computer says no.')).toBeNull();
+    await waitFor(() => {
+      expect(screen.queryByText('Computer says no.')).toBeNull();
+    });
   });
 });
 

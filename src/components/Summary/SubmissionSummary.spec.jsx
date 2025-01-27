@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
-import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
@@ -10,6 +10,7 @@ import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions
 import SubmissionProvider from 'components/SubmissionProvider';
 import {SubmissionSummary} from 'components/Summary';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 const Wrapper = ({form, submission}) => {
   const routes = [
@@ -29,6 +30,7 @@ const Wrapper = ({form, submission}) => {
   ];
   const router = createMemoryRouter(routes, {
     initialEntries: ['/overzicht'],
+    future: FUTURE_FLAGS,
   });
   return (
     <ConfigContext.Provider
@@ -42,7 +44,7 @@ const Wrapper = ({form, submission}) => {
     >
       <IntlProvider locale="nl" messages={messagesNL}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

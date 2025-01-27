@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 
 import AbortButton from 'components/AbortButton';
 import {OFButton} from 'components/Button';

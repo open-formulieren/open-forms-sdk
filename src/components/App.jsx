@@ -1,4 +1,4 @@
-import {Navigate, Outlet, useMatch, useSearchParams} from 'react-router-dom';
+import {Navigate, Outlet, useMatch, useSearchParams} from 'react-router';
 
 import useFormContext from 'hooks/useFormContext';
 import useZodErrorMap from 'hooks/useZodErrorMap';

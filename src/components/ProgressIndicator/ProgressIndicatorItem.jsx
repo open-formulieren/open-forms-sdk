@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router';
 
 import Link from 'components/Link';
 import {getBEMClassName} from 'utils';

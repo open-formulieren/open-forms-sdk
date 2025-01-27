@@ -2,12 +2,13 @@ import {render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
-import {Outlet, RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {Outlet, RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {LiteralsProvider} from 'components/Literal';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 import {CreateAppointmentContext} from '../Context';
 import {
@@ -50,37 +51,42 @@ const renderSummary = errorHandler => {
   });
   const routes = [
     {
-      path: '/appointments/*',
-      element: (
-        <ConfigContext.Provider
-          value={{
-            baseUrl: BASE_URL,
-            basePath: '',
-            baseTitle: '',
-            requiredFieldsWithAsterisk: true,
-          }}
-        >
-          <IntlProvider locale="en" messages={messagesEN}>
-            <LiteralsProvider literals={form.literals}>
-              <CreateAppointmentContext.Provider value={appointmentContext}>
-                <Outlet />
-              </CreateAppointmentContext.Provider>
-            </LiteralsProvider>
-          </IntlProvider>
-        </ConfigContext.Provider>
-      ),
+      path: '/appointments',
       children: [
         {
-          path: 'contactgegevens',
-          element: <>Back to contact details.</>,
-        },
-        {
-          path: 'overzicht',
-          element: <Summary />,
-        },
-        {
-          path: 'bevestiging',
-          element: <>Everyone likes confirmation.</>,
+          path: '*',
+          element: (
+            <ConfigContext.Provider
+              value={{
+                baseUrl: BASE_URL,
+                basePath: '',
+                baseTitle: '',
+                requiredFieldsWithAsterisk: true,
+              }}
+            >
+              <IntlProvider locale="en" messages={messagesEN}>
+                <LiteralsProvider literals={form.literals}>
+                  <CreateAppointmentContext.Provider value={appointmentContext}>
+                    <Outlet />
+                  </CreateAppointmentContext.Provider>
+                </LiteralsProvider>
+              </IntlProvider>
+            </ConfigContext.Provider>
+          ),
+          children: [
+            {
+              path: 'contactgegevens',
+              element: <>Back to contact details.</>,
+            },
+            {
+              path: 'overzicht',
+              element: <Summary />,
+            },
+            {
+              path: 'bevestiging',
+              element: <>Everyone likes confirmation.</>,
+            },
+          ],
         },
       ],
     },
@@ -88,10 +94,11 @@ const renderSummary = errorHandler => {
   const router = createMemoryRouter(routes, {
     initialEntries: ['/appointments/overzicht'],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
   realRender(
     <FormContext.Provider value={form}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
     </FormContext.Provider>
   );
 };

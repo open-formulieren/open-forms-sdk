@@ -26,7 +26,7 @@ describe('Transforming form steps and injecting fixed steps', () => {
     const stepsToRender = addFixedSteps(intl, updatedSteps, submission, '/stap/step-1', true, true);
 
     expect(stepsToRender.length).toEqual(4);
-    expect(stepsToRender[0].to).toEqual('startpagina');
+    expect(stepsToRender[0].to).toEqual('../startpagina');
 
     expect(stepsToRender[1].to).toEqual('/stap/step-1');
     expect(stepsToRender[1].label).toEqual('Step 1');
@@ -35,8 +35,8 @@ describe('Transforming form steps and injecting fixed steps', () => {
     expect(stepsToRender[1].isCurrent).toEqual(true);
     expect(stepsToRender[1].canNavigateTo).toEqual(true);
 
-    expect(stepsToRender[2].to).toEqual('overzicht');
-    expect(stepsToRender[3].to).toEqual('betalen');
+    expect(stepsToRender[2].to).toEqual('../overzicht');
+    expect(stepsToRender[3].to).toEqual('../betalen');
   });
 
   it('accepts parameters to not append summary or payment', () => {
@@ -53,7 +53,7 @@ describe('Transforming form steps and injecting fixed steps', () => {
 
     expect(stepsToRender.length).toEqual(2);
 
-    expect(stepsToRender[0].to).toEqual('startpagina');
+    expect(stepsToRender[0].to).toEqual('../startpagina');
 
     expect(stepsToRender[1].to).toEqual('/stap/step-1');
     expect(stepsToRender[1].label).toEqual('Step 1');

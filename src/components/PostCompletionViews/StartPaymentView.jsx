@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router';
 
 import Body from 'components/Body';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';

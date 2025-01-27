@@ -2,11 +2,12 @@ import {act, render as realRender, screen, waitFor} from '@testing-library/react
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
-import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL, buildSubmission} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 import {CreateAppointmentContext} from '../Context';
 import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
@@ -52,8 +53,9 @@ const render = initialValues => {
   const router = createMemoryRouter(routes, {
     initialEntries: ['/appointments/kalender'],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
-  realRender(<RouterProvider router={router} />);
+  realRender(<RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />);
 };
 
 beforeEach(() => {

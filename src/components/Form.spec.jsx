@@ -1,8 +1,8 @@
-import {render, screen, waitForElementToBeRemoved} from '@testing-library/react';
+import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
-import {RouterProvider, createMemoryRouter} from 'react-router-dom';
+import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission, mockAnalyticsToolConfigGet} from 'api-mocks';
@@ -18,7 +18,7 @@ import {
   mockSubmissionSummaryGet,
 } from 'api-mocks/submissions';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 window.scrollTo = vi.fn();
 
@@ -49,6 +49,7 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialEntry],
     initialIndex: 0,
+    future: FUTURE_FLAGS,
   });
 
   return (
@@ -63,7 +64,7 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -125,8 +126,10 @@ test('Navigation through form with introduction page', async () => {
   await user.click(startButton);
   const stepTitle = await screen.findByRole('heading', {name: 'Step 1'});
   expect(stepTitle).toBeVisible();
-  const formInput = await screen.findByLabelText('Component 1');
-  expect(formInput).toBeVisible();
+  // formio...
+  await waitFor(async () => {
+    expect(await screen.findByLabelText('Component 1')).toBeVisible();
+  });
 });
 
 test('Navigation through form without introduction page', async () => {
@@ -147,8 +150,10 @@ test('Navigation through form without introduction page', async () => {
   await user.click(startButton);
   const stepTitle = await screen.findByRole('heading', {name: 'Step 1'});
   expect(stepTitle).toBeVisible();
-  const formInput = await screen.findByLabelText('Component 1');
-  expect(formInput).toBeVisible();
+  // formio...
+  await waitFor(async () => {
+    expect(await screen.findByLabelText('Component 1')).toBeVisible();
+  });
 });
 
 test('Submitting the form with failing background processing', async () => {

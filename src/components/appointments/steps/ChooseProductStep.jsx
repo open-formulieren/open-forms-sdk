@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 

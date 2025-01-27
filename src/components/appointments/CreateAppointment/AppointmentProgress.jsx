@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
-import {useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router';
 
 import ProgressIndicator from 'components/ProgressIndicator';
 import {PI_TITLE, STEP_LABELS} from 'components/constants';
@@ -30,7 +30,7 @@ const AppointmentProgress = ({title, currentStep}) => {
     const stepCompleted = submittedSteps.includes(path);
 
     return {
-      to: path,
+      to: `../${path}`,
       label: intl.formatMessage(name),
       isCompleted: stepCompleted || isSubmissionComplete,
       isApplicable: true,
@@ -47,7 +47,7 @@ const AppointmentProgress = ({title, currentStep}) => {
   const finalSteps = [
     ...steps,
     {
-      to: 'overzicht',
+      to: '../overzicht',
       label: intl.formatMessage(STEP_LABELS.overview),
       isCompleted: isConfirmation,
       isApplicable: true,
@@ -55,7 +55,7 @@ const AppointmentProgress = ({title, currentStep}) => {
       canNavigateTo: steps.every(step => step.isCompleted),
     },
     {
-      to: 'bevestiging',
+      to: '../bevestiging',
       label: intl.formatMessage(STEP_LABELS.confirmation),
       isCompleted: isSubmissionComplete,
       isApplicable: true,

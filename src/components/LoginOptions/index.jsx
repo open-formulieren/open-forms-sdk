@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import {useSearchParams} from 'react-router-dom';
+import {useSearchParams} from 'react-router';
 
 import {Literal} from 'components/Literal';
 import {getCosignLoginUrl, getLoginUrl} from 'components/utils';

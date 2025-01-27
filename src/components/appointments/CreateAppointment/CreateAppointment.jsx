@@ -1,4 +1,4 @@
-import {Outlet, useLocation} from 'react-router-dom';
+import {Outlet, useLocation} from 'react-router';
 
 import Card from 'components/Card';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
@@ -40,7 +40,7 @@ const CreateAppointment = () => {
   const supportsMultipleProducts = form?.appointmentOptions.supportsMultipleProducts ?? false;
 
   const currentStep =
-    APPOINTMENT_STEP_PATHS.find(step => checkMatchesPath(pathname, step)) ||
+    APPOINTMENT_STEP_PATHS.find(relPath => checkMatchesPath(pathname, relPath)) ||
     APPOINTMENT_STEP_PATHS[0];
 
   const reset = () => {

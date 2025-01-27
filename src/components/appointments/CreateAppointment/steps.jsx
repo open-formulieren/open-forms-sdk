@@ -1,5 +1,5 @@
 import {defineMessage} from 'react-intl';
-import {Navigate, useSearchParams} from 'react-router-dom';
+import {Navigate, useSearchParams} from 'react-router';
 
 import {ChooseProductStep, ContactDetailsStep, LocationAndTimeStep} from '../steps';
 

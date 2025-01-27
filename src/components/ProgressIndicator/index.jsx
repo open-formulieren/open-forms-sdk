@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router';
 
 import Caption from 'components/Caption';
 import Card from 'components/Card';

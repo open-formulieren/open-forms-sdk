@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
-import {MemoryRouter} from 'react-router-dom';
+import {MemoryRouter} from 'react-router';
 
 import {testEmptyFields} from './fixtures';
 import FormStepSummary, {LabelValueRow} from './index';

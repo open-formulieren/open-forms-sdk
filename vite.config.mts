@@ -4,6 +4,7 @@ import {codecovVitePlugin} from '@codecov/vite-plugin';
 import replace from '@rollup/plugin-replace';
 import {sentryVitePlugin} from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 import type {OutputOptions} from 'rollup';
 import {defineConfig} from 'vite';
 import jsconfigPaths from 'vite-jsconfig-paths';
@@ -173,6 +174,16 @@ export default defineConfig(({mode}) => ({
       uploadToken: process.env.CODECOV_TOKEN,
     }),
   ],
+  resolve: {
+    alias: {
+      // ensure react-router imports don't end up with multiple copies/installations. See
+      // https://github.com/remix-run/react-router/issues/12785 for more context.
+      'react-router/dom': path.resolve(
+        './node_modules/react-router/dist/development/dom-export.mjs'
+      ),
+      'react-router': path.resolve('./node_modules/react-router/dist/development/index.mjs'),
+    },
+  },
   build: {
     target: 'modules', // the default
     assetsInlineLimit: 8 * 1024, // 8 KiB
