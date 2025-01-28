@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/react';
+import {getEnv} from 'env.mjs';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -14,7 +16,12 @@ import {DEBUG} from 'utils';
 import ErrorMessage from './ErrorMessage';
 
 const logError = (error, errorInfo) => {
-  if (DEBUG) console.error(error, errorInfo);
+  if (DEBUG) {
+    const muteConsole = getEnv('MUTE_ERROR_BOUNDARY_LOG');
+    if (!muteConsole) console.error(error, errorInfo);
+  } else {
+    Sentry.captureException(error);
+  }
 };
 
 class ErrorBoundary extends React.Component {
@@ -31,7 +38,6 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    // TODO: depending on the error type, send to sentry?
     logError(error, errorInfo);
   }
 
