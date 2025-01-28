@@ -1,18 +1,18 @@
-import React from 'react';
-import {withRouter} from 'storybook-addon-remix-react-router';
+import {MemoryRouter} from 'react-router';
 
 import {PermissionDenied, ServiceUnavailable, UnprocessableEntity} from 'errors';
 
 import ErrorBoundary from './ErrorBoundary';
 
+const Nested = ({error}) => {
+  throw error;
+};
+
 const render = ({useCard, errorType, errorCode}) => {
   const error = new errorType('some error', 500, 'some error', errorCode);
-
   return (
     <ErrorBoundary useCard={useCard}>
-      {React.createElement(() => {
-        throw error;
-      })}
+      <Nested error={error} />
     </ErrorBoundary>
   );
 };
@@ -20,6 +20,7 @@ const render = ({useCard, errorType, errorCode}) => {
 export default {
   title: 'Private API / ErrorBoundary',
   component: ErrorBoundary,
+  render,
   argTypes: {
     useCard: {control: {type: 'boolean'}},
     errorType: {
@@ -32,7 +33,6 @@ export default {
 };
 
 export const GenericError = {
-  render,
   args: {
     useCard: true,
     errorType: Error,
@@ -41,8 +41,13 @@ export const GenericError = {
 };
 
 export const PermissionDeniedError = {
-  render,
-  decorators: [withRouter],
+  decorators: [
+    Story => (
+      <MemoryRouter initialEntries={['/']}>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
   args: {
     useCard: true,
     errorType: PermissionDenied,
@@ -50,7 +55,6 @@ export const PermissionDeniedError = {
 };
 
 export const UnprocessableEntityErrorInactive = {
-  render,
   args: {
     useCard: true,
     errorType: UnprocessableEntity,
@@ -59,7 +63,6 @@ export const UnprocessableEntityErrorInactive = {
 };
 
 export const UnprocessableEntityErrorGeneric = {
-  render,
   args: {
     useCard: true,
     errorType: UnprocessableEntity,
@@ -68,7 +71,6 @@ export const UnprocessableEntityErrorGeneric = {
 };
 
 export const ServiceUnavailableErrorMaintenance = {
-  render,
   args: {
     useCard: true,
     errorType: ServiceUnavailable,
@@ -77,7 +79,6 @@ export const ServiceUnavailableErrorMaintenance = {
 };
 
 export const ServiceUnavailableErrorMaxSubmissions = {
-  render,
   args: {
     useCard: true,
     errorType: ServiceUnavailable,
@@ -86,7 +87,6 @@ export const ServiceUnavailableErrorMaxSubmissions = {
 };
 
 export const ServiceUnavailableError = {
-  render,
   args: {
     useCard: true,
     errorType: ServiceUnavailable,
@@ -95,7 +95,6 @@ export const ServiceUnavailableError = {
 };
 
 export const ServiceUnavailableErrorGeneric = {
-  render,
   args: {
     useCard: true,
     errorType: ServiceUnavailable,
