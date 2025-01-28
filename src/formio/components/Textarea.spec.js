@@ -1,8 +1,7 @@
 import {expect} from '@storybook/test';
 import {screen} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import _ from 'lodash';
-import {Formio} from 'react-formio';
+import {renderForm} from 'jstests/formio/utils';
 
 import {getComponentNode} from 'formio/components/jest-util';
 
@@ -33,14 +32,6 @@ const multipleTextareaForm = {
       },
     },
   ],
-};
-
-const renderForm = async formConfig => {
-  let formJSON = _.cloneDeep(formConfig);
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-  const form = await Formio.createForm(container, formJSON);
-  return {form, container};
 };
 
 describe('The textarea component', () => {

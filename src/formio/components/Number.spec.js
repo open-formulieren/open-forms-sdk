@@ -1,7 +1,6 @@
 import {screen} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import _ from 'lodash';
-import {Formio} from 'react-formio';
+import {renderForm} from 'jstests/formio/utils';
 
 import {getComponentNode} from 'formio/components/jest-util';
 
@@ -34,14 +33,6 @@ const multipleNumberForm = {
   ],
 };
 
-const renderForm = async formConfig => {
-  let formJSON = _.cloneDeep(formConfig);
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-  const form = await Formio.createForm(container, formJSON);
-  return {form, container};
-};
-
 describe('The number component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
@@ -49,7 +40,11 @@ describe('The number component', () => {
 
   test('Single number component with valid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(numberForm);
+    const {form} = await renderForm(numberForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Number');
 
@@ -62,7 +57,11 @@ describe('The number component', () => {
 
   test('Single number component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(numberForm);
+    const {form} = await renderForm(numberForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Number');
 
@@ -95,7 +94,11 @@ describe('The multiple number component', () => {
 
   test('Multiple number component with valid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleNumberForm);
+    const {form} = await renderForm(multipleNumberForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Multiple number');
 
@@ -108,7 +111,11 @@ describe('The multiple number component', () => {
 
   test('Multiple number component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleNumberForm);
+    const {form} = await renderForm(multipleNumberForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Multiple number');
 
@@ -133,7 +140,11 @@ describe('The multiple number component', () => {
 
   test('Multiple number without inputs', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleNumberForm);
+    const {form} = await renderForm(multipleNumberForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Multiple number');
     const component = getComponentNode(input);
@@ -153,7 +164,11 @@ describe('The multiple number component', () => {
 
   test('Multiple number with one valid and one invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleNumberForm);
+    const {form} = await renderForm(multipleNumberForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     await user.click(screen.getByRole('button', {name: 'Add Another'}));
 

@@ -1,8 +1,7 @@
 import {expect} from '@storybook/test';
 import {screen} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import _ from 'lodash';
-import {Formio} from 'react-formio';
+import {renderForm} from 'jstests/formio/utils';
 
 import {getComponentNode} from 'formio/components/jest-util';
 
@@ -35,14 +34,6 @@ const multipleTextfieldForm = {
   ],
 };
 
-const renderForm = async formConfig => {
-  let formJSON = _.cloneDeep(formConfig);
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-  const form = await Formio.createForm(container, formJSON);
-  return {form, container};
-};
-
 describe('The text component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
@@ -63,7 +54,11 @@ describe('The text component', () => {
 
   test('Single textfield component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(textfieldForm);
+    const {form} = await renderForm(textfieldForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Text');
 
@@ -97,7 +92,11 @@ describe('The mutiple text component', () => {
 
   test('Multiple textfield component with valid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTextfieldForm);
+    const {form} = await renderForm(multipleTextfieldForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const multipleInput = screen.getByLabelText('Text list');
 
@@ -110,7 +109,11 @@ describe('The mutiple text component', () => {
 
   test('Multiple textfield component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTextfieldForm);
+    const {form} = await renderForm(multipleTextfieldForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const multipleInput = screen.getByLabelText('Text list');
 
@@ -128,7 +131,11 @@ describe('The mutiple text component', () => {
 
   test('Multiple textfield without inputs', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTextfieldForm);
+    const {form} = await renderForm(multipleTextfieldForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const multipleInput = screen.getByLabelText('Text list');
     const multipleTextComponent = getComponentNode(multipleInput);
@@ -148,7 +155,11 @@ describe('The mutiple text component', () => {
 
   test('Multiple textfield with one valid and one invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTextfieldForm);
+    const {form} = await renderForm(multipleTextfieldForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     await user.click(screen.getByRole('button', {name: 'Add Another'}));
 
@@ -209,7 +220,11 @@ describe('Textfield with soft required validation', () => {
         },
       ],
     };
-    const {form} = await renderForm(FORM);
+    const {form} = await renderForm(FORM, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Text');
 

@@ -1,7 +1,6 @@
 import {screen, waitFor} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import _ from 'lodash';
-import {Formio} from 'react-formio';
+import {renderForm} from 'jstests/formio/utils';
 
 const phoneForm = {
   type: 'form',
@@ -16,14 +15,6 @@ const phoneForm = {
   ],
 };
 
-const renderForm = async () => {
-  let formJSON = _.cloneDeep(phoneForm);
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-  const form = await Formio.createForm(container, formJSON);
-  return {form, container};
-};
-
 describe('The phone number component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
@@ -33,7 +24,11 @@ describe('The phone number component', () => {
     'accepts numbers and + as first character (value: %i)',
     async value => {
       const user = userEvent.setup({delay: 50});
-      const {form} = await renderForm();
+      const {form} = await renderForm(phoneForm, {
+        evalContext: {
+          requiredFieldsWithAsterisk: true,
+        },
+      });
 
       const input = screen.getByLabelText('Phone number');
       expect(input).toBeVisible();
@@ -50,7 +45,11 @@ describe('The phone number component', () => {
     'only allows numbers and + as first character (value: %i)',
     async value => {
       const user = userEvent.setup({delay: 50});
-      const {form} = await renderForm();
+      const {form} = await renderForm(phoneForm, {
+        evalContext: {
+          requiredFieldsWithAsterisk: true,
+        },
+      });
 
       const input = screen.getByLabelText('Phone number');
       expect(input).toBeVisible();
@@ -72,7 +71,11 @@ describe('The phone number component', () => {
     ['06-12-34-56 78'], // weird but ok
   ])('allows dashes and spaces for formatting (value: %i)', async value => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm();
+    const {form} = await renderForm(phoneForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Phone number');
     expect(input).toBeVisible();

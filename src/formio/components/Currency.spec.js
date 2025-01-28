@@ -1,7 +1,6 @@
 import {screen} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import _ from 'lodash';
-import {Formio} from 'react-formio';
+import {renderForm} from 'jstests/formio/utils';
 
 const currencyForm = {
   type: 'form',
@@ -17,14 +16,6 @@ const currencyForm = {
   ],
 };
 
-const renderForm = async () => {
-  let formJSON = _.cloneDeep(currencyForm);
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-  const form = await Formio.createForm(container, formJSON);
-  return {form, container};
-};
-
 describe('The currency component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
@@ -32,7 +23,7 @@ describe('The currency component', () => {
 
   test('Single currency component with valid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm();
+    const {form} = await renderForm(currencyForm);
 
     const input = screen.getByLabelText('Currency');
 
@@ -45,7 +36,7 @@ describe('The currency component', () => {
 
   test('Single currency component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm();
+    const {form} = await renderForm(currencyForm);
 
     const input = screen.getByLabelText('Currency');
 

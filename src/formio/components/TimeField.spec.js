@@ -1,7 +1,6 @@
 import {screen, waitFor} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import _ from 'lodash';
-import {Formio} from 'react-formio';
+import {renderForm} from 'jstests/formio/utils';
 
 import {getComponentNode} from 'formio/components/jest-util';
 
@@ -35,14 +34,6 @@ const multipleTimeForm = {
   ],
 };
 
-const renderForm = async formConfig => {
-  let formJSON = _.cloneDeep(formConfig);
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-  const form = await Formio.createForm(container, formJSON);
-  return {form, container};
-};
-
 describe('The time component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
@@ -50,7 +41,11 @@ describe('The time component', () => {
 
   test('Time component with invalid time', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(timeForm);
+    const {form} = await renderForm(timeForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Time');
     expect(input).toBeVisible();
@@ -62,7 +57,11 @@ describe('The time component', () => {
 
   test('Time component with invalid time has descriptive aria tags', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(timeForm);
+    const {form} = await renderForm(timeForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Time');
     expect(input).toBeVisible();
@@ -104,7 +103,11 @@ describe('The time component multiple', () => {
 
   test('Multiple time component with valid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleTimeForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const multipleInput = screen.getByLabelText('Time');
 
@@ -117,7 +120,11 @@ describe('The time component multiple', () => {
 
   test('Multiple time component with invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleTimeForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Time');
 
@@ -137,7 +144,11 @@ describe('The time component multiple', () => {
 
   test('Required multiple time without inputs', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleTimeForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     const input = screen.getByLabelText('Time');
     const component = getComponentNode(input);
@@ -158,7 +169,11 @@ describe('The time component multiple', () => {
 
   test('Multiple time with one valid and one invalid input', async () => {
     const user = userEvent.setup({delay: 50});
-    const {form} = await renderForm(multipleTimeForm);
+    const {form} = await renderForm(multipleTimeForm, {
+      evalContext: {
+        requiredFieldsWithAsterisk: true,
+      },
+    });
 
     await user.click(screen.getByRole('button', {name: 'Add Another'}));
 
