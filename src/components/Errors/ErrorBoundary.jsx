@@ -1,9 +1,12 @@
+import * as Sentry from '@sentry/react';
+import {getEnv} from 'env.mjs';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
 import Card from 'components/Card';
+import FormUnavailable from 'components/Errors/FormUnavailable';
 import FormMaximumSubmissions from 'components/FormMaximumSubmissions';
 import Link from 'components/Link';
 import MaintenanceMode from 'components/MaintenanceMode';
@@ -13,7 +16,12 @@ import {DEBUG} from 'utils';
 import ErrorMessage from './ErrorMessage';
 
 const logError = (error, errorInfo) => {
-  if (DEBUG) console.error(error, errorInfo);
+  if (DEBUG) {
+    const muteConsole = getEnv('MUTE_ERROR_BOUNDARY_LOG');
+    if (!muteConsole) console.error(error, errorInfo);
+  } else {
+    Sentry.captureException(error);
+  }
 };
 
 class ErrorBoundary extends React.Component {
@@ -30,7 +38,6 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    // TODO: depending on the error type, send to sentry?
     logError(error, errorInfo);
   }
 
@@ -139,13 +146,9 @@ const UnprocessableEntityError = ({wrapper: Wrapper, error}) => {
 UnprocessableEntityError.propTypes = GenericError.propTypes;
 
 const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
-  if (!['form-maintenance', 'form-maximum-submissions'].includes(error.code)) {
-    return <GenericError wrapper={Wrapper} error={error} />;
-  }
-
-  // handle maintenance mode forms
-  if (error.code === 'form-maintenance') {
-    return (
+  const defaultComponent = <GenericError wrapper={Wrapper} error={error} />;
+  const componentMapping = {
+    'form-maintenance': (
       <MaintenanceMode
         title={
           <FormattedMessage
@@ -154,13 +157,12 @@ const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
           />
         }
       />
-    );
-  }
+    ),
+    'form-maximum-submissions': <FormMaximumSubmissions />,
+    service_unavailable: <FormUnavailable wrapper={Wrapper} />,
+  };
 
-  // handle submission limit forms
-  if (error.code === 'form-maximum-submissions') {
-    return <FormMaximumSubmissions />;
-  }
+  return componentMapping[error.code] || defaultComponent;
 };
 
 // map the error class to the component to render it
