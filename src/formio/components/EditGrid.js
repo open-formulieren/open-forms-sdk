@@ -1,6 +1,6 @@
 import {Formio} from 'react-formio';
 
-import {applyPrefix} from '../utils';
+import {applyPrefix} from 'utils';
 
 const FormioEditGrid = Formio.Components.components.editgrid;
 

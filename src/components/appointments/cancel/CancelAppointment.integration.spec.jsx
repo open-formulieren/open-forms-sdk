@@ -43,7 +43,7 @@ describe('Cancelling an appointment', () => {
   it('renders the correct page for a cancel route', async () => {
     render(<Wrapper />);
 
-    const textbox = screen.getByRole('textbox', {name: 'Your email address'});
+    const textbox = await screen.findByRole('textbox', {name: 'Your email address'});
     expect(textbox).toBeVisible();
     expect(textbox.name).toBe('email');
     expect(screen.getByRole('button')).toBeVisible();

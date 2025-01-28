@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Suspense} from 'react';
 import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime, useIntl} from 'react-intl';
 
 import Anchor from 'components/Anchor';
@@ -7,6 +7,7 @@ import Body from 'components/Body';
 import CoSignOld from 'components/CoSign';
 import Image from 'components/Image';
 import List from 'components/List';
+import Loader from 'components/Loader';
 import Map from 'components/Map';
 import {getFormattedDateString, getFormattedTimeString} from 'utils';
 
@@ -189,7 +190,11 @@ const MapDisplay = ({component, value}) => {
     return <EmptyDisplay />;
   }
 
-  return <Map geoJsonGeometry={value} disabled tileLayerUrl={component.tileLayerUrl} />;
+  return (
+    <Suspense fallback={<Loader modifiers={['centered']} />}>
+      <Map geoJsonGeometry={value} disabled tileLayerUrl={component.tileLayerUrl} />
+    </Suspense>
+  );
 };
 
 const CoSignDisplay = ({value}) => {

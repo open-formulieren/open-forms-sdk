@@ -1,13 +1,15 @@
 /**
  * A form widget to select a location on a Leaflet map.
  */
+import {Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {IntlProvider} from 'react-intl';
 
 import {ConfigContext} from 'Context';
+import Loader from 'components/Loader';
 import LeafletMap from 'components/Map';
-import {DEFAULT_LAT_LNG, DEFAULT_ZOOM} from 'map/constants';
+import {DEFAULT_LAT_LNG, DEFAULT_ZOOM} from 'components/Map/constants';
 
 const Field = Formio.Components.components.field;
 
@@ -109,14 +111,16 @@ export default class Map extends Field {
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
         <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
-          <LeafletMap
-            geoJsonGeometry={geoJsonGeometry || null}
-            onGeoJsonGeometrySet={this.onGeoJsonSet.bind(this)}
-            defaultCenter={defaultCenter}
-            defaultZoomLevel={zoom || DEFAULT_ZOOM}
-            interactions={this.component?.interactions}
-            tileLayerUrl={this.component.tileLayerUrl}
-          />
+          <Suspense fallback={<Loader modifiers={['centered']} />}>
+            <LeafletMap
+              geoJsonGeometry={geoJsonGeometry || null}
+              onGeoJsonGeometrySet={this.onGeoJsonSet.bind(this)}
+              defaultCenter={defaultCenter}
+              defaultZoomLevel={zoom || DEFAULT_ZOOM}
+              interactions={this.component?.interactions}
+              tileLayerUrl={this.component.tileLayerUrl}
+            />
+          </Suspense>
         </ConfigContext.Provider>
       </IntlProvider>
     );

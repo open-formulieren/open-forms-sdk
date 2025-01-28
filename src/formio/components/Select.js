@@ -1,6 +1,8 @@
 import {Formio} from 'react-formio';
 
-import {applyPrefix, setErrorAttributes} from '../utils';
+import {applyPrefix} from 'utils';
+
+import {setErrorAttributes} from '../utils';
 
 /**
  * Extend the default select field to modify it to our needs.

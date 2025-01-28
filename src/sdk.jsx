@@ -1,10 +1,6 @@
-import ProtectedEval from '@formio/protected-eval';
 import 'flatpickr';
-import lodash from 'lodash';
-import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import {Formio, Templates} from 'react-formio';
 import ReactModal from 'react-modal';
 import {createBrowserRouter, createHashRouter, resolvePath} from 'react-router';
 import {RouterProvider} from 'react-router/dom';
@@ -13,41 +9,17 @@ import {NonceProvider} from 'react-select';
 import {ConfigContext, FormContext} from 'Context';
 import {get} from 'api';
 import {getRedirectParams} from 'components/routingActions';
-import {AddFetchAuth} from 'formio/plugins';
 import {CSPNonce} from 'headers';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
 import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import initialiseSentry from 'sentry';
 import {DEBUG, getVersion} from 'utils';
 
-import OpenFormsModule from './formio/module';
-import OFLibrary from './formio/templates';
 import './styles.scss';
 
-// lodash must be bundled for Formio templates to work properly...
-if (typeof window !== 'undefined') {
-  window._ = lodash;
-}
-
-// use protected eval to not rely on unsafe-eval (CSP)
-// eslint-disable-next-line react-hooks/rules-of-hooks
-Formio.use(ProtectedEval);
-
-// use custom component overrides
-// eslint-disable-next-line react-hooks/rules-of-hooks
-Formio.use(OpenFormsModule);
-// use our own template library
-Templates.current = OFLibrary;
-
-Formio.registerPlugin(AddFetchAuth, 'addFetchAuth');
-
-Formio.libraries = {
-  // The flatpickr css is added as part of our scss build so add empty attribute to
-  //   prevent Formio trying to get this css from a CDN
-  'flatpickr-css': '',
-};
-
-fixLeafletIconUrls();
+// asynchronously 'pre-load' our formio initialization so that this can be split off
+// from the main bundle into a separate chunk.
+import('./formio-init');
 
 const VERSION = getVersion();
 
@@ -162,6 +134,7 @@ class OpenForm {
     this.targetNode.textContent = `Loading form...`;
     this.baseTitle = document.title;
     this.formObject = await get(this.url);
+
     this.root = createRoot(this.targetNode);
     this.render();
   }
@@ -213,4 +186,4 @@ class OpenForm {
 
 export default OpenForm;
 export {ANALYTICS_PROVIDERS} from 'hooks/usePageViews';
-export {VERSION, OpenForm, Formio, Templates, OFLibrary, OpenFormsModule};
+export {VERSION, OpenForm};

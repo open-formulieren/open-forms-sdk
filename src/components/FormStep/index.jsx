@@ -24,8 +24,7 @@
 import cloneDeep from 'lodash/cloneDeep';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-import {useContext, useRef} from 'react';
-import {Form} from 'react-formio';
+import {Suspense, lazy, useContext, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {useNavigate, useParams} from 'react-router';
 import {useAsync} from 'react-use';
@@ -49,11 +48,22 @@ import {
   findPreviousApplicableStep,
   isLastStep,
 } from 'components/utils';
-import {PREFIX} from 'formio/constants';
 import useFormContext from 'hooks/useFormContext';
 import useTitle from 'hooks/useTitle';
+import {PREFIX} from 'utils';
 
 import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
+
+// Dynamically import react-formio and use React.lazy to facilitate bundle splitting
+// into separate chunks.
+const Form = lazy(async () => {
+  // this should already have been resolved the the sdk.jsx entrypoint :)
+  const {Form, initializeFormio} = await import('formio-init');
+  // side effect to ensure our custom templates/module are set up
+  initializeFormio();
+  // React.lazy must yield a 'default export'
+  return {default: Form};
+});
 
 /**
  * Debounce interval in milliseconds (1000ms equals 1s) to prevent excessive amount of logic checks.
@@ -768,64 +778,66 @@ const FormStep = () => {
               headingType="subtitle"
               modifiers={['padded']}
             />
-            <form onSubmit={onReactSubmit} noValidate>
-              <Form
-                ref={formRef}
-                form={configuration}
-                onChange={onFormIOChange}
-                onSubmit={onFormIOSubmit}
-                onInitialized={onFormIOInitialized}
-                options={{
-                  noAlerts: true,
-                  baseUrl: config.baseUrl,
-                  language: formioTranslations.language,
-                  i18n: formioTranslations.i18n,
-                  evalContext: {
-                    ofPrefix: `${PREFIX}-`,
-                    requiredFieldsWithAsterisk: config.requiredFieldsWithAsterisk,
-                  },
-                  hooks: {
-                    customValidation: getCustomValidationHook(submissionStep.url, error =>
-                      dispatch({type: 'ERROR', payload: error})
-                    ),
-                  },
-                  // custom options
-                  intl,
-                  ofContext: {
-                    form: form,
-                    submissionUuid: submission.id,
-                    submissionUrl: submission.url,
-                    saveStepData: async () =>
-                      await submitStepData(submissionStep.url, {...getCurrentFormData()}),
-                    verifyEmailCallback: ({key, email}) => {
-                      // clear the errors from the component
-                      const formInstance = formRef.current.formio;
-                      const component = formInstance.getComponent(key);
-                      component.setCustomValidity('');
-
-                      dispatch({
-                        type: 'VERIFY_EMAIL',
-                        payload: {componentKey: key, emailAddress: email},
-                      });
+            <Suspense fallback={<Loader modifiers={['centered']} />}>
+              <form onSubmit={onReactSubmit} noValidate>
+                <Form
+                  ref={formRef}
+                  form={configuration}
+                  onChange={onFormIOChange}
+                  onSubmit={onFormIOSubmit}
+                  onInitialized={onFormIOInitialized}
+                  options={{
+                    noAlerts: true,
+                    baseUrl: config.baseUrl,
+                    language: formioTranslations.language,
+                    i18n: formioTranslations.i18n,
+                    evalContext: {
+                      ofPrefix: `${PREFIX}-`,
+                      requiredFieldsWithAsterisk: config.requiredFieldsWithAsterisk,
                     },
-                  },
-                }}
-              />
-              {config.debug ? <FormStepDebug data={getCurrentFormData()} /> : null}
-              <ButtonsToolbar
-                canSubmitStep={canSubmit}
-                canSubmitForm={submission.submissionAllowed}
-                canSuspendForm={form.suspensionAllowed}
-                isAuthenticated={submission.isAuthenticated}
-                isLastStep={isLastStep(currentStepIndex, submission)}
-                isCheckingLogic={logicChecking}
-                loginRequired={form.loginRequired}
-                onFormSave={onFormSave}
-                onNavigatePrevPage={onPrevPage}
-                previousPage={previousPage}
-                onDestroySession={onDestroySession}
-              />
-            </form>
+                    hooks: {
+                      customValidation: getCustomValidationHook(submissionStep.url, error =>
+                        dispatch({type: 'ERROR', payload: error})
+                      ),
+                    },
+                    // custom options
+                    intl,
+                    ofContext: {
+                      form: form,
+                      submissionUuid: submission.id,
+                      submissionUrl: submission.url,
+                      saveStepData: async () =>
+                        await submitStepData(submissionStep.url, {...getCurrentFormData()}),
+                      verifyEmailCallback: ({key, email}) => {
+                        // clear the errors from the component
+                        const formInstance = formRef.current.formio;
+                        const component = formInstance.getComponent(key);
+                        component.setCustomValidity('');
+
+                        dispatch({
+                          type: 'VERIFY_EMAIL',
+                          payload: {componentKey: key, emailAddress: email},
+                        });
+                      },
+                    },
+                  }}
+                />
+                {config.debug ? <FormStepDebug data={getCurrentFormData()} /> : null}
+                <ButtonsToolbar
+                  canSubmitStep={canSubmit}
+                  canSubmitForm={submission.submissionAllowed}
+                  canSuspendForm={form.suspensionAllowed}
+                  isAuthenticated={submission.isAuthenticated}
+                  isLastStep={isLastStep(currentStepIndex, submission)}
+                  isCheckingLogic={logicChecking}
+                  loginRequired={form.loginRequired}
+                  onFormSave={onFormSave}
+                  onNavigatePrevPage={onPrevPage}
+                  previousPage={previousPage}
+                  onDestroySession={onDestroySession}
+                />
+              </form>
+            </Suspense>
           </>
         ) : null}
       </Card>

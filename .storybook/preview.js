@@ -6,7 +6,6 @@ import 'design-token-editor/lib/css/root.css';
 import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
 import lodash from 'lodash';
-import {fixIconUrls as fixLeafletIconUrls} from 'map';
 import {initialize, mswLoader} from 'msw-storybook-addon';
 import {Formio, Templates} from 'react-formio';
 import {setAppElement} from 'react-modal';
@@ -38,8 +37,6 @@ initialize({
     url: './mockServiceWorker.js',
   },
 });
-
-fixLeafletIconUrls();
 
 // Added because of the warning for the react-modal
 // This is needed so screen readers don't see main content when modal is opened

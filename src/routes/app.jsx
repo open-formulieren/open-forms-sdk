@@ -3,9 +3,8 @@ import {Cosign} from 'components/CoSign';
 import ErrorBoundary from 'components/Errors/ErrorBoundary';
 import Form from 'components/Form';
 import SessionExpired from 'components/Sessions/SessionExpired';
-import {CreateAppointment} from 'components/appointments';
 
-import {createAppointmentRoutes, manageAppointmentRoutes} from './appointments';
+import appointmentRoutes from './appointments';
 import cosignRoutes from './cosign';
 import formRoutes from './form';
 
@@ -24,33 +23,9 @@ const routes = [
     element: <App />,
     children: [
       {
-        path: 'afspraak-annuleren',
-        children: [
-          {
-            path: '*',
-            children: manageAppointmentRoutes,
-          },
-        ],
-      },
-      {
-        path: 'afspraak-maken',
-        children: [
-          {
-            path: '*',
-            element: <CreateAppointment />,
-            children: createAppointmentRoutes,
-          },
-        ],
-      },
-      {
-        path: 'cosign',
-        children: [
-          {
-            path: '*',
-            element: <Cosign />,
-            children: cosignRoutes,
-          },
-        ],
+        path: 'cosign/*',
+        element: <Cosign />,
+        children: cosignRoutes,
       },
       {
         path: 'sessie-verlopen',
@@ -59,6 +34,11 @@ const routes = [
             <SessionExpired />
           </ErrorBoundary>
         ),
+      },
+      // appointments splat
+      {
+        path: '*',
+        children: appointmentRoutes,
       },
       // All the rest goes to the formio-based form flow
       {
