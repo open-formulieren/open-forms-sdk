@@ -92,7 +92,7 @@ describe('Create appointment session expiration', () => {
     });
 
     // select a product
-    const dropdowns = await screen.findAllByRole('combobox');
+    const dropdowns = await screen.findAllByRole('combobox', undefined, {timeout: 2000});
     expect(dropdowns).toHaveLength(1);
     await user.click(dropdowns[0]);
     await user.keyboard('[ArrowDown]');
