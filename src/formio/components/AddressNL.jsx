@@ -346,6 +346,7 @@ const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormi
         houseNumber: true,
         city: true,
       }}
+      validateOnChange={false}
       validationSchema={toFormikValidationSchema(
         addressNLSchema(required, intl, {
           postcode: {
