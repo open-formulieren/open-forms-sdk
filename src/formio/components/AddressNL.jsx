@@ -3,7 +3,7 @@
  */
 import {Formik, useFormikContext} from 'formik';
 import debounce from 'lodash/debounce';
-import {useContext, useEffect} from 'react';
+import {createRef, useContext, useEffect, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {FormattedMessage, IntlProvider, defineMessages, useIntl} from 'react-intl';
@@ -26,6 +26,8 @@ export default class AddressNL extends Field {
     // the edit grid renderRow otherwise wraps the result of getValueAsString in a
     // readonly input...
     this.component.template = 'hack';
+    // needed for manually triggering the formik validate method
+    this.formikInnerRef = createRef();
   }
 
   static schema(...extend) {
@@ -56,10 +58,36 @@ export default class AddressNL extends Field {
     };
   }
 
-  checkComponentValidity(data, dirty, row, options = {}) {
+  async checkComponentValidity(data, dirty, row, options = {}) {
     let updatedOptions = {...options};
     if (this.component.validate.plugins && this.component.validate.plugins.length) {
       updatedOptions.async = true;
+    }
+
+    if (!dirty) {
+      return super.checkComponentValidity(data, dirty, row, updatedOptions);
+    }
+
+    // Trigger again formik validation in order to show the generic error along with the
+    // nested fields errors and prevent the form from being submitted.
+    // Tried to go deeper for this in formio but this will be properly handled in the new
+    // form renderer.
+    if (this.formikInnerRef.current) {
+      const errors = await this.formikInnerRef.current.validateForm();
+
+      if (Object.keys(errors).length > 0) {
+        this.setComponentValidity(
+          [
+            {
+              message: this.t('There are errors concerning the nested fields.'),
+              level: 'error',
+            },
+          ],
+          true,
+          false
+        );
+        return false;
+      }
     }
     return super.checkComponentValidity(data, dirty, row, updatedOptions);
   }
@@ -77,6 +105,7 @@ export default class AddressNL extends Field {
       city: '',
       streetName: '',
       secretStreetCity: '',
+      autoPopulated: false,
     };
   }
 
@@ -169,6 +198,7 @@ export default class AddressNL extends Field {
             deriveAddress={this.component.deriveAddress}
             layout={this.component.layout}
             setFormioValues={this.onFormikChange.bind(this)}
+            formikInnerRef={this.formikInnerRef}
           />
         </ConfigContext.Provider>
       </IntlProvider>
@@ -204,9 +234,25 @@ const FIELD_LABELS = defineMessages({
     description: 'Label for addressNL houseNumber input',
     defaultMessage: 'House number',
   },
+  houseLetter: {
+    description: 'Label for addressNL houseLetter input',
+    defaultMessage: 'House letter',
+  },
+  houseNumberAddition: {
+    description: 'Label for addressNL houseNumberAddition input',
+    defaultMessage: 'House number addition',
+  },
+  streetName: {
+    description: 'Label for addressNL streetName input',
+    defaultMessage: 'Street name',
+  },
+  city: {
+    description: 'Label for addressNL city input',
+    defaultMessage: 'City',
+  },
 });
 
-const addressNLSchema = (required, intl, {postcode = {}, city = {}}) => {
+const addressNLSchema = (required, deriveAddress, intl, {postcode = {}, city = {}}) => {
   // Optionally use a user-supplied pattern/regex for more fine grained pattern
   // validation, and if a custom error message was supplied, use it.
   const postcodeRegex = postcode?.pattern
@@ -221,6 +267,7 @@ const addressNLSchema = (required, intl, {postcode = {}, city = {}}) => {
     });
   let postcodeSchema = z.string().regex(postcodeRegex, {message: postcodeErrorMessage});
 
+  let streetNameSchema = z.string();
   const {pattern: cityPattern = '', errorMessage: cityErrorMessage = ''} = city;
   let citySchema = z.string();
   if (cityPattern) {
@@ -237,15 +284,22 @@ const addressNLSchema = (required, intl, {postcode = {}, city = {}}) => {
       defaultMessage: 'House number must be a number with up to five digits (e.g. 456).',
     }),
   });
+
   if (!required) {
     postcodeSchema = postcodeSchema.optional();
     houseNumberSchema = houseNumberSchema.optional();
+    streetNameSchema = streetNameSchema.optional();
+    citySchema = citySchema.optional();
+  } else if (!deriveAddress) {
+    streetNameSchema = streetNameSchema.optional();
+    citySchema = citySchema.optional();
   }
 
   return z
     .object({
       postcode: postcodeSchema,
-      city: citySchema.optional(),
+      streetName: streetNameSchema,
+      city: citySchema,
       houseNumber: houseNumberSchema,
       houseLetter: z
         .string()
@@ -297,7 +351,14 @@ const addressNLSchema = (required, intl, {postcode = {}, city = {}}) => {
     });
 };
 
-const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormioValues}) => {
+const AddressNLForm = ({
+  initialValues,
+  required,
+  deriveAddress,
+  layout,
+  setFormioValues,
+  formikInnerRef,
+}) => {
   const intl = useIntl();
 
   const {
@@ -340,14 +401,16 @@ const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormi
 
   return (
     <Formik
+      innerRef={formikInnerRef}
       initialValues={initialValues}
       initialTouched={{
         postcode: true,
         houseNumber: true,
         city: true,
+        streetName: true,
       }}
       validationSchema={toFormikValidationSchema(
-        addressNLSchema(required, intl, {
+        addressNLSchema(required, deriveAddress, intl, {
           postcode: {
             pattern: postcodePattern,
             errorMessage: postcodeError,
@@ -373,6 +436,7 @@ const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormi
 const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
   const {values, isValid, setFieldValue} = useFormikContext();
   const {baseUrl} = useContext(ConfigContext);
+  const [isAddressAutoFilled, setAddressAutoFilled] = useState(true);
   const useColumns = layout === 'doubleColumn';
 
   useEffect(() => {
@@ -399,6 +463,12 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
     setFieldValue('city', data['city']);
     setFieldValue('streetName', data['streetName']);
     setFieldValue('secretStreetCity', data['secretStreetCity']);
+
+    // mark the auto-filled fields as populated and disabled when they have been both
+    // retrieved from the API and they do have a value
+    const dataRetrieved = !!(data['city'] && data['streetName']);
+    setAddressAutoFilled(dataRetrieved);
+    setFieldValue('autoPopulated', dataRetrieved);
   };
 
   return (
@@ -411,45 +481,24 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
     >
       <PostCodeField required={required} autoFillAddress={autofillAddress} />
       <HouseNumberField required={required} autoFillAddress={autofillAddress} />
-      <TextField
-        name="houseLetter"
-        label={
-          <FormattedMessage
-            description="Label for addressNL houseLetter input"
-            defaultMessage="House letter"
-          />
-        }
-      />
+      <TextField name="houseLetter" label={<FormattedMessage {...FIELD_LABELS.houseLetter} />} />
       <TextField
         name="houseNumberAddition"
-        label={
-          <FormattedMessage
-            description="Label for addressNL houseNumberAddition input"
-            defaultMessage="House number addition"
-          />
-        }
+        label={<FormattedMessage {...FIELD_LABELS.houseNumberAddition} />}
       />
       {deriveAddress && (
         <>
           <TextField
             name="streetName"
-            label={
-              <FormattedMessage
-                description="Label for addressNL streetName read only result"
-                defaultMessage="Street name"
-              />
-            }
-            disabled
+            label={<FormattedMessage {...FIELD_LABELS.streetName} />}
+            disabled={isAddressAutoFilled}
+            isRequired={required}
           />
           <TextField
             name="city"
-            label={
-              <FormattedMessage
-                description="Label for addressNL city read only result"
-                defaultMessage="City"
-              />
-            }
-            disabled
+            label={<FormattedMessage {...FIELD_LABELS.city} />}
+            disabled={isAddressAutoFilled}
+            isRequired={required}
           />
         </>
       )}
