@@ -3,12 +3,12 @@
  */
 import {Formik, useFormikContext} from 'formik';
 import debounce from 'lodash/debounce';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {FormattedMessage, IntlProvider, defineMessages, useIntl} from 'react-intl';
 import {z} from 'zod';
-import {toFormikValidationSchema} from 'zod-formik-adapter';
+import {toFormikValidate} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
@@ -299,6 +299,7 @@ const addressNLSchema = (required, intl, {postcode = {}, city = {}}) => {
 
 const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormioValues}) => {
   const intl = useIntl();
+  const [dirty, setDirty] = useState(false);
 
   const {
     component: {
@@ -338,6 +339,13 @@ const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormi
     return {message: ctx.defaultError}; // use global schema as fallback
   };
 
+  const handleFormikAddressDirtyChange = newDirtyState => {
+    // Only set the dirty state from `false` to `true`. Once it's dirty, it will remain dirty.
+    if (!dirty && newDirtyState) {
+      setDirty(newDirtyState);
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -347,34 +355,45 @@ const AddressNLForm = ({initialValues, required, deriveAddress, layout, setFormi
         city: true,
       }}
       validateOnChange={false}
-      validationSchema={toFormikValidationSchema(
-        addressNLSchema(required, intl, {
-          postcode: {
-            pattern: postcodePattern,
-            errorMessage: postcodeError,
-          },
-          city: {
-            pattern: cityPattern,
-            errorMessage: cityError,
-          },
-        }),
-        {errorMap}
-      )}
+      validate={values =>
+        dirty
+          ? toFormikValidate(
+              addressNLSchema(required, intl, {
+                postcode: {
+                  pattern: postcodePattern,
+                  errorMessage: postcodeError,
+                },
+                city: {
+                  pattern: cityPattern,
+                  errorMessage: cityError,
+                },
+              }),
+              {errorMap}
+            )(values)
+          : {}
+      }
     >
       <FormikAddress
         required={required}
         setFormioValues={setFormioValues}
         deriveAddress={deriveAddress}
         layout={layout}
+        setDirty={handleFormikAddressDirtyChange}
       />
     </Formik>
   );
 };
 
-const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
-  const {values, isValid, setFieldValue} = useFormikContext();
+const FormikAddress = ({required, setFormioValues, deriveAddress, layout, setDirty}) => {
+  const {values, isValid, setFieldValue, dirty} = useFormikContext();
   const {baseUrl} = useContext(ConfigContext);
   const useColumns = layout === 'doubleColumn';
+
+  useEffect(() => {
+    if (dirty) {
+      setDirty(dirty);
+    }
+  }, [dirty, setDirty]);
 
   useEffect(() => {
     // *always* synchronize the state up, since:
