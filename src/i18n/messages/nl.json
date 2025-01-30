@@ -211,6 +211,11 @@
     "description": "Check overview and confirm",
     "originalDefault": "Check and confirm"
   },
+  "AKhmW+": {
+    "defaultMessage": "Straatnaam",
+    "description": "Label for addressNL streetName input",
+    "originalDefault": "Street name"
+  },
   "AM6xqd": {
     "defaultMessage": "Huisnummer moet een nummer zijn met maximaal 5 cijfers (bijv. 456).",
     "description": "ZOD error message when AddressNL house number does not match the house number regular expression",
@@ -297,11 +302,6 @@
     "description": "Appointments: remove product/service button text",
     "originalDefault": "Remove"
   },
-  "DEetjI": {
-    "defaultMessage": "Straatnaam",
-    "description": "Label for addressNL streetName read only result",
-    "originalDefault": "Street name"
-  },
   "DK2ewv": {
     "defaultMessage": "Inlogprobleem",
     "description": "'Permission denied' error title",
@@ -372,6 +372,11 @@
     "defaultMessage": "De bevestigingscode bestaat uit hoofdletters (A-Z) en getallen (0-9).",
     "description": "Validation error message for verification code pattern",
     "originalDefault": "The verification code may only contain letters (A-Z) and numbers (0-9)."
+  },
+  "FKWQuw": {
+    "defaultMessage": "Unfortunately, this form is currently unavailable due to an outage. Please try again later.",
+    "description": "Open Forms service unavailable error message",
+    "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
   },
   "FrFeZj": {
     "defaultMessage": "Je hebt nog geen e-mailadres ingevuld.",
@@ -1046,11 +1051,6 @@
     "description": "ZOD 'too_big' error message, for BigInt",
     "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
   },
-  "osSl3z": {
-    "defaultMessage": "Stad",
-    "description": "Label for addressNL city read only result",
-    "originalDefault": "City"
-  },
   "ovI+W7": {
     "defaultMessage": "Gebruik ⌘ + scroll om te zoomen in de kaart",
     "description": "Gesturehandeling mac scroll message.",
@@ -1091,10 +1091,20 @@
     "description": "ZOD error message when AddressNL postcode does not match the postcode regular expression",
     "originalDefault": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
   },
+  "rWbce4": {
+    "defaultMessage": "Form unavailable",
+    "description": "Open Forms service unavailable error title",
+    "originalDefault": "Form unavailable"
+  },
   "riuSfc": {
     "defaultMessage": "Verstuur code",
     "description": "Email verification: send code button text",
     "originalDefault": "Send code"
+  },
+  "s4+4p2": {
+    "defaultMessage": "Plaats",
+    "description": "Label for addressNL city input",
+    "originalDefault": "City"
   },
   "sSmY1N": {
     "defaultMessage": "Zoek adres",

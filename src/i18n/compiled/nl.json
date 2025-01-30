@@ -439,6 +439,12 @@
       "value": "Controleer en bevestig"
     }
   ],
+  "AKhmW+": [
+    {
+      "type": 0,
+      "value": "Straatnaam"
+    }
+  ],
   "AM6xqd": [
     {
       "type": 0,
@@ -543,12 +549,6 @@
     {
       "type": 0,
       "value": "Verwijderen"
-    }
-  ],
-  "DEetjI": [
-    {
-      "type": 0,
-      "value": "Straatnaam"
     }
   ],
   "DK2ewv": [
@@ -661,6 +661,12 @@
     {
       "type": 0,
       "value": "De bevestigingscode bestaat uit hoofdletters (A-Z) en getallen (0-9)."
+    }
+  ],
+  "FKWQuw": [
+    {
+      "type": 0,
+      "value": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
     }
   ],
   "FrFeZj": [
@@ -2049,12 +2055,6 @@
       "value": " zijn."
     }
   ],
-  "osSl3z": [
-    {
-      "type": 0,
-      "value": "Stad"
-    }
-  ],
   "ovI+W7": [
     {
       "type": 0,
@@ -2187,10 +2187,22 @@
       "value": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB)."
     }
   ],
+  "rWbce4": [
+    {
+      "type": 0,
+      "value": "Form unavailable"
+    }
+  ],
   "riuSfc": [
     {
       "type": 0,
       "value": "Verstuur code"
+    }
+  ],
+  "s4+4p2": [
+    {
+      "type": 0,
+      "value": "Plaats"
     }
   ],
   "sSmY1N": [

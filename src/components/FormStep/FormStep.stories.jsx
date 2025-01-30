@@ -422,3 +422,36 @@ export const SummaryProgressNotVisible = {
     expect(canvas.queryByText(/Stap 1 van 1/)).toBeNull();
   },
 };
+
+export const AddressNLManuallyTriggeredValidation = {
+  render,
+  args: {
+    formioConfiguration: {
+      display: 'form',
+      components: [
+        {
+          key: 'addressnl',
+          type: 'addressNL',
+          label: 'Address NL',
+          validate: {
+            required: false,
+          },
+        },
+      ],
+    },
+    form: buildForm(),
+    submission: buildSubmission(),
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    const submitButton = await canvas.findByRole('button', {name: 'Next'});
+
+    await userEvent.type(postcodeInput, '1017 CJ');
+
+    // wait for the check logic api call
+    await sleep(1800);
+    await userEvent.click(submitButton);
+  },
+};

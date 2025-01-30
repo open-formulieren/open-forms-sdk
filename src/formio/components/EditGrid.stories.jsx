@@ -183,7 +183,7 @@ export const AddressNLWithData = {
         expect(canvas.getByLabelText('Straatnaam')).toHaveDisplayValue('Keizersgracht');
       });
       await waitFor(async () => {
-        expect(canvas.getByLabelText('Stad')).toHaveDisplayValue('Amsterdam');
+        expect(canvas.getByLabelText('Plaats')).toHaveDisplayValue('Amsterdam');
       });
     });
 
@@ -257,7 +257,7 @@ export const AddressNLWithNoData = {
         expect(canvas.getByLabelText('Straatnaam')).toHaveDisplayValue('');
       });
       await waitFor(async () => {
-        expect(canvas.getByLabelText('Stad')).toHaveDisplayValue('');
+        expect(canvas.getByLabelText('Plaats')).toHaveDisplayValue('');
       });
     });
 

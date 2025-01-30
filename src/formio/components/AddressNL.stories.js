@@ -1,6 +1,7 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
 import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
+import {sleep} from 'utils';
 
 import {
   mockBAGDataGet,
@@ -84,6 +85,27 @@ export const ClientSideValidation = {
   },
 };
 
+export const Required = {
+  args: {
+    extraComponentProperties: {
+      validate: {
+        required: true,
+      },
+    },
+  },
+  render: SingleFormioComponent,
+  play: async ({canvasElement}) => {
+    await sleep(500);
+    const canvas = within(canvasElement);
+
+    (await canvas.findByLabelText('Huisnummer')).focus();
+    await userEvent.tab();
+
+    expect(await canvas.findByText('Postcode is verplicht.')).toBeVisible();
+    expect(await canvas.findByText('Huisnummer is verplicht.')).toBeVisible();
+  },
+};
+
 export const NotRequired = {
   args: {
     extraComponentProperties: {
@@ -112,9 +134,46 @@ export const NotRequired = {
   },
 };
 
+export const IncorrectPostcode = {
+  render: SingleFormioComponent,
+  args: {
+    type: 'addressNL',
+    key: 'addressNL',
+    label: 'Address NL',
+    extraComponentProperties: {
+      validate: {
+        required: false,
+      },
+      deriveAddress: true,
+      openForms: {
+        components: {
+          postcode: {
+            validate: {pattern: '1017 [A-Za-z]{2}'},
+            translatedErrors: {
+              nl: {
+                pattern: 'De postcode moet 1017 XX zijn',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const postcodeInput = await canvas.findByLabelText('Postcode');
+    await userEvent.type(postcodeInput, '1234 AB');
+
+    await userEvent.tab();
+
+    await canvas.findByText('De postcode moet 1017 XX zijn');
+  },
+};
+
 // const EXPECTED_VALIDATION_ERROR = 'User is not a zaakgerechtigde for property.';
 
-export const WithPassingBRKValidation = {
+export const NotRequiredWithPassingBRKValidation = {
   render: SingleFormioComponent,
   parameters: {
     msw: {
@@ -234,7 +293,7 @@ export const WithDeriveCityStreetNameWithData = {
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
     await userEvent.type(houseNumberInput, '1');
 
-    const city = await canvas.findByLabelText('Stad');
+    const city = await canvas.findByLabelText('Plaats');
     const streetName = await canvas.findByLabelText('Straatnaam');
 
     await userEvent.tab();
@@ -243,43 +302,6 @@ export const WithDeriveCityStreetNameWithData = {
       expect(city).toHaveValue('Amsterdam');
       expect(streetName).toHaveValue('Keizersgracht');
     });
-  },
-};
-
-export const IncorrectPostcode = {
-  render: SingleFormioComponent,
-  args: {
-    type: 'addressNL',
-    key: 'addressNL',
-    label: 'Address NL',
-    extraComponentProperties: {
-      validate: {
-        required: false,
-      },
-      deriveAddress: true,
-      openForms: {
-        components: {
-          postcode: {
-            validate: {pattern: '1017 [A-Za-z]{2}'},
-            translatedErrors: {
-              nl: {
-                pattern: 'De postcode moet 1017 XX zijn',
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-  play: async ({canvasElement}) => {
-    const canvas = within(canvasElement);
-
-    const postcodeInput = await canvas.findByLabelText('Postcode');
-    await userEvent.type(postcodeInput, '1234 AB');
-
-    await userEvent.tab();
-
-    await canvas.findByText('De postcode moet 1017 XX zijn');
   },
 };
 
@@ -322,7 +344,7 @@ export const WithDeriveCityStreetNameWithDataIncorrectCity = {
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
     await userEvent.type(houseNumberInput, '1');
 
-    const city = await canvas.findByLabelText('Stad');
+    const city = await canvas.findByLabelText('Plaats');
     const streetName = await canvas.findByLabelText('Straatnaam');
 
     await userEvent.tab();
@@ -365,14 +387,16 @@ export const WithDeriveCityStreetNameNoData = {
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
     await userEvent.type(houseNumberInput, '1');
 
-    const city = await canvas.findByLabelText('Stad');
+    const city = await canvas.findByLabelText('Plaats');
     const streetName = await canvas.findByLabelText('Straatnaam');
 
     await userEvent.tab();
 
     await waitFor(() => {
       expect(city.value).toBe('');
+      expect(city).not.toBeDisabled();
       expect(streetName.value).toBe('');
+      expect(streetName).not.toBeDisabled();
     });
   },
 };
