@@ -35,7 +35,15 @@ export default class AddressNL extends Field {
         label: 'Address NL',
         input: true,
         key: 'addressNL',
-        defaultValue: this.emptyValue,
+        defaultValue: {
+          postcode: '',
+          houseNumber: '',
+          houseLetter: '',
+          houseNumberAddition: '',
+          city: '',
+          streetName: '',
+          secretStreetCity: '',
+        },
         validateOn: 'blur',
         deriveAddress: false,
         layout: 'doubleColumn',
@@ -68,7 +76,7 @@ export default class AddressNL extends Field {
     return AddressNL.schema();
   }
 
-  static get emptyValue() {
+  get emptyValue() {
     return {
       postcode: '',
       houseNumber: '',
@@ -152,7 +160,7 @@ export default class AddressNL extends Field {
       return;
     }
     const required = this.component?.validate?.required || false;
-    const initialValues = {...AddressNL.emptyValue, ...this.dataValue};
+    const initialValues = {...this.emptyValue, ...this.dataValue};
 
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
