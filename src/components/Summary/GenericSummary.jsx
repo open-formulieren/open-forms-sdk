@@ -29,7 +29,11 @@ const GenericSummary = ({
   const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? Form : 'div';
 
   if (isLoading) {
-    return <Loader modifiers={['centered']} />;
+    return (
+      <Card title={title}>
+        <Loader modifiers={['centered']} />
+      </Card>
+    );
   }
 
   return (
