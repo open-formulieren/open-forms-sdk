@@ -6,8 +6,7 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
 import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
-import routes from 'routes';
+import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import {
