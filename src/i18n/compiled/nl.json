@@ -663,6 +663,12 @@
       "value": "De bevestigingscode bestaat uit hoofdletters (A-Z) en getallen (0-9)."
     }
   ],
+  "FKWQuw": [
+    {
+      "type": 0,
+      "value": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
+    }
+  ],
   "FrFeZj": [
     {
       "type": 0,
@@ -1419,6 +1425,20 @@
       "value": " zijn."
     }
   ],
+  "YwnY5d": [
+    {
+      "type": 0,
+      "value": "Problems in form step '"
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "'"
+    }
+  ],
   "ZJoaby": [
     {
       "children": [
@@ -1589,6 +1609,24 @@
       "value": "Laden..."
     }
   ],
+  "eEC1P4": [
+    {
+      "type": 0,
+      "value": "Field '"
+    },
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": "': "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
   "eO6Ysb": [
     {
       "type": 0,
@@ -1665,6 +1703,12 @@
     {
       "type": 0,
       "value": "Huisletter moet een enkele letter zijn."
+    }
+  ],
+  "hcw9Gf": [
+    {
+      "type": 0,
+      "value": "There are problems with the submitted data."
     }
   ],
   "hkZ8N1": [
@@ -2185,6 +2229,12 @@
     {
       "type": 0,
       "value": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB)."
+    }
+  ],
+  "rWbce4": [
+    {
+      "type": 0,
+      "value": "Form unavailable"
     }
   ],
   "riuSfc": [

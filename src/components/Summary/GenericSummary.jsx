@@ -34,8 +34,10 @@ const GenericSummary = ({
 
   return (
     <Card title={title}>
-      {errors.map(error => (
-        <ErrorMessage key={error}>{error}</ErrorMessage>
+      {errors.map((error, index) => (
+        <div className="openforms-card__alert" key={`error-${index}`}>
+          <ErrorMessage>{error}</ErrorMessage>
+        </div>
       ))}
       <Formik
         initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
@@ -102,7 +104,7 @@ GenericSummary.propTypes = {
   editStepText: PropTypes.string,
   isLoading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
-  errors: PropTypes.arrayOf(PropTypes.string),
+  errors: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.string])),
   prevPage: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onDestroySession: PropTypes.func.isRequired,
