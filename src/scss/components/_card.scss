@@ -47,4 +47,10 @@
       @include rows(0, margin-top);
     }
   }
+
+  @include bem.element('alert') {
+    &:not(:last-child) {
+      margin-block-end: 20px;
+    }
+  }
 }

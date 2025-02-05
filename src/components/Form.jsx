@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
-import {Navigate, Outlet, useLocation, useNavigate, useSearchParams} from 'react-router';
+import {Navigate, Outlet, useLocation, useMatch, useNavigate, useSearchParams} from 'react-router';
 import {usePrevious} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -35,6 +35,7 @@ const Form = () => {
   const intl = useIntl();
   const prevLocale = usePrevious(intl.locale);
   const {state: routerState} = useLocation();
+  const confirmationMatch = useMatch('/bevestiging');
 
   // extract the declared properties and configuration
   const config = useContext(ConfigContext);
@@ -102,10 +103,18 @@ const Form = () => {
     return <Loader modifiers={['centered']} />;
   }
 
+  // don't render the PI if the form is configured to never display the progress
+  // indicator, or we're on the final confirmation page
+  const showProgressIndicator = form.showProgressIndicator && !confirmationMatch;
+
   // render the container for the router and necessary context providers for deeply
   // nested child components
   return (
-    <FormDisplay progressIndicator={<FormProgressIndicator submission={submission} />}>
+    <FormDisplay
+      progressIndicator={
+        showProgressIndicator ? <FormProgressIndicator submission={submission} /> : null
+      }
+    >
       <AnalyticsToolsConfigProvider>
         <SubmissionProvider
           submission={submission}

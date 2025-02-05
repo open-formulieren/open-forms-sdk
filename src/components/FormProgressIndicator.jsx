@@ -1,5 +1,5 @@
 import {useIntl} from 'react-intl';
-import {matchPath, useLocation, useMatch} from 'react-router';
+import {matchPath, useLocation} from 'react-router';
 
 import ProgressIndicator from 'components/ProgressIndicator';
 import {addFixedSteps, getStepsInfo} from 'components/ProgressIndicator/utils';
@@ -76,14 +76,7 @@ const getMobileStepTitle = (intl, pathname, form) => {
 const FormProgressIndicator = ({submission}) => {
   const form = useFormContext();
   const {pathname: currentPathname, state: routerState} = useLocation();
-  const confirmationMatch = useMatch('/bevestiging');
   const intl = useIntl();
-
-  // don't render anything if the form is configured to never display the progress
-  // indicator, or we're on the final confirmation page
-  if (!form.showProgressIndicator || confirmationMatch) {
-    return null;
-  }
 
   // otherwise collect the necessary information to render the PI.
   const isCompleted = !!routerState?.statusUrl;

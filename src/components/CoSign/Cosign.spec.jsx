@@ -103,5 +103,5 @@ test('Load submission summary after backend authentication', async () => {
 
   await screen.findByRole('heading', {name: 'Check and co-sign submission', level: 1});
   // wait for summary to load from the backend
-  await screen.findByText('Compnent 1 value');
+  await screen.findByText('Component 1 value');
 });

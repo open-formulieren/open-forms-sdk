@@ -102,7 +102,7 @@ export const mockSubmissionSummaryGet = () =>
           data: [
             {
               name: SUBMISSION_STEP_DETAILS.formStep.configuration.components[0].label,
-              value: 'Compnent 1 value',
+              value: 'Component 1 value',
               component: SUBMISSION_STEP_DETAILS.formStep.configuration.components[0],
             },
           ],
@@ -117,6 +117,22 @@ export const mockSubmissionCompletePost = () =>
     HttpResponse.json({
       statusUrl: `${BASE_URL}submissions/${SUBMISSION_DETAILS.id}/super-random-token/status`,
     })
+  );
+
+export const mockSubmissionCompleteInvalidPost = invalidParams =>
+  http.post(`${BASE_URL}submissions/:uuid/_complete`, () =>
+    HttpResponse.json(
+      {
+        type: 'http://localhost:8000/fouten/ValidationError/',
+        code: 'invalid',
+        title: 'Does not validate.',
+        status: 400,
+        detail: '',
+        instance: 'urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75',
+        invalidParams,
+      },
+      {status: 400}
+    )
   );
 
 /**

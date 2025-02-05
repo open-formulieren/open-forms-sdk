@@ -8,11 +8,13 @@ import {LiteralsProvider} from 'components/Literal';
 import {useSubmissionContext} from 'components/SubmissionProvider';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 import {findPreviousApplicableStep} from 'components/utils';
+import {ValidationError} from 'errors';
 import useFormContext from 'hooks/useFormContext';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
 
 import GenericSummary from './GenericSummary';
+import ValidationErrors from './ValidationErrors';
 import {loadSummaryData} from './data';
 
 const completeSubmission = async (submission, statementValues) => {
@@ -29,7 +31,7 @@ const SubmissionSummary = () => {
   const {submission, onDestroySession, removeSubmissionId} = useSubmissionContext();
   const refreshedSubmission = useRefreshSubmission(submission);
 
-  const [submitError, setSubmitError] = useState('');
+  const [submitErrors, setSubmitErrors] = useState(null);
 
   const pageTitle = intl.formatMessage({
     description: 'Summary page title',
@@ -52,11 +54,17 @@ const SubmissionSummary = () => {
 
   const onSubmit = async statementValues => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
+
     let statusUrl;
     try {
       statusUrl = await completeSubmission(refreshedSubmission, statementValues);
     } catch (e) {
-      setSubmitError(e.message);
+      if (e instanceof ValidationError) {
+        const {initialErrors} = e.asFormikProps();
+        setSubmitErrors(initialErrors);
+      } else {
+        setSubmitErrors(e.message);
+      }
       return;
     }
 
@@ -85,6 +93,20 @@ const SubmissionSummary = () => {
     event.preventDefault();
     navigate(getPreviousPage());
   };
+
+  const submitError =
+    submitErrors &&
+    (typeof submitErrors === 'string' ? (
+      submitErrors
+    ) : (
+      <>
+        <FormattedMessage
+          description="Summary page generic validation error message"
+          defaultMessage="There are problems with the submitted data."
+        />
+        <ValidationErrors errors={submitErrors} summaryData={summaryData} />
+      </>
+    ));
 
   const errorMessages = [location.state?.errorMessage, submitError].filter(Boolean);
 
