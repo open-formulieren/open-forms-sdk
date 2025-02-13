@@ -2,6 +2,57 @@
 SDK Changelog
 =============
 
+3.1.0-alpha.0 (2025-02-17)
+==========================
+
+First preview release of the upcoming 3.1.0 version.
+
+New features
+------------
+
+* [#5033] Improved error message when service is unavailable.
+* [#76] i18n, lodash, map and appointment modules are now dynamically loaded.
+* [#2177] The map component now supports placing a marker, line or polygon.
+  - Added leaflet-draw for user interactions.
+  - Refactored map component search input and 'nearest address' functionality to use
+    leaflet-draw.
+  - Changed map data from array to geoJson geometry, allowing the placement of markers,
+    lines and polygons.
+* [#5003] AddressNL component styling update.
+  - Removed asterisk next to AddressNL component label. When the component is required,
+    only the field labels have an asterisk next to them.
+  - Aligned address styling with other components in the submission summary.
+
+Bugfixes
+--------
+
+* [#4510] Fixed generic and user-unfriendly error messages in the submission summary.
+* [#4699] Fixed AddressNL validation being triggered on page load, and a crash when the
+  AddressNL component is hidden.
+
+Project maintenance
+-------------------
+
+* Errors in error boundaries are captured with Sentry.
+* Removed unused Sentry tracing.
+* [#4929] Restructured and upgraded React routing.
+  - Re-organized cosign, form, form start and appointment components.
+  - Removed unused code.
+  - Simplified form state management.
+  - Moved routing definitions and converted all dynamic routes to static.
+  - Updated storybook and vitest tests.
+  - Upgraded to React-Router 7.1.
+* Enabled Codecov JS bundle analysis.
+* Upgraded dependencies.
+  - Upgraded to playwright 1.49.
+  - Upgraded to Vitest 3.0.
+  - Upgraded to Sentry 8.50.
+* Separated storybook and Vitest coverage reporting.
+* Updated Docker Hub config file.
+* [#724] Replaced CRA with ViteJS.
+  - Removed CRA scripts and configuration.
+  - Removed CRA from project dev dependencies.
+
 3.0.0 (2025-01-06)
 ==================
 
@@ -15,7 +66,7 @@ changelog, which includes the alpha versions release notes.
 New features
 ------------
 
-* [#4984] Changed "abort" button's text to "cancel". 
+* [#4984] Changed "abort" button's text to "cancel".
 * [#4321] Forms can now have a submission limit. The SDK displays appropriate messages when this limit
   is reached.
 * [#2173] The map component now supports using a different background/tile layer.
