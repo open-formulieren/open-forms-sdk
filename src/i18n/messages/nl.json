@@ -374,7 +374,7 @@
     "originalDefault": "The verification code may only contain letters (A-Z) and numbers (0-9)."
   },
   "FKWQuw": {
-    "defaultMessage": "Unfortunately, this form is currently unavailable due to an outage. Please try again later.",
+    "defaultMessage": "Helaas is dit formulier momenteel niet beschikbaar door een storing. Probeer het later nog eens.",
     "description": "Open Forms service unavailable error message",
     "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
   },
@@ -728,7 +728,7 @@
     "originalDefault": "Invalid discriminator value. Expected {expected}."
   },
   "YwnY5d": {
-    "defaultMessage": "Problems in form step ''{name}''",
+    "defaultMessage": "Problemen in formulierstap ''{name}''",
     "description": "Overview page, title before listing the validation errors for a step",
     "originalDefault": "Problems in form step ''{name}''"
   },
@@ -824,7 +824,7 @@
     "originalDefault": "Loading..."
   },
   "eEC1P4": {
-    "defaultMessage": "Field ''{label}'': {error}",
+    "defaultMessage": "Veld ''{label}'': {error}",
     "description": "Overview page, validation error message for step field.",
     "originalDefault": "Field ''{label}'': {error}"
   },
@@ -884,7 +884,7 @@
     "originalDefault": "House letter must be a single letter."
   },
   "hcw9Gf": {
-    "defaultMessage": "There are problems with the submitted data.",
+    "defaultMessage": "De opgestuurde gegevens zijn ongeldig.",
     "description": "Summary page generic validation error message",
     "originalDefault": "There are problems with the submitted data."
   },
@@ -1112,7 +1112,7 @@
     "originalDefault": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
   },
   "rWbce4": {
-    "defaultMessage": "Form unavailable",
+    "defaultMessage": "Formulier niet beschikbaar",
     "description": "Open Forms service unavailable error title",
     "originalDefault": "Form unavailable"
   },
@@ -1212,7 +1212,7 @@
     "originalDefault": "Return to main website"
   },
   "zpHAro": {
-    "defaultMessage": "Klik om een lijk te tekenen",
+    "defaultMessage": "Klik om een lijn te tekenen",
     "description": "Draw handler polyline tooltip start.",
     "originalDefault": "Click to start drawing line"
   },

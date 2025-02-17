@@ -90,7 +90,7 @@ export const BackendValidationErrors = {
     });
 
     await step('Check validation errors from backend', async () => {
-      const genericMessage = await canvas.findByText('There are problems with the submitted data.');
+      const genericMessage = await canvas.findByText('De opgestuurde gegevens zijn ongeldig.');
       expect(genericMessage).toBeVisible();
 
       expect(await canvas.findByText(/Your carpet is ugly/)).toBeVisible();
