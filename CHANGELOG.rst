@@ -2,6 +2,17 @@
 SDK Changelog
 =============
 
+3.1.0-alpha.1 (2025-02-20)
+==========================
+
+Second preview release of the upcoming 3.1.0 version. Containing a hotfix to ensure
+correct working with the backend.
+
+Hotfix release
+
+* Fixed build assets placed in a unexpected folder, causing build errors when connecting
+  to the backend.
+
 3.1.0-alpha.0 (2025-02-17)
 ==========================
 
@@ -13,15 +24,15 @@ New features
 * [#5033] Improved error message when service is unavailable.
 * [#76] i18n, lodash, map and appointment modules are now dynamically loaded.
 * [#2177] The map component now supports placing a marker, line or polygon.
-  - Added leaflet-draw for user interactions.
-  - Refactored map component search input and 'nearest address' functionality to use
-    leaflet-draw.
-  - Changed map data from array to geoJson geometry, allowing the placement of markers,
-    lines and polygons.
+    - Added leaflet-draw for user interactions.
+    - Refactored map component search input and 'nearest address' functionality to use
+      leaflet-draw.
+    - Changed map data from array to geoJson geometry, allowing the placement of markers,
+      lines and polygons.
 * [#5003] AddressNL component styling update.
-  - Removed asterisk next to AddressNL component label. When the component is required,
-    only the field labels have an asterisk next to them.
-  - Aligned address styling with other components in the submission summary.
+    - Removed asterisk next to AddressNL component label. When the component is required,
+      only the field labels have an asterisk next to them.
+    - Aligned address styling with other components in the submission summary.
 
 Bugfixes
 --------
@@ -36,22 +47,22 @@ Project maintenance
 * Errors in error boundaries are captured with Sentry.
 * Removed unused Sentry tracing.
 * [#4929] Restructured and upgraded React routing.
-  - Re-organized cosign, form, form start and appointment components.
-  - Removed unused code.
-  - Simplified form state management.
-  - Moved routing definitions and converted all dynamic routes to static.
-  - Updated storybook and vitest tests.
-  - Upgraded to React-Router 7.1.
+    - Re-organized cosign, form, form start and appointment components.
+    - Removed unused code.
+    - Simplified form state management.
+    - Moved routing definitions and converted all dynamic routes to static.
+    - Updated storybook and vitest tests.
+    - Upgraded to React-Router 7.1.
 * Enabled Codecov JS bundle analysis.
 * Upgraded dependencies.
-  - Upgraded to playwright 1.49.
-  - Upgraded to Vitest 3.0.
-  - Upgraded to Sentry 8.50.
+    - Upgraded to playwright 1.49.
+    - Upgraded to Vitest 3.0.
+    - Upgraded to Sentry 8.50.
 * Separated storybook and Vitest coverage reporting.
 * Updated Docker Hub config file.
 * [#724] Replaced CRA with ViteJS.
-  - Removed CRA scripts and configuration.
-  - Removed CRA from project dev dependencies.
+    - Removed CRA scripts and configuration.
+    - Removed CRA from project dev dependencies.
 
 3.0.0 (2025-01-06)
 ==================
