@@ -56,6 +56,9 @@ const FormStart = () => {
 
   const hasActiveSubmission = !!submission;
   const isAuthenticated = hasActiveSubmission && submission.isAuthenticated;
+  // If there is no active submission, only show the login options if the submission limit has not
+  // been reached.
+  const showLoginOptions = !hasActiveSubmission && !form.submissionLimitReached;
 
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
@@ -166,13 +169,15 @@ const FormStart = () => {
 
         <FormStartMessage form={form} />
 
-        {hasActiveSubmission ? (
+        {hasActiveSubmission && (
           <ExistingSubmissionOptions
             form={form}
             onDestroySession={onDestroySession}
             isAuthenticated={isAuthenticated}
           />
-        ) : (
+        )}
+
+        {showLoginOptions && (
           <LoginOptions
             // if cosign allows links in emails, we don't need to display the cosign
             // login options, so strip them out
