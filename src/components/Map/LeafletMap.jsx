@@ -19,6 +19,7 @@ import {
   leafletGestureHandlingText,
   searchControlMessages,
 } from './translations';
+import {GeoJsonGeometry} from './types';
 
 // Run some Leaflet-specific patches...
 initialize();
@@ -92,18 +93,6 @@ const LeaftletMap = ({
     onGeoJsonGeometrySet?.(newFeatureLayer.toGeoJSON().geometry);
   };
 
-  useEffect(() => {
-    // Remove all shapes from the map.
-    // Only `geoJsonGeometry` should be shown on the map.
-    featureGroupRef.current?.clearLayers();
-    if (!geoJsonGeometry) {
-      return;
-    }
-    // Add the current `geoJsonGeometry` as shape
-    const layer = Leaflet.GeoJSON.geometryToLayer(geoJsonGeometry);
-    featureGroupRef.current?.addLayer(layer);
-  }, [geoJsonGeometry]);
-
   return (
     <>
       <MapContainer
@@ -143,6 +132,7 @@ const LeaftletMap = ({
               }}
             />
           )}
+          <Geometry geoJsonGeometry={geoJsonGeometry} featureGroupRef={featureGroupRef} />
         </FeatureGroup>
         {coordinates && <MapView coordinates={coordinates} />}
         {!disabled && (
@@ -171,21 +161,7 @@ const LeaftletMap = ({
 };
 
 LeaftletMap.propTypes = {
-  geoJsonGeometry: PropTypes.oneOfType([
-    PropTypes.shape({
-      type: PropTypes.oneOf(['Point']).isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-    }),
-    PropTypes.shape({
-      type: PropTypes.oneOf(['LineString']).isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-    }),
-    PropTypes.shape({
-      type: PropTypes.oneOf(['Polygon']).isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)))
-        .isRequired,
-    }),
-  ]),
+  geoJsonGeometry: GeoJsonGeometry,
   onGeoJsonGeometrySet: PropTypes.func,
   interactions: PropTypes.shape({
     polyline: PropTypes.bool,
@@ -194,6 +170,33 @@ LeaftletMap.propTypes = {
   }),
   disabled: PropTypes.bool,
   tileLayerUrl: PropTypes.string,
+};
+
+const Geometry = ({geoJsonGeometry, featureGroupRef}) => {
+  useEffect(() => {
+    if (!featureGroupRef.current) {
+      // If there is no feature group, nothing should be done...
+      return;
+    }
+
+    // Remove all shapes from the map.
+    // Only the data from `geoJsonGeometry` should be shown on the map.
+    featureGroupRef.current.clearLayers();
+    if (!geoJsonGeometry) {
+      return;
+    }
+
+    // Add the `geoJsonGeometry` data as shape.
+    const layer = Leaflet.GeoJSON.geometryToLayer(geoJsonGeometry);
+    featureGroupRef.current.addLayer(layer);
+  }, [featureGroupRef, geoJsonGeometry]);
+
+  return null;
+};
+
+Geometry.propTypes = {
+  geoJsonGeometry: GeoJsonGeometry,
+  featureGroupRef: PropTypes.object.isRequired,
 };
 
 // Set the map view if coordinates are provided
