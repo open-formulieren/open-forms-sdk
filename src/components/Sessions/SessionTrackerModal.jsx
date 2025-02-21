@@ -129,7 +129,7 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
           }}
         />
       </ErrorMessage>
-      <Toolbar modifiers={['bottom', 'reverse']}>
+      <Toolbar modifiers={['bottom']}>
         <ToolbarList>
           <OFButton
             type="submit"

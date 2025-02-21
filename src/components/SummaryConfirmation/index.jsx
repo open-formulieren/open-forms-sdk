@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import {useState} from 'react';
 
 import {OFButton} from 'components/Button';
-import Link from 'components/Link';
+import FAIcon from 'components/FAIcon';
 import {Literal} from 'components/Literal';
+import PreviousLink from 'components/PreviousLink';
 import StatementCheckboxes from 'components/StatementCheckboxes';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
@@ -34,26 +35,24 @@ const SummaryConfirmation = ({submissionAllowed, prevPage, onPrevPage}) => {
           showWarnings={showStatementWarnings}
         />
       )}
-      <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
-        <ToolbarList>
-          {!!onPrevPage && (
-            <Link onClick={onPrevPage} to={prevPage}>
-              <Literal name="previousText" />
-            </Link>
-          )}
-        </ToolbarList>
+      <Toolbar modifiers={['bottom']}>
         <ToolbarList>
           {canSubmit ? (
             <OFButton
               type="submit"
               appearance="primary-action-button"
+              className="openforms-button-with-icon"
               name="confirm"
               disabled={submitDisabled}
               onClick={() => setShowStatementWarnings(true)}
             >
               <Literal name="confirmText" />
+              <FAIcon icon="arrow-right-long" />
             </OFButton>
           ) : null}
+        </ToolbarList>
+        <ToolbarList>
+          {!!onPrevPage && <PreviousLink to={prevPage} onClick={onPrevPage} position="end" />}
         </ToolbarList>
       </Toolbar>
     </>

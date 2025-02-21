@@ -10,6 +10,8 @@
   align-items: flex-start;
   justify-content: space-between;
   position: relative;
+  flex-direction: column;
+  gap: 20px;
 
   @media print {
     display: none;
@@ -21,10 +23,6 @@
 
   @include bem.modifier('bottom') {
     @include margin(true, $properties: margin-top);
-  }
-
-  @include bem.modifier('reverse') {
-    justify-content: flex-end;
   }
 
   @include bem.modifier('column') {
@@ -45,41 +43,15 @@
       }
     }
 
-    @include bem.modifier('mobile-reverse-order') {
-      display: flex;
-      flex-direction: column-reverse;
-      margin-top: $typography-margin-text;
-
-      > * {
-        width: 100%;
-      }
-
-      @include bem.element('list') {
-        flex-direction: column-reverse;
-        &:not(:last-child) {
-          margin: $typography-margin-text 0 0 0;
-        }
-      }
-
-      @include bem.element('list-item') {
-        @include margin(auto, $properties: margin-bottom, $value-mobile: 0);
-        @include margin(auto, $properties: margin-top, $value-mobile: $typography-margin-list);
-        &:last-child {
-          padding-bottom: 0 !important;
-        }
-      }
-    }
-
     @include bem.element('list') {
       @include margin(auto, $properties: margin-bottom);
     }
 
     @include bem.element('list-item') {
       @include margin(auto, $properties: margin-bottom, $value-mobile: $typography-margin-list);
+      justify-content: center;
 
-      .utrecht-link {
-        display: flex;
-        justify-content: center;
+      .utrecht-link-button {
         width: 100%;
       }
     }
@@ -120,5 +92,13 @@
     @include margin($properties: margin-right);
     float: left;
     height: 34px;
+  }
+
+  .utrecht-link-button--openforms {
+    font-size: inherit;
+
+    &:hover {
+      text-decoration: var(--utrecht-link-text-decoration);
+    }
   }
 }
