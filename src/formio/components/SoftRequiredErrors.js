@@ -33,7 +33,11 @@ class SoftRequiredErrors extends FormioContentField {
     // check which components have an empty value
     for (const component of softRequiredComponents) {
       const isEmpty = component.isEmpty();
-      if (isEmpty) missingFieldLabels.push(component.label);
+      const isParentVisible = component.parent?.visible;
+      const isComponentVisible = component.visible;
+
+      if (isEmpty && isParentVisible && isComponentVisible)
+        missingFieldLabels.push(component.label);
     }
 
     if (!missingFieldLabels.length) return '';
