@@ -1,7 +1,9 @@
+import {LinkButton as UtrechtButtonLink} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 
 import AbortButton from 'components/AbortButton';
 import {OFButton} from 'components/Button';
+import FAIcon from 'components/FAIcon';
 import {Literal} from 'components/Literal';
 import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
@@ -25,7 +27,27 @@ const ButtonsToolbar = ({
 
   return (
     <>
-      <Toolbar modifiers={['mobile-reverse-order', 'bottom']}>
+      <Toolbar modifiers={['bottom']}>
+        <ToolbarList>
+          {showSubmitButton && (
+            <OFButton
+              type="submit"
+              appearance="primary-action-button"
+              name="next"
+              disabled={!canSubmitStep}
+              className="openforms-button-with-icon"
+            >
+              {isCheckingLogic ? (
+                <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
+              ) : (
+                <>
+                  <Literal name="nextText" />
+                  <FAIcon icon="arrow-right-long" />
+                </>
+              )}
+            </OFButton>
+          )}
+        </ToolbarList>
         <ToolbarList>
           {previousPage && (
             <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />
@@ -35,38 +57,22 @@ const ButtonsToolbar = ({
           {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
           need to be its own prop */}
           {canSuspendForm && (
-            <OFButton
-              type="button"
-              appearance="secondary-action-button"
+            <UtrechtButtonLink
               name="save"
               onClick={onFormSave}
+              className="utrecht-link-button--openforms"
             >
+              <FAIcon icon="arrow-right-long" />
               <Literal name="saveText" />
-            </OFButton>
-          )}
-          {showSubmitButton && (
-            <OFButton
-              type="submit"
-              appearance="primary-action-button"
-              name="next"
-              disabled={!canSubmitStep}
-            >
-              {isCheckingLogic ? (
-                <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
-              ) : (
-                <Literal name="nextText" />
-              )}
-            </OFButton>
+            </UtrechtButtonLink>
           )}
         </ToolbarList>
-      </Toolbar>
-      {!hideAbortButton && (
-        <Toolbar modifiers={['bottom', 'reverse']}>
+        {!hideAbortButton && (
           <ToolbarList>
             <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
           </ToolbarList>
-        </Toolbar>
-      )}
+        )}
+      </Toolbar>
     </>
   );
 };

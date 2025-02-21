@@ -123,7 +123,7 @@ out your email address for verification purposes.`}
               />
             </div>
 
-            <Toolbar modifiers={['bottom', 'reverse']}>
+            <Toolbar modifiers={['bottom']}>
               <ToolbarList>
                 <OFButton type="submit" appearance="primary-action-button">
                   <FormattedMessage

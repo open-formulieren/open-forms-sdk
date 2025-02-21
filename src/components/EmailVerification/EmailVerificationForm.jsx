@@ -154,7 +154,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
               </>
             )}
 
-            <Toolbar modifiers={['bottom', 'reverse']}>
+            <Toolbar modifiers={['bottom']}>
               <ToolbarList>
                 {mode === 'sendCode' && (
                   <SendCodeButton

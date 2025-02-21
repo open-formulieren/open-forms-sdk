@@ -26,9 +26,7 @@ const Toolbar = ({children, modifiers = []}) => {
 
 Toolbar.propTypes = {
   children: PropTypes.node,
-  modifiers: PropTypes.arrayOf(
-    PropTypes.oneOf(['start', 'bottom', 'reverse', 'compact', 'mobile-reverse-order', 'column'])
-  ),
+  modifiers: PropTypes.arrayOf(PropTypes.oneOf(['start', 'bottom', 'compact', 'column'])),
 };
 
 export {Toolbar, ToolbarList};

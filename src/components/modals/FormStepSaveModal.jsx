@@ -212,7 +212,7 @@ const FormStepSaveModal = ({
               autocomplete="email"
             />
 
-            <Toolbar modifiers={['bottom', 'reverse']}>
+            <Toolbar modifiers={['bottom']}>
               <ToolbarList>
                 <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
                   <FormattedMessage

@@ -66,7 +66,7 @@ const GenericSummary = ({
             prevPage={prevPage}
             onPrevPage={onPrevPage}
           />
-          <Toolbar modifiers={['bottom', 'reverse']}>
+          <Toolbar modifiers={['bottom']}>
             <ToolbarList>
               <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
             </ToolbarList>
