@@ -109,3 +109,192 @@ export const FillField = {
     });
   },
 };
+
+export const WithFieldSetAndNestedComponent = {
+  name: 'With fieldset and nested component',
+  args: {
+    components: [
+      {
+        type: 'fieldset',
+        key: 'fieldset',
+        label: "Auto's",
+        groupLabel: 'Auto',
+        components: [
+          {
+            type: 'file',
+            key: 'file',
+            label: 'Soft required upload',
+            openForms: {softRequired: true},
+          },
+        ],
+      },
+
+      {
+        type: 'softRequiredErrors',
+        html: `
+        <p>Not all required fields are filled out. That can get expensive!</p>
+
+        {{ missingFields }}
+
+        <p>Are you sure you want to continue?</p>
+          `,
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // needed for formio
+    await sleep(100);
+
+    expect(await canvas.findByText("Auto's")).toBeVisible();
+
+    await canvas.findByText('Not all required fields are filled out. That can get expensive!');
+    const list = await canvas.findByRole('list', {name: 'Empty fields'});
+    const listItem = within(list).getByRole('listitem');
+    expect(listItem.textContent).toEqual('Soft required upload');
+  },
+};
+
+export const WithFieldSetAndHiddenParent = {
+  name: 'With fieldset and hidden parent',
+  args: {
+    components: [
+      {
+        type: 'fieldset',
+        key: 'fieldset',
+        label: "Auto's",
+        groupLabel: 'Auto',
+        hidden: true,
+        components: [
+          {
+            type: 'file',
+            key: 'file',
+            label: 'Soft required upload',
+            openForms: {softRequired: true},
+          },
+        ],
+      },
+
+      {
+        type: 'softRequiredErrors',
+        html: `
+        <p>Not all required fields are filled out. That can get expensive!</p>
+
+        {{ missingFields }}
+
+        <p>Are you sure you want to continue?</p>
+          `,
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // needed for formio
+    await sleep(100);
+
+    await expect(canvas.queryByText("Auto's")).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByText('Not all required fields are filled out. That can get expensive!')
+    ).not.toBeInTheDocument();
+  },
+};
+
+export const WithEditGridAndNestedComponent = {
+  name: 'With editgrid and nested component',
+  args: {
+    components: [
+      {
+        type: 'editgrid',
+        key: 'editgrid',
+        label: "Auto's",
+        groupLabel: 'Auto',
+        hidden: false,
+        components: [
+          {
+            type: 'file',
+            key: 'file',
+            label: 'Soft required upload',
+            openForms: {softRequired: true},
+          },
+        ],
+      },
+
+      {
+        type: 'softRequiredErrors',
+        html: `
+        <p>Not all required fields are filled out. That can get expensive!</p>
+
+        {{ missingFields }}
+
+        <p>Are you sure you want to continue?</p>
+          `,
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // needed for formio
+    await sleep(100);
+
+    expect(await canvas.findByText("Auto's")).toBeVisible();
+
+    const addButton = await canvas.findByRole('button', {name: 'Add Another'});
+    await userEvent.click(addButton);
+
+    const saveButton = await canvas.findByRole('button', {name: 'Save'});
+    await userEvent.click(saveButton);
+
+    await canvas.findByText('Not all required fields are filled out. That can get expensive!');
+    const list = await canvas.findByRole('list', {name: 'Empty fields'});
+    const listItem = within(list).getByRole('listitem');
+    expect(listItem.textContent).toEqual('Soft required upload');
+  },
+};
+
+export const WithEditGridAndHiddenParent = {
+  name: 'With editgrid and hidden parent',
+  args: {
+    components: [
+      {
+        type: 'editgrid',
+        key: 'editgrid',
+        label: "Auto's",
+        groupLabel: 'Auto',
+        hidden: true,
+        components: [
+          {
+            type: 'file',
+            key: 'file',
+            label: 'Soft required upload',
+            openForms: {softRequired: true},
+          },
+        ],
+      },
+
+      {
+        type: 'softRequiredErrors',
+        html: `
+        <p>Not all required fields are filled out. That can get expensive!</p>
+
+        {{ missingFields }}
+
+        <p>Are you sure you want to continue?</p>
+          `,
+      },
+    ],
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // needed for formio
+    await sleep(100);
+
+    await expect(canvas.queryByText("Auto's")).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByText('Not all required fields are filled out. That can get expensive!')
+    ).not.toBeInTheDocument();
+  },
+};
