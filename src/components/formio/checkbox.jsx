@@ -22,6 +22,4 @@ FormioCheckbox.propTypes = {
   }).isRequired,
 };
 
-export const emptyValue = false;
-
 export default FormioCheckbox;
