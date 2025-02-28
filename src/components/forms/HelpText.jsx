@@ -2,6 +2,9 @@ import {FormFieldDescription} from '@utrecht/component-library-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+/**
+ * @deprecated
+ */
 const HelpText = ({children, ...props}) => {
   if (!children) return null;
   return (

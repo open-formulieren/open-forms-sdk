@@ -1,3 +1,4 @@
+import {TextField} from '@open-formulieren/formio-renderer';
 import {Formik} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
@@ -10,7 +11,6 @@ import {OFButton} from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import {EmailField} from 'components/forms';
 import {ValidationError} from 'errors';
 
 const CancelAppointment = () => {
@@ -105,7 +105,8 @@ out your email address for verification purposes.`}
                 />
               </Body>
 
-              <EmailField
+              <TextField
+                type="email"
                 name="email"
                 isRequired
                 label={

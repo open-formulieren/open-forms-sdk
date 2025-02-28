@@ -42,6 +42,9 @@ LabelContent.propTypes = {
   type: PropTypes.string,
 };
 
+/**
+ * @deprecated
+ */
 const Label = ({id, isRequired = false, disabled = false, children}) => (
   <Paragraph className="utrecht-form-field__label">
     <LabelContent id={id} isRequired={isRequired} disabled={disabled}>

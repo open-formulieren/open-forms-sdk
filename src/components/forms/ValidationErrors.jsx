@@ -1,6 +1,9 @@
 import {FormFieldDescription} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 
+/**
+ * @deprecated
+ */
 const ValidationErrors = ({error = '', id}) => {
   if (!error) return null;
   return (

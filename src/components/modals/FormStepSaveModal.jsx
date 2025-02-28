@@ -1,6 +1,7 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
+import {TextField} from '@open-formulieren/formio-renderer';
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
@@ -15,7 +16,6 @@ import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import {EmailField} from 'components/forms';
 import Modal from 'components/modals/Modal';
 
 const initialState = {
@@ -199,7 +199,8 @@ const FormStepSaveModal = ({
                 values={{numberOfDays: suspendFormUrlLifetime}}
               />
             </Body>
-            <EmailField
+            <TextField
+              type="email"
               name="email"
               isRequired
               label={intl.formatMessage(FIELD_LABELS.email)}
@@ -209,7 +210,7 @@ const FormStepSaveModal = ({
                   defaultMessage="The email address where you will receive the resume link."
                 />
               }
-              autocomplete="email"
+              autoComplete="email"
             />
 
             <Toolbar modifiers={['bottom', 'reverse']}>

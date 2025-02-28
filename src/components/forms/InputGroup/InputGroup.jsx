@@ -5,6 +5,9 @@ import {LabelContent} from 'components/forms/Label';
 
 import './InputGroup.scss';
 
+/**
+ * @deprecated
+ */
 export const InputGroup = ({
   children,
   label,
@@ -30,6 +33,9 @@ InputGroup.propTypes = {
   invalid: PropTypes.bool,
 };
 
+/**
+ * @deprecated
+ */
 export const InputGroupItem = ({children, component: Component = 'span'}) => (
   <Component className="openforms-input-group__item">{children}</Component>
 );

@@ -5,6 +5,9 @@ import React from 'react';
 
 import {HelpText, Label, ValidationErrors} from 'components/forms';
 
+/**
+ * @deprecated
+ */
 export const TextField = ({
   name,
   label = '',

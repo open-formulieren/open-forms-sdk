@@ -1,13 +1,15 @@
+import {TextField} from '@open-formulieren/formio-renderer';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
-import EmailField from './EmailField';
-
 export default {
   title: 'Pure React Components / Forms / EmailField',
   decorators: [FormikDecorator],
-  component: EmailField,
+  component: TextField,
+  args: {
+    type: 'email',
+  },
   parameters: {
     formik: {
       initialValues: {
@@ -20,7 +22,6 @@ export default {
 export const Default = {
   args: {
     name: 'email',
-    id: 'email',
     label: 'Email',
     description: 'This is a custom description for the email field',
     disabled: false,
@@ -59,7 +60,6 @@ export const ValidationError = {
   },
   args: {
     name: 'email',
-    id: 'email',
     label: 'Email',
     description: 'Description above the errors',
     disabled: false,

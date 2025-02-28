@@ -17,6 +17,7 @@ import {LabelContent} from 'components/forms/Label';
  * A radio field with a set of options.
  *
  * @reference https://nl-design-system.github.io/utrecht/storybook-react/?path=/docs/react-component-form-field-radio-group--docs
+ * @deprecated
  */
 export const RadioField = ({
   name,

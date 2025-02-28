@@ -2,6 +2,9 @@ import PropTypes from 'prop-types';
 
 import {TextField} from 'components/forms';
 
+/**
+ * @deprecated
+ */
 const EmailField = props => <TextField {...props} type="email" />;
 
 EmailField.propTypes = {
