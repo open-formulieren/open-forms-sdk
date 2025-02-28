@@ -1,3 +1,6 @@
+import {FormioForm} from '@open-formulieren/formio-renderer';
+import {fn} from '@storybook/test';
+
 import {FormikDecorator} from 'story-utils/decorators';
 
 import {FormioComponent} from './index';
@@ -5,10 +8,24 @@ import {FormioComponent} from './index';
 export default {
   title: 'Private API / Formio',
   component: FormioComponent,
-  decorators: [FormikDecorator],
+  args: {
+    onSubmit: fn(),
+    requiredFieldsWithAsterisk: true,
+  },
 };
 
+const render = ({component, onSubmit, requiredFieldsWithAsterisk}) => (
+  <FormioForm
+    components={[component]}
+    onSubmit={onSubmit}
+    requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
+  >
+    {null}
+  </FormioForm>
+);
+
 export const TextField = {
+  render,
   args: {
     component: {
       key: 'textfield',
@@ -22,6 +39,7 @@ export const TextField = {
 };
 
 export const EmailField = {
+  render,
   args: {
     component: {
       key: 'email',
@@ -35,6 +53,7 @@ export const EmailField = {
 };
 
 export const DateField = {
+  render,
   args: {
     component: {
       key: 'date',
@@ -51,6 +70,7 @@ export const DateField = {
 };
 
 export const Radio = {
+  render,
   args: {
     component: {
       key: 'radio',
@@ -69,6 +89,7 @@ export const Radio = {
 
 export const Checkbox = {
   render: args => <FormioComponent {...args} />,
+  decorators: [FormikDecorator],
   args: {
     component: {
       key: 'checkbox',
