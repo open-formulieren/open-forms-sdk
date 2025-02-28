@@ -1,27 +1,3 @@
-@use 'microscope-sass/lib/bem';
-
-@import '@utrecht/components/dist/form-field-description/css/index.css';
-
-// Extensions available to all themes
-.utrecht-form-field-description {
-  @include bem.modifier('openforms-errors') {
-    overflow-wrap: break-word;
-    font-weight: var(--of-utrecht-form-field-description-errors-font-weight, inherit);
-    line-height: var(--of-utrecht-form-field-description-errors-line-height, inherit);
-  }
-}
-
-// Extensions scoped to our own theme
-.openforms-theme {
-  .utrecht-form-field-description {
-    @include bem.modifier('openforms-errors') {
-      &:empty {
-        --utrecht-form-field-description-margin-block-start: 0;
-      }
-    }
-  }
-}
-
 // the formio styles conflict with our NL DS components, applying double padding and
 // causing overflows, so we reset them.
 .formio-error-wrapper {
