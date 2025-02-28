@@ -1,6 +1,7 @@
 /**
  * The addressNL component.
  */
+import {TextField} from '@open-formulieren/formio-renderer';
 import {Formik, useFormikContext} from 'formik';
 import debounce from 'lodash/debounce';
 import {useContext, useEffect} from 'react';
@@ -12,7 +13,6 @@ import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
-import {TextField} from 'components/forms';
 import enableValidationPlugins from 'formio/validators/plugins';
 
 import './AddressNL.scss';
@@ -447,7 +447,7 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
                 defaultMessage="Street name"
               />
             }
-            disabled
+            isDisabled
           />
           <TextField
             name="city"
@@ -457,7 +457,7 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
                 defaultMessage="City"
               />
             }
-            disabled
+            isDisabled
           />
         </>
       )}

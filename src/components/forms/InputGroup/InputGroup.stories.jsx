@@ -1,7 +1,8 @@
+import {TextField} from '@open-formulieren/formio-renderer';
 import {FormField, FormLabel, Textbox} from '@utrecht/component-library-react';
 import {Field} from 'formik';
 
-import {SelectField, TextField} from 'components/forms';
+import {SelectField} from 'components/forms';
 import {FormikDecorator} from 'story-utils/decorators';
 
 import {InputGroup, InputGroupItem} from './InputGroup';
