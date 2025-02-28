@@ -68,6 +68,7 @@ export const Radio = {
 };
 
 export const Checkbox = {
+  render: args => <FormioComponent {...args} />,
   args: {
     component: {
       key: 'checkbox',
