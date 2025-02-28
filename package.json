@@ -80,7 +80,7 @@
     "makemessages-en": "formatjs extract 'src/**/*.{js,jsx}' --format bin/i18n-formatter.js --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages-nl": "formatjs extract 'src/**/*.{js,jsx}' --format bin/i18n-formatter.js --out-file src/i18n/messages/nl.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages": "npm run makemessages-nl && npm run makemessages-en",
-    "compilemessages": "formatjs compile-folder --ast src/i18n/messages src/i18n/compiled",
+    "compilemessages": "formatjs compile",
     "build:design-tokens": "npm run build --workspace=design-tokens",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build --webpack-stats-json",
