@@ -37,7 +37,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
     submitStep,
     appointmentData,
     stepData,
-    stepErrors: {initialErrors, initialTouched},
+    stepErrors: {initialErrors},
     clearStepErrors,
   } = useCreateAppointmentContext();
   const navigate = useNavigate();
@@ -84,6 +84,8 @@ const ContactDetailsStep = ({navigateTo = null}) => {
       {!loading && (
         <FormioForm
           components={components}
+          values={stepData}
+          errors={initialErrors?.contactDetails}
           onSubmit={async values => {
             flushSync(() => {
               clearStepErrors();
