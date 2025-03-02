@@ -1,11 +1,10 @@
+import {HelpText, ValidationErrors} from '@open-formulieren/formio-renderer';
+import DateInputGroup from '@open-formulieren/formio-renderer/components/forms/DateField/DateInputGroup';
 import {FormField} from '@utrecht/component-library-react';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {HelpText, ValidationErrors} from 'components/forms';
-
-import DateInputGroup from './DateInputGroup';
 import DatePicker from './DatePicker';
 
 /**

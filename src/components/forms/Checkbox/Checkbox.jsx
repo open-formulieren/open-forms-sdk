@@ -1,11 +1,9 @@
+import {HelpText, ValidationErrors} from '@open-formulieren/formio-renderer';
+import {LabelContent} from '@open-formulieren/formio-renderer/components/forms/Label';
 import {FormField, Checkbox as UtrechtCheckbox} from '@utrecht/component-library-react';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
 import {useId} from 'react';
-
-import {HelpText, ValidationErrors} from 'components/forms';
-
-import {LabelContent} from '../Label';
 
 const Checkbox = ({
   name,
@@ -27,7 +25,7 @@ const Checkbox = ({
   return (
     <FormField type="checkbox" invalid={invalid} className="utrecht-form-field--openforms">
       <div className="utrecht-form-field__label utrecht-form-field__label--checkbox">
-        <LabelContent id={id} isRequired={isRequired} disabled={disabled} type="checkbox">
+        <LabelContent id={id} isRequired={isRequired} isDisabled={disabled} type="checkbox">
           {label}
         </LabelContent>
       </div>
@@ -45,7 +43,7 @@ const Checkbox = ({
         {...inputProps}
       />
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} id={errorMessageId} />}
+      {touched && errorMessageId && <ValidationErrors error={error} id={errorMessageId} />}
     </FormField>
   );
 };

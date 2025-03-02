@@ -1,3 +1,4 @@
+import {HelpText, Label, ValidationErrors} from '@open-formulieren/formio-renderer';
 import {FormField} from '@utrecht/component-library-react';
 import classNames from 'classnames';
 import {Field, useFormikContext} from 'formik';
@@ -6,8 +7,6 @@ import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 import Select from 'react-select';
-
-import {HelpText, Label, ValidationErrors} from 'components/forms';
 
 const SelectField = ({
   name,
@@ -78,7 +77,7 @@ const SelectField = ({
 
   return (
     <FormField invalid={invalid} className="utrecht-form-field--openforms">
-      <Label id={id} isRequired={isRequired} disabled={disabled}>
+      <Label id={id} isRequired={isRequired} isDisabled={disabled}>
         {label}
       </Label>
       <Field
@@ -140,7 +139,7 @@ const SelectField = ({
         aria-describedby={errorMessageId}
       />
       <HelpText>{description}</HelpText>
-      {touched && <ValidationErrors error={error} id={errorMessageId} />}
+      {touched && errorMessageId && <ValidationErrors error={error} id={errorMessageId} />}
     </FormField>
   );
 };
