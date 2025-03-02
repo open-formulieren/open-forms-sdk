@@ -1,3 +1,4 @@
+import {Label} from '@open-formulieren/formio-renderer';
 import {Paragraph, Textbox} from '@utrecht/component-library-react';
 import {formatISO} from 'date-fns';
 import {useFormikContext} from 'formik';
@@ -7,7 +8,7 @@ import {flushSync} from 'react-dom';
 import {useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
-import {FloatingWidget, Label, useFloatingWidget} from 'components/forms';
+import {FloatingWidget, useFloatingWidget} from 'components/forms';
 import {getBEMClassName} from 'utils';
 
 import DatePickerCalendar from './DatePickerCalendar';
@@ -69,7 +70,7 @@ const DatePicker = ({
   const {onFocus, ...referenceProps} = getReferenceProps();
   return (
     <>
-      <Label id={id} isRequired={isRequired} disabled={disabled}>
+      <Label id={id} isRequired={isRequired} isDisabled={disabled}>
         {label}
       </Label>
       <Paragraph className={getBEMClassName('datepicker-textbox')}>

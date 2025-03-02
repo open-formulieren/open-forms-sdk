@@ -1,5 +1,8 @@
-import {HelpText, ValidationErrors} from '@open-formulieren/formio-renderer';
-import DateInputGroup from '@open-formulieren/formio-renderer/components/forms/DateField/DateInputGroup';
+import {
+  HelpText,
+  DateField as RendererDateField,
+  ValidationErrors,
+} from '@open-formulieren/formio-renderer';
 import {FormField} from '@utrecht/component-library-react';
 import {Field, useFormikContext} from 'formik';
 import PropTypes from 'prop-types';
@@ -14,21 +17,22 @@ import DatePicker from './DatePicker';
  * manually type in the date. However, when the field is focused, this toggles the
  * calendar where a date can be selected using a pointer device.
  *
+ * The input group widget is implemented in the renderer package, the date picker not
+ * yet, so if the input group widget is specified, we defer to the existing component.
+ *
  * TODO: on mobile devices, use the native date picker?
  * TODO: when typing in the value, use the pattern/mask approach like form.io?
  */
-const DateField = ({
+const DatepickerDateField = ({
   name,
   label = '',
   isRequired = false,
   description = '',
   id = '',
   disabled = false,
-  widget = 'inputGroup',
   minDate,
   maxDate,
   disabledDates = [],
-  showFormattedDate = false,
   onChange,
   ...props
 }) => {
@@ -45,30 +49,12 @@ const DateField = ({
     selected: false,
     disabled: true,
   }));
-
-  let Widget = DateInputGroup;
-  let fieldProps = {};
-  switch (widget) {
-    case 'datepicker': {
-      Widget = DatePicker;
-      fieldProps = {
-        calendarProps: {minDate, maxDate, events: calendarEvents},
-      };
-      break;
-    }
-    default:
-    case 'inputGroup': {
-      Widget = DateInputGroup;
-      fieldProps = {showFormattedDate};
-      break;
-    }
-  }
   const errorMessageId = invalid ? `${id}-error-message` : undefined;
 
   return (
     <FormField type="text" invalid={invalid} className="utrecht-form-field--openforms">
       <Field
-        as={Widget}
+        as={DatePicker}
         name={name}
         label={label}
         isRequired={isRequired}
@@ -77,7 +63,7 @@ const DateField = ({
         invalid={invalid}
         extraOnChange={onChange}
         aria-describedby={errorMessageId}
-        {...fieldProps}
+        calendarProps={{minDate, maxDate, events: calendarEvents}}
         {...props}
       />
       <HelpText>{description}</HelpText>
@@ -86,9 +72,7 @@ const DateField = ({
   );
 };
 
-export const WIDGETS = ['datepicker', 'inputGroup'];
-
-DateField.propTypes = {
+DatepickerDateField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.node,
   isRequired: PropTypes.bool,
@@ -98,9 +82,21 @@ DateField.propTypes = {
   minDate: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   disabledDates: PropTypes.arrayOf(PropTypes.string),
-  widget: PropTypes.oneOf(WIDGETS),
-  showFormattedDate: PropTypes.bool,
   onChange: PropTypes.func,
 };
 
-export default DateField;
+export const WIDGETS = ['datepicker', 'inputGroup'];
+
+// Temporary wrapper until the calendar/date picker is also supported in the renderer.
+const DateFieldWrapper = ({widget = 'inputGroup', ...props}) => {
+  if (widget === 'inputGroup') {
+    return <RendererDateField widget={widget} {...props} />;
+  }
+  return <DatepickerDateField widget={widget} {...props} />;
+};
+
+DateFieldWrapper.propTypes = {
+  widget: PropTypes.oneOf(WIDGETS),
+};
+
+export default DateFieldWrapper;

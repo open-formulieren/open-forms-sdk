@@ -13,9 +13,6 @@ export default {
     widget: 'datepicker',
     onChange: undefined,
   },
-  argTypes: {
-    showFormattedDate: {table: {disable: true}},
-  },
   parameters: {
     formik: {
       initialValues: {

@@ -6,4 +6,3 @@ export * from './Checkbox';
 
 // helpers
 export * from './FloatingWidget';
-export {InputGroup, InputGroupItem} from './InputGroup';
