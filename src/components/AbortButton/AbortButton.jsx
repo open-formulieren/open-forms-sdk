@@ -1,7 +1,8 @@
+import {LinkButton as UtrechtButtonLink} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {OFButton} from 'components/Button';
+import FAIcon from 'components/FAIcon';
 import {useAnalyticsToolsConfig} from 'components/analytics/AnalyticsToolConfigProvider';
 import {buildGovMetricUrl} from 'components/analytics/utils';
 import useFormContext from 'hooks/useFormContext';
@@ -50,9 +51,16 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
   );
 
   return (
-    <OFButton appearance="primary-action-button" hint="danger" name="abort" onClick={callback}>
-      {message}
-    </OFButton>
+    <>
+      <UtrechtButtonLink
+        name="abort"
+        onClick={callback}
+        className={'utrecht-link-button--openforms'}
+      >
+        <FAIcon icon="xmark" />
+        {message}
+      </UtrechtButtonLink>
+    </>
   );
 };
 

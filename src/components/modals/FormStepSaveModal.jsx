@@ -1,7 +1,7 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
-import {Button as UtrechtButton} from '@utrecht/component-library-react';
+import {ButtonGroup, Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
@@ -14,7 +14,6 @@ import {post} from 'api';
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {EmailField} from 'components/forms';
 import Modal from 'components/modals/Modal';
 
@@ -212,16 +211,14 @@ const FormStepSaveModal = ({
               autocomplete="email"
             />
 
-            <Toolbar modifiers={['bottom', 'reverse']}>
-              <ToolbarList>
-                <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
-                  <FormattedMessage
-                    description="Form save modal submit button"
-                    defaultMessage="Continue later"
-                  />
-                </UtrechtButton>
-              </ToolbarList>
-            </Toolbar>
+            <ButtonGroup className="utrecht-button-group--column" role="group">
+              <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
+                <FormattedMessage
+                  description="Form save modal submit button"
+                  defaultMessage="Continue later"
+                />
+              </UtrechtButton>
+            </ButtonGroup>
           </Body>
         )}
       </Formik>
