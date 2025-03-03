@@ -126,6 +126,7 @@
     "@testing-library/user-event": "^14.6.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@typescript-eslint/parser": "^8.19.0",
+    "@utrecht/button-group-css": "1.4.0",
     "@utrecht/component-library-css": "1.0.0-alpha.604",
     "@utrecht/component-library-react": "1.0.0-alpha.353",
     "@utrecht/components": "1.0.0-alpha.565",

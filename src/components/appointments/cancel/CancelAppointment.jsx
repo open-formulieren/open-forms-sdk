@@ -1,3 +1,4 @@
+import {ButtonGroup} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
@@ -9,7 +10,6 @@ import Body from 'components/Body';
 import {OFButton} from 'components/Button';
 import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {EmailField} from 'components/forms';
 import {ValidationError} from 'errors';
 
@@ -122,17 +122,14 @@ out your email address for verification purposes.`}
                 }
               />
             </div>
-
-            <Toolbar modifiers={['bottom', 'reverse']}>
-              <ToolbarList>
-                <OFButton type="submit" appearance="primary-action-button">
-                  <FormattedMessage
-                    description="Cancel appointment submit button"
-                    defaultMessage="Cancel appointment"
-                  />
-                </OFButton>
-              </ToolbarList>
-            </Toolbar>
+            <ButtonGroup className="utrecht-button-group--column" role="group">
+              <OFButton type="submit" appearance="primary-action-button">
+                <FormattedMessage
+                  description="Cancel appointment submit button"
+                  defaultMessage="Cancel appointment"
+                />
+              </OFButton>
+            </ButtonGroup>
           </Body>
         )}
       </Formik>
