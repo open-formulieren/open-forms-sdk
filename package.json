@@ -173,10 +173,7 @@
     "state-pool": {
       "immer": "9.0.21"
     },
-    "formiojs": "npm:@open-formulieren/formiojs@4.13.14",
-    "@storybook/core": {
-      "esbuild": "0.24.0"
-    }
+    "formiojs": "npm:@open-formulieren/formiojs@4.13.14"
   },
   "babel": {
     "presets": [
