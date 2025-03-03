@@ -233,7 +233,7 @@ export default defineConfig(({mode}) => {
       fakeTimers: {
         toFake: ['setTimeout', 'clearTimeout', 'Date'],
       },
-      setupFiles: ['./src/vitest.setup.mjs'],
+      setupFiles: ['./src/vitest.setup.mts'],
       coverage: {
         provider: 'istanbul',
         include: ['src/**/*.{js,jsx,ts,tsx}'],
