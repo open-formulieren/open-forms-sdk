@@ -6,7 +6,7 @@
     "target": "ES2021",
     "jsx": "react-jsx",
     "declaration": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "esModuleInterop": true,
@@ -21,7 +21,10 @@
     "paths": {
       "@/*": ["./*"],
       "@/sb-decorators": ["../.storybook/decorators.tsx"]
-    }
+    },
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
