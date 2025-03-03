@@ -17,6 +17,7 @@
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
     "noErrorTruncation": true,
+    "allowJs": true,
     "paths": {
       "@/*": ["./*"],
       "@/sb-decorators": ["../.storybook/decorators.tsx"]

@@ -71,6 +71,7 @@
   "scripts": {
     "start": "npm run build:design-tokens && vite",
     "build": "npm run build:umd && npm run build:esm && npm run build:esm-bundle",
+    "build:typecheck": "tsc --noEmit",
     "build:umd": "BUILD_TARGET=umd vite build",
     "build:esm": "BUILD_TARGET=esm vite build",
     "build:esm-bundle": "BUILD_TARGET=esm-bundle vite build",
@@ -122,6 +123,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/leaflet": "^1.9.16",
     "@typescript-eslint/parser": "^8.19.0",
     "@utrecht/component-library-css": "1.0.0-alpha.604",
     "@utrecht/component-library-react": "1.0.0-alpha.353",
