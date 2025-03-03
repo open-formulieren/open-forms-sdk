@@ -99,6 +99,8 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.16.0",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@codecov/vite-plugin": "^1.7.0",
     "@formatjs/cli": "^6.6.1",
     "@gemeente-denhaag/design-tokens-components": "^0.2.3-alpha.315",
@@ -180,6 +182,10 @@
     "formiojs": "npm:@open-formulieren/formiojs@4.13.14"
   },
   "babel": {
+    "presets": [
+      ["@babel/preset-react", { "runtime": "automatic" }],
+      "@babel/preset-typescript"
+    ],
     "plugins": [
       [
         "formatjs",
