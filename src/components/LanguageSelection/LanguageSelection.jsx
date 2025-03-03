@@ -81,6 +81,7 @@ const LanguageSelection = ({heading = DEFAULT_HEADING, headingLevel = 2}) => {
       // to error bounary
       setUpdatingLanguage(false);
       setErr(err);
+      return;
     }
     // update UI language
     setUpdatingLanguage(false);
