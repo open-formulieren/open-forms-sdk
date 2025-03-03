@@ -18,6 +18,7 @@
     "allowSyntheticDefaultImports": true,
     "noErrorTruncation": true,
     "allowJs": true,
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["./*"],
       "@/sb-decorators": ["../.storybook/decorators.tsx"]
