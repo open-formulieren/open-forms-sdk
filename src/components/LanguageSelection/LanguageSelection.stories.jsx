@@ -153,8 +153,8 @@ export const UnavailableLanguage = {
   play: async ({args, canvasElement}) => {
     const canvas = within(canvasElement);
     const frysk_button = await waitFor(() => canvas.findByText(/^fy$/i)); // wait for api info call to return
-    window.confirm = () => true;
     await userEvent.click(frysk_button);
-    await waitFor(() => expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(0)); // did not change language
+    expect(await canvas.findByRole('alert')).toBeVisible();
+    expect(args.onLanguageChangeDone).toHaveBeenCalledTimes(0); // did not change language
   },
 };
