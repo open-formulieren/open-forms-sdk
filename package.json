@@ -97,11 +97,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.18.6",
     "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-react-jsx": "^7.14.9",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/preset-react": "^7.18.6",
     "@codecov/vite-plugin": "^1.7.0",
     "@formatjs/cli": "^6.6.1",
     "@gemeente-denhaag/design-tokens-components": "^0.2.3-alpha.315",
