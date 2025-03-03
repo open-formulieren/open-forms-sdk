@@ -7,8 +7,8 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import type {OutputOptions} from 'rollup';
 import {defineConfig, loadEnv} from 'vite';
-import jsconfigPaths from 'vite-jsconfig-paths';
 import eslint from 'vite-plugin-eslint2';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import {coverageConfigDefaults} from 'vitest/config';
 
 import {cjsTokens, ejsPlugin} from './build/plugins.mjs';
@@ -126,7 +126,7 @@ export default defineConfig(({mode}) => {
       // they don't get transformed to inject the message ID. The solution is to rename the
       // file extension to .jsx/.tsx
       react({babel: {babelrc: true}}),
-      jsconfigPaths(),
+      tsconfigPaths(),
       eslint({
         build: true,
         emitErrorAsWarning: mode === 'development',
