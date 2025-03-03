@@ -2,13 +2,13 @@
 Open Formulieren SDK
 ====================
 
-:Version: 3.0.0
+:Version: 3.0.1
 :Source: https://github.com/open-formulieren/open-forms-sdk
 :Keywords: e-Formulieren, Common Ground, FormIO, API
 
 |docs|
 
-Snel en eenvoudig formulieren uit Open Formulieren integreren in uw eigen 
+Snel en eenvoudig formulieren uit Open Formulieren integreren in uw eigen
 website
 (`English version`_)
 
@@ -19,7 +19,7 @@ Introductie
 ===========
 
 De Open Formulieren Javascript SDK (source development kit) stelt gebruikers in
-staat om formulieren uit `Open Formulieren`_ te integreren, weer te geven en 
+staat om formulieren uit `Open Formulieren`_ te integreren, weer te geven en
 inzendingen te versturen. De SDK gebruikt hiervoor de Open Formulieren API, en
 is gebouwd op de `formio.js`_ SDK.
 
@@ -27,7 +27,7 @@ Een standaard stijl is bijgeleverd maar formulier elementen kunnen zo opgemaakt
 worden dat ze passen bij uw eigen website.
 
 Open Formulieren is ontwikkeld volgens de `Common Ground`_ principes, met veel
-plugins voor overheidsgebruik en met focus op gebruiksgemak voor zowel 
+plugins voor overheidsgebruik en met focus op gebruiksgemak voor zowel
 eindgebruikers als beheerders.
 
 .. _`formio.js`: https://github.com/formio/formio.js/

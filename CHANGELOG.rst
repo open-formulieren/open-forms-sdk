@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+3.0.1 (2025-03-03)
+==================
+
+Bugfix release
+
+* [#5086] Fixed soft-required errors being shown for hidden fields.
+
 3.0.0 (2025-01-06)
 ==================
 
@@ -15,7 +22,7 @@ changelog, which includes the alpha versions release notes.
 New features
 ------------
 
-* [#4984] Changed "abort" button's text to "cancel". 
+* [#4984] Changed "abort" button's text to "cancel".
 * [#4321] Forms can now have a submission limit. The SDK displays appropriate messages when this limit
   is reached.
 * [#2173] The map component now supports using a different background/tile layer.

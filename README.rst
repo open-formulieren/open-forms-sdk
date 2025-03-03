@@ -2,7 +2,7 @@
 Open Forms SDK
 ==============
 
-:Version: 3.0.0
+:Version: 3.0.1
 :Source: https://github.com/open-formulieren/open-forms-sdk
 :Keywords: e-Formulieren, Common Ground, FormIO, API
 
@@ -17,15 +17,15 @@ Developed by `Maykin Media B.V.`_, commissioned by `Dimpact`_.
 Introduction
 ============
 
-The Open Forms Javascript SDK (source development kit) enables users to embed, 
-render and submit forms that are defined in `Open Forms`_. The SDK leverages 
+The Open Forms Javascript SDK (source development kit) enables users to embed,
+render and submit forms that are defined in `Open Forms`_. The SDK leverages
 the Open Forms API, and is built on top of the `formio.js`_ SDK.
 
-A default style is included but rendered form elements can be styled in line 
+A default style is included but rendered form elements can be styled in line
 with your own website.
 
 Open Forms is developed in line with the `Common Ground`_ principles,
-with many plugins for government usage and with a strong focus on usability for 
+with many plugins for government usage and with a strong focus on usability for
 both end users and administrators.
 
 .. _`formio.js`: https://github.com/formio/formio.js/
