@@ -1,22 +1,29 @@
 import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
 
-import {FormioComponent} from '.';
 import * as FormioStories from './index.stories';
 
 <Meta of={FormioStories} />
 
 # Formio renderer
 
-This package implements a mimimal Form.io render in pure React, using Formik.
-
 <div style={{background: '#fff3cd', padding: '2px 10px', marginBottom: '1em'}}>
 **DISCLAIMER**
 
-This implementation will be fleshed out and provided in `@open-formulieren/formio-renderer`. Until
-that is ready, we provide this implementation.
+This is an experimental preview of the renderer provided by `@open-formulieren/formio-renderer`.
+Check that package/repository for an up to date status.
 
 </div>
 
-## Props
+The following component types are supported at the time of writing:
 
-<ArgTypes of={FormioComponent} />
+- `bsn`
+- `date` (limited to the input group widget)
+- `email`
+- `fieldset` (barebones, not feature complete)
+- `phoneNumber`
+- `radio`
+- `textfield`
+
+## Example
+
+<Canvas of={FormioStories.TextField} />

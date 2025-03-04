@@ -129,6 +129,34 @@
       "value": "Locatie en tijd"
     }
   ],
+  "3C29X9": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (niet verplicht)"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "addNotRequiredSuffix"
+    }
+  ],
   "4ASssJ": [
     {
       "type": 0,
@@ -1717,6 +1745,12 @@
       "value": "Ongeldige invoer."
     }
   ],
+  "ht1O2Z": [
+    {
+      "type": 0,
+      "value": "Ongeldig BSN"
+    }
+  ],
   "ie+hkb": [
     {
       "type": 0,
@@ -2241,6 +2275,18 @@
     {
       "type": 0,
       "value": "Verstuur code"
+    }
+  ],
+  "sGwqUb": [
+    {
+      "type": 0,
+      "value": "Een BSN moet uit 9 cijfers bestaan"
+    }
+  ],
+  "sP3xMn": [
+    {
+      "type": 0,
+      "value": "Ongeldig telefoonnummer - je mag enkel cijfers, de + of - tekens en spaties gebruiken. Bijvoorbeeld +316 123-456-78."
     }
   ],
   "sSmY1N": [

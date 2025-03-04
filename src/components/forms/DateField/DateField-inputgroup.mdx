@@ -1,8 +1,8 @@
 import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
 
-import DateField from './DateField';
+import {DateField} from '@open-formulieren/formio-renderer';
+
 import * as InputGroupStories from './DateField-inputgroup.stories';
-import DateInputGroup from './DateInputGroup';
 
 <Meta of={InputGroupStories} />
 
@@ -24,12 +24,6 @@ Use the prop `widget="inputGroup"` to use this widget.
 ## Props
 
 <ArgTypes of={DateField} exclude={['minDate', 'maxDate', 'disabledDates']} />
-
-**DateInputGroup props**
-
-Internally, the `DateField` uses the `DateInputGroup` widget.
-
-<ArgTypes of={DateInputGroup} />
 
 ## No asterisks
 

@@ -15,6 +15,7 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @use 'flatpickr/dist/flatpickr.min';
 @use 'formiojs/dist/formio.form';
 @use 'leaflet/dist/leaflet';
+@use '@open-formulieren/formio-renderer/formio-renderer.css';
 
 // output the design tokens under the .openforms-theme classname
 @use '@open-formulieren/design-tokens/dist/index';
@@ -40,11 +41,9 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/data-list';
 @import './scss/components/errors';
 @import './scss/components/formio-component';
-@import './scss/components/help-text';
 @import './scss/components/image';
 @import './scss/components/form-field';
 @import './scss/components/form-field-container';
-@import './scss/components/radio-field'; // must come after form-field due to some OF-specific overrides
 @import './scss/components/input';
 @import './scss/components/label';
 @import './scss/components/list';
@@ -53,7 +52,6 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/textarea';
 @import './scss/components/toolbar';
 @import './scss/components/tooltip';
-@import './scss/components/fieldset';
 @import './scss/components/loading';
 @import './scss/components/progress-indicator';
 @import './scss/components/previous-link';

@@ -1,8 +1,7 @@
+import {TextField} from '@open-formulieren/formio-renderer';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
-
-import {TextField} from './TextField';
 
 export default {
   title: 'Pure React Components / Forms / TextField',
@@ -20,7 +19,6 @@ export default {
 export const Default = {
   args: {
     name: 'test',
-    id: 'test',
     label: 'test',
     description: 'This is a custom description',
     disabled: false,

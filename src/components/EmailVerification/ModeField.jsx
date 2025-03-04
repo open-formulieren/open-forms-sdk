@@ -1,6 +1,5 @@
+import {RadioField} from '@open-formulieren/formio-renderer';
 import {useIntl} from 'react-intl';
-
-import {RadioField} from 'components/forms';
 
 const ModeField = () => {
   const intl = useIntl();

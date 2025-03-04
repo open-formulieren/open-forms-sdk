@@ -129,6 +129,34 @@
       "value": "Location and time"
     }
   ],
+  "3C29X9": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            },
+            {
+              "type": 0,
+              "value": " (not required)"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "addNotRequiredSuffix"
+    }
+  ],
   "4ASssJ": [
     {
       "type": 0,
@@ -1713,6 +1741,12 @@
       "value": "Invalid input."
     }
   ],
+  "ht1O2Z": [
+    {
+      "type": 0,
+      "value": "Invalid BSN"
+    }
+  ],
   "ie+hkb": [
     {
       "type": 0,
@@ -2237,6 +2271,18 @@
     {
       "type": 0,
       "value": "Send code"
+    }
+  ],
+  "sGwqUb": [
+    {
+      "type": 0,
+      "value": "A BSN must be 9 digits"
+    }
+  ],
+  "sP3xMn": [
+    {
+      "type": 0,
+      "value": "Invalid phone number - a phone number may only contain digits, the + or - sign or spaces"
     }
   ],
   "sSmY1N": [

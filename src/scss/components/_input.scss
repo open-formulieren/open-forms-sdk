@@ -4,63 +4,6 @@
 
 $input-padding: $grid-margin-2;
 
-.utrecht-textbox {
-  // copied over from the upstream CSS rules and dumped in private vars to easier pass
-  // them to calc rules.
-  --_of-utrecht-textbox-inline-padding-end: var(
-    --utrecht-textbox-padding-inline-end,
-    var(--utrecht-form-control-padding-inline-end, initial)
-  );
-  --_of-utrecht-textbox-inline-padding-start: var(
-    --utrecht-textbox-padding-inline-start,
-    var(--utrecht-form-control-padding-inline-start, initial)
-  );
-  --_of-utrecht-textbox-border-width: var(
-    --utrecht-textbox-border-width,
-    var(--utrecht-form-control-border-width)
-  );
-  --_of-utrecht-textbox-total-inline-padding: calc(
-    var(--_of-utrecht-textbox-inline-padding-end) + var(--_of-utrecht-textbox-inline-padding-start)
-  );
-
-  @include bem.modifier('openforms') {
-    font-weight: var(--of-input-font-weight, normal);
-  }
-
-  @include bem.modifier('openforms-date-day') {
-    --_of-utrecht-textbox-openforms-date-day-width: calc(
-      var(--_of-utrecht-textbox-total-inline-padding) + 3ch + 2 *
-        var(--_of-utrecht-textbox-border-width)
-    );
-    width: var(
-      --of-utrecht-textbox-openforms-date-day-width,
-      var(--_of-utrecht-textbox-openforms-date-day-width)
-    );
-  }
-
-  @include bem.modifier('openforms-date-month') {
-    --_of-utrecht-textbox-openforms-date-month-width: calc(
-      var(--_of-utrecht-textbox-total-inline-padding) + 3ch + 2 *
-        var(--_of-utrecht-textbox-border-width)
-    );
-    width: var(
-      --of-utrecht-textbox-openforms-date-month-width,
-      var(--_of-utrecht-textbox-openforms-date-month-width)
-    );
-  }
-
-  @include bem.modifier('openforms-date-year') {
-    --_of-utrecht-textbox-openforms-date-year-width: calc(
-      var(--_of-utrecht-textbox-total-inline-padding) + 5ch + 2 *
-        var(--_of-utrecht-textbox-border-width)
-    );
-    width: var(
-      --of-utrecht-textbox-openforms-date-year-width,
-      var(--_of-utrecht-textbox-openforms-date-year-width)
-    );
-  }
-}
-
 // overrides of the utrecht-textbox component specific to our theme
 .openforms-theme {
   .utrecht-textbox {

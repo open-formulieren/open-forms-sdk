@@ -1,3 +1,4 @@
+import RenderSettingsProvider from '@open-formulieren/formio-renderer/components/RendererSettingsProvider';
 import 'flatpickr';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -167,16 +168,20 @@ class OpenForm {
               debug: DEBUG,
             }}
           >
-            <NonceProvider nonce={CSPNonce.getValue()} cacheKey="sdk-react-select">
-              <I18NErrorBoundary>
-                <I18NManager
-                  languageSelectorTarget={this.languageSelectorTarget}
-                  onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
-                >
-                  <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
-                </I18NManager>
-              </I18NErrorBoundary>
-            </NonceProvider>
+            <RenderSettingsProvider
+              requiredFieldsWithAsterisk={this.formObject.requiredFieldsWithAsterisk}
+            >
+              <NonceProvider nonce={CSPNonce.getValue()} cacheKey="sdk-react-select">
+                <I18NErrorBoundary>
+                  <I18NManager
+                    languageSelectorTarget={this.languageSelectorTarget}
+                    onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
+                  >
+                    <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+                  </I18NManager>
+                </I18NErrorBoundary>
+              </NonceProvider>
+            </RenderSettingsProvider>
           </ConfigContext.Provider>
         </FormContext.Provider>
       </React.StrictMode>

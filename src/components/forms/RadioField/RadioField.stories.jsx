@@ -1,8 +1,7 @@
+import {RadioField} from '@open-formulieren/formio-renderer';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
-
-import {RadioField} from './RadioField';
 
 export default {
   title: 'Pure React Components / Forms / RadioField',
@@ -27,7 +26,6 @@ export default {
 export const Default = {
   args: {
     name: 'test',
-    id: 'test',
     label: 'Radio field',
     description: 'This is a custom description',
     disabled: false,
