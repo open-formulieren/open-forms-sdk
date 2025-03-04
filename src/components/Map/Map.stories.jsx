@@ -109,12 +109,22 @@ export const MapWithInteractions = {
   },
   play: async ({canvasElement, step, args}) => {
     const canvas = within(canvasElement);
-    const map = canvasElement.querySelector('.leaflet-pane.leaflet-map-pane');
+    const map = await canvas.findByTestId('leaflet-map');
+
+    await waitFor(() => {
+      expect(map).not.toBeNull();
+      expect(map).toBeVisible();
+    });
 
     await step('All interactions are available', async () => {
-      expect(await canvas.findByTitle('Pin/punt')).toBeVisible();
-      expect(await canvas.findByTitle('Veelhoek (polygoon)')).toBeVisible();
-      expect(await canvas.findByTitle('Lijn')).toBeVisible();
+      const pin = await canvas.findByTitle('Pin/punt');
+      await waitFor(() => expect(pin).toBeVisible());
+
+      const polygon = await canvas.findByTitle('Veelhoek (polygoon)');
+      await waitFor(() => expect(polygon).toBeVisible());
+
+      const line = await canvas.findByTitle('Lijn');
+      await waitFor(() => expect(line).toBeVisible());
     });
 
     await step('Draw a marker', async () => {
