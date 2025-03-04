@@ -112,6 +112,7 @@ const LeaftletMap = ({
           duration: 3000,
         }}
       >
+        <EnsureTestId />
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
@@ -170,6 +171,17 @@ LeaftletMap.propTypes = {
   }),
   disabled: PropTypes.bool,
   tileLayerUrl: PropTypes.string,
+};
+
+const EnsureTestId = () => {
+  const map = useMap();
+  const container = map.getContainer();
+  useEffect(() => {
+    if (!container.dataset.testid) {
+      container.dataset.testid = 'leaflet-map';
+    }
+  }, [container]);
+  return null;
 };
 
 const Geometry = ({geoJsonGeometry, featureGroupRef}) => {

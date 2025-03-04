@@ -45,11 +45,17 @@ jobs:
 
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm run build:design-tokens
+
+      - name: Run type checker
+        run: npm run build:typecheck
+
       - name: Build Javascript
         run: |
           echo "Building version $VITE_VERSION"
-          npm ci
-          npm run build:design-tokens
           VITE_VERSION=${VITE_VERSION} npm run build
         env:
           VITE_VERSION: ${{ steps.build-args.outputs.version }}
