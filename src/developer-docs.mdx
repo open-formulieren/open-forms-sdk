@@ -6,37 +6,11 @@ import {Meta} from '@storybook/blocks';
 
 This documentation is aimed at Open Formulieren-developers working on the SDK.
 
-## Router integration and flow of data
+## Typescript
 
-The SDK started with react-router v5, which didn't have data routers. Since the upgrade to v6.4, we
-_can_ make use of data routers, but not everything has been converted yet.
-
-New code should maximize the use of data routers. Ideally you can do this by exporting the nested
-routes in your code like so:
-
-```jsx
-export const routes = [
-  {
-    path: 'some-nested-path',
-    element: <MyComponent />,
-    // any additional data router features
-  },
-];
-```
-
-This implies that the element cannot take dynamic props anymore, which is the biggest draw-back.
-However, there are mechanisms to load data from the route arguments via the `loader` (see the
-react-router documentation). Currently we still do this manually using the `useAsync` hook.
-
-Often you need access to the `form` object. This is now exposed via React context for the entire
-application:
-
-```jsx
-const MyComponent = () => {
-  const form = useFormContext();
-  return (...);
-};
-```
+Since March 2025, you can use Typescript. New code should be done in Typescript, if you're updating
+existing code, check if you can convert that code to TS first before making the changes you want to
+make, so we can gradually improve the type safety of the codebase.
 
 ## Story guidelines
 
@@ -44,7 +18,7 @@ Stories are written in [CSF](https://storybook.js.org/docs/react/writing-stories
 mixed in with proze documentation, written in
 [MDX](https://storybook.js.org/docs/react/writing-docs/mdx) (Markdown + JSX).
 
-- Stories go in `<Component>.stories.js`
+- Stories go in `<Component>.stories.ts`
 - Documentation goes in `<Component>.mdx`
 - MDX documentation can (and should) import from the stories module.
 
@@ -56,6 +30,8 @@ The stories must have a default export which sets the title (and thus the locati
 component meta, decorators/parameters/argtypes relevant for all or most of the stories, e.g.:
 
 ```js
+import type {Meta, StoryObj} from '@storybook/react';
+
 import ExampleComponent from './ExampleComponent';
 
 export default {
@@ -68,7 +44,9 @@ export default {
   argTypes: {
     children: {control: {disable: true}},
   },
-};
+} satisfies Meta<typeof ExampleComponent>;
+
+type Story = storObj<typeof ExampleComponent>;
 ```
 
 **Stories for variants**
@@ -82,7 +60,7 @@ typically test using the `play` function too.
 An example:
 
 ```jsx
-export const Default = {
+export const Default: Story = {
   name: 'Default', // optional, inferred from the exported name
   args: {
     isEnabled: true,
@@ -174,10 +152,10 @@ would see a folder structure like:
 
 ```
 MyComponent
-├── index.js
-├── mocks.js
-├── MyComponent.jsx
-├── MyComponent.stories.js
+├── index.ts
+├── mocks.ts
+├── MyComponent.tsx
+├── MyComponent.stories.ts
 └── MyComponent.mdx
 ```
 
