@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {IntlProvider, createIntl, createIntlCache} from 'react-intl';
 import {useAsync} from 'react-use';
-import {createGlobalstate, useGlobalState} from 'state-pool';
+import {createState, useState as useGlobalState} from 'state-pool';
 
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get} from 'api';
@@ -15,7 +15,7 @@ import Loader from 'components/Loader';
 // ensure flatpickr locales are included in bundle
 flatpickr.l10ns.nl = Dutch;
 
-const currentLanguage = createGlobalstate('nl');
+const currentLanguage = createState('nl');
 
 const setLanguage = langCode => {
   currentLanguage.setValue(langCode);

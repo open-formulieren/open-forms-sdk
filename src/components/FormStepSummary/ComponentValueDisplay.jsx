@@ -159,7 +159,7 @@ const FileDisplay = ({component, value}) => {
 
   return (
     <Anchor key={url} href={url}>
-      {originalName} {/* eslint-disable-next-line react/style-prop-object */}
+      {originalName}
       (<FormattedNumber value={size} style="unit" unit={unit} />)
     </Anchor>
   );

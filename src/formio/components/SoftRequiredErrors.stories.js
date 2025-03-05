@@ -89,7 +89,7 @@ export const FillField = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
     // formio... :thisisfine:
-    await sleep(100);
+    await sleep(200);
 
     const ERROR_TEXT = 'Not all required fields are filled out. That can get expensive!';
 

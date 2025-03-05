@@ -1,5 +1,5 @@
 import '@gemeente-denhaag/design-tokens-components/dist/theme/index.css';
-import '@nl-design-system-unstable/rotterdam-design-tokens/dist/index.css';
+import '@gemeente-rotterdam/design-tokens/dist/index.css';
 import '@utrecht/design-tokens/dist/index.css';
 import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';

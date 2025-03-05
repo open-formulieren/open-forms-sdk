@@ -1,5 +1,5 @@
 import {FormattedDate, FormattedRelativeTime, useIntl} from 'react-intl';
-import {useGlobalState} from 'state-pool';
+import {useState as useGlobalState} from 'state-pool';
 
 import {sessionExpiresAt} from 'api';
 import {getVersion} from 'utils';

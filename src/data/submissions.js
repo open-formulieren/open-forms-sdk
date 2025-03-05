@@ -1,4 +1,4 @@
-import {createGlobalstate} from 'state-pool';
+import {createState} from 'state-pool';
 
 import {post} from 'api';
 
@@ -32,7 +32,7 @@ export const createSubmission = async (
   return submissionResponse.data;
 };
 
-export const globalSubmissionState = createGlobalstate({hasSubmission: false});
+export const globalSubmissionState = createState({hasSubmission: false});
 
 export const flagActiveSubmission = () => {
   globalSubmissionState.updateValue(state => {

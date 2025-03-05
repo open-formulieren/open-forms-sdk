@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import {useContext, useState} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
-import {useGlobalState} from 'state-pool';
+import {useState as useGlobalState} from 'state-pool';
 
 import {ConfigContext} from 'Context';
 import {get, put} from 'api';

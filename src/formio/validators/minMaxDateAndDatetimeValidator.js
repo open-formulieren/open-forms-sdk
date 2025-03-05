@@ -11,11 +11,11 @@ const createValidator = key => {
       if (key === 'validate.datetimeMinMax') options.timeStyle = 'short';
 
       const minDate = component.options.intl.formatDate(
-        parseISO(component.component.datePicker.minDate),
+        parseISO(component.component?.datePicker?.minDate || ''),
         options
       );
       const maxDate = component.options.intl.formatDate(
-        parseISO(component.component.datePicker.maxDate),
+        parseISO(component.component?.datePicker?.maxDate || ''),
         options
       );
 
