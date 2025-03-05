@@ -127,7 +127,7 @@
     "@types/react-dom": "^18.3.5",
     "@typescript-eslint/parser": "^8.26.0",
     "@utrecht/component-library-react": "1.0.0-alpha.353",
-    "@utrecht/components": "1.0.0-alpha.565",
+    "@utrecht/components": "^4.0.0",
     "@utrecht/design-tokens": "^2.5.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-istanbul": "^3.0.7",

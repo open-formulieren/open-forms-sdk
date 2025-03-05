@@ -18,6 +18,6 @@
 // Reference: https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css_css-button-group--docs
 @include mobile-only {
   .utrecht-button-group {
-    @include utrecht-button-group--vertical;
+    @include utrecht-button-group--column;
   }
 }
