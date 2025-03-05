@@ -44,6 +44,7 @@ const NumberField = ({
         decimalSeparator,
         thousandSeparator,
         decimalScale: isInteger ? undefined : 2,
+        valueIsNumericString: thousandSeparator !== '.',
       };
   const errorMessageId = invalid ? `${id}-error-message` : undefined;
 
