@@ -40,7 +40,7 @@
     "flatpickr": "^4.6.9",
     "formik": "^2.2.9",
     "ibantools": "^4.5.1",
-    "immer": "^9.0.6",
+    "immer": "^10.1.1",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^4.2.0",
@@ -56,8 +56,8 @@
     "react-router": "^7.1.3",
     "react-select": "^5.7.3",
     "react-use": "^17.2.4",
-    "state-pool": "^0.8.0",
-    "use-immer": "^0.9.0",
+    "state-pool": "^0.10.1",
+    "use-immer": "^0.11.0",
     "zod": "^3.21.4",
     "zod-formik-adapter": "^1.2.0"
   },
@@ -170,9 +170,6 @@
     "yargs": "^17.1.1"
   },
   "overrides": {
-    "state-pool": {
-      "immer": "9.0.21"
-    },
     "formiojs": "npm:@open-formulieren/formiojs@4.13.14"
   },
   "babel": {

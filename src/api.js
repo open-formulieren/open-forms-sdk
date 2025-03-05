@@ -1,4 +1,4 @@
-import {createGlobalstate} from 'state-pool';
+import {createState} from 'state-pool';
 
 import {
   APIError,
@@ -18,7 +18,7 @@ const fetchDefaults = {
 
 const SessionExpiresInHeader = 'X-Session-Expires-In';
 
-let sessionExpiresAt = createGlobalstate({expiry: null});
+let sessionExpiresAt = createState({expiry: null});
 
 export const updateSessionExpiry = seconds => {
   const newExpiry = new Date();
