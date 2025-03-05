@@ -135,7 +135,7 @@
     "@utrecht/component-library-css": "1.0.0-alpha.604",
     "@utrecht/component-library-react": "1.0.0-alpha.353",
     "@utrecht/components": "1.0.0-alpha.565",
-    "@utrecht/design-tokens": "1.0.0-alpha.597",
+    "@utrecht/design-tokens": "^2.5.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-istanbul": "^3.0.7",
     "babel-plugin-formatjs": "^10.3.8",
