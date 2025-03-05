@@ -19,9 +19,7 @@ const render = ({component, onSubmit, requiredFieldsWithAsterisk}) => (
     components={[component]}
     onSubmit={onSubmit}
     requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
-  >
-    {null}
-  </FormioForm>
+  />
 );
 
 export const TextField = {

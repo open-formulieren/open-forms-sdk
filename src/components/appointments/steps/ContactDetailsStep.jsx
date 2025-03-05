@@ -95,6 +95,8 @@ const ContactDetailsStep = ({navigateTo = null}) => {
           }}
           requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
         >
+          {/* TODO: ensure we can pass an ID for the submit button so that we don't
+          need to rely on children anymore to submit the form */}
           <SubmitRow
             canSubmit={!loading}
             nextText={intl.formatMessage({
