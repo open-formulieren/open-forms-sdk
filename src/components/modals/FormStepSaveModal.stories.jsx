@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/named
 import {useArgs} from '@storybook/preview-api';
 import {expect, userEvent, within} from '@storybook/test';
 import {HttpResponse, http} from 'msw';
