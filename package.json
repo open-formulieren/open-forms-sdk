@@ -155,7 +155,7 @@
     "react-dom": "^18.2.0",
     "rimraf": "^6.0.1",
     "rollup": "^4.31.0",
-    "sass": "^1.32.12",
+    "sass-embedded": "^1.85.1",
     "storybook": "^8.6.3",
     "storybook-addon-remix-react-router": "^4.0.1",
     "storybook-addon-theme-provider": "^0.2.8",

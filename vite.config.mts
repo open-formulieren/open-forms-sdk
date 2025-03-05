@@ -218,6 +218,8 @@ export default defineConfig(({mode}) => {
         scss: {
           additionalData: `$fa-font-path: '@fortawesome/fontawesome-free/webfonts/';`,
           charset: false,
+          quietDeps: true,
+          silenceDeprecations: ['import', 'mixed-decls'],
         },
       },
     },
