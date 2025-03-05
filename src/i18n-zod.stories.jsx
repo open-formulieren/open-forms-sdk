@@ -1,3 +1,4 @@
+import {TextField} from '@open-formulieren/formio-renderer';
 import {userEvent, within} from '@storybook/test';
 import {ButtonGroup} from '@utrecht/component-library-react';
 import {Form, Formik} from 'formik';
@@ -6,7 +7,6 @@ import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {OFButton} from 'components/Button';
-import {EmailField, TextField} from 'components/forms';
 import useZodErrorMap from 'hooks/useZodErrorMap';
 
 export default {
@@ -103,7 +103,7 @@ const AccessibleErrorsExample = ({onSubmit}) => {
       <Form>
         <div className="openforms-form-field-container">
           <TextField name="name" label={labels.name} />
-          <EmailField name="email" label={labels.email} />
+          <TextField type="email" name="email" label={labels.email} />
           <ButtonGroup style={{justifyContent: 'flex-end'}}>
             <OFButton type="submit" appearance="primary-action-button">
               Submit

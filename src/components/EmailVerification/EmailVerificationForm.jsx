@@ -1,3 +1,4 @@
+import {TextField} from '@open-formulieren/formio-renderer';
 import {Link as UtrechtLink} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
@@ -12,7 +13,6 @@ import Body from 'components/Body';
 import {DisplayError} from 'components/Errors/ErrorBoundary';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import {Toolbar, ToolbarList} from 'components/Toolbar';
-import {TextField} from 'components/forms';
 import {ValidationError} from 'errors';
 
 import EnterCodeButton from './EnterCodeButton';

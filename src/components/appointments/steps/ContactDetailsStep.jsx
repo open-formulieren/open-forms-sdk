@@ -1,19 +1,16 @@
-import {Form, Formik} from 'formik';
+import {FormioForm} from '@open-formulieren/formio-renderer';
 import PropTypes from 'prop-types';
-import {useContext, useMemo} from 'react';
+import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
-import {z} from 'zod';
-import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {getCached, setCached} from 'cache';
 import {CardTitle} from 'components/Card';
 import Loader from 'components/Loader';
-import {FormioComponent, getEmptyValue, getSchema} from 'components/formio';
 import useTitle from 'hooks/useTitle';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
@@ -35,12 +32,12 @@ export const getContactDetailsFields = async (baseUrl, productIds) => {
 
 const ContactDetailsStep = ({navigateTo = null}) => {
   const intl = useIntl();
-  const {baseUrl} = useContext(ConfigContext);
+  const {baseUrl, requiredFieldsWithAsterisk} = useContext(ConfigContext);
   const {
     submitStep,
     appointmentData,
     stepData,
-    stepErrors: {initialErrors, initialTouched},
+    stepErrors: {initialErrors},
     clearStepErrors,
   } = useCreateAppointmentContext();
   const navigate = useNavigate();
@@ -64,18 +61,6 @@ const ContactDetailsStep = ({navigateTo = null}) => {
   }, [baseUrl, JSON.stringify(productIds)]);
   if (error) throw error;
 
-  const emptyValues =
-    !loading &&
-    Object.fromEntries(components.map(component => [component.key, getEmptyValue(component)]));
-
-  const validationSchema = useMemo(() => {
-    if (loading) return null;
-    const fieldSchemas = Object.fromEntries(
-      components.map(component => [component.key, getSchema(component)])
-    );
-    return z.object(fieldSchemas);
-  }, [loading, components]);
-
   // if we don't have products or appointment details in the state, redirect back to the start
   if (!products.length || !appointmentData.location || !appointmentData.datetime) {
     return <Navigate to="/" replace />;
@@ -97,47 +82,34 @@ const ContactDetailsStep = ({navigateTo = null}) => {
 
       {loading && <Loader modifiers={['centered']} />}
       {!loading && (
-        <Formik
-          initialValues={{...emptyValues, ...stepData}}
-          initialErrors={initialErrors?.contactDetails}
-          initialTouched={initialTouched?.contactDetails}
-          enableReinitialize
-          validateOnChange={false}
-          validateOnBlur={false}
-          validationSchema={
-            validationSchema ? toFormikValidationSchema(validationSchema) : undefined
-          }
-          onSubmit={(values, {setSubmitting}) => {
+        <FormioForm
+          components={components}
+          values={stepData}
+          errors={initialErrors?.contactDetails}
+          onSubmit={async values => {
             flushSync(() => {
               clearStepErrors();
               submitStep(values);
-              setSubmitting(false);
             });
             if (navigateTo !== null) navigate(navigateTo);
           }}
+          requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
         >
-          {/* TODO: don't do inline style */}
-          <Form style={{width: '100%'}}>
-            <div className="openforms-form-field-container">
-              {components.map(component => (
-                <FormioComponent key={component.key} component={component} />
-              ))}
-            </div>
-
-            <SubmitRow
-              canSubmit={Boolean(!loading && validationSchema)}
-              nextText={intl.formatMessage({
-                description: 'Appointments contact details step: next step text',
-                defaultMessage: 'To overview',
-              })}
-              previousText={intl.formatMessage({
-                description: 'Appointments contact details step: previous step text',
-                defaultMessage: 'Back to location and time',
-              })}
-              navigateBackTo="kalender"
-            />
-          </Form>
-        </Formik>
+          {/* TODO: ensure we can pass an ID for the submit button so that we don't
+          need to rely on children anymore to submit the form */}
+          <SubmitRow
+            canSubmit={!loading}
+            nextText={intl.formatMessage({
+              description: 'Appointments contact details step: next step text',
+              defaultMessage: 'To overview',
+            })}
+            previousText={intl.formatMessage({
+              description: 'Appointments contact details step: previous step text',
+              defaultMessage: 'Back to location and time',
+            })}
+            navigateBackTo="kalender"
+          />
+        </FormioForm>
       )}
     </>
   );

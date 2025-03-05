@@ -1,9 +1,8 @@
+import {DateField} from '@open-formulieren/formio-renderer';
 import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {Form, Formik} from 'formik';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
-
-import DateField from './DateField';
 
 export default {
   title: 'Pure React Components / Forms / DateField / Input group',
@@ -11,16 +10,13 @@ export default {
   decorators: [FormikDecorator],
   args: {
     widget: 'inputGroup',
-    showFormattedDate: false,
     description: '',
-    id: '',
-    disabled: false,
+    isDisabled: false,
   },
   argTypes: {
     minDate: {table: {disable: true}},
     maxDate: {table: {disable: true}},
-    disabledDates: {table: {disable: true}},
-    showFormattedDate: {control: 'boolean'},
+    isDisabledDates: {table: {disable: true}},
   },
   parameters: {
     formik: {
@@ -52,7 +48,7 @@ export const ISO8601 = {
       }}
     >
       <Form>
-        <DateField name="test" label="Test normalization" />
+        <DateField name="test" label="Test normalization" widget="inputGroup" />
         <button type="submit">Submit</button>
       </Form>
     </Formik>
@@ -65,10 +61,8 @@ export const ISO8601 = {
   },
   argTypes: {
     widget: {table: {disable: true}},
-    showFormattedDate: {table: {disable: true}},
     description: {table: {disable: true}},
-    id: {table: {disable: true}},
-    disabled: {table: {disable: true}},
+    isDisabled: {table: {disable: true}},
     name: {table: {disable: true}},
     label: {table: {disable: true}},
     isRequired: {table: {disable: true}},
