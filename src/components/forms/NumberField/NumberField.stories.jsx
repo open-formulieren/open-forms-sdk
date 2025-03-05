@@ -46,7 +46,7 @@ export const SmallNumbers = {
 
     // assert that we can type floats without localisation
     await userEvent.clear(input);
-    await userEvent.type(input, '1.5');
+    await userEvent.type(input, '1.5', {delay: 30});
     await expect(input).toHaveDisplayValue('1.5');
   },
 };
