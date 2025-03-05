@@ -1,5 +1,30 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+
+export interface AppDisplayProps {
+  /**
+   * Main content
+   */
+  children: React.ReactNode;
+  /**
+   * UI to change languages.
+   */
+  languageSwitcher?: React.ReactNode;
+  /**
+   * UI to display progression through the form steps.
+   */
+  progressIndicator?: React.ReactNode;
+  /**
+   * Element to display debug information.
+   */
+  appDebug?: React.ReactNode;
+  /**
+   * Main content.
+   *
+   * @deprecated Use children instead.
+   *
+   */
+  router?: React.ReactNode;
+}
 
 /**
  * Main application display component - this is the layout wrapper around content.
@@ -8,7 +33,7 @@ import PropTypes from 'prop-types';
  * is reserved for the main content.
  *
  */
-export const AppDisplay = ({
+export const AppDisplay: React.FC<AppDisplayProps> = ({
   children = null,
   languageSwitcher = null,
   progressIndicator = null,
@@ -29,19 +54,5 @@ export const AppDisplay = ({
     {appDebug && <div className="openforms-app__debug">{appDebug}</div>}
   </div>
 );
-
-AppDisplay.propTypes = {
-  children: PropTypes.node.isRequired,
-  languageSwitcher: PropTypes.node,
-  progressIndicator: PropTypes.node,
-  appDebug: PropTypes.node,
-  /**
-   * Main content.
-   *
-   * @deprecated Use children instead.
-   *
-   */
-  router: PropTypes.node,
-};
 
 export default AppDisplay;

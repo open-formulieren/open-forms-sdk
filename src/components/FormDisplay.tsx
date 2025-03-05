@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {useContext} from 'react';
 
 import {ConfigContext} from 'Context';
@@ -7,15 +6,29 @@ import {AppDisplay} from 'components/AppDisplay';
 import LanguageSwitcher from 'components/LanguageSwitcher';
 import useFormContext from 'hooks/useFormContext';
 
+export interface FormDisplayProps {
+  /**
+   * Main content.
+   */
+  children?: React.ReactNode;
+  progressIndicator?: React.ReactNode;
+  /**
+   * @deprecated
+   */
+  router?: React.ReactNode;
+}
+
 /**
  * Layout component to render the form container.
  *
  * Takes in the main body and (optional) progress indicator and forwards them to the
  * AppDisplay component, while adding in any global/skeleton nodes.
- *
- * @return {JSX}
  */
-const FormDisplay = ({children = null, progressIndicator = null, router = null}) => {
+const FormDisplay: React.FC<FormDisplayProps> = ({
+  children = null,
+  progressIndicator = null,
+  router = null,
+}) => {
   const {translationEnabled} = useFormContext();
   const config = useContext(ConfigContext);
 
@@ -31,21 +44,6 @@ const FormDisplay = ({children = null, progressIndicator = null, router = null})
       {children || router}
     </AppDisplay>
   );
-};
-
-FormDisplay.propTypes = {
-  /**
-   * Main content.
-   */
-  children: PropTypes.node,
-  progressIndicator: PropTypes.node,
-  /**
-   * Main content.
-   *
-   * @deprecated Use children instead.
-   *
-   */
-  router: PropTypes.node,
 };
 
 export default FormDisplay;

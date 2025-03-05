@@ -2,14 +2,14 @@ const CSPNonceHeaderName = 'X-CSP-Nonce';
 const CSRFTokenHeaderName = 'X-CSRFToken';
 const IsFormDesignerHeaderName = 'X-Is-Form-Designer';
 
-const factoryHeader = (headerName, headerValue) => {
+const factoryHeader = <T>(headerName: string, headerValue: T | null) => {
   return {
     headerName: headerName,
     value: headerValue,
     getValue() {
       return headerValue;
     },
-    setValue(value) {
+    setValue(value: T) {
       headerValue = value;
     },
   };
@@ -26,7 +26,7 @@ const factoryHeader = (headerName, headerValue) => {
  * The Open Forms SDK includes the value of the cspNonce as a header in fetch api calls
  * so that any HTML can be post-processed to add the correct nonce.
  */
-let CSPNonce = factoryHeader(CSPNonceHeaderName, null);
+const CSPNonce = factoryHeader<string>(CSPNonceHeaderName, null);
 
 /**
  * Global module-scoped variable to track the value of the CSRF Token.
@@ -37,7 +37,7 @@ let CSPNonce = factoryHeader(CSPNonceHeaderName, null);
  * The Open Forms SDK includes the value of the CSRF Token as a header in fetch api
  * calls if it's set.
  */
-let CSRFToken = factoryHeader(CSRFTokenHeaderName, null);
+const CSRFToken = factoryHeader<string>(CSRFTokenHeaderName, null);
 
 /**
  * Global module-scoped variable to track whether the user is a Form Designer.
@@ -45,7 +45,7 @@ let CSRFToken = factoryHeader(CSRFTokenHeaderName, null);
  * Form designers are allowed to navigate between submission steps even if these are not completed.
  *
  */
-let IsFormDesigner = factoryHeader(IsFormDesignerHeaderName, false);
+const IsFormDesigner = factoryHeader<boolean>(IsFormDesignerHeaderName, false);
 
 /**
  * Global module-scoped variable to track the current (UI) language.
@@ -53,6 +53,6 @@ let IsFormDesigner = factoryHeader(IsFormDesignerHeaderName, false);
  * The backend interprets the HTTP Accept-Language (request) header and informs us of
  * the activated language via the Content-Language response header.
  */
-let ContentLanguage = factoryHeader('Content-Language', 'nl');
+const ContentLanguage = factoryHeader<string>('Content-Language', 'nl');
 
 export {CSPNonce, CSRFToken, IsFormDesigner, ContentLanguage};

@@ -17,6 +17,7 @@ const FormContext = React.createContext({
   submissionAllowed: 'yes',
   sendConfirmationEmail: true,
   submissionStatementsConfiguration: [],
+  translationEnabled: false,
   literals: {
     beginText: {value: '', resolved: 'Begin'},
     changeText: {value: '', resolved: 'Change'},
