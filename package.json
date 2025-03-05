@@ -145,7 +145,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-storybook": "^0.11.2",
     "globals": "^16.0.0",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "microscope-sass": "^2.0.0",
     "msw": "^2.5.0",
     "msw-storybook-addon": "^2.0.4",
