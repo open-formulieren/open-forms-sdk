@@ -3,7 +3,7 @@
  */
 @use 'microscope-sass/lib/bem';
 
-@import '@utrecht/components/button-group/css/index';
+@import '@utrecht/components/button-group/src/index';
 
 .utrecht-button-group {
   // A button group used in an edit grid item

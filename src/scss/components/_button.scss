@@ -1,5 +1,5 @@
-@import '@utrecht/components/dist/button/css/index.css';
-@import '@utrecht/components/dist/button-link/css/index.css';
+@use '@utrecht/components/button';
+@use '@utrecht/components/button-link';
 
 .openforms-theme {
   .utrecht-button,

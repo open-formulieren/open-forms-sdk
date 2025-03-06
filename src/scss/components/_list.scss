@@ -1,12 +1,9 @@
 @use 'microscope-sass/lib/bem';
-
-@import '@utrecht/components/dist/unordered-list/css/index';
+@use '@utrecht/components/unordered-list';
 
 @import 'microscope-sass/lib/typography';
 
-@import '../mixins/prefix';
-
-.#{prefix('list')} {
+.openforms-list {
   list-style: none;
   margin: 0;
   padding: 0;

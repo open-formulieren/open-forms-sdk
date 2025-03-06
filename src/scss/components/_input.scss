@@ -1,6 +1,5 @@
 @use 'microscope-sass/lib/bem';
-
-@import '@utrecht/components/dist/textbox/css/index.css';
+@use '@utrecht/components/textbox';
 
 $input-padding: $grid-margin-2;
 
