@@ -158,7 +158,7 @@ const get = async (
   return data;
 };
 
-const _unsafe = async (method = 'POST', url: string, data: any, signal?: AbortSignal) => {
+const _unsafe = async (method = 'POST', url: string, data: unknown, signal?: AbortSignal) => {
   const opts: ApiCallOptions = {
     method,
     headers: {
@@ -181,17 +181,17 @@ const _unsafe = async (method = 'POST', url: string, data: any, signal?: AbortSi
   };
 };
 
-const post = async (url: string, data: any, signal?: AbortSignal) => {
+const post = async (url: string, data: unknown, signal?: AbortSignal) => {
   const resp = await _unsafe('POST', url, data, signal);
   return resp;
 };
 
-const patch = async (url: string, data: any = {}) => {
+const patch = async (url: string, data: unknown = {}) => {
   const resp = await _unsafe('PATCH', url, data);
   return resp;
 };
 
-const put = async (url: string, data: any = {}) => {
+const put = async (url: string, data: unknown = {}) => {
   const resp = await _unsafe('PUT', url, data);
   return resp;
 };
