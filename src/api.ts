@@ -12,21 +12,29 @@ import {
 import {CSPNonce, CSRFToken, ContentLanguage, IsFormDesigner} from './headers';
 import {setLanguage} from './i18n';
 
-const fetchDefaults = {
-  credentials: 'include', // required for Firefox 60, which is used in werkplekken
+interface ApiCallOptions extends Omit<RequestInit, 'headers'> {
+  headers?: Record<string, string>;
+}
+
+const fetchDefaults: ApiCallOptions = {
+  credentials: 'include',
 };
 
 const SessionExpiresInHeader = 'X-Session-Expires-In';
 
-let sessionExpiresAt = createState({expiry: null});
+interface SessionExpiryState {
+  expiry: Date | null;
+}
 
-export const updateSessionExpiry = seconds => {
+const sessionExpiresAt = createState<SessionExpiryState>({expiry: null});
+
+export const updateSessionExpiry = (seconds: number): void => {
   const newExpiry = new Date();
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
   sessionExpiresAt.setValue({expiry: newExpiry});
 };
 
-const throwForStatus = async response => {
+const throwForStatus = async (response: Response): Promise<void> => {
   if (response.ok) return;
 
   let responseData = null;
@@ -75,7 +83,10 @@ const throwForStatus = async response => {
   throw new ErrorClass(errorMessage, response.status, responseData.detail, responseData.code);
 };
 
-const addHeaders = (headers, method) => {
+const addHeaders = (
+  headers: Record<string, string> | undefined,
+  method: string
+): Record<string, string> => {
   if (!headers) headers = {};
 
   // add the CSP nonce request header in case the backend needs to do any post-processing
@@ -94,10 +105,10 @@ const addHeaders = (headers, method) => {
   return headers;
 };
 
-const updateStoredHeadersValues = headers => {
+const updateStoredHeadersValues = (headers: Headers): void => {
   const sessionExpiry = headers.get(SessionExpiresInHeader);
   if (sessionExpiry) {
-    updateSessionExpiry(parseInt(sessionExpiry), 10);
+    updateSessionExpiry(parseInt(sessionExpiry, 10));
   }
 
   const CSRFTokenValue = headers.get(CSRFToken.headerName);
@@ -117,7 +128,7 @@ const updateStoredHeadersValues = headers => {
   }
 };
 
-const apiCall = async (url, opts = {}) => {
+const apiCall = async (url: string, opts: ApiCallOptions = {}): Promise<Response> => {
   const method = opts.method || 'GET';
   const options = {...fetchDefaults, ...opts};
   options.headers = addHeaders(options.headers, method);
@@ -129,7 +140,17 @@ const apiCall = async (url, opts = {}) => {
   return response;
 };
 
-const get = async (url, params = {}, multiParams = []) => {
+/**
+ * Make a GET api call to `url`, with optional query string parameters.
+ *
+ * The return data is the JSON response body, or `null` if there is no content. Specify
+ * the generic type parameter `T` to get typed return data.
+ */
+const get = async <T = unknown>(
+  url: string,
+  params: Record<string, string> = {},
+  multiParams: Record<string, string>[] = []
+): Promise<T | null> => {
   let searchParams = new URLSearchParams();
   if (Object.keys(params).length) {
     searchParams = new URLSearchParams(params);
@@ -142,16 +163,43 @@ const get = async (url, params = {}, multiParams = []) => {
   }
   url += `?${searchParams}`;
   const response = await apiCall(url);
-  const data = response.status === 204 ? null : await response.json();
+  const data: T | null = response.status === 204 ? null : await response.json();
   return data;
 };
 
-const _unsafe = async (method = 'POST', url, data, signal) => {
-  const opts = {
+export interface UnsafeResponseData<T = unknown> {
+  /**
+   * The parsed response body JSON, if there was one.
+   */
+  data: T | null;
+  /**
+   * Whether the request completed successfully or not.
+   */
+  ok: boolean;
+  /**
+   * The HTTP response status code.
+   */
+  status: number;
+}
+
+/**
+ * Make an unsafe (POST, PUT, PATCH) API call to `url`.
+ *
+ * The return data is the JSON response body, or `null` if there is no content. Specify
+ * the generic type parameter `T` to get typed return data, and `U` for strongly typing
+ * the request data (before JSON serialization).
+ */
+const _unsafe = async <T = unknown, U = unknown>(
+  method = 'POST',
+  url: string,
+  data: U,
+  signal?: AbortSignal
+): Promise<UnsafeResponseData<T>> => {
+  const opts: ApiCallOptions = {
     method,
     headers: {
       'Content-Type': 'application/json',
-      [CSRFToken.headerName]: CSRFToken.getValue(),
+      [CSRFToken.headerName]: CSRFToken.getValue() ?? '',
     },
   };
   if (data) {
@@ -161,7 +209,7 @@ const _unsafe = async (method = 'POST', url, data, signal) => {
     opts.signal = signal;
   }
   const response = await apiCall(url, opts);
-  const responseData = response.status === 204 ? null : await response.json();
+  const responseData: T | null = response.status === 204 ? null : await response.json();
   return {
     ok: response.ok,
     status: response.status,
@@ -169,22 +217,49 @@ const _unsafe = async (method = 'POST', url, data, signal) => {
   };
 };
 
-const post = async (url, data, signal) => {
-  const resp = await _unsafe('POST', url, data, signal);
-  return resp;
-};
+/**
+ * Make a POST call to `url`.
+ *
+ * The return data is the JSON response body, or `null` if there is no content. Specify
+ * the generic type parameter `T` to get typed return data, and `U` for strongly typing
+ * the request data (before JSON serialization).
+ */
+const post = async <T = unknown, U = unknown>(
+  url: string,
+  data: U,
+  signal?: AbortSignal
+): Promise<UnsafeResponseData<T>> => await _unsafe<T, U>('POST', url, data, signal);
 
-const patch = async (url, data = {}) => {
-  const resp = await _unsafe('PATCH', url, data);
-  return resp;
-};
+/**
+ * Make a PATCH call to `url`.
+ *
+ * The return data is the JSON response body, or `null` if there is no content. Specify
+ * the generic type parameter `T` to get typed return data, and `U` for strongly typing
+ * the request data (before JSON serialization).
+ */
+const patch = async <T = unknown, U = unknown>(
+  url: string,
+  data: U
+): Promise<UnsafeResponseData<T>> => await _unsafe<T, U>('PATCH', url, data);
 
-const put = async (url, data = {}) => {
-  const resp = await _unsafe('PUT', url, data);
-  return resp;
-};
+/**
+ * Make a PUT call to `url`.
+ *
+ * The return data is the JSON response body, or `null` if there is no content. Specify
+ * the generic type parameter `T` to get typed return data, and `U` for strongly typing
+ * the request data (before JSON serialization).
+ */
+const put = async <T = unknown, U = unknown>(
+  url: string,
+  data: U
+): Promise<UnsafeResponseData<T>> => await _unsafe<T, U>('PUT', url, data);
 
-const destroy = async url => {
+/**
+ * Make a DELETE call to `url`.
+ *
+ * If the delete was not successfull, an error is thrown.
+ */
+const destroy = async (url: string): Promise<void> => {
   const opts = {
     method: 'DELETE',
   };
