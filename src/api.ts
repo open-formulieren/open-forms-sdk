@@ -12,21 +12,29 @@ import {
 import {CSPNonce, CSRFToken, ContentLanguage, IsFormDesigner} from './headers';
 import {setLanguage} from './i18n';
 
-const fetchDefaults = {
-  credentials: 'include', // required for Firefox 60, which is used in werkplekken
+interface ApiCallOptions extends Omit<RequestInit, 'headers'> {
+  headers?: Record<string, string>;
+}
+
+const fetchDefaults: ApiCallOptions = {
+  credentials: 'include',
 };
 
 const SessionExpiresInHeader = 'X-Session-Expires-In';
 
-let sessionExpiresAt = createState({expiry: null});
+interface SessionExpiryState {
+  expiry: Date | null;
+}
 
-export const updateSessionExpiry = seconds => {
+const sessionExpiresAt = createState<SessionExpiryState>({expiry: null});
+
+export const updateSessionExpiry = (seconds: number) => {
   const newExpiry = new Date();
   newExpiry.setSeconds(newExpiry.getSeconds() + seconds);
   sessionExpiresAt.setValue({expiry: newExpiry});
 };
 
-const throwForStatus = async response => {
+const throwForStatus = async (response: Response) => {
   if (response.ok) return;
 
   let responseData = null;
@@ -75,7 +83,7 @@ const throwForStatus = async response => {
   throw new ErrorClass(errorMessage, response.status, responseData.detail, responseData.code);
 };
 
-const addHeaders = (headers, method) => {
+const addHeaders = (headers: Record<string, string> | undefined, method: string) => {
   if (!headers) headers = {};
 
   // add the CSP nonce request header in case the backend needs to do any post-processing
@@ -94,10 +102,10 @@ const addHeaders = (headers, method) => {
   return headers;
 };
 
-const updateStoredHeadersValues = headers => {
+const updateStoredHeadersValues = (headers: Headers) => {
   const sessionExpiry = headers.get(SessionExpiresInHeader);
   if (sessionExpiry) {
-    updateSessionExpiry(parseInt(sessionExpiry), 10);
+    updateSessionExpiry(parseInt(sessionExpiry, 10));
   }
 
   const CSRFTokenValue = headers.get(CSRFToken.headerName);
@@ -117,7 +125,7 @@ const updateStoredHeadersValues = headers => {
   }
 };
 
-const apiCall = async (url, opts = {}) => {
+const apiCall = async (url: string, opts: ApiCallOptions = {}) => {
   const method = opts.method || 'GET';
   const options = {...fetchDefaults, ...opts};
   options.headers = addHeaders(options.headers, method);
@@ -129,7 +137,11 @@ const apiCall = async (url, opts = {}) => {
   return response;
 };
 
-const get = async (url, params = {}, multiParams = []) => {
+const get = async (
+  url: string,
+  params: Record<string, string> = {},
+  multiParams: Record<string, string>[] = []
+) => {
   let searchParams = new URLSearchParams();
   if (Object.keys(params).length) {
     searchParams = new URLSearchParams(params);
@@ -146,12 +158,12 @@ const get = async (url, params = {}, multiParams = []) => {
   return data;
 };
 
-const _unsafe = async (method = 'POST', url, data, signal) => {
-  const opts = {
+const _unsafe = async (method = 'POST', url: string, data: any, signal?: AbortSignal) => {
+  const opts: ApiCallOptions = {
     method,
     headers: {
       'Content-Type': 'application/json',
-      [CSRFToken.headerName]: CSRFToken.getValue(),
+      [CSRFToken.headerName]: CSRFToken.getValue() ?? '',
     },
   };
   if (data) {
@@ -169,22 +181,22 @@ const _unsafe = async (method = 'POST', url, data, signal) => {
   };
 };
 
-const post = async (url, data, signal) => {
+const post = async (url: string, data: any, signal?: AbortSignal) => {
   const resp = await _unsafe('POST', url, data, signal);
   return resp;
 };
 
-const patch = async (url, data = {}) => {
+const patch = async (url: string, data: any = {}) => {
   const resp = await _unsafe('PATCH', url, data);
   return resp;
 };
 
-const put = async (url, data = {}) => {
+const put = async (url: string, data: any = {}) => {
   const resp = await _unsafe('PUT', url, data);
   return resp;
 };
 
-const destroy = async url => {
+const destroy = async (url: string) => {
   const opts = {
     method: 'DELETE',
   };
