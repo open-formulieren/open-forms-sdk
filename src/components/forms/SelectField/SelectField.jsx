@@ -1,6 +1,6 @@
 import {HelpText, Label, ValidationErrors} from '@open-formulieren/formio-renderer';
 import {FormField} from '@utrecht/component-library-react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import {Field, useFormikContext} from 'formik';
 import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
@@ -86,7 +86,7 @@ const SelectField = ({
         inputId={id}
         classNames={{
           control: state =>
-            classNames('utrecht-select', 'utrecht-select--openforms', {
+            clsx('utrecht-select', 'utrecht-select--openforms', {
               'utrecht-select--focus': state.isFocused,
               'utrecht-select--focus-visible': state.isFocused,
               'utrecht-select--disabled': disabled,
@@ -95,7 +95,7 @@ const SelectField = ({
             }),
           menu: () => 'rs-menu',
           option: state =>
-            classNames('rs-menu__option', {
+            clsx('rs-menu__option', {
               'rs-menu__option--focus': state.isFocused,
               'rs-menu__option--visible-focus': state.isFocused,
             }),

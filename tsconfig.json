@@ -24,6 +24,7 @@
       "@/sb-decorators": ["../.storybook/decorators.tsx"]
     },
     "types": [
+      "vite/client",
       "vitest/globals"
     ]
   },

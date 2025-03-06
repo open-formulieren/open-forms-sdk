@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 // not all icons need to be seen by assistive technologies.
@@ -10,7 +10,7 @@ const FAIcon = ({
   noAriaHidden = false,
   ...props
 }) => {
-  const className = classNames(
+  const className = clsx(
     'fa',
     'fas',
     'fa-icon',
