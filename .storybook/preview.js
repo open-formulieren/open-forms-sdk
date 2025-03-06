@@ -21,9 +21,9 @@ import OFLibrary from 'formio/templates';
 import {withModalDecorator} from 'story-utils/decorators';
 
 import {
-  utrechtDocumentDecorator,
   withClearSessionStorage,
   withClearSubmissionLocalStorage,
+  withUtrechtDocument,
 } from './decorators';
 import {allModes} from './modes.mjs';
 import {reactIntl} from './reactIntl.mjs';
@@ -53,7 +53,7 @@ export default {
     withClearSessionStorage,
     withClearSubmissionLocalStorage,
     withModalDecorator,
-    utrechtDocumentDecorator,
+    withUtrechtDocument,
   ],
   parameters: {
     viewport: {

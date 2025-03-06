@@ -1,6 +1,6 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
+import {ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {mockBAGDataGet, mockBAGNoDataGet} from './AddressNL.mocks';
@@ -40,7 +40,6 @@ const defaultNested = [
 
 export default {
   title: 'Form.io components / Vanilla / EditGrid (Repeating group)',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'editgrid',
     groupLabel: '',

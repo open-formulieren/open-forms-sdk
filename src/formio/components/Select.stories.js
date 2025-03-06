@@ -1,13 +1,11 @@
 import {userEvent, within} from '@storybook/test';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {MultipleFormioComponents, SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Vanilla / Select',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'select',
     extraComponentProperties: {

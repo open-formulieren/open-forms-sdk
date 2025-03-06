@@ -1,10 +1,7 @@
-import {withUtrechtDocument} from 'story-utils/decorators';
-
 import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Custom / BSNField',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'bsn',
     extraComponentProperties: {},

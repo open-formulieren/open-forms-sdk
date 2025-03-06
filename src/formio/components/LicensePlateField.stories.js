@@ -1,10 +1,7 @@
-import {withUtrechtDocument} from 'story-utils/decorators';
-
 import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Custom / LicensePlateField',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'licenseplate',
     extraComponentProperties: {},

@@ -1,10 +1,7 @@
-import {withUtrechtDocument} from 'story-utils/decorators';
-
 import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Vanilla / DateTimeField',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'datetime',
     extraComponentProperties: {

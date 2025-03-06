@@ -1,5 +1,4 @@
 import RenderSettingsProvider from '@open-formulieren/formio-renderer/components/RendererSettingsProvider';
-import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
 
@@ -107,12 +106,6 @@ export const LayoutDecorator = Story => {
     </PaddedDiv>
   );
 };
-
-export const withUtrechtDocument = (Story, {parameters}) => (
-  <Document style={{'--utrecht-space-around': parameters?.utrechtDocument?.spaceAround ?? 1}}>
-    <Story />
-  </Document>
-);
 
 export const withCard = (Story, {parameters: {card: cardProps = {}}}) => (
   <Card {...cardProps}>

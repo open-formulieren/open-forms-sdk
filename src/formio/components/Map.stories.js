@@ -1,11 +1,11 @@
 import {mockAddressSearchGet, mockLatLngSearchGet} from 'components/Map/mocks';
-import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
+import {ConfigDecorator} from 'story-utils/decorators';
 
 import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Custom / Map',
-  decorators: [withUtrechtDocument, ConfigDecorator],
+  decorators: [ConfigDecorator],
   args: {
     type: 'map',
     key: 'map',
