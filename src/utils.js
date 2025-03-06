@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 import {getEnv} from './env';
 
@@ -28,7 +28,7 @@ export const applyPrefix = name => {
 export const getBEMClassName = (base, modifiers = []) => {
   const prefixedBase = applyPrefix(base);
   const prefixedModifiers = modifiers.map(mod => applyPrefix(`${base}--${mod}`));
-  return classNames(prefixedBase, ...prefixedModifiers);
+  return clsx(prefixedBase, ...prefixedModifiers);
 };
 
 // usage: await sleep(3000);
