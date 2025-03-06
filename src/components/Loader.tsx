@@ -1,6 +1,6 @@
 import {FormattedMessage} from 'react-intl';
 
-import {getBEMClassName} from 'utils';
+import {getBEMClassName} from '@/utils';
 
 export const MODIFIERS = ['centered', 'only-child', 'small', 'gray'] as const;
 
