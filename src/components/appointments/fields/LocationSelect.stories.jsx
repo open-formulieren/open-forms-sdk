@@ -31,10 +31,10 @@ export const MultipleCandidates = {
     const canvas = within(canvasElement);
     await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
     const dropdown = canvas.getByLabelText('Locatie');
-    await userEvent.click(dropdown);
+    dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
-    await expect(await canvas.findByText('Open Gem')).toBeVisible();
-    await expect(await canvas.findByText('Bahamas')).toBeVisible();
+    expect(await canvas.findByRole('option', {name: 'Open Gem'})).toBeVisible();
+    expect(await canvas.findByRole('option', {name: 'Bahamas'})).toBeVisible();
   },
 };
 
@@ -52,7 +52,7 @@ export const SingleCandidate = {
     await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
 
     const dropdown = canvas.getByLabelText('Locatie');
-    await userEvent.click(dropdown);
+    dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
 
     // wait for locations to be loaded
@@ -61,8 +61,8 @@ export const SingleCandidate = {
       expect(textNodes.length).toBeGreaterThan(0);
     });
 
-    await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
     await userEvent.keyboard('[Escape]');
-    await expect(await canvas.findByText('Open Gem')).toBeVisible();
+    expect(await canvas.findByText('Open Gem')).toBeVisible();
   },
 };
