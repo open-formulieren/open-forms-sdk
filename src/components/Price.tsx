@@ -1,6 +1,6 @@
 import {FormattedMessage, FormattedNumber} from 'react-intl';
 
-import {getBEMClassName} from 'utils';
+import {getBEMClassName} from '@/utils';
 
 export interface PriceProps {
   price?: string | number; // the API serializes decimals to strings to not lose precision
