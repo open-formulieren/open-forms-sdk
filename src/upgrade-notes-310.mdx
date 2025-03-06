@@ -1,0 +1,32 @@
+import {Meta} from '@storybook/blocks';
+
+<Meta title="Developers / Upgrade notes / 3.1.0" />
+
+# Upgrading from 3.0.x to 3.1.x
+
+In the Open Forms SDK 3.1.0 release cycle we've upgraded some of our own dependencies that
+unfortunately can cause visual changes if you use a custom theme. We've documented the changes here.
+
+## Design tokens
+
+In short - we have upgraded the community NL Design System components from version 1.0.0 to version
+7.4.0 (see the
+[upstream changelog](https://github.com/nl-design-system/utrecht/blob/e4515df1b2193defa20bd8704acc7a9f12d5231e/components/CHANGELOG.md)).
+We are planning to switch over to the individual component CSS packages, but for that we first
+wanted to deal with all the possible breaking changes while we had the chance.
+
+There are two affected components in Open Forms.
+
+**Alert**
+
+The alert component displays errors and informational messages.
+
+- The token `--utrecht-alert-icon-gap` was renamed to `--utrecht-alert-column-gap`. Update your
+  tokens and/or stylesheets accordingly.
+
+**Button**
+
+The button component is displayed full-width on mobile devices. After the upgrade, this may no
+longer be the case.
+
+- Set the design token `--utrecht-button-max-inline-size` to `100%`

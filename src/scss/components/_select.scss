@@ -1,7 +1,6 @@
 @use 'sass:math';
 @use 'microscope-sass/lib/bem';
-
-@import '@utrecht/components/dist/select/css/index.css';
+@use '@utrecht/components/select';
 
 /**
  * Additional styles for react-select component, using the utrecht-select as base.

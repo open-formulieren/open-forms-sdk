@@ -1,6 +1,6 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {ConfigDecorator, withUtrechtDocument} from 'story-utils/decorators';
+import {ConfigDecorator} from 'story-utils/decorators';
 
 import {
   mockBAGDataGet,
@@ -12,7 +12,7 @@ import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Custom / Address NL',
-  decorators: [withUtrechtDocument, ConfigDecorator],
+  decorators: [ConfigDecorator],
   args: {
     type: 'addressNL',
     key: 'addressNL',

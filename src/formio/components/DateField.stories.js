@@ -1,6 +1,5 @@
 import {expect, userEvent, within} from '@storybook/test';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {SingleFormioComponent} from './story-util';
@@ -24,7 +23,6 @@ const waitForFlatpickr = async node => {
 
 export default {
   title: 'Form.io components / Custom / DateField',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'date',
     extraComponentProperties: {

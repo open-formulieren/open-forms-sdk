@@ -7,10 +7,8 @@
  */
 .utrecht-heading-2 {
   @include bem.modifier('openforms-summary-step-name') {
-    // TODO: default values for `var(...)` are for backwards compatibility, remove in
-    // SDK 3.0.
-    font-size: var(--of-summary-step-name-font-size, 1.1875rem);
-    line-height: var(--of-summary-step-name-line-height, 1.17);
+    font-size: var(--of-summary-step-name-font-size);
+    line-height: var(--of-summary-step-name-line-height);
     overflow-wrap: break-word;
   }
 }
@@ -19,20 +17,17 @@
  * Container for the header + datalist of the summary.
  */
 .openforms-summary {
-  // TODO: default values for `var(...)` are for backwards compatibility, remove in
-  // SDK 3.0.
-
   @include bem.element('header') {
     display: flex;
     align-items: center;
     justify-content: space-between;
     column-gap: var(--of-summary-header-column-gap);
 
-    padding-block-end: var(--of-summary-header-padding-block-end, 12px);
+    padding-block-end: var(--of-summary-header-padding-block-end);
 
-    border-block-end-style: var(--of-summary-header-border-block-end-style, solid);
-    border-block-end-width: var(--of-summary-header-border-block-end-width, 1px);
-    border-block-end-color: var(--of-summary-header-border-block-end-color, var(--of-color-border));
+    border-block-end-style: var(--of-summary-header-border-block-end-style);
+    border-block-end-width: var(--of-summary-header-border-block-end-width);
+    border-block-end-color: var(--of-summary-header-border-block-end-color);
   }
 
   // accessible description

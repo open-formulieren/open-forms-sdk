@@ -1,6 +1,5 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {UPLOAD_URL, mockFileUploadDelete, mockFileUploadPost} from './FileField.mocks';
@@ -8,7 +7,6 @@ import {MultipleFormioComponents} from './story-util';
 
 export default {
   title: 'Form.io components / Custom / SoftRequiredErrors',
-  decorators: [withUtrechtDocument],
   render: MultipleFormioComponents,
   args: {
     components: [

@@ -1,7 +1,6 @@
 import {expect, userEvent, within} from '@storybook/test';
 import {getWorker} from 'msw-storybook-addon';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {
@@ -38,7 +37,6 @@ const MIME_TO_LABEL = {
 
 export default {
   title: 'Form.io components / Vanilla / FileUpload',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'file',
     extraComponentProperties: {},

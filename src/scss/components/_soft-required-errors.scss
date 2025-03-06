@@ -8,8 +8,11 @@
   @include wysiwyg;
 
   // unset, takes the utrecht-alert--warning by default, but can be overridden if desired
-  color: var(--of-soft-required-errors-color);
-  background-color: var(--of-soft-required-errors-background-color);
+  color: var(--of-soft-required-errors-color, var(--utrecht-alert-warning-color));
+  background-color: var(
+    --of-soft-required-errors-background-color,
+    var(--utrecht-alert-warning-background-color)
+  );
 
   @include bem.element('missing-fields') {
     font-weight: var(--of-soft-required-errors-missing-fields-font-weight, 600);

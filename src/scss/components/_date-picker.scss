@@ -1,9 +1,7 @@
 @use 'microscope-sass/lib/bem';
-@use '../mixins/prefix';
+@use '@utrecht/components/calendar';
 
-@import '@utrecht/components/dist/calendar/css/index.css';
-
-.#{prefix.prefix('datepicker')} {
+.openforms-datepicker {
   padding: 0;
   border: 0;
   border-radius: var(--of-datepicker-border-radius, 0);
@@ -28,7 +26,7 @@
   }
 }
 
-.#{prefix.prefix('datepicker-textbox')} {
+.openforms-datepicker-textbox {
   position: relative;
 
   .utrecht-textbox {

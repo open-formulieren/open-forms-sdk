@@ -1,13 +1,11 @@
 import {expect, userEvent, within} from '@storybook/test';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {MultipleFormioComponents} from './story-util';
 
 export default {
   title: 'Form.io components / Composite',
-  decorators: [withUtrechtDocument],
   args: {
     components: [
       {

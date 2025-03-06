@@ -1,10 +1,7 @@
-import {withUtrechtDocument} from 'story-utils/decorators';
-
 import {MultipleFormioComponents, SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Vanilla / Columns',
-  decorators: [withUtrechtDocument],
   args: {
     evalContext: {},
   },

@@ -1,12 +1,9 @@
 import {fn} from '@storybook/test';
 
-import {withUtrechtDocument} from 'story-utils/decorators';
-
 import {SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Vanilla / Email',
-  decorators: [withUtrechtDocument],
   args: {
     type: 'email',
     extraComponentProperties: {},

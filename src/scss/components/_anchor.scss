@@ -8,9 +8,8 @@
  * :active states for some variants.
  */
 @use 'microscope-sass/lib/bem';
-
-@import '@utrecht/components/dist/link-button/css/index.css';
-@import '@utrecht/components/dist/link/css/index'; // emits the .utrecht-link {...} styles
+@use '@utrecht/components/link-button';
+@use '@utrecht/components/link'; // emits the .utrecht-link {...} styles
 
 /**
  * Extensions of the utrecht-link component with OF-specific styles.
