@@ -1,5 +1,6 @@
 import {TextField} from '@open-formulieren/formio-renderer';
 import {Link as UtrechtLink} from '@utrecht/component-library-react';
+import {ButtonGroup, Link as UtrechtLink} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useContext, useState} from 'react';
@@ -12,7 +13,6 @@ import {post} from 'api';
 import Body from 'components/Body';
 import {DisplayError} from 'components/Errors/ErrorBoundary';
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {ValidationError} from 'errors';
 
 import EnterCodeButton from './EnterCodeButton';
@@ -154,19 +154,17 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
               </>
             )}
 
-            <Toolbar modifiers={['bottom', 'reverse']}>
-              <ToolbarList>
-                {mode === 'sendCode' && (
-                  <SendCodeButton
-                    submissionUrl={submissionUrl}
-                    componentKey={componentKey}
-                    emailAddress={emailAddress}
-                    onError={error => setError(error)}
-                  />
-                )}
-                {mode === 'enterCode' && <EnterCodeButton />}
-              </ToolbarList>
-            </Toolbar>
+            <ButtonGroup className="utrecht-button-group--column" role="group">
+              {mode === 'sendCode' && (
+                <SendCodeButton
+                  submissionUrl={submissionUrl}
+                  componentKey={componentKey}
+                  emailAddress={emailAddress}
+                  onError={error => setError(error)}
+                />
+              )}
+              {mode === 'enterCode' && <EnterCodeButton />}
+            </ButtonGroup>
           </Body>
         )
       }
