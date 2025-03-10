@@ -10,7 +10,7 @@ const env = import.meta.env;
 const envVarPrefix = 'VITE';
 const DEBUG = env.MODE === 'development';
 
-const getEnv = name => {
+const getEnv = (name: string): string | undefined => {
   const fullName = `${envVarPrefix}_${name}`;
   return env[fullName];
 };

@@ -1,5 +1,5 @@
 import {Link as UtrechtLink} from '@utrecht/component-library-react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 export const ANCHOR_MODIFIERS = [
@@ -18,7 +18,7 @@ const Anchor = ({
   ...extraProps
 }) => {
   // extend with our own modifiers
-  const className = classNames(
+  const className = clsx(
     'utrecht-link--openforms', // always apply our own modifier
     {
       'utrecht-link--current': modifiers.includes('current'),

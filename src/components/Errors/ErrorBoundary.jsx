@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import {getEnv} from 'env.mjs';
+import {getEnv} from 'env';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';

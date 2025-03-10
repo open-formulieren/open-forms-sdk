@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 
-import {getBEMClassName} from 'utils';
+import {getBEMClassName} from '@/utils';
 
-export const MODIFIERS = ['centered', 'only-child', 'small', 'gray'];
+export const MODIFIERS = ['centered', 'only-child', 'small', 'gray'] as const;
 
-const Loader = ({modifiers = [], withoutTranslation}) => {
+export interface LoaderProps {
+  modifiers?: (typeof MODIFIERS)[number][];
+  withoutTranslation?: boolean;
+}
+
+const Loader: React.FC<LoaderProps> = ({modifiers = [], withoutTranslation}) => {
   const className = getBEMClassName('loading', modifiers);
   return (
     <div className={className} role="status">
@@ -19,11 +23,6 @@ const Loader = ({modifiers = [], withoutTranslation}) => {
       </span>
     </div>
   );
-};
-
-Loader.propTypes = {
-  withoutTranslation: PropTypes.bool,
-  modifiers: PropTypes.arrayOf(PropTypes.oneOf(MODIFIERS)),
 };
 
 export default Loader;

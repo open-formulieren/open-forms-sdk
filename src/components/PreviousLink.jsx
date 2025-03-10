@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import FAIcon from 'components/FAIcon';
@@ -8,7 +8,7 @@ import {Literal} from 'components/Literal';
 const VARIANTS = ['start', 'end'];
 
 const PreviousLink = ({to, onClick, position}) => {
-  const className = classNames('openforms-previous-link', {
+  const className = clsx('openforms-previous-link', {
     [`openforms-previous-link--${position}`]: position,
   });
   return (
