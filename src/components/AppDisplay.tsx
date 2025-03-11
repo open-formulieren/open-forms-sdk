@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 export interface AppDisplayProps {
   /**
@@ -41,7 +41,7 @@ export const AppDisplay: React.FC<AppDisplayProps> = ({
   router,
 }) => (
   <div
-    className={classNames('openforms-app', {
+    className={clsx('openforms-app', {
       'openforms-app--no-progress-indicator': !progressIndicator,
       'openforms-app--no-language-switcher': !languageSwitcher,
     })}

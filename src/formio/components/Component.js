@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import {Formio} from 'react-formio';
 
 import {applyPrefix} from 'utils';
@@ -19,7 +19,7 @@ const FormioComponent = Formio.Components.components.component;
  * @todo: check impact of --hidden modifier
  */
 function getClassName() {
-  return classNames(
+  return clsx(
     applyPrefix('form-control'),
     applyPrefix(`form-control--${this.component.type}`),
     {[applyPrefix(`form-control--${this.key}`)]: this.key},

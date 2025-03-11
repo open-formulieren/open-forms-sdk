@@ -35,7 +35,7 @@
     "@open-formulieren/formiojs": "^4.13.14",
     "@open-formulieren/leaflet-tools": "^1.0.0",
     "@sentry/react": "^8.50.0",
-    "classnames": "^2.3.1",
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "flatpickr": "^4.6.9",
     "formik": "^2.2.9",

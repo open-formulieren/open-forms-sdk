@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
 
-import {getBEMClassName} from 'utils';
+import {getBEMClassName} from '@/utils';
 
-const Price = ({price = ''}) => {
+export interface PriceProps {
+  price?: string | number; // the API serializes decimals to strings to not lose precision
+}
+
+const Price: React.FC<PriceProps> = ({price = '0'}) => {
   return (
     <div className={getBEMClassName('price')}>
       <div className={getBEMClassName('price__label')}>
@@ -11,7 +14,7 @@ const Price = ({price = ''}) => {
       </div>
       <div className={getBEMClassName('price__amount')}>
         <FormattedNumber
-          value={price}
+          value={typeof price === 'number' ? price : parseFloat(price)}
           style="currency"
           currency="EUR"
           minimumFractionDigits={2}
@@ -20,10 +23,6 @@ const Price = ({price = ''}) => {
       </div>
     </div>
   );
-};
-
-Price.propTypes = {
-  price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default Price;
