@@ -193,9 +193,8 @@ const ChooseProductStep = ({navigateTo = null}) => {
             defaultMessage="Select your product(s)"
           />
         }
-        component="h2"
         headingType="subtitle"
-        modifiers={['padded']}
+        padded
       />
       <Formik
         initialValues={{...initialValues, ...stepData}}

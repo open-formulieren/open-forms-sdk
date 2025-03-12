@@ -206,7 +206,7 @@ const Summary = () => {
         }
         component="h2"
         headingType="subtitle"
-        modifiers={['padded']}
+        padded
       />
 
       {processingError && <ErrorMessage>{processingError}</ErrorMessage>}

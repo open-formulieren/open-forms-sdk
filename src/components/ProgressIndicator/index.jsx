@@ -1,9 +1,9 @@
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router';
 
 import Caption from 'components/Caption';
-import Card from 'components/Card';
 import List from 'components/List';
 import useWindowResize from 'hooks/useWindowResize';
 
@@ -22,11 +22,6 @@ const ProgressIndicator = ({
   const [verticalSpaceUsed, setVerticalSpaceUsed] = useState(null);
   const [resizeCounter, setResizeCounter] = useState(0);
   const buttonRef = useRef(null);
-
-  const modifiers = [];
-  if (expanded) {
-    modifiers.push('expanded');
-  }
 
   // collapse the expanded progress indicator if nav occurred, see
   // open-formulieren/open-forms#2673. It's important that *only* the pathname triggers
@@ -59,7 +54,12 @@ const ProgressIndicator = ({
       }
     : undefined;
   return (
-    <Card blockClassName="progress-indicator" modifiers={modifiers} style={customProperties}>
+    <div
+      className={clsx('openforms-progress-indicator', {
+        'openforms-progress-indicator--expanded': expanded,
+      })}
+      style={customProperties}
+    >
       <MobileButton
         ref={buttonRef}
         ariaMobileIconLabel={ariaMobileIconLabel}
@@ -90,7 +90,7 @@ const ProgressIndicator = ({
           ))}
         </List>
       </nav>
-    </Card>
+    </div>
   );
 };
 

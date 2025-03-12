@@ -1,3 +1,5 @@
+import type {Meta, StoryObj} from '@storybook/react';
+
 import Body from './Body';
 import Card from './Card';
 
@@ -6,20 +8,18 @@ export default {
   component: Card,
   argTypes: {
     children: {control: false},
-    captionComponent: {control: false},
-    titleComponent: {control: false},
   },
   parameters: {
     controls: {sort: 'requiredFirst'},
   },
-};
+} satisfies Meta<typeof Card>;
 
-export const Default = {
+type Story = StoryObj<typeof Card>;
+
+export const Default: Story = {
   args: {
     title: 'The Rig',
-    caption: '',
-    modifiers: [],
-    blockClassName: '',
     children: <Body>By Blanck Mass</Body>,
+    mobileHeaderHidden: false,
   },
 };

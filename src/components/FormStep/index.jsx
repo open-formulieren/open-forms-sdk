@@ -759,7 +759,7 @@ const FormStep = () => {
   const previousPage = getPreviousPageHref();
   return (
     <LiteralsProvider literals={formStep.literals}>
-      <Card title={form.name} titleComponent="h1" modifiers={['mobile-header-hidden']}>
+      <Card title={form.name} mobileHeaderHidden>
         {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
 
         {previousPage && <PreviousLink to={previousPage} onClick={onPrevPage} position="start" />}
@@ -772,12 +772,7 @@ const FormStep = () => {
         )}
         {!isLoadingSomething && configuration ? (
           <>
-            <CardTitle
-              title={submissionStep.name}
-              component="h2"
-              headingType="subtitle"
-              modifiers={['padded']}
-            />
+            <CardTitle title={submissionStep.name} headingType="subtitle" padded />
             <Suspense fallback={<Loader modifiers={['centered']} />}>
               <form onSubmit={onReactSubmit} noValidate>
                 <Form

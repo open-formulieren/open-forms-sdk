@@ -118,9 +118,8 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
             defaultMessage="Location and time"
           />
         }
-        component="h2"
         headingType="subtitle"
-        modifiers={['padded']}
+        padded
       />
 
       <ProductSummary products={products} />
