@@ -86,7 +86,7 @@ const Wrapper = ({children, ...props}) => {
   if (isConfirmation) return <>{children}</>;
 
   return (
-    <Card titleComponent="h1" modifiers={['mobile-header-hidden']} {...props}>
+    <Card mobileHeaderHidden {...props}>
       {children}
     </Card>
   );

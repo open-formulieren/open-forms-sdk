@@ -75,9 +75,8 @@ const ContactDetailsStep = ({navigateTo = null}) => {
             defaultMessage="Contact details"
           />
         }
-        component="h2"
         headingType="subtitle"
-        modifiers={['padded']}
+        padded
       />
 
       {loading && <Loader modifiers={['centered']} />}
