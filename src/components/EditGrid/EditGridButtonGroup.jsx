@@ -1,4 +1,4 @@
-import {ButtonGroup} from '@utrecht/component-library-react';
+import {ButtonGroup} from '@utrecht/button-group-react';
 import PropTypes from 'prop-types';
 
 const EditGridButtonGroup = ({children}) => (

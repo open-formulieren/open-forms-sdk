@@ -1,4 +1,5 @@
-import {ButtonGroup, Heading, LinkButton} from '@utrecht/component-library-react';
+import {ButtonGroup} from '@utrecht/button-group-react';
+import {Heading, LinkButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import {Fragment} from 'react';
 
