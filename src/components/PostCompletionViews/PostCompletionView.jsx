@@ -1,3 +1,4 @@
+import {ButtonGroup} from '@utrecht/button-group-react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 
@@ -6,7 +7,6 @@ import Body from 'components/Body';
 import {OFButton} from 'components/Button';
 import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import useTitle from 'hooks/useTitle';
 
 const PostCompletionView = ({
@@ -38,18 +38,16 @@ const PostCompletionView = ({
       {extraBody}
 
       {mainWebsiteUrl ? (
-        <Toolbar>
-          <ToolbarList>
-            <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
-              <OFButton appearance="secondary-action-button">
-                <FormattedMessage
-                  description="Back to main website link title"
-                  defaultMessage="Return to main website"
-                />
-              </OFButton>
-            </Anchor>
-          </ToolbarList>
-        </Toolbar>
+        <ButtonGroup className="utrecht-button-group--distanced" direction="column">
+          <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
+            <OFButton appearance="secondary-action-button">
+              <FormattedMessage
+                description="Back to main website link title"
+                defaultMessage="Return to main website"
+              />
+            </OFButton>
+          </Anchor>
+        </ButtonGroup>
       ) : null}
     </Card>
   );

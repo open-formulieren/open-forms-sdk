@@ -1,3 +1,4 @@
+import {ButtonGroup} from '@utrecht/button-group-react';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 
@@ -8,7 +9,6 @@ import FormStepSummary from 'components/FormStepSummary';
 import Loader from 'components/Loader';
 import Price from 'components/Price';
 import SummaryConfirmation from 'components/SummaryConfirmation';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const GenericSummary = ({
@@ -66,11 +66,9 @@ const GenericSummary = ({
             prevPage={prevPage}
             onPrevPage={onPrevPage}
           />
-          <Toolbar modifiers={['bottom', 'reverse']}>
-            <ToolbarList>
-              <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
-            </ToolbarList>
-          </Toolbar>
+          <ButtonGroup className="utrecht-button-group--distanced" direction="column">
+            <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
+          </ButtonGroup>
         </Wrapper>
       </Formik>
     </Card>

@@ -1,6 +1,6 @@
 import {TextField} from '@open-formulieren/formio-renderer';
 import {userEvent, within} from '@storybook/test';
-import {ButtonGroup} from '@utrecht/component-library-react';
+import {ButtonGroup} from '@utrecht/button-group-react';
 import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';
 import {z} from 'zod';
@@ -104,7 +104,10 @@ const AccessibleErrorsExample = ({onSubmit}) => {
         <div className="openforms-form-field-container">
           <TextField name="name" label={labels.name} />
           <TextField type="email" name="email" label={labels.email} />
-          <ButtonGroup style={{justifyContent: 'flex-end'}}>
+          <ButtonGroup
+            className="utrecht-button-group--distanced"
+            style={{justifyContent: 'flex-end'}}
+          >
             <OFButton type="submit" appearance="primary-action-button">
               Submit
             </OFButton>

@@ -1,3 +1,4 @@
+import {ButtonGroup} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
@@ -7,7 +8,6 @@ import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
 import {OFButton} from 'components/Button';
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Modal from 'components/modals/Modal';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 
@@ -129,23 +129,21 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
           }}
         />
       </ErrorMessage>
-      <Toolbar modifiers={['bottom', 'reverse']}>
-        <ToolbarList>
-          <OFButton
-            type="submit"
-            appearance="primary-action-button"
-            onClick={async event => {
-              event.preventDefault();
-              await apiCall(`${baseUrl}ping`);
-            }}
-          >
-            <FormattedMessage
-              description="Extend session button (in modal)"
-              defaultMessage="Extend"
-            />
-          </OFButton>
-        </ToolbarList>
-      </Toolbar>
+      <ButtonGroup direction="column">
+        <OFButton
+          type="submit"
+          appearance="primary-action-button"
+          onClick={async event => {
+            event.preventDefault();
+            await apiCall(`${baseUrl}ping`);
+          }}
+        >
+          <FormattedMessage
+            description="Extend session button (in modal)"
+            defaultMessage="Extend"
+          />
+        </OFButton>
+      </ButtonGroup>
     </Modal>
   );
 };

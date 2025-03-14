@@ -128,6 +128,7 @@
     "@typescript-eslint/parser": "^8.26.0",
     "@utrecht/component-library-react": "1.0.0-alpha.353",
     "@utrecht/components": "^7.4.0",
+    "@utrecht/button-group-react": "1.0.0",
     "@utrecht/design-tokens": "^2.5.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-istanbul": "^3.0.7",

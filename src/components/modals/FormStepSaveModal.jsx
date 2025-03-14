@@ -2,6 +2,7 @@
  * Display a modal to allow the user to save the form step in it's current state.
  */
 import {TextField} from '@open-formulieren/formio-renderer';
+import {ButtonGroup} from '@utrecht/button-group-react';
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
@@ -15,7 +16,6 @@ import {post} from 'api';
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
-import {Toolbar, ToolbarList} from 'components/Toolbar';
 import Modal from 'components/modals/Modal';
 
 const initialState = {
@@ -213,16 +213,14 @@ const FormStepSaveModal = ({
               autoComplete="email"
             />
 
-            <Toolbar modifiers={['bottom', 'reverse']}>
-              <ToolbarList>
-                <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
-                  <FormattedMessage
-                    description="Form save modal submit button"
-                    defaultMessage="Continue later"
-                  />
-                </UtrechtButton>
-              </ToolbarList>
-            </Toolbar>
+            <ButtonGroup className="utrecht-button-group--distanced" direction="column">
+              <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
+                <FormattedMessage
+                  description="Form save modal submit button"
+                  defaultMessage="Continue later"
+                />
+              </UtrechtButton>
+            </ButtonGroup>
           </Body>
         )}
       </Formik>
