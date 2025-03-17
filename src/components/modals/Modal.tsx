@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {createContext, useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import ReactModal from 'react-modal';
@@ -7,10 +6,16 @@ import {OFButton} from 'components/Button';
 import FAIcon from 'components/FAIcon';
 import {getBEMClassName} from 'utils';
 
-export const ModalContext = createContext({});
+// TODO: what are these types? Used https://www.npmjs.com/package/@types/react-modal?activeTab=code fow now
+interface ModalContext {
+  parentSelector?: HTMLElement;
+  ariaHideApp?: boolean;
+}
+
+export const ModalContext = createContext<ModalContext>({});
 ModalContext.displayName = 'ModalContext';
 
-const usePreventScroll = open => {
+const usePreventScroll = (open: boolean): void => {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -23,7 +28,16 @@ const usePreventScroll = open => {
   }, [open]);
 };
 
-const Modal = ({
+interface ModalProps {
+  isOpen?: boolean;
+  title?: React.ReactNode;
+  titleComponent?: HTMLTitleElement;
+  closeModal: React.EventHandler<React.MouseEvent | React.KeyboardEvent>;
+  contentModifiers?: string[];
+  children: React.ReactNode;
+}
+
+const Modal: React.FC<ModalProps> = ({
   isOpen = false,
   title = '',
   titleComponent: Title = 'h1',
@@ -51,6 +65,7 @@ const Modal = ({
           appearance="subtle-button"
           onClick={closeModal}
           className={getBEMClassName('react-modal__close')}
+          variant="default"
           title={intl.formatMessage({
             description: 'Modal close icon title',
             defaultMessage: 'Close',
@@ -66,15 +81,6 @@ const Modal = ({
       {children}
     </ReactModal>
   );
-};
-
-Modal.propTypes = {
-  isOpen: PropTypes.bool,
-  title: PropTypes.node,
-  titleComponent: PropTypes.string,
-  closeModal: PropTypes.func.isRequired,
-  children: PropTypes.node,
-  contentModifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Modal;

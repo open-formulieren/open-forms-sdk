@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
@@ -7,7 +6,24 @@ import Modal from 'components/modals/Modal';
 
 import EmailVerificationForm from './EmailVerificationForm';
 
-const EmailVerificationModal = ({
+interface EmailVerificationModalProps {
+  /**
+   * Modal open/closed state.
+   */
+  isOpen: boolean;
+  /**
+   * Callback function to close the modal
+   *
+   * Invoked on ESC keypress or clicking the "X" to close the modal.
+   */
+  // TODO: Is there a generic event?
+  closeModal: React.EventHandler<React.MouseEvent>;
+  submissionUrl: string;
+  componentKey: string;
+  emailAddress: string;
+}
+
+const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
   isOpen,
   closeModal,
   submissionUrl,
@@ -43,22 +59,6 @@ const EmailVerificationModal = ({
       <div aria-live="polite">{isVerified && <VerificationSuccess />}</div>
     </Modal>
   );
-};
-
-EmailVerificationModal.propTypes = {
-  /**
-   * Modal open/closed state.
-   */
-  isOpen: PropTypes.bool.isRequired,
-  /**
-   * Callback function to close the modal
-   *
-   * Invoked on ESC keypress or clicking the "X" to close the modal.
-   */
-  closeModal: PropTypes.func.isRequired,
-  submissionUrl: PropTypes.string.isRequired,
-  componentKey: PropTypes.string.isRequired,
-  emailAddress: PropTypes.string.isRequired,
 };
 
 const VerificationSuccess = () => (

@@ -2,10 +2,16 @@ import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
+interface EmailVerificiationResponse {
+  componentKey: string;
+  email: string;
+}
+
 export const mockEmailVerificationPost = http.post(
   `${BASE_URL}submissions/email-verifications`,
   async ({request}) => {
-    const {componentKey, email} = await request.json();
+    const obj: Promise<EmailVerificiationResponse> = await request.json();
+    const {componentKey, email} = obj;
     return HttpResponse.json({componentKey, email});
   }
 );
