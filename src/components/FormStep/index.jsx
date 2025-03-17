@@ -32,9 +32,9 @@ import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get} from 'api';
-import ButtonsToolbar from 'components/ButtonsToolbar';
 import Card, {CardTitle} from 'components/Card';
 import {EmailVerificationModal} from 'components/EmailVerification';
+import FormNavigation from 'components/FormNavigation';
 import FormStepDebug from 'components/FormStepDebug';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
@@ -823,7 +823,7 @@ const FormStep = () => {
                   }}
                 />
                 {config.debug ? <FormStepDebug data={getCurrentFormData()} /> : null}
-                <ButtonsToolbar
+                <FormNavigation
                   canSubmitStep={canSubmit}
                   canSubmitForm={submission.submissionAllowed}
                   canSuspendForm={form.suspensionAllowed}

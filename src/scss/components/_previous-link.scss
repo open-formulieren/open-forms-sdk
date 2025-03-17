@@ -18,5 +18,6 @@
 
   @include bem.element('icon') {
     display: var(--of-previous-link-icon-display, none);
+    margin-inline-end: 8px;
   }
 }
