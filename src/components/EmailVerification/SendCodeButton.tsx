@@ -1,5 +1,4 @@
 import {useFormikContext} from 'formik';
-import PropTypes from 'prop-types';
 import {useContext, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
@@ -8,7 +7,7 @@ import {post} from 'api';
 import {OFButton} from 'components/Button';
 import Loader from 'components/Loader';
 
-const createVerification = async (baseUrl, {submissionUrl, componentKey, emailAddress}) => {
+const createVerification = async (baseUrl: string, {submissionUrl, componentKey, emailAddress}k) => {
   await post(`${baseUrl}submissions/email-verifications`, {
     submission: submissionUrl,
     componentKey,
@@ -16,7 +15,20 @@ const createVerification = async (baseUrl, {submissionUrl, componentKey, emailAd
   });
 };
 
-const SendCodeButton = ({submissionUrl, componentKey, emailAddress, onError}) => {
+interface SendCodeButtonProps {
+  submissionUrl: string;
+  componentKey: string;
+  emailAddress: string;
+  // TODO: this needs arguments types and a return type
+  onError: CallableFunction;
+}
+
+const SendCodeButton: React.FC<SendCodeButtonProps> = ({
+  submissionUrl,
+  componentKey,
+  emailAddress,
+  onError,
+}) => {
   const {baseUrl} = useContext(ConfigContext);
   const [isSending, setIsSending] = useState(false);
   const {setFieldValue} = useFormikContext();
@@ -52,13 +64,6 @@ const SendCodeButton = ({submissionUrl, componentKey, emailAddress, onError}) =>
       )}
     </OFButton>
   );
-};
-
-SendCodeButton.propTypes = {
-  submissionUrl: PropTypes.string.isRequired,
-  componentKey: PropTypes.string.isRequired,
-  emailAddress: PropTypes.string.isRequired,
-  onError: PropTypes.func.isRequired,
 };
 
 export default SendCodeButton;
