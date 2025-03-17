@@ -1,16 +1,20 @@
-import PropTypes from 'prop-types';
 import {createContext, useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import ReactModal from 'react-modal';
 
-import {OFButton} from 'components/Button';
-import FAIcon from 'components/FAIcon';
-import {getBEMClassName} from 'utils';
+import {OFButton} from '@/components/Button';
+import FAIcon from '@/components/FAIcon';
+import {getBEMClassName} from '@/utils';
 
-export const ModalContext = createContext({});
+interface ModalContextType {
+  ariaHideApp?: boolean;
+  parentSelector?: () => HTMLElement;
+}
+
+export const ModalContext = createContext<ModalContextType>({});
 ModalContext.displayName = 'ModalContext';
 
-const usePreventScroll = open => {
+const usePreventScroll = (open: boolean): void => {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -23,12 +27,19 @@ const usePreventScroll = open => {
   }, [open]);
 };
 
-const Modal = ({
+export type ModalCloseHandler = React.EventHandler<React.MouseEvent | React.KeyboardEvent>;
+
+interface ModalProps {
+  isOpen?: boolean;
+  title?: React.ReactNode;
+  closeModal: ModalCloseHandler;
+  children: React.ReactNode;
+}
+
+const Modal: React.FC<ModalProps> = ({
   isOpen = false,
   title = '',
-  titleComponent: Title = 'h1',
   closeModal,
-  contentModifiers = [],
   children,
   ...props
 }) => {
@@ -39,18 +50,19 @@ const Modal = ({
     <ReactModal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      className={getBEMClassName('react-modal__content', contentModifiers)}
+      className={getBEMClassName('react-modal__content')}
       overlayClassName={getBEMClassName('react-modal__overlay')}
       parentSelector={parentSelector}
       ariaHideApp={ariaHideApp}
       {...props}
     >
       <header className={getBEMClassName('react-modal__header')}>
-        {title ? <Title className={getBEMClassName('react-modal__title')}>{title}</Title> : null}
+        {title ? <h1 className={getBEMClassName('react-modal__title')}>{title}</h1> : null}
         <OFButton
           appearance="subtle-button"
           onClick={closeModal}
           className={getBEMClassName('react-modal__close')}
+          variant="default"
           title={intl.formatMessage({
             description: 'Modal close icon title',
             defaultMessage: 'Close',
@@ -66,15 +78,6 @@ const Modal = ({
       {children}
     </ReactModal>
   );
-};
-
-Modal.propTypes = {
-  isOpen: PropTypes.bool,
-  title: PropTypes.node,
-  titleComponent: PropTypes.string,
-  closeModal: PropTypes.func.isRequired,
-  children: PropTypes.node,
-  contentModifiers: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Modal;

@@ -1,7 +1,9 @@
+import {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 
-import {BASE_URL} from 'api-mocks';
 import {ConfigDecorator} from 'story-utils/decorators';
+
+import {BASE_URL} from '@/api-mocks';
 
 import {EmailVerificationModal} from './index';
 import {mockEmailVerificationPost, mockEmailVerificationVerifyCodePost} from './mocks';
@@ -22,6 +24,8 @@ export default {
       handlers: [mockEmailVerificationPost, mockEmailVerificationVerifyCodePost],
     },
   },
-};
+} satisfies Meta<typeof EmailVerificationModal>;
 
-export const Default = {};
+type Story = StoryObj<typeof EmailVerificationModal>;
+
+export const Default: Story = {};

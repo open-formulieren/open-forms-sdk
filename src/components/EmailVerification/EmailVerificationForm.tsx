@@ -1,28 +1,34 @@
 import {TextField} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Link as UtrechtLink} from '@utrecht/component-library-react';
-import {Formik} from 'formik';
-import PropTypes from 'prop-types';
+import {Formik, type FormikHelpers} from 'formik';
 import {useContext, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage, type IntlShape, useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import {ConfigContext} from 'Context';
-import {post} from 'api';
-import Body from 'components/Body';
-import {ErrorDisplay} from 'components/Errors';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import {ValidationError} from 'errors';
+import {ConfigContext} from '@/Context';
+import {post} from '@/api';
+import Body from '@/components/Body';
+import {ErrorDisplay} from '@/components/Errors';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {ValidationError} from '@/errors';
 
 import EnterCodeButton from './EnterCodeButton';
 import ModeField from './ModeField';
 import SendCodeButton from './SendCodeButton';
 
+interface VerificationCodeData {
+  submissionUrl: string;
+  componentKey: string;
+  emailAddress: string;
+  code: string;
+}
+
 const submitVerificationCode = async (
-  baseUrl,
-  {submissionUrl, componentKey, emailAddress, code}
-) => {
+  baseUrl: string,
+  {submissionUrl, componentKey, emailAddress, code}: VerificationCodeData
+): Promise<void> => {
   await post(`${baseUrl}submissions/email-verifications/verify`, {
     submission: submissionUrl,
     componentKey,
@@ -31,7 +37,7 @@ const submitVerificationCode = async (
   });
 };
 
-const getValidationSchema = intl =>
+const getValidationSchema = (intl: IntlShape) =>
   z.object({
     code: z
       .string()
@@ -51,17 +57,34 @@ const getValidationSchema = intl =>
       ),
   });
 
-const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVerified}) => {
+export interface EmailVerificationProps {
+  submissionUrl: string;
+  componentKey: string;
+  emailAddress: string;
+  onVerified: () => void;
+}
+
+interface FormValues {
+  mode: string;
+  code: string;
+}
+
+const EmailVerificationForm: React.FC<EmailVerificationProps> = ({
+  submissionUrl,
+  componentKey,
+  emailAddress,
+  onVerified,
+}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
 
   /**
    * On Formik submit, submit the verification code to the backend. If all is okay,
    * the local state is updated so that the success message is displayed, otherwise
    * display any validation errors.
    */
-  const onSubmit = async (values, helpers) => {
+  const onSubmit = async (values: FormValues, helpers: FormikHelpers<FormValues>) => {
     setError(null);
     try {
       await submitVerificationCode(baseUrl, {
@@ -73,7 +96,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
       onVerified();
     } catch (e) {
       if (e instanceof ValidationError) {
-        const errors = {};
+        const errors: Record<string, string> = {};
         e.invalidParams.forEach(({name, reason}) => {
           // TODO: replace newlines with proper solution...
           const hasErrorAlready = !!errors[name];
@@ -160,7 +183,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
                   submissionUrl={submissionUrl}
                   componentKey={componentKey}
                   emailAddress={emailAddress}
-                  onError={error => setError(error)}
+                  onError={(error: Error) => setError(error)}
                 />
               )}
               {mode === 'enterCode' && <EnterCodeButton />}
@@ -170,13 +193,6 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
       }
     </Formik>
   );
-};
-
-EmailVerificationForm.propTypes = {
-  submissionUrl: PropTypes.string.isRequired,
-  componentKey: PropTypes.string.isRequired,
-  emailAddress: PropTypes.string.isRequired,
-  onVerified: PropTypes.func.isRequired,
 };
 
 export default EmailVerificationForm;

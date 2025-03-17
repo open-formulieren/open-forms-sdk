@@ -20,7 +20,6 @@ export const AddPartnerModal: React.FC<AddPartnerModalProps> = ({
 }) => {
   return (
     <Modal
-      // @ts-expect-error The Modal has an empty string as a default value for the title
       title={
         <FormattedMessage description="Add partner modal title" defaultMessage="Add partner" />
       }

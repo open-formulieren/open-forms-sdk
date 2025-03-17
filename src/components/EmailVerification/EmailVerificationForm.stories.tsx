@@ -1,8 +1,10 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {BASE_URL} from 'api-mocks';
 import {ConfigDecorator} from 'story-utils/decorators';
+
+import {BASE_URL} from '@/api-mocks';
 
 import {EmailVerificationForm} from './index';
 import {
@@ -26,11 +28,13 @@ export default {
       handlers: [mockEmailVerificationPost, mockEmailVerificationVerifyCodePost],
     },
   },
-};
+} satisfies Meta<typeof EmailVerificationForm>;
 
-export const Default = {};
+type Story = StoryObj<typeof EmailVerificationForm>;
 
-export const HappyFlow = {
+export const Default: Story = {};
+
+export const HappyFlow: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
@@ -43,7 +47,7 @@ export const HappyFlow = {
   },
 };
 
-export const ArbitrarySendCodeErrorFlow = {
+export const ArbitrarySendCodeErrorFlow: Story = {
   parameters: {
     msw: {
       handlers: [mockEmailVerificationErrorPost, mockEmailVerificationVerifyCodePost],
@@ -58,7 +62,7 @@ export const ArbitrarySendCodeErrorFlow = {
   },
 };
 
-export const InvalidCodeFlow = {
+export const InvalidCodeFlow: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
@@ -72,7 +76,7 @@ export const InvalidCodeFlow = {
   },
 };
 
-export const ArbitraryVerificationErrorFlow = {
+export const ArbitraryVerificationErrorFlow: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
@@ -86,7 +90,7 @@ export const ArbitraryVerificationErrorFlow = {
   },
 };
 
-export const NoAsterisks = {
+export const NoAsterisks: Story = {
   name: 'No asterisk for required fields',
   parameters: {
     config: {
