@@ -47,7 +47,7 @@ type Story = StoryObj<typeof EditGrid>;
 export const WithAddButton: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    const buttons = await canvas.findAllByRole('button', {name: /Edit item \d/});
+    const buttons = await canvas.findAllByRole('button', {name: /Bewerk item \d/});
     for (const btn of buttons) {
       await userEvent.click(btn);
     }

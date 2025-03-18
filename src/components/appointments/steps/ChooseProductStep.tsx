@@ -17,6 +17,15 @@ import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmen
 import SubmitRow from '../SubmitRow';
 import {Product} from '../fields';
 
+export interface AppointmentProduct {
+  productId: string;
+  amount: number;
+}
+
+export interface ProductStepValues {
+  products: AppointmentProduct[];
+}
+
 const productSchema = z
   .array(
     z.object({
@@ -29,7 +38,13 @@ const productSchema = z
 const chooseSingleProductSchema = z.object({products: productSchema.max(1)});
 const chooseMultiProductSchema = z.object({products: productSchema});
 
-const ChooseProductStepFields = ({values: {products = []}}) => {
+export interface ChooseProductStepFieldsProps {
+  values: ProductStepValues;
+}
+
+const ChooseProductStepFields: React.FC<ChooseProductStepFieldsProps> = ({
+  values: {products = []},
+}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
   const selectedProductIds = products.map(p => p.productId).filter(Boolean);
@@ -40,12 +55,10 @@ const ChooseProductStepFields = ({values: {products = []}}) => {
         <EditGrid
           name="products"
           emptyItem={{productId: '', amount: 1}}
-          addButtonLabel={
-            <FormattedMessage
-              description="Appointments: add additional product/service button text"
-              defaultMessage="Add another product"
-            />
-          }
+          addButtonLabel={intl.formatMessage({
+            description: 'Appointments: add additional product/service button text',
+            defaultMessage: 'Add another product',
+          })}
           getItemHeading={(_, index) => (
             <FormattedMessage
               description="Appointments: single product label/header"
@@ -73,11 +86,7 @@ const ChooseProductStepFields = ({values: {products = []}}) => {
   );
 };
 
-ChooseProductStepFields.propTypes = {
-  values: PropTypes.object.isRequired,
-};
-
-const INITIAL_VALUES = {
+const INITIAL_VALUES: ProductStepValues = {
   products: [
     {
       productId: '',
@@ -86,7 +95,11 @@ const INITIAL_VALUES = {
   ],
 };
 
-const ChooseProductStep = ({navigateTo = null}) => {
+export interface ChooseProductStepProps {
+  navigateTo?: string | null;
+}
+
+const ChooseProductStep: React.FC<ChooseProductStepProps> = ({navigateTo = null}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
   const {
@@ -127,7 +140,7 @@ const ChooseProductStep = ({navigateTo = null}) => {
         headingType="subtitle"
         padded
       />
-      <Formik
+      <Formik<ProductStepValues>
         initialValues={{...initialValues, ...stepData}}
         initialErrors={initialErrors}
         initialTouched={initialTouched}
