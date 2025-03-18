@@ -61,10 +61,22 @@
       "value": "Afspraakdetails"
     }
   ],
+  "+xOWBM": [
+    {
+      "type": 0,
+      "value": "Verwijderen"
+    }
+  ],
   "/yX9Xl": [
     {
       "type": 0,
       "value": "Tekeningen annuleren"
+    }
+  ],
+  "0EdUXi": [
+    {
+      "type": 0,
+      "value": "Opslaan"
     }
   ],
   "0j8tMq": [
@@ -461,6 +473,16 @@
       "value": "Afspraak geannuleerd"
     }
   ],
+  "9SgPC6": [
+    {
+      "type": 0,
+      "value": "Verwijder item "
+    },
+    {
+      "type": 1,
+      "value": "index"
+    }
+  ],
   "AG5zPa": [
     {
       "type": 0,
@@ -501,6 +523,16 @@
     {
       "type": 0,
       "value": "Er is iets fout gegaan bij het medeondertekenen. Neem alstublieft contact met ons op."
+    }
+  ],
+  "At/y3w": [
+    {
+      "type": 0,
+      "value": "Bewerk item "
+    },
+    {
+      "type": 1,
+      "value": "index"
     }
   ],
   "AustF4": [
