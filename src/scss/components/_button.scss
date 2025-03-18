@@ -3,7 +3,8 @@
 
 .openforms-theme {
   .utrecht-button,
-  .utrecht-button-link {
+  .utrecht-button-link,
+  .utrecht-link-button {
     // For buttons without any state or buttons being hovered over, apply a 3d effect
     // by making the top and left border transparent.
     &,
@@ -21,6 +22,24 @@
       --utrecht-button-border-radius: 2px;
     }
   }
+
+  .utrecht-link-button--openforms {
+    display: inline-block;
+    padding-inline-start: 0;
+    font-size: inherit;
+
+    &[name='abort'] {
+      color: var(--utrecht-button-primary-action-danger-background-color);
+    }
+
+    i {
+      margin-inline-end: 8px;
+    }
+
+    &:hover {
+      text-decoration: var(--utrecht-link-text-decoration);
+    }
+  }
 }
 
 @include mobile-only {
@@ -32,4 +51,10 @@
       justify-content: center;
     }
   }
+}
+
+.openforms-button-with-icon {
+  display: inline-flex;
+  flex-direction: row;
+  column-gap: 8px;
 }

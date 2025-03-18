@@ -3,7 +3,7 @@
  */
 @use 'microscope-sass/lib/bem';
 
-@import '@utrecht/components/button-group/src/index';
+@import '@utrecht/components/button-group';
 
 .utrecht-button-group {
   // A button group used in an edit grid item
@@ -13,11 +13,8 @@
     // can be tweaked with proprietary design tokens.
     justify-content: var(--of-button-group-editgrid-justify-content, flex-end);
   }
-}
 
-// Reference: https://nl-design-system.github.io/utrecht/storybook/?path=/docs/css_css-button-group--docs
-@include mobile-only {
-  .utrecht-button-group {
-    @include utrecht-button-group--column;
+  @include mobile-only {
+    align-items: center;
   }
 }

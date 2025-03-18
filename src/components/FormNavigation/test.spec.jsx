@@ -6,7 +6,7 @@ import {MemoryRouter} from 'react-router';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
-import ButtonsToolbar from './index';
+import FormNavigation from './index';
 
 const LITERALS = {
   nextText: {value: '', resolved: 'Next step'},
@@ -27,7 +27,7 @@ it('Last step of submittable form, button is present', () => {
 
   render(
     <Wrap>
-      <ButtonsToolbar
+      <FormNavigation
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
         canSuspendForm={true}
@@ -53,7 +53,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
 
   render(
     <Wrap>
-      <ButtonsToolbar
+      <FormNavigation
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
         canSuspendForm={true}
@@ -79,7 +79,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
 
   render(
     <Wrap>
-      <ButtonsToolbar
+      <FormNavigation
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
         canSuspendForm={true}
@@ -105,7 +105,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
 
   render(
     <Wrap>
-      <ButtonsToolbar
+      <FormNavigation
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
         canSuspendForm={true}
@@ -131,7 +131,7 @@ it('Suspending form allowed, button is present', () => {
 
   render(
     <Wrap>
-      <ButtonsToolbar
+      <FormNavigation
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
         canSuspendForm={true}
@@ -154,7 +154,7 @@ it('Suspending form not allowed, button is NOT present', () => {
 
   render(
     <Wrap>
-      <ButtonsToolbar
+      <FormNavigation
         canSubmitStep={true}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
         canSuspendForm={false}

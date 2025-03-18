@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import {useNavigate} from 'react-router';
 
-import ButtonsToolbar from 'components/ButtonsToolbar';
+import FormNavigation from 'components/FormNavigation';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
@@ -15,7 +15,7 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
         previousText: {resolved: previousText},
       }}
     >
-      <ButtonsToolbar
+      <FormNavigation
         canSubmitStep={canSubmit}
         canSubmitForm={SUBMISSION_ALLOWED.yes}
         canSuspendForm={false}
