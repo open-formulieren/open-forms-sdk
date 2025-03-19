@@ -61,10 +61,22 @@
       "value": "Location and time"
     }
   ],
+  "+xOWBM": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
   "/yX9Xl": [
     {
       "type": 0,
       "value": "Cancel drawing"
+    }
+  ],
+  "0EdUXi": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "0j8tMq": [
@@ -461,6 +473,16 @@
       "value": "Appointment cancelled"
     }
   ],
+  "9SgPC6": [
+    {
+      "type": 0,
+      "value": "Remove item "
+    },
+    {
+      "type": 1,
+      "value": "index"
+    }
+  ],
   "AG5zPa": [
     {
       "type": 0,
@@ -501,6 +523,16 @@
     {
       "type": 0,
       "value": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
+    }
+  ],
+  "At/y3w": [
+    {
+      "type": 0,
+      "value": "Edit item "
+    },
+    {
+      "type": 1,
+      "value": "index"
     }
   ],
   "AustF4": [

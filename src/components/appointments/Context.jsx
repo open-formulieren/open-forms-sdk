@@ -8,7 +8,8 @@ const CreateAppointmentContext = React.createContext({
   appointmentData: {},
   stepData: {},
   submittedSteps: [],
-  submitStep: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  submitStep: values => {},
   setErrors: () => {},
   stepErrors: {initialTouched: {}, initialErrors: {}},
   processingError: '',
