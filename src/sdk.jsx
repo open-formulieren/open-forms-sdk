@@ -11,6 +11,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {get} from 'api';
 import {getRedirectParams} from 'components/routingActions';
 import {CSPNonce} from 'headers';
+import {PARAM_NAME} from 'hooks/useInitialDataReference';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
 import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import initialiseSentry from 'sentry';
@@ -74,6 +75,7 @@ class OpenForm {
     this.browserBasePath = this.useHashRouting ? window.location.pathname : pathname;
     this.makeRedirect();
     this.calculateClientBaseUrl();
+    this.extractInitialDataReference();
   }
 
   makeRedirect() {
@@ -128,6 +130,11 @@ class OpenForm {
     ).href;
   }
 
+  extractInitialDataReference() {
+    const urlParams = new URLSearchParams(window.location.search);
+    this.initialDataReference = urlParams.get(PARAM_NAME);
+  }
+
   async init() {
     ReactModal.setAppElement(this.targetNode);
 
@@ -142,7 +149,7 @@ class OpenForm {
 
   async onLanguageChangeDone(newLanguagecode) {
     if (this.onLanguageChange) {
-      this.onLanguageChange(newLanguagecode);
+      this.onLanguageChange(newLanguagecode, this.initialDataReference);
       return;
     }
     this.formObject = await get(this.url);
