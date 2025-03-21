@@ -145,7 +145,42 @@ describe('OpenForm', () => {
       await form.onLanguageChangeDone('en');
     });
 
-    expect(onLanguageChangeMock).toBeCalledWith('en');
+    // Second argument is the initialDataReference, which is null in this case
+    expect(onLanguageChangeMock).toBeCalledWith('en', null);
+  });
+
+  it('should call the onLanguageChange callback with initial data reference', async () => {
+    mswServer.use(...apiMocks);
+    window.history.pushState({}, '', '?initial_data_reference=foo');
+    const formRoot = document.createElement('div');
+    const target = document.createElement('div');
+    const onLanguageChangeMock = vi.fn();
+
+    const form = new OpenForm(formRoot, {
+      baseUrl: BASE_URL,
+      basePath: '',
+      formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
+      languageSelectorTarget: target,
+      lang: 'nl',
+      onLanguageChange: onLanguageChangeMock,
+    });
+
+    await act(async () => await form.init());
+
+    // wait for the loader to be removed when all network requests have completed
+    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+
+    expect(target).not.toBeEmptyDOMElement();
+
+    await act(async () => {
+      await form.onLanguageChangeDone('en');
+    });
+
+    // Ensure the data reference is kept when a language change happens
+    expect(onLanguageChangeMock).toBeCalledWith('en', 'foo');
+
+    // Remove query param to ensure other tests don't fail
+    window.history.pushState({}, '', window.location.pathname);
   });
 
   it('should correctly set the formUrl', () => {
