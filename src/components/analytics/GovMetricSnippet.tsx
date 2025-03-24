@@ -8,7 +8,7 @@ import useFormContext from 'hooks/useFormContext';
 import {useAnalyticsToolsConfig} from './AnalyticsToolConfigProvider';
 import {buildGovMetricUrl, govMetricURLWithRating} from './utils';
 
-const GovMetricSnippet = () => {
+const GovMetricSnippet: React.FC = () => {
   const {enableGovmetricAnalytics, govmetricSourceIdFormFinished, govmetricSecureGuidFormFinished} =
     useAnalyticsToolsConfig();
   const form = useFormContext();
