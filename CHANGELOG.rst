@@ -2,6 +2,85 @@
 SDK Changelog
 =============
 
+3.1.0 (2025-03-28)
+==================
+
+Feature release
+
+There are additional changes compared to the alpha versions. Continue reading for the full
+changelog, which includes the alpha versions release notes.
+
+.. warning:: SDK 3.1.0 requires the backend API version 3.1.0 or newer.
+
+New features
+------------
+
+* [#4917] Changed placement of form "next", "previous", "continue later" and "log out"
+  buttons.
+* [#5046] The form start button is now hidden if the maximum number of submissions is
+  reached.
+* [#5033] If there's an outage in an external service that we rely on, we now provide
+  more useful feedback.
+* [#2177] You can now also draw lines and polygons on map components, in addition to
+  point markers.
+* [#5003] AddressNL component styling update.
+
+    - Removed asterisk next to AddressNL component label. When the component is required,
+      only the field labels have an asterisk next to them.
+    - Aligned address styling with other components in the submission summary.
+
+.. note:: The ``addressNL`` component is not yet a fully capable replacement for
+   individual address fields. Currently, it's only recommended for BRK-validation
+   purposes.
+
+.. note:: The ``map`` component is not yet fully worked out and some improvements are
+   needed to optimize the user experience.
+
+Bugfixes
+--------
+
+* [#5195] Fixed "start form" button being displayed on cosign start page.
+* [#5155] Fixed the url parameter "initial_data_reference" being lost after switching the
+  form language.
+* [#5086] Fixed soft-required component showing warnings for hidden fields.
+* [#5038] Fixed missing map shapes in form submission summary.
+* [#4510] Fixed missing validation error messages in the submission summary.
+* [#4699] Fixed AddressNL validation being triggered on page load, and a crash when the
+  AddressNL component is hidden.
+
+Project maintenance
+-------------------
+
+* [#445] Started converting the codebase to Typescript.
+
+    - Upgraded to @utrecht/components 7.4.0 in the process, which may affect (custom)
+      CSS themes.
+
+* Errors in error boundaries are now captured and sent to Sentry, if configured.
+* Removed unused Sentry tracing.
+* [#76] Optimized bundle to lazy load code until it's relevant.
+* [#4929] Restructured routes for and upgraded to react-router v7.
+* Enabled Codecov JS bundle analysis.
+* Separated storybook and Vitest coverage reporting.
+* [#724] Replaced create-react-app build toolchain with ViteJS.
+* Upgraded dependencies.
+
+    - Upgraded to Storybook 8.6.3.
+    - Upgraded to playwright 1.49.
+    - Upgraded to Vitest 3.0.
+    - Upgraded to Sentry 8.50.
+
+* Upgraded CI configuration dependencies.
+
+    - Upgraded to jinja2 3.1.6.
+
+3.0.1 (2025-03-03)
+==================
+
+Bugfix release
+
+* [#5086] Fixed soft-required errors being shown for hidden fields.
+
 3.1.0-alpha.1 (2025-02-20)
 ==========================
 
@@ -21,15 +100,12 @@ First preview release of the upcoming 3.1.0 version.
 New features
 ------------
 
-* [#5033] Improved error message when service is unavailable.
-* [#76] i18n, lodash, map and appointment modules are now dynamically loaded.
-* [#2177] The map component now supports placing a marker, line or polygon.
-    - Added leaflet-draw for user interactions.
-    - Refactored map component search input and 'nearest address' functionality to use
-      leaflet-draw.
-    - Changed map data from array to geoJson geometry, allowing the placement of markers,
-      lines and polygons.
+* [#5033] If there's an outage in an external service that we rely on, we now provide
+  more useful feedback.
+* [#2177] You can now also draw lines and polygons on map components, in addition to
+  point markers.
 * [#5003] AddressNL component styling update.
+
     - Removed asterisk next to AddressNL component label. When the component is required,
       only the field labels have an asterisk next to them.
     - Aligned address styling with other components in the submission summary.
@@ -37,7 +113,7 @@ New features
 Bugfixes
 --------
 
-* [#4510] Fixed generic and user-unfriendly error messages in the submission summary.
+* [#4510] Fixed missing validation error messages in the submission summary.
 * [#4699] Fixed AddressNL validation being triggered on page load, and a crash when the
   AddressNL component is hidden.
 
@@ -46,23 +122,17 @@ Project maintenance
 
 * Errors in error boundaries are captured with Sentry.
 * Removed unused Sentry tracing.
-* [#4929] Restructured and upgraded React routing.
-    - Re-organized cosign, form, form start and appointment components.
-    - Removed unused code.
-    - Simplified form state management.
-    - Moved routing definitions and converted all dynamic routes to static.
-    - Updated storybook and vitest tests.
-    - Upgraded to React-Router 7.1.
+* [#76] Optimized bundle to lazy load code until it's relevant.
+* [#4929] Restructured routes for and upgraded to react-router v7.
 * Enabled Codecov JS bundle analysis.
+* Separated storybook and Vitest coverage reporting.
+* Updated Docker Hub config file.
+* [#724] Replaced create-react-app build toolchain with ViteJS.
 * Upgraded dependencies.
+
     - Upgraded to playwright 1.49.
     - Upgraded to Vitest 3.0.
     - Upgraded to Sentry 8.50.
-* Separated storybook and Vitest coverage reporting.
-* Updated Docker Hub config file.
-* [#724] Replaced CRA with ViteJS.
-    - Removed CRA scripts and configuration.
-    - Removed CRA from project dev dependencies.
 
 3.0.0 (2025-01-06)
 ==================
@@ -82,11 +152,13 @@ New features
   is reached.
 * [#2173] The map component now supports using a different background/tile layer.
 * [#4320] Improved the user experience for forms with cosign
+
     - The confirmation page content is now dynamically provided by the API.
     - Tweaked the texts displayed in various points in the cosign process.
     - Cosign login options are now only displayed if the cosign request email does not use direct links.
       When direct links are used, the cosigner is directly taken to the cosign page without having to
       manually enter codes.
+
 * [#4546] It's now possible to "soft-require" file uploads. Soft-required uploads show a warning message when
   no file has been uploaded, but don't block the step submission or form progress.
 * [#4718] Improved accessibility when using an increased zoom level.
@@ -121,15 +193,19 @@ Project maintenance
 * [#3283] Updated the deprecated address endpoint.
 * Prepare build toolchain to use Vite instead of CRA - we'll switch over once 3.0.0 is
   released to Docker Hub and NPM.
+
   - Renamed .js files to .jsx.
   - Removed old tilde prefix in SCSS imports.
   - Added a parallel Vite-based build.
   - Migrated test runner from Jest to Vitest.
   - Migrated storybook builder from webpack to Vite.
+
 * Upgraded dependencies.
+
   - Upgraded to Storybook 8.4.
   - Upgraded to MSW 2.5
   - [#724] Upgraded to Jest 29 because of MSW requirements.
+
 * [#429] Updated all React tests to testing-library.
 * Ensured prettier checks jsx files.
 * [#4849] Ensured .jsx files are picked up for translation as well.
@@ -149,11 +225,13 @@ New features
 ------------
 
 * [#4320] Improved the user experience for forms with cosign
+
     - The confirmation page content is now dynamically provided by the API.
     - Tweaked the texts displayed in various points in the cosign process.
     - Cosign login options are now only displayed if the cosign request email does not use direct links.
       When direct links are used, the cosigner is directly taken to the cosign page without having to
       manually enter codes.
+
 * [#4546] It's now possible to "soft-require" file uploads. Soft-required uploads show a warning message when
   no file has been uploaded, but don't block the step submission or form progress.
 * [#4718] Improved accessibility when using an increased zoom level.
@@ -1754,12 +1832,15 @@ Features
 
 * Supports the Open Forms 1.0.x backend API
 * Implements the form fill-out flow
+
   - Present authentication options
   - Render form definitions
   - Progress through form steps
   - Confirm form submission
   - Report backend processing status
+
 * Supports a wide range of form widgets
+
   - Text based fields
   - Dropdowns, checkboxes, radio inputs
   - Date and time fields
@@ -1768,6 +1849,7 @@ Features
   - Co-signing
   - Map widget
   - Layout options: fieldsets, free content, columns
+
 * Mobile/responsive support
 * Appointment changing/cancellation
 * Payment integration
