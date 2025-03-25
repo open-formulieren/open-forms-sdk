@@ -1,11 +1,7 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import ErrorMessage from './ErrorMessage';
-
-interface WrapperProps {
-  title: string;
-  children: React.ReactNode;
-}
+import type {WrapperProps} from './types';
 
 export interface FormUnavailableProps {
   wrapper: React.ComponentType<WrapperProps>;

@@ -1,21 +1,22 @@
 import * as Sentry from '@sentry/react';
-import {getEnv} from 'env';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import Body from 'components/Body';
-import Card from 'components/Card';
-import FormUnavailable from 'components/Errors/FormUnavailable';
 import FormMaximumSubmissions from 'components/FormMaximumSubmissions';
 import Link from 'components/Link';
 import MaintenanceMode from 'components/MaintenanceMode';
-import {PermissionDenied, ServiceUnavailable, UnprocessableEntity} from 'errors';
-import {DEBUG} from 'utils';
+
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+import {getEnv} from '@/env';
+import {APIError, PermissionDenied, ServiceUnavailable, UnprocessableEntity} from '@/errors';
+import {DEBUG} from '@/utils';
 
 import ErrorMessage from './ErrorMessage';
+import FormUnavailable from './FormUnavailable';
+import type {WrapperProps} from './types';
 
-const logError = (error, errorInfo) => {
+const logError = (error: Error, errorInfo: React.ErrorInfo): void => {
   if (DEBUG) {
     const muteConsole = getEnv('MUTE_ERROR_BOUNDARY_LOG');
     if (!muteConsole) console.error(error, errorInfo);
@@ -24,24 +25,41 @@ const logError = (error, errorInfo) => {
   }
 };
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {hasError: false, error: null};
-  }
+interface Props {
+  children: React.ReactNode;
+  useCard?: boolean;
+}
 
-  static getDerivedStateFromError(error) {
+interface StateWithoutError {
+  hasError: false;
+  error: null;
+}
+
+interface StateWithError {
+  hasError: true;
+  error: Error | APIError;
+}
+
+type State = StateWithError | StateWithoutError;
+
+class ErrorBoundary extends React.Component<Props, State> {
+  public state: State = {
+    hasError: false,
+    error: null,
+  };
+
+  public static getDerivedStateFromError(error: Error): State {
     return {
       hasError: true,
       error,
     };
   }
 
-  componentDidCatch(error, errorInfo) {
+  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     logError(error, errorInfo);
   }
 
-  render() {
+  public render(): React.ReactNode {
     const {useCard, children} = this.props;
     const {hasError, error} = this.state;
     if (!hasError) {
@@ -52,18 +70,24 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-ErrorBoundary.propTypes = {
-  useCard: PropTypes.bool,
-};
+export interface DisplayErrorProps {
+  error: Error | APIError;
+  useCard?: boolean;
+}
 
-const DisplayError = ({error, useCard = false}) => {
-  const errorCls = error.constructor;
+const DisplayError: React.FC<DisplayErrorProps> = ({error, useCard = false}) => {
+  const errorCls = error.constructor.name;
   const ErrorComponent = ERROR_TYPE_MAP[errorCls] || GenericError;
   const Wrapper = useCard ? Card : 'div';
   return <ErrorComponent wrapper={Wrapper} error={error} />;
 };
 
-const GenericError = ({wrapper: Wrapper, error}) => {
+export interface ErrorProps<T extends Error = Error | APIError> {
+  wrapper: React.ComponentType<WrapperProps>;
+  error: T;
+}
+
+const GenericError: React.FC<ErrorProps> = ({wrapper: Wrapper, error}) => {
   const intl = useIntl();
   // Wrapper may be a DOM element, which can't handle <FormattedMessage />
   const title = intl.formatMessage({
@@ -78,25 +102,19 @@ const GenericError = ({wrapper: Wrapper, error}) => {
           defaultMessage="Unfortunately something went wrong!"
         />
       </ErrorMessage>
-      {error.detail && <Body>{error.detail}</Body>}
+      {'detail' in error && <Body>{error.detail}</Body>}
     </Wrapper>
   );
 };
 
-GenericError.propTypes = {
-  wrapper: PropTypes.elementType.isRequired,
-  error: PropTypes.object, // exception instance
-};
-
-const PermissionDeniedError = ({wrapper: Wrapper, error}) => {
+const PermissionDeniedError: React.FC<ErrorProps> = ({wrapper: Wrapper, error}) => {
+  const intl = useIntl();
   return (
     <Wrapper
-      title={
-        <FormattedMessage
-          description="'Permission denied' error title"
-          defaultMessage="Authentication problem"
-        />
-      }
+      title={intl.formatMessage({
+        description: "'Permission denied' error title",
+        defaultMessage: 'Authentication problem',
+      })}
     >
       <ErrorMessage>
         <FormattedMessage
@@ -105,8 +123,9 @@ const PermissionDeniedError = ({wrapper: Wrapper, error}) => {
         />
       </ErrorMessage>
 
-      {error.detail && <Body>{error.detail}</Body>}
+      {'detail' in error && <Body>{error.detail}</Body>}
 
+      {/* @ts-expect-error */}
       <Link to="/">
         <FormattedMessage
           description="return to form start link after 403"
@@ -117,21 +136,20 @@ const PermissionDeniedError = ({wrapper: Wrapper, error}) => {
   );
 };
 
-PermissionDeniedError.propTypes = GenericError.propTypes;
+const UnprocessableEntityError: React.FC<ErrorProps> = ({wrapper: Wrapper, error}) => {
+  const intl = useIntl();
 
-const UnprocessableEntityError = ({wrapper: Wrapper, error}) => {
-  if (error.code !== 'form-inactive') {
+  if (!('code' in error) || error.code !== 'form-inactive') {
     return <GenericError wrapper={Wrapper} error={error} />;
   }
+
   // handle deactivated forms
   return (
     <Wrapper
-      title={
-        <FormattedMessage
-          description="'Deactivated form' error title"
-          defaultMessage="Sorry - this form is no longer available"
-        />
-      }
+      title={intl.formatMessage({
+        description: "'Deactivated form' error title",
+        defaultMessage: 'Sorry - this form is no longer available',
+      })}
     >
       <ErrorMessage>
         <FormattedMessage
@@ -143,11 +161,10 @@ const UnprocessableEntityError = ({wrapper: Wrapper, error}) => {
   );
 };
 
-UnprocessableEntityError.propTypes = GenericError.propTypes;
-
-const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
+const ServiceUnavailableError: React.FC<ErrorProps<APIError>> = ({wrapper: Wrapper, error}) => {
   const defaultComponent = <GenericError wrapper={Wrapper} error={error} />;
-  const componentMapping = {
+  // TODO: strict definition of possible error codes?
+  const componentMapping: Record<string, React.ReactNode> = {
     'form-maintenance': (
       <MaintenanceMode
         title={
@@ -166,10 +183,10 @@ const ServiceUnavailableError = ({wrapper: Wrapper, error}) => {
 };
 
 // map the error class to the component to render it
-const ERROR_TYPE_MAP = {
-  [PermissionDenied]: PermissionDeniedError,
-  [UnprocessableEntity]: UnprocessableEntityError,
-  [ServiceUnavailable]: ServiceUnavailableError,
+const ERROR_TYPE_MAP: Record<string, React.FC<ErrorProps>> = {
+  [PermissionDenied.name]: PermissionDeniedError,
+  [UnprocessableEntity.name]: UnprocessableEntityError,
+  [ServiceUnavailable.name]: ServiceUnavailableError,
 };
 
 export {logError, DisplayError};
