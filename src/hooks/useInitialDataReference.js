@@ -1,6 +1,6 @@
 import {useSearchParams} from 'react-router';
 
-const PARAM_NAME = 'initial_data_reference';
+export const PARAM_NAME = 'initial_data_reference';
 
 /**
  * Hook to extract the initial data reference and callback to append the parameter to
