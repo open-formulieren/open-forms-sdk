@@ -1,8 +1,17 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import ErrorMessage from 'components/Errors/ErrorMessage';
+import ErrorMessage from './ErrorMessage';
 
-const FormUnavailable = ({wrapper: Wrapper}) => {
+interface WrapperProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+export interface FormUnavailableProps {
+  wrapper: React.ComponentType<WrapperProps>;
+}
+
+const FormUnavailable: React.FC<FormUnavailableProps> = ({wrapper: Wrapper}) => {
   const intl = useIntl();
   // Wrapper may be a DOM element, which can't handle <FormattedMessage />
   const title = intl.formatMessage({
