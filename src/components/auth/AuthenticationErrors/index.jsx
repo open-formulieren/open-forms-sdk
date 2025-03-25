@@ -78,7 +78,7 @@ const AuthenticationErrors = ({parameters}) => {
 
   return (
     <div className="openforms-authentication-errors">
-      <ErrorMessage modifier="error">{messagesToDisplay[0]}</ErrorMessage>
+      <ErrorMessage level="error">{messagesToDisplay[0]}</ErrorMessage>
     </div>
   );
 };

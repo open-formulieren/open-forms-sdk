@@ -103,7 +103,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
         ) : (
           <Body component="form" onSubmit={handleSubmit}>
             {!emailAddress ? (
-              <ErrorMessage modifier="warning">
+              <ErrorMessage level="warning">
                 <FormattedMessage
                   description="Email verification modal: warning that no email is specified"
                   defaultMessage="You haven't entered an email address yet."
