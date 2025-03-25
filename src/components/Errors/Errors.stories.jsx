@@ -2,7 +2,7 @@ import ErrorMessage, {ALERT_MODIFIERS} from './ErrorMessage';
 
 export default {
   title: 'Private API / Error Message',
-  render: ({message, modifier}) => <ErrorMessage modifier={modifier}>{message}</ErrorMessage>,
+  render: ({message, modifier}) => <ErrorMessage level={modifier}>{message}</ErrorMessage>,
   argTypes: {
     modifier: {
       options: ALERT_MODIFIERS,

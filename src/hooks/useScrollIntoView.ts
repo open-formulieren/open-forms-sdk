@@ -1,7 +1,9 @@
 import {useEffect, useRef} from 'react';
 
-const useScrollIntoView = (options = {behavior: 'smooth'}) => {
-  const ref = useRef();
+const useScrollIntoView = <T extends HTMLElement = HTMLElement>(
+  options: ScrollIntoViewOptions = {behavior: 'smooth'}
+): React.MutableRefObject<T | null> => {
+  const ref = useRef<T | null>(null);
   useEffect(() => {
     if (!ref.current) return;
     // scrollIntoView is not available in jest-dom, and this can cause to crashing/infinitely

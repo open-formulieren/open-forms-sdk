@@ -28,7 +28,7 @@ const MaintenanceModeAlert = () => {
     );
   }
 
-  return <ErrorMessage modifier="info">{message}</ErrorMessage>;
+  return <ErrorMessage level="info">{message}</ErrorMessage>;
 };
 
 const MaintenanceMode = ({title, asToast = false}) => {

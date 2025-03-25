@@ -11,7 +11,7 @@ const FormUnavailable = ({wrapper: Wrapper}) => {
   });
   return (
     <Wrapper title={title}>
-      <ErrorMessage modifier="error">
+      <ErrorMessage level="error">
         <FormattedMessage
           description="Open Forms service unavailable error message"
           defaultMessage="Unfortunately, this form is currently unavailable due to an outage. Please try again later."
