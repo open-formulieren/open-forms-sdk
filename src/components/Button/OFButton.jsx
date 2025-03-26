@@ -1,11 +1,12 @@
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 // Temporary until the aria-disabled is set on the Utrecht button
 const OFButton = ({disabled, children, ...extraProps}) => {
   const {onClick: onClickHandler, ...otherProps} = extraProps;
 
-  if (disabled) otherProps.className = 'utrecht-button--disabled';
+  otherProps.className = clsx(otherProps.className, {'utrecht-button--disabled': disabled});
 
   const onClick = event => {
     if (disabled) {
