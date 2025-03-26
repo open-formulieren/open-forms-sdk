@@ -25,6 +25,9 @@ const logError = (error: Error, errorInfo: React.ErrorInfo): void => {
   }
 };
 
+// you can pretty much throw anything in JS
+type AnyError = Error | APIError | string | object;
+
 interface Props {
   children: React.ReactNode;
   useCard?: boolean;
@@ -37,7 +40,7 @@ interface StateWithoutError {
 
 interface StateWithError {
   hasError: true;
-  error: Error | APIError;
+  error: AnyError;
 }
 
 type State = StateWithError | StateWithoutError;
@@ -71,7 +74,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 }
 
 export interface DisplayErrorProps {
-  error: Error | APIError;
+  error: AnyError;
   useCard?: boolean;
 }
 
@@ -82,7 +85,17 @@ const DisplayError: React.FC<DisplayErrorProps> = ({error, useCard = false}) => 
   return <ErrorComponent wrapper={Wrapper} error={error} />;
 };
 
-export interface ErrorProps<T extends Error = Error | APIError> {
+interface ErrorDetailProps {
+  error: AnyError;
+}
+
+const ErrorDetail: React.FC<ErrorDetailProps> = ({error}) => {
+  if (typeof error !== 'object') return null;
+  if (!('detail' in error)) return null;
+  return <Body>{error.detail}</Body>;
+};
+
+export interface ErrorProps<T extends AnyError = AnyError> {
   wrapper: React.ComponentType<WrapperProps>;
   error: T;
 }
@@ -102,7 +115,7 @@ const GenericError: React.FC<ErrorProps> = ({wrapper: Wrapper, error}) => {
           defaultMessage="Unfortunately something went wrong!"
         />
       </ErrorMessage>
-      {'detail' in error && <Body>{error.detail}</Body>}
+      <ErrorDetail error={error} />
     </Wrapper>
   );
 };
