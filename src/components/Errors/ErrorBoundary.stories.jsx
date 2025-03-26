@@ -1,6 +1,6 @@
 import {MemoryRouter} from 'react-router';
 
-import {PermissionDenied, ServiceUnavailable, UnprocessableEntity} from 'errors';
+import {PermissionDenied, ServiceUnavailable, UnprocessableEntity} from '@/errors';
 
 import ErrorBoundary from './ErrorBoundary';
 

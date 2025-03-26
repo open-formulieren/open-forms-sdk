@@ -125,7 +125,7 @@ const PermissionDeniedError: React.FC<ErrorProps> = ({wrapper: Wrapper, error}) 
 
       {'detail' in error && <Body>{error.detail}</Body>}
 
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error need to convert it to TS yet */}
       <Link to="/">
         <FormattedMessage
           description="return to form start link after 403"
