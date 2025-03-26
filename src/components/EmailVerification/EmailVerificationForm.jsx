@@ -11,7 +11,7 @@ import {toFormikValidationSchema} from 'zod-formik-adapter';
 import {ConfigContext} from 'Context';
 import {post} from 'api';
 import Body from 'components/Body';
-import {DisplayError} from 'components/Errors/ErrorBoundary';
+import {ErrorDisplay} from 'components/Errors';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import {ValidationError} from 'errors';
 
@@ -98,7 +98,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
       {({handleSubmit, values: {mode}, setFieldValue}) =>
         error ? (
           <Body component="div">
-            <DisplayError error={error} />
+            <ErrorDisplay error={error} />
           </Body>
         ) : (
           <Body component="form" onSubmit={handleSubmit}>
