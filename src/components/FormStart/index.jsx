@@ -6,8 +6,8 @@ import {useAsync} from 'react-use';
 import {ConfigContext} from 'Context';
 import Body from 'components/Body';
 import Card from 'components/Card';
+import FormMaximumSubmissionsError from 'components/Errors/FormMaximumSubmissionsError';
 import ExistingSubmissionOptions from 'components/ExistingSubmissionOptions';
-import FormMaximumSubmissions from 'components/FormMaximumSubmissions';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import LoginOptions from 'components/LoginOptions';
@@ -162,7 +162,7 @@ const FormStart = () => {
   return (
     <LiteralsProvider literals={form.literals}>
       <Card title={form.name}>
-        {form.submissionLimitReached ? <FormMaximumSubmissions /> : null}
+        {form.submissionLimitReached && <FormMaximumSubmissionsError />}
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
         {authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
