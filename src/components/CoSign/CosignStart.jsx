@@ -68,7 +68,7 @@ const CosignStart = () => {
 
         <LoginOptions
           // hide the normal login options, and only display the cosign login options
-          form={{...form, loginOptions: []}}
+          form={{...form, loginOptions: [], loginRequired: true}}
           // dummy - we don't actually start a new submission, but the next URL is baked
           // into the login URLs.
           onFormStart={() => {}}
