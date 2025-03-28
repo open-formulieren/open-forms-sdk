@@ -5,11 +5,11 @@
       "tag": "latest"
     },
     {
-      "gitRef": "stable/3.0.x",
+      "gitRef": "stable/3.1.x",
       "tag": null
     },
     {
-      "gitRef": "stable/2.4.x",
+      "gitRef": "stable/3.0.x",
       "tag": null
     }
   ]
