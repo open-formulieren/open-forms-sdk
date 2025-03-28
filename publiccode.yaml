@@ -7,7 +7,7 @@ publiccodeYmlVersion: '0.2'
 name: Open Forms SDK
 url: 'http://github.com/open-formulieren/open-forms-sdk.git'
 softwareType: standalone/frontend
-softwareVersion: 3.1.0-alpha.1
+softwareVersion: 3.1.0
 releaseDate: 't.b.d.'
 logo: 'https://github.com/open-formulieren/open-forms/blob/master/docs/logo.svg'
 platforms:
@@ -24,18 +24,18 @@ description:
       - Formulieren weergeven
     genericName: Formulieren UI component
     longDescription: >
-      Met Open Formulieren kunnen beheerders snel slimme formulieren realiseren die 
-      ontsloten worden middels een API. Met de Open Formulieren JavaScript `SDK`_ 
-      kunnen gepersonaliseerde formulieren opgehaald en getoond worden aan de 
-      gebruiker, in de stijl van de gemeente. Hierbij zijn velden vooringevuld indien 
-      mogelijk en zijn er keuzes beschikbaar afhankelijk van de gebruiker, mits deze 
+      Met Open Formulieren kunnen beheerders snel slimme formulieren realiseren die
+      ontsloten worden middels een API. Met de Open Formulieren JavaScript `SDK`_
+      kunnen gepersonaliseerde formulieren opgehaald en getoond worden aan de
+      gebruiker, in de stijl van de gemeente. Hierbij zijn velden vooringevuld indien
+      mogelijk en zijn er keuzes beschikbaar afhankelijk van de gebruiker, mits deze
       is geauthenticeerd.
 
       Door gebruik te maken van een plugin-architectuur kan Open Formulieren flexibel
-      worden ingericht met submission backends (bijv. Open Zaak), authenticatie 
+      worden ingericht met submission backends (bijv. Open Zaak), authenticatie
       middelen, betaalproviders, kalender applicaties en pre-fill services.
 
-      Open Formulieren is ontwikkeld volgens de Common Ground principes, specifiek 
+      Open Formulieren is ontwikkeld volgens de Common Ground principes, specifiek
       voor gemeenten en met focus op gebruiksgemak voor zowel burger als beheerder.
 
   en:
@@ -48,12 +48,12 @@ description:
     longDescription: >
       Using Open Forms, administrators can quickly create powerful and smart forms
       that are exposed via an API. With the Open Forms JavaScript SDK, personalized
-      forms can be retrieved and shown to the user. The form blends in with an 
+      forms can be retrieved and shown to the user. The form blends in with an
       existing website using various styling options. Form fields are pre-filled
       whenever possible and personalized choices are shown depending on the user, if
       authenticated.
 
-      Using a plugin-based architecture, Open Forms allows for flexible submission 
+      Using a plugin-based architecture, Open Forms allows for flexible submission
       backends (ie. Open Zaak), authentication schemes, payment providers, calendar
       apps and pre-fill services.
 

@@ -292,11 +292,6 @@
     "isTranslated": true,
     "originalDefault": "d"
   },
-  "DCzTpQ": {
-    "defaultMessage": "Verwijderen",
-    "description": "Appointments: remove product/service button text",
-    "originalDefault": "Remove"
-  },
   "DEetjI": {
     "defaultMessage": "Straatnaam",
     "description": "Label for addressNL streetName read only result",
@@ -561,11 +556,6 @@
     "description": "Edit toolbar save message.",
     "originalDefault": "Save"
   },
-  "OnfuIr": {
-    "defaultMessage": "{withAsterisk, select, true {<label></label>} other {<label></label> (niet verplicht)}}",
-    "description": "Form field label, field not required",
-    "originalDefault": "{withAsterisk, select, true {<label></label>} other {<label></label> (not required)}}"
-  },
   "Op4orj": {
     "defaultMessage": "Geen vormen om te verwijderen",
     "description": "Edit toolbar remove button disabled tooltip.",
@@ -620,11 +610,6 @@
     "defaultMessage": "Ja",
     "description": "'True' display",
     "originalDefault": "Yes"
-  },
-  "RSPyzt": {
-    "defaultMessage": "Maand",
-    "description": "Date input group: month label",
-    "originalDefault": "Month"
   },
   "Rf8Sot": {
     "defaultMessage": "Probleem - {formName}",
@@ -797,11 +782,6 @@
     "defaultMessage": "Huisletter",
     "description": "Label for addressNL houseLetter input",
     "originalDefault": "House letter"
-  },
-  "cKFCTI": {
-    "defaultMessage": "Nog één toevoegen",
-    "description": "Edit grid add button, default label text",
-    "originalDefault": "Add another"
   },
   "cxDC/G": {
     "defaultMessage": "Het verplichte veld is niet ingevuld.",
@@ -1166,11 +1146,6 @@
     "description": "Appointment cancellation missing submission ID query string parameter",
     "originalDefault": "Failed to determine the appointment"
   },
-  "vCObuG": {
-    "defaultMessage": "Dag",
-    "description": "Date input group: day label",
-    "originalDefault": "Day"
-  },
   "vIfXbq": {
     "defaultMessage": "Het systeem kon de afspraak niet vinden",
     "description": "Appointment cancellation missing time query string parameter",
@@ -1200,11 +1175,6 @@
     "defaultMessage": "Ongeldige letterlijke waarde, verwachtte {expected}.",
     "description": "ZOD 'invalid_literal' error message",
     "originalDefault": "Invalid literal value, expected {expected}."
-  },
-  "yKo62N": {
-    "defaultMessage": "Jaar",
-    "description": "Date input group: year label",
-    "originalDefault": "Year"
   },
   "zkdWYe": {
     "defaultMessage": "Terug naar de website",

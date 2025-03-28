@@ -599,12 +599,6 @@
       "value": "d"
     }
   ],
-  "DCzTpQ": [
-    {
-      "type": 0,
-      "value": "Verwijderen"
-    }
-  ],
   "DEetjI": [
     {
       "type": 0,
@@ -1115,38 +1109,6 @@
     {
       "type": 0,
       "value": "Opslaan"
-    }
-  ],
-  "OnfuIr": [
-    {
-      "options": {
-        "other": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            },
-            {
-              "type": 0,
-              "value": " (niet verplicht)"
-            }
-          ]
-        },
-        "true": {
-          "value": [
-            {
-              "children": [
-              ],
-              "type": 8,
-              "value": "label"
-            }
-          ]
-        }
-      },
-      "type": 5,
-      "value": "withAsterisk"
     }
   ],
   "Op4orj": [
