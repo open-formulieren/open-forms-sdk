@@ -49,3 +49,13 @@ export default {
 export const Default = {
   name: 'CosignStart',
 };
+
+export const LoginOptional = {
+  parameters: {
+    formContext: {
+      form: {
+        loginRequired: false,
+      },
+    },
+  },
+};
