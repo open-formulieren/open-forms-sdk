@@ -44,7 +44,7 @@ export default class Map extends Field {
   }
 
   get emptyValue() {
-    return '';
+    return undefined;
   }
 
   /**
