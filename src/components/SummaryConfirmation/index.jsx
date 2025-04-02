@@ -40,7 +40,6 @@ const SummaryConfirmation = ({submissionAllowed, prevPage, onPrevPage}) => {
           <OFButton
             type="submit"
             appearance="primary-action-button"
-            className="openforms-button-with-icon"
             name="confirm"
             disabled={submitDisabled}
             onClick={() => setShowStatementWarnings(true)}

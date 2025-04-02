@@ -28,13 +28,7 @@ const FormNavigation = ({
   return (
     <ButtonGroup className="utrecht-button-group--distanced" direction="column">
       {showSubmitButton && (
-        <OFButton
-          type="submit"
-          appearance="primary-action-button"
-          name="next"
-          disabled={!canSubmitStep}
-          className="openforms-button-with-icon"
-        >
+        <OFButton type="submit" variant="primary" name="next" disabled={!canSubmitStep}>
           {isCheckingLogic ? (
             <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
           ) : (
