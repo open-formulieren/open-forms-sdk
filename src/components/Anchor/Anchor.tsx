@@ -1,6 +1,6 @@
-import {Link as UtrechtLink} from '@utrecht/component-library-react';
+import {Link} from '@utrecht/component-library-react';
+import type {LinkProps} from '@utrecht/component-library-react/dist/Link';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 
 export const ANCHOR_MODIFIERS = [
   // maps to NLDS
@@ -8,15 +8,13 @@ export const ANCHOR_MODIFIERS = [
   // OF specific
   'hover',
   'inherit',
-];
+] as const;
 
-const Anchor = ({
-  children,
-  href,
-  modifiers = [],
-  component: Component = UtrechtLink,
-  ...extraProps
-}) => {
+export interface AnchorProps extends LinkProps {
+  modifiers?: (typeof ANCHOR_MODIFIERS)[number][];
+}
+
+const Anchor: React.FC<AnchorProps> = ({children, href, modifiers = [], ...extraProps}) => {
   // extend with our own modifiers
   const className = clsx(
     'utrecht-link--html-a',
@@ -28,17 +26,10 @@ const Anchor = ({
     }
   );
   return (
-    <Component className={className} href={href || undefined} {...extraProps}>
+    <Link className={className} href={href || undefined} {...extraProps}>
       {children}
-    </Component>
+    </Link>
   );
-};
-
-Anchor.propTypes = {
-  href: PropTypes.string,
-  modifiers: PropTypes.arrayOf(PropTypes.oneOf(ANCHOR_MODIFIERS)),
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  onClick: PropTypes.func,
 };
 
 export default Anchor;

@@ -1,13 +1,16 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 
 import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
 import {Literal} from 'components/Literal';
 
-const VARIANTS = ['start', 'end'];
+export interface PreviousLinkProps {
+  to: string;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void | Promise<void>;
+  position?: 'start' | 'end';
+}
 
-const PreviousLink = ({to, onClick, position}) => {
+const PreviousLink: React.FC<PreviousLinkProps> = ({to, onClick, position}) => {
   const className = clsx('openforms-previous-link', {
     [`openforms-previous-link--${position}`]: position,
   });
@@ -19,12 +22,6 @@ const PreviousLink = ({to, onClick, position}) => {
       </span>
     </Link>
   );
-};
-
-PreviousLink.propTypes = {
-  to: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-  position: PropTypes.oneOf(VARIANTS),
 };
 
 export default PreviousLink;
