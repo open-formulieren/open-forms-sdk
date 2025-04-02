@@ -19,6 +19,7 @@ const Anchor = ({
 }) => {
   // extend with our own modifiers
   const className = clsx(
+    'utrecht-link--html-a',
     'utrecht-link--openforms', // always apply our own modifier
     {
       'utrecht-link--current': modifiers.includes('current'),

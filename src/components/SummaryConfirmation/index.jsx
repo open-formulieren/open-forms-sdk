@@ -39,7 +39,7 @@ const SummaryConfirmation = ({submissionAllowed, prevPage, onPrevPage}) => {
         {canSubmit ? (
           <OFButton
             type="submit"
-            appearance="primary-action-button"
+            variant="primary"
             name="confirm"
             disabled={submitDisabled}
             onClick={() => setShowStatementWarnings(true)}

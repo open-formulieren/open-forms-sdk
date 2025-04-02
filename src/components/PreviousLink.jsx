@@ -14,7 +14,9 @@ const PreviousLink = ({to, onClick, position}) => {
   return (
     <Link to={to} onClick={onClick} className={className}>
       <FAIcon icon="arrow-left-long" extraClassName="openforms-previous-link__icon" />
-      <Literal name="previousText" />
+      <span className="openforms-previous-link__text">
+        <Literal name="previousText" />
+      </span>
     </Link>
   );
 };
