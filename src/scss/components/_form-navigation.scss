@@ -1,10 +1,11 @@
 @use 'microscope-sass/lib/bem';
 
 .openforms-form-navigation {
+  --utrecht-button-group-block-gap: var(--of-form-navigation-row-gap);
   // Required as long as we hardcode font-awesome icons, will need to revisit this
   // when we support other icon libraries
+  --utrecht-button-icon-gap: var(--of-form-navigation-icon-gap, var(--utrecht-button-column-gap));
   --utrecht-button-icon-size: var(--of-form-navigation-icon-size, auto);
-  --utrecht-button-group-block-gap: var(--of-form-navigation-row-gap);
 
   // for properly aligned stacked appearance of links/buttons, we need to control
   // the inline-start (and end?) padding of link-button components, which use the

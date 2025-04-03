@@ -44,7 +44,7 @@ const FormNavigation = ({
             <>
               <Literal name="nextText" />
               <Icon>
-                <FAIcon icon="" />
+                <FAIcon icon="" extraClassName="fa-fw" />
               </Icon>
             </>
           )}
@@ -64,7 +64,7 @@ const FormNavigation = ({
           className="openforms-form-navigation__save-button"
         >
           <Icon>
-            <FAIcon icon="" />
+            <FAIcon icon="" extraClassName="fa-fw" />
           </Icon>
           <Literal name="saveText" />
         </LinkButton>
