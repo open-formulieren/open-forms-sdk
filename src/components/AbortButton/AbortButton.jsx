@@ -1,4 +1,4 @@
-import {LinkButton as UtrechtButtonLink} from '@utrecht/component-library-react';
+import {Icon, LinkButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -51,16 +51,12 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
   );
 
   return (
-    <>
-      <UtrechtButtonLink
-        name="abort"
-        onClick={callback}
-        className={'utrecht-link-button--openforms'}
-      >
+    <LinkButton name="abort" onClick={callback} className="openforms-abort-button">
+      <Icon>
         <FAIcon icon="xmark" />
-        {message}
-      </UtrechtButtonLink>
-    </>
+      </Icon>
+      {message}
+    </LinkButton>
   );
 };
 

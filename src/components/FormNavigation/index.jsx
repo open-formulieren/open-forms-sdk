@@ -1,5 +1,5 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
-import {Icon, LinkButton as UtrechtButtonLink} from '@utrecht/component-library-react';
+import {Icon, LinkButton} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 
 import AbortButton from 'components/AbortButton';
@@ -52,14 +52,12 @@ const FormNavigation = ({
       {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
           need to be its own prop */}
       {canSuspendForm && (
-        <UtrechtButtonLink
-          name="save"
-          onClick={onFormSave}
-          className="utrecht-link-button--openforms"
-        >
-          <FAIcon icon="circle-pause" />
+        <LinkButton name="save" onClick={onFormSave}>
+          <Icon>
+            <FAIcon icon="circle-pause" />
+          </Icon>
           <Literal name="saveText" />
-        </UtrechtButtonLink>
+        </LinkButton>
       )}
 
       {!hideAbortButton && (

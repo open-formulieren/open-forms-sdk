@@ -22,24 +22,6 @@
       --utrecht-button-border-radius: 2px;
     }
   }
-
-  .utrecht-link-button--openforms {
-    display: inline-block;
-    padding-inline-start: 0;
-    font-size: inherit;
-
-    &[name='abort'] {
-      color: var(--utrecht-button-primary-action-danger-background-color);
-    }
-
-    i {
-      margin-inline-end: 8px;
-    }
-
-    &:hover {
-      text-decoration: var(--utrecht-link-text-decoration);
-    }
-  }
 }
 
 @include mobile-only {
