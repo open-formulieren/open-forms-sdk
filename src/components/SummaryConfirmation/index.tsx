@@ -1,29 +1,42 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {useFormikContext} from 'formik';
-import PropTypes from 'prop-types';
 import {useState} from 'react';
 
-import {OFButton} from 'components/Button';
 import FAIcon from 'components/FAIcon';
 import {Literal} from 'components/Literal';
-import PreviousLink from 'components/PreviousLink';
 import StatementCheckboxes from 'components/StatementCheckboxes';
 import {SUBMISSION_ALLOWED} from 'components/constants';
-import useFormContext from 'hooks/useFormContext';
 
-const isSubmitEnabled = (statementsInfo = [], statementsValues) => {
+import {OFButton} from '@/components/Button';
+import PreviousLink from '@/components/PreviousLink';
+import {SubmissionStatementConfiguration} from '@/data/forms';
+import useFormContext from '@/hooks/useFormContext';
+
+const isSubmitEnabled = (
+  statementsInfo: SubmissionStatementConfiguration[] = [],
+  statementsValues: Record<string, boolean>
+): boolean => {
   return statementsInfo.every(info => {
-    if (!info.validate.required) return true;
-
+    if (!info.validate?.required) return true;
     return Boolean(statementsValues[info.key]);
   });
 };
 
-const SummaryConfirmation = ({submissionAllowed, prevPage, onPrevPage}) => {
+export interface SummaryConfirmationProps {
+  submissionAllowed: 'yes' | 'no_with_overview' | 'no_without_overview';
+  prevPage?: string;
+  onPrevPage?: (event: React.MouseEvent<HTMLAnchorElement>) => Promise<void>;
+}
+
+const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
+  submissionAllowed,
+  prevPage = '',
+  onPrevPage,
+}) => {
   const {submissionStatementsConfiguration = []} = useFormContext();
   const canSubmit = submissionAllowed === SUBMISSION_ALLOWED.yes;
-  const {values: formikValues} = useFormikContext();
-  const [showStatementWarnings, setShowStatementWarnings] = useState(false);
+  const {values: formikValues} = useFormikContext<Record<string, boolean>>();
+  const [showStatementWarnings, setShowStatementWarnings] = useState<boolean>(false);
 
   const submitDisabled = !isSubmitEnabled(submissionStatementsConfiguration, formikValues);
 
@@ -52,12 +65,6 @@ const SummaryConfirmation = ({submissionAllowed, prevPage, onPrevPage}) => {
       </ButtonGroup>
     </>
   );
-};
-
-SummaryConfirmation.propTypes = {
-  submissionAllowed: PropTypes.string.isRequired,
-  prevPage: PropTypes.string,
-  onPrevPage: PropTypes.func,
 };
 
 export default SummaryConfirmation;
