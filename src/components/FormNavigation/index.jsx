@@ -31,14 +31,20 @@ const FormNavigation = ({
       direction="column"
     >
       {showSubmitButton && (
-        <OFButton type="submit" variant="primary" name="next" disabled={!canSubmitStep}>
+        <OFButton
+          type="submit"
+          name="next"
+          disabled={!canSubmitStep}
+          variant="primary"
+          className="openforms-form-navigation__next-button"
+        >
           {isCheckingLogic ? (
             <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
           ) : (
             <>
               <Literal name="nextText" />
               <Icon>
-                <FAIcon icon="arrow-right-long" />
+                <FAIcon icon="" />
               </Icon>
             </>
           )}
@@ -52,9 +58,13 @@ const FormNavigation = ({
       {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
           need to be its own prop */}
       {canSuspendForm && (
-        <LinkButton name="save" onClick={onFormSave}>
+        <LinkButton
+          name="save"
+          onClick={onFormSave}
+          className="openforms-form-navigation__save-button"
+        >
           <Icon>
-            <FAIcon icon="circle-pause" />
+            <FAIcon icon="" />
           </Icon>
           <Literal name="saveText" />
         </LinkButton>

@@ -1,3 +1,5 @@
+@use 'microscope-sass/lib/bem';
+
 .openforms-form-navigation {
   // Required as long as we hardcode font-awesome icons, will need to revisit this
   // when we support other icon libraries
@@ -16,5 +18,18 @@
       --of-form-navigation-link-button-padding-inline-start,
       0
     );
+    --utrecht-button-font-size: var(--of-form-navigation-link-button-font-size, 1em);
+  }
+
+  @include bem.element('next-button') {
+    .utrecht-icon > .fa-icon {
+      --fa: var(--of-form-navigation-next-button-fa-icon, '\f178');
+    }
+  }
+
+  @include bem.element('save-button') {
+    .utrecht-icon > .fa-icon {
+      --fa: var(--of-form-navigation-save-button-fa-icon, '\f178');
+    }
   }
 }

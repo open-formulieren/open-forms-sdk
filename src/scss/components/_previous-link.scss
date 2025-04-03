@@ -41,5 +41,9 @@
     --utrecht-icon-size: var(--of-previous-link-icon-size, auto);
     // allow hiding the icon entirely, if desired
     display: var(--of-previous-link-icon-display, inline-block);
+
+    > .fa-icon {
+      --fa: var(--of-previous-link-fa-icon, '\f177');
+    }
   }
 }
