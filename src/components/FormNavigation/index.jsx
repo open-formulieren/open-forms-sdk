@@ -1,5 +1,5 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
-import {LinkButton as UtrechtButtonLink} from '@utrecht/component-library-react';
+import {Icon, LinkButton as UtrechtButtonLink} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 
 import AbortButton from 'components/AbortButton';
@@ -26,7 +26,10 @@ const FormNavigation = ({
   const showSubmitButton = !(canSubmitForm === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep);
 
   return (
-    <ButtonGroup className="utrecht-button-group--distanced" direction="column">
+    <ButtonGroup
+      className="utrecht-button-group--distanced openforms-form-navigation"
+      direction="column"
+    >
       {showSubmitButton && (
         <OFButton type="submit" variant="primary" name="next" disabled={!canSubmitStep}>
           {isCheckingLogic ? (
@@ -34,7 +37,9 @@ const FormNavigation = ({
           ) : (
             <>
               <Literal name="nextText" />
-              <FAIcon icon="arrow-right-long" />
+              <Icon>
+                <FAIcon icon="arrow-right-long" />
+              </Icon>
             </>
           )}
         </OFButton>

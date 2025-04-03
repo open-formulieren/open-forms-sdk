@@ -1,5 +1,6 @@
 @use 'microscope-sass/lib/bem';
 @use '@utrecht/components/link'; // emits the .utrecht-link {...} styles
+@use '@utrecht/components/icon';
 
 .openforms-previous-link {
   display: flex;
@@ -34,31 +35,11 @@
     display: var(--of-previous-link-display-end, flex);
   }
 
-  @include bem.element('icon') {
+  .utrecht-icon {
+    // Required as long as we hardcode font-awesome icons, will need to revisit this
+    // when we support other icon libraries
+    --utrecht-icon-size: var(--of-previous-link-icon-size, auto);
     // allow hiding the icon entirely, if desired
     display: var(--of-previous-link-icon-display, inline-block);
-  }
-
-  // hack to apply the link styles only on the text and not on the icon. Because of the
-  // flexbox, the icon is forced into block display mode, which *does* render underlines,
-  // unlike inline-block.
-  &.utrecht-link:any-link {
-    text-decoration-line: none;
-  }
-
-  @include bem.element('text') {
-    @extend .utrecht-link, :any-link;
-    &:hover {
-      @extend .utrecht-link--hover;
-    }
-    &:focus-visible {
-      @extend .utrecht-link--focus-visible;
-    }
-    &:focus {
-      @extend .utrecht-link--focus;
-    }
-    &:active {
-      @extend .utrecht-link--active;
-    }
   }
 }

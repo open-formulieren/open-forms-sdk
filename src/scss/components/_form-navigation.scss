@@ -1,0 +1,5 @@
+.openforms-form-navigation {
+  // Required as long as we hardcode font-awesome icons, will need to revisit this
+  // when we support other icon libraries
+  --utrecht-button-icon-size: var(--of-form-navigation-icon-size, auto);
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {type LinkProps as RouterLinkProps, useHref, useLinkClickHandler} from 'react-router';
 
-import Anchor from 'components/Anchor';
+import Anchor from '@/components/Anchor';
 
 export interface LinkProps extends RouterLinkProps {
   placeholder?: boolean;

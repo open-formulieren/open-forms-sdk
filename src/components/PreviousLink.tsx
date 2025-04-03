@@ -1,8 +1,10 @@
+import {Icon} from '@utrecht/component-library-react';
 import clsx from 'clsx';
 
 import FAIcon from 'components/FAIcon';
-import Link from 'components/Link';
 import {Literal} from 'components/Literal';
+
+import Link from '@/components/Link';
 
 export interface PreviousLinkProps {
   to: string;
@@ -16,10 +18,10 @@ const PreviousLink: React.FC<PreviousLinkProps> = ({to, onClick, position}) => {
   });
   return (
     <Link to={to} onClick={onClick} className={className}>
-      <FAIcon icon="arrow-left-long" extraClassName="openforms-previous-link__icon" />
-      <span className="openforms-previous-link__text">
-        <Literal name="previousText" />
-      </span>
+      <Icon>
+        <FAIcon icon="arrow-left-long" />
+      </Icon>
+      <Literal name="previousText" />
     </Link>
   );
 };

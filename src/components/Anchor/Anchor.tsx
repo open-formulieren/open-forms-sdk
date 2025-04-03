@@ -14,11 +14,12 @@ export interface AnchorProps extends LinkProps {
   modifiers?: (typeof ANCHOR_MODIFIERS)[number][];
 }
 
-const Anchor: React.FC<AnchorProps> = ({children, href, modifiers = [], ...extraProps}) => {
+const Anchor: React.FC<AnchorProps> = ({children, href, modifiers = [], className, ...props}) => {
   // extend with our own modifiers
-  const className = clsx(
+  className = clsx(
     'utrecht-link--html-a',
     'utrecht-link--openforms', // always apply our own modifier
+    className,
     {
       'utrecht-link--current': modifiers.includes('current'),
       'utrecht-link--openforms-hover': modifiers.includes('hover'),
@@ -26,7 +27,7 @@ const Anchor: React.FC<AnchorProps> = ({children, href, modifiers = [], ...extra
     }
   );
   return (
-    <Link className={className} href={href || undefined} {...extraProps}>
+    <Link className={className} href={href || undefined} {...props}>
       {children}
     </Link>
   );
