@@ -22,7 +22,6 @@ const GenericSummary = ({
   errors = [],
   onSubmit,
   onDestroySession,
-  onPrevPage = null,
 }) => {
   const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? Form : 'div';
 
@@ -62,7 +61,6 @@ const GenericSummary = ({
           <SummaryConfirmation
             submissionAllowed={submissionAllowed}
             prevPage={prevPage}
-            onPrevPage={onPrevPage}
             isAuthenticated={isAuthenticated}
             onDestroySession={onDestroySession}
           />
@@ -107,7 +105,6 @@ GenericSummary.propTypes = {
   prevPage: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onDestroySession: PropTypes.func.isRequired,
-  onPrevPage: PropTypes.func,
 };
 
 export default GenericSummary;

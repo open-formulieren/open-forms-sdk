@@ -22,8 +22,7 @@ const isSubmitEnabled = (
 export interface SummaryConfirmationProps {
   submissionAllowed: 'yes' | 'no_with_overview' | 'no_without_overview';
   prevPage?: string;
-  onPrevPage?: (event: React.MouseEvent<HTMLAnchorElement>) => Promise<void>;
-  isAuthenticated: boolean;
+  isAuthenticated?: boolean;
   onDestroySession?: () => Promise<void>;
   hideAbortButton?: boolean;
 }
@@ -31,8 +30,7 @@ export interface SummaryConfirmationProps {
 const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
   submissionAllowed,
   prevPage = '',
-  onPrevPage,
-  isAuthenticated,
+  isAuthenticated = false,
   onDestroySession = async () => {},
   hideAbortButton = false,
 }) => {
@@ -63,7 +61,6 @@ const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
         onDestroySession={onDestroySession}
         hideAbortButton={hideAbortButton}
         previousPage={prevPage}
-        onNavigatePrevPage={onPrevPage}
       />
     </>
   );

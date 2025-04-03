@@ -89,11 +89,6 @@ const SubmissionSummary = () => {
     return navigateTo;
   };
 
-  const onPrevPage = event => {
-    event.preventDefault();
-    navigate(getPreviousPage());
-  };
-
   const submitError =
     submitErrors &&
     (typeof submitErrors === 'string' ? (
@@ -129,7 +124,6 @@ const SubmissionSummary = () => {
         errors={errorMessages}
         prevPage={getPreviousPage()}
         onSubmit={onSubmit}
-        onPrevPage={onPrevPage}
         onDestroySession={onDestroySession}
       />
     </LiteralsProvider>
