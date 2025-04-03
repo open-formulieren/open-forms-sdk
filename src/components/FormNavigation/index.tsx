@@ -13,6 +13,8 @@ import {SUBMISSION_ALLOWED} from '@/components/constants';
 export interface FormNavigationProps {
   canSubmitStep: boolean;
   canSubmitForm: 'yes' | 'no_with_overview' | 'no_without_overview';
+  submitButtonLiteral?: 'nextText' | 'confirmText';
+  onSubmitClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   canSuspendForm: boolean;
   isLastStep: boolean;
   isCheckingLogic: boolean;
@@ -27,6 +29,8 @@ export interface FormNavigationProps {
 const FormNavigation: React.FC<FormNavigationProps> = ({
   canSubmitStep,
   canSubmitForm,
+  submitButtonLiteral = 'nextText',
+  onSubmitClick,
   canSuspendForm,
   isLastStep,
   isCheckingLogic,
@@ -49,6 +53,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
           type="submit"
           name="next"
           disabled={!canSubmitStep}
+          onClick={onSubmitClick}
           variant="primary"
           className="openforms-form-navigation__next-button"
         >
@@ -56,7 +61,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
             <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
           ) : (
             <>
-              <Literal name="nextText" />
+              <Literal name={submitButtonLiteral} />
               <Icon>
                 <FAIcon icon="" extraClassName="fa-fw" />
               </Icon>
