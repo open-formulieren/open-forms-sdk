@@ -1,16 +1,30 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Icon, LinkButton} from '@utrecht/component-library-react';
-import PropTypes from 'prop-types';
 
-import AbortButton from 'components/AbortButton';
-import {OFButton} from 'components/Button';
 import FAIcon from 'components/FAIcon';
 import {Literal} from 'components/Literal';
-import Loader from 'components/Loader';
-import PreviousLink from 'components/PreviousLink';
-import {SUBMISSION_ALLOWED} from 'components/constants';
 
-const FormNavigation = ({
+import AbortButton from '@/components/AbortButton';
+import {OFButton} from '@/components/Button';
+import Loader from '@/components/Loader';
+import PreviousLink from '@/components/PreviousLink';
+import {SUBMISSION_ALLOWED} from '@/components/constants';
+
+export interface FormNavigationProps {
+  canSubmitStep: boolean;
+  canSubmitForm: 'yes' | 'no_with_overview' | 'no_without_overview';
+  canSuspendForm: boolean;
+  isLastStep: boolean;
+  isCheckingLogic: boolean;
+  isAuthenticated: boolean;
+  hideAbortButton?: boolean;
+  onNavigatePrevPage?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onFormSave?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  previousPage?: string;
+  onDestroySession: () => Promise<void>;
+}
+
+const FormNavigation: React.FC<FormNavigationProps> = ({
   canSubmitStep,
   canSubmitForm,
   canSuspendForm,
@@ -75,20 +89,6 @@ const FormNavigation = ({
       )}
     </ButtonGroup>
   );
-};
-
-FormNavigation.propTypes = {
-  canSubmitStep: PropTypes.bool.isRequired,
-  canSubmitForm: PropTypes.string.isRequired,
-  canSuspendForm: PropTypes.bool.isRequired,
-  isLastStep: PropTypes.bool.isRequired,
-  isCheckingLogic: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  hideAbortButton: PropTypes.bool,
-  onNavigatePrevPage: PropTypes.func,
-  onFormSave: PropTypes.func.isRequired,
-  previousPage: PropTypes.string,
-  onDestroySession: PropTypes.func.isRequired,
 };
 
 export default FormNavigation;
