@@ -5,9 +5,112 @@ import {Meta} from '@storybook/blocks';
 # Upgrading from 3.0.x to 3.1.x
 
 In the Open Forms SDK 3.1.0 release cycle we've upgraded some of our own dependencies that
-unfortunately can cause visual changes if you use a custom theme. We've documented the changes here.
+unfortunately can cause visual changes if you use a custom theme. Additionally, we reworked the
+button/link placement in the form navigation which require some attention.
 
-## Design tokens
+## Form navigation
+
+The form navigation consists of the "Next" button, "Previous" link, "Save" (or pause) button and the
+logout/abort button. Their appearance is controlled through some design tokens. The tokens below are
+taken from the default Open Forms theme and are a good starting point.
+
+```json
+{
+  "utrecht": {
+    "button": {
+      "column-gap": {"value": "8px"}, // spacing between button text and icon
+      "icon": {
+        // spacing between button text and icon for the link-button variant
+        "gap": {"value": "{utrecht.button.column-gap}"},
+        "size": {"value": "auto"} // font-awesome icons limitation to properly align them
+      }
+    },
+    "link": {
+      "icon": {
+        "size": {"value": "auto"}
+      }
+    },
+    "icon": {
+      "size": {"value": "auto"}
+    }
+  },
+  "of": {
+    "abort-button": {
+      "color": {"value": "#FF0000"},
+      "fa-icon": {"value": "\"\\f00d\""}, // matches the --fa variable for fa-$someIcon
+      "hover": {
+        "color": {"value": "#FF0000"}
+      }
+    },
+    "form-navigation": {
+      "icon": {
+        "size": {"value": "auto"}
+      },
+      "link-button": {
+        "padding-inline-end": {"value": 0},
+        "padding-inline-start": {"value": 0}
+      },
+      "row-gap": {"value": "8px"},
+      "save-button": {
+        "fa-icon": {"value": "\"\\f28b\""}
+      },
+      "next-button": {
+        "fa-icon": {"value": "\"\\f178\""}
+      }
+    },
+    "previous-link": {
+      "column-gap": {"value": "8px"},
+      "fa-icon": {"value": "\"\\f177\""},
+      "icon": {
+        "display": {"value": "inline-block"},
+        "size": {"value": "auto"}
+      },
+      "padding-block-end": {"value": "{utrecht.button.padding-block-end}"},
+      "padding-block-start": {"value": "{utrecht.button.padding-block-start}"}
+    }
+  }
+}
+```
+
+The icon size and spacing tokens in particular may conflict with existing styles - if you already
+use those in different places, changing these globally to suit the font-awesome icons is too
+invasive. As a workaround, we support Open Forms-specific tokens that are only applied in the form
+navigation context:
+
+```json
+{
+  "of": {
+    "form-navigation": {
+      "icon": {
+        "size": {"value": "auto"}
+      },
+      "icon-gap": {"value": "{utrecht.button.column-gap}"}
+    }
+  }
+}
+```
+
+Tip: if you want to use left/right chevrons for the button/links instead, use:
+
+```json
+{
+  "of": {
+    "form-navigation": {
+      "save-button": {
+        "fa-icon": {"value": "\"\\f054\""}
+      },
+      "next-button": {
+        "fa-icon": {"value": "\"\\f054\""}
+      }
+    },
+    "previous-link": {
+      "fa-icon": {"value": "\"\\f053\""}
+    }
+  }
+}
+```
+
+## Design tokens - upgraded components
 
 In short - we have upgraded the community NL Design System components from version 1.0.0 to version
 7.4.0 (see the

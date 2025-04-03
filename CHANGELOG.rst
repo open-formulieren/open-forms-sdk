@@ -2,6 +2,15 @@
 SDK Changelog
 =============
 
+3.1.1 (2025-04-??)
+==================
+
+Regular bugfix release.
+
+* [#4917] Substantially reduced the impact of the UX/NL DS changes to (existing) custom
+  themes by graciously falling back to default styling, and provided upgrade
+  instructions for theme designers/developers.
+
 3.1.0 (2025-03-28)
 ==================
 
@@ -11,6 +20,11 @@ There are additional changes compared to the alpha versions. Continue reading fo
 changelog, which includes the alpha versions release notes.
 
 .. warning:: SDK 3.1.0 requires the backend API version 3.1.0 or newer.
+
+.. warning:: We have made changes that affect (custom) themes. You likely need to
+   specify some additional design tokens. Please see our
+   `upgrade notes <https://open-formulieren.github.io/open-forms-sdk/?path=/docs/developers-upgrade-notes-3-1-0--docs>`_
+   for 3.1.0.
 
 New features
 ------------
