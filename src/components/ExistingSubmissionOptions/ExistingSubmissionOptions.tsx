@@ -21,7 +21,7 @@ const ExistingSubmissionOptions: React.FC<ExistingSubmissionOptionsProps> = ({
   const firstStepRoute = `/stap/${form.steps[0].slug}`;
   return (
     <>
-      <ButtonGroup className="utrecht-button-group--distanced" direction="column">
+      <ButtonGroup className="openforms-form-navigation" direction="column">
         <OFButton variant="primary" onClick={() => navigate(firstStepRoute)}>
           <FormattedMessage
             defaultMessage="Continue existing submission"

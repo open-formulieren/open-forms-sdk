@@ -213,7 +213,7 @@ const FormStepSaveModal = ({
               autoComplete="email"
             />
 
-            <ButtonGroup className="utrecht-button-group--distanced" direction="column">
+            <ButtonGroup className="openforms-form-navigation" direction="column">
               <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
                 <FormattedMessage
                   description="Form save modal submit button"
