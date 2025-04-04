@@ -26,10 +26,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
   previousPage,
   onDestroySession,
 }) => (
-  <ButtonGroup
-    className="utrecht-button-group--distanced openforms-form-navigation"
-    direction="column"
-  >
+  <ButtonGroup className="openforms-form-navigation" direction="column">
     {submitButton}
 
     {previousPage && <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />}
