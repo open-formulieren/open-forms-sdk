@@ -34,7 +34,7 @@ import {ConfigContext, FormioTranslations} from 'Context';
 import {get} from 'api';
 import Card, {CardTitle} from 'components/Card';
 import {EmailVerificationModal} from 'components/EmailVerification';
-import FormNavigation from 'components/FormNavigation';
+import FormNavigation, {StepSubmitButton} from 'components/FormNavigation';
 import FormStepDebug from 'components/FormStepDebug';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
@@ -819,16 +819,19 @@ const FormStep = () => {
                 />
                 {config.debug ? <FormStepDebug data={getCurrentFormData()} /> : null}
                 <FormNavigation
-                  canSubmitStep={canSubmit}
-                  canSubmitForm={submission.submissionAllowed}
+                  submitButton={
+                    <StepSubmitButton
+                      canSubmitForm={submission.submissionAllowed}
+                      canSubmitStep={canSubmit}
+                      isLastStep={isLastStep(currentStepIndex, submission)}
+                      isCheckingLogic={logicChecking}
+                    />
+                  }
                   canSuspendForm={form.suspensionAllowed}
-                  isAuthenticated={submission.isAuthenticated}
-                  isLastStep={isLastStep(currentStepIndex, submission)}
-                  isCheckingLogic={logicChecking}
-                  loginRequired={form.loginRequired}
                   onFormSave={onFormSave}
-                  onNavigatePrevPage={onPrevPage}
                   previousPage={previousPage}
+                  onNavigatePrevPage={onPrevPage}
+                  isAuthenticated={submission.isAuthenticated}
                   onDestroySession={onDestroySession}
                 />
               </form>

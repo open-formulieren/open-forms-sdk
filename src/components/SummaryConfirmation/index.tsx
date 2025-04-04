@@ -4,10 +4,9 @@ import {useState} from 'react';
 import StatementCheckboxes from 'components/StatementCheckboxes';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
+import FormNavigation, {FormSubmitButton} from '@/components/FormNavigation';
 import {SubmissionStatementConfiguration} from '@/data/forms';
 import useFormContext from '@/hooks/useFormContext';
-
-import FormNavigation from '../FormNavigation';
 
 const isSubmitEnabled = (
   statementsInfo: SubmissionStatementConfiguration[] = [],
@@ -50,13 +49,14 @@ const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
         />
       )}
       <FormNavigation
-        canSubmitStep={submitEnabled}
-        canSubmitForm={submissionAllowed}
-        submitButtonLiteral="confirmText"
-        onSubmitClick={() => setShowStatementWarnings(true)}
+        submitButton={
+          <FormSubmitButton
+            canSubmitForm={submissionAllowed}
+            isDisabled={!submitEnabled}
+            onClick={() => setShowStatementWarnings(true)}
+          />
+        }
         canSuspendForm={false}
-        isLastStep={false}
-        isCheckingLogic={false}
         isAuthenticated={isAuthenticated}
         onDestroySession={onDestroySession}
         hideAbortButton={hideAbortButton}
