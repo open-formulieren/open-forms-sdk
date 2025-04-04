@@ -123,8 +123,8 @@ out your email address for verification purposes.`}
                 }
               />
             </div>
-            <ButtonGroup className="utrecht-button-group--distanced" direction="column">
-              <OFButton type="submit" appearance="primary-action-button">
+            <ButtonGroup className="openforms-form-navigation" direction="column">
+              <OFButton type="submit" variant="primary">
                 <FormattedMessage
                   description="Cancel appointment submit button"
                   defaultMessage="Cancel appointment"
