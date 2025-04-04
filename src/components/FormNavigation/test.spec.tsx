@@ -36,7 +36,6 @@ it('Last step of submittable form, button is present', () => {
             isCheckingLogic={false}
           />
         }
-        canSuspendForm={true}
         isAuthenticated={false}
         onFormSave={mockFunction}
         onDestroySession={mockFunction}
@@ -65,7 +64,6 @@ it('Last step of non-submittable form with overview, button is present', () => {
             isCheckingLogic={false}
           />
         }
-        canSuspendForm={true}
         isAuthenticated={false}
         previousPage="#"
         onFormSave={mockFunction}
@@ -94,7 +92,6 @@ it('Last step of non-submittable form without overview, button is NOT present', 
             isCheckingLogic={false}
           />
         }
-        canSuspendForm={true}
         isAuthenticated={false}
         previousPage="#"
         onFormSave={mockFunction}
@@ -123,7 +120,6 @@ it('Non-last step of non-submittable form without overview, button IS present', 
             isCheckingLogic={false}
           />
         }
-        canSuspendForm={true}
         isAuthenticated={false}
         previousPage="#"
         onFormSave={mockFunction}
@@ -152,7 +148,6 @@ it('Suspending form allowed, button is present', () => {
             isCheckingLogic={false}
           />
         }
-        canSuspendForm={true}
         isAuthenticated={false}
         previousPage="#"
         onFormSave={mockFunction}
@@ -178,10 +173,9 @@ it('Suspending form not allowed, button is NOT present', () => {
             isCheckingLogic={false}
           />
         }
-        canSuspendForm={false}
+        onFormSave={undefined}
         isAuthenticated={false}
         previousPage="#"
-        onFormSave={mockFunction}
         onDestroySession={mockFunction}
       />
     </Wrap>

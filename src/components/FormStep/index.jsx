@@ -827,8 +827,7 @@ const FormStep = () => {
                       isCheckingLogic={logicChecking}
                     />
                   }
-                  canSuspendForm={form.suspensionAllowed}
-                  onFormSave={onFormSave}
+                  onFormSave={form.suspensionAllowed ? onFormSave : undefined}
                   previousPage={previousPage}
                   onNavigatePrevPage={onPrevPage}
                   isAuthenticated={submission.isAuthenticated}

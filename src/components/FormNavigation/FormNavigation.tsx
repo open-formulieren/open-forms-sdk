@@ -9,7 +9,6 @@ import PreviousLink from '@/components/PreviousLink';
 
 export interface FormNavigationProps {
   submitButton: React.ReactNode;
-  canSuspendForm: boolean;
   onFormSave?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   previousPage?: string;
   onNavigatePrevPage?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
@@ -20,7 +19,6 @@ export interface FormNavigationProps {
 
 const FormNavigation: React.FC<FormNavigationProps> = ({
   submitButton,
-  canSuspendForm,
   isAuthenticated,
   hideAbortButton,
   onNavigatePrevPage,
@@ -36,9 +34,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
 
     {previousPage && <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />}
 
-    {/* TODO: refactor: `const canSuspendForm = onFormSave === undefined` - this does not
-          need to be its own prop */}
-    {canSuspendForm && (
+    {onFormSave && (
       <LinkButton
         name="save"
         onClick={onFormSave}

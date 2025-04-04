@@ -56,7 +56,6 @@ const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
             onClick={() => setShowStatementWarnings(true)}
           />
         }
-        canSuspendForm={false}
         isAuthenticated={isAuthenticated}
         onDestroySession={onDestroySession}
         hideAbortButton={hideAbortButton}

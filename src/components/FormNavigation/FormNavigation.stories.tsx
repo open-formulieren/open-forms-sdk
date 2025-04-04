@@ -19,7 +19,6 @@ export default {
         isCheckingLogic={false}
       />
     ),
-    canSuspendForm: true,
     onFormSave: fn(),
     previousPage: '#prev',
     onNavigatePrevPage: fn(),
@@ -72,13 +71,13 @@ export const LastStepNoOverview: Story = {
 export const SubmittableConfirmation: Story = {
   args: {
     submitButton: <FormSubmitButton canSubmitForm="yes" isDisabled={false} onClick={fn()} />,
-    canSuspendForm: false,
+    onFormSave: undefined,
   },
 };
 
 export const UnsubmittableConfirmation: Story = {
   args: {
     submitButton: <FormSubmitButton canSubmitForm="no_with_overview" isDisabled={false} />,
-    canSuspendForm: false,
+    onFormSave: undefined,
   },
 };

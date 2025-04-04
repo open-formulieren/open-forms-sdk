@@ -24,8 +24,6 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
             isLastStep={false}
           />
         }
-        canSuspendForm={false}
-        onFormSave={() => {}}
         hideAbortButton
         isAuthenticated={false} // TODO -> if authenticated (for prefill), logout must be shown
         onDestroySession={() => {}}
