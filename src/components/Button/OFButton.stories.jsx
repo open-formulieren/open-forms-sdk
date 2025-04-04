@@ -1,7 +1,4 @@
-import {
-  ButtonLink as UtrechtButtonLink,
-  LinkButton as UtrechtLinkButton,
-} from '@utrecht/component-library-react';
+import {LinkButton} from '@utrecht/component-library-react';
 
 import FAIcon from '../FAIcon';
 import OFButton from './OFButton';
@@ -17,8 +14,7 @@ export default {
   },
 };
 
-const render = ({label, component, ...args}) => {
-  const ButtonComponent = component;
+const render = ({label, component: ButtonComponent, ...args}) => {
   return <ButtonComponent {...args}>{label}</ButtonComponent>;
 };
 
@@ -35,7 +31,7 @@ export const UtrechtPrimary = {
   args: {
     label: 'Primary',
     component: OFButton,
-    appearance: 'primary-action-button',
+    variant: 'primary',
   },
 };
 
@@ -44,7 +40,7 @@ export const UtrechtSecondary = {
   args: {
     label: 'Secondary',
     component: OFButton,
-    appearance: 'secondary-action-button',
+    variant: 'secondary',
   },
 };
 
@@ -53,47 +49,7 @@ export const UtrechtDanger = {
   args: {
     label: 'Danger',
     component: OFButton,
-    appearance: 'primary-action-button',
-    hint: 'danger',
-  },
-};
-
-export const UtrechtLinkLooksLikeDefaultButton = {
-  render,
-  args: {
-    label: 'Default',
-    component: UtrechtButtonLink,
-    href: '#',
-  },
-};
-
-export const UtrechtLinkLooksLikePrimaryButton = {
-  render,
-  args: {
-    label: 'Primary',
-    component: UtrechtButtonLink,
-    href: '#',
-    appearance: 'primary-action-button',
-  },
-};
-
-export const UtrechtLinkLooksLikeSecondaryButton = {
-  render,
-  args: {
-    label: 'Secondary',
-    component: UtrechtButtonLink,
-    href: '#',
-    appearance: 'secondary-action-button',
-  },
-};
-
-export const UtrechtLinkLooksLikeDangerButton = {
-  render,
-  args: {
-    label: 'Danger',
-    component: UtrechtButtonLink,
-    href: '#',
-    appearance: 'primary-action-button',
+    variant: 'primary',
     hint: 'danger',
   },
 };
@@ -102,7 +58,7 @@ export const UtrechtButtonLooksLikeLink = {
   render,
   args: {
     label: 'Link-like button',
-    component: UtrechtLinkButton,
+    component: LinkButton,
   },
 };
 
@@ -130,7 +86,7 @@ export const UtrechtButtonDisabled = {
   args: {
     label: 'Disabled',
     component: OFButton,
-    appearance: 'primary-action-button',
+    variant: 'primary',
     disabled: true,
   },
 };

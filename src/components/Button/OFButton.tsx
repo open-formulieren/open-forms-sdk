@@ -1,4 +1,4 @@
-import {Button, PrimaryActionButton} from '@utrecht/component-library-react';
+import {Button, PrimaryActionButton, SecondaryActionButton} from '@utrecht/component-library-react';
 import type {ButtonProps} from '@utrecht/component-library-react/dist/Button';
 import clsx from 'clsx';
 
@@ -6,7 +6,7 @@ export interface OFButtonProps extends ButtonProps {
   children: React.ReactNode;
   // TODO: rename to `isDisabled`
   disabled?: boolean;
-  variant: 'default' | 'primary';
+  variant: 'default' | 'primary' | 'secondary';
 }
 
 // Wrap around Utrecht button so we can properly manage the disabled state in an
@@ -19,6 +19,9 @@ const resolveComponent = (variant: OFButtonProps['variant']): React.ComponentTyp
     }
     case 'primary': {
       return PrimaryActionButton;
+    }
+    case 'secondary': {
+      return SecondaryActionButton;
     }
     default: {
       const exhaustiveCheck: never = variant;

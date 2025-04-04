@@ -42,7 +42,7 @@ export const WithoutPayment = {
     const loader = await canvas.findByRole('status');
     await waitForElementToBeRemoved(loader, {timeout: 2000, interval: 100});
 
-    expect(canvas.getByRole('button', {name: 'Terug naar de website'})).toBeVisible();
+    expect(canvas.getByRole('link', {name: 'Terug naar de website'})).toBeVisible();
     expect(canvas.getByText(/OF-L337/)).toBeVisible();
     expect(args.onConfirmed).toBeCalledTimes(1);
   },
