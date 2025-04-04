@@ -5,13 +5,12 @@ import Anchor, {type AnchorProps} from '@/components/Anchor';
 
 export interface LinkProps extends RouterLinkProps {
   placeholder?: boolean;
-  component?: AnchorProps['component'];
 }
 
 /**
  * Custom Link component using the design system component, replacing react-router's Link.
  */
-const Link: React.FC<LinkProps> = ({
+const Link: React.FC<LinkProps & AnchorProps> = ({
   onClick,
   placeholder,
   replace = false,
@@ -47,8 +46,5 @@ const Link: React.FC<LinkProps> = ({
 };
 
 Link.displayName = 'Link';
-
-// Prop types deliberately unspecified, please use the typescript definitions of
-// react-router instead.
 
 export default Link;
