@@ -53,6 +53,7 @@ const ChooseProductStepFields: React.FC<ChooseProductStepFieldsProps> = ({
     <Form>
       {supportsMultipleProducts ? (
         <EditGrid
+          label=""
           name="products"
           emptyItem={{productId: '', amount: 1}}
           addButtonLabel={intl.formatMessage({
