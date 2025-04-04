@@ -1,4 +1,3 @@
-import {ButtonLink} from '@utrecht/component-library-react';
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Navigate} from 'react-router';
@@ -10,7 +9,7 @@ import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
 import useInitialDataReference from 'hooks/useInitialDataReference';
 
-const IntroductionPage = () => {
+const IntroductionPage: React.FC = () => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
   const {addInitialDataReference} = useInitialDataReference();
 
@@ -29,7 +28,7 @@ const IntroductionPage = () => {
 
       <Link
         to={startPageUrl}
-        component={ButtonLink}
+        as="button-link"
         appearance="primary-action-button"
         className="openforms-start-link"
       >

@@ -1,0 +1,41 @@
+@use 'microscope-sass/lib/bem';
+
+.openforms-form-navigation {
+  --utrecht-button-group-block-gap: var(--of-form-navigation-row-gap);
+  // Required as long as we hardcode font-awesome icons, will need to revisit this
+  // when we support other icon libraries
+  --utrecht-button-icon-gap: var(--of-form-navigation-icon-gap, var(--utrecht-button-column-gap));
+  --utrecht-button-icon-size: var(--of-form-navigation-icon-size, auto);
+
+  padding-block-start: var(
+    --of-form-navigation-padding-block-start,
+    var(--utrecht-button-group-padding-block-start, 12px)
+  );
+
+  // for properly aligned stacked appearance of links/buttons, we need to control
+  // the inline-start (and end?) padding of link-button components, which use the
+  // padding tokens from the button component.
+  .utrecht-link-button {
+    --utrecht-button-padding-inline-end: var(
+      --of-form-navigation-link-button-padding-inline-end,
+      0
+    );
+    --utrecht-button-padding-inline-start: var(
+      --of-form-navigation-link-button-padding-inline-start,
+      0
+    );
+    --utrecht-button-font-size: var(--of-form-navigation-link-button-font-size, 1em);
+  }
+
+  @include bem.element('next-button') {
+    .utrecht-icon > .fa-icon {
+      --fa: var(--of-form-navigation-next-button-fa-icon, '\f178');
+    }
+  }
+
+  @include bem.element('save-button') {
+    .utrecht-icon > .fa-icon {
+      --fa: var(--of-form-navigation-save-button-fa-icon, '\f178');
+    }
+  }
+}

@@ -78,6 +78,8 @@ export const LiteralDecorator = (Story, {args}) => (
       previousText: {
         resolved: args.previousText || 'Previous',
       },
+      saveText: {resolved: 'Save', value: ''},
+      nextText: {resolved: 'Next', value: ''},
       beginText: {
         resolved: args.beginText || 'Start',
       },

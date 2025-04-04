@@ -4,7 +4,7 @@ const SUBMISSION_ALLOWED = {
   yes: 'yes',
   noWithOverview: 'no_with_overview',
   noWithoutOverview: 'no_without_overview',
-};
+} as const;
 
 const STEP_LABELS = defineMessages({
   introduction: {

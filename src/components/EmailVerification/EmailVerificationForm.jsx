@@ -154,7 +154,7 @@ const EmailVerificationForm = ({submissionUrl, componentKey, emailAddress, onVer
               </>
             )}
 
-            <ButtonGroup direction="column" className="utrecht-button-group--distanced">
+            <ButtonGroup direction="column" className="openforms-form-navigation">
               {mode === 'sendCode' && (
                 <SendCodeButton
                   submissionUrl={submissionUrl}

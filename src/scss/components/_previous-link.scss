@@ -1,8 +1,27 @@
 @use 'microscope-sass/lib/bem';
+@use '@utrecht/components/link'; // emits the .utrecht-link {...} styles
+@use '@utrecht/components/icon';
 
 .openforms-previous-link {
+  display: flex;
   flex-direction: row;
-  column-gap: 8px;
+  align-items: center;
+  column-gap: var(
+    --of-previous-link-column-gap,
+    // Deprecated fallback to make upgrading easier, will be removed in 4.0.
+    var(--utrecht-button-column-gap, 8px)
+  );
+
+  padding-block-end: var(
+    --of-previous-link-padding-block-end,
+    // Deprecated fallback to make upgrading easier, will be removed in 4.0.
+    var(--utrecht-button-padding-block-end)
+  );
+  padding-block-start: var(
+    --of-previous-link-padding-block-start,
+    // Deprecated fallback to make upgrading easier, will be removed in 4.0.
+    var(--utrecht-button-padding-block-start)
+  );
 
   @include bem.modifier('start') {
     margin-block-end: 20px;
@@ -13,11 +32,18 @@
   }
 
   @include bem.modifier('end') {
-    display: var(--of-previous-link-display-end, inline-flex);
+    display: var(--of-previous-link-display-end, flex);
   }
 
-  @include bem.element('icon') {
-    display: var(--of-previous-link-icon-display, none);
-    margin-inline-end: 8px;
+  .utrecht-icon {
+    // Required as long as we hardcode font-awesome icons, will need to revisit this
+    // when we support other icon libraries
+    --utrecht-icon-size: var(--of-previous-link-icon-size, auto);
+    // allow hiding the icon entirely, if desired
+    display: var(--of-previous-link-icon-display, inline-block);
+
+    > .fa-icon {
+      --fa: var(--of-previous-link-fa-icon, '\f177');
+    }
   }
 }

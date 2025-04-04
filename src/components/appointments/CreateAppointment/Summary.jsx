@@ -1,7 +1,7 @@
 import {Form, Formik} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {createSearchParams, useLocation, useNavigate} from 'react-router';
+import {createSearchParams, useHref, useLocation, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
@@ -62,6 +62,7 @@ const Summary = () => {
   const {baseUrl} = useContext(ConfigContext);
   const {state: routerState} = useLocation();
   const navigate = useNavigate();
+  const backHref = useHref('../contactgegevens');
   const {appointmentData, submission, setErrors} = useCreateAppointmentContext();
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
@@ -261,7 +262,9 @@ const Summary = () => {
 
             <SummaryConfirmation
               submissionAllowed="yes"
-              onPrevPage={() => navigate('../contactgegevens')}
+              prevPage={backHref}
+              isAuthenticated={false}
+              hideAbortButton
             />
           </Form>
         </Formik>

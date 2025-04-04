@@ -6,7 +6,7 @@ import {MemoryRouter} from 'react-router';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
-import FormNavigation from './index';
+import FormNavigation, {StepSubmitButton} from './index';
 
 const LITERALS = {
   nextText: {value: '', resolved: 'Next step'},
@@ -14,7 +14,7 @@ const LITERALS = {
   previousText: {value: '', resolved: 'Previous step'},
 };
 
-const Wrap = ({children}) => (
+const Wrap: React.FC<React.PropsWithChildren> = ({children}) => (
   <IntlProvider locale="nl" messages={messagesNL}>
     <MemoryRouter>
       <LiteralsProvider literals={LITERALS}>{children}</LiteralsProvider>
@@ -28,13 +28,15 @@ it('Last step of submittable form, button is present', () => {
   render(
     <Wrap>
       <FormNavigation
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.yes}
-        canSuspendForm={true}
+        submitButton={
+          <StepSubmitButton
+            canSubmitForm={SUBMISSION_ALLOWED.yes}
+            canSubmitStep
+            isLastStep
+            isCheckingLogic={false}
+          />
+        }
         isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
         onFormSave={mockFunction}
         onDestroySession={mockFunction}
         previousPage="#"
@@ -54,13 +56,15 @@ it('Last step of non-submittable form with overview, button is present', () => {
   render(
     <Wrap>
       <FormNavigation
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
-        canSuspendForm={true}
+        submitButton={
+          <StepSubmitButton
+            canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
+            canSubmitStep
+            isLastStep
+            isCheckingLogic={false}
+          />
+        }
         isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
         previousPage="#"
         onFormSave={mockFunction}
         onDestroySession={mockFunction}
@@ -80,13 +84,15 @@ it('Last step of non-submittable form without overview, button is NOT present', 
   render(
     <Wrap>
       <FormNavigation
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
-        canSuspendForm={true}
+        submitButton={
+          <StepSubmitButton
+            canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+            canSubmitStep
+            isLastStep
+            isCheckingLogic={false}
+          />
+        }
         isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
         previousPage="#"
         onFormSave={mockFunction}
         onDestroySession={mockFunction}
@@ -106,13 +112,15 @@ it('Non-last step of non-submittable form without overview, button IS present', 
   render(
     <Wrap>
       <FormNavigation
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
-        canSuspendForm={true}
+        submitButton={
+          <StepSubmitButton
+            canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
+            canSubmitStep
+            isLastStep={false}
+            isCheckingLogic={false}
+          />
+        }
         isAuthenticated={false}
-        isLastStep={false}
-        isCheckingLogic={false}
-        loginRequired={false}
         previousPage="#"
         onFormSave={mockFunction}
         onDestroySession={mockFunction}
@@ -132,13 +140,15 @@ it('Suspending form allowed, button is present', () => {
   render(
     <Wrap>
       <FormNavigation
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.yes}
-        canSuspendForm={true}
+        submitButton={
+          <StepSubmitButton
+            canSubmitForm={SUBMISSION_ALLOWED.yes}
+            canSubmitStep
+            isLastStep
+            isCheckingLogic={false}
+          />
+        }
         isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
         previousPage="#"
         onFormSave={mockFunction}
         onDestroySession={mockFunction}
@@ -155,15 +165,17 @@ it('Suspending form not allowed, button is NOT present', () => {
   render(
     <Wrap>
       <FormNavigation
-        canSubmitStep={true}
-        canSubmitForm={SUBMISSION_ALLOWED.yes}
-        canSuspendForm={false}
+        submitButton={
+          <StepSubmitButton
+            canSubmitForm={SUBMISSION_ALLOWED.yes}
+            canSubmitStep
+            isLastStep
+            isCheckingLogic={false}
+          />
+        }
+        onFormSave={undefined}
         isAuthenticated={false}
-        isLastStep={true}
-        isCheckingLogic={false}
-        loginRequired={false}
         previousPage="#"
-        onFormSave={mockFunction}
         onDestroySession={mockFunction}
       />
     </Wrap>

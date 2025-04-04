@@ -1,4 +1,5 @@
-import {expect, waitFor, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react';
+import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildForm} from 'api-mocks';
@@ -15,32 +16,30 @@ export default {
   argTypes: {
     form: {control: false},
   },
-};
+} satisfies Meta<typeof ExistingSubmissionOptions>;
 
-export const Default = {
+type Story = StoryObj<typeof ExistingSubmissionOptions>;
+
+export const Default: Story = {
   args: {
     isAuthenticated: false,
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Annuleren'});
-      await expect(abortButton).toBeVisible();
-    });
+    const abortButton = await canvas.findByRole('button', {name: 'Annuleren'});
+    await expect(abortButton).toBeVisible();
   },
 };
 
-export const Authenticated = {
+export const Authenticated: Story = {
   args: {
     isAuthenticated: true,
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const abortButton = await canvas.queryByRole('button', {name: 'Uitloggen'});
-      await expect(abortButton).toBeVisible();
-    });
+    const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
+    await expect(abortButton).toBeVisible();
   },
 };
