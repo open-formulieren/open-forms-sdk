@@ -17,8 +17,7 @@ export default {
   },
 };
 
-const render = ({label, component, ...args}) => {
-  const ButtonComponent = component;
+const render = ({label, component: ButtonComponent, ...args}) => {
   return <ButtonComponent {...args}>{label}</ButtonComponent>;
 };
 
@@ -35,7 +34,7 @@ export const UtrechtPrimary = {
   args: {
     label: 'Primary',
     component: OFButton,
-    appearance: 'primary-action-button',
+    variant: 'primary',
   },
 };
 
@@ -44,7 +43,7 @@ export const UtrechtSecondary = {
   args: {
     label: 'Secondary',
     component: OFButton,
-    appearance: 'secondary-action-button',
+    variant: 'secondary',
   },
 };
 
@@ -53,7 +52,7 @@ export const UtrechtDanger = {
   args: {
     label: 'Danger',
     component: OFButton,
-    appearance: 'primary-action-button',
+    variant: 'primary',
     hint: 'danger',
   },
 };
@@ -73,7 +72,7 @@ export const UtrechtLinkLooksLikePrimaryButton = {
     label: 'Primary',
     component: UtrechtButtonLink,
     href: '#',
-    appearance: 'primary-action-button',
+    variant: 'primary',
   },
 };
 
@@ -83,7 +82,7 @@ export const UtrechtLinkLooksLikeSecondaryButton = {
     label: 'Secondary',
     component: UtrechtButtonLink,
     href: '#',
-    appearance: 'secondary-action-button',
+    variant: 'secondary',
   },
 };
 
@@ -93,7 +92,7 @@ export const UtrechtLinkLooksLikeDangerButton = {
     label: 'Danger',
     component: UtrechtButtonLink,
     href: '#',
-    appearance: 'primary-action-button',
+    variant: 'primary',
     hint: 'danger',
   },
 };
@@ -130,7 +129,7 @@ export const UtrechtButtonDisabled = {
   args: {
     label: 'Disabled',
     component: OFButton,
-    appearance: 'primary-action-button',
+    variant: 'primary',
     disabled: true,
   },
 };

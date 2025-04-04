@@ -1,15 +1,24 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
-import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 
-import Anchor from 'components/Anchor';
-import Body from 'components/Body';
-import {OFButton} from 'components/Button';
-import Card from 'components/Card';
 import FAIcon from 'components/FAIcon';
 import useTitle from 'hooks/useTitle';
 
-const PostCompletionView = ({
+import Anchor from '@/components/Anchor';
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+
+export interface PostCompletionViewProps {
+  downloadPDFText?: string;
+  pageTitle?: React.ReactNode;
+  header?: React.ReactNode;
+  body?: React.ReactNode;
+  mainWebsiteUrl?: string;
+  reportDownloadUrl?: string;
+  extraBody?: React.ReactNode;
+}
+
+const PostCompletionView: React.FC<PostCompletionViewProps> = ({
   downloadPDFText,
   pageTitle,
   header,
@@ -29,6 +38,7 @@ const PostCompletionView = ({
       {body}
 
       <Body>
+        {/* @ts-expect-error type inference from JS is wrong */}
         <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
         <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
           {linkTitle}
@@ -39,28 +49,21 @@ const PostCompletionView = ({
 
       {mainWebsiteUrl ? (
         <ButtonGroup className="utrecht-button-group--distanced" direction="column">
-          <Anchor href={mainWebsiteUrl} rel="noopener noreferrer">
-            <OFButton appearance="secondary-action-button">
-              <FormattedMessage
-                description="Back to main website link title"
-                defaultMessage="Return to main website"
-              />
-            </OFButton>
+          <Anchor
+            as="button-link"
+            href={mainWebsiteUrl}
+            rel="noopener noreferrer"
+            appearance="secondary-action-button"
+          >
+            <FormattedMessage
+              description="Back to main website link title"
+              defaultMessage="Return to main website"
+            />
           </Anchor>
         </ButtonGroup>
       ) : null}
     </Card>
   );
-};
-
-PostCompletionView.propTypes = {
-  downloadPDFText: PropTypes.string,
-  pageTitle: PropTypes.node,
-  header: PropTypes.node,
-  body: PropTypes.node,
-  mainWebsiteUrl: PropTypes.string,
-  reportDownloadUrl: PropTypes.string,
-  extraBody: PropTypes.node,
 };
 
 export default PostCompletionView;
