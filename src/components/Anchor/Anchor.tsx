@@ -1,4 +1,4 @@
-import {Link} from '@utrecht/component-library-react';
+import {ButtonLink, Link} from '@utrecht/component-library-react';
 import type {LinkProps} from '@utrecht/component-library-react/dist/Link';
 import clsx from 'clsx';
 
@@ -12,9 +12,17 @@ export const ANCHOR_MODIFIERS = [
 
 export interface AnchorProps extends LinkProps {
   modifiers?: (typeof ANCHOR_MODIFIERS)[number][];
+  component?: typeof Link | typeof ButtonLink;
 }
 
-const Anchor: React.FC<AnchorProps> = ({children, href, modifiers = [], className, ...props}) => {
+const Anchor: React.FC<AnchorProps> = ({
+  children,
+  href,
+  modifiers = [],
+  className,
+  component: LinkComponent = Link,
+  ...props
+}) => {
   // extend with our own modifiers
   className = clsx(
     'utrecht-link--html-a',
@@ -27,9 +35,9 @@ const Anchor: React.FC<AnchorProps> = ({children, href, modifiers = [], classNam
     }
   );
   return (
-    <Link className={className} href={href || undefined} {...props}>
+    <LinkComponent className={className} href={href || undefined} {...props}>
       {children}
-    </Link>
+    </LinkComponent>
   );
 };
 
