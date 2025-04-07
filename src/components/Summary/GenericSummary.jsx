@@ -1,8 +1,6 @@
-import {ButtonGroup} from '@utrecht/button-group-react';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 
-import AbortButton from 'components/AbortButton';
 import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import FormStepSummary from 'components/FormStepSummary';
@@ -24,7 +22,6 @@ const GenericSummary = ({
   errors = [],
   onSubmit,
   onDestroySession,
-  onPrevPage = null,
 }) => {
   const Wrapper = submissionAllowed === SUBMISSION_ALLOWED.yes ? Form : 'div';
 
@@ -64,11 +61,9 @@ const GenericSummary = ({
           <SummaryConfirmation
             submissionAllowed={submissionAllowed}
             prevPage={prevPage}
-            onPrevPage={onPrevPage}
+            isAuthenticated={isAuthenticated}
+            onDestroySession={onDestroySession}
           />
-          <ButtonGroup className="utrecht-button-group--distanced" direction="column">
-            <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
-          </ButtonGroup>
         </Wrapper>
       </Formik>
     </Card>
@@ -110,7 +105,6 @@ GenericSummary.propTypes = {
   prevPage: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onDestroySession: PropTypes.func.isRequired,
-  onPrevPage: PropTypes.func,
 };
 
 export default GenericSummary;

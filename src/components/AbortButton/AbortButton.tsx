@@ -1,13 +1,18 @@
-import {LinkButton as UtrechtButtonLink} from '@utrecht/component-library-react';
-import PropTypes from 'prop-types';
+import {Icon, LinkButton} from '@utrecht/component-library-react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
-import {useAnalyticsToolsConfig} from 'components/analytics/AnalyticsToolConfigProvider';
-import {buildGovMetricUrl} from 'components/analytics/utils';
-import useFormContext from 'hooks/useFormContext';
 
-const AbortButton = ({isAuthenticated, onDestroySession}) => {
+import {useAnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
+import {buildGovMetricUrl} from '@/components/analytics/utils';
+import useFormContext from '@/hooks/useFormContext';
+
+export interface AbortButtonProps {
+  isAuthenticated: boolean;
+  onDestroySession: () => Promise<void>;
+}
+
+const AbortButton: React.FC<AbortButtonProps> = ({isAuthenticated, onDestroySession}) => {
   const intl = useIntl();
   const analyticsToolsConfig = useAnalyticsToolsConfig();
   const form = useFormContext();
@@ -23,7 +28,7 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
           'Are you sure that you want to cancel this submission? You will lose your progress if you continue.',
       });
 
-  const callback = async event => {
+  const callback = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     if (!window.confirm(confirmationMessage)) return;
@@ -51,21 +56,13 @@ const AbortButton = ({isAuthenticated, onDestroySession}) => {
   );
 
   return (
-    <>
-      <UtrechtButtonLink
-        name="abort"
-        onClick={callback}
-        className={'utrecht-link-button--openforms'}
-      >
-        <FAIcon icon="xmark" />
-        {message}
-      </UtrechtButtonLink>
-    </>
+    <LinkButton name="abort" onClick={callback} className="openforms-abort-button">
+      <Icon>
+        <FAIcon icon="" extraClassName="fa-fw" />
+      </Icon>
+      {message}
+    </LinkButton>
   );
 };
 
-AbortButton.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  onDestroySession: PropTypes.func.isRequired,
-};
 export default AbortButton;

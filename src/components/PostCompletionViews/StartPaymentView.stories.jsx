@@ -1,4 +1,4 @@
-import {expect, waitFor, within} from '@storybook/test';
+import {expect, within} from '@storybook/test';
 
 import {BASE_URL} from 'api-mocks';
 import {
@@ -37,16 +37,8 @@ export const Default = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await waitFor(
-      async () => {
-        expect(
-          canvas.queryByRole('button', {name: 'Terug naar de website'})
-        ).not.toBeInTheDocument();
-      },
-      {
-        timeout: 2000,
-        interval: 100,
-      }
-    );
+    const startPaymentButton = await canvas.findByRole('button', {name: 'Nu betalen'});
+    expect(startPaymentButton).toBeVisible();
+    expect(canvas.queryByRole('link', {name: 'Terug naar de website'})).not.toBeInTheDocument();
   },
 };

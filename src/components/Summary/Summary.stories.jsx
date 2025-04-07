@@ -184,7 +184,6 @@ export default {
     previousText: 'Previous',
     onSubmit: fn(),
     onDestroySession: fn(),
-    onPrevPage: fn(),
   },
   argTypes: {
     submissionAllowed: {
@@ -222,7 +221,6 @@ const render = ({
   errors,
   prevPage,
   onSubmit,
-  onPrevPage,
   onDestroySession,
   // story args
   showPreviousPageLink,
@@ -253,12 +251,11 @@ const render = ({
         isLoading={isLoading}
         isAuthenticated={isAuthenticated}
         errors={errors}
-        prevPage={prevPage}
+        prevPage={showPreviousPageLink ? prevPage : ''}
         onSubmit={event => {
           event.preventDefault();
           onSubmit(event);
         }}
-        onPrevPage={showPreviousPageLink ? onPrevPage : null}
         onDestroySession={onDestroySession}
       />
     </FormContext.Provider>
