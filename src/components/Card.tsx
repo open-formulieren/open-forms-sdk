@@ -53,7 +53,7 @@ export interface CardProps {
   mobileHeaderHidden?: boolean;
 }
 
-const Card: React.FC<CardProps & React.ComponentPropsWithoutRef<'div'>> = ({
+const Card: React.FC<CardProps & Omit<React.ComponentPropsWithoutRef<'div'>, 'title'>> = ({
   title,
   children,
   titleHeadingType = 'title',

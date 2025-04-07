@@ -26,13 +26,12 @@ const Wrapper = ({children}) => (
 );
 
 it('Summary of non-submittable form, button is NOT present', () => {
-  const mockFunction = vi.fn();
   render(
     <Wrapper>
       <SummaryConfirmation
         submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
         prevPage="some-page"
-        onPrevPage={mockFunction}
+        hideAbortButton
       />
     </Wrapper>
   );
@@ -43,13 +42,12 @@ it('Summary of non-submittable form, button is NOT present', () => {
 });
 
 it('Summary of submittable form, button IS present', () => {
-  const mockFunction = vi.fn();
   render(
     <Wrapper>
       <SummaryConfirmation
         submissionAllowed={SUBMISSION_ALLOWED.yes}
         prevPage="some-page"
-        onPrevPage={mockFunction}
+        hideAbortButton
       />
     </Wrapper>
   );

@@ -1,0 +1,19 @@
+// additional styles to apply "danger" styling to the abort button (presented as a link)
+.openforms-abort-button {
+  --utrecht-link-color: var(
+    --of-abort-button-color,
+    var(--utrecht-button-primary-action-danger-background-color)
+  );
+  --utrecht-link-hover-color: var(
+    --of-abort-button-hover-color,
+    var(--utrecht-button-primary-action-danger-background-color)
+  );
+  --utrecht-link-active-color: var(--of-abort-button-active-color);
+  --utrecht-link-focus-color: var(--of-abort-button-focus-color);
+
+  .utrecht-icon {
+    > .fa-icon {
+      --fa: var(--of-abort-button-fa-icon, '\f00d');
+    }
+  }
+}

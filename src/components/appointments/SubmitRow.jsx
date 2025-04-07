@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import {useNavigate} from 'react-router';
 
-import FormNavigation from 'components/FormNavigation';
+import FormNavigation, {StepSubmitButton} from 'components/FormNavigation/index';
 import {LiteralsProvider} from 'components/Literal';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
@@ -16,18 +16,19 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
       }}
     >
       <FormNavigation
-        canSubmitStep={canSubmit}
-        canSubmitForm={SUBMISSION_ALLOWED.yes}
-        canSuspendForm={false}
-        isAuthenticated={false} // TODO -> if authenticated (for prefill), logout must be shown
-        isLastStep={false}
-        isCheckingLogic={false}
-        loginRequired={false}
+        submitButton={
+          <StepSubmitButton
+            canSubmitStep={canSubmit}
+            isCheckingLogic={false}
+            canSubmitForm={SUBMISSION_ALLOWED.yes}
+            isLastStep={false}
+          />
+        }
         hideAbortButton
+        isAuthenticated={false} // TODO -> if authenticated (for prefill), logout must be shown
+        onDestroySession={async () => {}}
         previousPage={navigateBackTo ? `../${navigateBackTo}` : ''}
-        onFormSave={() => {}}
         onNavigatePrevPage={navigateBackTo ? () => navigate(`../${navigateBackTo}`) : undefined}
-        onDestroySession={() => {}}
       />
     </LiteralsProvider>
   );
