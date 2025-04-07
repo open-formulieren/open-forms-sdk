@@ -26,7 +26,7 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
         }
         hideAbortButton
         isAuthenticated={false} // TODO -> if authenticated (for prefill), logout must be shown
-        onDestroySession={() => {}}
+        onDestroySession={async () => {}}
         previousPage={navigateBackTo ? `../${navigateBackTo}` : ''}
         onNavigatePrevPage={navigateBackTo ? () => navigate(`../${navigateBackTo}`) : undefined}
       />

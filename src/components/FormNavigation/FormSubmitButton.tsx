@@ -5,10 +5,11 @@ import {Literal} from 'components/Literal';
 
 import {OFButton} from '@/components/Button';
 import {SUBMISSION_ALLOWED} from '@/components/constants';
+import type {Submission} from '@/data/submissions';
 
 export interface FormSubmitButtonProps {
   isDisabled: boolean;
-  canSubmitForm: 'yes' | 'no_with_overview' | 'no_without_overview';
+  canSubmitForm: Submission['submissionAllowed'];
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 

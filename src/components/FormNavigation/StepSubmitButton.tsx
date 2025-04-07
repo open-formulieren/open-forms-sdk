@@ -6,11 +6,12 @@ import {Literal} from 'components/Literal';
 import {OFButton} from '@/components/Button';
 import Loader from '@/components/Loader';
 import {SUBMISSION_ALLOWED} from '@/components/constants';
+import type {Submission} from '@/data/submissions';
 
 export interface StepSubmitButtonProps {
   canSubmitStep: boolean;
   isCheckingLogic: boolean;
-  canSubmitForm: 'yes' | 'no_with_overview' | 'no_without_overview';
+  canSubmitForm: Submission['submissionAllowed'];
   isLastStep: boolean;
 }
 
