@@ -171,6 +171,11 @@ class OpenForm {
   async init() {
     ReactModal.setAppElement(this.targetNode);
 
+    // Fixing an issue where browser (in particular Chrome) translations change the DOM
+    // tree, causing React to lose track of DOM nodes and crashing the SDK.
+    // See https://github.com/open-formulieren/open-forms/issues/5242
+    this.targetNode.setAttribute('translate', 'no');
+
     this.url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
     this.baseTitle = document.title;
