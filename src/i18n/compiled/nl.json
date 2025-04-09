@@ -1667,6 +1667,12 @@
       "value": "Pin/punt"
     }
   ],
+  "fQnOQI": [
+    {
+      "type": 0,
+      "value": "Current location cannot be accessed"
+    }
+  ],
   "fWjfVm": [
     {
       "type": 0,
@@ -2149,6 +2155,12 @@
       "value": "Intersectie-resultaten kunnen niet samengevoegd worden."
     }
   ],
+  "pt+SJ7": [
+    {
+      "type": 0,
+      "value": "Use my current location"
+    }
+  ],
   "q9AKjH": [
     {
       "type": 0,
@@ -2335,6 +2347,12 @@
       "value": "Naar contactgegevens"
     }
   ],
+  "t9GstA": [
+    {
+      "type": 0,
+      "value": "Current location"
+    }
+  ],
   "tBQ8TL": [
     {
       "type": 0,
@@ -2471,6 +2489,12 @@
     {
       "type": 0,
       "value": "Jaar"
+    }
+  ],
+  "yRAlcb": [
+    {
+      "type": 0,
+      "value": "Your current location cannot be accessed"
     }
   ],
   "zkdWYe": [
