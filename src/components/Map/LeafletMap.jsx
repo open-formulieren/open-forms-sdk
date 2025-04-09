@@ -10,12 +10,15 @@ import {useGeolocation} from 'react-use';
 import {ConfigContext} from 'Context';
 import {getBEMClassName} from 'utils';
 
+import {LeafletControl, LeafletControlButton} from '@/components/Map/LeafletControl';
+
 import NearestAddress from './NearestAddress';
 import {DEFAULT_INTERACTIONS, DEFAULT_LAT_LNG, DEFAULT_ZOOM} from './constants';
 import {CRS_RD, TILE_LAYER_RD, initialize} from './init';
 import OpenFormsProvider from './provider';
 import {
   applyLeafletTranslations,
+  leafletEditToolbarMessages,
   leafletGestureHandlingText,
   searchControlMessages,
 } from './translations';
@@ -76,10 +79,17 @@ const LeaftletMap = ({
     updateGeoJsonGeometry(event.layer);
   };
 
+  const deleteShapeConfirmMessage = intl.formatMessage({
+    description: "Leaflet map's delete confirmation message",
+    defaultMessage: 'Are you sure you want to delete your drawn shape?',
+  });
+
   const onFeatureDelete = () => {
-    // The value `null` is needed to make sure that Formio actually updates the value.
-    // node_modules/formiojs/components/_classes/component/Component.js:2528
-    onGeoJsonGeometrySet?.(null);
+    if (window.confirm(deleteShapeConfirmMessage)) {
+      // The value `null` is needed to make sure that Formio actually updates the value.
+      // node_modules/formiojs/components/_classes/component/Component.js:2528
+      onGeoJsonGeometrySet?.(null);
+    }
   };
 
   const onSearchMarkerSet = event => {
@@ -116,22 +126,25 @@ const LeaftletMap = ({
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
-            <EditControl
-              position="topright"
-              onCreated={onFeatureCreate}
-              onDeleted={onFeatureDelete}
-              edit={{
-                edit: false,
-              }}
-              draw={{
-                rectangle: false,
-                circle: false,
-                polyline: !!interactions?.polyline,
-                polygon: !!interactions?.polygon,
-                marker: !!interactions?.marker,
-                circlemarker: false,
-              }}
-            />
+            <>
+              <EditControl
+                position="topright"
+                onCreated={onFeatureCreate}
+                edit={{
+                  edit: false,
+                  remove: false,
+                }}
+                draw={{
+                  rectangle: false,
+                  circle: false,
+                  polyline: !!interactions?.polyline,
+                  polygon: !!interactions?.polygon,
+                  marker: !!interactions?.marker,
+                  circlemarker: false,
+                }}
+              />
+              <DeleteControl onFeatureDelete={onFeatureDelete} geoJsonGeometry={geoJsonGeometry} />
+            </>
           )}
           <Geometry geoJsonGeometry={geoJsonGeometry} featureGroupRef={featureGroupRef} />
         </FeatureGroup>
@@ -209,6 +222,29 @@ const Geometry = ({geoJsonGeometry, featureGroupRef}) => {
 Geometry.propTypes = {
   geoJsonGeometry: GeoJsonGeometry,
   featureGroupRef: PropTypes.object.isRequired,
+};
+
+const DeleteControl = ({onFeatureDelete, disabled}) => {
+  const intl = useIntl();
+  const message = intl.formatMessage(
+    disabled ? leafletEditToolbarMessages.remove : leafletEditToolbarMessages.removeDisabled
+  );
+  return (
+    <LeafletControl position="topright">
+      <LeafletControlButton
+        onClick={onFeatureDelete}
+        disabled={disabled}
+        extraClassName="leaflet-draw-edit-remove"
+        ariaLabel={message}
+        ariaContent={message}
+      />
+    </LeafletControl>
+  );
+};
+
+DeleteControl.propTypes = {
+  onFeatureDelete: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 // Set the map view if coordinates are provided
