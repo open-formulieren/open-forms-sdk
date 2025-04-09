@@ -79,11 +79,6 @@
     "description": "(Async) select options loading message",
     "originalDefault": "Loading..."
   },
-  "4ZOmtU": {
-    "defaultMessage": "Wijzigingen opslaan",
-    "description": "Edit toolbar save tooltip.",
-    "originalDefault": "Save changes"
-  },
   "4gPdgK": {
     "defaultMessage": "Slecht",
     "description": "GovMetric rating text",
@@ -414,11 +409,6 @@
     "isTranslated": true,
     "originalDefault": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
   },
-  "HY6Irs": {
-    "defaultMessage": "Wijzigingen annuleren",
-    "description": "Edit toolbar cancel tooltip.",
-    "originalDefault": "Cancel changes"
-  },
   "HgLr1F": {
     "defaultMessage": "Annuleer",
     "description": "Draw toolbar cancel button message.",
@@ -551,11 +541,6 @@
     "description": "Payment page title",
     "originalDefault": "Payment"
   },
-  "N2sZnS": {
-    "defaultMessage": "Opslaan",
-    "description": "Edit toolbar save message.",
-    "originalDefault": "Save"
-  },
   "Op4orj": {
     "defaultMessage": "Geen vormen om te verwijderen",
     "description": "Edit toolbar remove button disabled tooltip.",
@@ -645,11 +630,6 @@
     "defaultMessage": "De tekst moet {exact, select, true {exact} other {{inclusive, select, true {minstens} other {meer dan}}} } {minimum, plural, one {{minimum} karakter} other {{minimum} karakters}} lang zijn.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
-  },
-  "U5+FHP": {
-    "defaultMessage": "Annuleer",
-    "description": "Edit toolbar cancel message.",
-    "originalDefault": "Cancel"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -757,11 +737,6 @@
     "defaultMessage": "Je gegevens",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
-  },
-  "bRtoG6": {
-    "defaultMessage": "Verwijder alles",
-    "description": "Edit toolbar clearAll message.",
-    "originalDefault": "Remove all"
   },
   "bgfiRG": {
     "defaultMessage": "Je hebt de betaling gestart.",
@@ -1076,6 +1051,11 @@
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
   },
+  "qPBMwn": {
+    "defaultMessage": "Are you sure you want to delete your drawn shape?",
+    "description": "Leaflet map's delete confirmation message",
+    "originalDefault": "Are you sure you want to delete your drawn shape?"
+  },
   "qyWfE+": {
     "defaultMessage": "Een bevestigingscode ontvangen",
     "description": "Email verification mode selection: send code label",
@@ -1105,11 +1085,6 @@
     "defaultMessage": "Zoek adres",
     "description": "The leaflet map's input fields placeholder message.",
     "originalDefault": "Enter address, please"
-  },
-  "sYb+eZ": {
-    "defaultMessage": "Verwijder alle vormen van de kaart",
-    "description": "Edit toolbar clearAll tooltip.",
-    "originalDefault": "Remove all shapes"
   },
   "senRv3": {
     "defaultMessage": "Je staat op het punt je afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul je e-mailadres in ter controle.",

@@ -79,11 +79,6 @@
     "description": "(Async) select options loading message",
     "originalDefault": "Loading..."
   },
-  "4ZOmtU": {
-    "defaultMessage": "Save changes",
-    "description": "Edit toolbar save tooltip.",
-    "originalDefault": "Save changes"
-  },
   "4gPdgK": {
     "defaultMessage": "Bad",
     "description": "GovMetric rating text",
@@ -409,11 +404,6 @@
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
   },
-  "HY6Irs": {
-    "defaultMessage": "Cancel changes",
-    "description": "Edit toolbar cancel tooltip.",
-    "originalDefault": "Cancel changes"
-  },
   "HgLr1F": {
     "defaultMessage": "Cancel",
     "description": "Draw toolbar cancel button message.",
@@ -544,11 +534,6 @@
     "description": "Payment page title",
     "originalDefault": "Payment"
   },
-  "N2sZnS": {
-    "defaultMessage": "Save",
-    "description": "Edit toolbar save message.",
-    "originalDefault": "Save"
-  },
   "Op4orj": {
     "defaultMessage": "No shapes to remove",
     "description": "Edit toolbar remove button disabled tooltip.",
@@ -638,11 +623,6 @@
     "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
-  },
-  "U5+FHP": {
-    "defaultMessage": "Cancel",
-    "description": "Edit toolbar cancel message.",
-    "originalDefault": "Cancel"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -748,11 +728,6 @@
     "defaultMessage": "Contact details",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
-  },
-  "bRtoG6": {
-    "defaultMessage": "Remove all",
-    "description": "Edit toolbar clearAll message.",
-    "originalDefault": "Remove all"
   },
   "bgfiRG": {
     "defaultMessage": "You've started the payment process.",
@@ -1064,6 +1039,11 @@
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
   },
+  "qPBMwn": {
+    "defaultMessage": "Are you sure you want to delete your drawn shape?",
+    "description": "Leaflet map's delete confirmation message",
+    "originalDefault": "Are you sure you want to delete your drawn shape?"
+  },
   "qyWfE+": {
     "defaultMessage": "Receive a verification code",
     "description": "Email verification mode selection: send code label",
@@ -1093,11 +1073,6 @@
     "defaultMessage": "Find address",
     "description": "The leaflet map's input fields placeholder message.",
     "originalDefault": "Enter address, please"
-  },
-  "sYb+eZ": {
-    "defaultMessage": "Remove all shapes",
-    "description": "Edit toolbar clearAll tooltip.",
-    "originalDefault": "Remove all shapes"
   },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",

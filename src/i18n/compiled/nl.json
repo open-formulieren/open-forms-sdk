@@ -181,12 +181,6 @@
       "value": "Opties ophalen..."
     }
   ],
-  "4ZOmtU": [
-    {
-      "type": 0,
-      "value": "Wijzigingen opslaan"
-    }
-  ],
   "4gPdgK": [
     {
       "type": 0,
@@ -779,12 +773,6 @@
       "value": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
     }
   ],
-  "HY6Irs": [
-    {
-      "type": 0,
-      "value": "Wijzigingen annuleren"
-    }
-  ],
   "HgLr1F": [
     {
       "type": 0,
@@ -1105,12 +1093,6 @@
       "value": "Betalen"
     }
   ],
-  "N2sZnS": [
-    {
-      "type": 0,
-      "value": "Opslaan"
-    }
-  ],
   "Op4orj": [
     {
       "type": 0,
@@ -1341,12 +1323,6 @@
       "value": " lang zijn."
     }
   ],
-  "U5+FHP": [
-    {
-      "type": 0,
-      "value": "Annuleer"
-    }
-  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1569,12 +1545,6 @@
     {
       "type": 0,
       "value": "Je gegevens"
-    }
-  ],
-  "bRtoG6": [
-    {
-      "type": 0,
-      "value": "Verwijder alles"
     }
   ],
   "bgfiRG": [
@@ -2241,6 +2211,12 @@
       "value": "Log in om het formulier mede te ondertekenen"
     }
   ],
+  "qPBMwn": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete your drawn shape?"
+    }
+  ],
   "qyWfE+": [
     {
       "type": 0,
@@ -2287,12 +2263,6 @@
     {
       "type": 0,
       "value": "Zoek adres"
-    }
-  ],
-  "sYb+eZ": [
-    {
-      "type": 0,
-      "value": "Verwijder alle vormen van de kaart"
     }
   ],
   "senRv3": [
