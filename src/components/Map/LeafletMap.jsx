@@ -119,7 +119,7 @@ const LeaftletMap = ({
             <EditControl
               position="topright"
               onCreated={onFeatureCreate}
-              onDeleted={onFeatureDelete}
+              onDeleteStart={onFeatureDelete}
               edit={{
                 edit: false,
               }}

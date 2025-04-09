@@ -32,30 +32,6 @@ const leafletGestureHandlingText = defineMessages({
 });
 
 const leafletEditToolbarMessages = defineMessages({
-  saveText: {
-    description: 'Edit toolbar save message.',
-    defaultMessage: 'Save',
-  },
-  saveTitle: {
-    description: 'Edit toolbar save tooltip.',
-    defaultMessage: 'Save changes',
-  },
-  cancelText: {
-    description: 'Edit toolbar cancel message.',
-    defaultMessage: 'Cancel',
-  },
-  cancelTitle: {
-    description: 'Edit toolbar cancel tooltip.',
-    defaultMessage: 'Cancel changes',
-  },
-  clearAllText: {
-    description: 'Edit toolbar clearAll message.',
-    defaultMessage: 'Remove all',
-  },
-  clearAllTitle: {
-    description: 'Edit toolbar clearAll tooltip.',
-    defaultMessage: 'Remove all shapes',
-  },
   remove: {
     description: 'Edit toolbar remove button tooltip.',
     defaultMessage: 'Remove shapes',
@@ -139,25 +115,9 @@ const leafletDrawHandlerMessages = defineMessages({
 const applyLeafletTranslations = intl => {
   // We have to do the translations via Leaflet
   // https://github.com/alex3165/react-leaflet-draw/issues/179
-  Leaflet.drawLocal.edit.toolbar = {
-    actions: {
-      save: {
-        text: intl.formatMessage(leafletEditToolbarMessages.saveText),
-        title: intl.formatMessage(leafletEditToolbarMessages.saveTitle),
-      },
-      cancel: {
-        text: intl.formatMessage(leafletEditToolbarMessages.cancelText),
-        title: intl.formatMessage(leafletEditToolbarMessages.cancelTitle),
-      },
-      clearAll: {
-        text: intl.formatMessage(leafletEditToolbarMessages.clearAllText),
-        title: intl.formatMessage(leafletEditToolbarMessages.clearAllTitle),
-      },
-    },
-    buttons: {
-      remove: intl.formatMessage(leafletEditToolbarMessages.remove),
-      removeDisabled: intl.formatMessage(leafletEditToolbarMessages.removeDisabled),
-    },
+  Leaflet.drawLocal.edit.toolbar.buttons = {
+    remove: intl.formatMessage(leafletEditToolbarMessages.remove),
+    removeDisabled: intl.formatMessage(leafletEditToolbarMessages.removeDisabled),
   };
   Leaflet.drawLocal.draw.toolbar = {
     actions: {
