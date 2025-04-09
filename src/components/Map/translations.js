@@ -66,6 +66,13 @@ const leafletEditToolbarMessages = defineMessages({
   },
 });
 
+const leafletEditHandlersMessages = defineMessages({
+  RemoveTitle: {
+    description: 'Edit handlers remove tooltip.',
+    defaultMessage: 'Click on a shape to remove.',
+  },
+});
+
 const leafletDrawToolbarMessages = defineMessages({
   actionsText: {
     description: 'Draw toolbar cancel button message.',
@@ -157,6 +164,13 @@ const applyLeafletTranslations = intl => {
     buttons: {
       remove: intl.formatMessage(leafletEditToolbarMessages.remove),
       removeDisabled: intl.formatMessage(leafletEditToolbarMessages.removeDisabled),
+    },
+  };
+  Leaflet.drawLocal.edit.handlers = {
+    remove: {
+      tooltip: {
+        text: intl.formatMessage(leafletEditHandlersMessages.RemoveTitle),
+      },
     },
   };
   Leaflet.drawLocal.draw.toolbar = {
