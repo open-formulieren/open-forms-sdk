@@ -185,6 +185,8 @@ const EnsureTestId = () => {
 };
 
 const Geometry = ({geoJsonGeometry, featureGroupRef}) => {
+  const map = useMap();
+
   useEffect(() => {
     if (!featureGroupRef.current) {
       // If there is no feature group, nothing should be done...
@@ -201,7 +203,10 @@ const Geometry = ({geoJsonGeometry, featureGroupRef}) => {
     // Add the `geoJsonGeometry` data as shape.
     const layer = Leaflet.GeoJSON.geometryToLayer(geoJsonGeometry);
     featureGroupRef.current.addLayer(layer);
-  }, [featureGroupRef, geoJsonGeometry]);
+
+    // Update map zoom to fit the shape
+    map.fitBounds(Leaflet.geoJSON(geoJsonGeometry).getBounds(), {padding: [1, 1]});
+  }, [featureGroupRef, geoJsonGeometry, map]);
 
   return null;
 };
