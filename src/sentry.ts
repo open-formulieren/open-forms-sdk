@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/react';
 
-import {getVersion} from 'utils';
+import {getVersion} from '@/utils';
 
-const initialiseSentry = (sentryDSN, env) => {
+const initialiseSentry = (sentryDSN: string, env: string): void => {
   if (!sentryDSN) return;
 
   Sentry.init({

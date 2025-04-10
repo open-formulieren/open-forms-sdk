@@ -8,7 +8,7 @@ import {createState, useState as useGlobalState} from 'state-pool';
 
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get} from 'api';
-import {logError} from 'components/Errors/ErrorBoundary';
+import {logError} from 'components/Errors';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
 
