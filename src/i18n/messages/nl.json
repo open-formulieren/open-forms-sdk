@@ -1161,6 +1161,11 @@
     "description": "Draw handler polygon tooltip end.",
     "originalDefault": "Click first point to finish shape"
   },
+  "w6Z2/m": {
+    "defaultMessage": "Click on a shape to remove.",
+    "description": "Edit handlers remove tooltip.",
+    "originalDefault": "Click on a shape to remove."
+  },
   "wwsWUp": {
     "defaultMessage": "Wat vind je van dit formulier?",
     "description": "GovMetric snippet header",
