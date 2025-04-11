@@ -1,9 +1,9 @@
-import get from 'lodash/get';
-import set from 'lodash/set';
+import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import {type FormikErrors, type FormikTouched, getIn, setIn} from 'formik';
 
 // See https://stackoverflow.com/a/43595110 and https://stackoverflow.com/a/32749533
 class ExtendableError extends Error {
-  constructor(message) {
+  public constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
     if (typeof Error.captureStackTrace === 'function') {
@@ -14,26 +14,37 @@ class ExtendableError extends Error {
   }
 }
 
+interface InvalidParam {
+  name: string;
+  code: string;
+  reason: string;
+}
+
+export interface Http400ResponseBody {
+  type?: string;
+  code: string;
+  title: string;
+  status: 400;
+  detail: string;
+  instance: string;
+  invalidParams: InvalidParam[];
+}
+
+interface ValidationErrorAsFormikProps {
+  initialErrors: FormikErrors<JSONObject>;
+  initialTouched: FormikTouched<JSONObject>;
+}
+
 export class ValidationError extends ExtendableError {
-  constructor(message, errors) {
+  private _errors: InvalidParam[];
+
+  public constructor(message: string, errors: Http400ResponseBody) {
     super(message);
     this._errors = errors.invalidParams;
   }
 
-  get invalidParams() {
+  public get invalidParams(): InvalidParam[] {
     return this._errors;
-  }
-
-  get errors() {
-    // merge errors back per component
-    const errorsPerComponent = {};
-
-    for (const err of this._errors) {
-      if (!errorsPerComponent[err.name]) errorsPerComponent[err.name] = [];
-      errorsPerComponent[err.name].push(err);
-    }
-
-    return errorsPerComponent;
   }
 
   /**
@@ -46,24 +57,28 @@ export class ValidationError extends ExtendableError {
    * @return {Object} Object with the `initialErrors` and `initialTouched` keys/props,
    *   derived from the error field names.
    */
-  asFormikProps() {
-    const initialErrors = {};
-    const initialTouched = {};
+  public asFormikProps(): ValidationErrorAsFormikProps {
+    let initialErrors: FormikErrors<JSONObject> = {};
+    let initialTouched: FormikTouched<JSONObject> = {};
 
     this.invalidParams.forEach(err => {
       const {name, reason} = err;
-      set(initialTouched, name, true);
+      initialTouched = setIn(initialTouched, name, true);
 
-      const existingErrorMessage = get(initialErrors, name, '');
+      const existingErrorMessage = getIn(initialErrors, name, '');
       const formikError = existingErrorMessage ? [existingErrorMessage, reason].join('\n') : reason;
-      set(initialErrors, name, formikError);
+      initialErrors = setIn(initialErrors, name, formikError);
     });
     return {initialErrors, initialTouched};
   }
 }
 
 export class APIError extends ExtendableError {
-  constructor(message, statusCode, detail, code) {
+  public statusCode: number;
+  public detail: string;
+  public code: string;
+
+  public constructor(message: string, statusCode: number, detail: string, code: string) {
     super(message);
     this.statusCode = statusCode;
     this.detail = detail;
