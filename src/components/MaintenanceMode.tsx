@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 
-import Card from 'components/Card';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import {IsFormDesigner} from 'headers';
+import Card from '@/components/Card';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {IsFormDesigner} from '@/headers';
 
-const MaintenanceModeAlert = () => {
+const MaintenanceModeAlert: React.FC = () => {
   const userIsFormDesigner = IsFormDesigner.getValue();
 
   let message;
@@ -31,15 +30,15 @@ const MaintenanceModeAlert = () => {
   return <ErrorMessage level="info">{message}</ErrorMessage>;
 };
 
-const MaintenanceMode = ({title, asToast = false}) => {
+export interface MaintenanceModeProps {
+  title?: React.ReactNode;
+  asToast?: boolean;
+}
+
+const MaintenanceMode: React.FC<MaintenanceModeProps> = ({title, asToast = false}) => {
   const alert = <MaintenanceModeAlert />;
   if (asToast) return alert;
   return <Card title={title}>{alert}</Card>;
-};
-
-MaintenanceMode.propTypes = {
-  title: PropTypes.node,
-  asToast: PropTypes.bool,
 };
 
 export default MaintenanceMode;
