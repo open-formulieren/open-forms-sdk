@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import {Navigate} from 'react-router';
 
-import MaintenanceMode from 'components/MaintenanceMode';
 import {useSubmissionContext} from 'components/SubmissionProvider';
-import {ServiceUnavailable} from 'errors';
-import {IsFormDesigner} from 'headers';
-import useFormContext from 'hooks/useFormContext';
+
+import MaintenanceMode from '@/components/MaintenanceMode';
+import {ServiceUnavailable} from '@/errors';
+import {IsFormDesigner} from '@/headers';
+import useFormContext from '@/hooks/useFormContext';
+
+export interface RequireSubmissionProps {
+  children: React.ReactNode;
+}
 
 /**
  * Wrapper component to enforce there is an active submission in the state.
@@ -22,7 +26,7 @@ import useFormContext from 'hooks/useFormContext';
  *       <MyProtectedView />
  *     </RequireSubmission>
  */
-const RequireSubmission = ({children}) => {
+const RequireSubmission: React.FC<RequireSubmissionProps> = ({children}) => {
   const {maintenanceMode} = useFormContext();
   const {submission} = useSubmissionContext();
 
@@ -46,10 +50,6 @@ const RequireSubmission = ({children}) => {
       {children}
     </>
   );
-};
-
-RequireSubmission.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default RequireSubmission;
