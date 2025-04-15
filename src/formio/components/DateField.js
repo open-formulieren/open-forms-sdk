@@ -16,6 +16,14 @@ const extractDate = value => {
 
 class DateField extends DateTimeField {
   constructor(component, options, data) {
+    // GH#5240
+    // override the date format of the calendar widget to always emit dates instead
+    // of datetimes so that backend validation doesn't choke on datetimes when dates
+    // are expected.
+    if (!component.customOptions) {
+      component.customOptions = {allowInvalidPreload: true};
+    }
+    component.customOptions.dateFormat = 'yyyy-MM-dd';
     super(component, options, data);
 
     if (component.datePicker.minDate || component.datePicker.maxDate) {
