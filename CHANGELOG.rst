@@ -2,6 +2,19 @@
 SDK Changelog
 =============
 
+3.0.2 (2025-04-16)
+==================
+
+Periodic bugfix release.
+
+* [#5151] Fixed incorrect empty value for map component.
+* [#5240] Fixed incorrect date field value format blocking form suspension.
+* [#5155] Fixed ``initial_date_reference`` being lost on language change while
+  filling out a form.
+* [#5195] Fixed the "start form" button being displayed in cosign flows.
+* [#5242] Fixed crashes because of browser translation plugins (like Chrome) by not
+  allowing translations.
+
 3.0.1 (2025-03-03)
 ==================
 
