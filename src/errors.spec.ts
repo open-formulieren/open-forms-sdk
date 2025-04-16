@@ -1,9 +1,14 @@
-import {ValidationError} from 'errors';
+import {ValidationError} from '@/errors';
+import type {Http400ResponseBody} from '@/errors';
 
 describe('ValidationError', () => {
   it('can expose the validation errors in a format for Formik', () => {
-    const responseData = {
+    const responseData: Http400ResponseBody = {
+      code: 'nope',
+      title: 'Nope',
+      status: 400,
       detail: 'Data invalid',
+      instance: 'urn:error:5092703a-9569-436a-ac15-22d6a6aa6889',
       invalidParams: [
         {
           name: 'topLevel',
