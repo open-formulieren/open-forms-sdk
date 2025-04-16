@@ -4,30 +4,30 @@ import Card from '@/components/Card';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 import {IsFormDesigner} from '@/headers';
 
+const GENERIC_MESSAGE = (
+  <FormattedMessage
+    description="Maintenance mode message"
+    defaultMessage="This form is currently undergoing maintenance and can not be accessed at the moment."
+  />
+);
+
+const MESSAGE_FOR_FORM_DESIGNER = (
+  <FormattedMessage
+    description="Maintenance mode message (for form designer)"
+    defaultMessage={`
+    This form is currently in maintenance mode. As a staff user, you can
+    continue filling out the form as usual.
+  `}
+  />
+);
+
 const MaintenanceModeAlert: React.FC = () => {
   const userIsFormDesigner = IsFormDesigner.getValue();
-
-  let message;
-  if (!userIsFormDesigner) {
-    message = (
-      <FormattedMessage
-        description="Maintenance mode message"
-        defaultMessage="This form is currently undergoing maintenance and can not be accessed at the moment."
-      />
-    );
-  } else {
-    message = (
-      <FormattedMessage
-        description="Maintenance mode message (for form designer)"
-        defaultMessage={`
-        This form is currently in maintenance mode. As a staff user, you can
-        continue filling out the form as usual.
-      `}
-      />
-    );
-  }
-
-  return <ErrorMessage level="info">{message}</ErrorMessage>;
+  return (
+    <ErrorMessage level="info">
+      {userIsFormDesigner ? MESSAGE_FOR_FORM_DESIGNER : GENERIC_MESSAGE}
+    </ErrorMessage>
+  );
 };
 
 export interface MaintenanceModeProps {
