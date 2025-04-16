@@ -2,14 +2,38 @@
 SDK Changelog
 =============
 
-3.1.1 (2025-04-??)
+3.1.1 (2025-04-16)
 ==================
 
-Regular bugfix release.
+Periodic bugfix release.
 
+* [#5240] Fixed incorrect date field value format blocking form suspension.
+* [#5242] Fixed crashes because of browser translation plugins (like Chrome) by not
+  allowing translations.
 * [#4917] Substantially reduced the impact of the UX/NL DS changes to (existing) custom
   themes by graciously falling back to default styling, and provided upgrade
   instructions for theme designers/developers.
+
+3.0.2 (2025-04-16)
+==================
+
+Periodic bugfix release.
+
+* [#5151] Fixed incorrect empty value for map component.
+* [#5240] Fixed incorrect date field value format blocking form suspension.
+* [#5155] Fixed ``initial_date_reference`` being lost on language change while
+  filling out a form.
+* [#5195] Fixed the "start form" button being displayed in cosign flows.
+* [#5242] Fixed crashes because of browser translation plugins (like Chrome) by not
+  allowing translations.
+
+2.4.4 (2025-04-16)
+==================
+
+Final bugfix release in the 2.4.x series.
+
+* [#5151] Fixed incorrect empty value for map component.
+* [#5240] Fixed incorrect date field value format blocking form suspension.
 
 3.1.0 (2025-03-28)
 ==================
