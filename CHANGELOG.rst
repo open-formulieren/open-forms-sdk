@@ -2,11 +2,14 @@
 SDK Changelog
 =============
 
-3.1.1 (2025-04-??)
+3.1.1 (2025-04-16)
 ==================
 
-Regular bugfix release.
+Periodic bugfix release.
 
+* [#5240] Fixed incorrect date field value format blocking form suspension.
+* [#5242] Fixed crashes because of browser translation plugins (like Chrome) by not
+  allowing translations.
 * [#4917] Substantially reduced the impact of the UX/NL DS changes to (existing) custom
   themes by graciously falling back to default styling, and provided upgrade
   instructions for theme designers/developers.
