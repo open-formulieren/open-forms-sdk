@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+2.4.4 (2025-04-16)
+==================
+
+Final bugfix release in the 2.4.x series.
+
+* [#5151] Fixed incorrect empty value for map component.
+* [#5240] Fixed incorrect date field value format blocking form suspension.
+
 2.4.3 (2025-01-07)
 ==================
 
