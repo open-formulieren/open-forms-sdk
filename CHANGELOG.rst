@@ -2,6 +2,32 @@
 SDK Changelog
 =============
 
+3.2.0-alpha.0 (2025-04-25)
+==========================
+
+First preview release of the upcoming 3.2.0 version.
+
+Bugfixes
+--------
+
+* [#5240] Fixed incorrect date field value format blocking form suspension.
+* [#5191] Fixed incorrect zoom level of the map component depending on the drawn shape.
+* [#5242] Fixed crashes because of browser translation plugins (like Chrome) by not
+  allowing translations.
+* [#4917] Substantially reduced the impact of the UX/NL DS changes to (existing) custom
+  themes by graciously falling back to default styling, and provided upgrade
+  instructions for theme designers/developers.
+
+Project maintenance
+-------------------
+
+* [#445] Refactored error-boundary code and converted more code to Typescript.
+* Updated dependencies:
+
+    - Upgraded to @open-formulieren/design-tokens 0.59.0.
+    - Upgraded to @open-formulieren/formio-renderer 0.5.0.
+    - Upgraded to storybook 8.6.12.
+
 3.1.1 (2025-04-16)
 ==================
 
