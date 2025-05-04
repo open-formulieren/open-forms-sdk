@@ -16,6 +16,25 @@ const searchControlMessages = defineMessages({
   },
 });
 
+const locationControlMessages = defineMessages({
+  buttonTitle: {
+    description: "The leaflet map's use user location button tooltip text.",
+    defaultMessage: 'Use my current location',
+  },
+  buttonTitleDisabled: {
+    description: "The leaflet map's use user location button disabled tooltip text.",
+    defaultMessage: 'Your current location cannot be accessed',
+  },
+  buttonLabel: {
+    description: "The leaflet map's use user location button ariaLabel text.",
+    defaultMessage: 'Current location',
+  },
+  buttonLabelDisabled: {
+    description: "The leaflet map's use user location button disabled ariaLabel text.",
+    defaultMessage: 'Current location cannot be accessed',
+  },
+});
+
 const leafletGestureHandlingText = defineMessages({
   touch: {
     description: 'Gesturehandeling phone touch message.',
@@ -199,4 +218,9 @@ const applyLeafletTranslations = intl => {
   };
 };
 
-export {searchControlMessages, leafletGestureHandlingText, applyLeafletTranslations};
+export {
+  searchControlMessages,
+  locationControlMessages,
+  leafletGestureHandlingText,
+  applyLeafletTranslations,
+};

@@ -814,6 +814,11 @@
     "description": "Draw toolbar marker button tooltip.",
     "originalDefault": "Marker"
   },
+  "fQnOQI": {
+    "defaultMessage": "Current location cannot be accessed",
+    "description": "The leaflet map's use user location button disabled ariaLabel text.",
+    "originalDefault": "Current location cannot be accessed"
+  },
   "fWjfVm": {
     "defaultMessage": "Please hold on while we're processing your submission.",
     "description": "Checking background processing status body",
@@ -1054,6 +1059,11 @@
     "description": "ZOD 'invalid_intersection_types' error message",
     "originalDefault": "Intersection results could not be merged"
   },
+  "pt+SJ7": {
+    "defaultMessage": "Use my current location",
+    "description": "The leaflet map's use user location button tooltip text.",
+    "originalDefault": "Use my current location"
+  },
   "q9AKjH": {
     "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at most} other {under}}} } {maximum, plural, one {{maximum} character} other {{maximum} characters}}.",
     "description": "ZOD 'too_big' error message, for strings",
@@ -1109,6 +1119,11 @@
     "description": "Appointments location and time step: next step text",
     "originalDefault": "To contact details"
   },
+  "t9GstA": {
+    "defaultMessage": "Current location",
+    "description": "The leaflet map's use user location button ariaLabel text.",
+    "originalDefault": "Current location"
+  },
   "tBQ8TL": {
     "defaultMessage": "Not co-signed",
     "description": "Not co-signed (summary) message",
@@ -1163,6 +1178,11 @@
     "defaultMessage": "Invalid literal value, expected {expected}.",
     "description": "ZOD 'invalid_literal' error message",
     "originalDefault": "Invalid literal value, expected {expected}."
+  },
+  "yRAlcb": {
+    "defaultMessage": "Your current location cannot be accessed",
+    "description": "The leaflet map's use user location button disabled tooltip text.",
+    "originalDefault": "Your current location cannot be accessed"
   },
   "zkdWYe": {
     "defaultMessage": "Return to main website",
