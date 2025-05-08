@@ -1,8 +1,15 @@
+import type {Meta, StoryObj} from '@storybook/react';
+
 import Anchor, {ANCHOR_MODIFIERS} from './index';
 
 export default {
   title: 'Pure React components / Anchor',
   component: Anchor,
+  args: {
+    children: 'Label',
+    href: 'https://example.com',
+    target: '_blank',
+  },
   argTypes: {
     modifiers: {
       options: ANCHOR_MODIFIERS,
@@ -10,40 +17,32 @@ export default {
         type: 'check',
       },
     },
-    children: {control: false},
     onClick: {control: false},
   },
   parameters: {
     controls: {sort: 'requiredFirst'},
   },
-};
+} satisfies Meta<typeof Anchor>;
 
-const render = ({label, ...args}) => (
-  <Anchor href="https://example.com" target="_blank" {...args}>
-    {label}
-  </Anchor>
-);
+type Story = StoryObj<typeof Anchor>;
 
-export const Default = {
-  render,
+export const Default: Story = {
   args: {
-    label: 'Anchor/link',
+    children: 'Anchor/link',
   },
 };
 
-export const Hover = {
-  render,
+export const Hover: Story = {
   args: {
     modifiers: ['hover'],
-    label: 'Hover',
+    children: 'Hover',
   },
 };
 
-export const Inherit = {
-  render,
+export const Inherit: Story = {
   args: {
     modifiers: ['inherit'],
-    label: 'Inherit',
+    children: 'Inherit',
   },
 };
 
@@ -55,10 +54,9 @@ export const Inherit = {
  * which removes the link from the tab/focus navigation while keeping a consistent
  * markup.
  */
-export const Placeholder = {
-  render,
+export const Placeholder: Story = {
   args: {
-    label: 'placeholder',
+    children: 'placeholder',
     placeholder: true,
   },
 };
@@ -70,10 +68,9 @@ export const Placeholder = {
  * While the link is enabled and can be clicked, the styling does not *encourage* users
  * to click it by rendering the default cursor instead.
  */
-export const Current = {
-  render,
+export const Current: Story = {
   args: {
     modifiers: ['current'],
-    label: 'Current',
+    children: 'Current',
   },
 };
