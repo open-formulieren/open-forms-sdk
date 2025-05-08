@@ -2,15 +2,15 @@ import {render, screen} from '@testing-library/react';
 import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
 
-import {AuthenticationErrors} from './index';
+import AuthenticationError from './AuthenticationError';
 
-let scrollIntoViewMock = vi.fn();
+const scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 it('Renders DigiD default error', () => {
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
-      <AuthenticationErrors parameters={{'_digid-message': 'error'}} />
+      <AuthenticationError parameter="_digid-message" errorCode="error" />
     </IntlProvider>
   );
 
@@ -27,7 +27,7 @@ it('Renders DigiD default error', () => {
 it('Renders DigiD cancel login error', () => {
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
-      <AuthenticationErrors parameters={{'_digid-message': 'login-cancelled'}} />
+      <AuthenticationError parameter="_digid-message" errorCode="login-cancelled" />
     </IntlProvider>
   );
 
@@ -37,7 +37,7 @@ it('Renders DigiD cancel login error', () => {
 it('Renders EHerkenning default error', () => {
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
-      <AuthenticationErrors parameters={{'_eherkenning-message': 'error'}} />
+      <AuthenticationError parameter="_eherkenning-message" errorCode="error" />
     </IntlProvider>
   );
 
@@ -51,7 +51,7 @@ it('Renders EHerkenning default error', () => {
 it('Renders EHerkenning cancel login error', () => {
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
-      <AuthenticationErrors parameters={{'_eherkenning-message': 'login-cancelled'}} />
+      <AuthenticationError parameter="_eherkenning-message" errorCode="login-cancelled" />
     </IntlProvider>
   );
 
@@ -61,7 +61,7 @@ it('Renders EHerkenning cancel login error', () => {
 it('Renders eIDAS default error', () => {
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
-      <AuthenticationErrors parameters={{'_eidas-message': 'error'}} />
+      <AuthenticationError parameter="_eidas-message" errorCode="error" />
     </IntlProvider>
   );
 
@@ -75,7 +75,7 @@ it('Renders eIDAS default error', () => {
 it('Renders eIDAS cancel login error', () => {
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
-      <AuthenticationErrors parameters={{'_eidas-message': 'login-cancelled'}} />
+      <AuthenticationError parameter="_eidas-message" errorCode="login-cancelled" />
     </IntlProvider>
   );
 
