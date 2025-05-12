@@ -13,10 +13,7 @@ import Loader from 'components/Loader';
 import LoginOptions from 'components/LoginOptions';
 import MaintenanceMode from 'components/MaintenanceMode';
 import {useSubmissionContext} from 'components/SubmissionProvider';
-import {
-  AuthenticationErrors,
-  useDetectAuthErrorMessages,
-} from 'components/auth/AuthenticationErrors';
+import {AuthenticationError, useDetectAuthErrorMessage} from 'components/auth';
 import AuthenticationOutage, {
   useDetectAuthenticationOutage,
 } from 'components/auth/AuthenticationOutage';
@@ -62,8 +59,8 @@ const FormStart = () => {
 
   const doStart = useStartSubmission();
   const outagePluginId = useDetectAuthenticationOutage();
-  const authErrors = useDetectAuthErrorMessages();
-  const hasAuthErrors = !!outagePluginId || !!authErrors;
+  const authError = useDetectAuthErrorMessage();
+  const hasAuthErrors = !!outagePluginId || !!authError;
 
   const onFormStartCalledRef = useRef(false);
 
@@ -165,7 +162,7 @@ const FormStart = () => {
         {form.submissionLimitReached && <FormMaximumSubmissionsError />}
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
-        {authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
+        {authError && <AuthenticationError parameter={authError[0]} errorCode={authError[1]} />}
 
         <FormStartMessage form={form} />
 

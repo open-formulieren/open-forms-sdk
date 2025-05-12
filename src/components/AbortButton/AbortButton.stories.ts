@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 
 import {AnalyticsToolsDecorator} from 'story-utils/decorators';
@@ -8,9 +9,11 @@ export default {
   title: 'Private API / Abort button',
   component: AbortButton,
   decorators: [AnalyticsToolsDecorator],
-};
+} satisfies Meta<typeof AbortButton>;
 
-export const Authenticated = {
+type Story = StoryObj<typeof AbortButton>;
+
+export const Authenticated: Story = {
   args: {
     isAuthenticated: true,
   },
@@ -22,7 +25,7 @@ export const Authenticated = {
   },
 };
 
-export const Anonymous = {
+export const Anonymous: Story = {
   args: {
     isAuthenticated: false,
   },
@@ -34,7 +37,7 @@ export const Anonymous = {
   },
 };
 
-export const AnonymousAndGovMetric = {
+export const AnonymousAndGovMetric: Story = {
   args: {
     isAuthenticated: false,
   },
@@ -53,7 +56,7 @@ export const AnonymousAndGovMetric = {
   },
 };
 
-export const AuthenticatedAndGovmetric = {
+export const AuthenticatedAndGovmetric: Story = {
   args: {
     isAuthenticated: true,
   },

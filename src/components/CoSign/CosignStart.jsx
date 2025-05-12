@@ -5,10 +5,7 @@ import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
 import LoginOptions from 'components/LoginOptions';
 import MaintenanceMode from 'components/MaintenanceMode';
-import {
-  AuthenticationErrors,
-  useDetectAuthErrorMessages,
-} from 'components/auth/AuthenticationErrors';
+import {AuthenticationError, useDetectAuthErrorMessage} from 'components/auth';
 import AuthenticationOutage, {
   useDetectAuthenticationOutage,
 } from 'components/auth/AuthenticationOutage';
@@ -20,7 +17,7 @@ const CosignStart = () => {
   const form = useFormContext();
 
   const outagePluginId = useDetectAuthenticationOutage();
-  const authErrors = useDetectAuthErrorMessages();
+  const authError = useDetectAuthErrorMessage();
 
   if (!form.active) {
     throw new UnprocessableEntity('Unprocessable Entity', 422, 'Form not active', 'form-inactive');
@@ -56,7 +53,7 @@ const CosignStart = () => {
       <Card title={form.name}>
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
-        {authErrors ? <AuthenticationErrors parameters={authErrors} /> : null}
+        {authError && <AuthenticationError parameter={authError[0]} errorCode={authError[1]} />}
 
         <Body>
           <FormattedMessage
