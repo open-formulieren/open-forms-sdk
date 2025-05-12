@@ -13,6 +13,7 @@ import {START_FORM_QUERY_PARAM} from 'components/constants';
 import {flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
 import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
 import useFormContext from 'hooks/useFormContext';
+import useInitialDataReference from 'hooks/useInitialDataReference';
 import usePageViews from 'hooks/usePageViews';
 import useRecycleSubmission from 'hooks/useRecycleSubmission';
 
@@ -36,6 +37,7 @@ const Form = () => {
   const prevLocale = usePrevious(intl.locale);
   const {state: routerState} = useLocation();
   const confirmationMatch = useMatch('/bevestiging');
+  const {addInitialDataReference} = useInitialDataReference();
 
   // extract the declared properties and configuration
   const config = useContext(ConfigContext);
@@ -79,7 +81,7 @@ const Form = () => {
     await destroy(`${config.baseUrl}authentication/${submission.id}/session`);
     removeSubmissionId();
     setSubmission(null);
-    navigate('/');
+    navigate(addInitialDataReference('/'));
   };
 
   // handle redirect from payment provider to render appropriate page and include the

@@ -1,17 +1,27 @@
 import {useContext} from 'react';
-import {useLocation, useSearchParams} from 'react-router';
+import {useLocation, useMatch, useSearchParams} from 'react-router';
 import {useAsync, useLocalStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
+import useInitialDataReference from 'hooks/useInitialDataReference';
 
 const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onError = () => {}) => {
   const location = useLocation();
   const config = useContext(ConfigContext);
   const [params] = useSearchParams();
-  // XXX: use sessionStorage instead of localStorage for this, so that it's scoped to
-  // a single tab/window?
-  let [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
+  const {initialDataReference: referenceFromUrl} = useInitialDataReference();
+  const homePageMatch = useMatch('/startpagina');
+  const introductionPageMatch = useMatch('/introductie');
+
+  // We only care about the initial data reference from the URL when we are on the introduction or
+  // starting page
+  const initialDataReference =
+    homePageMatch || introductionPageMatch
+      ? referenceFromUrl
+      : currentSubmission?.initialDataReference;
+  const storageKey = initialDataReference ? form.uuid + initialDataReference : form.uuid;
+  let [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(storageKey, '');
 
   // If no submissionID is in the localStorage see if one can be retrieved from the query param
   if (!submissionId) {
