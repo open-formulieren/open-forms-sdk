@@ -281,3 +281,50 @@ test('Submitting form with payment requirement', async () => {
 
   expect(await screen.findByText('A payment is required for this product.')).toBeVisible();
 });
+
+test('Starting a form with the same initial data reference', async () => {
+  const user = userEvent.setup();
+  const form = buildForm();
+  mswServer.use(
+    mockAnalyticsToolConfigGet(),
+    mockSubmissionGet(),
+    mockSubmissionPost(),
+    mockSubmissionStepGet()
+  );
+  // Start a form with initial data reference 'foo'
+  render(<Wrapper form={form} initialEntry="/startpagina?initial_data_reference=foo" />);
+  const startButton = await screen.findByRole('button', {name: 'Begin'});
+  expect(startButton).toBeVisible();
+
+  // Clicking the start button starts the submission and ensures it is saved in the storage
+  await user.click(startButton);
+  expect(await screen.findByRole('heading', {name: 'Step 1'})).toBeVisible();
+
+  // Start a form with initial data reference 'foo' again and ensure a new submission cannot be
+  // started
+  render(<Wrapper form={form} initialEntry="/startpagina?initial_data_reference=foo" />);
+  expect(screen.queryByRole('button', {name: 'Begin'})).toBeNull();
+});
+
+test('Starting a form with a different initial data reference', async () => {
+  const user = userEvent.setup();
+  const form = buildForm();
+  mswServer.use(
+    mockAnalyticsToolConfigGet(),
+    mockSubmissionGet(),
+    mockSubmissionPost(),
+    mockSubmissionStepGet()
+  );
+  // Start a form with initial data reference 'foo'
+  render(<Wrapper form={form} initialEntry="/startpagina?initial_data_reference=foo" />);
+  const startButton = await screen.findByRole('button', {name: 'Begin'});
+  expect(startButton).toBeVisible();
+
+  // Clicking the start button starts the submission and ensures it is saved in the storage
+  await user.click(startButton);
+  expect(await screen.findByRole('heading', {name: 'Step 1'})).toBeVisible();
+
+  // Start a form with initial data reference 'bar' and ensure a submission can be started
+  render(<Wrapper form={form} initialEntry="/startpagina?initial_data_reference=bar" />);
+  expect(await screen.findByRole('button', {name: 'Begin'})).toBeVisible();
+});
