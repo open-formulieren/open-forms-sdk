@@ -13,11 +13,11 @@ import cosignRoutes from 'routes/cosign';
 import Cosign from './Cosign';
 
 beforeEach(() => {
-  localStorage.clear();
+  sessionStorage.clear();
 });
 
 afterEach(() => {
-  localStorage.clear();
+  sessionStorage.clear();
 });
 
 const TEST_FORM = buildForm({
