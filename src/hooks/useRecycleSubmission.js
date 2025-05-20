@@ -1,6 +1,6 @@
-import {useContext} from 'react';
+import {useCallback, useContext} from 'react';
 import {useLocation, useMatch, useSearchParams} from 'react-router';
-import {useAsync, useLocalStorage} from 'react-use';
+import {useAsync, useSessionStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
@@ -21,9 +21,14 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onErr
       ? referenceFromUrl
       : currentSubmission?.initialDataReference;
   const storageKey = initialDataReference ? form.uuid + initialDataReference : form.uuid;
-  let [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(storageKey, '');
+  let [submissionId, setSubmissionId] = useSessionStorage(storageKey, '');
 
-  // If no submissionID is in the localStorage see if one can be retrieved from the query param
+  let removeSubmissionId = useCallback(() => {
+    // We remove the current submission by setting it to an empty string, which is falsy
+    setSubmissionId('');
+  }, [setSubmissionId]);
+
+  // If no submissionID is in the session storage see if one can be retrieved from the query param
   if (!submissionId) {
     submissionId = params.get('submission_uuid');
   }
@@ -34,7 +39,7 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onErr
   const {loading} = useAsync(async () => {
     // no URL to load -> abort
     if (!url) return;
-    // the submission from the state is the same as the submission ID in local storage -> abort
+    // the submission from the state is the same as the submission ID in session storage -> abort
     if (currentSubmission?.id === submissionId) return;
 
     // fetch the submission from the API
