@@ -4,9 +4,9 @@ import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm, buildSubmission, mockAnalyticsToolConfigGet} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
+import {ConfigContext, FormContext} from '@/Context';
+import {BASE_URL, buildForm, buildSubmission, mockAnalyticsToolConfigGet} from '@/api-mocks';
+import mswServer from '@/api-mocks/msw-server';
 import {
   mockSubmissionCompletePost,
   mockSubmissionGet,
@@ -16,9 +16,10 @@ import {
   mockSubmissionProcessingStatusGet,
   mockSubmissionStepGet,
   mockSubmissionSummaryGet,
-} from 'api-mocks/submissions';
-import {SUBMISSION_ALLOWED} from 'components/constants';
-import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+} from '@/api-mocks/submissions';
+import {SUBMISSION_ALLOWED} from '@/components/constants';
+import {type Form} from '@/data/forms';
+import routes, {FUTURE_FLAGS} from '@/routes';
 
 window.scrollTo = vi.fn();
 
@@ -29,7 +30,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  localStorage.clear();
+  sessionStorage.clear();
 });
 
 afterEach(() => {
@@ -37,7 +38,7 @@ afterEach(() => {
     vi.runOnlyPendingTimers();
     vi.useRealTimers();
   }
-  localStorage.clear();
+  sessionStorage.clear();
 });
 
 afterAll(() => {
@@ -45,7 +46,12 @@ afterAll(() => {
   vi.clearAllMocks();
 });
 
-const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
+interface WrapperProps {
+  form?: Form;
+  initialEntry?: string;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({form = buildForm(), initialEntry = '/startpagina'}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialEntry],
     initialIndex: 0,
@@ -60,11 +66,12 @@ const Wrapper = ({form = buildForm(), initialEntry = '/startpagina'}) => {
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+          <RouterProvider router={router} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -92,7 +99,15 @@ test.each([
     render(
       <Wrapper
         form={buildForm({
-          loginOptions: [{identifier: 'digid', label: 'DigiD', url: 'http://mock-digid.nl/login'}],
+          loginOptions: [
+            {
+              identifier: 'digid',
+              label: 'DigiD',
+              url: 'http://mock-digid.nl/login',
+              logo: {title: 'logo', imageSrc: '', href: '', appearance: 'dark'},
+              isForGemachtigde: false,
+            },
+          ],
           introductionPageContent: introductionPageContent,
         })}
         initialEntry="/?initial_data_reference=foo"
@@ -168,10 +183,9 @@ test('Submitting the form with failing background processing', async () => {
     submissionAllowed: SUBMISSION_ALLOWED.yes,
     payment: {
       isRequired: false,
-      amount: undefined,
+      amount: null,
       hasPaid: false,
     },
-    MARKER: true,
   });
   mswServer.use(
     mockAnalyticsToolConfigGet(),
@@ -211,10 +225,9 @@ test('Submitting the form with successful background processing', async () => {
     submissionAllowed: SUBMISSION_ALLOWED.yes,
     payment: {
       isRequired: false,
-      amount: undefined,
+      amount: null,
       hasPaid: false,
     },
-    MARKER: true,
   });
   mswServer.use(
     mockAnalyticsToolConfigGet(),
@@ -256,7 +269,6 @@ test('Submitting form with payment requirement', async () => {
       amount: '42.69',
       hasPaid: false,
     },
-    MARKER: true,
   });
   mswServer.use(
     mockAnalyticsToolConfigGet(),
@@ -264,7 +276,7 @@ test('Submitting form with payment requirement', async () => {
     mockSubmissionSummaryGet(),
     mockSubmissionCompletePost(),
     mockSubmissionProcessingStatusGet,
-    mockSubmissionPaymentStartPost(null)
+    mockSubmissionPaymentStartPost(undefined)
   );
 
   render(<Wrapper form={form} initialEntry={`/overzicht?submission_uuid=${submission.id}`} />);
