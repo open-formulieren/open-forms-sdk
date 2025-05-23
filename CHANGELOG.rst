@@ -2,6 +2,18 @@
 SDK Changelog
 =============
 
+
+3.2.0-alpha.1 (2025-05-23)
+==========================
+
+Second preview release of the upcoming 3.2.0 version.
+
+Project maintenance
+-------------------
+
+* [#445] Converted code to Typescript.
+
+
 3.2.0-alpha.0 (2025-04-25)
 ==========================
 
