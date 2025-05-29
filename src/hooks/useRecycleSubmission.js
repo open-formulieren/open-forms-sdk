@@ -1,6 +1,6 @@
-import {useContext} from 'react';
+import {useCallback, useContext} from 'react';
 import {useLocation, useSearchParams} from 'react-router';
-import {useAsync, useLocalStorage} from 'react-use';
+import {useAsync, useSessionStorage} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {apiCall} from 'api';
@@ -17,11 +17,14 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onErr
   // reference, this causes the (new) initial data reference to be ignored.
   const {initialDataReference} = useInitialDataReference();
 
-  // XXX: use sessionStorage instead of localStorage for this, so that it's scoped to
-  // a single tab/window?
-  let [submissionId, setSubmissionId, removeSubmissionId] = useLocalStorage(form.uuid, '');
+  let [submissionId, setSubmissionId] = useSessionStorage(form.uuid, '');
 
-  // If no submissionID is in the localStorage see if one can be retrieved from the query param
+  let removeSubmissionId = useCallback(() => {
+    // We remove the current submission by setting it to an empty string, which is falsy
+    setSubmissionId('');
+  }, [setSubmissionId]);
+
+  // If no submissionID is in the session storage see if one can be retrieved from the query param
   if (!submissionId) {
     submissionId = params.get('submission_uuid');
   }
@@ -29,7 +32,7 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onErr
   // see open-formulieren/open-forms#5266 - if we have both an initial data reference
   // (extracted from the query parameters) and a submission ID, discard the submission ID. The
   // query parameter is passed along just long enough to be able to send it to the submission
-  // create, after which it's "baked in" on the server side. The presence of this parameters
+  // create, after which it's "baked in" on the server side. The presence of this parameter
   // therefore implies that we should discard any existing submissions for the same form.
   if (initialDataReference && submissionId) {
     submissionId = undefined;
@@ -41,7 +44,7 @@ const useRecycleSubmission = (form, currentSubmission, onSubmissionLoaded, onErr
   const {loading} = useAsync(async () => {
     // no URL to load -> abort
     if (!url) return;
-    // the submission from the state is the same as the submission ID in local storage -> abort
+    // the submission from the state is the same as the submission ID in session storage -> abort
     if (currentSubmission?.id === submissionId) return;
 
     // fetch the submission from the API

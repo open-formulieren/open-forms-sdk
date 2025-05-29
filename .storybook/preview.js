@@ -20,11 +20,7 @@ import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
 import {withModalDecorator} from 'story-utils/decorators';
 
-import {
-  withClearSessionStorage,
-  withClearSubmissionLocalStorage,
-  withUtrechtDocument,
-} from './decorators';
+import {withClearSessionStorage, withUtrechtDocument} from './decorators';
 import {allModes} from './modes.mjs';
 import {reactIntl} from './reactIntl.mjs';
 import ThemeProvider from './theme';
@@ -51,7 +47,6 @@ export default {
   decorators: [
     withThemeProvider(ThemeProvider),
     withClearSessionStorage,
-    withClearSubmissionLocalStorage,
     withModalDecorator,
     withUtrechtDocument,
   ],

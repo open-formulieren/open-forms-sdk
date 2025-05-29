@@ -29,7 +29,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  localStorage.clear();
+  sessionStorage.clear();
 });
 
 afterEach(() => {
@@ -37,7 +37,7 @@ afterEach(() => {
     vi.runOnlyPendingTimers();
     vi.useRealTimers();
   }
-  localStorage.clear();
+  sessionStorage.clear();
 });
 
 afterAll(() => {
