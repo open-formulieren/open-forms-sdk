@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {FormikDecorator} from 'story-utils/decorators';
@@ -13,9 +14,11 @@ export default {
       initialValues: {},
     },
   },
-};
+} satisfies Meta<typeof StatementCheckbox>;
 
-export const Default = {
+type Story = StoryObj<typeof StatementCheckbox>;
+
+export const Default: Story = {
   args: {
     configuration: {
       key: 'privacyPolicyAccepted',
@@ -36,7 +39,7 @@ export const Default = {
   },
 };
 
-export const WithWarning = {
+export const WithWarning: Story = {
   name: 'With warning',
   args: {
     configuration: {

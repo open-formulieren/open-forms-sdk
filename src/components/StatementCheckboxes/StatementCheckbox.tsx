@@ -1,5 +1,5 @@
 import {Checkbox} from '@open-formulieren/formio-renderer';
-import PropTypes from 'prop-types';
+import {CheckboxComponentSchema} from '@open-formulieren/types';
 import {defineMessages, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
@@ -20,9 +20,22 @@ const WARNINGS = defineMessages({
   },
 });
 
-const StatementCheckbox = ({configuration, showWarning = false}) => {
+export interface StatementCheckboxProps {
+  // the backend doesn't add the `id` property - that's okay, we can inject one if we
+  // need to
+  configuration: Omit<CheckboxComponentSchema, 'id' | 'defaultValue'> & {
+    key: 'privacyPolicyAccepted' | 'statementOfTruthAccepted';
+  };
+  showWarning?: boolean;
+}
+
+const StatementCheckbox: React.FC<StatementCheckboxProps> = ({
+  configuration,
+  showWarning = false,
+}) => {
   const intl = useIntl();
-  if (!configuration.validate.required) return null;
+  if (!configuration?.validate?.required) return null;
+
   // TODO: When we rework this component, change the class names
   return (
     <div className="openforms-privacy-checkbox">
@@ -44,21 +57,6 @@ const StatementCheckbox = ({configuration, showWarning = false}) => {
       )}
     </div>
   );
-};
-
-StatementCheckbox.propTypes = {
-  configuration: PropTypes.shape({
-    type: PropTypes.oneOf(['checkbox']).isRequired,
-    key: PropTypes.string.isRequired,
-    label: PropTypes.node.isRequired,
-    validate: PropTypes.shape({
-      required: PropTypes.bool,
-    }),
-  }).isRequired,
-  /**
-   * Whether to display the warning or not.
-   */
-  showWarning: PropTypes.bool,
 };
 
 export default StatementCheckbox;
