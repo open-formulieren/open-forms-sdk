@@ -1,9 +1,9 @@
+import {Checkbox} from '@open-formulieren/formio-renderer';
 import PropTypes from 'prop-types';
 import {defineMessages, useIntl} from 'react-intl';
 
 import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import {FormioComponent} from 'components/formio';
 
 import './StatementCheckbox.scss';
 
@@ -23,22 +23,20 @@ const WARNINGS = defineMessages({
 const StatementCheckbox = ({configuration, showWarning = false}) => {
   const intl = useIntl();
   if (!configuration.validate.required) return null;
-
-  const labelBody = (
-    <Body
-      component="div"
-      modifiers={['wysiwyg', 'inline']}
-      dangerouslySetInnerHTML={{__html: configuration.label}}
-    />
-  );
-  const formioDefinition = {
-    ...configuration,
-    label: labelBody,
-  };
   // TODO: When we rework this component, change the class names
   return (
     <div className="openforms-privacy-checkbox">
-      <FormioComponent component={formioDefinition} />
+      <Checkbox
+        name={configuration.key}
+        label={
+          <Body
+            component="div"
+            modifiers={['wysiwyg', 'inline']}
+            dangerouslySetInnerHTML={{__html: configuration.label}}
+          />
+        }
+        isRequired
+      />
       {showWarning && (
         <ErrorMessage level="warning">
           {intl.formatMessage(WARNINGS[configuration.key])}
