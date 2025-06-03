@@ -7,11 +7,14 @@ import StatementCheckbox from './StatementCheckbox';
 
 export default {
   title: 'Pure React components / Statement Checkbox',
-  component: StatementCheckbox,
   decorators: [FormikDecorator],
+  component: StatementCheckbox,
+  args: {
+    showWarning: false,
+  },
   parameters: {
     formik: {
-      initialValues: {},
+      initialValues: {privacyPolicyAccepted: false},
     },
   },
 } satisfies Meta<typeof StatementCheckbox>;
@@ -28,7 +31,6 @@ export const Default: Story = {
         toestemming voor het verwerken van de door mij opgegeven gegevens.</p>`,
       validate: {required: true},
     },
-    showWarning: false,
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
@@ -51,5 +53,16 @@ export const WithWarning: Story = {
       validate: {required: true},
     },
     showWarning: true,
+  },
+};
+
+export const MultipleParagraphsLabel: Story = {
+  args: {
+    configuration: {
+      key: 'privacyPolicyAccepted',
+      type: 'checkbox',
+      label: `<p>Line 1</p> <p>Line 2</p>`,
+      validate: {required: true},
+    },
   },
 };

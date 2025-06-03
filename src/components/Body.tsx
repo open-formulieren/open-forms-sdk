@@ -1,6 +1,6 @@
 import {getBEMClassName} from 'utils';
 
-export const VARIANTS = ['big', 'muted', 'small', 'wysiwyg', 'inline'] as const;
+export const VARIANTS = ['big', 'muted', 'small', 'wysiwyg'] as const;
 export type Variant = (typeof VARIANTS)[number];
 
 export type BodyProps<T extends React.ElementType = 'p'> = {
