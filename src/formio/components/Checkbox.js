@@ -1,7 +1,6 @@
 import {Formio} from 'react-formio';
 
 import {setErrorAttributes} from '../utils';
-import './Checkbox.scss';
 
 /**
  * Extend the default checkbox field to modify it to our needs.

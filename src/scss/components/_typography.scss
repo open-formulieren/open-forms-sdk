@@ -86,10 +86,6 @@
     }
   }
 
-  @include bem.modifier(inline) {
-    display: inline-block;
-  }
-
   @include bem.modifier(muted) {
     color: var(--of-color-fg-muted);
   }

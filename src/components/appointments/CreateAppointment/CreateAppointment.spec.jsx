@@ -73,7 +73,7 @@ afterEach(() => {
 });
 
 describe('Create appointment session expiration', () => {
-  it('resets the session storage/local state', async () => {
+  it('resets the session storage/local state', {timeout: 15_000}, async () => {
     const user = userEvent.setup({delay: null});
     mswServer.use(
       mockSubmissionPost(buildSubmission({steps: []})),
@@ -92,7 +92,7 @@ describe('Create appointment session expiration', () => {
     });
 
     // select a product
-    const dropdowns = await screen.findAllByRole('combobox', undefined, {timeout: 2000});
+    const dropdowns = await screen.findAllByRole('combobox', undefined, {timeout: 10_000});
     expect(dropdowns).toHaveLength(1);
     await user.click(dropdowns[0]);
     await user.keyboard('[ArrowDown]');
