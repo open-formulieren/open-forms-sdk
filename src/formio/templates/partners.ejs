@@ -1,0 +1,16 @@
+<div ref="partnersContainer"></div>
+
+{% if (!ctx.value || ctx.value.length === 0) { %}
+  <div ref="addPartnerButton" class='utrecht-button-group utrecht-button-group--column openforms-form-navigation'>
+    <p>{{ ctx.t('No partners found.') }}</p>
+    <button class="utrecht-button utrecht-button--primary-action">
+      {{ ctx.t('Add partner manually') }}
+    </button>
+  </div>
+{% } else if (ctx.value[0]?.__addedManually) { %}
+  <div ref="editPartnerButton" class='utrecht-button-group utrecht-button-group--column openforms-form-navigation'>
+    <button class="utrecht-button utrecht-button--primary-action">
+      {{ ctx.t('Edit partner') }}
+    </button>
+  {% } %}
+  </div>
