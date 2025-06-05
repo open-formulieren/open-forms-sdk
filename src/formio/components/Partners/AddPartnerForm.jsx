@@ -3,8 +3,7 @@ import {ButtonGroup} from '@utrecht/button-group-react';
 import {subDays, subYears} from 'date-fns';
 import {Formik} from 'formik';
 import PropTypes from 'prop-types';
-import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
-import {z} from 'zod';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import Body from 'components/Body';
@@ -12,50 +11,9 @@ import ErrorMessage from 'components/Errors/ErrorMessage';
 import {DateField} from 'components/forms';
 
 import EnterPartnerButton from './EnterPartnerButton';
+import getValidationSchema from './validationSchema';
 
-const BSN_STRUCTURE_MESSAGE = defineMessage({
-  description: 'Validation error describing shape of BSN.',
-  defaultMessage: 'A BSN must be 9 digits',
-});
-
-const BSN_INVALID_MESSAGE = defineMessage({
-  description: 'Validation error for BSN that does not pass the 11-test.',
-  defaultMessage: 'Invalid BSN',
-});
-
-const isValidBsn = value => {
-  // Formula taken from https://nl.wikipedia.org/wiki/Burgerservicenummer#11-proef
-  const elevenTestValue =
-    9 * parseInt(value[0]) +
-    8 * parseInt(value[1]) +
-    7 * parseInt(value[2]) +
-    6 * parseInt(value[3]) +
-    5 * parseInt(value[4]) +
-    4 * parseInt(value[5]) +
-    3 * parseInt(value[6]) +
-    2 * parseInt(value[7]) +
-    -1 * parseInt(value[8]);
-
-  return elevenTestValue % 11 === 0;
-};
-
-const getValidationSchema = (componentKey, intl) => {
-  const baseSchema = z.object({
-    bsn: z
-      .string()
-      .length(9, {message: intl.formatMessage(BSN_STRUCTURE_MESSAGE)})
-      .regex(/[0-9]{9}/, {message: intl.formatMessage(BSN_STRUCTURE_MESSAGE)})
-      .refine(isValidBsn, {message: intl.formatMessage(BSN_INVALID_MESSAGE)}),
-    initials: z.string().optional(),
-    affixes: z.string().optional(),
-    lastName: z.string(),
-    dateOfBirth: z.string(),
-  });
-
-  return baseSchema;
-};
-
-const AddPartnerForm = ({partner, componentKey, onSave, closeModal}) => {
+const AddPartnerForm = ({partner, onSave, closeModal}) => {
   const intl = useIntl();
 
   const today = new Date();
@@ -80,7 +38,7 @@ const AddPartnerForm = ({partner, componentKey, onSave, closeModal}) => {
           dateOfBirth: '',
         }
       }
-      validationSchema={toFormikValidationSchema(getValidationSchema(componentKey, intl))}
+      validationSchema={toFormikValidationSchema(getValidationSchema(intl))}
       onSubmit={onSubmit}
     >
       {({handleSubmit, values, setFieldValue}) => (
@@ -177,7 +135,6 @@ AddPartnerForm.propTypes = {
     lastName: PropTypes.string,
     dateOfBirth: PropTypes.string,
   }),
-  componentKey: PropTypes.string.isRequired,
   onSave: PropTypes.func,
   closeModal: PropTypes.func,
 };
