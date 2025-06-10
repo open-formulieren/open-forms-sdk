@@ -1,13 +1,14 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
+import {JSONObject} from '@open-formulieren/formio-renderer/types.js';
 import {ButtonGroup} from '@utrecht/button-group-react';
-import PropTypes from 'prop-types';
 import {useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
 import EnterPartnerButton from './EnterPartnerButton';
 import PARTNER_COMPONENTS from './definition';
+import {AddPartnerFormProps, PartnerManuallyAdded} from './types';
 
-const AddPartnerForm = ({partner, onSave, closeModal}) => {
+const AddPartnerForm: React.FC<AddPartnerFormProps> = ({partner, onSave, closeModal}) => {
   const intl = useIntl();
 
   const components = useMemo(
@@ -19,9 +20,11 @@ const AddPartnerForm = ({partner, onSave, closeModal}) => {
     [intl]
   );
 
-  const onSubmit = async values => {
+  const onSubmit = async (values: JSONObject) => {
+    const partner = values as unknown as PartnerManuallyAdded;
+
     if (onSave) {
-      onSave(values);
+      onSave(partner);
       closeModal();
     }
   };
@@ -30,13 +33,21 @@ const AddPartnerForm = ({partner, onSave, closeModal}) => {
     <FormioForm
       components={components}
       values={
-        partner ?? {
-          bsn: '',
-          initials: '',
-          affixes: '',
-          lastName: '',
-          dateOfBirth: '',
-        }
+        partner
+          ? {
+              bsn: partner.bsn,
+              initials: partner.initials,
+              affixes: partner.affixes,
+              lastName: partner.lastName,
+              dateOfBirth: partner.dateOfBirth,
+            }
+          : {
+              bsn: '',
+              initials: '',
+              affixes: '',
+              lastName: '',
+              dateOfBirth: '',
+            }
       }
       onSubmit={onSubmit}
       // TODO: grab from context
@@ -47,18 +58,6 @@ const AddPartnerForm = ({partner, onSave, closeModal}) => {
       </ButtonGroup>
     </FormioForm>
   );
-};
-
-AddPartnerForm.propTypes = {
-  partner: PropTypes.shape({
-    bsn: PropTypes.string,
-    initials: PropTypes.string,
-    affixes: PropTypes.string,
-    lastName: PropTypes.string,
-    dateOfBirth: PropTypes.string,
-  }),
-  onSave: PropTypes.func,
-  closeModal: PropTypes.func,
 };
 
 export default AddPartnerForm;

@@ -1,3 +1,4 @@
+import {DataList, DataListItem, DataListKey, DataListValue} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React, {Suspense} from 'react';
 import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime, useIntl} from 'react-intl';
@@ -171,6 +172,64 @@ const NumberDisplay = ({component, value}) => {
   return <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />;
 };
 
+const PartnersDisplay = ({value}) => {
+  if (!value) return <EmptyDisplay />;
+
+  const partnerFields = [
+    {
+      name: 'bsn',
+      label: <FormattedMessage description="Label for partners BSN" defaultMessage="BSN" />,
+    },
+    {
+      name: 'initials',
+      label: (
+        <FormattedMessage description="Label for partners initials" defaultMessage="Initials" />
+      ),
+    },
+    {
+      name: 'affixes',
+      label: <FormattedMessage description="Label for partners affixes" defaultMessage="Affixes" />,
+    },
+    {
+      name: 'lastName',
+      label: (
+        <FormattedMessage description="Label for partners lastname" defaultMessage="Lastname" />
+      ),
+    },
+    {
+      name: 'dateOfBirth',
+      label: (
+        <FormattedMessage
+          description="Label for partners date of birth"
+          defaultMessage="Date of birth"
+        />
+      ),
+    },
+  ];
+
+  return (
+    <>
+      {value.map((partner, index) => (
+        <div key={index}>
+          <DataList>
+            {partnerFields.map(({name, label}) => (
+              <DataListItem key={name}>
+                <DataListKey className="utrecht-data-list__item-key--openforms-partners">
+                  {label}
+                </DataListKey>
+                <DataListValue>{partner[name]}</DataListValue>
+              </DataListItem>
+            ))}
+          </DataList>
+
+          {/* Divider between partners */}
+          {index < value.length - 1 && <hr className="utrecht-hr" />}
+        </div>
+      ))}
+    </>
+  );
+};
+
 const CurrencyDisplay = ({component, value}) => {
   if (!value && value !== 0) return <EmptyDisplay />;
 
@@ -290,6 +349,7 @@ const TYPE_TO_COMPONENT = {
   addressNL: AddressNLDisplay,
   content: ContentDisplay,
   fieldset: FieldsetDisplay,
+  partners: PartnersDisplay,
 };
 
 export default ComponentValueDisplay;

@@ -1,4 +1,5 @@
-import {expect, userEvent, within} from '@storybook/test';
+import {Meta, StoryObj} from '@storybook/react';
+import {expect, fn, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 
@@ -9,13 +10,17 @@ export default {
   component: AddPartnerForm,
   decorators: [ConfigDecorator],
   args: {
-    componentKey: 'partners',
+    partner: null,
+    onSave: fn(),
+    closeModal: fn(),
   },
-};
+} satisfies Meta<typeof AddPartnerForm>;
 
-export const Default = {};
+type Story = StoryObj<typeof AddPartnerForm>;
 
-export const HappyFlow = {
+export const Default: Story = {};
+
+export const HappyFlow: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
@@ -29,16 +34,25 @@ export const HappyFlow = {
     await userEvent.type(lastNameInput, 'Boei');
     expect(lastNameInput).toHaveValue('Boei');
 
-    const dateOfbirthInput = await canvas.findByLabelText('Date of birth');
-    expect(dateOfbirthInput).toBeVisible();
-    await userEvent.type(dateOfbirthInput, '01-01-2000');
-    expect(dateOfbirthInput).toHaveValue('1-1-2000');
+    const dayInput = canvas.getByLabelText('Dag');
+    expect(dayInput).toBeVisible();
+    await userEvent.type(dayInput, '1');
+    const monthInput = canvas.getByLabelText('Maand');
+    expect(monthInput).toBeVisible();
+    await userEvent.type(monthInput, '1');
+    const yearInput = canvas.getByLabelText('Jaar');
+    expect(yearInput).toBeVisible();
+    await userEvent.type(yearInput, '2000');
+
+    expect(dayInput).toHaveValue('1');
+    expect(monthInput).toHaveValue('1');
+    expect(yearInput).toHaveValue('2000');
 
     await userEvent.click(canvas.getByRole('button', {name: 'Save'}));
   },
 };
 
-export const RequiredFieldsErrors = {
+export const RequiredFieldsErrors: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 

@@ -52,8 +52,6 @@ import useFormContext from 'hooks/useFormContext';
 import useTitle from 'hooks/useTitle';
 import {PREFIX} from 'utils';
 
-import AddPartnerModal from '@/formio/components/Partners/AddPartnerModal';
-
 import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
 
 // Dynamically import react-formio and use React.lazy to facilitate bundle splitting
@@ -100,11 +98,6 @@ const initialState = {
     isOpen: false,
     componentKey: '',
     emailAddress: '',
-  },
-  addPartnerModal: {
-    isOpen: false,
-    componentKey: '',
-    partner: null,
   },
 };
 
@@ -211,23 +204,6 @@ const reducer = (draft, action) => {
       break;
     }
 
-    case 'ADD_PARTNER': {
-      const {partner, componentKey, onSave} = action.payload;
-
-      draft.addPartnerModal.isOpen = true;
-      draft.addPartnerModal.componentKey = componentKey;
-      draft.addPartnerModal.onSave = onSave;
-      draft.addPartnerModal.partner = partner;
-      // otherwise remains in blocked state from backend validation errors
-      draft.canSubmit = true;
-      break;
-    }
-
-    case 'CLOSE_ADD_PARTNER_MODAL': {
-      draft.addPartnerModal = initialState.addPartnerModal;
-      break;
-    }
-
     default: {
       throw new Error(`Unknown action ${action.type}`);
     }
@@ -266,7 +242,6 @@ const FormStep = () => {
       isNavigating,
       error,
       emailVerificationModal,
-      addPartnerModal,
     },
     dispatch,
   ] = useImmerReducer(reducer, initialState);
@@ -839,20 +814,6 @@ const FormStep = () => {
                           payload: {componentKey: key, emailAddress: email},
                         });
                       },
-                      addPartnerCallback: ({key, partner, onSave}) => {
-                        const formInstance = formRef.current.formio;
-                        const component = formInstance.getComponent(key);
-                        component.setCustomValidity('');
-
-                        dispatch({
-                          type: 'ADD_PARTNER',
-                          payload: {
-                            componentKey: key,
-                            partner: partner,
-                            onSave: onSave,
-                          },
-                        });
-                      },
                     },
                   }}
                 />
@@ -892,13 +853,6 @@ const FormStep = () => {
         submissionUrl={submission.url}
         componentKey={emailVerificationModal.componentKey}
         emailAddress={emailVerificationModal.emailAddress}
-      />
-      <AddPartnerModal
-        partner={addPartnerModal.partner}
-        isOpen={addPartnerModal.isOpen}
-        closeModal={() => dispatch({type: 'CLOSE_ADD_PARTNER_MODAL'})}
-        componentKey={addPartnerModal.componentKey}
-        onSave={addPartnerModal.onSave}
       />
     </LiteralsProvider>
   );

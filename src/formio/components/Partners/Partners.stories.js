@@ -1,4 +1,4 @@
-import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
+import {expect, fn, screen, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 
@@ -61,49 +61,77 @@ export const ManuallyAddedPartner = {
 
 export const EditManuallyAddedPartner = {
   args: {
+    onSave: fn(),
     submissionData: {
       partners: [
         {
-          bsn: '123456789',
+          bsn: '123456782',
           initials: 'J',
           affixes: 'K',
           lastName: 'Boei',
-          dateOfBirth: '1-1-2000',
+          dateOfBirth: '2000-1-1',
           __addedManually: true,
         },
       ],
     },
-    ofContext: {
-      addPartnerCallback: fn(),
-    },
   },
-  play: async ({canvasElement, args, step}) => {
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
+    const user = userEvent.setup();
 
-    const bsnLabel = canvas.getByText('BSN');
-    const bsnValue = bsnLabel.nextElementSibling;
-    expect(bsnValue?.textContent).toBe('123456789');
+    await step('Check partners details', async () => {
+      const bsnLabel = await canvas.findByText(
+        (content, element) => element?.tagName.toLowerCase() === 'dt' && content.trim() === 'BSN'
+      );
+      const bsnValue = bsnLabel.nextElementSibling;
+      expect(bsnValue?.textContent).toBe('123456782');
 
-    const initialsLabel = canvas.getByText('Initials');
-    const initialsValue = initialsLabel.nextElementSibling;
-    expect(initialsValue?.textContent).toBe('J');
+      const initialsLabel = await canvas.findByText(
+        (content, element) =>
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Initials'
+      );
+      const initialsValue = initialsLabel.nextElementSibling;
+      expect(initialsValue?.textContent).toBe('J');
 
-    const affixesLabel = canvas.getByText('Affixes');
-    const affixesValue = affixesLabel.nextElementSibling;
-    expect(affixesValue?.textContent).toBe('K');
+      const affixesLabel = await canvas.findByText(
+        (content, element) =>
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Affixes'
+      );
+      const affixesValue = affixesLabel.nextElementSibling;
+      expect(affixesValue?.textContent).toBe('K');
 
-    const lastNameLabel = canvas.getByText('Lastname');
-    const lastNameValue = lastNameLabel.nextElementSibling;
-    expect(lastNameValue?.textContent).toBe('Boei');
+      const lastNameLabel = await canvas.findByText(
+        (content, element) =>
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Lastname'
+      );
+      const lastNameValue = lastNameLabel.nextElementSibling;
+      expect(lastNameValue?.textContent).toBe('Boei');
 
-    const dateOfBirthLabel = canvas.getByText('Date of birth');
-    const dateOfBirthValue = dateOfBirthLabel.nextElementSibling;
-    expect(dateOfBirthValue?.textContent).toBe('1-1-2000');
+      const dateOfBirthLabel = await canvas.findByText(
+        (content, element) =>
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Date of birth'
+      );
+      const dateOfBirthValue = dateOfBirthLabel.nextElementSibling;
+      expect(dateOfBirthValue?.textContent).toBe('2000-1-1');
+    });
 
-    await step('Click edit button and verify callback', async () => {
+    await step('Edit the partner', async () => {
       const editButton = await canvas.findByRole('button', {name: 'Edit partner'});
       await userEvent.click(editButton);
-      await waitFor(() => expect(args.ofContext.addPartnerCallback).toHaveBeenCalledOnce());
+
+      const modal = await screen.findByRole('dialog');
+      const modalWithin = within(modal);
+
+      const initialsInput = modalWithin.getByLabelText('Initials');
+      await userEvent.type(initialsInput, 'U');
+
+      await user.click(modalWithin.getByRole('button', {name: 'Save'}));
+    });
+
+    await step('Check modified partners details', async () => {
+      const initialsLabel = canvas.getByText('Initials');
+      const initialsValue = initialsLabel.nextElementSibling;
+      expect(initialsValue?.textContent).toBe('JU');
     });
   },
 };

@@ -1,7 +1,6 @@
 /**
  * The partners component.
  */
-import {Formik} from 'formik';
 import debounce from 'lodash/debounce';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
@@ -10,7 +9,8 @@ import {IntlProvider} from 'react-intl';
 import {ConfigContext} from 'Context';
 import enableValidationPlugins from 'formio/validators/plugins';
 
-import PartnersForm from './PartnersForm';
+import {AddPartnerModal} from './AddPartnerModal';
+import {PartnersFormik} from './PartnersForm';
 
 const Field = Formio.Components.components.field;
 
@@ -18,6 +18,11 @@ export default class Partners extends Field {
   constructor(component, options, data) {
     super(component, options, data);
     enableValidationPlugins(this);
+
+    this.state = {
+      isPartnerModalOpen: false,
+      partnerBeingEdited: null,
+    };
   }
 
   static schema(...extend) {
@@ -61,11 +66,8 @@ export default class Partners extends Field {
     const changed = super.setValue(value, flags);
 
     // re-render if the value is set, which may be because of existing submission data
-    // and redraw because otherwise the template is not re-evaluated and we always get
-    // the button to add a partner
     if (changed) {
       this.renderReact();
-      this.redraw();
     }
 
     return changed;
@@ -121,55 +123,31 @@ export default class Partners extends Field {
   }
 
   openPartnerModal(partner = null) {
-    const key = this.component.key;
-    const callback = this.options?.ofContext?.addPartnerCallback;
+    this.state.isPartnerModalOpen = true;
+    this.state.partnerBeingEdited = partner;
+    this.renderReact();
+  }
 
-    if (!callback) return;
+  closePartnerModal() {
+    this.state.isPartnerModalOpen = false;
+    this.state.partnerBeingEdited = null;
+    this.renderReact();
+  }
 
-    callback({
-      key,
-      partner,
-      onSave: newPartner => {
-        if (!partner) {
-          // new partner
-          newPartner.__addedManually = true;
-          this.setValue([newPartner], {modified: true});
-        } else {
-          // editing an existing partner (only manually added ones)
-          const updatedPartner = {
-            ...partner,
-            ...newPartner,
-            __addedManually: true,
-          };
-          this.setValue([updatedPartner], {modified: true});
-        }
+  handlePartnerSave(newPartner) {
+    const updated = [{...newPartner, __addedManually: true}];
 
-        this.renderReact();
-      },
-    });
+    this.updateValue(updated, {modified: true});
+
+    this.state.isPartnerModalOpen = false;
+    this.state.partnerBeingEdited = null;
+    this.renderReact();
   }
 
   attach(element) {
     this.loadRefs(element, {
       partnersContainer: 'single',
-      addPartnerButton: 'single',
-      editPartnerButton: 'single',
     });
-
-    if (this.refs.addPartnerButton) {
-      this.addEventListener(this.refs.addPartnerButton, 'click', () => {
-        this.openPartnerModal();
-      });
-    }
-
-    if (this.refs.editPartnerButton) {
-      this.addEventListener(this.refs.editPartnerButton, 'click', () => {
-        const partner = this.dataValue?.[0];
-        if (partner?.__addedManually) {
-          this.openPartnerModal(partner);
-        }
-      });
-    }
 
     return super.attach(element).then(() => {
       if (!this.component?.hidden) {
@@ -180,11 +158,11 @@ export default class Partners extends Field {
   }
 
   renderReact() {
-    if (this.component?.hidden) {
-      return;
-    }
+    if (this.component?.hidden || !this.reactRoot) return;
 
-    const initialValues = this.dataValue?.length ? this.dataValue : this.emptyValue;
+    const values = this.dataValue || [];
+    const manuallyAddedPartner = values.find(p => p?.__addedManually);
+    const hasNoPartners = values.length === 0;
 
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
@@ -195,9 +173,21 @@ export default class Partners extends Field {
             component: this.component,
           }}
         >
-          <Formik initialValues={initialValues} enableReinitialize>
-            <PartnersForm setFormioValues={this.onFormikChange.bind(this)} />
-          </Formik>
+          <PartnersFormik
+            initialValues={values}
+            onFormikChange={this.onFormikChange.bind(this)}
+            hasNoPartners={hasNoPartners}
+            manuallyAddedPartner={manuallyAddedPartner}
+            onAddPartner={() => this.openPartnerModal()}
+            onEditPartner={() => this.openPartnerModal(manuallyAddedPartner)}
+          />
+
+          <AddPartnerModal
+            isOpen={this.state.isPartnerModalOpen}
+            partner={this.state.partnerBeingEdited}
+            closeModal={() => this.closePartnerModal()}
+            onSave={this.handlePartnerSave.bind(this)}
+          />
         </ConfigContext.Provider>
       </IntlProvider>
     );

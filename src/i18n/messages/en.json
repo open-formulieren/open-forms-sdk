@@ -89,11 +89,6 @@
     "description": "(Async) select options loading message",
     "originalDefault": "Loading..."
   },
-  "4Y/5bo": {
-    "defaultMessage": "You haven't entered any data yet.",
-    "description": "Add partner modal: warning that no data is added",
-    "originalDefault": "You haven't entered any data yet."
-  },
   "4ZOmtU": {
     "defaultMessage": "Save changes",
     "description": "Edit toolbar save tooltip.",
@@ -323,6 +318,11 @@
     "defaultMessage": "Invalid function return type",
     "description": "ZOD 'invalid_return_type' error message",
     "originalDefault": "Invalid function return type"
+  },
+  "DrrkB0": {
+    "defaultMessage": "Edit partner",
+    "description": "Edit partner: edit partner button text",
+    "originalDefault": "Edit partner"
   },
   "DvlDIB": {
     "defaultMessage": "Are you sure that you want to logout?",
@@ -578,6 +578,11 @@
     "defaultMessage": "Save",
     "description": "Edit toolbar save message.",
     "originalDefault": "Save"
+  },
+  "N9YM+2": {
+    "defaultMessage": "Add partner",
+    "description": "Add partner: add partner button text",
+    "originalDefault": "Add partner"
   },
   "Op4orj": {
     "defaultMessage": "No shapes to remove",
@@ -899,11 +904,6 @@
     "description": "ZOD 'custom' error message",
     "originalDefault": "Invalid input."
   },
-  "ht1O2Z": {
-    "defaultMessage": "Invalid BSN",
-    "description": "Validation error for BSN that does not pass the 11-test.",
-    "originalDefault": "Invalid BSN"
-  },
   "ie+hkb": {
     "defaultMessage": "Average",
     "description": "GovMetric rating text",
@@ -1143,11 +1143,6 @@
     "defaultMessage": "Send code",
     "description": "Email verification: send code button text",
     "originalDefault": "Send code"
-  },
-  "sGwqUb": {
-    "defaultMessage": "A BSN must be 9 digits",
-    "description": "Validation error describing shape of BSN.",
-    "originalDefault": "A BSN must be 9 digits"
   },
   "sSmY1N": {
     "defaultMessage": "Find address",
