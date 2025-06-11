@@ -24,6 +24,16 @@
     "description": "Appointments navbar title for 'location and time' step",
     "originalDefault": "Location and time"
   },
+  "/HGnU6": {
+    "defaultMessage": "BSN",
+    "description": "Label for partners BSN",
+    "originalDefault": "BSN"
+  },
+  "/oxZic": {
+    "defaultMessage": "Initials",
+    "description": "Label for partners initials",
+    "originalDefault": "Initials"
+  },
   "/yX9Xl": {
     "defaultMessage": "Tekeningen annuleren",
     "description": "Draw toolbar cancel button tooltip.",
@@ -206,6 +216,11 @@
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
+  "9zWz+X": {
+    "defaultMessage": "Lastname",
+    "description": "Label for partners lastname",
+    "originalDefault": "Lastname"
+  },
   "AG5zPa": {
     "defaultMessage": "Controleer en bevestig",
     "description": "Check overview and confirm",
@@ -307,6 +322,11 @@
     "description": "ZOD 'invalid_return_type' error message",
     "originalDefault": "Invalid function return type"
   },
+  "DrrkB0": {
+    "defaultMessage": "Edit partner",
+    "description": "Edit partner: edit partner button text",
+    "originalDefault": "Edit partner"
+  },
   "DvlDIB": {
     "defaultMessage": "Ben je zeker dat je wil uitloggen?",
     "description": "log out confirmation prompt",
@@ -402,6 +422,11 @@
     "defaultMessage": "Overzicht",
     "description": "Summary page title",
     "originalDefault": "Summary"
+  },
+  "H8mxqp": {
+    "defaultMessage": "Date of birth",
+    "description": "Label for partners dateOfBirth",
+    "originalDefault": "Date of birth"
   },
   "HGx1ny": {
     "defaultMessage": "Afspraak annuleren",
@@ -504,6 +529,11 @@
     "description": "Cosign start explanation message",
     "originalDefault": "Did you receive an email with a request to cosign? Start the cosigning by logging in."
   },
+  "LXXhoO": {
+    "defaultMessage": "Affixes",
+    "description": "Label for partners affixes",
+    "originalDefault": "Affixes"
+  },
   "LiRh7j": {
     "defaultMessage": "Bevestiging: {reference}",
     "description": "Confirmation page title",
@@ -555,6 +585,11 @@
     "defaultMessage": "Opslaan",
     "description": "Edit toolbar save message.",
     "originalDefault": "Save"
+  },
+  "N9YM+2": {
+    "defaultMessage": "Add partner",
+    "description": "Add partner: add partner button text",
+    "originalDefault": "Add partner"
   },
   "Op4orj": {
     "defaultMessage": "Geen vormen om te verwijderen",
@@ -691,6 +726,11 @@
     "defaultMessage": "Locatie en tijdstip",
     "description": "Appointment overview: location and time step title",
     "originalDefault": "Location and time"
+  },
+  "X9Jjme": {
+    "defaultMessage": "Save",
+    "description": "Add partner: save partner data button text",
+    "originalDefault": "Save"
   },
   "XeIY+R": {
     "defaultMessage": "De datum moet kleiner dan of gelijk aan {maximum} zijn.",
@@ -1046,6 +1086,11 @@
     "description": "ZOD 'too_big' error message, for BigInt",
     "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
   },
+  "or6w5Z": {
+    "defaultMessage": "Add partner",
+    "description": "Add partner modal title",
+    "originalDefault": "Add partner"
+  },
   "osSl3z": {
     "defaultMessage": "Stad",
     "description": "Label for addressNL city read only result",
@@ -1085,6 +1130,16 @@
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
     "originalDefault": "Suspending the form failed, please try again later"
+  },
+  "r4wx7J": {
+    "defaultMessage": "Lastname",
+    "description": "Label for partners lastName",
+    "originalDefault": "Lastname"
+  },
+  "rSw7cz": {
+    "defaultMessage": "Date of birth",
+    "description": "Label for partners date of birth",
+    "originalDefault": "Date of birth"
   },
   "rUsmvU": {
     "defaultMessage": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB).",
