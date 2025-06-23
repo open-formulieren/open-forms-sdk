@@ -1,14 +1,18 @@
 <!-- rendered by both radio and selectboxes component -->
 {% ctx.values.forEach(function(item) { %}
 <div class="utrecht-form-field utrecht-form-field--{{ctx.component.inputType}} utrecht-form-field--openforms">
-  <p class="utrecht-paragraph utrecht-form-field__label utrecht-form-field__label--{{ctx.component.inputType}}">
-    <label
-      for="{{ctx.id}}{{ctx.row}}-{{item.value}}"
-      class="utrecht-form-label utrecht-form-label--openforms utrecht-form-label--{{ctx.component.inputType}} {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
-    >
-      {{ item.label }}
-    </label>
-  </p>
+
+  {% if (ctx.component.inputType == 'radio') { %}
+    <p class="utrecht-paragraph utrecht-form-field__label utrecht-form-field__label--{{ctx.component.inputType}}">
+      <label
+        for="{{ctx.id}}{{ctx.row}}-{{item.value}}"
+        class="utrecht-form-label utrecht-form-label--openforms utrecht-form-label--{{ctx.component.inputType}} {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
+      >
+        {{ item.label }}
+      </label>
+    </p>
+  {% } %}
+
   <input
     ref="input"
     value="{{item.value}}"
@@ -26,8 +30,23 @@
     aria-describedby="{{ctx.id}}{{ctx.row}}-{{item.value}}-description"
     {% } %}
   >
-  {% if (item.description) { %}
-    <div class="utrecht-description utrecht-form-description--openforms" id="{{ctx.id}}{{ctx.row}}-{{item.value}}-description">
+
+  {% if (ctx.component.inputType == 'checkbox') { %}
+    <div class="utrecht-form-field__label utrecht-form-field__label--checkbox">
+      <label
+        for="{{ctx.id}}{{ctx.row}}-{{item.value}}"
+        class="utrecht-form-label utrecht-form-label--openforms utrecht-form-label--checkbox {% if (ctx.disabled) { %}utrecht-form-label--disabled{% } %}"
+      >
+        {{ item.label }}
+      </label>
+    </div>
+  {% } %}
+
+  {% if (item.description ) { %}
+    <div
+      class="{% if (ctx.component.inputType == 'radio') { %}utrecht-description utrecht-form-description--openforms{% } else { %}utrecht-form-field-description utrecht-form-field__description{% } %}"
+      id="{{ctx.id}}{{ctx.row}}-{{item.value}}-description"
+    >
         {{ item.description }}
     </div>
   {% } %}
