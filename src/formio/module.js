@@ -16,6 +16,7 @@ import IBANField from './components/IBANField';
 import LicensePlateField from './components/LicensePlateField';
 import Map from './components/Map';
 import {default as NumberComponent} from './components/Number';
+import Partners from './components/Partners/Partners';
 import PhoneNumberField from './components/PhoneNumberField';
 import PostcodeField from './components/PostcodeField';
 import Radio from './components/Radio';
@@ -55,6 +56,7 @@ const FormIOModule = {
     cosign: Cosign,
     editgrid: EditGrid,
     softRequiredErrors: SoftRequiredErrors,
+    partners: Partners,
   },
   providers: {
     storage: {url: CSRFEnabledUrl},

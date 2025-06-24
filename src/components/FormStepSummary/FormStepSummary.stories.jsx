@@ -226,3 +226,90 @@ export const WithEditGridNotAsFirstElement = {
     ],
   },
 };
+
+export const WithPartnersAsFirstElement = {
+  args: {
+    data: [
+      {
+        name: 'Partners',
+        value: [
+          {
+            bsn: '999970136',
+            affixes: '',
+            initials: 'P.',
+            lastName: 'Pauw',
+            firstNames: 'Pia',
+            dateOfBirth: '1989-04-01',
+            dateOfBirthPrecision: 'date',
+          },
+        ],
+        component: {
+          type: 'partners',
+          key: 'partners',
+          label: 'Partners',
+        },
+      },
+      {
+        name: 'A repeating group',
+        value: '',
+        component: {
+          type: 'editgrid',
+          key: 'editgrid',
+          label: 'A repeating group',
+        },
+      },
+      {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
+        },
+      },
+    ],
+  },
+};
+export const WithPartnersAsSecondElement = {
+  args: {
+    data: [
+      {
+        name: 'A repeating group',
+        value: '',
+        component: {
+          type: 'editgrid',
+          key: 'editgrid',
+          label: 'A repeating group',
+        },
+      },
+      {
+        name: 'Partners',
+        value: [
+          {
+            bsn: '999970136',
+            affixes: '',
+            initials: 'P.',
+            lastName: 'Pauw',
+            firstNames: 'Pia',
+            dateOfBirth: '1989-04-01',
+            dateOfBirthPrecision: 'date',
+          },
+        ],
+        component: {
+          type: 'partners',
+          key: 'partners',
+          label: 'Partners',
+        },
+      },
+      {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
+        },
+      },
+    ],
+  },
+};

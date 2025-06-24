@@ -67,6 +67,18 @@
       "value": "Verwijderen"
     }
   ],
+  "/HGnU6": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
+  "/oxZic": [
+    {
+      "type": 0,
+      "value": "Initials"
+    }
+  ],
   "/yX9Xl": [
     {
       "type": 0,
@@ -483,6 +495,12 @@
       "value": "index"
     }
   ],
+  "9zWz+X": [
+    {
+      "type": 0,
+      "value": "Lastname"
+    }
+  ],
   "AG5zPa": [
     {
       "type": 0,
@@ -615,6 +633,12 @@
     {
       "type": 0,
       "value": "Ongeldige type return-waarde"
+    }
+  ],
+  "DrrkB0": [
+    {
+      "type": 0,
+      "value": "Edit partner"
     }
   ],
   "DvlDIB": [
@@ -765,6 +789,12 @@
     {
       "type": 0,
       "value": "Overzicht"
+    }
+  ],
+  "H8mxqp": [
+    {
+      "type": 0,
+      "value": "Date of birth"
     }
   ],
   "HGx1ny": [
@@ -1039,6 +1069,12 @@
       "value": "Heb je een e-mail ontvangen om mede te ondertekenen? Start het medeondertekenen door in te loggen."
     }
   ],
+  "LXXhoO": [
+    {
+      "type": 0,
+      "value": "Affixes"
+    }
+  ],
   "LiRh7j": [
     {
       "type": 0,
@@ -1109,6 +1145,12 @@
     {
       "type": 0,
       "value": "Opslaan"
+    }
+  ],
+  "N9YM+2": [
+    {
+      "type": 0,
+      "value": "Add partner"
     }
   ],
   "Op4orj": [
@@ -1405,6 +1447,12 @@
     {
       "type": 0,
       "value": "Locatie en tijdstip"
+    }
+  ],
+  "X9Jjme": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "XeIY+R": [
@@ -2121,6 +2169,12 @@
       "value": " zijn."
     }
   ],
+  "or6w5Z": [
+    {
+      "type": 0,
+      "value": "Add partner"
+    }
+  ],
   "osSl3z": [
     {
       "type": 0,
@@ -2251,6 +2305,18 @@
     {
       "type": 0,
       "value": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw."
+    }
+  ],
+  "r4wx7J": [
+    {
+      "type": 0,
+      "value": "Lastname"
+    }
+  ],
+  "rSw7cz": [
+    {
+      "type": 0,
+      "value": "Date of birth"
     }
   ],
   "rUsmvU": [

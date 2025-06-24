@@ -13,6 +13,7 @@ import {default as MapTemplate} from './map.ejs';
 import {default as MissingFieldsTemplate} from './missingFields.ejs';
 import {default as MultiValueRowTemplate} from './multiValueRow.ejs';
 import {default as MultiValueTableTemplate} from './multiValueTable.ejs';
+import {default as PartnersTemplate} from './partners.ejs';
 import {default as RadioTemplate} from './radio.ejs';
 import {default as SelectTemplate} from './select.ejs';
 import {default as SignatureTemplate} from './signature.ejs';
@@ -39,6 +40,7 @@ const OFLibrary = {
   editgrid: {form: EditGridTemplate},
   editgridrow: {form: EditGridRowTemplate},
   addressNL: {form: AddressNLTemplate},
+  partners: {form: PartnersTemplate},
 };
 
 export default OFLibrary;
