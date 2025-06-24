@@ -40,7 +40,7 @@ SubmissionProvider.propTypes = {
    */
   onDestroySession: PropTypes.func.isRequired,
   /**
-   * Callback to remove the submission reference (it's ID) from the local storage.
+   * Callback to remove the submission reference (it's ID) from the session storage.
    */
   removeSubmissionId: PropTypes.func.isRequired,
 };
