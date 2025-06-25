@@ -8,6 +8,7 @@ const MAPPING_PARAMS_SERVICE = {
   '_digid-message': 'DigiD',
   '_eherkenning-message': 'EHerkenning',
   '_eidas-message': 'eIDAS',
+  '_yivi-message': 'Yivi',
 };
 
 const CANCEL_LOGIN_PARAM = 'login-cancelled';
