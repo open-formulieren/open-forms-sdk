@@ -1,20 +1,26 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
 import {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import type {AnyComponentSchema, PartnerDetails} from '@open-formulieren/types';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {useContext, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
-import {FormContext} from 'Context';
+import {FormContext} from '@/Context';
 
 import PartnerSubmitButton from './PartnerSubmitButton';
 import PARTNER_COMPONENTS from './definition';
-import {AddPartnerFormProps, PartnerManuallyAdded} from './types';
+import {PartnerManuallyAdded} from './types';
 
-const AddPartnerForm: React.FC<AddPartnerFormProps> = ({partner, onSave, closeModal}) => {
+export interface AddPartnerFormProps {
+  partner: PartnerDetails | null;
+  onSave: (partner: PartnerDetails) => void;
+}
+
+const AddPartnerForm: React.FC<AddPartnerFormProps> = ({partner, onSave}) => {
   const intl = useIntl();
   const {requiredFieldsWithAsterisk} = useContext(FormContext);
 
-  const components = useMemo(
+  const components: AnyComponentSchema[] = useMemo(
     () =>
       PARTNER_COMPONENTS.map(component => ({
         ...component,
@@ -25,33 +31,13 @@ const AddPartnerForm: React.FC<AddPartnerFormProps> = ({partner, onSave, closeMo
 
   const onSubmit = async (values: JSONObject) => {
     const partner = values as unknown as PartnerManuallyAdded;
-
-    if (onSave) {
-      onSave(partner);
-      closeModal();
-    }
+    onSave(partner);
   };
 
   return (
     <FormioForm
       components={components}
-      values={
-        partner
-          ? {
-              bsn: partner.bsn,
-              initials: partner.initials,
-              affixes: partner.affixes,
-              lastName: partner.lastName,
-              dateOfBirth: partner.dateOfBirth,
-            }
-          : {
-              bsn: '',
-              initials: '',
-              affixes: '',
-              lastName: '',
-              dateOfBirth: '',
-            }
-      }
+      values={partner ? {...partner} : undefined}
       onSubmit={onSubmit}
       requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
     >

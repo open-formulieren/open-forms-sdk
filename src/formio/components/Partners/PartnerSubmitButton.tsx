@@ -1,11 +1,12 @@
+import type {PartnerDetails} from '@open-formulieren/types';
 import {useFormikContext} from 'formik';
 import {FormattedMessage} from 'react-intl';
 
-import {OFButton} from 'components/Button';
-import Loader from 'components/Loader';
+import {OFButton} from '@/components/Button';
+import Loader from '@/components/Loader';
 
 const PartnerSubmitButton: React.FC = () => {
-  const {isSubmitting} = useFormikContext<Record<string, boolean>>();
+  const {isSubmitting} = useFormikContext<PartnerDetails>();
   return (
     <OFButton
       type="submit"

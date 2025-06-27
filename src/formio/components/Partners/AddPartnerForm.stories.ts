@@ -12,7 +12,6 @@ export default {
   args: {
     partner: null,
     onSave: fn(),
-    closeModal: fn(),
   },
 } satisfies Meta<typeof AddPartnerForm>;
 

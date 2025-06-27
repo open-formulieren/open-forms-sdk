@@ -1,9 +1,16 @@
+import type {PartnerDetails} from '@open-formulieren/types';
 import {FormattedMessage} from 'react-intl';
 
 import Modal from 'components/modals/Modal';
 
 import AddPartnerForm from './AddPartnerForm';
-import {AddPartnerModalProps} from './types';
+
+export interface AddPartnerModalProps {
+  partner: PartnerDetails | null;
+  isOpen: boolean;
+  closeModal: () => void;
+  onSave: (newPartner: PartnerDetails) => void;
+}
 
 export const AddPartnerModal: React.FC<AddPartnerModalProps> = ({
   partner,
@@ -20,7 +27,13 @@ export const AddPartnerModal: React.FC<AddPartnerModalProps> = ({
       isOpen={isOpen}
       closeModal={closeModal}
     >
-      <AddPartnerForm partner={partner} onSave={onSave} closeModal={closeModal} />
+      <AddPartnerForm
+        partner={partner}
+        onSave={(partner: PartnerDetails) => {
+          onSave(partner);
+          closeModal();
+        }}
+      />
     </Modal>
   );
 };

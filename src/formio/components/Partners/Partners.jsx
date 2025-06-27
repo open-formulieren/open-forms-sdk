@@ -10,7 +10,7 @@ import {ConfigContext} from 'Context';
 import enableValidationPlugins from 'formio/validators/plugins';
 
 import {AddPartnerModal} from './AddPartnerModal';
-import {PartnersFormik} from './PartnersForm';
+import {PartnersComponent} from './PartnersForm';
 
 const Field = Formio.Components.components.field;
 
@@ -138,7 +138,6 @@ export default class Partners extends Field {
     const updated = [{...newPartner, __addedManually: true}];
 
     this.updateValue(updated, {modified: true});
-    this.closePartnerModal();
   }
 
   attach(element) {
@@ -170,8 +169,8 @@ export default class Partners extends Field {
             component: this.component,
           }}
         >
-          <PartnersFormik
-            initialValues={values}
+          <PartnersComponent
+            partners={values}
             onFormikChange={this.onFormikChange.bind(this)}
             hasNoPartners={hasNoPartners}
             manuallyAddedPartner={manuallyAddedPartner}
