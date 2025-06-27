@@ -42,7 +42,7 @@ const CosignDone = () => {
       </Body>
 
       <Body>
-        <FAIcon icon="download" modifiers={['inline']} />
+        <FAIcon icon="download" inline />
         <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
           <FormattedMessage
             description="Download report PDF link title"

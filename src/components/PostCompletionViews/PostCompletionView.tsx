@@ -38,8 +38,7 @@ const PostCompletionView: React.FC<PostCompletionViewProps> = ({
       {body}
 
       <Body>
-        {/* @ts-expect-error type inference from JS is wrong */}
-        <FAIcon icon="download" aria-hidden="true" modifiers={['inline']} />
+        <FAIcon icon="download" inline />
         <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
           {linkTitle}
         </Anchor>

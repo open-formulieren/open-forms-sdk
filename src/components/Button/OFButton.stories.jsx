@@ -65,7 +65,7 @@ export const UtrechtButtonLooksLikeLink = {
 export const UtrechtIconButton = {
   render,
   args: {
-    label: <FAIcon icon={'pen'} />,
+    label: <FAIcon icon="pen" />,
     component: OFButton,
     appearance: 'subtle-button',
   },
@@ -74,7 +74,7 @@ export const UtrechtIconButton = {
 export const UtrechtIconButtonDanger = {
   render,
   args: {
-    label: <FAIcon icon={'pen'} />,
+    label: <FAIcon icon="pen" />,
     component: OFButton,
     appearance: 'subtle-button',
     hint: 'danger',

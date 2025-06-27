@@ -14,7 +14,7 @@ const MobileButton = forwardRef(
       >
         <FAIcon
           icon={expanded ? 'chevron-up' : 'chevron-down'}
-          modifiers={['normal']}
+          normal
           aria-label={ariaMobileIconLabel}
         />
         <span

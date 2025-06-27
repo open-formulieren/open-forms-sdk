@@ -44,7 +44,7 @@ const StepSubmitButton: React.FC<StepSubmitButtonProps> = ({
         <>
           <Literal name="nextText" />
           <Icon>
-            <FAIcon icon="" extraClassName="fa-fw" />
+            <FAIcon icon="" className="fa-fw" />
           </Icon>
         </>
       )}

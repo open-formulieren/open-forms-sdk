@@ -37,7 +37,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
     >
       <Literal name="confirmText" />
       <Icon>
-        <FAIcon icon="" extraClassName="fa-fw" />
+        <FAIcon icon="" className="fa-fw" />
       </Icon>
     </OFButton>
   );

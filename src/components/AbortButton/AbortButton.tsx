@@ -58,7 +58,7 @@ const AbortButton: React.FC<AbortButtonProps> = ({isAuthenticated, onDestroySess
   return (
     <LinkButton name="abort" onClick={callback} className="openforms-abort-button">
       <Icon>
-        <FAIcon icon="" extraClassName="fa-fw" />
+        <FAIcon icon="" className="fa-fw" />
       </Icon>
       {message}
     </LinkButton>
