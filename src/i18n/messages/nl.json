@@ -216,10 +216,10 @@
     "description": "Appointment cancelled title",
     "originalDefault": "Appointment cancelled"
   },
-  "9zWz+X": {
-    "defaultMessage": "Lastname",
-    "description": "Label for partners lastname",
-    "originalDefault": "Lastname"
+  "9UF9Z7": {
+    "defaultMessage": "No information provided",
+    "description": "Emtpy field message",
+    "originalDefault": "No information provided"
   },
   "AG5zPa": {
     "defaultMessage": "Controleer en bevestig",
@@ -1135,11 +1135,6 @@
     "defaultMessage": "Lastname",
     "description": "Label for partners lastName",
     "originalDefault": "Lastname"
-  },
-  "rSw7cz": {
-    "defaultMessage": "Date of birth",
-    "description": "Label for partners date of birth",
-    "originalDefault": "Date of birth"
   },
   "rUsmvU": {
     "defaultMessage": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB).",
