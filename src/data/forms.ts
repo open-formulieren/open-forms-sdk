@@ -16,6 +16,7 @@ export interface FormLoginOption {
 
 export interface ButtonText {
   resolved: string;
+  value?: string;
 }
 
 /**
@@ -58,6 +59,11 @@ export interface Form {
   translationEnabled: boolean;
   loginOptions: FormLoginOption[];
   autoLoginAuthenticationBackend: string;
+  paymentRequired: boolean;
+  appointmentOptions: null | {
+    isAppointment: boolean;
+    supportsMultipleProducts: null | boolean;
+  };
   literals: {
     previousText: ButtonText;
     beginText: ButtonText;
@@ -70,6 +76,7 @@ export interface Form {
   showProgressIndicator: boolean;
   showSummaryProgress: boolean;
   maintenanceMode: boolean;
+  active: boolean;
   introductionPageContent: string;
   explanationTemplate: string;
   submissionAllowed: 'yes' | 'no_with_overview' | 'no_without_overview';
