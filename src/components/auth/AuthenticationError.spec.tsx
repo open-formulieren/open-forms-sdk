@@ -81,3 +81,27 @@ it('Renders eIDAS cancel login error', () => {
 
   expect(screen.getByText('Je hebt het inloggen met eIDAS geannuleerd.')).toBeVisible();
 });
+
+it('Renders Yivi default error', () => {
+  render(
+    <IntlProvider locale="nl" messages={messagesNL}>
+      <AuthenticationError parameter="_yivi-message" errorCode="error" />
+    </IntlProvider>
+  );
+
+  expect(
+    screen.getByText(
+      'Er is een fout opgetreden bij het inloggen met Yivi. Probeer het later opnieuw.'
+    )
+  ).toBeVisible();
+});
+
+it('Renders Yivi cancel login error', () => {
+  render(
+    <IntlProvider locale="nl" messages={messagesNL}>
+      <AuthenticationError parameter="_yivi-message" errorCode="login-cancelled" />
+    </IntlProvider>
+  );
+
+  expect(screen.getByText('Je hebt het inloggen met Yivi geannuleerd.')).toBeVisible();
+});
