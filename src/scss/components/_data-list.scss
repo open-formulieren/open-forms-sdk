@@ -50,11 +50,21 @@
       @include bem.modifier('openforms-editgrid') {
         @include component-type-overrides('editgrid');
       }
+      @include bem.modifier('openforms-partners') {
+        @include component-type-overrides('partners');
+
+        display: flex;
+        flex-direction: column;
+      }
     }
 
     @include bem.element('item-key') {
       overflow-wrap: break-word;
       flex-basis: 50%;
+
+      @include bem.modifier('openforms-partners') {
+        font-weight: var(--of-utrecht-data-list-item-key-laptop-font-weight, 700) !important;
+      }
     }
 
     @include bem.element('item-value') {
