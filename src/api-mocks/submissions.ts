@@ -1,5 +1,8 @@
 import {HttpResponse, http} from 'msw';
 
+import type {Submission} from '@/data/submissions';
+import {InvalidParam} from '@/errors';
+
 import {BASE_URL, getDefaultFactory} from './base';
 
 // FIXME - this is incomplete, the prop types aren't detailed enough.
@@ -7,6 +10,8 @@ const SUBMISSION_DETAILS = {
   id: '458b29ae-5baa-4132-a0d7-8c7071b8152a',
   url: `${BASE_URL}submissions/458b29ae-5baa-4132-a0d7-8c7071b8152a`,
   form: `${BASE_URL}forms/mock`,
+  formUrl: 'http://localhost:3000/mock',
+  initialDataReference: '',
   steps: [
     {
       id: '6ca342af-86c7-451c-a19f-65050b2eee5c',
@@ -31,10 +36,10 @@ const SUBMISSION_DETAILS = {
   isAuthenticated: false,
   payment: {
     isRequired: false,
-    amount: undefined,
+    amount: null,
     hasPaid: false,
   },
-};
+} satisfies Submission;
 
 // mock for /api/v2/submissions/{submission_uuid}/steps/{step_uuid}
 const SUBMISSION_STEP_DETAILS = {
@@ -61,12 +66,12 @@ const SUBMISSION_STEP_DETAILS = {
 
 /**
  * Return a submission object as if it would be returned from the backend API.
- * @param  {Object} overrides Key-value mapping with overrides from the defaults. These
- *                            are deep-assigned via lodash.set to the defaults, so use
- *                            '.'-joined strings as keys for deep paths.
- * @return {Object}           A submission object.
+ *
+ * @param  overrides Key-value mapping with overrides from the defaults. These
+ *                   are deep-assigned via lodash.set to the defaults, so use
+ *                   '.'-joined strings as keys for deep paths.
  */
-export const buildSubmission = getDefaultFactory(SUBMISSION_DETAILS);
+export const buildSubmission = getDefaultFactory<Submission>(SUBMISSION_DETAILS);
 
 export const mockSubmissionPost = (submission = buildSubmission()) =>
   http.post(`${BASE_URL}submissions`, () => {
@@ -119,7 +124,7 @@ export const mockSubmissionCompletePost = () =>
     })
   );
 
-export const mockSubmissionCompleteInvalidPost = invalidParams =>
+export const mockSubmissionCompleteInvalidPost = (invalidParams: InvalidParam[]) =>
   http.post(`${BASE_URL}submissions/:uuid/_complete`, () =>
     HttpResponse.json(
       {

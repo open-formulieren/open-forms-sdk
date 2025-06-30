@@ -14,7 +14,7 @@ class ExtendableError extends Error {
   }
 }
 
-interface InvalidParam {
+export interface InvalidParam {
   name: string;
   code: string;
   reason: string;

@@ -18,7 +18,7 @@ const CompletionMark = ({completed = false}) => {
   // accessible to assistive technologies. Only here where the Completion mark icon actually has a meaning.
   return (
     <>
-      <FAIcon icon="check" modifiers={['small']} aria-label={ariaLabel} title={ariaLabel} />
+      <FAIcon icon="check" small aria-label={ariaLabel} title={ariaLabel} />
       <span className="sr-only">{ariaLabel}</span>
     </>
   );

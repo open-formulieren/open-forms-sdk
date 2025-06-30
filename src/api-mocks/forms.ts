@@ -4,6 +4,8 @@ import {HttpResponse, http} from 'msw';
 import {PRIVACY_POLICY_ACCEPTED} from 'components/SummaryConfirmation/mocks';
 import {SUBMISSION_ALLOWED} from 'components/constants';
 
+import type {Form} from '@/data/forms';
+
 import {BASE_URL, getDefaultFactory} from './base';
 
 export const FORM_DEFAULTS = {
@@ -13,15 +15,15 @@ export const FORM_DEFAULTS = {
   url: `${BASE_URL}forms/mock`,
   loginRequired: false,
   loginOptions: [],
-  cosignLoginInfo: undefined,
-  product: '',
   showProgressIndicator: true,
   showSummaryProgress: false,
   maintenanceMode: false,
   active: true,
   submissionAllowed: SUBMISSION_ALLOWED.yes,
+  submissionLimitReached: false,
   suspensionAllowed: true,
   sendConfirmationEmail: true,
+  displayMainWebsiteLink: true,
   submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED],
   appointmentOptions: {
     isAppointment: false,
@@ -54,18 +56,20 @@ export const FORM_DEFAULTS = {
   autoLoginAuthenticationBackend: '',
   translationEnabled: false,
   hideNonApplicableSteps: false,
+  cosignLoginOptions: [],
+  cosignHasLinkInEmail: false,
   paymentRequired: false,
-  paymentOptions: [],
-};
+  submissionReportDownloadLinkTitle: '',
+} satisfies Form;
 
 /**
  * Return a form object as if it would be returned from the form detail API endpoint.
- * @param  {Object} overrides Key-value mapping with overrides from the defaults. These
- *                            are deep-assigned via lodash.set to the defaults, so use
- *                            '.'-joined strings as keys for deep paths.
- * @return {Object}           A form detail object conforming to the Form proptype spec.
+ * @param  overrides Key-value mapping with overrides from the defaults. These
+ *                   are deep-assigned via lodash.set to the defaults, so use
+ *                   '.'-joined strings as keys for deep paths.
+ * @return            A form detail object conforming to the Form proptype spec.
  */
-export const buildForm = getDefaultFactory(FORM_DEFAULTS);
+export const buildForm = getDefaultFactory<Form>(FORM_DEFAULTS);
 
 export const mockFormGet = (formDetail = buildForm(), once = false) =>
   http.get(

@@ -9,7 +9,6 @@ import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from 'Context';
 import {get} from 'api';
-import {getRedirectParams} from 'components/routingActions';
 import {CSPNonce} from 'headers';
 import {PARAM_NAME} from 'hooks/useInitialDataReference';
 import {I18NErrorBoundary, I18NManager} from 'i18n';
@@ -17,6 +16,7 @@ import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import initialiseSentry from 'sentry';
 import {DEBUG, getVersion} from 'utils';
 
+import {getRedirectParams} from './routingActions';
 import './styles.scss';
 
 // asynchronously 'pre-load' our formio initialization so that this can be split off
@@ -82,42 +82,42 @@ class OpenForm {
     // Perform pre-redirect based on this action: this is decoupled from the backend
     const query = new URLSearchParams(document.location.search);
     const action = query.get('_of_action');
-    if (action) {
-      const actionParamsQuery = query.get('_of_action_params');
-      const actionParams = actionParamsQuery ? JSON.parse(actionParamsQuery) : {};
-      query.delete('_of_action');
-      query.delete('_of_action_params');
+    if (!action) return;
 
-      const {path: redirectPath, query: redirectQuery = new URLSearchParams()} = getRedirectParams(
-        action,
-        actionParams
-      );
-      const newUrl = new URL(this.browserBasePath, window.location.origin);
-      if (!this.useHashRouting) {
-        newUrl.pathname += `${!newUrl.pathname.endsWith('/') ? '/' : ''}${redirectPath}`;
-        // We first append query params from the redirect action
-        for (let [key, val] of redirectQuery.entries()) {
-          newUrl.searchParams.append(key, val);
-        }
-        // And extra unrelated query params
-        for (let [key, val] of query.entries()) {
-          newUrl.searchParams.append(key, val);
-        }
-      } else {
-        // First add extra unrelated query params, before hash (`#`)
-        for (let [key, val] of query.entries()) {
-          newUrl.searchParams.append(key, val);
-        }
+    const actionParamsQuery = query.get('_of_action_params');
+    const actionParams = actionParamsQuery ? JSON.parse(actionParamsQuery) : null;
+    query.delete('_of_action');
+    query.delete('_of_action_params');
 
-        // Then add our custom path as the hash part. Our query parameters are added here,
-        // but are only parsed as such by react-router, e.g. location.searchParams
-        // will not include them (as per RFC). This is why unrelated query params were added before hash.
-        // TODO use query.size once we have better browser support
-        newUrl.hash = `/${redirectPath}${[...redirectQuery].length ? '?' + redirectQuery : ''}`;
+    const {path: redirectPath, query: redirectQuery = new URLSearchParams()} = getRedirectParams({
+      action,
+      params: actionParams,
+    });
+    const newUrl = new URL(this.browserBasePath, window.location.origin);
+    if (!this.useHashRouting) {
+      newUrl.pathname += `${!newUrl.pathname.endsWith('/') ? '/' : ''}${redirectPath}`;
+      // We first append query params from the redirect action
+      for (let [key, val] of redirectQuery.entries()) {
+        newUrl.searchParams.append(key, val);
+      }
+      // And extra unrelated query params
+      for (let [key, val] of query.entries()) {
+        newUrl.searchParams.append(key, val);
+      }
+    } else {
+      // First add extra unrelated query params, before hash (`#`)
+      for (let [key, val] of query.entries()) {
+        newUrl.searchParams.append(key, val);
       }
 
-      window.history.replaceState(null, '', newUrl);
+      // Then add our custom path as the hash part. Our query parameters are added here,
+      // but are only parsed as such by react-router, e.g. location.searchParams
+      // will not include them (as per RFC). This is why unrelated query params were added before hash.
+      // TODO use query.size once we have better browser support
+      newUrl.hash = `/${redirectPath}${[...redirectQuery].length ? '?' + redirectQuery : ''}`;
     }
+
+    window.history.replaceState(null, '', newUrl);
   }
 
   calculateClientBaseUrl() {

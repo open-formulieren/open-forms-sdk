@@ -19,7 +19,7 @@ const PreviousLink: React.FC<PreviousLinkProps> = ({to, onClick, position}) => {
   return (
     <Link to={to} onClick={onClick} className={className}>
       <Icon>
-        <FAIcon icon="" extraClassName="fa-fw" />
+        <FAIcon icon="" className="fa-fw" />
       </Icon>
       <Literal name="previousText" />
     </Link>

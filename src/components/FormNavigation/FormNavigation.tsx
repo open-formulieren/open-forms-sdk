@@ -38,7 +38,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
         className="openforms-form-navigation__save-button"
       >
         <Icon>
-          <FAIcon icon="" extraClassName="fa-fw" />
+          <FAIcon icon="" className="fa-fw" />
         </Icon>
         <Literal name="saveText" />
       </LinkButton>

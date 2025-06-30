@@ -112,7 +112,7 @@ const DatePicker = ({
         />
         <FAIcon
           icon="calendar-days"
-          extraClassName={calendarIconClassName}
+          className={calendarIconClassName}
           noAriaHidden
           aria-label={intl.formatMessage({
             description: 'Datepicker: accessible calendar toggle label',

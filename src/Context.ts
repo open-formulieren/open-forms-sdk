@@ -11,6 +11,7 @@ const FormContext = React.createContext<Form>({
   translationEnabled: false,
   loginOptions: [],
   autoLoginAuthenticationBackend: '',
+  paymentRequired: false,
   literals: {
     beginText: {resolved: 'Begin'},
     changeText: {resolved: 'Change'},
@@ -23,6 +24,7 @@ const FormContext = React.createContext<Form>({
   showProgressIndicator: true,
   showSummaryProgress: false,
   maintenanceMode: false,
+  active: true,
   introductionPageContent: '',
   explanationTemplate: '',
   submissionAllowed: 'yes',
@@ -37,6 +39,10 @@ const FormContext = React.createContext<Form>({
   cosignHasLinkInEmail: true,
   submissionStatementsConfiguration: [],
   submissionReportDownloadLinkTitle: '',
+  appointmentOptions: {
+    isAppointment: false,
+    supportsMultipleProducts: null,
+  },
 });
 FormContext.displayName = 'FormContext';
 
