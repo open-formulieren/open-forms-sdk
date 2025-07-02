@@ -3,6 +3,57 @@ SDK Changelog
 =============
 
 
+3.2.0 (2025-07-10)
+==================
+
+Feature release.
+
+New features
+------------
+
+* [#824] Added new partners component type. When partner details have been prefilled, they are
+  displayed. When no details are available, the end-user can provide them (BSN, initials, last
+  name, date of birth).
+* [#5132] Added appropriate error message when authentication via Yivi has failed.
+
+Bugfixes
+--------
+
+* [#4614] Fixed required asterisk being on the line below the text of the privacy and truth
+  statement checkbox.
+* [#5266] Fixed re-use of submission being offered when using an initial data reference.
+* [#5240] Fixed incorrect date field value format blocking form suspension.
+* [#5191] Fixed incorrect zoom level of the map component depending on the drawn shape.
+* [#5242] Fixed crashes because of browser translation plugins (like Chrome) by not
+  allowing translations.
+* [#4917] Substantially reduced the impact of the UX/NL DS changes to (existing) custom
+  themes by graciously falling back to default styling, and provided upgrade
+  instructions for theme designers/developers.
+
+Project maintenance
+-------------------
+
+* [#445] Various changes:
+
+    - Refactored error-boundary code.
+    - Removed obsoleted formio checkbox component.
+    - Converted more code to Typescript.
+
+* Removed obsoleted checkbox (S)CCS.
+* Fixed test flakiness.
+* Added regenerator-runtime dependency.
+* Updated dependencies:
+
+    - Upgraded to @open-formulieren/design-tokens 0.59.0.
+    - Upgraded to @open-formulieren/formio-renderer 0.6.0.
+    - Upgraded to storybook 8.6.12.
+
+* Upgraded CI configuration dependencies.
+
+    - Upgraded to requests 2.32.4.
+    - Upgraded to urllib3 2.5.0.
+
+
 3.2.0-alpha.1 (2025-05-23)
 ==========================
 
