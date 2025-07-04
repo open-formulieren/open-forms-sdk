@@ -27,10 +27,11 @@
   "/HGnU6": {
     "defaultMessage": "BSN",
     "description": "Label for partners BSN",
+    "isTranslated": true,
     "originalDefault": "BSN"
   },
   "/oxZic": {
-    "defaultMessage": "Initials",
+    "defaultMessage": "Initialen",
     "description": "Label for partners initials",
     "originalDefault": "Initials"
   },
@@ -217,7 +218,7 @@
     "originalDefault": "Appointment cancelled"
   },
   "9UF9Z7": {
-    "defaultMessage": "No information provided",
+    "defaultMessage": "Geen informatie verstrekt",
     "description": "Emtpy field message",
     "originalDefault": "No information provided"
   },
@@ -323,7 +324,7 @@
     "originalDefault": "Invalid function return type"
   },
   "DrrkB0": {
-    "defaultMessage": "Edit partner",
+    "defaultMessage": "Partner bewerken",
     "description": "Edit partner: edit partner button text",
     "originalDefault": "Edit partner"
   },
@@ -424,7 +425,7 @@
     "originalDefault": "Summary"
   },
   "H8mxqp": {
-    "defaultMessage": "Date of birth",
+    "defaultMessage": "Geboortedatum",
     "description": "Label for partners dateOfBirth",
     "originalDefault": "Date of birth"
   },
@@ -530,7 +531,7 @@
     "originalDefault": "Did you receive an email with a request to cosign? Start the cosigning by logging in."
   },
   "LXXhoO": {
-    "defaultMessage": "Affixes",
+    "defaultMessage": "Voorvoegsels",
     "description": "Label for partners affixes",
     "originalDefault": "Affixes"
   },
@@ -587,7 +588,7 @@
     "originalDefault": "Save"
   },
   "N9YM+2": {
-    "defaultMessage": "Add partner",
+    "defaultMessage": "Partner toevoegen",
     "description": "Add partner: add partner button text",
     "originalDefault": "Add partner"
   },
@@ -728,7 +729,7 @@
     "originalDefault": "Location and time"
   },
   "X9Jjme": {
-    "defaultMessage": "Save",
+    "defaultMessage": "Opslaan",
     "description": "Add partner: save partner data button text",
     "originalDefault": "Save"
   },
@@ -1087,7 +1088,7 @@
     "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
   },
   "or6w5Z": {
-    "defaultMessage": "Add partner",
+    "defaultMessage": "Partner toevoegen",
     "description": "Add partner modal title",
     "originalDefault": "Add partner"
   },
@@ -1132,7 +1133,7 @@
     "originalDefault": "Suspending the form failed, please try again later"
   },
   "r4wx7J": {
-    "defaultMessage": "Lastname",
+    "defaultMessage": "Achternaam",
     "description": "Label for partners lastName",
     "originalDefault": "Lastname"
   },
