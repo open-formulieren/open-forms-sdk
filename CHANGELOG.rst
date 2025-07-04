@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+3.1.2 (2025-07-04)
+==================
+
+Periodic bugfix release.
+
+* [#5266] Fixed re-use of submission being offered when using an initial data reference.
+
 3.1.1 (2025-04-16)
 ==================
 
