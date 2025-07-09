@@ -1,10 +1,10 @@
 import {FormattedMessage} from 'react-intl';
 
 import {LiteralsProvider} from 'components/Literal';
-import LoginOptions from 'components/LoginOptions';
 
 import Body from '@/components/Body';
 import Card from '@/components/Card';
+import LoginOptions from '@/components/LoginOptions';
 import MaintenanceMode from '@/components/MaintenanceMode';
 import {AuthenticationError, useDetectAuthErrorMessage} from '@/components/auth';
 import AuthenticationOutage, {
