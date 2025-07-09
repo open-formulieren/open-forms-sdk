@@ -1,15 +1,15 @@
 import {Paragraph} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 
-import Anchor from 'components/Anchor';
-import Body from 'components/Body';
-import Card from 'components/Card';
-import FAIcon from 'components/FAIcon';
-import useFormContext from 'hooks/useFormContext';
+import Anchor from '@/components/Anchor';
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+import FAIcon from '@/components/FAIcon';
+import useFormContext from '@/hooks/useFormContext';
 
 import {useCosignContext} from './Context';
 
-const CosignDone = () => {
+const CosignDone: React.FC = () => {
   const {reportDownloadUrl} = useCosignContext();
   const {name, sendConfirmationEmail} = useFormContext();
 
@@ -55,7 +55,5 @@ const CosignDone = () => {
     </Card>
   );
 };
-
-CosignDone.propTypes = {};
 
 export default CosignDone;

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Outlet, useNavigate} from 'react-router';
 
-import ErrorBoundary from 'components/Errors/ErrorBoundary';
+import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 
 import {CosignProvider} from './Context';
 
