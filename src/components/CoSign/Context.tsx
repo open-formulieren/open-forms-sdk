@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 export interface CosignContextType {
   reportDownloadUrl: string;
-  onCosignComplete: () => void;
+  onCosignComplete: (reportUrl: string) => void;
 }
 
 const CosignContext = React.createContext<CosignContextType>({

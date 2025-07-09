@@ -5,11 +5,11 @@ import ErrorBoundary from 'components/Errors/ErrorBoundary';
 
 import {CosignProvider} from './Context';
 
-const Cosign = () => {
+const Cosign: React.FC = () => {
   const navigate = useNavigate();
-  const [reportDownloadUrl, setReportDownloadUrl] = useState('');
+  const [reportDownloadUrl, setReportDownloadUrl] = useState<string>('');
 
-  const onCosignComplete = reportUrl => {
+  const onCosignComplete = (reportUrl: string) => {
     setReportDownloadUrl(reportUrl);
     navigate('/cosign/done');
   };
