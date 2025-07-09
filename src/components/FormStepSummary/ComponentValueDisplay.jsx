@@ -1,4 +1,3 @@
-import {DataList, DataListItem, DataListKey, DataListValue} from '@utrecht/component-library-react';
 import PropTypes from 'prop-types';
 import React, {Suspense} from 'react';
 import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime, useIntl} from 'react-intl';
@@ -11,8 +10,6 @@ import List from 'components/List';
 import Loader from 'components/Loader';
 import Map from 'components/Map';
 import {getFormattedDateString, getFormattedTimeString} from 'utils';
-
-import PARTNER_COMPONENTS from '@/formio/components/Partners/definition';
 
 import {humanFileSize} from './utils';
 
@@ -174,44 +171,9 @@ const NumberDisplay = ({component, value}) => {
   return <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />;
 };
 
-const PartnersDisplay = ({value}) => {
-  if (!value) return <EmptyDisplay />;
-
-  const partnerFields = PARTNER_COMPONENTS.map(({key, label}) => ({
-    name: key,
-    label: label,
-  }));
-
-  return (
-    <>
-      {value.map((partner, index) => (
-        <div key={index}>
-          <DataList>
-            {partnerFields.map(({name, label}) => (
-              <DataListItem key={name}>
-                <DataListKey className="utrecht-data-list__item-key--openforms-partners">
-                  <FormattedMessage {...label} />
-                </DataListKey>
-                <DataListValue>
-                  {partner[name] || (
-                    <i>
-                      <FormattedMessage
-                        description="Emtpy field message"
-                        defaultMessage="No information provided"
-                      />
-                    </i>
-                  )}
-                </DataListValue>
-              </DataListItem>
-            ))}
-          </DataList>
-
-          {/* Divider between partners */}
-          {index < value.length - 1 && <hr className="utrecht-hr" />}
-        </div>
-      ))}
-    </>
-  );
+const PartnersDisplay = () => {
+  // the partners data is handled in the backend, so we do not want to show it twice
+  return <EmptyDisplay />;
 };
 
 const CurrencyDisplay = ({component, value}) => {
