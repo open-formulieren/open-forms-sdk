@@ -1,19 +1,20 @@
 import {FormattedMessage} from 'react-intl';
 
-import Body from 'components/Body';
-import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
 import LoginOptions from 'components/LoginOptions';
-import MaintenanceMode from 'components/MaintenanceMode';
-import {AuthenticationError, useDetectAuthErrorMessage} from 'components/auth';
+
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+import MaintenanceMode from '@/components/MaintenanceMode';
+import {AuthenticationError, useDetectAuthErrorMessage} from '@/components/auth';
 import AuthenticationOutage, {
   useDetectAuthenticationOutage,
-} from 'components/auth/AuthenticationOutage';
-import {UnprocessableEntity} from 'errors';
-import {IsFormDesigner} from 'headers';
-import useFormContext from 'hooks/useFormContext';
+} from '@/components/auth/AuthenticationOutage';
+import {UnprocessableEntity} from '@/errors';
+import {IsFormDesigner} from '@/headers';
+import useFormContext from '@/hooks/useFormContext';
 
-const CosignStart = () => {
+const CosignStart: React.FC = () => {
   const form = useFormContext();
 
   const outagePluginId = useDetectAuthenticationOutage();

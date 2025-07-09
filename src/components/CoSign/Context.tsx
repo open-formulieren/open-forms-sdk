@@ -1,14 +1,26 @@
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-const CosignContext = React.createContext({
+export interface CosignContextType {
+  reportDownloadUrl: string;
+  onCosignComplete: () => void;
+}
+
+const CosignContext = React.createContext<CosignContextType>({
   reportDownloadUrl: '',
   onCosignComplete: () => {},
 });
 
 CosignContext.displayName = 'CosignContext';
 
-const CosignProvider = ({reportDownloadUrl, onCosignComplete, children}) => (
+export interface CosignProviderProps extends CosignContextType {
+  children?: React.ReactNode;
+}
+
+const CosignProvider: React.FC<CosignProviderProps> = ({
+  reportDownloadUrl,
+  onCosignComplete,
+  children,
+}) => (
   <CosignContext.Provider
     value={{
       reportDownloadUrl,
@@ -18,11 +30,6 @@ const CosignProvider = ({reportDownloadUrl, onCosignComplete, children}) => (
     {children}
   </CosignContext.Provider>
 );
-
-CosignProvider.propTypes = {
-  reportDownloadUrl: PropTypes.string.isRequired,
-  onCosignComplete: PropTypes.func.isRequired,
-};
 
 const useCosignContext = () => useContext(CosignContext);
 
