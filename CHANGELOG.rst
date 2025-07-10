@@ -53,6 +53,20 @@ Project maintenance
     - Upgraded to requests 2.32.4.
     - Upgraded to urllib3 2.5.0.
 
+3.1.2 (2025-07-04)
+==================
+
+Periodic bugfix release.
+
+* [#5266] Fixed re-use of submission being offered when using an initial data reference.
+
+3.0.3 (2025-07-04)
+==================
+
+Final bugfix release in the 3.0.x series.
+
+* [#5266] Fixed re-use of submission being offered when using an initial data reference.
+
 
 3.2.0-alpha.1 (2025-05-23)
 ==========================
