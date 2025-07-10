@@ -88,48 +88,48 @@ export const EditManuallyAddedPartner = {
 
       const initialsLabel = await canvas.findByText(
         (content, element) =>
-          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Initials'
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Initialen'
       );
       const initialsValue = initialsLabel.nextElementSibling;
       expect(initialsValue?.textContent).toBe('J');
 
       const affixesLabel = await canvas.findByText(
         (content, element) =>
-          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Affixes'
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Voorvoegsels'
       );
       const affixesValue = affixesLabel.nextElementSibling;
       expect(affixesValue?.textContent).toBe('K');
 
       const lastNameLabel = await canvas.findByText(
         (content, element) =>
-          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Lastname'
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Achternaam'
       );
       const lastNameValue = lastNameLabel.nextElementSibling;
       expect(lastNameValue?.textContent).toBe('Boei');
 
       const dateOfBirthLabel = await canvas.findByText(
         (content, element) =>
-          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Date of birth'
+          element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Geboortedatum'
       );
       const dateOfBirthValue = dateOfBirthLabel.nextElementSibling;
       expect(dateOfBirthValue?.textContent).toBe('2000-1-1');
     });
 
     await step('Edit the partner', async () => {
-      const editButton = await canvas.findByRole('button', {name: 'Edit partner'});
+      const editButton = await canvas.findByRole('button', {name: 'Partner bewerken'});
       await userEvent.click(editButton);
 
       const modal = await screen.findByRole('dialog');
       const modalWithin = within(modal);
 
-      const initialsInput = modalWithin.getByLabelText('Initials');
+      const initialsInput = modalWithin.getByLabelText('Initialen');
       await userEvent.type(initialsInput, 'U');
 
-      await user.click(modalWithin.getByRole('button', {name: 'Save'}));
+      await user.click(modalWithin.getByRole('button', {name: 'Opslaan'}));
     });
 
     await step('Check modified partners details', async () => {
-      const initialsLabel = canvas.getByText('Initials');
+      const initialsLabel = canvas.getByText('Initialen');
       const initialsValue = initialsLabel.nextElementSibling;
       expect(initialsValue?.textContent).toBe('JU');
     });
