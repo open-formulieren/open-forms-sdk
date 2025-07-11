@@ -9,7 +9,9 @@ import {CoSignAuthentication} from './CoSignOld';
 it('CoSign component constructs the right auth URL', () => {
   // Control the location that the test will use
   const {location} = window;
+  // @ts-expect-error monkeypatching
   delete window.location;
+  // @ts-expect-error monkeypatching
   window.location = {
     href: 'https://openforms.nl/form-name/step/step-name',
   };
@@ -33,19 +35,14 @@ it('CoSign component constructs the right auth URL', () => {
 
   render(
     <IntlProvider locale="nl" messages={messagesNL}>
-      <CoSignAuthentication
-        form={form}
-        submissionUuid="111-222-333"
-        authPlugin="digid"
-        saveStepData={() => {}}
-      />
+      <CoSignAuthentication form={form} submissionUuid="111-222-333" authPlugin="digid" />
     </IntlProvider>
   );
 
   // Reset location
   window.location = location;
 
-  const loginButton = screen.getByRole('link', {name: 'Inloggen met DigiD'});
+  const loginButton = screen.getByRole<HTMLAnchorElement>('link', {name: 'Inloggen met DigiD'});
   expect(loginButton).toBeVisible();
 
   const loginUrl = new URL(loginButton.href);

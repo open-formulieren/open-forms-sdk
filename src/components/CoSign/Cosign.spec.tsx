@@ -7,7 +7,7 @@ import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
 import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+import {FUTURE_FLAGS} from 'routes';
 import cosignRoutes from 'routes/cosign';
 
 import Cosign from './Cosign';
@@ -65,7 +65,11 @@ const routes = [
   },
 ];
 
-const Wrapper = ({relativeUrl}) => {
+interface WrapperProps {
+  relativeUrl: string;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({relativeUrl}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [`/cosign/${relativeUrl}`],
     future: FUTURE_FLAGS,
@@ -78,11 +82,12 @@ const Wrapper = ({relativeUrl}) => {
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={TEST_FORM}>
-          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+          <RouterProvider router={router} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

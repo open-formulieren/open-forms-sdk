@@ -1,36 +1,50 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSearchParams} from 'react-router';
 
 import {Literal} from 'components/Literal';
 import {getCosignLoginUrl, getLoginUrl} from 'components/utils';
-import Types from 'types';
 
-import LoginOptionsDisplay from './LoginOptionsDisplay';
+import type {Form} from '@/data/forms';
 
-const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOptions = true}) => {
+import LoginOptionsDisplay, {FormattedLoginOption} from './LoginOptionsDisplay';
+
+export interface LoginOptionsProps {
+  form: Form;
+  onFormStart: (opts: {isAnonymous: boolean}) => Promise<void> | void;
+  extraNextParams?: Record<string, string>;
+  isolateCosignOptions?: boolean;
+}
+
+const LoginOptions: React.FC<LoginOptionsProps> = ({
+  form,
+  onFormStart,
+  extraNextParams = {},
+  isolateCosignOptions = true,
+}) => {
   const [params] = useSearchParams();
 
-  const loginAsYourselfOptions = [];
-  const loginAsGemachtigdeOptions = [];
-  const cosignLoginOptions = [];
+  const loginAsYourselfOptions: FormattedLoginOption[] = [];
+  const loginAsGemachtigdeOptions: FormattedLoginOption[] = [];
+  const cosignLoginOptions: FormattedLoginOption[] = [];
 
   form.loginOptions.forEach(option => {
-    let readyOption = {...option};
-    readyOption.url = getLoginUrl(option, {}, extraNextParams);
-    readyOption.label = (
-      <FormattedMessage
-        description="Login button label"
-        defaultMessage="Login with {provider}"
-        values={{provider: option.label}}
-      />
-    );
+    const formattedOption: FormattedLoginOption = {
+      ...option,
+      url: getLoginUrl(option, {}, extraNextParams),
+      label: (
+        <FormattedMessage
+          description="Login button label"
+          defaultMessage="Login with {provider}"
+          values={{provider: option.label}}
+        />
+      ),
+    };
 
-    if (readyOption.isForGemachtigde) {
-      loginAsGemachtigdeOptions.push(readyOption);
+    if (formattedOption.isForGemachtigde) {
+      loginAsGemachtigdeOptions.push(formattedOption);
     } else {
-      loginAsYourselfOptions.push(readyOption);
+      loginAsYourselfOptions.push(formattedOption);
     }
   });
 
@@ -63,7 +77,7 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOpt
   const containerProps = form.loginRequired
     ? {}
     : {
-        onSubmit: async e => {
+        onSubmit: async (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           await onFormStart({isAnonymous: true});
         },
@@ -80,14 +94,6 @@ const LoginOptions = ({form, onFormStart, extraNextParams = {}, isolateCosignOpt
       />
     </Container>
   );
-};
-
-LoginOptions.propTypes = {
-  form: Types.Form.isRequired,
-  onFormStart: PropTypes.func.isRequired,
-  extraParams: PropTypes.object,
-  extraNextParams: PropTypes.object,
-  isolateCosignOptions: PropTypes.bool,
 };
 
 export default LoginOptions;

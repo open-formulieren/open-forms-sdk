@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildForm} from 'api-mocks';
@@ -44,13 +45,15 @@ export default {
       }),
     },
   },
-};
+} satisfies Meta<typeof CosignStart>;
 
-export const Default = {
+type Story = StoryObj<typeof CosignStart>;
+
+export const Default: Story = {
   name: 'CosignStart',
 };
 
-export const LoginOptional = {
+export const LoginOptional: Story = {
   parameters: {
     formContext: {
       form: {
