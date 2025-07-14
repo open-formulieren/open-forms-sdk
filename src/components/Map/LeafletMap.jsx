@@ -1,11 +1,10 @@
 import * as Leaflet from 'leaflet';
 import {GeoSearchControl} from 'leaflet-geosearch';
 import PropTypes from 'prop-types';
-import {useContext, useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
-import {useGeolocation} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {getBEMClassName} from 'utils';
@@ -17,29 +16,13 @@ import OpenFormsProvider from './provider';
 import {
   applyLeafletTranslations,
   leafletGestureHandlingText,
+  locationControlMessages,
   searchControlMessages,
 } from './translations';
 import {GeoJsonGeometry} from './types';
 
 // Run some Leaflet-specific patches...
 initialize();
-
-const useDefaultCoordinates = () => {
-  // FIXME: can't call hooks conditionally
-  const {loading, latitude, longitude, error} = useGeolocation();
-  // it's possible the user declined permissions (error.code === 1) to access the
-  // location, or the location could not be determined. In that case, fall back to the
-  // hardcoded default. See Github issue
-  // https://github.com/open-formulieren/open-forms/issues/864 and the docs on
-  // GeolocationPositionError:
-  // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
-  if (error) {
-    return null;
-  }
-  if (!navigator.geolocation) return null;
-  if (loading) return null;
-  return [latitude, longitude];
-};
 
 const getCoordinates = geoJsonGeometry => {
   if (!geoJsonGeometry) {
@@ -61,9 +44,7 @@ const LeaftletMap = ({
 }) => {
   const featureGroupRef = useRef();
   const intl = useIntl();
-  const defaultCoordinates = useDefaultCoordinates();
   const geoJsonCoordinates = getCoordinates(geoJsonGeometry);
-  const coordinates = geoJsonCoordinates ?? defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
@@ -135,7 +116,7 @@ const LeaftletMap = ({
           )}
           <Geometry geoJsonGeometry={geoJsonGeometry} featureGroupRef={featureGroupRef} />
         </FeatureGroup>
-        {coordinates && <MapView coordinates={coordinates} />}
+        {geoJsonCoordinates && <MapView coordinates={geoJsonCoordinates} />}
         {!disabled && (
           <SearchControl
             onMarkerSet={onSearchMarkerSet}
@@ -152,6 +133,7 @@ const LeaftletMap = ({
             }}
           />
         )}
+        <LocationControl />
         {disabled && <DisabledMapControls />}
       </MapContainer>
       {geoJsonCoordinates && geoJsonCoordinates.length && (
@@ -221,12 +203,18 @@ Geometry.propTypes = {
 };
 
 // Set the map view if coordinates are provided
+const setMapView = (map, coordinates = null) => {
+  if (!coordinates || coordinates.length !== 2) return;
+  if (!coordinates.filter(value => isFinite(value)).length === 2) return;
+  map.setView(coordinates);
+};
+
+// Set the map view if coordinates are provided
+// @TODO can be removed/relocated to main functionality?
 const MapView = ({coordinates = null}) => {
   const map = useMap();
   useEffect(() => {
-    if (!coordinates || coordinates.length !== 2) return;
-    if (!coordinates.filter(value => isFinite(value)).length === 2) return;
-    map.setView(coordinates);
+    setMapView(map, coordinates);
   }, [map, coordinates]);
   // rendering is done by leaflet, so just return null
   return null;
@@ -234,6 +222,113 @@ const MapView = ({coordinates = null}) => {
 
 MapView.propTypes = {
   coordinates: PropTypes.arrayOf(PropTypes.number),
+};
+
+/**
+ * Custom Leaflet location control, for "use current user location" functionality.
+ *
+ * @class
+ * @constructor
+ */
+const LocationButton = Leaflet.Control.extend({
+  /**
+   * Create a location button.
+   *
+   * @param disabledButton boolean
+   * @param onClick fn - a function that doesn't accept arguments
+   * @param tooltip string
+   * @param ariaLabel string
+   */
+  initialize: function (disabledButton, onClick, tooltip, ariaLabel) {
+    this.disabledButton = disabledButton;
+    this.onClick = onClick;
+    this.tooltip = tooltip;
+    this.ariaLabel = ariaLabel;
+  },
+  /**
+   * Global configuration for the control.
+   */
+  options: {
+    position: 'topleft',
+  },
+  /**
+   * Define the html and functionality of the control button.
+   *
+   * @returns {HTMLDivElement}
+   */
+  onAdd: function () {
+    const container = Leaflet.DomUtil.create('div', 'leaflet-bar leaflet-control');
+    const button = Leaflet.DomUtil.create(
+      'a',
+      `leaflet-control-button fa-solid fa-location-crosshairs ${this.disabledButton && 'leaflet-disabled'}`,
+      container
+    );
+
+    Leaflet.DomEvent.disableClickPropagation(button);
+    Leaflet.DomEvent.on(button, 'click', () => {
+      if (!this.disabledButton) {
+        this.onClick();
+      }
+    });
+
+    button.title = this.tooltip;
+    button.setAttribute('role', 'button');
+    button.setAttribute('aria-disabled', this.disabledButton);
+    button.setAttribute('aria-label', this.ariaLabel);
+
+    return container;
+  },
+});
+
+const LocationControl = () => {
+  const map = useMap();
+  const intl = useIntl();
+
+  const [disabled, setDisabled] = useState(false);
+
+  // Create location control button and attach it to the map
+  useEffect(() => {
+    /**
+     * @param position GeolocationPosition
+     */
+    const onGeoLocationSuccess = position => {
+      setMapView(map, [position.coords.latitude, position.coords.longitude]);
+    };
+
+    /**
+     * @param positionError GeolocationPositionError
+     */
+    const onGeoLocationError = positionError => {
+      // Only update the state if `disabled` is `false`, preventing unnecessary renders.
+      if (positionError.code === GeolocationPositionError.PERMISSION_DENIED && !disabled) {
+        setDisabled(true);
+      }
+    };
+
+    const locationButton = new LocationButton(
+      disabled,
+      () => {
+        navigator.geolocation.getCurrentPosition(onGeoLocationSuccess, onGeoLocationError);
+      },
+      intl.formatMessage(
+        !disabled
+          ? locationControlMessages.buttonTitle
+          : locationControlMessages.buttonTitleDisabled
+      ),
+      intl.formatMessage(
+        !disabled
+          ? locationControlMessages.buttonLabel
+          : locationControlMessages.buttonLabelDisabled
+      )
+    );
+    map.addControl(locationButton);
+
+    return () => {
+      map.removeControl(locationButton);
+    };
+  }, [disabled, intl, map]);
+
+  return null;
 };
 
 const SearchControl = ({onMarkerSet, options}) => {

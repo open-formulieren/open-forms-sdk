@@ -1711,6 +1711,12 @@
       "value": "Marker"
     }
   ],
+  "fQnOQI": [
+    {
+      "type": 0,
+      "value": "Current location cannot be accessed"
+    }
+  ],
   "fWjfVm": [
     {
       "type": 0,
@@ -2199,6 +2205,12 @@
       "value": "Intersection results could not be merged"
     }
   ],
+  "pt+SJ7": [
+    {
+      "type": 0,
+      "value": "Use my current location"
+    }
+  ],
   "q9AKjH": [
     {
       "type": 0,
@@ -2391,6 +2403,12 @@
       "value": "To contact details"
     }
   ],
+  "t9GstA": [
+    {
+      "type": 0,
+      "value": "Current location"
+    }
+  ],
   "tBQ8TL": [
     {
       "type": 0,
@@ -2527,6 +2545,12 @@
     {
       "type": 0,
       "value": "Year"
+    }
+  ],
+  "yRAlcb": [
+    {
+      "type": 0,
+      "value": "Your current location cannot be accessed"
     }
   ],
   "zkdWYe": [
