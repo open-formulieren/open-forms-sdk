@@ -1,12 +1,18 @@
 import {HttpResponse, http} from 'msw';
 
-import {BASE_URL} from 'api-mocks';
+import {BASE_URL} from '@/api-mocks';
+
+interface EmailVerificationResponse {
+  componentKey: string;
+  email: string;
+}
 
 export const mockEmailVerificationPost = http.post(
   `${BASE_URL}submissions/email-verifications`,
   async ({request}) => {
-    const {componentKey, email} = await request.json();
-    return HttpResponse.json({componentKey, email});
+    const obj = (await request.json()) as EmailVerificationResponse;
+    const {componentKey, email} = obj;
+    return HttpResponse.json<EmailVerificationResponse>({componentKey, email});
   }
 );
 
@@ -51,14 +57,22 @@ const statusToBody = {
   },
 };
 
+interface EmailVerificationVerifyCodeResponse {
+  componentKey: string;
+  email: string;
+  code: 'FAILME' | 'NOPERM';
+}
+
 export const mockEmailVerificationVerifyCodePost = http.post(
   `${BASE_URL}submissions/email-verifications/verify`,
   async ({request}) => {
-    const {componentKey, email, code} = await request.json();
+    const {componentKey, email, code} =
+      (await request.json()) as EmailVerificationVerifyCodeResponse;
 
     const statusCode = codeToStatus?.[code] ?? 200;
 
-    const responseData = statusCode === 200 ? {componentKey, email} : statusToBody[statusCode];
+    const responseData =
+      statusCode === 200 ? {componentKey, email} : statusToBody[statusCode as 400 | 403];
     return HttpResponse.json(responseData, {status: statusCode});
   }
 );
