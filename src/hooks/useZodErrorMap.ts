@@ -1,9 +1,9 @@
-import {useIntl} from 'react-intl';
+import {type IntlShape, useIntl} from 'react-intl';
 import {ZodIssueCode, ZodParsedType, util, z} from 'zod';
 
-export const makeZodErrorMap = intl => {
+export const makeZodErrorMap = (intl: IntlShape): z.ZodErrorMap => {
   // taken and adapted from https://github.com/colinhacks/zod/blob/master/src/locales/en.ts
-  const errorMap = (issue, ctx) => {
+  const errorMap: z.ZodErrorMap = (issue, ctx) => {
     let message;
 
     switch (issue.code) {
@@ -179,6 +179,7 @@ export const makeZodErrorMap = intl => {
                 } {minimum, plural, one {{minimum} item} other {{minimum} items}}.`,
             },
             {
+              // @ts-expect-error react-intl doesn't support bigint yet
               minimum: issue.minimum,
               exact: issue.exact,
               inclusive: issue.inclusive,
@@ -195,6 +196,7 @@ export const makeZodErrorMap = intl => {
                 } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.`,
             },
             {
+              // @ts-expect-error react-intl doesn't support bigint yet
               minimum: issue.minimum,
               exact: issue.exact,
               inclusive: issue.inclusive,
@@ -245,6 +247,7 @@ export const makeZodErrorMap = intl => {
                 } {maximum, plural, one {{maximum} item} other {{maximum} items}}.`,
             },
             {
+              // @ts-expect-error react-intl doesn't support bigint yet
               maximum: issue.maximum,
               exact: issue.exact,
               inclusive: issue.inclusive,
@@ -261,6 +264,7 @@ export const makeZodErrorMap = intl => {
                 } {maximum, plural, one {{maximum} character} other {{maximum} characters}}.`,
             },
             {
+              // @ts-expect-error react-intl doesn't support bigint yet
               maximum: issue.maximum,
               exact: issue.exact,
               inclusive: issue.inclusive,
@@ -356,7 +360,7 @@ export const makeZodErrorMap = intl => {
   return errorMap;
 };
 
-const useZodErrorMap = () => {
+const useZodErrorMap = (): void => {
   const intl = useIntl();
   z.setErrorMap(makeZodErrorMap(intl));
 };
