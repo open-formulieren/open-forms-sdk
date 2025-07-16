@@ -1,5 +1,3 @@
-@import '../mixins/prefix';
-
-.#{prefix('image')} {
-  max-width: 350px;
+.openforms-image {
+  max-inline-size: 350px;
 }
