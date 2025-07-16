@@ -1,12 +1,12 @@
 import {Navigate, Outlet, useMatch, useSearchParams} from 'react-router';
 
-import useFormContext from 'hooks/useFormContext';
-import useZodErrorMap from 'hooks/useZodErrorMap';
+import useFormContext from '@/hooks/useFormContext';
+import useZodErrorMap from '@/hooks/useZodErrorMap';
 
 /*
 Top level router - routing between an actual form or supporting screens.
  */
-const App = () => {
+const App: React.FC = () => {
   const form = useFormContext();
   const [params] = useSearchParams();
   const appointmentMatch = useMatch('afspraak-maken/*');
@@ -30,7 +30,5 @@ const App = () => {
   }
   return <Outlet />;
 };
-
-App.propTypes = {};
 
 export default App;
