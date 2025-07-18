@@ -110,7 +110,7 @@ const SelectboxesDisplay = ({component, value}) => {
   const selectedObjs = component.values.filter(obj => selectedBoxes.includes(obj.value));
   const selectedLabels = selectedObjs.map(selectedLabel => selectedLabel.label);
   return (
-    <List modifiers={['extra-compact', 'dash']}>
+    <List extraCompact withDash>
       {selectedLabels.map((label, i) => (
         <Body key={i} component="span">
           {label}

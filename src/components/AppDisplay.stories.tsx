@@ -1,6 +1,8 @@
-import Body from 'components/Body';
+import type {Meta, StoryObj} from '@storybook/react';
 
-import {AppDisplay} from './AppDisplay';
+import Body from '@/components/Body';
+
+import AppDisplay from './AppDisplay';
 
 export default {
   title: 'Composites / App display',
@@ -8,9 +10,11 @@ export default {
   argTypes: {
     appDebug: {control: 'boolean'},
   },
-};
+} satisfies Meta<typeof AppDisplay>;
 
-const SpacedDiv = ({children}) => (
+type Story = StoryObj<typeof AppDisplay>;
+
+const SpacedDiv: React.FC<React.PropsWithChildren> = ({children}) => (
   <div
     style={{
       background: 'white',
@@ -23,14 +27,9 @@ const SpacedDiv = ({children}) => (
   </div>
 );
 
-export const Default = {
+export const Default: Story = {
   render: ({appDebug}) => (
     <AppDisplay
-      router={
-        <SpacedDiv>
-          <Body>{'<Router>'}</Body>
-        </SpacedDiv>
-      }
       languageSwitcher={
         <div style={{marginLeft: 'auto', marginRight: 'auto'}}>
           <Body>{'<Language switcher>'}</Body>
@@ -44,7 +43,11 @@ export const Default = {
           </SpacedDiv>
         ) : null
       }
-    />
+    >
+      <SpacedDiv>
+        <Body>{'<Router>'}</Body>
+      </SpacedDiv>
+    </AppDisplay>
   ),
   args: {
     appDebug: false,

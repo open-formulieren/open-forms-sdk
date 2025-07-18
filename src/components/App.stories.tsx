@@ -1,24 +1,70 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/test';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {FormContext} from 'Context';
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
+import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
+import routes, {FUTURE_FLAGS} from 'routes';
+import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+
+import {FormContext} from '@/Context';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
 import {
   mockSubmissionCheckLogicPost,
   mockSubmissionGet,
   mockSubmissionPost,
   mockSubmissionStepGet,
-} from 'api-mocks/submissions';
-import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+} from '@/api-mocks/submissions';
+import {Form, MinimalFormStep} from '@/data/forms';
 
 import App from './App';
 import {SUBMISSION_ALLOWED} from './constants';
 
+interface WrapperProps {
+  form: Form;
+  showExternalHeader: boolean;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({form, showExternalHeader}) => {
+  const router = createMemoryRouter(routes, {
+    initialEntries: ['/'],
+    initialIndex: 0,
+    future: FUTURE_FLAGS,
+  });
+  return (
+    <FormContext.Provider value={form}>
+      {showExternalHeader && (
+        <header style={{padding: '10px', textAlign: 'center'}}>External header</header>
+      )}
+      <RouterProvider router={router} />
+    </FormContext.Provider>
+  );
+};
+
+interface Args {
+  name: string;
+  'form.translationEnabled': boolean;
+  submissionAllowed: Form['submissionAllowed'];
+  hideNonApplicableSteps: boolean;
+  'form.submissionLimitReached': boolean;
+  steps: MinimalFormStep[];
+  showExternalHeader: boolean;
+}
+
 export default {
   title: 'Private API / App',
   component: App,
+  render: args => {
+    const form = buildForm({
+      name: args.name,
+      translationEnabled: args['form.translationEnabled'],
+      explanationTemplate: '<p>Toelichtingssjabloon...</p>',
+      submissionAllowed: args['submissionAllowed'],
+      hideNonApplicableSteps: args['hideNonApplicableSteps'],
+      submissionLimitReached: args['form.submissionLimitReached'],
+      steps: args['steps'],
+    });
+    return <Wrapper form={form} showExternalHeader={args.showExternalHeader} />;
+  },
   decorators: [ConfigDecorator],
   args: {
     name: 'Mock form',
@@ -38,7 +84,6 @@ export default {
         },
         url: `${BASE_URL}forms/mock/steps/9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5`,
         isApplicable: true,
-        completed: false,
       },
       {
         uuid: '98980oi8-e5a4-4abf-b64a-76j3j3ki897',
@@ -52,7 +97,6 @@ export default {
         },
         url: `${BASE_URL}forms/mock/steps/98980oi8-e5a4-4abf-b64a-76j3j3ki897`,
         isApplicable: false,
-        completed: false,
       },
     ],
     showExternalHeader: false,
@@ -82,43 +126,15 @@ export default {
       ],
     },
   },
-};
+} satisfies Meta<Args>;
 
-const Wrapper = ({form, showExternalHeader}) => {
-  const router = createMemoryRouter(routes, {
-    initialEntries: ['/'],
-    initialIndex: 0,
-    future: FUTURE_FLAGS,
-  });
-  return (
-    <FormContext.Provider value={form}>
-      {showExternalHeader && (
-        <header style={{padding: '10px', textAlign: 'center'}}>External header</header>
-      )}
-      <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
-    </FormContext.Provider>
-  );
-};
+type Story = StoryObj<Args>;
 
-const render = args => {
-  const form = buildForm({
-    name: args.name,
-    translationEnabled: args['form.translationEnabled'],
-    explanationTemplate: '<p>Toelichtingssjabloon...</p>',
-    submissionAllowed: args['submissionAllowed'],
-    hideNonApplicableSteps: args['hideNonApplicableSteps'],
-    submissionLimitReached: args['form.submissionLimitReached'],
-    steps: args['steps'],
-  });
-  return <Wrapper form={form} showExternalHeader={args.showExternalHeader} />;
-};
-
-export const Default = {
-  render,
+export const Default: Story = {
   decorators: [LayoutDecorator],
 };
 
-export const TranslationEnabled = {
+export const TranslationEnabled: Story = {
   ...Default,
   args: {
     'form.translationEnabled': true,
@@ -129,7 +145,7 @@ export const TranslationEnabled = {
   },
 };
 
-export const TranslationDisabled = {
+export const TranslationDisabled: Story = {
   ...Default,
   args: {
     'form.translationEnabled': false,
@@ -139,7 +155,7 @@ export const TranslationDisabled = {
 
     // wait for spinners to disappear
     const spinners = document.querySelectorAll('.openforms-loading__spinner');
-    await Promise.all(Array.from(spinners).map(waitForElementToBeRemoved));
+    await Promise.all(Array.from(spinners).map(spinner => waitForElementToBeRemoved(spinner)));
 
     // assert there's no NL button
     const langSelector = canvas.queryByText(/^nl$/i);
@@ -147,7 +163,7 @@ export const TranslationDisabled = {
   },
 };
 
-export const ActiveSubmission = {
+export const ActiveSubmission: Story = {
   ...Default,
   name: 'Active submission',
   args: {
@@ -164,7 +180,6 @@ export const ActiveSubmission = {
         },
         url: `${BASE_URL}forms/mock/steps/9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5`,
         isApplicable: true,
-        completed: false,
       },
     ],
   },
@@ -197,7 +212,7 @@ export const ActiveSubmission = {
   },
 };
 
-export const NonApplicableStepActiveSubmission = {
+export const NonApplicableStepActiveSubmission: Story = {
   ...Default,
   name: 'Active submission with non-applicable step hidden',
   args: {
@@ -231,8 +246,7 @@ export const NonApplicableStepActiveSubmission = {
   },
 };
 
-export const SeveralStepsInMobileViewport = {
-  render,
+export const SeveralStepsInMobileViewport: Story = {
   args: {
     showExternalHeader: true,
     name: 'A rather long form name that overflows on mobile',
@@ -394,8 +408,6 @@ export const SeveralStepsInMobileViewport = {
         isApplicable: true,
       },
     ],
-    ariaMobileIconLabel: 'Progress step indicator toggle icon (mobile)',
-    accessibleToggleStepsLabel: 'Current step in form Formulier: Stap 2',
   },
   parameters: {
     layout: 'fullscreen', // removes padding in canvas
@@ -405,16 +417,14 @@ export const SeveralStepsInMobileViewport = {
   },
 };
 
-export const MaximumSubmissionsReached = {
-  render,
+export const MaximumSubmissionsReached: Story = {
   decorators: [LayoutDecorator],
   args: {
     'form.submissionLimitReached': true,
   },
 };
 
-export const MaximumSubmissionsNotReached = {
-  render,
+export const MaximumSubmissionsNotReached: Story = {
   decorators: [LayoutDecorator],
   args: {
     'form.submissionLimitReached': false,

@@ -18,14 +18,10 @@
   }
 
   // TODO: check if this can be removed
-  &:not(#{&}--compact, #{&}--extra-compact) &__item {
+  &:not(#{&}--extra-compact) &__item {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-  }
-
-  @include bem.modifier('compact') {
-    --of-list-gap: var(--of-list-compact-gap, 8px);
   }
 
   @include bem.modifier('extra-compact') {

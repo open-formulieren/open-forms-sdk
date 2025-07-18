@@ -33,7 +33,7 @@ export interface AppDisplayProps {
  * is reserved for the main content.
  *
  */
-export const AppDisplay: React.FC<AppDisplayProps> = ({
+const AppDisplay: React.FC<AppDisplayProps> = ({
   children = null,
   languageSwitcher = null,
   progressIndicator = null,
