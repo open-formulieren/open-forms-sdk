@@ -29,6 +29,11 @@
     "description": "Label for partners BSN",
     "originalDefault": "BSN"
   },
+  "/jQkSu": {
+    "defaultMessage": "Add child",
+    "description": "Add child modal title",
+    "originalDefault": "Add child"
+  },
   "/oxZic": {
     "defaultMessage": "Initials",
     "description": "Label for partners initials",
@@ -129,6 +134,11 @@
     "description": "Draw toolbar polygon button tooltip.",
     "originalDefault": "Shape (polygon)"
   },
+  "6EoG3C": {
+    "defaultMessage": "Save",
+    "description": "Add child: save child data button text",
+    "originalDefault": "Save"
+  },
   "6GNK65": {
     "defaultMessage": "There was an authentication and/or permission problem.",
     "description": "Authentication error message",
@@ -178,6 +188,11 @@
     "defaultMessage": "Time",
     "description": "Appoinments: time select label",
     "originalDefault": "Time"
+  },
+  "8MVAfQ": {
+    "defaultMessage": "Edit child",
+    "description": "Edit child modal title",
+    "originalDefault": "Edit child"
   },
   "8MZ9TV": {
     "defaultMessage": "Please accept the privacy policy before submitting",
@@ -684,6 +699,11 @@
     "description": "Appointments: single product label/header",
     "originalDefault": "Product {number}/{total}"
   },
+  "VCgwM7": {
+    "defaultMessage": "Add Child",
+    "description": "Add child: add child button text",
+    "originalDefault": "Add Child"
+  },
   "VaNtPf": {
     "defaultMessage": "Cancel appointment",
     "description": "Cancel appointment submit button",
@@ -693,6 +713,11 @@
     "defaultMessage": "Your payment has been received.",
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
+  },
+  "W4dbIb": {
+    "defaultMessage": "Date of birth",
+    "description": "Label for children dateOfBirth",
+    "originalDefault": "Date of birth"
   },
   "WDiVaT": {
     "defaultMessage": "Are you sure that you want to cancel this submission? You will lose your progress if you continue.",
@@ -1099,6 +1124,11 @@
     "description": "ZOD 'invalid_intersection_types' error message",
     "originalDefault": "Intersection results could not be merged"
   },
+  "psBz1n": {
+    "defaultMessage": "BSN",
+    "description": "Label for children BSN",
+    "originalDefault": "BSN"
+  },
   "q9AKjH": {
     "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at most} other {under}}} } {maximum, plural, one {{maximum} character} other {{maximum} characters}}.",
     "description": "ZOD 'too_big' error message, for strings",
@@ -1183,6 +1213,11 @@
     "defaultMessage": "Failed to determine the appointment",
     "description": "Appointment cancellation missing submission ID query string parameter",
     "originalDefault": "Failed to determine the appointment"
+  },
+  "vHBt6x": {
+    "defaultMessage": "Firstnames",
+    "description": "Label for children firstNames",
+    "originalDefault": "Firstnames"
   },
   "vIfXbq": {
     "defaultMessage": "Failed to determine the appointment time",
