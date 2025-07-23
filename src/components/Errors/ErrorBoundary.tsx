@@ -31,15 +31,15 @@ interface StateWithError {
   error: AnyError;
 }
 
-type State = StateWithError | StateWithoutError;
+export type ErrorBoundaryState = StateWithError | StateWithoutError;
 
-class ErrorBoundary extends React.Component<Props, State> {
-  public state: State = {
+class ErrorBoundary extends React.Component<Props, ErrorBoundaryState> {
+  public state: ErrorBoundaryState = {
     hasError: false,
     error: null,
   };
 
-  public static getDerivedStateFromError(error: Error): State {
+  public static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return {
       hasError: true,
       error,

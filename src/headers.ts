@@ -1,3 +1,5 @@
+import type {SupportedLocales} from '@open-formulieren/types';
+
 const CSPNonceHeaderName = 'X-CSP-Nonce';
 const CSRFTokenHeaderName = 'X-CSRFToken';
 const IsFormDesignerHeaderName = 'X-Is-Form-Designer';
@@ -53,6 +55,6 @@ const IsFormDesigner = factoryHeader<boolean>(IsFormDesignerHeaderName, false);
  * The backend interprets the HTTP Accept-Language (request) header and informs us of
  * the activated language via the Content-Language response header.
  */
-const ContentLanguage = factoryHeader<string>('Content-Language', 'nl');
+const ContentLanguage = factoryHeader<SupportedLocales>('Content-Language', 'nl');
 
 export {CSPNonce, CSRFToken, IsFormDesigner, ContentLanguage};

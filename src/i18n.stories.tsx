@@ -1,3 +1,6 @@
+import type {SupportedLocales} from '@open-formulieren/types';
+import type {Meta, StoryObj} from '@storybook/react';
+import {fn} from '@storybook/test';
 import {useIntl} from 'react-intl';
 
 import {
@@ -11,6 +14,10 @@ export default {
   title: 'Private API / Translation manager',
   component: I18NManager,
   decorators: [ConfigDecorator],
+  args: {
+    languageSelectorTarget: null,
+    onLanguageChangeDone: fn(),
+  },
   parameters: {
     msw: {handlers: [mockFormioTranslations]},
     controls: {hideNoControlsWarning: true},
@@ -20,16 +27,21 @@ export default {
     children: {table: {disable: true}},
     onLanguageChangeDone: {table: {disable: true}},
   },
-};
+} satisfies Meta<typeof I18NManager>;
 
-const Debug = () => {
+type Story = StoryObj<typeof I18NManager>;
+
+const Debug: React.FC = () => {
   const {locale} = useIntl();
   return (
     <>
       <div>Current locale: {locale}</div>
       <div>
         Change locale to:
-        <select value={locale} onChange={event => setLanguage(event.target.value)}>
+        <select
+          value={locale}
+          onChange={event => setLanguage(event.target.value as SupportedLocales)}
+        >
           <option value="nl">nl</option>
           <option value="en">en</option>
         </select>
@@ -38,19 +50,19 @@ const Debug = () => {
   );
 };
 
-export const Default = {
-  render: () => (
-    <I18NManager languageSelectorTarget={null}>
+export const Default: Story = {
+  render: args => (
+    <I18NManager {...args}>
       <Debug />
     </I18NManager>
   ),
 };
 
-export const WithError = {
+export const WithError: Story = {
   name: 'Error loading assets',
-  render: () => (
+  render: args => (
     <I18NErrorBoundary>
-      <I18NManager languageSelectorTarget={null}>
+      <I18NManager {...args}>
         <Debug />
       </I18NManager>
     </I18NErrorBoundary>

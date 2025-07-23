@@ -1,28 +1,37 @@
+import type {SupportedLocales} from '@open-formulieren/types';
 import flatpickr from 'flatpickr';
 import {Dutch} from 'flatpickr/dist/l10n/nl.js';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
-import {IntlProvider, createIntl, createIntlCache} from 'react-intl';
+import {
+  IntlProvider,
+  type MessageDescriptor,
+  type MessageFormatElement,
+  createIntl,
+  createIntlCache,
+} from 'react-intl';
 import {useAsync} from 'react-use';
 import {createState, useState as useGlobalState} from 'state-pool';
 
-import {ConfigContext, FormioTranslations} from 'Context';
-import {get} from 'api';
-import {logError} from 'components/Errors';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import Loader from 'components/Loader';
+import {ConfigContext, FormioTranslations} from '@/Context';
+import {get} from '@/api';
+import {logError} from '@/components/Errors';
+import type {ErrorBoundaryState} from '@/components/Errors/ErrorBoundary';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import Loader from '@/components/Loader';
 
 // ensure flatpickr locales are included in bundle
 flatpickr.l10ns.nl = Dutch;
 
-const currentLanguage = createState('nl');
+const currentLanguage = createState<SupportedLocales>('nl');
 
-const setLanguage = langCode => {
+const setLanguage = (langCode: SupportedLocales) => {
   currentLanguage.setValue(langCode);
 };
 
-const loadLocaleData = async locale => {
-  let localeToLoad;
+type ReactIntlLocaleData = Record<string, MessageFormatElement[]>;
+
+const loadLocaleData = async (locale: SupportedLocales): Promise<ReactIntlLocaleData> => {
+  let localeToLoad: SupportedLocales;
   switch (locale) {
     case 'nl': {
       localeToLoad = 'nl';
@@ -45,30 +54,53 @@ Functionality to localize messages in a locale outside of the usual React lifecy
  */
 const cache = createIntlCache();
 
-const formatMessageForLocale = async (locale, msg) => {
+const formatMessageForLocale = async (locale: SupportedLocales, msg: MessageDescriptor) => {
   const messages = await loadLocaleData(locale);
   const intl = createIntl({locale, messages}, cache);
   return intl.formatMessage(msg);
 };
 
-const loadFormioTranslations = async (baseUrl, languageCode) => {
+type FormioTranslations = Partial<Record<SupportedLocales, Record<string, string>>>;
+
+const loadFormioTranslations = async (
+  baseUrl: string,
+  languageCode: SupportedLocales
+): Promise<FormioTranslations> => {
   const messages = await get(`${baseUrl}i18n/formio/${languageCode}`);
   return {[languageCode]: messages};
 };
 
-const I18NContext = React.createContext({
+interface I18NContextType {
+  onLanguageChangeDone: (newLanguageCode: SupportedLocales) => void;
+  languageSelectorTarget: HTMLElement | null;
+}
+
+const I18NContext = React.createContext<I18NContextType>({
   onLanguageChangeDone: () => {},
   languageSelectorTarget: null,
 });
 I18NContext.displayName = 'I18NContext';
 
-const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) => {
+export interface I18NManagerProps {
+  languageSelectorTarget: HTMLElement | null;
+  onLanguageChangeDone: I18NContextType['onLanguageChangeDone'];
+  children: React.ReactNode;
+}
+
+const I18NManager: React.FC<I18NManagerProps> = ({
+  languageSelectorTarget,
+  onLanguageChangeDone,
+  children,
+}) => {
   const {baseUrl} = useContext(ConfigContext);
   const [languageCode] = useGlobalState(currentLanguage);
 
   // ensure that we load the translations for the requested language
   const {loading, value, error} = useAsync(async () => {
-    const promises = [loadLocaleData(languageCode), loadFormioTranslations(baseUrl, languageCode)];
+    const promises: [Promise<ReactIntlLocaleData>, Promise<FormioTranslations>] = [
+      loadLocaleData(languageCode),
+      loadFormioTranslations(baseUrl, languageCode),
+    ];
     const [messages, formioTranslations] = await Promise.all(promises);
     return {
       messages,
@@ -77,12 +109,11 @@ const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) =
   }, [baseUrl, languageCode]);
 
   if (loading) return <Loader modifiers={['centered']} withoutTranslation />;
-
   if (error) {
     throw error;
   }
 
-  const {messages, formioTranslations} = value;
+  const {messages, formioTranslations} = value!; // no error, not loading -> value is not undefined
 
   return (
     <IntlProvider messages={messages} locale={languageCode} defaultLocale="nl">
@@ -95,11 +126,9 @@ const I18NManager = ({languageSelectorTarget, onLanguageChangeDone, children}) =
   );
 };
 
-I18NManager.propTypes = {
-  languageSelectorTarget: PropTypes.instanceOf(Element),
-  onLanguageChangeDone: PropTypes.func,
-  children: PropTypes.node,
-};
+interface I18NErrorBoundaryProps {
+  children: React.ReactNode;
+}
 
 /**
  * Special error boundary that doesn't use react-intl anywhere.
@@ -109,24 +138,24 @@ I18NManager.propTypes = {
  * in our I18NManager component, this is not the case, so we need to use a generic
  * error boundary.
  */
-class I18NErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {hasError: false, error: null};
-  }
+class I18NErrorBoundary extends React.Component<I18NErrorBoundaryProps, ErrorBoundaryState> {
+  public state: ErrorBoundaryState = {
+    hasError: false,
+    error: null,
+  };
 
-  static getDerivedStateFromError(error) {
+  public static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return {
       hasError: true,
       error,
     };
   }
 
-  componentDidCatch(error, errorInfo) {
+  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     logError(error, errorInfo);
   }
 
-  render() {
+  public render() {
     const {children} = this.props;
     const {hasError, error} = this.state;
     if (!hasError) {
@@ -140,11 +169,11 @@ class I18NErrorBoundary extends React.Component {
     return (
       <ErrorMessage>
         <div>{defaultMsg}</div>
-        {error.detail ? (
+        {typeof error === 'object' && 'detail' in error && (
           <p>
             Fout: <em>{error.detail}</em>
           </p>
-        ) : null}
+        )}
       </ErrorMessage>
     );
   }
