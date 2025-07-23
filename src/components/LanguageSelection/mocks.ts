@@ -1,16 +1,25 @@
+import type {SupportedLocales} from '@open-formulieren/types';
 import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
 
-export const DEFAULT_LANGUAGES = [
+import type {FormioTranslations} from '@/i18n';
+
+import type {LanguageInfo} from './LanguageSelection';
+
+export const DEFAULT_LANGUAGES: LanguageInfo['languages'] = [
   {code: 'nl', name: 'Nederlands'},
   {code: 'en', name: 'English'},
+  // @ts-expect-error we deliberately add a 'foreign' language to test fallback behaviour
   {code: 'fy', name: 'frysk'},
 ];
 
-export const mockLanguageInfoGet = (languages = DEFAULT_LANGUAGES, current = 'nl') =>
+export const mockLanguageInfoGet = (
+  languages: LanguageInfo['languages'] = DEFAULT_LANGUAGES,
+  current: LanguageInfo['current'] = 'nl'
+) =>
   http.get(`${BASE_URL}i18n/info`, () =>
-    HttpResponse.json({
+    HttpResponse.json<LanguageInfo>({
       languages: languages,
       current: current,
     })
@@ -43,7 +52,7 @@ export const mockInvalidLanguageChoicePut = (lang = 'fy') =>
     )
   );
 
-const FORMIO_TRANSLATIONS = {
+const FORMIO_TRANSLATIONS: FormioTranslations = {
   nl: {
     'Click to set value': 'Klik om waarde in te stellen',
     Cancel: 'Annuleren',
@@ -54,11 +63,14 @@ const FORMIO_TRANSLATIONS = {
   },
 };
 
-export const mockFormioTranslations = http.get(`${BASE_URL}i18n/formio/:lang`, ({params}) => {
-  const {lang} = params;
-  const translations = FORMIO_TRANSLATIONS[lang];
-  return HttpResponse.json(translations);
-});
+export const mockFormioTranslations = http.get<{lang: SupportedLocales}>(
+  `${BASE_URL}i18n/formio/:lang`,
+  ({params}) => {
+    const {lang} = params;
+    const translations = FORMIO_TRANSLATIONS[lang];
+    return HttpResponse.json(translations);
+  }
+);
 
 export const mockFormioTranslationsServiceUnavailable = http.get(
   `${BASE_URL}i18n/formio/:lang`,

@@ -60,17 +60,17 @@ const formatMessageForLocale = async (locale: SupportedLocales, msg: MessageDesc
   return intl.formatMessage(msg);
 };
 
-type FormioTranslations = Partial<Record<SupportedLocales, Record<string, string>>>;
+export type FormioTranslations = Record<SupportedLocales, Record<string, string>>;
 
 const loadFormioTranslations = async (
   baseUrl: string,
   languageCode: SupportedLocales
-): Promise<FormioTranslations> => {
+): Promise<Partial<FormioTranslations>> => {
   const messages = await get(`${baseUrl}i18n/formio/${languageCode}`);
   return {[languageCode]: messages};
 };
 
-interface I18NContextType {
+export interface I18NContextType {
   onLanguageChangeDone: (newLanguageCode: SupportedLocales) => void;
   languageSelectorTarget: HTMLElement | null;
 }
@@ -97,7 +97,7 @@ const I18NManager: React.FC<I18NManagerProps> = ({
 
   // ensure that we load the translations for the requested language
   const {loading, value, error} = useAsync(async () => {
-    const promises: [Promise<ReactIntlLocaleData>, Promise<FormioTranslations>] = [
+    const promises: [Promise<ReactIntlLocaleData>, Promise<Partial<FormioTranslations>>] = [
       loadLocaleData(languageCode),
       loadFormioTranslations(baseUrl, languageCode),
     ];

@@ -1,8 +1,7 @@
 import {useContext} from 'react';
 import ReactDOM from 'react-dom';
 
-import {LanguageSelection} from 'components/LanguageSelection';
-
+import LanguageSelection from '@/components/LanguageSelection';
 import {I18NContext} from '@/i18n';
 
 const LanguageSwitcher: React.FC = () => {
