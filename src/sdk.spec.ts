@@ -1,16 +1,17 @@
 import {act, waitFor, within} from '@testing-library/react';
 
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockFormGet} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
-import {mockFormioTranslations, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockFormGet} from '@/api-mocks';
+import mswServer from '@/api-mocks/msw-server';
+import type {LanguageInfo} from '@/components/LanguageSelection/LanguageSelection';
+import {mockFormioTranslations, mockLanguageInfoGet} from '@/components/LanguageSelection/mocks';
 
 import {OpenForm} from './sdk';
 
 // scrollIntoView is not supported in jest-dom
-let scrollIntoViewMock = vi.fn();
+const scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
-const LANGUAGES = [
+const LANGUAGES: LanguageInfo['languages'] = [
   {code: 'nl', name: 'Nederlands'},
   {code: 'en', name: 'English'},
 ];
@@ -48,7 +49,7 @@ describe('OpenForm', () => {
       <div id="my-languages-element"></div>
       <div id="root"></div>
     `;
-    const formRoot = document.getElementById('root');
+    const formRoot = document.getElementById('root')!;
     const target = document.getElementById('my-languages-element');
     mswServer.use(...apiMocks);
     const form = new OpenForm(formRoot, {
@@ -113,6 +114,7 @@ describe('OpenForm', () => {
     expect(within(formRoot).getAllByText('Nederlandse versie').length).toBeGreaterThan(0);
 
     await act(async () => {
+      // @ts-expect-error we're calling a private method here
       await form.onLanguageChangeDone('en');
     });
 
@@ -142,6 +144,7 @@ describe('OpenForm', () => {
     expect(target).not.toBeEmptyDOMElement();
 
     await act(async () => {
+      // @ts-expect-error we're calling a private method here
       await form.onLanguageChangeDone('en');
     });
 
@@ -173,6 +176,7 @@ describe('OpenForm', () => {
     expect(target).not.toBeEmptyDOMElement();
 
     await act(async () => {
+      // @ts-expect-error we're calling a private method here
       await form.onLanguageChangeDone('en');
     });
 
@@ -192,6 +196,7 @@ describe('OpenForm', () => {
       formId: '81a22589-abce-4147-a2a3-62e9a56685aa',
     });
 
+    // @ts-expect-error accessing a protected property here
     expect(form.clientBaseUrl).toEqual('http://localhost/some-subpath');
   });
 
@@ -206,6 +211,7 @@ describe('OpenForm', () => {
       useHashRouting: true,
     });
 
+    // @ts-expect-error accessing a protected property here
     expect(form.clientBaseUrl).toEqual('http://localhost/some-path');
   });
 
@@ -220,6 +226,7 @@ describe('OpenForm', () => {
       useHashRouting: true,
     });
 
+    // @ts-expect-error accessing a protected property here
     expect(form.clientBaseUrl).toEqual('http://localhost/some-path?someQuery=foo');
   });
 

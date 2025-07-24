@@ -57,7 +57,7 @@ import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
 // Dynamically import react-formio and use React.lazy to facilitate bundle splitting
 // into separate chunks.
 const Form = lazy(async () => {
-  // this should already have been resolved the the sdk.jsx entrypoint :)
+  // this should already have been resolved the the sdk.tsx entrypoint :)
   const {Form, initializeFormio} = await import('formio-init');
   // side effect to ensure our custom templates/module are set up
   initializeFormio();

@@ -206,7 +206,7 @@ export default defineConfig(({mode}) => {
       // we write the .mjs file to the same directory
       emptyOutDir: buildTarget !== 'esm-bundle',
       rollupOptions: {
-        input: 'src/sdk.jsx',
+        input: 'src/sdk.tsx',
         // do not externalize anything in UMD build - bundle everything
         external: buildTarget === 'esm' ? packageRegexes : undefined,
         output: getOutput(buildTarget, buildDist),
