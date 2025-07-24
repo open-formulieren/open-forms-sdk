@@ -73,6 +73,12 @@
       "value": "BSN"
     }
   ],
+  "/jQkSu": [
+    {
+      "type": 0,
+      "value": "Add child"
+    }
+  ],
   "/oxZic": [
     {
       "type": 0,
@@ -247,6 +253,12 @@
     {
       "type": 0,
       "value": "Veelhoek (polygoon)"
+    }
+  ],
+  "6EoG3C": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "6GNK65": [
@@ -429,6 +441,12 @@
     {
       "type": 0,
       "value": "Tijdstip"
+    }
+  ],
+  "8MVAfQ": [
+    {
+      "type": 0,
+      "value": "Edit child"
     }
   ],
   "8MZ9TV": [
@@ -1407,6 +1425,12 @@
       "value": "total"
     }
   ],
+  "VCgwM7": [
+    {
+      "type": 0,
+      "value": "Add Child"
+    }
+  ],
   "VaNtPf": [
     {
       "type": 0,
@@ -1417,6 +1441,12 @@
     {
       "type": 0,
       "value": "De betaling is ontvangen."
+    }
+  ],
+  "W4dbIb": [
+    {
+      "type": 0,
+      "value": "Date of birth"
     }
   ],
   "WDiVaT": [
@@ -2203,6 +2233,12 @@
       "value": "Intersectie-resultaten kunnen niet samengevoegd worden."
     }
   ],
+  "psBz1n": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
   "q9AKjH": [
     {
       "type": 0,
@@ -2481,6 +2517,12 @@
     {
       "type": 0,
       "value": "Dag"
+    }
+  ],
+  "vHBt6x": [
+    {
+      "type": 0,
+      "value": "Firstnames"
     }
   ],
   "vIfXbq": [
