@@ -2,6 +2,7 @@ import AddressNL from './components/AddressNL';
 import BsnField from './components/BsnField';
 import Button from './components/Button';
 import Checkbox from './components/Checkbox';
+import Children from './components/Children/Children';
 import CoSignOld from './components/CoSignOld';
 import Component from './components/Component';
 import ContentComponent from './components/Content';
@@ -57,6 +58,7 @@ const FormIOModule = {
     editgrid: EditGrid,
     softRequiredErrors: SoftRequiredErrors,
     partners: Partners,
+    children: Children,
   },
   providers: {
     storage: {url: CSRFEnabledUrl},

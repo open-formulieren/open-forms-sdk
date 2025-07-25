@@ -176,6 +176,11 @@ const PartnersDisplay = () => {
   return <EmptyDisplay />;
 };
 
+const ChildrenDisplay = () => {
+  // the children data is handled in the backend, so we do not want to show it twice
+  return <EmptyDisplay />;
+};
+
 const CurrencyDisplay = ({component, value}) => {
   if (!value && value !== 0) return <EmptyDisplay />;
 
@@ -296,6 +301,7 @@ const TYPE_TO_COMPONENT = {
   content: ContentDisplay,
   fieldset: FieldsetDisplay,
   partners: PartnersDisplay,
+  children: ChildrenDisplay,
 };
 
 export default ComponentValueDisplay;
