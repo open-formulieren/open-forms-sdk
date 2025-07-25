@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+3.2.1 (2025-07-25)
+==================
+
+Package metadata fix.
+
+* [#850] Added the missing formio module/template library exports to the package
+  metadata.
 
 3.2.0 (2025-07-10)
 ==================
