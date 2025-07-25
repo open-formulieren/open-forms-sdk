@@ -42,6 +42,4 @@ const IntroductionPage: React.FC = () => {
   );
 };
 
-IntroductionPage.propTypes = {};
-
 export default IntroductionPage;

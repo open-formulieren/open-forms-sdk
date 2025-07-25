@@ -43,7 +43,7 @@ interface Payment {
   };
 }
 
-type Action = CosignInit | Cosign | CancelAppointment | CreateAppointment | Resume | Payment;
+export type Action = CosignInit | Cosign | CancelAppointment | CreateAppointment | Resume | Payment;
 
 interface RedirectParams {
   path: string;

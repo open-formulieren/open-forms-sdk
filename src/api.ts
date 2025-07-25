@@ -1,3 +1,4 @@
+import type {SupportedLocales} from '@open-formulieren/types';
 import {createState} from 'state-pool';
 
 import {
@@ -123,8 +124,10 @@ const updateStoredHeadersValues = (headers: Headers): void => {
 
   const contentLanguage = headers.get(ContentLanguage.headerName);
   if (contentLanguage) {
-    ContentLanguage.setValue(contentLanguage);
-    setLanguage(contentLanguage);
+    // need to cast here since we don't have type/runtime safety guarantees about returned
+    // values, but we have fallback code to treat unknown locales as english.
+    ContentLanguage.setValue(contentLanguage as SupportedLocales);
+    setLanguage(contentLanguage as SupportedLocales);
   }
 };
 

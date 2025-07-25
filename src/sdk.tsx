@@ -1,22 +1,25 @@
-import RenderSettingsProvider from '@open-formulieren/formio-renderer/components/RendererSettingsProvider';
+import RenderSettingsProvider from '@open-formulieren/formio-renderer/components/RendererSettingsProvider.js';
+import type {SupportedLocales} from '@open-formulieren/types';
 import 'flatpickr';
 import React from 'react';
-import {createRoot} from 'react-dom/client';
+import {type Root, createRoot} from 'react-dom/client';
 import ReactModal from 'react-modal';
 import {createBrowserRouter, createHashRouter, resolvePath} from 'react-router';
 import {RouterProvider} from 'react-router/dom';
 import {NonceProvider} from 'react-select';
 
-import {ConfigContext, FormContext} from 'Context';
-import {get} from 'api';
-import {CSPNonce} from 'headers';
 import {PARAM_NAME} from 'hooks/useInitialDataReference';
-import {I18NErrorBoundary, I18NManager} from 'i18n';
-import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
-import initialiseSentry from 'sentry';
-import {DEBUG, getVersion} from 'utils';
+import routes, {FUTURE_FLAGS} from 'routes';
 
-import {getRedirectParams} from './routingActions';
+import {ConfigContext, FormContext} from '@/Context';
+import {get} from '@/api';
+import type {Form} from '@/data/forms';
+import {CSPNonce} from '@/headers';
+import {I18NErrorBoundary, I18NManager} from '@/i18n';
+import initialiseSentry from '@/sentry';
+import {DEBUG, getVersion} from '@/utils';
+
+import {type Action as RoutingAction, getRedirectParams} from './routingActions';
 import './styles.scss';
 
 // asynchronously 'pre-load' our formio initialization so that this can be split off
@@ -25,15 +28,51 @@ import('./formio-init');
 
 const VERSION = getVersion();
 
+export interface SDKOptions {
+  baseUrl: string;
+  formId: string; // UUID or slug
+  basePath?: string;
+  CSPNonce?: string;
+  lang?: SupportedLocales;
+  sentryDSN?: string;
+  sentryEnv?: string;
+  languageSelectorTarget?: string | HTMLElement | null;
+  useHashRouting?: boolean;
+  onLanguageChange?: (
+    newLanguagecode: SupportedLocales,
+    initialDataReference: string | null
+  ) => void;
+}
+
 class OpenForm {
-  constructor(targetNode, opts) {
+  protected targetNode: HTMLElement;
+  protected baseUrl: string;
+  protected apiUrl: string;
+  protected initialDataReference: string | null;
+
+  protected lang: SupportedLocales;
+  protected languageSelectorTarget: HTMLElement | null;
+  protected onLanguageChange: SDKOptions['onLanguageChange'];
+
+  // resolved form definition from backend
+  protected formObject: Form | null;
+
+  protected useHashRouting: boolean;
+  protected routerBasePath: string;
+  protected browserBasePath: string;
+  protected clientBaseUrl: string;
+  protected baseDocumentTitle: string;
+
+  private root: Root | null;
+
+  public constructor(targetNode: HTMLElement, opts: SDKOptions) {
     const {
       baseUrl,
       basePath,
       formId,
-      CSPNonce: CSPNonceValue,
-      lang,
-      sentryDSN,
+      CSPNonce: CSPNonceValue = '',
+      lang = 'nl',
+      sentryDSN = '',
       sentryEnv = '',
       languageSelectorTarget,
       useHashRouting = false,
@@ -42,15 +81,18 @@ class OpenForm {
 
     this.targetNode = targetNode;
     this.baseUrl = baseUrl;
-    this.formId = formId;
     this.formObject = null;
     this.lang = lang;
     this.useHashRouting = useHashRouting;
     this.onLanguageChange = typeof onLanguageChange === 'function' ? onLanguageChange : undefined;
 
+    this.apiUrl = `${baseUrl}forms/${formId}`;
+
     switch (typeof languageSelectorTarget) {
       case 'string': {
-        this.languageSelectorTarget = document.querySelector(languageSelectorTarget);
+        this.languageSelectorTarget = document.querySelector(
+          languageSelectorTarget
+        ) as HTMLElement | null;
         break;
       }
       case 'object': {
@@ -58,7 +100,7 @@ class OpenForm {
         break;
       }
       default:
-        this.languageSelectorTarget = undefined;
+        this.languageSelectorTarget = null;
         break;
     }
 
@@ -76,9 +118,12 @@ class OpenForm {
     this.makeRedirect();
     this.calculateClientBaseUrl();
     this.extractInitialDataReference();
+
+    this.baseDocumentTitle = document.title;
+    this.root = null;
   }
 
-  makeRedirect() {
+  protected makeRedirect() {
     // Perform pre-redirect based on this action: this is decoupled from the backend
     const query = new URLSearchParams(document.location.search);
     const action = query.get('_of_action');
@@ -90,23 +135,23 @@ class OpenForm {
     query.delete('_of_action_params');
 
     const {path: redirectPath, query: redirectQuery = new URLSearchParams()} = getRedirectParams({
-      action,
+      action: action as RoutingAction['action'],
       params: actionParams,
     });
     const newUrl = new URL(this.browserBasePath, window.location.origin);
     if (!this.useHashRouting) {
       newUrl.pathname += `${!newUrl.pathname.endsWith('/') ? '/' : ''}${redirectPath}`;
       // We first append query params from the redirect action
-      for (let [key, val] of redirectQuery.entries()) {
+      for (const [key, val] of redirectQuery.entries()) {
         newUrl.searchParams.append(key, val);
       }
       // And extra unrelated query params
-      for (let [key, val] of query.entries()) {
+      for (const [key, val] of query.entries()) {
         newUrl.searchParams.append(key, val);
       }
     } else {
       // First add extra unrelated query params, before hash (`#`)
-      for (let [key, val] of query.entries()) {
+      for (const [key, val] of query.entries()) {
         newUrl.searchParams.append(key, val);
       }
 
@@ -120,7 +165,7 @@ class OpenForm {
     window.history.replaceState(null, '', newUrl);
   }
 
-  calculateClientBaseUrl() {
+  protected calculateClientBaseUrl() {
     // calculate the client-side base URL, as this is recorded in backend calls for
     // submissions.
     const clientBase = resolvePath(this.browserBasePath).pathname; // has leading slash
@@ -130,12 +175,12 @@ class OpenForm {
     ).href;
   }
 
-  extractInitialDataReference() {
+  protected extractInitialDataReference() {
     const urlParams = new URLSearchParams(window.location.search);
     this.initialDataReference = urlParams.get(PARAM_NAME);
   }
 
-  async init() {
+  public async init() {
     ReactModal.setAppElement(this.targetNode);
 
     // Fixing an issue where browser (in particular Chrome) translations change the DOM
@@ -143,27 +188,32 @@ class OpenForm {
     // See https://github.com/open-formulieren/open-forms/issues/5242
     this.targetNode.setAttribute('translate', 'no');
 
-    this.url = `${this.baseUrl}forms/${this.formId}`;
     this.targetNode.textContent = `Loading form...`;
-    this.baseTitle = document.title;
-    this.formObject = await get(this.url);
+    this.formObject = await get<Form>(this.apiUrl);
 
     this.root = createRoot(this.targetNode);
     this.render();
   }
 
-  async onLanguageChangeDone(newLanguagecode) {
+  private async onLanguageChangeDone(newLanguagecode: SupportedLocales) {
     if (this.onLanguageChange) {
       this.onLanguageChange(newLanguagecode, this.initialDataReference);
       return;
     }
-    this.formObject = await get(this.url);
+    this.formObject = await get<Form>(this.apiUrl);
     this.render();
   }
 
-  render() {
+  private render() {
     const createRouter = this.useHashRouting ? createHashRouter : createBrowserRouter;
     const router = createRouter(routes, {basename: this.routerBasePath, future: FUTURE_FLAGS});
+
+    if (!this.formObject) {
+      throw new Error('Form must be loaded from the API, make sure to call `init` first.');
+    }
+    if (!this.root) {
+      throw new Error('The react root is not yet initialized, make sure to call `init`` first.');
+    }
 
     // render the wrapping React component
     this.root.render(
@@ -174,7 +224,7 @@ class OpenForm {
               baseUrl: this.baseUrl,
               clientBaseUrl: this.clientBaseUrl,
               basePath: this.routerBasePath,
-              baseTitle: this.baseTitle,
+              baseTitle: this.baseDocumentTitle,
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
               debug: DEBUG,
@@ -183,13 +233,13 @@ class OpenForm {
             <RenderSettingsProvider
               requiredFieldsWithAsterisk={this.formObject.requiredFieldsWithAsterisk}
             >
-              <NonceProvider nonce={CSPNonce.getValue()} cacheKey="sdk-react-select">
+              <NonceProvider nonce={CSPNonce.getValue() ?? ''} cacheKey="sdk-react-select">
                 <I18NErrorBoundary>
                   <I18NManager
                     languageSelectorTarget={this.languageSelectorTarget}
                     onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
                   >
-                    <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+                    <RouterProvider router={router} />
                   </I18NManager>
                 </I18NErrorBoundary>
               </NonceProvider>

@@ -1,7 +1,6 @@
 import {EditGrid} from '@open-formulieren/formio-renderer';
 import {Form, Formik} from 'formik';
 import {produce} from 'immer';
-import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -160,10 +159,6 @@ const ChooseProductStep: React.FC<ChooseProductStepProps> = ({navigateTo = null}
       />
     </>
   );
-};
-
-ChooseProductStep.propTypes = {
-  navigateTo: PropTypes.string,
 };
 
 export default ChooseProductStep;
