@@ -6,6 +6,8 @@
   "exports": {
     ".": "./dist/open-forms-sdk.js",
     "./styles.css": "./dist/open-forms-sdk.css",
+    "./formio-module": "./dist/esm/formio/module.js",
+    "./formio-templates": "./dist/esm/formio/templates/library.js",
     "./components/*": "./dist/esm/components/*",
     "./hooks/*": "./dist/esm/hooks/*",
     "./types/*": "./dist/esm/types/*",

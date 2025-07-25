@@ -1,0 +1,81 @@
+import {Meta} from '@storybook/blocks';
+
+<Meta title="Developers / External storybook" />
+
+# Embedding in external storybook
+
+Users of [NL Design System](https://www.nldesignsystem.nl/) are encouraged to incorporate our custom
+(Formio) components and templates into their own Storybook for visual regression testing.
+
+Here you find guidelines on _how_ to achieve this and the necessary hoops to jump through.
+
+## Build toolchains
+
+Your build toolchain needs to be able to transform the `.ejs` templates into Javascript, which
+requires some plugins.
+
+### ViteJS
+
+With ViteJS, you can set up a simple code transform:
+
+```ts
+import lodashTemplate from 'lodash/template.js';
+
+const ejsPlugin = () => ({
+  name: 'compile-ejs',
+  async transform(src: string, id: string) {
+    const options = {
+      variable: 'ctx',
+      evaluate: /\{%([\s\S]+?)%\}/g,
+      interpolate: /\{\{([\s\S]+?)\}\}/g,
+      escape: /\{\{\{([\s\S]+?)\}\}\}/g,
+    };
+    if (id.endsWith('.ejs')) {
+      // @ts-ignore
+      const code = lodashTemplate(src, options);
+      return {code: `export default ${code}`, map: null};
+    }
+    return undefined;
+  },
+});
+```
+
+Include it in the Vite config plugins array:
+
+```ts
+export default defineConfig({
+  plugins: [...rest, ejsPlugin()],
+  ...rest,
+});
+```
+
+Note that you need to have `lodash` installed for this in your (dev) dependencies.
+
+### Webpack
+
+Contributions welcome!
+
+## React render helpers
+
+A number of variants around the same principle exist:
+
+- [our own utils](https://github.com/open-formulieren/open-forms-sdk/blob/3b8742a2b3fed361ac4e392074d79b9014ad51f3/src/formio/components/story-util.jsx#L9)
+- [Den Haag `StoryUtil.tsx`](https://github.com/nl-design-system/denhaag/blob/9d620ed06b2b8cf5d87734d4baf2eb1352df6b9e/packages/storybook/src/open-forms/StoryUtil.tsx)
+
+The crucial part is that the custom Formio module and templates need to be loaded and configured:
+
+```ts
+import OpenFormsModule from '@open-formulieren/sdk/formio-module';
+// the build plugin is required for this import
+import OFLibrary from '@open-formulieren/sdk/formio-templates';
+import '@open-formulieren/sdk/styles.css';
+import {Formio, Templates} from 'react-formio';
+
+const initialize = () => {
+  Formio.use(OpenFormsModule);
+  Templates.current = OFLibrary;
+};
+```
+
+Ensure this initialization code runs somewhere - it can be a hook, it can be part of your
+`.storybook/preview.ts`.
