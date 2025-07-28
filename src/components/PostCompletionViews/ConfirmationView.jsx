@@ -12,9 +12,6 @@ import {DEBUG} from 'utils';
 import PostCompletionView from './PostCompletionView';
 import StatusUrlPoller, {SubmissionStatusContext} from './StatusUrlPoller';
 
-// see openforms.payments.constants.UserAction in the backend
-const USER_ACTIONS = ['accept', 'exception', 'cancel', 'unknown'];
-
 // see openforms.payments.constants.PaymentStatus in the backend
 const STATUS_MESSAGES = {
   started: defineMessage({
@@ -44,7 +41,6 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
   const intl = useIntl();
   const location = useLocation();
   const paymentStatus = location?.state?.status;
-  const userAction = location?.state?.userAction;
 
   const {
     publicReference,
@@ -57,8 +53,6 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
   const paymentStatusMessage = STATUS_MESSAGES[paymentStatus];
   let Wrapper = React.Fragment;
   if (paymentStatus) {
-    if (!USER_ACTIONS.includes(userAction)) throw new Error('Unknown payment user action');
-
     if (!paymentStatusMessage) throw new Error('Unknown payment status');
 
     if (paymentStatus === 'failed') Wrapper = ErrorMessage;
