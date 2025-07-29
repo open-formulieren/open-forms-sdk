@@ -22,15 +22,17 @@ export const WithDataRetrieved = {
         {
           bsn: '123456789',
           firstNames: 'Peter',
-          dateOfBirth: '1-1-2000',
+          dateOfBirth: '2000-1-1',
           __addedManually: false,
+          __id: crypto.randomUUID(),
           selected: false,
         },
         {
           bsn: '165456987',
           firstNames: 'Paul',
-          dateOfBirth: '16-10-1998',
+          dateOfBirth: '1998-10-16',
           __addedManually: false,
+          __id: crypto.randomUUID(),
           selected: false,
         },
       ],
@@ -48,15 +50,17 @@ export const WithSelectionEnabled = {
         {
           bsn: '123456789',
           firstNames: 'Peter',
-          dateOfBirth: '1-1-2000',
+          dateOfBirth: '2000-1-1',
           __addedManually: false,
+          __id: crypto.randomUUID(),
           selected: false,
         },
         {
           bsn: '165456987',
           firstNames: 'Paul',
-          dateOfBirth: '16-10-1998',
+          dateOfBirth: '1998-10-16',
           __addedManually: false,
+          __id: crypto.randomUUID(),
           selected: false,
         },
       ],
@@ -73,15 +77,17 @@ export const ManuallyAddedChildren = {
         {
           bsn: '123456789',
           firstNames: 'Peter',
-          dateOfBirth: '1-1-2000',
+          dateOfBirth: '2000-1-1',
           __addedManually: true,
+          __id: crypto.randomUUID(),
           selected: false,
         },
         {
           bsn: '165456987',
           firstNames: 'Paul',
-          dateOfBirth: '16-10-1998',
+          dateOfBirth: '1998-10-16',
           __addedManually: true,
+          __id: crypto.randomUUID(),
           selected: false,
         },
       ],
@@ -98,15 +104,17 @@ export const EditManuallyAddedChildren = {
         {
           bsn: '123456782',
           firstNames: 'Peter',
-          dateOfBirth: '1-1-2000',
+          dateOfBirth: '2000-1-1',
           __addedManually: true,
+          __id: crypto.randomUUID(),
           selected: false,
         },
         {
           bsn: '165456987',
           firstNames: 'Paul',
-          dateOfBirth: '16-10-1998',
+          dateOfBirth: '1998-10-16',
           __addedManually: true,
+          __id: crypto.randomUUID(),
           selected: false,
         },
       ],
@@ -129,12 +137,12 @@ export const EditManuallyAddedChildren = {
       const firstChildCells = within(rows[1]).getAllByRole('cell');
       expect(firstChildCells[0]).toHaveTextContent('123456782');
       expect(firstChildCells[1]).toHaveTextContent('Peter');
-      expect(firstChildCells[2]).toHaveTextContent('1-1-2000');
+      expect(firstChildCells[2]).toHaveTextContent('2000-1-1');
 
       const secondChildCells = within(rows[2]).getAllByRole('cell');
       expect(secondChildCells[0]).toHaveTextContent('165456987');
       expect(secondChildCells[1]).toHaveTextContent('Paul');
-      expect(secondChildCells[2]).toHaveTextContent('16-10-1998');
+      expect(secondChildCells[2]).toHaveTextContent('1998-10-16');
 
       const editIcons = canvasElement.querySelectorAll('i.fa-pen');
       const deleteIcons = canvasElement.querySelectorAll('i.fa-trash-can');
@@ -163,13 +171,13 @@ export const EditManuallyAddedChildren = {
       const firstChildCells = within(rows[1]).getAllByRole('cell');
       expect(firstChildCells[0]).toHaveTextContent('123456782');
       expect(firstChildCells[1]).toHaveTextContent('PeterUpdated');
-      expect(firstChildCells[2]).toHaveTextContent('1-1-2000');
+      expect(firstChildCells[2]).toHaveTextContent('2000-1-1');
 
       // second child not updated
       const secondChildCells = within(rows[2]).getAllByRole('cell');
       expect(secondChildCells[0]).toHaveTextContent('165456987');
       expect(secondChildCells[1]).toHaveTextContent('Paul');
-      expect(secondChildCells[2]).toHaveTextContent('16-10-1998');
+      expect(secondChildCells[2]).toHaveTextContent('1998-10-16');
     });
 
     await step('Remove the second child', async () => {
@@ -183,5 +191,51 @@ export const EditManuallyAddedChildren = {
 
       expect(rows).toHaveLength(2);
     });
+  },
+};
+
+export const DuplicateBsns = {
+  args: {
+    onSave: fn(),
+    onRemoveChild: fn(),
+    submissionData: {
+      children: [
+        {
+          bsn: '123456782',
+          firstNames: 'Peter',
+          dateOfBirth: '2000-1-1',
+          __addedManually: true,
+          __id: crypto.randomUUID(),
+          selected: false,
+        },
+        {
+          bsn: '165456987',
+          firstNames: 'Paul',
+          dateOfBirth: '1998-10-16',
+          __addedManually: true,
+          __id: crypto.randomUUID(),
+          selected: false,
+        },
+      ],
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    const editIcons = canvasElement.querySelectorAll('i.fa-pen');
+    await userEvent.click(editIcons[1]);
+
+    const modal = await screen.findByRole('dialog');
+    const modalWithin = within(modal);
+
+    const bsnInput = modalWithin.getByLabelText('BSN');
+    await userEvent.clear(bsnInput);
+    await userEvent.type(bsnInput, '123456782');
+
+    await user.click(modalWithin.getByRole('button', {name: 'Save'}));
+
+    const errorMessage = await canvas.findByText('Multiple children share the same BSN number');
+    expect(errorMessage).toBeInTheDocument();
   },
 };

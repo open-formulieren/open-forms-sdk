@@ -69,6 +69,7 @@ export default class Children extends Field {
       ...child,
       selected: typeof child.selected === 'boolean' ? child.selected : false,
       __addedManually: typeof child.__addedManually === 'boolean' ? child.__addedManually : false,
+      __id: child.__id ?? crypto.randomUUID(),
     }));
 
     const changed = super.setValue(value, flags);
@@ -143,21 +144,40 @@ export default class Children extends Field {
   }
 
   handleChildSave(newChild) {
-    const childExists = newChild.__addedManually === true;
+    const childExists = newChild.__addedManually === true && newChild.__id;
     const oldChild = this.state.childBeingEdited;
 
     let updated;
     if (childExists) {
       // Update the existing child
       updated = this.dataValue.map(child =>
-        child.bsn === oldChild.bsn ? {...child, ...newChild} : child
+        child.__id === oldChild.__id ? {...child, ...newChild} : child
       );
     } else {
       // Add the new child to the ones already added by the user
-      updated = [...this.dataValue, {...newChild, __addedManually: true}];
+      updated = [
+        ...this.dataValue,
+        {...newChild, __addedManually: true, __id: crypto.randomUUID()},
+      ];
     }
 
     this.updateValue(updated, {modified: true});
+  }
+
+  checkComponentValidity(data, dirty, row) {
+    this.setCustomValidity('', data);
+
+    // Check for duplicate BSNs
+    const bsnSet = new Set();
+    for (const child of this.dataValue) {
+      if (bsnSet.has(child.bsn)) {
+        this.setCustomValidity(this.t('Multiple children share the same BSN number'), data);
+        return false;
+      }
+      bsnSet.add(child.bsn);
+    }
+
+    return super.checkComponentValidity(data, dirty, row);
   }
 
   handleChildRemoval(childToRemove) {
@@ -167,14 +187,14 @@ export default class Children extends Field {
 
     if (!removalConfirmed) return;
 
-    const newValue = this.dataValue.filter(child => child.bsn !== childToRemove.bsn);
+    const newValue = this.dataValue.filter(child => child.__id !== childToRemove.__id);
     this.updateValue(newValue);
     this.renderReact();
   }
 
-  toggleChildSelection(childBSN) {
+  toggleChildSelection(childId) {
     this.dataValue = this.dataValue.map(child => {
-      if (child.bsn === childBSN) {
+      if (child.__id === childId) {
         return {...child, selected: !child.selected};
       }
       return child;
@@ -222,7 +242,7 @@ export default class Children extends Field {
             onAddChild={() => this.openChildModal()}
             onEditChild={childToEdit => this.openChildModal(childToEdit)}
             onRemoveChild={childToRemove => this.handleChildRemoval(childToRemove)}
-            toggleChildSelection={childBSN => this.toggleChildSelection(childBSN)}
+            toggleChildSelection={childId => this.toggleChildSelection(childId)}
           />
 
           <AddChildModal

@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  Icon,
   Table,
   TableBody,
   TableCell,
@@ -8,6 +9,7 @@ import {
   TableRow,
 } from '@utrecht/component-library-react';
 import '@utrecht/table-css';
+import {UUID} from 'crypto';
 import {FormattedMessage} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
@@ -24,7 +26,7 @@ export interface ChildrenComponentProps {
   onAddChild: () => void;
   onEditChild: (child: ChildExtendedDetails) => void;
   onRemoveChild: (child: ChildExtendedDetails) => void;
-  toggleChildSelection: (childBSN: string) => void;
+  toggleChildSelection: (childId: UUID) => void;
 }
 
 /**
@@ -66,7 +68,7 @@ export interface DisplayChildrenProps {
   enableSelection: boolean;
   onEditChild: (child: ChildExtendedDetails) => void;
   onRemoveChild: (child: ChildExtendedDetails) => void;
-  toggleChildSelection: (childBSN: string) => void;
+  toggleChildSelection: (childId: UUID) => void;
 }
 
 export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
@@ -103,7 +105,7 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                     <Checkbox
                       name={`child.${index}`}
                       checked={!!child.selected}
-                      onClick={() => toggleChildSelection(child.bsn)}
+                      onChange={() => toggleChildSelection(child.__id)}
                     />
                   </TableCell>
                 )}
@@ -144,7 +146,9 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                       appearance="subtle-button"
                       variant="default"
                     >
-                      <FAIcon icon="pen" />
+                      <Icon>
+                        <FAIcon icon="pen" />
+                      </Icon>
                     </OFButton>
                     <OFButton
                       onClick={() => onRemoveChild(child)}
@@ -152,7 +156,9 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                       variant="default"
                       hint="danger"
                     >
-                      <FAIcon icon="trash-can" />
+                      <Icon>
+                        <FAIcon icon="trash-can" />
+                      </Icon>
                     </OFButton>
                   </TableCell>
                 )}

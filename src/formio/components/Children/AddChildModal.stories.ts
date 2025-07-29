@@ -27,6 +27,7 @@ export const EditChild: StoryObj<Children> = {
       firstNames: 'Peter',
       dateOfBirth: '2000-1-1',
       __addedManually: false,
+      __id: crypto.randomUUID(),
       selected: false,
     },
   },
