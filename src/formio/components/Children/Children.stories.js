@@ -219,21 +219,23 @@ export const DuplicateBsns = {
       ],
     },
   },
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
 
-    const editIcons = canvasElement.querySelectorAll('i.fa-pen');
-    await userEvent.click(editIcons[1]);
+    await step('Edit the child', async () => {
+      const editIcons = await canvasElement.querySelectorAll('i.fa-pen');
+      await userEvent.click(editIcons[1]);
 
-    const modal = await screen.findByRole('dialog');
-    const modalWithin = within(modal);
+      const modal = await screen.findByRole('dialog');
+      const modalWithin = within(modal);
 
-    const bsnInput = modalWithin.getByLabelText('BSN');
-    await userEvent.clear(bsnInput);
-    await userEvent.type(bsnInput, '123456782');
+      const bsnInput = modalWithin.getByLabelText('BSN');
+      await user.clear(bsnInput);
+      await user.type(bsnInput, '123456782');
 
-    await user.click(modalWithin.getByRole('button', {name: 'Save'}));
+      await user.click(modalWithin.getByRole('button', {name: 'Save'}));
+    });
 
     const errorMessage = await canvas.findByText('Multiple children share the same BSN number');
     expect(errorMessage).toBeInTheDocument();
