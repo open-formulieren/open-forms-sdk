@@ -30,6 +30,11 @@
     "isTranslated": true,
     "originalDefault": "BSN"
   },
+  "/jQkSu": {
+    "defaultMessage": "Add child",
+    "description": "Add child modal title",
+    "originalDefault": "Add child"
+  },
   "/oxZic": {
     "defaultMessage": "Initialen",
     "description": "Label for partners initials",
@@ -130,6 +135,11 @@
     "description": "Draw toolbar polygon button tooltip.",
     "originalDefault": "Shape (polygon)"
   },
+  "6EoG3C": {
+    "defaultMessage": "Save",
+    "description": "Add child: save child data button text",
+    "originalDefault": "Save"
+  },
   "6GNK65": {
     "defaultMessage": "Je moet ingelogd zijn voor deze actie.",
     "description": "Authentication error message",
@@ -181,6 +191,11 @@
     "defaultMessage": "Tijdstip",
     "description": "Appoinments: time select label",
     "originalDefault": "Time"
+  },
+  "8MVAfQ": {
+    "defaultMessage": "Edit child",
+    "description": "Edit child modal title",
+    "originalDefault": "Edit child"
   },
   "8MZ9TV": {
     "defaultMessage": "Je moet akkoord gaan met het privacybeleid om door te gaan",
@@ -693,6 +708,11 @@
     "isTranslated": true,
     "originalDefault": "Product {number}/{total}"
   },
+  "VCgwM7": {
+    "defaultMessage": "Add Child",
+    "description": "Add child: add child button text",
+    "originalDefault": "Add Child"
+  },
   "VaNtPf": {
     "defaultMessage": "Afspraak annuleren",
     "description": "Cancel appointment submit button",
@@ -702,6 +722,11 @@
     "defaultMessage": "De betaling is ontvangen.",
     "description": "payment completed status",
     "originalDefault": "Your payment has been received."
+  },
+  "W4dbIb": {
+    "defaultMessage": "Date of birth",
+    "description": "Label for children dateOfBirth",
+    "originalDefault": "Date of birth"
   },
   "WDiVaT": {
     "defaultMessage": "Ben je zeker dat je deze formulierinzending wilt annuleren? Je verliest alle voortgang als je bevestigt.",
@@ -1112,6 +1137,11 @@
     "description": "ZOD 'invalid_intersection_types' error message",
     "originalDefault": "Intersection results could not be merged"
   },
+  "psBz1n": {
+    "defaultMessage": "BSN",
+    "description": "Label for children BSN",
+    "originalDefault": "BSN"
+  },
   "q9AKjH": {
     "defaultMessage": "De tekst moet {exact, select, true {exact} other {{inclusive, select, true {maximaal} other {minder dan}}} } {maximum, plural, one {{maximum} karakter} other {{maximum} karakters}} lang zijn.",
     "description": "ZOD 'too_big' error message, for strings",
@@ -1196,6 +1226,11 @@
     "defaultMessage": "Het systeem kon de afspraak niet vinden",
     "description": "Appointment cancellation missing submission ID query string parameter",
     "originalDefault": "Failed to determine the appointment"
+  },
+  "vHBt6x": {
+    "defaultMessage": "Firstnames",
+    "description": "Label for children firstNames",
+    "originalDefault": "Firstnames"
   },
   "vIfXbq": {
     "defaultMessage": "Het systeem kon de afspraak niet vinden",

@@ -22,6 +22,17 @@
       --utrecht-button-border-radius: 2px;
     }
   }
+
+  .utrecht-table .utrecht-button {
+    --_utrecht-button-background-color: transparent;
+    --utrecht-button-padding-block-start: 0;
+    --utrecht-button-padding-block-end: 0;
+
+    &:hover {
+      --utrecht-button-subtle-hover-background-color: transparent;
+      --utrecht-button-subtle-danger-hover-background-color: transparent;
+    }
+  }
 }
 
 @include mobile-only {
