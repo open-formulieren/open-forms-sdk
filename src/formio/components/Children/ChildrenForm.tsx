@@ -10,7 +10,7 @@ import {
 } from '@utrecht/component-library-react';
 import '@utrecht/table-css';
 import {UUID} from 'crypto';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
 
@@ -78,10 +78,13 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
   onRemoveChild,
   toggleChildSelection,
 }) => {
+  const intl = useIntl();
+
   const childrenFields = CHILDREN_COMPONENTS.map(({key, label}) => ({
     name: key,
     label: label,
   }));
+
   return (
     <div style={{padding: '1em'}}>
       {childrenValues.length > 0 && (
@@ -145,6 +148,13 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                       onClick={() => onEditChild(child)}
                       appearance="subtle-button"
                       variant="default"
+                      aria-label={intl.formatMessage(
+                        {
+                          description: 'Edit child button [bsn]',
+                          defaultMessage: 'Edit child with BSN: {bsn}.',
+                        },
+                        {bsn: child.bsn}
+                      )}
                     >
                       <Icon>
                         <FAIcon icon="pen" />
@@ -155,6 +165,13 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                       appearance="subtle-button"
                       variant="default"
                       hint="danger"
+                      aria-label={intl.formatMessage(
+                        {
+                          description: 'Delete child button [bsn]',
+                          defaultMessage: 'Delete child with BSN: {bsn}.',
+                        },
+                        {bsn: child.bsn}
+                      )}
                     >
                       <Icon>
                         <FAIcon icon="trash-can" />

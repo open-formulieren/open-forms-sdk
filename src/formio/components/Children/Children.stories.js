@@ -224,9 +224,14 @@ export const DuplicateBsns = {
     const user = userEvent.setup();
 
     await step('Edit the child', async () => {
-      const editIcons = await canvasElement.querySelectorAll('i.fa-pen');
-      await userEvent.click(editIcons[1]);
+      const table = await canvas.findByRole('table');
+      const rows = await within(table).findAllByRole('row');
+      expect(rows).toHaveLength(3);
 
+      const editIcons = await canvasElement.querySelectorAll('i.fa-pen');
+      expect(editIcons).toHaveLength(2);
+
+      await userEvent.click(editIcons[1]);
       const modal = await screen.findByRole('dialog');
       const modalWithin = within(modal);
 
