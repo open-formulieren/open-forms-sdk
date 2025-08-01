@@ -28,7 +28,7 @@ export const EditChild: StoryObj<Children> = {
       dateOfBirth: '2000-1-1',
       __addedManually: false,
       __id: crypto.randomUUID(),
-      selected: false,
+      selected: null,
     },
   },
 };
