@@ -1,19 +1,32 @@
 import {TextField} from '@open-formulieren/formio-renderer';
-import {userEvent, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react';
+import {fn, userEvent, within} from '@storybook/test';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import {OFButton} from 'components/Button';
-import useZodErrorMap from 'hooks/useZodErrorMap';
+import {OFButton} from '@/components/Button';
+import useZodErrorMap from '@/hooks/useZodErrorMap';
+
+interface Args {
+  email: string;
+  number: number;
+}
 
 export default {
   title: 'Private API / ZOD translations',
-};
+} satisfies Meta<Args>;
 
-const TestComponent = ({email, number}) => {
+type Story = StoryObj<Args>;
+
+interface TestComponentProps {
+  email: string;
+  number: number;
+}
+
+const TestComponent: React.FC<TestComponentProps> = ({email, number}) => {
   useZodErrorMap();
   const result = z
     .object({
@@ -51,7 +64,7 @@ const TestComponent = ({email, number}) => {
   );
 };
 
-export const NLTranslations = {
+export const NLTranslations: Story = {
   name: 'Dutch error messages',
   parameters: {
     locale: 'nl',
@@ -63,10 +76,14 @@ export const NLTranslations = {
   },
 };
 
-const AccessibleErrorsExample = ({onSubmit}) => {
+interface AccessibleErrorsExampleProps {
+  onSubmit: () => void;
+}
+
+const AccessibleErrorsExample: React.FC<AccessibleErrorsExampleProps> = ({onSubmit}) => {
   const intl = useIntl();
   useZodErrorMap();
-  const labels = {
+  const labels: Record<string, string> = {
     name: 'Name',
     email: 'Email address',
   };
@@ -75,7 +92,7 @@ const AccessibleErrorsExample = ({onSubmit}) => {
     email: z.string().email(),
   });
 
-  const errorMap = (issue, ctx) => {
+  const errorMap: z.ZodErrorMap = (issue, ctx) => {
     switch (issue.code) {
       case z.ZodIssueCode.invalid_type: {
         if (issue.received === z.ZodParsedType.undefined) {
@@ -108,7 +125,7 @@ const AccessibleErrorsExample = ({onSubmit}) => {
             className="utrecht-button-group--distanced"
             style={{justifyContent: 'flex-end'}}
           >
-            <OFButton type="submit" appearance="primary-action-button">
+            <OFButton type="submit" variant="primary" appearance="primary-action-button">
               Submit
             </OFButton>
           </ButtonGroup>
@@ -118,9 +135,9 @@ const AccessibleErrorsExample = ({onSubmit}) => {
   );
 };
 
-export const LocalOverridePOC = {
+export const LocalOverridePOC: StoryObj<unknown> = {
   name: 'Accessible errors example',
-  render: ({onSubmit}) => <AccessibleErrorsExample onSubmit={onSubmit} />,
+  render: () => <AccessibleErrorsExample onSubmit={fn()} />,
   parameters: {locale: 'nl'},
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);

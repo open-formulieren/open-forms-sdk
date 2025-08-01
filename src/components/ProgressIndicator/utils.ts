@@ -1,8 +1,13 @@
-import {STEP_LABELS} from 'components/constants';
-import {checkMatchesPath} from 'components/utils/routers';
-import {IsFormDesigner} from 'headers';
+import type {IntlShape} from 'react-intl';
 
-const canNavigateToStep = (index, submission) => {
+import {checkMatchesPath} from 'components/utils/routers';
+
+import {STEP_LABELS} from '@/components/constants';
+import type {Form} from '@/data/forms';
+import type {Submission} from '@/data/submissions';
+import {IsFormDesigner} from '@/headers';
+
+const canNavigateToStep = (index: number, submission: Submission): boolean => {
   // The user can navigate to a step when:
   // 1. All previous steps have been completed
   // 2. The user is a form designer
@@ -20,7 +25,20 @@ const canNavigateToStep = (index, submission) => {
   return !previousApplicableButNotCompletedSteps.length && submission.steps[index].isApplicable;
 };
 
-const getStepsInfo = (formSteps, submission, currentPathname) => {
+export interface StepMeta {
+  to: string;
+  label: string;
+  isCompleted: boolean;
+  isApplicable: boolean;
+  canNavigateTo: boolean;
+  isCurrent: boolean;
+}
+
+const getStepsInfo = (
+  formSteps: Form['steps'],
+  submission: Submission,
+  currentPathname: string
+): StepMeta[] => {
   return formSteps.map((step, index) => ({
     to: `/stap/${step.slug}`,
     label: step.formDefinition,
@@ -32,15 +50,15 @@ const getStepsInfo = (formSteps, submission, currentPathname) => {
 };
 
 const addFixedSteps = (
-  intl,
-  steps,
-  submission,
-  currentPathname,
-  showOverview,
-  needsPayment,
+  intl: IntlShape,
+  steps: StepMeta[],
+  submission: Submission,
+  currentPathname: string,
+  showOverview: boolean,
+  needsPayment: boolean,
   completed = false,
   hasIntroduction = false
-) => {
+): StepMeta[] => {
   const hasSubmission = !!submission;
   const isPayment = checkMatchesPath(currentPathname, 'betalen');
   const applicableSteps = hasSubmission ? submission.steps.filter(step => step.isApplicable) : [];
@@ -48,7 +66,7 @@ const addFixedSteps = (
   const applicableCompleted =
     hasSubmission && applicableSteps.length === applicableAndCompletedSteps.length;
 
-  const introductionPageStep = {
+  const introductionPageStep: StepMeta = {
     to: '../introductie',
     label: intl.formatMessage(STEP_LABELS.introduction),
     isCompleted: true,
@@ -57,7 +75,7 @@ const addFixedSteps = (
     isCurrent: checkMatchesPath(currentPathname, 'introductie'),
   };
 
-  const startPageStep = {
+  const startPageStep: StepMeta = {
     to: '../startpagina',
     label: intl.formatMessage(STEP_LABELS.login),
     isCompleted: hasSubmission,
@@ -66,7 +84,7 @@ const addFixedSteps = (
     isCurrent: checkMatchesPath(currentPathname, 'startpagina'),
   };
 
-  const summaryStep = {
+  const summaryStep: StepMeta = {
     to: '../overzicht',
     label: intl.formatMessage(STEP_LABELS.overview),
     isCompleted: isPayment,
@@ -75,10 +93,11 @@ const addFixedSteps = (
     canNavigateTo: applicableCompleted,
   };
 
-  const paymentStep = {
+  const paymentStep: StepMeta = {
     to: '../betalen',
     label: intl.formatMessage(STEP_LABELS.payment),
     isCompleted: false,
+    isApplicable: needsPayment,
     isCurrent: isPayment,
     canNavigateTo: completed,
   };
@@ -89,8 +108,7 @@ const addFixedSteps = (
     ...steps,
     showOverview && summaryStep,
     needsPayment && paymentStep,
-  ].filter(Boolean);
-
+  ].filter(step => !!step);
   return finalSteps;
 };
 

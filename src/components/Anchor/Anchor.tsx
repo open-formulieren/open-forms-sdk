@@ -9,7 +9,7 @@ export const ANCHOR_MODIFIERS = [
   'inherit',
 ] as const;
 
-type Variant = (typeof ANCHOR_MODIFIERS)[number];
+export type Variant = (typeof ANCHOR_MODIFIERS)[number];
 
 interface AnchorLinkProps extends React.ComponentPropsWithoutRef<typeof Link> {
   as?: 'link';

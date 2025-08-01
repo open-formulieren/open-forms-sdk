@@ -1,9 +1,16 @@
-import PropTypes from 'prop-types';
 import {forwardRef} from 'react';
 
 import FAIcon from 'components/FAIcon';
 
-const MobileButton = forwardRef(
+export interface MobileButtonProps {
+  ariaMobileIconLabel: string;
+  accessibleToggleStepsLabel: string;
+  formTitle: string;
+  expanded?: boolean;
+  onExpandClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+const MobileButton = forwardRef<HTMLButtonElement, MobileButtonProps>(
   ({ariaMobileIconLabel, accessibleToggleStepsLabel, formTitle, expanded, onExpandClick}, ref) => {
     return (
       <button
@@ -29,13 +36,5 @@ const MobileButton = forwardRef(
 );
 
 MobileButton.displayName = 'MobileButton';
-
-MobileButton.propTypes = {
-  ariaMobileIconLabel: PropTypes.string.isRequired,
-  accessibleToggleStepsLabel: PropTypes.string.isRequired,
-  formTitle: PropTypes.string.isRequired,
-  expanded: PropTypes.bool,
-  onExpandClick: PropTypes.func.isRequired,
-};
 
 export default MobileButton;
