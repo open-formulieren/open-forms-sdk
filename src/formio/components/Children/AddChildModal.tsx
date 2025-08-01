@@ -12,7 +12,7 @@ export interface AddChildrenModalProps {
   onSave: (child: ChildExtendedDetails) => void;
 }
 
-export const AddChildModal: React.FC<AddChildrenModalProps> = ({
+const AddChildModal: React.FC<AddChildrenModalProps> = ({
   childValues,
   isOpen,
   closeModal,

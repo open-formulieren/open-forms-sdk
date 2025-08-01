@@ -9,7 +9,7 @@ import {IntlProvider} from 'react-intl';
 import {ConfigContext} from 'Context';
 import enableValidationPlugins from 'formio/validators/plugins';
 
-import {AddChildModal} from './AddChildModal';
+import AddChildModal from './AddChildModal';
 import {ChildrenComponent} from './ChildrenForm';
 
 const Field = Formio.Components.components.field;
@@ -63,11 +63,15 @@ export default class Children extends Field {
       value = [];
     }
 
-    // Normalize each child to ensure `selected` and `__addedManually` are always a
-    // boolean (used to track the added/selected children by the user)
+    // Normalize each child to ensure `__addedManually` is always a boolean.
+    // The key `selected` should be a boolean only when the enableSelection from the
+    // component configuration is set to True (otherwise should be null).
+    // Both are used to track the added/selected children by the user.
+    const allowSelection = this.component.enableSelection === true;
     value = value.map(child => ({
       ...child,
-      selected: typeof child.selected === 'boolean' ? child.selected : false,
+      selected:
+        typeof child.selected === 'boolean' ? child.selected : allowSelection ? false : null,
       __addedManually: typeof child.__addedManually === 'boolean' ? child.__addedManually : false,
       __id: child.__id ?? crypto.randomUUID(),
     }));
@@ -195,7 +199,7 @@ export default class Children extends Field {
   toggleChildSelection(childId) {
     this.dataValue = this.dataValue.map(child => {
       if (child.__id === childId) {
-        return {...child, selected: !child.selected};
+        return {...child, selected: child.selected === null ? true : !child.selected};
       }
       return child;
     });
