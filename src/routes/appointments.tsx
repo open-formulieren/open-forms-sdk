@@ -1,9 +1,11 @@
-import ErrorBoundary from 'components/Errors/ErrorBoundary';
+import type {RouteObject} from 'react-router';
+
+import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 
 /**
  * Route subtree for appointment forms.
  */
-const createAppointmentRoutes = [
+const createAppointmentRoutes: RouteObject[] = [
   {
     path: '',
     lazy: async () => {
@@ -22,6 +24,7 @@ const createAppointmentRoutes = [
     path: 'kalender',
     lazy: async () => {
       const {LocationAndTimeStep} = await import('components/appointments');
+      // @ts-expect-error component not TS yet
       return {element: <LocationAndTimeStep navigateTo="../contactgegevens" />};
     },
   },
@@ -29,6 +32,7 @@ const createAppointmentRoutes = [
     path: 'contactgegevens',
     lazy: async () => {
       const {ContactDetailsStep} = await import('components/appointments');
+      // @ts-expect-error component not TS yet
       return {element: <ContactDetailsStep navigateTo="../overzicht" />};
     },
   },

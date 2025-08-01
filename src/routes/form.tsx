@@ -1,14 +1,17 @@
-import ErrorBoundary from 'components/Errors/ErrorBoundary';
+import type {RouteObject} from 'react-router';
+
 import FormLandingPage from 'components/FormLandingPage';
 import FormStart from 'components/FormStart';
 import FormStep from 'components/FormStep';
-import IntroductionPage from 'components/IntroductionPage';
 import {ConfirmationView, StartPaymentView} from 'components/PostCompletionViews';
 import RequireSubmission from 'components/RequireSubmission';
 import {SessionTrackerModal} from 'components/Sessions';
 import {SubmissionSummary} from 'components/Summary';
 
-const routes = [
+import ErrorBoundary from '@/components/Errors/ErrorBoundary';
+import IntroductionPage from '@/components/IntroductionPage';
+
+const routes: RouteObject[] = [
   {
     path: '',
     element: <FormLandingPage />,

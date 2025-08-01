@@ -1,8 +1,11 @@
-import App from 'components/App';
-import {Cosign} from 'components/CoSign';
-import ErrorBoundary from 'components/Errors/ErrorBoundary';
+import type {RouteObject} from 'react-router';
+
 import Form from 'components/Form';
 import SessionExpired from 'components/Sessions/SessionExpired';
+
+import App from '@/components/App';
+import {Cosign} from '@/components/CoSign';
+import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 
 import appointmentRoutes from './appointments';
 import cosignRoutes from './cosign';
@@ -13,11 +16,8 @@ import formRoutes from './form';
  *
  * These routes are the top-level routes, dividing the SDK into distinct features/
  * chunks.
- *
- * @todo - soon-ish we can use dynamic loading to split up the bundle for lazy loading
- * and reduce the initial load time.
  */
-const routes = [
+const routes: RouteObject[] = [
   {
     path: '*',
     element: <App />,

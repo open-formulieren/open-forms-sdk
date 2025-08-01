@@ -9,13 +9,13 @@ import {RouterProvider} from 'react-router/dom';
 import {NonceProvider} from 'react-select';
 
 import {PARAM_NAME} from 'hooks/useInitialDataReference';
-import routes, {FUTURE_FLAGS} from 'routes';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {get} from '@/api';
 import type {Form} from '@/data/forms';
 import {CSPNonce} from '@/headers';
 import {I18NErrorBoundary, I18NManager} from '@/i18n';
+import routes, {FUTURE_FLAGS} from '@/routes';
 import initialiseSentry from '@/sentry';
 import {DEBUG, getVersion} from '@/utils';
 
