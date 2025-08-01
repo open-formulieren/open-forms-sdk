@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 
-import FAIcon from 'components/FAIcon';
+import FAIcon from '@/components/FAIcon';
 
-const CompletionMark = ({completed = false}) => {
+export interface CompletionMarkProps {
+  completed?: boolean;
+}
+
+const CompletionMark: React.FC<CompletionMarkProps> = ({completed = false}) => {
   const intl = useIntl();
-  // Wrapper may be a DOM element, which can't handle <FormattedMessage />
+  // The wrapper is a DOM element, which can't handle <FormattedMessage />
   const ariaLabel = intl.formatMessage({
     description: 'Step completion marker icon label',
     defaultMessage: 'Completed',
@@ -22,10 +25,6 @@ const CompletionMark = ({completed = false}) => {
       <span className="sr-only">{ariaLabel}</span>
     </>
   );
-};
-
-CompletionMark.propTypes = {
-  completed: PropTypes.bool,
 };
 
 export default CompletionMark;

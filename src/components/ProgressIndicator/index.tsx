@@ -1,16 +1,25 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router';
 
-import Caption from 'components/Caption';
-import List from 'components/List';
 import useWindowResize from 'hooks/useWindowResize';
+
+import Caption from '@/components/Caption';
+import List from '@/components/List';
 
 import MobileButton from './MobileButton';
 import ProgressIndicatorItem from './ProgressIndicatorItem';
+import type {StepMeta} from './utils';
 
-const ProgressIndicator = ({
+export interface ProgressIndicatorProps {
+  title: React.ReactNode;
+  formTitle: string;
+  steps: StepMeta[];
+  ariaMobileIconLabel: string;
+  accessibleToggleStepsLabel: string;
+}
+
+const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   title,
   formTitle,
   steps,
@@ -18,10 +27,10 @@ const ProgressIndicator = ({
   accessibleToggleStepsLabel,
 }) => {
   const {pathname: currentPathname} = useLocation();
-  const [expanded, setExpanded] = useState(false);
-  const [verticalSpaceUsed, setVerticalSpaceUsed] = useState(null);
-  const [resizeCounter, setResizeCounter] = useState(0);
-  const buttonRef = useRef(null);
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const [verticalSpaceUsed, setVerticalSpaceUsed] = useState<number | null>(null);
+  const [resizeCounter, setResizeCounter] = useState<number>(0);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   // collapse the expanded progress indicator if nav occurred, see
   // open-formulieren/open-forms#2673. It's important that *only* the pathname triggers
@@ -44,6 +53,7 @@ const ProgressIndicator = ({
       isMounted = false;
     };
   }, [buttonRef, setVerticalSpaceUsed, resizeCounter]);
+
   useWindowResize(() => {
     setResizeCounter(prev => prev + 1);
   });
@@ -92,23 +102,6 @@ const ProgressIndicator = ({
       </nav>
     </div>
   );
-};
-
-ProgressIndicator.propTypes = {
-  title: PropTypes.node.isRequired,
-  formTitle: PropTypes.string.isRequired,
-  steps: PropTypes.arrayOf(
-    PropTypes.shape({
-      to: PropTypes.string.isRequired,
-      label: PropTypes.node.isRequired,
-      isCompleted: PropTypes.bool,
-      isApplicable: PropTypes.bool,
-      isCurrent: PropTypes.bool,
-      canNavigateTo: PropTypes.bool,
-    })
-  ).isRequired,
-  ariaMobileIconLabel: PropTypes.string.isRequired,
-  accessibleToggleStepsLabel: PropTypes.string.isRequired,
 };
 
 export default ProgressIndicator;

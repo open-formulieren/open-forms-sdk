@@ -1,19 +1,27 @@
-import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router';
 
-import Link from 'components/Link';
-import {getBEMClassName} from 'utils';
+import type {Variant as LinkVariant} from '@/components/Anchor/Anchor';
+import Link from '@/components/Link';
 
 import CompletionMark from './CompletionMark';
 
-const getLinkModifiers = isActive => {
-  const modifiers = ['inherit', 'hover'];
+const getLinkModifiers = (isActive: boolean): LinkVariant[] => {
+  const modifiers: LinkVariant[] = ['inherit', 'hover'];
   if (isActive) {
     modifiers.push('current');
   }
   return modifiers;
 };
+
+export interface ProgressIndicatorItemProps {
+  label: string;
+  to: string;
+  isActive: boolean;
+  isCompleted: boolean;
+  canNavigateTo: boolean;
+  isApplicable: boolean;
+}
 
 /**
  * A single progress indicator item.
@@ -27,14 +35,21 @@ const getLinkModifiers = isActive => {
  *
  * Once a step is completed, it is displayed with a completion checkmark in front of it.
  */
-const ProgressIndicatorItem = ({label, to, isActive, isCompleted, canNavigateTo, isApplicable}) => {
+const ProgressIndicatorItem: React.FC<ProgressIndicatorItemProps> = ({
+  label,
+  to,
+  isActive,
+  isCompleted,
+  canNavigateTo,
+  isApplicable,
+}) => {
   const location = useLocation();
   return (
-    <div className={getBEMClassName('progress-indicator-item')}>
-      <div className={getBEMClassName('progress-indicator-item__marker')}>
+    <div className="openforms-progress-indicator-item">
+      <div className="openforms-progress-indicator-item__marker">
         <CompletionMark completed={isCompleted} />
       </div>
-      <div className={getBEMClassName('progress-indicator-item__label')}>
+      <div className="openforms-progress-indicator-item__label">
         <Link
           to={to}
           state={location.state}
@@ -59,15 +74,6 @@ const ProgressIndicatorItem = ({label, to, isActive, isCompleted, canNavigateTo,
       </div>
     </div>
   );
-};
-
-ProgressIndicatorItem.propTypes = {
-  label: PropTypes.node.isRequired,
-  to: PropTypes.string,
-  isActive: PropTypes.bool,
-  isCompleted: PropTypes.bool,
-  canNavigateTo: PropTypes.bool,
-  isApplicable: PropTypes.bool,
 };
 
 export default ProgressIndicatorItem;

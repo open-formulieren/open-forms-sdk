@@ -1,21 +1,27 @@
-import messagesEN from 'i18n/compiled/en.json';
 import {createIntl, createIntlCache} from 'react-intl';
 
-import {buildSubmission} from 'api-mocks/submissions';
+import {buildSubmission} from '@/api-mocks/submissions';
+import type {Form} from '@/data/forms';
+import messagesEN from '@/i18n/compiled/en.json';
 
 import {addFixedSteps, getStepsInfo} from './utils';
 
 const cache = createIntlCache();
 const intl = createIntl({locale: 'en', messages: messagesEN}, cache);
 
-const formSteps = [
+const formSteps: Form['steps'] = [
   {
+    uuid: '123',
     slug: 'step-1',
     formDefinition: 'Step 1',
-    isCompleted: false,
+    index: 0,
+    literals: {
+      previousText: {resolved: 'Previous'},
+      saveText: {resolved: 'Save'},
+      nextText: {resolved: 'Next'},
+    },
+    url: '',
     isApplicable: true,
-    isCurrent: true,
-    canNavigateTo: true,
   },
 ];
 
