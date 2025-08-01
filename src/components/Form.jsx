@@ -92,7 +92,6 @@ const Form = () => {
         to="/bevestiging"
         state={{
           status: params.get('of_payment_status'),
-          userAction: params.get('of_payment_action'),
           statusUrl: params.get('of_submission_status'),
         }}
       />
