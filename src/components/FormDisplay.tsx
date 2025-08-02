@@ -1,10 +1,9 @@
 import {useContext} from 'react';
 
-import LanguageSwitcher from 'components/LanguageSwitcher';
-
 import {ConfigContext} from '@/Context';
 import AppDebug from '@/components/AppDebug';
 import AppDisplay from '@/components/AppDisplay';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import useFormContext from '@/hooks/useFormContext';
 
 export interface FormDisplayProps {
