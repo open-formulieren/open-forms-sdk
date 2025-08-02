@@ -2,12 +2,12 @@ import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Navigate} from 'react-router';
 
-import {FormContext} from 'Context';
-import Body from 'components/Body';
-import Card from 'components/Card';
-import FAIcon from 'components/FAIcon';
-import Link from 'components/Link';
-import useInitialDataReference from 'hooks/useInitialDataReference';
+import {FormContext} from '@/Context';
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+import FAIcon from '@/components/FAIcon';
+import Link from '@/components/Link';
+import useInitialDataReference from '@/hooks/useInitialDataReference';
 
 const IntroductionPage: React.FC = () => {
   const {name, introductionPageContent = ''} = useContext(FormContext);

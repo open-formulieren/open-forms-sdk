@@ -4,7 +4,6 @@ import {useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
 import {LiteralsProvider} from 'components/Literal';
-import useInitialDataReference from 'hooks/useInitialDataReference';
 import useTitle from 'hooks/useTitle';
 
 import {ConfigContext} from '@/Context';
@@ -24,6 +23,7 @@ import {createSubmission} from '@/data/submissions';
 import {UnprocessableEntity} from '@/errors';
 import {IsFormDesigner} from '@/headers';
 import useFormContext from '@/hooks/useFormContext';
+import useInitialDataReference from '@/hooks/useInitialDataReference';
 import useStartSubmission from '@/hooks/useStartSubmission';
 
 /**
@@ -76,7 +76,7 @@ const FormStart: React.FC = () => {
         form,
         clientBaseUrl,
         null,
-        initialDataReference,
+        initialDataReference ?? '',
         isAnonymous
       );
 

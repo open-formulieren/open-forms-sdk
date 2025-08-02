@@ -8,12 +8,11 @@ import {createBrowserRouter, createHashRouter, resolvePath} from 'react-router';
 import {RouterProvider} from 'react-router/dom';
 import {NonceProvider} from 'react-select';
 
-import {PARAM_NAME} from 'hooks/useInitialDataReference';
-
 import {ConfigContext, FormContext} from '@/Context';
 import {get} from '@/api';
 import type {Form} from '@/data/forms';
 import {CSPNonce} from '@/headers';
+import {PARAM_NAME} from '@/hooks/useInitialDataReference';
 import {I18NErrorBoundary, I18NManager} from '@/i18n';
 import routes, {FUTURE_FLAGS} from '@/routes';
 import initialiseSentry from '@/sentry';
