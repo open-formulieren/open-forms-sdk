@@ -3,39 +3,28 @@ import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import Body from 'components/Body';
-import Card from 'components/Card';
-import FormMaximumSubmissionsError from 'components/Errors/FormMaximumSubmissionsError';
-import ExistingSubmissionOptions from 'components/ExistingSubmissionOptions';
 import {LiteralsProvider} from 'components/Literal';
-import Loader from 'components/Loader';
-import LoginOptions from 'components/LoginOptions';
-import MaintenanceMode from 'components/MaintenanceMode';
-import {useSubmissionContext} from 'components/SubmissionProvider';
-import {AuthenticationError, useDetectAuthErrorMessage} from 'components/auth';
+import useInitialDataReference from 'hooks/useInitialDataReference';
+import useTitle from 'hooks/useTitle';
+
+import {ConfigContext} from '@/Context';
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+import FormMaximumSubmissionsError from '@/components/Errors/FormMaximumSubmissionsError';
+import ExistingSubmissionOptions from '@/components/ExistingSubmissionOptions';
+import Loader from '@/components/Loader';
+import LoginOptions, {type OnFormStartOptions} from '@/components/LoginOptions';
+import MaintenanceMode from '@/components/MaintenanceMode';
+import {useSubmissionContext} from '@/components/SubmissionProvider';
+import {AuthenticationError, useDetectAuthErrorMessage} from '@/components/auth';
 import AuthenticationOutage, {
   useDetectAuthenticationOutage,
-} from 'components/auth/AuthenticationOutage';
-import {createSubmission} from 'data/submissions';
-import {UnprocessableEntity} from 'errors';
-import {IsFormDesigner} from 'headers';
-import useFormContext from 'hooks/useFormContext';
-import useInitialDataReference from 'hooks/useInitialDataReference';
-import useStartSubmission from 'hooks/useStartSubmission';
-import useTitle from 'hooks/useTitle';
-import {getBEMClassName} from 'utils';
-
-const FormStartMessage = ({form}) => {
-  return (
-    <Body component="div">
-      <div
-        className={getBEMClassName('body', ['wysiwyg'])}
-        dangerouslySetInnerHTML={{__html: form.explanationTemplate}}
-      />
-    </Body>
-  );
-};
+} from '@/components/auth/AuthenticationOutage';
+import {createSubmission} from '@/data/submissions';
+import {UnprocessableEntity} from '@/errors';
+import {IsFormDesigner} from '@/headers';
+import useFormContext from '@/hooks/useFormContext';
+import useStartSubmission from '@/hooks/useStartSubmission';
 
 /**
  * Form start screen.
@@ -43,7 +32,7 @@ const FormStartMessage = ({form}) => {
  * This is shown when the form is initially loaded and provides the explicit user
  * action to start the form, or present the login button (DigiD, eHerkenning...)
  */
-const FormStart = () => {
+const FormStart: React.FC = () => {
   const {baseUrl, clientBaseUrl} = useContext(ConfigContext);
   const {initialDataReference} = useInitialDataReference();
   const navigate = useNavigate();
@@ -62,7 +51,7 @@ const FormStart = () => {
   const authError = useDetectAuthErrorMessage();
   const hasAuthErrors = !!outagePluginId || !!authError;
 
-  const onFormStartCalledRef = useRef(false);
+  const onFormStartCalledRef = useRef<boolean>(false);
 
   useTitle(form.name);
 
@@ -78,7 +67,7 @@ const FormStart = () => {
    * @return {Promise<Void>} Triggers side effects and state updates.
    */
   const onFormStart = useCallback(
-    async (options = {}) => {
+    async (options: OnFormStartOptions = {}) => {
       const {isAnonymous = false} = options;
       if (submission !== null) throw new Error('There already is a submission!');
 
@@ -152,7 +141,7 @@ const FormStart = () => {
     );
   }
 
-  const extraNextParams = initialDataReference
+  const extraNextParams: Record<string, string> = initialDataReference
     ? {initial_data_reference: initialDataReference}
     : {};
 
@@ -164,7 +153,13 @@ const FormStart = () => {
 
         {authError && <AuthenticationError parameter={authError[0]} errorCode={authError[1]} />}
 
-        <FormStartMessage form={form} />
+        {form.explanationTemplate && (
+          <Body
+            component="div"
+            modifiers={['wysiwyg']}
+            dangerouslySetInnerHTML={{__html: form.explanationTemplate}}
+          />
+        )}
 
         {hasActiveSubmission && (
           <ExistingSubmissionOptions

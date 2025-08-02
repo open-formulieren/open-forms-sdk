@@ -5,14 +5,14 @@ import type {Submission} from '@/data/submissions';
 interface SubmissionContextType {
   submission: Submission | null;
   onSubmissionObtained: (submission: Submission) => void;
-  onDestroySession: () => void;
+  onDestroySession: () => Promise<void>;
   removeSubmissionId: () => void;
 }
 
 const SubmissionContext = React.createContext<SubmissionContextType>({
   submission: null,
   onSubmissionObtained: () => {},
-  onDestroySession: () => {},
+  onDestroySession: async () => {},
   removeSubmissionId: () => {},
 });
 

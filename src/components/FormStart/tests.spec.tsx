@@ -1,27 +1,36 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import messagesEN from 'i18n/compiled/en.json';
 import {useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
-import {mockSubmissionPost} from 'api-mocks/submissions';
-import SubmissionProvider from 'components/SubmissionProvider';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+import {ConfigContext, FormContext} from '@/Context';
+import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
+import mswServer from '@/api-mocks/msw-server';
+import {mockSubmissionPost} from '@/api-mocks/submissions';
+import SubmissionProvider from '@/components/SubmissionProvider';
+import type {Form} from '@/data/forms';
+import type {Submission} from '@/data/submissions';
+import messagesEN from '@/i18n/compiled/en.json';
+import {FUTURE_FLAGS} from '@/routes';
 
 import FormStart from './index';
 
-let scrollIntoViewMock = vi.fn();
+const scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 afterAll(() => {
   vi.clearAllMocks();
 });
 
-const Wrap = ({
+interface WrapperProps {
+  form?: Form;
+  currentUrl?: string;
+  initialSubmission?: Submission | null;
+  onSubmissionObtained?: () => void;
+}
+
+const Wrap: React.FC<WrapperProps> = ({
   form = buildForm(),
   currentUrl = '/startpagina',
   initialSubmission = null,
@@ -42,6 +51,7 @@ const Wrap = ({
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
@@ -52,10 +62,10 @@ const Wrap = ({
               setSubmission(submission);
               onSubmissionObtained?.();
             }}
-            onDestroySession={() => {}}
+            onDestroySession={async () => {}}
             removeSubmissionId={vi.fn()}
           >
-            <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+            <RouterProvider router={router} />
           </SubmissionProvider>
         </FormContext.Provider>
       </IntlProvider>
@@ -82,7 +92,7 @@ test('Start form without having logged in', async () => {
   await user.click(startButton);
 
   expect(startSubmissionRequest).not.toBeUndefined();
-  const requestBody = await startSubmissionRequest.json();
+  const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.anonymous).toBe(true);
 });
 
@@ -105,7 +115,7 @@ test('Start form with having logged in', async () => {
     loginRequired: true,
   });
   mswServer.use(mockSubmissionPost());
-  let startSubmissionRequest;
+  let startSubmissionRequest: Request;
   mswServer.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
@@ -115,16 +125,16 @@ test('Start form with having logged in', async () => {
 
   // we simulate the redirect flow by the backend
   render(<Wrap form={form} />);
-  const digidLink = await screen.findByRole('link', {name: 'Login with DigiD'});
-  const parsedDigidLink = new URL(digidLink.getAttribute('href'));
-  const nextUrl = new URL(parsedDigidLink.searchParams.get('next'));
+  const digidLink = await screen.findByRole<HTMLAnchorElement>('link', {name: 'Login with DigiD'});
+  const parsedDigidLink = new URL(digidLink.getAttribute('href')!);
+  const nextUrl = new URL(parsedDigidLink.searchParams.get('next')!);
   expect(nextUrl).not.toBeNull();
   render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
 
   await waitFor(() => {
     expect(startSubmissionRequest).not.toBeUndefined();
   });
-  const requestBody = await startSubmissionRequest.json();
+  const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.anonymous).toBe(false);
 });
 
@@ -147,7 +157,7 @@ test('Start form with object reference query param', async () => {
     loginRequired: true,
   });
   mswServer.use(mockSubmissionPost());
-  let startSubmissionRequest;
+  let startSubmissionRequest: Request;
   mswServer.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
@@ -158,15 +168,15 @@ test('Start form with object reference query param', async () => {
   // we simulate the redirect flow by the backend
   render(<Wrap form={form} currentUrl="/startpagina?initial_data_reference=foo" />);
   const digidLink = await screen.findByRole('link', {name: 'Login with DigiD'});
-  const parsedDigidLink = new URL(digidLink.getAttribute('href'));
-  const nextUrl = new URL(parsedDigidLink.searchParams.get('next'));
+  const parsedDigidLink = new URL(digidLink.getAttribute('href')!);
+  const nextUrl = new URL(parsedDigidLink.searchParams.get('next')!);
   expect(nextUrl).not.toBeNull();
   render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
 
   await waitFor(() => {
     expect(startSubmissionRequest).not.toBeUndefined();
   });
-  const requestBody = await startSubmissionRequest.json();
+  const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.initialDataReference).toBe('foo');
 });
 
@@ -189,7 +199,7 @@ test('Start form without object reference query param', async () => {
     loginRequired: true,
   });
   mswServer.use(mockSubmissionPost());
-  let startSubmissionRequest;
+  let startSubmissionRequest: Request;
   mswServer.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
@@ -200,15 +210,15 @@ test('Start form without object reference query param', async () => {
   // we simulate the redirect flow by the backend
   render(<Wrap form={form} currentUrl="/startpagina" />);
   const digidLink = await screen.findByRole('link', {name: 'Login with DigiD'});
-  const parsedDigidLink = new URL(digidLink.getAttribute('href'));
-  const nextUrl = new URL(parsedDigidLink.searchParams.get('next'));
+  const parsedDigidLink = new URL(digidLink.getAttribute('href')!);
+  const nextUrl = new URL(parsedDigidLink.searchParams.get('next')!);
   expect(nextUrl).not.toBeNull();
   render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
 
   await waitFor(() => {
     expect(startSubmissionRequest).not.toBeUndefined();
   });
-  const requestBody = await startSubmissionRequest.json();
+  const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.initialDataReference).toBeUndefined();
 });
 

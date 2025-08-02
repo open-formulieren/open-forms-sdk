@@ -9,9 +9,13 @@ import type {Form} from '@/data/forms';
 
 import LoginOptionsDisplay, {FormattedLoginOption} from './LoginOptionsDisplay';
 
+export interface OnFormStartOptions {
+  isAnonymous?: boolean;
+}
+
 export interface LoginOptionsProps {
   form: Form;
-  onFormStart: (opts: {isAnonymous: boolean}) => Promise<void> | void;
+  onFormStart: (opts: OnFormStartOptions) => Promise<void> | void;
   extraNextParams?: Record<string, string>;
   isolateCosignOptions?: boolean;
 }

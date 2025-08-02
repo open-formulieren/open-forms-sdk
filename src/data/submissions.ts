@@ -60,7 +60,7 @@ export const createSubmission = async (
   baseUrl: string,
   form: Form,
   formUrl: string,
-  signal: AbortSignal,
+  signal: AbortSignal | null,
   initialDataReference: string,
   anonymous = false
 ): Promise<Submission> => {
