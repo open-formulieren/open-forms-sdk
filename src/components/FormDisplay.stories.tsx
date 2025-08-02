@@ -1,8 +1,15 @@
-import Body from 'components/Body';
-import Card from 'components/Card';
+import type {Meta, StoryObj} from '@storybook/react';
+
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+
 import FormDisplay from './FormDisplay';
+
+interface Args extends React.ComponentProps<typeof FormDisplay> {
+  showProgressIndicator: boolean;
+}
 
 export default {
   title: 'Composites / Form display',
@@ -31,15 +38,17 @@ export default {
   parameters: {
     config: {debug: false},
   },
-};
+} satisfies Meta<Args>;
 
-export const Default = {
+type Story = StoryObj<Args>;
+
+export const Default: Story = {
   args: {
     showProgressIndicator: true,
   },
 };
 
-export const WithoutProgressIndicator = {
+export const WithoutProgressIndicator: Story = {
   args: {
     showProgressIndicator: false,
   },

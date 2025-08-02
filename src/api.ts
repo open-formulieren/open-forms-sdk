@@ -196,7 +196,7 @@ const _unsafe = async <T = unknown, U = unknown>(
   method = 'POST',
   url: string,
   data: U,
-  signal?: AbortSignal
+  signal?: AbortSignal | null
 ): Promise<UnsafeResponseData<T>> => {
   const opts: ApiCallOptions = {
     method,
@@ -230,7 +230,7 @@ const _unsafe = async <T = unknown, U = unknown>(
 const post = async <T = unknown, U = unknown>(
   url: string,
   data: U,
-  signal?: AbortSignal
+  signal?: AbortSignal | null
 ): Promise<UnsafeResponseData<T>> => await _unsafe<T, U>('POST', url, data, signal);
 
 /**

@@ -1,13 +1,28 @@
-import {useIntl} from 'react-intl';
+import {type IntlShape, useIntl} from 'react-intl';
 import {matchPath, useLocation} from 'react-router';
 
-import ProgressIndicator from 'components/ProgressIndicator';
-import {addFixedSteps, getStepsInfo} from 'components/ProgressIndicator/utils';
-import {PI_TITLE, STEP_LABELS, SUBMISSION_ALLOWED} from 'components/constants';
-import useFormContext from 'hooks/useFormContext';
-import Types from 'types';
+import ProgressIndicator from '@/components/ProgressIndicator';
+import {type StepMeta, addFixedSteps, getStepsInfo} from '@/components/ProgressIndicator/utils';
+import {PI_TITLE, STEP_LABELS, SUBMISSION_ALLOWED} from '@/components/constants';
+import type {Form} from '@/data/forms';
+import type {Submission} from '@/data/submissions';
+import useFormContext from '@/hooks/useFormContext';
 
-const getProgressIndicatorSteps = ({intl, form, submission, currentPathname, isCompleted}) => {
+interface GetProgressIndicatorStepsOptions {
+  intl: IntlShape;
+  form: Form;
+  submission: Submission | null;
+  currentPathname: string;
+  isCompleted: boolean;
+}
+
+const getProgressIndicatorSteps = ({
+  intl,
+  form,
+  submission,
+  currentPathname,
+  isCompleted,
+}: GetProgressIndicatorStepsOptions): StepMeta[] => {
   const submissionAllowedSpec = submission?.submissionAllowed ?? form.submissionAllowed;
   const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
   const needsPayment = submission?.payment.isRequired ?? form.paymentRequired;
@@ -33,12 +48,8 @@ const getProgressIndicatorSteps = ({intl, form, submission, currentPathname, isC
 
 /**
  * Determine the 'step' title to render for the accessible mobile menu label.
- * @param  {IntlShape} intl  The `useIntl` return value.
- * @param  {String} pathname The pathname ('url') of the current location.
- * @param  {Object} form     The Open Forms form instance being rendered.
- * @return {String}          The (formatted) string for the step title/name.
  */
-const getMobileStepTitle = (intl, pathname, form) => {
+const getMobileStepTitle = (intl: IntlShape, pathname: string, form: Form): string => {
   // TODO replace absolute path check with relative
   if (matchPath('/introductie', pathname)) {
     return intl.formatMessage(STEP_LABELS.introduction);
@@ -51,7 +62,7 @@ const getMobileStepTitle = (intl, pathname, form) => {
   if (stepMatch) {
     const slug = stepMatch.params.step;
     const step = form.steps.find(step => step.slug === slug);
-    return step.formDefinition;
+    return step!.formDefinition;
   }
 
   if (matchPath('/overzicht', pathname)) {
@@ -67,13 +78,17 @@ const getMobileStepTitle = (intl, pathname, form) => {
   return '';
 };
 
+export interface FormProgressIndicatorProps {
+  submission: Submission | null;
+}
+
 /**
  * Component to configure the progress indicator for a specific form.
  *
  * This component encapsulates the render/no render behaviour of the progress indicator
  * by looking at the form configuration settings.
  */
-const FormProgressIndicator = ({submission}) => {
+const FormProgressIndicator: React.FC<FormProgressIndicatorProps> = ({submission}) => {
   const form = useFormContext();
   const {pathname: currentPathname, state: routerState} = useLocation();
   const intl = useIntl();
@@ -105,10 +120,6 @@ const FormProgressIndicator = ({submission}) => {
       accessibleToggleStepsLabel={accessibleToggleStepsLabel}
     />
   );
-};
-
-FormProgressIndicator.propTypes = {
-  submission: Types.Submission,
 };
 
 export default FormProgressIndicator;
