@@ -7,7 +7,7 @@ import type {Form} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
 import {IsFormDesigner} from '@/headers';
 
-const canNavigateToStep = (index: number, submission: Submission): boolean => {
+const canNavigateToStep = (index: number, submission: Submission | null): boolean => {
   // The user can navigate to a step when:
   // 1. All previous steps have been completed
   // 2. The user is a form designer
@@ -36,7 +36,7 @@ export interface StepMeta {
 
 const getStepsInfo = (
   formSteps: Form['steps'],
-  submission: Submission,
+  submission: Submission | null,
   currentPathname: string
 ): StepMeta[] => {
   return formSteps.map((step, index) => ({
@@ -52,7 +52,7 @@ const getStepsInfo = (
 const addFixedSteps = (
   intl: IntlShape,
   steps: StepMeta[],
-  submission: Submission,
+  submission: Submission | null,
   currentPathname: string,
   showOverview: boolean,
   needsPayment: boolean,
