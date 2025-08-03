@@ -1,9 +1,30 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {AnalyticsToolsDecorator, withForm, withSubmissionPollInfo} from 'story-utils/decorators';
 
+import {buildForm} from '@/api-mocks';
+import type {Form} from '@/data/forms';
+
 import {ConfirmationViewDisplay} from './ConfirmationView';
+
+type SubmissionPollInfoArgs = {
+  publicReference: string;
+  paymentUrl: string;
+  reportDownloadUrl: string;
+  confirmationPageTitle: string;
+  confirmationPageContent: string;
+  mainWebsiteUrl: string;
+};
+
+type FormArgs = {
+  form?: Form;
+};
+
+export type Args = React.ComponentProps<typeof ConfirmationViewDisplay> &
+  FormArgs &
+  SubmissionPollInfoArgs;
 
 export default {
   title: 'Views / Post completion views / Confirmation view',
@@ -17,9 +38,11 @@ export default {
       location: {state: {}},
     },
   },
-};
+} satisfies Meta<Args>;
 
-export const WithoutPayment = {
+type Story = StoryObj<Args>;
+
+export const WithoutPayment: Story = {
   args: {
     paymentUrl: '',
     publicReference: 'OF-1234',
@@ -30,7 +53,7 @@ export const WithoutPayment = {
   },
 };
 
-export const WithSuccessfulPayment = {
+export const WithSuccessfulPayment: Story = {
   args: {
     publicReference: 'OF-1234',
     reportDownloadUrl: '#',
@@ -56,7 +79,7 @@ export const WithSuccessfulPayment = {
   },
 };
 
-export const WithFailedPayment = {
+export const WithFailedPayment: Story = {
   args: {
     publicReference: 'OF-1234',
     reportDownloadUrl: '#',
@@ -85,7 +108,7 @@ export const WithFailedPayment = {
   },
 };
 
-export const WithGovMetric = {
+export const WithGovMetric: Story = {
   name: 'With GovMetric',
   args: {
     paymentUrl: '',
@@ -94,9 +117,9 @@ export const WithGovMetric = {
     confirmationPageContent: 'Your answers are submitted. Hurray!',
     mainWebsiteUrl: '#',
     downloadPDFText: 'Download a PDF of your submitted answers',
-    form: {
+    form: buildForm({
       slug: 'a-test-form',
-    },
+    }),
   },
   parameters: {
     analyticsToolsParams: {
@@ -108,10 +131,10 @@ export const WithGovMetric = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const lists = await canvas.getAllByRole('list');
+    const lists = canvas.getAllByRole('list');
     const facesList = lists[0]; // The buttons toolbar is also a list
 
-    const faces = within(facesList).getAllByRole('link');
+    const faces = within(facesList).getAllByRole<HTMLAnchorElement>('link');
 
     await expect(faces.length).toEqual(3);
     await expect(faces[0].href).toEqual(
