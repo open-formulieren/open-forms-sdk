@@ -1,17 +1,27 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
-import Body from 'components/Body';
-import Card from 'components/Card';
-import Loader from 'components/Loader';
 import usePoll from 'hooks/usePoll';
+
+import Body from '@/components/Body';
+import Card from '@/components/Card';
+import Loader from '@/components/Loader';
+import type {SubmissionProcessingStatus} from '@/data/submission-status';
 
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';
 
-const SubmissionStatusContext = React.createContext({
+interface SubmissionStatusContextType {
+  publicReference: string;
+  paymentUrl: string;
+  reportDownloadUrl: string;
+  confirmationPageTitle: string;
+  confirmationPageContent: string;
+  mainWebsiteUrl: string;
+}
+
+const SubmissionStatusContext = React.createContext<SubmissionStatusContextType>({
   publicReference: '',
   paymentUrl: '',
   reportDownloadUrl: '',
@@ -21,7 +31,28 @@ const SubmissionStatusContext = React.createContext({
 });
 SubmissionStatusContext.displayName = 'SubmissionStatusContext';
 
-const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}) => {
+export interface StatusUrlPollerProps {
+  /**
+   * Backend status URL to poll for status checks.
+   */
+  statusUrl: string;
+  /**
+   * Route to navigate to if the status check reports failure.
+   *
+   * The route state will be extended with `errorMessage` property retrieved from the
+   * backend processing.
+   */
+  onFailureNavigateTo: string;
+  onConfirmed?: () => void;
+  children: React.ReactNode;
+}
+
+const StatusUrlPoller: React.FC<StatusUrlPollerProps> = ({
+  statusUrl,
+  onFailureNavigateTo,
+  onConfirmed,
+  children,
+}) => {
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,8 +69,8 @@ const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}
   } = usePoll(
     statusUrl,
     1000,
-    response => response.status === 'done',
-    response => {
+    (response: SubmissionProcessingStatus) => response.status === 'done',
+    (response: SubmissionProcessingStatus) => {
       if (response.result === RESULT_FAILED) {
         const errorMessage = response.errorMessage || genericErrorMessage;
         const newState = {...(location.state || {}), errorMessage};
@@ -84,7 +115,7 @@ const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}
     confirmationPageTitle,
     confirmationPageContent,
     mainWebsiteUrl,
-  } = statusResponse;
+  } = statusResponse as unknown as SubmissionProcessingStatus; // FIXME
 
   return (
     <SubmissionStatusContext.Provider
@@ -100,22 +131,6 @@ const StatusUrlPoller = ({statusUrl, onFailureNavigateTo, onConfirmed, children}
       {children}
     </SubmissionStatusContext.Provider>
   );
-};
-
-StatusUrlPoller.propTypes = {
-  /**
-   * Backend status URL to poll for status checks.
-   */
-  statusUrl: PropTypes.string.isRequired,
-  /**
-   * Route to navigate to if the status check reports failure.
-   *
-   * The route state will be extended with `errorMessage` property retrieved from the
-   * backend processing.
-   */
-  onFailureNavigateTo: PropTypes.string.isRequired,
-  onConfirmed: PropTypes.func,
-  children: PropTypes.node,
 };
 
 export {SubmissionStatusContext};
