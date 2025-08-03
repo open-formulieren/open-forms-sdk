@@ -195,7 +195,7 @@ export interface UnsafeResponseData<T = unknown> {
 const _unsafe = async <T = unknown, U = unknown>(
   method = 'POST',
   url: string,
-  data: U,
+  data?: U,
   signal?: AbortSignal | null
 ): Promise<UnsafeResponseData<T>> => {
   const opts: ApiCallOptions = {
@@ -229,7 +229,7 @@ const _unsafe = async <T = unknown, U = unknown>(
  */
 const post = async <T = unknown, U = unknown>(
   url: string,
-  data: U,
+  data?: U,
   signal?: AbortSignal | null
 ): Promise<UnsafeResponseData<T>> => await _unsafe<T, U>('POST', url, data, signal);
 

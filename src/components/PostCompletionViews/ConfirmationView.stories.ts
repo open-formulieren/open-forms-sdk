@@ -9,7 +9,7 @@ import type {Form} from '@/data/forms';
 
 import {ConfirmationViewDisplay} from './ConfirmationView';
 
-type SubmissionPollInfoArgs = {
+export type SubmissionPollInfoArgs = {
   publicReference: string;
   paymentUrl: string;
   reportDownloadUrl: string;
