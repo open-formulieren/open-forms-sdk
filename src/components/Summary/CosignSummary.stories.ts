@@ -21,9 +21,7 @@ export default {
   args: {
     form: buildForm(),
     submission,
-    summaryData: [],
     onSubmissionLoaded: fn(),
-    onDataLoaded: fn(),
     onCosignComplete: fn(),
     onDestroySession: fn(),
   },
