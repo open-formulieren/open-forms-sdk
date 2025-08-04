@@ -9,7 +9,7 @@ import Body from '@/components/Body';
 import Card from '@/components/Card';
 
 export interface PostCompletionViewProps {
-  downloadPDFText?: string;
+  downloadPDFText?: React.ReactNode;
   pageTitle?: React.ReactNode;
   header?: React.ReactNode;
   body?: React.ReactNode;

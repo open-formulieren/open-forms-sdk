@@ -1,13 +1,18 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 
-import {BASE_URL} from 'api-mocks';
+import {withSubmissionPollInfo} from 'story-utils/decorators';
+
+import {BASE_URL} from '@/api-mocks';
 import {
   mockSubmissionPaymentStartPost,
   mockSubmissionProcessingStatusGet,
-} from 'api-mocks/submissions';
-import {withSubmissionPollInfo} from 'story-utils/decorators';
+} from '@/api-mocks/submissions';
 
+import type {SubmissionPollInfoArgs} from './ConfirmationView.stories';
 import {StartPaymentViewDisplay} from './StartPaymentView';
+
+type Args = React.ComponentProps<typeof StartPaymentViewDisplay> & SubmissionPollInfoArgs;
 
 export default {
   title: 'Views / Post completion views / Start payment',
@@ -24,9 +29,11 @@ export default {
       handlers: [mockSubmissionProcessingStatusGet, mockSubmissionPaymentStartPost()],
     },
   },
-};
+} satisfies Meta<Args>;
 
-export const Default = {
+type Story = StoryObj<Args>;
+
+export const Default: Story = {
   args: {
     publicReference: 'OF-1234',
     reportDownloadUrl: '#',

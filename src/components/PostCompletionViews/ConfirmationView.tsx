@@ -1,46 +1,51 @@
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
-import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
+import {FormattedMessage, type MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useLocation, useSearchParams} from 'react-router';
 
-import Body from 'components/Body';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import {GovMetricSnippet} from 'components/analytics';
-import useFormContext from 'hooks/useFormContext';
-import {DEBUG} from 'utils';
+import Body from '@/components/Body';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {GovMetricSnippet} from '@/components/analytics';
+import useFormContext from '@/hooks/useFormContext';
+import {DEBUG} from '@/utils';
 
 import PostCompletionView from './PostCompletionView';
 import StatusUrlPoller, {SubmissionStatusContext} from './StatusUrlPoller';
 
+type PaymentStatus = 'started' | 'processing' | 'failed' | 'completed' | 'registered';
+
 // see openforms.payments.constants.PaymentStatus in the backend
-const STATUS_MESSAGES = {
-  started: defineMessage({
+const STATUS_MESSAGES = defineMessages<PaymentStatus, MessageDescriptor>({
+  started: {
     description: 'payment started status',
     defaultMessage: "You've started the payment process.",
-  }),
-  processing: defineMessage({
+  },
+  processing: {
     description: 'payment processing status',
     defaultMessage: 'Your payment is currently processing.',
-  }),
-  failed: defineMessage({
+  },
+  failed: {
     description: 'payment failed status',
     defaultMessage:
       'The payment has failed. If you aborted the payment, please complete payment from the confirmation email.',
-  }),
-  completed: defineMessage({
+  },
+  completed: {
     description: 'payment completed status',
     defaultMessage: 'Your payment has been received.',
-  }),
-  registered: defineMessage({
+  },
+  registered: {
     description: 'payment registered status',
     defaultMessage: 'Your payment is received and processed.',
-  }),
-};
+  },
+});
 
-const ConfirmationViewDisplay = ({downloadPDFText}) => {
+export interface ConfirmationViewDisplayProps {
+  downloadPDFText: React.ReactNode;
+}
+
+const ConfirmationViewDisplay: React.FC<ConfirmationViewDisplayProps> = ({downloadPDFText}) => {
   const intl = useIntl();
   const location = useLocation();
-  const paymentStatus = location?.state?.status;
+  const paymentStatus: PaymentStatus | undefined = location?.state?.status;
 
   const {
     publicReference,
@@ -50,28 +55,11 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
     mainWebsiteUrl,
   } = useContext(SubmissionStatusContext);
 
-  const paymentStatusMessage = STATUS_MESSAGES[paymentStatus];
-  let Wrapper = React.Fragment;
-  if (paymentStatus) {
-    if (!paymentStatusMessage) throw new Error('Unknown payment status');
-
-    if (paymentStatus === 'failed') Wrapper = ErrorMessage;
+  if (paymentStatus && !(paymentStatus in STATUS_MESSAGES)) {
+    throw new Error('Unknown payment status');
   }
 
-  const body = (
-    <>
-      {paymentStatus && (
-        <Body component="div">
-          <Wrapper>{intl.formatMessage(paymentStatusMessage)}</Wrapper>
-        </Body>
-      )}
-      <Body
-        component="div"
-        modifiers={['wysiwyg']}
-        dangerouslySetInnerHTML={{__html: confirmationPageContent}}
-      />
-    </>
-  );
+  const Wrapper = paymentStatus === 'failed' ? ErrorMessage : React.Fragment;
 
   return (
     <PostCompletionView
@@ -89,7 +77,20 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
           />
         )
       }
-      body={body}
+      body={
+        <>
+          {paymentStatus && (
+            <Body component="div">
+              <Wrapper>{intl.formatMessage(STATUS_MESSAGES[paymentStatus])}</Wrapper>
+            </Body>
+          )}
+          <Body
+            component="div"
+            modifiers={['wysiwyg']}
+            dangerouslySetInnerHTML={{__html: confirmationPageContent}}
+          />
+        </>
+      }
       mainWebsiteUrl={mainWebsiteUrl}
       reportDownloadUrl={reportDownloadUrl}
       extraBody={<GovMetricSnippet />}
@@ -97,18 +98,26 @@ const ConfirmationViewDisplay = ({downloadPDFText}) => {
   );
 };
 
-ConfirmationViewDisplay.propTypes = {
-  downloadPDFText: PropTypes.node,
-};
+export interface ConfirmationViewProps {
+  /**
+   * Location to navigate to on failure.
+   */
+  onFailureNavigateTo: string;
+  /**
+   * Optional callback to invoke when processing was successful.
+   * @deprecated
+   */
+  onConfirmed?: () => void;
+}
 
-const ConfirmationView = ({onFailureNavigateTo, onConfirmed}) => {
+const ConfirmationView: React.FC<ConfirmationViewProps> = ({onFailureNavigateTo, onConfirmed}) => {
   const form = useFormContext();
   // TODO: take statusUrl from session storage instead of router state / query params,
   // which is the best tradeoff between security and convenience (state doesn't survive
   // hard refreshes, query params is prone to accidental information leaking)
   const location = useLocation();
   const [params] = useSearchParams();
-  const statusUrl = params.get('statusUrl') ?? location.state?.statusUrl;
+  const statusUrl: string = params.get('statusUrl') ?? location.state?.statusUrl;
 
   if (DEBUG && !statusUrl) {
     throw new Error(
@@ -125,18 +134,6 @@ const ConfirmationView = ({onFailureNavigateTo, onConfirmed}) => {
       <ConfirmationViewDisplay downloadPDFText={form.submissionReportDownloadLinkTitle} />
     </StatusUrlPoller>
   );
-};
-
-ConfirmationView.propTypes = {
-  /**
-   * Location to navigate to on failure.
-   */
-  onFailureNavigateTo: PropTypes.string,
-  /**
-   * Optional callback to invoke when processing was successful.
-   * @deprecated
-   */
-  onConfirmed: PropTypes.func,
 };
 
 export {ConfirmationViewDisplay};

@@ -1,9 +1,12 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
 import {AnalyticsToolsDecorator, withForm, withSubmissionPollInfo} from 'story-utils/decorators';
 
+import {buildForm} from '@/api-mocks';
+
 import {ConfirmationViewDisplay} from './ConfirmationView';
+import type {Args} from './ConfirmationView.stories';
 
 export default {
   title: 'Views / Cosign / Submission completed',
@@ -66,8 +69,10 @@ export default {
       location: {state: {}},
     },
   },
-};
+} satisfies Meta<Args>;
 
-export const Default = {
+type Story = StoryObj<Args>;
+
+export const Default: Story = {
   name: 'Submission completed',
 };

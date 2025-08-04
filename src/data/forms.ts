@@ -38,7 +38,7 @@ export interface MinimalFormStep {
 
 export interface SubmissionStatementConfiguration {
   type: 'checkbox';
-  key: string;
+  key: 'privacyPolicyAccepted' | 'statementOfTruthAccepted';
   label: string;
   validate?: {
     required?: boolean;

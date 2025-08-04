@@ -1,12 +1,14 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, waitForElementToBeRemoved, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {BASE_URL, buildSubmission} from 'api-mocks';
+import {withSubmissionPollInfo} from 'story-utils/decorators';
+
+import {BASE_URL, buildSubmission} from '@/api-mocks';
 import {
   mockSubmissionProcessingStatusGet,
   mockSubmissionProcessingStatusPendingGet,
-} from 'api-mocks/submissions';
-import {withSubmissionPollInfo} from 'story-utils/decorators';
+} from '@/api-mocks/submissions';
 
 import ConfirmationView from './ConfirmationView';
 
@@ -14,9 +16,6 @@ export default {
   title: 'Views / Post completion views / With Polling',
   component: ConfirmationView,
   decorators: [withSubmissionPollInfo, withRouter],
-  argTypes: {
-    statusUrl: {control: false},
-  },
   args: {
     onConfirmed: fn(),
   },
@@ -33,9 +32,11 @@ export default {
       },
     },
   },
-};
+} satisfies Meta<typeof ConfirmationView>;
 
-export const WithoutPayment = {
+type Story = StoryObj<typeof ConfirmationView>;
+
+export const WithoutPayment: Story = {
   play: async ({canvasElement, args}) => {
     const canvas = within(canvasElement);
 
@@ -48,7 +49,7 @@ export const WithoutPayment = {
   },
 };
 
-export const WithPayment = {
+export const WithPayment: Story = {
   parameters: {
     reactRouter: {
       location: {
@@ -58,7 +59,7 @@ export const WithPayment = {
   },
 };
 
-export const Pending = {
+export const Pending: Story = {
   parameters: {
     msw: {
       handlers: [mockSubmissionProcessingStatusPendingGet],
