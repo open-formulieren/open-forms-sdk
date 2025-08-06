@@ -1,31 +1,28 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
-import {post} from 'api';
 import {LiteralsProvider} from 'components/Literal';
-import {useSubmissionContext} from 'components/SubmissionProvider';
-import {SUBMISSION_ALLOWED} from 'components/constants';
 import {findPreviousApplicableStep} from 'components/utils';
-import {ValidationError} from 'errors';
-import useFormContext from 'hooks/useFormContext';
 import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
+
+import {ConfigContext} from '@/Context';
+import {useSubmissionContext} from '@/components/SubmissionProvider';
+import {SUBMISSION_ALLOWED} from '@/components/constants';
+import {completeSubmission} from '@/data/submissions';
+import {ValidationError} from '@/errors';
+import useFormContext from '@/hooks/useFormContext';
 
 import GenericSummary from './GenericSummary';
 import ValidationErrors from './ValidationErrors';
 import {useLoadSummaryData} from './hooks';
 
-const completeSubmission = async (submission, statementValues) => {
-  const response = await post(`${submission.url}/_complete`, statementValues);
-  const {statusUrl} = response.data;
-  return statusUrl;
-};
-
 const SubmissionSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
+  const {baseUrl} = useContext(ConfigContext);
   const form = useFormContext();
   const {submission, onDestroySession, removeSubmissionId} = useSubmissionContext();
   const refreshedSubmission = useRefreshSubmission(submission);
@@ -50,7 +47,8 @@ const SubmissionSummary = () => {
 
     let statusUrl;
     try {
-      statusUrl = await completeSubmission(refreshedSubmission, statementValues);
+      statusUrl = (await completeSubmission(baseUrl, refreshedSubmission.id, statementValues))
+        .statusUrl;
     } catch (e) {
       if (e instanceof ValidationError) {
         const {initialErrors} = e.asFormikProps();

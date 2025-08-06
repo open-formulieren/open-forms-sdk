@@ -243,7 +243,7 @@ test('Submitting the form with successful background processing', async () => {
 
   // confirm the submission and complete it
   vi.useFakeTimers();
-  await user.click(screen.getByRole('button', {name: 'Confirm'}));
+  await user.click(await screen.findByRole('button', {name: 'Confirm'}));
   expect(await screen.findByRole('heading', {name: 'Processing...'})).toBeVisible();
   const loader = await screen.findByRole('status');
   vi.runOnlyPendingTimers();

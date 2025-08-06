@@ -143,6 +143,38 @@ export const loadSummaryData = async (
   return result!;
 };
 
+/**
+ * The shape of the submission step summary data, for a single step.
+ *
+ * @see `#/components/schemas/SubmissionCompletion` in the API spec.
+ */
+type SubmissionCompleteBody = Partial<Record<SubmissionStatementConfiguration['key'], boolean>>;
+
+/**
+ * The shape of the submission step summary data, for a single step.
+ *
+ * @see `#/components/schemas/SubmissionCompletion` in the API spec.
+ */
+interface SubmissionCompleteResponseData extends SubmissionCompleteBody {
+  /**
+   * The endpoint to poll to get the background processing status.
+   */
+  statusUrl: string;
+}
+
+export const completeSubmission = async (
+  baseUrl: string,
+  submissionId: string,
+  statementValues: SubmissionCompleteBody
+): Promise<SubmissionCompleteResponseData> => {
+  const endpoint = `${baseUrl}submissions/${submissionId}/_complete`;
+  const result = await post<SubmissionCompleteResponseData, SubmissionCompleteBody>(
+    endpoint,
+    statementValues
+  );
+  return result.data!;
+};
+
 export type CosignConfirmBody = Record<SubmissionStatementConfiguration['key'], boolean>;
 
 interface CosignResponseData {
