@@ -12,7 +12,7 @@ import {FormattedMessage} from 'react-intl';
 import FAIcon from 'components/FAIcon';
 import Link from 'components/Link';
 
-import ComponentValueDisplay from './ComponentValueDisplay';
+import ComponentValueDisplay from '@/components/ComponentValueDisplay';
 
 // Components without a label that should still be displayed
 const COMPONENTS_WITH_NO_NAME = ['content'];
