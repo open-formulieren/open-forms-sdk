@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
-import {useAsync} from 'react-use';
 
 import {post} from 'api';
 import {LiteralsProvider} from 'components/Literal';
@@ -15,7 +14,7 @@ import useTitle from 'hooks/useTitle';
 
 import GenericSummary from './GenericSummary';
 import ValidationErrors from './ValidationErrors';
-import {loadSummaryData} from './data';
+import {useLoadSummaryData} from './hooks';
 
 const completeSubmission = async (submission, statementValues) => {
   const response = await post(`${submission.url}/_complete`, statementValues);
@@ -41,16 +40,10 @@ const SubmissionSummary = () => {
 
   const paymentInfo = refreshedSubmission.payment;
 
-  const {
-    loading,
-    value: summaryData,
-    error,
-  } = useAsync(async () => {
-    const submissionUrl = new URL(refreshedSubmission.url);
-    return await loadSummaryData(submissionUrl);
-  }, [refreshedSubmission.url]);
+  const summaryDataState = useLoadSummaryData(refreshedSubmission);
   // throw to nearest error boundary
-  if (error) throw error;
+  if (summaryDataState.error) throw summaryDataState.error;
+  const summaryData = summaryDataState.value || [];
 
   const onSubmit = async statementValues => {
     if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
@@ -119,7 +112,7 @@ const SubmissionSummary = () => {
         showPaymentInformation={paymentInfo.isRequired && !paymentInfo.hasPaid}
         amountToPay={paymentInfo.amount}
         editStepText={form.literals.changeText.resolved}
-        isLoading={loading}
+        isLoading={summaryDataState.loading}
         isAuthenticated={refreshedSubmission.isAuthenticated}
         errors={errorMessages}
         prevPage={getPreviousPage()}

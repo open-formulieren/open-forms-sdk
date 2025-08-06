@@ -1,15 +1,16 @@
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
+import {ConfigDecorator, withForm} from 'story-utils/decorators';
+
+import {buildForm} from '@/api-mocks';
 import {
   buildSubmission,
   mockSubmissionCompleteInvalidPost,
   mockSubmissionGet,
   mockSubmissionSummaryGet,
-} from 'api-mocks/submissions';
-import SubmissionProvider from 'components/SubmissionProvider';
-import {ConfigDecorator, withForm} from 'story-utils/decorators';
+} from '@/api-mocks/submissions';
+import SubmissionProvider from '@/components/SubmissionProvider';
 
 import SubmissionSummary from './SubmissionSummary';
 
