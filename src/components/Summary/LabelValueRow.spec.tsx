@@ -1,16 +1,25 @@
-import {render, screen} from '@testing-library/react';
-import messagesNL from 'i18n/compiled/nl.json';
+import type {
+  CheckboxComponentSchema,
+  ColumnsComponentSchema,
+  CurrencyComponentSchema,
+  DateComponentSchema,
+  NumberComponentSchema,
+  SelectComponentSchema,
+} from '@open-formulieren/types';
+import {render as realRender, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router';
 
-import {testEmptyFields} from './fixtures';
-import FormStepSummary, {LabelValueRow} from './index';
+import messagesNL from '@/i18n/compiled/nl.json';
 
-const Wrap = ({children}) => (
-  <IntlProvider locale="nl" messages={messagesNL}>
-    <MemoryRouter>{children}</MemoryRouter>
-  </IntlProvider>
-);
+import {LabelValueRow} from './FormStepSummary';
+
+const render = (ui: React.ReactNode) =>
+  realRender(
+    <IntlProvider locale="nl" messages={messagesNL}>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </IntlProvider>
+  );
 
 // NOTE - ideally, in these tests we would query by the roles that speak more to the
 // imagination than 'term' and 'definition', however these are still "too new" and not
@@ -21,11 +30,12 @@ const Wrap = ({children}) => (
 //
 // MDN: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/structural_roles#structural_roles_with_html_equivalents
 
-it('Unfilled dates displayed properly', () => {
-  const dateComponent = {
+test('Unfilled dates displayed properly', () => {
+  const dateComponent: DateComponentSchema = {
+    id: 'dateOfBirth',
     key: 'dateOfBirth',
     type: 'date',
-    format: 'dd-MM-yyyy',
+    label: 'Date of birth',
   };
 
   render(<LabelValueRow name="Date of birth" value="" component={dateComponent} />);
@@ -33,11 +43,16 @@ it('Unfilled dates displayed properly', () => {
   expect(screen.getByRole('definition')).toHaveTextContent('');
 });
 
-it('Multi-value select field displayed properly', () => {
-  const selectBoxesComponent = {
+test('Multi-value select field displayed properly', () => {
+  const selectComponent: SelectComponentSchema = {
+    id: 'selectPets',
     key: 'selectPets',
     type: 'select',
+    label: 'Select pets',
     multiple: true,
+    dataSrc: 'values',
+    dataType: 'string',
+    openForms: {translations: {}, dataSrc: 'manual'},
     data: {
       values: [
         {
@@ -56,32 +71,14 @@ it('Multi-value select field displayed properly', () => {
     },
   };
 
-  render(
-    <Wrap>
-      <LabelValueRow name="Select Pets" value={['dog', 'fish']} component={selectBoxesComponent} />
-    </Wrap>
-  );
+  render(<LabelValueRow name="Select Pets" value={['dog', 'fish']} component={selectComponent} />);
 
   expect(screen.getByRole('definition')).toHaveTextContent('Dog; Fish');
 });
 
-it.each(testEmptyFields)('Empty fields (%s)', dataEntry => {
-  render(
-    <Wrap>
-      <FormStepSummary
-        name="Form Step 1"
-        editUrl="/stap/fs-1"
-        editStepText="Change"
-        data={[dataEntry]}
-      />
-    </Wrap>
-  );
-
-  expect(screen.getByRole('definition')).toHaveTextContent('');
-});
-
-it('Columns without labels are not rendered', () => {
-  const columnComponent = {
+test('Columns without labels are not rendered', () => {
+  const columnComponent: ColumnsComponentSchema = {
+    id: 'columns',
     key: 'columns',
     type: 'columns',
     columns: [],
@@ -93,49 +90,43 @@ it('Columns without labels are not rendered', () => {
   expect(screen.queryByRole('term')).not.toBeInTheDocument();
 });
 
-it('Number fields with zero values are displayed', () => {
-  const numberComponent = {
+test('Number fields with zero values are displayed', () => {
+  const numberComponent: NumberComponentSchema = {
+    id: 'numberComponent',
     key: 'numberComponent',
     type: 'number',
-    multiple: false,
+    label: 'Number',
   };
-  render(
-    <Wrap>
-      <LabelValueRow name="Number zero" value={0} component={numberComponent} />
-    </Wrap>
-  );
+  render(<LabelValueRow name="Number zero" value={0} component={numberComponent} />);
   expect(screen.getByRole('definition')).toHaveTextContent('0');
 });
 
-it('Currency fields with zero values are displayed', () => {
-  const numberComponent = {
+test('Currency fields with zero values are displayed', () => {
+  const currencyComponent: CurrencyComponentSchema = {
+    id: 'currencyComponent',
     key: 'currencyComponent',
     type: 'currency',
-    multiple: false,
+    label: 'Currency',
+    currency: 'EUR',
   };
-  render(
-    <Wrap>
-      <LabelValueRow name="Currency zero" value={0} component={numberComponent} />
-    </Wrap>
-  );
+  render(<LabelValueRow name="Currency zero" value={0} component={currencyComponent} />);
 
   expect(screen.getByRole('definition')).toHaveTextContent('€ 0,00');
 });
 
-it.each([
+test.each([
   [true, 'Ja'],
   [false, 'Nee'],
 ])("Checkboxes are capitalised (value '%s' -> %s)", (value, text) => {
-  const checkbox = {
+  const checkbox: CheckboxComponentSchema = {
+    id: 'checkbox',
     key: 'checkbox',
     type: 'checkbox',
+    label: 'Checkbox',
+    defaultValue: false,
   };
 
-  render(
-    <Wrap>
-      <LabelValueRow name="Date of birth" value={value} component={checkbox} />
-    </Wrap>
-  );
+  render(<LabelValueRow name="Checkbox" value={value} component={checkbox} />);
 
   expect(screen.getByRole('definition')).toHaveTextContent(text);
 });

@@ -1,3 +1,5 @@
+import type {AnyComponentSchema} from '@open-formulieren/types';
+import {JSONValue} from '@open-formulieren/types/lib/types';
 import {
   DataList,
   DataListItem,
@@ -5,19 +7,25 @@ import {
   DataListValue,
   Heading2,
 } from '@utrecht/component-library-react';
-import PropTypes from 'prop-types';
 import {useId} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import FAIcon from 'components/FAIcon';
-import Link from 'components/Link';
-
 import ComponentValueDisplay from '@/components/ComponentValueDisplay';
+import FAIcon from '@/components/FAIcon';
+import Link from '@/components/Link';
+import type {StepSummaryData} from '@/data/submissions';
 
 // Components without a label that should still be displayed
-const COMPONENTS_WITH_NO_NAME = ['content'];
+const COMPONENTS_WITH_NO_NAME: AnyComponentSchema['type'][] = ['content'];
 
-const LabelValueRow = ({name, value, component}) => {
+export interface LabelValueRowProps {
+  name: React.ReactNode;
+  value: JSONValue | undefined;
+  component: AnyComponentSchema;
+}
+
+// Exported because there are (unit) tests
+export const LabelValueRow: React.FC<LabelValueRowProps> = ({name, value, component}) => {
   if (!name && !COMPONENTS_WITH_NO_NAME.includes(component.type)) {
     return null;
   }
@@ -32,26 +40,54 @@ const LabelValueRow = ({name, value, component}) => {
   );
 };
 
-LabelValueRow.propTypes = {
-  name: PropTypes.node.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.array,
-    PropTypes.number,
-    PropTypes.bool,
-  ]),
-  component: PropTypes.object.isRequired,
-};
+export type FormStepSummaryEditProps =
+  | {
+      blockEdit?: false;
+      /**
+       * Route to the step to modify it.
+       */
+      editUrl: string;
+      /**
+       * Label of the link to edit the step data.
+       */
+      editStepText: React.ReactNode;
+    }
+  | {
+      blockEdit: true;
+      editUrl: never;
+      editStepText: never;
+    };
 
-const FormStepSummary = ({editUrl, name, data, editStepText = ''}) => {
+export interface FormStepSummaryProps {
+  /**
+   * Step name, used as heading.
+   */
+  name: React.ReactNode;
+  /**
+   * The array of label/value + context items of the fields within the step.
+   */
+  data: StepSummaryData['data'];
+}
+
+/**
+ * Display the title of the step, an edit link (optionally) and the values of the
+ * submitted form fields in the step.
+ *
+ * This display helps the user double check that what they entered is correct, before
+ * they finally submit it to the backend.
+ */
+const FormStepSummary: React.FC<FormStepSummaryProps & FormStepSummaryEditProps> = ({
+  name,
+  data,
+  ...props
+}) => {
   const linkDescriptionId = useId();
   return (
     <div className="openforms-summary">
       <div className="openforms-summary__header">
         <Heading2 className="utrecht-heading-2--openforms-summary-step-name">{name}</Heading2>
 
-        {editStepText && (
+        {!props.blockEdit && (
           <>
             <span className="openforms-summary__link-description" id={linkDescriptionId}>
               <FormattedMessage
@@ -61,9 +97,9 @@ const FormStepSummary = ({editUrl, name, data, editStepText = ''}) => {
               />
             </span>
 
-            <Link to={editUrl} aria-describedby={linkDescriptionId}>
+            <Link to={props.editUrl} aria-describedby={linkDescriptionId}>
               <FAIcon icon="pen-to-square" />
-              {editStepText}
+              {props.editStepText}
             </Link>
           </>
         )}
@@ -83,12 +119,4 @@ const FormStepSummary = ({editUrl, name, data, editStepText = ''}) => {
   );
 };
 
-FormStepSummary.propTypes = {
-  name: PropTypes.node.isRequired,
-  editUrl: PropTypes.string.isRequired,
-  editStepText: PropTypes.node,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
-export {LabelValueRow};
 export default FormStepSummary;

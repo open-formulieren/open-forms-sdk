@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 import Card from 'components/Card';
 import ErrorMessage from 'components/Errors/ErrorMessage';
-import FormStepSummary from 'components/FormStepSummary';
 import Loader from 'components/Loader';
 import Price from 'components/Price';
 import SummaryConfirmation from 'components/SummaryConfirmation';
 import {SUBMISSION_ALLOWED} from 'components/constants';
+
+import FormStepSummary from './FormStepSummary';
 
 const GenericSummary = ({
   title,

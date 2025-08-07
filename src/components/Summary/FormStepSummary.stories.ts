@@ -1,7 +1,8 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import FormStepSummary from './index';
+import FormStepSummary from './FormStepSummary';
 
 export default {
   title: 'Private API / FormStepSummary',
@@ -13,29 +14,31 @@ export default {
     },
   },
   args: {
-    editUrl: '#',
     name: 'Step title',
     data: [
       {
         name: 'A field',
         value: 'The field value',
         component: {
+          id: 'textfield',
           type: 'textfield',
           key: 'textfield',
           label: 'A field',
         },
       },
     ],
+    editUrl: '#',
     editStepText: 'Edit',
   },
   argTypes: {
     name: {type: 'string'},
     editStepText: {type: 'string'},
-    slug: {table: {disable: true}},
   },
-};
+} satisfies Meta<typeof FormStepSummary>;
 
-export const Default = {
+type Story = StoryObj<typeof FormStepSummary>;
+
+export const Default: Story = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
@@ -50,9 +53,9 @@ export const Default = {
   },
 };
 
-export const NotEditable = {
+export const NotEditable: Story = {
   args: {
-    editStepText: '',
+    blockEdit: true,
   },
 
   play: async ({canvasElement, step}) => {
@@ -69,7 +72,7 @@ export const NotEditable = {
   },
 };
 
-export const WithFieldsetAsFirstElement = {
+export const WithFieldsetAsFirstElement: Story = {
   name: 'Layout components: fieldset, first child',
   args: {
     data: [
@@ -77,15 +80,26 @@ export const WithFieldsetAsFirstElement = {
         name: 'A fieldset',
         value: '',
         component: {
+          id: 'component1',
           type: 'fieldset',
           key: 'fieldset',
           label: 'A fieldset',
+          hideHeader: false,
+          components: [
+            {
+              id: 'component2',
+              type: 'textfield',
+              key: 'textfield1',
+              label: 'A textfield',
+            },
+          ],
         },
       },
       {
         name: 'A textfield',
         value: 'A value',
         component: {
+          id: 'component2',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -95,6 +109,7 @@ export const WithFieldsetAsFirstElement = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
+          id: 'component3',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -104,7 +119,7 @@ export const WithFieldsetAsFirstElement = {
   },
 };
 
-export const WithFieldsetNotAsFirstElement = {
+export const WithFieldsetNotAsFirstElement: Story = {
   name: 'Layout components: fieldset, not first child',
   args: {
     data: [
@@ -112,6 +127,7 @@ export const WithFieldsetNotAsFirstElement = {
         name: 'A number',
         value: 3.14,
         component: {
+          id: 'component1',
           type: 'number',
           key: 'number',
           label: 'A number',
@@ -121,15 +137,32 @@ export const WithFieldsetNotAsFirstElement = {
         name: 'A fieldset',
         value: '',
         component: {
+          id: 'component2',
           type: 'fieldset',
           key: 'fieldset',
           label: 'A fieldset',
+          hideHeader: false,
+          components: [
+            {
+              id: 'component3',
+              type: 'textfield',
+              key: 'textfield1',
+              label: 'A textfield',
+            },
+            {
+              id: 'component4',
+              type: 'textfield',
+              key: 'textfield2',
+              label: 'Another textfield',
+            },
+          ],
         },
       },
       {
         name: 'A textfield',
         value: 'A value',
         component: {
+          id: 'component3',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -139,6 +172,7 @@ export const WithFieldsetNotAsFirstElement = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
+          id: 'component4',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -148,7 +182,7 @@ export const WithFieldsetNotAsFirstElement = {
   },
 };
 
-export const WithEditGridAsFirstElement = {
+export const WithEditGridAsFirstElement: Story = {
   name: 'Layout components: editgrid, first child',
   args: {
     data: [
@@ -156,15 +190,33 @@ export const WithEditGridAsFirstElement = {
         name: 'A repeating group',
         value: '',
         component: {
+          id: 'component1',
           type: 'editgrid',
           key: 'editgrid',
           label: 'A repeating group',
+          groupLabel: 'Item',
+          disableAddingRemovingRows: false,
+          components: [
+            {
+              id: 'component2',
+              type: 'textfield',
+              key: 'textfield1',
+              label: 'A textfield',
+            },
+            {
+              id: 'component3',
+              type: 'textfield',
+              key: 'textfield2',
+              label: 'Another textfield',
+            },
+          ],
         },
       },
       {
         name: 'A textfield',
         value: 'A value',
         component: {
+          id: 'component2',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -174,6 +226,7 @@ export const WithEditGridAsFirstElement = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
+          id: 'component3',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -183,7 +236,7 @@ export const WithEditGridAsFirstElement = {
   },
 };
 
-export const WithEditGridNotAsFirstElement = {
+export const WithEditGridNotAsFirstElement: Story = {
   name: 'Layout components: editgrid, not first child',
   args: {
     data: [
@@ -191,6 +244,7 @@ export const WithEditGridNotAsFirstElement = {
         name: 'A number',
         value: 3.14,
         component: {
+          id: 'component1',
           type: 'number',
           key: 'number',
           label: 'A number',
@@ -200,15 +254,33 @@ export const WithEditGridNotAsFirstElement = {
         name: 'A repeating group',
         value: '',
         component: {
+          id: 'component2',
           type: 'editgrid',
           key: 'editgrid',
           label: 'A repeating group',
+          groupLabel: 'Item',
+          disableAddingRemovingRows: false,
+          components: [
+            {
+              id: 'component3',
+              type: 'textfield',
+              key: 'textfield1',
+              label: 'A textfield',
+            },
+            {
+              id: 'component4',
+              type: 'textfield',
+              key: 'textfield2',
+              label: 'Another textfield',
+            },
+          ],
         },
       },
       {
         name: 'A textfield',
         value: 'A value',
         component: {
+          id: 'component3',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -218,6 +290,7 @@ export const WithEditGridNotAsFirstElement = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
+          id: 'component4',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -227,7 +300,7 @@ export const WithEditGridNotAsFirstElement = {
   },
 };
 
-export const WithPartnersAsFirstElement = {
+export const WithPartnersAsFirstElement: Story = {
   args: {
     data: [
       {
@@ -244,6 +317,7 @@ export const WithPartnersAsFirstElement = {
           },
         ],
         component: {
+          id: 'component1',
           type: 'partners',
           key: 'partners',
           label: 'Partners',
@@ -253,15 +327,27 @@ export const WithPartnersAsFirstElement = {
         name: 'A repeating group',
         value: '',
         component: {
+          id: 'component2',
           type: 'editgrid',
           key: 'editgrid',
           label: 'A repeating group',
+          groupLabel: 'Item',
+          disableAddingRemovingRows: false,
+          components: [
+            {
+              id: 'component3',
+              type: 'textfield',
+              key: 'textfield1',
+              label: 'A textfield',
+            },
+          ],
         },
       },
       {
         name: 'A textfield',
         value: 'A value',
         component: {
+          id: 'component3',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -270,16 +356,20 @@ export const WithPartnersAsFirstElement = {
     ],
   },
 };
-export const WithPartnersAsSecondElement = {
+export const WithPartnersAsSecondElement: Story = {
   args: {
     data: [
       {
         name: 'A repeating group',
         value: '',
         component: {
+          id: 'component1',
           type: 'editgrid',
           key: 'editgrid',
           label: 'A repeating group',
+          groupLabel: 'Item',
+          disableAddingRemovingRows: false,
+          components: [],
         },
       },
       {
@@ -296,6 +386,7 @@ export const WithPartnersAsSecondElement = {
           },
         ],
         component: {
+          id: 'component2',
           type: 'partners',
           key: 'partners',
           label: 'Partners',
@@ -305,6 +396,7 @@ export const WithPartnersAsSecondElement = {
         name: 'A textfield',
         value: 'A value',
         component: {
+          id: 'component3',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
