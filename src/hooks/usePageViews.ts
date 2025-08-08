@@ -1,11 +1,11 @@
 import {useContext, useEffect, useRef} from 'react';
-import {useLocation} from 'react-router';
+import {type Location, useLocation} from 'react-router';
 
 import {ConfigContext} from 'Context';
 import {DEBUG} from 'utils';
 
-function usePrevious(value) {
-  const ref = useRef({
+function usePrevious<T>(value: T): T | null {
+  const ref = useRef<{value: T; prev: T | null}>({
     value: value,
     prev: null,
   });
@@ -23,12 +23,12 @@ function usePrevious(value) {
 }
 
 const ANALYTICS_PROVIDERS = {
-  debug: async location =>
+  debug: async (location: Location) =>
     DEBUG &&
     console.log(
       `Tracking navigation to ${window.location.origin + location.pathname}${location.hash}`
     ),
-  gtag: async location => {
+  gtag: async (location: Location) => {
     /* Google Analytics
     Hashrouting support: https://support.google.com/analytics/thread/20971249/track-hashtag-in-url-but-after-site-was-loaded
     */
@@ -40,7 +40,7 @@ const ANALYTICS_PROVIDERS = {
       })
     );
   },
-  siteimprove: async (location, previousLocation) =>
+  siteimprove: async (location: Location, previousLocation: Location | null) =>
     /* SiteImprove
     Docs: https://support.siteimprove.com/hc/en-gb/articles/115001615171-Siteimprove-Analytics-Custom-Visit-Tracking
     Note: siteimprove requires the full URL to track pages, not merely the path
@@ -56,7 +56,7 @@ const ANALYTICS_PROVIDERS = {
         title: document.title,
       },
     ]),
-  matomoOrPiwik: async (location, previousLocation) => {
+  matomoOrPiwik: async (location: Location, previousLocation: Location | null) => {
     /* Matomo, Piwik and Piwik PRO are all supported
     Matomo: https://developer.matomo.org/guides/spa-tracking
     Piwik: https://piwik.org/docs/tracking-javascript-guide/
@@ -81,7 +81,7 @@ const ANALYTICS_PROVIDERS = {
  * We assume that the provider has been included already in the global scope of the
  * containing page where the SDK is embedded.
  */
-const trackPageView = (location, previousLocation) => {
+const trackPageView = (location: Location, previousLocation: Location | null) => {
   const promises = Object.values(ANALYTICS_PROVIDERS).map(callback =>
     callback(location, previousLocation)
   );
@@ -92,12 +92,11 @@ const trackPageView = (location, previousLocation) => {
 
 /**
  * Ensure that the current page view is sent to the (supported) analytics tool(s).
- * @return {Void}
  */
-const usePageViews = () => {
+const usePageViews = (): void => {
   const {basePath} = useContext(ConfigContext);
   const location = useLocation();
-  const previousLocation = usePrevious(location);
+  const previousLocation = usePrevious<Location>(location);
   useEffect(() => {
     // if there's no change, do nothing
     if (

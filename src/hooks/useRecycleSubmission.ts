@@ -4,8 +4,8 @@ import {useAsync, useSessionStorage} from 'react-use';
 
 import {ConfigContext} from '@/Context';
 import {apiCall} from '@/api';
-import {type Form} from '@/data/forms';
-import {type Submission} from '@/data/submissions';
+import type {Form} from '@/data/forms';
+import type {Submission} from '@/data/submissions';
 
 import useInitialDataReference from './useInitialDataReference';
 
@@ -22,7 +22,7 @@ import useInitialDataReference from './useInitialDataReference';
  */
 const useRecycleSubmission = (
   form: Form,
-  currentSubmission: Submission,
+  currentSubmission: Submission | null,
   onSubmissionLoaded: (submission: Submission) => void = () => {},
   onError: (error: Error) => void = () => {}
 ): [boolean, (value: string | null) => void, () => void] => {

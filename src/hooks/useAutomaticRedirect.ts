@@ -3,10 +3,12 @@ import {useLocation} from 'react-router';
 
 import {getLoginRedirectUrl} from 'components/utils';
 
-import {ConfigContext} from '../Context';
+import {ConfigContext} from '@/Context';
+import type {Form} from '@/data/forms';
+
 import useStartSubmission from './useStartSubmission';
 
-const useAutomaticRedirect = form => {
+const useAutomaticRedirect = (form: Form): boolean => {
   const location = useLocation();
   const {basePath} = useContext(ConfigContext);
 

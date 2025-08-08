@@ -3,30 +3,29 @@ import {useIntl} from 'react-intl';
 import {Navigate, Outlet, useLocation, useMatch, useNavigate, useSearchParams} from 'react-router';
 import {usePrevious} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {destroy} from 'api';
-import FormProgressIndicator from 'components/FormProgressIndicator';
-import Loader from 'components/Loader';
-import SubmissionProvider from 'components/SubmissionProvider';
-import AnalyticsToolsConfigProvider from 'components/analytics/AnalyticsToolConfigProvider';
-import {START_FORM_QUERY_PARAM} from 'components/constants';
-import {flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
-import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
-import useFormContext from 'hooks/useFormContext';
 import usePageViews from 'hooks/usePageViews';
-import useRecycleSubmission from 'hooks/useRecycleSubmission';
+
+import {ConfigContext} from '@/Context';
+import {destroy} from '@/api';
+import FormProgressIndicator from '@/components/FormProgressIndicator';
+import Loader from '@/components/Loader';
+import SubmissionProvider from '@/components/SubmissionProvider';
+import AnalyticsToolsConfigProvider from '@/components/analytics/AnalyticsToolConfigProvider';
+import {START_FORM_QUERY_PARAM} from '@/components/constants';
+import {flagActiveSubmission, flagNoActiveSubmission} from '@/data/submissions';
+import {type Submission} from '@/data/submissions';
+import useAutomaticRedirect from '@/hooks/useAutomaticRedirect';
+import useFormContext from '@/hooks/useFormContext';
+import useRecycleSubmission from '@/hooks/useRecycleSubmission';
 
 import FormDisplay from './FormDisplay';
 
 /**
  * An OpenForms form.
  *
- *
  * OpenForms forms consist of some metadata and individual steps.
- * @param  {Object} options.form The form definition from the Open Forms API
- * @return {JSX}
  */
-const Form = () => {
+const Form: React.FC = () => {
   const form = useFormContext();
   const navigate = useNavigate();
   const shouldAutomaticallyRedirect = useAutomaticRedirect(form);
@@ -43,12 +42,12 @@ const Form = () => {
   // figure out the submission in the state. If it's stored in the router state, extract
   // it and set it in the React state to 'persist' it.
   const submissionFromRouterState = routerState?.submission;
-  const [submission, setSubmission] = useState(null);
+  const [submission, setSubmission] = useState<Submission | null>(null);
   if (submission == null && submissionFromRouterState != null) {
     setSubmission(submissionFromRouterState);
   }
 
-  const onSubmissionLoaded = submission => {
+  const onSubmissionLoaded = (submission: Submission) => {
     setSubmission(submission);
     flagActiveSubmission();
   };
@@ -76,7 +75,9 @@ const Form = () => {
   );
 
   const onDestroySession = async () => {
-    await destroy(`${config.baseUrl}authentication/${submission.id}/session`);
+    if (submission) {
+      await destroy(`${config.baseUrl}authentication/${submission.id}/session`);
+    }
     removeSubmissionId();
     setSubmission(null);
     navigate('/');
@@ -130,7 +131,5 @@ const Form = () => {
     </FormDisplay>
   );
 };
-
-Form.propTypes = {};
 
 export default Form;
