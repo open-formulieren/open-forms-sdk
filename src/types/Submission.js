@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 
-import {SUBMISSION_ALLOWED} from 'components/constants';
-
 const Submission = PropTypes.shape({
   id: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   form: PropTypes.string.isRequired,
   steps: PropTypes.arrayOf(PropTypes.object).isRequired, // TODO: define this as well
-  submissionAllowed: PropTypes.oneOf(Object.values(SUBMISSION_ALLOWED)).isRequired,
+  submissionAllowed: PropTypes.string.isRequired,
   payment: PropTypes.shape({
     isRequired: PropTypes.bool.isRequired,
     amount: PropTypes.string,

@@ -9,7 +9,6 @@ import useTitle from 'hooks/useTitle';
 
 import {ConfigContext} from '@/Context';
 import {useSubmissionContext} from '@/components/SubmissionProvider';
-import {SUBMISSION_ALLOWED} from '@/components/constants';
 import {completeSubmission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
@@ -43,7 +42,7 @@ const SubmissionSummary = () => {
   const summaryData = summaryDataState.value || [];
 
   const onSubmit = async statementValues => {
-    if (refreshedSubmission.submissionAllowed !== SUBMISSION_ALLOWED.yes) return;
+    if (refreshedSubmission.submissionAllowed !== 'yes') return;
 
     let statusUrl;
     try {

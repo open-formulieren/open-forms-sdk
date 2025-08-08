@@ -5,7 +5,6 @@ import {Literal} from 'components/Literal';
 
 import {OFButton} from '@/components/Button';
 import Loader from '@/components/Loader';
-import {SUBMISSION_ALLOWED} from '@/components/constants';
 import type {Submission} from '@/data/submissions';
 
 export interface StepSubmitButtonProps {
@@ -29,7 +28,7 @@ const StepSubmitButton: React.FC<StepSubmitButtonProps> = ({
   canSubmitForm,
   isLastStep,
 }) => {
-  if (canSubmitForm === SUBMISSION_ALLOWED.noWithoutOverview && isLastStep) return null;
+  if (canSubmitForm === 'no_without_overview' && isLastStep) return null;
   return (
     <OFButton
       type="submit"

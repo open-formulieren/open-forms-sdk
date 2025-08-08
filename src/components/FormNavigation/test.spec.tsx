@@ -1,10 +1,10 @@
 import {render, screen} from '@testing-library/react';
-import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router';
 
 import {LiteralsProvider} from 'components/Literal';
-import {SUBMISSION_ALLOWED} from 'components/constants';
+
+import messagesNL from '@/i18n/compiled/nl.json';
 
 import FormNavigation, {StepSubmitButton} from './index';
 
@@ -29,12 +29,7 @@ it('Last step of submittable form, button is present', () => {
     <Wrap>
       <FormNavigation
         submitButton={
-          <StepSubmitButton
-            canSubmitForm={SUBMISSION_ALLOWED.yes}
-            canSubmitStep
-            isLastStep
-            isCheckingLogic={false}
-          />
+          <StepSubmitButton canSubmitForm="yes" canSubmitStep isLastStep isCheckingLogic={false} />
         }
         isAuthenticated={false}
         onFormSave={mockFunction}
@@ -58,7 +53,7 @@ it('Last step of non-submittable form with overview, button is present', () => {
       <FormNavigation
         submitButton={
           <StepSubmitButton
-            canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
+            canSubmitForm="no_with_overview"
             canSubmitStep
             isLastStep
             isCheckingLogic={false}
@@ -86,7 +81,7 @@ it('Last step of non-submittable form without overview, button is NOT present', 
       <FormNavigation
         submitButton={
           <StepSubmitButton
-            canSubmitForm={SUBMISSION_ALLOWED.noWithoutOverview}
+            canSubmitForm="no_without_overview"
             canSubmitStep
             isLastStep
             isCheckingLogic={false}
@@ -114,7 +109,7 @@ it('Non-last step of non-submittable form without overview, button IS present', 
       <FormNavigation
         submitButton={
           <StepSubmitButton
-            canSubmitForm={SUBMISSION_ALLOWED.noWithOverview}
+            canSubmitForm="no_with_overview"
             canSubmitStep
             isLastStep={false}
             isCheckingLogic={false}
@@ -141,12 +136,7 @@ it('Suspending form allowed, button is present', () => {
     <Wrap>
       <FormNavigation
         submitButton={
-          <StepSubmitButton
-            canSubmitForm={SUBMISSION_ALLOWED.yes}
-            canSubmitStep
-            isLastStep
-            isCheckingLogic={false}
-          />
+          <StepSubmitButton canSubmitForm="yes" canSubmitStep isLastStep isCheckingLogic={false} />
         }
         isAuthenticated={false}
         previousPage="#"
@@ -166,12 +156,7 @@ it('Suspending form not allowed, button is NOT present', () => {
     <Wrap>
       <FormNavigation
         submitButton={
-          <StepSubmitButton
-            canSubmitForm={SUBMISSION_ALLOWED.yes}
-            canSubmitStep
-            isLastStep
-            isCheckingLogic={false}
-          />
+          <StepSubmitButton canSubmitForm="yes" canSubmitStep isLastStep isCheckingLogic={false} />
         }
         onFormSave={undefined}
         isAuthenticated={false}

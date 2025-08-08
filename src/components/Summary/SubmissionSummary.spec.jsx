@@ -9,7 +9,6 @@ import mswServer from 'api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
 import SubmissionProvider from 'components/SubmissionProvider';
 import {SubmissionSummary} from 'components/Summary';
-import {SUBMISSION_ALLOWED} from 'components/constants';
 import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 const Wrapper = ({form, submission}) => {
@@ -56,7 +55,7 @@ test.each([true, false])(
   async loginRequired => {
     const form = buildForm({loginRequired});
     const submissionIsAuthenticated = buildSubmission({
-      submissionAllowed: SUBMISSION_ALLOWED.yes,
+      submissionAllowed: 'yes',
       isAuthenticated: true,
     });
     mswServer.use(mockSubmissionGet(submissionIsAuthenticated), mockSubmissionSummaryGet());
@@ -71,7 +70,7 @@ test.each([true, false])(
 test('Summary when isAuthenticated and loginRequired are false', async () => {
   const form = buildForm({loginRequired: false});
   const submissionNotAuthenticated = buildSubmission({
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    submissionAllowed: 'yes',
     isAuthenticated: false,
   });
   mswServer.use(mockSubmissionGet(submissionNotAuthenticated), mockSubmissionSummaryGet());

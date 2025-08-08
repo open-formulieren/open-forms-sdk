@@ -3,7 +3,7 @@ import {matchPath, useLocation} from 'react-router';
 
 import ProgressIndicator from '@/components/ProgressIndicator';
 import {type StepMeta, addFixedSteps, getStepsInfo} from '@/components/ProgressIndicator/utils';
-import {PI_TITLE, STEP_LABELS, SUBMISSION_ALLOWED} from '@/components/constants';
+import {PI_TITLE, STEP_LABELS} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
 import useFormContext from '@/hooks/useFormContext';
@@ -24,7 +24,7 @@ const getProgressIndicatorSteps = ({
   isCompleted,
 }: GetProgressIndicatorStepsOptions): StepMeta[] => {
   const submissionAllowedSpec = submission?.submissionAllowed ?? form.submissionAllowed;
-  const showOverview = submissionAllowedSpec !== SUBMISSION_ALLOWED.noWithoutOverview;
+  const showOverview = submissionAllowedSpec !== 'no_without_overview';
   const needsPayment = submission?.payment.isRequired ?? form.paymentRequired;
 
   const showNonApplicableSteps = !form.hideNonApplicableSteps;

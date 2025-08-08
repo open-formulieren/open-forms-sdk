@@ -1,11 +1,5 @@
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-const SUBMISSION_ALLOWED = {
-  yes: 'yes',
-  noWithOverview: 'no_with_overview',
-  noWithoutOverview: 'no_without_overview',
-} as const;
-
 const STEP_LABELS = defineMessages({
   introduction: {
     description: 'introduction page title',
@@ -37,10 +31,4 @@ const PI_TITLE = (
   <FormattedMessage description="Title of progress indicator" defaultMessage="Progress" />
 );
 
-export {
-  SUBMISSION_ALLOWED,
-  START_FORM_QUERY_PARAM,
-  SUBMISSION_UUID_QUERY_PARAM,
-  STEP_LABELS,
-  PI_TITLE,
-};
+export {START_FORM_QUERY_PARAM, SUBMISSION_UUID_QUERY_PARAM, STEP_LABELS, PI_TITLE};

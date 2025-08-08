@@ -8,7 +8,6 @@ import useRecycleSubmission from 'hooks/useRecycleSubmission';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 
 import {ConfigContext} from '@/Context';
-import {SUBMISSION_ALLOWED} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import {type CosignConfirmBody, type Submission, confirmCosign} from '@/data/submissions';
 
@@ -76,13 +75,11 @@ const CosignSummary: React.FC<CosignSummaryProps> = ({
               defaultMessage="Check and co-sign submission"
             />
           }
-          submissionAllowed={SUBMISSION_ALLOWED.yes}
-          // @ts-expect-error inference is not accurate
+          submissionAllowed="yes"
           summaryData={summaryData}
-          showPaymentInformation={false}
-          editStepText=""
+          blockEdit
           isLoading={anythingLoading}
-          isAuthenticated={true}
+          isAuthenticated
           onSubmit={onSubmit}
           onDestroySession={onDestroySession}
         />

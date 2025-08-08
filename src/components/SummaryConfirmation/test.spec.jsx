@@ -3,7 +3,6 @@ import {Formik} from 'formik';
 import {MemoryRouter} from 'react-router';
 
 import {LiteralsProvider} from 'components/Literal';
-import {SUBMISSION_ALLOWED} from 'components/constants';
 
 import SummaryConfirmation from './index';
 
@@ -29,7 +28,7 @@ it('Summary of non-submittable form, button is NOT present', () => {
   render(
     <Wrapper>
       <SummaryConfirmation
-        submissionAllowed={SUBMISSION_ALLOWED.noWithOverview}
+        submissionAllowed="no_with_overview"
         prevPage="some-page"
         hideAbortButton
       />
@@ -44,11 +43,7 @@ it('Summary of non-submittable form, button is NOT present', () => {
 it('Summary of submittable form, button IS present', () => {
   render(
     <Wrapper>
-      <SummaryConfirmation
-        submissionAllowed={SUBMISSION_ALLOWED.yes}
-        prevPage="some-page"
-        hideAbortButton
-      />
+      <SummaryConfirmation submissionAllowed="yes" prevPage="some-page" hideAbortButton />
     </Wrapper>
   );
 

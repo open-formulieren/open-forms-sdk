@@ -54,8 +54,8 @@ export type FormStepSummaryEditProps =
     }
   | {
       blockEdit: true;
-      editUrl: never;
-      editStepText: never;
+      editUrl?: never;
+      editStepText?: never;
     };
 
 export interface FormStepSummaryProps {
