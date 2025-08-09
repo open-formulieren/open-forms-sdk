@@ -7,7 +7,7 @@ import {DEBUG} from '@/utils';
 import ErrorDisplay from './ErrorDisplay';
 import type {AnyError} from './types';
 
-const logError = (error: Error, errorInfo: React.ErrorInfo): void => {
+const logError = (error: Error, errorInfo?: React.ErrorInfo): void => {
   if (DEBUG) {
     const muteConsole = getEnv('MUTE_ERROR_BOUNDARY_LOG');
     if (!muteConsole) console.error(error, errorInfo);

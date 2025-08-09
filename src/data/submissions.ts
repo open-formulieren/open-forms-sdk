@@ -41,11 +41,17 @@ export interface Submission {
   steps: NestedSubmissionStep[];
   submissionAllowed: 'yes' | 'no_with_overview' | 'no_without_overview';
   isAuthenticated: boolean;
-  payment: {
-    isRequired: boolean;
-    amount: null | string; // decimal serialized to string
-    hasPaid: boolean;
-  };
+  payment:
+    | {
+        isRequired: false;
+        amount: null;
+        hasPaid: false;
+      }
+    | {
+        isRequired: true;
+        amount: string; // decimal serialized to string
+        hasPaid: boolean;
+      };
   formUrl: string;
   initialDataReference: string;
 }

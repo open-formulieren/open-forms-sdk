@@ -1,32 +1,40 @@
+import {JSONObject} from '@open-formulieren/types/lib/types';
+import {FormikErrors} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
 import {LiteralsProvider} from 'components/Literal';
 import {findPreviousApplicableStep} from 'components/utils';
-import useRefreshSubmission from 'hooks/useRefreshSubmission';
 import useTitle from 'hooks/useTitle';
 
 import {ConfigContext} from '@/Context';
 import {useSubmissionContext} from '@/components/SubmissionProvider';
-import {completeSubmission} from '@/data/submissions';
+import type {SubmissionStatementConfiguration} from '@/data/forms';
+import {type Submission, completeSubmission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
+import useRefreshSubmission from '@/hooks/useRefreshSubmission';
 
 import GenericSummary from './GenericSummary';
 import ValidationErrors from './ValidationErrors';
 import {useLoadSummaryData} from './hooks';
 
-const SubmissionSummary = () => {
+function assertSubmission(submission: Submission | null): asserts submission is Submission {
+  if (!submission) throw new Error('A submission must be available in the context');
+}
+
+const SubmissionSummary: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const form = useFormContext();
   const {submission, onDestroySession, removeSubmissionId} = useSubmissionContext();
+  assertSubmission(submission);
   const refreshedSubmission = useRefreshSubmission(submission);
 
-  const [submitErrors, setSubmitErrors] = useState(null);
+  const [submitErrors, setSubmitErrors] = useState<string | FormikErrors<JSONObject> | null>(null);
 
   const pageTitle = intl.formatMessage({
     description: 'Summary page title',
@@ -41,10 +49,12 @@ const SubmissionSummary = () => {
   if (summaryDataState.error) throw summaryDataState.error;
   const summaryData = summaryDataState.value || [];
 
-  const onSubmit = async statementValues => {
+  const onSubmit = async (
+    statementValues: Record<SubmissionStatementConfiguration['key'], boolean>
+  ) => {
     if (refreshedSubmission.submissionAllowed !== 'yes') return;
 
-    let statusUrl;
+    let statusUrl: string;
     try {
       statusUrl = (await completeSubmission(baseUrl, refreshedSubmission.id, statementValues))
         .statusUrl;
@@ -53,7 +63,7 @@ const SubmissionSummary = () => {
         const {initialErrors} = e.asFormikProps();
         setSubmitErrors(initialErrors);
       } else {
-        setSubmitErrors(e.message);
+        setSubmitErrors(e.message as string);
       }
       return;
     }
@@ -72,7 +82,7 @@ const SubmissionSummary = () => {
     });
   };
 
-  const getPreviousPage = () => {
+  const getPreviousPage = (): string => {
     const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
     const prevStepSlug = form.steps[previousStepIndex]?.slug;
     const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
@@ -93,7 +103,9 @@ const SubmissionSummary = () => {
       </>
     ));
 
-  const errorMessages = [location.state?.errorMessage, submitError].filter(Boolean);
+  const errorMessages: React.ReactNode[] = [location.state?.errorMessage, submitError].filter(
+    Boolean
+  );
 
   return (
     <LiteralsProvider literals={form.literals}>
@@ -105,11 +117,16 @@ const SubmissionSummary = () => {
           />
         }
         submissionAllowed={refreshedSubmission.submissionAllowed}
-        summaryData={summaryData}
-        showPaymentInformation={paymentInfo.isRequired && !paymentInfo.hasPaid}
-        amountToPay={paymentInfo.amount}
-        editStepText={form.literals.changeText.resolved}
         isLoading={summaryDataState.loading}
+        summaryData={summaryData}
+        // payment props
+        {...(paymentInfo.isRequired && !paymentInfo.hasPaid
+          ? {
+              showPaymentInformation: true,
+              amountToPay: paymentInfo.amount,
+            }
+          : {showPaymentInformation: false})}
+        editStepText={form.literals.changeText.resolved}
         isAuthenticated={refreshedSubmission.isAuthenticated}
         errors={errorMessages}
         prevPage={getPreviousPage()}
@@ -119,7 +136,5 @@ const SubmissionSummary = () => {
     </LiteralsProvider>
   );
 };
-
-SubmissionSummary.propTypes = {};
 
 export default SubmissionSummary;
