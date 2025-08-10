@@ -12,6 +12,7 @@ export interface StepSubmitButtonProps {
   isCheckingLogic: boolean;
   canSubmitForm: Submission['submissionAllowed'];
   isLastStep: boolean;
+  form?: string;
 }
 
 /**
@@ -27,6 +28,7 @@ const StepSubmitButton: React.FC<StepSubmitButtonProps> = ({
   isCheckingLogic,
   canSubmitForm,
   isLastStep,
+  form,
 }) => {
   if (canSubmitForm === 'no_without_overview' && isLastStep) return null;
   return (
@@ -36,6 +38,7 @@ const StepSubmitButton: React.FC<StepSubmitButtonProps> = ({
       disabled={!canSubmitStep || isCheckingLogic}
       variant="primary"
       className="openforms-form-navigation__next-button"
+      form={form}
     >
       {isCheckingLogic ? (
         <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />

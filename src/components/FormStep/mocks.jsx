@@ -25,9 +25,15 @@ export const getSubmissionStepDetail = ({
   ...overrides,
 });
 
+/**
+ * @deprecated Use @/api-mocks/submission instead.
+ */
 export const mockSubmissionStepGet = body =>
   http.get(`${BASE_URL}submissions/:submissionUuid/steps/:stepUuid`, () => HttpResponse.json(body));
 
+/**
+ * @deprecated Use @/api-mocks/submission instead.
+ */
 export const mockSubmissionLogicCheckPost = (submission, step) => {
   return http.post(`${BASE_URL}submissions/:submissionUuid/steps/:stepUuid/_check-logic`, () =>
     HttpResponse.json({submission, step})

@@ -83,17 +83,25 @@ export const mockSubmissionGet = (submission = buildSubmission()) =>
     return HttpResponse.json(submission, {status: 200});
   });
 
-export const mockSubmissionStepGet = () =>
+export const mockSubmissionStepGet = (stepDetails = SUBMISSION_STEP_DETAILS) =>
   http.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, () => {
-    return HttpResponse.json(SUBMISSION_STEP_DETAILS, {status: 200});
+    return HttpResponse.json(stepDetails, {status: 200});
   });
 
-export const mockSubmissionCheckLogicPost = () =>
+export const mockSubmissionStepPut = (
+  stepDetails = SUBMISSION_STEP_DETAILS,
+  status: 200 | 201 = 200
+) =>
+  http.put(`${BASE_URL}submissions/:uuid/steps/:uuid`, () => {
+    return HttpResponse.json(stepDetails, {status: status});
+  });
+
+export const mockSubmissionCheckLogicPost = (
+  submission: Submission = SUBMISSION_DETAILS,
+  step = SUBMISSION_STEP_DETAILS
+) =>
   http.post(`${BASE_URL}submissions/:uuid/steps/:uuid/_check-logic`, () => {
-    const responseData = {
-      submission: SUBMISSION_DETAILS,
-      step: SUBMISSION_STEP_DETAILS,
-    };
+    const responseData = {submission, step};
     return HttpResponse.json(responseData, {status: 200});
   });
 
