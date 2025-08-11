@@ -1,6 +1,5 @@
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {Location} from 'react-router';
 
 import {LiteralsProvider} from 'components/Literal';
 import {SessionTrackerModal} from 'components/Sessions';
@@ -17,7 +16,7 @@ import {useLoadSummaryData} from './hooks';
 export interface CosignSummaryProps {
   form: Form;
   submission: Submission | null;
-  onSubmissionLoaded: (submission: Submission, location: Location) => void;
+  onSubmissionLoaded: (submission: Submission) => void;
   onCosignComplete: (pdfDownloadUrl: string) => void;
   onDestroySession: () => Promise<void>;
 }
@@ -37,7 +36,6 @@ const CosignSummary: React.FC<CosignSummaryProps> = ({
     form,
     submission,
     onSubmissionLoaded,
-    // @ts-expect-error hook is not TS aware yet
     (error: Error) => {
       throw error;
     }
@@ -52,14 +50,12 @@ const CosignSummary: React.FC<CosignSummaryProps> = ({
 
   const onSubmit = async (statementValues: CosignConfirmBody) => {
     const {reportDownloadUrl} = await confirmCosign(baseUrl, submission!.id, statementValues);
-    // @ts-expect-error incorrect inference from JS
     removeSubmissionId();
     onCosignComplete(reportDownloadUrl);
   };
 
   // FIXME: the callback onTimeout is not a stable reference, breaking memoization
   const [, expiryDate] = useSessionTimeout(() => {
-    // @ts-expect-error incorrect inference from JS
     removeSubmissionId();
     onDestroySession();
   });

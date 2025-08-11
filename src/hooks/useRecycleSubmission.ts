@@ -22,7 +22,7 @@ import useInitialDataReference from './useInitialDataReference';
  */
 const useRecycleSubmission = (
   form: Form,
-  currentSubmission: Submission,
+  currentSubmission: Submission | null,
   onSubmissionLoaded: (submission: Submission) => void = () => {},
   onError: (error: Error) => void = () => {}
 ): [boolean, (value: string | null) => void, () => void] => {
