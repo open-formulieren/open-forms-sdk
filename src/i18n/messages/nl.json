@@ -55,6 +55,11 @@
     "description": "Email verification modal body text",
     "originalDefault": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it."
   },
+  "1Jy08C": {
+    "defaultMessage": "Bewerk kind met BSN: {bsn}.",
+    "description": "Edit child button [bsn]",
+    "originalDefault": "Edit child with BSN: {bsn}."
+  },
   "1hdvgS": {
     "defaultMessage": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
     "description": "Co-sign auth option not available on form",
@@ -843,6 +848,11 @@
     "defaultMessage": "De bevestigingscode moet precies zes tekens lang zijn.",
     "description": "Validation error message for verification codes with length != 6",
     "originalDefault": "The verification code must contain exactly six characters."
+  },
+  "c4FCKY": {
+    "defaultMessage": "Verwijder kind met BSN: {bsn}.",
+    "description": "Delete child button [bsn]",
+    "originalDefault": "Delete child with BSN: {bsn}."
   },
   "cBsrax": {
     "defaultMessage": "Huisletter",
