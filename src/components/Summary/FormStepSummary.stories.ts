@@ -99,7 +99,7 @@ export const WithFieldsetAsFirstElement: Story = {
         name: 'A textfield',
         value: 'A value',
         component: {
-          id: 'component2',
+          id: 'component3',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -109,7 +109,7 @@ export const WithFieldsetAsFirstElement: Story = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
-          id: 'component3',
+          id: 'component4',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -162,7 +162,7 @@ export const WithFieldsetNotAsFirstElement: Story = {
         name: 'A textfield',
         value: 'A value',
         component: {
-          id: 'component3',
+          id: 'component5',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -172,7 +172,7 @@ export const WithFieldsetNotAsFirstElement: Story = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
-          id: 'component4',
+          id: 'component6',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -216,7 +216,7 @@ export const WithEditGridAsFirstElement: Story = {
         name: 'A textfield',
         value: 'A value',
         component: {
-          id: 'component2',
+          id: 'component4',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -226,7 +226,7 @@ export const WithEditGridAsFirstElement: Story = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
-          id: 'component3',
+          id: 'component5',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -280,7 +280,7 @@ export const WithEditGridNotAsFirstElement: Story = {
         name: 'A textfield',
         value: 'A value',
         component: {
-          id: 'component3',
+          id: 'component5',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',
@@ -290,7 +290,7 @@ export const WithEditGridNotAsFirstElement: Story = {
         name: 'Another textfield',
         value: 'Another value',
         component: {
-          id: 'component4',
+          id: 'component6',
           type: 'textfield',
           key: 'textfield2',
           label: 'Another textfield',
@@ -347,7 +347,7 @@ export const WithPartnersAsFirstElement: Story = {
         name: 'A textfield',
         value: 'A value',
         component: {
-          id: 'component3',
+          id: 'component4',
           type: 'textfield',
           key: 'textfield1',
           label: 'A textfield',

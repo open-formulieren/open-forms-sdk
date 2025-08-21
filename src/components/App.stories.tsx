@@ -14,8 +14,8 @@ import {
   mockSubmissionPost,
   mockSubmissionStepGet,
 } from '@/api-mocks/submissions';
-import {Form, MinimalFormStep} from '@/data/forms';
-import {Submission} from '@/data/submissions';
+import type {Form, MinimalFormStep} from '@/data/forms';
+import type {Submission} from '@/data/submissions';
 
 import App from './App';
 

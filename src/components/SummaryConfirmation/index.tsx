@@ -1,10 +1,9 @@
 import {useFormikContext} from 'formik';
 import {useState} from 'react';
 
-import StatementCheckboxes from 'components/StatementCheckboxes';
-
 import FormNavigation, {FormSubmitButton} from '@/components/FormNavigation';
-import {SubmissionStatementConfiguration} from '@/data/forms';
+import StatementCheckboxes from '@/components/StatementCheckboxes';
+import type {SubmissionStatementConfiguration} from '@/data/forms';
 import useFormContext from '@/hooks/useFormContext';
 
 const isSubmitEnabled = (

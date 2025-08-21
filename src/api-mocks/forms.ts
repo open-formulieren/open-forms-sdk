@@ -1,8 +1,7 @@
 import {produce} from 'immer';
 import {HttpResponse, http} from 'msw';
 
-import {PRIVACY_POLICY_ACCEPTED} from 'components/SummaryConfirmation/mocks';
-
+import {PRIVACY_POLICY_ACCEPTED} from '@/components/SummaryConfirmation/mocks';
 import type {Form} from '@/data/forms';
 
 import {BASE_URL, getDefaultFactory} from './base';

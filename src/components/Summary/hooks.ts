@@ -3,7 +3,7 @@ import {useAsync} from 'react-use';
 import {AsyncState} from 'react-use/lib/useAsyncFn';
 
 import {ConfigContext} from '@/Context';
-import {StepSummaryData, type Submission, loadSummaryData} from '@/data/submissions';
+import {type StepSummaryData, type Submission, loadSummaryData} from '@/data/submissions';
 
 /**
  * Fetch the submission summary data once the submission is available.
