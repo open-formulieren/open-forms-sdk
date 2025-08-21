@@ -3,7 +3,7 @@ SDK Changelog
 =============
 
 3.3.0-alpha.0 (2025-08-21)
-==================
+==========================
 
 First preview release of the upcoming 3.3.0 version.
 
