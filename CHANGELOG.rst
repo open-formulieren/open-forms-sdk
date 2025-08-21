@@ -2,8 +2,18 @@
 SDK Changelog
 =============
 
+3.3.0-alpha.1 (2025-08-21)
+==========================
+
+Second preview release of the upcoming 3.3.0 version.
+
+Project maintenance
+-------------------
+
+* Fixed missing underlines causing CI builds to fail
+
 3.3.0-alpha.0 (2025-08-21)
-==================
+==========================
 
 First preview release of the upcoming 3.3.0 version.
 
