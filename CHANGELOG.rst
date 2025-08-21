@@ -2,6 +2,32 @@
 SDK Changelog
 =============
 
+3.3.0-alpha.0 (2025-08-21)
+==================
+
+First preview release of the upcoming 3.3.0 version.
+
+New features
+------------
+
+* Switched from local storage to session storage for form submissions.
+* [#825] Added children component.
+
+Bugfixes
+--------
+
+* [#850] Fixed missing exports for our formio module and template library.
+* Fixed the behaviour of ``selected`` property.
+
+Project maintenance
+-------------------
+
+* Bumped dependencies to their latest (security) releases.
+* Added Storybook stories for ``FormStart``.
+* Removed obsoleted and unused SDK embed example.
+* [#4879] Removed some dead code.
+* [#445] Converted another chunk of code to Typescript.
+
 3.2.1 (2025-07-25)
 ==================
 
