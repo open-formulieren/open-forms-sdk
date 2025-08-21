@@ -1,24 +1,24 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
-import cloneDeep from 'lodash/cloneDeep';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {FormContext} from 'Context';
-import {buildForm} from 'api-mocks';
+import {ConfigDecorator, LiteralDecorator, withForm} from 'story-utils/decorators';
+
+import {buildForm} from '@/api-mocks';
 import {
   PRIVACY_POLICY_ACCEPTED,
   STATEMENT_OF_TRUTH_ACCEPTED,
-} from 'components/SummaryConfirmation/mocks';
-import {SUBMISSION_ALLOWED} from 'components/constants';
-import {ConfigDecorator, FormikDecorator, LiteralDecorator} from 'story-utils/decorators';
+} from '@/components/SummaryConfirmation/mocks';
 
 import GenericSummary from './GenericSummary';
 
 export default {
   title: 'Private API / GenericSummary',
   component: GenericSummary,
-  decorators: [FormikDecorator, LiteralDecorator, withRouter, ConfigDecorator],
+  decorators: [LiteralDecorator, withRouter, ConfigDecorator, withForm],
   args: {
     title: 'Generic Summary',
+    submissionAllowed: 'yes',
     summaryData: [
       {
         slug: 'uw-gegevens',
@@ -28,6 +28,7 @@ export default {
             name: '',
             value: 'In this section you can enter your personal details.',
             component: {
+              id: 'content',
               type: 'content',
               label: 'Content',
               key: 'content',
@@ -38,6 +39,7 @@ export default {
             name: 'Voornaam',
             value: 'John',
             component: {
+              id: 'voornaam',
               key: 'voornaam',
               type: 'textfield',
               label: 'Voornaam',
@@ -48,6 +50,7 @@ export default {
             name: 'Achternaam',
             value: 'Doe',
             component: {
+              id: 'achternaam',
               key: 'achternaam',
               type: 'textfield',
               label: 'Achternaam',
@@ -58,10 +61,12 @@ export default {
             name: 'Email adres',
             value: 'john@test.nl',
             component: {
+              id: 'emailAdres',
               key: 'emailAdres',
               type: 'email',
               label: 'Email adres',
               hidden: false,
+              validateOn: 'blur',
             },
           },
         ],
@@ -74,28 +79,33 @@ export default {
             name: 'Partner details',
             value: null,
             component: {
+              id: 'fieldset1',
               type: 'fieldset',
               key: 'fieldset1',
               label: 'Partner details',
-              hideLabel: false,
+              hideHeader: false,
               components: [
                 {
+                  id: 'voornaam2',
                   key: 'voornaam2',
                   type: 'textfield',
                   label: 'Voornaam',
                   hidden: false,
                 },
                 {
+                  id: 'achternaam2',
                   key: 'achternaam2',
                   type: 'textfield',
                   label: 'Achternaam',
                   hidden: false,
                 },
                 {
+                  id: 'emailAdres2',
                   key: 'emailAdres2',
                   type: 'email',
                   label: 'Email adres',
                   hidden: false,
+                  validateOn: 'blur',
                 },
               ],
             },
@@ -104,6 +114,7 @@ export default {
             name: 'Voornaam',
             value: 'Carl',
             component: {
+              id: 'voornaam2',
               key: 'voornaam2',
               type: 'textfield',
               label: 'Voornaam',
@@ -114,6 +125,7 @@ export default {
             name: 'Achternaam',
             value: 'Doe',
             component: {
+              id: 'achternaam2',
               key: 'achternaam2',
               type: 'textfield',
               label: 'Achternaam',
@@ -124,10 +136,12 @@ export default {
             name: 'Email adres',
             value: 'carl@test.nl',
             component: {
+              id: 'emailAdres2',
               key: 'emailAdres2',
               type: 'email',
               label: 'Email adres',
               hidden: false,
+              validateOn: 'blur',
             },
           },
         ],
@@ -140,12 +154,14 @@ export default {
             name: '',
             value: null,
             component: {
+              id: 'fieldset2',
               type: 'fieldset',
               key: 'fieldset2',
               label: 'Pet details',
-              hideLabel: true,
+              hideHeader: true,
               components: [
                 {
+                  id: 'huisdierNaam',
                   key: 'huisdierNaam',
                   type: 'textfield',
                   label: 'Huisdier naam',
@@ -158,6 +174,7 @@ export default {
             name: 'Huisdier Naam',
             value: 'Nemo',
             component: {
+              id: 'huisdierNaam',
               key: 'huisdierNaam',
               type: 'textfield',
               label: 'Huisdier naam',
@@ -167,134 +184,76 @@ export default {
         ],
       },
     ],
-    showPaymentInformation: true,
-    amountToPay: 54.05,
-    showPreviousPageLink: true,
     isLoading: false,
     isAuthenticated: false,
-    errors: [],
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
-    editStepText: 'Change',
     prevPage: 'some-previous-page',
-    // formContext args
-    askPrivacyConsent: true,
-    askStatementOfTruth: false,
-    // LiteralDecorator args
-    confirmText: 'Confirm',
-    previousText: 'Previous',
+    errors: [],
     onSubmit: fn(),
     onDestroySession: fn(),
+    // payment information
+    showPaymentInformation: true,
+    amountToPay: 54.05,
+    // editable steps or not
+    blockEdit: false,
+    editStepText: 'Change',
   },
   argTypes: {
     submissionAllowed: {
-      options: [SUBMISSION_ALLOWED.yes, SUBMISSION_ALLOWED.noWithOverview],
+      options: ['yes', 'no_with_overview'],
       control: {
         type: 'radio',
         labels: {
-          [SUBMISSION_ALLOWED.yes]: 'Yes',
-          [SUBMISSION_ALLOWED.noWithOverview]: 'No, with overview',
+          yes: 'Yes',
+          no_with_overview: 'No, with overview',
         },
       },
     },
   },
   parameters: {
-    formik: {
-      initialValues: {privacy: false},
-      wrapForm: false,
-    },
     reactRouter: {
       routing: '/overzicht',
     },
+    formContext: {
+      form: buildForm({
+        submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED],
+      }),
+    },
   },
-};
+} satisfies Meta<typeof GenericSummary>;
 
-const render = ({
-  // component props
-  title,
-  submissionAllowed,
-  summaryData,
-  showPaymentInformation,
-  amountToPay,
-  editStepText,
-  isLoading,
-  isAuthenticated,
-  errors,
-  prevPage,
-  onSubmit,
-  onDestroySession,
-  // story args
-  showPreviousPageLink,
-  askPrivacyConsent,
-  askStatementOfTruth,
-}) => {
-  const configuration = [];
-  if (askPrivacyConsent !== null) {
-    const privacyPolicyStatement = cloneDeep(PRIVACY_POLICY_ACCEPTED);
-    privacyPolicyStatement.validate.required = askPrivacyConsent;
-    configuration.push(privacyPolicyStatement);
-  }
-  if (askStatementOfTruth !== null) {
-    const truthStatement = cloneDeep(STATEMENT_OF_TRUTH_ACCEPTED);
-    truthStatement.validate.required = askStatementOfTruth;
-    configuration.push(truthStatement);
-  }
-  const form = buildForm({submissionStatementsConfiguration: configuration});
-  return (
-    <FormContext.Provider value={form}>
-      <GenericSummary
-        title={title}
-        submissionAllowed={submissionAllowed}
-        summaryData={summaryData}
-        showPaymentInformation={showPaymentInformation}
-        amountToPay={amountToPay}
-        editStepText={editStepText}
-        isLoading={isLoading}
-        isAuthenticated={isAuthenticated}
-        errors={errors}
-        prevPage={showPreviousPageLink ? prevPage : ''}
-        onSubmit={event => {
-          event.preventDefault();
-          onSubmit(event);
-        }}
-        onDestroySession={onDestroySession}
-      />
-    </FormContext.Provider>
-  );
-};
+type Story = StoryObj<typeof GenericSummary>;
 
-export const Default = {
-  render,
+export const Default: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    const contentNodes = canvas.getAllByText((content, element) => {
-      return element.className.split(' ').includes('utrecht-data-list__item--openforms-content');
+    const contentNodes = canvas.getAllByText<HTMLDivElement>((_, element) => {
+      return element!.className.split(' ').includes('utrecht-data-list__item--openforms-content');
     });
 
-    await expect(contentNodes.length).toEqual(1);
+    expect(contentNodes.length).toEqual(1);
 
     const contentNode = contentNodes[0];
 
-    await expect(contentNode.firstChild.textContent).toEqual('');
+    expect(contentNode.firstChild!.textContent).toEqual('');
 
-    const fieldsetNodes = canvas.getAllByText((content, element) => {
-      return element.className.split(' ').includes('utrecht-data-list__item--openforms-fieldset');
+    const fieldsetNodes = canvas.getAllByText((_, element) => {
+      return element!.className.split(' ').includes('utrecht-data-list__item--openforms-fieldset');
     });
 
     // The fieldset with hidden label is not rendered
-    await expect(fieldsetNodes.length).toEqual(1);
+    expect(fieldsetNodes.length).toEqual(1);
 
     const fieldsetPartnerNode = fieldsetNodes[0];
 
-    await expect(fieldsetPartnerNode.firstChild.textContent).toEqual('Partner details');
+    expect(fieldsetPartnerNode.firstChild!.textContent).toEqual('Partner details');
 
     const abortButton = await canvas.findByRole('button', {name: 'Annuleren'});
-    await expect(abortButton).toBeVisible();
+    expect(abortButton).toBeVisible();
   },
 };
 
-export const Authenticated = {
-  render,
+export const Authenticated: Story = {
   args: {
     isAuthenticated: true,
   },
@@ -302,16 +261,19 @@ export const Authenticated = {
     const canvas = within(canvasElement);
 
     const abortButton = await canvas.findByRole('button', {name: 'Uitloggen'});
-    await expect(abortButton).toBeVisible();
+    expect(abortButton).toBeVisible();
   },
 };
 
-export const MultipleRequiredStatements = {
-  render,
-  args: {
-    askPrivacyConsent: true,
-    askStatementOfTruth: true,
+export const MultipleRequiredStatements: Story = {
+  parameters: {
+    formContext: {
+      form: {
+        submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED, STATEMENT_OF_TRUTH_ACCEPTED],
+      },
+    },
   },
+
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
@@ -342,11 +304,13 @@ export const MultipleRequiredStatements = {
   },
 };
 
-export const OnlyOneRequiredStatement = {
-  render,
-  args: {
-    askPrivacyConsent: true,
-    askStatementOfTruth: false,
+export const OnlyOneRequiredStatement: Story = {
+  parameters: {
+    formContext: {
+      form: {
+        submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED],
+      },
+    },
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
@@ -360,19 +324,17 @@ export const OnlyOneRequiredStatement = {
   },
 };
 
-export const Loading = {
-  render,
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
   parameters: {
     // loader keeps spinning indefinitely
     chromatic: {disableSnapshot: true},
   },
-  args: {
-    isLoading: true,
-  },
 };
 
-export const AddressNLSummary = {
-  render,
+export const AddressNLSummary: Story = {
   args: {
     summaryData: [
       {
@@ -383,10 +345,13 @@ export const AddressNLSummary = {
             name: 'Address NL',
             value: {postcode: '1234 AB', houseNumber: '1'},
             component: {
+              id: 'addressNL',
               key: 'addressNL',
               type: 'addressNL',
               label: 'Address NL',
               hidden: false,
+              deriveAddress: false,
+              layout: 'singleColumn',
             },
           },
         ],
@@ -395,12 +360,11 @@ export const AddressNLSummary = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
+    expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
   },
 };
 
-export const AddressNLSummaryWithoutCityFound = {
-  render,
+export const AddressNLSummaryWithoutCityFound: Story = {
   args: {
     summaryData: [
       {
@@ -411,11 +375,13 @@ export const AddressNLSummaryWithoutCityFound = {
             name: 'Address NL',
             value: {postcode: '1234 AB', houseNumber: '1'},
             component: {
+              id: 'addressNL',
               key: 'addressNL',
               type: 'addressNL',
               label: 'Address NL',
               hidden: false,
               deriveAddress: true,
+              layout: 'singleColumn',
             },
           },
         ],
@@ -424,12 +390,11 @@ export const AddressNLSummaryWithoutCityFound = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
+    expect(canvas.getByRole('definition')).toHaveTextContent('1234 AB 1');
   },
 };
 
-export const AddressNLSummaryFull = {
-  render,
+export const AddressNLSummaryFull: Story = {
   args: {
     summaryData: [
       {
@@ -447,11 +412,13 @@ export const AddressNLSummaryFull = {
               streetName: 'Keizersgracht',
             },
             component: {
+              id: 'addressNL',
               key: 'addressNL',
               type: 'addressNL',
               label: 'Address NL',
               hidden: false,
               deriveAddress: true,
+              layout: 'singleColumn',
             },
           },
         ],
@@ -460,14 +427,13 @@ export const AddressNLSummaryFull = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent(
+    expect(canvas.getByRole('definition')).toHaveTextContent(
       'Keizersgracht 1A Add1234 AB Amsterdam'
     );
   },
 };
 
-export const AddressNLSummaryEmpty = {
-  render,
+export const AddressNLSummaryEmpty: Story = {
   args: {
     summaryData: [
       {
@@ -478,10 +444,13 @@ export const AddressNLSummaryEmpty = {
             name: 'Address NL',
             value: {},
             component: {
+              id: 'addressNL',
               key: 'addressNL',
               type: 'addressNL',
               label: 'Address NL',
               hidden: false,
+              deriveAddress: false,
+              layout: 'singleColumn',
             },
           },
         ],
@@ -490,12 +459,11 @@ export const AddressNLSummaryEmpty = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('definition')).toHaveTextContent('');
+    expect(canvas.getByRole('definition')).toHaveTextContent('');
   },
 };
 
-export const MapSummary = {
-  render,
+export const MapSummary: Story = {
   args: {
     summaryData: [
       {
@@ -509,6 +477,7 @@ export const MapSummary = {
               coordinates: [5.291266, 52.1326332],
             },
             component: {
+              id: 'map',
               key: 'map',
               type: 'map',
               label: 'Map with default tile layer',
@@ -521,6 +490,7 @@ export const MapSummary = {
               coordinates: [5.291266, 52.1326332],
             },
             component: {
+              id: 'map',
               key: 'map',
               type: 'map',
               label: 'Map with custom tile layer',

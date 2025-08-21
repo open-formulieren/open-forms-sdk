@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router';
 
 import FormNavigation, {StepSubmitButton} from 'components/FormNavigation/index';
 import {LiteralsProvider} from 'components/Literal';
-import {SUBMISSION_ALLOWED} from 'components/constants';
 
 const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}) => {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const SubmitRow = ({canSubmit, nextText, previousText = '', navigateBackTo = ''}
           <StepSubmitButton
             canSubmitStep={canSubmit}
             isCheckingLogic={false}
-            canSubmitForm={SUBMISSION_ALLOWED.yes}
+            canSubmitForm="yes"
             isLastStep={false}
           />
         }

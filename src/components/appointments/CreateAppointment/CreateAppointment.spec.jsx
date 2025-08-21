@@ -159,7 +159,7 @@ describe('Create appointment status checking', () => {
 
     expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
     // check all checkboxes
-    for (const checkbox of screen.getAllByRole('checkbox')) {
+    for (const checkbox of await screen.findAllByRole('checkbox')) {
       await user.click(checkbox);
     }
     const submitButton = screen.getByRole('button', {name: 'Confirm'});

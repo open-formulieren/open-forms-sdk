@@ -1,68 +1,88 @@
-import PropTypes from 'prop-types';
+import type {
+  AddressData,
+  AddressNLComponentSchema,
+  AnyComponentSchema,
+  CheckboxComponentSchema,
+  ContentComponentSchema,
+  CosignV1ComponentSchema,
+  CurrencyComponentSchema,
+  DateComponentSchema,
+  DateTimeComponentSchema,
+  FileComponentSchema,
+  FileUploadData,
+  MapComponentSchema,
+  NumberComponentSchema,
+  RadioComponentSchema,
+  SelectComponentSchema,
+  SelectboxesComponentSchema,
+  SignatureComponentSchema,
+  TimeComponentSchema,
+} from '@open-formulieren/types';
+import type {JSONValue} from '@open-formulieren/types/lib/types';
 import React, {Suspense} from 'react';
-import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime, useIntl} from 'react-intl';
+import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime} from 'react-intl';
 
-import Anchor from 'components/Anchor';
-import Body from 'components/Body';
 import CoSignOld from 'components/CoSign';
-import Image from 'components/Image';
-import List from 'components/List';
-import Loader from 'components/Loader';
 import Map from 'components/Map';
-import {getFormattedDateString, getFormattedTimeString} from 'utils';
 
-import {humanFileSize} from './utils';
+import Anchor from '@/components/Anchor';
+import Body from '@/components/Body';
+import Image from '@/components/Image';
+import List from '@/components/List';
+import Loader from '@/components/Loader';
 
-const EmptyDisplay = () => '';
+export interface DisplayProps<S, V> {
+  component: S;
+  value: V | undefined;
+}
 
-const DefaultDisplay = ({value}) => {
+const EmptyDisplay: React.FC = () => '';
+
+const DefaultDisplay: React.FC<DisplayProps<AnyComponentSchema, JSONValue>> = ({value}) => {
   if (value == null) return '';
   if (value === '') return <EmptyDisplay />;
   return value.toString();
 };
 
-const SignatureDisplay = ({component, value}) => {
+const SignatureDisplay: React.FC<DisplayProps<SignatureComponentSchema, string>> = ({
+  component,
+  value,
+}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
   return <Image src={value} alt={component.key} />;
 };
 
-const CheckboxDisplay = ({value}) => {
+const CheckboxDisplay: React.FC<DisplayProps<CheckboxComponentSchema, boolean>> = ({value}) => {
   if (value) {
     return <FormattedMessage description="'True' display" defaultMessage="Yes" />;
   }
   return <FormattedMessage description="'False' display" defaultMessage="No" />;
 };
 
-const RadioDisplay = ({component, value}) => {
+const RadioDisplay: React.FC<DisplayProps<RadioComponentSchema, string>> = ({component, value}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
+  if (!('values' in component)) return value;
   const obj = component.values.find(obj => obj.value === value);
   return obj ? obj.label : value;
 };
 
-const SelectDisplay = ({component, value}) => {
-  const intl = useIntl();
+const SelectDisplay: React.FC<DisplayProps<SelectComponentSchema, string>> = ({
+  component,
+  value,
+}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
-
-  // special appointment cases
-  if (component.appointments?.showProducts || component.appointments?.showLocations) {
-    return value.name;
-  } else if (component.appointments?.showDates) {
-    return getFormattedDateString(intl, value);
-  } else if (component.appointments?.showTimes) {
-    return getFormattedTimeString(intl, value);
-  }
-
+  if (!('data' in component)) return value;
   const obj = component.data.values.find(obj => obj.value === value);
   return obj ? obj.label : value;
 };
 
-const DateDisplay = ({value}) => {
+const DateDisplay: React.FC<DisplayProps<DateComponentSchema, string>> = ({value}) => {
   if (!value) return <EmptyDisplay />;
   const [year, month, day] = value.split('-');
   const date = new Date();
@@ -70,7 +90,7 @@ const DateDisplay = ({value}) => {
   return <FormattedDate value={date} />;
 };
 
-const DateTimeDisplay = ({value}) => {
+const DateTimeDisplay: React.FC<DisplayProps<DateTimeComponentSchema, string>> = ({value}) => {
   if (!value) return <EmptyDisplay />;
   const datetime = Date.parse(value);
   return (
@@ -82,28 +102,31 @@ const DateTimeDisplay = ({value}) => {
   );
 };
 
-const TimeDisplay = ({value}) => {
+const TimeDisplay: React.FC<DisplayProps<TimeComponentSchema, string>> = ({value}) => {
   if (!value) return <EmptyDisplay />;
   // value may be a full ISO-8601 date
   let time = new Date(value);
   // Invalid date (which is instanceof Date, but also NaN)
+  // @ts-expect-error Typescript doesn't like the Date -> number casting
   if (isNaN(time)) {
     const [hours, minutes, seconds] = value.split(':');
     time = new Date();
-    time.setHours(hours);
-    time.setMinutes(minutes);
-    time.setSeconds(seconds);
+    time.setHours(parseInt(hours));
+    time.setMinutes(parseInt(minutes));
+    time.setSeconds(parseInt(seconds));
   }
   return <FormattedTime value={time} />;
 };
 
-const SelectboxesDisplay = ({component, value}) => {
+const SelectboxesDisplay: React.FC<
+  DisplayProps<SelectboxesComponentSchema, Record<string, boolean>>
+> = ({component, value}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
 
   const selectedBoxes = Object.keys(value).filter(key => value[key] === true);
-  if (!selectedBoxes.length) {
+  if (!selectedBoxes.length || !('values' in component)) {
     return <EmptyDisplay />;
   }
 
@@ -120,38 +143,38 @@ const SelectboxesDisplay = ({component, value}) => {
   );
 };
 
-const FileDisplay = ({component, value}) => {
-  /*
-    NOTE the structure of the data set by FormIO's file component. It's an array for
-    both single/multiple values, so we have to normalize this.
+interface HumanFileSize {
+  size: number;
+  unit: 'byte' | 'kilobyte' | 'megabyte' | 'gigabyte' | 'terabyte';
+}
 
-    [
-       {
-           "url": "http://server/api/v2/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
-           "data": {
-               "url": "http://server/api/v2/submissions/files/62f2ec22-da7d-4385-b719-b8637c1cd483",
-               "form": "",
-               "name": "my-image.jpg",
-               "size": 46114,
-               "baseUrl": "http://server",
-               "project": "",
-           },
-           "name": "my-image-12305610-2da4-4694-a341-ccb919c3d543.jpg",
-           "size": 46114,
-           "type": "image/jpg",
-           "storage": "url",
-           "originalName": "my-image.jpg",
-       }
-    ] */
+/**
+ * Takes a file size in bytes and returns the appropriate human readable value + unit
+ * to use.
+ */
+const humanFileSize = (size: number): HumanFileSize => {
+  if (size === 0) {
+    return {size: 0, unit: 'byte'};
+  }
+  const index = Math.floor(Math.log(size) / Math.log(1024));
+  const newSize = parseFloat((size / Math.pow(1024, index)).toFixed(2));
+  const unit = (['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'] as const)[index];
+  return {size: newSize, unit};
+};
 
+const FileDisplay: React.FC<DisplayProps<FileComponentSchema, FileUploadData>> = ({
+  component,
+  value,
+}) => {
   // Case where no file was uploaded
   if (!value || (Array.isArray(value) && value.length === 0)) {
     return <EmptyDisplay />;
   }
 
-  // Normalize in case we get an array for a single value
+  // Normalize in case we get an array for a single value, which is what Formio actually
+  // does.
   if (!component.multiple && Array.isArray(value)) {
-    value = value[0];
+    value = value[0] as FileUploadData;
   }
 
   const {url, size: sizeInBytes, originalName} = value;
@@ -165,23 +188,29 @@ const FileDisplay = ({component, value}) => {
   );
 };
 
-const NumberDisplay = ({component, value}) => {
+const NumberDisplay: React.FC<DisplayProps<NumberComponentSchema, number>> = ({
+  component,
+  value,
+}) => {
   if (!value && value !== 0) return <EmptyDisplay />;
 
   return <FormattedNumber value={value} maximumFractionDigits={component.decimalLimit} />;
 };
 
-const PartnersDisplay = () => {
+const PartnersDisplay: React.FC = () => {
   // the partners data is handled in the backend, so we do not want to show it twice
   return <EmptyDisplay />;
 };
 
-const ChildrenDisplay = () => {
+const ChildrenDisplay: React.FC = () => {
   // the children data is handled in the backend, so we do not want to show it twice
   return <EmptyDisplay />;
 };
 
-const CurrencyDisplay = ({component, value}) => {
+const CurrencyDisplay: React.FC<DisplayProps<CurrencyComponentSchema, number>> = ({
+  component,
+  value,
+}) => {
   if (!value && value !== 0) return <EmptyDisplay />;
 
   return (
@@ -195,26 +224,31 @@ const CurrencyDisplay = ({component, value}) => {
   );
 };
 
-const MapDisplay = ({component, value}) => {
+// TODO: properly specify the value type once the map is converted to TS, See #445
+const MapDisplay: React.FC<DisplayProps<MapComponentSchema, object>> = ({component, value}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
 
   return (
     <Suspense fallback={<Loader modifiers={['centered']} />}>
+      {/* @ts-expect-error the map can't properly infer what's expected */}
       <Map geoJsonGeometry={value} disabled tileLayerUrl={component.tileLayerUrl} />
     </Suspense>
   );
 };
 
-const CoSignDisplay = ({value}) => {
+const CoSignDisplay: React.FC<DisplayProps<CosignV1ComponentSchema, unknown>> = ({value}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
   return <CoSignOld interactive={false} />;
 };
 
-const AddressNLDisplay = ({component, value}) => {
+const AddressNLDisplay: React.FC<DisplayProps<AddressNLComponentSchema, AddressData>> = ({
+  component,
+  value,
+}) => {
   if (!value || Object.values(value).every(v => v === '')) {
     return <EmptyDisplay />;
   }
@@ -240,16 +274,20 @@ const AddressNLDisplay = ({component, value}) => {
   );
 };
 
-const ContentDisplay = ({component}) => {
+const ContentDisplay: React.FC<DisplayProps<ContentComponentSchema, never>> = ({component}) => {
   return <span dangerouslySetInnerHTML={{__html: component.html}} />;
 };
 
-const FieldsetDisplay = () => {
+const FieldsetDisplay: React.FC = () => {
   return <EmptyDisplay />;
 };
 
-const ComponentValueDisplay = ({value, component}) => {
-  const {multiple = false, type} = component;
+const ComponentValueDisplay: React.FC<DisplayProps<AnyComponentSchema, JSONValue>> = ({
+  component,
+  value,
+}) => {
+  const {type} = component;
+  const multiple = 'multiple' in component ? component.multiple : false;
 
   if (value == null) {
     return <EmptyDisplay />;
@@ -278,12 +316,10 @@ const ComponentValueDisplay = ({value, component}) => {
   return <Formatter component={component} value={value} />;
 };
 
-ComponentValueDisplay.propTypes = {
-  component: PropTypes.object.isRequired,
-};
-
 // mapping of Formio types to respective React components
-const TYPE_TO_COMPONENT = {
+const TYPE_TO_COMPONENT: Partial<
+  Record<AnyComponentSchema['type'], React.FC<DisplayProps<AnyComponentSchema, unknown>>>
+> = {
   signature: SignatureDisplay,
   checkbox: CheckboxDisplay,
   radio: RadioDisplay,

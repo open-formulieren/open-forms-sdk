@@ -4,7 +4,6 @@ import FAIcon from 'components/FAIcon';
 import {Literal} from 'components/Literal';
 
 import {OFButton} from '@/components/Button';
-import {SUBMISSION_ALLOWED} from '@/components/constants';
 import type {Submission} from '@/data/submissions';
 
 export interface FormSubmitButtonProps {
@@ -25,7 +24,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   canSubmitForm,
   onClick,
 }) => {
-  if (canSubmitForm !== SUBMISSION_ALLOWED.yes) return null;
+  if (canSubmitForm !== 'yes') return null;
   return (
     <OFButton
       type="submit"

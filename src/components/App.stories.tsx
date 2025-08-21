@@ -14,10 +14,10 @@ import {
   mockSubmissionPost,
   mockSubmissionStepGet,
 } from '@/api-mocks/submissions';
-import {Form, MinimalFormStep} from '@/data/forms';
+import type {Form, MinimalFormStep} from '@/data/forms';
+import type {Submission} from '@/data/submissions';
 
 import App from './App';
-import {SUBMISSION_ALLOWED} from './constants';
 
 interface WrapperProps {
   form: Form;
@@ -69,7 +69,7 @@ export default {
   args: {
     name: 'Mock form',
     'form.translationEnabled': true,
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    submissionAllowed: 'yes',
     hideNonApplicableSteps: false,
     steps: [
       {
@@ -103,10 +103,18 @@ export default {
   },
   argTypes: {
     submissionAllowed: {
-      options: Object.values(SUBMISSION_ALLOWED),
+      options: [
+        'yes',
+        'no_with_overview',
+        'no_without_overview',
+      ] satisfies Submission['submissionAllowed'][],
       control: {type: 'radio'},
       'submission.submissionAllowed': {
-        options: Object.values(SUBMISSION_ALLOWED),
+        options: [
+          'yes',
+          'no_with_overview',
+          'no_without_overview',
+        ] satisfies Submission['submissionAllowed'][],
         control: {type: 'radio'},
       },
     },

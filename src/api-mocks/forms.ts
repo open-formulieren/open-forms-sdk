@@ -1,9 +1,7 @@
 import {produce} from 'immer';
 import {HttpResponse, http} from 'msw';
 
-import {PRIVACY_POLICY_ACCEPTED} from 'components/SummaryConfirmation/mocks';
-import {SUBMISSION_ALLOWED} from 'components/constants';
-
+import {PRIVACY_POLICY_ACCEPTED} from '@/components/SummaryConfirmation/mocks';
 import type {Form} from '@/data/forms';
 
 import {BASE_URL, getDefaultFactory} from './base';
@@ -19,7 +17,7 @@ export const FORM_DEFAULTS = {
   showSummaryProgress: false,
   maintenanceMode: false,
   active: true,
-  submissionAllowed: SUBMISSION_ALLOWED.yes,
+  submissionAllowed: 'yes',
   submissionLimitReached: false,
   suspensionAllowed: true,
   sendConfirmationEmail: true,

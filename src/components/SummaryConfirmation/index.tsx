@@ -1,11 +1,9 @@
 import {useFormikContext} from 'formik';
 import {useState} from 'react';
 
-import StatementCheckboxes from 'components/StatementCheckboxes';
-import {SUBMISSION_ALLOWED} from 'components/constants';
-
 import FormNavigation, {FormSubmitButton} from '@/components/FormNavigation';
-import {SubmissionStatementConfiguration} from '@/data/forms';
+import StatementCheckboxes from '@/components/StatementCheckboxes';
+import type {SubmissionStatementConfiguration} from '@/data/forms';
 import useFormContext from '@/hooks/useFormContext';
 
 const isSubmitEnabled = (
@@ -34,7 +32,7 @@ const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
   hideAbortButton = false,
 }) => {
   const {submissionStatementsConfiguration = []} = useFormContext();
-  const canSubmit = submissionAllowed === SUBMISSION_ALLOWED.yes;
+  const canSubmit = submissionAllowed === 'yes';
   const {values: formikValues} = useFormikContext<Record<string, boolean>>();
   const [showStatementWarnings, setShowStatementWarnings] = useState<boolean>(false);
 

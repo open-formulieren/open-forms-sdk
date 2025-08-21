@@ -17,7 +17,6 @@ import {
   mockSubmissionStepGet,
   mockSubmissionSummaryGet,
 } from '@/api-mocks/submissions';
-import {SUBMISSION_ALLOWED} from '@/components/constants';
 import {type Form} from '@/data/forms';
 import routes, {FUTURE_FLAGS} from '@/routes';
 
@@ -180,7 +179,7 @@ test('Submitting the form with failing background processing', async () => {
   // page for a retry.
   const form = buildForm({loginRequired: false, submissionStatementsConfiguration: []});
   const submission = buildSubmission({
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    submissionAllowed: 'yes',
     payment: {
       isRequired: false,
       amount: null,
@@ -222,7 +221,7 @@ test('Submitting the form with successful background processing', async () => {
   // page for a retry.
   const form = buildForm({loginRequired: false, submissionStatementsConfiguration: []});
   const submission = buildSubmission({
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    submissionAllowed: 'yes',
     payment: {
       isRequired: false,
       amount: null,
@@ -243,7 +242,7 @@ test('Submitting the form with successful background processing', async () => {
 
   // confirm the submission and complete it
   vi.useFakeTimers();
-  await user.click(screen.getByRole('button', {name: 'Confirm'}));
+  await user.click(await screen.findByRole('button', {name: 'Confirm'}));
   expect(await screen.findByRole('heading', {name: 'Processing...'})).toBeVisible();
   const loader = await screen.findByRole('status');
   vi.runOnlyPendingTimers();
@@ -263,7 +262,7 @@ test('Submitting form with payment requirement', async () => {
   // page for a retry.
   const form = buildForm({loginRequired: false, submissionStatementsConfiguration: []});
   const submission = buildSubmission({
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    submissionAllowed: 'yes',
     payment: {
       isRequired: true,
       amount: '42.69',

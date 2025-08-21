@@ -1,18 +1,25 @@
 import {render, screen} from '@testing-library/react';
-import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
-import {mockSubmissionGet, mockSubmissionSummaryGet} from 'api-mocks/submissions';
-import SubmissionProvider from 'components/SubmissionProvider';
-import {SubmissionSummary} from 'components/Summary';
-import {SUBMISSION_ALLOWED} from 'components/constants';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+import {ConfigContext, FormContext} from '@/Context';
+import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
+import mswServer from '@/api-mocks/msw-server';
+import {mockSubmissionGet, mockSubmissionSummaryGet} from '@/api-mocks/submissions';
+import SubmissionProvider from '@/components/SubmissionProvider';
+import type {Form} from '@/data/forms';
+import type {Submission} from '@/data/submissions';
+import messagesNL from '@/i18n/compiled/nl.json';
+import {FUTURE_FLAGS} from '@/routes';
 
-const Wrapper = ({form, submission}) => {
+import SubmissionSummary from './SubmissionSummary';
+
+interface WrapperProps {
+  form: Form;
+  submission: Submission;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({form, submission}) => {
   const routes = [
     {
       path: '/overzicht',
@@ -40,11 +47,12 @@ const Wrapper = ({form, submission}) => {
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="nl" messages={messagesNL}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+          <RouterProvider router={router} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -56,7 +64,7 @@ test.each([true, false])(
   async loginRequired => {
     const form = buildForm({loginRequired});
     const submissionIsAuthenticated = buildSubmission({
-      submissionAllowed: SUBMISSION_ALLOWED.yes,
+      submissionAllowed: 'yes',
       isAuthenticated: true,
     });
     mswServer.use(mockSubmissionGet(submissionIsAuthenticated), mockSubmissionSummaryGet());
@@ -71,7 +79,7 @@ test.each([true, false])(
 test('Summary when isAuthenticated and loginRequired are false', async () => {
   const form = buildForm({loginRequired: false});
   const submissionNotAuthenticated = buildSubmission({
-    submissionAllowed: SUBMISSION_ALLOWED.yes,
+    submissionAllowed: 'yes',
     isAuthenticated: false,
   });
   mswServer.use(mockSubmissionGet(submissionNotAuthenticated), mockSubmissionSummaryGet());

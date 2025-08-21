@@ -1,15 +1,17 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
+import {ConfigDecorator, withForm} from 'story-utils/decorators';
+
+import {buildForm} from '@/api-mocks';
 import {
   buildSubmission,
   mockSubmissionCompleteInvalidPost,
   mockSubmissionGet,
   mockSubmissionSummaryGet,
-} from 'api-mocks/submissions';
-import SubmissionProvider from 'components/SubmissionProvider';
-import {ConfigDecorator, withForm} from 'story-utils/decorators';
+} from '@/api-mocks/submissions';
+import SubmissionProvider from '@/components/SubmissionProvider';
 
 import SubmissionSummary from './SubmissionSummary';
 
@@ -20,9 +22,9 @@ export default {
   title: 'Private API / SubmissionSummary',
   component: SubmissionSummary,
   decorators: [
-    (Story, {args}) => (
+    (Story, {parameters}) => (
       <SubmissionProvider
-        submission={args.submission}
+        submission={parameters.submission}
         onSubmissionObtained={fn()}
         onDestroySession={fn()}
         removeSubmissionId={fn()}
@@ -34,26 +36,22 @@ export default {
     ConfigDecorator,
     withForm,
   ],
-  args: {
-    form,
-    submission,
-  },
-  argTypes: {
-    form: {table: {disable: true}},
-    submission: {table: {disable: true}},
-  },
   parameters: {
     msw: {
       handlers: {
         loadSubmission: [mockSubmissionGet(submission), mockSubmissionSummaryGet()],
       },
     },
+    formContext: {form},
+    submission,
   },
-};
+} satisfies Meta<typeof SubmissionSummary>;
 
-export const Overview = {};
+type Story = StoryObj<typeof SubmissionSummary>;
 
-export const BackendValidationErrors = {
+export const Overview: Story = {};
+
+export const BackendValidationErrors: Story = {
   parameters: {
     msw: {
       handlers: {
