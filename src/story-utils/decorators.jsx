@@ -1,4 +1,4 @@
-import RenderSettingsProvider from '@open-formulieren/formio-renderer/components/RendererSettingsProvider';
+import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider.js';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
 
@@ -21,9 +21,12 @@ export const ConfigDecorator = (Story, {parameters}) => {
   const value = merge(defaults, fromParams);
   return (
     <ConfigContext.Provider value={value}>
-      <RenderSettingsProvider requiredFieldsWithAsterisk={value.requiredFieldsWithAsterisk}>
+      <FormSettingsProvider
+        requiredFieldsWithAsterisk={value.requiredFieldsWithAsterisk}
+        components={[]}
+      >
         <Story />
-      </RenderSettingsProvider>
+      </FormSettingsProvider>
     </ConfigContext.Provider>
   );
 };
