@@ -159,9 +159,15 @@ export default class Children extends Field {
       );
     } else {
       // Add the new child to the ones already added by the user
+      const allowSelection = this.component.enableSelection === true;
       updated = [
         ...this.dataValue,
-        {...newChild, __addedManually: true, __id: crypto.randomUUID()},
+        {
+          ...newChild,
+          __addedManually: true,
+          __id: crypto.randomUUID(),
+          selected: allowSelection ? false : null,
+        },
       ];
     }
 
