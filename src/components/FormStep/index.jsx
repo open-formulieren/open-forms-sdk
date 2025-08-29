@@ -40,7 +40,7 @@ import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
 import {useSubmissionContext} from 'components/SubmissionProvider';
-import {SummaryProgress} from 'components/SummaryProgress';
+import SummaryProgress from 'components/SummaryProgress';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
   eventTriggeredBySubmitButton,
