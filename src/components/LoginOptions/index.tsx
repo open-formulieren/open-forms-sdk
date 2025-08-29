@@ -7,7 +7,7 @@ import {getCosignLoginUrl, getLoginUrl} from 'components/utils';
 
 import type {Form} from '@/data/forms';
 
-import LoginOptionsDisplay, {FormattedLoginOption} from './LoginOptionsDisplay';
+import LoginOptionsDisplay, {type FormattedLoginOption} from './LoginOptionsDisplay';
 
 export interface OnFormStartOptions {
   isAnonymous?: boolean;
