@@ -1,11 +1,8 @@
 @use 'microscope-sass/lib/bem';
 
-@import 'microscope-sass/lib/grid';
 @import 'microscope-sass/lib/responsive';
 
-@import '../mixins/prefix';
-
-.#{prefix(login-button-logo)} {
+.openforms-login-button-logo {
   display: inline-flex;
   align-items: center;
 
@@ -33,7 +30,7 @@
   }
 
   &__image {
-    max-height: $grid-row-height;
-    max-width: $grid-row-height;
+    max-height: var(--of-login-button-logo-image-max-max-height, 46px);
+    max-width: var(--of-login-button-logo-image-max-max-width, 46px);
   }
 }

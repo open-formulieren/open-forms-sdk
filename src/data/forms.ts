@@ -5,7 +5,7 @@ export interface FormLoginOption {
   identifier: string;
   label: string;
   url: string;
-  logo: {
+  logo?: {
     title: string;
     imageSrc: string;
     href: string;

@@ -1,8 +1,7 @@
 import {FormattedMessage} from 'react-intl';
 
-import LoginButton from 'components/LoginButton';
-
 import Body from '@/components/Body';
+import LoginButton from '@/components/LoginButton';
 import type {FormLoginOption} from '@/data/forms';
 import {getBEMClassName} from '@/utils';
 
