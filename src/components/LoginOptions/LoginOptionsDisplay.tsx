@@ -1,10 +1,10 @@
 import {FormattedMessage} from 'react-intl';
 
-import LoginButton from 'components/LoginButton';
-
 import Body from '@/components/Body';
 import type {FormLoginOption} from '@/data/forms';
 import {getBEMClassName} from '@/utils';
+
+import LoginButton from './LoginButton';
 
 export interface FormattedLoginOption {
   identifier: string;
