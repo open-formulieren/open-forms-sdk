@@ -1,4 +1,4 @@
-import RenderSettingsProvider from '@open-formulieren/formio-renderer/components/RendererSettingsProvider';
+import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
 
@@ -9,6 +9,8 @@ import {LiteralsProvider} from 'components/Literal';
 import {SubmissionStatusContext} from 'components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from 'components/analytics/AnalyticsToolConfigProvider';
 import {ModalContext} from 'components/modals/Modal';
+
+const NO_COMPONENTS = [];
 
 export const ConfigDecorator = (Story, {parameters}) => {
   const defaults = {
@@ -21,9 +23,12 @@ export const ConfigDecorator = (Story, {parameters}) => {
   const value = merge(defaults, fromParams);
   return (
     <ConfigContext.Provider value={value}>
-      <RenderSettingsProvider requiredFieldsWithAsterisk={value.requiredFieldsWithAsterisk}>
+      <FormSettingsProvider
+        requiredFieldsWithAsterisk={value.requiredFieldsWithAsterisk}
+        components={NO_COMPONENTS}
+      >
         <Story />
-      </RenderSettingsProvider>
+      </FormSettingsProvider>
     </ConfigContext.Provider>
   );
 };

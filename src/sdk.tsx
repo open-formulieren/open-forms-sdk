@@ -1,5 +1,5 @@
-import RenderSettingsProvider from '@open-formulieren/formio-renderer/components/RendererSettingsProvider.js';
-import type {SupportedLocales} from '@open-formulieren/types';
+import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider.js';
+import type {AnyComponentSchema, SupportedLocales} from '@open-formulieren/types';
 import 'flatpickr';
 import React from 'react';
 import {type Root, createRoot} from 'react-dom/client';
@@ -42,6 +42,8 @@ export interface SDKOptions {
     initialDataReference: string | null
   ) => void;
 }
+
+const NO_COMPONENTS: AnyComponentSchema[] = [] as const;
 
 class OpenForm {
   protected targetNode: HTMLElement;
@@ -229,8 +231,9 @@ class OpenForm {
               debug: DEBUG,
             }}
           >
-            <RenderSettingsProvider
+            <FormSettingsProvider
               requiredFieldsWithAsterisk={this.formObject.requiredFieldsWithAsterisk}
+              components={NO_COMPONENTS}
             >
               <NonceProvider nonce={CSPNonce.getValue() ?? ''} cacheKey="sdk-react-select">
                 <I18NErrorBoundary>
@@ -242,7 +245,7 @@ class OpenForm {
                   </I18NManager>
                 </I18NErrorBoundary>
               </NonceProvider>
-            </RenderSettingsProvider>
+            </FormSettingsProvider>
           </ConfigContext.Provider>
         </FormContext.Provider>
       </React.StrictMode>
