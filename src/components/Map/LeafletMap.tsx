@@ -11,7 +11,14 @@ import {
 } from 'leaflet';
 import {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
-import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {
+  FeatureGroup,
+  LayersControl,
+  MapContainer,
+  TileLayer,
+  WMSTileLayer,
+  useMap,
+} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
@@ -65,6 +72,7 @@ export interface LeafletMapProps {
   disabled?: boolean;
   interactions?: MapComponentSchema['interactions'];
   tileLayerUrl?: string;
+  overlays?: MapComponentSchema['overlays'];
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = ({
@@ -75,6 +83,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   disabled = false,
   interactions = DEFAULT_INTERACTIONS,
   tileLayerUrl = TILE_LAYER_RD.url,
+  overlays = [],
 }) => {
   const featureGroupRef = useRef<LeafletFeatureGroup>(null);
   const intl = useIntl();
@@ -135,6 +144,24 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       >
         <EnsureTestId />
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
+        {overlays?.length && (
+          <LayersControl position="topright">
+            {overlays.map((layer, index) =>
+              layer.type === 'wms' ? (
+                <LayersControl.Overlay name={layer.label} key={index} checked>
+                  <WMSTileLayer
+                    url={layer.url}
+                    params={{
+                      format: 'image/png',
+                      layers: layer.layers.join(','),
+                      transparent: true,
+                    }}
+                  />
+                </LayersControl.Overlay>
+              ) : null
+            )}
+          </LayersControl>
+        )}
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
             <EditControl
