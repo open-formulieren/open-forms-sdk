@@ -145,3 +145,39 @@ export const MapWithInteractions = {
     });
   },
 };
+
+export const MapWithWMSLayers = {
+  args: {
+    // Center on a more populated area, to better showcase the WMS layers
+    geoJsonGeometry: {
+      type: 'Point',
+      coordinates: [5.284580856043387, 52.120930596779296],
+    },
+    wmsTileLayers: [
+      {
+        uuid: '931f18f0-cedc-453b-a2d5-a2c1ff9df523',
+        url: 'https://service.pdok.nl/lv/bag/wms/v2_0',
+        label: 'BAG Pand and Verblijfsobject layer',
+        layers: ['pand', 'verblijfsobject'],
+      },
+    ],
+  },
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+    const map = await canvas.findByTestId('leaflet-map');
+
+    await waitFor(() => {
+      expect(map).not.toBeNull();
+      expect(map).toBeVisible();
+    });
+
+    await step('Layers menu is shown with the defined layers', async () => {
+      const layersButton = canvas.getByRole('button', {name: 'Layers'});
+      await userEvent.hover(layersButton);
+
+      const layerCheckbox = canvas.getByLabelText('BAG Pand and Verblijfsobject layer');
+      expect(layerCheckbox).toBeVisible();
+      expect(layerCheckbox).toBeChecked();
+    });
+  },
+};

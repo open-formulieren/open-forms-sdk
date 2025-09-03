@@ -41,3 +41,19 @@ export const Default = {
   name: 'Map',
   render: SingleFormioComponent,
 };
+
+export const MapWithWMSLayers = {
+  render: SingleFormioComponent,
+  args: {
+    extraComponentProperties: {
+      wmsTileLayers: [
+        {
+          uuid: '931f18f0-cedc-453b-a2d5-a2c1ff9df523',
+          url: 'https://service.pdok.nl/lv/bag/wms/v2_0',
+          label: 'BAG Pand and Verblijfsobject layer',
+          layers: ['pand', 'verblijfsobject'],
+        },
+      ],
+    },
+  },
+};
