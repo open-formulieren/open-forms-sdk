@@ -3,12 +3,6 @@
 
 @import 'microscope-sass/lib/grid';
 
-.utrecht-textarea {
-  @include bem.modifier('openforms') {
-    font-weight: var(--of-input-font-weight, normal);
-  }
-}
-
 .openforms-theme {
   .utrecht-textarea {
     @include rows(3, min-height, $force: true);

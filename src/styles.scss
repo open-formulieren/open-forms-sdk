@@ -30,7 +30,6 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/typography';
 @import './scss/components/fa-icon';
 
-@import './scss/components/alert';
 @import './scss/components/app';
 @import './scss/components/anchor';
 @import './scss/components/abort-button';
@@ -49,7 +48,6 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/label';
 @import './scss/components/list';
 @import './scss/components/deprecated-select';
-@import './scss/components/select';
 @import './scss/components/textarea';
 @import './scss/components/tooltip';
 @import './scss/components/loading';
@@ -71,9 +69,10 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/login-options';
 @import './scss/components/login-button';
 @import './scss/components/login-button-logo';
+// TODO: obsolete when the new renderer goes live
 @import './scss/components/floating-widget';
 @import './scss/components/date-picker';
-@import './scss/components/input-container';
 @import './scss/components/authentication-errors';
 @import './scss/components/govmetric_snippet';
+// TODO: obsolete when the new renderer goes live
 @import './scss/components/soft-required-errors';
