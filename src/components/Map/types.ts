@@ -22,3 +22,10 @@ export type MapInteractions = {
   polygon: boolean;
   polyline: boolean;
 };
+
+export type WMSTileLayer = {
+  uuid: string;
+  url: string;
+  label: string;
+  layers: string[];
+};

@@ -10,7 +10,14 @@ import {
 } from 'leaflet';
 import {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
-import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
+import {
+  FeatureGroup,
+  LayersControl,
+  MapContainer,
+  TileLayer,
+  WMSTileLayer as WMSTileLayerComponent,
+  useMap,
+} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
@@ -25,7 +32,7 @@ import {
   leafletGestureHandlingText,
   searchControlMessages,
 } from './translations';
-import type {Coordinates, GeoJsonGeometry, MapInteractions} from './types';
+import type {Coordinates, GeoJsonGeometry, MapInteractions, WMSTileLayer} from './types';
 
 // Run some Leaflet-specific patches...
 initialize();
@@ -64,6 +71,7 @@ export interface LeafletMapProps {
   disabled?: boolean;
   interactions?: MapInteractions;
   tileLayerUrl?: string;
+  wmsTileLayers?: WMSTileLayer[];
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = ({
@@ -74,6 +82,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   disabled = false,
   interactions = DEFAULT_INTERACTIONS,
   tileLayerUrl = TILE_LAYER_RD.url,
+  wmsTileLayers = [],
 }) => {
   const featureGroupRef = useRef<LeafletFeatureGroup>(null);
   const intl = useIntl();
@@ -134,6 +143,22 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       >
         <EnsureTestId />
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
+        {wmsTileLayers?.length && (
+          <LayersControl position="topright">
+            {wmsTileLayers.map((layer, index) => (
+              <LayersControl.Overlay name={layer.label} key={index} checked>
+                <WMSTileLayerComponent
+                  url={layer.url}
+                  params={{
+                    format: 'image/png',
+                    layers: layer.layers.join(','),
+                    transparent: true,
+                  }}
+                />
+              </LayersControl.Overlay>
+            ))}
+          </LayersControl>
+        )}
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
             <EditControl
