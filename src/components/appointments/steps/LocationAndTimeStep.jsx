@@ -5,7 +5,7 @@ import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router';
-import {useAsync} from 'react-use';
+import {useAsync, useUpdateEffect} from 'react-use';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
@@ -41,26 +41,15 @@ const LocationAndTimeStepFields = () => {
     appointmentData: {products = []},
   } = useCreateAppointmentContext();
 
-  const onFieldChange = event => {
-    const {name, value: newValue} = event.target;
-    const currentValue = values[name];
-
-    if (newValue === currentValue) return;
-
-    switch (name) {
-      case 'location': {
-        setFieldValue('date', '');
-        setFieldValue('datetime', '');
-        break;
-      }
-      case 'date': {
-        setFieldValue('datetime', '');
-        break;
-      }
-      default:
-        throw new Error(`Unknown field: '${name}'`);
-    }
-  };
+  const {location, date} = values;
+  // if a field changes, clear the dependent fields
+  useUpdateEffect(() => {
+    setFieldValue('date', '');
+    setFieldValue('datetime', '');
+  }, [location]);
+  useUpdateEffect(() => {
+    setFieldValue('datetime', '');
+  }, [date]);
 
   // if we don't have products in the state, redirect back to the start
   if (!products.length) {
@@ -71,8 +60,8 @@ const LocationAndTimeStepFields = () => {
     // TODO: don't do inline style
     <Form style={{width: '100%'}}>
       <div className="openforms-form-field-container">
-        <LocationSelect products={products} onChange={onFieldChange} />
-        <DateSelect products={products} onChange={onFieldChange} />
+        <LocationSelect products={products} />
+        <DateSelect products={products} />
         <TimeSelect products={products} />
       </div>
 
