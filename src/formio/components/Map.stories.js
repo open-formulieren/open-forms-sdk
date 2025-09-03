@@ -41,3 +41,27 @@ export const Default = {
   name: 'Map',
   render: SingleFormioComponent,
 };
+
+export const MapWithOverlays = {
+  render: SingleFormioComponent,
+  args: {
+    extraComponentProperties: {
+      overlays: [
+        {
+          uuid: 'f20448c3-a8cb-471c-bfcc-78a6c22d0ae6',
+          url: 'https://service.pdok.nl/bzk/bro-grondwaterspiegeldiepte/wms/v2_0?request=getCapabilities&service=WMS',
+          label: 'Grondwaterspiegeldiepte layer',
+          type: 'wms',
+          layers: ['bro-grondwaterspiegeldieptemetingen-GHG'],
+        },
+        {
+          uuid: '931f18f0-cedc-453b-a2d5-a2c1ff9df523',
+          url: 'https://service.pdok.nl/lv/bag/wms/v2_0?request=getCapabilities&service=WMS',
+          label: 'BAG Pand and Verblijfsobject layer',
+          type: 'wms',
+          layers: ['pand', 'verblijfsobject'],
+        },
+      ],
+    },
+  },
+};
