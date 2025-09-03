@@ -1,67 +1,27 @@
+import {NumberField} from '@open-formulieren/formio-renderer';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
-
-import NumberField from './NumberField';
 
 export default {
   title: 'Pure React Components / Forms / NumberField',
   component: NumberField,
   decorators: [FormikDecorator],
   parameters: {
-    docs: {
-      source: {
-        type: 'dynamic',
-        excludeDecorators: true,
-      },
-    },
     formik: {
       initialValues: {
-        amount: '4',
+        amount: 4,
       },
     },
-  },
-};
-
-export const SmallNumbers = {
-  name: 'Small numbers with incr/decr buttons',
-  args: {
-    name: 'amount',
-    id: 'amount-type-number',
-    label: 'Amount',
-    description: 'HTML type=number, still allows typing invalid values.',
-    useNumberType: true,
-    disabled: false,
-    isRequired: false,
-    readOnly: false,
-  },
-  play: async ({canvasElement}) => {
-    const canvas = within(canvasElement);
-    const input = canvas.getByLabelText('Amount');
-
-    // assert that we can still type 'large' numbers
-    await userEvent.clear(input);
-    await userEvent.type(input, '1000');
-    await expect(input).toHaveDisplayValue('1000');
-
-    // assert that we can type floats without localisation
-    await userEvent.clear(input);
-    await userEvent.type(input, '1.5', {delay: 30});
-    await expect(input).toHaveDisplayValue('1.5');
   },
 };
 
 export const Default = {
   args: {
     name: 'amount',
-    id: 'amount',
     label: 'Amount',
     description: 'This is a custom description for the amount field',
-    disabled: false,
     isRequired: false,
-    useNumberType: false,
-    min: undefined,
-    step: undefined,
   },
   parameters: {
     formik: {
@@ -73,15 +33,10 @@ export const Default = {
 export const ReadOnly = {
   args: {
     name: 'amount',
-    id: 'amount',
     label: 'Amount',
     description: 'This is a custom description for the amount field',
-    disabled: false,
     isRequired: false,
-    readOnly: true,
-    useNumberType: false,
-    min: undefined,
-    step: undefined,
+    isReadonly: true,
   },
   parameters: {
     formik: {
@@ -122,12 +77,11 @@ export const LocalisedWithDecimals = {
   },
   args: {
     name: 'amount',
-    id: 'amount',
     label: 'Amount',
     description: 'This is a custom description for the amount field',
-    disabled: false,
     isRequired: true,
-    readOnly: false,
+    isReadonly: false,
+    allowNegative: true,
   },
 };
 
@@ -149,12 +103,11 @@ export const LocalisedWithThousandSeparator = {
   },
   args: {
     name: 'amount',
-    id: 'amount',
     label: 'Amount',
     description: 'This is a custom description for the amount field',
-    disabled: false,
     isRequired: true,
-    readOnly: false,
+    isReadonly: false,
+    useThousandSeparator: true,
   },
 };
 
@@ -177,12 +130,8 @@ export const ValidationError = {
     name: 'amount',
     label: 'Amount',
     description: 'Description above the errors',
-    disabled: false,
     isRequired: true,
-    readOnly: false,
-    useNumberType: false,
-    min: undefined,
-    step: undefined,
+    isReadonly: false,
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
@@ -201,9 +150,7 @@ export const NoAsterisks = {
   args: {
     name: 'amount',
     label: 'Default required',
-    useNumberType: false,
-    disabled: false,
     isRequired: true,
-    readOnly: false,
+    isReadonly: false,
   },
 };
