@@ -1,30 +1,37 @@
+import {MapComponentSchema} from '@open-formulieren/types';
 import * as Leaflet from 'leaflet';
-import {GeoSearchControl} from 'leaflet-geosearch';
-import PropTypes from 'prop-types';
-import {useContext, useEffect, useRef} from 'react';
+import {
+  Circle,
+  CircleMarker,
+  DrawEvents,
+  FeatureGroup as LeafletFeatureGroup,
+  Marker,
+  Polygon,
+  Polyline,
+} from 'leaflet';
+import {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
-import {ConfigContext} from 'Context';
 import {getBEMClassName} from 'utils';
 
+import SearchControl, {type GeoSearchShowLocationEvent} from './LeafletMapSearchControl';
 import NearestAddress from './NearestAddress';
 import {DEFAULT_INTERACTIONS, DEFAULT_LAT_LNG, DEFAULT_ZOOM} from './constants';
 import {CRS_RD, TILE_LAYER_RD, initialize} from './init';
-import OpenFormsProvider from './provider';
 import {
   applyLeafletTranslations,
   leafletGestureHandlingText,
   searchControlMessages,
 } from './translations';
-import {GeoJsonGeometry} from './types';
+import type {Coordinates, GeoJsonGeometry} from './types';
 
 // Run some Leaflet-specific patches...
 initialize();
 
-const useDefaultCoordinates = () => {
+const useDefaultCoordinates = (): Coordinates | null => {
   // FIXME: can't call hooks conditionally
   const {loading, latitude, longitude, error} = useGeolocation();
   // it's possible the user declined permissions (error.code === 1) to access the
@@ -37,11 +44,11 @@ const useDefaultCoordinates = () => {
     return null;
   }
   if (!navigator.geolocation) return null;
-  if (loading) return null;
+  if (loading || !latitude || !longitude) return null;
   return [latitude, longitude];
 };
 
-const getCoordinates = geoJsonGeometry => {
+const getCoordinates = (geoJsonGeometry: GeoJsonGeometry): Coordinates | null => {
   if (!geoJsonGeometry) {
     return null;
   }
@@ -50,7 +57,17 @@ const getCoordinates = geoJsonGeometry => {
   return [center.lat, center.lng];
 };
 
-const LeaftletMap = ({
+export interface LeafletMapProps {
+  geoJsonGeometry: GeoJsonGeometry;
+  onGeoJsonGeometrySet: (newGeoJsonGeometry: GeoJsonGeometry | null) => void;
+  defaultCenter?: Coordinates;
+  defaultZoomLevel?: number;
+  disabled?: boolean;
+  interactions?: MapComponentSchema['interactions'];
+  tileLayerUrl?: string;
+}
+
+const LeafletMap: React.FC<LeafletMapProps> = ({
   geoJsonGeometry,
   onGeoJsonGeometrySet,
   defaultCenter = DEFAULT_LAT_LNG,
@@ -59,11 +76,11 @@ const LeaftletMap = ({
   interactions = DEFAULT_INTERACTIONS,
   tileLayerUrl = TILE_LAYER_RD.url,
 }) => {
-  const featureGroupRef = useRef();
+  const featureGroupRef = useRef<LeafletFeatureGroup>(null);
   const intl = useIntl();
   const defaultCoordinates = useDefaultCoordinates();
   const geoJsonCoordinates = getCoordinates(geoJsonGeometry);
-  const coordinates = geoJsonCoordinates ?? defaultCoordinates;
+  const coordinates: Coordinates | null = geoJsonCoordinates ?? defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
@@ -72,7 +89,7 @@ const LeaftletMap = ({
     applyLeafletTranslations(intl);
   }, [intl]);
 
-  const onFeatureCreate = event => {
+  const onFeatureCreate = (event: DrawEvents.Created) => {
     updateGeoJsonGeometry(event.layer);
   };
 
@@ -82,11 +99,13 @@ const LeaftletMap = ({
     onGeoJsonGeometrySet?.(null);
   };
 
-  const onSearchMarkerSet = event => {
+  const onSearchMarkerSet = (event: GeoSearchShowLocationEvent) => {
     updateGeoJsonGeometry(event.marker);
   };
 
-  const updateGeoJsonGeometry = newFeatureLayer => {
+  const updateGeoJsonGeometry = (
+    newFeatureLayer: Circle | CircleMarker | Marker | Polygon | Polyline
+  ) => {
     // Remove all existing shapes from the map, ensuring that shapes are only added through
     // `geoJsonGeometry` changes.
     featureGroupRef.current?.clearLayers();
@@ -101,6 +120,8 @@ const LeaftletMap = ({
         crs={CRS_RD}
         attributionControl
         className={className}
+        // @ts-expect-error searchControl, gestureHandling and gestureHandlingOptions are
+        // missing in the props definitions, but definitely being used.
         searchControl
         gestureHandling
         gestureHandlingOptions={{
@@ -161,18 +182,6 @@ const LeaftletMap = ({
   );
 };
 
-LeaftletMap.propTypes = {
-  geoJsonGeometry: GeoJsonGeometry,
-  onGeoJsonGeometrySet: PropTypes.func,
-  interactions: PropTypes.shape({
-    polyline: PropTypes.bool,
-    polygon: PropTypes.bool,
-    marker: PropTypes.bool,
-  }),
-  disabled: PropTypes.bool,
-  tileLayerUrl: PropTypes.string,
-};
-
 const EnsureTestId = () => {
   const map = useMap();
   const container = map.getContainer();
@@ -184,7 +193,12 @@ const EnsureTestId = () => {
   return null;
 };
 
-const Geometry = ({geoJsonGeometry, featureGroupRef}) => {
+interface GeometryProps {
+  geoJsonGeometry: GeoJsonGeometry;
+  featureGroupRef: React.RefObject<LeafletFeatureGroup>;
+}
+
+const Geometry: React.FC<GeometryProps> = ({geoJsonGeometry, featureGroupRef}) => {
   const map = useMap();
 
   useEffect(() => {
@@ -201,7 +215,11 @@ const Geometry = ({geoJsonGeometry, featureGroupRef}) => {
     }
 
     // Add the `geoJsonGeometry` data as shape.
-    const layer = Leaflet.GeoJSON.geometryToLayer(geoJsonGeometry);
+    const layer = Leaflet.GeoJSON.geometryToLayer({
+      type: 'Feature',
+      geometry: geoJsonGeometry,
+      properties: {},
+    });
     featureGroupRef.current.addLayer(layer);
 
     // For marker/point elements the zooming doesn't provide any functionality, as it
@@ -215,102 +233,21 @@ const Geometry = ({geoJsonGeometry, featureGroupRef}) => {
   return null;
 };
 
-Geometry.propTypes = {
-  geoJsonGeometry: GeoJsonGeometry,
-  featureGroupRef: PropTypes.object.isRequired,
-};
+interface MapViewProps {
+  coordinates?: Coordinates;
+}
 
 // Set the map view if coordinates are provided
-const MapView = ({coordinates = null}) => {
+const MapView: React.FC<MapViewProps> = ({coordinates = null}) => {
   const map = useMap();
   useEffect(() => {
-    if (!coordinates || coordinates.length !== 2) return;
-    if (!coordinates.filter(value => isFinite(value)).length === 2) return;
+    if (!coordinates) return;
+    if (coordinates.filter(value => isFinite(value)).length !== 2) return;
     map.setView(coordinates);
   }, [map, coordinates]);
+
   // rendering is done by leaflet, so just return null
   return null;
-};
-
-MapView.propTypes = {
-  coordinates: PropTypes.arrayOf(PropTypes.number),
-};
-
-const SearchControl = ({onMarkerSet, options}) => {
-  const {baseUrl} = useContext(ConfigContext);
-  const map = useMap();
-  const intl = useIntl();
-
-  const {
-    showMarker,
-    showPopup,
-    retainZoomLevel,
-    animateZoom,
-    autoClose,
-    searchLabel,
-    keepResult,
-    updateMap,
-    notFoundMessage,
-  } = options;
-
-  const buttonLabel = intl.formatMessage(searchControlMessages.buttonLabel);
-
-  useEffect(() => {
-    const provider = new OpenFormsProvider(baseUrl);
-    const searchControl = new GeoSearchControl({
-      provider: provider,
-      style: 'button',
-      showMarker,
-      showPopup,
-      retainZoomLevel,
-      animateZoom,
-      autoClose,
-      searchLabel,
-      keepResult,
-      updateMap,
-      notFoundMessage,
-    });
-
-    searchControl.button.setAttribute('aria-label', buttonLabel);
-    map.addControl(searchControl);
-    map.on('geosearch/showlocation', onMarkerSet);
-
-    return () => {
-      map.off('geosearch/showlocation', onMarkerSet);
-      map.removeControl(searchControl);
-    };
-  }, [
-    map,
-    onMarkerSet,
-    baseUrl,
-    showMarker,
-    showPopup,
-    retainZoomLevel,
-    animateZoom,
-    autoClose,
-    searchLabel,
-    keepResult,
-    updateMap,
-    notFoundMessage,
-    buttonLabel,
-  ]);
-
-  return null;
-};
-
-SearchControl.propTypes = {
-  onMarkerSet: PropTypes.func.isRequired,
-  options: PropTypes.shape({
-    showMarker: PropTypes.bool.isRequired,
-    showPopup: PropTypes.bool.isRequired,
-    retainZoomLevel: PropTypes.bool.isRequired,
-    animateZoom: PropTypes.bool.isRequired,
-    autoClose: PropTypes.bool.isRequired,
-    searchLabel: PropTypes.string.isRequired,
-    keepResult: PropTypes.bool.isRequired,
-    updateMap: PropTypes.bool.isRequired,
-    notFoundMessage: PropTypes.string.isRequired,
-  }),
 };
 
 const DisabledMapControls = () => {
@@ -322,9 +259,9 @@ const DisabledMapControls = () => {
     map.scrollWheelZoom.disable();
     map.boxZoom.disable();
     map.keyboard.disable();
-    if (map.tap) map.tap.disable();
+    map.tapHold?.disable();
   }, [map]);
   return null;
 };
 
-export default LeaftletMap;
+export default LeafletMap;
