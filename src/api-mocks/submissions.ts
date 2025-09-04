@@ -1,8 +1,11 @@
+import type {AnyComponentSchema} from '@open-formulieren/types';
+import type {JSONObject} from '@open-formulieren/types/lib/types';
 import {HttpResponse, http} from 'msw';
 
 import type {SubmissionStep} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
 import {InvalidParam} from '@/errors';
+import {sleep} from '@/utils';
 
 import {BASE_URL, getDefaultFactory} from './base';
 
@@ -115,12 +118,47 @@ export const mockSubmissionStepGet = (stepDetails: SubmissionStep = SUBMISSION_S
     return HttpResponse.json(stepDetails, {status: 200});
   });
 
-export const mockSubmissionCheckLogicPost = () =>
-  http.post(`${BASE_URL}submissions/:uuid/steps/:uuid/_check-logic`, () => {
-    const responseData = {
-      submission: SUBMISSION_DETAILS,
-      step: SUBMISSION_STEP_DETAILS,
+export const mockSubmissionStepValidatePost = (
+  errors: Record<string, string> | undefined = undefined
+) =>
+  http.post(`${BASE_URL}submissions/:uuid/steps/:stepUuid/validate`, () => {
+    if (!errors) {
+      return new HttpResponse(null, {status: 204});
+    }
+
+    const invalidParams: InvalidParam[] = Object.entries(errors).map(([name, error]) => ({
+      name: `data.${name}`,
+      code: 'invalid',
+      reason: error,
+    }));
+    const body = {
+      type: 'http://localhost:8000/fouten/ValidationError/',
+      code: 'invalid',
+      title: 'Invalid input.',
+      status: 400,
+      detail: '',
+      instance: 'urn:uuid:a3a9701b-3fa6-444b-a777-bcb43960440a',
+      invalidParams: invalidParams,
     };
+    return HttpResponse.json(body, {status: 400});
+  });
+
+export const mockSubmissionStepPut = (
+  stepDetails: SubmissionStep = SUBMISSION_STEP_DETAILS,
+  status: 200 | 201 = 200
+) =>
+  http.put(`${BASE_URL}submissions/:uuid/steps/:stepUuid`, () => {
+    return HttpResponse.json(stepDetails, {status: status});
+  });
+
+export const mockSubmissionCheckLogicPost = (
+  submission: Submission = SUBMISSION_DETAILS,
+  step: SubmissionStep = SUBMISSION_STEP_DETAILS,
+  delay: number = 0
+) =>
+  http.post(`${BASE_URL}submissions/:uuid/steps/:stepUuid/_check-logic`, async () => {
+    const responseData = {submission, step};
+    await sleep(delay);
     return HttpResponse.json(responseData, {status: 200});
   });
 
