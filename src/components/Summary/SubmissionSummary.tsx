@@ -5,13 +5,13 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
 import {LiteralsProvider} from 'components/Literal';
-import {findPreviousApplicableStep} from 'components/utils';
 import useTitle from 'hooks/useTitle';
 
 import {ConfigContext} from '@/Context';
-import {useSubmissionContext} from '@/components/SubmissionProvider';
+import {StepState} from '@/components/FormStep/utils';
+import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import type {SubmissionStatementConfiguration} from '@/data/forms';
-import {type Submission, completeSubmission} from '@/data/submissions';
+import {completeSubmission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
 import useRefreshSubmission from '@/hooks/useRefreshSubmission';
@@ -19,10 +19,6 @@ import useRefreshSubmission from '@/hooks/useRefreshSubmission';
 import GenericSummary from './GenericSummary';
 import ValidationErrors from './ValidationErrors';
 import {useLoadSummaryData} from './hooks';
-
-function assertSubmission(submission: Submission | null): asserts submission is Submission {
-  if (!submission) throw new Error('A submission must be available in the context');
-}
 
 const SubmissionSummary: React.FC = () => {
   const location = useLocation();
@@ -82,13 +78,6 @@ const SubmissionSummary: React.FC = () => {
     });
   };
 
-  const getPreviousPage = (): string => {
-    const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
-    const prevStepSlug = form.steps[previousStepIndex]?.slug;
-    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
-    return navigateTo;
-  };
-
   const submitError =
     submitErrors &&
     (typeof submitErrors === 'string' ? (
@@ -129,7 +118,7 @@ const SubmissionSummary: React.FC = () => {
         editStepText={form.literals.changeText.resolved}
         isAuthenticated={refreshedSubmission.isAuthenticated}
         errors={errorMessages}
-        prevPage={getPreviousPage()}
+        prevPage={StepState.getLastApplicableStepTo(form, submission)}
         onSubmit={onSubmit}
         onDestroySession={onDestroySession}
       />

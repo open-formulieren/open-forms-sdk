@@ -5,7 +5,12 @@ import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';
 
 import {FormContext} from 'Context';
-import {buildForm, buildSubmission} from 'api-mocks';
+import {buildForm, buildSubmission, buildSubmissionStep} from 'api-mocks';
+import {
+  mockSubmissionCheckLogicPost,
+  mockSubmissionStepGet,
+  mockSubmissionStepValidatePost,
+} from 'api-mocks/submissions';
 import {
   mockEmailVerificationPost,
   mockEmailVerificationVerifyCodePost,
@@ -15,12 +20,6 @@ import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import FormStep from './index';
-import {
-  getSubmissionStepDetail,
-  mockSubmissionLogicCheckPost,
-  mockSubmissionStepGet,
-  mockSubmissionValidatePost,
-} from './mocks';
 
 export default {
   title: 'Private API / FormStep',
@@ -68,14 +67,14 @@ const render = ({
       step.url = `${draftSubmission.url}/steps/${uuid4()}`;
     }
   });
-  const submissionStepDetailBody = getSubmissionStepDetail({
-    formioConfiguration: formioConfiguration,
+  const submissionStepDetailBody = buildSubmissionStep({
+    components: formioConfiguration?.components ?? [],
   });
   worker.resetHandlers();
   worker.use(
     mockSubmissionStepGet(submissionStepDetailBody),
-    mockSubmissionLogicCheckPost(submission, submissionStepDetailBody),
-    mockSubmissionValidatePost(validationErrors),
+    mockSubmissionCheckLogicPost(submission, submissionStepDetailBody),
+    mockSubmissionStepValidatePost(validationErrors),
     mockEmailVerificationPost,
     mockEmailVerificationVerifyCodePost
   );

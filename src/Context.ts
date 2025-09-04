@@ -43,6 +43,7 @@ const FormContext = React.createContext<Form>({
     isAppointment: false,
     supportsMultipleProducts: null,
   },
+  newRendererEnabled: false,
 });
 FormContext.displayName = 'FormContext';
 
