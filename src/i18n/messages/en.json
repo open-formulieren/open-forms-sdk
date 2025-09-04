@@ -94,11 +94,6 @@
     "description": "GovMetric red face alt text",
     "originalDefault": "Red smiley (negative)"
   },
-  "4IX8hk": {
-    "defaultMessage": "Loading...",
-    "description": "(Async) select options loading message",
-    "originalDefault": "Loading..."
-  },
   "4ZOmtU": {
     "defaultMessage": "Save changes",
     "description": "Edit toolbar save tooltip.",
@@ -628,11 +623,6 @@
     "defaultMessage": "Remove last drawn point",
     "description": "Draw toolbar undo button tooltip.",
     "originalDefault": "Remove last drawn point"
-  },
-  "QPdaOi": {
-    "defaultMessage": "No results found",
-    "description": "Select 'no options' message",
-    "originalDefault": "No results found"
   },
   "QtraZC": {
     "defaultMessage": "Date must be greater than or equal to {minimum}.",
