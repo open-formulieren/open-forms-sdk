@@ -1,29 +1,5 @@
 import {START_FORM_QUERY_PARAM} from 'components/constants';
 
-const findPreviousApplicableStep = (currentStepIndex, submission) => {
-  let candidateStepIndex = currentStepIndex - 1;
-  while (candidateStepIndex >= 0 && !submission.steps[candidateStepIndex].isApplicable) {
-    candidateStepIndex = candidateStepIndex - 1;
-    if (candidateStepIndex < 0) break;
-  }
-  return candidateStepIndex;
-};
-
-const findNextApplicableStep = (currentStepIndex, submission) => {
-  let candidateStepIndex = currentStepIndex + 1;
-  if (candidateStepIndex >= submission.steps.length) return candidateStepIndex;
-
-  while (!submission.steps[candidateStepIndex].isApplicable) {
-    candidateStepIndex = candidateStepIndex + 1;
-    if (!submission.steps[candidateStepIndex]) break;
-  }
-  return candidateStepIndex;
-};
-
-const isLastStep = (currentStepIndex, submission) => {
-  return currentStepIndex === submission.steps.length - 1;
-};
-
 const getLoginUrl = (loginOption, extraParams = {}, extraNextParams = {}) => {
   if (loginOption.url === '#') return loginOption.url;
   const nextUrl = new URL(window.location.href);
@@ -74,12 +50,4 @@ const eventTriggeredBySubmitButton = event => {
   return false;
 };
 
-export {
-  findNextApplicableStep,
-  findPreviousApplicableStep,
-  isLastStep,
-  getLoginRedirectUrl,
-  getLoginUrl,
-  getCosignLoginUrl,
-  eventTriggeredBySubmitButton,
-};
+export {getLoginRedirectUrl, getLoginUrl, getCosignLoginUrl, eventTriggeredBySubmitButton};

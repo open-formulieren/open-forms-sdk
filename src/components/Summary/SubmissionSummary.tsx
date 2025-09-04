@@ -5,10 +5,10 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
 import {LiteralsProvider} from 'components/Literal';
-import {findPreviousApplicableStep} from 'components/utils';
 import useTitle from 'hooks/useTitle';
 
 import {ConfigContext} from '@/Context';
+import {StepState} from '@/components/FormStep/utils';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import type {SubmissionStatementConfiguration} from '@/data/forms';
 import {completeSubmission} from '@/data/submissions';
@@ -78,13 +78,6 @@ const SubmissionSummary: React.FC = () => {
     });
   };
 
-  const getPreviousPage = (): string => {
-    const previousStepIndex = findPreviousApplicableStep(form.steps.length, submission);
-    const prevStepSlug = form.steps[previousStepIndex]?.slug;
-    const navigateTo = prevStepSlug ? `/stap/${prevStepSlug}` : '/';
-    return navigateTo;
-  };
-
   const submitError =
     submitErrors &&
     (typeof submitErrors === 'string' ? (
@@ -125,7 +118,7 @@ const SubmissionSummary: React.FC = () => {
         editStepText={form.literals.changeText.resolved}
         isAuthenticated={refreshedSubmission.isAuthenticated}
         errors={errorMessages}
-        prevPage={getPreviousPage()}
+        prevPage={StepState.getLastApplicableStepTo(form, submission)}
         onSubmit={onSubmit}
         onDestroySession={onDestroySession}
       />

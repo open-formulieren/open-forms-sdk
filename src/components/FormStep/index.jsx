@@ -41,18 +41,14 @@ import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
 import {useSubmissionContext} from 'components/SubmissionProvider';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-import {
-  eventTriggeredBySubmitButton,
-  findNextApplicableStep,
-  findPreviousApplicableStep,
-  isLastStep,
-} from 'components/utils';
+import {eventTriggeredBySubmitButton} from 'components/utils';
 import useFormContext from 'hooks/useFormContext';
 import useTitle from 'hooks/useTitle';
 import {PREFIX} from 'utils';
 
 import Progress from './Progress';
 import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
+import {StepState} from './utils';
 
 // Dynamically import react-formio and use React.lazy to facilitate bundle splitting
 // into separate chunks.
@@ -261,8 +257,8 @@ const FormStep = () => {
 
   // look up the form step via slug so that we can obtain the submission step
   const formStep = form.steps.find(s => s.slug === slug);
-  const currentStepIndex = form.steps.indexOf(formStep);
   const submissionStep = submission.steps.find(s => s.formStep === formStep.url);
+  const {previousTo: previousPage, isLastStep} = new StepState(form, submission, formStep);
 
   useTitle(formStep.formDefinition, form.name);
 
@@ -517,12 +513,10 @@ const FormStep = () => {
     const {submission: updatedSubmission} = await doLogicCheck(submissionStep.url, data);
     onSubmissionObtained(updatedSubmission); // report back to parent component
 
-    // navigate to the next page (either the next step or the overview)
-    const currentStepIndex = form.steps.indexOf(formStep);
-    const nextStepIndex = findNextApplicableStep(currentStepIndex, submission);
-    const nextStep = form.steps[nextStepIndex]; // will be undefined if it's the last step
-    const nextUrl = nextStep ? `/stap/${nextStep.slug}` : '/overzicht';
-    navigate(nextUrl);
+    // navigate to the next page (either the next step or the overview). Make sure to
+    // use the updated submission state to determine what the next step is.
+    const {nextTo} = new StepState(form, updatedSubmission, formStep);
+    navigate(nextTo);
   };
 
   /**
@@ -613,14 +607,6 @@ const FormStep = () => {
     dispatch({type: 'TOGGLE_FORM_SAVE_MODAL', payload: {open: true}});
   };
 
-  const getPreviousPageHref = () => {
-    const currentStepIndex = form.steps.indexOf(formStep);
-    const previousStepIndex = findPreviousApplicableStep(currentStepIndex, submission);
-
-    const prevStepSlug = form.steps[previousStepIndex]?.slug;
-    return prevStepSlug ? `/stap/${prevStepSlug}` : '/';
-  };
-
   /**
    * Handler to navigate back to the previous step or page
    * @param {PointerEvent} event
@@ -634,8 +620,7 @@ const FormStep = () => {
 
     dispatch({type: 'NAVIGATE'});
 
-    const navigateTo = getPreviousPageHref();
-    navigate(navigateTo);
+    navigate(previousPage);
   };
 
   /**
@@ -755,7 +740,6 @@ const FormStep = () => {
 
   const isLoadingSomething = loading || isNavigating;
 
-  const previousPage = getPreviousPageHref();
   return (
     <LiteralsProvider literals={formStep.literals}>
       <Card title={form.name} mobileHeaderHidden>
@@ -816,7 +800,7 @@ const FormStep = () => {
                     <StepSubmitButton
                       canSubmitForm={submission.submissionAllowed}
                       canSubmitStep={canSubmit}
-                      isLastStep={isLastStep(currentStepIndex, submission)}
+                      isLastStep={isLastStep}
                       isCheckingLogic={logicChecking}
                     />
                   }
