@@ -1,11 +1,11 @@
 import {HttpResponse, http} from 'msw';
 
+import type {SubmissionStep} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
 import {InvalidParam} from '@/errors';
 
 import {BASE_URL, getDefaultFactory} from './base';
 
-// FIXME - this is incomplete, the prop types aren't detailed enough.
 const SUBMISSION_DETAILS = {
   id: '458b29ae-5baa-4132-a0d7-8c7071b8152a',
   url: `${BASE_URL}submissions/458b29ae-5baa-4132-a0d7-8c7071b8152a`,
@@ -62,7 +62,7 @@ const SUBMISSION_STEP_DETAILS = {
   isApplicable: true,
   completed: false,
   canSubmit: true,
-};
+} satisfies SubmissionStep;
 
 /**
  * Return a submission object as if it would be returned from the backend API.
@@ -83,9 +83,36 @@ export const mockSubmissionGet = (submission = buildSubmission()) =>
     return HttpResponse.json(submission, {status: 200});
   });
 
-export const mockSubmissionStepGet = () =>
-  http.get(`${BASE_URL}submissions/:uuid/steps/:uuid`, () => {
-    return HttpResponse.json(SUBMISSION_STEP_DETAILS, {status: 200});
+interface BuildSubmissionStepOpts {
+  components?: AnyComponentSchema[];
+  data?: JSONObject | null;
+}
+
+/**
+ * Return a submission step object as if it would be returned from the backend API.
+ */
+export const buildSubmissionStep = ({
+  components = SUBMISSION_STEP_DETAILS.formStep.configuration.components,
+  data = null,
+}: BuildSubmissionStepOpts): SubmissionStep => {
+  const formioConfiguration: SubmissionStep['formStep']['configuration'] = {
+    type: 'form',
+    components,
+  };
+  return {
+    id: '6ca342af-86c7-451c-a19f-65050b2eee5c',
+    slug: 'step-1',
+    formStep: {index: 0, configuration: formioConfiguration},
+    data: data,
+    isApplicable: true,
+    completed: false,
+    canSubmit: true,
+  } satisfies SubmissionStep;
+};
+
+export const mockSubmissionStepGet = (stepDetails: SubmissionStep = SUBMISSION_STEP_DETAILS) =>
+  http.get(`${BASE_URL}submissions/:uuid/steps/:stepUuid`, () => {
+    return HttpResponse.json(stepDetails, {status: 200});
   });
 
 export const mockSubmissionCheckLogicPost = () =>
