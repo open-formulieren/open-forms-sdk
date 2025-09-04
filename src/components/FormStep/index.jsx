@@ -32,10 +32,10 @@ import {useImmerReducer} from 'use-immer';
 
 import {ConfigContext, FormioTranslations} from 'Context';
 import {get} from 'api';
+import {useDebugContext} from 'components/AppDebug';
 import Card, {CardTitle} from 'components/Card';
 import {EmailVerificationModal} from 'components/EmailVerification';
 import FormNavigation, {StepSubmitButton} from 'components/FormNavigation';
-import FormStepDebug from 'components/FormStepDebug';
 import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
@@ -225,6 +225,7 @@ const reducer = (draft, action) => {
 const FormStep = () => {
   const intl = useIntl();
   const config = useContext(ConfigContext);
+  const {setStepValues: setDebugStepValues} = useDebugContext();
   const formioTranslations = useContext(FormioTranslations);
   const form = useFormContext();
   const {submission, onSubmissionObtained, onDestroySession} = useSubmissionContext();
@@ -704,6 +705,8 @@ const FormStep = () => {
     // See https://github.com/open-formulieren/open-forms/issues/3572 for an example.
     if (!modifiedByHuman && logicChecking) return;
 
+    setDebugStepValues(getCurrentFormData(), false);
+
     // backend logic leads to changes in FormIO configuration, which triggers onFormIOInitialized.
     // This in turn triggers the onFormIOChange event because the submission data is set
     // programmatically. Without checking for human interaction, this would block the
@@ -817,7 +820,6 @@ const FormStep = () => {
                     },
                   }}
                 />
-                {config.debug ? <FormStepDebug data={getCurrentFormData()} /> : null}
                 <FormNavigation
                   submitButton={
                     <StepSubmitButton

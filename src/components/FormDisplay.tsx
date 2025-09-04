@@ -1,7 +1,7 @@
-import {useContext} from 'react';
+import {Fragment, useContext} from 'react';
 
 import {ConfigContext} from '@/Context';
-import AppDebug from '@/components/AppDebug';
+import AppDebug, {DebugContextProvider} from '@/components/AppDebug';
 import AppDisplay from '@/components/AppDisplay';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import useFormContext from '@/hooks/useFormContext';
@@ -35,14 +35,18 @@ const FormDisplay: React.FC<FormDisplayProps> = ({
   const appDebug = config.debug ? <AppDebug /> : null;
   const languageSwitcher = translationEnabled ? <LanguageSwitcher /> : null;
 
+  const Wrapper = config.debug ? DebugContextProvider : Fragment;
+
   return (
-    <AppDisplay
-      languageSwitcher={languageSwitcher}
-      progressIndicator={progressIndicator}
-      appDebug={appDebug}
-    >
-      {children || router}
-    </AppDisplay>
+    <Wrapper>
+      <AppDisplay
+        languageSwitcher={languageSwitcher}
+        progressIndicator={progressIndicator}
+        appDebug={appDebug}
+      >
+        {children || router}
+      </AppDisplay>
+    </Wrapper>
   );
 };
 
