@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 import type {Submission} from '@/data/submissions';
 
-interface SubmissionContextType {
+export interface SubmissionContextType {
   submission: Submission | null;
   onSubmissionObtained: (submission: Submission) => void;
   onDestroySession: () => Promise<void>;
@@ -31,5 +31,9 @@ const SubmissionProvider: React.FC<React.PropsWithChildren<SubmissionContextType
 );
 
 export const useSubmissionContext = () => useContext(SubmissionContext);
+
+export function assertSubmission(submission: Submission | null): asserts submission is Submission {
+  if (!submission) throw new Error('A submission must be available in the context');
+}
 
 export default SubmissionProvider;

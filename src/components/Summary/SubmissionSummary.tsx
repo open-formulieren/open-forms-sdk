@@ -9,9 +9,9 @@ import {findPreviousApplicableStep} from 'components/utils';
 import useTitle from 'hooks/useTitle';
 
 import {ConfigContext} from '@/Context';
-import {useSubmissionContext} from '@/components/SubmissionProvider';
+import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import type {SubmissionStatementConfiguration} from '@/data/forms';
-import {type Submission, completeSubmission} from '@/data/submissions';
+import {completeSubmission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
 import useRefreshSubmission from '@/hooks/useRefreshSubmission';
@@ -19,10 +19,6 @@ import useRefreshSubmission from '@/hooks/useRefreshSubmission';
 import GenericSummary from './GenericSummary';
 import ValidationErrors from './ValidationErrors';
 import {useLoadSummaryData} from './hooks';
-
-function assertSubmission(submission: Submission | null): asserts submission is Submission {
-  if (!submission) throw new Error('A submission must be available in the context');
-}
 
 const SubmissionSummary: React.FC = () => {
   const location = useLocation();
