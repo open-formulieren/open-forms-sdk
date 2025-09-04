@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
@@ -9,11 +8,16 @@ import Loader from 'components/Loader';
 import {getBEMClassName} from 'utils';
 
 import './MapAddress.scss';
+import {Coordinates} from './types';
+
+interface NearestAddressProps {
+  coordinates: Coordinates;
+}
 
 /**
  * Retrieve and display the nearest address label for the selected coordinates.
  */
-const NearestAddress = ({coordinates}) => {
+const NearestAddress: React.FC<NearestAddressProps> = ({coordinates}) => {
   const {baseUrl} = useContext(ConfigContext);
   const [lat, lng] = coordinates;
   // XXX: this would benefit from caching, but rather than rolling our own we should
@@ -23,7 +27,10 @@ const NearestAddress = ({coordinates}) => {
     value: address,
     error,
   } = useAsync(async () => {
-    const data = await get(`${baseUrl}geo/latlng-search`, {lat, lng});
+    const data = await get<{label: string}>(`${baseUrl}geo/latlng-search`, {
+      lat: lat.toString(),
+      lng: lng.toString(),
+    });
     return data ? data.label : null;
   }, [baseUrl, lat, lng]);
   // silent failure for a non-critical part
@@ -53,10 +60,6 @@ const NearestAddress = ({coordinates}) => {
       )}
     </div>
   );
-};
-
-NearestAddress.propTypes = {
-  coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default NearestAddress;

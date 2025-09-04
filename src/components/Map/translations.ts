@@ -1,5 +1,5 @@
 import * as Leaflet from 'leaflet';
-import {defineMessages} from 'react-intl';
+import {type IntlShape, defineMessages} from 'react-intl';
 
 const searchControlMessages = defineMessages({
   buttonLabel: {
@@ -136,7 +136,7 @@ const leafletDrawHandlerMessages = defineMessages({
   },
 });
 
-const applyLeafletTranslations = intl => {
+const applyLeafletTranslations = (intl: IntlShape) => {
   // We have to do the translations via Leaflet
   // https://github.com/alex3165/react-leaflet-draw/issues/179
   Leaflet.drawLocal.edit.toolbar = {
@@ -155,6 +155,7 @@ const applyLeafletTranslations = intl => {
       },
     },
     buttons: {
+      ...Leaflet.drawLocal.edit.toolbar.buttons,
       remove: intl.formatMessage(leafletEditToolbarMessages.remove),
       removeDisabled: intl.formatMessage(leafletEditToolbarMessages.removeDisabled),
     },
@@ -173,6 +174,7 @@ const applyLeafletTranslations = intl => {
       title: intl.formatMessage(leafletDrawToolbarMessages.undoTitle),
     },
     buttons: {
+      ...Leaflet.drawLocal.draw.toolbar.buttons,
       polyline: intl.formatMessage(leafletDrawToolbarMessages.polyline),
       polygon: intl.formatMessage(leafletDrawToolbarMessages.polygon),
       marker: intl.formatMessage(leafletDrawToolbarMessages.marker),
@@ -184,6 +186,7 @@ const applyLeafletTranslations = intl => {
     },
   };
   Leaflet.drawLocal.draw.handlers.polyline = {
+    ...Leaflet.drawLocal.draw.handlers.polyline,
     tooltip: {
       start: intl.formatMessage(leafletDrawHandlerMessages.polylineTooltipStart),
       cont: intl.formatMessage(leafletDrawHandlerMessages.polylineTooltipContinue),
