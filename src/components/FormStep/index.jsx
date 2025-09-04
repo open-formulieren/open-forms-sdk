@@ -40,7 +40,6 @@ import {LiteralsProvider} from 'components/Literal';
 import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
 import {useSubmissionContext} from 'components/SubmissionProvider';
-import SummaryProgress from 'components/SummaryProgress';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
 import {
   eventTriggeredBySubmitButton,
@@ -52,6 +51,7 @@ import useFormContext from 'hooks/useFormContext';
 import useTitle from 'hooks/useTitle';
 import {PREFIX} from 'utils';
 
+import Progress from './Progress';
 import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
 
 // Dynamically import react-formio and use React.lazy to facilitate bundle splitting
@@ -755,10 +755,6 @@ const FormStep = () => {
 
   const isLoadingSomething = loading || isNavigating;
 
-  // Summary progress
-  const applicableSteps = submission.steps.filter(step => step.isApplicable === true);
-  const currentSubmissionStepIndex = applicableSteps.indexOf(submissionStep);
-
   const previousPage = getPreviousPageHref();
   return (
     <LiteralsProvider literals={formStep.literals}>
@@ -767,14 +763,9 @@ const FormStep = () => {
 
         {previousPage && <PreviousLink to={previousPage} onClick={onPrevPage} position="start" />}
 
-        {!isLoadingSomething && form.showSummaryProgress && (
-          <SummaryProgress
-            current={currentSubmissionStepIndex + 1}
-            total={applicableSteps.length}
-          />
-        )}
         {!isLoadingSomething && configuration ? (
           <>
+            <Progress form={form} submission={submission} currentStep={submissionStep} />
             <CardTitle title={submissionStep.name} headingType="subtitle" padded />
             <Suspense fallback={<Loader modifiers={['centered']} />}>
               <form onSubmit={onReactSubmit} noValidate>
