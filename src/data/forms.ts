@@ -91,4 +91,5 @@ export interface Form {
   cosignHasLinkInEmail: boolean;
   submissionStatementsConfiguration: SubmissionStatementConfiguration[];
   submissionReportDownloadLinkTitle: string;
+  newRendererEnabled: boolean;
 }
