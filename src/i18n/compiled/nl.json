@@ -1,4 +1,18 @@
 {
+  "+/hjpS": [
+    {
+      "type": 0,
+      "value": "De waarde moet "
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " of kleiner zijn."
+    }
+  ],
   "+CrcRw": [
     {
       "type": 0,
@@ -67,6 +81,12 @@
       "value": "Verwijderen"
     }
   ],
+  "+zrboi": [
+    {
+      "type": 0,
+      "value": "Ongeldig IBAN"
+    }
+  ],
   "/HGnU6": [
     {
       "type": 0,
@@ -121,6 +141,62 @@
     {
       "type": 0,
       "value": " bevestigen. We sturen je eerst een bevestigingscode naar dit e-mailadres. Vervolgens moet je deze bevestigingscode hier invoeren."
+    }
+  ],
+  "1Jy08C": [
+    {
+      "type": 0,
+      "value": "Bewerk kind met BSN: "
+    },
+    {
+      "type": 1,
+      "value": "bsn"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "1TAtDi": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Nog "
+            },
+            {
+              "type": 1,
+              "value": "remainingCharCount"
+            },
+            {
+              "type": 0,
+              "value": " karakter over."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Nog "
+            },
+            {
+              "type": 1,
+              "value": "remainingCharCount"
+            },
+            {
+              "type": 0,
+              "value": " karakters over."
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "remainingCharCount"
     }
   ],
   "1hdvgS": [
@@ -605,6 +681,20 @@
       "value": "Gebruik twee vingers om te navigeren in de kaart"
     }
   ],
+  "Bo6onH": [
+    {
+      "type": 0,
+      "value": "Zorg dat dit veld "
+    },
+    {
+      "type": 1,
+      "value": "minSelectedCount"
+    },
+    {
+      "type": 0,
+      "value": " of meer opties aangevinkt heeft.."
+    }
+  ],
   "C7jQ09": [
     {
       "type": 0,
@@ -765,10 +855,22 @@
       "value": "Helaas is dit formulier momenteel niet beschikbaar door een storing. Probeer het later nog eens."
     }
   ],
+  "FfBWqF": [
+    {
+      "type": 0,
+      "value": "Toon tooltip"
+    }
+  ],
   "FrFeZj": [
     {
       "type": 0,
       "value": "Je hebt nog geen e-mailadres ingevuld."
+    }
+  ],
+  "GS1Yjy": [
+    {
+      "type": 0,
+      "value": "Velden zonder antwoord"
     }
   ],
   "GbPef0": [
@@ -1212,7 +1314,7 @@
   "QPdaOi": [
     {
       "type": 0,
-      "value": "Geen beschikbare keuzes"
+      "value": "Geen opties om te kiezen"
     }
   ],
   "QtraZC": [
@@ -1307,6 +1409,20 @@
     {
       "type": 0,
       "value": "Goed"
+    }
+  ],
+  "TZb5ph": [
+    {
+      "type": 0,
+      "value": "Zorg dat dit veld "
+    },
+    {
+      "type": 1,
+      "value": "maxSelectedCount"
+    },
+    {
+      "type": 0,
+      "value": " of minder opties aagevinkt heeft."
     }
   ],
   "Tip5+d": [
@@ -1671,6 +1787,20 @@
     {
       "type": 0,
       "value": "De bevestigingscode moet precies zes tekens lang zijn."
+    }
+  ],
+  "c4FCKY": [
+    {
+      "type": 0,
+      "value": "Verwijder kind met BSN: "
+    },
+    {
+      "type": 1,
+      "value": "bsn"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "cBsrax": [
@@ -2331,6 +2461,44 @@
       "value": "Log in om het formulier mede te ondertekenen"
     }
   ],
+  "qTqAIS": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "charCount"
+            },
+            {
+              "type": 0,
+              "value": " karakter"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "charCount"
+            },
+            {
+              "type": 0,
+              "value": " karakters"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "charCount"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "qyWfE+": [
     {
       "type": 0,
@@ -2549,6 +2717,20 @@
       "value": "Wat vind je van dit formulier?"
     }
   ],
+  "xHVrv5": [
+    {
+      "type": 0,
+      "value": "De waarde moet "
+    },
+    {
+      "type": 1,
+      "value": "min"
+    },
+    {
+      "type": 0,
+      "value": " of groter zijn."
+    }
+  ],
   "xh+7Vv": [
     {
       "type": 0,
@@ -2573,6 +2755,12 @@
     {
       "type": 0,
       "value": "Jaar"
+    }
+  ],
+  "z+/GrY": [
+    {
+      "type": 0,
+      "value": "Ongeldig Nederlands kenteken"
     }
   ],
   "zkdWYe": [

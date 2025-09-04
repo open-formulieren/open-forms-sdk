@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import {useCallback, useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {getCached, setCached} from 'cache';
-import {AsyncSelectField} from 'components/forms';
+import AsyncSelectField from 'components/forms/SelectField/AsyncSelectField';
 
 import {ProductsType} from '../types';
 
@@ -31,12 +30,15 @@ export const getLocations = async (baseUrl, productIds) => {
   return locationList;
 };
 
-const LocationSelect = ({products, onChange}) => {
+const LocationSelect = ({products}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
   const getOptions = useCallback(
-    async () => await getLocations(baseUrl, productIds),
+    async () => {
+      const locations = await getLocations(baseUrl, productIds);
+      return locations.map(location => ({value: location.identifier, label: location.name}));
+    },
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [baseUrl, JSON.stringify(productIds)]
@@ -47,17 +49,13 @@ const LocationSelect = ({products, onChange}) => {
       isRequired
       label={intl.formatMessage(fieldLabel)}
       getOptions={getOptions}
-      valueProperty="identifier"
-      getOptionLabel={location => location.name}
       autoSelectOnlyOption
-      onChange={onChange}
     />
   );
 };
 
 LocationSelect.propTypes = {
   products: ProductsType.isRequired,
-  onChange: PropTypes.func,
 };
 
 export default LocationSelect;

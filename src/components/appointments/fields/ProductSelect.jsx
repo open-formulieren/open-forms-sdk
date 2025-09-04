@@ -6,7 +6,7 @@ import {defineMessage, useIntl} from 'react-intl';
 import {ConfigContext} from 'Context';
 import {get} from 'api';
 import {getCached, setCached} from 'cache';
-import {AsyncSelectField} from 'components/forms';
+import AsyncSelectField from 'components/forms/SelectField/AsyncSelectField';
 
 const CACHED_PRODUCTS_KEY = 'appointment|all-products';
 const CACHED_PRODUCTS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
@@ -53,7 +53,13 @@ const ProductSelect = ({name, selectedProductIds}) => {
   const {baseUrl} = useContext(ConfigContext);
   const {value} = getFieldProps(name);
   const getOptions = useCallback(
-    async () => await getProducts(baseUrl, selectedProductIds, value),
+    async () => {
+      const products = await getProducts(baseUrl, selectedProductIds, value);
+      return products.map(product => ({
+        value: product.identifier,
+        label: product.name,
+      }));
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [baseUrl, JSON.stringify(selectedProductIds), value]
   );
@@ -63,8 +69,6 @@ const ProductSelect = ({name, selectedProductIds}) => {
       isRequired
       label={intl.formatMessage(fieldLabel)}
       getOptions={getOptions}
-      valueProperty="identifier"
-      getOptionLabel={product => product.name}
     />
   );
 };

@@ -1,8 +1,7 @@
+import {NumberField} from '@open-formulieren/formio-renderer';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
-
-import {NumberField} from 'components/forms';
 
 import {AppointmentConfigContext} from '../Context';
 import ProductSelect from './ProductSelect';
@@ -25,10 +24,7 @@ const Product = ({namePrefix, index, selectedProductIds}) => {
         name={`${namePrefix}[${index}].amount`}
         label={intl.formatMessage(amountLabel)}
         isRequired
-        useNumberType
-        step={1}
-        min={1}
-        readOnly={!supportsMultipleProducts}
+        isReadonly={!supportsMultipleProducts}
       />
     </div>
   );

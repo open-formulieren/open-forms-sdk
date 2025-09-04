@@ -1,10 +1,12 @@
+import {SelectField} from '@open-formulieren/formio-renderer';
 import {expect, userEvent, within} from '@storybook/test';
 import {useCallback} from 'react';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
+import {sleep} from '@/utils';
+
 import AsyncSelectField from './AsyncSelectField';
-import SelectField from './SelectField';
 
 export default {
   title: 'Pure React Components / Forms / SelectField',
@@ -25,10 +27,9 @@ export default {
 export const Static = {
   args: {
     name: 'select',
-    id: 'select-static',
     label: 'Static options',
     description: 'This is a custom description for the select field',
-    disabled: false,
+    isDisabled: false,
     isRequired: true,
     options: [
       {value: 'option-1', label: 'Option 1'},
@@ -53,7 +54,7 @@ export const Static = {
 
     // test that a value can be selected
     await expect(canvas.queryByText('Option 1')).toBeNull();
-    await dropdown.focus();
+    dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
     await expect(canvas.getByText('Option 1')).toBeVisible();
     await expect(canvas.getByText('Option 2')).toBeVisible();
@@ -63,47 +64,20 @@ export const Static = {
   },
 };
 
-export const MenuOpen = {
-  name: 'Force menu open',
-  args: {
-    name: 'select',
-    id: 'select-static',
-    label: 'Static options',
-    description: 'This is a custom description for the select field',
-    disabled: false,
-    isRequired: true,
-    options: [
-      {value: 'option-1', label: 'Option 1'},
-      {value: 'option-2', label: 'Option 2'},
-    ],
-    menuIsOpen: true,
-  },
-  parameters: {
-    formik: {
-      initialValues: {
-        select: '',
-      },
-    },
-  },
-};
-
-const delay = async delay => await new Promise(resolve => setTimeout(resolve, delay));
-
 export const Async = {
   render: function Render({getOptionsDelay, dynamicOptions, ...args}) {
     const serializedOptions = JSON.stringify(dynamicOptions);
     const getOptions = useCallback(async () => {
-      await delay(getOptionsDelay);
+      await sleep(getOptionsDelay);
       return JSON.parse(serializedOptions);
     }, [serializedOptions, getOptionsDelay]);
     return <AsyncSelectField {...args} getOptions={getOptions} />;
   },
   args: {
     name: 'select',
-    id: 'select-dynamic',
     label: 'Dynamic options',
     description: 'This is a custom description for the select field',
-    disabled: false,
+    isDisabled: false,
     isRequired: true,
     getOptionsDelay: 1000,
     dynamicOptions: [
@@ -125,12 +99,12 @@ export const Async = {
     await expect(dropdown.role).toBe('combobox');
 
     // initially, in the loading state the options should not be visible
-    await dropdown.focus();
+    dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
     await expect(canvas.queryByText('Daffy')).toBeNull();
     await expect(canvas.queryByText('Bugs')).toBeNull();
     await expect(canvas.queryByText('Elmer')).toBeNull();
-    await delay(args.getOptionsDelay + 5); // wait to resolve
+    await sleep(args.getOptionsDelay + 5); // wait to resolve
     await expect(canvas.getByText('Daffy')).toBeVisible();
   },
 };
@@ -154,7 +128,7 @@ export const ValidationError = {
     name: 'invalidSelect',
     label: 'Invalid select',
     description: 'Description above the errors',
-    disabled: false,
+    isDisabled: false,
     isRequired: false,
     options: [
       {value: 'option-1', label: 'Option 1'},
@@ -177,9 +151,8 @@ export const NoAsterisks = {
   },
   args: {
     name: 'select',
-    id: 'select',
     label: 'Default required',
-    disabled: false,
+    isDisabled: false,
     isRequired: true,
     options: [
       {value: 'option-1', label: 'Option 1'},

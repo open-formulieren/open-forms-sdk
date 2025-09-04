@@ -5,8 +5,8 @@ import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
-import {AsyncSelectField} from 'components/forms';
 import {useCalendarLocale} from 'components/forms/DateField';
+import AsyncSelectField from 'components/forms/SelectField/AsyncSelectField';
 
 import {ProductsType} from '../types';
 import {prepareProductsForProductIDQuery} from '../utils';
@@ -67,7 +67,7 @@ const TimeSelect = ({products}) => {
     <AsyncSelectField
       name="datetime"
       isRequired
-      disabled={!products || !products.length || !location || !date}
+      isDisabled={!products || !products.length || !location || !date}
       label={intl.formatMessage(fieldLabel)}
       description={
         <FormattedMessage
