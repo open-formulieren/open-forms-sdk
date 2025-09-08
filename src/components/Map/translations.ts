@@ -155,6 +155,9 @@ const applyLeafletTranslations = (intl: IntlShape) => {
       },
     },
     buttons: {
+      // We only support the action "remove", so we only need  translations for the
+      // remove button. The other action, "edit", will never be shown.
+      // But, to prevent typescript from complaining, we add the default translations.
       ...Leaflet.drawLocal.edit.toolbar.buttons,
       remove: intl.formatMessage(leafletEditToolbarMessages.remove),
       removeDisabled: intl.formatMessage(leafletEditToolbarMessages.removeDisabled),
@@ -174,6 +177,9 @@ const applyLeafletTranslations = (intl: IntlShape) => {
       title: intl.formatMessage(leafletDrawToolbarMessages.undoTitle),
     },
     buttons: {
+      // We only support the shapes: polyline, polygon and marker, so we don't need
+      // translations for the other buttons. But, to prevent typescript from complaining,
+      // we add the default button translations.
       ...Leaflet.drawLocal.draw.toolbar.buttons,
       polyline: intl.formatMessage(leafletDrawToolbarMessages.polyline),
       polygon: intl.formatMessage(leafletDrawToolbarMessages.polygon),
@@ -186,7 +192,10 @@ const applyLeafletTranslations = (intl: IntlShape) => {
     },
   };
   Leaflet.drawLocal.draw.handlers.polyline = {
-    ...Leaflet.drawLocal.draw.handlers.polyline,
+    // The `error` message is used when polylines aren't allowed to intersect.
+    // As we allow polyline to intersect, this error message will never be show.
+    // To make TS happy, let's add the default error message.
+    error: Leaflet.drawLocal.draw.handlers.polyline.error,
     tooltip: {
       start: intl.formatMessage(leafletDrawHandlerMessages.polylineTooltipStart),
       cont: intl.formatMessage(leafletDrawHandlerMessages.polylineTooltipContinue),
