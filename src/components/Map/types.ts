@@ -1,3 +1,5 @@
+import {MapComponentSchema} from '@open-formulieren/types';
+
 export type Coordinates = [number, number];
 
 type PointGeometry = {
@@ -16,3 +18,5 @@ type PolygonGeometry = {
 };
 
 export type GeoJsonGeometry = PointGeometry | LineGeometry | PolygonGeometry;
+
+export type Overlay = NonNullable<MapComponentSchema['overlays']>[number];

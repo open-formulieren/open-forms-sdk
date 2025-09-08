@@ -11,19 +11,13 @@ import {
 } from 'leaflet';
 import {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
-import {
-  FeatureGroup,
-  LayersControl,
-  MapContainer,
-  TileLayer,
-  WMSTileLayer,
-  useMap,
-} from 'react-leaflet';
+import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
 import {useGeolocation} from 'react-use';
 
 import {getBEMClassName} from 'utils';
 
+import LayersControl from './LeafletMapLayersControl';
 import SearchControl, {type GeoSearchShowLocationEvent} from './LeafletMapSearchControl';
 import NearestAddress from './NearestAddress';
 import {DEFAULT_INTERACTIONS, DEFAULT_LAT_LNG, DEFAULT_ZOOM} from './constants';
@@ -146,24 +140,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       >
         <EnsureTestId />
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
-        {overlays?.length && (
-          <LayersControl position="topright">
-            {overlays.map((layer, index) =>
-              layer.type === 'wms' ? (
-                <LayersControl.Overlay name={layer.label} key={index} checked>
-                  <WMSTileLayer
-                    url={layer.url}
-                    params={{
-                      format: 'image/png',
-                      layers: layer.layers.join(','),
-                      transparent: true,
-                    }}
-                  />
-                </LayersControl.Overlay>
-              ) : null
-            )}
-          </LayersControl>
-        )}
+        <LayersControl overlays={overlays} />
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
             <EditControl
