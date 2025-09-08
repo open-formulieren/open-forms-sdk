@@ -126,6 +126,8 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       <MapContainer
         center={defaultCenter}
         zoom={defaultZoomLevel}
+        minZoom={TILE_LAYER_RD.minZoom}
+        maxZoom={TILE_LAYER_RD.maxZoom}
         crs={CRS_RD}
         attributionControl
         className={className}
