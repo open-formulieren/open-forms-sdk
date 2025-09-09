@@ -47,6 +47,10 @@ export class ValidationError extends ExtendableError {
     return this._errors;
   }
 
+  public set invalidParams(params: InvalidParam[]) {
+    this._errors = params;
+  }
+
   /**
    * Emit the validation errors into datastructures suitable for Formik.
    *

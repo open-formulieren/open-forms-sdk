@@ -23,6 +23,12 @@
     transparent 75%,
     transparent
   );
+
+  @include bem.element('spacer') {
+    border: solid 1px #ae9e49;
+    margin-block-end: 1em;
+    margin-block-start: 1em;
+  }
 }
 
 .debug-info {
@@ -38,5 +44,12 @@
 
   @include bem.element(value) {
     flex-basis: 50%;
+  }
+
+  @include bem.element(code) {
+    background: rgba(0, 0, 0, 0.1);
+    margin-block-end: 0;
+    margin-block-start: 0;
+    padding: 0.5em;
   }
 }

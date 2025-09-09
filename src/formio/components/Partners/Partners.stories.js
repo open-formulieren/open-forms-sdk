@@ -24,7 +24,7 @@ export const WithDataRetrieved = {
           initials: 'J',
           affixes: 'K',
           lastName: 'Boei',
-          dateOfBirth: '1-1-2000',
+          dateOfBirth: '2000-01-01',
           __addedManually: false,
         },
         {
@@ -32,7 +32,7 @@ export const WithDataRetrieved = {
           initials: '',
           affixes: '',
           lastName: 'Tijest',
-          dateOfBirth: '1-1-1990',
+          dateOfBirth: '1990-01-01',
           __addedManually: false,
         },
       ],
@@ -51,7 +51,7 @@ export const ManuallyAddedPartner = {
           initials: 'J',
           affixes: 'K',
           lastName: 'Boei',
-          dateOfBirth: '1-1-2000',
+          dateOfBirth: '2000-01-01',
           __addedManually: true,
         },
       ],
@@ -69,7 +69,7 @@ export const EditManuallyAddedPartner = {
           initials: 'J',
           affixes: 'K',
           lastName: 'Boei',
-          dateOfBirth: '2000-1-1',
+          dateOfBirth: '2000-01-01',
           __addedManually: true,
         },
       ],
@@ -112,7 +112,7 @@ export const EditManuallyAddedPartner = {
           element?.tagName.toLowerCase() === 'dt' && content.trim() === 'Geboortedatum'
       );
       const dateOfBirthValue = dateOfBirthLabel.nextElementSibling;
-      expect(dateOfBirthValue?.textContent).toBe('2000-1-1');
+      expect(dateOfBirthValue?.textContent).toBe('2000-01-01');
     });
 
     await step('Edit the partner', async () => {

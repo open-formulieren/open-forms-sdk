@@ -22,7 +22,7 @@ export const WithDataRetrieved = {
         {
           bsn: '123456789',
           firstNames: 'Peter',
-          dateOfBirth: '2000-1-1',
+          dateOfBirth: '2000-01-01',
           __addedManually: false,
           __id: crypto.randomUUID(),
           selected: null,
@@ -50,7 +50,7 @@ export const WithSelectionEnabled = {
         {
           bsn: '123456789',
           firstNames: 'Peter',
-          dateOfBirth: '2000-1-1',
+          dateOfBirth: '2000-01-01',
           __addedManually: false,
           __id: crypto.randomUUID(),
           selected: false,
@@ -77,7 +77,7 @@ export const ManuallyAddedChildren = {
         {
           bsn: '123456789',
           firstNames: 'Peter',
-          dateOfBirth: '2000-1-1',
+          dateOfBirth: '2000-01-01',
           __addedManually: true,
           __id: crypto.randomUUID(),
           selected: null,
@@ -104,7 +104,7 @@ export const EditManuallyAddedChildren = {
         {
           bsn: '123456782',
           firstNames: 'Peter',
-          dateOfBirth: '2000-1-1',
+          dateOfBirth: '2000-01-01',
           __addedManually: true,
           __id: crypto.randomUUID(),
           selected: null,
@@ -137,7 +137,7 @@ export const EditManuallyAddedChildren = {
       const firstChildCells = within(rows[1]).getAllByRole('cell');
       expect(firstChildCells[0]).toHaveTextContent('123456782');
       expect(firstChildCells[1]).toHaveTextContent('Peter');
-      expect(firstChildCells[2]).toHaveTextContent('2000-1-1');
+      expect(firstChildCells[2]).toHaveTextContent('2000-01-01');
 
       const secondChildCells = within(rows[2]).getAllByRole('cell');
       expect(secondChildCells[0]).toHaveTextContent('165456987');
@@ -171,7 +171,7 @@ export const EditManuallyAddedChildren = {
       const firstChildCells = within(rows[1]).getAllByRole('cell');
       expect(firstChildCells[0]).toHaveTextContent('123456782');
       expect(firstChildCells[1]).toHaveTextContent('PeterUpdated');
-      expect(firstChildCells[2]).toHaveTextContent('2000-1-1');
+      expect(firstChildCells[2]).toHaveTextContent('2000-01-01');
 
       // second child not updated
       const secondChildCells = within(rows[2]).getAllByRole('cell');
@@ -203,7 +203,7 @@ export const DuplicateBsns = {
         {
           bsn: '123456782',
           firstNames: 'Peter',
-          dateOfBirth: '2000-1-1',
+          dateOfBirth: '2000-01-01',
           __addedManually: true,
           __id: crypto.randomUUID(),
           selected: null,
