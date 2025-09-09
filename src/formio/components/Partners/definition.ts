@@ -54,8 +54,22 @@ const PARTNER_COMPONENTS = [
     }),
     validate: {
       required: true,
+    },
+    datePicker: {
       minDate: subYears(today, 120).toISOString(),
       maxDate: subDays(today, 1).toISOString(),
+      // ignored, but required in the type defs
+      showWeeks: false,
+      startingDay: 0,
+      initDate: '',
+      minMode: 'day',
+      maxMode: 'year',
+      yearRows: 1,
+      yearColumns: 1,
+    },
+    openForms: {
+      widget: 'inputGroup',
+      translations: {},
     },
   } satisfies withLocalizedLabel<DateComponentSchema>,
 ];

@@ -103,7 +103,7 @@
     "@gemeente-denhaag/design-tokens-components": "^2.0.0",
     "@gemeente-rotterdam/design-tokens": "1.0.0-alpha.51",
     "@maykinmedia/eslint-config": "^1.0.0",
-    "@open-formulieren/types": "^0.44.0",
+    "@open-formulieren/types": "^0.47.0",
     "@rollup/plugin-replace": "^6.0.2",
     "@sentry/vite-plugin": "^3.0.0",
     "@storybook/addon-actions": "^8.6.12",
