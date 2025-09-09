@@ -59,8 +59,8 @@ export const DateField: Story = {
           required: true,
         },
         openForms: {
-          // @ts-expect-error - widget customization is not yet implemented
           widget: 'inputGroup',
+          translations: {},
         },
       } satisfies DateComponentSchema,
     ],
