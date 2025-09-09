@@ -1,6 +1,6 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
 import type {FormStateRef} from '@open-formulieren/formio-renderer/components/FormioForm.js';
-import {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import isEqual from 'fast-deep-equal';
 import {useFormikContext} from 'formik';

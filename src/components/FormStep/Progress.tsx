@@ -14,7 +14,7 @@ export interface ProgressProps {
  */
 const Progress: React.FC<ProgressProps> = ({form, submission, currentStep}) => {
   if (!form.showSummaryProgress) return null;
-  const applicableSteps = submission.steps.filter(step => step.isApplicable === true);
+  const applicableSteps = submission.steps.filter(step => step.isApplicable);
   const currentSubmissionStepIndex = applicableSteps.indexOf(currentStep);
   return (
     <SummaryProgress current={currentSubmissionStepIndex + 1} total={applicableSteps.length} />
