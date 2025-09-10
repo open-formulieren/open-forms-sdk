@@ -27,7 +27,7 @@ import {
   leafletGestureHandlingText,
   searchControlMessages,
 } from './translations';
-import type {Coordinates, GeoJsonGeometry} from './types';
+import type {Coordinates, GeoJsonGeometry, Interactions} from './types';
 
 // Run some Leaflet-specific patches...
 initialize();
@@ -49,7 +49,7 @@ const useDefaultCoordinates = (): Coordinates | null => {
   return [latitude, longitude];
 };
 
-const getCoordinates = (geoJsonGeometry: GeoJsonGeometry): Coordinates | null => {
+const getCoordinates = (geoJsonGeometry: GeoJsonGeometry | undefined): Coordinates | null => {
   if (!geoJsonGeometry) {
     return null;
   }
@@ -59,7 +59,7 @@ const getCoordinates = (geoJsonGeometry: GeoJsonGeometry): Coordinates | null =>
 };
 
 export interface LeafletMapProps {
-  geoJsonGeometry: GeoJsonGeometry;
+  geoJsonGeometry?: GeoJsonGeometry;
   onGeoJsonGeometrySet: (newGeoJsonGeometry: GeoJsonGeometry | null) => void;
   defaultCenter?: Coordinates;
   defaultZoomLevel?: number;
@@ -87,6 +87,12 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
+
+  // Get the names of the active interactions
+  const activeInteractionNames = Object.entries(interactions)
+    .filter(([, allow]) => !!allow)
+    .map<keyof Interactions>(([interaction]) => interaction as keyof Interactions);
+  const singleInteractionMode = activeInteractionNames.length === 1;
 
   useEffect(() => {
     applyLeafletTranslations(intl);
@@ -143,22 +149,31 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
         <LayersControl overlays={overlays} />
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
-            <EditControl
-              position="topright"
-              onCreated={onFeatureCreate}
-              onDeleted={onFeatureDelete}
-              edit={{
-                edit: false,
-              }}
-              draw={{
-                rectangle: false,
-                circle: false,
-                polyline: !!interactions?.polyline,
-                polygon: !!interactions?.polygon,
-                marker: !!interactions?.marker,
-                circlemarker: false,
-              }}
-            />
+            <>
+              {singleInteractionMode && (
+                <SingleInteractionMode
+                  shape={activeInteractionNames[0]}
+                  geoJsonGeometry={geoJsonGeometry}
+                />
+              )}
+              <EditControl
+                position="topright"
+                onCreated={onFeatureCreate}
+                onDeleted={onFeatureDelete}
+                edit={{
+                  edit: false,
+                }}
+                draw={{
+                  rectangle: false,
+                  circle: false,
+                  // Add the draw buttons when there is more than 1 active interaction.
+                  polyline: !singleInteractionMode && !!interactions?.polyline,
+                  polygon: !singleInteractionMode && !!interactions?.polygon,
+                  marker: !singleInteractionMode && !!interactions?.marker,
+                  circlemarker: false,
+                }}
+              />
+            </>
           )}
           <Geometry geoJsonGeometry={geoJsonGeometry} featureGroupRef={featureGroupRef} />
         </FeatureGroup>
@@ -199,8 +214,46 @@ const EnsureTestId = () => {
   return null;
 };
 
+interface SingleInteractionModeProps {
+  geoJsonGeometry?: GeoJsonGeometry;
+  shape: keyof Interactions;
+}
+
+const SingleInteractionMode: React.FC<SingleInteractionModeProps> = ({geoJsonGeometry, shape}) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map) return;
+
+    let drawHandler;
+    switch (shape) {
+      case 'marker':
+        drawHandler = new Leaflet.Draw.Marker(map);
+        break;
+      case 'polygon':
+        drawHandler = new Leaflet.Draw.Polygon(map);
+        break;
+      case 'polyline':
+        drawHandler = new Leaflet.Draw.Polyline(map);
+        break;
+      default:
+        return;
+    }
+
+    // Enable drawing mode immediately
+    drawHandler.enable();
+
+    return () => {
+      drawHandler.disable();
+    };
+    // Re-enable drawing mode when interactions, the map, or the current geojson changes.
+  }, [geoJsonGeometry, shape, map]);
+
+  return null;
+};
+
 interface GeometryProps {
-  geoJsonGeometry: GeoJsonGeometry;
+  geoJsonGeometry?: GeoJsonGeometry;
   featureGroupRef: React.RefObject<LeafletFeatureGroup>;
 }
 
