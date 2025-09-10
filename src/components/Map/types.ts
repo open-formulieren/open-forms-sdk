@@ -1,21 +1,21 @@
-import {MapComponentSchema} from '@open-formulieren/types';
+import type {MapComponentSchema} from '@open-formulieren/types';
 
 export type Coordinates = [number, number];
 
-type PointGeometry = {
+interface PointGeometry {
   type: 'Point';
   coordinates: Coordinates;
-};
+}
 
-type LineGeometry = {
+interface LineGeometry {
   type: 'LineString';
   coordinates: Coordinates[];
-};
+}
 
-type PolygonGeometry = {
+interface PolygonGeometry {
   type: 'Polygon';
   coordinates: Coordinates[][];
-};
+}
 
 export type GeoJsonGeometry = PointGeometry | LineGeometry | PolygonGeometry;
 

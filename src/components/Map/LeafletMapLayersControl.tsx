@@ -1,6 +1,7 @@
-import {MapComponentSchema} from '@open-formulieren/types';
+import type {MapComponentSchema} from '@open-formulieren/types';
 import {LayersControl as LeafletLayersControl, WMSTileLayer} from 'react-leaflet';
 
+import './LeafletMapLayersControl.scss';
 import type {Overlay} from './types';
 
 interface TileLayerControlProps {

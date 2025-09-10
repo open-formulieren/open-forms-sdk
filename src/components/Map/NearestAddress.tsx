@@ -8,7 +8,7 @@ import Loader from 'components/Loader';
 import {getBEMClassName} from 'utils';
 
 import './MapAddress.scss';
-import {Coordinates} from './types';
+import type {Coordinates} from './types';
 
 interface NearestAddressProps {
   coordinates: Coordinates;

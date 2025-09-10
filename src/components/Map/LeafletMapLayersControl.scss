@@ -1,0 +1,4 @@
+.leaflet-control.leaflet-control-layers {
+  // Preventing layers menu from expanding beyond the zoom-buttons on mobile devices.
+  max-inline-size: calc(100vw - 110px);
+}

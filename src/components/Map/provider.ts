@@ -1,6 +1,6 @@
 import {get} from 'api';
 
-type AddressSearchResult = {
+interface AddressSearchResult {
   label: string;
   // The address coordinates in WGS 84 coordinate system
   latLng: {
@@ -12,7 +12,14 @@ type AddressSearchResult = {
     x: number;
     y: number;
   };
-};
+}
+
+interface SearchResult {
+  label: string;
+  // The address coordinates in WGS 84 coordinate system
+  x: number;
+  y: number;
+}
 
 class OpenFormsProvider {
   private endpoint: string;
@@ -21,7 +28,7 @@ class OpenFormsProvider {
     this.endpoint = `${baseUrl}geo/address-search`;
   }
 
-  parse(results: AddressSearchResult[]) {
+  parse(results: AddressSearchResult[]): SearchResult[] {
     return results.map(location => ({
       label: location.label,
       x: location.latLng.lng,
@@ -29,7 +36,7 @@ class OpenFormsProvider {
     }));
   }
 
-  async search({query}: {query: string}) {
+  async search({query}: {query: string}): Promise<SearchResult[]> {
     let results;
     try {
       results = await get<AddressSearchResult[]>(this.endpoint, {q: query});
