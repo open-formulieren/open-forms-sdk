@@ -221,32 +221,43 @@ interface SingleInteractionModeProps {
 
 const SingleInteractionMode: React.FC<SingleInteractionModeProps> = ({geoJsonGeometry, shape}) => {
   const map = useMap();
+  const drawHandlerRef = useRef<Leaflet.Draw.Feature | null>(null);
 
   useEffect(() => {
     if (!map) return;
 
-    let drawHandler;
-    switch (shape) {
-      case 'marker':
-        drawHandler = new Leaflet.Draw.Marker(map);
-        break;
-      case 'polygon':
-        drawHandler = new Leaflet.Draw.Polygon(map);
-        break;
-      case 'polyline':
-        drawHandler = new Leaflet.Draw.Polyline(map);
-        break;
-      default:
-        return;
-    }
+    const getDrawHandler = () => {
+      switch (shape) {
+        case 'marker':
+          return new Leaflet.Draw.Marker(map as Leaflet.DrawMap);
+        case 'polygon':
+          return new Leaflet.Draw.Polygon(map as Leaflet.DrawMap);
+        case 'polyline':
+          return new Leaflet.Draw.Polyline(map as Leaflet.DrawMap);
+        default:
+          return null;
+      }
+    };
 
-    // Enable drawing mode immediately
-    drawHandler.enable();
+    // Get draw handler
+    drawHandlerRef.current = getDrawHandler();
+
+    // Enable drawing mode
+    drawHandlerRef.current?.enable();
+
+    // Cancel drawing on 'right-click'
+    map.on('contextmenu', () => {
+      drawHandlerRef.current?.disable();
+
+      // After canceling the currect drawing, get a new handler to allow a new drawing.
+      drawHandlerRef.current = getDrawHandler();
+      drawHandlerRef.current?.enable();
+    });
 
     return () => {
-      drawHandler.disable();
+      drawHandlerRef.current?.disable();
     };
-    // Re-enable drawing mode when interactions, the map, or the current geojson changes.
+    // Re-enable drawing mode when the shape, the map, or the current geojson changes.
   }, [geoJsonGeometry, shape, map]);
 
   return null;
