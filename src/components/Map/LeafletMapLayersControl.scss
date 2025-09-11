@@ -1,4 +1,10 @@
-.leaflet-control.leaflet-control-layers {
-  // Preventing layers menu from expanding beyond the zoom-buttons on mobile devices.
-  max-inline-size: calc(100vw - 110px);
+.leaflet-control-layers {
+  // Making sure that the expanded map layers menu don't go over the other map controls.
+  &-expanded {
+    max-inline-size: calc(100% - 50px);
+  }
+
+  &-overlays {
+    word-break: break-word;
+  }
 }

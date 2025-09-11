@@ -6,6 +6,7 @@ import {useMap} from 'react-leaflet';
 
 import {ConfigContext} from 'Context';
 
+import './LeafletMapSearchControl.scss';
 import OpenFormsProvider from './provider';
 import {searchControlMessages} from './translations';
 
