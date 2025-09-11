@@ -145,3 +145,65 @@ export const MapWithInteractions = {
     });
   },
 };
+
+export const MapWithOverlays = {
+  args: {
+    // Center on a more populated area, to better showcase the WMS layers
+    geoJsonGeometry: {
+      type: 'Point',
+      coordinates: [5.284580856043387, 52.120930596779296],
+    },
+    overlays: [
+      {
+        uuid: 'f20448c3-a8cb-471c-bfcc-78a6c22d0ae6',
+        url: 'https://service.pdok.nl/bzk/bro-grondwaterspiegeldiepte/wms/v2_0?request=getCapabilities&service=WMS',
+        label: 'Grondwaterspiegeldiepte layer',
+        type: 'wms',
+        layers: ['bro-grondwaterspiegeldieptemetingen-GHG'],
+      },
+      {
+        uuid: '931f18f0-cedc-453b-a2d5-a2c1ff9df523',
+        url: 'https://service.pdok.nl/lv/bag/wms/v2_0?request=getCapabilities&service=WMS',
+        label: 'BAG Pand and Verblijfsobject layer',
+        type: 'wms',
+        layers: ['pand', 'verblijfsobject'],
+      },
+      {
+        uuid: '4a76c09a-2ae3-4c17-8b40-ade45cb86a0e',
+        url: 'https://service.pdok.nl/lv/bag/wfs/v2_0?request=getCapabilities&service=WFS',
+        label: 'Unsupported WFS layer',
+        type: 'wfs',
+        layers: ['pand'],
+      },
+    ],
+  },
+  play: async ({canvasElement, step}) => {
+    const canvas = within(canvasElement);
+    const map = await canvas.findByTestId('leaflet-map');
+
+    await waitFor(() => {
+      expect(map).not.toBeNull();
+      expect(map).toBeVisible();
+    });
+
+    await step('Layers menu is shown with the defined and supported layers', async () => {
+      const layersButton = canvas.getByRole('button', {name: 'Layers'});
+      await userEvent.hover(layersButton);
+
+      const layerCheckbox1 = canvas.getByLabelText('BAG Pand and Verblijfsobject layer');
+      const layerCheckbox2 = canvas.getByLabelText('Grondwaterspiegeldiepte layer');
+
+      // Expect both layers to be visible and checked
+      expect(layerCheckbox1).toBeVisible();
+      expect(layerCheckbox2).toBeVisible();
+      expect(layerCheckbox1).toBeChecked();
+      expect(layerCheckbox2).toBeChecked();
+
+      // At this time, WFS layers are not yet supported. So this layer should not be
+      // displayed in the Layers menu.
+      const wfsLayerCheckbox = canvas.queryByLabelText('Unsupported WFS layer');
+
+      expect(wfsLayerCheckbox).not.toBeInTheDocument();
+    });
+  },
+};

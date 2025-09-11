@@ -1,0 +1,10 @@
+.leaflet-control-layers {
+  // Making sure that the expanded map layers menu don't go over the other map controls.
+  &-expanded {
+    max-inline-size: calc(100% - 50px);
+  }
+
+  &-overlays {
+    word-break: break-word;
+  }
+}

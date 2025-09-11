@@ -119,6 +119,7 @@ export default class Map extends Field {
               defaultZoomLevel={zoom || DEFAULT_ZOOM}
               interactions={this.component?.interactions}
               tileLayerUrl={this.component.tileLayerUrl}
+              overlays={this.component?.overlays}
             />
           </Suspense>
         </ConfigContext.Provider>

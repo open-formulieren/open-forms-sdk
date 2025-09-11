@@ -1,5 +1,5 @@
 import * as Leaflet from 'leaflet';
-import {defineMessages} from 'react-intl';
+import {type IntlShape, defineMessages} from 'react-intl';
 
 const searchControlMessages = defineMessages({
   buttonLabel: {
@@ -136,7 +136,7 @@ const leafletDrawHandlerMessages = defineMessages({
   },
 });
 
-const applyLeafletTranslations = intl => {
+const applyLeafletTranslations = (intl: IntlShape) => {
   // We have to do the translations via Leaflet
   // https://github.com/alex3165/react-leaflet-draw/issues/179
   Leaflet.drawLocal.edit.toolbar = {
@@ -155,6 +155,10 @@ const applyLeafletTranslations = intl => {
       },
     },
     buttons: {
+      // We only support the action "remove", so we only need  translations for the
+      // remove button. The other action, "edit", will never be shown.
+      // But, to prevent typescript from complaining, we add the default translations.
+      ...Leaflet.drawLocal.edit.toolbar.buttons,
       remove: intl.formatMessage(leafletEditToolbarMessages.remove),
       removeDisabled: intl.formatMessage(leafletEditToolbarMessages.removeDisabled),
     },
@@ -173,6 +177,10 @@ const applyLeafletTranslations = intl => {
       title: intl.formatMessage(leafletDrawToolbarMessages.undoTitle),
     },
     buttons: {
+      // We only support the shapes: polyline, polygon and marker, so we don't need
+      // translations for the other buttons. But, to prevent typescript from complaining,
+      // we add the default button translations.
+      ...Leaflet.drawLocal.draw.toolbar.buttons,
       polyline: intl.formatMessage(leafletDrawToolbarMessages.polyline),
       polygon: intl.formatMessage(leafletDrawToolbarMessages.polygon),
       marker: intl.formatMessage(leafletDrawToolbarMessages.marker),
@@ -184,6 +192,10 @@ const applyLeafletTranslations = intl => {
     },
   };
   Leaflet.drawLocal.draw.handlers.polyline = {
+    // The `error` message is used when polylines aren't allowed to intersect.
+    // As we allow polyline to intersect, this error message will never be show.
+    // To make TS happy, let's add the default error message.
+    error: Leaflet.drawLocal.draw.handlers.polyline.error,
     tooltip: {
       start: intl.formatMessage(leafletDrawHandlerMessages.polylineTooltipStart),
       cont: intl.formatMessage(leafletDrawHandlerMessages.polylineTooltipContinue),
