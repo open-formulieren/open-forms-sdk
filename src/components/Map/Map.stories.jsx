@@ -207,3 +207,54 @@ export const MapWithOverlays = {
     });
   },
 };
+
+export const MapWithOneInteraction = {
+  args: {
+    interactions: {
+      polygon: false,
+      polyline: false,
+      marker: true,
+    },
+    onGeoJsonGeometrySet: fn(),
+  },
+  parameters: {
+    msw: {
+      handlers: [mockAddressSearchGet, mockLatLngSearchEmptyGet],
+    },
+  },
+  play: async ({canvasElement, step, args}) => {
+    const canvas = within(canvasElement);
+    const map = await canvas.findByTestId('leaflet-map');
+
+    await waitFor(() => {
+      expect(map).not.toBeNull();
+      expect(map).toBeVisible();
+    });
+
+    await step('None of the interactions are shown', async () => {
+      const pin = canvas.queryByTitle('Pin/punt');
+      const polygon = canvas.queryByTitle('Veelhoek (polygoon)');
+      const line = canvas.queryByTitle('Lijn');
+
+      expect(pin).not.toBeInTheDocument();
+      expect(polygon).not.toBeInTheDocument();
+      expect(line).not.toBeInTheDocument();
+    });
+
+    await step('Draw a marker', async () => {
+      // Because there is only one shape, we can draw without having to click the
+      // "draw marker" button.
+      await userEvent.click(map, {x: 100, y: 100});
+
+      // This 'button' is the placed marker on the map
+      expect(await canvas.findByRole('button', {name: 'Marker'})).toBeVisible();
+      expect(args.onGeoJsonGeometrySet).toBeCalledWith({
+        type: 'Point',
+        // Expect that the coordinates array contains 2 items.
+        // We cannot pin it to specific values, because they can differentiate.
+        // To make sure that this test doesn't magically fail, just expect any 2 values
+        coordinates: [expect.anything(), expect.anything()],
+      });
+    });
+  },
+};

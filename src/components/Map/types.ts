@@ -20,3 +20,4 @@ interface PolygonGeometry {
 export type GeoJsonGeometry = PointGeometry | LineGeometry | PolygonGeometry;
 
 export type Overlay = NonNullable<MapComponentSchema['overlays']>[number];
+export type Interactions = Required<MapComponentSchema>['interactions'];
