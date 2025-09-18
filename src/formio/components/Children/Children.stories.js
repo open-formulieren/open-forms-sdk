@@ -131,8 +131,8 @@ export const EditManuallyAddedChildren = {
 
       const headerCells = within(rows[0]).getAllByRole('columnheader');
       expect(headerCells[0]).toHaveTextContent('BSN');
-      expect(headerCells[1]).toHaveTextContent('Firstnames');
-      expect(headerCells[2]).toHaveTextContent('Date of birth');
+      expect(headerCells[1]).toHaveTextContent('Voornamen');
+      expect(headerCells[2]).toHaveTextContent('Geboortedatum');
 
       const firstChildCells = within(rows[1]).getAllByRole('cell');
       expect(firstChildCells[0]).toHaveTextContent('123456782');
@@ -157,10 +157,10 @@ export const EditManuallyAddedChildren = {
       const modal = await screen.findByRole('dialog');
       const modalWithin = within(modal);
 
-      const firstnamesInput = modalWithin.getByLabelText('Firstnames');
+      const firstnamesInput = modalWithin.getByLabelText('Voornamen');
       await userEvent.type(firstnamesInput, 'Updated');
 
-      await user.click(modalWithin.getByRole('button', {name: 'Save'}));
+      await user.click(modalWithin.getByRole('button', {name: 'Opslaan'}));
     });
 
     await step('Check modified children details', async () => {
@@ -239,7 +239,7 @@ export const DuplicateBsns = {
       await user.clear(bsnInput);
       await user.type(bsnInput, '123456782');
 
-      await user.click(modalWithin.getByRole('button', {name: 'Save'}));
+      await user.click(modalWithin.getByRole('button', {name: 'Opslaan'}));
     });
 
     const errorMessage = await canvas.findByText('Multiple children share the same BSN number');
