@@ -2,6 +2,36 @@
 SDK Changelog
 =============
 
+3.3.0-alpha.2 (2025-08-22)
+==========================
+
+Third preview release of the upcoming 3.3.0 version.
+
+.. note:: This release adds the ability to opt-in to the new experimental form renderer.
+   The feature can be enabled on a per-form basis through the admin interface.
+
+New features
+------------
+
+* [#5575] Implemented WMS layers in the map component.
+* [#5133] Updated the open-formulieren formio-renderer and replaced
+  several components:
+  - Select field for appointments.
+  - NumberField.
+
+Bugfixes
+--------
+
+* [#5378] Updated map drawing behaviour when only map interaction
+  is allowed.
+* Fixed invalid dates in test stories.
+* Added the missing 'selected' poperty from the manually added children.
+
+Project maintenance
+-------------------
+
+* [#445] Converted another chunk of code to Typescript.
+
 3.3.0-alpha.1 (2025-08-21)
 ==========================
 
