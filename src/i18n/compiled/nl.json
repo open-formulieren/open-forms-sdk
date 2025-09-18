@@ -1,18 +1,4 @@
 {
-  "+/hjpS": [
-    {
-      "type": 0,
-      "value": "De waarde moet "
-    },
-    {
-      "type": 1,
-      "value": "max"
-    },
-    {
-      "type": 0,
-      "value": " of kleiner zijn."
-    }
-  ],
   "+CrcRw": [
     {
       "type": 0,
@@ -81,12 +67,6 @@
       "value": "Verwijderen"
     }
   ],
-  "+zrboi": [
-    {
-      "type": 0,
-      "value": "Ongeldig IBAN"
-    }
-  ],
   "/HGnU6": [
     {
       "type": 0,
@@ -96,7 +76,7 @@
   "/jQkSu": [
     {
       "type": 0,
-      "value": "Add child"
+      "value": "Kind toevoegen"
     }
   ],
   "/oxZic": [
@@ -155,48 +135,6 @@
     {
       "type": 0,
       "value": "."
-    }
-  ],
-  "1TAtDi": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Nog "
-            },
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " karakter over."
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Nog "
-            },
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " karakters over."
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "remainingCharCount"
     }
   ],
   "1hdvgS": [
@@ -269,12 +207,6 @@
       "value": "Rode smiley (negatief)"
     }
   ],
-  "4IX8hk": [
-    {
-      "type": 0,
-      "value": "Opties ophalen..."
-    }
-  ],
   "4ZOmtU": [
     {
       "type": 0,
@@ -334,7 +266,7 @@
   "6EoG3C": [
     {
       "type": 0,
-      "value": "Save"
+      "value": "Opslaan"
     }
   ],
   "6GNK65": [
@@ -522,7 +454,7 @@
   "8MVAfQ": [
     {
       "type": 0,
-      "value": "Edit child"
+      "value": "Kind bewerken"
     }
   ],
   "8MZ9TV": [
@@ -679,20 +611,6 @@
     {
       "type": 0,
       "value": "Gebruik twee vingers om te navigeren in de kaart"
-    }
-  ],
-  "Bo6onH": [
-    {
-      "type": 0,
-      "value": "Zorg dat dit veld "
-    },
-    {
-      "type": 1,
-      "value": "minSelectedCount"
-    },
-    {
-      "type": 0,
-      "value": " of meer opties aangevinkt heeft.."
     }
   ],
   "C7jQ09": [
@@ -855,22 +773,10 @@
       "value": "Helaas is dit formulier momenteel niet beschikbaar door een storing. Probeer het later nog eens."
     }
   ],
-  "FfBWqF": [
-    {
-      "type": 0,
-      "value": "Toon tooltip"
-    }
-  ],
   "FrFeZj": [
     {
       "type": 0,
       "value": "Je hebt nog geen e-mailadres ingevuld."
-    }
-  ],
-  "GS1Yjy": [
-    {
-      "type": 0,
-      "value": "Velden zonder antwoord"
     }
   ],
   "GbPef0": [
@@ -1311,12 +1217,6 @@
       "value": "Verwijder het laatst getekende punt"
     }
   ],
-  "QPdaOi": [
-    {
-      "type": 0,
-      "value": "Geen opties om te kiezen"
-    }
-  ],
   "QtraZC": [
     {
       "type": 0,
@@ -1409,20 +1309,6 @@
     {
       "type": 0,
       "value": "Goed"
-    }
-  ],
-  "TZb5ph": [
-    {
-      "type": 0,
-      "value": "Zorg dat dit veld "
-    },
-    {
-      "type": 1,
-      "value": "maxSelectedCount"
-    },
-    {
-      "type": 0,
-      "value": " of minder opties aagevinkt heeft."
     }
   ],
   "Tip5+d": [
@@ -1544,7 +1430,7 @@
   "VCgwM7": [
     {
       "type": 0,
-      "value": "Add Child"
+      "value": "Kind toevoegen"
     }
   ],
   "VaNtPf": [
@@ -1562,7 +1448,7 @@
   "W4dbIb": [
     {
       "type": 0,
-      "value": "Date of birth"
+      "value": "Geboortedatum"
     }
   ],
   "WDiVaT": [
@@ -2461,44 +2347,6 @@
       "value": "Log in om het formulier mede te ondertekenen"
     }
   ],
-  "qTqAIS": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " karakter"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " karakters"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "charCount"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "qyWfE+": [
     {
       "type": 0,
@@ -2690,7 +2538,7 @@
   "vHBt6x": [
     {
       "type": 0,
-      "value": "Firstnames"
+      "value": "Voornamen"
     }
   ],
   "vIfXbq": [
@@ -2717,20 +2565,6 @@
       "value": "Wat vind je van dit formulier?"
     }
   ],
-  "xHVrv5": [
-    {
-      "type": 0,
-      "value": "De waarde moet "
-    },
-    {
-      "type": 1,
-      "value": "min"
-    },
-    {
-      "type": 0,
-      "value": " of groter zijn."
-    }
-  ],
   "xh+7Vv": [
     {
       "type": 0,
@@ -2755,12 +2589,6 @@
     {
       "type": 0,
       "value": "Jaar"
-    }
-  ],
-  "z+/GrY": [
-    {
-      "type": 0,
-      "value": "Ongeldig Nederlands kenteken"
     }
   ],
   "zkdWYe": [
