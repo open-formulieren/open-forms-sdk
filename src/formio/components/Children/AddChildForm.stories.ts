@@ -24,7 +24,7 @@ export const HappyFlow: Story = {
     const canvas = within(canvasElement);
 
     const bsnInput = await canvas.findByLabelText('BSN');
-    const firstNamesInput = await canvas.findByLabelText('Firstnames');
+    const firstNamesInput = await canvas.findByLabelText('Voornamen');
 
     expect(bsnInput).toBeVisible();
     expect(firstNamesInput).toBeVisible();
@@ -51,7 +51,7 @@ export const HappyFlow: Story = {
     expect(monthInput).toHaveValue('1');
     expect(yearInput).toHaveValue('2000');
 
-    await userEvent.click(canvas.getByRole('button', {name: 'Save'}));
+    await userEvent.click(canvas.getByRole('button', {name: 'Opslaan'}));
   },
 };
 
@@ -59,7 +59,7 @@ export const RequiredFieldsErrors: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByRole('button', {name: 'Save'}));
+    await userEvent.click(canvas.getByRole('button', {name: 'Opslaan'}));
 
     const errors = canvas.getAllByText('Required');
     expect(errors).toHaveLength(3);
