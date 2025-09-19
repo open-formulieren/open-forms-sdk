@@ -19,7 +19,9 @@ class Selectboxes extends Formio.Components.components.selectboxes {
   }
 
   setErrorClasses(elements, dirty, hasErrors, hasMessages) {
-    setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    if (this.refs.messageContainer) {
+      setErrorAttributes(elements, hasErrors, hasMessages, this.refs.messageContainer.id);
+    }
     return super.setErrorClasses(elements, dirty, hasErrors, hasMessages);
   }
 }
