@@ -1,18 +1,4 @@
 {
-  "+/hjpS": [
-    {
-      "type": 0,
-      "value": "The value must be "
-    },
-    {
-      "type": 1,
-      "value": "max"
-    },
-    {
-      "type": 0,
-      "value": " or less."
-    }
-  ],
   "+CrcRw": [
     {
       "type": 0,
@@ -79,12 +65,6 @@
     {
       "type": 0,
       "value": "Remove"
-    }
-  ],
-  "+zrboi": [
-    {
-      "type": 0,
-      "value": "Invalid IBAN"
     }
   ],
   "/HGnU6": [
@@ -157,40 +137,6 @@
       "value": "."
     }
   ],
-  "1TAtDi": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " character remaining."
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " characters remaining."
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "remainingCharCount"
-    }
-  ],
   "1hdvgS": [
     {
       "type": 0,
@@ -259,12 +205,6 @@
     {
       "type": 0,
       "value": "Red smiley (negative)"
-    }
-  ],
-  "4IX8hk": [
-    {
-      "type": 0,
-      "value": "Loading..."
     }
   ],
   "4ZOmtU": [
@@ -673,50 +613,6 @@
       "value": "Use two fingers to move the map"
     }
   ],
-  "Bo6onH": [
-    {
-      "type": 0,
-      "value": "You must select at least "
-    },
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "style": null,
-              "type": 2,
-              "value": "minSelectedCount"
-            },
-            {
-              "type": 0,
-              "value": " item"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "style": null,
-              "type": 2,
-              "value": "minSelectedCount"
-            },
-            {
-              "type": 0,
-              "value": " items"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "minSelectedCount"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "C7jQ09": [
     {
       "type": 0,
@@ -877,22 +773,10 @@
       "value": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
     }
   ],
-  "FfBWqF": [
-    {
-      "type": 0,
-      "value": "Show tooltip"
-    }
-  ],
   "FrFeZj": [
     {
       "type": 0,
       "value": "You haven't entered an email address yet."
-    }
-  ],
-  "GS1Yjy": [
-    {
-      "type": 0,
-      "value": "Empty fields"
     }
   ],
   "GbPef0": [
@@ -1333,12 +1217,6 @@
       "value": "Remove last drawn point"
     }
   ],
-  "QPdaOi": [
-    {
-      "type": 0,
-      "value": "No results found"
-    }
-  ],
   "QtraZC": [
     {
       "type": 0,
@@ -1431,50 +1309,6 @@
     {
       "type": 0,
       "value": "Good"
-    }
-  ],
-  "TZb5ph": [
-    {
-      "type": 0,
-      "value": "You can only select up to "
-    },
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "style": null,
-              "type": 2,
-              "value": "maxSelectedCount"
-            },
-            {
-              "type": 0,
-              "value": " item"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "style": null,
-              "type": 2,
-              "value": "maxSelectedCount"
-            },
-            {
-              "type": 0,
-              "value": " items"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maxSelectedCount"
-    },
-    {
-      "type": 0,
-      "value": "."
     }
   ],
   "Tip5+d": [
@@ -2509,44 +2343,6 @@
       "value": "Log in to co-sign the form"
     }
   ],
-  "qTqAIS": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " character"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " characters"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "charCount"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "qyWfE+": [
     {
       "type": 0,
@@ -2765,20 +2561,6 @@
       "value": "How do you rate this form?"
     }
   ],
-  "xHVrv5": [
-    {
-      "type": 0,
-      "value": "The value must be "
-    },
-    {
-      "type": 1,
-      "value": "min"
-    },
-    {
-      "type": 0,
-      "value": " or greater."
-    }
-  ],
   "xh+7Vv": [
     {
       "type": 0,
@@ -2803,12 +2585,6 @@
     {
       "type": 0,
       "value": "Year"
-    }
-  ],
-  "z+/GrY": [
-    {
-      "type": 0,
-      "value": "Invalid Dutch license plate"
     }
   ],
   "zkdWYe": [

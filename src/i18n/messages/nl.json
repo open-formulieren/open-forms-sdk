@@ -31,7 +31,7 @@
     "originalDefault": "BSN"
   },
   "/jQkSu": {
-    "defaultMessage": "Add child",
+    "defaultMessage": "Kind toevoegen",
     "description": "Add child modal title",
     "originalDefault": "Add child"
   },
@@ -136,7 +136,7 @@
     "originalDefault": "Shape (polygon)"
   },
   "6EoG3C": {
-    "defaultMessage": "Save",
+    "defaultMessage": "Opslaan",
     "description": "Add child: save child data button text",
     "originalDefault": "Save"
   },
@@ -193,7 +193,7 @@
     "originalDefault": "Time"
   },
   "8MVAfQ": {
-    "defaultMessage": "Edit child",
+    "defaultMessage": "Kind bewerken",
     "description": "Edit child modal title",
     "originalDefault": "Edit child"
   },
@@ -704,7 +704,7 @@
     "originalDefault": "Product {number}/{total}"
   },
   "VCgwM7": {
-    "defaultMessage": "Add Child",
+    "defaultMessage": "Kind toevoegen",
     "description": "Add child: add child button text",
     "originalDefault": "Add Child"
   },
@@ -719,7 +719,7 @@
     "originalDefault": "Your payment has been received."
   },
   "W4dbIb": {
-    "defaultMessage": "Date of birth",
+    "defaultMessage": "Geboortedatum",
     "description": "Label for children dateOfBirth",
     "originalDefault": "Date of birth"
   },
@@ -1140,6 +1140,7 @@
   "psBz1n": {
     "defaultMessage": "BSN",
     "description": "Label for children BSN",
+    "isTranslated": true,
     "originalDefault": "BSN"
   },
   "q9AKjH": {
@@ -1228,7 +1229,7 @@
     "originalDefault": "Failed to determine the appointment"
   },
   "vHBt6x": {
-    "defaultMessage": "Firstnames",
+    "defaultMessage": "Voornamen",
     "description": "Label for children firstNames",
     "originalDefault": "Firstnames"
   },
