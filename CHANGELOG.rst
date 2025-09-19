@@ -13,8 +13,8 @@ Third preview release of the upcoming 3.3.0 version.
 New features
 ------------
 
-* [open-formulieren/open-forms#5575] Implemented WMS layers in the map component.
-* [open-formulieren/open-forms#5133] Updated the open-formulieren formio-renderer and replaced
+* [#5575] Implemented WMS layers in the map component.
+* [#5133] Updated the open-formulieren formio-renderer and replaced
   several components:
   - Select field for appointments.
   - NumberField.
@@ -22,7 +22,7 @@ New features
 Bugfixes
 --------
 
-* [open-formulieren/open-forms#5378] Updated map drawing behaviour when only map interaction
+* [#5378] Updated map drawing behaviour when only map interaction
   is allowed.
 * Fixed invalid dates in test stories.
 * Added the missing 'selected' poperty from the manually added children.
