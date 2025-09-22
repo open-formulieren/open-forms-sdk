@@ -21,6 +21,7 @@ import LayersControl from './LeafletMapLayersControl';
 import SearchControl, {type GeoSearchShowLocationEvent} from './LeafletMapSearchControl';
 import NearestAddress from './NearestAddress';
 import {DEFAULT_INTERACTIONS, DEFAULT_LAT_LNG, DEFAULT_ZOOM} from './constants';
+import {overloadLeafletDeleteControl} from './deleteControl';
 import {CRS_RD, TILE_LAYER_RD, initialize} from './init';
 import {
   applyLeafletTranslations,
@@ -97,6 +98,10 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   useEffect(() => {
     applyLeafletTranslations(intl);
   }, [intl]);
+
+  useEffect(() => {
+    overloadLeafletDeleteControl(featureGroupRef, intl);
+  }, [featureGroupRef, intl]);
 
   const onFeatureCreate = (event: DrawEvents.Created) => {
     updateGeoJsonGeometry(event.layer);
