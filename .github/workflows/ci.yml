@@ -20,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -73,10 +73,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -110,10 +110,10 @@ jobs:
             script: lint
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -124,6 +124,36 @@ jobs:
       - name: Run ${{ matrix.tool.name }} linter
         run: npm run ${{ matrix.tool.script }}
 
+  i18n-check:
+    name: Check i18n messages extracted
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Extract messages and check for changes
+        run: |
+          npm run makemessages
+          ./bin/compilemessages.sh
+          git diff --exit-code src/i18n/{compiled,messages}
+
+      - name: Write failure markdown
+        if: ${{ failure() }}
+        run: |
+          first_changed_file=$(git diff --name-only --diff-filter=M src/i18n/{compiled,messages} | head -n 1)
+          first_lineno=$(git diff -U0 $first_changed_file | grep '^@@' | head -1 | sed -E 's/.*\+([0-9]+).*/\1/')
+          echo "::error file=$first_changed_file,line=$first_lineno,title=Outdated::There are changes detected in the i18n messages"
+          echo 'Please make sure to extract and compile messages locally commit the changes.' >> $GITHUB_STEP_SUMMARY
+        shell: bash
+
+
   publish:
     name: Publish the NPM package
     runs-on: ubuntu-latest
@@ -131,15 +161,16 @@ jobs:
       - build
       - tests
       - linting
+      - i18n-check
 
     # do not publish in forks or non-tag pushes
     if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'open-formulieren'
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -150,7 +181,7 @@ jobs:
         run: npm ci
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: sdk-build
           path: dist/
@@ -173,7 +204,7 @@ jobs:
 
     steps:
       # This will include the updated OAS (if updated) from the update-oas job.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
