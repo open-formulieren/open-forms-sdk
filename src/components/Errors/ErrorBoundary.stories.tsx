@@ -1,10 +1,10 @@
-import {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react';
 import {MemoryRouter} from 'react-router';
 
 import {PermissionDenied, ServiceUnavailable, UnprocessableEntity} from '@/errors';
 
 import ErrorBoundary from './ErrorBoundary';
-import {AnyError} from './types';
+import type {AnyError} from './types';
 
 // in JS, you actually *can* throw anything
 const Throw: React.FC<{error: AnyError}> = ({error}) => {

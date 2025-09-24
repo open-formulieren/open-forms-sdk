@@ -1,5 +1,5 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
-import {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {useContext, useMemo} from 'react';
@@ -9,7 +9,7 @@ import {FormContext} from '@/Context';
 
 import ChildrenSubmitButton from './ChildrenSubmitButton';
 import CHILDREN_COMPONENTS from './definition';
-import {ChildExtendedDetails} from './types';
+import type {ChildExtendedDetails} from './types';
 
 export interface AddChildrenFormProps {
   childValues: ChildExtendedDetails | null;

@@ -5,7 +5,7 @@ import {FormattedMessage} from 'react-intl';
 import {OFButton} from '@/components/Button';
 
 import PARTNER_COMPONENTS from './definition';
-import {PartnerManuallyAdded} from './types';
+import type {PartnerManuallyAdded} from './types';
 
 export interface PartnersComponentProps {
   partners: PartnerDetails[];

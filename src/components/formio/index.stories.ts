@@ -1,6 +1,6 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
-import {DateComponentSchema} from '@open-formulieren/types';
-import {Meta, StoryObj} from '@storybook/react';
+import type {DateComponentSchema} from '@open-formulieren/types';
+import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 
 export default {

@@ -1,7 +1,8 @@
 import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
 import {useEffect, useRef, useState} from 'react';
 import {useParams} from 'react-router';
-import useAsync, {AsyncState} from 'react-use/esm/useAsync';
+import type {AsyncState} from 'react-use/esm/useAsync';
+import useAsync from 'react-use/esm/useAsync';
 
 import {get} from '@/api';
 import type {Form, MinimalFormStep} from '@/data/forms';

@@ -3,7 +3,7 @@ import {FormattedMessage} from 'react-intl';
 import Modal from 'components/modals/Modal';
 
 import AddChildForm from './AddChildForm';
-import {ChildExtendedDetails} from './types';
+import type {ChildExtendedDetails} from './types';
 
 export interface AddChildrenModalProps {
   childValues: ChildExtendedDetails | null;

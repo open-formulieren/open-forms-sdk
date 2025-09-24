@@ -3,7 +3,7 @@ import {expect, within} from '@storybook/test';
 
 import {buildForm, buildSubmission} from '@/api-mocks';
 
-import FormStepNewRenderer from './FormStepNewRenderer';
+import type FormStepNewRenderer from './FormStepNewRenderer';
 import FormStepNewRendererStories from './FormStepNewRenderer.stories';
 
 export default {

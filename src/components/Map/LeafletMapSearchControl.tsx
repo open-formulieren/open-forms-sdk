@@ -1,4 +1,4 @@
-import {Control, LeafletEvent, Marker} from 'leaflet';
+import type {Control, LeafletEvent, Marker} from 'leaflet';
 import {GeoSearchControl} from 'leaflet-geosearch';
 import {useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';

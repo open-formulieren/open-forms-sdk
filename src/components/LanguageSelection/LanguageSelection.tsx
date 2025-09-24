@@ -1,4 +1,4 @@
-import {SupportedLocales} from '@open-formulieren/types';
+import type {SupportedLocales} from '@open-formulieren/types';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Heading, LinkButton} from '@utrecht/component-library-react';
 import {Fragment, useContext, useId, useState} from 'react';

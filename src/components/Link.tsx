@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import {type LinkProps as RouterLinkProps, useHref, useLinkClickHandler} from 'react-router';
 
 import Anchor, {type AnchorProps} from '@/components/Anchor';

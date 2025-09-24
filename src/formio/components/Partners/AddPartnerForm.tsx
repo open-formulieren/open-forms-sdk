@@ -1,5 +1,5 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
-import {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
 import type {AnyComponentSchema, PartnerDetails} from '@open-formulieren/types';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {useContext, useMemo} from 'react';
@@ -9,7 +9,7 @@ import {FormContext} from '@/Context';
 
 import PartnerSubmitButton from './PartnerSubmitButton';
 import PARTNER_COMPONENTS from './definition';
-import {PartnerManuallyAdded} from './types';
+import type {PartnerManuallyAdded} from './types';
 
 export interface AddPartnerFormProps {
   partner: PartnerDetails | null;

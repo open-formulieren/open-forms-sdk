@@ -1,5 +1,5 @@
 import {Checkbox} from '@open-formulieren/formio-renderer';
-import {CheckboxComponentSchema} from '@open-formulieren/types';
+import type {CheckboxComponentSchema} from '@open-formulieren/types';
 import {useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 

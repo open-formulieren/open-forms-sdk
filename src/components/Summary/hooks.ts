@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import {useAsync} from 'react-use';
-import {AsyncState} from 'react-use/lib/useAsyncFn';
+import type {AsyncState} from 'react-use/lib/useAsyncFn';
 
 import {ConfigContext} from '@/Context';
 import {type StepSummaryData, type Submission, loadSummaryData} from '@/data/submissions';

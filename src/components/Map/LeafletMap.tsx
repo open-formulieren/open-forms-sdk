@@ -1,6 +1,6 @@
 import type {MapComponentSchema} from '@open-formulieren/types';
 import * as Leaflet from 'leaflet';
-import {
+import type {
   Circle,
   CircleMarker,
   DrawEvents,
