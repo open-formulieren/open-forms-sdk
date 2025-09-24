@@ -914,6 +914,11 @@
     "description": "Appoinments: time select help text",
     "originalDefault": "Times are in your local time"
   },
+  "h2LzuB": {
+    "defaultMessage": "Are you sure you want to delete your drawn shape?",
+    "description": "Leaflet map: delete drawn shape confirmation message",
+    "originalDefault": "Are you sure you want to delete your drawn shape?"
+  },
   "hFqzG6": {
     "defaultMessage": "Huidige stap in formulier {title}: {activeStepTitle}",
     "description": "Active step accessible label in mobile progress indicator",
