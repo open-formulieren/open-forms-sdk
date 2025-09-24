@@ -20,7 +20,7 @@ import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
 import {withModalDecorator} from 'story-utils/decorators';
 
-import {withClearSessionStorage, withUtrechtDocument} from './decorators';
+import {withClearSessionStorage, withGeolocationMocking, withUtrechtDocument} from './decorators';
 import {allModes} from './modes.mjs';
 import {reactIntl} from './reactIntl.mjs';
 import ThemeProvider from './theme';
@@ -49,6 +49,7 @@ export default {
     withClearSessionStorage,
     withModalDecorator,
     withUtrechtDocument,
+    withGeolocationMocking,
   ],
   parameters: {
     viewport: {
@@ -87,6 +88,12 @@ export default {
         mobile: allModes.smallMobile,
         desktop: allModes.desktop,
       },
+    },
+    geolocation: {
+      permission: 'granted',
+      latitude: 52.3857386,
+      longitude: 4.8417475,
+      updatePermission: () => {}, // Is set by withGeolocationMocking
     },
   },
   loaders: [mswLoader],

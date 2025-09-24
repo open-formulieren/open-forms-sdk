@@ -51,6 +51,8 @@ export interface LeafletMapProps {
   interactions?: MapComponentSchema['interactions'];
   tileLayerUrl?: string;
   overlays?: MapComponentSchema['overlays'];
+  // To allow storybook to monitor the map instance, a map container child can be added.
+  mapContainerChild?: React.ReactNode;
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = ({
@@ -62,6 +64,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   interactions = DEFAULT_INTERACTIONS,
   tileLayerUrl = TILE_LAYER_RD.url,
   overlays = [],
+  mapContainerChild,
 }) => {
   const featureGroupRef = useRef<LeafletFeatureGroup>(null);
   const intl = useIntl();
@@ -184,6 +187,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
           </>
         )}
         {disabled && <DisabledMapControls />}
+        {mapContainerChild}
       </MapContainer>
       {geoJsonCoordinates && geoJsonCoordinates.length && (
         <NearestAddress coordinates={geoJsonCoordinates} />

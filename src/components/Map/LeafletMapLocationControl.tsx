@@ -20,7 +20,7 @@ const createLocationControl = ({intl, position = 'bottomright'}: CreateLocationC
         callback(result.state);
 
         // Return new permission on change
-        result.onchange = e => callback((e.target as PermissionStatus).state);
+        result.onchange = () => callback(result.state);
       });
     },
 
