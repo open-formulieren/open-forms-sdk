@@ -1,7 +1,7 @@
 import * as Leaflet from 'leaflet';
 import {FeatureGroup as LeafletFeatureGroup} from 'leaflet';
 import type {RefObject} from 'react';
-import {IntlShape} from 'react-intl';
+import type {IntlShape} from 'react-intl';
 
 /**
  * Overload the Leaflet-Draw delete control, to support "one-click" deletion of all
