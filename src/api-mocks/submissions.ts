@@ -4,7 +4,7 @@ import {HttpResponse, http} from 'msw';
 
 import type {SubmissionStep} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
-import {InvalidParam} from '@/errors';
+import type {InvalidParam} from '@/errors';
 import {sleep} from '@/utils';
 
 import {BASE_URL, getDefaultFactory} from './base';

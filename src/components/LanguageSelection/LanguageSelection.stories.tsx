@@ -7,7 +7,8 @@ import {IntlProvider} from 'react-intl';
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
-import {I18NContext, I18NContextType} from '@/i18n';
+import type {I18NContextType} from '@/i18n';
+import {I18NContext} from '@/i18n';
 
 import LanguageSelection, {type LanguageInfo} from './LanguageSelection';
 import {

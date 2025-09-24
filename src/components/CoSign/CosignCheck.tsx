@@ -5,7 +5,7 @@ import {CosignSummary} from 'components/Summary';
 
 import {ConfigContext} from '@/Context';
 import {destroy} from '@/api';
-import {Submission} from '@/data/submissions';
+import type {Submission} from '@/data/submissions';
 import useFormContext from '@/hooks/useFormContext';
 
 import {useCosignContext} from './Context';

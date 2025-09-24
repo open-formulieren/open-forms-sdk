@@ -2,7 +2,8 @@ import {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import Body from '@/components/Body';
-import Modal, {ModalCloseHandler} from '@/components/modals/Modal';
+import type {ModalCloseHandler} from '@/components/modals/Modal';
+import Modal from '@/components/modals/Modal';
 
 import EmailVerificationForm from './EmailVerificationForm';
 

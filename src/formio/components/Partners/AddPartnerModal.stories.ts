@@ -1,10 +1,10 @@
-import {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import {AddPartnerModal} from './AddPartnerModal';
-import Partners from './Partners';
+import type Partners from './Partners';
 
 export default {
   title: 'Private API / Partners / Modal',

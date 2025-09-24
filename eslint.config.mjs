@@ -13,6 +13,14 @@ const config = [
     rules: {
       // normally this would be on, but we'll rather migrate to typescript
       'react/prop-types': 'off',
+      // let's test-drive it before adding it to our maykin recommended
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          fixStyle: 'separate-type-imports',
+          prefer: 'type-imports',
+        },
+      ],
     },
   },
   // Unit tests

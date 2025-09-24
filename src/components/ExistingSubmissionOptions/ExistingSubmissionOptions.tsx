@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router';
 
 import AbortButton from '@/components/AbortButton';
 import {OFButton} from '@/components/Button';
-import {Form} from '@/data/forms';
+import type {Form} from '@/data/forms';
 
 export interface ExistingSubmissionOptionsProps {
   form: Form;

@@ -1,9 +1,11 @@
-import {IntlShape, useIntl} from 'react-intl';
+import type {IntlShape} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {useSearchParams} from 'react-router';
 
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 
-import {type AuthErrorCode, MAPPING_PARAMS_SERVICE, MessageParamName} from './constants';
+import type {AuthErrorCode, MessageParamName} from './constants';
+import {MAPPING_PARAMS_SERVICE} from './constants';
 
 /**
  * Check if there are any authentication error parameters in the query string and

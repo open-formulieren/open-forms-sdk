@@ -1,10 +1,10 @@
-import {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 
 import {ConfigDecorator} from 'story-utils/decorators';
 
 import AddChildModal from './AddChildModal';
-import Children from './Children';
+import type Children from './Children';
 
 export default {
   title: 'Private API / Children / Modal',

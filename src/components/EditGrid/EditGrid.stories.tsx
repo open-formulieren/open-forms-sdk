@@ -1,5 +1,5 @@
 import {EditGrid} from '@open-formulieren/formio-renderer';
-import {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react';
 import {userEvent, within} from '@storybook/test';
 
 import Body from 'components/Body';

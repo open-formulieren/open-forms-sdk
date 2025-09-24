@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@utrecht/component-library-react';
 import '@utrecht/table-css';
-import {UUID} from 'crypto';
+import type {UUID} from 'crypto';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import FAIcon from 'components/FAIcon';
@@ -17,7 +17,7 @@ import FAIcon from 'components/FAIcon';
 import {OFButton} from '@/components/Button';
 
 import CHILDREN_COMPONENTS from './definition';
-import {ChildExtendedDetails} from './types';
+import type {ChildExtendedDetails} from './types';
 
 export interface ChildrenComponentProps {
   childrenValues: ChildExtendedDetails[];
