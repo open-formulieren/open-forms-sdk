@@ -1,11 +1,10 @@
 import type {RouteObject} from 'react-router';
 
-import SessionExpired from 'components/Sessions/SessionExpired';
-
 import App from '@/components/App';
 import {Cosign} from '@/components/CoSign';
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import Form from '@/components/Form';
+import SessionExpired from '@/components/Sessions/SessionExpired';
 
 import appointmentRoutes from './appointments';
 import cosignRoutes from './cosign';

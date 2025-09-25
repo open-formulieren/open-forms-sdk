@@ -1,14 +1,16 @@
+import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {useEffect} from 'react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {sessionExpiresAt} from 'api';
-import useSessionTimeout from 'hooks/useSessionTimeout';
 import {ConfigDecorator} from 'story-utils/decorators';
+
+import {sessionExpiresAt} from '@/api';
+import useSessionTimeout from '@/hooks/useSessionTimeout';
 
 import SessionExpired from './SessionExpired';
 
-const Render = args => {
-  const [expired] = useSessionTimeout(null);
+const withExpiredSession: Decorator = Story => {
+  const [expired] = useSessionTimeout(undefined);
   useEffect(() => {
     const now = new Date();
     sessionExpiresAt.setValue({expiry: now});
@@ -18,16 +20,15 @@ const Render = args => {
   }, []);
 
   if (!expired) {
-    return 'Waiting for expiry...';
+    return <>Waiting for expiry...</>;
   }
-
-  return <SessionExpired {...args} />;
+  return <Story />;
 };
 
 export default {
   title: 'Views / Session Expired',
   component: SessionExpired,
-  decorators: [ConfigDecorator, withRouter],
+  decorators: [withExpiredSession, ConfigDecorator, withRouter],
   parameters: {
     config: {
       debug: false, // force false in local dev-mode
@@ -36,9 +37,10 @@ export default {
       routing: '/sessie-verlopen',
     },
   },
-};
+} satisfies Meta<typeof SessionExpired>;
 
-export const Default = {
+type Story = StoryObj<typeof SessionExpired>;
+
+export const Default: Story = {
   name: 'Session Expired',
-  render: Render,
 };
