@@ -1,5 +1,5 @@
 import * as Leaflet from 'leaflet';
-import {FeatureGroup as LeafletFeatureGroup} from 'leaflet';
+import type {FeatureGroup as LeafletFeatureGroup} from 'leaflet';
 import type {RefObject} from 'react';
 import type {IntlShape} from 'react-intl';
 
