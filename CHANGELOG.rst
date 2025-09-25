@@ -2,6 +2,47 @@
 SDK Changelog
 =============
 
+3.3.0 (2025-09-30)
+==================
+
+Feature release.
+
+.. note:: this release adds the ability to opt-in to the new experimental form renderer.
+   the feature can be enabled on a per-form basis through the admin interface.
+
+New features
+------------
+
+* [#5191] Changed the Leaflet-Draw "delete" button behavior and removed the "Delete" menu.
+* [#5575] implemented wms layers in the map component.
+* [#5133] updated the open-formulieren formio-renderer and replaced
+  several components:
+  - select field for appointments.
+  - numberfield.
+* Switched from local storage to session storage for form submissions.
+* [#825] Added children component.
+
+Bugfixes
+--------
+
+* [#5378] updated map drawing behaviour when only map interaction
+  is allowed.
+* fixed invalid dates in test stories.
+* added the missing 'selected' poperty from the manually added children.
+* [#850] Fixed missing exports for our formio module and template library.
+* Fixed the behaviour of ``selected`` property.
+
+Project maintenance
+-------------------
+
+* [#445] converted another chunk of code to typescript.
+* Bumped dependencies to their latest (security) releases.
+* Added Storybook stories for ``FormStart``.
+* Removed obsoleted and unused SDK embed example.
+* Fixed missing underlines causing CI builds to fail
+* [#4879] Removed some dead code.
+* [#445] Converted another chunk of code to Typescript.
+
 3.3.0-alpha.2 (2025-08-22)
 ==========================
 
