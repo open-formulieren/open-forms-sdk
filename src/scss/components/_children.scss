@@ -1,0 +1,19 @@
+.openforms-children {
+  padding: var(--of-children-padding, 8px);
+
+  @media (max-width: $breakpoint-tablet) {
+    overflow: auto;
+    overflow-wrap: break-word;
+    -webkit-overflow-scrolling: touch;
+
+    &__actions {
+      display: inline-flex;
+    }
+
+    --utrecht-table-cell-padding-inline-end: 20px;
+
+    .utrecht-table__header-cell {
+      white-space: nowrap;
+    }
+  }
+}

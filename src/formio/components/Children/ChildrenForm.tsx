@@ -86,7 +86,7 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
   }));
 
   return (
-    <div style={{padding: '1em'}}>
+    <div className="openforms-children">
       {childrenValues.length > 0 && (
         <Table>
           <TableHeader>
@@ -143,7 +143,7 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                   )}
                 </TableCell>
                 {child.__addedManually && (
-                  <TableCell>
+                  <TableCell className="openforms-children__actions">
                     <OFButton
                       onClick={() => onEditChild(child)}
                       appearance="subtle-button"
