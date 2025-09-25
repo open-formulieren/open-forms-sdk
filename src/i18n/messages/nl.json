@@ -759,7 +759,7 @@
     "originalDefault": "Invalid date"
   },
   "X/24FO": {
-    "defaultMessage": "Map component search button",
+    "defaultMessage": "Zoeken",
     "description": "The leaflet map's search button areaLabel text.",
     "originalDefault": "Map component search button"
   },
@@ -1209,7 +1209,7 @@
     "originalDefault": "Send code"
   },
   "sSmY1N": {
-    "defaultMessage": "Enter address, please",
+    "defaultMessage": "Zoek adres",
     "description": "The leaflet map's input fields placeholder message.",
     "originalDefault": "Enter address, please"
   },
