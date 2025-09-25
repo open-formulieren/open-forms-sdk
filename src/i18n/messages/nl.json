@@ -915,7 +915,7 @@
     "originalDefault": "Times are in your local time"
   },
   "h2LzuB": {
-    "defaultMessage": "Are you sure you want to delete your drawn shape?",
+    "defaultMessage": "Ben je zeker dat je de getekende vorm wil verwijderen?",
     "description": "Leaflet map: delete drawn shape confirmation message",
     "originalDefault": "Are you sure you want to delete your drawn shape?"
   },
