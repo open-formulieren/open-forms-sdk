@@ -1,9 +1,8 @@
+import {DateField} from '@open-formulieren/formio-renderer';
 import {render, screen} from '@testing-library/react';
 import {Formik} from 'formik';
 import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
-
-import DateField from './DateField';
 
 const Wrapper = ({initialValues, children}) => (
   <IntlProvider locale="nl" messages={messagesNL}>

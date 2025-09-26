@@ -1,14 +1,13 @@
+import {DateField} from '@open-formulieren/formio-renderer';
 import {Paragraph} from '@utrecht/component-library-react';
 import {eachDayOfInterval, formatISO, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
-import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
-import {DateField} from 'components/forms';
 
 import {ProductsType} from '../types';
 import {prepareProductsForProductIDQuery} from '../utils';
@@ -31,7 +30,7 @@ const getDates = async (baseUrl, productIds, locationId) => {
   return results.sort();
 };
 
-const DateSelect = ({products, onChange}) => {
+const DateSelect = ({products}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {
@@ -74,26 +73,22 @@ const DateSelect = ({products, onChange}) => {
     formatISO(d, {representation: 'date'})
   );
 
-  const disabledDays = possibleDays.filter(date => !availableDates.includes(date));
+  const disabledDates = possibleDays.filter(date => !availableDates.includes(date));
 
   return (
     <DateField
       name="date"
-      widget="datepicker"
-      disabled={loading || !location}
-      isRequired
       label={intl.formatMessage(fieldLabel)}
-      disabledDates={disabledDays}
-      minDate={minDate}
-      maxDate={maxDate}
-      onChange={onChange}
+      isRequired
+      isDisabled={loading || !location}
+      widget="datePicker"
+      widgetProps={{minDate, maxDate, disabledDates}}
     />
   );
 };
 
 DateSelect.propTypes = {
   products: ProductsType.isRequired,
-  onChange: PropTypes.func,
 };
 
 export default DateSelect;

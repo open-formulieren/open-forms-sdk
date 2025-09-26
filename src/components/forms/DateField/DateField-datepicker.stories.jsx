@@ -1,9 +1,8 @@
+import {DateField} from '@open-formulieren/formio-renderer';
 import {expect, userEvent, within} from '@storybook/test';
 import {addDays, subDays} from 'date-fns';
 
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
-
-import DateField from './DateField';
 
 export default {
   title: 'Pure React Components / Forms / DateField / Datepicker',

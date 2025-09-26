@@ -52,10 +52,10 @@ describe('The appointment time select', () => {
     await user.keyboard('[ArrowDown]');
 
     // see mocks.js for the returned times
-    expect(await screen.findByRole('option', {name: '08:00'})).toBeVisible();
-    expect(screen.getByRole('option', {name: '08:10'})).toBeVisible();
-    expect(screen.getByRole('option', {name: '10:00'})).toBeVisible();
-    expect(screen.getByRole('option', {name: '10:30'})).toBeVisible();
-    expect(screen.getByRole('option', {name: '14:30'})).toBeVisible();
+    expect(await screen.findByRole('option', {name: '8:00 AM'})).toBeVisible();
+    expect(screen.getByRole('option', {name: '8:10 AM'})).toBeVisible();
+    expect(screen.getByRole('option', {name: '10:00 AM'})).toBeVisible();
+    expect(screen.getByRole('option', {name: '10:30 AM'})).toBeVisible();
+    expect(screen.getByRole('option', {name: '2:30 PM'})).toBeVisible();
   });
 });

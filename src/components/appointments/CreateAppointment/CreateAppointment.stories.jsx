@@ -1,11 +1,11 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 import {addDays, format} from 'date-fns';
+import {enGB, nl} from 'date-fns/locale';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
-import {loadCalendarLocale} from 'components/forms/DateField/DatePickerCalendar';
 import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
@@ -65,6 +65,15 @@ const render = ({showProgressIndicator, supportsMultipleProducts, name}) => {
     'appointmentOptions.supportsMultipleProducts': supportsMultipleProducts,
   });
   return <Wrapper form={form} />;
+};
+
+const loadCalendarLocale = locale => {
+  switch (locale) {
+    case 'nl':
+      return nl;
+    default:
+      return enGB;
+  }
 };
 
 export const Default = {
@@ -196,7 +205,7 @@ export const HappyFlow = {
     });
 
     await step('Wait for the statements to load', async () => {
-      await expect(
+      expect(
         await canvas.findByLabelText(
           /I accept the privacy policy and consent to the processing of my personal data/
         )
