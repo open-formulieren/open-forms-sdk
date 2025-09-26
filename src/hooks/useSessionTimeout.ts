@@ -5,19 +5,23 @@ import {useState as useGlobalState} from 'state-pool';
 
 import {sessionExpiresAt} from 'api';
 
-const useSessionTimeout = onTimeout => {
+type ResetCallback = () => void;
+
+type UseSessionTimeout = [boolean, Date | null, ResetCallback];
+
+const useSessionTimeout = (onTimeout?: () => void): UseSessionTimeout => {
   const [expiresAt, setExpiryDate] = useGlobalState(sessionExpiresAt);
   const navigate = useNavigate();
   const update = useUpdate();
   const expiryDate = expiresAt?.expiry;
 
-  const expiryInMs = expiryDate - new Date();
+  const expiryInMs = expiryDate != null ? Number(expiryDate) - Number(new Date()) : 0;
   const expired = expiryInMs <= 0;
 
   const sessionMatch = useMatch('/sessie-verlopen');
 
   const handleExpired = useCallback(() => {
-    if (onTimeout) onTimeout();
+    onTimeout?.();
     if (!sessionMatch) navigate('/sessie-verlopen');
   }, [onTimeout, navigate, sessionMatch]);
 

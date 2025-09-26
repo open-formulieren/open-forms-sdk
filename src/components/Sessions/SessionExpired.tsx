@@ -1,15 +1,16 @@
 import {useContext, useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {ConfigContext} from 'Context';
-import AppDebug from 'components/AppDebug';
-import Card from 'components/Card';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import Link from 'components/Link';
-import {flagNoActiveSubmission} from 'data/submissions';
 import useSessionTimeout from 'hooks/useSessionTimeout';
 
-const SessionExpired = () => {
+import {ConfigContext} from '@/Context';
+import AppDebug from '@/components/AppDebug';
+import Card from '@/components/Card';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import Link from '@/components/Link';
+import {flagNoActiveSubmission} from '@/data/submissions';
+
+const SessionExpired: React.FC = () => {
   const config = useContext(ConfigContext);
   const [expired, expiryDate, reset] = useSessionTimeout();
 
