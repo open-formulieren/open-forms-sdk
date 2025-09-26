@@ -1,6 +1,7 @@
 import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider';
 import {Formik} from 'formik';
 import merge from 'lodash/merge';
+import {useEffect} from 'react';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm} from 'api-mocks';
@@ -157,3 +158,95 @@ export const withModalDecorator = Story => (
     <Story />
   </ModalContext.Provider>
 );
+
+export const mockGeolocationDecorator = (Story, {args}) => {
+  const originalPermissionsQuery = navigator.permissions?.query;
+  const originalGeolocation = navigator.geolocation;
+
+  let permission = args.geolocationPermission ?? 'granted';
+
+  // Mock permission status
+  const permissionStatus = {
+    state: permission,
+  };
+
+  // Expose a helper to update permission status
+  args._updateGeolocationPermission = newPermission => {
+    if (permission !== newPermission) {
+      permission = newPermission;
+      permissionStatus.state = newPermission;
+      permissionStatus.onchange?.({target: {state: newPermission}});
+    }
+  };
+
+  // Mock Permissions API
+  if (navigator.permissions) {
+    navigator.permissions.query = params => {
+      if (params.name === 'geolocation') {
+        return Promise.resolve(permissionStatus);
+      }
+      return originalPermissionsQuery(params);
+    };
+  }
+
+  // Mock Geolocation
+  Object.defineProperty(navigator, 'geolocation', {
+    value: {
+      getCurrentPosition: (success, error) => {
+        switch (permission) {
+          case 'granted':
+            success({
+              coords: {
+                latitude: args.geolocationLatitude ?? 52.3857386,
+                longitude: args.geolocationLongitude ?? 4.8417475,
+              },
+            });
+            return;
+
+          case 'prompt':
+            // simulate no decision yet → error or no-op
+            error?.({
+              code: 1,
+              message: 'Permission prompt (simulated)',
+            });
+            return;
+
+          case 'denied':
+            error?.({
+              code: 1, // PERMISSION_DENIED
+              message: 'User denied Geolocation',
+            });
+        }
+      },
+    },
+    configurable: true,
+  });
+
+  // Render story with cleanup wrapper
+  return (
+    <CleanupWrapper
+      restore={() => {
+        // Restore permissions API and Geolocation after unmount (important!)
+        if (navigator.permissions) {
+          navigator.permissions.query = originalPermissionsQuery;
+        }
+        Object.defineProperty(navigator, 'geolocation', {
+          value: originalGeolocation,
+          configurable: true,
+        });
+      }}
+    >
+      <Story />
+    </CleanupWrapper>
+  );
+};
+
+const CleanupWrapper = ({children, restore}) => {
+  useEffect(() => {
+    return () => {
+      restore();
+    };
+  }, [restore]);
+
+  return children;
+};

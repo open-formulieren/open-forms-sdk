@@ -1,7 +1,8 @@
-import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
-import {useState} from 'react';
+import {expect, fn, spyOn, userEvent, waitFor, within} from '@storybook/test';
+import {useEffect, useState} from 'react';
+import {useMap} from 'react-leaflet';
 
-import {ConfigDecorator} from 'story-utils/decorators';
+import {ConfigDecorator, mockGeolocationDecorator} from 'story-utils/decorators';
 
 import LeafletMap from './index';
 import {mockAddressSearchGet, mockLatLngSearchEmptyGet, mockLatLngSearchGet} from './mocks';
@@ -21,8 +22,24 @@ const StorybookLeafletMap = props => {
     setGeoJson(args);
   };
   return (
-    <LeafletMap {...props} geoJsonGeometry={geoJson} onGeoJsonGeometrySet={handleGeoJsonChange} />
+    <LeafletMap
+      {...props}
+      geoJsonGeometry={geoJson}
+      onGeoJsonGeometrySet={handleGeoJsonChange}
+      mapContainerChild={<StorybookLeafletMapExposer />}
+    />
   );
+};
+
+const StorybookLeafletMapExposer = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (map) {
+      window.__leafletMap = map;
+    }
+  }, [map]);
+  return null;
 };
 
 export default {
@@ -308,6 +325,110 @@ export const MapDeleteMarker = {
 
       expect(deleteButton).toHaveAttribute('title', 'Geen vormen om te verwijderen');
       expect(deleteButton).toHaveClass('leaflet-disabled');
+    });
+  },
+};
+
+export const MapWithCurrentLocationGranted = {
+  args: {
+    geolocationPermission: 'granted',
+    geolocationLatitude: 52.3857386,
+    geolocationLongitude: 4.8417475,
+  },
+  decorators: [mockGeolocationDecorator],
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    const map = await canvas.findByTestId('leaflet-map');
+
+    await waitFor(() => {
+      expect(map).not.toBeNull();
+      expect(map).toBeVisible();
+    });
+
+    const mapSetViewSpy = spyOn(window.__leafletMap, 'setView');
+
+    // There is a "Current location" button
+    const currentLocationButton = within(map).getByRole('link', {name: 'Current location'});
+    expect(currentLocationButton).toBeVisible();
+    expect(currentLocationButton).not.toHaveAttribute('aria-disabled');
+
+    // When clicking the button, the map setView is called with the latitude and
+    // longitude of the geolocation (i.e. the current location of the user).
+    await userEvent.click(currentLocationButton);
+    expect(mapSetViewSpy).toHaveBeenCalledWith({
+      lat: 52.3857386,
+      lng: 4.8417475,
+    });
+  },
+};
+
+export const MapWithCurrentLocationPermissionDenied = {
+  args: {
+    geolocationPermission: 'denied',
+  },
+  decorators: [mockGeolocationDecorator],
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    const map = await canvas.findByTestId('leaflet-map');
+
+    await waitFor(() => {
+      expect(map).not.toBeNull();
+      expect(map).toBeVisible();
+    });
+
+    const mapSetViewSpy = spyOn(window.__leafletMap, 'setView');
+
+    // There is a "current location" button in a "disabled" state
+    const currentLocationButton = within(map).getByRole('link', {
+      name: 'Current location cannot be accessed',
+    });
+    expect(currentLocationButton).toBeVisible();
+    expect(currentLocationButton).toHaveAttribute('aria-disabled', 'true');
+
+    // When clicking the disabled button, nothing happens
+    await userEvent.click(currentLocationButton);
+    expect(mapSetViewSpy).not.toHaveBeenCalled();
+  },
+};
+
+export const MapWithCurrentLocationManuallyDeniedPermission = {
+  args: {
+    geolocationPermission: 'prompt',
+  },
+  decorators: [mockGeolocationDecorator],
+  play: async ({canvasElement, step, args}) => {
+    const canvas = within(canvasElement);
+    const map = await canvas.findByTestId('leaflet-map');
+
+    await waitFor(() => {
+      expect(map).not.toBeNull();
+      expect(map).toBeVisible();
+    });
+
+    const mapSetViewSpy = spyOn(window.__leafletMap, 'setView');
+    const currentLocationButton = within(map).getByRole('link', {name: 'Current location'});
+
+    step('Initially enabled location control', () => {
+      expect(currentLocationButton).toBeVisible();
+      expect(currentLocationButton).not.toHaveAttribute('aria-disabled');
+    });
+
+    // Simulate geolocation permission change. We cannot target the permission window,
+    // so we simulate the permission change via a mock helper function.
+    args._updateGeolocationPermission('denied');
+
+    step('After denial of geolocation permission', async () => {
+      // The "current location" button is now in a "disabled" state
+      expect(currentLocationButton).toBeVisible();
+      expect(currentLocationButton).toHaveAttribute(
+        'aria-label',
+        'Current location cannot be accessed'
+      );
+      expect(currentLocationButton).toHaveAttribute('aria-disabled', 'true');
+
+      // When clicking the location button, nothing happens
+      await userEvent.click(currentLocationButton);
+      expect(mapSetViewSpy).not.toHaveBeenCalled();
     });
   },
 };

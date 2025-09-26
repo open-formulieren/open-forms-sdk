@@ -877,6 +877,12 @@
       "value": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
     }
   ],
+  "FWCQJu": [
+    {
+      "type": 0,
+      "value": "Current location"
+    }
+  ],
   "FfBWqF": [
     {
       "type": 0,
@@ -925,6 +931,12 @@
     {
       "type": 0,
       "value": "Saving the data failed, please try again later"
+    }
+  ],
+  "H4VhcO": [
+    {
+      "type": 0,
+      "value": "Current location cannot be accessed"
     }
   ],
   "H4n86k": [
@@ -1217,6 +1229,12 @@
       "value": "Affixes"
     }
   ],
+  "LYjd+f": [
+    {
+      "type": 0,
+      "value": "Use my current location"
+    }
+  ],
   "LiRh7j": [
     {
       "type": 0,
@@ -1293,6 +1311,12 @@
     {
       "type": 0,
       "value": "Add partner"
+    }
+  ],
+  "NZ8rJn": [
+    {
+      "type": 0,
+      "value": "Your current location cannot be accessed"
     }
   ],
   "Op4orj": [
@@ -1638,7 +1662,7 @@
   "X/24FO": [
     {
       "type": 0,
-      "value": "Search"
+      "value": "Map component search button"
     }
   ],
   "X3FjL+": [
@@ -2610,7 +2634,7 @@
   "sSmY1N": [
     {
       "type": 0,
-      "value": "Find address"
+      "value": "Enter address, please"
     }
   ],
   "sYb+eZ": [

@@ -409,6 +409,11 @@
     "description": "Open Forms service unavailable error message",
     "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
   },
+  "FWCQJu": {
+    "defaultMessage": "Current location",
+    "description": "Leaflet map: use user location button ariaLabel text.",
+    "originalDefault": "Current location"
+  },
   "FrFeZj": {
     "defaultMessage": "Je hebt nog geen e-mailadres ingevuld.",
     "description": "Email verification modal: warning that no email is specified",
@@ -433,6 +438,11 @@
     "defaultMessage": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw.",
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
+  },
+  "H4VhcO": {
+    "defaultMessage": "Current location cannot be accessed",
+    "description": "Leaflet map: use user location button disabled ariaLabel text.",
+    "originalDefault": "Current location cannot be accessed"
   },
   "H4n86k": {
     "defaultMessage": "Overzicht",
@@ -550,6 +560,11 @@
     "description": "Label for partners affixes",
     "originalDefault": "Affixes"
   },
+  "LYjd+f": {
+    "defaultMessage": "Use my current location",
+    "description": "Leaflet map: use user location button tooltip text.",
+    "originalDefault": "Use my current location"
+  },
   "LiRh7j": {
     "defaultMessage": "Bevestiging: {reference}",
     "description": "Confirmation page title",
@@ -606,6 +621,11 @@
     "defaultMessage": "Partner toevoegen",
     "description": "Add partner: add partner button text",
     "originalDefault": "Add partner"
+  },
+  "NZ8rJn": {
+    "defaultMessage": "Your current location cannot be accessed",
+    "description": "Leaflet map: use user location button disabled tooltip text.",
+    "originalDefault": "Your current location cannot be accessed"
   },
   "Op4orj": {
     "defaultMessage": "Geen vormen om te verwijderen",
@@ -805,7 +825,7 @@
     "originalDefault": "Your email address"
   },
   "aUpjaY": {
-    "defaultMessage": "Sorry, er zijn geen zoekresultaten voor dit adres.",
+    "defaultMessage": "Sorry, that address could not be found.",
     "description": "The leaflet map's location not found message.",
     "originalDefault": "Sorry, that address could not be found."
   },
