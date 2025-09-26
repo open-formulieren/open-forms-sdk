@@ -1,12 +1,15 @@
 import {useArgs} from '@storybook/preview-api';
-import {expect, userEvent, within} from '@storybook/test';
+import type {Decorator, Meta, StoryObj} from '@storybook/react';
+import {expect, fn, userEvent, within} from '@storybook/test';
 import {HttpResponse, http} from 'msw';
 
-import {BASE_URL} from 'api-mocks';
-import {OFButton} from 'components/Button';
 import {ConfigDecorator} from 'story-utils/decorators';
 
-import {default as FormStepSaveModalComponent} from './FormStepSaveModal';
+import {BASE_URL} from '@/api-mocks';
+import {OFButton} from '@/components/Button';
+
+import type {FormStepSaveModalProps} from './FormStepSaveModal';
+import FormStepSaveModal from './FormStepSaveModal';
 
 const mockSuspendFormPOST = http.post(`${BASE_URL}submissions/:uuid/_suspend`, () =>
   HttpResponse.json({ok: true})
@@ -21,39 +24,26 @@ const mockDestroySessionDELETE = http.delete(
   () => new HttpResponse(null, {status: 204})
 );
 
-const Render = ({
-  isOpen,
-  closeModal,
-  submissionId,
-  suspendFormUrlLifetime,
-  onSessionDestroyed,
-  onSaveConfirm,
-}) => {
+const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context) => {
   const [, updateArgs] = useArgs();
   return (
     <>
-      <OFButton appearance="primary-action-button" onClick={() => updateArgs({isOpen: true})}>
+      <OFButton variant="primary" onClick={() => updateArgs({isOpen: true})}>
         Open Modal
       </OFButton>
-      <FormStepSaveModalComponent
-        isOpen={isOpen}
-        closeModal={() => {
-          closeModal();
-          updateArgs({isOpen: false});
+      <Story
+        {...context}
+        args={{
+          ...context.args,
+          closeModal: () => {
+            context.args.closeModal();
+            updateArgs({isOpen: false});
+          },
+          onSessionDestroyed: () => {
+            context.args.onSessionDestroyed();
+            updateArgs({isOpen: false});
+          },
         }}
-        onSessionDestroyed={() => {
-          onSessionDestroyed();
-          updateArgs({isOpen: false});
-        }}
-        onSaveConfirm={() => {
-          onSaveConfirm();
-          return {ok: true};
-        }}
-        suspendFormUrl={`${BASE_URL}submissions/${submissionId}/_suspend`}
-        submissionId={submissionId}
-        suspendFormUrlLifetime={suspendFormUrlLifetime}
-        parentSelector={() => document.getElementById('storybook-root')}
-        ariaHideApp={false}
       />
     </>
   );
@@ -61,37 +51,37 @@ const Render = ({
 
 export default {
   title: 'Private API / FormStepSaveModal',
-  component: FormStepSaveModalComponent,
-  render: Render,
-  decorators: [ConfigDecorator],
+  component: FormStepSaveModal,
+  decorators: [withTriggerDecorator, ConfigDecorator],
+  args: {
+    suspendFormUrl: `${BASE_URL}submissions/bb890fae-b0b1-4e61-a6a9-536edfc8a63f/_suspend`,
+    onSessionDestroyed: fn(),
+    onSaveConfirm: fn(),
+    closeModal: fn(),
+  },
+  argTypes: {
+    suspendFormUrl: {control: false},
+  },
   parameters: {
-    controls: {
-      expanded: true,
-    },
     msw: {
       handlers: [mockSuspendFormPOST, mockDestroySessionDELETE],
     },
   },
-  argTypes: {
-    suspendFormUrl: {control: false},
-    onSessionDestroyed: {control: false, action: true},
-    onSaveConfirm: {control: false, action: true},
-    closeModal: {control: false, action: true},
-  },
-};
+} satisfies Meta<typeof FormStepSaveModal>;
 
-export const FormStepSaveModal = {
+type Story = StoryObj<typeof FormStepSaveModal>;
+
+export const FormStepSaveModalStory: Story = {
+  name: 'FormStepSaveModal',
   args: {
     isOpen: false,
-    submissionId: '05b5d1d6-cd5f-465b-a4b9-6f1078ffe9cc',
     suspendFormUrlLifetime: 7,
   },
 };
 
-export const FormStepSaveModalWithErrors = {
+export const FormStepSaveModalWithErrors: Story = {
   args: {
     isOpen: false,
-    submissionId: '05b5d1d6-cd5f-465b-a4b9-6f1078ffe9cc',
     suspendFormUrlLifetime: 7,
   },
 
@@ -125,19 +115,15 @@ export const FormStepSaveModalWithErrors = {
   },
 };
 
-export const FormStepSaveModalMultipleSubmits = {
+export const FormStepSaveModalMultipleSubmits: Story = {
+  args: {
+    isOpen: false,
+    suspendFormUrlLifetime: 7,
+  },
   parameters: {
-    controls: {
-      expanded: true,
-    },
     msw: {
       handlers: [mockDestroySessionDELETE, mockSuspendFormPOSTError],
     },
-  },
-  args: {
-    isOpen: false,
-    submissionId: '05b5d1d6-cd5f-465b-a4b9-6f1078ffe9cc',
-    suspendFormUrlLifetime: 7,
   },
 
   play: async ({canvasElement, step}) => {
@@ -155,7 +141,7 @@ export const FormStepSaveModalMultipleSubmits = {
 
     await step('Test backend error', async () => {
       await userEvent.type(emailInput, 'test@example.com');
-      const submitButton = canvas.getByRole('button', {name: 'Later verdergaan', type: 'submit'});
+      const submitButton = canvas.getByRole('button', {name: 'Later verdergaan'});
       await userEvent.click(submitButton);
       const backendErrorMessage = await within(modal).findByText(backendErrorMsg);
       expect(backendErrorMessage).toBeVisible();
@@ -163,7 +149,7 @@ export const FormStepSaveModalMultipleSubmits = {
 
     // close the modal
     const closeModalButton = document.querySelector('.openforms-react-modal__close');
-    await userEvent.click(closeModalButton);
+    await userEvent.click(closeModalButton!);
 
     // re-open the modal and try to re-submit the form
     await expect(openModalButton).toBeVisible();
@@ -177,7 +163,7 @@ export const FormStepSaveModalMultipleSubmits = {
 
     await step('Test we can re-submit the form', async () => {
       expect(emailInput2).toHaveDisplayValue('');
-      const submitButton2 = canvas.getByRole('button', {name: 'Later verdergaan', type: 'submit'});
+      const submitButton2 = canvas.getByRole('button', {name: 'Later verdergaan'});
       await userEvent.click(submitButton2);
       const invalidErrorMessage = await within(modal2).findByText('Je e-mailadres is verplicht.');
       expect(invalidErrorMessage).toBeVisible();
