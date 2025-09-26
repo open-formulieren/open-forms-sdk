@@ -1,3 +1,4 @@
+import {DateField} from '@open-formulieren/formio-renderer';
 import {Paragraph} from '@utrecht/component-library-react';
 import {eachDayOfInterval, formatISO, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
@@ -8,7 +9,6 @@ import {useAsync} from 'react-use';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
-import {DateField} from 'components/forms';
 
 import {ProductsType} from '../types';
 import {prepareProductsForProductIDQuery} from '../utils';
@@ -79,13 +79,12 @@ const DateSelect = ({products, onChange}) => {
   return (
     <DateField
       name="date"
-      widget="datepicker"
-      disabled={loading || !location}
-      isRequired
       label={intl.formatMessage(fieldLabel)}
+      isRequired
+      isDisabled={loading || !location}
+      widget="datePicker"
+      widgetProps={{minDate, maxDate}}
       disabledDates={disabledDays}
-      minDate={minDate}
-      maxDate={maxDate}
       onChange={onChange}
     />
   );
