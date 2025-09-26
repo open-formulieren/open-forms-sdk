@@ -5,62 +5,63 @@ import {TextField} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
-import PropTypes from 'prop-types';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
-import {useImmerReducer} from 'use-immer';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import {post} from 'api';
-import Body from 'components/Body';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import Loader from 'components/Loader';
-import Modal from 'components/modals/Modal';
-
-const initialState = {
-  errorMessage: '',
-  isSaving: false,
-};
+import {post} from '@/api';
+import Body from '@/components/Body';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import Loader from '@/components/Loader';
+import Modal from '@/components/modals/Modal';
 
 const emailValidationSchema = z.object({
   email: z.string().email(),
 });
 
-const FIELD_LABELS = defineMessages({
+const FIELD_LABELS = defineMessages<string>({
   email: {
     description: 'Form save modal email field label',
     defaultMessage: 'Your email address',
   },
 });
 
-const reducer = (draft, action) => {
-  switch (action.type) {
-    case 'START_SAVE': {
-      draft.errorMessage = '';
-      draft.isSaving = true;
-      break;
-    }
-    case 'API_ERROR': {
-      const {feedback} = action.payload;
-      draft.errorMessage = feedback;
-      draft.isSaving = false;
-      break;
-    }
-    case 'REMOVE_ERROR_MESSAGE': {
-      draft.errorMessage = '';
-      break;
-    }
-    case 'SAVE_SUCCEEDED': {
-      return initialState;
-    }
-    default: {
-      throw new Error(`Unknown action ${action.type}`);
-    }
-  }
-};
+interface FormikValues {
+  email: string;
+}
 
-const FormStepSaveModal = ({
+export interface FormStepSaveModalProps {
+  /**
+   * Modal open/closed state.
+   */
+  isOpen: boolean;
+  /**
+   * Callback function to close the modal
+   *
+   * Invoked on ESC keypress or clicking the "X" to close the modal.
+   */
+  closeModal: () => void;
+  /**
+   * Callback to execute when the submission session is destroyed, effectively logging
+   * out the user.
+   */
+  onSessionDestroyed: () => void;
+  /**
+   * Callback to persist the submission data to the backend.
+   */
+  onSaveConfirm: () => Promise<void>;
+  /**
+   * Backend API endpoint to suspend the submission.
+   */
+  suspendFormUrl: string;
+  /**
+   * Duration that the resume URL is valid for, in days.
+   */
+  suspendFormUrlLifetime: number;
+}
+
+const FormStepSaveModal: React.FC<FormStepSaveModalProps> = ({
   isOpen,
   closeModal,
   onSaveConfirm,
@@ -70,18 +71,15 @@ const FormStepSaveModal = ({
   ...props
 }) => {
   const intl = useIntl();
-
-  const [{errorMessage, isSaving}, dispatch] = useImmerReducer(reducer, initialState);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
     if (!isOpen && errorMessage) {
-      dispatch({
-        type: 'REMOVE_ERROR_MESSAGE',
-      });
+      setErrorMessage('');
     }
-  }, [dispatch, isOpen, errorMessage]);
+  }, [isOpen, errorMessage]);
 
-  const errorMap = (issue, ctx) => {
+  const errorMap: z.ZodErrorMap = (issue, ctx) => {
     const fieldLabelDefinition = FIELD_LABELS[issue.path.join('.')];
     if (!fieldLabelDefinition) {
       return {message: ctx.defaultError}; // use global schema as fallback
@@ -126,46 +124,32 @@ const FormStepSaveModal = ({
     return {message: ctx.defaultError}; // use global schema as fallback
   };
 
-  const onSubmit = async ({email}, actions) => {
-    if (isSaving) return;
-
-    dispatch({type: 'START_SAVE'});
+  const onSubmit = async ({email}: FormikValues) => {
+    setErrorMessage('');
 
     try {
       await onSaveConfirm();
     } catch {
-      actions.setSubmitting(false);
-      dispatch({
-        type: 'API_ERROR',
-        payload: {
-          feedback: intl.formatMessage({
-            description: 'Modal saving data failed message',
-            defaultMessage: 'Saving the data failed, please try again later',
-          }),
-        },
-      });
+      setErrorMessage(
+        intl.formatMessage({
+          description: 'Modal saving data failed message',
+          defaultMessage: 'Saving the data failed, please try again later',
+        })
+      );
       return;
     }
 
     try {
       await post(suspendFormUrl, {email});
     } catch {
-      actions.setSubmitting(false);
-      dispatch({
-        type: 'API_ERROR',
-        payload: {
-          feedback: intl.formatMessage({
-            description: 'Modal suspending form failed message',
-            defaultMessage: 'Suspending the form failed, please try again later',
-          }),
-        },
-      });
+      setErrorMessage(
+        intl.formatMessage({
+          description: 'Modal suspending form failed message',
+          defaultMessage: 'Suspending the form failed, please try again later',
+        })
+      );
       return;
     }
-
-    actions.setSubmitting(false);
-    dispatch({type: 'SAVE_SUCCEEDED'});
-
     onSessionDestroyed();
   };
 
@@ -181,14 +165,14 @@ const FormStepSaveModal = ({
       closeModal={closeModal}
       {...props}
     >
-      <Formik
+      <Formik<FormikValues>
         initialValues={{email: ''}}
         onSubmit={onSubmit}
         validationSchema={toFormikValidationSchema(emailValidationSchema, {errorMap})}
       >
         {props => (
           <Body component="form" onSubmit={props.handleSubmit} noValidate>
-            {isSaving ? <Loader modifiers={['centered']} /> : null}
+            {props.isSubmitting && <Loader modifiers={['centered']} />}
 
             {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 
@@ -214,7 +198,11 @@ const FormStepSaveModal = ({
             />
 
             <ButtonGroup className="openforms-form-navigation" direction="column">
-              <UtrechtButton type="submit" appearance="primary-action-button" disabled={isSaving}>
+              <UtrechtButton
+                type="submit"
+                appearance="primary-action-button"
+                disabled={props.isSubmitting}
+              >
                 <FormattedMessage
                   description="Form save modal submit button"
                   defaultMessage="Continue later"
@@ -226,36 +214,6 @@ const FormStepSaveModal = ({
       </Formik>
     </Modal>
   );
-};
-
-FormStepSaveModal.propTypes = {
-  /**
-   * Modal open/closed state.
-   */
-  isOpen: PropTypes.bool.isRequired,
-  /**
-   * Callback function to close the modal
-   *
-   * Invoked on ESC keypress or clicking the "X" to close the modal.
-   */
-  closeModal: PropTypes.func.isRequired,
-  /**
-   * Callback to execute when the submission session is destroyed, effectively logging
-   * out the user.
-   */
-  onSessionDestroyed: PropTypes.func.isRequired,
-  /**
-   * Callback to persist the submission data to the backend.
-   */
-  onSaveConfirm: PropTypes.func.isRequired,
-  /**
-   * Backend API endpoint to suspend the submission.
-   */
-  suspendFormUrl: PropTypes.string.isRequired,
-  /**
-   * Duration that the resume URL is valid for, in days.
-   */
-  suspendFormUrlLifetime: PropTypes.number.isRequired,
 };
 
 export default FormStepSaveModal;
