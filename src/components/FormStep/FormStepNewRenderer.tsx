@@ -7,17 +7,16 @@ import {useFormikContext} from 'formik';
 import {useCallback, useRef, useState} from 'react';
 import {useNavigate, useNavigation} from 'react-router';
 
-import {LiteralsProvider} from 'components/Literal';
-import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-
 import {get} from '@/api';
 import {useDebugContext} from '@/components/AppDebug';
 import Card, {CardTitle} from '@/components/Card';
 import FormNavigation, {StepSubmitButton} from '@/components/FormNavigation';
 import type {FormNavigationProps} from '@/components/FormNavigation/FormNavigation';
+import {LiteralsProvider} from '@/components/Literal';
 import Loader from '@/components/Loader';
 import PreviousLink from '@/components/PreviousLink';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
+import FormStepSaveModal from '@/components/modals/FormStepSaveModal';
 import {type SubmissionStep, saveStepData} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
@@ -180,7 +179,6 @@ const FormStepNewRenderer: React.FC = () => {
         onSessionDestroyed={onDestroySession}
         suspendFormUrl={`${submission.url}/_suspend`}
         suspendFormUrlLifetime={form.resumeLinkLifetime}
-        submissionId={submission.id}
       />
     </LiteralsProvider>
   );

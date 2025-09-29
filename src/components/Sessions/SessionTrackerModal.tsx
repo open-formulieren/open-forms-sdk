@@ -1,41 +1,34 @@
-import {ButtonGroup} from '@utrecht/component-library-react';
-import PropTypes from 'prop-types';
+import {ButtonGroup} from '@utrecht/button-group-react';
 import {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
 import {useTimeout, useTimeoutFn} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {apiCall} from 'api';
-import {OFButton} from 'components/Button';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import Modal from 'components/modals/Modal';
-import useSessionTimeout from 'hooks/useSessionTimeout';
+import {ConfigContext} from '@/Context';
+import {apiCall} from '@/api';
+import {OFButton} from '@/components/Button';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import Modal from '@/components/modals/Modal';
+import useSessionTimeout from '@/hooks/useSessionTimeout';
 
-const WARN_SESSION_TIMEOUT_FACTOR = 0.9; // once 90% of the session expiry time has passed, show a warning
-const TEN_HOURS_MS = 10 * 3600 * 1000; // ten hours in miliseconds
+const WARN_SESSION_TIMEOUT_FACTOR: number = 0.9; // once 90% of the session expiry time has passed, show a warning
+const TEN_HOURS_MS: number = 10 * 3600 * 1000; // ten hours in miliseconds
 
-const RelativeTimeToExpiry = ({numSeconds}) => {
+interface RelativeTimeToExpiryProps {
+  numSeconds: number;
+}
+
+const RelativeTimeToExpiry: React.FC<RelativeTimeToExpiryProps> = ({numSeconds}) => {
   // more than 24 hours -> don't bother
   if (numSeconds >= 3600 * 24) return null;
   return <FormattedRelativeTime value={numSeconds} numeric="auto" updateIntervalInSeconds={1} />;
 };
 
-RelativeTimeToExpiry.propTypes = {
-  numSeconds: PropTypes.number.isRequired,
-};
+type UseTriggerWarning = [boolean, () => void];
 
-const useTriggerWarning = ms => {
-  let timeout;
-
+const useTriggerWarning = (ms: number): UseTriggerWarning => {
   const [showWarning, setShowWarning] = useState(false);
-
-  // no time available
-  if (ms == null) {
-    timeout = TEN_HOURS_MS; // 10 hours as a fallback
-  } else {
-    // re-render WARN_SESSION_TIMEOUT_FACTOR before the session expires to show a warning
-    timeout = WARN_SESSION_TIMEOUT_FACTOR * ms;
-  }
+  // re-render WARN_SESSION_TIMEOUT_FACTOR before the session expires to show a warning
+  const timeout = WARN_SESSION_TIMEOUT_FACTOR * ms;
   const reset = useTimeoutFn(() => setShowWarning(true), timeout)[2];
   return [
     showWarning,
@@ -46,18 +39,30 @@ const useTriggerWarning = ms => {
   ];
 };
 
-const SessionTrackerModal = ({expiryDate = null, onTimeout, children}) => {
+export interface SessionTrackerModalProps {
+  expiryDate?: Date | null;
+  onTimeout?: () => void;
+  children: React.ReactNode;
+}
+
+const SessionTrackerModal: React.FC<SessionTrackerModalProps> = ({
+  expiryDate = null,
+  onTimeout,
+  children,
+}) => {
   // support grabbing the expiry date from the hook instead of the prop
   const [, hookExpiryDate] = useSessionTimeout(onTimeout);
   if (expiryDate == null) {
     expiryDate = hookExpiryDate;
   }
 
-  const [warningDismissed, setWarningDismissed] = useState(false);
+  const [warningDismissed, setWarningDismissed] = useState<boolean>(false);
 
   // re-render when the session is expired to show the error message
   const now = new Date();
-  const _timeToExpiryInMS = expiryDate ? Math.max(expiryDate - now, 0) : TEN_HOURS_MS; // 10 hour fallback in case there's no date
+  const _timeToExpiryInMS = expiryDate
+    ? Math.max(Number(expiryDate) - Number(now), 0)
+    : TEN_HOURS_MS; // 10 hour fallback in case there's no date
   // Limit to max 10 hours, because funny things happen once you go > 25 days where the
   // callback executes immediately which results in infinite render loops. Shouldn't
   // matter for prod environments where session timeouts are typically < 1 hour, but in
@@ -82,7 +87,7 @@ const SessionTrackerModal = ({expiryDate = null, onTimeout, children}) => {
   }, [expiryDate]);
 
   const showWarning = !warningDismissed && warningTriggered;
-  const secondsToExpiry = parseInt((expiryDate - now) / 1000);
+  const secondsToExpiry = Math.floor(timeToExpiryInMS / 1000);
   // ensure that the components don't get unmounted when there's no expiryDate -> do not
   // exit early
   return (
@@ -99,13 +104,17 @@ const SessionTrackerModal = ({expiryDate = null, onTimeout, children}) => {
   );
 };
 
-SessionTrackerModal.propTypes = {
-  expiryDate: PropTypes.instanceOf(Date),
-  onTimeout: PropTypes.func,
-  children: PropTypes.node,
-};
+export interface ExpiryModalProps {
+  showWarning: boolean;
+  secondsToExpiry: number;
+  setWarningDismissed: (state: boolean) => void;
+}
 
-const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
+const ExpiryModal: React.FC<ExpiryModalProps> = ({
+  showWarning,
+  secondsToExpiry,
+  setWarningDismissed,
+}) => {
   const {baseUrl} = useContext(ConfigContext);
   return (
     <Modal
@@ -132,7 +141,7 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
       <ButtonGroup direction="column">
         <OFButton
           type="submit"
-          appearance="primary-action-button"
+          variant="primary"
           onClick={async event => {
             event.preventDefault();
             await apiCall(`${baseUrl}ping`);
@@ -146,12 +155,6 @@ const ExpiryModal = ({showWarning, secondsToExpiry, setWarningDismissed}) => {
       </ButtonGroup>
     </Modal>
   );
-};
-
-ExpiryModal.propTypes = {
-  showWarning: PropTypes.bool.isRequired,
-  secondsToExpiry: PropTypes.number.isRequired,
-  setWarningDismissed: PropTypes.func.isRequired,
 };
 
 export default SessionTrackerModal;

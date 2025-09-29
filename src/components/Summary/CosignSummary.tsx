@@ -1,14 +1,13 @@
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {LiteralsProvider} from 'components/Literal';
-import {SessionTrackerModal} from 'components/Sessions';
-import useSessionTimeout from 'hooks/useSessionTimeout';
-
 import {ConfigContext} from '@/Context';
+import {LiteralsProvider} from '@/components/Literal';
+import {SessionTrackerModal} from '@/components/Sessions';
 import type {Form} from '@/data/forms';
 import {type CosignConfirmBody, type Submission, confirmCosign} from '@/data/submissions';
 import useRecycleSubmission from '@/hooks/useRecycleSubmission';
+import useSessionTimeout from '@/hooks/useSessionTimeout';
 
 import GenericSummary from './GenericSummary';
 import {useLoadSummaryData} from './hooks';
@@ -61,7 +60,6 @@ const CosignSummary: React.FC<CosignSummaryProps> = ({
   });
 
   return (
-    // @ts-expect-error expiryDate inference is not accurate
     <SessionTrackerModal expiryDate={expiryDate}>
       <LiteralsProvider literals={form.literals}>
         <GenericSummary
