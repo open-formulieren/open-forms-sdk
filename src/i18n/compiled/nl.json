@@ -855,6 +855,12 @@
       "value": "Helaas is dit formulier momenteel niet beschikbaar door een storing. Probeer het later nog eens."
     }
   ],
+  "FWCQJu": [
+    {
+      "type": 0,
+      "value": "Current location"
+    }
+  ],
   "FfBWqF": [
     {
       "type": 0,
@@ -903,6 +909,12 @@
     {
       "type": 0,
       "value": "Er ging iets fout bij het bewaren van de gegevens. Probeer het later opnieuw."
+    }
+  ],
+  "H4VhcO": [
+    {
+      "type": 0,
+      "value": "Current location cannot be accessed"
     }
   ],
   "H4n86k": [
@@ -1195,6 +1207,12 @@
       "value": "Voorvoegsels"
     }
   ],
+  "LYjd+f": [
+    {
+      "type": 0,
+      "value": "Use my current location"
+    }
+  ],
   "LiRh7j": [
     {
       "type": 0,
@@ -1271,6 +1289,12 @@
     {
       "type": 0,
       "value": "Partner toevoegen"
+    }
+  ],
+  "NZ8rJn": [
+    {
+      "type": 0,
+      "value": "Your current location cannot be accessed"
     }
   ],
   "Op4orj": [
@@ -1750,7 +1774,7 @@
   "aUpjaY": [
     {
       "type": 0,
-      "value": "Sorry, er zijn geen zoekresultaten voor dit adres."
+      "value": "Sorry, that address could not be found."
     }
   ],
   "abKEBH": [

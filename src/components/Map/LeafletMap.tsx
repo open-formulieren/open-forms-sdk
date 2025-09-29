@@ -13,11 +13,11 @@ import {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
-import {useGeolocation} from 'react-use';
 
 import {getBEMClassName} from 'utils';
 
 import LayersControl from './LeafletMapLayersControl';
+import LocationControl from './LeafletMapLocationControl';
 import SearchControl, {type GeoSearchShowLocationEvent} from './LeafletMapSearchControl';
 import NearestAddress from './NearestAddress';
 import {DEFAULT_INTERACTIONS, DEFAULT_LAT_LNG, DEFAULT_ZOOM} from './constants';
@@ -32,23 +32,6 @@ import type {Coordinates, GeoJsonGeometry, Interactions} from './types';
 
 // Run some Leaflet-specific patches...
 initialize();
-
-const useDefaultCoordinates = (): Coordinates | null => {
-  // FIXME: can't call hooks conditionally
-  const {loading, latitude, longitude, error} = useGeolocation();
-  // it's possible the user declined permissions (error.code === 1) to access the
-  // location, or the location could not be determined. In that case, fall back to the
-  // hardcoded default. See Github issue
-  // https://github.com/open-formulieren/open-forms/issues/864 and the docs on
-  // GeolocationPositionError:
-  // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
-  if (error) {
-    return null;
-  }
-  if (!navigator.geolocation) return null;
-  if (loading || !latitude || !longitude) return null;
-  return [latitude, longitude];
-};
 
 const getCoordinates = (geoJsonGeometry: GeoJsonGeometry | undefined): Coordinates | null => {
   if (!geoJsonGeometry) {
@@ -68,6 +51,8 @@ export interface LeafletMapProps {
   interactions?: MapComponentSchema['interactions'];
   tileLayerUrl?: string;
   overlays?: MapComponentSchema['overlays'];
+  // To allow storybook to monitor the map instance, a map container child can be added.
+  mapContainerChild?: React.ReactNode;
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = ({
@@ -79,12 +64,11 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   interactions = DEFAULT_INTERACTIONS,
   tileLayerUrl = TILE_LAYER_RD.url,
   overlays = [],
+  mapContainerChild,
 }) => {
   const featureGroupRef = useRef<LeafletFeatureGroup>(null);
   const intl = useIntl();
-  const defaultCoordinates = useDefaultCoordinates();
   const geoJsonCoordinates = getCoordinates(geoJsonGeometry);
-  const coordinates: Coordinates | null = geoJsonCoordinates ?? defaultCoordinates;
 
   const modifiers = disabled ? ['disabled'] : [];
   const className = getBEMClassName('leaflet-map', modifiers);
@@ -182,24 +166,28 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
           )}
           <Geometry geoJsonGeometry={geoJsonGeometry} featureGroupRef={featureGroupRef} />
         </FeatureGroup>
-        {coordinates && <MapView coordinates={coordinates} />}
+        {geoJsonCoordinates && <MapView coordinates={geoJsonCoordinates} />}
         {!disabled && (
-          <SearchControl
-            onMarkerSet={onSearchMarkerSet}
-            options={{
-              showMarker: false,
-              showPopup: false,
-              retainZoomLevel: false,
-              animateZoom: true,
-              autoClose: false,
-              searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
-              keepResult: true,
-              updateMap: true,
-              notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
-            }}
-          />
+          <>
+            <SearchControl
+              onMarkerSet={onSearchMarkerSet}
+              options={{
+                showMarker: false,
+                showPopup: false,
+                retainZoomLevel: false,
+                animateZoom: true,
+                autoClose: false,
+                searchLabel: intl.formatMessage(searchControlMessages.searchLabel),
+                keepResult: true,
+                updateMap: true,
+                notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
+              }}
+            />
+            <LocationControl />
+          </>
         )}
         {disabled && <DisabledMapControls />}
+        {mapContainerChild}
       </MapContainer>
       {geoJsonCoordinates && geoJsonCoordinates.length && (
         <NearestAddress coordinates={geoJsonCoordinates} />

@@ -1,6 +1,8 @@
 import type {Decorator} from '@storybook/react';
 import {Document} from '@utrecht/component-library-react';
 
+import {setupGeolocationMock} from './mocks/geolocationMock';
+
 /**
  * Storybook does not have a before/after cleanup cycle, and localStorage would in
  * these situations break story/test isolation.
@@ -29,3 +31,16 @@ export const withUtrechtDocument: Decorator = (Story, {parameters}) => (
     <Story />
   </Document>
 );
+
+export const withGeolocationMocking: Decorator = (Story, {parameters}) => {
+  const {updateGeolocationPermission} = setupGeolocationMock({
+    geolocationPermission: parameters.geolocation.permission,
+    geolocationLatitude: parameters.geolocation.latitude,
+    geolocationLongitude: parameters.geolocation.longitude,
+  });
+
+  // Expose updateGeolocationPermission function
+  parameters.geolocation.updatePermission = updateGeolocationPermission;
+
+  return <Story />;
+};
