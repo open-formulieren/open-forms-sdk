@@ -1,4 +1,4 @@
-import {addDays, formatISO} from 'date-fns';
+import {addDays, formatISO, isValid, parseISO} from 'date-fns';
 import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from 'api-mocks';
@@ -126,6 +126,28 @@ export const mockAppointmentDatesGet = http.get(`${BASE_URL}appointments/dates`,
 export const mockAppointmentTimesGet = http.get(`${BASE_URL}appointments/times`, ({request}) => {
   const url = new URL(request.url);
   const date = url.searchParams.get('date');
+  // the backend validates the `date` parameter
+  if (!isValid(parseISO(date))) {
+    return HttpResponse.json(
+      {
+        type: 'http://localhost:8000/fouten/ValidationError/',
+        code: 'invalid',
+        title: 'Invalid input.',
+        status: 400,
+        detail: '',
+        instance: 'urn:uuid:41e0174a-efc2-4cc0-9bf2-8366242a4e75',
+        invalidParams: [
+          {
+            name: 'date',
+            code: 'invalid',
+            reason: 'Invalid ISO-8601 date.',
+          },
+        ],
+      },
+      {status: 400}
+    );
+  }
+
   // ensure we can handle datetimes with timezone information in varying formats.
   // Ideally, the API returns UTC, but the UI needs to display localized times.
   const times = [

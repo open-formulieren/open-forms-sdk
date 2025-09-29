@@ -1,4 +1,4 @@
-import {parseISO} from 'date-fns';
+import {isValid, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import {useCallback, useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
@@ -16,7 +16,7 @@ export const fieldLabel = defineMessage({
 });
 
 const getDatetimes = async (baseUrl, productIds, locationId, date) => {
-  if (!productIds.length || !locationId || !date) return [];
+  if (!productIds.length || !locationId || !isValid(parseISO(date))) return [];
   const multiParams = productIds.map(id => ({product_id: id}));
   const datetimesList = await get(
     `${baseUrl}appointments/times`,
