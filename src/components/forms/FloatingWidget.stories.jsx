@@ -1,15 +1,14 @@
+import {
+  FloatingWidget,
+  useFloatingWidget,
+} from '@open-formulieren/formio-renderer/components/forms/FloatingWidget.js';
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
 import {sleep} from 'utils';
 
-import {FloatingWidget, useFloatingWidget} from './FloatingWidget';
-
 export default {
   title: 'Private API / FloatingWidget',
   component: FloatingWidget,
-  parameters: {
-    controls: {hideNoControlsWarning: true},
-  },
 };
 
 const waitForFocus = async element => {
