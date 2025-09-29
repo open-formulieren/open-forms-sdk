@@ -34,9 +34,33 @@ const createLocationControl = ({intl, position = 'bottomright'}: CreateLocationC
         container
       );
       link.href = '#';
+
+      // Listen to the current and future permissions, and update control accordingly.
+      this._getPermission((permission: PermissionState) => {
+        switch (permission) {
+          case 'granted':
+          case 'prompt':
+            this.enable(map);
+            return;
+
+          case 'denied':
+            this.disable();
+        }
+      });
+      return container;
+    },
+
+    enable: function (map: Leaflet.Map) {
+      if (!link) return;
+
+      // Remove any 'disabled' styling or accessibly indicators, and update the titles.
+      link.classList.remove('leaflet-disabled');
+      link.ariaDisabled = null;
       link.title = intl.formatMessage(locationControlMessages.buttonTitle);
       link.ariaLabel = intl.formatMessage(locationControlMessages.buttonLabel);
 
+      // Remove any previous event handlers and add a "trigger geolocation request" click handler
+      Leaflet.DomEvent.off(link);
       Leaflet.DomEvent.on(link, 'click', e => {
         Leaflet.DomEvent.stopPropagation(e);
         Leaflet.DomEvent.preventDefault(e);
@@ -49,14 +73,6 @@ const createLocationControl = ({intl, position = 'bottomright'}: CreateLocationC
           })
         );
       });
-
-      // Listen to the current and future permissions, and handle 'denied' state.
-      this._getPermission((permission: PermissionState) => {
-        if (permission === 'denied') {
-          this.disable();
-        }
-      });
-      return container;
     },
 
     // Disable the Location control

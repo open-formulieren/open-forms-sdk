@@ -386,7 +386,7 @@ export const MapWithCurrentLocationPermissionDenied = {
   },
 };
 
-export const MapWithCurrentLocationManuallyDeniedPermission = {
+export const MapWithCurrentLocationManuallyTogglePermission = {
   parameters: {
     geolocation: {
       permission: 'prompt',
@@ -413,7 +413,7 @@ export const MapWithCurrentLocationManuallyDeniedPermission = {
     // so we simulate the permission change via a mock helper function.
     parameters.geolocation.updatePermission('denied');
 
-    step('After denial of geolocation permission', async () => {
+    await step('After denial of geolocation permission', async () => {
       // The "current location" button is now in a "disabled" state
       expect(currentLocationButton).toBeVisible();
       expect(currentLocationButton).toHaveAttribute(
@@ -425,6 +425,20 @@ export const MapWithCurrentLocationManuallyDeniedPermission = {
       // When clicking the location button, nothing happens
       await userEvent.click(currentLocationButton);
       expect(mapSetViewSpy).not.toHaveBeenCalled();
+    });
+
+    // Toggling back to enabled
+    parameters.geolocation.updatePermission('granted');
+
+    step('After granting permission for geolocation', async () => {
+      // The "current location" button is now again in an "enabled" state
+      expect(currentLocationButton).toBeVisible();
+      expect(currentLocationButton).toHaveAttribute('aria-label', 'Current location');
+      expect(currentLocationButton).not.toHaveAttribute('aria-disabled');
+
+      // When clicking the location button, nothing happens
+      await userEvent.click(currentLocationButton);
+      expect(mapSetViewSpy).toHaveBeenCalledOnce();
     });
   },
 };
