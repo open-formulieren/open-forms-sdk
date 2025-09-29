@@ -183,7 +183,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
                 notFoundMessage: intl.formatMessage(searchControlMessages.notFound),
               }}
             />
-            <LocationControl intl={intl} />
+            <LocationControl />
           </>
         )}
         {disabled && <DisabledMapControls />}

@@ -1,11 +1,12 @@
 import {createControlComponent} from '@react-leaflet/core';
 import * as Leaflet from 'leaflet';
 import type {IntlShape} from 'react-intl';
+import {injectIntl} from 'react-intl';
 
 import {locationControlMessages} from './translations';
 
 interface CreateLocationControlProps extends Leaflet.ControlOptions {
-  intl: IntlShape;
+  intl: IntlShape; // Injected by `injectIntl`
 }
 
 const createLocationControl = ({intl, position = 'bottomright'}: CreateLocationControlProps) => {
@@ -14,14 +15,14 @@ const createLocationControl = ({intl, position = 'bottomright'}: CreateLocationC
   const LocationControl = Leaflet.Control.extend({
     options: {position},
 
-    _getPermission: (callback: (permission: PermissionState) => void) => {
-      navigator.permissions.query({name: 'geolocation'}).then(result => {
-        // Return the current permission
-        callback(result.state);
+    _getPermission: async (callback: (permission: PermissionState) => void) => {
+      const permission = await navigator.permissions.query({name: 'geolocation'});
 
-        // Return new permission on change
-        result.onchange = () => callback(result.state);
-      });
+      // Return the current permission
+      callback(permission.state);
+
+      // Return new permission on change
+      permission.onchange = () => callback(permission.state);
     },
 
     // Mount the Location control
@@ -41,13 +42,11 @@ const createLocationControl = ({intl, position = 'bottomright'}: CreateLocationC
         Leaflet.DomEvent.preventDefault(e);
 
         // Trigger "permission popup", and set current location after permission granted
-        navigator.geolocation.getCurrentPosition(
-          pos =>
-            map.setView({
-              lat: pos.coords.latitude,
-              lng: pos.coords.longitude,
-            }),
-          err => console.error(err)
+        navigator.geolocation.getCurrentPosition(pos =>
+          map.setView({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          })
         );
       });
 
@@ -85,4 +84,4 @@ const createLocationControl = ({intl, position = 'bottomright'}: CreateLocationC
 const LocationControl: React.FC<CreateLocationControlProps> =
   createControlComponent(createLocationControl);
 
-export default LocationControl;
+export default injectIntl(LocationControl);
