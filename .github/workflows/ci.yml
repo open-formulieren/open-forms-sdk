@@ -154,6 +154,13 @@ jobs:
     # do not publish in forks or non-tag pushes
     if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'open-formulieren'
 
+    environment:
+      name: release
+      url: https://www.npmjs.com/package/@open-formulieren/sdk
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - uses: actions/checkout@v5
         with:
@@ -166,7 +173,10 @@ jobs:
           scope: '@open-formulieren'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # update npm
+          npm install --global npm@latest
+          npm ci
 
       - name: Download build artifact
         uses: actions/download-artifact@v5
@@ -183,8 +193,6 @@ jobs:
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
           npm publish --access public --new-version=$VERSION
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   docker:
     name: Build (and push) Docker image
