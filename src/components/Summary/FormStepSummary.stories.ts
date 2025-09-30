@@ -324,6 +324,28 @@ export const WithPartnersAsFirstElement: Story = {
         },
       },
       {
+        name: 'Partner 1',
+        value: '',
+        component: {
+          id: 'component1',
+          type: 'partners',
+          key: 'partners',
+          label: 'Partners',
+        },
+      },
+      {
+        name: 'BSN',
+        value: 'XXXXXXXXX',
+        component: {
+          id: 'bsn',
+          type: 'bsn',
+          key: 'bsn',
+          label: 'BSN',
+          inputMask: '999999999',
+          validateOn: 'blur',
+        },
+      },
+      {
         name: 'A repeating group',
         value: '',
         component: {
@@ -373,6 +395,16 @@ export const WithPartnersAsSecondElement: Story = {
         },
       },
       {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          id: 'component3',
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
+        },
+      },
+      {
         name: 'Partners',
         value: [
           {
@@ -393,13 +425,25 @@ export const WithPartnersAsSecondElement: Story = {
         },
       },
       {
-        name: 'A textfield',
-        value: 'A value',
+        name: 'Partner 1',
+        value: '',
         component: {
-          id: 'component3',
-          type: 'textfield',
-          key: 'textfield1',
-          label: 'A textfield',
+          id: 'component1',
+          type: 'partners',
+          key: 'partners',
+          label: 'Partners',
+        },
+      },
+      {
+        name: 'BSN',
+        value: 'XXXXXXXXX',
+        component: {
+          id: 'bsn',
+          type: 'bsn',
+          key: 'bsn',
+          label: 'BSN',
+          inputMask: '999999999',
+          validateOn: 'blur',
         },
       },
     ],
