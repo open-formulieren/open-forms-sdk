@@ -410,7 +410,7 @@
     "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
   },
   "FWCQJu": {
-    "defaultMessage": "Current location",
+    "defaultMessage": "Huidige locatie",
     "description": "Leaflet map: use user location button ariaLabel text.",
     "originalDefault": "Current location"
   },
@@ -440,7 +440,7 @@
     "originalDefault": "Saving the data failed, please try again later"
   },
   "H4VhcO": {
-    "defaultMessage": "Current location cannot be accessed",
+    "defaultMessage": "Huidige locatie kan niet bepaald worden",
     "description": "Leaflet map: use user location button disabled ariaLabel text.",
     "originalDefault": "Current location cannot be accessed"
   },
@@ -561,7 +561,7 @@
     "originalDefault": "Affixes"
   },
   "LYjd+f": {
-    "defaultMessage": "Use my current location",
+    "defaultMessage": "Gebruik mijn huidige locatie",
     "description": "Leaflet map: use user location button tooltip text.",
     "originalDefault": "Use my current location"
   },
@@ -623,7 +623,7 @@
     "originalDefault": "Add partner"
   },
   "NZ8rJn": {
-    "defaultMessage": "Your current location cannot be accessed",
+    "defaultMessage": "Je huidige locatie kan niet bepaald worden",
     "description": "Leaflet map: use user location button disabled tooltip text.",
     "originalDefault": "Your current location cannot be accessed"
   },
@@ -825,7 +825,7 @@
     "originalDefault": "Your email address"
   },
   "aUpjaY": {
-    "defaultMessage": "Sorry, that address could not be found.",
+    "defaultMessage": "Sorry, dit address kan niet gevonden worden.",
     "description": "The leaflet map's location not found message.",
     "originalDefault": "Sorry, that address could not be found."
   },

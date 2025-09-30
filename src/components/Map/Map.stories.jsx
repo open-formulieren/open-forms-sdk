@@ -342,7 +342,7 @@ export const MapWithCurrentLocationGranted = {
     const mapSetViewSpy = spyOn(window.__leafletMap, 'setView');
 
     // There is a "Current location" button
-    const currentLocationButton = within(map).getByRole('link', {name: 'Current location'});
+    const currentLocationButton = within(map).getByRole('link', {name: 'Huidige locatie'});
     expect(currentLocationButton).toBeVisible();
     expect(currentLocationButton).not.toHaveAttribute('aria-disabled');
 
@@ -375,7 +375,7 @@ export const MapWithCurrentLocationPermissionDenied = {
 
     // There is a "current location" button in a "disabled" state
     const currentLocationButton = within(map).getByRole('link', {
-      name: 'Current location cannot be accessed',
+      name: 'Huidige locatie kan niet bepaald worden',
     });
     expect(currentLocationButton).toBeVisible();
     expect(currentLocationButton).toHaveAttribute('aria-disabled', 'true');
@@ -402,7 +402,7 @@ export const MapWithCurrentLocationManuallyTogglePermission = {
     });
 
     const mapSetViewSpy = spyOn(window.__leafletMap, 'setView');
-    const currentLocationButton = within(map).getByRole('link', {name: 'Current location'});
+    const currentLocationButton = within(map).getByRole('link', {name: 'Huidige locatie'});
 
     step('Initially enabled location control', () => {
       expect(currentLocationButton).toBeVisible();
@@ -418,7 +418,7 @@ export const MapWithCurrentLocationManuallyTogglePermission = {
       expect(currentLocationButton).toBeVisible();
       expect(currentLocationButton).toHaveAttribute(
         'aria-label',
-        'Current location cannot be accessed'
+        'Huidige locatie kan niet bepaald worden'
       );
       expect(currentLocationButton).toHaveAttribute('aria-disabled', 'true');
 
@@ -433,7 +433,7 @@ export const MapWithCurrentLocationManuallyTogglePermission = {
     step('After granting permission for geolocation', async () => {
       // The "current location" button is now again in an "enabled" state
       expect(currentLocationButton).toBeVisible();
-      expect(currentLocationButton).toHaveAttribute('aria-label', 'Current location');
+      expect(currentLocationButton).toHaveAttribute('aria-label', 'Huidige locatie');
       expect(currentLocationButton).not.toHaveAttribute('aria-disabled');
 
       // When clicking the location button, nothing happens
