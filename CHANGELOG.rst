@@ -16,6 +16,7 @@ New features
 * [#5575] Implemented WMS layers in the map component.
 * [#5133] Updated the open-formulieren formio-renderer and replaced
   several components:
+
   - Select field for appointments.
   - NumberField.
 
@@ -116,23 +117,23 @@ Project maintenance
 
 * [#445] Various changes:
 
-    - Refactored error-boundary code.
-    - Removed obsoleted formio checkbox component.
-    - Converted more code to Typescript.
+  - Refactored error-boundary code.
+  - Removed obsoleted formio checkbox component.
+  - Converted more code to Typescript.
 
 * Removed obsoleted checkbox (S)CCS.
 * Fixed test flakiness.
 * Added regenerator-runtime dependency.
 * Updated dependencies:
 
-    - Upgraded to @open-formulieren/design-tokens 0.59.0.
-    - Upgraded to @open-formulieren/formio-renderer 0.6.0.
-    - Upgraded to storybook 8.6.12.
+  - Upgraded to @open-formulieren/design-tokens 0.59.0.
+  - Upgraded to @open-formulieren/formio-renderer 0.6.0.
+  - Upgraded to storybook 8.6.12.
 
 * Upgraded CI configuration dependencies.
 
-    - Upgraded to requests 2.32.4.
-    - Upgraded to urllib3 2.5.0.
+  - Upgraded to requests 2.32.4.
+  - Upgraded to urllib3 2.5.0.
 
 3.1.2 (2025-07-04)
 ==================
@@ -182,9 +183,9 @@ Project maintenance
 * [#445] Refactored error-boundary code and converted more code to Typescript.
 * Updated dependencies:
 
-    - Upgraded to @open-formulieren/design-tokens 0.59.0.
-    - Upgraded to @open-formulieren/formio-renderer 0.5.0.
-    - Upgraded to storybook 8.6.12.
+  - Upgraded to @open-formulieren/design-tokens 0.59.0.
+  - Upgraded to @open-formulieren/formio-renderer 0.5.0.
+  - Upgraded to storybook 8.6.12.
 
 3.1.1 (2025-04-16)
 ==================
@@ -247,9 +248,9 @@ New features
   point markers.
 * [#5003] AddressNL component styling update.
 
-    - Removed asterisk next to AddressNL component label. When the component is required,
-      only the field labels have an asterisk next to them.
-    - Aligned address styling with other components in the submission summary.
+  - Removed asterisk next to AddressNL component label. When the component is required,
+    only the field labels have an asterisk next to them.
+  - Aligned address styling with other components in the submission summary.
 
 .. note:: The ``addressNL`` component is not yet a fully capable replacement for
    individual address fields. Currently, it's only recommended for BRK-validation
@@ -275,8 +276,8 @@ Project maintenance
 
 * [#445] Started converting the codebase to Typescript.
 
-    - Upgraded to @utrecht/components 7.4.0 in the process, which may affect (custom)
-      CSS themes.
+  - Upgraded to @utrecht/components 7.4.0 in the process, which may affect (custom)
+    CSS themes.
 
 * Errors in error boundaries are now captured and sent to Sentry, if configured.
 * Removed unused Sentry tracing.
@@ -287,14 +288,14 @@ Project maintenance
 * [#724] Replaced create-react-app build toolchain with ViteJS.
 * Upgraded dependencies.
 
-    - Upgraded to Storybook 8.6.3.
-    - Upgraded to playwright 1.49.
-    - Upgraded to Vitest 3.0.
-    - Upgraded to Sentry 8.50.
+  - Upgraded to Storybook 8.6.3.
+  - Upgraded to playwright 1.49.
+  - Upgraded to Vitest 3.0.
+  - Upgraded to Sentry 8.50.
 
 * Upgraded CI configuration dependencies.
 
-    - Upgraded to jinja2 3.1.6.
+  - Upgraded to jinja2 3.1.6.
 
 3.0.1 (2025-03-03)
 ==================
@@ -328,9 +329,9 @@ New features
   point markers.
 * [#5003] AddressNL component styling update.
 
-    - Removed asterisk next to AddressNL component label. When the component is required,
-      only the field labels have an asterisk next to them.
-    - Aligned address styling with other components in the submission summary.
+  - Removed asterisk next to AddressNL component label. When the component is required,
+    only the field labels have an asterisk next to them.
+  - Aligned address styling with other components in the submission summary.
 
 Bugfixes
 --------
@@ -352,9 +353,9 @@ Project maintenance
 * [#724] Replaced create-react-app build toolchain with ViteJS.
 * Upgraded dependencies.
 
-    - Upgraded to playwright 1.49.
-    - Upgraded to Vitest 3.0.
-    - Upgraded to Sentry 8.50.
+  - Upgraded to playwright 1.49.
+  - Upgraded to Vitest 3.0.
+  - Upgraded to Sentry 8.50.
 
 3.0.0 (2025-01-06)
 ==================
@@ -375,11 +376,11 @@ New features
 * [#2173] The map component now supports using a different background/tile layer.
 * [#4320] Improved the user experience for forms with cosign
 
-    - The confirmation page content is now dynamically provided by the API.
-    - Tweaked the texts displayed in various points in the cosign process.
-    - Cosign login options are now only displayed if the cosign request email does not use direct links.
-      When direct links are used, the cosigner is directly taken to the cosign page without having to
-      manually enter codes.
+  - The confirmation page content is now dynamically provided by the API.
+  - Tweaked the texts displayed in various points in the cosign process.
+  - Cosign login options are now only displayed if the cosign request email does not use direct links.
+    When direct links are used, the cosigner is directly taken to the cosign page without having to
+    manually enter codes.
 
 * [#4546] It's now possible to "soft-require" file uploads. Soft-required uploads show a warning message when
   no file has been uploaded, but don't block the step submission or form progress.
@@ -448,11 +449,11 @@ New features
 
 * [#4320] Improved the user experience for forms with cosign
 
-    - The confirmation page content is now dynamically provided by the API.
-    - Tweaked the texts displayed in various points in the cosign process.
-    - Cosign login options are now only displayed if the cosign request email does not use direct links.
-      When direct links are used, the cosigner is directly taken to the cosign page without having to
-      manually enter codes.
+  - The confirmation page content is now dynamically provided by the API.
+  - Tweaked the texts displayed in various points in the cosign process.
+  - Cosign login options are now only displayed if the cosign request email does not use direct links.
+    When direct links are used, the cosigner is directly taken to the cosign page without having to
+    manually enter codes.
 
 * [#4546] It's now possible to "soft-require" file uploads. Soft-required uploads show a warning message when
   no file has been uploaded, but don't block the step submission or form progress.
