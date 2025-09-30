@@ -32,12 +32,14 @@ const renderSummary = errorHandler => {
       datetime: `2023-07-12T08:00:00Z`,
     },
     contactgegevens: {
-      lastName: 'Kundera',
-      dateOfBirth: '1929-04-01',
-      email: 'milan@kundera.cz',
-      phone: '12345678',
-      bsn: '123456782',
-      gender: 'M',
+      contactDetails: {
+        lastName: 'Kundera',
+        dateOfBirth: '1929-04-01',
+        email: 'milan@kundera.cz',
+        phone: '12345678',
+        bsn: '123456782',
+        gender: 'M',
+      },
     },
   };
   const form = buildForm();

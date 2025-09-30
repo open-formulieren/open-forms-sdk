@@ -1,17 +1,23 @@
 import {NumberField} from '@open-formulieren/formio-renderer';
-import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
+import type {MessageDescriptor} from 'react-intl';
 
 import {AppointmentConfigContext} from '../Context';
 import ProductSelect from './ProductSelect';
 
-export const amountLabel = defineMessage({
+export const amountLabel: MessageDescriptor = defineMessage({
   description: 'Appointments: product amount field label',
   defaultMessage: 'Amount',
 });
 
-const Product = ({namePrefix, index, selectedProductIds}) => {
+export interface ProductProps {
+  namePrefix: string;
+  index: number;
+  selectedProductIds: string[];
+}
+
+const Product: React.FC<ProductProps> = ({namePrefix, index, selectedProductIds}) => {
   const intl = useIntl();
   const {supportsMultipleProducts} = useContext(AppointmentConfigContext);
   return (
@@ -28,12 +34,6 @@ const Product = ({namePrefix, index, selectedProductIds}) => {
       />
     </div>
   );
-};
-
-Product.propTypes = {
-  namePrefix: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  selectedProductIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Product;

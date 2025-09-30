@@ -9,44 +9,42 @@ const createAppointmentRoutes: RouteObject[] = [
   {
     path: '',
     lazy: async () => {
-      const {LandingPage} = await import('components/appointments');
+      const {LandingPage} = await import('@/components/appointments');
       return {element: <LandingPage />};
     },
   },
   {
     path: 'producten',
     lazy: async () => {
-      const {ChooseProductStep} = await import('components/appointments');
+      const {ChooseProductStep} = await import('@/components/appointments');
       return {element: <ChooseProductStep navigateTo="../kalender" />};
     },
   },
   {
     path: 'kalender',
     lazy: async () => {
-      const {LocationAndTimeStep} = await import('components/appointments');
-      // @ts-expect-error component not TS yet
+      const {LocationAndTimeStep} = await import('@/components/appointments');
       return {element: <LocationAndTimeStep navigateTo="../contactgegevens" />};
     },
   },
   {
     path: 'contactgegevens',
     lazy: async () => {
-      const {ContactDetailsStep} = await import('components/appointments');
-      // @ts-expect-error component not TS yet
+      const {ContactDetailsStep} = await import('@/components/appointments');
       return {element: <ContactDetailsStep navigateTo="../overzicht" />};
     },
   },
   {
     path: 'overzicht',
     lazy: async () => {
-      const {Summary} = await import('components/appointments');
+      const {Summary} = await import('@/components/appointments');
       return {element: <Summary />};
     },
   },
   {
     path: 'bevestiging',
     lazy: async () => {
-      const {Confirmation} = await import('components/appointments');
+      const {Confirmation} = await import('@/components/appointments');
       return {element: <Confirmation />};
     },
   },
@@ -56,7 +54,7 @@ const manageAppointmentRoutes = [
   {
     path: '',
     lazy: async () => {
-      const {CancelAppointment} = await import('components/appointments');
+      const {CancelAppointment} = await import('@/components/appointments');
       return {
         element: (
           <ErrorBoundary>
@@ -69,7 +67,7 @@ const manageAppointmentRoutes = [
   {
     path: 'succes',
     lazy: async () => {
-      const {CancelAppointmentSuccess} = await import('components/appointments');
+      const {CancelAppointmentSuccess} = await import('@/components/appointments');
       return {element: <CancelAppointmentSuccess />};
     },
   },
@@ -92,7 +90,7 @@ const appointmentRoutes = [
         path: '*',
         children: createAppointmentRoutes,
         lazy: async () => {
-          const {CreateAppointment} = await import('components/appointments');
+          const {CreateAppointment} = await import('@/components/appointments');
           return {element: <CreateAppointment />};
         },
       },

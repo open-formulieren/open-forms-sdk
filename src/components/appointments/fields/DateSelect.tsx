@@ -4,38 +4,48 @@ import {eachDayOfInterval, formatISO, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import {useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
+import type {MessageDescriptor} from 'react-intl';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {get} from 'api';
+import {ConfigContext} from '@/Context';
+import {get} from '@/api';
+import type {AppointmentDate, AppointmentProduct} from '@/data/appointments';
 
-import {ProductsType} from '../types';
+import type {LocationAndTimeStepValues} from '../steps/LocationAndTimeStep';
 import {prepareProductsForProductIDQuery} from '../utils';
 
-export const fieldLabel = defineMessage({
+export const fieldLabel: MessageDescriptor = defineMessage({
   description: 'Appoinments: appointment date label',
   defaultMessage: 'Date',
 });
 
-const getDates = async (baseUrl, productIds, locationId) => {
+const getDates = async (
+  baseUrl: string,
+  productIds: string[],
+  locationId: string
+): Promise<string[]> => {
   if (!productIds.length || !locationId) return [];
   const multiParams = productIds.map(id => ({product_id: id}));
-  const datesList = await get(
+  const datesList = await get<AppointmentDate[]>(
     `${baseUrl}appointments/dates`,
     {location_id: locationId},
     multiParams
   );
-  const results = datesList.map(item => item.date);
+  const results = datesList!.map(item => item.date);
   // Array.prototype.toSorted is too new, jest tests can't handle it yet
   return results.sort();
 };
 
-const DateSelect = ({products}) => {
+export interface DateSelectProps {
+  products: AppointmentProduct[];
+}
+
+const DateSelect: React.FC<DateSelectProps> = ({products}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {
     values: {location},
-  } = useFormikContext();
+  } = useFormikContext<LocationAndTimeStepValues>();
 
   // get the available dates from the API
   const productIds = prepareProductsForProductIDQuery(products);
@@ -68,7 +78,7 @@ const DateSelect = ({products}) => {
 
   const today = new Date();
   const minDate = availableDates.length ? parseISO(availableDates[0]) : today;
-  const maxDate = availableDates.length ? parseISO(availableDates.at(-1)) : today;
+  const maxDate = availableDates.length ? parseISO(availableDates.at(-1)!) : today;
   const possibleDays = eachDayOfInterval({start: minDate, end: maxDate}).map(d =>
     formatISO(d, {representation: 'date'})
   );
@@ -85,10 +95,6 @@ const DateSelect = ({products}) => {
       widgetProps={{minDate, maxDate, disabledDates}}
     />
   );
-};
-
-DateSelect.propTypes = {
-  products: ProductsType.isRequired,
 };
 
 export default DateSelect;

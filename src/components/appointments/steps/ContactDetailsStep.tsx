@@ -1,17 +1,18 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
-import PropTypes from 'prop-types';
+import type {AnyComponentSchema} from '@open-formulieren/types';
 import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {get} from 'api';
 import {getCached, setCached} from 'cache';
-import {CardTitle} from 'components/Card';
-import Loader from 'components/Loader';
 import useTitle from 'hooks/useTitle';
+
+import {ConfigContext} from '@/Context';
+import {get} from '@/api';
+import {CardTitle} from '@/components/Card';
+import Loader from '@/components/Loader';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
 import SubmitRow from '../SubmitRow';
@@ -19,18 +20,32 @@ import SubmitRow from '../SubmitRow';
 const CACHED_CONTACT_DETAILS_FIELDS_KEY = 'appointments|contactDetailsFields';
 const CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
 
-export const getContactDetailsFields = async (baseUrl, productIds) => {
+export const getContactDetailsFields = async (
+  baseUrl: string,
+  productIds: string[]
+): Promise<AnyComponentSchema[]> => {
   const fullKey = `${CACHED_CONTACT_DETAILS_FIELDS_KEY}:${productIds.join(';')}`;
-  let components = getCached(fullKey, CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS);
+  let components: AnyComponentSchema[] | null = getCached(
+    fullKey,
+    CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS
+  );
   if (components === null) {
     const multiParams = productIds.map(id => ({product_id: id}));
-    components = await get(`${baseUrl}appointments/customer-fields`, {}, multiParams);
+    components = (await get<AnyComponentSchema[]>(
+      `${baseUrl}appointments/customer-fields`,
+      {},
+      multiParams
+    ))!;
     setCached(fullKey, components);
   }
   return components;
 };
 
-const ContactDetailsStep = ({navigateTo = null}) => {
+export interface ContactDetailsStepProps {
+  navigateTo?: string;
+}
+
+const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}) => {
   const intl = useIntl();
   const {baseUrl, requiredFieldsWithAsterisk} = useContext(ConfigContext);
   const {
@@ -39,7 +54,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
     stepData,
     stepErrors: {initialErrors},
     clearStepErrors,
-  } = useCreateAppointmentContext();
+  } = useCreateAppointmentContext<'contactgegevens'>();
   const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
@@ -53,7 +68,7 @@ const ContactDetailsStep = ({navigateTo = null}) => {
 
   const {
     loading,
-    value: components,
+    value: components = [],
     error,
   } = useAsync(async () => {
     if (!productIds.length) return [];
@@ -88,9 +103,12 @@ const ContactDetailsStep = ({navigateTo = null}) => {
           onSubmit={async values => {
             flushSync(() => {
               clearStepErrors();
-              submitStep(values);
+              // type cast necessary because JSONObject is wider than our known flat set of
+              // components
+              // TODO: support generic value type parameter to FormioForm?
+              submitStep({contactDetails: values as Record<string, string | number | boolean>});
             });
-            if (navigateTo !== null) navigate(navigateTo);
+            if (navigateTo) navigate(navigateTo);
           }}
           requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
         >
@@ -112,10 +130,6 @@ const ContactDetailsStep = ({navigateTo = null}) => {
       )}
     </>
   );
-};
-
-ContactDetailsStep.propTypes = {
-  navigateTo: PropTypes.string,
 };
 
 export default ContactDetailsStep;

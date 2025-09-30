@@ -1,6 +1,5 @@
 import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import {Form, Formik, useFormikContext} from 'formik';
-import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -9,16 +8,23 @@ import {useAsync, useUpdateEffect} from 'react-use';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import {ConfigContext} from 'Context';
-import {CardTitle} from 'components/Card';
-import Loader from 'components/Loader';
 import useTitle from 'hooks/useTitle';
+
+import {ConfigContext} from '@/Context';
+import {CardTitle} from '@/components/Card';
+import Loader from '@/components/Loader';
+import type {AppointmentProduct} from '@/data/appointments';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
 import SubmitRow from '../SubmitRow';
 import {DateSelect, LocationSelect, TimeSelect} from '../fields';
 import {getAllProducts} from '../fields/ProductSelect';
-import {ProductsType} from '../types';
+
+export interface LocationAndTimeStepValues {
+  location: string;
+  date: string;
+  datetime: string;
+}
 
 const schema = z.object({
   location: z.string(),
@@ -28,7 +34,7 @@ const schema = z.object({
 
 // XXX: check field dependencies - clear time if date/location is not valid etc.
 
-const INITIAL_VALUES = {
+const INITIAL_VALUES: LocationAndTimeStepValues = {
   location: '',
   date: '',
   datetime: '',
@@ -36,10 +42,10 @@ const INITIAL_VALUES = {
 
 const LocationAndTimeStepFields = () => {
   const intl = useIntl();
-  const {values, setFieldValue} = useFormikContext();
+  const {values, setFieldValue} = useFormikContext<LocationAndTimeStepValues>();
   const {
     appointmentData: {products = []},
-  } = useCreateAppointmentContext();
+  } = useCreateAppointmentContext<'kalender'>();
 
   const {location, date} = values;
   // if a field changes, clear the dependent fields
@@ -81,7 +87,11 @@ const LocationAndTimeStepFields = () => {
   );
 };
 
-const LocationAndTimeStep = ({navigateTo = null}) => {
+export interface LocationAndTimeStepProps {
+  navigateTo?: string;
+}
+
+const LocationAndTimeStep: React.FC<LocationAndTimeStepProps> = ({navigateTo = ''}) => {
   const intl = useIntl();
   const {
     appointmentData: {products = []},
@@ -89,7 +99,7 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
     stepErrors: {initialErrors, initialTouched},
     clearStepErrors,
     submitStep,
-  } = useCreateAppointmentContext();
+  } = useCreateAppointmentContext<'kalender'>();
   const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
@@ -113,7 +123,7 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
 
       <ProductSummary products={products} />
 
-      <Formik
+      <Formik<LocationAndTimeStepValues>
         initialValues={{...INITIAL_VALUES, ...stepData}}
         initialErrors={initialErrors}
         initialTouched={initialTouched}
@@ -126,7 +136,7 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
             submitStep(values);
             setSubmitting(false);
           });
-          if (navigateTo !== null) navigate(navigateTo);
+          if (navigateTo) navigate(navigateTo);
         }}
         component={LocationAndTimeStepFields}
       />
@@ -134,15 +144,15 @@ const LocationAndTimeStep = ({navigateTo = null}) => {
   );
 };
 
-LocationAndTimeStep.propTypes = {
-  navigateTo: PropTypes.string,
-};
+export interface ProductSummaryProps {
+  products: AppointmentProduct[];
+}
 
-const ProductSummary = ({products}) => {
+const ProductSummary: React.FC<ProductSummaryProps> = ({products}) => {
   const {baseUrl} = useContext(ConfigContext);
   const {
     loading,
-    value: allProducts,
+    value: allProducts = [],
     error,
   } = useAsync(async () => await getAllProducts(baseUrl), [baseUrl]);
 
@@ -177,10 +187,6 @@ const ProductSummary = ({products}) => {
       </UnorderedList>
     </>
   );
-};
-
-ProductSummary.propTypes = {
-  products: ProductsType.isRequired,
 };
 
 export default LocationAndTimeStep;

@@ -2,37 +2,48 @@ import {isValid, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import {useCallback, useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
+import type {MessageDescriptor} from 'react-intl';
 
-import {ConfigContext} from 'Context';
-import {get} from 'api';
-import AsyncSelectField from 'components/forms/SelectField/AsyncSelectField';
+import {ConfigContext} from '@/Context';
+import {get} from '@/api';
+import AsyncSelectField from '@/components/forms/SelectField/AsyncSelectField';
+import type {AppointmentProduct, AppointmentTime} from '@/data/appointments';
 
-import {ProductsType} from '../types';
+import type {LocationAndTimeStepValues} from '../steps/LocationAndTimeStep';
 import {prepareProductsForProductIDQuery} from '../utils';
 
-export const fieldLabel = defineMessage({
+export const fieldLabel: MessageDescriptor = defineMessage({
   description: 'Appoinments: time select label',
   defaultMessage: 'Time',
 });
 
-const getDatetimes = async (baseUrl, productIds, locationId, date) => {
+const getDatetimes = async (
+  baseUrl: string,
+  productIds: string[],
+  locationId: string,
+  date: string
+): Promise<string[]> => {
   if (!productIds.length || !locationId || !isValid(parseISO(date))) return [];
   const multiParams = productIds.map(id => ({product_id: id}));
-  const datetimesList = await get(
+  const datetimesList = await get<AppointmentTime[]>(
     `${baseUrl}appointments/times`,
     {location_id: locationId, date: date},
     multiParams
   );
 
-  return datetimesList.map(item => item.time);
+  return datetimesList!.map(item => item.time);
 };
 
-const TimeSelect = ({products}) => {
+export interface TimeSelectProps {
+  products: AppointmentProduct[];
+}
+
+const TimeSelect: React.FC<TimeSelectProps> = ({products}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {
     values: {location, date},
-  } = useFormikContext();
+  } = useFormikContext<LocationAndTimeStepValues>();
 
   const productIds = prepareProductsForProductIDQuery(products);
 
@@ -76,10 +87,6 @@ const TimeSelect = ({products}) => {
       autoSelectOnlyOption
     />
   );
-};
-
-TimeSelect.propTypes = {
-  products: ProductsType.isRequired,
 };
 
 export default TimeSelect;

@@ -1,20 +1,28 @@
+import type {AnyComponentSchema} from '@open-formulieren/types';
+import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {FormikErrors} from 'formik';
 import {Form, Formik} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {createSearchParams, useHref, useLocation, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {post} from 'api';
-import {CardTitle} from 'components/Card';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import {Literal} from 'components/Literal';
-import Loader from 'components/Loader';
-import FormStepSummary from 'components/Summary/FormStepSummary';
-import SummaryConfirmation from 'components/SummaryConfirmation';
-import {ValidationError} from 'errors';
 import useTitle from 'hooks/useTitle';
 
+import {ConfigContext} from '@/Context';
+import {CardTitle} from '@/components/Card';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {Literal} from '@/components/Literal';
+import Loader from '@/components/Loader';
+import FormStepSummary from '@/components/Summary/FormStepSummary';
+import type {GenericSummaryProps} from '@/components/Summary/GenericSummary';
+import SummaryConfirmation from '@/components/SummaryConfirmation';
+import type {Appointment, Location, Product} from '@/data/appointments';
+import {createAppointment} from '@/data/appointments';
+import type {ComponentSummary} from '@/data/submissions';
+import {ValidationError} from '@/errors';
+
+import type {AppoinmentStep} from '../Context';
 import {fieldLabel as dateLabel} from '../fields/DateSelect';
 import {getLocations, fieldLabel as locationLabel} from '../fields/LocationSelect';
 import {amountLabel} from '../fields/Product';
@@ -23,22 +31,9 @@ import {fieldLabel as timeLabel} from '../fields/TimeSelect';
 import {getContactDetailsFields} from '../steps/ContactDetailsStep';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 
-const createAppointment = async (baseUrl, submission, appointmentData, statementValues) => {
-  const {products, location, date, datetime, ...contactDetails} = appointmentData;
-  const body = {
-    submission: submission.url,
-    products,
-    location,
-    date,
-    datetime,
-    contactDetails,
-    ...statementValues,
-  };
-  const response = await post(`${baseUrl}appointments/appointments`, body);
-  return response.data;
-};
+type FormikValues = Parameters<GenericSummaryProps['onSubmit']>[0];
 
-const getErrorsNavigateTo = errors => {
+const getErrorsNavigateTo = (errors: FormikErrors<JSONObject>): AppoinmentStep | null => {
   const errorKeys = Object.keys(errors);
 
   if (errorKeys.includes('products')) {
@@ -57,7 +52,7 @@ const getErrorsNavigateTo = errors => {
   return null;
 };
 
-const Summary = () => {
+const Summary: React.FC = () => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {state: routerState} = useLocation();
@@ -76,15 +71,23 @@ const Summary = () => {
   // throw for unhandled submit errors
   if (submitError) throw submitError;
 
-  const {products, location, date, datetime, ...contactDetails} = appointmentData;
+  // the default values should never kick in, but this makes them type-safe
+  const {
+    products = [],
+    location = '',
+    date = '',
+    datetime = '',
+    contactDetails = {},
+  } = appointmentData;
+
   const productIds = products.map(p => p.productId).sort();
 
   const {
     loading,
-    value = [],
+    value = [[], [], []],
     error,
   } = useAsync(async () => {
-    const promises = [
+    const promises: [Promise<Product[]>, Promise<Location[]>, Promise<AnyComponentSchema[]>] = [
       getAllProducts(baseUrl),
       getLocations(baseUrl, productIds),
       getContactDetailsFields(baseUrl, productIds),
@@ -93,22 +96,32 @@ const Summary = () => {
   }, [baseUrl, JSON.stringify(productIds)]);
 
   if (error) throw error;
-
-  const [productList = [], locations = [], contactDetailComponents = []] = value;
+  const [productList, locations, contactDetailComponents] = value;
 
   // products, as repeating group/editgrid
-  let productsData = [];
+  const productsData: ComponentSummary[] = [];
   const numProducts = products.length;
   products.forEach(({productId, amount}, index) => {
-    const header = (
-      <FormattedMessage
-        description="Appointments: single product label/header"
-        defaultMessage="Product {number}/{total}"
-        values={{number: index + 1, total: numProducts}}
-      />
-    );
     if (numProducts > 1) {
-      productsData.push({name: header, value: null, component: {type: 'editgrid'}});
+      productsData.push({
+        name: intl.formatMessage(
+          {
+            description: 'Appointments: single product label/header',
+            defaultMessage: 'Product {number}/{total}',
+          },
+          {number: index + 1, total: numProducts}
+        ),
+        value: null,
+        component: {
+          id: 'products-editgrid',
+          type: 'editgrid',
+          key: 'products-editgrid',
+          label: '',
+          disableAddingRemovingRows: false,
+          components: [],
+          groupLabel: '',
+        },
+      });
     }
 
     productsData.push(
@@ -116,46 +129,75 @@ const Summary = () => {
         name: intl.formatMessage(productLabel),
         value: productId,
         component: {
+          id: 'product',
           type: 'radio',
+          key: 'product',
+          label: '',
           values: productList.map(({identifier, name}) => ({
             value: identifier,
             label: name,
           })),
+          defaultValue: null,
+          openForms: {translations: {}, dataSrc: 'manual'},
         },
       },
       {
         name: intl.formatMessage(amountLabel),
         value: amount,
-        component: {type: 'number', decimalLimit: 0},
+        component: {
+          id: 'product-amount',
+          type: 'number',
+          key: 'product-amount',
+          label: '',
+          decimalLimit: 0,
+        },
       }
     );
   });
 
   // location and time data, in the shape that FormStepSummary expects
-  const locationAndTimeData = [
+  const locationAndTimeData: ComponentSummary[] = [
     {
       name: intl.formatMessage(locationLabel),
       value: location,
       component: {
+        id: 'location',
         type: 'radio',
+        key: 'location',
+        label: '',
         values: locations.map(({identifier, name}) => ({value: identifier, label: name})),
+        defaultValue: null,
+        openForms: {translations: {}, dataSrc: 'manual'},
       },
     },
     {
       name: intl.formatMessage(dateLabel),
       value: date,
-      component: {type: 'date'},
+      component: {
+        id: 'date',
+        type: 'date',
+        key: 'date',
+        label: '',
+      },
     },
     {
       name: intl.formatMessage(timeLabel),
       value: datetime,
-      component: {type: 'time'},
+      component: {
+        id: 'time',
+        type: 'time',
+        key: 'time',
+        label: '',
+        inputType: 'text',
+        validateOn: 'blur',
+        format: 'HH:mm',
+      },
     },
   ];
 
   // contact details data
-  const contactDetailsData = contactDetailComponents.map(component => ({
-    name: component.label,
+  const contactDetailsData: ComponentSummary[] = contactDetailComponents.map(component => ({
+    name: 'label' in component ? (component.label ?? '') : '',
     value: contactDetails[component.key],
     component,
   }));
@@ -163,11 +205,20 @@ const Summary = () => {
   /**
    * Submit the appointment data to the backend.
    */
-  const onSubmit = async statementValues => {
+  const onSubmit = async (statementValues: FormikValues) => {
     setSubmitting(true);
-    let appointment;
+    let appointment: Appointment;
     try {
-      appointment = await createAppointment(baseUrl, submission, appointmentData, statementValues);
+      appointment = await createAppointment(
+        baseUrl,
+        submission!,
+        products,
+        location,
+        date,
+        datetime,
+        contactDetails,
+        statementValues
+      );
     } catch (e) {
       if (e instanceof ValidationError) {
         const {initialErrors, initialTouched} = e.asFormikProps();
@@ -205,7 +256,7 @@ const Summary = () => {
             defaultMessage="Check and confirm"
           />
         }
-        component="h2"
+        headingLevel={2}
         headingType="subtitle"
         padded
       />
@@ -215,7 +266,7 @@ const Summary = () => {
       {loading ? (
         <Loader modifiers={['centered']} />
       ) : (
-        <Formik
+        <Formik<FormikValues>
           initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
           onSubmit={onSubmit}
         >
@@ -272,7 +323,5 @@ const Summary = () => {
     </>
   );
 };
-
-Summary.propTypes = {};
 
 export default Summary;
