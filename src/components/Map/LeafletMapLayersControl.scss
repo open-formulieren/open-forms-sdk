@@ -1,3 +1,5 @@
+@use 'microscope-sass/lib/bem';
+
 .leaflet-control-layers {
   // Making sure that the expanded map layers menu don't go over the other map controls.
   &-expanded {
@@ -21,5 +23,15 @@
   @include bem.modifier('poly') {
     stroke: var(--of-leaflet-overlay-feature-poly-stroke, black);
     fill: var(--of-leaflet-overlay-feature-poly-fill, var(--of-color-info));
+  }
+}
+
+.openforms-leaflet-map-overlay-popup-table {
+  @include bem.element('item-key') {
+    align-content: start;
+  }
+
+  @include bem.element('item-value') {
+    word-break: break-word;
   }
 }
