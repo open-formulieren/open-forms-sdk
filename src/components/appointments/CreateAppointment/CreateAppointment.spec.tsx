@@ -5,9 +5,9 @@ import {IntlProvider} from 'react-intl';
 import ReactModal from 'react-modal';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext, FormContext} from 'Context';
-import {updateSessionExpiry} from 'api';
-import {BASE_URL, buildForm} from 'api-mocks';
+import {ConfigContext, FormContext} from '@/Context';
+import {updateSessionExpiry} from '@/api';
+import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
 import {
   mockAppointmentCustomerFieldsGet,
   mockAppointmentDatesGet,
@@ -15,15 +15,11 @@ import {
   mockAppointmentPost,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from 'api-mocks/appointments';
-import mswServer from 'api-mocks/msw-server';
-import {
-  buildSubmission,
-  mockSubmissionPost,
-  mockSubmissionProcessingStatusErrorGet,
-} from 'api-mocks/submissions';
-import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
-import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+} from '@/api-mocks/appointments';
+import mswServer from '@/api-mocks/msw-server';
+import {mockSubmissionPost, mockSubmissionProcessingStatusErrorGet} from '@/api-mocks/submissions';
+import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from '@/hooks/useGetOrCreateSubmission';
+import routes, {FUTURE_FLAGS} from '@/routes';
 
 import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAppointmentState';
 
@@ -31,7 +27,7 @@ import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAp
 const scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
-const renderApp = (initialRoute = '/') => {
+const renderApp = (initialRoute: string = '/') => {
   const form = buildForm({
     appointmentOptions: {
       isAppointment: true,
@@ -40,7 +36,7 @@ const renderApp = (initialRoute = '/') => {
   });
   const router = createMemoryRouter(routes, {
     initialEntries: [initialRoute],
-    initialIndex: [0],
+    initialIndex: 0,
     future: FUTURE_FLAGS,
   });
   render(
@@ -51,11 +47,12 @@ const renderApp = (initialRoute = '/') => {
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+          <RouterProvider router={router} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
