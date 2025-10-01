@@ -26,6 +26,49 @@ const selectboxesForm = {
   ],
 };
 
+const selectboxesInHiddenFieldsetForm = {
+  type: 'form',
+  components: [
+    {
+      key: 'textfield',
+      type: 'textfield',
+      label: 'Text',
+      validate: {
+        required: true,
+      },
+    },
+    {
+      key: 'fieldSet',
+      type: 'fieldset',
+      input: false,
+      label: 'Field Set',
+      hidden: true,
+      components: [
+        {
+          key: 'selectboxes',
+          type: 'selectboxes',
+          label: 'Selectboxes',
+          values: [
+            {
+              label: 'Optie A',
+              value: 'selectA',
+            },
+            {
+              label: 'Optie B',
+              value: 'selectB',
+            },
+          ],
+          validate: {
+            required: true,
+            maxSelectedCount: 2,
+            minSelectedCount: 2,
+          },
+        },
+      ],
+    },
+  ],
+};
+
 describe('The selectboxes component', () => {
   afterEach(() => {
     document.body.innerHTML = '';
@@ -77,6 +120,19 @@ describe('The selectboxes component', () => {
     expect(selectboxB).not.toHaveClass('is-invalid');
     expect(selectboxB).not.toHaveAttribute('aria-describedby');
     expect(selectboxB).not.toHaveAttribute('aria-invalid');
+    expect(form.isValid()).toBeTruthy();
+  });
+
+  test('Selectboxes component in a hidden fieldset should be valid', async () => {
+    const user = userEvent.setup({delay: 50});
+    const {form} = await renderForm(selectboxesInHiddenFieldsetForm, {alwaysDirty: true});
+
+    const input = screen.getByLabelText('Text');
+
+    expect(input).toBeVisible();
+
+    await user.type(input, 'foo');
+
     expect(form.isValid()).toBeTruthy();
   });
 });
