@@ -1,4 +1,4 @@
-import type {RouteObject} from 'react-router';
+import {type RouteObject, redirect} from 'react-router';
 
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 
@@ -7,10 +7,10 @@ import ErrorBoundary from '@/components/Errors/ErrorBoundary';
  */
 const createAppointmentRoutes: RouteObject[] = [
   {
-    path: '',
-    lazy: async () => {
-      const {LandingPage} = await import('@/components/appointments');
-      return {element: <LandingPage />};
+    index: true,
+    loader: ({request}) => {
+      const url = new URL(request.url);
+      return redirect(`producten${url.search}`);
     },
   },
   {
