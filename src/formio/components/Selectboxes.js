@@ -30,7 +30,7 @@ class Selectboxes extends Formio.Components.components.selectboxes {
     if (!this.shouldSkipValidation(data, dirty, rowData)) {
       return super.checkComponentValidity(data, dirty, rowData, options);
     }
-    const { async = false} = options;
+    const {async = false} = options;
     return async ? Promise.resolve(true) : true;
   }
 }
