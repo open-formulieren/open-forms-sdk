@@ -45,7 +45,7 @@ const getCoordinates = (geoJsonGeometry: GeoJsonGeometry | undefined): Coordinat
 
 export interface LeafletMapProps {
   geoJsonGeometry?: GeoJsonGeometry;
-  onGeoJsonGeometrySet: (newGeoJsonGeometry: GeoJsonGeometry | null) => void;
+  onGeoJsonGeometrySet?: (newGeoJsonGeometry: GeoJsonGeometry | null) => void;
   defaultCenter?: Coordinates;
   defaultZoomLevel?: number;
   disabled?: boolean;
