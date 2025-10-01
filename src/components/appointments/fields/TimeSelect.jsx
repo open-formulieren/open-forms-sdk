@@ -1,11 +1,10 @@
-import {format, parseISO} from 'date-fns';
+import {isValid, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import {useCallback, useContext} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {get} from 'api';
-import {useCalendarLocale} from 'components/forms/DateField';
 import AsyncSelectField from 'components/forms/SelectField/AsyncSelectField';
 
 import {ProductsType} from '../types';
@@ -17,7 +16,7 @@ export const fieldLabel = defineMessage({
 });
 
 const getDatetimes = async (baseUrl, productIds, locationId, date) => {
-  if (!productIds.length || !locationId || !date) return [];
+  if (!productIds.length || !locationId || !isValid(parseISO(date))) return [];
   const multiParams = productIds.map(id => ({product_id: id}));
   const datetimesList = await get(
     `${baseUrl}appointments/times`,
@@ -34,7 +33,6 @@ const TimeSelect = ({products}) => {
   const {
     values: {location, date},
   } = useFormikContext();
-  const calendarLocale = useCalendarLocale();
 
   const productIds = prepareProductsForProductIDQuery(products);
 
@@ -48,8 +46,7 @@ const TimeSelect = ({products}) => {
           return {
             parsed,
             value: datetime,
-            // p: long localized time, without seconds
-            label: format(parsed, 'p', {locale: calendarLocale}),
+            label: intl.formatTime(parsed),
           };
         })
         .sort((a, b) => {
@@ -60,7 +57,7 @@ const TimeSelect = ({products}) => {
     },
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [baseUrl, calendarLocale, JSON.stringify(productIds), location, date]
+    [baseUrl, intl, JSON.stringify(productIds), location, date]
   );
 
   return (

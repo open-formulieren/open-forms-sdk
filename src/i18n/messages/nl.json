@@ -80,11 +80,6 @@
     "description": "Appoinments: appointment date label",
     "originalDefault": "Date"
   },
-  "2KKNKT": {
-    "defaultMessage": "Vorig jaar",
-    "description": "Calendar: previous year button title",
-    "originalDefault": "Previous year"
-  },
   "2osLqe": {
     "defaultMessage": "Locatie en tijd",
     "description": "Appointments: select location and time step title",
@@ -272,11 +267,6 @@
     "description": "Co-signed without representation fallback message",
     "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
   },
-  "AustF4": {
-    "defaultMessage": "Volgende maand",
-    "description": "Calendar: next month button title",
-    "originalDefault": "Next month"
-  },
   "AxDC+M": {
     "defaultMessage": "Inloggen met {provider}",
     "description": "Login button label",
@@ -316,12 +306,6 @@
     "defaultMessage": "Klik op de kaart om een pin/punt te plaatsen",
     "description": "Draw handler marker tooltip start.",
     "originalDefault": "Click map to place marker"
-  },
-  "DBTNgI": {
-    "defaultMessage": "d",
-    "description": "Placeholder for day part of a date",
-    "isTranslated": true,
-    "originalDefault": "d"
   },
   "DEetjI": {
     "defaultMessage": "Straatnaam",
@@ -500,11 +484,6 @@
     "description": "ZOD 'too_small' error message, for arrays",
     "originalDefault": "Array must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} item} other {{minimum} items}}."
   },
-  "IhLYXK": {
-    "defaultMessage": "Toon/verberg de kalender",
-    "description": "Datepicker: accessible calendar toggle label",
-    "originalDefault": "Toggle calendar"
-  },
   "IzoDEF": {
     "defaultMessage": "Product en/of dienst(en)",
     "description": "Appointments products step title",
@@ -529,11 +508,6 @@
     "defaultMessage": "Er ging helaas iets fout!",
     "description": "Generic error message",
     "originalDefault": "Unfortunately something went wrong!"
-  },
-  "KWP1b9": {
-    "defaultMessage": "Vorige maand",
-    "description": "Calendar: previous month button title",
-    "originalDefault": "Previous month"
   },
   "KvSkZT": {
     "defaultMessage": "Oeps!",
@@ -600,12 +574,6 @@
     "defaultMessage": "Wijzig velden in formulierstap ''{name}''",
     "description": "Form step change link accessible description",
     "originalDefault": "Change fields in form step ''{name}''"
-  },
-  "MJXZYI": {
-    "defaultMessage": "m",
-    "description": "Placeholder for month part of a date",
-    "isTranslated": true,
-    "originalDefault": "m"
   },
   "MJva3t": {
     "defaultMessage": "Betalen",
@@ -701,11 +669,6 @@
     "defaultMessage": "Goed",
     "description": "GovMetric rating text",
     "originalDefault": "Good"
-  },
-  "Tip5+d": {
-    "defaultMessage": "Volgend jaar",
-    "description": "Calendar: next year button title",
-    "originalDefault": "Next year"
   },
   "Tx14Bn": {
     "defaultMessage": "De tekst moet {exact, select, true {exact} other {{inclusive, select, true {minstens} other {meer dan}}} } {minimum, plural, one {{minimum} karakter} other {{minimum} karakters}} lang zijn.",
@@ -1106,11 +1069,6 @@
     "defaultMessage": "Gebruik CTRL + scroll om te zoomen in de kaart",
     "description": "Gesturehandeling pc scroll message.",
     "originalDefault": "Use ctrl + scroll to zoom the map"
-  },
-  "nfRRDu": {
-    "defaultMessage": "jjjj",
-    "description": "Placeholder for year part of a date",
-    "originalDefault": "yyyy"
   },
   "nwQjsz": {
     "defaultMessage": "Je sessie vervalt binnenkort.",

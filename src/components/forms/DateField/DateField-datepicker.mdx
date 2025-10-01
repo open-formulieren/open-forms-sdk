@@ -1,8 +1,7 @@
+import {DateField} from '@open-formulieren/formio-renderer';
 import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
 
-import DateField from './DateField';
 import * as DatepickerStories from './DateField-datepicker.stories';
-import DatePicker from './DatePicker';
 
 <Meta of={DatepickerStories} />
 
@@ -34,12 +33,6 @@ Use the prop `widget="datepicker"` to use this widget.
 ## Props
 
 <ArgTypes of={DateField} />
-
-**DatePicker props**
-
-Internally, the `DateField` uses the `DatePicker` widget.
-
-<ArgTypes of={DatePicker} />
 
 ## No asterisks
 

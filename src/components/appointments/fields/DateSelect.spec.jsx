@@ -58,7 +58,7 @@ describe('The appointment date select', () => {
     expect(input).toHaveFocus();
     expect(await screen.findByRole('dialog')).toBeVisible();
 
-    expect(screen.getByRole('button', {name: 'Monday 12 June 2023'})).toBeDisabled();
+    expect(await screen.findByRole('button', {name: 'Monday 12 June 2023'})).toBeDisabled();
     expect(screen.getByRole('button', {name: 'Tuesday 13 June 2023'})).not.toBeDisabled();
     expect(screen.getByRole('button', {name: 'Wednesday 14 June 2023'})).not.toBeDisabled();
     expect(screen.getByRole('button', {name: 'Thursday 15 June 2023'})).not.toBeDisabled();
@@ -82,7 +82,7 @@ describe('The appointment date select', () => {
     expect(input).toHaveFocus();
     expect(await screen.findByRole('dialog')).toBeVisible();
 
-    expect(screen.getByRole('button', {name: 'Monday 12 June 2023'})).not.toBeDisabled();
+    expect(await screen.findByRole('button', {name: 'Monday 12 June 2023'})).not.toBeDisabled();
     expect(screen.getByRole('button', {name: 'Tuesday 13 June 2023'})).toBeDisabled();
     expect(screen.getByRole('button', {name: 'Wednesday 14 June 2023'})).toBeDisabled();
     expect(screen.getByRole('button', {name: 'Thursday 15 June 2023'})).not.toBeDisabled();

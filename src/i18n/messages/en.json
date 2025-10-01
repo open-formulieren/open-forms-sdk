@@ -79,11 +79,6 @@
     "description": "Appoinments: appointment date label",
     "originalDefault": "Date"
   },
-  "2KKNKT": {
-    "defaultMessage": "Previous year",
-    "description": "Calendar: previous year button title",
-    "originalDefault": "Previous year"
-  },
   "2osLqe": {
     "defaultMessage": "Location and time",
     "description": "Appointments: select location and time step title",
@@ -269,11 +264,6 @@
     "description": "Co-signed without representation fallback message",
     "originalDefault": "Something went wrong while processing the co-sign authentication. Please contact the municipality."
   },
-  "AustF4": {
-    "defaultMessage": "Next month",
-    "description": "Calendar: next month button title",
-    "originalDefault": "Next month"
-  },
   "AxDC+M": {
     "defaultMessage": "Login with {provider}",
     "description": "Login button label",
@@ -313,11 +303,6 @@
     "defaultMessage": "Click map to place marker",
     "description": "Draw handler marker tooltip start.",
     "originalDefault": "Click map to place marker"
-  },
-  "DBTNgI": {
-    "defaultMessage": "d",
-    "description": "Placeholder for day part of a date",
-    "originalDefault": "d"
   },
   "DEetjI": {
     "defaultMessage": "Street name",
@@ -494,11 +479,6 @@
     "description": "ZOD 'too_small' error message, for arrays",
     "originalDefault": "Array must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} item} other {{minimum} items}}."
   },
-  "IhLYXK": {
-    "defaultMessage": "Toggle calendar",
-    "description": "Datepicker: accessible calendar toggle label",
-    "originalDefault": "Toggle calendar"
-  },
   "IzoDEF": {
     "defaultMessage": "Select your product(s)",
     "description": "Appointments products step title",
@@ -523,11 +503,6 @@
     "defaultMessage": "Unfortunately something went wrong!",
     "description": "Generic error message",
     "originalDefault": "Unfortunately something went wrong!"
-  },
-  "KWP1b9": {
-    "defaultMessage": "Previous month",
-    "description": "Calendar: previous month button title",
-    "originalDefault": "Previous month"
   },
   "KvSkZT": {
     "defaultMessage": "Oops!",
@@ -593,11 +568,6 @@
     "defaultMessage": "Change fields in form step ''{name}''",
     "description": "Form step change link accessible description",
     "originalDefault": "Change fields in form step ''{name}''"
-  },
-  "MJXZYI": {
-    "defaultMessage": "m",
-    "description": "Placeholder for month part of a date",
-    "originalDefault": "m"
   },
   "MJva3t": {
     "defaultMessage": "Payment",
@@ -693,11 +663,6 @@
     "defaultMessage": "Good",
     "description": "GovMetric rating text",
     "originalDefault": "Good"
-  },
-  "Tip5+d": {
-    "defaultMessage": "Next year",
-    "description": "Calendar: next year button title",
-    "originalDefault": "Next year"
   },
   "Tx14Bn": {
     "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.",
@@ -1093,11 +1058,6 @@
     "defaultMessage": "Use ctrl + scroll to zoom the map",
     "description": "Gesturehandeling pc scroll message.",
     "originalDefault": "Use ctrl + scroll to zoom the map"
-  },
-  "nfRRDu": {
-    "defaultMessage": "yyyy",
-    "description": "Placeholder for year part of a date",
-    "originalDefault": "yyyy"
   },
   "nwQjsz": {
     "defaultMessage": "Your session will expire soon.",
