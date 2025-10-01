@@ -176,10 +176,15 @@ export const MapWithInteractions: Story = {
 
 export const MapWithOverlays: Story = {
   args: {
+    interactions: {
+      polygon: true,
+      polyline: true,
+      marker: true,
+    },
     // Center on a more populated area, to better showcase the WMS layers
     geoJsonGeometry: {
       type: 'Point',
-      coordinates: [5.284580856043387, 52.120930596779296],
+      coordinates: [5.211776, 52.087276],
     },
     overlays: [
       {
@@ -198,10 +203,10 @@ export const MapWithOverlays: Story = {
       },
       {
         uuid: '4a76c09a-2ae3-4c17-8b40-ade45cb86a0e',
-        url: 'https://service.pdok.nl/lv/bag/wfs/v2_0?request=getCapabilities&service=WFS',
-        label: 'Unsupported WFS layer',
+        url: 'https://service.pdok.nl/rws/nutsdiensten-en-overheidsdiensten/riool-leidingelementen/wfs/v1_0?request=GetCapabilities&service=WFS',
+        label: 'Leidingelementen WFS layer',
         type: 'wfs',
-        layers: ['pand'],
+        layers: ['nutsdiensten-en-overheidsdiensten:appurtenance'],
       },
     ],
   },
@@ -220,18 +225,30 @@ export const MapWithOverlays: Story = {
 
       const layerCheckbox1 = canvas.getByLabelText('BAG Pand and Verblijfsobject layer');
       const layerCheckbox2 = canvas.getByLabelText('Grondwaterspiegeldiepte layer');
+      const layerCheckbox3 = canvas.getByLabelText('Leidingelementen WFS layer');
 
-      // Expect both layers to be visible and checked
+      // Expect all layers to be visible and checked
       expect(layerCheckbox1).toBeVisible();
       expect(layerCheckbox2).toBeVisible();
+      expect(layerCheckbox3).toBeVisible();
+
       expect(layerCheckbox1).toBeChecked();
       expect(layerCheckbox2).toBeChecked();
+      expect(layerCheckbox3).toBeChecked();
 
-      // At this time, WFS layers are not yet supported. So this layer should not be
-      // displayed in the Layers menu.
-      const wfsLayerCheckbox = canvas.queryByLabelText('Unsupported WFS layer');
+      await userEvent.unhover(layersButton);
+    });
 
-      expect(wfsLayerCheckbox).not.toBeInTheDocument();
+    await step('Opening WFS feature popup', async () => {
+      const wfsFeature = canvas.getByRole('button', {name: 'Interactive marker'});
+      expect(wfsFeature).toBeVisible();
+
+      await userEvent.click(wfsFeature);
+
+      waitFor(() => {
+        const popup = canvas.getByRole('table', {name: 'WFS feature properties'});
+        expect(popup).toBeVisible();
+      });
     });
   },
 };

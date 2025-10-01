@@ -42,21 +42,30 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
   const intl = useIntl();
   const groupRef = useRef<Leaflet.LayerGroup>(null);
 
-  const getPopupContent = (feature: Feature): string => {
-    const popupContent = (
-      <table className="openforms-leaflet-map-overlay-popup-table">
-        {Object.entries(feature?.properties || {}).map(([key, value]) => (
-          <tr key={key}>
-            <th className="openforms-leaflet-map-overlay-popup-table__item-key">{key}</th>
-            <td className="openforms-leaflet-map-overlay-popup-table__item-value">
-              {value || '-'}
-            </td>
-          </tr>
-        ))}
-      </table>
-    );
-    return ReactDOMServer.renderToString(popupContent);
-  };
+  const getPopupContent = useCallback(
+    (feature: Feature): string => {
+      const popupContent = (
+        <table
+          className="openforms-leaflet-map-overlay-popup-table"
+          title={intl.formatMessage({
+            description: 'Leaflet WFS overlay feature popup menu title',
+            defaultMessage: 'WFS feature properties',
+          })}
+        >
+          {Object.entries(feature?.properties || {}).map(([key, value]) => (
+            <tr key={key}>
+              <th className="openforms-leaflet-map-overlay-popup-table__item-key">{key}</th>
+              <td className="openforms-leaflet-map-overlay-popup-table__item-value">
+                {value || '-'}
+              </td>
+            </tr>
+          ))}
+        </table>
+      );
+      return ReactDOMServer.renderToString(popupContent);
+    },
+    [intl]
+  );
 
   const fetchFeatureCollections = useCallback(async (): Promise<FeatureCollection[]> => {
     const bounds = map.getBounds();
@@ -99,15 +108,17 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
                 className:
                   'openforms-leaflet-map-overlay-feature openforms-leaflet-map-overlay-feature--marker',
               }),
+              title: intl.formatMessage({
+                description: 'Leaflet WFS overlay marker title',
+                defaultMessage: 'Interactive marker',
+              }),
             }),
           style: {
             className:
               'openforms-leaflet-map-overlay-feature openforms-leaflet-map-overlay-feature--poly',
           },
           onEachFeature: (feature, layer) => {
-            layer.bindPopup(getPopupContent(feature), {
-              maxHeight: 200,
-            });
+            layer.bindPopup(getPopupContent(feature), {maxHeight: 200});
           },
         }).addTo(group);
       });
@@ -124,7 +135,7 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
       map.off('moveend', updateFeatureCollections);
       map.removeLayer(group);
     };
-  }, [map, url, featureTypes, intl, fetchFeatureCollections]);
+  }, [map, url, featureTypes, intl, fetchFeatureCollections, getPopupContent]);
 
   return <LayerGroup ref={groupRef} />;
 };
