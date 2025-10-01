@@ -1,9 +1,9 @@
 import {expect, userEvent, within} from '@storybook/test';
 
+import {mockAppointmentProductsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
 import {AppointmentConfigContext} from '../Context';
-import {mockAppointmentProductsGet} from '../mocks';
 import Product from './Product';
 
 const PRODUCTS_DATA = [

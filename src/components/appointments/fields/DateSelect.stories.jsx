@@ -1,8 +1,8 @@
 import {expect, userEvent, within} from '@storybook/test';
 
+import {mockAppointmentDatesGet} from 'api-mocks/appointments';
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
-import {mockAppointmentDatesGet} from '../mocks';
 import DateSelect from './DateSelect';
 
 export default {

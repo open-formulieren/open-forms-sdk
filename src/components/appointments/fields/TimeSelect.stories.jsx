@@ -1,9 +1,9 @@
 import {expect, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 
+import {mockAppointmentTimesGet} from 'api-mocks/appointments';
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
-import {mockAppointmentTimesGet} from '../mocks';
 import TimeSelect from './TimeSelect';
 
 const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date'});

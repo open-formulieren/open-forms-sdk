@@ -2,9 +2,9 @@ import {expect, userEvent, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
+import {mockAppointmentCustomerFieldsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
-import {mockAppointmentCustomerFieldsGet} from '../mocks';
 import {withAppointmentState} from '../story-utils';
 import ContactDetailsStep from './ContactDetailsStep';
 

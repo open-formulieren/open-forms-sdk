@@ -8,10 +8,6 @@ import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import {FormContext} from '@/Context';
 import {buildForm} from '@/api-mocks';
-import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from '@/api-mocks/submissions';
-import type {Form} from '@/data/forms';
-import routes, {FUTURE_FLAGS} from '@/routes';
-
 import {
   mockAppointmentCustomerFieldsGet,
   mockAppointmentDatesGet,
@@ -19,7 +15,11 @@ import {
   mockAppointmentPost,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from '../mocks';
+} from '@/api-mocks/appointments';
+import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from '@/api-mocks/submissions';
+import type {Form} from '@/data/forms';
+import routes, {FUTURE_FLAGS} from '@/routes';
+
 import CreateAppointment from './';
 
 const Wrapper: React.FC<{form: Form}> = ({form}) => {
@@ -131,7 +131,7 @@ export const HappyFlow: Story = {
         await canvas.findByText('Open Gem');
       });
 
-      // this location has a date available tomorrow (see ./mocks.js)
+      // this location has a date available tomorrow (see api-mocks/appointments)
       const tomorrow = format(addDays(new Date(), 1), 'P', {
         locale: calendarLocale,
       });

@@ -6,12 +6,12 @@ import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL, buildSubmission} from 'api-mocks';
+import {mockAppointmentProductsGet} from 'api-mocks/appointments';
 import mswServer from 'api-mocks/msw-server';
 import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
 import {CreateAppointmentContext} from '../Context';
 import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
-import {mockAppointmentProductsGet} from '../mocks';
 import ChooseProductStep from './ChooseProductStep';
 
 const render = () => {

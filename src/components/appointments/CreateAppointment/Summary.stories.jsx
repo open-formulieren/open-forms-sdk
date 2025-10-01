@@ -1,5 +1,11 @@
 import {withRouter} from 'storybook-addon-remix-react-router';
 
+import {
+  mockAppointmentCustomerFieldsGet,
+  mockAppointmentLocationsGet,
+  mockAppointmentPost,
+  mockAppointmentProductsGet,
+} from 'api-mocks/appointments';
 import {buildSubmission} from 'api-mocks/submissions';
 import {
   ConfigDecorator,
@@ -9,12 +15,6 @@ import {
   withForm,
 } from 'story-utils/decorators';
 
-import {
-  mockAppointmentCustomerFieldsGet,
-  mockAppointmentLocationsGet,
-  mockAppointmentPost,
-  mockAppointmentProductsGet,
-} from '../mocks';
 import {withAppointmentState} from '../story-utils';
 import Summary from './Summary';
 

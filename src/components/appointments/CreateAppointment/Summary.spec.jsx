@@ -6,18 +6,18 @@ import {Outlet, RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from 'Context';
 import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
-import {LiteralsProvider} from 'components/Literal';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
-
-import {CreateAppointmentContext} from '../Context';
 import {
   mockAppointmentCustomerFieldsGet,
   mockAppointmentErrorPost,
   mockAppointmentLocationsGet,
   mockAppointmentPost,
   mockAppointmentProductsGet,
-} from '../mocks';
+} from 'api-mocks/appointments';
+import mswServer from 'api-mocks/msw-server';
+import {LiteralsProvider} from 'components/Literal';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+
+import {CreateAppointmentContext} from '../Context';
 import {buildContextValue} from './CreateAppointmentState';
 import Summary from './Summary';
 

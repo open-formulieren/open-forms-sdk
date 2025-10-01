@@ -6,17 +6,17 @@ import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL, buildSubmission} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
-
-import {CreateAppointmentContext} from '../Context';
-import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
 import {
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from '../mocks';
+} from 'api-mocks/appointments';
+import mswServer from 'api-mocks/msw-server';
+import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+
+import {CreateAppointmentContext} from '../Context';
+import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
 import LocationAndTimeStep from './LocationAndTimeStep';
 
 const render = initialValues => {
@@ -72,7 +72,7 @@ describe('The location and time step', () => {
 
     await act(async () => {
       render(
-        // product with multiple locations, see ./mocks.js
+        // product with multiple locations, see api-mocks/appointments
         {
           products: [{productId: 'e8e045ab', amount: 1}],
           location: '',

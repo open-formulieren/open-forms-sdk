@@ -6,9 +6,9 @@ import {IntlProvider} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
+import {mockAppointmentTimesGet} from 'api-mocks/appointments';
 import mswServer from 'api-mocks/msw-server';
 
-import {mockAppointmentTimesGet} from '../mocks';
 import TimeSelect from './TimeSelect';
 
 const products = [{productId: 'e8e045ab', amount: 1}];

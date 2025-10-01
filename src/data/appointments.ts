@@ -71,7 +71,7 @@ interface AppointmentBase {
   contactDetails: JSONObject;
 }
 
-type AppointmentCreateBody = AppointmentBase & StatementValues;
+export type AppointmentCreateBody = AppointmentBase & StatementValues;
 
 export interface Appointment extends AppointmentBase {
   statusUrl: string;

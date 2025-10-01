@@ -6,9 +6,9 @@ import {IntlProvider} from 'react-intl';
 
 import {ConfigContext} from 'Context';
 import {BASE_URL} from 'api-mocks';
+import {mockAppointmentDatesGet} from 'api-mocks/appointments';
 import mswServer from 'api-mocks/msw-server';
 
-import {mockAppointmentDatesGet} from '../mocks';
 import DateSelect from './DateSelect';
 
 const waitForPosition = () => act(async () => {});

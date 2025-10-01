@@ -8,6 +8,14 @@ import {RouterProvider, createMemoryRouter} from 'react-router';
 import {ConfigContext, FormContext} from 'Context';
 import {updateSessionExpiry} from 'api';
 import {BASE_URL, buildForm} from 'api-mocks';
+import {
+  mockAppointmentCustomerFieldsGet,
+  mockAppointmentDatesGet,
+  mockAppointmentLocationsGet,
+  mockAppointmentPost,
+  mockAppointmentProductsGet,
+  mockAppointmentTimesGet,
+} from 'api-mocks/appointments';
 import mswServer from 'api-mocks/msw-server';
 import {
   buildSubmission,
@@ -17,18 +25,10 @@ import {
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from 'hooks/useGetOrCreateSubmission';
 import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 
-import {
-  mockAppointmentCustomerFieldsGet,
-  mockAppointmentDatesGet,
-  mockAppointmentLocationsGet,
-  mockAppointmentPost,
-  mockAppointmentProductsGet,
-  mockAppointmentTimesGet,
-} from '../mocks';
 import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAppointmentState';
 
 // scrollIntoView is not not supported in jest-dom
-let scrollIntoViewMock = vi.fn();
+const scrollIntoViewMock = vi.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const renderApp = (initialRoute = '/') => {

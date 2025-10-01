@@ -1,8 +1,8 @@
 import {expect, userEvent, within} from '@storybook/test';
 
+import {mockAppointmentProductsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
-import {mockAppointmentProductsGet} from '../mocks';
 import {default as ProductSelectComponent} from './ProductSelect';
 
 export default {

@@ -2,14 +2,14 @@ import {expect, userEvent, within} from '@storybook/test';
 import {formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
-
 import {
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from '../mocks';
+} from 'api-mocks/appointments';
+import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+
 import {withAppointmentState} from '../story-utils';
 import LocationAndTimeStep from './LocationAndTimeStep';
 

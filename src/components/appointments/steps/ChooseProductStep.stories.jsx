@@ -1,10 +1,10 @@
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
+import {mockAppointmentProductsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
 import {AppointmentConfigContext} from '../Context';
-import {mockAppointmentProductsGet} from '../mocks';
 import {withAppointmentState} from '../story-utils';
 import ChooseProductStep from './ChooseProductStep';
 

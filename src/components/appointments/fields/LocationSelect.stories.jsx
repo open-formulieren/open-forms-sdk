@@ -1,8 +1,8 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
+import {mockAppointmentLocationsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
-import {mockAppointmentLocationsGet} from '../mocks';
 import LocationSelect from './LocationSelect';
 
 export default {
