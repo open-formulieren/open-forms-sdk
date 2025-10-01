@@ -1,15 +1,22 @@
-import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import {useLocation} from 'react-router';
 
-import ProgressIndicator from 'components/ProgressIndicator';
-import {PI_TITLE, STEP_LABELS} from 'components/constants';
 import {checkMatchesPath} from 'components/utils/routers';
 
+import ProgressIndicator from '@/components/ProgressIndicator';
+import type {StepMeta} from '@/components/ProgressIndicator/utils';
+import {PI_TITLE, STEP_LABELS} from '@/components/constants';
+
+import type {AppoinmentStep} from '../types';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS} from './steps';
 
-const AppointmentProgress = ({title, currentStep}) => {
+export interface AppointmentProgressProps {
+  title: string;
+  currentStep: AppoinmentStep;
+}
+
+const AppointmentProgress: React.FC<AppointmentProgressProps> = ({title, currentStep}) => {
   const {submission, submittedSteps} = useCreateAppointmentContext();
   const intl = useIntl();
   const {pathname: currentPathname} = useLocation();
@@ -20,7 +27,7 @@ const AppointmentProgress = ({title, currentStep}) => {
   const isSubmissionComplete = isConfirmation && submission === null;
 
   const currentStepIndex = APPOINTMENT_STEP_PATHS.indexOf(currentStep);
-  const steps = APPOINTMENT_STEPS.map(({path, name}) => {
+  const steps: StepMeta[] = APPOINTMENT_STEPS.map(({path, name}) => {
     const index = APPOINTMENT_STEP_PATHS.indexOf(path);
     const previousStepIndex = Math.max(index - 1, 0);
 
@@ -44,7 +51,7 @@ const AppointmentProgress = ({title, currentStep}) => {
   });
 
   // Add the fixed steps to the the original steps array
-  const finalSteps = [
+  const finalSteps: StepMeta[] = [
     ...steps,
     {
       to: '../overzicht',
@@ -65,7 +72,7 @@ const AppointmentProgress = ({title, currentStep}) => {
   ];
 
   // Figure out the title for the mobile menu based on the state
-  let activeStepTitle;
+  let activeStepTitle: string;
   if (isSummary) {
     activeStepTitle = intl.formatMessage(STEP_LABELS.overview);
   } else if (isConfirmation) {
@@ -95,11 +102,6 @@ const AppointmentProgress = ({title, currentStep}) => {
       accessibleToggleStepsLabel={accessibleToggleStepsLabel}
     />
   );
-};
-
-AppointmentProgress.propTypes = {
-  title: PropTypes.string.isRequired,
-  currentStep: PropTypes.oneOf(APPOINTMENT_STEP_PATHS).isRequired,
 };
 
 export default AppointmentProgress;
