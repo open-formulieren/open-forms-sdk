@@ -1,6 +1,14 @@
 import {defineMessage} from 'react-intl';
+import type {MessageDescriptor} from 'react-intl';
 
-export const APPOINTMENT_STEPS = [
+import type {AppoinmentStep} from '../types';
+
+interface StepAndName {
+  path: AppoinmentStep;
+  name: MessageDescriptor;
+}
+
+export const APPOINTMENT_STEPS: StepAndName[] = [
   {
     path: 'producten',
     name: defineMessage({
@@ -24,4 +32,4 @@ export const APPOINTMENT_STEPS = [
   },
 ];
 
-export const APPOINTMENT_STEP_PATHS = APPOINTMENT_STEPS.map(s => s.path);
+export const APPOINTMENT_STEP_PATHS: AppoinmentStep[] = APPOINTMENT_STEPS.map(s => s.path);

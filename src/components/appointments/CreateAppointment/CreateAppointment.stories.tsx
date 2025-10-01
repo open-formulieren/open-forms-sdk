@@ -1,13 +1,16 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 import {addDays, format} from 'date-fns';
 import {enGB, nl} from 'date-fns/locale';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {FormContext} from 'Context';
-import {buildForm} from 'api-mocks';
-import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
-import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+
+import {FormContext} from '@/Context';
+import {buildForm} from '@/api-mocks';
+import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from '@/api-mocks/submissions';
+import type {Form} from '@/data/forms';
+import routes, {FUTURE_FLAGS} from '@/routes';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -18,6 +21,24 @@ import {
   mockAppointmentTimesGet,
 } from '../mocks';
 import CreateAppointment from './';
+
+const Wrapper: React.FC<{form: Form}> = ({form}) => {
+  const router = createMemoryRouter(routes, {
+    initialEntries: ['/afspraak-maken/'],
+    future: FUTURE_FLAGS,
+  });
+  return (
+    <FormContext.Provider value={form}>
+      <RouterProvider router={router} />
+    </FormContext.Provider>
+  );
+};
+
+interface Args {
+  name: string;
+  supportsMultipleProducts: boolean;
+  showProgressIndicator: boolean;
+}
 
 export default {
   title: 'Private API / Appointments / CreateForm',
@@ -38,59 +59,29 @@ export default {
     },
   },
   args: {
+    name: 'Plan an appointment',
     supportsMultipleProducts: true,
-  },
-  argTypes: {
-    form: {table: {disable: true}},
-  },
-};
-
-const Wrapper = ({form}) => {
-  const router = createMemoryRouter(routes, {
-    initialEntries: ['/afspraak-maken/'],
-    future: FUTURE_FLAGS,
-  });
-  return (
-    <FormContext.Provider value={form}>
-      <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
-    </FormContext.Provider>
-  );
-};
-
-const render = ({showProgressIndicator, supportsMultipleProducts, name}) => {
-  const form = buildForm({
-    showProgressIndicator,
-    name,
-    'appointmentOptions.isAppointment': true,
-    'appointmentOptions.supportsMultipleProducts': supportsMultipleProducts,
-  });
-  return <Wrapper form={form} />;
-};
-
-const loadCalendarLocale = locale => {
-  switch (locale) {
-    case 'nl':
-      return nl;
-    default:
-      return enGB;
-  }
-};
-
-export const Default = {
-  render,
-  args: {
     showProgressIndicator: true,
-    name: 'Plan an appointment',
   },
-};
+  render: ({showProgressIndicator, supportsMultipleProducts, name}) => {
+    const form = buildForm({
+      showProgressIndicator,
+      name,
+      appointmentOptions: {
+        isAppointment: true,
+        supportsMultipleProducts,
+      },
+    });
+    return <Wrapper form={form} />;
+  },
+} satisfies Meta<Args>;
 
-export const HappyFlow = {
+type Story = StoryObj<Args>;
+
+export const Default: Story = {};
+
+export const HappyFlow: Story = {
   name: 'Happy flow',
-  render,
-  args: {
-    showProgressIndicator: true,
-    name: 'Plan an appointment',
-  },
   parameters: {
     // we can't control the browser timezone on chromatic, leading to broken assertions
     // due to the localized appointment times.
@@ -100,24 +91,24 @@ export const HappyFlow = {
     const {locale} = globals;
     const canvas = within(canvasElement);
 
-    const calendarLocale = loadCalendarLocale(locale);
+    const calendarLocale = locale === 'nl' ? nl : enGB;
 
     await step('Wait for products to load', async () => {
       await waitFor(
         async () =>
           await expect(
-            await canvas.queryByRole('button', {name: 'Bevestig producten'})
+            canvas.queryByRole('button', {name: 'Bevestig producten'})
           ).not.toHaveAttribute('aria-disabled', 'true')
       );
     });
 
     await step('Select the product', async () => {
-      let productDropdown;
+      let productDropdown: HTMLDivElement;
       await waitFor(async () => {
         productDropdown = await canvas.findByRole('combobox');
         expect(productDropdown).toBeVisible();
       });
-      await productDropdown.focus();
+      productDropdown!.focus();
       await userEvent.keyboard('[ArrowDown]');
       const productOption = await canvas.findByText('Paspoort aanvraag');
       await userEvent.click(productOption);
@@ -134,7 +125,7 @@ export const HappyFlow = {
       await waitFor(async () => {
         await expect(canvas.getByRole('link', {name: 'Terug naar producten'})).toBeVisible();
         await expect(
-          await canvas.queryByRole('button', {name: 'Naar contactgegevens'})
+          canvas.queryByRole('button', {name: 'Naar contactgegevens'})
         ).not.toHaveAttribute('aria-disabled', 'true');
         // location auto-filled
         await canvas.findByText('Open Gem');
@@ -152,12 +143,12 @@ export const HappyFlow = {
         await userEvent.type(dateInput, tomorrow);
       });
 
-      let timeDropdown;
+      let timeDropdown: HTMLDivElement;
       await waitFor(async () => {
         timeDropdown = await canvas.findByLabelText('Tijdstip');
         await expect(timeDropdown).not.toBeDisabled();
       });
-      await timeDropdown.focus();
+      timeDropdown!.focus();
       await userEvent.keyboard('[ArrowDown]');
 
       // because of the time change (winter-summer) the regex was simplified,
@@ -180,9 +171,10 @@ export const HappyFlow = {
         ).toBeVisible();
       });
       await waitFor(async () => {
-        await expect(
-          await canvas.queryByRole('button', {name: 'Naar overzicht'})
-        ).not.toHaveAttribute('aria-disabled', 'true');
+        await expect(canvas.queryByRole('button', {name: 'Naar overzicht'})).not.toHaveAttribute(
+          'aria-disabled',
+          'true'
+        );
       });
       await userEvent.type(await canvas.findByLabelText('Last name'), 'Elvis');
       await userEvent.type(canvas.getByLabelText('Dag'), '8');

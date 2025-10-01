@@ -1,9 +1,11 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, waitFor, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {BASE_URL} from 'api-mocks';
-import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
 import {LayoutDecorator, withCard, withForm} from 'story-utils/decorators';
+
+import {BASE_URL} from '@/api-mocks';
+import {mockSubmissionProcessingStatusGet} from '@/api-mocks/submissions';
 
 import Confirmation from './Confirmation';
 
@@ -24,9 +26,11 @@ export default {
       },
     },
   },
-};
+} satisfies Meta<typeof Confirmation>;
 
-export const Success = {
+type Story = StoryObj<typeof Confirmation>;
+
+export const Success: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 

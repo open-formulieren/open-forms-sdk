@@ -22,13 +22,13 @@ import {createAppointment} from '@/data/appointments';
 import type {ComponentSummary} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 
-import type {AppoinmentStep} from '../Context';
 import {fieldLabel as dateLabel} from '../fields/DateSelect';
 import {getLocations, fieldLabel as locationLabel} from '../fields/LocationSelect';
 import {amountLabel} from '../fields/Product';
 import {getAllProducts, fieldLabel as productLabel} from '../fields/ProductSelect';
 import {fieldLabel as timeLabel} from '../fields/TimeSelect';
 import {getContactDetailsFields} from '../steps/ContactDetailsStep';
+import type {AppoinmentStep} from '../types';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 
 type FormikValues = Parameters<GenericSummaryProps['onSubmit']>[0];

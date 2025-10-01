@@ -7,7 +7,8 @@ import type {Submission} from '@/data/submissions';
 import useSessionTimeout from '@/hooks/useSessionTimeout';
 
 import {CreateAppointmentContext} from '../Context';
-import type {AppoinmentStep, AppointmentDataByStep, CreateAppointmentContextType} from '../Context';
+import type {CreateAppointmentContextType} from '../Context';
+import type {AppoinmentStep, AppointmentDataByStep} from '../types';
 
 export const SESSION_STORAGE_KEY = 'appointment|formData';
 

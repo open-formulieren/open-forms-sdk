@@ -1,14 +1,19 @@
 import {useContext, useEffect} from 'react';
 import {useAsyncFn, useSessionStorage} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from 'data/submissions';
+import {ConfigContext} from '@/Context';
+import type {Form} from '@/data/forms';
+import {createSubmission, flagActiveSubmission, flagNoActiveSubmission} from '@/data/submissions';
+import type {Submission} from '@/data/submissions';
 
 export const SESSION_STORAGE_KEY = 'appointment|submission';
 
-const useGetOrCreateSubmission = (form, skipCreation) => {
+const useGetOrCreateSubmission = (form: Form, skipCreation: boolean) => {
   const {baseUrl, clientBaseUrl} = useContext(ConfigContext);
-  const [submission, setSubmission] = useSessionStorage(SESSION_STORAGE_KEY, null);
+  const [submission, setSubmission] = useSessionStorage<Submission | null>(
+    SESSION_STORAGE_KEY,
+    null
+  );
 
   const clear = () => {
     setSubmission(null);
@@ -20,13 +25,15 @@ const useGetOrCreateSubmission = (form, skipCreation) => {
   const shouldCreate = !hasSubmission && !skipCreation;
 
   const [state, callback] = useAsyncFn(
-    async signal => {
+    async (signal: AbortSignal) => {
       if (shouldCreate) {
         try {
-          setSubmission(await createSubmission(baseUrl, form, clientBaseUrl, signal));
-        } catch (e) {
-          if (error.name !== 'AbortError') {
-            throw e;
+          const submission = await createSubmission(baseUrl, form, clientBaseUrl, signal, '');
+          setSubmission(submission);
+        } catch (error) {
+          // See https://developer.mozilla.org/en-US/docs/Web/API/DOMException#aborterror
+          if (!(error instanceof DOMException) || error.name !== 'AbortError') {
+            throw error;
           }
         }
       }
