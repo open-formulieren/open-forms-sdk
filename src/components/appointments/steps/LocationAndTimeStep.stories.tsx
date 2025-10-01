@@ -13,6 +13,7 @@ import {
 } from '@/api-mocks/appointments';
 
 import {withAppointmentState} from '../story-utils';
+import type {AppointmentDataByStep, AppointmentErrors} from '../types';
 import LocationAndTimeStep from './LocationAndTimeStep';
 
 export default {
@@ -32,7 +33,7 @@ export default {
           date: '',
           datetime: '',
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
     },
     msw: {
       handlers: [
@@ -65,11 +66,11 @@ export const WithBackendErrors: Story = {
           date: '2023-07-12',
           datetime: '',
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
       appointmentErrors: {
         initialTouched: {date: true},
         initialErrors: {date: 'This date is not available'},
-      },
+      } satisfies AppointmentErrors,
     },
   },
   play: async ({canvasElement}) => {
@@ -97,7 +98,7 @@ export const DependentFieldsReset: Story = {
           date: TODAY,
           datetime: '',
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
     },
   },
   play: async ({canvasElement, step}) => {

@@ -98,15 +98,13 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}
       {!loading && (
         <FormioForm
           components={components}
-          values={stepData}
+          values={stepData?.contactDetails}
+          // @ts-expect-error the Errors type in our renderer needs to support undefined
           errors={initialErrors?.contactDetails}
           onSubmit={async values => {
             flushSync(() => {
               clearStepErrors();
-              // type cast necessary because JSONObject is wider than our known flat set of
-              // components
-              // TODO: support generic value type parameter to FormioForm?
-              submitStep({contactDetails: values as Record<string, string | number | boolean>});
+              submitStep({contactDetails: values});
             });
             if (navigateTo) navigate(navigateTo);
           }}

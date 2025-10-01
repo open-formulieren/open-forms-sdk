@@ -1,3 +1,6 @@
+import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {FormikErrors, FormikTouched} from 'formik';
+
 import type {AppointmentProduct} from '@/data/appointments';
 
 export type AppoinmentStep = 'producten' | 'kalender' | 'contactgegevens';
@@ -34,6 +37,21 @@ export interface AppointmentDataByStep {
    * @todo: the contactDetails key is new - incorporate it everywhere!
    */
   contactgegevens: {
-    contactDetails: Record<string, string | number | boolean>;
+    contactDetails: JSONObject;
   };
+}
+
+// create intersection of all the steps, which is the final state to submit to the
+// backend
+export type AppointmentData = AppointmentDataByStep['producten'] &
+  AppointmentDataByStep['kalender'] &
+  AppointmentDataByStep['contactgegevens'];
+
+/**
+ * The Formik `initialTouched` and `initialErrors` data structures for all the possible
+ * appointment data keys, with the correct deep structure.
+ */
+export interface AppointmentErrors {
+  initialTouched: FormikTouched<AppointmentData>;
+  initialErrors: FormikErrors<AppointmentData>;
 }

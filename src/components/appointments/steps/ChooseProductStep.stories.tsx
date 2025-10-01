@@ -8,6 +8,7 @@ import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
 
 import {AppointmentConfigContext} from '../Context';
 import {withAppointmentState} from '../story-utils';
+import type {AppointmentDataByStep, AppointmentErrors} from '../types';
 import ChooseProductStep from './ChooseProductStep';
 
 export default {
@@ -30,7 +31,7 @@ export default {
             },
           ],
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
     },
   },
 } satisfies Meta<typeof ChooseProductStep>;
@@ -70,7 +71,7 @@ export const AddingProducts: Story = {
             },
           ],
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
     },
   },
   play: async ({canvasElement}) => {
@@ -100,7 +101,7 @@ export const RemovingProducts: Story = {
             },
           ],
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
     },
   },
   play: async ({canvasElement}) => {
@@ -148,11 +149,11 @@ export const WithBackendErrors: Story = {
         producten: {
           products: [{productId: '166a5c79', amount: 1}],
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
       appointmentErrors: {
         initialTouched: {products: [{productId: true}]},
         initialErrors: {products: [{productId: 'Product is sold out.'}]},
-      },
+      } satisfies AppointmentErrors,
     },
   },
   play: async ({canvasElement}) => {

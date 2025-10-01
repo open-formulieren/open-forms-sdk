@@ -21,6 +21,7 @@ import {mockSubmissionPost, mockSubmissionProcessingStatusErrorGet} from '@/api-
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from '@/hooks/useGetOrCreateSubmission';
 import routes, {FUTURE_FLAGS} from '@/routes';
 
+import type {AppointmentDataByStep} from '../types';
 import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAppointmentState';
 
 // scrollIntoView is not not supported in jest-dom
@@ -138,7 +139,7 @@ describe('Create appointment status checking', () => {
     const user = userEvent.setup({delay: null});
     // set the appointment data in sessionStorage
     const submission = buildSubmission({steps: []});
-    const appointmentData = {
+    const appointmentData: AppointmentDataByStep = {
       producten: {
         products: [{productId: '166a5c79', amount: 1}],
       },
@@ -147,7 +148,7 @@ describe('Create appointment status checking', () => {
         date: '2023-08-22',
         datetime: '2023-08-22T15:00:00+02:00',
       },
-      contactgegevens: {lastName: 'Gem'},
+      contactgegevens: {contactDetails: {lastName: 'Gem'}},
     };
     sessionStorage.setItem(SUBMISSION_SESSION_STORAGE_KEY, JSON.stringify(submission));
     sessionStorage.setItem(APPOINTMENT_SESSION_STORAGE_KEY, JSON.stringify(appointmentData));

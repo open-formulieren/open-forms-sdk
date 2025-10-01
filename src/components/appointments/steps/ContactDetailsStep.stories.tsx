@@ -8,6 +8,7 @@ import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators
 import {mockAppointmentCustomerFieldsGet} from '@/api-mocks/appointments';
 
 import {withAppointmentState} from '../story-utils';
+import type {AppointmentDataByStep, AppointmentErrors} from '../types';
 import ContactDetailsStep from './ContactDetailsStep';
 
 const TOMORROW: string = formatISO(addDays(new Date(), 1), {representation: 'date'});
@@ -29,7 +30,7 @@ export default {
           date: TOMORROW,
           datetime: `${TOMORROW}T08:00:00Z`,
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
     },
     msw: {
       handlers: [mockAppointmentCustomerFieldsGet],
@@ -86,15 +87,17 @@ export const WithBackendErrors: Story = {
           datetime: `${TOMORROW}T08:00:00Z`,
         },
         contactgegevens: {
-          lastName: 'Mr. Krabs',
+          contactDetails: {
+            lastName: 'Mr. Krabs',
+          },
         },
-      },
+      } satisfies Partial<AppointmentDataByStep>,
       appointmentErrors: {
         initialTouched: {contactDetails: {lastName: true}},
         initialErrors: {
           contactDetails: {lastName: 'Unfortunately, you are banned from making appointments.'},
         },
-      },
+      } satisfies AppointmentErrors,
     },
   },
   play: async ({canvasElement}) => {

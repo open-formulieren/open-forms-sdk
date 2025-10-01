@@ -3,7 +3,7 @@ import React from 'react';
 
 import type {Submission} from '@/data/submissions';
 
-import type {AppoinmentStep, AppointmentDataByStep} from './types';
+import type {AppoinmentStep, AppointmentData, AppointmentDataByStep} from './types';
 
 export interface AppointmentConfigContext {
   supportsMultipleProducts: boolean;
@@ -13,12 +13,6 @@ const AppointmentConfigContext = React.createContext<AppointmentConfigContext>({
   supportsMultipleProducts: true,
 });
 AppointmentConfigContext.displayName = 'AppointmentConfigContext';
-
-// create intersection of all the steps, which is the final state to submit to the
-// backend
-type AppointmentData = AppointmentDataByStep['producten'] &
-  AppointmentDataByStep['kalender'] &
-  AppointmentDataByStep['contactgegevens'];
 
 export interface CreateAppointmentContextType<S extends AppoinmentStep = AppoinmentStep> {
   submission: Submission | null;

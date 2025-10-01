@@ -8,13 +8,11 @@ import useSessionTimeout from '@/hooks/useSessionTimeout';
 
 import {CreateAppointmentContext} from '../Context';
 import type {CreateAppointmentContextType} from '../Context';
-import type {AppoinmentStep, AppointmentDataByStep} from '../types';
+import type {AppoinmentStep, AppointmentData, AppointmentDataByStep} from '../types';
 
 export const SESSION_STORAGE_KEY = 'appointment|formData';
 
 type ErrorKeysByStep = {[K in AppoinmentStep]: (keyof AppointmentDataByStep[K])[]};
-
-type AppointmentData = CreateAppointmentContextType['appointmentData'];
 
 const ERROR_KEYS_BY_STEP: ErrorKeysByStep = {
   producten: ['products'],
@@ -111,13 +109,13 @@ export const buildContextValue = ({
   const submittedSteps = (Object.keys(appointmentData) as AppoinmentStep[]).filter(
     subObject => Object.keys(subObject).length
   );
-  const mergedAppointmentData: AppointmentData = (
+  const mergedAppointmentData: Partial<AppointmentData> = (
     Object.keys(appointmentData) as AppoinmentStep[]
   ).reduce((accumulator, key) => {
     const stepData = appointmentData[key];
     if (!stepData) return accumulator;
     return {...accumulator, ...stepData};
-  }, {} satisfies AppointmentData);
+  }, {} satisfies Partial<AppointmentData>);
 
   const errorKeys = currentStep === '' ? [] : ERROR_KEYS_BY_STEP[currentStep];
   const {initialTouched = {}, initialErrors = {}} = appointmentErrors;
