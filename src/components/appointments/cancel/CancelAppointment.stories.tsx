@@ -1,19 +1,23 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import Card from 'components/Card';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
-import {mockAppointmentCancelErrorPost, mockAppointmentCancelPost} from '../mocks';
+import {mockAppointmentCancelErrorPost, mockAppointmentCancelPost} from '@/api-mocks/appointments';
+import Card from '@/components/Card';
+
 import CancelAppointment from './CancelAppointment';
 
 export default {
   title: 'Private API / Appointments / Cancellation / Cancel',
   component: CancelAppointment,
   decorators: [LayoutDecorator, withRouter, ConfigDecorator],
-};
+} satisfies Meta<typeof CancelAppointment>;
 
-export const Default = {
+type Story = StoryObj<typeof CancelAppointment>;
+
+export const Default: Story = {
   parameters: {
     reactRouter: {
       location: {
@@ -29,22 +33,26 @@ export const Default = {
   },
 };
 
-export const MissingTimeParameter = {
+export const MissingTimeParameter: Story = {
   name: 'Missing time parameter',
-  render: () => (
-    <Card title="Error">
-      <CancelAppointment />
-    </Card>
-  ),
+  decorators: [
+    Story => (
+      <Card title="Error">
+        <Story />{' '}
+      </Card>
+    ),
+  ],
 };
 
-export const MissingSubmissionUUIDParameter = {
+export const MissingSubmissionUUIDParameter: Story = {
   name: 'Missing submission parameter',
-  render: () => (
-    <Card title="Error">
-      <CancelAppointment />
-    </Card>
-  ),
+  decorators: [
+    Story => (
+      <Card title="Error">
+        <Story />{' '}
+      </Card>
+    ),
+  ],
   parameters: {
     reactRouter: {
       location: {
@@ -56,7 +64,7 @@ export const MissingSubmissionUUIDParameter = {
   },
 };
 
-export const WithBackendValidationErrors = {
+export const WithBackendValidationErrors: Story = {
   name: 'Backend validation errors',
   parameters: {
     reactRouter: {

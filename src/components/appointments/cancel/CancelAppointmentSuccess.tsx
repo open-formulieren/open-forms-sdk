@@ -1,9 +1,9 @@
 import {FormattedMessage} from 'react-intl';
 
-import Body from 'components/Body';
-import Card from 'components/Card';
+import Body from '@/components/Body';
+import Card from '@/components/Card';
 
-const CancelAppointmentSuccess = () => (
+const CancelAppointmentSuccess: React.FC = () => (
   <Card
     title={
       <FormattedMessage

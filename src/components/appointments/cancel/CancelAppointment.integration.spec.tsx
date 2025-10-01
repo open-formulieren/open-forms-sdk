@@ -3,9 +3,9 @@ import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm} from 'api-mocks';
-import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+import {ConfigContext, FormContext} from '@/Context';
+import {BASE_URL, buildForm} from '@/api-mocks';
+import routes, {FUTURE_FLAGS} from '@/routes';
 
 const Wrapper = () => {
   const form = buildForm({
@@ -26,13 +26,15 @@ const Wrapper = () => {
       value={{
         baseUrl: BASE_URL,
         basePath: '',
+        clientBaseUrl: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+          <RouterProvider router={router} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -43,7 +45,9 @@ describe('Cancelling an appointment', () => {
   it('renders the correct page for a cancel route', async () => {
     render(<Wrapper />);
 
-    const textbox = await screen.findByRole('textbox', {name: 'Your email address'});
+    const textbox = await screen.findByRole<HTMLInputElement>('textbox', {
+      name: 'Your email address',
+    });
     expect(textbox).toBeVisible();
     expect(textbox.name).toBe('email');
     expect(screen.getByRole('button')).toBeVisible();

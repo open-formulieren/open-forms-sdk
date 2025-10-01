@@ -5,15 +5,19 @@ import {useContext, useState} from 'react';
 import {FormattedDate, FormattedMessage} from 'react-intl';
 import {useNavigate, useSearchParams} from 'react-router';
 
-import {ConfigContext} from 'Context';
-import {post} from 'api';
-import Body from 'components/Body';
-import {OFButton} from 'components/Button';
-import Card from 'components/Card';
-import ErrorMessage from 'components/Errors/ErrorMessage';
-import {ValidationError} from 'errors';
+import {ConfigContext} from '@/Context';
+import Body from '@/components/Body';
+import {OFButton} from '@/components/Button';
+import Card from '@/components/Card';
+import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {cancelAppointment} from '@/data/appointments';
+import {ValidationError} from '@/errors';
 
-const CancelAppointment = () => {
+interface Values {
+  email: string;
+}
+
+const CancelAppointment: React.FC = () => {
   const {baseUrl} = useContext(ConfigContext);
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -51,25 +55,6 @@ const CancelAppointment = () => {
   // parse into native Date object - we receive an ISO-8601 string.
   const time = new Date(timeParam);
 
-  const onSubmit = async ({email}, actions) => {
-    const endpoint = `${baseUrl}appointments/${submissionId}/cancel`;
-    try {
-      await post(endpoint, {email});
-    } catch (e) {
-      if (e instanceof ValidationError) {
-        const error = e.invalidParams.map(invalidParam => invalidParam.reason).join('\n');
-        actions.setFieldError('email', error);
-      } else {
-        setFailed(true);
-      }
-      return;
-    } finally {
-      actions.setSubmitting(false);
-    }
-
-    navigate('/afspraak-annuleren/succes');
-  };
-
   return (
     <Card
       title={
@@ -79,7 +64,23 @@ const CancelAppointment = () => {
         />
       }
     >
-      <Formik initialValues={{email: ''}} onSubmit={onSubmit}>
+      <Formik<Values>
+        initialValues={{email: ''}}
+        onSubmit={async ({email}, actions) => {
+          try {
+            await cancelAppointment(baseUrl, submissionId, email);
+          } catch (e) {
+            if (e instanceof ValidationError) {
+              const error = e.invalidParams.map(invalidParam => invalidParam.reason).join('\n');
+              actions.setFieldError('email', error);
+            } else {
+              setFailed(true);
+            }
+            return;
+          }
+          navigate('/afspraak-annuleren/succes');
+        }}
+      >
         {props => (
           <Body component="form" onSubmit={props.handleSubmit}>
             {failed && (

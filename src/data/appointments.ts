@@ -101,3 +101,22 @@ export const createAppointment = async (
   );
   return response.data!;
 };
+
+/**
+ * Request body shape for appointment cancellation.
+ *
+ * @see `#/components/schemas/CancelAppointmentInput` in the API spec.
+ *
+ */
+interface AppointmentCancelBody {
+  email: string;
+}
+
+export const cancelAppointment = async (
+  baseUrl: string,
+  submissionId: string,
+  email: string
+): Promise<void> => {
+  const endpoint = `${baseUrl}appointments/${submissionId}/cancel`;
+  await post<null, AppointmentCancelBody>(endpoint, {email});
+};
