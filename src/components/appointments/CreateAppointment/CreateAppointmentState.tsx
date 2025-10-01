@@ -38,6 +38,7 @@ const extractStepErrors = (
 
   switch (currentStep) {
     case 'producten': {
+      console.log('initialErrors', initialErrors);
       const stepInitialTouched: StepTouched<'producten'> = {};
       const stepInitialErrors: StepErrors<'producten'> = {};
       for (const key of ERROR_KEYS_BY_STEP.producten) {
@@ -46,6 +47,7 @@ const extractStepErrors = (
         stepInitialErrors[key] = errors;
         stepInitialTouched[key] = initialTouched[key];
       }
+      console.log('stepInitialTouched', stepInitialTouched);
       return {stepInitialTouched, stepInitialErrors};
     }
     case 'kalender': {

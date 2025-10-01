@@ -1,14 +1,16 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {mockAppointmentCustomerFieldsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+
+import {mockAppointmentCustomerFieldsGet} from '@/api-mocks/appointments';
 
 import {withAppointmentState} from '../story-utils';
 import ContactDetailsStep from './ContactDetailsStep';
 
-const TOMORROW = formatISO(addDays(new Date(), 1), {representation: 'date'});
+const TOMORROW: string = formatISO(addDays(new Date(), 1), {representation: 'date'});
 
 export default {
   title: 'Private API / Appointments / Steps / 3 - Contact details',
@@ -33,13 +35,15 @@ export default {
       handlers: [mockAppointmentCustomerFieldsGet],
     },
   },
-};
+} satisfies Meta<typeof ContactDetailsStep>;
 
-export const InitialState = {
+type Story = StoryObj<typeof ContactDetailsStep>;
+
+export const InitialState: Story = {
   name: 'Initial state',
 };
 
-export const FillOutAllFields = {
+export const FillOutAllFields: Story = {
   name: 'Fill out all fields',
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
@@ -67,7 +71,7 @@ export const FillOutAllFields = {
   },
 };
 
-export const WithBackendErrors = {
+export const WithBackendErrors: Story = {
   name: 'Display backend errors',
   parameters: {
     appointmentState: {

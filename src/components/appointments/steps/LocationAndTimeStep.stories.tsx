@@ -1,14 +1,16 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
+
+import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
 
 import {
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from 'api-mocks/appointments';
-import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+} from '@/api-mocks/appointments';
 
 import {withAppointmentState} from '../story-utils';
 import LocationAndTimeStep from './LocationAndTimeStep';
@@ -41,13 +43,15 @@ export default {
       ],
     },
   },
-};
+} satisfies Meta<typeof LocationAndTimeStep>;
 
-export const InitialState = {
+type Story = StoryObj<typeof LocationAndTimeStep>;
+
+export const InitialState: Story = {
   name: 'Initial state',
 };
 
-export const WithBackendErrors = {
+export const WithBackendErrors: Story = {
   name: 'Display backend errors',
   parameters: {
     appointmentState: {
@@ -79,7 +83,7 @@ export const WithBackendErrors = {
 
 const TODAY = formatISO(new Date(), {representation: 'date'});
 
-export const DependentFieldsReset = {
+export const DependentFieldsReset: Story = {
   name: 'Dependent fields reset',
   parameters: {
     appointmentState: {

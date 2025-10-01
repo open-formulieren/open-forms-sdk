@@ -1,8 +1,10 @@
+import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {mockAppointmentProductsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+
+import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
 
 import {AppointmentConfigContext} from '../Context';
 import {withAppointmentState} from '../story-utils';
@@ -31,9 +33,11 @@ export default {
       },
     },
   },
-};
+} satisfies Meta<typeof ChooseProductStep>;
 
-export const InitialState = {
+type Story = StoryObj<typeof ChooseProductStep>;
+
+export const InitialState: Story = {
   name: 'Initial state',
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
@@ -52,7 +56,7 @@ export const InitialState = {
   },
 };
 
-export const AddingProducts = {
+export const AddingProducts: Story = {
   name: 'Adding products',
   parameters: {
     appointmentState: {
@@ -78,7 +82,7 @@ export const AddingProducts = {
   },
 };
 
-export const RemovingProducts = {
+export const RemovingProducts: Story = {
   name: 'Removing products',
   parameters: {
     appointmentState: {
@@ -118,13 +122,13 @@ export const RemovingProducts = {
   },
 };
 
-const withoutMultipleProducts = Story => (
+const withoutMultipleProducts: Decorator = Story => (
   <AppointmentConfigContext.Provider value={{supportsMultipleProducts: false}}>
     <Story />
   </AppointmentConfigContext.Provider>
 );
 
-export const NoMultipleProducts = {
+export const NoMultipleProducts: Story = {
   name: 'No multiple products support',
   decorators: [withoutMultipleProducts],
   play: async ({canvasElement}) => {
@@ -135,7 +139,7 @@ export const NoMultipleProducts = {
   },
 };
 
-export const WithBackendErrors = {
+export const WithBackendErrors: Story = {
   name: 'Display backend errors',
   parameters: {
     appointmentState: {

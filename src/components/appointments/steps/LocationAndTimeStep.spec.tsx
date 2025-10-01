@@ -2,24 +2,28 @@ import {act, render as realRender, screen, waitFor} from '@testing-library/react
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
+import type {RouteObject} from 'react-router';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext} from 'Context';
-import {BASE_URL, buildSubmission} from 'api-mocks';
+import {ConfigContext} from '@/Context';
+import {BASE_URL, buildSubmission} from '@/api-mocks';
 import {
   mockAppointmentDatesGet,
   mockAppointmentLocationsGet,
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
-} from 'api-mocks/appointments';
-import mswServer from 'api-mocks/msw-server';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+} from '@/api-mocks/appointments';
+import mswServer from '@/api-mocks/msw-server';
+import {FUTURE_FLAGS} from '@/routes';
 
 import {CreateAppointmentContext} from '../Context';
 import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
+import type {AppointmentDataByStep} from '../types';
 import LocationAndTimeStep from './LocationAndTimeStep';
 
-const render = initialValues => {
+const render = (
+  initialValues: AppointmentDataByStep['producten'] & AppointmentDataByStep['kalender']
+) => {
   const {products, ...stepData} = initialValues;
   const appointmentContext = buildContextValue({
     submission: buildSubmission(),
@@ -29,7 +33,7 @@ const render = initialValues => {
       kalender: stepData,
     },
   });
-  const routes = [
+  const routes: RouteObject[] = [
     {
       path: '/appointments/kalender',
       element: (
@@ -37,8 +41,10 @@ const render = initialValues => {
           value={{
             baseUrl: BASE_URL,
             basePath: '',
+            clientBaseUrl: '',
             baseTitle: '',
             requiredFieldsWithAsterisk: true,
+            debug: false,
           }}
         >
           <IntlProvider locale="en" messages={messagesEN}>
@@ -55,7 +61,7 @@ const render = initialValues => {
     initialIndex: 0,
     future: FUTURE_FLAGS,
   });
-  realRender(<RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />);
+  realRender(<RouterProvider router={router} />);
 };
 
 beforeEach(() => {
