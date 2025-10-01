@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
 import {mockAppointmentLocationsGet} from 'api-mocks/appointments';
@@ -22,14 +23,16 @@ export default {
   args: {
     products: [{productId: 'e8e045ab', amount: 1}],
   },
-};
+} satisfies Meta<typeof LocationSelect>;
 
-export const MultipleCandidates = {
+type Story = StoryObj<typeof LocationSelect>;
+
+export const MultipleCandidates: Story = {
   name: 'Multiple candidate locations',
   play: async ({canvasElement}) => {
     // test that the options are fetched from the API endpoint
     const canvas = within(canvasElement);
-    await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
     const dropdown = canvas.getByLabelText('Locatie');
     dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
@@ -38,7 +41,7 @@ export const MultipleCandidates = {
   },
 };
 
-export const SingleCandidate = {
+export const SingleCandidate: Story = {
   name: 'Single candidate location',
   args: {
     products: [
@@ -48,8 +51,8 @@ export const SingleCandidate = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
-    await expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Bahamas')).not.toBeInTheDocument();
 
     const dropdown = canvas.getByLabelText('Locatie');
     dropdown.focus();

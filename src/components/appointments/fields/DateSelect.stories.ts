@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {mockAppointmentDatesGet} from 'api-mocks/appointments';
@@ -23,13 +24,15 @@ export default {
   args: {
     products: [{productId: 'e8e045ab', amount: 1}],
   },
-};
+} satisfies Meta<typeof DateSelect>;
 
-export const AvailableDatesRange = {
+type Story = StoryObj<typeof DateSelect>;
+
+export const AvailableDatesRange: Story = {
   name: 'Calendar with available date range',
 };
 
-export const DisabledGaps = {
+export const DisabledGaps: Story = {
   name: 'Calendar with disabled gaps in date range',
   parameters: {
     formik: {
@@ -41,7 +44,7 @@ export const DisabledGaps = {
   },
 };
 
-export const NoLocationSelected = {
+export const NoLocationSelected: Story = {
   name: 'Calendar disabled when no location is set',
   parameters: {
     formik: {
@@ -53,13 +56,13 @@ export const NoLocationSelected = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByLabelText('Datum')).toBeDisabled();
+    expect(canvas.getByLabelText('Datum')).toBeDisabled();
     await userEvent.click(canvas.getByLabelText('Datum'));
-    await expect(await canvas.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
   },
 };
 
-export const NoDatesAvailable = {
+export const NoDatesAvailable: Story = {
   name: 'No dates available',
   parameters: {
     formik: {
@@ -71,7 +74,7 @@ export const NoDatesAvailable = {
   },
 };
 
-export const SingleDateAvailable = {
+export const SingleDateAvailable: Story = {
   name: 'Single date available',
   parameters: {
     formik: {

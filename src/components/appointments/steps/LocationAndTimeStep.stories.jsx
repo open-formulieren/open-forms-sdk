@@ -71,7 +71,7 @@ export const WithBackendErrors = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await expect(await canvas.findByText('This date is not available')).toBeVisible();
+    expect(await canvas.findByText('This date is not available')).toBeVisible();
     const submitButton = canvas.getByRole('button', {name: 'Naar contactgegevens'});
     expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
   },

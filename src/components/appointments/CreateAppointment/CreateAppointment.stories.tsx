@@ -94,11 +94,11 @@ export const HappyFlow: Story = {
     const calendarLocale = locale === 'nl' ? nl : enGB;
 
     await step('Wait for products to load', async () => {
-      await waitFor(
-        async () =>
-          await expect(
-            canvas.queryByRole('button', {name: 'Bevestig producten'})
-          ).not.toHaveAttribute('aria-disabled', 'true')
+      await waitFor(async () =>
+        expect(canvas.queryByRole('button', {name: 'Bevestig producten'})).not.toHaveAttribute(
+          'aria-disabled',
+          'true'
+        )
       );
     });
 
@@ -123,10 +123,11 @@ export const HappyFlow: Story = {
     await step('Fill out the location and time', async () => {
       expect(await canvas.findByText('Locatie en tijd')).toBeVisible();
       await waitFor(async () => {
-        await expect(canvas.getByRole('link', {name: 'Terug naar producten'})).toBeVisible();
-        await expect(
-          canvas.queryByRole('button', {name: 'Naar contactgegevens'})
-        ).not.toHaveAttribute('aria-disabled', 'true');
+        expect(canvas.getByRole('link', {name: 'Terug naar producten'})).toBeVisible();
+        expect(canvas.queryByRole('button', {name: 'Naar contactgegevens'})).not.toHaveAttribute(
+          'aria-disabled',
+          'true'
+        );
         // location auto-filled
         await canvas.findByText('Open Gem');
       });
@@ -138,7 +139,7 @@ export const HappyFlow: Story = {
       await canvas.findByText('Datum');
       await waitFor(async () => {
         const dateInput = await canvas.findByLabelText('Datum');
-        await expect(dateInput).not.toBeDisabled();
+        expect(dateInput).not.toBeDisabled();
         // FIXME: type in non-iso format
         await userEvent.type(dateInput, tomorrow);
       });
@@ -146,7 +147,7 @@ export const HappyFlow: Story = {
       let timeDropdown: HTMLDivElement;
       await waitFor(async () => {
         timeDropdown = await canvas.findByLabelText('Tijdstip');
-        await expect(timeDropdown).not.toBeDisabled();
+        expect(timeDropdown).not.toBeDisabled();
       });
       timeDropdown!.focus();
       await userEvent.keyboard('[ArrowDown]');
@@ -166,12 +167,10 @@ export const HappyFlow: Story = {
     await step('Fill out the contact details', async () => {
       expect(await canvas.findByText('Je gegevens')).toBeVisible();
       await waitFor(async () => {
-        await expect(
-          canvas.getByRole('link', {name: 'Terug naar locatie en tijdstip'})
-        ).toBeVisible();
+        expect(canvas.getByRole('link', {name: 'Terug naar locatie en tijdstip'})).toBeVisible();
       });
       await waitFor(async () => {
-        await expect(canvas.queryByRole('button', {name: 'Naar overzicht'})).not.toHaveAttribute(
+        expect(canvas.queryByRole('button', {name: 'Naar overzicht'})).not.toHaveAttribute(
           'aria-disabled',
           'true'
         );

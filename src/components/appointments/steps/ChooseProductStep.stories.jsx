@@ -40,15 +40,15 @@ export const InitialState = {
 
     // we expect a single initial row
     const dropdowns = canvas.getAllByRole('combobox');
-    await expect(dropdowns).toHaveLength(1);
+    expect(dropdowns).toHaveLength(1);
     const amountInputs = canvas.getAllByLabelText('Aantal personen');
-    await expect(amountInputs).toHaveLength(1);
+    expect(amountInputs).toHaveLength(1);
 
     // there should be a button to add a row
-    await expect(canvas.getByRole('button', {name: 'Nog een product toevoegen'})).toBeVisible();
+    expect(canvas.getByRole('button', {name: 'Nog een product toevoegen'})).toBeVisible();
 
     // and no button to remove the single row
-    await expect(await canvas.queryByRole('button', {name: 'Verwijderen'})).toBeNull();
+    expect(canvas.queryByRole('button', {name: 'Verwijderen'})).toBeNull();
   },
 };
 
@@ -74,7 +74,7 @@ export const AddingProducts = {
     const addButton = canvas.getByRole('button', {name: 'Nog een product toevoegen'});
     await userEvent.click(addButton);
     const dropdowns = canvas.getAllByRole('combobox');
-    await expect(dropdowns).toHaveLength(2);
+    expect(dropdowns).toHaveLength(2);
   },
 };
 
@@ -102,19 +102,19 @@ export const RemovingProducts = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     const dropdowns = canvas.getAllByRole('combobox');
-    await expect(dropdowns).toHaveLength(2);
-    await expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
-    await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
+    expect(dropdowns).toHaveLength(2);
+    expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
+    expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
 
     // now any of both products can be removed
-    const removeButtons = await canvas.queryAllByRole('button', {name: 'Verwijderen'});
-    await expect(removeButtons).toHaveLength(2);
+    const removeButtons = canvas.queryAllByRole('button', {name: 'Verwijderen'});
+    expect(removeButtons).toHaveLength(2);
 
     // and after removing one row, the last remaining one can't be removed
     await userEvent.click(removeButtons[0]);
-    await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
-    await expect(await canvas.queryByText('Paspoort aanvraag')).toBeNull();
-    await expect(await canvas.queryByRole('button', {name: 'Verwijderen'})).toBeNull();
+    expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
+    expect(canvas.queryByText('Paspoort aanvraag')).toBeNull();
+    expect(canvas.queryByRole('button', {name: 'Verwijderen'})).toBeNull();
   },
 };
 
@@ -130,7 +130,7 @@ export const NoMultipleProducts = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     const buttons = canvas.getAllByRole('button');
-    await expect(buttons).toHaveLength(1);
+    expect(buttons).toHaveLength(1);
     await canvas.findByRole('button', {name: 'Bevestig producten'});
   },
 };
@@ -154,7 +154,7 @@ export const WithBackendErrors = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await expect(await canvas.findByText('Product is sold out.')).toBeVisible();
+    expect(await canvas.findByText('Product is sold out.')).toBeVisible();
     const submitButton = canvas.getByRole('button', {name: 'Bevestig producten'});
     expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
   },

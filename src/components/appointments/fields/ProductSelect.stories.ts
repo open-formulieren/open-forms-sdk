@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {mockAppointmentProductsGet} from 'api-mocks/appointments';
@@ -27,17 +28,19 @@ export default {
   argTypes: {
     name: {table: {disable: true}},
   },
-};
+} satisfies Meta<typeof ProductSelectComponent>;
 
-export const ProductSelect = {
+type Story = StoryObj<typeof ProductSelectComponent>;
+
+export const ProductSelect: Story = {
   name: 'Data from API endpoint',
   play: async ({canvasElement}) => {
     // test that the options are fetched from the API endpoint
     const canvas = within(canvasElement);
-    await expect(canvas.queryByText('Paspoort aanvraag')).toBeNull();
+    expect(canvas.queryByText('Paspoort aanvraag')).toBeNull();
     const dropdown = canvas.getByLabelText('Product');
-    await dropdown.focus();
+    dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
-    await expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
+    expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
   },
 };

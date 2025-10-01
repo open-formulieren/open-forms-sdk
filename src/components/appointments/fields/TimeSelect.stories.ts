@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 
@@ -28,11 +29,13 @@ export default {
   args: {
     products: [{productId: 'e8e045ab', amount: 1}],
   },
-};
+} satisfies Meta<typeof TimeSelect>;
 
-export const Default = {};
+type Story = StoryObj<typeof TimeSelect>;
 
-export const NoDateSelectedDisabled = {
+export const Default: Story = {};
+
+export const NoDateSelectedDisabled: Story = {
   name: 'No date selected -> disabled',
   parameters: {
     formik: {
@@ -46,12 +49,12 @@ export const NoDateSelectedDisabled = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     const dropdown = canvas.getByLabelText('Tijdstip');
-    await expect(dropdown.role).toBe('combobox');
-    await expect(dropdown).toBeDisabled();
+    expect(dropdown.role).toBe('combobox');
+    expect(dropdown).toBeDisabled();
   },
 };
 
-export const LocalizedTimes = {
+export const LocalizedTimes: Story = {
   name: 'Times are localized',
   parameters: {
     chromatic: {disableSnapshot: true},

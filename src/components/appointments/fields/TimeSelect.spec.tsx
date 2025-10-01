@@ -4,23 +4,26 @@ import {Formik} from 'formik';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 
-import {ConfigContext} from 'Context';
-import {BASE_URL} from 'api-mocks';
-import {mockAppointmentTimesGet} from 'api-mocks/appointments';
-import mswServer from 'api-mocks/msw-server';
+import {ConfigContext} from '@/Context';
+import {BASE_URL} from '@/api-mocks';
+import {mockAppointmentTimesGet} from '@/api-mocks/appointments';
+import mswServer from '@/api-mocks/msw-server';
+import type {AppointmentProduct} from '@/data/appointments';
 
 import TimeSelect from './TimeSelect';
 
-const products = [{productId: 'e8e045ab', amount: 1}];
+const products: AppointmentProduct[] = [{productId: 'e8e045ab', amount: 1}];
 
-const render = (comp, locationId) =>
+const render = (children: React.ReactNode, locationId: string) =>
   realRender(
     <ConfigContext.Provider
       value={{
         baseUrl: BASE_URL,
         basePath: '',
+        clientBaseUrl: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
@@ -29,8 +32,9 @@ const render = (comp, locationId) =>
             location: locationId,
             date: '2023-06-14',
           }}
+          onSubmit={vi.fn()}
         >
-          {comp}
+          {children}
         </Formik>
       </IntlProvider>
     </ConfigContext.Provider>

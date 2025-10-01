@@ -61,8 +61,8 @@ export const FillOutAllFields = {
 
     await step('Check submit status', async () => {
       const submitButton = canvas.getByRole('button', {name: 'Naar overzicht'});
-      await expect(submitButton).not.toBeDisabled();
-      await expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+      expect(submitButton).not.toBeDisabled();
+      expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
     });
   },
 };
@@ -96,7 +96,7 @@ export const WithBackendErrors = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    await expect(
+    expect(
       await canvas.findByText('Unfortunately, you are banned from making appointments.')
     ).toBeVisible();
     const submitButton = canvas.getByRole('button', {name: 'Naar overzicht'});

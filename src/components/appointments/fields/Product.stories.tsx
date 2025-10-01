@@ -1,12 +1,15 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {mockAppointmentProductsGet} from 'api-mocks/appointments';
 import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
 
+import type {AppointmentProduct} from '@/data/appointments';
+
 import {AppointmentConfigContext} from '../Context';
 import Product from './Product';
 
-const PRODUCTS_DATA = [
+const PRODUCTS_DATA: AppointmentProduct[] = [
   {
     productId: '166a5c79',
     amount: 2,
@@ -16,6 +19,12 @@ const PRODUCTS_DATA = [
     amount: 1,
   },
 ];
+
+interface Args {
+  productId: string;
+  selectedProductIds: string[];
+  supportsMultipleProducts: boolean;
+}
 
 export default {
   title: 'Private API / Appointments / Product and amount',
@@ -31,54 +40,52 @@ export default {
       handlers: [mockAppointmentProductsGet],
     },
   },
+  args: {
+    productId: '',
+    selectedProductIds: [],
+    supportsMultipleProducts: true,
+  },
   argTypes: {
     productId: {
       options: ['166a5c79', 'e8e045ab'],
       control: {type: 'radio'},
     },
-    namePrefix: {table: {disable: true}},
-    index: {table: {disable: true}},
   },
-  args: {
-    selectedProductIds: [],
-    supportsMultipleProducts: true,
+  render: ({productId, selectedProductIds, supportsMultipleProducts = true}) => {
+    const data_entry = PRODUCTS_DATA.find(prod => prod.productId === productId);
+    const index = supportsMultipleProducts && data_entry ? PRODUCTS_DATA.indexOf(data_entry) : 0;
+    return (
+      <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
+        <Product namePrefix="products" index={index} selectedProductIds={selectedProductIds} />
+      </AppointmentConfigContext.Provider>
+    );
   },
-};
+} satisfies Meta<Args>;
 
-const render = ({productId, selectedProductIds, supportsMultipleProducts = true}) => {
-  const data_entry = PRODUCTS_DATA.find(prod => prod.productId === productId);
-  const index = supportsMultipleProducts ? PRODUCTS_DATA.indexOf(data_entry) : 0;
-  return (
-    <AppointmentConfigContext.Provider value={{supportsMultipleProducts}}>
-      <Product namePrefix="products" index={index} selectedProductIds={selectedProductIds} />
-    </AppointmentConfigContext.Provider>
-  );
-};
+type Story = StoryObj<Args>;
 
-export const ProductAndAmount = {
+export const ProductAndAmount: Story = {
   name: 'Product and amount',
-  render,
   args: {
     productId: '166a5c79',
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     // search for a product
-    await expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
+    expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
     await userEvent.type(canvas.getByLabelText('Product'), 'Rijbewijs');
     await userEvent.click(await canvas.findByText('Rijbewijs aanvraag (Drivers license)'));
-    await expect(canvas.queryByText('Paspoort aanvraag')).toBeNull();
-    await expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
+    expect(canvas.queryByText('Paspoort aanvraag')).toBeNull();
+    expect(await canvas.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
     const amountInput = canvas.getByLabelText('Aantal personen');
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, '1');
-    await expect(amountInput).toHaveDisplayValue('1');
+    expect(amountInput).toHaveDisplayValue('1');
   },
 };
 
-export const NoMultipleProductsSupport = {
+export const NoMultipleProductsSupport: Story = {
   name: 'No multiple products support',
-  render,
   parameters: {
     formik: {
       initialValues: {

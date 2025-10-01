@@ -2,7 +2,8 @@ import {render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
-import {Outlet, RouteObject, RouterProvider, createMemoryRouter} from 'react-router';
+import type {RouteObject} from 'react-router';
+import {Outlet, RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
