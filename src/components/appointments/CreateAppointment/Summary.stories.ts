@@ -1,12 +1,6 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {
-  mockAppointmentCustomerFieldsGet,
-  mockAppointmentLocationsGet,
-  mockAppointmentPost,
-  mockAppointmentProductsGet,
-} from 'api-mocks/appointments';
-import {buildSubmission} from 'api-mocks/submissions';
 import {
   ConfigDecorator,
   LayoutDecorator,
@@ -14,6 +8,14 @@ import {
   withCard,
   withForm,
 } from 'story-utils/decorators';
+
+import {
+  mockAppointmentCustomerFieldsGet,
+  mockAppointmentLocationsGet,
+  mockAppointmentPost,
+  mockAppointmentProductsGet,
+} from '@/api-mocks/appointments';
+import {buildSubmission} from '@/api-mocks/submissions';
 
 import {withAppointmentState} from '../story-utils';
 import Summary from './Summary';
@@ -45,12 +47,14 @@ export default {
           datetime: `2023-07-12T08:00:00Z`,
         },
         contactgegevens: {
-          lastName: 'Kundera',
-          dateOfBirth: '1929-04-01',
-          email: 'milan@kundera.cz',
-          phone: '12345678',
-          bsn: '123456782',
-          gender: 'M',
+          contactDetails: {
+            lastName: 'Kundera',
+            dateOfBirth: '1929-04-01',
+            email: 'milan@kundera.cz',
+            phone: '12345678',
+            bsn: '123456782',
+            gender: 'M',
+          },
         },
       },
     },
@@ -69,11 +73,13 @@ export default {
     previousText: 'Previous',
     changeText: 'Change',
   },
-};
+} satisfies Meta<typeof Summary>;
 
-export const Default = {};
+type Story = StoryObj<typeof Summary>;
 
-export const MultipleProducts = {
+export const Default: Story = {};
+
+export const MultipleProducts: Story = {
   parameters: {
     appointmentState: {
       submission: buildSubmission(),
@@ -91,12 +97,14 @@ export const MultipleProducts = {
           datetime: `2023-07-12T08:00:00Z`,
         },
         contactgegevens: {
-          lastName: 'Kundera',
-          dateOfBirth: '1929-04-01',
-          email: 'milan@kundera.cz',
-          phone: '12345678',
-          bsn: '123456782',
-          gender: 'M',
+          contactDetails: {
+            lastName: 'Kundera',
+            dateOfBirth: '1929-04-01',
+            email: 'milan@kundera.cz',
+            phone: '12345678',
+            bsn: '123456782',
+            gender: 'M',
+          },
         },
       },
     },

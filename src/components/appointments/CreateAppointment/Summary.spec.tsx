@@ -2,27 +2,30 @@ import {render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
-import {Outlet, RouterProvider, createMemoryRouter} from 'react-router';
+import {Outlet, RouteObject, RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm, buildSubmission} from 'api-mocks';
+import {ConfigContext, FormContext} from '@/Context';
+import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
 import {
   mockAppointmentCustomerFieldsGet,
   mockAppointmentErrorPost,
   mockAppointmentLocationsGet,
   mockAppointmentPost,
   mockAppointmentProductsGet,
-} from 'api-mocks/appointments';
-import mswServer from 'api-mocks/msw-server';
-import {LiteralsProvider} from 'components/Literal';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+} from '@/api-mocks/appointments';
+import mswServer from '@/api-mocks/msw-server';
+import {LiteralsProvider} from '@/components/Literal';
+import {FUTURE_FLAGS} from '@/routes';
 
 import {CreateAppointmentContext} from '../Context';
+import type {AppointmentDataByStep} from '../types';
 import {buildContextValue} from './CreateAppointmentState';
 import Summary from './Summary';
 
-const renderSummary = errorHandler => {
-  const appointmentData = {
+const renderSummary = (
+  errorHandler?: Parameters<typeof buildContextValue>[0]['setAppointmentErrors']
+) => {
+  const appointmentData: AppointmentDataByStep = {
     producten: {
       products: [{productId: '166a5c79', amount: 1}],
     },
@@ -51,7 +54,7 @@ const renderSummary = errorHandler => {
     appointmentData: appointmentData,
     setAppointmentErrors: errorHandler,
   });
-  const routes = [
+  const routes: RouteObject[] = [
     {
       path: '/appointments',
       children: [
@@ -62,8 +65,10 @@ const renderSummary = errorHandler => {
               value={{
                 baseUrl: BASE_URL,
                 basePath: '',
+                clientBaseUrl: '',
                 baseTitle: '',
                 requiredFieldsWithAsterisk: true,
+                debug: false,
               }}
             >
               <IntlProvider locale="en" messages={messagesEN}>
@@ -100,7 +105,7 @@ const renderSummary = errorHandler => {
   });
   realRender(
     <FormContext.Provider value={form}>
-      <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+      <RouterProvider router={router} />
     </FormContext.Provider>
   );
 };

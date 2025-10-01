@@ -22,22 +22,6 @@ const ERROR_KEYS_BY_STEP: ErrorKeysByStep = {
   contactgegevens: ['contactDetails'],
 };
 
-interface BuildContextValueOpts {
-  submission: Submission | null;
-  currentStep: AppoinmentStep;
-  appointmentData: Partial<AppointmentDataByStep>;
-  setAppointmentData?: (values: Partial<AppointmentDataByStep>) => void;
-  appointmentErrors?: {
-    initialTouched: FormikTouched<AppointmentData>;
-    initialErrors: FormikErrors<AppointmentData>;
-  };
-  setAppointmentErrors: (errors: {
-    initialTouched: FormikTouched<AppointmentData>;
-    initialErrors: FormikErrors<AppointmentData>;
-  }) => void;
-  resetSession?: () => void;
-}
-
 type StepTouched<T extends AppoinmentStep = AppoinmentStep> = FormikTouched<
   AppointmentDataByStep[T]
 >;
@@ -60,7 +44,6 @@ const extractStepErrors = (
         const errors = initialErrors[key];
         if (!errors) continue;
         stepInitialErrors[key] = errors;
-        // FIXME: there's a type bug here for the recursion of the nested structures
         stepInitialTouched[key] = initialTouched[key];
       }
       return {stepInitialTouched, stepInitialErrors};
@@ -98,6 +81,22 @@ const extractStepErrors = (
   }
 };
 
+interface BuildContextValueOpts {
+  submission: Submission | null;
+  currentStep: AppoinmentStep | '';
+  appointmentData: Partial<AppointmentDataByStep>;
+  setAppointmentData?: (values: Partial<AppointmentDataByStep>) => void;
+  appointmentErrors?: {
+    initialTouched: FormikTouched<AppointmentData>;
+    initialErrors: FormikErrors<AppointmentData>;
+  };
+  setAppointmentErrors?: (errors: {
+    initialTouched: FormikTouched<AppointmentData>;
+    initialErrors: FormikErrors<AppointmentData>;
+  }) => void;
+  resetSession?: () => void;
+}
+
 export const buildContextValue = ({
   submission,
   currentStep,
@@ -118,7 +117,7 @@ export const buildContextValue = ({
     return {...accumulator, ...stepData};
   }, {} satisfies AppointmentData);
 
-  const errorKeys = ERROR_KEYS_BY_STEP[currentStep] || [];
+  const errorKeys = currentStep === '' ? [] : ERROR_KEYS_BY_STEP[currentStep];
   const {initialTouched = {}, initialErrors = {}} = appointmentErrors;
 
   // filter out the errors that are relevant for the current step only
@@ -127,7 +126,7 @@ export const buildContextValue = ({
   return {
     submission,
     appointmentData: mergedAppointmentData,
-    stepData: appointmentData[currentStep] || {},
+    stepData: currentStep === '' ? {} : (appointmentData[currentStep] ?? {}),
     submittedSteps,
     submitStep: values => setAppointmentData({...appointmentData, [currentStep]: values}),
     setErrors: setAppointmentErrors,
