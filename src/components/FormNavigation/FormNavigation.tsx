@@ -5,6 +5,7 @@ import FAIcon from 'components/FAIcon';
 import {Literal} from 'components/Literal';
 
 import AbortButton from '@/components/AbortButton';
+import Link from '@/components/Link';
 import PreviousLink from '@/components/PreviousLink';
 
 export interface FormNavigationProps {
@@ -47,6 +48,13 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
     {!hideAbortButton && (
       <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
     )}
+
+    <Link to="#main-content" className="openforms-backtotop-link">
+      <Icon>
+        <FAIcon icon="" className="fa-fw" />
+      </Icon>
+      <Literal name="backToTopText" />
+    </Link>
   </ButtonGroup>
 );
 

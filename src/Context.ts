@@ -17,6 +17,7 @@ const FormContext = React.createContext<Form>({
     changeText: {resolved: 'Change'},
     confirmText: {resolved: 'Confirm'},
     previousText: {resolved: 'Previous'},
+    backToTopText: {resolved: 'Back to top'},
   },
   slug: '',
   url: '',

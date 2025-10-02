@@ -1,0 +1,25 @@
+@use 'microscope-sass/lib/bem';
+@use '@utrecht/components/link'; // emits the .utrecht-link {...} styles
+@use '@utrecht/components/icon';
+
+.openforms-backtotop-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: var(--utrecht-button-column-gap, 8px);
+
+  padding-block-end: var(--utrecht-button-padding-block-end);
+  padding-block-start: var(--utrecht-button-padding-block-start);
+
+  .utrecht-icon {
+    // Required as long as we hardcode font-awesome icons, will need to revisit this
+    // when we support other icon libraries
+    --utrecht-icon-size: auto;
+    // allow hiding the icon entirely, if desired
+    display: inline-block;
+
+    > .fa-icon {
+      --fa: '\f176';
+    }
+  }
+}
