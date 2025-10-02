@@ -1,4 +1,6 @@
+import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {expect, fn, spyOn, userEvent, waitFor, within} from '@storybook/test';
+import type {Map as LMap} from 'leaflet';
 import {useEffect, useState} from 'react';
 import {useMap} from 'react-leaflet';
 
@@ -6,16 +8,24 @@ import {ConfigDecorator} from 'story-utils/decorators';
 
 import LeafletMap from './index';
 import {mockAddressSearchGet, mockLatLngSearchEmptyGet, mockLatLngSearchGet} from './mocks';
+import type {GeoJsonGeometry} from './types';
 
-const withMapLayout = Story => (
+// add our leaflet instrumentation to the global window object
+declare global {
+  interface Window {
+    __leafletMap: LMap;
+  }
+}
+
+const withMapLayout: Decorator = Story => (
   <div className="openforms-leaflet-map" style={{maxWidth: '600px'}}>
     <Story />
   </div>
 );
 
-const StorybookLeafletMap = props => {
+const StorybookLeafletMap = (props: React.ComponentProps<typeof LeafletMap>) => {
   const [geoJson, setGeoJson] = useState(props?.geoJsonGeometry);
-  const handleGeoJsonChange = args => {
+  const handleGeoJsonChange = (args: GeoJsonGeometry) => {
     if (props?.onGeoJsonGeometrySet) {
       props?.onGeoJsonGeometrySet(args);
     }
@@ -61,11 +71,13 @@ export default {
       handlers: [mockAddressSearchGet, mockLatLngSearchGet],
     },
   },
-};
+} satisfies Meta<typeof StorybookLeafletMap>;
 
-export const Map = {};
+type Story = StoryObj<typeof StorybookLeafletMap>;
 
-export const MapWithAddressSearch = {
+export const Map: Story = {};
+
+export const MapWithAddressSearch: Story = {
   args: {
     onGeoJsonGeometrySet: fn(),
   },
@@ -79,7 +91,7 @@ export const MapWithAddressSearch = {
     });
 
     const searchField = await canvas.findByPlaceholderText('Zoek adres');
-    const searchBox = within(searchField.parentNode);
+    const searchBox = within(searchField.parentElement!);
     await userEvent.type(searchField, 'Gemeente Utrecht');
     const searchResult = await searchBox.findByText('Utrecht, Utrecht, Utrecht');
 
@@ -95,7 +107,7 @@ export const MapWithAddressSearch = {
   },
 };
 
-export const MapReverseGeoEmpty = {
+export const MapReverseGeoEmpty: Story = {
   parameters: {
     msw: {
       handlers: [mockAddressSearchGet, mockLatLngSearchEmptyGet],
@@ -103,14 +115,14 @@ export const MapReverseGeoEmpty = {
   },
 };
 
-export const MapWithAerialPhotoBackground = {
+export const MapWithAerialPhotoBackground: Story = {
   args: {
     tileLayerUrl:
       'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_orthoHR/EPSG:28992/{z}/{x}/{y}.png',
   },
 };
 
-export const MapWithInteractions = {
+export const MapWithInteractions: Story = {
   args: {
     interactions: {
       polygon: true,
@@ -148,6 +160,7 @@ export const MapWithInteractions = {
       const markerButton = await canvas.findByTitle('Pin/punt');
       await userEvent.click(markerButton);
 
+      // @ts-expect-error the x/y coordinates don't seem to be defined in testing-library
       await userEvent.click(map, {x: 100, y: 100});
 
       // This 'button' is the placed marker on the map
@@ -163,7 +176,7 @@ export const MapWithInteractions = {
   },
 };
 
-export const MapWithOverlays = {
+export const MapWithOverlays: Story = {
   args: {
     // Center on a more populated area, to better showcase the WMS layers
     geoJsonGeometry: {
@@ -225,7 +238,7 @@ export const MapWithOverlays = {
   },
 };
 
-export const MapWithOneInteraction = {
+export const MapWithOneInteraction: Story = {
   args: {
     interactions: {
       polygon: false,
@@ -261,6 +274,7 @@ export const MapWithOneInteraction = {
     await step('Draw a marker', async () => {
       // Because there is only one shape, we can draw without having to click the
       // "draw marker" button.
+      // @ts-expect-error the x/y coordinates don't seem to be defined in testing-library
       await userEvent.click(map, {x: 100, y: 100});
 
       // This 'button' is the placed marker on the map
@@ -276,7 +290,7 @@ export const MapWithOneInteraction = {
   },
 };
 
-export const MapDeleteMarker = {
+export const MapDeleteMarker: Story = {
   args: {
     // Center on a more populated area, to better showcase the WMS layers
     geoJsonGeometry: {
@@ -329,7 +343,7 @@ export const MapDeleteMarker = {
   },
 };
 
-export const MapWithCurrentLocationGranted = {
+export const MapWithCurrentLocationGranted: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     const map = await canvas.findByTestId('leaflet-map');
@@ -356,7 +370,7 @@ export const MapWithCurrentLocationGranted = {
   },
 };
 
-export const MapWithCurrentLocationPermissionDenied = {
+export const MapWithCurrentLocationPermissionDenied: Story = {
   parameters: {
     geolocation: {
       permission: 'denied',
@@ -386,7 +400,7 @@ export const MapWithCurrentLocationPermissionDenied = {
   },
 };
 
-export const MapWithCurrentLocationManuallyTogglePermission = {
+export const MapWithCurrentLocationManuallyTogglePermission: Story = {
   parameters: {
     geolocation: {
       permission: 'prompt',

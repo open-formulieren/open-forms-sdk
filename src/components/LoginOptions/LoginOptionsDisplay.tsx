@@ -18,7 +18,7 @@ export interface LoginOptionsDisplayProps {
   loginAsYourselfOptions: FormattedLoginOption[];
   loginAsGemachtigdeOptions: FormattedLoginOption[];
   cosignLoginOptions?: FormattedLoginOption[];
-  isolateCosignOptions: boolean;
+  isolateCosignOptions?: boolean;
 }
 
 const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
