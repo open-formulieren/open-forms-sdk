@@ -9,7 +9,7 @@ import Body from 'components/Body';
 import ErrorMessage from 'components/Errors/ErrorMessage';
 import Loader from 'components/Loader';
 import LoginOptionsDisplay from 'components/LoginOptions/LoginOptionsDisplay';
-import {getLoginUrl} from 'components/utils';
+import {getLoginUrl} from 'components/LoginOptions/utils';
 import Types from 'types';
 import {getBEMClassName} from 'utils';
 

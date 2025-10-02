@@ -111,3 +111,15 @@ export class StepState {
     return this.currentStepIndex === this.submission.steps.length - 1;
   }
 }
+
+export const isEventTriggeredBySubmitButton = (
+  event: React.SyntheticEvent<HTMLFormElement, SubmitEvent>
+): boolean => {
+  const submitterAttributes = event.nativeEvent.submitter!.attributes;
+
+  for (const attribute of submitterAttributes) {
+    if (attribute.name === 'type' && attribute.value === 'submit') return true;
+  }
+
+  return false;
+};
