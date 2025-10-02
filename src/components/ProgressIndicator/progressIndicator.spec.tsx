@@ -4,16 +4,17 @@ import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
-import {buildSubmission, mockSubmissionPost} from 'api-mocks/submissions';
-import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+import {ConfigContext, FormContext} from '@/Context';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
+import mswServer from '@/api-mocks/msw-server';
+import {buildSubmission, mockSubmissionPost} from '@/api-mocks/submissions';
+import type {Form} from '@/data/forms';
+import routes, {FUTURE_FLAGS} from '@/routes';
 
-const renderApp = (form, initialRoute = '/') => {
+const renderApp = (form: Form, initialRoute: string = '/') => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialRoute],
-    initialIndex: [0],
+    initialIndex: 0,
     future: FUTURE_FLAGS,
   });
   render(
@@ -24,11 +25,12 @@ const renderApp = (form, initialRoute = '/') => {
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        debug: false,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+          <RouterProvider router={router} />
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

@@ -4,14 +4,21 @@ import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {buildForm} from 'api-mocks';
-import {LiteralsProvider} from 'components/Literal';
-import {START_FORM_QUERY_PARAM} from 'components/constants';
-import {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
+import {buildForm} from '@/api-mocks';
+import {LiteralsProvider} from '@/components/Literal';
+import {START_FORM_QUERY_PARAM} from '@/components/constants';
+import type {Form} from '@/data/forms';
+import {FUTURE_FLAGS} from '@/routes';
 
 import LoginOptions from './index';
 
-const Wrapper = ({form, onFormStart, currentUrl = '/'}) => {
+interface WrapperProps {
+  form: Form;
+  onFormStart: React.ComponentProps<typeof LoginOptions>['onFormStart'];
+  currentUrl?: string;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({form, onFormStart, currentUrl = '/'}) => {
   const parsedUrl = new URL(currentUrl, 'http://dummy');
   const routes = [
     {
@@ -24,7 +31,7 @@ const Wrapper = ({form, onFormStart, currentUrl = '/'}) => {
   return (
     <IntlProvider locale="nl" messages={messagesNL}>
       <LiteralsProvider literals={{beginText: {resolved: 'Begin Form'}}}>
-        <RouterProvider router={router} future={PROVIDER_FUTURE_FLAGS} />
+        <RouterProvider router={router} />
       </LiteralsProvider>
     </IntlProvider>
   );
@@ -70,13 +77,15 @@ it('Login required, options not wrapped in form tag', async () => {
 
   render(<Wrapper form={form} onFormStart={onFormStart} />);
 
-  const digidLoginLink = await screen.findByRole('link', {name: 'Inloggen met DigiD'});
+  const digidLoginLink = await screen.findByRole<HTMLAnchorElement>('link', {
+    name: 'Inloggen met DigiD',
+  });
   expect(digidLoginLink).toBeVisible();
-  const loginHref = new URL(digidLoginLink.getAttribute('href'));
+  const loginHref = new URL(digidLoginLink.getAttribute('href')!);
   expect(loginHref.origin).toBe('https://open-forms.nl');
   expect(loginHref.pathname).toBe('/auth/form-slug/digid/start');
 
-  const nextUrl = new URL(loginHref.searchParams.get('next'));
+  const nextUrl = new URL(loginHref.searchParams.get('next')!);
   expect(nextUrl.pathname).toBe('/');
   expect(nextUrl.searchParams.get(START_FORM_QUERY_PARAM)).not.toBeNull();
 
@@ -115,13 +124,15 @@ it('Login button has the right URL after cancelling log in', async () => {
 
   expect(onFormStart).not.toHaveBeenCalled();
 
-  const digidLoginLink = await screen.findByRole('link', {name: 'Inloggen met DigiD'});
+  const digidLoginLink = await screen.findByRole<HTMLAnchorElement>('link', {
+    name: 'Inloggen met DigiD',
+  });
   expect(digidLoginLink).toBeVisible();
-  const loginHref = new URL(digidLoginLink.getAttribute('href'));
+  const loginHref = new URL(digidLoginLink.getAttribute('href')!);
   expect(loginHref.origin).toBe('https://open-forms.nl');
   expect(loginHref.pathname).toBe('/auth/form-slug/digid/start');
 
-  const nextUrl = new URL(loginHref.searchParams.get('next'));
+  const nextUrl = new URL(loginHref.searchParams.get('next')!);
   expect(nextUrl.pathname).toBe('/');
   expect(nextUrl.searchParams.get(START_FORM_QUERY_PARAM)).not.toBeNull();
   expect(nextUrl.searchParams.get('_digid-message')).toBeNull();

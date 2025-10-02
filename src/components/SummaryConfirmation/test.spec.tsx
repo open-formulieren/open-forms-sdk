@@ -2,16 +2,19 @@ import {render, screen} from '@testing-library/react';
 import {Formik} from 'formik';
 import {MemoryRouter} from 'react-router';
 
-import {LiteralsProvider} from 'components/Literal';
+import {LiteralsProvider} from '@/components/Literal';
+import type {Form} from '@/data/forms';
 
 import SummaryConfirmation from './index';
 
-const LITERALS = {
-  confirmText: {value: '', resolved: 'Submit form'},
-  previousText: {value: '', resolved: 'Previous step'},
+const LITERALS: Form['literals'] = {
+  confirmText: {resolved: 'Submit form'},
+  previousText: {resolved: 'Previous step'},
+  beginText: {resolved: ''},
+  changeText: {resolved: ''},
 };
 
-const Wrapper = ({children}) => (
+const Wrapper: React.FC<React.PropsWithChildren> = ({children}) => (
   <MemoryRouter>
     <LiteralsProvider literals={LITERALS}>
       <Formik

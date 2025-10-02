@@ -1,8 +1,10 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
 import {withForm} from 'story-utils/decorators';
+
+import {buildForm} from '@/api-mocks';
 
 import IntroductionPage from './index';
 
@@ -46,13 +48,15 @@ export default {
       form: buildForm({introductionPageContent: DEFAULT_CONTENT}),
     },
   },
-};
+} satisfies Meta<typeof IntroductionPage>;
 
-export const Default = {
+type Story = StoryObj<typeof IntroductionPage>;
+
+export const Default: Story = {
   name: 'IntroductionPage',
 };
 
-export const IntroductionPageWithInitialDataReference = {
+export const IntroductionPageWithInitialDataReference: Story = {
   name: 'IntroductionPage with initial data reference',
   parameters: {
     reactRouter: {

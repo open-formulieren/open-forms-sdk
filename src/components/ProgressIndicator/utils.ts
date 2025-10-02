@@ -1,11 +1,10 @@
 import type {IntlShape} from 'react-intl';
 
-import {checkMatchesPath} from 'components/utils/routers';
-
 import {STEP_LABELS} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
 import {IsFormDesigner} from '@/headers';
+import {checkMatchesPath} from '@/routes/utils';
 
 const canNavigateToStep = (index: number, submission: Submission | null): boolean => {
   // The user can navigate to a step when:
@@ -38,16 +37,21 @@ const getStepsInfo = (
   formSteps: Form['steps'],
   submission: Submission | null,
   currentPathname: string
-): StepMeta[] => {
-  return formSteps.map((step, index) => ({
-    to: `/stap/${step.slug}`,
-    label: step.formDefinition,
-    isCompleted: submission ? submission.steps[index].completed : false,
-    isApplicable: submission ? submission.steps[index].isApplicable : (step.isApplicable ?? true),
-    isCurrent: checkMatchesPath(currentPathname, step.slug),
-    canNavigateTo: canNavigateToStep(index, submission),
-  }));
-};
+): StepMeta[] =>
+  formSteps.map((step, index) => {
+    // this fallback should never happen, but our (API) type definitions show that in theory
+    // the slug can be absent or null from the server.
+    // FIXME: update the API specification.
+    const slug = step.slug ?? '__fallback__';
+    return {
+      to: `/stap/${slug}`,
+      label: step.formDefinition,
+      isCompleted: submission ? submission.steps[index].completed : false,
+      isApplicable: submission ? submission.steps[index].isApplicable : (step.isApplicable ?? true),
+      isCurrent: checkMatchesPath(currentPathname, slug),
+      canNavigateTo: canNavigateToStep(index, submission),
+    };
+  });
 
 const addFixedSteps = (
   intl: IntlShape,

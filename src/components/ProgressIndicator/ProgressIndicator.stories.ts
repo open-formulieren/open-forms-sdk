@@ -1,3 +1,4 @@
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
@@ -55,11 +56,13 @@ export default {
     ariaMobileIconLabel: 'Progress step indicator toggle icon (mobile)',
     accessibleToggleStepsLabel: 'Current step in form Formulier: Stap 2',
   },
-};
+} satisfies Meta<typeof ProgressIndicator>;
 
-export const Default = {};
+type Story = StoryObj<typeof ProgressIndicator>;
 
-export const MobileViewport = {
+export const Default: Story = {};
+
+export const MobileViewport: Story = {
   name: 'Mobile version',
   parameters: {
     viewport: {

@@ -1,11 +1,10 @@
 import {useIntl} from 'react-intl';
 import {useLocation} from 'react-router';
 
-import {checkMatchesPath} from 'components/utils/routers';
-
 import ProgressIndicator from '@/components/ProgressIndicator';
 import type {StepMeta} from '@/components/ProgressIndicator/utils';
 import {PI_TITLE, STEP_LABELS} from '@/components/constants';
+import {checkMatchesPath} from '@/routes/utils';
 
 import type {AppoinmentStep} from '../types';
 import {useCreateAppointmentContext} from './CreateAppointmentState';
