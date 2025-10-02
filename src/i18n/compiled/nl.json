@@ -299,6 +299,12 @@
       "value": "Klik het laatste punt om de lijn te voltooien"
     }
   ],
+  "5hVC3B": [
+    {
+      "type": 0,
+      "value": "WFS feature properties"
+    }
+  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -667,6 +673,12 @@
     {
       "type": 0,
       "value": "Verwijder vormen"
+    }
+  ],
+  "B7vtl2": [
+    {
+      "type": 0,
+      "value": "Interactive marker"
     }
   ],
   "BL1Ehr": [
