@@ -1,7 +1,9 @@
-import {getLoginUrl} from './index';
+import type {FormLoginOption} from '@/data/forms';
+
+import {getLoginUrl} from './utils';
 
 it('Login URL contains "next" URL with "_start" parameter', () => {
-  const loginOption = {
+  const loginOption: FormLoginOption = {
     identifier: 'digid',
     label: 'DigiD',
     url: 'https://openforms.nl/auth/form-name/digid/start',
@@ -16,7 +18,9 @@ it('Login URL contains "next" URL with "_start" parameter', () => {
 
   // Control the location that the test will use
   const {location} = window;
+  // @ts-expect-error monkeypatching
   delete window.location;
+  // @ts-expect-error monkeypatching
   window.location = {
     href: 'https://openforms.nl/form-name/',
   };
@@ -32,7 +36,7 @@ it('Login URL contains "next" URL with "_start" parameter', () => {
 });
 
 it('Login URL does NOT contain "_start" parameter if coSign', () => {
-  const loginOption = {
+  const loginOption: FormLoginOption = {
     identifier: 'digid',
     label: 'DigiD',
     url: 'https://openforms.nl/auth/form-name/digid/start',
@@ -47,7 +51,9 @@ it('Login URL does NOT contain "_start" parameter if coSign', () => {
 
   // Control the location that the test will use
   const {location} = window;
+  // @ts-expect-error monkeypatching
   delete window.location;
+  // @ts-expect-error monkeypatching
   window.location = {
     href: 'https://openforms.nl/form-name/step/step-name',
   };

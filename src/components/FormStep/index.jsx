@@ -41,14 +41,13 @@ import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
 import {useSubmissionContext} from 'components/SubmissionProvider';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
-import {eventTriggeredBySubmitButton} from 'components/utils';
 import useFormContext from 'hooks/useFormContext';
 import useTitle from 'hooks/useTitle';
 import {PREFIX} from 'utils';
 
 import Progress from './Progress';
 import {doLogicCheck, getCustomValidationHook, submitStepData} from './data';
-import {StepState} from './utils';
+import {StepState, isEventTriggeredBySubmitButton} from './utils';
 
 // Dynamically import react-formio and use React.lazy to facilitate bundle splitting
 // into separate chunks.
@@ -539,7 +538,7 @@ const FormStep = () => {
     event.preventDefault();
 
     // Issue #2084 - The button to save a row of an editgrid triggers a submit if there are validation errors
-    if (!eventTriggeredBySubmitButton(event)) return;
+    if (!isEventTriggeredBySubmitButton(event)) return;
 
     if (!canSubmit) return;
 

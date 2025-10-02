@@ -186,7 +186,7 @@ export const Functional: Story = {
   },
   play: async ({args, canvasElement}) => {
     const canvas = within(canvasElement);
-    let anonymousStartButton = await canvas.getByRole('button');
+    const anonymousStartButton = await canvas.getByRole('button');
     await userEvent.click(anonymousStartButton);
     await waitFor(() => expect(args.onFormStart).toHaveBeenCalled());
   },
