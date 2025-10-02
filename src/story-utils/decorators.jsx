@@ -94,6 +94,9 @@ export const LiteralDecorator = (Story, {args}) => (
       confirmText: {
         resolved: args.confirmText || 'Confirm',
       },
+      backToTopText: {
+        resolved: args.backToTopText || 'Back to top',
+      },
     }}
   >
     <Story />

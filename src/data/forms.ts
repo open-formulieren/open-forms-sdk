@@ -69,6 +69,7 @@ export interface Form {
     beginText: ButtonText;
     changeText: ButtonText;
     confirmText: ButtonText;
+    backToTopText: ButtonText;
   };
   slug: string;
   url: string;
