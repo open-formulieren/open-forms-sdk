@@ -30,6 +30,7 @@ import Body from '@/components/Body';
 import Image from '@/components/Image';
 import List from '@/components/List';
 import Loader from '@/components/Loader';
+import type {GeoJsonGeometry} from '@/components/Map/types';
 
 export interface DisplayProps<S, V> {
   component: S;
@@ -107,8 +108,7 @@ const TimeDisplay: React.FC<DisplayProps<TimeComponentSchema, string>> = ({value
   // value may be a full ISO-8601 date
   let time = new Date(value);
   // Invalid date (which is instanceof Date, but also NaN)
-  // @ts-expect-error Typescript doesn't like the Date -> number casting
-  if (isNaN(time)) {
+  if (isNaN(Number(time))) {
     const [hours, minutes, seconds] = value.split(':');
     time = new Date();
     time.setHours(parseInt(hours));
@@ -224,15 +224,16 @@ const CurrencyDisplay: React.FC<DisplayProps<CurrencyComponentSchema, number>> =
   );
 };
 
-// TODO: properly specify the value type once the map is converted to TS, See #445
-const MapDisplay: React.FC<DisplayProps<MapComponentSchema, object>> = ({component, value}) => {
+const MapDisplay: React.FC<DisplayProps<MapComponentSchema, GeoJsonGeometry>> = ({
+  component,
+  value,
+}) => {
   if (!value) {
     return <EmptyDisplay />;
   }
 
   return (
     <Suspense fallback={<Loader modifiers={['centered']} />}>
-      {/* @ts-expect-error the map can't properly infer what's expected */}
       <Map geoJsonGeometry={value} disabled tileLayerUrl={component.tileLayerUrl} />
     </Suspense>
   );

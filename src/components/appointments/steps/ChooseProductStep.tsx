@@ -8,18 +8,15 @@ import {useNavigate, useSearchParams} from 'react-router';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import {CardTitle} from 'components/Card';
 import useTitle from 'hooks/useTitle';
+
+import {CardTitle} from '@/components/Card';
+import type {AppointmentProduct} from '@/data/appointments';
 
 import {AppointmentConfigContext} from '../Context';
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
 import SubmitRow from '../SubmitRow';
 import {Product} from '../fields';
-
-export interface AppointmentProduct {
-  productId: string;
-  amount: number;
-}
 
 export interface ProductStepValues {
   products: AppointmentProduct[];
@@ -107,7 +104,7 @@ const ChooseProductStep: React.FC<ChooseProductStepProps> = ({navigateTo = null}
     stepErrors: {initialErrors, initialTouched},
     clearStepErrors,
     submitStep,
-  } = useCreateAppointmentContext();
+  } = useCreateAppointmentContext<'producten'>();
   const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
