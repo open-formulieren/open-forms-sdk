@@ -1,13 +1,13 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
-import {FormikDecorator} from 'story-utils/decorators';
+import {withFormik} from '@/sb-decorators';
 
 import StatementCheckbox from './StatementCheckbox';
 
 export default {
   title: 'Pure React components / Statement Checkbox',
-  decorators: [FormikDecorator],
+  decorators: [withFormik],
   component: StatementCheckbox,
   args: {
     showWarning: false,

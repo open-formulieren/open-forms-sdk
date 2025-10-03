@@ -1,6 +1,6 @@
 import {expect, userEvent, within} from '@storybook/test';
 
-import {FormikDecorator} from 'story-utils/decorators';
+import {withFormik} from '@/sb-decorators';
 
 import {AppointmentConfigContext} from '../Context';
 import {mockAppointmentProductsGet} from '../mocks';
@@ -20,7 +20,7 @@ const PRODUCTS_DATA = [
 export default {
   title: 'Private API / Appointments / Product and amount',
   component: Product,
-  decorators: [FormikDecorator],
+  decorators: [withFormik],
   parameters: {
     formik: {
       initialValues: {
