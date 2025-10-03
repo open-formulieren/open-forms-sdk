@@ -1,9 +1,8 @@
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildSubmission} from 'api-mocks/submissions';
-import {LiteralDecorator} from 'story-utils/decorators';
 
-import {withCard, withForm, withPageWrapper} from '@/sb-decorators';
+import {withCard, withForm, withLiterals, withPageWrapper} from '@/sb-decorators';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -17,14 +16,7 @@ import Summary from './Summary';
 export default {
   title: 'Private API / Appointments / Steps / 4 - Summary',
   component: Summary,
-  decorators: [
-    withCard,
-    withPageWrapper,
-    withAppointmentState,
-    LiteralDecorator,
-    withForm,
-    withRouter,
-  ],
+  decorators: [withCard, withPageWrapper, withAppointmentState, withLiterals, withForm, withRouter],
   parameters: {
     controls: {hideNoControlsWarning: true},
     appointmentState: {
@@ -57,12 +49,6 @@ export default {
         mockAppointmentPost,
       ],
     },
-  },
-  args: {
-    // LiteralDecorator args
-    confirmText: 'Confirm',
-    previousText: 'Previous',
-    changeText: 'Change',
   },
 };
 

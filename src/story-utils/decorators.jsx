@@ -1,7 +1,5 @@
 import {Formik} from 'formik';
 
-import {LiteralsProvider} from 'components/Literal';
-
 export const FormikDecorator = (Story, context) => {
   const isDisabled = context.parameters?.formik?.disable ?? false;
   if (isDisabled) {
@@ -29,26 +27,3 @@ export const FormikDecorator = (Story, context) => {
     </Formik>
   );
 };
-
-export const LiteralDecorator = (Story, {args}) => (
-  <LiteralsProvider
-    literals={{
-      previousText: {
-        resolved: args.previousText || 'Previous',
-      },
-      saveText: {resolved: 'Save', value: ''},
-      nextText: {resolved: 'Next', value: ''},
-      beginText: {
-        resolved: args.beginText || 'Start',
-      },
-      changeText: {
-        resolved: args.changeText || 'Change',
-      },
-      confirmText: {
-        resolved: args.confirmText || 'Confirm',
-      },
-    }}
-  >
-    <Story />
-  </LiteralsProvider>
-);
