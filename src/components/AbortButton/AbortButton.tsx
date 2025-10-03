@@ -1,8 +1,7 @@
 import {Icon, LinkButton} from '@utrecht/component-library-react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import FAIcon from 'components/FAIcon';
-
+import FAIcon from '@/components/FAIcon';
 import {useAnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
 import {buildGovMetricUrl} from '@/components/analytics/utils';
 import useFormContext from '@/hooks/useFormContext';

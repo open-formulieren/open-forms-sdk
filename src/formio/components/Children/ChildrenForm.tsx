@@ -12,9 +12,8 @@ import '@utrecht/table-css';
 import type {UUID} from 'crypto';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import FAIcon from 'components/FAIcon';
-
 import {OFButton} from '@/components/Button';
+import FAIcon from '@/components/FAIcon';
 
 import CHILDREN_COMPONENTS from './definition';
 import type {ChildExtendedDetails} from './types';

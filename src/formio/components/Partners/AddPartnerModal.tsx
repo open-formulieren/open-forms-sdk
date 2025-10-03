@@ -1,7 +1,7 @@
 import type {PartnerDetails} from '@open-formulieren/types';
 import {FormattedMessage} from 'react-intl';
 
-import Modal from 'components/modals/Modal';
+import Modal from '@/components/modals/Modal';
 
 import AddPartnerForm from './AddPartnerForm';
 

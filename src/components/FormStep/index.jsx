@@ -832,6 +832,4 @@ const FormStep = () => {
   );
 };
 
-FormStep.propTypes = {};
-
 export default FormStep;

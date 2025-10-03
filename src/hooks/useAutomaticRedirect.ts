@@ -1,8 +1,7 @@
 import {useContext, useEffect} from 'react';
 import {useLocation} from 'react-router';
 
-import {getLoginUrl} from 'components/LoginOptions/utils';
-
+import {getLoginUrl} from '@/components/LoginOptions/utils';
 import type {Form} from '@/data/forms';
 
 import {ConfigContext} from '../Context';

@@ -4,20 +4,21 @@ import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';
 
-import {FormContext} from 'Context';
-import {buildForm, buildSubmission, buildSubmissionStep} from 'api-mocks';
+import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
+
+import {FormContext} from '@/Context';
+import {buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import {
   mockSubmissionCheckLogicPost,
   mockSubmissionStepGet,
   mockSubmissionStepValidatePost,
-} from 'api-mocks/submissions';
+} from '@/api-mocks/submissions';
 import {
   mockEmailVerificationPost,
   mockEmailVerificationVerifyCodePost,
-} from 'components/EmailVerification/mocks';
-import SubmissionProvider from 'components/SubmissionProvider';
-import {AnalyticsToolsDecorator, ConfigDecorator} from 'story-utils/decorators';
-import {sleep} from 'utils';
+} from '@/components/EmailVerification/mocks';
+import SubmissionProvider from '@/components/SubmissionProvider';
+import {sleep} from '@/utils';
 
 import FormStep from './index';
 
