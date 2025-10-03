@@ -1,10 +1,9 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Icon, LinkButton} from '@utrecht/component-library-react';
 
-import FAIcon from 'components/FAIcon';
-import {Literal} from 'components/Literal';
-
 import AbortButton from '@/components/AbortButton';
+import FAIcon from '@/components/FAIcon';
+import {Literal} from '@/components/Literal';
 import PreviousLink from '@/components/PreviousLink';
 
 export interface FormNavigationProps {

@@ -1,9 +1,8 @@
 import {Icon} from '@utrecht/component-library-react';
 
-import FAIcon from 'components/FAIcon';
-import {Literal} from 'components/Literal';
-
 import {OFButton} from '@/components/Button';
+import FAIcon from '@/components/FAIcon';
+import {Literal} from '@/components/Literal';
 import type {Submission} from '@/data/submissions';
 
 export interface FormSubmitButtonProps {

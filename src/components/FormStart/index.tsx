@@ -3,14 +3,12 @@ import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
-import {LiteralsProvider} from 'components/Literal';
-import useTitle from 'hooks/useTitle';
-
 import {ConfigContext} from '@/Context';
 import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FormMaximumSubmissionsError from '@/components/Errors/FormMaximumSubmissionsError';
 import ExistingSubmissionOptions from '@/components/ExistingSubmissionOptions';
+import {LiteralsProvider} from '@/components/Literal';
 import Loader from '@/components/Loader';
 import LoginOptions, {type OnFormStartOptions} from '@/components/LoginOptions';
 import MaintenanceMode from '@/components/MaintenanceMode';
@@ -25,6 +23,7 @@ import {IsFormDesigner} from '@/headers';
 import useFormContext from '@/hooks/useFormContext';
 import useInitialDataReference from '@/hooks/useInitialDataReference';
 import useStartSubmission from '@/hooks/useStartSubmission';
+import useTitle from '@/hooks/useTitle';
 
 /**
  * Form start screen.
@@ -182,7 +181,5 @@ const FormStart: React.FC = () => {
     </LiteralsProvider>
   );
 };
-
-FormStart.propTypes = {};
 
 export default FormStart;

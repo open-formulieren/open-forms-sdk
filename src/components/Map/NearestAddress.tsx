@@ -2,10 +2,10 @@ import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {get} from 'api';
-import Loader from 'components/Loader';
-import {getBEMClassName} from 'utils';
+import {ConfigContext} from '@/Context';
+import {get} from '@/api';
+import Loader from '@/components/Loader';
+import {getBEMClassName} from '@/utils';
 
 import './MapAddress.scss';
 import type {Coordinates} from './types';

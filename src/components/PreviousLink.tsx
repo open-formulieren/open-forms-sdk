@@ -1,10 +1,9 @@
 import {Icon} from '@utrecht/component-library-react';
 import clsx from 'clsx';
 
-import FAIcon from 'components/FAIcon';
-import {Literal} from 'components/Literal';
-
+import FAIcon from '@/components/FAIcon';
 import Link from '@/components/Link';
+import {Literal} from '@/components/Literal';
 
 export interface PreviousLinkProps {
   to: string;

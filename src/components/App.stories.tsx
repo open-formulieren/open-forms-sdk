@@ -2,8 +2,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/test';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import routes, {FUTURE_FLAGS} from 'routes';
 import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
 
 import {FormContext} from '@/Context';
@@ -14,8 +12,10 @@ import {
   mockSubmissionPost,
   mockSubmissionStepGet,
 } from '@/api-mocks/submissions';
+import {mockLanguageChoicePut, mockLanguageInfoGet} from '@/components/LanguageSelection/mocks';
 import type {Form, MinimalFormStep} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
+import routes, {FUTURE_FLAGS} from '@/routes';
 
 import App from './App';
 
