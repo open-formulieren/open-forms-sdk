@@ -1,11 +1,11 @@
-import {LayoutDecorator} from 'story-utils/decorators';
+import {withPageWrapper} from '@/sb-decorators';
 
 import CancelAppointmentSuccess from './CancelAppointmentSuccess';
 
 export default {
   title: 'Private API / Appointments / Cancellation / Success',
   component: CancelAppointmentSuccess,
-  decorators: [LayoutDecorator],
+  decorators: [withPageWrapper],
 };
 
 export const Success = {};

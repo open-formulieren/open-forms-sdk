@@ -88,6 +88,15 @@ export const withConfig: Decorator = (Story, {parameters}) => {
   );
 };
 
+/**
+ * Wrap the story in a page layout, providing a grey background and some padding.
+ */
+export const withPageWrapper: Decorator = Story => (
+  <div style={{backgroundColor: '#e6e6e6', padding: '15px'}}>
+    <Story />
+  </div>
+);
+
 export const withGeolocationMocking: Decorator = (Story, {parameters}) => {
   const {updateGeolocationPermission} = setupGeolocationMock({
     geolocationPermission: parameters.geolocation.permission,

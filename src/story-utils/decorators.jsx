@@ -58,20 +58,6 @@ export const LiteralDecorator = (Story, {args}) => (
   </LiteralsProvider>
 );
 
-const PaddedDiv = ({className, children, style = {}}) => (
-  <div style={{padding: '15px 0', ...style}} className={className}>
-    {children}
-  </div>
-);
-
-export const LayoutDecorator = Story => {
-  return (
-    <PaddedDiv style={{backgroundColor: '#e6e6e6', paddingInline: '15px'}}>
-      <Story />
-    </PaddedDiv>
-  );
-};
-
 export const withCard = (Story, {parameters: {card: cardProps = {}}}) => (
   <Card {...cardProps}>
     <Story />

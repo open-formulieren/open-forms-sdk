@@ -2,8 +2,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/test';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {LayoutDecorator} from 'story-utils/decorators';
-
 import {FormContext} from '@/Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
 import {
@@ -16,6 +14,7 @@ import {mockLanguageChoicePut, mockLanguageInfoGet} from '@/components/LanguageS
 import type {Form, MinimalFormStep} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
 import routes, {FUTURE_FLAGS} from '@/routes';
+import {withPageWrapper} from '@/sb-decorators';
 
 import App from './App';
 
@@ -135,7 +134,7 @@ export default {
 type Story = StoryObj<Args>;
 
 export const Default: Story = {
-  decorators: [LayoutDecorator],
+  decorators: [withPageWrapper],
 };
 
 export const TranslationEnabled: Story = {
@@ -422,14 +421,14 @@ export const SeveralStepsInMobileViewport: Story = {
 };
 
 export const MaximumSubmissionsReached: Story = {
-  decorators: [LayoutDecorator],
+  decorators: [withPageWrapper],
   args: {
     'form.submissionLimitReached': true,
   },
 };
 
 export const MaximumSubmissionsNotReached: Story = {
-  decorators: [LayoutDecorator],
+  decorators: [withPageWrapper],
   args: {
     'form.submissionLimitReached': false,
   },
