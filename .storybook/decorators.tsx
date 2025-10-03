@@ -7,6 +7,7 @@ import {ConfigContext, FormContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
 import Card from '@/components/Card';
+import {LiteralsProvider} from '@/components/Literal';
 import {SubmissionStatusContext} from '@/components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
@@ -180,3 +181,18 @@ export const withSubmissionPollInfo: Decorator<SubmissionPollInfoArgs> = (Story,
     </SubmissionStatusContext.Provider>
   );
 };
+
+export const withLiterals: Decorator = (Story, {parameters}) => (
+  <LiteralsProvider
+    literals={{
+      previousText: {resolved: parameters?.literals?.previousText || 'Previous'},
+      saveText: {resolved: parameters?.literals?.saveText || 'Save'},
+      nextText: {resolved: parameters?.literals?.nextText || 'Next'},
+      beginText: {resolved: parameters?.literals?.beginText || 'Start'},
+      changeText: {resolved: parameters?.literals?.changeText || 'Change'},
+      confirmText: {resolved: parameters?.literals?.confirmText || 'Confirm'},
+    }}
+  >
+    <Story />
+  </LiteralsProvider>
+);

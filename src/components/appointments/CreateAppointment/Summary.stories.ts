@@ -1,8 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {LiteralDecorator} from 'story-utils/decorators';
-
 import {
   mockAppointmentCustomerFieldsGet,
   mockAppointmentLocationsGet,
@@ -10,7 +8,7 @@ import {
   mockAppointmentProductsGet,
 } from '@/api-mocks/appointments';
 import {buildSubmission} from '@/api-mocks/submissions';
-import {withCard, withForm, withPageWrapper} from '@/sb-decorators';
+import {withCard, withForm, withLiterals, withPageWrapper} from '@/sb-decorators';
 
 import {withAppointmentState} from '../story-utils';
 import Summary from './Summary';
@@ -18,14 +16,7 @@ import Summary from './Summary';
 export default {
   title: 'Private API / Appointments / Steps / 4 - Summary',
   component: Summary,
-  decorators: [
-    withCard,
-    withPageWrapper,
-    withAppointmentState,
-    LiteralDecorator,
-    withForm,
-    withRouter,
-  ],
+  decorators: [withCard, withPageWrapper, withAppointmentState, withLiterals, withForm, withRouter],
   parameters: {
     controls: {hideNoControlsWarning: true},
     appointmentState: {
@@ -60,12 +51,6 @@ export default {
         mockAppointmentPost,
       ],
     },
-  },
-  args: {
-    // LiteralDecorator args
-    confirmText: 'Confirm',
-    previousText: 'Previous',
-    changeText: 'Change',
   },
 } satisfies Meta<typeof Summary>;
 

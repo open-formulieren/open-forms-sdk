@@ -2,29 +2,25 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
-import {LiteralDecorator} from 'story-utils/decorators';
+import {buildForm} from '@/api-mocks';
+import {withLiterals} from '@/sb-decorators';
 
 import LoginOptionsDisplay from './LoginOptionsDisplay';
 import LoginOptions from './index';
 
-type Args = React.ComponentProps<typeof LoginOptions> & {
-  beginText: string;
-};
-
 export default {
   title: 'Composites / Login Options',
   component: LoginOptions,
-  decorators: [LiteralDecorator, withRouter],
+  decorators: [withLiterals, withRouter],
   args: {
     onFormStart: fn(),
   },
   argTypes: {
     form: {table: {disable: true}},
   },
-} satisfies Meta<Args>;
+} satisfies Meta<typeof LoginOptions>;
 
-type Story = StoryObj<Args>;
+type Story = StoryObj<typeof LoginOptions>;
 
 export const Display: StoryObj<typeof LoginOptionsDisplay> = {
   render: ({loginAsYourselfOptions, loginAsGemachtigdeOptions, cosignLoginOptions}) => (
@@ -116,7 +112,6 @@ export const Display: StoryObj<typeof LoginOptionsDisplay> = {
 
 export const Functional: Story = {
   args: {
-    beginText: 'Begin form (anonymous)',
     form: buildForm({
       loginRequired: false,
       loginOptions: [
@@ -184,6 +179,11 @@ export const Functional: Story = {
       cosignLoginOptions: [],
     }),
   },
+  parameters: {
+    literals: {
+      beginText: 'Begin form (anonymous)',
+    },
+  },
   play: async ({args, canvasElement}) => {
     const canvas = within(canvasElement);
     const anonymousStartButton = await canvas.getByRole('button');
@@ -195,7 +195,6 @@ export const Functional: Story = {
 export const NoMachtigenOptions: Story = {
   name: "No 'machtigen' options",
   args: {
-    beginText: '(anonymous)',
     form: buildForm({
       loginRequired: true,
       loginOptions: [
@@ -215,12 +214,16 @@ export const NoMachtigenOptions: Story = {
       cosignLoginOptions: [],
     }),
   },
+  parameters: {
+    literals: {
+      beginText: '(anonymous)',
+    },
+  },
 };
 
 export const WithCoSignOption: Story = {
   name: 'Co-sign option',
   args: {
-    beginText: '(anonymous)',
     form: buildForm({
       loginRequired: true,
       loginOptions: [
@@ -252,5 +255,10 @@ export const WithCoSignOption: Story = {
         },
       ],
     }),
+  },
+  parameters: {
+    literals: {
+      beginText: '(anonymous)',
+    },
   },
 };
