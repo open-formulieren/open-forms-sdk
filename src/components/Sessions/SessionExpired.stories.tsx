@@ -2,8 +2,6 @@ import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {useEffect} from 'react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import {sessionExpiresAt} from '@/api';
 import useSessionTimeout from '@/hooks/useSessionTimeout';
 
@@ -28,11 +26,8 @@ const withExpiredSession: Decorator = Story => {
 export default {
   title: 'Views / Session Expired',
   component: SessionExpired,
-  decorators: [withExpiredSession, ConfigDecorator, withRouter],
+  decorators: [withExpiredSession, withRouter],
   parameters: {
-    config: {
-      debug: false, // force false in local dev-mode
-    },
     reactRouter: {
       routing: '/sessie-verlopen',
     },

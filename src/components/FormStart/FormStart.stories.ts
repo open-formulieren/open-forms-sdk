@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator, withForm} from 'story-utils/decorators';
+import {withForm} from 'story-utils/decorators';
 
 import {buildForm} from '@/api-mocks';
 
@@ -9,7 +9,7 @@ import FormStart from './index';
 
 export default {
   title: 'Private API / FormStart',
-  decorators: [withForm, ConfigDecorator, withRouter],
+  decorators: [withForm, withRouter],
   component: FormStart,
   parameters: {
     formContext: {

@@ -7,7 +7,7 @@ import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
 import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
 import routes, {FUTURE_FLAGS, PROVIDER_FUTURE_FLAGS} from 'routes';
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+import {LayoutDecorator} from 'story-utils/decorators';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -22,7 +22,7 @@ import CreateAppointment from './';
 export default {
   title: 'Private API / Appointments / CreateForm',
   component: CreateAppointment,
-  decorators: [ConfigDecorator, LayoutDecorator],
+  decorators: [LayoutDecorator],
   parameters: {
     msw: {
       handlers: [

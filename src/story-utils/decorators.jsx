@@ -1,37 +1,12 @@
-import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider';
 import {Formik} from 'formik';
-import merge from 'lodash/merge';
 
-import {ConfigContext, FormContext} from 'Context';
-import {BASE_URL, buildForm} from 'api-mocks';
+import {FormContext} from 'Context';
+import {buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
 import {SubmissionStatusContext} from 'components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from 'components/analytics/AnalyticsToolConfigProvider';
 import {ModalContext} from 'components/modals/Modal';
-
-const NO_COMPONENTS = [];
-
-export const ConfigDecorator = (Story, {parameters}) => {
-  const defaults = {
-    baseUrl: BASE_URL,
-    basePath: '',
-    baseTitle: '',
-    requiredFieldsWithAsterisk: true,
-  };
-  const fromParams = parameters?.config || {};
-  const value = merge(defaults, fromParams);
-  return (
-    <ConfigContext.Provider value={value}>
-      <FormSettingsProvider
-        requiredFieldsWithAsterisk={value.requiredFieldsWithAsterisk}
-        components={NO_COMPONENTS}
-      >
-        <Story />
-      </FormSettingsProvider>
-    </ConfigContext.Provider>
-  );
-};
 
 export const AnalyticsToolsDecorator = (Story, {parameters}) => {
   const defaults = {

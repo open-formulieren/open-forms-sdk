@@ -1,6 +1,6 @@
 import {expect, userEvent, within} from '@storybook/test';
 
-import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+import {FormikDecorator} from 'story-utils/decorators';
 
 import {mockAppointmentProductsGet} from '../mocks';
 import {default as ProductSelectComponent} from './ProductSelect';
@@ -8,7 +8,7 @@ import {default as ProductSelectComponent} from './ProductSelect';
 export default {
   title: 'Private API / Appointments / Fields / ProductSelect',
   component: ProductSelectComponent,
-  decorators: [FormikDecorator, ConfigDecorator],
+  decorators: [FormikDecorator],
   parameters: {
     controls: {hideNoControlsWarning: true},
     formik: {

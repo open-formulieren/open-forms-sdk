@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator, LiteralDecorator, withForm} from 'story-utils/decorators';
+import {LiteralDecorator, withForm} from 'story-utils/decorators';
 
 import {buildForm} from '@/api-mocks';
 import {
@@ -15,7 +15,7 @@ import GenericSummary from './GenericSummary';
 export default {
   title: 'Private API / GenericSummary',
   component: GenericSummary,
-  decorators: [LiteralDecorator, withRouter, ConfigDecorator, withForm],
+  decorators: [LiteralDecorator, withRouter, withForm],
   args: {
     title: 'Generic Summary',
     submissionAllowed: 'yes',

@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/test';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+import {LayoutDecorator} from 'story-utils/decorators';
 
 import {FormContext} from '@/Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
@@ -65,7 +65,6 @@ export default {
     });
     return <Wrapper form={form} showExternalHeader={args.showExternalHeader} />;
   },
-  decorators: [ConfigDecorator],
   args: {
     name: 'Mock form',
     'form.translationEnabled': true,
@@ -120,9 +119,6 @@ export default {
     },
   },
   parameters: {
-    config: {
-      debug: false,
-    },
     msw: {
       handlers: [
         mockLanguageInfoGet([

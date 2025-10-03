@@ -1,6 +1,6 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+import {FormikDecorator} from 'story-utils/decorators';
 
 import {mockAppointmentLocationsGet} from '../mocks';
 import LocationSelect from './LocationSelect';
@@ -8,7 +8,7 @@ import LocationSelect from './LocationSelect';
 export default {
   title: 'Private API / Appointments / Fields / LocationSelect',
   component: LocationSelect,
-  decorators: [FormikDecorator, ConfigDecorator],
+  decorators: [FormikDecorator],
   parameters: {
     formik: {
       initialValues: {

@@ -1,13 +1,7 @@
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildSubmission} from 'api-mocks/submissions';
-import {
-  ConfigDecorator,
-  LayoutDecorator,
-  LiteralDecorator,
-  withCard,
-  withForm,
-} from 'story-utils/decorators';
+import {LayoutDecorator, LiteralDecorator, withCard, withForm} from 'story-utils/decorators';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -28,7 +22,6 @@ export default {
     LiteralDecorator,
     withForm,
     withRouter,
-    ConfigDecorator,
   ],
   parameters: {
     controls: {hideNoControlsWarning: true},

@@ -2,7 +2,7 @@ import {expect, userEvent, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+import {LayoutDecorator, withCard} from 'story-utils/decorators';
 
 import {mockAppointmentCustomerFieldsGet} from '../mocks';
 import {withAppointmentState} from '../story-utils';
@@ -13,7 +13,7 @@ const TOMORROW = formatISO(addDays(new Date(), 1), {representation: 'date'});
 export default {
   title: 'Private API / Appointments / Steps / 3 - Contact details',
   component: ContactDetailsStep,
-  decorators: [withCard, LayoutDecorator, withAppointmentState, withRouter, ConfigDecorator],
+  decorators: [withCard, LayoutDecorator, withAppointmentState, withRouter],
   parameters: {
     controls: {hideNoControlsWarning: true},
     appointmentState: {
