@@ -3,7 +3,8 @@ import {expect, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 
 import {mockAppointmentTimesGet} from 'api-mocks/appointments';
-import {FormikDecorator} from 'story-utils/decorators';
+
+import {withFormik} from '@/sb-decorators';
 
 import TimeSelect from './TimeSelect';
 
@@ -12,7 +13,7 @@ const tomorrow = formatISO(addDays(new Date(), 1), {representation: 'date'});
 export default {
   title: 'Private API / Appointments / Fields / TimeSelect',
   component: TimeSelect,
-  decorators: [FormikDecorator],
+  decorators: [withFormik],
   parameters: {
     controls: {hideNoControlsWarning: true},
     formik: {

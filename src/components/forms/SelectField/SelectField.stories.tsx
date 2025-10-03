@@ -3,8 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {useCallback} from 'react';
 
-import {FormikDecorator} from 'story-utils/decorators';
-
+import {withFormik} from '@/sb-decorators';
 import {sleep} from '@/utils';
 
 import AsyncSelectField from './AsyncSelectField';
@@ -12,7 +11,7 @@ import AsyncSelectField from './AsyncSelectField';
 export default {
   title: 'Pure React Components / Forms / SelectField',
   component: SelectField,
-  decorators: [FormikDecorator],
+  decorators: [withFormik],
   parameters: {
     formik: {
       initialValues: {

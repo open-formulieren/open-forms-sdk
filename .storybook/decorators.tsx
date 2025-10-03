@@ -2,6 +2,8 @@ import FormSettingsProvider from '@open-formulieren/formio-renderer/components/F
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import type {Decorator} from '@storybook/react';
 import {Document} from '@utrecht/component-library-react';
+import {Formik} from 'formik';
+import React from 'react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
@@ -196,3 +198,38 @@ export const withLiterals: Decorator = (Story, {parameters}) => (
     <Story />
   </LiteralsProvider>
 );
+
+/**
+ * Wrap the Story in a Formik context so that form fields can be included and tested.
+ *
+ * Behaviour can be customized through `parameters.formik`, with a 'global' killswitch
+ * `parameters.formik.disable`. Otheriwse the `initialValues`, `initialErrors` and
+ * `initialTouched` props are supported.
+ *
+ * Use `parameters.formik.wrapForm` to control if the story is wrapped in a `form` tag
+ * or not.
+ */
+export const withFormik: Decorator = (Story, context) => {
+  const isDisabled = context.parameters?.formik?.disable ?? false;
+  if (isDisabled) {
+    return <Story />;
+  }
+  const initialValues = context.parameters?.formik?.initialValues || {};
+  const initialErrors = context.parameters?.formik?.initialErrors || {};
+  const initialTouched = context.parameters?.formik?.initialTouched || {};
+  const wrapForm = context.parameters?.formik?.wrapForm ?? true;
+  const Wrapper = wrapForm ? 'form' : React.Fragment;
+  return (
+    <Formik
+      initialValues={initialValues}
+      initialErrors={initialErrors}
+      initialTouched={initialTouched}
+      enableReinitialize
+      onSubmit={(values, formikHelpers) => console.log(values, formikHelpers)}
+    >
+      <Wrapper>
+        <Story />
+      </Wrapper>
+    </Formik>
+  );
+};

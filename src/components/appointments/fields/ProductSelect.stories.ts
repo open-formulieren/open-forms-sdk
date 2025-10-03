@@ -2,14 +2,15 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {mockAppointmentProductsGet} from 'api-mocks/appointments';
-import {FormikDecorator} from 'story-utils/decorators';
+
+import {withFormik} from '@/sb-decorators';
 
 import {default as ProductSelectComponent} from './ProductSelect';
 
 export default {
   title: 'Private API / Appointments / Fields / ProductSelect',
   component: ProductSelectComponent,
-  decorators: [FormikDecorator],
+  decorators: [withFormik],
   parameters: {
     controls: {hideNoControlsWarning: true},
     formik: {
