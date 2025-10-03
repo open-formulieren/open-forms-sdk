@@ -1,5 +1,6 @@
 import '@gemeente-denhaag/design-tokens-components/dist/theme/index.css';
 import '@gemeente-rotterdam/design-tokens/dist/index.css';
+import type {Preview} from '@storybook/react';
 import '@utrecht/design-tokens/dist/index.css';
 import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
@@ -7,6 +8,7 @@ import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
 import lodash from 'lodash';
 import {initialize, mswLoader} from 'msw-storybook-addon';
+// @ts-expect-error formio has poor TS support
 import {Formio, Templates} from 'react-formio';
 import {setAppElement} from 'react-modal';
 import 'scss/dte-theme.scss';
@@ -48,7 +50,7 @@ Formio.use(OpenFormsModule);
 // use our own template library
 Templates.current = OFLibrary;
 
-export default {
+const preview: Preview = {
   decorators: [
     withThemeProvider(ThemeProvider),
     withClearSessionStorage,
@@ -136,3 +138,5 @@ export default {
     ],
   },
 };
+
+export default preview;
