@@ -3,7 +3,9 @@ import {expect, userEvent, within} from '@storybook/test';
 import {formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {LayoutDecorator, withCard} from 'story-utils/decorators';
+import {withCard} from 'story-utils/decorators';
+
+import {withPageWrapper} from '@/sb-decorators';
 
 import {
   mockAppointmentDatesGet,
@@ -19,7 +21,7 @@ import LocationAndTimeStep from './LocationAndTimeStep';
 export default {
   title: 'Private API / Appointments / Steps / 2 - Location and time',
   component: LocationAndTimeStep,
-  decorators: [withCard, LayoutDecorator, withAppointmentState, withRouter],
+  decorators: [withCard, withPageWrapper, withAppointmentState, withRouter],
   parameters: {
     controls: {hideNoControlsWarning: true},
     appointmentState: {
