@@ -6,6 +6,7 @@ import {Document} from '@utrecht/component-library-react';
 import {ConfigContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
 import {BASE_URL} from '@/api-mocks';
+import Card from '@/components/Card';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
 
@@ -95,6 +96,17 @@ export const withPageWrapper: Decorator = Story => (
   <div style={{backgroundColor: '#e6e6e6', padding: '15px'}}>
     <Story />
   </div>
+);
+
+/**
+ * Wrap the story in a `Card` component container.
+ *
+ * Card props can be customized through story `parameters.card`.
+ */
+export const withCard: Decorator = (Story, {parameters: {card: cardProps = {}}}) => (
+  <Card {...cardProps}>
+    <Story />
+  </Card>
 );
 
 export const withGeolocationMocking: Decorator = (Story, {parameters}) => {
