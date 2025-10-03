@@ -18,12 +18,12 @@ import 'styles.scss';
 // ensure NL locale is included
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
-import {withModalDecorator} from 'story-utils/decorators';
 
 import {
   withClearSessionStorage,
   withConfig,
   withGeolocationMocking,
+  withModalDecorator,
   withUtrechtDocument,
 } from './decorators';
 import {allModes} from './modes.mjs';

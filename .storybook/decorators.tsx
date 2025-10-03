@@ -7,8 +7,10 @@ import {ConfigContext, FormContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
 import Card from '@/components/Card';
+import {SubmissionStatusContext} from '@/components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
+import {ModalContext} from '@/components/modals/Modal';
 import type {Form} from '@/data/forms';
 
 import {setupGeolocationMock} from './mocks/geolocationMock';
@@ -139,4 +141,42 @@ export const withGeolocationMocking: Decorator = (Story, {parameters}) => {
   parameters.geolocation.updatePermission = updateGeolocationPermission;
 
   return <Story />;
+};
+
+export const withModalDecorator: Decorator = Story => (
+  <ModalContext.Provider
+    value={{
+      // only for storybook integration, do not use this in real apps!
+      parentSelector: () => document.getElementById('storybook-root')!,
+      ariaHideApp: false,
+    }}
+  >
+    <Story />
+  </ModalContext.Provider>
+);
+
+export type SubmissionPollInfoArgs = {
+  publicReference: string;
+  paymentUrl: string;
+  reportDownloadUrl: string;
+  confirmationPageTitle: string;
+  confirmationPageContent: string;
+  mainWebsiteUrl: string;
+};
+
+export const withSubmissionPollInfo: Decorator<SubmissionPollInfoArgs> = (Story, {args}) => {
+  return (
+    <SubmissionStatusContext.Provider
+      value={{
+        publicReference: args.publicReference,
+        paymentUrl: args.paymentUrl,
+        reportDownloadUrl: args.reportDownloadUrl,
+        confirmationPageTitle: args.confirmationPageTitle,
+        confirmationPageContent: args.confirmationPageContent,
+        mainWebsiteUrl: args.mainWebsiteUrl,
+      }}
+    >
+      <Story />
+    </SubmissionStatusContext.Provider>
+  );
 };

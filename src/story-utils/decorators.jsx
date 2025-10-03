@@ -1,8 +1,6 @@
 import {Formik} from 'formik';
 
 import {LiteralsProvider} from 'components/Literal';
-import {SubmissionStatusContext} from 'components/PostCompletionViews';
-import {ModalContext} from 'components/modals/Modal';
 
 export const FormikDecorator = (Story, context) => {
   const isDisabled = context.parameters?.formik?.disable ?? false;
@@ -53,33 +51,4 @@ export const LiteralDecorator = (Story, {args}) => (
   >
     <Story />
   </LiteralsProvider>
-);
-
-export const withSubmissionPollInfo = (Story, {args}) => {
-  return (
-    <SubmissionStatusContext.Provider
-      value={{
-        publicReference: args.publicReference,
-        paymentUrl: args.paymentUrl,
-        reportDownloadUrl: args.reportDownloadUrl,
-        confirmationPageTitle: args.confirmationPageTitle,
-        confirmationPageContent: args.confirmationPageContent,
-        mainWebsiteUrl: args.mainWebsiteUrl,
-      }}
-    >
-      <Story />
-    </SubmissionStatusContext.Provider>
-  );
-};
-
-export const withModalDecorator = Story => (
-  <ModalContext.Provider
-    value={{
-      // only for storybook integration, do not use this in real apps!
-      parentSelector: () => document.getElementById('storybook-root'),
-      ariaHideApp: false,
-    }}
-  >
-    <Story />
-  </ModalContext.Provider>
 );

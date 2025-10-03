@@ -2,15 +2,17 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, waitForElementToBeRemoved, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withSubmissionPollInfo} from 'story-utils/decorators';
-
 import {BASE_URL, buildSubmission} from '@/api-mocks';
 import {
   mockSubmissionProcessingStatusGet,
   mockSubmissionProcessingStatusPendingGet,
 } from '@/api-mocks/submissions';
+import {withSubmissionPollInfo} from '@/sb-decorators';
+import type {SubmissionPollInfoArgs} from '@/sb-decorators';
 
 import ConfirmationView from './ConfirmationView';
+
+type Args = React.ComponentProps<typeof ConfirmationView> & SubmissionPollInfoArgs;
 
 export default {
   title: 'Views / Post completion views / With Polling',
@@ -32,9 +34,9 @@ export default {
       },
     },
   },
-} satisfies Meta<typeof ConfirmationView>;
+} satisfies Meta<Args>;
 
-type Story = StoryObj<typeof ConfirmationView>;
+type Story = StoryObj<Args>;
 
 export const WithoutPayment: Story = {
   play: async ({canvasElement, args}) => {
