@@ -2,21 +2,11 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withSubmissionPollInfo} from 'story-utils/decorators';
-
 import {buildForm} from '@/api-mocks';
-import {withForm} from '@/sb-decorators';
+import {withForm, withSubmissionPollInfo} from '@/sb-decorators';
+import type {SubmissionPollInfoArgs} from '@/sb-decorators';
 
 import {ConfirmationViewDisplay} from './ConfirmationView';
-
-export type SubmissionPollInfoArgs = {
-  publicReference: string;
-  paymentUrl: string;
-  reportDownloadUrl: string;
-  confirmationPageTitle: string;
-  confirmationPageContent: string;
-  mainWebsiteUrl: string;
-};
 
 export type Args = React.ComponentProps<typeof ConfirmationViewDisplay> & SubmissionPollInfoArgs;
 

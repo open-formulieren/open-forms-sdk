@@ -1,10 +1,8 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withSubmissionPollInfo} from 'story-utils/decorators';
-
 import {buildForm} from '@/api-mocks';
-import {withForm} from '@/sb-decorators';
+import {withForm, withSubmissionPollInfo} from '@/sb-decorators';
 
 import {ConfirmationViewDisplay} from './ConfirmationView';
 import type {Args} from './ConfirmationView.stories';
