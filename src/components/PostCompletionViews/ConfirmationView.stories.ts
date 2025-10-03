@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {AnalyticsToolsDecorator, withForm, withSubmissionPollInfo} from 'story-utils/decorators';
+import {withForm, withSubmissionPollInfo} from 'story-utils/decorators';
 
 import {buildForm} from '@/api-mocks';
 import type {Form} from '@/data/forms';
@@ -29,7 +29,7 @@ export type Args = React.ComponentProps<typeof ConfirmationViewDisplay> &
 export default {
   title: 'Views / Post completion views / Confirmation view',
   component: ConfirmationViewDisplay,
-  decorators: [withForm, AnalyticsToolsDecorator, withSubmissionPollInfo, withRouter],
+  decorators: [withForm, withSubmissionPollInfo, withRouter],
   argTypes: {
     paymentUrl: {control: false},
   },

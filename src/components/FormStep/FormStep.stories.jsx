@@ -4,8 +4,6 @@ import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
 import {v4 as uuid4} from 'uuid';
 
-import {AnalyticsToolsDecorator} from 'story-utils/decorators';
-
 import {FormContext} from '@/Context';
 import {buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import {
@@ -25,7 +23,7 @@ import FormStep from './index';
 export default {
   title: 'Private API / FormStep',
   component: FormStep,
-  decorators: [withRouter, AnalyticsToolsDecorator],
+  decorators: [withRouter],
   args: {
     onSubmissionObtained: fn(),
     onDestroySession: fn(),

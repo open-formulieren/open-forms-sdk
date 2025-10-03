@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {AnalyticsToolsDecorator, withForm, withSubmissionPollInfo} from 'story-utils/decorators';
+import {withForm, withSubmissionPollInfo} from 'story-utils/decorators';
 
 import {buildForm} from '@/api-mocks';
 
@@ -11,7 +11,7 @@ import type {Args} from './ConfirmationView.stories';
 export default {
   title: 'Views / Cosign / Submission completed',
   component: ConfirmationViewDisplay,
-  decorators: [withForm, AnalyticsToolsDecorator, withSubmissionPollInfo, withRouter],
+  decorators: [withForm, withSubmissionPollInfo, withRouter],
   args: {
     publicReference: 'OF-1234',
     reportDownloadUrl: '/dummy',

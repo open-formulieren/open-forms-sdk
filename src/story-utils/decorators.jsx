@@ -5,24 +5,7 @@ import {buildForm} from 'api-mocks';
 import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
 import {SubmissionStatusContext} from 'components/PostCompletionViews';
-import {AnalyticsToolsConfigContext} from 'components/analytics/AnalyticsToolConfigProvider';
 import {ModalContext} from 'components/modals/Modal';
-
-export const AnalyticsToolsDecorator = (Story, {parameters}) => {
-  const defaults = {
-    govmetricSourceIdFormFinished: '',
-    govmetricSourceIdFormAborted: '',
-    govmetricSecureGuidFormFinished: '',
-    govmetricSecureGuidFormAborted: '',
-    enableGovmetricAnalytics: false,
-  };
-
-  return (
-    <AnalyticsToolsConfigContext.Provider value={{...defaults, ...parameters.analyticsToolsParams}}>
-      <Story />
-    </AnalyticsToolsConfigContext.Provider>
-  );
-};
 
 export const FormikDecorator = (Story, context) => {
   const isDisabled = context.parameters?.formik?.disable ?? false;
