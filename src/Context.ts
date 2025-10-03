@@ -57,6 +57,7 @@ export interface ConfigContextType {
    */
   requiredFieldsWithAsterisk: boolean;
   debug: boolean;
+  backToTopText: string;
 }
 
 const ConfigContext = React.createContext<ConfigContextType>({
@@ -66,6 +67,7 @@ const ConfigContext = React.createContext<ConfigContextType>({
   baseTitle: '',
   requiredFieldsWithAsterisk: true,
   debug: DEBUG,
+  backToTopText: '',
 });
 ConfigContext.displayName = 'ConfigContext';
 
