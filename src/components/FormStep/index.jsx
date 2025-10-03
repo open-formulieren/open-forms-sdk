@@ -778,8 +778,6 @@ const FormStep = () => {
                       form: form,
                       submissionUuid: submission.id,
                       submissionUrl: submission.url,
-                      saveStepData: async () =>
-                        await submitStepData(submissionStep.url, {...getCurrentFormData()}),
                       verifyEmailCallback: ({key, email}) => {
                         // clear the errors from the component
                         const formInstance = formRef.current.formio;
