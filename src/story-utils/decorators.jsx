@@ -1,7 +1,5 @@
 import {Formik} from 'formik';
 
-import {FormContext} from 'Context';
-import {buildForm} from 'api-mocks';
 import {LiteralsProvider} from 'components/Literal';
 import {SubmissionStatusContext} from 'components/PostCompletionViews';
 import {ModalContext} from 'components/modals/Modal';
@@ -56,15 +54,6 @@ export const LiteralDecorator = (Story, {args}) => (
     <Story />
   </LiteralsProvider>
 );
-
-export const withForm = (Story, {parameters, args}) => {
-  const form = args?.form || parameters?.formContext?.form || buildForm();
-  return (
-    <FormContext.Provider value={form}>
-      <Story />
-    </FormContext.Provider>
-  );
-};
 
 export const withSubmissionPollInfo = (Story, {args}) => {
   return (

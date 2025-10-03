@@ -3,12 +3,13 @@ import type {AnyComponentSchema} from '@open-formulieren/types';
 import type {Decorator} from '@storybook/react';
 import {Document} from '@utrecht/component-library-react';
 
-import {ConfigContext} from '@/Context';
+import {ConfigContext, FormContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
-import {BASE_URL} from '@/api-mocks';
+import {BASE_URL, buildForm} from '@/api-mocks';
 import Card from '@/components/Card';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
+import type {Form} from '@/data/forms';
 
 import {setupGeolocationMock} from './mocks/geolocationMock';
 
@@ -40,6 +41,24 @@ export const withUtrechtDocument: Decorator = (Story, {parameters}) => (
     <Story />
   </Document>
 );
+
+/**
+ * Wrap the story in a `FormContext`, replicating the `src/sdk.tsx` behaviour as this is
+ * always set up in the real app.
+ *
+ * The particular form instance/information can be specified through
+ * `parameters.formContext.form` or a mock form is used. You can build a form instance
+ * quite easily with `import {buildForm} from '@/api-mocks';`.
+
+ */
+export const withForm: Decorator = (Story, {parameters}) => {
+  const form: Form = parameters?.formContext?.form || buildForm();
+  return (
+    <FormContext.Provider value={form}>
+      <Story />
+    </FormContext.Provider>
+  );
+};
 
 const NO_COMPONENTS: AnyComponentSchema[] = [];
 

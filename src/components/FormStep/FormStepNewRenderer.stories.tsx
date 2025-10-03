@@ -2,8 +2,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {reactRouterParameters, withRouter} from 'storybook-addon-remix-react-router';
 
-import {withForm} from 'story-utils/decorators';
-
 import {BASE_URL, buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import {
   mockSubmissionCheckLogicPost,
@@ -17,6 +15,7 @@ import {
   mockEmailVerificationVerifyCodePost,
 } from '@/components/EmailVerification/mocks';
 import SubmissionProvider, {type SubmissionContextType} from '@/components/SubmissionProvider';
+import {withForm} from '@/sb-decorators';
 
 import FormStepNewRenderer from './FormStepNewRenderer';
 

@@ -2,11 +2,9 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, waitFor, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withForm} from 'story-utils/decorators';
-
 import {BASE_URL} from '@/api-mocks';
 import {mockSubmissionProcessingStatusGet} from '@/api-mocks/submissions';
-import {withCard, withPageWrapper} from '@/sb-decorators';
+import {withCard, withForm, withPageWrapper} from '@/sb-decorators';
 
 import Confirmation from './Confirmation';
 

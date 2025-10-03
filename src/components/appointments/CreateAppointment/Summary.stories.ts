@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {LiteralDecorator, withForm} from 'story-utils/decorators';
+import {LiteralDecorator} from 'story-utils/decorators';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -10,7 +10,7 @@ import {
   mockAppointmentProductsGet,
 } from '@/api-mocks/appointments';
 import {buildSubmission} from '@/api-mocks/submissions';
-import {withCard, withPageWrapper} from '@/sb-decorators';
+import {withCard, withForm, withPageWrapper} from '@/sb-decorators';
 
 import {withAppointmentState} from '../story-utils';
 import Summary from './Summary';
