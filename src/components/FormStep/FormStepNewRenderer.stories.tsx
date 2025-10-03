@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {reactRouterParameters, withRouter} from 'storybook-addon-remix-react-router';
 
-import {AnalyticsToolsDecorator, ConfigDecorator, withForm} from 'story-utils/decorators';
+import {AnalyticsToolsDecorator, withForm} from 'story-utils/decorators';
 
 import {BASE_URL, buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import {
@@ -54,7 +54,6 @@ export default {
         <Story />
       </SubmissionProvider>
     ),
-    ConfigDecorator,
     withRouter,
     withForm,
     AnalyticsToolsDecorator,
@@ -85,9 +84,6 @@ export default {
         validate: [mockSubmissionStepValidatePost(undefined)],
         emailVerification: [mockEmailVerificationPost, mockEmailVerificationVerifyCodePost],
       },
-    },
-    config: {
-      debug: false,
     },
     formContext: {
       form: buildForm({

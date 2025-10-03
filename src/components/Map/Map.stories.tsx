@@ -4,8 +4,6 @@ import type {Map as LMap} from 'leaflet';
 import {useEffect, useState} from 'react';
 import {useMap} from 'react-leaflet';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import LeafletMap from './index';
 import {mockAddressSearchGet, mockLatLngSearchEmptyGet, mockLatLngSearchGet} from './mocks';
 import type {GeoJsonGeometry} from './types';
@@ -55,7 +53,7 @@ const StorybookLeafletMapExposer = () => {
 export default {
   title: 'Private API / Map',
   component: LeafletMap,
-  decorators: [withMapLayout, ConfigDecorator],
+  decorators: [withMapLayout],
   render: StorybookLeafletMap,
   args: {
     geoJsonGeometry: {

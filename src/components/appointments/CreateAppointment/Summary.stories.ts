@@ -1,13 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {
-  ConfigDecorator,
-  LayoutDecorator,
-  LiteralDecorator,
-  withCard,
-  withForm,
-} from 'story-utils/decorators';
+import {LayoutDecorator, LiteralDecorator, withCard, withForm} from 'story-utils/decorators';
 
 import {
   mockAppointmentCustomerFieldsGet,
@@ -30,7 +24,6 @@ export default {
     LiteralDecorator,
     withForm,
     withRouter,
-    ConfigDecorator,
   ],
   parameters: {
     controls: {hideNoControlsWarning: true},

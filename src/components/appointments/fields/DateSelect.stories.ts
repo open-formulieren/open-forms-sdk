@@ -2,13 +2,13 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {mockAppointmentDatesGet} from 'api-mocks/appointments';
-import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+import {FormikDecorator} from 'story-utils/decorators';
 
 import DateSelect from './DateSelect';
 
 export default {
   title: 'Private API / Appointments / Fields / DateSelect',
-  decorators: [FormikDecorator, ConfigDecorator],
+  decorators: [FormikDecorator],
   component: DateSelect,
   parameters: {
     formik: {

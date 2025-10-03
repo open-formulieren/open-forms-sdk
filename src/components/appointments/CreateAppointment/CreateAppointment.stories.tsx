@@ -4,7 +4,7 @@ import {addDays, format} from 'date-fns';
 import {enGB, nl} from 'date-fns/locale';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+import {LayoutDecorator} from 'story-utils/decorators';
 
 import {FormContext} from '@/Context';
 import {buildForm} from '@/api-mocks';
@@ -43,7 +43,7 @@ interface Args {
 export default {
   title: 'Private API / Appointments / CreateForm',
   component: CreateAppointment,
-  decorators: [ConfigDecorator, LayoutDecorator],
+  decorators: [LayoutDecorator],
   parameters: {
     msw: {
       handlers: [

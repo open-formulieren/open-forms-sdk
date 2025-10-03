@@ -3,8 +3,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 import {useIntl} from 'react-intl';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import {
   mockFormioTranslations,
   mockFormioTranslationsServiceUnavailable,
@@ -14,7 +12,6 @@ import {I18NErrorBoundary, I18NManager, setLanguage} from '@/i18n';
 export default {
   title: 'Private API / Translation manager',
   component: I18NManager,
-  decorators: [ConfigDecorator],
   args: {
     languageSelectorTarget: null,
     onLanguageChangeDone: fn(),

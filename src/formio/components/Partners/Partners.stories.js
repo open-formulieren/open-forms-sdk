@@ -1,12 +1,9 @@
 import {expect, fn, screen, userEvent, within} from '@storybook/test';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import {SingleFormioComponent} from '../story-util';
 
 export default {
   title: 'Form.io components / Custom / Partners',
-  decorators: [ConfigDecorator],
   render: SingleFormioComponent,
   args: {
     type: 'partners',

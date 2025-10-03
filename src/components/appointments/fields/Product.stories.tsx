@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
 import {mockAppointmentProductsGet} from 'api-mocks/appointments';
-import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
+import {FormikDecorator} from 'story-utils/decorators';
 
 import type {AppointmentProduct} from '@/data/appointments';
 
@@ -29,7 +29,7 @@ interface Args {
 export default {
   title: 'Private API / Appointments / Product and amount',
   component: Product,
-  decorators: [FormikDecorator, ConfigDecorator],
+  decorators: [FormikDecorator],
   parameters: {
     formik: {
       initialValues: {

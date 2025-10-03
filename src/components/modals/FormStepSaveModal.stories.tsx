@@ -3,8 +3,6 @@ import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {HttpResponse, http} from 'msw';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import {BASE_URL} from '@/api-mocks';
 import {OFButton} from '@/components/Button';
 
@@ -52,7 +50,7 @@ const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context)
 export default {
   title: 'Private API / FormStepSaveModal',
   component: FormStepSaveModal,
-  decorators: [withTriggerDecorator, ConfigDecorator],
+  decorators: [withTriggerDecorator],
   args: {
     suspendFormUrl: `${BASE_URL}submissions/bb890fae-b0b1-4e61-a6a9-536edfc8a63f/_suspend`,
     onSessionDestroyed: fn(),

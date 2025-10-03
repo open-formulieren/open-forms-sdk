@@ -1,14 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import AddChildForm from './AddChildForm';
 
 export default {
   title: 'Private API / Children / Modal content',
   component: AddChildForm,
-  decorators: [ConfigDecorator],
   args: {
     childValues: null,
     onSave: fn(),

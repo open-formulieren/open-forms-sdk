@@ -2,8 +2,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import {BASE_URL} from '@/api-mocks';
 
 import {EmailVerificationForm} from './index';
@@ -16,7 +14,7 @@ import {
 export default {
   title: 'Private API / Email verification / Modal content',
   component: EmailVerificationForm,
-  decorators: [ConfigDecorator, withRouter],
+  decorators: [withRouter],
   args: {
     submissionUrl: `${BASE_URL}submissions/123`,
     emailAddress: 'openforms@example.com',
