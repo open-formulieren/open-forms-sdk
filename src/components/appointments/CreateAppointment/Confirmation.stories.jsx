@@ -3,9 +3,8 @@ import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {BASE_URL} from 'api-mocks';
 import {mockSubmissionProcessingStatusGet} from 'api-mocks/submissions';
-import {withForm} from 'story-utils/decorators';
 
-import {withCard, withPageWrapper} from '@/sb-decorators';
+import {withCard, withForm, withPageWrapper} from '@/sb-decorators';
 
 import Confirmation from './Confirmation';
 

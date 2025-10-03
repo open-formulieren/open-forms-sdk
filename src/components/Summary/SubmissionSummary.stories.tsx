@@ -2,8 +2,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withForm} from 'story-utils/decorators';
-
 import {buildForm} from '@/api-mocks';
 import {
   buildSubmission,
@@ -12,6 +10,7 @@ import {
   mockSubmissionSummaryGet,
 } from '@/api-mocks/submissions';
 import SubmissionProvider from '@/components/SubmissionProvider';
+import {withForm} from '@/sb-decorators';
 
 import SubmissionSummary from './SubmissionSummary';
 

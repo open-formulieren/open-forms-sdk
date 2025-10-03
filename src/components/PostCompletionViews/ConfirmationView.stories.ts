@@ -2,10 +2,10 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withForm, withSubmissionPollInfo} from 'story-utils/decorators';
+import {withSubmissionPollInfo} from 'story-utils/decorators';
 
 import {buildForm} from '@/api-mocks';
-import type {Form} from '@/data/forms';
+import {withForm} from '@/sb-decorators';
 
 import {ConfirmationViewDisplay} from './ConfirmationView';
 
@@ -18,13 +18,7 @@ export type SubmissionPollInfoArgs = {
   mainWebsiteUrl: string;
 };
 
-type FormArgs = {
-  form?: Form;
-};
-
-export type Args = React.ComponentProps<typeof ConfirmationViewDisplay> &
-  FormArgs &
-  SubmissionPollInfoArgs;
+export type Args = React.ComponentProps<typeof ConfirmationViewDisplay> & SubmissionPollInfoArgs;
 
 export default {
   title: 'Views / Post completion views / Confirmation view',
@@ -117,11 +111,13 @@ export const WithGovMetric: Story = {
     confirmationPageContent: 'Your answers are submitted. Hurray!',
     mainWebsiteUrl: '#',
     downloadPDFText: 'Download a PDF of your submitted answers',
-    form: buildForm({
-      slug: 'a-test-form',
-    }),
   },
   parameters: {
+    formContext: {
+      form: buildForm({
+        slug: 'a-test-form',
+      }),
+    },
     analyticsToolsParams: {
       govmetricSourceIdFormFinished: '1234',
       govmetricSecureGuid: '',

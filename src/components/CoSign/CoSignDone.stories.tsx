@@ -2,8 +2,8 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
-import {withForm} from 'story-utils/decorators';
+import {buildForm} from '@/api-mocks';
+import {withForm} from '@/sb-decorators';
 
 import {CosignProvider} from './Context';
 import CosignDone from './CosignDone';

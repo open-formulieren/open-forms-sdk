@@ -2,9 +2,8 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withForm} from 'story-utils/decorators';
-
 import {buildForm} from '@/api-mocks';
+import {withForm} from '@/sb-decorators';
 
 import IntroductionPage from './index';
 
