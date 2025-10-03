@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {reactRouterParameters, withRouter} from 'storybook-addon-remix-react-router';
 
-import {AnalyticsToolsDecorator, withForm} from 'story-utils/decorators';
+import {withForm} from 'story-utils/decorators';
 
 import {BASE_URL, buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import {
@@ -56,7 +56,6 @@ export default {
     ),
     withRouter,
     withForm,
-    AnalyticsToolsDecorator,
   ],
   component: FormStepNewRenderer,
   parameters: {

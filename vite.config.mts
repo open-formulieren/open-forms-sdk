@@ -1,4 +1,3 @@
-/// <reference types="vitest/config" />
 // https://vitejs.dev/config/
 import {codecovVitePlugin} from '@codecov/vite-plugin';
 import replace from '@rollup/plugin-replace';
@@ -6,10 +5,10 @@ import {sentryVitePlugin} from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import type {OutputOptions} from 'rollup';
-import {defineConfig, loadEnv} from 'vite';
+import {loadEnv} from 'vite';
 import eslint from 'vite-plugin-eslint2';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import {coverageConfigDefaults} from 'vitest/config';
+import {coverageConfigDefaults, defineConfig} from 'vitest/config';
 
 import {cjsTokens, ejsPlugin} from './build/plugins.mjs';
 import {packageRegexes} from './build/utils.mjs';

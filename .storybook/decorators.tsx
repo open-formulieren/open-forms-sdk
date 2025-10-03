@@ -6,6 +6,8 @@ import {Document} from '@utrecht/component-library-react';
 import {ConfigContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
 import {BASE_URL} from '@/api-mocks';
+import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
+import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
 
 import {setupGeolocationMock} from './mocks/geolocationMock';
 
@@ -41,11 +43,13 @@ export const withUtrechtDocument: Decorator = (Story, {parameters}) => (
 const NO_COMPONENTS: AnyComponentSchema[] = [];
 
 /**
- * Wrap the story in a ConfigContext, replicating the ``src/sdk.tsx``` entrypoint logic.
+ * Wrap the story in the necessary configuration contexts, replicating the `src/sdk.tsx`
+ * entrypoint logic.
  *
- * The configuration values can be updated through story `parameters.config`.
+ * The configuration values can be updated through story `parameters.config` and `parameters.analyticsToolsParams`.
  */
 export const withConfig: Decorator = (Story, {parameters}) => {
+  // General configuration
   const DEFAULTS: ConfigContextType = {
     baseUrl: BASE_URL,
     basePath: '',
@@ -55,15 +59,31 @@ export const withConfig: Decorator = (Story, {parameters}) => {
     debug: false,
   };
   const overrides: Partial<ConfigContextType> = parameters?.config || {};
-  const value: ConfigContextType = {...DEFAULTS, ...overrides};
+  const configValue: ConfigContextType = {...DEFAULTS, ...overrides};
+
+  // Analytics tool configuration
+  const ANALYTICS_DEFAULTS: AnalyticsToolsConfig = {
+    govmetricSourceIdFormFinished: '',
+    govmetricSourceIdFormAborted: '',
+    govmetricSecureGuidFormFinished: '',
+    govmetricSecureGuidFormAborted: '',
+    enableGovmetricAnalytics: false,
+  };
+  const analyticsValue: AnalyticsToolsConfig = {
+    ...ANALYTICS_DEFAULTS,
+    ...(parameters.analyticsToolsParams ?? {}),
+  };
+
   return (
-    <ConfigContext.Provider value={value}>
-      <FormSettingsProvider
-        requiredFieldsWithAsterisk={value.requiredFieldsWithAsterisk}
-        components={NO_COMPONENTS}
-      >
-        <Story />
-      </FormSettingsProvider>
+    <ConfigContext.Provider value={configValue}>
+      <AnalyticsToolsConfigContext.Provider value={analyticsValue}>
+        <FormSettingsProvider
+          requiredFieldsWithAsterisk={configValue.requiredFieldsWithAsterisk}
+          components={NO_COMPONENTS}
+        >
+          <Story />
+        </FormSettingsProvider>
+      </AnalyticsToolsConfigContext.Provider>
     </ConfigContext.Provider>
   );
 };

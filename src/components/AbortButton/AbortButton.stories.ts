@@ -1,14 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 
-import {AnalyticsToolsDecorator} from 'story-utils/decorators';
-
 import AbortButton from './AbortButton';
 
 export default {
   title: 'Private API / Abort button',
   component: AbortButton,
-  decorators: [AnalyticsToolsDecorator],
 } satisfies Meta<typeof AbortButton>;
 
 type Story = StoryObj<typeof AbortButton>;
