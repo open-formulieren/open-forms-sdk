@@ -1,9 +1,9 @@
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildSubmission} from 'api-mocks/submissions';
-import {LiteralDecorator, withCard, withForm} from 'story-utils/decorators';
+import {LiteralDecorator, withForm} from 'story-utils/decorators';
 
-import {withPageWrapper} from '@/sb-decorators';
+import {withCard, withPageWrapper} from '@/sb-decorators';
 
 import {
   mockAppointmentCustomerFieldsGet,

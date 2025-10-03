@@ -2,7 +2,6 @@ import {Formik} from 'formik';
 
 import {FormContext} from 'Context';
 import {buildForm} from 'api-mocks';
-import Card from 'components/Card';
 import {LiteralsProvider} from 'components/Literal';
 import {SubmissionStatusContext} from 'components/PostCompletionViews';
 import {ModalContext} from 'components/modals/Modal';
@@ -56,12 +55,6 @@ export const LiteralDecorator = (Story, {args}) => (
   >
     <Story />
   </LiteralsProvider>
-);
-
-export const withCard = (Story, {parameters: {card: cardProps = {}}}) => (
-  <Card {...cardProps}>
-    <Story />
-  </Card>
 );
 
 export const withForm = (Story, {parameters, args}) => {
