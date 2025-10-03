@@ -1,7 +1,7 @@
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator, LayoutDecorator, withCard} from 'story-utils/decorators';
+import {withCard, withPageWrapper} from '@/sb-decorators';
 
 import {AppointmentConfigContext} from '../Context';
 import {mockAppointmentProductsGet} from '../mocks';
@@ -11,7 +11,7 @@ import ChooseProductStep from './ChooseProductStep';
 export default {
   title: 'Private API / Appointments / Steps / 1 - Choose product',
   component: ChooseProductStep,
-  decorators: [withCard, LayoutDecorator, withAppointmentState, withRouter, ConfigDecorator],
+  decorators: [withCard, withPageWrapper, withAppointmentState, withRouter],
   parameters: {
     controls: {hideNoControlsWarning: true},
     msw: {

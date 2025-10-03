@@ -1,15 +1,12 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import AddChildModal from './AddChildModal';
 import type Children from './Children';
 
 export default {
   title: 'Private API / Children / Modal',
   component: AddChildModal,
-  decorators: [ConfigDecorator],
   args: {
     childValues: null,
     isOpen: true,

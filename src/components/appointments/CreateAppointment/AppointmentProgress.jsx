@@ -4,7 +4,7 @@ import {useLocation} from 'react-router';
 
 import ProgressIndicator from 'components/ProgressIndicator';
 import {PI_TITLE, STEP_LABELS} from 'components/constants';
-import {checkMatchesPath} from 'components/utils/routers';
+import {checkMatchesPath} from 'routes/utils';
 
 import {useCreateAppointmentContext} from './CreateAppointmentState';
 import {APPOINTMENT_STEPS, APPOINTMENT_STEP_PATHS} from './steps';

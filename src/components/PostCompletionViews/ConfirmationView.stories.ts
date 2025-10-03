@@ -2,34 +2,18 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {AnalyticsToolsDecorator, withForm, withSubmissionPollInfo} from 'story-utils/decorators';
-
 import {buildForm} from '@/api-mocks';
-import type {Form} from '@/data/forms';
+import {withForm, withSubmissionPollInfo} from '@/sb-decorators';
+import type {SubmissionPollInfoArgs} from '@/sb-decorators';
 
 import {ConfirmationViewDisplay} from './ConfirmationView';
 
-export type SubmissionPollInfoArgs = {
-  publicReference: string;
-  paymentUrl: string;
-  reportDownloadUrl: string;
-  confirmationPageTitle: string;
-  confirmationPageContent: string;
-  mainWebsiteUrl: string;
-};
-
-type FormArgs = {
-  form?: Form;
-};
-
-export type Args = React.ComponentProps<typeof ConfirmationViewDisplay> &
-  FormArgs &
-  SubmissionPollInfoArgs;
+export type Args = React.ComponentProps<typeof ConfirmationViewDisplay> & SubmissionPollInfoArgs;
 
 export default {
   title: 'Views / Post completion views / Confirmation view',
   component: ConfirmationViewDisplay,
-  decorators: [withForm, AnalyticsToolsDecorator, withSubmissionPollInfo, withRouter],
+  decorators: [withForm, withSubmissionPollInfo, withRouter],
   argTypes: {
     paymentUrl: {control: false},
   },
@@ -117,11 +101,13 @@ export const WithGovMetric: Story = {
     confirmationPageContent: 'Your answers are submitted. Hurray!',
     mainWebsiteUrl: '#',
     downloadPDFText: 'Download a PDF of your submitted answers',
-    form: buildForm({
-      slug: 'a-test-form',
-    }),
   },
   parameters: {
+    formContext: {
+      form: buildForm({
+        slug: 'a-test-form',
+      }),
+    },
     analyticsToolsParams: {
       govmetricSourceIdFormFinished: '1234',
       govmetricSecureGuid: '',

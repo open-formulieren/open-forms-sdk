@@ -4,8 +4,6 @@ import {getWorker} from 'msw-storybook-addon';
 import React from 'react';
 import {IntlProvider} from 'react-intl';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import type {I18NContextType} from '@/i18n';
 import {I18NContext} from '@/i18n';
@@ -45,7 +43,7 @@ const I18NDecorator: Decorator<Args> = (
 export default {
   title: 'Composites / Language Selection',
   component: LanguageSelection,
-  decorators: [I18NDecorator, ConfigDecorator],
+  decorators: [I18NDecorator],
   args: {
     onLanguageChangeDone: fn(),
     languageSelectorTarget: null,

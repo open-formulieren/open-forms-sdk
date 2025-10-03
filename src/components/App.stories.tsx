@@ -2,10 +2,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/test';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {mockLanguageChoicePut, mockLanguageInfoGet} from 'components/LanguageSelection/mocks';
-import routes, {FUTURE_FLAGS} from 'routes';
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
-
 import {FormContext} from '@/Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
 import {
@@ -14,8 +10,11 @@ import {
   mockSubmissionPost,
   mockSubmissionStepGet,
 } from '@/api-mocks/submissions';
+import {mockLanguageChoicePut, mockLanguageInfoGet} from '@/components/LanguageSelection/mocks';
 import type {Form, MinimalFormStep} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
+import routes, {FUTURE_FLAGS} from '@/routes';
+import {withPageWrapper} from '@/sb-decorators';
 
 import App from './App';
 
@@ -65,7 +64,6 @@ export default {
     });
     return <Wrapper form={form} showExternalHeader={args.showExternalHeader} />;
   },
-  decorators: [ConfigDecorator],
   args: {
     name: 'Mock form',
     'form.translationEnabled': true,
@@ -120,9 +118,6 @@ export default {
     },
   },
   parameters: {
-    config: {
-      debug: false,
-    },
     msw: {
       handlers: [
         mockLanguageInfoGet([
@@ -139,7 +134,7 @@ export default {
 type Story = StoryObj<Args>;
 
 export const Default: Story = {
-  decorators: [LayoutDecorator],
+  decorators: [withPageWrapper],
 };
 
 export const TranslationEnabled: Story = {
@@ -426,14 +421,14 @@ export const SeveralStepsInMobileViewport: Story = {
 };
 
 export const MaximumSubmissionsReached: Story = {
-  decorators: [LayoutDecorator],
+  decorators: [withPageWrapper],
   args: {
     'form.submissionLimitReached': true,
   },
 };
 
 export const MaximumSubmissionsNotReached: Story = {
-  decorators: [LayoutDecorator],
+  decorators: [withPageWrapper],
   args: {
     'form.submissionLimitReached': false,
   },

@@ -1,9 +1,8 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
-
 import Body from '@/components/Body';
 import Card from '@/components/Card';
+import {withPageWrapper} from '@/sb-decorators';
 
 import FormDisplay from './FormDisplay';
 
@@ -14,7 +13,7 @@ interface Args extends React.ComponentProps<typeof FormDisplay> {
 export default {
   title: 'Composites / Form display',
   component: FormDisplay,
-  decorators: [LayoutDecorator, ConfigDecorator],
+  decorators: [withPageWrapper],
   render: args => (
     <FormDisplay
       progressIndicator={
@@ -34,9 +33,6 @@ export default {
   argTypes: {
     router: {table: {disable: true}},
     progressIndicator: {table: {disable: true}},
-  },
-  parameters: {
-    config: {debug: false},
   },
 } satisfies Meta<Args>;
 

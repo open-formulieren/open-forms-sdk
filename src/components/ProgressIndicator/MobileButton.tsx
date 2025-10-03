@@ -1,6 +1,6 @@
 import {forwardRef} from 'react';
 
-import FAIcon from 'components/FAIcon';
+import FAIcon from '@/components/FAIcon';
 
 export interface MobileButtonProps {
   ariaMobileIconLabel: string;

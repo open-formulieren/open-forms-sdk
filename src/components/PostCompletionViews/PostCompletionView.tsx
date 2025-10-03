@@ -1,16 +1,15 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {FormattedMessage} from 'react-intl';
 
-import FAIcon from 'components/FAIcon';
-import useTitle from 'hooks/useTitle';
-
 import Anchor from '@/components/Anchor';
 import Body from '@/components/Body';
 import Card from '@/components/Card';
+import FAIcon from '@/components/FAIcon';
+import useTitle from '@/hooks/useTitle';
 
 export interface PostCompletionViewProps {
   downloadPDFText?: React.ReactNode;
-  pageTitle?: React.ReactNode;
+  pageTitle?: string;
   header?: React.ReactNode;
   body?: React.ReactNode;
   mainWebsiteUrl?: string;
@@ -20,7 +19,7 @@ export interface PostCompletionViewProps {
 
 const PostCompletionView: React.FC<PostCompletionViewProps> = ({
   downloadPDFText,
-  pageTitle,
+  pageTitle = '',
   header,
   body,
   mainWebsiteUrl,

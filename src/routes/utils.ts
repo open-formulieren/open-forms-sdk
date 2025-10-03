@@ -5,7 +5,7 @@ import {matchPath, resolvePath} from 'react-router';
  * @param currentPathname The current router location.pathname, from useLocation.
  * @param path            The relative path to check for matches
  */
-export const checkMatchesPath = (currentPathname, path) => {
+export const checkMatchesPath = (currentPathname: string, path: string): boolean => {
   // we need to transform the path into a parent-route lookup, instead of using the
   // default relative ./<foo> behaviour. The idea is that this component is mounted
   // somewhere in a larger route definition but the exact parent route is not relevant.

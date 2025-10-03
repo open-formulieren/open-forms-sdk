@@ -6,14 +6,12 @@ import {useIntl} from 'react-intl';
 import {
   mockFormioTranslations,
   mockFormioTranslationsServiceUnavailable,
-} from 'components/LanguageSelection/mocks';
-import {I18NErrorBoundary, I18NManager, setLanguage} from 'i18n';
-import {ConfigDecorator} from 'story-utils/decorators';
+} from '@/components/LanguageSelection/mocks';
+import {I18NErrorBoundary, I18NManager, setLanguage} from '@/i18n';
 
 export default {
   title: 'Private API / Translation manager',
   component: I18NManager,
-  decorators: [ConfigDecorator],
   args: {
     languageSelectorTarget: null,
     onLanguageChangeDone: fn(),

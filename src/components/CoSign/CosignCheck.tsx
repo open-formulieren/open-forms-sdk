@@ -1,10 +1,9 @@
 import {useContext, useState} from 'react';
 import {useNavigate} from 'react-router';
 
-import {CosignSummary} from 'components/Summary';
-
 import {ConfigContext} from '@/Context';
 import {destroy} from '@/api';
+import {CosignSummary} from '@/components/Summary';
 import type {Submission} from '@/data/submissions';
 import useFormContext from '@/hooks/useFormContext';
 

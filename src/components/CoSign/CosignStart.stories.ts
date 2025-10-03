@@ -1,8 +1,8 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
-import {withForm} from 'story-utils/decorators';
+import {buildForm} from '@/api-mocks';
+import {withForm} from '@/sb-decorators';
 
 import CosignStart from './CosignStart';
 

@@ -1,3 +1,5 @@
+import type {Meta, StoryObj} from '@storybook/react';
+
 import _Loader, {MODIFIERS} from './Loader';
 
 export default {
@@ -18,6 +20,8 @@ export default {
   parameters: {
     chromatic: {disableSnapshot: true},
   },
-};
+} satisfies Meta<typeof _Loader>;
 
-export const Loader = {};
+type Story = StoryObj<typeof _Loader>;
+
+export const Loader: Story = {};

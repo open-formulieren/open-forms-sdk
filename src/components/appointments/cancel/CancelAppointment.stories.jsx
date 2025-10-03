@@ -2,7 +2,8 @@ import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import Card from 'components/Card';
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
+
+import {withPageWrapper} from '@/sb-decorators';
 
 import {mockAppointmentCancelErrorPost, mockAppointmentCancelPost} from '../mocks';
 import CancelAppointment from './CancelAppointment';
@@ -10,7 +11,7 @@ import CancelAppointment from './CancelAppointment';
 export default {
   title: 'Private API / Appointments / Cancellation / Cancel',
   component: CancelAppointment,
-  decorators: [LayoutDecorator, withRouter, ConfigDecorator],
+  decorators: [withPageWrapper, withRouter],
 };
 
 export const Default = {

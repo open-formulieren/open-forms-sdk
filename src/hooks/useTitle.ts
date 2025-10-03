@@ -1,9 +1,9 @@
 import {useContext} from 'react';
 import {useTitle as reactUseTitle} from 'react-use';
 
-import {ConfigContext} from 'Context';
+import {ConfigContext} from '@/Context';
 
-const useTitle = (localTitle, regionalTitle = '') => {
+const useTitle = (localTitle: string, regionalTitle: string = ''): void => {
   let {baseTitle} = useContext(ConfigContext);
   baseTitle = baseTitle ? baseTitle.trim() : '';
 

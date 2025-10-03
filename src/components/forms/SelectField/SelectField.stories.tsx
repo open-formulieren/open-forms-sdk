@@ -1,9 +1,9 @@
 import {SelectField} from '@open-formulieren/formio-renderer';
+import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {useCallback} from 'react';
 
-import {ConfigDecorator, FormikDecorator} from 'story-utils/decorators';
-
+import {withFormik} from '@/sb-decorators';
 import {sleep} from '@/utils';
 
 import AsyncSelectField from './AsyncSelectField';
@@ -11,7 +11,7 @@ import AsyncSelectField from './AsyncSelectField';
 export default {
   title: 'Pure React Components / Forms / SelectField',
   component: SelectField,
-  decorators: [FormikDecorator],
+  decorators: [withFormik],
   parameters: {
     formik: {
       initialValues: {
@@ -19,12 +19,11 @@ export default {
       },
     },
   },
-  args: {
-    onChange: undefined,
-  },
-};
+} satisfies Meta<typeof SelectField>;
 
-export const Static = {
+type Story = StoryObj<typeof SelectField>;
+
+export const Static: Story = {
   args: {
     name: 'select',
     label: 'Static options',
@@ -64,7 +63,12 @@ export const Static = {
   },
 };
 
-export const Async = {
+interface AsyncSelectFieldArgs extends React.ComponentProps<typeof AsyncSelectField> {
+  getOptionsDelay: number;
+  dynamicOptions: {value: string; label: string}[];
+}
+
+export const Async: StoryObj<AsyncSelectFieldArgs> = {
   render: function Render({getOptionsDelay, dynamicOptions, ...args}) {
     const serializedOptions = JSON.stringify(dynamicOptions);
     const getOptions = useCallback(async () => {
@@ -86,9 +90,6 @@ export const Async = {
       {value: 'elmer', label: 'Elmer'},
     ],
   },
-  argTypes: {
-    options: {table: {disable: true}},
-  },
   play: async ({canvasElement, args}) => {
     const canvas = within(canvasElement);
     const dropdown = canvas.getByLabelText('Dynamic options');
@@ -106,57 +107,5 @@ export const Async = {
     await expect(canvas.queryByText('Elmer')).toBeNull();
     await sleep(args.getOptionsDelay + 5); // wait to resolve
     await expect(canvas.getByText('Daffy')).toBeVisible();
-  },
-};
-
-export const ValidationError = {
-  name: 'Validation error',
-  parameters: {
-    formik: {
-      initialValues: {
-        invalidSelect: '',
-      },
-      initialErrors: {
-        invalidSelect: 'invalid',
-      },
-      initialTouched: {
-        invalidSelect: true,
-      },
-    },
-  },
-  args: {
-    name: 'invalidSelect',
-    label: 'Invalid select',
-    description: 'Description above the errors',
-    isDisabled: false,
-    isRequired: false,
-    options: [
-      {value: 'option-1', label: 'Option 1'},
-      {value: 'option-2', label: 'Option 2'},
-    ],
-  },
-  play: async ({canvasElement}) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByText('invalid')).toBeVisible();
-  },
-};
-
-export const NoAsterisks = {
-  name: 'No asterisk for required',
-  decorators: [ConfigDecorator],
-  parameters: {
-    config: {
-      requiredFieldsWithAsterisk: false,
-    },
-  },
-  args: {
-    name: 'select',
-    label: 'Default required',
-    isDisabled: false,
-    isRequired: true,
-    options: [
-      {value: 'option-1', label: 'Option 1'},
-      {value: 'option-2', label: 'Option 2'},
-    ],
   },
 };

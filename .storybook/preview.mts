@@ -1,5 +1,6 @@
 import '@gemeente-denhaag/design-tokens-components/dist/theme/index.css';
 import '@gemeente-rotterdam/design-tokens/dist/index.css';
+import type {Preview} from '@storybook/react';
 import '@utrecht/design-tokens/dist/index.css';
 import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
@@ -7,6 +8,7 @@ import 'flatpickr';
 import 'flatpickr/dist/l10n/nl.js';
 import lodash from 'lodash';
 import {initialize, mswLoader} from 'msw-storybook-addon';
+// @ts-expect-error formio has poor TS support
 import {Formio, Templates} from 'react-formio';
 import {setAppElement} from 'react-modal';
 import 'scss/dte-theme.scss';
@@ -18,9 +20,14 @@ import 'styles.scss';
 // ensure NL locale is included
 import OpenFormsModule from 'formio/module';
 import OFLibrary from 'formio/templates';
-import {withModalDecorator} from 'story-utils/decorators';
 
-import {withClearSessionStorage, withGeolocationMocking, withUtrechtDocument} from './decorators';
+import {
+  withClearSessionStorage,
+  withConfig,
+  withGeolocationMocking,
+  withModalDecorator,
+  withUtrechtDocument,
+} from './decorators';
 import {allModes} from './modes.mjs';
 import {reactIntl} from './reactIntl.mjs';
 import ThemeProvider from './theme';
@@ -43,11 +50,12 @@ Formio.use(OpenFormsModule);
 // use our own template library
 Templates.current = OFLibrary;
 
-export default {
+const preview: Preview = {
   decorators: [
     withThemeProvider(ThemeProvider),
     withClearSessionStorage,
     withModalDecorator,
+    withConfig,
     withUtrechtDocument,
     withGeolocationMocking,
   ],
@@ -130,3 +138,5 @@ export default {
     ],
   },
 };
+
+export default preview;

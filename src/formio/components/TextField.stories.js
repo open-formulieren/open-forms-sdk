@@ -1,6 +1,5 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {mockAddressAutoCompleteGet} from './TextField.mocks';
@@ -8,7 +7,6 @@ import {MultipleFormioComponents, SingleFormioComponent} from './story-util';
 
 export default {
   title: 'Form.io components / Vanilla / TextField',
-  decorators: [ConfigDecorator],
   args: {
     type: 'textfield',
     extraComponentProperties: {},

@@ -1,8 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import {BASE_URL} from '@/api-mocks';
 
 import {EmailVerificationModal} from './index';
@@ -11,7 +9,6 @@ import {mockEmailVerificationPost, mockEmailVerificationVerifyCodePost} from './
 export default {
   title: 'Private API / Email verification / Modal',
   component: EmailVerificationModal,
-  decorators: [ConfigDecorator],
   args: {
     isOpen: true,
     closeModal: fn(),
