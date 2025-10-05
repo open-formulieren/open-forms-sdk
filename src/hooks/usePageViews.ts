@@ -1,28 +1,21 @@
 import {useContext, useEffect, useRef} from 'react';
 import {useLocation} from 'react-router';
+import type {Location} from 'react-router';
 
-import {ConfigContext} from 'Context';
-import {DEBUG} from 'utils';
+import {ConfigContext} from '@/Context';
+import {DEBUG} from '@/utils';
 
-function usePrevious(value) {
-  const ref = useRef({
-    value: value,
-    prev: null,
-  });
-
-  const current = ref.current.value;
-
-  if (value !== current) {
-    ref.current = {
-      value: value,
-      prev: current,
-    };
+declare global {
+  interface Window {
+    gtag?: (ev: 'event', event: string, opts: object) => void;
+    _sz?: Array<['trackdynamic', object]>;
+    _paq?: Array<[string, string?]>;
   }
-
-  return ref.current.prev;
 }
 
-const ANALYTICS_PROVIDERS = {
+export type AnayticsProvider = (location: Location, previousLocation: Location | null) => void;
+
+const ANALYTICS_PROVIDERS: Record<string, AnayticsProvider> = {
   debug: async location =>
     DEBUG &&
     console.log(
@@ -35,7 +28,7 @@ const ANALYTICS_PROVIDERS = {
     return (
       window.gtag &&
       window.gtag('event', 'page_view', {
-        page_location: location.href,
+        page_location: window.location.href,
         page_path: location.pathname + location.hash,
       })
     );
@@ -81,7 +74,7 @@ const ANALYTICS_PROVIDERS = {
  * We assume that the provider has been included already in the global scope of the
  * containing page where the SDK is embedded.
  */
-const trackPageView = (location, previousLocation) => {
+const trackPageView = (location: Location, previousLocation: Location | null) => {
   const promises = Object.values(ANALYTICS_PROVIDERS).map(callback =>
     callback(location, previousLocation)
   );
@@ -92,12 +85,21 @@ const trackPageView = (location, previousLocation) => {
 
 /**
  * Ensure that the current page view is sent to the (supported) analytics tool(s).
- * @return {Void}
  */
-const usePageViews = () => {
+const usePageViews = (): void => {
   const {basePath} = useContext(ConfigContext);
   const location = useLocation();
-  const previousLocation = usePrevious(location);
+
+  // at some point, react-use/usePrevious was used which updates in a useEffect, and this
+  // was changed into immediate ref-update-during render. Now, the React (18+) docs warn
+  // against this, as it can produce unexpected side-effects with concurrent rendering.
+  // TODO: clean this up and avoid reading/writing mutable refs during render.
+  const previousLocationRef = useRef<Location | null>(null);
+  const previousLocation = previousLocationRef.current;
+  if (location !== previousLocation) {
+    previousLocationRef.current = location;
+  }
+
   useEffect(() => {
     // if there's no change, do nothing
     if (
@@ -107,10 +109,9 @@ const usePageViews = () => {
     )
       return;
     const fullPath = `${basePath}${location.pathname}`;
-    const fullPreviousPath = previousLocation && `${basePath}${previousLocation.pathname}`;
     trackPageView(
       {...location, pathname: fullPath},
-      previousLocation && {...previousLocation, pathname: fullPreviousPath}
+      previousLocation && {...previousLocation, pathname: `${basePath}${previousLocation.pathname}`}
     );
   }, [basePath, location, previousLocation]);
 };

@@ -1,3 +1,4 @@
+import type {JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import messagesEN from 'i18n/compiled/en.json';
 import messagesNL from 'i18n/compiled/nl.json';
 import {createIntl, createIntlCache} from 'react-intl';
@@ -9,7 +10,14 @@ const cache = createIntlCache();
 const intlEN = createIntl({locale: 'en', messages: messagesEN}, cache);
 const intlNL = createIntl({locale: 'nl', messages: messagesNL}, cache);
 
-const TEST_CASES = [
+interface TestCase {
+  schema: z.ZodFirstPartySchemaTypes | z.ZodSchema;
+  label: string;
+  value: JSONValue | Date | bigint | undefined;
+  message: string;
+}
+
+const TEST_CASES: TestCase[] = [
   {
     schema: z.string(),
     label: 'required',
@@ -108,13 +116,13 @@ const TEST_CASES = [
   },
   // too small
   {
-    schema: z.array().min(1),
+    schema: z.array(z.string()).min(1),
     label: 'too_small::array, inclusive',
     value: [],
     message: 'Array must contain at least 1 item.',
   },
   {
-    schema: z.array().length(3),
+    schema: z.array(z.string()).length(3),
     label: 'too_small::array, exactly',
     value: [],
     message: 'Array must contain exactly 3 items.',
@@ -150,12 +158,15 @@ const TEST_CASES = [
     message: 'Date must be greater than or equal to 1/1/2023.',
   },
   {
-    schema: z.custom().superRefine((val, ctx) => {
-      ctx.addIssue({
-        code: z.ZodIssueCode.too_small,
-        minimum: 420,
-        fatal: true,
-      });
+    schema: z.custom().superRefine((_, ctx) => {
+      ctx.addIssue(
+        // @ts-expect-error incomplete issue returned
+        {
+          code: z.ZodIssueCode.too_small,
+          minimum: 420,
+          fatal: true,
+        }
+      );
       return z.NEVER;
     }),
     label: 'too_small, generic',
@@ -200,7 +211,7 @@ const TEST_CASES = [
     message: 'Number must be less than -273.15.',
   },
   {
-    schema: z.bigint().lt(-273),
+    schema: z.bigint().lt(-273n),
     label: 'too_big::bigint, exclusive',
     value: -273n,
     message: 'BigInt must be less than -273.',
@@ -212,12 +223,15 @@ const TEST_CASES = [
     message: 'Date must be smaller than or equal to 1/1/2022.',
   },
   {
-    schema: z.custom().superRefine((val, ctx) => {
-      ctx.addIssue({
-        code: z.ZodIssueCode.too_big,
-        maximum: 42,
-        fatal: true,
-      });
+    schema: z.custom().superRefine((_, ctx) => {
+      ctx.addIssue(
+        // @ts-expect-error incomplete issue returned
+        {
+          code: z.ZodIssueCode.too_big,
+          maximum: 42,
+          fatal: true,
+        }
+      );
       return z.NEVER;
     }),
     label: 'too_big, generic',
@@ -255,7 +269,7 @@ describe('Localized global zod error map (EN)', () => {
 
       expect(result.success).toBe(false);
       // we only expect one top level error in these tests
-      const error = result.error.issues[0].message;
+      const error = result.error!.issues[0].message;
       expect(error).toBe(message);
     }
   );
@@ -267,6 +281,7 @@ describe('Localized global zod error map (EN)', () => {
       .returns(z.string())
       .implement(x => x);
     try {
+      // @ts-expect-error deliberate wrong function argument type
       strIdentity(null);
     } catch (e) {
       const error = e.issues[0].message;
@@ -279,6 +294,7 @@ describe('Localized global zod error map (EN)', () => {
       .function()
       .args(z.string())
       .returns(z.string())
+      // @ts-expect-error deliberate wrong return type
       .implement(() => null);
     try {
       strIdentity('foo');
@@ -297,7 +313,7 @@ describe('Localized global zod error map (NL)', () => {
 
     expect(result.success).toBe(false);
     // we only expect one top level error in these tests
-    const error = result.error.issues[0].message;
+    const error = result.error!.issues[0].message;
     expect(error.length).toBeGreaterThan(0);
   });
 
@@ -308,6 +324,7 @@ describe('Localized global zod error map (NL)', () => {
       .returns(z.string())
       .implement(x => x);
     try {
+      // @ts-expect-error deliberate wrong function argument type
       strIdentity(null);
     } catch (e) {
       const error = e.issues[0].message;
@@ -320,6 +337,7 @@ describe('Localized global zod error map (NL)', () => {
       .function()
       .args(z.string())
       .returns(z.string())
+      // @ts-expect-error deliberate wrong return type
       .implement(() => null);
     try {
       strIdentity('foo');

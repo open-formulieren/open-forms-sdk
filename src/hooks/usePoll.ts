@@ -3,11 +3,33 @@ import {useTimeoutFn} from 'react-use';
 
 import {get} from '../api';
 
+type UsePollState<T> =
+  | {
+      loading: true;
+      error: undefined;
+      response: null;
+    }
+  | {
+      loading: false;
+      error: Error;
+      response: null;
+    }
+  | {
+      loading: false;
+      error: undefined;
+      response: T;
+    };
+
 /**
  * Hook to poll an API endpoint
  */
-const usePoll = (url, timeout, doneCheck, onDone) => {
-  const [state, setState] = useState({
+const usePoll = <T = unknown>(
+  url: string,
+  timeout: number,
+  doneCheck: (response: T) => boolean,
+  onDone: (response: T) => void | Promise<void>
+): UsePollState<T> => {
+  const [state, setState] = useState<UsePollState<T>>({
     loading: true,
     error: undefined,
     response: null,
@@ -15,7 +37,7 @@ const usePoll = (url, timeout, doneCheck, onDone) => {
 
   const fn = async () => {
     try {
-      const response = await get(url);
+      const response = (await get<T>(url))!;
       const isDone = doneCheck(response);
       if (isDone) {
         setState({loading: false, error: undefined, response});
