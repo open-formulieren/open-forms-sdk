@@ -1,8 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 
-import {mockAppointmentProductsGet} from 'api-mocks/appointments';
-
+import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
 import {withFormik} from '@/sb-decorators';
 
 import {default as ProductSelectComponent} from './ProductSelect';

@@ -1,8 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {mockAppointmentLocationsGet} from 'api-mocks/appointments';
-
+import {mockAppointmentLocationsGet} from '@/api-mocks/appointments';
 import {withFormik} from '@/sb-decorators';
 
 import LocationSelect from './LocationSelect';

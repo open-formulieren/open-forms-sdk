@@ -2,8 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 
-import {mockAppointmentTimesGet} from 'api-mocks/appointments';
-
+import {mockAppointmentTimesGet} from '@/api-mocks/appointments';
 import {withFormik} from '@/sb-decorators';
 
 import TimeSelect from './TimeSelect';
