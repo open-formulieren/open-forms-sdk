@@ -2,6 +2,13 @@
 SDK Changelog
 =============
 
+3.1.4 (2025-10-06)
+==================
+
+Final bugfix release in the ``3.1.x`` series.
+
+* [#5435] Fixed validation not being skipped for hidden selectboxes component.
+
 3.3.0 (2025-09-30)
 ==================
 
