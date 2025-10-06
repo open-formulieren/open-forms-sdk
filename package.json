@@ -4,21 +4,21 @@
   "private": true,
   "main": "dist/open-forms-sdk.js",
   "exports": {
-    ".": "./dist/open-forms-sdk.js",
-    "./styles.css": "./dist/open-forms-sdk.css",
-    "./formio-module": "./dist/esm/formio/module.js",
-    "./formio-templates": "./dist/esm/formio/templates/library.js",
-    "./components/*": "./dist/esm/components/*",
-    "./hooks/*": "./dist/esm/hooks/*",
-    "./types/*": "./dist/esm/types/*",
-    "./map/*": "./dist/esm/map/*",
-    "./errors": "./dist/esm/errors.js",
-    "./sdk": "./dist/esm/sdk.js",
-    "./utils": "./dist/esm/utils.js"
+    ".": "./dist/bundles/open-forms-sdk.js",
+    "./open-forms-sdk.mjs": "./dist/bundles/open-forms-sdk.mjs",
+    "./styles.css": "./dist/bundles/open-forms-sdk.css",
+    "./bundles/*": "./dist/bundles/*",
+    "./formio-module": "./dist/formio/module.js",
+    "./formio-templates": "./dist/formio/templates/library.js",
+    "./components/*": "./dist/components/*",
+    "./hooks/*": "./dist/hooks/*",
+    "./errors": "./dist/errors.js",
+    "./sdk": "./dist/sdk.js",
+    "./utils": "./dist/utils.js",
+    "./package.json": "./package.json"
   },
   "files": [
     "dist/",
-    "src/",
     "README.rst",
     "README.NL.rst",
     "LICENSE.md"
@@ -72,7 +72,7 @@
   },
   "scripts": {
     "start": "npm run build:design-tokens && vite",
-    "build": "npm run build:umd && npm run build:esm && npm run build:esm-bundle",
+    "build": "npm run build:esm && npm run build:umd && npm run build:esm-bundle",
     "build:typecheck": "tsc --noEmit",
     "build:umd": "BUILD_TARGET=umd vite build",
     "build:esm": "BUILD_TARGET=esm vite build",

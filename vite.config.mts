@@ -15,6 +15,7 @@ import {packageRegexes} from './build/utils.mjs';
 
 // type definition for our custom envvars
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv {
       BUILD_TARGET: 'umd' | 'esm' | 'esm-bundle' | undefined;
@@ -36,7 +37,7 @@ const buildTargetDefined = process.env.BUILD_TARGET !== undefined;
  */
 const esmOutput = (buildDist: string) =>
   ({
-    dir: `${buildDist}/esm`,
+    dir: buildDist,
     format: 'esm',
     preserveModules: true,
     preserveModulesRoot: 'src',
@@ -51,7 +52,7 @@ const esmOutput = (buildDist: string) =>
 
 const esmBundleOutput = (buildDist: string) =>
   ({
-    dir: buildDist,
+    dir: `${buildDist}/bundles/`,
     format: 'esm',
     preserveModules: false,
     entryFileNames: 'open-forms-sdk.mjs',
@@ -72,7 +73,7 @@ const esmBundleOutput = (buildDist: string) =>
  */
 const umdOutput = (buildDist: string) =>
   ({
-    dir: buildDist,
+    dir: `${buildDist}/bundles/`,
     format: 'umd',
     exports: 'named',
     name: 'OpenForms',
