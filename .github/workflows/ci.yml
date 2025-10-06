@@ -173,7 +173,7 @@ jobs:
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-          npm publish --access public --new-version=$VERSION
+          npm publish --tag stable-3.2.x --access public --new-version=$VERSION
 
   docker:
     name: Build (and push) Docker image
