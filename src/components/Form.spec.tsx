@@ -67,6 +67,7 @@ const Wrapper: React.FC<WrapperProps> = ({form = buildForm(), initialEntry = '/s
         requiredFieldsWithAsterisk: true,
         debug: false,
         backToTopText: '',
+        backToTopRef: '',
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>

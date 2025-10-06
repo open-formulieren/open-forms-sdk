@@ -52,6 +52,8 @@ const Wrap: React.FC<WrapperProps> = ({
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
         debug: false,
+        backToTopText: '',
+        backToTopRef: '',
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>

@@ -26,6 +26,8 @@ const renderApp = (form: Form, initialRoute: string = '/') => {
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
         debug: false,
+        backToTopText: '',
+        backToTopRef: '',
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>

@@ -48,6 +48,8 @@ const Wrapper: React.FC<WrapperProps> = ({form, submission}) => {
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
         debug: false,
+        backToTopText: '',
+        backToTopRef: '',
       }}
     >
       <IntlProvider locale="nl" messages={messagesNL}>
