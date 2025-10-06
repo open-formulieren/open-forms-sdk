@@ -5,11 +5,11 @@ import type {Submission} from '@/data/submissions';
 
 import type {AppoinmentStep, AppointmentData, AppointmentDataByStep} from './types';
 
-export interface AppointmentConfigContext {
+interface AppointmentConfigContextType {
   supportsMultipleProducts: boolean;
 }
 
-const AppointmentConfigContext = React.createContext<AppointmentConfigContext>({
+const AppointmentConfigContext = React.createContext<AppointmentConfigContextType>({
   supportsMultipleProducts: true,
 });
 AppointmentConfigContext.displayName = 'AppointmentConfigContext';

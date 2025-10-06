@@ -36,7 +36,6 @@ const extractStepErrors = (
 
   switch (currentStep) {
     case 'producten': {
-      console.log('initialErrors', initialErrors);
       const stepInitialTouched: StepTouched<'producten'> = {};
       const stepInitialErrors: StepErrors<'producten'> = {};
       for (const key of ERROR_KEYS_BY_STEP.producten) {
@@ -45,7 +44,6 @@ const extractStepErrors = (
         stepInitialErrors[key] = errors;
         stepInitialTouched[key] = initialTouched[key];
       }
-      console.log('stepInitialTouched', stepInitialTouched);
       return {stepInitialTouched, stepInitialErrors};
     }
     case 'kalender': {
@@ -81,11 +79,15 @@ const extractStepErrors = (
   }
 };
 
+type PartialAppointmentDataByStep = Partial<{
+  [K in keyof AppointmentDataByStep]: Partial<AppointmentDataByStep[K]>;
+}>;
+
 interface BuildContextValueOpts {
   submission: Submission | null;
   currentStep: AppoinmentStep | '';
-  appointmentData: Partial<AppointmentDataByStep>;
-  setAppointmentData?: (values: Partial<AppointmentDataByStep>) => void;
+  appointmentData: PartialAppointmentDataByStep;
+  setAppointmentData?: (values: PartialAppointmentDataByStep) => void;
   appointmentErrors?: {
     initialTouched: FormikTouched<AppointmentData>;
     initialErrors: FormikErrors<AppointmentData>;
@@ -106,14 +108,10 @@ export const buildContextValue = ({
   setAppointmentErrors = () => {},
   resetSession = () => {},
 }: BuildContextValueOpts): CreateAppointmentContextType => {
-  const submittedSteps = (Object.keys(appointmentData) as AppoinmentStep[]).filter(
-    subObject => Object.keys(subObject).length
-  );
   const mergedAppointmentData: Partial<AppointmentData> = (
     Object.keys(appointmentData) as AppoinmentStep[]
   ).reduce((accumulator, key) => {
     const stepData = appointmentData[key];
-    if (!stepData) return accumulator;
     return {...accumulator, ...stepData};
   }, {} satisfies Partial<AppointmentData>);
 
@@ -127,7 +125,7 @@ export const buildContextValue = ({
     submission,
     appointmentData: mergedAppointmentData,
     stepData: currentStep === '' ? {} : (appointmentData[currentStep] ?? {}),
-    submittedSteps,
+    submittedSteps: Object.keys(appointmentData) as AppoinmentStep[],
     submitStep: values => setAppointmentData({...appointmentData, [currentStep]: values}),
     setErrors: setAppointmentErrors,
     stepErrors: {initialTouched: stepInitialTouched, initialErrors: stepInitialErrors},
@@ -157,7 +155,7 @@ export const CreateAppointmentState: React.FC<CreateAppointmentStateProps> = ({
   resetSession,
   children,
 }) => {
-  const [appointmentData, setAppointmentData] = useSessionStorage<Partial<AppointmentDataByStep>>(
+  const [appointmentData, setAppointmentData] = useSessionStorage<PartialAppointmentDataByStep>(
     SESSION_STORAGE_KEY,
     {}
   );

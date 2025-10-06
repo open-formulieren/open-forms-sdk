@@ -3,8 +3,6 @@ import type {FormikErrors, FormikTouched} from 'formik';
 
 import type {AppointmentProduct} from '@/data/appointments';
 
-export type AppoinmentStep = 'producten' | 'kalender' | 'contactgegevens';
-
 /**
  * Information gathered per step to create an appointment.
  *
@@ -40,6 +38,8 @@ export interface AppointmentDataByStep {
     contactDetails: JSONObject;
   };
 }
+
+export type AppoinmentStep = {[K in keyof AppointmentDataByStep]: K}[keyof AppointmentDataByStep];
 
 // create intersection of all the steps, which is the final state to submit to the
 // backend

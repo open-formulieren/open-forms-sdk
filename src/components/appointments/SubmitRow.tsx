@@ -1,12 +1,23 @@
 import FormNavigation, {StepSubmitButton} from '@/components/FormNavigation';
 import {LiteralsProvider} from '@/components/Literal';
 
-export interface SubmitRowProps {
+interface SubmitRowBaseProps {
   canSubmit: boolean;
   nextText: string;
-  previousText?: string;
-  navigateBackTo?: string;
 }
+
+interface SubmitRowNoBackNavigationProps {
+  navigateBackTo?: undefined;
+  previousText?: never;
+}
+
+interface SubmitRowWithBackNavigationProps {
+  navigateBackTo: string;
+  previousText: string;
+}
+
+export type SubmitRowProps = SubmitRowBaseProps &
+  (SubmitRowNoBackNavigationProps | SubmitRowWithBackNavigationProps);
 
 const SubmitRow: React.FC<SubmitRowProps> = ({
   canSubmit,
