@@ -4,7 +4,10 @@
   "private": true,
   "main": "dist/open-forms-sdk.js",
   "exports": {
-    ".": "./dist/bundles/open-forms-sdk.js",
+    ".": {
+      "import": "./dist/bundles/open-forms-sdk.js",
+      "types": "./dist/bundles/index.d.ts"
+    },
     "./open-forms-sdk.mjs": "./dist/bundles/open-forms-sdk.mjs",
     "./styles.css": "./dist/bundles/open-forms-sdk.css",
     "./bundles/*": "./dist/bundles/*",
@@ -141,6 +144,7 @@
     "@utrecht/design-tokens": "^2.5.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-istanbul": "^3.0.7",
+    "ajv": "^8.17.1",
     "babel-plugin-formatjs": "^10.3.8",
     "babel-plugin-module-resolver": "^5.0.2",
     "design-token-editor": "^0.6.0",
@@ -173,6 +177,7 @@
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.25.0",
     "vite": "^6.0.11",
+    "vite-plugin-dts": "^4.5.4",
     "vite-plugin-eslint2": "^5.0.3",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",

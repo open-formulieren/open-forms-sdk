@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import type {OutputOptions} from 'rollup';
 import {loadEnv} from 'vite';
+import dts from 'vite-plugin-dts';
 import eslint from 'vite-plugin-eslint2';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import {coverageConfigDefaults, defineConfig} from 'vitest/config';
@@ -145,6 +146,18 @@ export default defineConfig(({mode}) => {
           "this\['Interpreter'\]": "window['Interpreter']",
         },
       }),
+      buildTarget === 'esm'
+        ? dts({tsconfigPath: './tsconfig.prod.json'})
+        : dts({
+            include: [
+              'src/sdk.tsx',
+              'src/hooks/usePageViews.ts',
+              'src/data/forms.ts',
+              'src/type-fixes.d.ts',
+            ],
+            rollupTypes: true,
+            outDir: `${buildDist}/bundles`,
+          }),
       /**
        * Plugin to ignore (S)CSS when bundling to UMD bundle target, since we use the ESM
        * bundle to generate these.
