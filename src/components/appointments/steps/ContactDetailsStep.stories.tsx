@@ -3,9 +3,8 @@ import {expect, userEvent, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withCard, withPageWrapper} from '@/sb-decorators';
-
 import {mockAppointmentCustomerFieldsGet} from '@/api-mocks/appointments';
+import {withCard, withPageWrapper} from '@/sb-decorators';
 
 import {withAppointmentState} from '../story-utils';
 import type {AppointmentDataByStep, AppointmentErrors} from '../types';

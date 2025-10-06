@@ -2,10 +2,9 @@ import {useCallback, useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 
-import {getCached, setCached} from 'cache';
-
 import {ConfigContext} from '@/Context';
 import {get} from '@/api';
+import {getCached, setCached} from '@/cache';
 import AsyncSelectField from '@/components/forms/SelectField/AsyncSelectField';
 import type {AppointmentProduct, Location} from '@/data/appointments';
 
@@ -22,11 +21,11 @@ export const fieldLabel: MessageDescriptor = defineMessage({
 export const getLocations = async (baseUrl: string, productIds: string[]): Promise<Location[]> => {
   if (!productIds.length) return [];
   const fullKey = `${CACHED_LOCATIONS_KEY}:${productIds.join(';')}`;
-  let locationList: Location[] | null = getCached(fullKey, CACHED_LOCATIONS_MAX_AGE_MS);
+  let locationList: Location[] | null = getCached<Location[]>(fullKey, CACHED_LOCATIONS_MAX_AGE_MS);
   if (locationList === null) {
     const multiParams = productIds.map(id => ({product_id: id}));
     locationList = (await get<Location[]>(`${baseUrl}appointments/locations`, {}, multiParams))!;
-    setCached(fullKey, locationList);
+    setCached<Location[]>(fullKey, locationList);
   }
   return locationList;
 };

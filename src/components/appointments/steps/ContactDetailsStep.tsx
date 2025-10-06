@@ -6,13 +6,12 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
-import {getCached, setCached} from 'cache';
-import useTitle from 'hooks/useTitle';
-
 import {ConfigContext} from '@/Context';
 import {get} from '@/api';
+import {getCached, setCached} from '@/cache';
 import {CardTitle} from '@/components/Card';
 import Loader from '@/components/Loader';
+import useTitle from '@/hooks/useTitle';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
 import SubmitRow from '../SubmitRow';
@@ -25,7 +24,7 @@ export const getContactDetailsFields = async (
   productIds: string[]
 ): Promise<AnyComponentSchema[]> => {
   const fullKey = `${CACHED_CONTACT_DETAILS_FIELDS_KEY}:${productIds.join(';')}`;
-  let components: AnyComponentSchema[] | null = getCached(
+  let components: AnyComponentSchema[] | null = getCached<AnyComponentSchema[]>(
     fullKey,
     CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS
   );
@@ -36,7 +35,7 @@ export const getContactDetailsFields = async (
       {},
       multiParams
     ))!;
-    setCached(fullKey, components);
+    setCached<AnyComponentSchema[]>(fullKey, components);
   }
   return components;
 };

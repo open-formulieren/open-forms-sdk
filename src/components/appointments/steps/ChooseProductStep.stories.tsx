@@ -2,9 +2,8 @@ import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {withCard, withPageWrapper} from '@/sb-decorators';
-
 import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
+import {withCard, withPageWrapper} from '@/sb-decorators';
 
 import {AppointmentConfigContext} from '../Context';
 import {withAppointmentState} from '../story-utils';

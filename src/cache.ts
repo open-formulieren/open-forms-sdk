@@ -7,7 +7,7 @@
 
 // TODO: replace with tanstack useQuery at some point
 
-export const getCached = (cacheKey, maxAge) => {
+export const getCached = <T = unknown>(cacheKey: string, maxAge: number): T | null => {
   const cachedValue = window.sessionStorage.getItem(cacheKey);
   if (cachedValue === null) return null;
   const {value, timestamp} = JSON.parse(cachedValue);
@@ -21,7 +21,7 @@ export const getCached = (cacheKey, maxAge) => {
   return value;
 };
 
-export const setCached = (cacheKey, value) => {
+export const setCached = <T = unknown>(cacheKey: string, value: T): void => {
   const now = new Date().getTime();
   const serialized = JSON.stringify({value, timestamp: now});
   window.sessionStorage.setItem(cacheKey, serialized);

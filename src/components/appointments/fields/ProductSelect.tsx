@@ -3,10 +3,9 @@ import {useCallback, useContext} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 
-import {getCached, setCached} from 'cache';
-
 import {ConfigContext} from '@/Context';
 import {get} from '@/api';
+import {getCached, setCached} from '@/cache';
 import AsyncSelectField from '@/components/forms/SelectField/AsyncSelectField';
 import type {Product} from '@/data/appointments';
 
@@ -19,10 +18,13 @@ export const fieldLabel: MessageDescriptor = defineMessage({
 });
 
 export const getAllProducts = async (baseUrl: string): Promise<Product[]> => {
-  let products: Product[] | null = getCached(CACHED_PRODUCTS_KEY, CACHED_PRODUCTS_MAX_AGE_MS);
+  let products: Product[] | null = getCached<Product[]>(
+    CACHED_PRODUCTS_KEY,
+    CACHED_PRODUCTS_MAX_AGE_MS
+  );
   if (products === null) {
     products = (await get<Product[]>(`${baseUrl}appointments/products`))!;
-    setCached(CACHED_PRODUCTS_KEY, products);
+    setCached<Product[]>(CACHED_PRODUCTS_KEY, products);
   }
   return products;
 };
@@ -41,14 +43,14 @@ const getProducts = async (
 
   const uniqueIds = [...new Set(otherProductIds)].sort();
   const cacheKey = `appointments|products|${uniqueIds.join(';')}`;
-  let products: Product[] | null = getCached(cacheKey, CACHED_PRODUCTS_MAX_AGE_MS);
+  let products: Product[] | null = getCached<Product[]>(cacheKey, CACHED_PRODUCTS_MAX_AGE_MS);
   if (products === null) {
     const multiParams = uniqueIds.map(id => ({product_id: id}));
     products = (await get<Product[]>(`${baseUrl}appointments/products`, {}, multiParams))!;
     // only allow products that aren't selected yet, as these should use the amount
     // field to order multiple.
     products = products.filter(p => !uniqueIds.includes(p.identifier));
-    setCached(cacheKey, products);
+    setCached<Product[]>(cacheKey, products);
   }
   return products;
 };
