@@ -1,9 +1,9 @@
-import govmetricAverageImg from 'img/govmetric/average.png';
-import govmetricGoodImg from 'img/govmetric/good.png';
-import govmetricPoorImg from 'img/govmetric/poor.png';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import useFormContext from 'hooks/useFormContext';
+import useFormContext from '@/hooks/useFormContext';
+import govmetricAverageImg from '@/img/govmetric/average.png';
+import govmetricGoodImg from '@/img/govmetric/good.png';
+import govmetricPoorImg from '@/img/govmetric/poor.png';
 
 import {useAnalyticsToolsConfig} from './AnalyticsToolConfigProvider';
 import {buildGovMetricUrl, govMetricURLWithRating} from './utils';

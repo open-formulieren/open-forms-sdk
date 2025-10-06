@@ -1,6 +1,6 @@
 import {HttpResponse, http} from 'msw';
 
-import {BASE_URL} from 'api-mocks';
+import {BASE_URL} from '@/api-mocks';
 
 const ADDRESS_SEARCH_ENDPOINT = `${BASE_URL}geo/address-search`;
 const LATLNG_SEARCH_ENDPOINT = `${BASE_URL}geo/latlng-search`;

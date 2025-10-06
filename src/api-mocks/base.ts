@@ -1,6 +1,7 @@
-import {getEnv} from 'env';
 import cloneDeep from 'lodash/cloneDeep';
 import set from 'lodash/set';
+
+import {getEnv} from '@/env';
 
 export const BASE_URL = getEnv('BASE_API_URL') || 'http://localhost:8000/api/v2/';
 

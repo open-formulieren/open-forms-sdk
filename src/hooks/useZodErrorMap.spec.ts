@@ -1,8 +1,9 @@
 import type {JSONValue} from '@open-formulieren/formio-renderer/types.js';
-import messagesEN from 'i18n/compiled/en.json';
-import messagesNL from 'i18n/compiled/nl.json';
 import {createIntl, createIntlCache} from 'react-intl';
 import {z} from 'zod';
+
+import messagesEN from '@/i18n/compiled/en.json';
+import messagesNL from '@/i18n/compiled/nl.json';
 
 import {makeZodErrorMap} from './useZodErrorMap';
 

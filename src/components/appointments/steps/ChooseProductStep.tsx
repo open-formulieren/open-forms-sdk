@@ -8,10 +8,9 @@ import {useNavigate, useSearchParams} from 'react-router';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import useTitle from 'hooks/useTitle';
-
 import {CardTitle} from '@/components/Card';
 import type {AppointmentProduct} from '@/data/appointments';
+import useTitle from '@/hooks/useTitle';
 
 import {AppointmentConfigContext} from '../Context';
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';

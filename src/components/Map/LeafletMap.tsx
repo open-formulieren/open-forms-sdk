@@ -1,4 +1,5 @@
 import type {MapComponentSchema} from '@open-formulieren/types';
+import clsx from 'clsx';
 import * as Leaflet from 'leaflet';
 import type {
   Circle,
@@ -13,8 +14,6 @@ import {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {FeatureGroup, MapContainer, TileLayer, useMap} from 'react-leaflet';
 import {EditControl} from 'react-leaflet-draw';
-
-import {getBEMClassName} from 'utils';
 
 import LayersControl from './LeafletMapLayersControl';
 import LocationControl from './LeafletMapLocationControl';
@@ -71,8 +70,9 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   const intl = useIntl();
   const geoJsonCoordinates = getCoordinates(geoJsonGeometry);
 
-  const modifiers = disabled ? ['disabled'] : [];
-  const className = getBEMClassName('leaflet-map', modifiers);
+  const className = clsx('openforms-leaflet-map', {
+    'openforms-leaflet-map--disabled': disabled,
+  });
 
   // Get the names of the active interactions
   const activeInteractionNames = Object.entries(interactions)

@@ -8,12 +8,11 @@ import {useAsync, useUpdateEffect} from 'react-use';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import useTitle from 'hooks/useTitle';
-
 import {ConfigContext} from '@/Context';
 import {CardTitle} from '@/components/Card';
 import Loader from '@/components/Loader';
 import type {AppointmentProduct} from '@/data/appointments';
+import useTitle from '@/hooks/useTitle';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
 import SubmitRow from '../SubmitRow';

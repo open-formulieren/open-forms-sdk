@@ -1,4 +1,4 @@
-import {get} from 'api';
+import {get} from '@/api';
 
 interface AddressSearchResult {
   label: string;

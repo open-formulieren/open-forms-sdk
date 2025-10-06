@@ -1,8 +1,8 @@
 import {render, screen} from '@testing-library/react';
-import messagesNL from 'i18n/compiled/nl.json';
 import {IntlProvider} from 'react-intl';
 
-import {buildForm} from 'api-mocks';
+import {buildForm} from '@/api-mocks';
+import messagesNL from '@/i18n/compiled/nl.json';
 
 import {CoSignAuthentication} from './CoSignOld';
 

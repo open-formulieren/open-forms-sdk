@@ -1,6 +1,5 @@
 import {render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import type {RouteObject} from 'react-router';
 import {Outlet, RouterProvider, createMemoryRouter} from 'react-router';
@@ -16,6 +15,7 @@ import {
 } from '@/api-mocks/appointments';
 import mswServer from '@/api-mocks/msw-server';
 import {LiteralsProvider} from '@/components/Literal';
+import messagesEN from '@/i18n/compiled/en.json';
 import {FUTURE_FLAGS} from '@/routes';
 
 import {CreateAppointmentContext} from '../Context';

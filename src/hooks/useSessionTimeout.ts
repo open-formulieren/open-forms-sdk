@@ -3,7 +3,7 @@ import {useMatch, useNavigate} from 'react-router';
 import {useUpdate} from 'react-use';
 import {useState as useGlobalState} from 'state-pool';
 
-import {sessionExpiresAt} from 'api';
+import {sessionExpiresAt} from '@/api';
 
 type ResetCallback = () => void;
 

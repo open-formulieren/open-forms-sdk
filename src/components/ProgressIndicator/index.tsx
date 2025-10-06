@@ -2,10 +2,9 @@ import clsx from 'clsx';
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router';
 
-import useWindowResize from 'hooks/useWindowResize';
-
 import Caption from '@/components/Caption';
 import List from '@/components/List';
+import useWindowResize from '@/hooks/useWindowResize';
 
 import MobileButton from './MobileButton';
 import ProgressIndicatorItem from './ProgressIndicatorItem';
