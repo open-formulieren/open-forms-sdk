@@ -18,6 +18,7 @@ window.onload = () => {
     // React App :(
     CSPNonce: 'RqgbALvp8D5b3+8NuhfuKg==',
     backToTopText: 'Back to top',
+    backToTopRef: 'root',
     useHashRouting: USE_HASH_ROUTING === 'true' || false,
   });
   form.init();

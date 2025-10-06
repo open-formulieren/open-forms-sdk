@@ -7,7 +7,6 @@ import FAIcon from '@/components/FAIcon';
 import {Literal} from '@/components/Literal';
 
 import {ConfigContext} from 'Context';
-import Link from '@/components/Link';
 
 import PreviousLink from '@/components/PreviousLink';
 
@@ -30,7 +29,8 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
   previousPage,
   onDestroySession,
 }) => {
-  const {backToTopText} = useContext(ConfigContext);
+  const {backToTopText, backToTopRef} = useContext(ConfigContext);
+  const backToTopNode = backToTopRef ? document.getElementById(backToTopRef) : null;
 
   return (
     <ButtonGroup className="openforms-form-navigation" direction="column">
@@ -55,13 +55,17 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
         <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
       )}
 
-      {!!backToTopText && (
-        <Link to="#main-content" className="openforms-backtotop-link">
+      {!!backToTopText && backToTopNode && (
+        <LinkButton
+          name="backToTop"
+          className="openforms-form-navigation__backtotop-button"
+          onClick={() => backToTopNode.scrollIntoView({behavior: 'smooth'})}
+        >
           <Icon>
             <FAIcon icon="" className="fa-fw" />
           </Icon>
           {backToTopText}
-        </Link>
+        </LinkButton>
       )}
     </ButtonGroup>
   );
