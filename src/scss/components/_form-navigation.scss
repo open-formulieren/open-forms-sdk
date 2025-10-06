@@ -38,4 +38,10 @@
       --fa: var(--of-form-navigation-save-button-fa-icon, '\f178');
     }
   }
+
+  @include bem.element('backtotop-button') {
+    .utrecht-icon > .fa-icon {
+      --fa: var(--of-form-navigation-backtotop-button-fa-icon, '\f176');
+    }
+  }
 }
