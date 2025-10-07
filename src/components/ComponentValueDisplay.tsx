@@ -22,14 +22,13 @@ import type {JSONValue} from '@open-formulieren/types/lib/types';
 import React, {Suspense} from 'react';
 import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime} from 'react-intl';
 
-import CoSignOld from 'components/CoSign';
-import Map from 'components/Map';
-
 import Anchor from '@/components/Anchor';
 import Body from '@/components/Body';
+import CoSignOld from '@/components/CoSign';
 import Image from '@/components/Image';
 import List from '@/components/List';
 import Loader from '@/components/Loader';
+import Map from '@/components/Map';
 import type {GeoJsonGeometry} from '@/components/Map/types';
 
 export interface DisplayProps<S, V> {

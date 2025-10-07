@@ -1,5 +1,5 @@
-import {BASE_URL} from 'api-mocks';
-import mswServer from 'api-mocks/msw-server';
+import {BASE_URL} from '@/api-mocks';
+import mswServer from '@/api-mocks/msw-server';
 
 import {
   mockAddressSearch400Get,

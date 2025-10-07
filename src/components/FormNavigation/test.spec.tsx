@@ -2,8 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router';
 
-import {LiteralsProvider} from 'components/Literal';
-
+import {LiteralsProvider} from '@/components/Literal';
 import messagesNL from '@/i18n/compiled/nl.json';
 
 import FormNavigation, {StepSubmitButton} from './index';

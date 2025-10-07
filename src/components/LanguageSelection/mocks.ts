@@ -1,8 +1,7 @@
 import type {SupportedLocales} from '@open-formulieren/types';
 import {HttpResponse, http} from 'msw';
 
-import {BASE_URL} from 'api-mocks';
-
+import {BASE_URL} from '@/api-mocks';
 import type {FormioTranslations} from '@/i18n';
 
 import type {LanguageInfo} from './LanguageSelection';

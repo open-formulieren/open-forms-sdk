@@ -1,15 +1,14 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 
-import {withSubmissionPollInfo} from 'story-utils/decorators';
-
 import {BASE_URL} from '@/api-mocks';
 import {
   mockSubmissionPaymentStartPost,
   mockSubmissionProcessingStatusGet,
 } from '@/api-mocks/submissions';
+import {withSubmissionPollInfo} from '@/sb-decorators';
+import type {SubmissionPollInfoArgs} from '@/sb-decorators';
 
-import type {SubmissionPollInfoArgs} from './ConfirmationView.stories';
 import {StartPaymentViewDisplay} from './StartPaymentView';
 
 type Args = React.ComponentProps<typeof StartPaymentViewDisplay> & SubmissionPollInfoArgs;

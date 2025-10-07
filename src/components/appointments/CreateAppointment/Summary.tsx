@@ -7,8 +7,6 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {createSearchParams, useHref, useLocation, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
-import useTitle from 'hooks/useTitle';
-
 import {ConfigContext} from '@/Context';
 import {CardTitle} from '@/components/Card';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
@@ -21,6 +19,7 @@ import type {Appointment, Location, Product} from '@/data/appointments';
 import {createAppointment} from '@/data/appointments';
 import type {ComponentSummary} from '@/data/submissions';
 import {ValidationError} from '@/errors';
+import useTitle from '@/hooks/useTitle';
 
 import {fieldLabel as dateLabel} from '../fields/DateSelect';
 import {getLocations, fieldLabel as locationLabel} from '../fields/LocationSelect';

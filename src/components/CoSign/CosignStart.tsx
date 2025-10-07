@@ -1,9 +1,8 @@
 import {FormattedMessage} from 'react-intl';
 
-import {LiteralsProvider} from 'components/Literal';
-
 import Body from '@/components/Body';
 import Card from '@/components/Card';
+import {LiteralsProvider} from '@/components/Literal';
 import LoginOptions from '@/components/LoginOptions';
 import MaintenanceMode from '@/components/MaintenanceMode';
 import {AuthenticationError, useDetectAuthErrorMessage} from '@/components/auth';

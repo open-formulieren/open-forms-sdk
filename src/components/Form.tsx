@@ -3,9 +3,6 @@ import {useIntl} from 'react-intl';
 import {Navigate, Outlet, useLocation, useMatch, useNavigate, useSearchParams} from 'react-router';
 import {usePrevious} from 'react-use';
 
-import useAutomaticRedirect from 'hooks/useAutomaticRedirect';
-import usePageViews from 'hooks/usePageViews';
-
 import {ConfigContext} from '@/Context';
 import {destroy} from '@/api';
 import FormProgressIndicator from '@/components/FormProgressIndicator';
@@ -14,7 +11,9 @@ import SubmissionProvider from '@/components/SubmissionProvider';
 import AnalyticsToolsConfigProvider from '@/components/analytics/AnalyticsToolConfigProvider';
 import {START_FORM_QUERY_PARAM} from '@/components/constants';
 import {type Submission, flagActiveSubmission, flagNoActiveSubmission} from '@/data/submissions';
+import useAutomaticRedirect from '@/hooks/useAutomaticRedirect';
 import useFormContext from '@/hooks/useFormContext';
+import usePageViews from '@/hooks/usePageViews';
 import useRecycleSubmission from '@/hooks/useRecycleSubmission';
 
 import FormDisplay from './FormDisplay';

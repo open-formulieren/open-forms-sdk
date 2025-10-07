@@ -1,6 +1,5 @@
 import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import ReactModal from 'react-modal';
 import {RouterProvider, createMemoryRouter} from 'react-router';
@@ -19,6 +18,7 @@ import {
 import mswServer from '@/api-mocks/msw-server';
 import {mockSubmissionPost, mockSubmissionProcessingStatusErrorGet} from '@/api-mocks/submissions';
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from '@/hooks/useGetOrCreateSubmission';
+import messagesEN from '@/i18n/compiled/en.json';
 import routes, {FUTURE_FLAGS} from '@/routes';
 
 import type {AppointmentDataByStep} from '../types';

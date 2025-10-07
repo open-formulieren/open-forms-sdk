@@ -1,10 +1,10 @@
 import {render, screen} from '@testing-library/react';
-import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
+import messagesEN from '@/i18n/compiled/en.json';
 import routes, {FUTURE_FLAGS} from '@/routes';
 
 const Wrapper = () => {

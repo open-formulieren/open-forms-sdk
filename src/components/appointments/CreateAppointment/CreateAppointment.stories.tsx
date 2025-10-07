@@ -4,8 +4,6 @@ import {addDays, format} from 'date-fns';
 import {enGB, nl} from 'date-fns/locale';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
-
 import {FormContext} from '@/Context';
 import {buildForm} from '@/api-mocks';
 import {
@@ -19,6 +17,7 @@ import {
 import {mockSubmissionPost, mockSubmissionProcessingStatusGet} from '@/api-mocks/submissions';
 import type {Form} from '@/data/forms';
 import routes, {FUTURE_FLAGS} from '@/routes';
+import {withPageWrapper} from '@/sb-decorators';
 
 import CreateAppointment from './';
 
@@ -43,7 +42,7 @@ interface Args {
 export default {
   title: 'Private API / Appointments / CreateForm',
   component: CreateAppointment,
-  decorators: [ConfigDecorator, LayoutDecorator],
+  decorators: [withPageWrapper],
   parameters: {
     msw: {
       handlers: [

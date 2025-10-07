@@ -1,7 +1,5 @@
 import {ButtonLink} from '@utrecht/component-library-react';
 
-import {getBEMClassName} from 'utils';
-
 import {OFButton} from '@/components/Button';
 import type {FormattedLoginOption} from '@/components/LoginOptions/LoginOptionsDisplay';
 
@@ -12,7 +10,7 @@ export interface LoginButtonProps {
 }
 
 const LoginButton: React.FC<LoginButtonProps> = ({option}) => (
-  <div className={getBEMClassName('login-button')}>
+  <div className="openforms-login-button">
     {option.url !== undefined ? (
       <ButtonLink appearance="primary-action-button" href={option.url}>
         {option.label}

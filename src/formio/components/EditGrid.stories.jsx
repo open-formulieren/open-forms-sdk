@@ -1,6 +1,5 @@
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
-import {ConfigDecorator} from 'story-utils/decorators';
 import {sleep} from 'utils';
 
 import {mockBAGDataGet, mockBAGNoDataGet} from './AddressNL.mocks';
@@ -121,7 +120,6 @@ export const WithData = {
 
 export const AddressNLWithData = {
   render: SingleFormioComponent,
-  decorators: [ConfigDecorator],
   parameters: {
     msw: {
       handlers: [mockBAGDataGet],
@@ -195,7 +193,6 @@ export const AddressNLWithData = {
 
 export const AddressNLWithNoData = {
   render: SingleFormioComponent,
-  decorators: [ConfigDecorator],
   parameters: {
     msw: {
       handlers: [mockBAGNoDataGet],

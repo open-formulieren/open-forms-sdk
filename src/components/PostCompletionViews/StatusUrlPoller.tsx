@@ -2,12 +2,11 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
-import usePoll from 'hooks/usePoll';
-
 import Body from '@/components/Body';
 import Card from '@/components/Card';
 import Loader from '@/components/Loader';
 import type {SubmissionProcessingStatus} from '@/data/submission-status';
+import usePoll from '@/hooks/usePoll';
 
 const RESULT_FAILED = 'failed';
 const RESULT_SUCCESS = 'success';

@@ -1,5 +1,4 @@
 import {render, screen} from '@testing-library/react';
-import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
@@ -7,6 +6,7 @@ import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
 import mswServer from '@/api-mocks/msw-server';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from '@/api-mocks/submissions';
+import messagesEN from '@/i18n/compiled/en.json';
 import {FUTURE_FLAGS} from '@/routes';
 import cosignRoutes from '@/routes/cosign';
 

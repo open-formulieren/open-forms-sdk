@@ -1,6 +1,6 @@
 import {FormattedMessage} from 'react-intl';
 
-import Modal from 'components/modals/Modal';
+import Modal from '@/components/modals/Modal';
 
 import AddChildForm from './AddChildForm';
 import type {ChildExtendedDetails} from './types';

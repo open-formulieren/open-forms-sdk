@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import {useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from 'Context';
-import {get} from 'api';
+import {ConfigContext} from '@/Context';
+import {get} from '@/api';
 
 export interface AnalyticsToolsConfig {
   govmetricSourceIdFormFinished: string;

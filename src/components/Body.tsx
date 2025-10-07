@@ -1,4 +1,4 @@
-import {getBEMClassName} from 'utils';
+import clsx from 'clsx';
 
 export const VARIANTS = ['big', 'muted', 'small', 'wysiwyg'] as const;
 export type Variant = (typeof VARIANTS)[number];
@@ -16,7 +16,10 @@ const Body = <T extends React.ElementType = 'p'>({
   ...props
 }: BodyProps<T>) => {
   const Component = component || 'p';
-  const className = getBEMClassName('body', modifiers);
+  const className = clsx(
+    'openforms-body',
+    modifiers.map(mod => `openforms-body--${mod}`)
+  );
   return (
     <Component className={className} {...props}>
       {children}

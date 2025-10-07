@@ -1,14 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 
-import {ConfigDecorator} from 'story-utils/decorators';
-
 import AddPartnerForm from './AddPartnerForm';
 
 export default {
   title: 'Private API / Partners / Modal content',
   component: AddPartnerForm,
-  decorators: [ConfigDecorator],
   args: {
     partner: null,
     onSave: fn(),

@@ -1,6 +1,5 @@
 import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
@@ -18,6 +17,7 @@ import {
   mockSubmissionSummaryGet,
 } from '@/api-mocks/submissions';
 import {type Form} from '@/data/forms';
+import messagesEN from '@/i18n/compiled/en.json';
 import routes, {FUTURE_FLAGS} from '@/routes';
 
 window.scrollTo = vi.fn();

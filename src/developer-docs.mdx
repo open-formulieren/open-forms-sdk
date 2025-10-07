@@ -37,7 +37,7 @@ import ExampleComponent from './ExampleComponent';
 export default {
   title: 'Private API / My example',
   component: ExampleComponent,
-  decorators: [ConfigDecorator],
+  decorators: [],
   parameters: {
     formik: {initialValues: {foo: 'bar'}},
   },
@@ -88,7 +88,7 @@ Typical elements in the MDX page are:
 
 - Meta element for storybook
 - A quick summary of what the component is and does, when to use it or not
-- The props of the component, introspected via its `propTypes` by Storybook
+- The props of the component, introspected via its TS props by Storybook
 - Relevant stories to illustrate some textual documentation, e.g. how validation errors are handled
   in form field components.
 

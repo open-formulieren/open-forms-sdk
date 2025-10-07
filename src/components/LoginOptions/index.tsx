@@ -2,9 +2,8 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSearchParams} from 'react-router';
 
-import {Literal} from 'components/Literal';
-import {getCosignLoginUrl, getLoginUrl} from 'components/utils';
-
+import {Literal} from '@/components/Literal';
+import {getCosignLoginUrl, getLoginUrl} from '@/components/LoginOptions/utils';
 import type {Form} from '@/data/forms';
 
 import LoginOptionsDisplay, {type FormattedLoginOption} from './LoginOptionsDisplay';

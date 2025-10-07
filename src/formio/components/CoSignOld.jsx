@@ -57,16 +57,16 @@ export default class CoSignOld extends Field {
     // no container node ready (yet), defer to next render cycle
     if (!container) return;
 
-    const {form, submissionUuid, saveStepData} = this.options.ofContext;
+    const {form, submissionUuid} = this.options.ofContext;
 
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
         <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
           <CoSignReact
+            interactive
+            submissionUuid={submissionUuid}
             authPlugin={this.component.authPlugin}
             form={form}
-            submissionUuid={submissionUuid}
-            saveStepData={saveStepData}
           />
         </ConfigContext.Provider>
       </IntlProvider>

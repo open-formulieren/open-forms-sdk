@@ -254,5 +254,5 @@ class OpenForm {
 }
 
 export default OpenForm;
-export {ANALYTICS_PROVIDERS} from 'hooks/usePageViews';
+export {ANALYTICS_PROVIDERS} from '@/hooks/usePageViews';
 export {VERSION, OpenForm};

@@ -1,8 +1,9 @@
 import {ignoreBuildArtifacts} from '@maykinmedia/eslint-config';
 import recommended from '@maykinmedia/eslint-config/recommended';
+import {defineConfig} from 'eslint/config';
 import globals from 'globals';
 
-const config = [
+const config = defineConfig([
   ignoreBuildArtifacts(['dist', 'dist-vite', 'storybook-static']),
   {
     files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
@@ -23,6 +24,21 @@ const config = [
       ],
     },
   },
+  // Only allow JSX? in specific places, otherwise TS must be used.
+  {
+    files: ['src/**/*.{js,jsx}'],
+    ignores: [
+      'src/formio/**/*.{js,jsx}',
+      'src/jstests/formio/**/*.{js,jsx}',
+      'src/formio-init.js',
+      'src/components/FormStep/index.jsx',
+      'src/components/FormStep/data.js',
+      'src/components/FormStep/FormStep.stories.jsx',
+    ],
+    rules: {
+      'no-restricted-syntax': ['error', {selector: 'Program', message: 'You must use Typescript.'}],
+    },
+  },
   // Unit tests
   {
     files: ['**/*.spec.{js,jsx}', 'src/vitest.setup.mjs'],
@@ -33,6 +49,6 @@ const config = [
       },
     },
   },
-];
+]);
 
 export default config;

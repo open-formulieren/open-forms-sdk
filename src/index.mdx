@@ -152,6 +152,9 @@ npm run makemessages
 ./bin/compilemessages.sh
 ```
 
+CI checks for missing translations during release flows, and missing translation extractions during
+regular development.
+
 ### Code-style
 
 **Prettier**
@@ -172,7 +175,7 @@ The project has been configured to be able to use 'absolute' imports, which mean
 **Do**
 
 ```jsx
-import SomeComponent from 'components/SomeComponent';
+import SomeComponent from '@/components/SomeComponent';
 ```
 
 **Don't**
@@ -182,6 +185,16 @@ import SomeComponent from '../../SomeComponent';
 ```
 
 Imports are also sorted using a prettier-plugin.
+
+**Linting**
+
+Linting is done with ESLint (also in CI), but you can run this locally too or integrate it in your
+editor:
+
+```bash
+npm run lint
+npm run lint -- --fix  # to auto-fix issues where possible
+```
 
 **Don't change code without cause**
 
@@ -207,9 +220,10 @@ control.
 
 The source code is built to multiple targets for different audiences:
 
+- ESM bundle with multiple modules, for optimized loading patterns when embedding.
 - UMD bundle with single JS/CSS files, for drop-in embedding and plain JS usage.
 - NPM package containing the UMD bundle **and** ES-modules of the main components.
 - Storybook static build (you're reading this now!)
-- Docker image containing the UMD build for easy deployment, embedded in the backend build.
+- Docker image containing the ESM and UMD build for easy deployment, embedded in the backend build.
 
 [contributing]: https://github.com/open-formulieren/open-forms-sdk/blob/main/CONTRIBUTING.md

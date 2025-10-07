@@ -8,7 +8,6 @@ import {
   mockSubmissionGet,
   mockSubmissionSummaryGet,
 } from '@/api-mocks/submissions';
-import {ConfigDecorator} from '@/story-utils/decorators';
 
 import CosignSummary from './CosignSummary';
 
@@ -16,7 +15,7 @@ const submission = buildSubmission();
 
 export default {
   title: 'Views / Cosign / Summary',
-  decorators: [withRouter, ConfigDecorator],
+  decorators: [withRouter],
   component: CosignSummary,
   args: {
     form: buildForm(),

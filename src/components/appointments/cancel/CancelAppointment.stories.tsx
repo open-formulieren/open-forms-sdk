@@ -2,17 +2,16 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {ConfigDecorator, LayoutDecorator} from 'story-utils/decorators';
-
 import {mockAppointmentCancelErrorPost, mockAppointmentCancelPost} from '@/api-mocks/appointments';
 import Card from '@/components/Card';
+import {withPageWrapper} from '@/sb-decorators';
 
 import CancelAppointment from './CancelAppointment';
 
 export default {
   title: 'Private API / Appointments / Cancellation / Cancel',
   component: CancelAppointment,
-  decorators: [LayoutDecorator, withRouter, ConfigDecorator],
+  decorators: [withPageWrapper, withRouter],
 } satisfies Meta<typeof CancelAppointment>;
 
 type Story = StoryObj<typeof CancelAppointment>;

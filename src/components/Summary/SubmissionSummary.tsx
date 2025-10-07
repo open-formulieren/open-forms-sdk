@@ -4,17 +4,16 @@ import {useContext, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
-import {LiteralsProvider} from 'components/Literal';
-import useTitle from 'hooks/useTitle';
-
 import {ConfigContext} from '@/Context';
 import {StepState} from '@/components/FormStep/utils';
+import {LiteralsProvider} from '@/components/Literal';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import type {SubmissionStatementConfiguration} from '@/data/forms';
 import {completeSubmission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
 import useRefreshSubmission from '@/hooks/useRefreshSubmission';
+import useTitle from '@/hooks/useTitle';
 
 import GenericSummary from './GenericSummary';
 import ValidationErrors from './ValidationErrors';

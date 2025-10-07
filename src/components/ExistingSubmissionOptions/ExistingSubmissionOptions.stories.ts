@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from 'api-mocks';
+import {buildForm} from '@/api-mocks';
 
 import ExistingSubmissionOptions from './ExistingSubmissionOptions';
 

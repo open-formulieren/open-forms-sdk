@@ -2,17 +2,16 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, waitFor, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {LayoutDecorator, withCard, withForm} from 'story-utils/decorators';
-
 import {BASE_URL} from '@/api-mocks';
 import {mockSubmissionProcessingStatusGet} from '@/api-mocks/submissions';
+import {withCard, withForm, withPageWrapper} from '@/sb-decorators';
 
 import Confirmation from './Confirmation';
 
 export default {
   title: 'Private API / Appointments / Steps / 5 - Confirmation',
   component: Confirmation,
-  decorators: [withForm, withRouter, LayoutDecorator, withCard],
+  decorators: [withForm, withRouter, withPageWrapper, withCard],
   parameters: {
     controls: {hideNoControlsWarning: true},
     msw: {

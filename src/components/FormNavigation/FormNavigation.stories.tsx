@@ -2,14 +2,14 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {AnalyticsToolsDecorator, ConfigDecorator, LiteralDecorator} from 'story-utils/decorators';
+import {withLiterals} from '@/sb-decorators';
 
 import FormNavigation, {FormSubmitButton, StepSubmitButton} from './index';
 
 export default {
   title: 'Private API / FormNavigation',
   component: FormNavigation,
-  decorators: [ConfigDecorator, withRouter, AnalyticsToolsDecorator, LiteralDecorator],
+  decorators: [withRouter, withLiterals],
   args: {
     submitButton: (
       <StepSubmitButton

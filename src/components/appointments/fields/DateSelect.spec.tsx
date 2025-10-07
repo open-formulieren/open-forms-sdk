@@ -1,7 +1,6 @@
 import {act, render as realRender, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {Formik} from 'formik';
-import messagesEN from 'i18n/compiled/en.json';
 import {IntlProvider} from 'react-intl';
 
 import {ConfigContext} from '@/Context';
@@ -9,6 +8,7 @@ import {BASE_URL} from '@/api-mocks';
 import {mockAppointmentDatesGet} from '@/api-mocks/appointments';
 import mswServer from '@/api-mocks/msw-server';
 import type {AppointmentProduct} from '@/data/appointments';
+import messagesEN from '@/i18n/compiled/en.json';
 
 import DateSelect from './DateSelect';
 

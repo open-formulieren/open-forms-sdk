@@ -1,7 +1,5 @@
 import {Outlet, useLocation} from 'react-router';
 
-import {checkMatchesPath} from 'components/utils/routers';
-
 import Card from '@/components/Card';
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import FormDisplay from '@/components/FormDisplay';
@@ -11,6 +9,7 @@ import {SessionTrackerModal} from '@/components/Sessions';
 import useFormContext from '@/hooks/useFormContext';
 import useGetOrCreateSubmission from '@/hooks/useGetOrCreateSubmission';
 import useSessionTimeout from '@/hooks/useSessionTimeout';
+import {checkMatchesPath} from '@/routes/utils';
 
 import {AppointmentConfigContext} from '../Context';
 import AppointmentProgress from './AppointmentProgress';
