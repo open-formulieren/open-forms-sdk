@@ -105,7 +105,7 @@ export const flagNoActiveSubmission = (): void => {
  *
  * @see `#/components/schemas/SubmissionComponentSummary` in the API spec.
  */
-interface ComponentSummary {
+export interface ComponentSummary {
   /**
    * Display name of the component, usually the label.
    */
