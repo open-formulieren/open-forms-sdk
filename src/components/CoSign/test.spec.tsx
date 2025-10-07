@@ -8,13 +8,11 @@ import {CoSignAuthentication} from './CoSignOld';
 
 it('CoSign component constructs the right auth URL', () => {
   // Control the location that the test will use
-  const {location} = window;
-  // @ts-expect-error monkeypatching
-  delete window.location;
-  // @ts-expect-error monkeypatching
-  window.location = {
+  const mockedLocation: Location = {
+    ...window.location,
     href: 'https://openforms.nl/form-name/step/step-name',
   };
+  const spy = vi.spyOn(window, 'location', 'get').mockReturnValue(mockedLocation);
 
   const form = buildForm({
     loginOptions: [
@@ -40,7 +38,7 @@ it('CoSign component constructs the right auth URL', () => {
   );
 
   // Reset location
-  window.location = location;
+  spy.mockRestore();
 
   const loginButton = screen.getByRole<HTMLAnchorElement>('link', {name: 'Inloggen met DigiD'});
   expect(loginButton).toBeVisible();
