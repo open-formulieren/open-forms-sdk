@@ -1,5 +1,5 @@
 import type {MapComponentSchema} from '@open-formulieren/types';
-import type {Feature, FeatureCollection} from 'geojson';
+import type {Feature} from 'geojson';
 import * as Leaflet from 'leaflet';
 import {useCallback, useEffect, useRef} from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -11,9 +11,8 @@ import {
   useMap,
 } from 'react-leaflet';
 
-import {getWFSBbox, getWFSVersion} from '@/components/Map/wfsUtils';
-
 import './LeafletMapLayersControl.scss';
+import {fetchFeatureCollections} from './fetchWFSFeatures';
 import type {Overlay} from './types';
 
 interface TileLayerControlProps {
@@ -69,39 +68,12 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
     [intl]
   );
 
-  const fetchFeatureCollections = useCallback(async (): Promise<FeatureCollection[]> => {
-    const baseUrl = new URL(url).href.split('?')[0];
-
-    const bounds = map.getBounds();
-    const wfsVersion = await getWFSVersion(url);
-    const isWfsVersion2 = wfsVersion.startsWith('2.');
-
-    // Version 1.x and 2.0.0 of WFS use different formats for EPSG and bbox,
-    // and a different query parameter for typeName.
-    const crs = isWfsVersion2 ? 'urn:ogc:def:crs:EPSG::4326' : 'EPSG:4326';
-    const typeNameParam = isWfsVersion2 ? 'typenames' : 'typename';
-    const bbox = getWFSBbox(bounds, crs, wfsVersion);
-
-    // PDOK doesn't support multiple feature types in one request, for the outputFormat
-    // JSON. So we spread them out to multiple requests, that are then merged into one
-    // layer.
-    const requests = featureTypes.map(async typeName => {
-      const requestUrl =
-        `${baseUrl}?service=WFS&version=${wfsVersion}&request=GetFeature&${typeNameParam}=${typeName}` +
-        `&outputFormat=application/json&srsName=${crs}&bbox=${bbox}`;
-      const response = await fetch(requestUrl);
-      return await response.json();
-    });
-
-    return Promise.all(requests);
-  }, [featureTypes, map, url]);
-
   useEffect(() => {
     if (!groupRef.current) return;
     const group = groupRef.current;
 
     const updateFeatureCollections = async () => {
-      const featureCollections = await fetchFeatureCollections();
+      const featureCollections = await fetchFeatureCollections(url, featureTypes, map);
 
       // Remove the previous WFS shapes
       group.clearLayers();
@@ -144,7 +116,7 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
       map.off('moveend', updateFeatureCollections);
       map.removeLayer(group);
     };
-  }, [map, url, featureTypes, intl, fetchFeatureCollections, getPopupContent]);
+  }, [map, url, featureTypes, intl, getPopupContent]);
 
   return <LayerGroup ref={groupRef} />;
 };
