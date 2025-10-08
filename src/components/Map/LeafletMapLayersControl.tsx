@@ -11,6 +11,8 @@ import {
   useMap,
 } from 'react-leaflet';
 
+import {getWFSBbox, getWFSVersion} from '@/components/Map/wfsUtils';
+
 import './LeafletMapLayersControl.scss';
 import type {Overlay} from './types';
 
@@ -68,18 +70,25 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
   );
 
   const fetchFeatureCollections = useCallback(async (): Promise<FeatureCollection[]> => {
-    const bounds = map.getBounds();
-    const bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()},EPSG:4326`;
-
     const baseUrl = new URL(url).href.split('?')[0];
+
+    const bounds = map.getBounds();
+    const wfsVersion = await getWFSVersion(url);
+    const isWfsVersion2 = wfsVersion.startsWith('2.');
+
+    // Version 1.x and 2.0.0 of WFS use different formats for EPSG and bbox,
+    // and a different query parameter for typeName.
+    const crs = isWfsVersion2 ? 'urn:ogc:def:crs:EPSG::4326' : 'EPSG:4326';
+    const typeNameParam = isWfsVersion2 ? 'typenames' : 'typename';
+    const bbox = getWFSBbox(bounds, crs, wfsVersion);
 
     // PDOK doesn't support multiple feature types in one request, for the outputFormat
     // JSON. So we spread them out to multiple requests, that are then merged into one
     // layer.
     const requests = featureTypes.map(async typeName => {
       const requestUrl =
-        `${baseUrl}?service=WFS&version=2.0.0&request=GetFeature&typeNames=${typeName}` +
-        `&outputFormat=application/json&srsName=urn:ogc:def:crs:EPSG::4326&bbox=${bbox}`;
+        `${baseUrl}?service=WFS&version=${wfsVersion}&request=GetFeature&${typeNameParam}=${typeName}` +
+        `&outputFormat=application/json&srsName=${crs}&bbox=${bbox}`;
       const response = await fetch(requestUrl);
       return await response.json();
     });

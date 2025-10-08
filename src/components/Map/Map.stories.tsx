@@ -208,6 +208,13 @@ export const MapWithOverlays: Story = {
         type: 'wfs',
         layers: ['nutsdiensten-en-overheidsdiensten:appurtenance'],
       },
+      {
+        uuid: '9a7ce208-f810-43d0-b21e-8028f2248b09',
+        url: 'https://service.pdok.nl/rws/gebiedsbeheer/kwetsbaargebied-agglomeraties/wfs/v1_0?request=GetCapabilities&service=WFS&version=1.1.0',
+        label: 'Gebiedsbeheer WFS 1.1.0 layer',
+        type: 'wfs',
+        layers: ['gebiedsbeheer:am_sensitve_area_agglomerations'],
+      },
     ],
   },
   play: async ({canvasElement, step}) => {
@@ -240,10 +247,13 @@ export const MapWithOverlays: Story = {
     });
 
     await step('Opening WFS feature popup', async () => {
-      const wfsFeature = canvas.getByRole('button', {name: 'Interactive marker'});
-      expect(wfsFeature).toBeVisible();
+      await waitFor(async () => {
+        const wfsFeatures = canvas.getAllByRole('button', {name: 'Interactive marker'});
+        expect(wfsFeatures).toHaveLength(2);
+        expect(wfsFeatures[0]).toBeVisible();
 
-      await userEvent.click(wfsFeature);
+        await userEvent.click(wfsFeatures[0]);
+      });
 
       waitFor(() => {
         const popup = canvas.getByRole('table', {name: 'WFS feature properties'});
