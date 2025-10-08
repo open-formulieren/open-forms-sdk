@@ -82,6 +82,8 @@ export const withConfig: Decorator = (Story, {parameters}) => {
     baseTitle: '',
     requiredFieldsWithAsterisk: true,
     debug: false,
+    backToTopText: '',
+    backToTopRef: '',
   };
   const overrides: Partial<ConfigContextType> = parameters?.config || {};
   const configValue: ConfigContextType = {...DEFAULTS, ...overrides};
