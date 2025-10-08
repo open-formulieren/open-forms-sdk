@@ -2,12 +2,11 @@ import {ButtonGroup} from '@utrecht/button-group-react';
 import {Icon, LinkButton} from '@utrecht/component-library-react';
 import {useContext} from 'react';
 
+import {ConfigContext} from 'Context';
+
 import AbortButton from '@/components/AbortButton';
 import FAIcon from '@/components/FAIcon';
 import {Literal} from '@/components/Literal';
-
-import {ConfigContext} from 'Context';
-
 import PreviousLink from '@/components/PreviousLink';
 
 export interface FormNavigationProps {
@@ -36,7 +35,9 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
     <ButtonGroup className="openforms-form-navigation" direction="column">
       {submitButton}
 
-    {previousPage && <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />}
+      {previousPage && (
+        <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />
+      )}
 
       {onFormSave && (
         <LinkButton
