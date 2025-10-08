@@ -12,7 +12,7 @@ import {
 } from 'react-leaflet';
 
 import './LeafletMapLayersControl.scss';
-import {fetchFeatureCollections} from './fetchWFSFeatures';
+import {fetchFeatureCollections, getTileKey, getTilesFromBounds} from './fetchWFSFeatures';
 import type {Overlay} from './types';
 
 interface TileLayerControlProps {
@@ -42,6 +42,7 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
   const map = useMap();
   const intl = useIntl();
   const groupRef = useRef<Leaflet.LayerGroup>(null);
+  const tileCacheRef = useRef<Set<string>>(new Set());
 
   const getPopupContent = useCallback(
     (feature: Feature): string => {
@@ -71,12 +72,28 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
   useEffect(() => {
     if (!groupRef.current) return;
     const group = groupRef.current;
+    const tileCache = tileCacheRef.current;
 
     const updateFeatureCollections = async () => {
-      const featureCollections = await fetchFeatureCollections(url, featureTypes, map);
+      // Only update features when layer is active.
+      if (!map.hasLayer(group)) {
+        return;
+      }
 
-      // Remove the previous WFS shapes
-      group.clearLayers();
+      const bounds = map.getBounds();
+      const zoom = map.getZoom();
+      // Create tiles from the map bounds, and determine which tiles to fetch
+      const visibleTiles = getTilesFromBounds(bounds, map);
+      const tilesToFetch = visibleTiles.filter(tile => !tileCache.has(getTileKey(tile, zoom)));
+
+      // Add all newly fetched tiles to the cache
+      tilesToFetch.forEach(tile => tileCache.add(getTileKey(tile, zoom)));
+      const featureCollections = await fetchFeatureCollections(
+        url,
+        featureTypes,
+        tilesToFetch,
+        map
+      );
 
       // Mount the new WFS shapes
       featureCollections.forEach(featureCollection => {
@@ -105,8 +122,16 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
       });
     };
 
+    // When zoom level changes, clear the cache and update the features.
+    const handleZoom = () => {
+      tileCache.clear();
+      group.clearLayers();
+      updateFeatureCollections();
+    };
+
     // Fetch new WFS overlay data after moving the map
     map.on('moveend', updateFeatureCollections);
+    map.on('zoomend', handleZoom);
     updateFeatureCollections();
 
     // Add LayerGroup to map
@@ -114,6 +139,7 @@ const WFSTileLayer: React.FC<WFSTileLayerProps> = ({url, featureTypes}) => {
 
     return () => {
       map.off('moveend', updateFeatureCollections);
+      map.off('zoomend', handleZoom);
       map.removeLayer(group);
     };
   }, [map, url, featureTypes, intl, getPopupContent]);
