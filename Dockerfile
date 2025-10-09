@@ -24,8 +24,9 @@ RUN npm run build:design-tokens \
   && npm run build
 
 # set up symlinks to mimick the old dist/ layout
+WORKDIR /app/dist
 RUN \
-  BASE=/app/dist \
+  BASE=. \
   && if [ "$SDK_VERSION" != "latest" ]; then \
     BASE="$BASE/$SDK_VERSION"; \
   fi \
