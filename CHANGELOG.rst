@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+3.2.2 (2025-10-09)
+==================
+
+Regular bugfix release.
+
+* [#5435] Fixed validation not being skipped for hidden selectboxes component.
+* The NPM packages are now published with Trusted Publishing, enhancing supply chain security.
+
 3.1.4 (2025-10-06)
 ==================
 
