@@ -204,7 +204,7 @@ jobs:
         with:
           submodules: true
 
-      - name: Set tag
+      - name: Determine SDK version being built
         id: vars
         run: |
           # Strip git ref prefix from version
@@ -216,15 +216,18 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$VERSION" == "main" ] && VERSION=latest
 
-          echo "tag=${VERSION}" >> $GITHUB_OUTPUT
+          # PRs result in version 'merge' -> transform that into 'latest'
+          [ "$VERSION" == "merge" ] && VERSION=latest
+
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build the Docker image
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
         run: |
           docker build . \
           --build-arg SDK_VERSION=${RELEASE_VERSION} \
           --tag $IMAGE_NAME:$RELEASE_VERSION
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.version }}
 
       - name: Log into registry
         if: github.event_name == 'push' && github.repository_owner == 'open-formulieren' # Exclude PRs / forks
@@ -235,7 +238,7 @@ jobs:
       - name: Push the Docker image
         if: github.event_name == 'push' && github.repository_owner == 'open-formulieren' # Exclude PRs / forks
         env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+          RELEASE_VERSION: ${{ steps.vars.outputs.version }}
         run: docker push $IMAGE_NAME:$RELEASE_VERSION
 
   update-docker-readme:

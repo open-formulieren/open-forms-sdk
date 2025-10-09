@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import type {OutputOptions} from 'rollup';
 import {loadEnv} from 'vite';
+import dts from 'vite-plugin-dts';
 import eslint from 'vite-plugin-eslint2';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import {coverageConfigDefaults, defineConfig} from 'vitest/config';
@@ -15,6 +16,7 @@ import {packageRegexes} from './build/utils.mjs';
 
 // type definition for our custom envvars
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv {
       BUILD_TARGET: 'umd' | 'esm' | 'esm-bundle' | undefined;
@@ -36,7 +38,7 @@ const buildTargetDefined = process.env.BUILD_TARGET !== undefined;
  */
 const esmOutput = (buildDist: string) =>
   ({
-    dir: `${buildDist}/esm`,
+    dir: buildDist,
     format: 'esm',
     preserveModules: true,
     preserveModulesRoot: 'src',
@@ -51,7 +53,7 @@ const esmOutput = (buildDist: string) =>
 
 const esmBundleOutput = (buildDist: string) =>
   ({
-    dir: buildDist,
+    dir: `${buildDist}/bundles/`,
     format: 'esm',
     preserveModules: false,
     entryFileNames: 'open-forms-sdk.mjs',
@@ -72,7 +74,7 @@ const esmBundleOutput = (buildDist: string) =>
  */
 const umdOutput = (buildDist: string) =>
   ({
-    dir: buildDist,
+    dir: `${buildDist}/bundles/`,
     format: 'umd',
     exports: 'named',
     name: 'OpenForms',
@@ -144,6 +146,18 @@ export default defineConfig(({mode}) => {
           "this\['Interpreter'\]": "window['Interpreter']",
         },
       }),
+      buildTarget === 'esm'
+        ? dts({tsconfigPath: './tsconfig.prod.json'})
+        : dts({
+            include: [
+              'src/sdk.tsx',
+              'src/hooks/usePageViews.ts',
+              'src/data/forms.ts',
+              'src/type-fixes.d.ts',
+            ],
+            rollupTypes: true,
+            outDir: `${buildDist}/bundles`,
+          }),
       /**
        * Plugin to ignore (S)CSS when bundling to UMD bundle target, since we use the ESM
        * bundle to generate these.

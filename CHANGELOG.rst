@@ -2,6 +2,20 @@
 SDK Changelog
 =============
 
+3.4.0 (2025-12-??)
+==================
+
+Deprecations
+------------
+
+* The UMD bundle is deprecated and will be removed in Open Forms SDK 4.0. The UMD bundle
+  is currently the default export of the NPM package. In 4.0, the ESM modules will be
+  the default and the ESM **bundle** will require an updated import path.
+* The bundles have moved from ``dist/open-forms-sdk.{js,mjs,css}`` to
+  ``dist/bundles/open-forms-sdk.{js,mjs,css}``. The Docker image still supports the old
+  paths for backwards compatibility, but this is deprecated and may be removed in 4.0.
+  For bundle imports, use a base path of ``/bundles/*``.
+
 3.2.2 (2025-10-09)
 ==================
 

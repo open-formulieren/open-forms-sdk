@@ -20,7 +20,20 @@ RUN npm ci
 COPY . ./
 
 # build SDK bundle
-RUN npm run build:design-tokens && npm run build
+RUN npm run build:design-tokens \
+  && npm run build
+
+# set up symlinks to mimick the old dist/ layout
+RUN \
+  BASE=/app/dist \
+  && if [ "$SDK_VERSION" != "latest" ]; then \
+    BASE="$BASE/$SDK_VERSION"; \
+  fi \
+  && ln -s "$BASE/bundles/open-forms-sdk.js" "$BASE/open-forms-sdk.js" \
+  && ln -s "$BASE/bundles/open-forms-sdk.mjs" "$BASE/open-forms-sdk.mjs" \
+  && ln -s "$BASE/bundles/assets" "$BASE/assets" \
+  && ln -s "$BASE/bundles/static" "$BASE/static" \
+  && ln -s "$BASE/bundles/open-forms-sdk.css" "$BASE/open-forms-sdk.css"
 
 # Stage 2 -- serve static build with nginx
 FROM nginxinc/nginx-unprivileged:${NGINX_VERSION}

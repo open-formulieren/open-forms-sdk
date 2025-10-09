@@ -17,18 +17,16 @@ it('Login URL contains "next" URL with "_start" parameter', () => {
   };
 
   // Control the location that the test will use
-  const {location} = window;
-  // @ts-expect-error monkeypatching
-  delete window.location;
-  // @ts-expect-error monkeypatching
-  window.location = {
+  const mockedLocation: Location = {
+    ...window.location,
     href: 'https://openforms.nl/form-name/',
   };
+  const spy = vi.spyOn(window, 'location', 'get').mockReturnValue(mockedLocation);
 
   const loginUrl = getLoginUrl(loginOption);
 
   // Reset location
-  window.location = location;
+  spy.mockRestore();
 
   const parsedUrl = new URL(loginUrl);
 
@@ -50,18 +48,16 @@ it('Login URL does NOT contain "_start" parameter if coSign', () => {
   };
 
   // Control the location that the test will use
-  const {location} = window;
-  // @ts-expect-error monkeypatching
-  delete window.location;
-  // @ts-expect-error monkeypatching
-  window.location = {
+  const mockedLocation: Location = {
+    ...window.location,
     href: 'https://openforms.nl/form-name/step/step-name',
   };
+  const spy = vi.spyOn(window, 'location', 'get').mockReturnValue(mockedLocation);
 
   const loginUrl = getLoginUrl(loginOption, {coSignSubmission: '11-22-33'});
 
   // Reset location
-  window.location = location;
+  spy.mockRestore();
 
   const parsedUrl = new URL(loginUrl);
 

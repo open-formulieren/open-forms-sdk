@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig",
+  "exclude": [
+    ".storybook",
+    "node_modules",
+    "dist",
+    "**/*.stories.*",
+    "**/*.spec.*",
+    "src/vitest.setup.mts",
+    "src/api-mocks/**/*",
+    "src/jstests/**/*",
+  ]
+}
