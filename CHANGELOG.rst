@@ -16,6 +16,42 @@ Deprecations
   paths for backwards compatibility, but this is deprecated and may be removed in 4.0.
   For bundle imports, use a base path of ``/bundles/*``.
 
+3.4.0-alpha.0 (2025-10-10)
+==========================
+
+First preview release of the upcoming 3.4.0 version.
+
+Deprecations
+------------
+
+* The UMD bundle is deprecated and will be removed in Open Forms SDK 4.0. The UMD bundle
+  is currently the default export of the NPM package. In 4.0, the ESM modules will be
+  the default and the ESM **bundle** will require an updated import path.
+* The bundles have moved from ``dist/open-forms-sdk.{js,mjs,css}`` to
+  ``dist/bundles/open-forms-sdk.{js,mjs,css}``. The Docker image still supports the old
+  paths for backwards compatibility, but this is deprecated and may be removed in 4.0.
+  For bundle imports, use a base path of ``/bundles/*``.
+
+New features
+------------
+
+* [#445] The NPM package now includes TypeScript declaration files for the public API.
+
+Bugfixes
+--------
+
+* [#5435] Fixed validation not being skipped for hidden selectboxes component.
+
+Project maintenance
+-------------------
+
+* [#445] Finished the conversion of our own code to TypeScript. We will have some "plain"
+  JavaScript for the overrides/custom components used in the formio.js renderer and
+  there are no plans to convert this to TS.
+* Replaced the ``DateField`` with the variant from the our
+  ``@open-formulieren/formio-renderer`` package.
+* Removed obsolete code, stories, documentation and tests.
+
 3.2.2 (2025-10-09)
 ==================
 
