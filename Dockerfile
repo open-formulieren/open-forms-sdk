@@ -19,23 +19,23 @@ RUN npm ci
 # copy source code & config
 COPY . ./
 
-# build SDK bundle
+# build SDK bundle - assets end up in /app/dist/*
 RUN npm run build:design-tokens \
   && npm run build
 
 # set up symlinks to mimick the old dist/ layout
 WORKDIR /app/dist
 RUN \
-  BASE=. \
+  ln -s "./bundles/open-forms-sdk.js" "./open-forms-sdk.js" \
+  && ln -s "./bundles/open-forms-sdk.js.map" "./open-forms-sdk.js.map" \
+  && ln -s "./bundles/open-forms-sdk.mjs" "./open-forms-sdk.mjs" \
+  && ln -s "./bundles/open-forms-sdk.mjs.map" "./open-forms-sdk.mjs.map" \
+  && ln -s "./bundles/assets" "./assets" \
+  && ln -s "./bundles/open-forms-sdk.css" "./open-forms-sdk.css" \
+  # and move the files to the versioned subdirectory, if a version is passed
   && if [ "$SDK_VERSION" != "latest" ]; then \
-    BASE="$BASE/$SDK_VERSION"; \
-  fi \
-  && ln -s "$BASE/bundles/open-forms-sdk.js" "$BASE/open-forms-sdk.js" \
-  && ln -s "$BASE/bundles/open-forms-sdk.js.map" "$BASE/open-forms-sdk.js.map" \
-  && ln -s "$BASE/bundles/open-forms-sdk.mjs" "$BASE/open-forms-sdk.mjs" \
-  && ln -s "$BASE/bundles/open-forms-sdk.mjs.map" "$BASE/open-forms-sdk.mjs.map" \
-  && ln -s "$BASE/bundles/assets" "$BASE/assets" \
-  && ln -s "$BASE/bundles/open-forms-sdk.css" "$BASE/open-forms-sdk.css"
+    cd .. && mv dist "$SDK_VERSION" && mkdir dist && mv "$SDK_VERSION" dist/ ; \
+  fi
 
 # Stage 2 -- serve static build with nginx
 FROM nginxinc/nginx-unprivileged:${NGINX_VERSION}

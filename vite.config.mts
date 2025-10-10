@@ -5,7 +5,6 @@ import {sentryVitePlugin} from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import type {OutputOptions} from 'rollup';
-import {loadEnv} from 'vite';
 import dts from 'vite-plugin-dts';
 import eslint from 'vite-plugin-eslint2';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -27,93 +26,75 @@ declare global {
 const buildTarget = process.env.BUILD_TARGET || 'umd';
 const buildTargetDefined = process.env.BUILD_TARGET !== undefined;
 
-/**
- * Rollup output options for ESM build, which is what we package in the NPM package
- * under the 'esm' subdirectory.
- *
- * The ESM package is experimental. Known issues:
- * @fixme
- *
- * - the react-intl translations are not distributed yet (also broken in CRA/babel build!)
- */
-const esmOutput = (buildDist: string) =>
-  ({
-    dir: buildDist,
-    format: 'esm',
-    preserveModules: true,
-    preserveModulesRoot: 'src',
-    entryFileNames: '[name].js',
-    assetFileNames: ({name}) => {
-      if (name?.endsWith('.css')) {
-        return '[name].[ext]';
-      }
-      return 'static/media/[name].[hash:8].[ext]';
-    },
-  }) satisfies OutputOptions;
-
-const esmBundleOutput = (buildDist: string) =>
-  ({
-    dir: `${buildDist}/bundles/`,
-    format: 'esm',
-    preserveModules: false,
-    entryFileNames: 'open-forms-sdk.mjs',
-    assetFileNames: ({name}) => {
-      if (name === 'style.css') {
-        return 'open-forms-sdk.css';
-      }
-      return 'static/media/[name].[hash:8].[ext]';
-    },
-    inlineDynamicImports: false,
-  }) satisfies OutputOptions;
-
-/**
- * Rollup output options for UMD bundle, included in the NPM package but
- * the primary distribution mechanism is in a Docker image.
- *
- * @deprecated - it's better to use the ESM bundle which has separate chunks.
- */
-const umdOutput = (buildDist: string) =>
-  ({
-    dir: `${buildDist}/bundles/`,
-    format: 'umd',
-    exports: 'named',
-    name: 'OpenForms',
-    generatedCode: 'es2015',
-    entryFileNames: 'open-forms-sdk.js',
-    assetFileNames: ({name}) => {
-      if (name === 'style.css') {
-        return 'open-forms-sdk.css';
-      }
-      return 'static/media/[name].[hash:8].[ext]';
-    },
-    inlineDynamicImports: true,
-  }) satisfies OutputOptions;
-
-const getOutput = (
-  buildTarget: typeof process.env.BUILD_TARGET,
-  buildDist: string
-): OutputOptions => {
+const getOutput = (buildTarget: typeof process.env.BUILD_TARGET): OutputOptions => {
   switch (buildTarget) {
     case 'esm-bundle': {
-      return esmBundleOutput(buildDist);
+      return {
+        dir: `dist/bundles/`,
+        format: 'esm',
+        preserveModules: false,
+        entryFileNames: 'open-forms-sdk.mjs',
+        assetFileNames: ({name}) => {
+          if (name === 'style.css') {
+            return 'open-forms-sdk.css';
+          }
+          return 'static/media/[name].[hash:8].[ext]';
+        },
+        inlineDynamicImports: false,
+      } satisfies OutputOptions;
     }
     case 'esm': {
-      return esmOutput(buildDist);
+      /**
+       * Rollup output options for ESM build, which is what we package in the NPM package
+       * under the 'esm' subdirectory.
+       *
+       * The ESM package is experimental. Known issues:
+       * @fixme
+       *
+       * - the react-intl translations are not distributed yet (also broken in CRA/babel build!)
+       */
+      return {
+        dir: 'dist/',
+        format: 'esm',
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+        entryFileNames: '[name].js',
+        assetFileNames: ({name}) => {
+          if (name?.endsWith('.css')) {
+            return '[name].[ext]';
+          }
+          return 'static/media/[name].[hash:8].[ext]';
+        },
+      } satisfies OutputOptions;
     }
     case 'umd':
     default: {
-      return umdOutput(buildDist);
+      /**
+       * Rollup output options for UMD bundle, included in the NPM package but
+       * the primary distribution mechanism is in a Docker image.
+       *
+       * @deprecated - it's better to use the ESM bundle which has separate chunks.
+       */
+      return {
+        dir: `dist/bundles/`,
+        format: 'umd',
+        exports: 'named',
+        name: 'OpenForms',
+        generatedCode: 'es2015',
+        entryFileNames: 'open-forms-sdk.js',
+        assetFileNames: ({name}) => {
+          if (name === 'style.css') {
+            return 'open-forms-sdk.css';
+          }
+          return 'static/media/[name].[hash:8].[ext]';
+        },
+        inlineDynamicImports: true,
+      } satisfies OutputOptions;
     }
   }
 };
 
 export default defineConfig(({mode}) => {
-  const env = loadEnv(mode, process.cwd(), '');
-  let buildDist = 'dist';
-  if (env.SDK_VERSION && env.SDK_VERSION !== 'latest') {
-    buildDist = `${buildDist}/${env.SDK_VERSION}`;
-  }
-
   return {
     base: './',
     publicDir: false,
@@ -156,7 +137,7 @@ export default defineConfig(({mode}) => {
               'src/type-fixes.d.ts',
             ],
             rollupTypes: true,
-            outDir: `${buildDist}/bundles`,
+            outDir: `dist/bundles`,
           }),
       /**
        * Plugin to ignore (S)CSS when bundling to UMD bundle target, since we use the ESM
@@ -215,14 +196,14 @@ export default defineConfig(({mode}) => {
       assetsInlineLimit: 8 * 1024, // 8 KiB
       cssCodeSplit: false,
       sourcemap: buildTarget !== 'esm',
-      outDir: buildDist,
+      outDir: 'dist',
       // we write the .mjs file to the same directory
       emptyOutDir: buildTarget !== 'esm-bundle',
       rollupOptions: {
         input: 'src/sdk.tsx',
         // do not externalize anything in UMD build - bundle everything
         external: buildTarget === 'esm' ? packageRegexes : undefined,
-        output: getOutput(buildTarget, buildDist),
+        output: getOutput(buildTarget),
         preserveEntrySignatures: 'strict',
       },
     },
