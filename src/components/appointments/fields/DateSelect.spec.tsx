@@ -26,6 +26,8 @@ const render = (children: React.ReactNode, locationId: string) =>
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
         debug: false,
+        backToTopText: '',
+        backToTopRef: '',
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>

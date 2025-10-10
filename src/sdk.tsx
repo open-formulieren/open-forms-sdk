@@ -32,6 +32,8 @@ export interface SDKOptions {
   formId: string; // UUID or slug
   basePath?: string;
   CSPNonce?: string;
+  backToTopText?: string;
+  backToTopRef?: string;
   lang?: SupportedLocales;
   sentryDSN?: string;
   sentryEnv?: string;
@@ -63,6 +65,8 @@ class OpenForm {
   protected browserBasePath: string;
   protected clientBaseUrl: string;
   protected baseDocumentTitle: string;
+  protected backToTopText: string;
+  protected backToTopRef: string;
 
   private root: Root | null;
 
@@ -72,6 +76,8 @@ class OpenForm {
       basePath,
       formId,
       CSPNonce: CSPNonceValue = '',
+      backToTopText = '',
+      backToTopRef = '',
       lang = 'nl',
       sentryDSN = '',
       sentryEnv = '',
@@ -122,6 +128,8 @@ class OpenForm {
 
     this.baseDocumentTitle = document.title;
     this.root = null;
+    this.backToTopText = backToTopText;
+    this.backToTopRef = backToTopRef;
   }
 
   protected makeRedirect() {
@@ -229,6 +237,8 @@ class OpenForm {
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
               debug: DEBUG,
+              backToTopText: this.backToTopText,
+              backToTopRef: this.backToTopRef,
             }}
           >
             <FormSettingsProvider

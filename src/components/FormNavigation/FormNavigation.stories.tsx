@@ -81,3 +81,19 @@ export const UnsubmittableConfirmation: Story = {
     onFormSave: undefined,
   },
 };
+
+export const WithBackToTopButton: Story = {
+  args: {
+    submitButton: (
+      <StepSubmitButton
+        canSubmitForm="yes"
+        isLastStep={false}
+        canSubmitStep
+        isCheckingLogic={false}
+      />
+    ),
+  },
+  parameters: {
+    config: {backToTopText: 'Back to top', backToTopRef: 'storybook-root'},
+  },
+};
