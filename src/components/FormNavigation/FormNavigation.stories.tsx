@@ -82,7 +82,7 @@ export const UnsubmittableConfirmation: Story = {
   },
 };
 
-export const WithoutBackToTopOption: Story = {
+export const WithBackToTopButton: Story = {
   args: {
     submitButton: (
       <StepSubmitButton
@@ -94,6 +94,6 @@ export const WithoutBackToTopOption: Story = {
     ),
   },
   parameters: {
-    config: {backToTopText: ''},
+    config: {backToTopText: 'Back to top', backToTopRef: 'storybook-root'},
   },
 };
