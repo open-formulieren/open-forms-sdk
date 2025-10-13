@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from '@/Context';
+import BacktotopLink from '@/components/BacktotopLink';
 import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FormMaximumSubmissionsError from '@/components/Errors/FormMaximumSubmissionsError';
@@ -177,6 +178,8 @@ const FormStart: React.FC = () => {
             extraNextParams={extraNextParams}
           />
         )}
+
+        <BacktotopLink />
       </Card>
     </LiteralsProvider>
   );

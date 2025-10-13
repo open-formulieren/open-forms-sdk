@@ -62,3 +62,9 @@ export const LoginOptional: Story = {
     },
   },
 };
+
+export const WithBackToTopButton: Story = {
+  parameters: {
+    config: {backToTopText: 'Back to top', backToTopRef: 'storybook-root'},
+  },
+};

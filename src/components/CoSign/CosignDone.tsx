@@ -2,6 +2,7 @@ import {Paragraph} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 
 import Anchor from '@/components/Anchor';
+import BacktotopLink from '@/components/BacktotopLink';
 import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
@@ -52,6 +53,8 @@ const CosignDone: React.FC = () => {
       </Body>
 
       {/* TODO Add link to main website */}
+
+      <BacktotopLink />
     </Card>
   );
 };

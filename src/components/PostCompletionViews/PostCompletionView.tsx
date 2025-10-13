@@ -2,6 +2,7 @@ import {ButtonGroup} from '@utrecht/button-group-react';
 import {FormattedMessage} from 'react-intl';
 
 import Anchor from '@/components/Anchor';
+import BacktotopLink from '@/components/BacktotopLink';
 import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
@@ -60,6 +61,8 @@ const PostCompletionView: React.FC<PostCompletionViewProps> = ({
           </Anchor>
         </ButtonGroup>
       ) : null}
+
+      <BacktotopLink />
     </Card>
   );
 };

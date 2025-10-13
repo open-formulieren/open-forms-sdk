@@ -4,22 +4,13 @@ import Body from '@/components/Body';
 
 import PostCompletionView from './PostCompletionView';
 
-interface Args {
-  pageTitle: string;
-  header: string;
-  body: string;
-  mainWebsiteUrl: string;
-  reportDownloadUrl: string;
-  downloadPDFText: string;
-}
-
 export default {
   title: 'Views / Post completion views ',
   component: PostCompletionView,
   render: ({body, ...args}) => <PostCompletionView {...args} body={<Body>{body}</Body>} />,
-} satisfies Meta<Args>;
+} satisfies Meta<typeof PostCompletionView>;
 
-type Story = StoryObj<Args>;
+type Story = StoryObj<typeof PostCompletionView>;
 
 export const Generic: Story = {
   args: {
@@ -29,5 +20,19 @@ export const Generic: Story = {
     mainWebsiteUrl: '#',
     reportDownloadUrl: '#',
     downloadPDFText: 'Download a PDF of your submitted answers',
+  },
+};
+
+export const WithBackToTopButton: Story = {
+  args: {
+    pageTitle: 'Confirmation',
+    header: 'Confirmation!',
+    body: 'This is some text for the body',
+    mainWebsiteUrl: '#',
+    reportDownloadUrl: '#',
+    downloadPDFText: 'Download a PDF of your submitted answers',
+  },
+  parameters: {
+    config: {backToTopText: 'Back to top', backToTopRef: 'storybook-root'},
   },
 };

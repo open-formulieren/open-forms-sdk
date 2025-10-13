@@ -57,3 +57,12 @@ export const LoginRequired: Story = {
     },
   },
 };
+
+export const WithBacktotopLink: Story = {
+  parameters: {
+    formContext: {
+      form: buildForm(),
+    },
+    config: {backToTopText: 'Back to top', backToTopRef: 'storybook-root'},
+  },
+};

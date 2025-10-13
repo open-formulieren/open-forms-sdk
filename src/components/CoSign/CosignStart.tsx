@@ -1,5 +1,6 @@
 import {FormattedMessage} from 'react-intl';
 
+import BacktotopLink from '@/components/BacktotopLink';
 import Body from '@/components/Body';
 import Card from '@/components/Card';
 import {LiteralsProvider} from '@/components/Literal';
@@ -71,6 +72,8 @@ const CosignStart: React.FC = () => {
           onFormStart={() => {}}
           isolateCosignOptions={false}
         />
+
+        <BacktotopLink />
       </Card>
     </LiteralsProvider>
   );
