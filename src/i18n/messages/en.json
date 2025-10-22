@@ -79,11 +79,6 @@
     "description": "Appoinments: appointment date label",
     "originalDefault": "Date"
   },
-  "2osLqe": {
-    "defaultMessage": "Location and time",
-    "description": "Appointments: select location and time step title",
-    "originalDefault": "Location and time"
-  },
   "4ASssJ": {
     "defaultMessage": "Red smiley (negative)",
     "description": "GovMetric red face alt text",
@@ -754,6 +749,11 @@
     "description": "Overview page, title before listing the validation errors for a step",
     "originalDefault": "Problems in form step ''{name}''"
   },
+  "ZFoN7U": {
+    "defaultMessage": "Date and time",
+    "description": "Appointments: date and time step step page title",
+    "originalDefault": "Date and time"
+  },
   "ZJoaby": {
     "defaultMessage": "<p>Thank you for cosigning. We have received your \"{formName}\" submission. {confirmationEmailEnabled, select, true {You will receive a confirmation email.} other {} }</p> <p>Do not forget to download your summary, we do not send it via email.</p>",
     "description": "Cosign confirmation page body",
@@ -884,11 +884,6 @@
     "description": "Summary page title",
     "originalDefault": "Check and confirm"
   },
-  "gUyAAs": {
-    "defaultMessage": "Times are in your local time",
-    "description": "Appoinments: time select help text",
-    "originalDefault": "Times are in your local time"
-  },
   "h2LzuB": {
     "defaultMessage": "Are you sure you want to delete your drawn shape?",
     "description": "Leaflet map: delete drawn shape confirmation message",
@@ -963,11 +958,6 @@
     "defaultMessage": "Your appointment has been cancelled",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
-  },
-  "jbeaEq": {
-    "defaultMessage": "Location and time",
-    "description": "Appointments: location and time step step page title",
-    "originalDefault": "Location and time"
   },
   "jbireK": {
     "defaultMessage": "Your products",
@@ -1183,6 +1173,11 @@
     "defaultMessage": "The email address where you received the appointment confirmation email.",
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
+  },
+  "uGZ2tu": {
+    "defaultMessage": "Date and time",
+    "description": "Appointments: select date and time step title",
+    "originalDefault": "Date and time"
   },
   "uPtko4": {
     "defaultMessage": "Unfortunately, this form is no longer available for submissions.",

@@ -221,12 +221,6 @@
       "value": "Previous year"
     }
   ],
-  "2osLqe": [
-    {
-      "type": 0,
-      "value": "Location and time"
-    }
-  ],
   "3C29X9": [
     {
       "options": {
@@ -1731,6 +1725,12 @@
       "value": "'"
     }
   ],
+  "ZFoN7U": [
+    {
+      "type": 0,
+      "value": "Date and time"
+    }
+  ],
   "ZJoaby": [
     {
       "children": [
@@ -1971,12 +1971,6 @@
       "value": "Check and confirm"
     }
   ],
-  "gUyAAs": [
-    {
-      "type": 0,
-      "value": "Times are in your local time"
-    }
-  ],
   "h2LzuB": [
     {
       "type": 0,
@@ -2111,12 +2105,6 @@
     {
       "type": 0,
       "value": "Your appointment has been cancelled"
-    }
-  ],
-  "jbeaEq": [
-    {
-      "type": 0,
-      "value": "Location and time"
     }
   ],
   "jbireK": [
@@ -2693,6 +2681,12 @@
     {
       "type": 0,
       "value": "The email address where you received the appointment confirmation email."
+    }
+  ],
+  "uGZ2tu": [
+    {
+      "type": 0,
+      "value": "Date and time"
     }
   ],
   "uPtko4": [

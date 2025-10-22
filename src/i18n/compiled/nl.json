@@ -229,12 +229,6 @@
       "value": "Vorig jaar"
     }
   ],
-  "2osLqe": [
-    {
-      "type": 0,
-      "value": "Locatie en tijd"
-    }
-  ],
   "3C29X9": [
     {
       "options": {
@@ -1679,6 +1673,12 @@
       "value": "'"
     }
   ],
+  "ZFoN7U": [
+    {
+      "type": 0,
+      "value": "Datum en tijd"
+    }
+  ],
   "ZJoaby": [
     {
       "children": [
@@ -1923,12 +1923,6 @@
       "value": "Controle en bevestiging"
     }
   ],
-  "gUyAAs": [
-    {
-      "type": 0,
-      "value": "Je wordt op dit tijdstip op de afspraak verwacht"
-    }
-  ],
   "h2LzuB": [
     {
       "type": 0,
@@ -2063,12 +2057,6 @@
     {
       "type": 0,
       "value": "Je afspraak is geannuleerd"
-    }
-  ],
-  "jbeaEq": [
-    {
-      "type": 0,
-      "value": "Afspraakdetails: locatie en tijdstip"
     }
   ],
   "jbireK": [
@@ -2645,6 +2633,12 @@
     {
       "type": 0,
       "value": "Het e-mailadres waarop je de bevestigingsmail van de afspraak heeft ontvangen."
+    }
+  ],
+  "uGZ2tu": [
+    {
+      "type": 0,
+      "value": "Datum en tijd"
     }
   ],
   "uPtko4": [

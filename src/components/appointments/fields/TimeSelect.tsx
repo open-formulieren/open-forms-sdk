@@ -1,7 +1,7 @@
 import {isValid, parseISO} from 'date-fns';
 import {useFormikContext} from 'formik';
 import {useCallback, useContext} from 'react';
-import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
+import {defineMessage, useIntl} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 
 import {ConfigContext} from '@/Context';
@@ -77,12 +77,6 @@ const TimeSelect: React.FC<TimeSelectProps> = ({products}) => {
       isRequired
       isDisabled={!products || !products.length || !location || !date}
       label={intl.formatMessage(fieldLabel)}
-      description={
-        <FormattedMessage
-          description="Appoinments: time select help text"
-          defaultMessage="Times are in your local time"
-        />
-      }
       getOptions={getOptions}
       autoSelectOnlyOption
     />

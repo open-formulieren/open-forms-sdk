@@ -91,7 +91,7 @@ describe('The location and time step', () => {
     await waitFor(() => {
       expect(screen.queryByText('Open Gem')).not.toBeInTheDocument();
     });
-    expect(screen.queryByText('Bahamas')).not.toBeInTheDocument();
+    expect(screen.queryByText('Bahamas (Nassau, Winsome Dr, 1014 EG)')).not.toBeInTheDocument();
 
     expect(screen.getByLabelText('Date')).toBeDisabled();
     expect(screen.getByLabelText('Time')).toBeDisabled();
@@ -107,7 +107,7 @@ describe('The location and time step', () => {
       datetime: '',
     });
 
-    expect(await screen.findByText('Bahamas')).toBeVisible();
+    expect(await screen.findByText('Bahamas (Nassau, Winsome Dr, 1014 EG)')).toBeVisible();
     expect(screen.getByLabelText('Date')).not.toBeDisabled();
     expect(screen.getByLabelText('Time')).toBeDisabled();
   });
@@ -129,7 +129,7 @@ describe('The location and time step', () => {
     });
 
     // location Bahamas always has 'today' available
-    expect(await screen.findByText('Bahamas')).toBeVisible();
+    expect(await screen.findByText('Bahamas (Nassau, Winsome Dr, 1014 EG)')).toBeVisible();
     const dateInput = screen.getByLabelText('Date');
     await user.type(dateInput, '6/12/2023');
     expect(dateInput).toHaveFocus();
@@ -150,7 +150,7 @@ describe('The location and time step', () => {
       datetime: '',
     });
 
-    expect(await screen.findByText('Bahamas')).toBeVisible();
+    expect(await screen.findByText('Bahamas (Nassau, Winsome Dr, 1014 EG)')).toBeVisible();
     expect(screen.getByLabelText('Date')).not.toBeDisabled();
     expect(screen.getByLabelText('Time')).not.toBeDisabled();
   });

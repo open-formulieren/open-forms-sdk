@@ -71,11 +71,17 @@ interface LocationConfig {
 const LOCATIONS: LocationConfig[] = [
   {
     products: ['166a5c79', 'e8e045ab'],
-    location: {identifier: '1396f17c', name: 'Open Gem'},
+    location: {identifier: '1396f17c', name: 'Open Gem', city: '', address: '', postalcode: ''},
   },
   {
     products: ['e8e045ab', 'ea04db83'],
-    location: {identifier: '34000e85', name: 'Bahamas'},
+    location: {
+      identifier: '34000e85',
+      name: 'Bahamas',
+      city: 'Nassau',
+      address: 'Winsome Dr',
+      postalcode: '1014 EG',
+    },
   },
 ];
 

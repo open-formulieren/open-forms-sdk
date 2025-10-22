@@ -102,8 +102,8 @@ const LocationAndTimeStep: React.FC<LocationAndTimeStepProps> = ({navigateTo = '
   const navigate = useNavigate();
   useTitle(
     intl.formatMessage({
-      description: 'Appointments: location and time step step page title',
-      defaultMessage: 'Location and time',
+      description: 'Appointments: date and time step step page title',
+      defaultMessage: 'Date and time',
     })
   );
 
@@ -112,8 +112,8 @@ const LocationAndTimeStep: React.FC<LocationAndTimeStepProps> = ({navigateTo = '
       <CardTitle
         title={
           <FormattedMessage
-            description="Appointments: select location and time step title"
-            defaultMessage="Location and time"
+            description="Appointments: select date and time step title"
+            defaultMessage="Date and time"
           />
         }
         headingType="subtitle"

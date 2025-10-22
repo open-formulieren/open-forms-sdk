@@ -120,7 +120,7 @@ export const HappyFlow: Story = {
     });
 
     await step('Fill out the location and time', async () => {
-      expect(await canvas.findByText('Locatie en tijd')).toBeVisible();
+      expect(await canvas.findByText('Datum en tijd')).toBeVisible();
       await waitFor(async () => {
         expect(canvas.getByRole('link', {name: 'Terug naar producten'})).toBeVisible();
         expect(canvas.queryByRole('button', {name: 'Naar contactgegevens'})).not.toHaveAttribute(
