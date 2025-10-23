@@ -104,6 +104,11 @@
     "description": "Draw handler polyline tooltip end.",
     "originalDefault": "Click last point to finish line"
   },
+  "5hVC3B": {
+    "defaultMessage": "WFS feature properties",
+    "description": "Leaflet WFS overlay feature popup menu title",
+    "originalDefault": "WFS feature properties"
+  },
   "5uh2hS": {
     "defaultMessage": "Appointment cancellation failed",
     "description": "Appointment cancellation error message",
@@ -268,6 +273,11 @@
     "defaultMessage": "Remove shapes",
     "description": "Edit toolbar remove button tooltip.",
     "originalDefault": "Remove shapes"
+  },
+  "B7vtl2": {
+    "defaultMessage": "Interactive marker",
+    "description": "Leaflet WFS overlay marker title",
+    "originalDefault": "Interactive marker"
   },
   "BL1Ehr": {
     "defaultMessage": "Invalid.",

@@ -285,6 +285,12 @@
       "value": "Click last point to finish line"
     }
   ],
+  "5hVC3B": [
+    {
+      "type": 0,
+      "value": "WFS feature properties"
+    }
+  ],
   "5uh2hS": [
     {
       "type": 0,
@@ -653,6 +659,12 @@
     {
       "type": 0,
       "value": "Remove shapes"
+    }
+  ],
+  "B7vtl2": [
+    {
+      "type": 0,
+      "value": "Interactive marker"
     }
   ],
   "BL1Ehr": [
