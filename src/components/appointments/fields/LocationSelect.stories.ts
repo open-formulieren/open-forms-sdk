@@ -38,7 +38,7 @@ export const MultipleCandidates: Story = {
     await userEvent.keyboard('[ArrowDown]');
     expect(await canvas.findByRole('option', {name: 'Open Gem'})).toBeVisible();
     expect(
-      await canvas.findByRole('option', {name: 'Bahamas (Nassau, Winsome Dr, 1014 EG)'})
+      await canvas.findByRole('option', {name: 'Bahamas (Winsome Dr, 1014 EG, Nassau)'})
     ).toBeVisible();
   },
 };
@@ -54,7 +54,7 @@ export const SingleCandidate: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
     expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
-    expect(canvas.queryByText('Bahamas (Nassau, Winsome Dr, 1014 EG)')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).not.toBeInTheDocument();
 
     const dropdown = canvas.getByLabelText('Locatie');
     dropdown.focus();
@@ -66,7 +66,7 @@ export const SingleCandidate: Story = {
       expect(textNodes.length).toBeGreaterThan(0);
     });
 
-    expect(canvas.queryByText('Bahamas (Nassau, Winsome Dr, 1014 EG)')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).not.toBeInTheDocument();
     await userEvent.keyboard('[Escape]');
     expect(await canvas.findByText('Open Gem')).toBeVisible();
   },

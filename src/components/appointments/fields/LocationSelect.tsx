@@ -40,9 +40,9 @@ const LocationSelect: React.FC<LocationSelectProps> = ({products}) => {
   const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
 
   const getAddressDetails = (location: Location): string => {
-    const {name, city, address, postalcode} = location;
+    const {name, address, postalcode, city} = location;
 
-    const details = [city, address, postalcode].filter(Boolean).join(', ');
+    const details = [address, postalcode, city].filter(Boolean).join(', ');
     const fullText = details ? `${name} (${details})` : name;
     return fullText;
   };
