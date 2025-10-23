@@ -20,6 +20,9 @@ export interface Product {
 export interface Location {
   identifier: string;
   name: string;
+  city: string;
+  address: string;
+  postalcode: string;
 }
 
 /**

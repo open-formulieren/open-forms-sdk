@@ -80,11 +80,6 @@
     "description": "Appoinments: appointment date label",
     "originalDefault": "Date"
   },
-  "2osLqe": {
-    "defaultMessage": "Locatie en tijd",
-    "description": "Appointments: select location and time step title",
-    "originalDefault": "Location and time"
-  },
   "4ASssJ": {
     "defaultMessage": "Rode smiley (negatief)",
     "description": "GovMetric red face alt text",
@@ -761,6 +756,11 @@
     "description": "Overview page, title before listing the validation errors for a step",
     "originalDefault": "Problems in form step ''{name}''"
   },
+  "ZFoN7U": {
+    "defaultMessage": "Datum en tijd",
+    "description": "Appointments: date and time step step page title",
+    "originalDefault": "Date and time"
+  },
   "ZJoaby": {
     "defaultMessage": "<p>Bedankt voor het medeondertekenen. Wij hebben je inzending \"{formName}\" ontvangen. {confirmationEmailEnabled, select, true {Je ontvangt per mail een bevestiging.} other {} }</p> <p>Vergeet niet je aanvraag te downloaden, deze versturen wij niet per mail.</p>",
     "description": "Cosign confirmation page body",
@@ -892,11 +892,6 @@
     "description": "Summary page title",
     "originalDefault": "Check and confirm"
   },
-  "gUyAAs": {
-    "defaultMessage": "Je wordt op dit tijdstip op de afspraak verwacht",
-    "description": "Appoinments: time select help text",
-    "originalDefault": "Times are in your local time"
-  },
   "h2LzuB": {
     "defaultMessage": "Ben je zeker dat je de getekende vorm wil verwijderen?",
     "description": "Leaflet map: delete drawn shape confirmation message",
@@ -971,11 +966,6 @@
     "defaultMessage": "Je afspraak is geannuleerd",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
-  },
-  "jbeaEq": {
-    "defaultMessage": "Afspraakdetails: locatie en tijdstip",
-    "description": "Appointments: location and time step step page title",
-    "originalDefault": "Location and time"
   },
   "jbireK": {
     "defaultMessage": "Jouw producten",
@@ -1195,6 +1185,11 @@
     "defaultMessage": "Het e-mailadres waarop je de bevestigingsmail van de afspraak heeft ontvangen.",
     "description": "Cancel appointment email field help text",
     "originalDefault": "The email address where you received the appointment confirmation email."
+  },
+  "uGZ2tu": {
+    "defaultMessage": "Datum en tijd",
+    "description": "Appointments: select date and time step title",
+    "originalDefault": "Date and time"
   },
   "uPtko4": {
     "defaultMessage": "Onze excuses - dit formulier heeft het maximale aantal inzendingen bereikt en is daarom niet langer beschikbaar.",

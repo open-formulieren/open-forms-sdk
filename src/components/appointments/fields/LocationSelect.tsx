@@ -38,10 +38,22 @@ const LocationSelect: React.FC<LocationSelectProps> = ({products}) => {
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const productIds = products.map(prod => prod.productId).sort(); // sort to get a stable identity
+
+  const getAddressDetails = (location: Location): string => {
+    const {name, address, postalcode, city} = location;
+
+    const details = [address, postalcode, city].filter(Boolean).join(', ');
+    const fullText = details ? `${name} (${details})` : name;
+    return fullText;
+  };
+
   const getOptions = useCallback(
     async () => {
       const locations = await getLocations(baseUrl, productIds);
-      return locations.map(location => ({value: location.identifier, label: location.name}));
+      return locations.map(location => ({
+        value: location.identifier,
+        label: getAddressDetails(location),
+      }));
     },
     // about JSON.stringify: https://github.com/facebook/react/issues/14476#issuecomment-471199055
     // eslint-disable-next-line react-hooks/exhaustive-deps
