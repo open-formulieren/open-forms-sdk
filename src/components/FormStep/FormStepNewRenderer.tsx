@@ -1,12 +1,14 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
 import type {FormStateRef} from '@open-formulieren/formio-renderer/components/FormioForm.js';
-import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
+import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import isEqual from 'fast-deep-equal';
 import {useFormikContext} from 'formik';
-import {useCallback, useRef, useState} from 'react';
+import {useCallback, useContext, useRef, useState} from 'react';
 import {useNavigate, useNavigation} from 'react-router';
 
+import {ConfigContext} from '@/Context';
 import {get} from '@/api';
 import {useDebugContext} from '@/components/AppDebug';
 import Card, {CardTitle} from '@/components/Card';
@@ -19,6 +21,7 @@ import {assertSubmission, useSubmissionContext} from '@/components/SubmissionPro
 import FormStepSaveModal from '@/components/modals/FormStepSaveModal';
 import {type SubmissionStep, saveStepData} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
+import {validateValue} from '@/data/validation';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
 
@@ -37,6 +40,7 @@ import {StepState} from './utils';
 const FormStepNewRenderer: React.FC = () => {
   const {state: navigationState} = useNavigation();
   const navigate = useNavigate();
+  const {baseUrl} = useContext(ConfigContext);
   const form = useFormContext();
   const {setStepValues: setDebugStepValues} = useDebugContext();
   const {submission, onSubmissionObtained, onDestroySession} = useSubmissionContext();
@@ -62,6 +66,18 @@ const FormStepNewRenderer: React.FC = () => {
 
   const {formStep, submissionStep: sparseStep} = useResolveStepUrl(form, submission);
   const state = useLoadStep(sparseStep.url, onStepLoaded);
+
+  const {id: submissionId} = submission;
+  const validatePluginCallback = useCallback(
+    async (plugin: string, value: JSONValue) => {
+      const {isValid, messages} = await validateValue(baseUrl, plugin, submissionId, value);
+      const result: Awaited<ReturnType<ValidatePluginCallback>> = isValid
+        ? {valid: true}
+        : {valid: false, messages};
+      return result;
+    },
+    [baseUrl, submissionId]
+  );
 
   /**
    * Process the logic check result.
@@ -146,6 +162,7 @@ const FormStepNewRenderer: React.FC = () => {
               navigate(nextTo);
             }}
             requiredFieldsWithAsterisk={form.requiredFieldsWithAsterisk}
+            validatePluginCallback={validatePluginCallback}
           >
             <FormStepNavigation
               submissionAllowed={submission.submissionAllowed}
