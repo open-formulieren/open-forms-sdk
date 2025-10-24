@@ -19,6 +19,7 @@ import Loader from '@/components/Loader';
 import PreviousLink from '@/components/PreviousLink';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import FormStepSaveModal from '@/components/modals/FormStepSaveModal';
+import {autoCompleteAddress} from '@/data/geo';
 import {type SubmissionStep, saveStepData} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
 import {validateValue} from '@/data/validation';
@@ -77,6 +78,11 @@ const FormStepNewRenderer: React.FC = () => {
       return result;
     },
     [baseUrl, submissionId]
+  );
+  const addressAutoComplete = useCallback(
+    async (postcode: string, houseNumber: string) =>
+      await autoCompleteAddress(baseUrl, postcode, houseNumber),
+    [baseUrl]
   );
 
   /**
@@ -163,6 +169,7 @@ const FormStepNewRenderer: React.FC = () => {
             }}
             requiredFieldsWithAsterisk={form.requiredFieldsWithAsterisk}
             validatePluginCallback={validatePluginCallback}
+            componentParameters={{addressNL: {addressAutoComplete}}}
           >
             <FormStepNavigation
               submissionAllowed={submission.submissionAllowed}
