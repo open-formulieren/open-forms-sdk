@@ -1,7 +1,8 @@
 import debounce from 'lodash/debounce';
 import {Formio} from 'react-formio';
 
-import {get} from '../../api';
+import {autoCompleteAddress} from 'data/geo';
+
 import {linkToSoftRequiredDisplay, setErrorAttributes} from '../utils';
 import enableValidationPlugins from '../validators/plugins';
 
@@ -57,7 +58,7 @@ class TextField extends Formio.Components.components.textfield {
   get setLocationData() {
     if (!this._debouncedSetLocationData) {
       this._debouncedSetLocationData = debounce((postcode, house_number, key) => {
-        get(`${this.options.baseUrl}geo/address-autocomplete`, {postcode, house_number})
+        autoCompleteAddress(this.options.baseUrl, postcode, house_number)
           .then(result => {
             if (result[key]) {
               this.setValue(result[key]);

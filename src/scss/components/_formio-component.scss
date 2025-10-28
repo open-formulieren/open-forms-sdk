@@ -15,11 +15,21 @@
     > .utrecht-form-field {
       @extend .utrecht-form-field--invalid;
       @include form-field.utrecht-form-field--invalid;
+      white-space: unset !important;
+
+      .form-text.error {
+        white-space: preserve-breaks wrap;
+      }
     }
 
     > .utrecht-form-fieldset {
       @extend .utrecht-form-fieldset--invalid;
       @include form-fieldset.utrecht-form-fieldset--invalid;
+      white-space: unset !important;
+
+      .form-text.error {
+        white-space: preserve-breaks wrap;
+      }
     }
   }
 }

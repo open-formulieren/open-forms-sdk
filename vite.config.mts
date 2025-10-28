@@ -218,6 +218,11 @@ export default defineConfig(({mode}) => {
       },
     },
     test: {
+      server: {
+        deps: {
+          inline: ['@open-formulieren/formio-renderer'],
+        },
+      },
       environment: 'jsdom',
       environmentOptions: {
         jsdom: {
