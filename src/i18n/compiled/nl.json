@@ -93,6 +93,12 @@
       "value": "BSN"
     }
   ],
+  "/RrV7w": [
+    {
+      "type": 0,
+      "value": "Huisnummertoevoeging moet bestaan uit maximaal vier letters en cijfers."
+    }
+  ],
   "/jQkSu": [
     {
       "type": 0,
@@ -121,6 +127,20 @@
     {
       "type": 0,
       "value": "Uitloggen"
+    }
+  ],
+  "0tH+u2": [
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "index"
     }
   ],
   "1+Q55M": [
@@ -217,6 +237,12 @@
       "value": "Ongeldige functie-argumenten"
     }
   ],
+  "2HsmfN": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
   "2I8NDW": [
     {
       "type": 0,
@@ -227,6 +253,12 @@
     {
       "type": 0,
       "value": "Vorig jaar"
+    }
+  ],
+  "33UD7T": [
+    {
+      "type": 0,
+      "value": "Voorvoegsels"
     }
   ],
   "3C29X9": [
@@ -255,6 +287,12 @@
       },
       "type": 5,
       "value": "addNotRequiredSuffix"
+    }
+  ],
+  "3DaLqN": [
+    {
+      "type": 0,
+      "value": "Een BSN bestaat uit 9 cijfers."
     }
   ],
   "4ASssJ": [
@@ -325,6 +363,12 @@
       "value": "Veelhoek (polygoon)"
     }
   ],
+  "646077": [
+    {
+      "type": 0,
+      "value": "Ongeldig BSN."
+    }
+  ],
   "6EoG3C": [
     {
       "type": 0,
@@ -335,6 +379,12 @@
     {
       "type": 0,
       "value": "Je moet ingelogd zijn voor deze actie."
+    }
+  ],
+  "6g4o2Y": [
+    {
+      "type": 0,
+      "value": "mm"
     }
   ],
   "6sTcEM": [
@@ -586,7 +636,13 @@
   "9UF9Z7": [
     {
       "type": 0,
-      "value": "Geen informatie verstrekt"
+      "value": "Geen informatie verstrekt."
+    }
+  ],
+  "AEnddx": [
+    {
+      "type": 0,
+      "value": "De datum en tijd moeten een datumdeel en een tijdsdeel hebben, gescheiden met een spatie (bijvoorbeeld 30-10-2025 17:34)."
     }
   ],
   "AG5zPa": [
@@ -737,6 +793,12 @@
       "value": "Ongeldige type return-waarde"
     }
   ],
+  "DZjLaH": [
+    {
+      "type": 0,
+      "value": "Uur moet tussen 0-23 zijn en minuut tussen 0-59."
+    }
+  ],
   "DrrkB0": [
     {
       "type": 0,
@@ -767,6 +829,12 @@
     {
       "type": 0,
       "value": ". Probeer het later opnieuw."
+    }
+  ],
+  "E++Snm": [
+    {
+      "type": 0,
+      "value": "De geboortedatum mag hoogstens 120 jaar geleden zijn."
     }
   ],
   "E+3d5q": [
@@ -873,6 +941,20 @@
       "value": "Velden zonder antwoord"
     }
   ],
+  "GThFIc": [
+    {
+      "type": 0,
+      "value": "Tijd moet na "
+    },
+    {
+      "type": 1,
+      "value": "minTime"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
+    }
+  ],
   "GbPef0": [
     {
       "type": 0,
@@ -883,6 +965,12 @@
     {
       "type": 0,
       "value": "Terug naar producten"
+    }
+  ],
+  "GkuPAG": [
+    {
+      "type": 0,
+      "value": "uu"
     }
   ],
   "GnxsaY": [
@@ -1137,6 +1225,12 @@
       "value": "Je e-mailadres"
     }
   ],
+  "K+ha3D": [
+    {
+      "type": 0,
+      "value": "Voorletters"
+    }
+  ],
   "KMs17v": [
     {
       "type": 0,
@@ -1291,6 +1385,12 @@
       "value": "Je huidige locatie kan niet bepaald worden"
     }
   ],
+  "Oc3efT": [
+    {
+      "type": 0,
+      "value": "Plaats is verplicht."
+    }
+  ],
   "Op4orj": [
     {
       "type": 0,
@@ -1443,10 +1543,22 @@
       "value": " of minder opties aagevinkt heeft."
     }
   ],
+  "TcqyzM": [
+    {
+      "type": 0,
+      "value": "Postcode is verplicht."
+    }
+  ],
   "Tip5+d": [
     {
       "type": 0,
       "value": "Volgend jaar"
+    }
+  ],
+  "Tmbth6": [
+    {
+      "type": 0,
+      "value": "De geboortedatum heeft een ongeldig formaat."
     }
   ],
   "Tx14Bn": [
@@ -1541,6 +1653,12 @@
       "value": "Annuleer"
     }
   ],
+  "UONGQo": [
+    {
+      "type": 0,
+      "value": "Huisnummer is verplicht."
+    }
+  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1599,6 +1717,18 @@
     {
       "type": 0,
       "value": "Ongeldige datum"
+    }
+  ],
+  "WpfP0s": [
+    {
+      "type": 0,
+      "value": "De ingediende waarde voldoet niet aan het postcode formaat: 1234 AB"
+    }
+  ],
+  "WzAGB4": [
+    {
+      "type": 0,
+      "value": "Nog één toevoegen"
     }
   ],
   "X/24FO": [
@@ -1783,10 +1913,30 @@
       "value": "Nee"
     }
   ],
+  "ampZcZ": [
+    {
+      "type": 0,
+      "value": "Tijd moet voor "
+    },
+    {
+      "type": 1,
+      "value": "maxTime"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
+    }
+  ],
   "ay8sO5": [
     {
       "type": 0,
       "value": "Je gegevens"
+    }
+  ],
+  "bKPaUj": [
+    {
+      "type": 0,
+      "value": "Huisnummer moet een nummer zijn met maximaal 5 cijfers (bijv. 456)."
     }
   ],
   "bRtoG6": [
@@ -1801,10 +1951,22 @@
       "value": "Je hebt de betaling gestart."
     }
   ],
+  "bmnUq8": [
+    {
+      "type": 0,
+      "value": "Achternaam"
+    }
+  ],
   "bu0CcW": [
     {
       "type": 0,
       "value": "De betaling is ontvangen en verwerkt."
+    }
+  ],
+  "bv/J3Y": [
+    {
+      "type": 0,
+      "value": "Straatnaam is verplicht."
     }
   ],
   "c0Ry9H": [
@@ -1843,6 +2005,20 @@
     {
       "type": 0,
       "value": "Het verplichte veld is niet ingevuld."
+    }
+  ],
+  "d2SYc4": [
+    {
+      "type": 0,
+      "value": "De datum en tijd moet gelijk aan of na "
+    },
+    {
+      "type": 1,
+      "value": "min"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
     }
   ],
   "dFTtOX": [
@@ -1969,12 +2145,6 @@
     {
       "type": 0,
       "value": "Ongeldige invoer."
-    }
-  ],
-  "ht1O2Z": [
-    {
-      "type": 0,
-      "value": "Ongeldig BSN"
     }
   ],
   "ie+hkb": [
@@ -2247,10 +2417,30 @@
       "value": ". Verleng de sessie indien je door wenst te gaan."
     }
   ],
+  "muPw1F": [
+    {
+      "type": 0,
+      "value": "De datum en tijd moet gelijk aan of voor "
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
+    }
+  ],
   "n1vyJM": [
     {
       "type": 0,
       "value": "Introductie"
+    }
+  ],
+  "nF6MTl": [
+    {
+      "type": 0,
+      "value": "Tijdstip"
     }
   ],
   "nLymjB": [
@@ -2287,6 +2477,12 @@
     {
       "type": 0,
       "value": "Nog een product toevoegen"
+    }
+  ],
+  "odKXcF": [
+    {
+      "type": 0,
+      "value": "Je moet een achternaam opgeven."
     }
   ],
   "ojU6az": [
@@ -2356,13 +2552,25 @@
   "osSl3z": [
     {
       "type": 0,
-      "value": "Stad"
+      "value": "Plaats"
     }
   ],
   "ovI+W7": [
     {
       "type": 0,
       "value": "Gebruik ⌘ + scroll om te zoomen in de kaart"
+    }
+  ],
+  "oxM3rx": [
+    {
+      "type": 0,
+      "value": "Sluiten"
+    }
+  ],
+  "pHX3oF": [
+    {
+      "type": 0,
+      "value": "Huisletter moet één enkele letter zijn."
     }
   ],
   "pMkaJD": [
@@ -2529,6 +2737,28 @@
       "value": "Een bevestigingscode ontvangen"
     }
   ],
+  "r0uvHk": [
+    {
+      "type": 0,
+      "value": "'"
+    },
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "index"
+    },
+    {
+      "type": 0,
+      "value": "' verwijderen"
+    }
+  ],
   "r1L6Zj": [
     {
       "type": 0,
@@ -2539,6 +2769,12 @@
     {
       "type": 0,
       "value": "Achternaam"
+    }
+  ],
+  "rQ5vC9": [
+    {
+      "type": 0,
+      "value": "Postcode moet bestaan uit vier cijfers gevolgd door twee letters (bijv. 1234 AB)."
     }
   ],
   "rUsmvU": [
@@ -2557,12 +2793,6 @@
     {
       "type": 0,
       "value": "Verstuur code"
-    }
-  ],
-  "sGwqUb": [
-    {
-      "type": 0,
-      "value": "Een BSN moet uit 9 cijfers bestaan"
     }
   ],
   "sP3xMn": [
@@ -2621,6 +2851,12 @@
     {
       "type": 0,
       "value": "Naar contactgegevens"
+    }
+  ],
+  "syyEii": [
+    {
+      "type": 0,
+      "value": "Geboortedatum"
     }
   ],
   "tBQ8TL": [
@@ -2729,6 +2965,28 @@
       "value": "Het systeem kon de afspraak niet vinden"
     }
   ],
+  "vMKP5p": [
+    {
+      "type": 0,
+      "value": "Tijd moet vallen tussen "
+    },
+    {
+      "type": 1,
+      "value": "minTime"
+    },
+    {
+      "type": 0,
+      "value": " en "
+    },
+    {
+      "type": 1,
+      "value": "maxTime"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "vf9+XT": [
     {
       "type": 0,
@@ -2739,6 +2997,12 @@
     {
       "type": 0,
       "value": "Klik op het eerste punt, om de veelhoek te voltooien"
+    }
+  ],
+  "wiPGoP": [
+    {
+      "type": 0,
+      "value": "Partner toevoegen"
     }
   ],
   "wwsWUp": [
@@ -2785,6 +3049,18 @@
     {
       "type": 0,
       "value": "Jaar"
+    }
+  ],
+  "ybTcqX": [
+    {
+      "type": 0,
+      "value": "Partner verwijderen"
+    }
+  ],
+  "yjCrXX": [
+    {
+      "type": 0,
+      "value": "De geboortedatum mag niet in de toekomst liggen."
     }
   ],
   "z+/GrY": [

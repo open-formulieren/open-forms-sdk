@@ -231,7 +231,7 @@ export const WithDeriveCityStreetNameWithData = {
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
     await userEvent.type(houseNumberInput, '1');
 
-    const city = await canvas.findByLabelText('Stad');
+    const city = await canvas.findByLabelText('Plaats');
     const streetName = await canvas.findByLabelText('Straatnaam');
 
     await userEvent.tab();
@@ -319,7 +319,7 @@ export const WithDeriveCityStreetNameWithDataIncorrectCity = {
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
     await userEvent.type(houseNumberInput, '1');
 
-    const city = await canvas.findByLabelText('Stad');
+    const city = await canvas.findByLabelText('Plaats');
     const streetName = await canvas.findByLabelText('Straatnaam');
 
     await userEvent.tab();
@@ -362,7 +362,7 @@ export const WithDeriveCityStreetNameNoData = {
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
     await userEvent.type(houseNumberInput, '1');
 
-    const city = await canvas.findByLabelText('Stad');
+    const city = await canvas.findByLabelText('Plaats');
     const streetName = await canvas.findByLabelText('Straatnaam');
 
     await userEvent.tab();

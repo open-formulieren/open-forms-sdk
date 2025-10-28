@@ -93,6 +93,12 @@
       "value": "BSN"
     }
   ],
+  "/RrV7w": [
+    {
+      "type": 0,
+      "value": "House number addition must be up to four letters and digits."
+    }
+  ],
   "/jQkSu": [
     {
       "type": 0,
@@ -121,6 +127,20 @@
     {
       "type": 0,
       "value": "Log out"
+    }
+  ],
+  "0tH+u2": [
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "index"
     }
   ],
   "1+Q55M": [
@@ -209,6 +229,12 @@
       "value": "Invalid function arguments"
     }
   ],
+  "2HsmfN": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
   "2I8NDW": [
     {
       "type": 0,
@@ -219,6 +245,12 @@
     {
       "type": 0,
       "value": "Previous year"
+    }
+  ],
+  "33UD7T": [
+    {
+      "type": 0,
+      "value": "Affixes"
     }
   ],
   "3C29X9": [
@@ -247,6 +279,12 @@
       },
       "type": 5,
       "value": "addNotRequiredSuffix"
+    }
+  ],
+  "3DaLqN": [
+    {
+      "type": 0,
+      "value": "A BSN must be 9 digits."
     }
   ],
   "4ASssJ": [
@@ -317,6 +355,12 @@
       "value": "Shape (polygon)"
     }
   ],
+  "646077": [
+    {
+      "type": 0,
+      "value": "Invalid BSN."
+    }
+  ],
   "6EoG3C": [
     {
       "type": 0,
@@ -327,6 +371,12 @@
     {
       "type": 0,
       "value": "There was an authentication and/or permission problem."
+    }
+  ],
+  "6g4o2Y": [
+    {
+      "type": 0,
+      "value": "MM"
     }
   ],
   "6sTcEM": [
@@ -581,6 +631,12 @@
       "value": "No information provided"
     }
   ],
+  "AEnddx": [
+    {
+      "type": 0,
+      "value": "The datetime must consist of a date and a time stamp, separated by a space (e.g. 10/30/2025 5:34 PM)."
+    }
+  ],
   "AG5zPa": [
     {
       "type": 0,
@@ -759,6 +815,12 @@
       "value": "Invalid function return type"
     }
   ],
+  "DZjLaH": [
+    {
+      "type": 0,
+      "value": "Hour must be between 0-23 and minute between 0-59"
+    }
+  ],
   "DrrkB0": [
     {
       "type": 0,
@@ -789,6 +851,12 @@
     {
       "type": 0,
       "value": ". Probeer het later opnieuw."
+    }
+  ],
+  "E++Snm": [
+    {
+      "type": 0,
+      "value": "Date of birth must be within the last 120 years."
     }
   ],
   "E+3d5q": [
@@ -895,6 +963,16 @@
       "value": "Empty fields"
     }
   ],
+  "GThFIc": [
+    {
+      "type": 0,
+      "value": "Time must be after "
+    },
+    {
+      "type": 1,
+      "value": "minTime"
+    }
+  ],
   "GbPef0": [
     {
       "type": 0,
@@ -905,6 +983,12 @@
     {
       "type": 0,
       "value": "Back to products"
+    }
+  ],
+  "GkuPAG": [
+    {
+      "type": 0,
+      "value": "HH"
     }
   ],
   "GnxsaY": [
@@ -1159,6 +1243,12 @@
       "value": "Your email address"
     }
   ],
+  "K+ha3D": [
+    {
+      "type": 0,
+      "value": "Initials"
+    }
+  ],
   "KMs17v": [
     {
       "type": 0,
@@ -1311,6 +1401,12 @@
     {
       "type": 0,
       "value": "Your current location cannot be accessed"
+    }
+  ],
+  "Oc3efT": [
+    {
+      "type": 0,
+      "value": "You must provide a city."
     }
   ],
   "Op4orj": [
@@ -1495,10 +1591,22 @@
       "value": "."
     }
   ],
+  "TcqyzM": [
+    {
+      "type": 0,
+      "value": "You must provide a postcode."
+    }
+  ],
   "Tip5+d": [
     {
       "type": 0,
       "value": "Next year"
+    }
+  ],
+  "Tmbth6": [
+    {
+      "type": 0,
+      "value": "The format of the date of birth is incorrect."
     }
   ],
   "Tx14Bn": [
@@ -1593,6 +1701,12 @@
       "value": "Cancel"
     }
   ],
+  "UONGQo": [
+    {
+      "type": 0,
+      "value": "You must provide a house number."
+    }
+  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1651,6 +1765,18 @@
     {
       "type": 0,
       "value": "Invalid date"
+    }
+  ],
+  "WpfP0s": [
+    {
+      "type": 0,
+      "value": "The submitted value does not match the postcode pattern: 1234 AB"
+    }
+  ],
+  "WzAGB4": [
+    {
+      "type": 0,
+      "value": "Add another"
     }
   ],
   "X/24FO": [
@@ -1831,10 +1957,26 @@
       "value": "No"
     }
   ],
+  "ampZcZ": [
+    {
+      "type": 0,
+      "value": "Time must be before "
+    },
+    {
+      "type": 1,
+      "value": "maxTime"
+    }
+  ],
   "ay8sO5": [
     {
       "type": 0,
       "value": "Contact details"
+    }
+  ],
+  "bKPaUj": [
+    {
+      "type": 0,
+      "value": "House number must be a number with up to five digits (e.g. 456)."
     }
   ],
   "bRtoG6": [
@@ -1849,10 +1991,22 @@
       "value": "You've started the payment process."
     }
   ],
+  "bmnUq8": [
+    {
+      "type": 0,
+      "value": "Lastname"
+    }
+  ],
   "bu0CcW": [
     {
       "type": 0,
       "value": "Your payment is received and processed."
+    }
+  ],
+  "bv/J3Y": [
+    {
+      "type": 0,
+      "value": "You must provide a street name."
     }
   ],
   "c0Ry9H": [
@@ -1891,6 +2045,20 @@
     {
       "type": 0,
       "value": "The required field is not filled out."
+    }
+  ],
+  "d2SYc4": [
+    {
+      "type": 0,
+      "value": "The datetime must be later than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "min"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "dFTtOX": [
@@ -2017,12 +2185,6 @@
     {
       "type": 0,
       "value": "Invalid input."
-    }
-  ],
-  "ht1O2Z": [
-    {
-      "type": 0,
-      "value": "Invalid BSN"
     }
   ],
   "ie+hkb": [
@@ -2295,10 +2457,30 @@
       "value": ". Extend your session if you wish to continue."
     }
   ],
+  "muPw1F": [
+    {
+      "type": 0,
+      "value": "The datetime must be earlier than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "n1vyJM": [
     {
       "type": 0,
       "value": "Introduction"
+    }
+  ],
+  "nF6MTl": [
+    {
+      "type": 0,
+      "value": "Time"
     }
   ],
   "nLymjB": [
@@ -2335,6 +2517,12 @@
     {
       "type": 0,
       "value": "Add another product"
+    }
+  ],
+  "odKXcF": [
+    {
+      "type": 0,
+      "value": "You must provide a last name."
     }
   ],
   "ojU6az": [
@@ -2411,6 +2599,18 @@
     {
       "type": 0,
       "value": "Use ⌘ + scroll to zoom the map"
+    }
+  ],
+  "oxM3rx": [
+    {
+      "type": 0,
+      "value": "Close modal"
+    }
+  ],
+  "pHX3oF": [
+    {
+      "type": 0,
+      "value": "House letter must be a single letter."
     }
   ],
   "pMkaJD": [
@@ -2577,6 +2777,28 @@
       "value": "Receive a verification code"
     }
   ],
+  "r0uvHk": [
+    {
+      "type": 0,
+      "value": "Remove '"
+    },
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "index"
+    },
+    {
+      "type": 0,
+      "value": "'"
+    }
+  ],
   "r1L6Zj": [
     {
       "type": 0,
@@ -2587,6 +2809,12 @@
     {
       "type": 0,
       "value": "Lastname"
+    }
+  ],
+  "rQ5vC9": [
+    {
+      "type": 0,
+      "value": "Postcode must be four digits followed by two letters (e.g. 1234 AB)."
     }
   ],
   "rUsmvU": [
@@ -2605,12 +2833,6 @@
     {
       "type": 0,
       "value": "Send code"
-    }
-  ],
-  "sGwqUb": [
-    {
-      "type": 0,
-      "value": "A BSN must be 9 digits"
     }
   ],
   "sP3xMn": [
@@ -2669,6 +2891,12 @@
     {
       "type": 0,
       "value": "To contact details"
+    }
+  ],
+  "syyEii": [
+    {
+      "type": 0,
+      "value": "Date of birth"
     }
   ],
   "tBQ8TL": [
@@ -2777,6 +3005,24 @@
       "value": "Failed to determine the appointment time"
     }
   ],
+  "vMKP5p": [
+    {
+      "type": 0,
+      "value": "Time must be in-between "
+    },
+    {
+      "type": 1,
+      "value": "minTime"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "type": 1,
+      "value": "maxTime"
+    }
+  ],
   "vf9+XT": [
     {
       "type": 0,
@@ -2787,6 +3033,12 @@
     {
       "type": 0,
       "value": "Click first point to finish shape"
+    }
+  ],
+  "wiPGoP": [
+    {
+      "type": 0,
+      "value": "Add partner details"
     }
   ],
   "wwsWUp": [
@@ -2833,6 +3085,18 @@
     {
       "type": 0,
       "value": "Year"
+    }
+  ],
+  "ybTcqX": [
+    {
+      "type": 0,
+      "value": "Remove partner details"
+    }
+  ],
+  "yjCrXX": [
+    {
+      "type": 0,
+      "value": "Date of birth cannot be in the future."
     }
   ],
   "z+/GrY": [

@@ -223,7 +223,7 @@
     "originalDefault": "Appointment cancelled"
   },
   "9UF9Z7": {
-    "defaultMessage": "Geen informatie verstrekt",
+    "defaultMessage": "Geen informatie verstrekt.",
     "description": "Emtpy field message",
     "originalDefault": "No information provided"
   },
@@ -1091,7 +1091,7 @@
     "originalDefault": "Add partner"
   },
   "osSl3z": {
-    "defaultMessage": "Stad",
+    "defaultMessage": "Plaats",
     "description": "Label for addressNL city read only result",
     "originalDefault": "City"
   },
