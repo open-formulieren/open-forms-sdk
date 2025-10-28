@@ -14,7 +14,12 @@
 }
 
 .openforms-addressnl {
-  display: grid;
+  // only apply the 'double styling' in the old renderer otherwise the columns take a
+  // quarter of the space instead of half.
+  @at-root [ref='addressNLContainer'] & {
+    display: grid;
+  }
+
   grid-template-columns: var(--_of-addressnl-grid-template-columns, 1fr);
   grid-column-gap: var(--of-addressnl-column-gap, 8px);
   grid-row-gap: var(--of-addressnl-row-gap, var(--of-form-field-container-gap, 24px));
