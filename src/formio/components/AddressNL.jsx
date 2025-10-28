@@ -12,7 +12,7 @@ import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from 'Context';
-import {get} from 'api';
+import {autoCompleteAddress} from 'data/geo';
 import enableValidationPlugins from 'formio/validators/plugins';
 
 import './AddressNL.scss';
@@ -397,12 +397,7 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
     if (!deriveAddress) return;
     if (!values.postcode || !values.houseNumber) return;
 
-    const params = {
-      postcode: values['postcode'],
-      house_number: values['houseNumber'],
-    };
-
-    const data = await get(`${baseUrl}geo/address-autocomplete`, params);
+    const data = await autoCompleteAddress(baseUrl, values.postcode, values.houseNumber);
 
     setFieldValue('city', data['city']);
     setFieldValue('streetName', data['streetName']);
