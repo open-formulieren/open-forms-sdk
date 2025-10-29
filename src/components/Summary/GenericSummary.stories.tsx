@@ -497,6 +497,52 @@ export const MapSummary: Story = {
                 'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_orthoHR/EPSG:28992/{z}/{x}/{y}.png',
             },
           },
+          {
+            name: 'Map with overlays',
+            value: {
+              type: 'Point',
+              coordinates: [5.215246, 52.136559],
+            },
+            component: {
+              id: 'map',
+              key: 'map',
+              type: 'map',
+              label: 'Map with overlay',
+              overlays: [
+                {
+                  uuid: '931f18f0-cedc-453b-a2d5-a2c1ff9df523',
+                  url: 'https://service.pdok.nl/lv/bag/wms/v2_0?request=getCapabilities&service=WMS',
+                  label: 'BAG Pand and Verblijfsobject layer',
+                  type: 'wms',
+                  layers: ['pand', 'verblijfsobject'],
+                },
+              ],
+            },
+          },
+          {
+            name: 'Map with overlays and custom tile layer',
+            value: {
+              type: 'Point',
+              coordinates: [5.215246, 52.136559],
+            },
+            component: {
+              id: 'map',
+              key: 'map',
+              type: 'map',
+              label: 'Map with overlay and custom tile layer',
+              tileLayerUrl:
+                'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_orthoHR/EPSG:28992/{z}/{x}/{y}.png',
+              overlays: [
+                {
+                  uuid: '931f18f0-cedc-453b-a2d5-a2c1ff9df523',
+                  url: 'https://service.pdok.nl/lv/bag/wms/v2_0?request=getCapabilities&service=WMS',
+                  label: 'BAG Pand and Verblijfsobject layer',
+                  type: 'wms',
+                  layers: ['pand', 'verblijfsobject'],
+                },
+              ],
+            },
+          },
         ],
       },
     ],
