@@ -16,8 +16,10 @@
     <button class="utrecht-button utrecht-button--secondary-action editRow">
       <i class="{{ ctx.iconClass('edit') }}"></i>
     </button>
+    {% if (!ctx.component.disableAddingRemovingRows) { %}
     <button class="utrecht-button utrecht-button--primary-action utrecht-button--danger removeRow">
       <i class="{{ ctx.iconClass('trash-can') }}"></i>
     </button>
+    {% } %}
   </p>
 {% } %}
