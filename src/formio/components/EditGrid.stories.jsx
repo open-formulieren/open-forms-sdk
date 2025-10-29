@@ -118,6 +118,25 @@ export const WithData = {
   },
 };
 
+export const DisableAddingRemovingRows = {
+  render,
+  args: {
+    key: 'editgrid',
+    label: "Auto's",
+    groupLabel: 'Auto',
+    extraComponentProperties: {
+      disableAddingRemovingRows: true,
+      components: defaultNested,
+    },
+    data: [
+      {
+        kleur: 'Red',
+        bedrag: '15000000',
+      },
+    ],
+  },
+};
+
 export const AddressNLWithData = {
   render: SingleFormioComponent,
   parameters: {

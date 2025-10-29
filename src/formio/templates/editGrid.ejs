@@ -24,7 +24,7 @@
                 {{ctx.t(ctx.component.saveRow || 'Save', { _userInput: true })}}
               </button>
 
-              {% if (ctx.component.removeRow) { %}
+              {% if (ctx.component.removeRow && !ctx.component.disableAddingRemovingRows) { %}
                 <button class="utrecht-button utrecht-button--primary-action utrecht-button--danger" ref="{{ctx.ref.cancelRow}}">
                   {{ctx.t(ctx.component.removeRow || 'Cancel', { _userInput: true })}}
                 </button>
