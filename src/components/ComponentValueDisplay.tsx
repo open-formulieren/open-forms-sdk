@@ -233,7 +233,12 @@ const MapDisplay: React.FC<DisplayProps<MapComponentSchema, GeoJsonGeometry>> = 
 
   return (
     <Suspense fallback={<Loader modifiers={['centered']} />}>
-      <Map geoJsonGeometry={value} disabled tileLayerUrl={component.tileLayerUrl} />
+      <Map
+        geoJsonGeometry={value}
+        disabled
+        tileLayerUrl={component.tileLayerUrl}
+        overlays={component?.overlays}
+      />
     </Suspense>
   );
 };
