@@ -2,6 +2,15 @@
 SDK Changelog
 =============
 
+3.3.1 (2025-10-29)
+==================
+
+Regular bugfix release.
+
+* [#5728] Fixed delete buttons showing when ``disableAddingRemovingRows`` is set to
+  ``true`` in repeating groups.
+* [#5727] Fixed map overlays not being shown in form submission summary page.
+
 3.3.0 (2025-09-30)
 ==================
 
