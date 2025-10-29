@@ -140,7 +140,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       >
         <EnsureTestId />
         <TileLayer {...TILE_LAYER_RD} url={tileLayerUrl} />
-        <LayersControl overlays={overlays} />
+        <LayersControl overlays={overlays} withoutControl={disabled} />
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
             <>

@@ -232,8 +232,13 @@ const MapDisplay: React.FC<DisplayProps<MapComponentSchema, object>> = ({compone
 
   return (
     <Suspense fallback={<Loader modifiers={['centered']} />}>
-      {/* @ts-expect-error the map can't properly infer what's expected */}
-      <Map geoJsonGeometry={value} disabled tileLayerUrl={component.tileLayerUrl} />
+      <Map
+        /* @ts-expect-error the map can't properly infer what's expected */
+        geoJsonGeometry={value}
+        disabled
+        tileLayerUrl={component.tileLayerUrl}
+        overlays={component?.overlays}
+      />
     </Suspense>
   );
 };
