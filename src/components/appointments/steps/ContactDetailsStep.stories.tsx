@@ -3,7 +3,11 @@ import {expect, userEvent, within} from '@storybook/test';
 import {addDays, formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {mockAppointmentCustomerFieldsGet} from '@/api-mocks/appointments';
+import {
+  mockAppointmentCustomerFieldsGet,
+  mockAppointmentLocationsGet,
+  mockAppointmentProductsGet,
+} from '@/api-mocks/appointments';
 import {withCard, withPageWrapper} from '@/sb-decorators';
 
 import {withAppointmentState} from '../story-utils';
@@ -22,7 +26,10 @@ export default {
       currentStep: 'contactgegevens',
       appointmentData: {
         producten: {
-          products: [{productId: '166a5c79', amount: 1}],
+          products: [
+            {productId: '166a5c79', amount: 1},
+            {productId: 'e8e045ab', amount: 2},
+          ],
         },
         kalender: {
           location: '1396f17c',
@@ -32,7 +39,11 @@ export default {
       } satisfies Partial<AppointmentDataByStep>,
     },
     msw: {
-      handlers: [mockAppointmentCustomerFieldsGet],
+      handlers: [
+        mockAppointmentCustomerFieldsGet,
+        mockAppointmentProductsGet,
+        mockAppointmentLocationsGet,
+      ],
     },
   },
 } satisfies Meta<typeof ContactDetailsStep>;

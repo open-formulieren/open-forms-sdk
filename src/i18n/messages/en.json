@@ -84,6 +84,11 @@
     "description": "GovMetric red face alt text",
     "originalDefault": "Red smiley (negative)"
   },
+  "4DfOmj": {
+    "defaultMessage": "Your products",
+    "description": "Product summary on appointments contact details step heading",
+    "originalDefault": "Your products"
+  },
   "4ZOmtU": {
     "defaultMessage": "Save changes",
     "description": "Edit toolbar save tooltip.",
@@ -148,11 +153,6 @@
     "defaultMessage": "Payment",
     "description": "On succesful completion title but payment required",
     "originalDefault": "Betalen"
-  },
-  "7Fk8NY": {
-    "defaultMessage": "{name}: {amount}x",
-    "description": "Product summary on appointments location and time step",
-    "originalDefault": "{name}: {amount}x"
   },
   "7kd6yw": {
     "defaultMessage": "This form is currently in maintenance mode. As a staff user, you can continue filling out the form as usual.",
@@ -268,6 +268,11 @@
     "defaultMessage": "Remove shapes",
     "description": "Edit toolbar remove button tooltip.",
     "originalDefault": "Remove shapes"
+  },
+  "BBWisr": {
+    "defaultMessage": "{name}: {amount}x",
+    "description": "Product summary on appointments contact details step",
+    "originalDefault": "{name}: {amount}x"
   },
   "BL1Ehr": {
     "defaultMessage": "Invalid.",
@@ -959,11 +964,6 @@
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
   },
-  "jbireK": {
-    "defaultMessage": "Your products",
-    "description": "Product summary on appointments location and time step heading",
-    "originalDefault": "Your products"
-  },
   "jdzNwf": {
     "defaultMessage": "Current step in form {formName}: {activeStepTitle}",
     "description": "Active step accessible label in mobile progress indicator",
@@ -1213,6 +1213,11 @@
     "defaultMessage": "Click first point to finish shape",
     "description": "Draw handler polygon tooltip end.",
     "originalDefault": "Click first point to finish shape"
+  },
+  "wl8Ucz": {
+    "defaultMessage": "Your appointment",
+    "description": "Location summary on appointments contact details step heading",
+    "originalDefault": "Your appointment"
   },
   "wwsWUp": {
     "defaultMessage": "How do you rate this form?",

@@ -301,6 +301,12 @@
       "value": "Rode smiley (negatief)"
     }
   ],
+  "4DfOmj": [
+    {
+      "type": 0,
+      "value": "Jouw product(en)"
+    }
+  ],
   "4IX8hk": [
     {
       "type": 0,
@@ -403,24 +409,6 @@
     {
       "type": 0,
       "value": "Betalen"
-    }
-  ],
-  "7Fk8NY": [
-    {
-      "type": 1,
-      "value": "name"
-    },
-    {
-      "type": 0,
-      "value": ": "
-    },
-    {
-      "type": 1,
-      "value": "amount"
-    },
-    {
-      "type": 0,
-      "value": "x"
     }
   ],
   "7kd6yw": [
@@ -717,6 +705,24 @@
     {
       "type": 0,
       "value": "Verwijder vormen"
+    }
+  ],
+  "BBWisr": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "amount"
+    },
+    {
+      "type": 0,
+      "value": "x"
     }
   ],
   "BL1Ehr": [
@@ -1930,7 +1936,7 @@
   "ay8sO5": [
     {
       "type": 0,
-      "value": "Je gegevens"
+      "value": "Contactgegevens"
     }
   ],
   "bKPaUj": [
@@ -2227,12 +2233,6 @@
     {
       "type": 0,
       "value": "Je afspraak is geannuleerd"
-    }
-  ],
-  "jbireK": [
-    {
-      "type": 0,
-      "value": "Jouw producten"
     }
   ],
   "jdzNwf": [
@@ -3003,6 +3003,12 @@
     {
       "type": 0,
       "value": "Partner toevoegen"
+    }
+  ],
+  "wl8Ucz": [
+    {
+      "type": 0,
+      "value": "Jouw afspraak"
     }
   ],
   "wwsWUp": [
