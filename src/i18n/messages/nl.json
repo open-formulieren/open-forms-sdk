@@ -85,6 +85,11 @@
     "description": "GovMetric red face alt text",
     "originalDefault": "Red smiley (negative)"
   },
+  "4DfOmj": {
+    "defaultMessage": "Jouw product(en)",
+    "description": "Product summary on appointments contact details step heading",
+    "originalDefault": "Your products"
+  },
   "4ZOmtU": {
     "defaultMessage": "Wijzigingen opslaan",
     "description": "Edit toolbar save tooltip.",
@@ -150,12 +155,6 @@
     "description": "On succesful completion title but payment required",
     "isTranslated": true,
     "originalDefault": "Betalen"
-  },
-  "7Fk8NY": {
-    "defaultMessage": "{name}: {amount}x",
-    "description": "Product summary on appointments location and time step",
-    "isTranslated": true,
-    "originalDefault": "{name}: {amount}x"
   },
   "7kd6yw": {
     "defaultMessage": "Dit formulier is momenteel in onderhoud. Als medewerker kun je dit formulier wel invullen.",
@@ -271,6 +270,11 @@
     "defaultMessage": "Verwijder vormen",
     "description": "Edit toolbar remove button tooltip.",
     "originalDefault": "Remove shapes"
+  },
+  "BBWisr": {
+    "defaultMessage": "{name}: {amount}x",
+    "description": "Product summary on appointments contact details step",
+    "originalDefault": "{name}: {amount}x"
   },
   "BL1Ehr": {
     "defaultMessage": "Ongeldig.",
@@ -798,7 +802,7 @@
     "originalDefault": "No"
   },
   "ay8sO5": {
-    "defaultMessage": "Je gegevens",
+    "defaultMessage": "Contactgegevens",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
   },
@@ -966,11 +970,6 @@
     "defaultMessage": "Je afspraak is geannuleerd",
     "description": "Appointment cancellated body",
     "originalDefault": "Your appointment has been cancelled"
-  },
-  "jbireK": {
-    "defaultMessage": "Jouw producten",
-    "description": "Product summary on appointments location and time step heading",
-    "originalDefault": "Your products"
   },
   "jdzNwf": {
     "defaultMessage": "Huidige stap in formulier {formName}: {activeStepTitle}",
@@ -1225,6 +1224,11 @@
     "defaultMessage": "Klik op het eerste punt, om de veelhoek te voltooien",
     "description": "Draw handler polygon tooltip end.",
     "originalDefault": "Click first point to finish shape"
+  },
+  "wl8Ucz": {
+    "defaultMessage": "Jouw afspraak",
+    "description": "Location summary on appointments contact details step heading",
+    "originalDefault": "Your appointment"
   },
   "wwsWUp": {
     "defaultMessage": "Wat vind je van dit formulier?",

@@ -89,7 +89,7 @@ describe('The location and time step', () => {
     });
     // No location should be selected, as there are multiple options
     await waitFor(() => {
-      expect(screen.queryByText('Open Gem')).not.toBeInTheDocument();
+      expect(screen.queryByText('Open Gem (Amsterdam)')).not.toBeInTheDocument();
     });
     expect(screen.queryByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).not.toBeInTheDocument();
 
@@ -165,7 +165,7 @@ describe('The location and time step', () => {
       datetime: '',
     });
 
-    expect(await screen.findByText('Open Gem')).toBeVisible();
+    expect(await screen.findByText('Open Gem (Amsterdam)')).toBeVisible();
     await waitFor(() => {
       expect(screen.getByLabelText('Date')).not.toBeDisabled();
     });

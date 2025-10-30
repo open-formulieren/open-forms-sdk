@@ -293,6 +293,12 @@
       "value": "Red smiley (negative)"
     }
   ],
+  "4DfOmj": [
+    {
+      "type": 0,
+      "value": "Your products"
+    }
+  ],
   "4IX8hk": [
     {
       "type": 0,
@@ -395,24 +401,6 @@
     {
       "type": 0,
       "value": "Payment"
-    }
-  ],
-  "7Fk8NY": [
-    {
-      "type": 1,
-      "value": "name"
-    },
-    {
-      "type": 0,
-      "value": ": "
-    },
-    {
-      "type": 1,
-      "value": "amount"
-    },
-    {
-      "type": 0,
-      "value": "x"
     }
   ],
   "7kd6yw": [
@@ -709,6 +697,24 @@
     {
       "type": 0,
       "value": "Remove shapes"
+    }
+  ],
+  "BBWisr": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "amount"
+    },
+    {
+      "type": 0,
+      "value": "x"
     }
   ],
   "BL1Ehr": [
@@ -2269,12 +2275,6 @@
       "value": "Your appointment has been cancelled"
     }
   ],
-  "jbireK": [
-    {
-      "type": 0,
-      "value": "Your products"
-    }
-  ],
   "jdzNwf": [
     {
       "type": 0,
@@ -3039,6 +3039,12 @@
     {
       "type": 0,
       "value": "Add partner details"
+    }
+  ],
+  "wl8Ucz": [
+    {
+      "type": 0,
+      "value": "Your appointment"
     }
   ],
   "wwsWUp": [

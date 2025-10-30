@@ -109,7 +109,7 @@ export const DependentFieldsReset: Story = {
       const dropdown = canvas.getByLabelText('Locatie');
       await userEvent.click(dropdown);
       await userEvent.keyboard('[ArrowDown]');
-      await userEvent.click(await canvas.findByText('Open Gem'));
+      await userEvent.click(await canvas.findByText('Open Gem (Amsterdam)'));
     });
 
     expect(canvas.getByLabelText('Datum')).toHaveDisplayValue('');

@@ -121,6 +121,11 @@ export const HappyFlow: Story = {
 
     await step('Fill out the location and time', async () => {
       expect(await canvas.findByText('Datum en tijd')).toBeVisible();
+
+      // previous step summary section (products)
+      expect(await canvas.findByText('Jouw product(en)')).toBeVisible();
+      expect(await canvas.findByText('Paspoort aanvraag: 1x')).toBeVisible();
+
       await waitFor(async () => {
         expect(canvas.getByRole('link', {name: 'Terug naar producten'})).toBeVisible();
         expect(canvas.queryByRole('button', {name: 'Naar contactgegevens'})).not.toHaveAttribute(
@@ -128,7 +133,7 @@ export const HappyFlow: Story = {
           'true'
         );
         // location auto-filled
-        await canvas.findByText('Open Gem');
+        await canvas.findByText('Open Gem (Amsterdam)');
       });
 
       // this location has a date available tomorrow (see api-mocks/appointments)
@@ -164,7 +169,20 @@ export const HappyFlow: Story = {
     });
 
     await step('Fill out the contact details', async () => {
-      expect(await canvas.findByText('Je gegevens')).toBeVisible();
+      const tomorrow = format(addDays(new Date(), 1), 'P', {
+        locale: calendarLocale,
+      });
+
+      await waitFor(async () => {
+        expect(await canvas.findAllByText('Contactgegevens')).toHaveLength(2);
+      });
+
+      // previous steps summary section (products, location and time of the appointment)
+      expect(await canvas.findByText('Jouw product(en)')).toBeVisible();
+      expect(await canvas.findByText('Paspoort aanvraag: 1x')).toBeVisible();
+      expect(await canvas.findByText('Jouw afspraak')).toBeVisible();
+      expect(await canvas.findByText(`Open Gem, Amsterdam, ${tomorrow}, 07:00`)).toBeVisible();
+
       await waitFor(async () => {
         expect(canvas.getByRole('link', {name: 'Terug naar locatie en tijdstip'})).toBeVisible();
       });

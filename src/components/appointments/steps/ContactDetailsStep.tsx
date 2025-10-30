@@ -15,6 +15,8 @@ import useTitle from '@/hooks/useTitle';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
 import SubmitRow from '../SubmitRow';
+import {LocationAndDateTimeSummary} from '../summary/LocationAndDatetimeSummary';
+import {ProductSummary} from '../summary/ProductSummary';
 
 const CACHED_CONTACT_DETAILS_FIELDS_KEY = 'appointments|contactDetailsFields';
 const CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
@@ -65,6 +67,9 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}
   const products = appointmentData?.products || [];
   const productIds = products.map(p => p.productId).sort();
 
+  const locationIdentifier = appointmentData?.location || '';
+  const appointmentDatetime = appointmentData?.datetime || '';
+
   const {
     loading,
     value: components = [],
@@ -95,35 +100,45 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}
 
       {loading && <Loader modifiers={['centered']} />}
       {!loading && (
-        <FormioForm
-          components={components}
-          values={stepData?.contactDetails}
-          // @ts-expect-error the Errors type in our renderer needs to support undefined
-          errors={initialErrors?.contactDetails}
-          onSubmit={async values => {
-            flushSync(() => {
-              clearStepErrors();
-              submitStep({contactDetails: values});
-            });
-            if (navigateTo) navigate(navigateTo);
-          }}
-          requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
-        >
-          {/* TODO: ensure we can pass an ID for the submit button so that we don't
-          need to rely on children anymore to submit the form */}
-          <SubmitRow
-            canSubmit={!loading}
-            nextText={intl.formatMessage({
-              description: 'Appointments contact details step: next step text',
-              defaultMessage: 'To overview',
-            })}
-            previousText={intl.formatMessage({
-              description: 'Appointments contact details step: previous step text',
-              defaultMessage: 'Back to location and time',
-            })}
-            navigateBackTo="kalender"
+        <>
+          {/* previous steps summary */}
+          <ProductSummary products={products} />
+          <LocationAndDateTimeSummary
+            products={products}
+            selectedLocationIdentifier={locationIdentifier}
+            selectedLocationDatetime={appointmentDatetime}
           />
-        </FormioForm>
+
+          <FormioForm
+            components={components}
+            values={stepData?.contactDetails}
+            // @ts-expect-error the Errors type in our renderer needs to support undefined
+            errors={initialErrors?.contactDetails}
+            onSubmit={async values => {
+              flushSync(() => {
+                clearStepErrors();
+                submitStep({contactDetails: values});
+              });
+              if (navigateTo) navigate(navigateTo);
+            }}
+            requiredFieldsWithAsterisk={requiredFieldsWithAsterisk}
+          >
+            {/* TODO: ensure we can pass an ID for the submit button so that we don't
+          need to rely on children anymore to submit the form */}
+            <SubmitRow
+              canSubmit={!loading}
+              nextText={intl.formatMessage({
+                description: 'Appointments contact details step: next step text',
+                defaultMessage: 'To overview',
+              })}
+              previousText={intl.formatMessage({
+                description: 'Appointments contact details step: previous step text',
+                defaultMessage: 'Back to location and time',
+              })}
+              navigateBackTo="kalender"
+            />
+          </FormioForm>
+        </>
       )}
     </>
   );

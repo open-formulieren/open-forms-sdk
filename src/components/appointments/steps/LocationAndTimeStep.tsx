@@ -1,23 +1,18 @@
-import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import {Form, Formik, useFormikContext} from 'formik';
-import {useContext} from 'react';
 import {flushSync} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router';
-import {useAsync, useUpdateEffect} from 'react-use';
+import {useUpdateEffect} from 'react-use';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import {ConfigContext} from '@/Context';
 import {CardTitle} from '@/components/Card';
-import Loader from '@/components/Loader';
-import type {AppointmentProduct} from '@/data/appointments';
 import useTitle from '@/hooks/useTitle';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
 import SubmitRow from '../SubmitRow';
 import {DateSelect, LocationSelect, TimeSelect} from '../fields';
-import {getAllProducts} from '../fields/ProductSelect';
+import {ProductSummary} from '../summary/ProductSummary';
 
 export interface LocationAndTimeStepValues {
   location: string;
@@ -139,51 +134,6 @@ const LocationAndTimeStep: React.FC<LocationAndTimeStepProps> = ({navigateTo = '
         }}
         component={LocationAndTimeStepFields}
       />
-    </>
-  );
-};
-
-export interface ProductSummaryProps {
-  products: AppointmentProduct[];
-}
-
-const ProductSummary: React.FC<ProductSummaryProps> = ({products}) => {
-  const {baseUrl} = useContext(ConfigContext);
-  const {
-    loading,
-    value: allProducts = [],
-    error,
-  } = useAsync(async () => await getAllProducts(baseUrl), [baseUrl]);
-
-  if (!products.length) return null;
-  if (error) throw error;
-  if (loading) {
-    return <Loader modifiers={['small']} />;
-  }
-
-  const productsById = Object.fromEntries(allProducts.map(p => [p.identifier, p.name]));
-  return (
-    <>
-      <Heading3 className="utrecht-heading-3--distanced">
-        <FormattedMessage
-          description="Product summary on appointments location and time step heading"
-          defaultMessage="Your products"
-        />
-      </Heading3>
-      <UnorderedList className="utrecht-unordered-list--distanced">
-        {products.map(({productId, amount}, index) => (
-          <UnorderedListItem key={`${productId}-${index}`}>
-            <FormattedMessage
-              description="Product summary on appointments location and time step"
-              defaultMessage="{name}: {amount}x"
-              values={{
-                amount,
-                name: productsById[productId],
-              }}
-            />
-          </UnorderedListItem>
-        ))}
-      </UnorderedList>
     </>
   );
 };

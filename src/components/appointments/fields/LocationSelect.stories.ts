@@ -32,11 +32,11 @@ export const MultipleCandidates: Story = {
   play: async ({canvasElement}) => {
     // test that the options are fetched from the API endpoint
     const canvas = within(canvasElement);
-    expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Open Gem (Amsterdam)')).not.toBeInTheDocument();
     const dropdown = canvas.getByLabelText('Locatie');
     dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
-    expect(await canvas.findByRole('option', {name: 'Open Gem'})).toBeVisible();
+    expect(await canvas.findByRole('option', {name: 'Open Gem (Amsterdam)'})).toBeVisible();
     expect(
       await canvas.findByRole('option', {name: 'Bahamas (Winsome Dr, 1014 EG, Nassau)'})
     ).toBeVisible();
@@ -53,7 +53,7 @@ export const SingleCandidate: Story = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    expect(canvas.queryByText('Open Gem')).not.toBeInTheDocument();
+    expect(canvas.queryByText('Open Gem (Amsterdam)')).not.toBeInTheDocument();
     expect(canvas.queryByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).not.toBeInTheDocument();
 
     const dropdown = canvas.getByLabelText('Locatie');
@@ -62,12 +62,12 @@ export const SingleCandidate: Story = {
 
     // wait for locations to be loaded
     await waitFor(async () => {
-      const textNodes = canvas.queryAllByText('Open Gem');
+      const textNodes = canvas.queryAllByText('Open Gem (Amsterdam)');
       expect(textNodes.length).toBeGreaterThan(0);
     });
 
     expect(canvas.queryByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).not.toBeInTheDocument();
     await userEvent.keyboard('[Escape]');
-    expect(await canvas.findByText('Open Gem')).toBeVisible();
+    expect(await canvas.findByText('Open Gem (Amsterdam)')).toBeVisible();
   },
 };
