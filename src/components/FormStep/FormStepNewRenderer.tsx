@@ -21,6 +21,7 @@ import {getLoginUrl} from '@/components/LoginOptions/utils';
 import PreviousLink from '@/components/PreviousLink';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import FormStepSaveModal from '@/components/modals/FormStepSaveModal';
+import {createTemporaryFileUpload, destroyTemporaryFileUpload} from '@/data/file-uploads';
 import {autoCompleteAddress} from '@/data/geo';
 import {type SubmissionStep, saveStepData} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
@@ -99,6 +100,13 @@ const FormStepNewRenderer: React.FC = () => {
       return loginOption;
     },
     [form, submissionId]
+  );
+
+  const upload = useCallback(
+    async (file: File): ReturnType<typeof createTemporaryFileUpload> => {
+      return await createTemporaryFileUpload(baseUrl, submission, file);
+    },
+    [baseUrl, submission]
   );
 
   /**
@@ -188,6 +196,10 @@ const FormStepNewRenderer: React.FC = () => {
             componentParameters={{
               addressNL: {addressAutoComplete},
               coSign: {getCosignStatus, getLoginOption},
+              file: {
+                upload,
+                destroy: destroyTemporaryFileUpload,
+              },
             }}
           >
             <FormStepNavigation

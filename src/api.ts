@@ -13,7 +13,7 @@ import {
 import {CSPNonce, CSRFToken, ContentLanguage, IsFormDesigner} from './headers';
 import {setLanguage} from './i18n';
 
-interface ApiCallOptions extends Omit<RequestInit, 'headers'> {
+export interface ApiCallOptions extends Omit<RequestInit, 'headers'> {
   headers?: Record<string, string>;
 }
 
@@ -131,13 +131,17 @@ const updateStoredHeadersValues = (headers: Headers): void => {
   }
 };
 
-const apiCall = async (url: string, opts: ApiCallOptions = {}): Promise<Response> => {
+const apiCall = async (
+  url: string,
+  opts: ApiCallOptions = {},
+  statusCheck: (response: Response) => Promise<void> = throwForStatus
+): Promise<Response> => {
   const method = opts.method || 'GET';
   const options = {...fetchDefaults, ...opts};
   options.headers = addHeaders(options.headers, method);
 
   const response = await window.fetch(url, options);
-  await throwForStatus(response);
+  await statusCheck(response);
 
   updateStoredHeadersValues(response.headers);
   return response;
@@ -202,6 +206,7 @@ const _unsafe = async <T = unknown, U = unknown>(
     method,
     headers: {
       'Content-Type': 'application/json',
+      // TODO: is this necessary? See apiCall and addHeaders
       [CSRFToken.headerName]: CSRFToken.getValue() ?? '',
     },
   };
