@@ -169,9 +169,7 @@ export const HappyFlow: Story = {
     });
 
     await step('Fill out the contact details', async () => {
-      const tomorrow = format(addDays(new Date(), 1), 'P', {
-        locale: calendarLocale,
-      });
+      const tomorrow = format(addDays(new Date(), 1), 'd-M-yyyy', {locale: calendarLocale});
 
       await waitFor(async () => {
         expect(await canvas.findAllByText('Contactgegevens')).toHaveLength(2);
