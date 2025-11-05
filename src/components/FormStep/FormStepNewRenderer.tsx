@@ -12,10 +12,12 @@ import {ConfigContext} from '@/Context';
 import {get} from '@/api';
 import {useDebugContext} from '@/components/AppDebug';
 import Card, {CardTitle} from '@/components/Card';
+import {getCosignStatus as getCosignStatus_} from '@/components/CoSign';
 import FormNavigation, {StepSubmitButton} from '@/components/FormNavigation';
 import type {FormNavigationProps} from '@/components/FormNavigation/FormNavigation';
 import {LiteralsProvider} from '@/components/Literal';
 import Loader from '@/components/Loader';
+import {getLoginUrl} from '@/components/LoginOptions/utils';
 import PreviousLink from '@/components/PreviousLink';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import FormStepSaveModal from '@/components/modals/FormStepSaveModal';
@@ -83,6 +85,20 @@ const FormStepNewRenderer: React.FC = () => {
     async (postcode: string, houseNumber: string) =>
       await autoCompleteAddress(baseUrl, postcode, houseNumber),
     [baseUrl]
+  );
+  const getCosignStatus = useCallback(
+    async () => await getCosignStatus_(baseUrl, submissionId),
+    [baseUrl, submissionId]
+  );
+  const getLoginOption = useCallback(
+    async (authPlugin: string) => {
+      const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
+
+      if (!loginOption) return null;
+      loginOption.url = getLoginUrl(loginOption, {coSignSubmission: submissionId});
+      return loginOption;
+    },
+    [form, submissionId]
   );
 
   /**
@@ -169,7 +185,10 @@ const FormStepNewRenderer: React.FC = () => {
             }}
             requiredFieldsWithAsterisk={form.requiredFieldsWithAsterisk}
             validatePluginCallback={validatePluginCallback}
-            componentParameters={{addressNL: {addressAutoComplete}}}
+            componentParameters={{
+              addressNL: {addressAutoComplete},
+              coSign: {getCosignStatus, getLoginOption},
+            }}
           >
             <FormStepNavigation
               submissionAllowed={submission.submissionAllowed}

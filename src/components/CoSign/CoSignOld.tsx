@@ -19,7 +19,7 @@ export interface SubmissionCoSignStatus {
   readonly representation: string;
 }
 
-const getCosignStatus = async (
+export const getCosignStatus = async (
   baseUrl: string,
   submissionUuid: string
 ): Promise<SubmissionCoSignStatus> => {
