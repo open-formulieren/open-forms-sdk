@@ -31,7 +31,7 @@ export const PartnersComponent: React.FC<PartnersComponentProps> = ({
   <>
     <DisplayPartners partners={partners} />
     {hasNoPartners && (
-      <OFButton onClick={onAddPartner} variant="primary" appearance="primary-action-button">
+      <OFButton onClick={onAddPartner} variant="secondary" appearance="primary-action-button">
         <FormattedMessage
           description="Add partner: add partner button text"
           defaultMessage="Add partner"
@@ -39,7 +39,7 @@ export const PartnersComponent: React.FC<PartnersComponentProps> = ({
       </OFButton>
     )}
     {!hasNoPartners && manuallyAddedPartner && (
-      <OFButton onClick={onEditPartner} variant="primary" appearance="primary-action-button">
+      <OFButton onClick={onEditPartner} variant="secondary" appearance="primary-action-button">
         <FormattedMessage
           description="Edit partner: edit partner button text"
           defaultMessage="Edit partner"
