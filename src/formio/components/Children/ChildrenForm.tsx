@@ -52,7 +52,7 @@ export const ChildrenComponent: React.FC<ChildrenComponentProps> = ({
       toggleChildSelection={toggleChildSelection}
     />
     {enableCreation && (
-      <OFButton onClick={onAddChild} variant="primary" appearance="primary-action-button">
+      <OFButton onClick={onAddChild} variant="secondary" appearance="primary-action-button">
         <FormattedMessage
           description="Add child: add child button text"
           defaultMessage="Add Child"
