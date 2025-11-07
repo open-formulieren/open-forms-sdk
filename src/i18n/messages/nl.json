@@ -274,6 +274,7 @@
   "BBWisr": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments contact details step",
+    "isTranslated": true,
     "originalDefault": "{name}: {amount}x"
   },
   "BL1Ehr": {
