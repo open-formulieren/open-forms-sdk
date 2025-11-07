@@ -1,6 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, userEvent, within} from '@storybook/test';
-import {addDays, formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {
@@ -13,8 +12,6 @@ import {withCard, withPageWrapper} from '@/sb-decorators';
 import {withAppointmentState} from '../story-utils';
 import type {AppointmentDataByStep, AppointmentErrors} from '../types';
 import ContactDetailsStep from './ContactDetailsStep';
-
-const TOMORROW: string = formatISO(addDays(new Date(), 1), {representation: 'date'});
 
 export default {
   title: 'Private API / Appointments / Steps / 3 - Contact details',
@@ -33,8 +30,8 @@ export default {
         },
         kalender: {
           location: '1396f17c',
-          date: TOMORROW,
-          datetime: `${TOMORROW}T08:00:00Z`,
+          date: '2025-10-31',
+          datetime: `2025-10-31T08:00:00Z`,
         },
       } satisfies Partial<AppointmentDataByStep>,
     },
@@ -93,8 +90,8 @@ export const WithBackendErrors: Story = {
         },
         kalender: {
           location: '1396f17c',
-          date: TOMORROW,
-          datetime: `${TOMORROW}T08:00:00Z`,
+          date: '2025-10-31',
+          datetime: `2025-10-31T08:00:00Z`,
         },
         contactgegevens: {
           contactDetails: {
