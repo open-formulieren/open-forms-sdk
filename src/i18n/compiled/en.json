@@ -163,6 +163,12 @@
       "value": ". First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it."
     }
   ],
+  "1AgCMs": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
   "1Jy08C": [
     {
       "type": 0,
@@ -215,6 +221,12 @@
     {
       "type": 0,
       "value": "Something went wrong while presenting the login option. Please contact the municipality."
+    }
+  ],
+  "2/wgNH": [
+    {
+      "type": 0,
+      "value": "The file is too small."
     }
   ],
   "2D6ubj": [
@@ -579,6 +591,20 @@
       "value": "\"."
     }
   ],
+  "8uM5Vx": [
+    {
+      "type": 0,
+      "value": "Remove '"
+    },
+    {
+      "type": 1,
+      "value": "fileName"
+    },
+    {
+      "type": 0,
+      "value": "'"
+    }
+  ],
   "8wgdHE": [
     {
       "type": 0,
@@ -629,6 +655,12 @@
     {
       "type": 0,
       "value": "Check and confirm"
+    }
+  ],
+  "ALpIwm": [
+    {
+      "type": 0,
+      "value": "The signature value must be a base64-encoded png."
     }
   ],
   "AM6xqd": [
@@ -933,6 +965,12 @@
       "value": "Email address verification"
     }
   ],
+  "ErdIGO": [
+    {
+      "type": 0,
+      "value": "Clear signature"
+    }
+  ],
   "FDy8nr": [
     {
       "type": 0,
@@ -1075,6 +1113,48 @@
     {
       "type": 0,
       "value": "Finish drawing"
+    }
+  ],
+  "HoCa81": [
+    {
+      "type": 0,
+      "value": "Too many files uploaded. You can upload "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "one file."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "up to "
+            },
+            {
+              "type": 1,
+              "value": "maxNumberOfFiles"
+            },
+            {
+              "type": 0,
+              "value": " files"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "maxNumberOfFiles"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "I6ok5N": [
@@ -1325,6 +1405,12 @@
       "value": "Use my current location"
     }
   ],
+  "LaKfzC": [
+    {
+      "type": 0,
+      "value": "Signature"
+    }
+  ],
   "LiRh7j": [
     {
       "type": 0,
@@ -1453,6 +1539,12 @@
       "value": "Remove last drawn point"
     }
   ],
+  "QAN3ua": [
+    {
+      "type": 0,
+      "value": "The file(s) are ready to drop."
+    }
+  ],
   "QPdaOi": [
     {
       "type": 0,
@@ -1501,6 +1593,12 @@
     {
       "type": 0,
       "value": "Month"
+    }
+  ],
+  "Rba7CV": [
+    {
+      "type": 0,
+      "value": "The maximum number of uploads is reached. You cannot upload additional files."
     }
   ],
   "Rf8Sot": [
@@ -1863,6 +1961,12 @@
       "value": "Date and time"
     }
   ],
+  "ZGuxfW": [
+    {
+      "type": 0,
+      "value": "File name"
+    }
+  ],
   "ZJoaby": [
     {
       "children": [
@@ -2047,6 +2151,20 @@
       "value": "Add another"
     }
   ],
+  "cnQt6v": [
+    {
+      "type": 0,
+      "value": "The uploaded file type is not an allowed type. It must be "
+    },
+    {
+      "type": 1,
+      "value": "allowedTypes"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "cxDC/G": [
     {
       "type": 0,
@@ -2227,6 +2345,70 @@
       "value": "."
     }
   ],
+  "iiVLgn": [
+    {
+      "options": {
+        "false": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Drop, or click to select a file to upload."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Drop, or click to select "
+            },
+            {
+              "options": {
+                "0": {
+                  "value": [
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "up to "
+                    },
+                    {
+                      "type": 1,
+                      "value": "limit"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "limit"
+            },
+            {
+              "type": 0,
+              "value": " files to upload."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "multiple"
+    },
+    {
+      "type": 0,
+      "value": " The maximum size of a single file is "
+    },
+    {
+      "children": [
+      ],
+      "type": 8,
+      "value": "fileSize"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "ijV760": [
     {
       "type": 0,
@@ -2255,6 +2437,20 @@
     {
       "type": 0,
       "value": "What would you like to do?"
+    }
+  ],
+  "j1VL+H": [
+    {
+      "type": 1,
+      "value": "fileTypes"
+    },
+    {
+      "type": 0,
+      "value": " or "
+    },
+    {
+      "type": 1,
+      "value": "lastOption"
     }
   ],
   "jAZped": [
@@ -2319,6 +2515,20 @@
     {
       "type": 0,
       "value": "Toggle the progress status display"
+    }
+  ],
+  "jqQOW0": [
+    {
+      "type": 0,
+      "value": "The file must be smaller than "
+    },
+    {
+      "type": 1,
+      "value": "fileMaxSize"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "kH9Cpi": [
@@ -2501,6 +2711,12 @@
       "value": "Your session will expire soon."
     }
   ],
+  "oCHirf": [
+    {
+      "type": 0,
+      "value": "Uploading..."
+    }
+  ],
   "oMvPQU": [
     {
       "type": 0,
@@ -2607,6 +2823,12 @@
       "value": "Close modal"
     }
   ],
+  "pErllF": [
+    {
+      "type": 0,
+      "value": "Something went wrong while presenting the login option. Please contact the municipality."
+    }
+  ],
   "pHX3oF": [
     {
       "type": 0,
@@ -2639,6 +2861,12 @@
     {
       "type": 0,
       "value": "BSN"
+    }
+  ],
+  "pzR8ui": [
+    {
+      "type": 0,
+      "value": "Something went wrong while processing the co-sign results. Please contact the municipality."
     }
   ],
   "q9AKjH": [
@@ -2827,6 +3055,12 @@
     {
       "type": 0,
       "value": "Form unavailable"
+    }
+  ],
+  "re7vQZ": [
+    {
+      "type": 0,
+      "value": "The upload must be completed before you can continue."
     }
   ],
   "riuSfc": [
@@ -3053,6 +3287,30 @@
       "value": "How do you rate this form?"
     }
   ],
+  "x/mWt2": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Uploaded files"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Uploaded file"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "single"
+    }
+  ],
   "xHVrv5": [
     {
       "type": 0,
@@ -3091,6 +3349,12 @@
     {
       "type": 0,
       "value": "Year"
+    }
+  ],
+  "ySaVSL": [
+    {
+      "type": 0,
+      "value": "The file upload (meta) data is not consistent."
     }
   ],
   "ybTcqX": [

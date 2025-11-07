@@ -163,6 +163,12 @@
       "value": " bevestigen. We sturen je eerst een bevestigingscode naar dit e-mailadres. Vervolgens moet je deze bevestigingscode hier invoeren."
     }
   ],
+  "1AgCMs": [
+    {
+      "type": 0,
+      "value": "Verwijderen"
+    }
+  ],
   "1Jy08C": [
     {
       "type": 0,
@@ -222,7 +228,13 @@
   "1hdvgS": [
     {
       "type": 0,
-      "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
+      "value": "Er ging iets fout bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
+    }
+  ],
+  "2/wgNH": [
+    {
+      "type": 0,
+      "value": "Het bestand is te klein."
     }
   ],
   "2D6ubj": [
@@ -587,6 +599,20 @@
       "value": "\" moet in de waarde zitten."
     }
   ],
+  "8uM5Vx": [
+    {
+      "type": 0,
+      "value": "Verwijder '"
+    },
+    {
+      "type": 1,
+      "value": "fileName"
+    },
+    {
+      "type": 0,
+      "value": "'"
+    }
+  ],
   "8wgdHE": [
     {
       "type": 0,
@@ -637,6 +663,12 @@
     {
       "type": 0,
       "value": "Controleer en bevestig"
+    }
+  ],
+  "ALpIwm": [
+    {
+      "type": 0,
+      "value": "De handtekening moet een base64-geëncodeerde PNG-afbeelding zijn."
     }
   ],
   "AM6xqd": [
@@ -911,6 +943,12 @@
       "value": "E-mailadres bevestigen"
     }
   ],
+  "ErdIGO": [
+    {
+      "type": 0,
+      "value": "Wis handtekening"
+    }
+  ],
   "FDy8nr": [
     {
       "type": 0,
@@ -1057,6 +1095,48 @@
     {
       "type": 0,
       "value": "Tekening voltooien"
+    }
+  ],
+  "HoCa81": [
+    {
+      "type": 0,
+      "value": "Te veel bestanden toegevoegd. Het "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "mag er hoogstens 1 zijn"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "mogen er hoogstens "
+            },
+            {
+              "type": 1,
+              "value": "maxNumberOfFiles"
+            },
+            {
+              "type": 0,
+              "value": " zijn"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "maxNumberOfFiles"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "I6ok5N": [
@@ -1307,6 +1387,12 @@
       "value": "Gebruik mijn huidige locatie"
     }
   ],
+  "LaKfzC": [
+    {
+      "type": 0,
+      "value": "Handtekening"
+    }
+  ],
   "LiRh7j": [
     {
       "type": 0,
@@ -1435,6 +1521,12 @@
       "value": "Verwijder het laatst getekende punt"
     }
   ],
+  "QAN3ua": [
+    {
+      "type": 0,
+      "value": "Je kan het/de bestand(en) loslaten."
+    }
+  ],
   "QPdaOi": [
     {
       "type": 0,
@@ -1483,6 +1575,12 @@
     {
       "type": 0,
       "value": "Maand"
+    }
+  ],
+  "Rba7CV": [
+    {
+      "type": 0,
+      "value": "De limiet van het aantal bestanden is bereikt. Je kan geen extra bestanden toevoegen."
     }
   ],
   "Rf8Sot": [
@@ -1815,6 +1913,12 @@
       "value": "Datum en tijd"
     }
   ],
+  "ZGuxfW": [
+    {
+      "type": 0,
+      "value": "Bestandsnaam"
+    }
+  ],
   "ZJoaby": [
     {
       "children": [
@@ -2007,6 +2111,20 @@
       "value": "Nog één toevoegen"
     }
   ],
+  "cnQt6v": [
+    {
+      "type": 0,
+      "value": "Het toegevoegde bestand is niet van een toegestaan type. Het moet "
+    },
+    {
+      "type": 1,
+      "value": "allowedTypes"
+    },
+    {
+      "type": 0,
+      "value": " zijn."
+    }
+  ],
   "cxDC/G": [
     {
       "type": 0,
@@ -2187,6 +2305,70 @@
       "value": "."
     }
   ],
+  "iiVLgn": [
+    {
+      "options": {
+        "false": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Sleep een bestand of klik om een bestand te selecteren."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Sleep bestanden of klik om "
+            },
+            {
+              "options": {
+                "0": {
+                  "value": [
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "tot "
+                    },
+                    {
+                      "type": 1,
+                      "value": "limit"
+                    }
+                  ]
+                }
+              },
+              "type": 5,
+              "value": "limit"
+            },
+            {
+              "type": 0,
+              "value": " bestanden toe te voegen."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "multiple"
+    },
+    {
+      "type": 0,
+      "value": " Een betsand mag hoogstens "
+    },
+    {
+      "children": [
+      ],
+      "type": 8,
+      "value": "fileSize"
+    },
+    {
+      "type": 0,
+      "value": " groot zijn."
+    }
+  ],
   "ijV760": [
     {
       "type": 0,
@@ -2215,6 +2397,20 @@
     {
       "type": 0,
       "value": "Wat wil je doen?"
+    }
+  ],
+  "j1VL+H": [
+    {
+      "type": 1,
+      "value": "fileTypes"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "lastOption"
     }
   ],
   "jAZped": [
@@ -2279,6 +2475,20 @@
     {
       "type": 0,
       "value": "Toon/verberg de voortgang in het formulier"
+    }
+  ],
+  "jqQOW0": [
+    {
+      "type": 0,
+      "value": "Het bestand moet "
+    },
+    {
+      "type": 1,
+      "value": "fileMaxSize"
+    },
+    {
+      "type": 0,
+      "value": " of kleiner zijn."
     }
   ],
   "kH9Cpi": [
@@ -2461,6 +2671,12 @@
       "value": "Je sessie vervalt binnenkort."
     }
   ],
+  "oCHirf": [
+    {
+      "type": 0,
+      "value": "Uploaden..."
+    }
+  ],
   "oMvPQU": [
     {
       "type": 0,
@@ -2567,6 +2783,12 @@
       "value": "Sluiten"
     }
   ],
+  "pErllF": [
+    {
+      "type": 0,
+      "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
+    }
+  ],
   "pHX3oF": [
     {
       "type": 0,
@@ -2599,6 +2821,12 @@
     {
       "type": 0,
       "value": "BSN"
+    }
+  ],
+  "pzR8ui": [
+    {
+      "type": 0,
+      "value": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
     }
   ],
   "q9AKjH": [
@@ -2787,6 +3015,12 @@
     {
       "type": 0,
       "value": "Formulier niet beschikbaar"
+    }
+  ],
+  "re7vQZ": [
+    {
+      "type": 0,
+      "value": "De upload moet klaar zijn voor je door kan gaan."
     }
   ],
   "riuSfc": [
@@ -3017,6 +3251,30 @@
       "value": "Wat vind je van dit formulier?"
     }
   ],
+  "x/mWt2": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Toegevoegde bestanden"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Toegevoegd bestand"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "single"
+    }
+  ],
   "xHVrv5": [
     {
       "type": 0,
@@ -3055,6 +3313,12 @@
     {
       "type": 0,
       "value": "Jaar"
+    }
+  ],
+  "ySaVSL": [
+    {
+      "type": 0,
+      "value": "De bestandsuploadgegevens komen niet overeen."
     }
   ],
   "ybTcqX": [
