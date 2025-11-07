@@ -1,13 +1,23 @@
-import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
-import {useEffect, useRef, useState} from 'react';
+import type {FormioForm} from '@open-formulieren/formio-renderer';
+import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
+import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
+import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {useParams} from 'react-router';
 import type {AsyncState} from 'react-use/esm/useAsync';
 import useAsync from 'react-use/esm/useAsync';
 
+import {ConfigContext} from '@/Context';
 import {get} from '@/api';
+import {getCosignStatus as getCosignStatus_} from '@/components/CoSign';
+import {getLoginUrl} from '@/components/LoginOptions/utils';
+import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
+import {createTemporaryFileUpload, destroyTemporaryFileUpload} from '@/data/file-uploads';
 import type {Form, MinimalFormStep} from '@/data/forms';
+import {autoCompleteAddress} from '@/data/geo';
 import {type SubmissionStep, checkStepLogic} from '@/data/submission-steps';
 import type {NestedSubmissionStep, Submission} from '@/data/submissions';
+import {validateValue} from '@/data/validation';
+import useFormContext from '@/hooks/useFormContext';
 
 interface ResolvedStep {
   /**
@@ -125,4 +135,69 @@ export const useCheckStepLogic = (
   }, []);
 
   return {scheduleLogicCheck, inProgress};
+};
+
+/**
+ * Extract all the necessary configuration 'context' for the FormioForm, injecting the
+ * dependencies for the various component types that may be used.
+ */
+export const useFormioFormConfigurationParameters = (): Pick<
+  React.ComponentProps<typeof FormioForm>,
+  'componentParameters' | 'validatePluginCallback'
+> => {
+  const {baseUrl} = useContext(ConfigContext);
+  const form = useFormContext();
+  const {submission} = useSubmissionContext();
+  assertSubmission(submission);
+
+  const {id: submissionId} = submission;
+  const validatePluginCallback = useCallback(
+    async (plugin: string, value: JSONValue) => {
+      const {isValid, messages} = await validateValue(baseUrl, plugin, submissionId, value);
+      const result: Awaited<ReturnType<ValidatePluginCallback>> = isValid
+        ? {valid: true}
+        : {valid: false, messages};
+      return result;
+    },
+    [baseUrl, submissionId]
+  );
+  const addressAutoComplete = useCallback(
+    async (postcode: string, houseNumber: string) =>
+      await autoCompleteAddress(baseUrl, postcode, houseNumber),
+    [baseUrl]
+  );
+
+  const getCosignStatus = useCallback(
+    async () => await getCosignStatus_(baseUrl, submissionId),
+    [baseUrl, submissionId]
+  );
+  const getLoginOption = useCallback(
+    (authPlugin: string) => {
+      const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
+
+      if (!loginOption) return null;
+      loginOption.url = getLoginUrl(loginOption, {coSignSubmission: submissionId});
+      return loginOption;
+    },
+    [form, submissionId]
+  );
+
+  const upload = useCallback(
+    async (file: File): ReturnType<typeof createTemporaryFileUpload> => {
+      return await createTemporaryFileUpload(baseUrl, submission, file);
+    },
+    [baseUrl, submission]
+  );
+
+  return {
+    validatePluginCallback,
+    componentParameters: {
+      addressNL: {addressAutoComplete},
+      coSign: {getCosignStatus, getLoginOption},
+      file: {
+        upload,
+        destroy: destroyTemporaryFileUpload,
+      },
+    },
+  };
 };
