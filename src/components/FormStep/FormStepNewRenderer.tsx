@@ -91,7 +91,7 @@ const FormStepNewRenderer: React.FC = () => {
     [baseUrl, submissionId]
   );
   const getLoginOption = useCallback(
-    async (authPlugin: string) => {
+    (authPlugin: string) => {
       const loginOption = form.loginOptions.find(opt => opt.identifier === authPlugin);
 
       if (!loginOption) return null;
