@@ -61,7 +61,7 @@
     "originalDefault": "Edit child with BSN: {bsn}."
   },
   "1hdvgS": {
-    "defaultMessage": "Er is iets fout gegaan bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
+    "defaultMessage": "Er ging iets fout bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
