@@ -15,6 +15,73 @@ Deprecations
   ``dist/bundles/open-forms-sdk.{js,mjs,css}``. The Docker image still supports the old
   paths for backwards compatibility, but this is deprecated and may be removed in 4.0.
   For bundle imports, use a base path of ``/bundles/*``.
+* The reworked file upload component (experimental renderer) deprecates the old upload
+  component design tokens. We'll provide upgrade documentation and shims for backwards
+  compatibility.
+
+3.4.0-alpha.1 (2025-11-10)
+==========================
+
+Second preview release of the upcoming 3.4.0 version.
+
+Deprecations
+------------
+
+* The UMD bundle is deprecated and will be removed in Open Forms SDK 4.0. The UMD bundle
+  is currently the default export of the NPM package. In 4.0, the ESM modules will be
+  the default and the ESM **bundle** will require an updated import path.
+* The bundles have moved from ``dist/open-forms-sdk.{js,mjs,css}`` to
+  ``dist/bundles/open-forms-sdk.{js,mjs,css}``. The Docker image still supports the old
+  paths for backwards compatibility, but this is deprecated and may be removed in 4.0.
+  For bundle imports, use a base path of ``/bundles/*``.
+* The reworked file upload component (experimental renderer) deprecates the old upload
+  component design tokens. We'll provide upgrade documentation and shims for backwards
+  compatibility.
+
+New features
+------------
+
+* Appointments improvements:
+
+  - [#5694] Updated "location and time" step title to "date and time".
+  - [#5695] Added extra information to contact details step: products, date and time,
+    descriptions.
+
+* Updated the new renderer version. A detailed
+  `changelog is available <https://github.com/open-formulieren/formio-renderer/blob/main/CHANGELOG.md>`_.
+
+  - The following component types are now supported:
+
+   - ``datetime``
+   - ``time``
+   - ``addressNL``
+   - ``postcode``
+   - ``partners``
+   - ``signature``
+   - ``coSign`` (legacy)
+   - ``file``
+
+  - The multiple-values option is now supported in components that offer this option.
+  - The backend plugin validation is now enabled.
+  - Applied a number of quality-of-life improvements to components that weren't possible
+    before, notably for ``addressNL`` .
+
+* [#5548] Reduced visual clutter created by buttons to add a value to a multi-value field
+  and the button to add another item to a repeating group.
+
+Bugfixes
+--------
+
+* [#5728] Fixed delete buttons showing when ``disableAddingRemovingRows`` is set to
+  ``true`` in repeating groups.
+* [#5727] Fixed map overlays not being shown in form submission summary page.
+
+Project maintenance
+-------------------
+
+* Refactored some code to be in a more logical location and improve consistency.
+* Improved (UI) test stability/determinism.
+* Updated dev dependencies to their latest (security) fixes.
 
 3.3.1 (2025-10-29)
 ==================

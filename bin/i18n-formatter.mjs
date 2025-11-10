@@ -1,5 +1,8 @@
-const fs = require('fs');
-const argv = require('yargs').argv;
+import fs from 'fs';
+import yargs from 'yargs';
+import {hideBin} from 'yargs/helpers';
+
+const argv = yargs(hideBin(process.argv)).parse();
 
 // load the existing catalog to prevent overwriting messages
 const existingCatalog = JSON.parse(fs.readFileSync(argv.outFile, 'utf-8'));
@@ -20,4 +23,4 @@ const format = messages => {
   return messages;
 };
 
-exports.format = format;
+export {format};
