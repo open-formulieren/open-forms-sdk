@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {BASE_URL} from '@/api-mocks';
+import {BASE_URL, buildSubmission} from '@/api-mocks';
 
 import {EmailVerificationForm} from './index';
 import {
@@ -16,7 +16,7 @@ export default {
   component: EmailVerificationForm,
   decorators: [withRouter],
   args: {
-    submissionUrl: `${BASE_URL}submissions/123`,
+    submission: buildSubmission({url: `${BASE_URL}submissions/123`}),
     emailAddress: 'openforms@example.com',
     componentKey: 'emailWithVerificationRequirement',
     onVerified: fn(),

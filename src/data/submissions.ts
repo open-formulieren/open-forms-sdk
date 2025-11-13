@@ -198,6 +198,15 @@ export const confirmCosign = async (
   return result.data!;
 };
 
+interface LegacyOptions {
+  /**
+   * Rethrow errors instead of processing them into a result object.
+   *
+   * @deprecated Will be removed when the formio.js renderer is removed.
+   */
+  rethrowError?: boolean;
+}
+
 /**
  * @see `#/components/schemas/EmailVerification` in the API spec.
  */
@@ -222,7 +231,8 @@ export const requestEmailVerificationCode = async (
   baseUrl: string,
   submission: Submission,
   componentKey: string,
-  email: string
+  email: string,
+  options?: LegacyOptions
 ): Promise<RequestEmailVerificationCodeResult> => {
   const endpoint = `${baseUrl}submissions/email-verifications`;
   try {
@@ -236,6 +246,7 @@ export const requestEmailVerificationCode = async (
     );
     return {success: true};
   } catch (err: unknown) {
+    if (options?.rethrowError) throw err;
     let errorMessage: string = 'An unknown error occurred';
     if (err instanceof ValidationError) {
       errorMessage = err.invalidParams.map(invalidParam => invalidParam.reason).join('\n');
@@ -277,7 +288,8 @@ export const verifyEmailCode = async (
   submission: Submission,
   componentKey: string,
   email: string,
-  code: string
+  code: string,
+  options?: LegacyOptions
 ): Promise<VerifyCodeResult> => {
   const endpoint = `${baseUrl}submissions/email-verifications/verify`;
   try {
@@ -289,6 +301,7 @@ export const verifyEmailCode = async (
     });
     return {success: true};
   } catch (err: unknown) {
+    if (options?.rethrowError) throw err;
     if (err instanceof ValidationError) {
       const codeError = err.asFormikProps().initialErrors.code ?? err.message;
       return {success: false, errors: {code: codeError}};
