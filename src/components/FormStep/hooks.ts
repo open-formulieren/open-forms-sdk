@@ -1,4 +1,8 @@
 import type {FormioForm} from '@open-formulieren/formio-renderer';
+import type {
+  RequestVerificationCode,
+  VerifyCode,
+} from '@open-formulieren/formio-renderer/registry/email/verification/types.js';
 import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
 import {useCallback, useContext, useEffect, useRef, useState} from 'react';
@@ -15,7 +19,12 @@ import {createTemporaryFileUpload, destroyTemporaryFileUpload} from '@/data/file
 import type {Form, MinimalFormStep} from '@/data/forms';
 import {autoCompleteAddress} from '@/data/geo';
 import {type SubmissionStep, checkStepLogic} from '@/data/submission-steps';
-import type {NestedSubmissionStep, Submission} from '@/data/submissions';
+import {
+  type NestedSubmissionStep,
+  type Submission,
+  requestEmailVerificationCode,
+  verifyEmailCode,
+} from '@/data/submissions';
 import {validateValue} from '@/data/validation';
 import useFormContext from '@/hooks/useFormContext';
 
@@ -189,11 +198,25 @@ export const useFormioFormConfigurationParameters = (): Pick<
     [baseUrl, submission]
   );
 
+  const requestVerificationCode: RequestVerificationCode = useCallback(
+    async (componentKey: string, email: string) => {
+      return await requestEmailVerificationCode(baseUrl, submission, componentKey, email);
+    },
+    [baseUrl, submission]
+  );
+  const verifyCode: VerifyCode = useCallback(
+    async (componentKey: string, email: string, code: string) => {
+      return await verifyEmailCode(baseUrl, submission, componentKey, email, code);
+    },
+    [baseUrl, submission]
+  );
+
   return {
     validatePluginCallback,
     componentParameters: {
       addressNL: {addressAutoComplete},
       coSign: {getCosignStatus, getLoginOption},
+      email: {requestVerificationCode, verifyCode},
       file: {
         upload,
         destroy: destroyTemporaryFileUpload,
