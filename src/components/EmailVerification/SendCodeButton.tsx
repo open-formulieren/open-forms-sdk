@@ -1,11 +1,10 @@
-import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
+import {LoadingIndicator, PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {useFormikContext} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from '@/Context';
 import {post} from '@/api';
-import Loader from '@/components/Loader';
 
 interface AdditionalVerificationProps {
   submissionUrl: string;
@@ -58,7 +57,7 @@ const SendCodeButton: React.FC<SendCodeButtonProps> = ({
       disabled={!emailAddress || isSending}
     >
       {isSending ? (
-        <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
+        <LoadingIndicator position="center" size="small" color="muted" />
       ) : (
         <FormattedMessage
           description="Email verification: send code button text"

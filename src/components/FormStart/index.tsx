@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {useCallback, useContext, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router';
@@ -9,7 +10,6 @@ import Card from '@/components/Card';
 import FormMaximumSubmissionsError from '@/components/Errors/FormMaximumSubmissionsError';
 import ExistingSubmissionOptions from '@/components/ExistingSubmissionOptions';
 import {LiteralsProvider} from '@/components/Literal';
-import Loader from '@/components/Loader';
 import LoginOptions, {type OnFormStartOptions} from '@/components/LoginOptions';
 import MaintenanceMode from '@/components/MaintenanceMode';
 import {useSubmissionContext} from '@/components/SubmissionProvider';
@@ -108,7 +108,7 @@ const FormStart: React.FC = () => {
   if (doStart && !hasAuthErrors) {
     return (
       <Card>
-        <Loader modifiers={['centered', 'only-child']} />
+        <LoadingIndicator position="center" />
       </Card>
     );
   }

@@ -1,7 +1,7 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {useAsync} from 'react-use';
 
 import {post} from '@/api';
-import Loader from '@/components/Loader';
 import type {PaymentInfo} from '@/data/payment';
 
 import PaymentForm from './PaymentForm';
@@ -30,7 +30,7 @@ const StartPayment: React.FC<StartPaymentProps> = ({startUrl}) => {
   const {loading, value} = useAsync(async () => (await post<PaymentInfo>(fullUrl)).data, [fullUrl]);
 
   if (loading) {
-    return <Loader modifiers={['centered']} />;
+    return <LoadingIndicator position="center" />;
   }
 
   return (

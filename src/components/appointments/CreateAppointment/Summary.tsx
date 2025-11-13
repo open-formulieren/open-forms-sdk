@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import type {JSONObject} from '@open-formulieren/types/lib/types';
 import type {FormikErrors} from 'formik';
@@ -11,7 +12,6 @@ import {ConfigContext} from '@/Context';
 import {CardTitle} from '@/components/Card';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 import {Literal} from '@/components/Literal';
-import Loader from '@/components/Loader';
 import FormStepSummary from '@/components/Summary/FormStepSummary';
 import type {GenericSummaryProps} from '@/components/Summary/GenericSummary';
 import SummaryConfirmation from '@/components/SummaryConfirmation';
@@ -263,7 +263,7 @@ const Summary: React.FC = () => {
       {processingError && <ErrorMessage>{processingError}</ErrorMessage>}
 
       {loading ? (
-        <Loader modifiers={['centered']} />
+        <LoadingIndicator position="center" />
       ) : (
         <Formik<FormikValues>
           initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
