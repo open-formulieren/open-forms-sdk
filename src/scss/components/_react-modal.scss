@@ -59,7 +59,9 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
 
   &__close.utrecht-button {
     position: absolute;
-    display: inline-block;
+    // override of the CSS shipped by the formio-renderer - will become irrelevant
+    // when we refactor to use that modal component
+    display: inline-block !important;
     top: calc(
       $modal-close-icon-offset - var(--utrecht-button-padding-block-start) - var(
           --_utrecht-button-border-width
@@ -70,7 +72,9 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
           --_utrecht-button-border-width
         )
     );
-    inline-size: auto;
+    // override of the CSS shipped by the formio-renderer - will become irrelevant
+    // when we refactor to use that modal component
+    inline-size: auto !important;
     cursor: pointer;
     opacity: 0.5;
     font-size: 150%;

@@ -1,3 +1,4 @@
+import {SecondaryActionButton, SubtleButton} from '@open-formulieren/formio-renderer';
 import {
   Checkbox,
   Icon,
@@ -12,7 +13,6 @@ import '@utrecht/table-css';
 import type {UUID} from 'crypto';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {OFButton} from '@/components/Button';
 import FAIcon from '@/components/FAIcon';
 
 import CHILDREN_COMPONENTS from './definition';
@@ -52,12 +52,12 @@ export const ChildrenComponent: React.FC<ChildrenComponentProps> = ({
       toggleChildSelection={toggleChildSelection}
     />
     {enableCreation && (
-      <OFButton onClick={onAddChild} variant="secondary" appearance="primary-action-button">
+      <SecondaryActionButton onClick={onAddChild}>
         <FormattedMessage
           description="Add child: add child button text"
           defaultMessage="Add Child"
         />
-      </OFButton>
+      </SecondaryActionButton>
     )}
   </>
 );
@@ -143,10 +143,8 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                 </TableCell>
                 {child.__addedManually && (
                   <TableCell className="openforms-children__actions">
-                    <OFButton
+                    <SubtleButton
                       onClick={() => onEditChild(child)}
-                      appearance="subtle-button"
-                      variant="default"
                       aria-label={intl.formatMessage(
                         {
                           description: 'Edit child button [bsn]',
@@ -158,11 +156,9 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                       <Icon>
                         <FAIcon icon="pen" />
                       </Icon>
-                    </OFButton>
-                    <OFButton
+                    </SubtleButton>
+                    <SubtleButton
                       onClick={() => onRemoveChild(child)}
-                      appearance="subtle-button"
-                      variant="default"
                       hint="danger"
                       aria-label={intl.formatMessage(
                         {
@@ -175,7 +171,7 @@ export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
                       <Icon>
                         <FAIcon icon="trash-can" />
                       </Icon>
-                    </OFButton>
+                    </SubtleButton>
                   </TableCell>
                 )}
               </TableRow>

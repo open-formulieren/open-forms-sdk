@@ -1,8 +1,7 @@
+import {SecondaryActionButton} from '@open-formulieren/formio-renderer';
 import type {PartnerDetails} from '@open-formulieren/types';
 import {DataList, DataListItem, DataListKey, DataListValue} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
-
-import {OFButton} from '@/components/Button';
 
 import PARTNER_COMPONENTS from './definition';
 import type {PartnerManuallyAdded} from './types';
@@ -31,20 +30,20 @@ export const PartnersComponent: React.FC<PartnersComponentProps> = ({
   <>
     <DisplayPartners partners={partners} />
     {hasNoPartners && (
-      <OFButton onClick={onAddPartner} variant="secondary" appearance="primary-action-button">
+      <SecondaryActionButton onClick={onAddPartner}>
         <FormattedMessage
           description="Add partner: add partner button text"
           defaultMessage="Add partner"
         />
-      </OFButton>
+      </SecondaryActionButton>
     )}
     {!hasNoPartners && manuallyAddedPartner && (
-      <OFButton onClick={onEditPartner} variant="secondary" appearance="primary-action-button">
+      <SecondaryActionButton onClick={onEditPartner}>
         <FormattedMessage
           description="Edit partner: edit partner button text"
           defaultMessage="Edit partner"
         />
-      </OFButton>
+      </SecondaryActionButton>
     )}
   </>
 );

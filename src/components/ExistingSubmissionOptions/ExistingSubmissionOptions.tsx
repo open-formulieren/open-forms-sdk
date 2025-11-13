@@ -1,9 +1,9 @@
+import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router';
 
 import AbortButton from '@/components/AbortButton';
-import {OFButton} from '@/components/Button';
 import type {Form} from '@/data/forms';
 
 export interface ExistingSubmissionOptionsProps {
@@ -22,12 +22,12 @@ const ExistingSubmissionOptions: React.FC<ExistingSubmissionOptionsProps> = ({
   return (
     <>
       <ButtonGroup className="openforms-form-navigation" direction="column">
-        <OFButton variant="primary" onClick={() => navigate(firstStepRoute)}>
+        <PrimaryActionButton onClick={() => navigate(firstStepRoute)}>
           <FormattedMessage
             defaultMessage="Continue existing submission"
             description="Continue existing submission button label"
           />
-        </OFButton>
+        </PrimaryActionButton>
         <AbortButton onDestroySession={onDestroySession} isAuthenticated={isAuthenticated} />
       </ButtonGroup>
     </>

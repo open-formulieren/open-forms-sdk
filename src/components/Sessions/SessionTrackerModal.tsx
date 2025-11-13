@@ -1,3 +1,4 @@
+import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {useContext, useEffect, useState} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
@@ -5,7 +6,6 @@ import {useTimeout, useTimeoutFn} from 'react-use';
 
 import {ConfigContext} from '@/Context';
 import {apiCall} from '@/api';
-import {OFButton} from '@/components/Button';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 import Modal from '@/components/modals/Modal';
 import useSessionTimeout from '@/hooks/useSessionTimeout';
@@ -139,9 +139,8 @@ const ExpiryModal: React.FC<ExpiryModalProps> = ({
         />
       </ErrorMessage>
       <ButtonGroup direction="column">
-        <OFButton
+        <PrimaryActionButton
           type="submit"
-          variant="primary"
           onClick={async event => {
             event.preventDefault();
             await apiCall(`${baseUrl}ping`);
@@ -151,7 +150,7 @@ const ExpiryModal: React.FC<ExpiryModalProps> = ({
             description="Extend session button (in modal)"
             defaultMessage="Extend"
           />
-        </OFButton>
+        </PrimaryActionButton>
       </ButtonGroup>
     </Modal>
   );

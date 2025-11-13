@@ -1,10 +1,10 @@
+import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {useFormikContext} from 'formik';
 import {useContext, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from '@/Context';
 import {post} from '@/api';
-import {OFButton} from '@/components/Button';
 import Loader from '@/components/Loader';
 
 interface AdditionalVerificationProps {
@@ -41,9 +41,8 @@ const SendCodeButton: React.FC<SendCodeButtonProps> = ({
   const [isSending, setIsSending] = useState(false);
   const {setFieldValue} = useFormikContext();
   return (
-    <OFButton
+    <PrimaryActionButton
       type="button"
-      variant="primary"
       onClick={async () => {
         setIsSending(true);
         try {
@@ -66,7 +65,7 @@ const SendCodeButton: React.FC<SendCodeButtonProps> = ({
           defaultMessage="Send code"
         />
       )}
-    </OFButton>
+    </PrimaryActionButton>
   );
 };
 

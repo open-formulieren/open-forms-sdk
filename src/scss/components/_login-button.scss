@@ -9,13 +9,17 @@
   gap: math.div($grid-container-margin-base, 2);
 
   @include margin(auto, margin-bottom, math.div($grid-container-margin-base, 2));
+}
 
-  @include mobile-only {
-    gap: 0;
-    .utrecht-button,
-    .utrecht-button-link {
-      width: 75%;
-      justify-content: flex-start;
+.openforms-theme {
+  .openforms-login-button {
+    @include mobile-only {
+      gap: 0;
+      .utrecht-button,
+      .utrecht-button-link {
+        inline-size: 75%;
+        justify-content: flex-start;
+      }
     }
   }
 }

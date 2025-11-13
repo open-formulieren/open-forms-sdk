@@ -1,4 +1,4 @@
-import {TextField} from '@open-formulieren/formio-renderer';
+import {PrimaryActionButton, TextField} from '@open-formulieren/formio-renderer';
 import type {Meta, StoryObj} from '@storybook/react';
 import {fn, userEvent, within} from '@storybook/test';
 import {ButtonGroup} from '@utrecht/button-group-react';
@@ -7,7 +7,6 @@ import {useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
-import {OFButton} from '@/components/Button';
 import useZodErrorMap from '@/hooks/useZodErrorMap';
 
 interface Args {
@@ -121,13 +120,8 @@ const AccessibleErrorsExample: React.FC<AccessibleErrorsExampleProps> = ({onSubm
         <div className="openforms-form-field-container">
           <TextField name="name" label={labels.name} />
           <TextField type="email" name="email" label={labels.email} />
-          <ButtonGroup
-            className="utrecht-button-group--distanced"
-            style={{justifyContent: 'flex-end'}}
-          >
-            <OFButton type="submit" variant="primary" appearance="primary-action-button">
-              Submit
-            </OFButton>
+          <ButtonGroup>
+            <PrimaryActionButton type="submit">Submit</PrimaryActionButton>
           </ButtonGroup>
         </div>
       </Form>
