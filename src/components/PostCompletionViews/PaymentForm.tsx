@@ -1,7 +1,6 @@
+import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {useEffect, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
-
-import {OFButton} from '@/components/Button';
 
 const AUTOSUBMIT_AFTER = 5000;
 
@@ -44,9 +43,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({method, url, data, autoSubmit 
   return (
     <form ref={formRef} method={method} action={url}>
       {dataFields}
-      <OFButton type="submit" variant="primary">
+      <PrimaryActionButton type="submit">
         <FormattedMessage description="Start payment button" defaultMessage="Pay now" />
-      </OFButton>
+      </PrimaryActionButton>
     </form>
   );
 };

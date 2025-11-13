@@ -1,9 +1,8 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
-import {TextField} from '@open-formulieren/formio-renderer';
+import {Button, TextField} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
-import {Button as UtrechtButton} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
@@ -198,7 +197,7 @@ const FormStepSaveModal: React.FC<FormStepSaveModalProps> = ({
             />
 
             <ButtonGroup className="openforms-form-navigation" direction="column">
-              <UtrechtButton
+              <Button
                 type="submit"
                 appearance="primary-action-button"
                 disabled={props.isSubmitting}
@@ -207,7 +206,7 @@ const FormStepSaveModal: React.FC<FormStepSaveModalProps> = ({
                   description="Form save modal submit button"
                   defaultMessage="Continue later"
                 />
-              </UtrechtButton>
+              </Button>
             </ButtonGroup>
           </Body>
         )}

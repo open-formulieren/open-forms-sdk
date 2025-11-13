@@ -1,6 +1,6 @@
+import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {Icon} from '@utrecht/component-library-react';
 
-import {OFButton} from '@/components/Button';
 import FAIcon from '@/components/FAIcon';
 import {Literal} from '@/components/Literal';
 import type {Submission} from '@/data/submissions';
@@ -25,11 +25,10 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
 }) => {
   if (canSubmitForm !== 'yes') return null;
   return (
-    <OFButton
+    <PrimaryActionButton
       type="submit"
       name="next"
       disabled={isDisabled}
-      variant="primary"
       className="openforms-form-navigation__next-button"
       onClick={onClick}
     >
@@ -37,7 +36,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
       <Icon>
         <FAIcon icon="" className="fa-fw" />
       </Icon>
-    </OFButton>
+    </PrimaryActionButton>
   );
 };
 
