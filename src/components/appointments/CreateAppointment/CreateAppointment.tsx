@@ -1,10 +1,10 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {Outlet, useLocation} from 'react-router';
 
 import Card from '@/components/Card';
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import FormDisplay from '@/components/FormDisplay';
 import {LiteralsProvider} from '@/components/Literal';
-import Loader from '@/components/Loader';
 import {SessionTrackerModal} from '@/components/Sessions';
 import useFormContext from '@/hooks/useFormContext';
 import useGetOrCreateSubmission from '@/hooks/useGetOrCreateSubmission';
@@ -64,7 +64,7 @@ const CreateAppointment: React.FC = () => {
             <Wrapper title={form.name}>
               <ErrorBoundary>
                 {isLoading ? (
-                  <Loader modifiers={['centered']} />
+                  <LoadingIndicator position="center" />
                 ) : (
                   <LiteralsProvider literals={form.literals}>
                     <Outlet />

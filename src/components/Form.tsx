@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {useContext, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {Navigate, Outlet, useLocation, useMatch, useNavigate, useSearchParams} from 'react-router';
@@ -6,7 +7,6 @@ import {usePrevious} from 'react-use';
 import {ConfigContext} from '@/Context';
 import {destroy} from '@/api';
 import FormProgressIndicator from '@/components/FormProgressIndicator';
-import Loader from '@/components/Loader';
 import SubmissionProvider from '@/components/SubmissionProvider';
 import AnalyticsToolsConfigProvider from '@/components/analytics/AnalyticsToolConfigProvider';
 import {START_FORM_QUERY_PARAM} from '@/components/constants';
@@ -95,7 +95,7 @@ const Form: React.FC = () => {
   }
 
   if (loading || shouldAutomaticallyRedirect) {
-    return <Loader modifiers={['centered']} />;
+    return <LoadingIndicator position="center" />;
   }
 
   // don't render the PI if the form is configured to never display the progress

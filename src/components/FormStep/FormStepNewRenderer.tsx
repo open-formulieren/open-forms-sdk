@@ -1,4 +1,4 @@
-import {FormioForm} from '@open-formulieren/formio-renderer';
+import {FormioForm, LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {FormStateRef} from '@open-formulieren/formio-renderer/components/FormioForm.js';
 import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
 import type {AnyComponentSchema} from '@open-formulieren/types';
@@ -13,7 +13,6 @@ import Card, {CardTitle} from '@/components/Card';
 import FormNavigation, {StepSubmitButton} from '@/components/FormNavigation';
 import type {FormNavigationProps} from '@/components/FormNavigation/FormNavigation';
 import {LiteralsProvider} from '@/components/Literal';
-import Loader from '@/components/Loader';
 import PreviousLink from '@/components/PreviousLink';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import FormStepSaveModal from '@/components/modals/FormStepSaveModal';
@@ -116,7 +115,7 @@ const FormStepNewRenderer: React.FC = () => {
         <Progress form={form} submission={submission} currentStep={sparseStep} />
         <CardTitle title={sparseStep.name} headingType="subtitle" padded />
 
-        {isLoading && <Loader modifiers={['centered']} />}
+        {isLoading && <LoadingIndicator position="center" />}
 
         {!isLoading && (
           <FormioForm

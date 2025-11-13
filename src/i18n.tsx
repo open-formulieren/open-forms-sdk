@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {SupportedLocales} from '@open-formulieren/types';
 import flatpickr from 'flatpickr';
 import {Dutch} from 'flatpickr/dist/l10n/nl.js';
@@ -17,7 +18,6 @@ import {get} from '@/api';
 import {logError} from '@/components/Errors';
 import type {ErrorBoundaryState} from '@/components/Errors/ErrorBoundary';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
-import Loader from '@/components/Loader';
 
 // ensure flatpickr locales are included in bundle
 flatpickr.l10ns.nl = Dutch;
@@ -108,7 +108,10 @@ const I18NManager: React.FC<I18NManagerProps> = ({
     };
   }, [baseUrl, languageCode]);
 
-  if (loading) return <Loader modifiers={['centered']} withoutTranslation />;
+  if (loading) {
+    // the description is *deliberately* not localized
+    return <LoadingIndicator position="center" description="Loading..." />;
+  }
   if (error) {
     throw error;
   }

@@ -1,8 +1,8 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {Form, Formik} from 'formik';
 
 import Card from '@/components/Card';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
-import Loader from '@/components/Loader';
 import Price from '@/components/Price';
 import SummaryConfirmation from '@/components/SummaryConfirmation';
 import type {SubmissionStatementConfiguration} from '@/data/forms';
@@ -70,7 +70,7 @@ const GenericSummary: React.FC<GenericSummaryProps> = ({
   if (isLoading) {
     return (
       <Card title={title}>
-        <Loader modifiers={['centered']} />
+        <LoadingIndicator position="center" />
       </Card>
     );
   }

@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {SupportedLocales} from '@open-formulieren/types';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Heading, LinkButton} from '@utrecht/component-library-react';
@@ -9,7 +10,6 @@ import {useState as useGlobalState} from 'state-pool';
 import {ConfigContext} from '@/Context';
 import {get, put} from '@/api';
 import type {AnyError} from '@/components/Errors/types';
-import Loader from '@/components/Loader';
 import {globalSubmissionState} from '@/data/submissions';
 import {I18NContext, formatMessageForLocale} from '@/i18n';
 
@@ -49,7 +49,7 @@ const LanguageSelection: React.FC = () => {
     throw anyError; // bubble up to boundary
   }
   if (loading || updatingLanguage) {
-    return <Loader modifiers={['small']} />;
+    return <LoadingIndicator size="small" />;
   }
 
   const {languages} = languageInfo!;

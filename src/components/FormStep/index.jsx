@@ -21,6 +21,7 @@
  *     restored to its original state
  *
  */
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import cloneDeep from 'lodash/cloneDeep';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
@@ -37,7 +38,6 @@ import Card, {CardTitle} from 'components/Card';
 import {EmailVerificationModal} from 'components/EmailVerification';
 import FormNavigation, {StepSubmitButton} from 'components/FormNavigation';
 import {LiteralsProvider} from 'components/Literal';
-import Loader from 'components/Loader';
 import PreviousLink from 'components/PreviousLink';
 import {useSubmissionContext} from 'components/SubmissionProvider';
 import FormStepSaveModal from 'components/modals/FormStepSaveModal';
@@ -742,7 +742,7 @@ const FormStep = () => {
   return (
     <LiteralsProvider literals={formStep.literals}>
       <Card title={form.name} mobileHeaderHidden>
-        {isLoadingSomething ? <Loader modifiers={['centered']} /> : null}
+        {isLoadingSomething ? <LoadingIndicator position="center" /> : null}
 
         {previousPage && <PreviousLink to={previousPage} onClick={onPrevPage} position="start" />}
 
@@ -750,7 +750,7 @@ const FormStep = () => {
           <>
             <Progress form={form} submission={submission} currentStep={submissionStep} />
             <CardTitle title={submissionStep.name} headingType="subtitle" padded />
-            <Suspense fallback={<Loader modifiers={['centered']} />}>
+            <Suspense fallback={<LoadingIndicator position="center" />}>
               <form onSubmit={onReactSubmit} noValidate>
                 <Form
                   ref={formRef}

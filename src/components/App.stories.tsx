@@ -157,7 +157,7 @@ export const TranslationDisabled: Story = {
     const canvas = within(canvasElement);
 
     // wait for spinners to disappear
-    const spinners = document.querySelectorAll('.openforms-loading__spinner');
+    const spinners = document.querySelectorAll('.openforms-loading-indicator__spinner');
     await Promise.all(Array.from(spinners).map(spinner => waitForElementToBeRemoved(spinner)));
 
     // assert there's no NL button
