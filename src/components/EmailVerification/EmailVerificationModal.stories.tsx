@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 
-import {BASE_URL} from '@/api-mocks';
+import {BASE_URL, buildSubmission} from '@/api-mocks';
 
 import {EmailVerificationModal} from './index';
 import {mockEmailVerificationPost, mockEmailVerificationVerifyCodePost} from './mocks';
@@ -12,7 +12,7 @@ export default {
   args: {
     isOpen: true,
     closeModal: fn(),
-    submissionUrl: `${BASE_URL}submissions/123`,
+    submission: buildSubmission({url: `${BASE_URL}submissions/123`}),
     emailAddress: 'openforms@example.com',
     componentKey: 'emailWithVerificationRequirement',
   },
