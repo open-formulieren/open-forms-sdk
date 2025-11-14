@@ -22,6 +22,29 @@ const config = defineConfig([
           prefer: 'type-imports',
         },
       ],
+      'no-restricted-imports': [
+        'error',
+        {
+          // the utrecht-button variants have some accessibility issues, use the wrappers
+          // instead
+          paths: [
+            {
+              name: '@utrecht/component-library-react',
+              importNames: [
+                'PrimaryActionButton',
+                'Button',
+                'SecondaryActionButton',
+                'SubtleButton',
+              ],
+              message: 'Use Button (variants) from `@open-formulieren/formio-renderer` instead.',
+            },
+            {
+              name: '@/components/Button',
+              message: 'Use Button (variants) from `@open-formulieren/formio-renderer` instead.',
+            },
+          ],
+        },
+      ],
     },
   },
   // Only allow JSX? in specific places, otherwise TS must be used.

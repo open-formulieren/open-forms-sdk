@@ -1,9 +1,8 @@
+import {LoadingIndicator, PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {Icon} from '@utrecht/component-library-react';
 
-import {OFButton} from '@/components/Button';
 import FAIcon from '@/components/FAIcon';
 import {Literal} from '@/components/Literal';
-import Loader from '@/components/Loader';
 import type {Submission} from '@/data/submissions';
 
 export interface StepSubmitButtonProps {
@@ -29,15 +28,14 @@ const StepSubmitButton: React.FC<StepSubmitButtonProps> = ({
 }) => {
   if (canSubmitForm === 'no_without_overview' && isLastStep) return null;
   return (
-    <OFButton
+    <PrimaryActionButton
       type="submit"
       name="next"
       disabled={!canSubmitStep || isCheckingLogic}
-      variant="primary"
       className="openforms-form-navigation__next-button"
     >
       {isCheckingLogic ? (
-        <Loader modifiers={['centered', 'only-child', 'small', 'gray']} />
+        <LoadingIndicator position="center" size="small" color="muted" />
       ) : (
         <>
           <Literal name="nextText" />
@@ -46,7 +44,7 @@ const StepSubmitButton: React.FC<StepSubmitButtonProps> = ({
           </Icon>
         </>
       )}
-    </OFButton>
+    </PrimaryActionButton>
   );
 };
 

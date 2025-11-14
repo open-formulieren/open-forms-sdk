@@ -1,43 +1,50 @@
+import {
+  Button,
+  PrimaryActionButton,
+  SecondaryActionButton,
+  SubtleButton,
+} from '@open-formulieren/formio-renderer';
 import type {Meta, StoryObj} from '@storybook/react';
+// TODO: wrap and blocklist in formio-renderer for disabled state
 import {LinkButton} from '@utrecht/component-library-react';
 
 import FAIcon from '../FAIcon';
-import OFButton from './OFButton';
 
 export default {
   title: 'Pure React components / OF Button',
-  component: OFButton,
+  component: Button,
   argTypes: {
-    children: {type: 'string'},
+    children: {table: {disable: true}},
   },
-} satisfies Meta<typeof OFButton>;
+} satisfies Meta<typeof Button>;
 
-type Story = StoryObj<typeof OFButton>;
+type Story = StoryObj<typeof Button>;
 
 export const UtrechtDefault: Story = {
+  render: args => <Button {...args} />,
   args: {
     children: 'Default',
   },
 };
 
 export const UtrechtPrimary: Story = {
+  render: args => <PrimaryActionButton {...args} />,
   args: {
     children: 'Primary',
-    variant: 'primary',
   },
 };
 
 export const UtrechtSecondary: Story = {
+  render: args => <SecondaryActionButton {...args} />,
   args: {
     children: 'Secondary',
-    variant: 'secondary',
   },
 };
 
 export const UtrechtDanger: Story = {
+  render: args => <PrimaryActionButton {...args} />,
   args: {
     children: 'Danger',
-    variant: 'primary',
     hint: 'danger',
   },
 };
@@ -50,24 +57,24 @@ export const UtrechtButtonLooksLikeLink: StoryObj<typeof LinkButton> = {
 };
 
 export const UtrechtIconButton: Story = {
+  render: args => <SubtleButton {...args} />,
   args: {
     children: <FAIcon icon="pen" />,
-    appearance: 'subtle-button',
   },
 };
 
 export const UtrechtIconButtonDanger: Story = {
+  render: args => <SubtleButton {...args} />,
   args: {
     children: <FAIcon icon="pen" />,
-    appearance: 'subtle-button',
     hint: 'danger',
   },
 };
 
 export const UtrechtButtonDisabled: Story = {
+  render: args => <PrimaryActionButton {...args} />,
   args: {
     children: 'Disabled',
-    variant: 'primary',
     disabled: true,
   },
 };

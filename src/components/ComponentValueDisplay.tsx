@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {
   AddressData,
   AddressNLComponentSchema,
@@ -27,7 +28,6 @@ import Body from '@/components/Body';
 import CoSignOld from '@/components/CoSign';
 import Image from '@/components/Image';
 import List from '@/components/List';
-import Loader from '@/components/Loader';
 import Map from '@/components/Map';
 import type {GeoJsonGeometry} from '@/components/Map/types';
 
@@ -232,7 +232,7 @@ const MapDisplay: React.FC<DisplayProps<MapComponentSchema, GeoJsonGeometry>> = 
   }
 
   return (
-    <Suspense fallback={<Loader modifiers={['centered']} />}>
+    <Suspense fallback={<LoadingIndicator position="center" />}>
       <Map
         geoJsonGeometry={value}
         disabled

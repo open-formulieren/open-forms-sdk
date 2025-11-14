@@ -1,10 +1,10 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from '@/Context';
 import {get} from '@/api';
-import Loader from '@/components/Loader';
 import {getBEMClassName} from '@/utils';
 
 import './MapAddress.scss';
@@ -43,7 +43,7 @@ const NearestAddress: React.FC<NearestAddressProps> = ({coordinates}) => {
   return (
     <div className={getBEMClassName('map-address')}>
       {loading ? (
-        <Loader modifiers={['only-child', 'small']} />
+        <LoadingIndicator size="small" />
       ) : (
         // can't put address inside a p element
         <div className="utrecht-paragraph">

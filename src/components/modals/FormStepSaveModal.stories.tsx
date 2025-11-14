@@ -1,10 +1,10 @@
+import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {useArgs} from '@storybook/preview-api';
 import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from '@/api-mocks';
-import {OFButton} from '@/components/Button';
 
 import type {FormStepSaveModalProps} from './FormStepSaveModal';
 import FormStepSaveModal from './FormStepSaveModal';
@@ -26,9 +26,9 @@ const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context)
   const [, updateArgs] = useArgs();
   return (
     <>
-      <OFButton variant="primary" onClick={() => updateArgs({isOpen: true})}>
+      <PrimaryActionButton onClick={() => updateArgs({isOpen: true})}>
         Open Modal
-      </OFButton>
+      </PrimaryActionButton>
       <Story
         {...context}
         args={{

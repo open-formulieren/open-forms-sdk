@@ -1,10 +1,10 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
 import Body from '@/components/Body';
 import Card from '@/components/Card';
-import Loader from '@/components/Loader';
 import type {SubmissionProcessingStatus} from '@/data/submission-status';
 import usePoll from '@/hooks/usePoll';
 
@@ -90,7 +90,7 @@ const StatusUrlPoller: React.FC<StatusUrlPollerProps> = ({
           />
         }
       >
-        <Loader modifiers={['centered']} />
+        <LoadingIndicator position="center" />
         <Body>
           <FormattedMessage
             description="Checking background processing status body"

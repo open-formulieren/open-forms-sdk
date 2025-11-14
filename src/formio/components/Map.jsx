@@ -1,13 +1,13 @@
 /**
  * A form widget to select a location on a Leaflet map.
  */
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {IntlProvider} from 'react-intl';
 
 import {ConfigContext} from 'Context';
-import Loader from 'components/Loader';
 import LeafletMap from 'components/Map';
 import {DEFAULT_LAT_LNG, DEFAULT_ZOOM} from 'components/Map/constants';
 
@@ -111,7 +111,7 @@ export default class Map extends Field {
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
         <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
-          <Suspense fallback={<Loader modifiers={['centered']} />}>
+          <Suspense fallback={<LoadingIndicator position="center" />}>
             <LeafletMap
               geoJsonGeometry={geoJsonGeometry || null}
               onGeoJsonGeometrySet={this.onGeoJsonSet.bind(this)}

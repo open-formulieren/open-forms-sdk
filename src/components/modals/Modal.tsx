@@ -1,8 +1,8 @@
+import {SubtleButton} from '@open-formulieren/formio-renderer';
 import {createContext, useContext, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import ReactModal from 'react-modal';
 
-import {OFButton} from '@/components/Button';
 import FAIcon from '@/components/FAIcon';
 import {getBEMClassName} from '@/utils';
 
@@ -36,6 +36,10 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
+/**
+ * @deprecated Use the @open-formulieren/formio-renderer modal instead.
+ * @todo Refactor usage.
+ */
 const Modal: React.FC<ModalProps> = ({
   isOpen = false,
   title = '',
@@ -58,11 +62,9 @@ const Modal: React.FC<ModalProps> = ({
     >
       <header className={getBEMClassName('react-modal__header')}>
         {title ? <h1 className={getBEMClassName('react-modal__title')}>{title}</h1> : null}
-        <OFButton
-          appearance="subtle-button"
+        <SubtleButton
           onClick={closeModal}
           className={getBEMClassName('react-modal__close')}
-          variant="default"
           title={intl.formatMessage({
             description: 'Modal close icon title',
             defaultMessage: 'Close',
@@ -73,7 +75,7 @@ const Modal: React.FC<ModalProps> = ({
           })}
         >
           <FAIcon icon="close" />
-        </OFButton>
+        </SubtleButton>
       </header>
       {children}
     </ReactModal>
