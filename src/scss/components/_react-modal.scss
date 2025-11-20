@@ -82,6 +82,13 @@ $modal-close-icon-offset: math.div($modal-padding, 2) !default;
     &:hover {
       opacity: 0.8;
     }
+
+    // override of the CSS shipped by the formio-renderer - will become irrelevant
+    // when we refactor to use that modal component
+    @include mobile-only {
+      display: inline !important;
+      inline-size: auto !important;
+    }
   }
 
   &__title {
