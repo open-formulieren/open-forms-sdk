@@ -852,11 +852,6 @@
     "description": "Draw handler polygon tooltip continue.",
     "originalDefault": "Click to continue drawing shape"
   },
-  "eAmrdi": {
-    "defaultMessage": "Laden...",
-    "description": "Loading content text",
-    "originalDefault": "Loading..."
-  },
   "eEC1P4": {
     "defaultMessage": "Veld ''{label}'': {error}",
     "description": "Overview page, validation error message for step field.",
@@ -1031,7 +1026,7 @@
     "originalDefault": "Product"
   },
   "lmWBQT": {
-    "defaultMessage": "De bevestigingscode is precies zes tekens lang en bestaat uit hoofdletters en getallen.",
+    "defaultMessage": "De bevestigingscode is precies 6 tekens lang en bestaat uit hoofdletters en getallen.",
     "description": "Email verification: code input field description",
     "originalDefault": "The code is exactly six characters long and consists of only uppercase letters and numbers."
   },
