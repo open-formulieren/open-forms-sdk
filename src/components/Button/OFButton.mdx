@@ -1,8 +1,8 @@
 import {ArgTypes, Canvas, Meta} from '@storybook/blocks';
 
-import * as OFButtonStories from './OFButton.stories';
+import * as ButtonStories from './OFButton.stories';
 
-<Meta of={OFButtonStories} />
+<Meta of={ButtonStories} />
 
 # Buttons
 
@@ -16,26 +16,22 @@ aria attribute instead.
 More information on the Utrecht buttons can be found
 [here](https://nl-design-system.github.io/themes/?path=/docs/button--gemeente-utrecht).
 
-<Canvas of={OFButtonStories.UtrechtDefault} />
-<Canvas of={OFButtonStories.UtrechtPrimary} />
-<Canvas of={OFButtonStories.UtrechtSecondary} />
-<Canvas of={OFButtonStories.UtrechtDanger} />
+<Canvas of={ButtonStories.UtrechtDefault} />
+<Canvas of={ButtonStories.UtrechtPrimary} />
+<Canvas of={ButtonStories.UtrechtSecondary} />
+<Canvas of={ButtonStories.UtrechtDanger} />
 
 ### Button that looks like a link
 
-<Canvas of={OFButtonStories.UtrechtButtonLooksLikeLink} />
+<Canvas of={ButtonStories.UtrechtButtonLooksLikeLink} />
 
 ## Icon buttons
 
-<Canvas of={OFButtonStories.UtrechtIconButton} />
-<Canvas of={OFButtonStories.UtrechtIconButtonDanger} />
+<Canvas of={ButtonStories.UtrechtIconButton} />
+<Canvas of={ButtonStories.UtrechtIconButtonDanger} />
 
 ## Disabled state
 
 Passing the `disabled` prop sets the appropriate `aria-disabled` attribute.
 
-<Canvas of={OFButtonStories.UtrechtButtonDisabled} />
-
-## Props
-
-<ArgTypes of={OFButtonStories} />
+<Canvas of={ButtonStories.UtrechtButtonDisabled} />

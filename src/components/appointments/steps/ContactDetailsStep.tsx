@@ -1,4 +1,4 @@
-import {FormioForm} from '@open-formulieren/formio-renderer';
+import {FormioForm, LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import {useContext} from 'react';
 import {flushSync} from 'react-dom';
@@ -10,7 +10,6 @@ import {ConfigContext} from '@/Context';
 import {get} from '@/api';
 import {getCached, setCached} from '@/cache';
 import {CardTitle} from '@/components/Card';
-import Loader from '@/components/Loader';
 import useTitle from '@/hooks/useTitle';
 
 import {useCreateAppointmentContext} from '../CreateAppointment/CreateAppointmentState';
@@ -98,7 +97,7 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}
         padded
       />
 
-      {loading && <Loader modifiers={['centered']} />}
+      {loading && <LoadingIndicator position="center" />}
       {!loading && (
         <>
           {/* previous steps summary */}

@@ -1,10 +1,10 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from '@/Context';
-import Loader from '@/components/Loader';
 import type {AppointmentProduct} from '@/data/appointments';
 
 import {getLocations} from '../fields/LocationSelect';
@@ -32,7 +32,7 @@ export const LocationAndDateTimeSummary: React.FC<LocationAndDateTimeSummaryProp
   if (!products.length) return null;
   if (error) throw error;
   if (loading) {
-    return <Loader modifiers={['small']} />;
+    return <LoadingIndicator size="small" />;
   }
 
   const selectedLocation = allLocations.find(l => l.identifier === selectedLocationIdentifier);

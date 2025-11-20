@@ -1,10 +1,10 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {Heading3, UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from '@/Context';
-import Loader from '@/components/Loader';
 import type {AppointmentProduct} from '@/data/appointments';
 
 import {getAllProducts} from '../fields/ProductSelect';
@@ -24,7 +24,7 @@ export const ProductSummary: React.FC<ProductSummaryProps> = ({products}) => {
   if (!products.length) return null;
   if (error) throw error;
   if (loading) {
-    return <Loader modifiers={['small']} />;
+    return <LoadingIndicator size="small" />;
   }
 
   const productsById = Object.fromEntries(allProducts.map(p => [p.identifier, p.name]));

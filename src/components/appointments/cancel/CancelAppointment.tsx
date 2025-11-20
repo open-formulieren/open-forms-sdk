@@ -1,4 +1,4 @@
-import {TextField} from '@open-formulieren/formio-renderer';
+import {PrimaryActionButton, TextField} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Formik} from 'formik';
 import {useContext, useState} from 'react';
@@ -7,7 +7,6 @@ import {useNavigate, useSearchParams} from 'react-router';
 
 import {ConfigContext} from '@/Context';
 import Body from '@/components/Body';
-import {OFButton} from '@/components/Button';
 import Card from '@/components/Card';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 import {cancelAppointment} from '@/data/appointments';
@@ -125,12 +124,12 @@ out your email address for verification purposes.`}
               />
             </div>
             <ButtonGroup className="openforms-form-navigation" direction="column">
-              <OFButton type="submit" variant="primary">
+              <PrimaryActionButton type="submit">
                 <FormattedMessage
                   description="Cancel appointment submit button"
                   defaultMessage="Cancel appointment"
                 />
-              </OFButton>
+              </PrimaryActionButton>
             </ButtonGroup>
           </Body>
         )}

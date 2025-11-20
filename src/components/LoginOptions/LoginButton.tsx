@@ -1,6 +1,6 @@
+import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {ButtonLink} from '@utrecht/component-library-react';
 
-import {OFButton} from '@/components/Button';
 import type {FormattedLoginOption} from '@/components/LoginOptions/LoginOptionsDisplay';
 
 import LoginButtonIcon from './LoginButtonIcon';
@@ -16,9 +16,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({option}) => (
         {option.label}
       </ButtonLink>
     ) : (
-      <OFButton variant="primary" type="submit">
-        {option.label}
-      </OFButton>
+      <PrimaryActionButton type="submit">{option.label}</PrimaryActionButton>
     )}
     <LoginButtonIcon identifier={option.identifier} logo={option.logo} />
   </div>

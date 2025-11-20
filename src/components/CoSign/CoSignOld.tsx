@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useAsync} from 'react-use';
@@ -6,7 +7,6 @@ import {ConfigContext, SubmissionContext} from '@/Context';
 import {get} from '@/api';
 import Body from '@/components/Body';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
-import Loader from '@/components/Loader';
 import LoginOptionsDisplay from '@/components/LoginOptions/LoginOptionsDisplay';
 import {getLoginUrl} from '@/components/LoginOptions/utils';
 import type {Form} from '@/data/forms';
@@ -105,7 +105,7 @@ const CoSignOld: React.FC<CoSignOldProps> = ({...props}) => {
   // log errors to the console if any
   if (state.error) console.error(state.error);
   // while loading, display spinner
-  if (state.loading) return <Loader modifiers={['small']} />;
+  if (state.loading) return <LoadingIndicator size="small" />;
 
   const {coSigned, representation} = state.value ?? {coSigned: false, representation: ''};
   // Early simple exit if it's cosigned already.

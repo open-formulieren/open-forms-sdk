@@ -63,6 +63,12 @@
       "value": "Klik om een veelhoek (polygoon) te tekenen"
     }
   ],
+  "+MVbpZ": [
+    {
+      "type": 0,
+      "value": "Kind toevoegen"
+    }
+  ],
   "+W79Dr": [
     {
       "type": 0,
@@ -115,6 +121,12 @@
     {
       "type": 0,
       "value": "Tekeningen annuleren"
+    }
+  ],
+  "07h5b8": [
+    {
+      "type": 0,
+      "value": "Voornaam is verplicht."
     }
   ],
   "0EdUXi": [
@@ -181,48 +193,6 @@
     {
       "type": 0,
       "value": "."
-    }
-  ],
-  "1TAtDi": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Nog "
-            },
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " karakter over."
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Nog "
-            },
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " karakters over."
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "remainingCharCount"
     }
   ],
   "1hdvgS": [
@@ -307,6 +277,12 @@
       "value": "Een BSN bestaat uit 9 cijfers."
     }
   ],
+  "3beumC": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
   "4ASssJ": [
     {
       "type": 0,
@@ -347,6 +323,40 @@
     {
       "type": 0,
       "value": "Klik het laatste punt om de lijn te voltooien"
+    }
+  ],
+  "5TAbGN": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "charCount"
+            },
+            {
+              "type": 0,
+              "value": " karakter."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "charCount"
+            },
+            {
+              "type": 0,
+              "value": " karakters."
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "charCount"
     }
   ],
   "5uh2hS": [
@@ -619,6 +629,12 @@
       "value": "Inloggen voor iemand anders"
     }
   ],
+  "94ZHpN": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
   "94yVWJ": [
     {
       "type": 0,
@@ -783,6 +799,18 @@
       "value": " of meer opties aangevinkt heeft.."
     }
   ],
+  "Bq2hIW": [
+    {
+      "type": 0,
+      "value": "Om door te gaan moet je dit e-mailadres bevestigen."
+    }
+  ],
+  "BxPJLU": [
+    {
+      "type": 0,
+      "value": "Voornaam"
+    }
+  ],
   "C7jQ09": [
     {
       "type": 0,
@@ -793,6 +821,20 @@
     {
       "type": 0,
       "value": "Het getal moet eindig zijn."
+    }
+  ],
+  "CTDEh6": [
+    {
+      "type": 0,
+      "value": "Het BSN "
+    },
+    {
+      "type": 1,
+      "value": "bsn"
+    },
+    {
+      "type": 0,
+      "value": " komt meerdere keren voor. Elk kind moet een uniek BSN hebben."
     }
   ],
   "CvRUHm": [
@@ -819,6 +861,12 @@
       "value": "Straatnaam"
     }
   ],
+  "DGjM+p": [
+    {
+      "type": 0,
+      "value": "Voornaam"
+    }
+  ],
   "DK2ewv": [
     {
       "type": 0,
@@ -835,6 +883,12 @@
     {
       "type": 0,
       "value": "Uur moet tussen 0-23 zijn en minuut tussen 0-59."
+    }
+  ],
+  "DcLzdm": [
+    {
+      "type": 0,
+      "value": "De geboortedatum mag hoogstens 120 jaar geleden zijn."
     }
   ],
   "DrrkB0": [
@@ -1139,6 +1193,48 @@
       "value": "."
     }
   ],
+  "I2pBWg": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Nog "
+            },
+            {
+              "type": 1,
+              "value": "remainingCharCount"
+            },
+            {
+              "type": 0,
+              "value": " karakter over."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Nog "
+            },
+            {
+              "type": 1,
+              "value": "remainingCharCount"
+            },
+            {
+              "type": 0,
+              "value": " karakters over."
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "remainingCharCount"
+    }
+  ],
   "I6ok5N": [
     {
       "type": 0,
@@ -1317,6 +1413,38 @@
       "value": "Voorletters"
     }
   ],
+  "K4JPOy": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Bewerk kind met BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Bewerk kind met voornaam: "
+            },
+            {
+              "type": 1,
+              "value": "firstNames"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "hasFirstNames"
+    }
+  ],
   "KMs17v": [
     {
       "type": 0,
@@ -1459,6 +1587,12 @@
       "value": "Betalen"
     }
   ],
+  "MrlKEu": [
+    {
+      "type": 0,
+      "value": "De geboortedatum mag niet in de toekomst liggen."
+    }
+  ],
   "N2sZnS": [
     {
       "type": 0,
@@ -1513,6 +1647,12 @@
     {
       "type": 0,
       "value": "Ongeldige invoer."
+    }
+  ],
+  "PzBahf": [
+    {
+      "type": 0,
+      "value": "Geboortedatum"
     }
   ],
   "Q6/Lj7": [
@@ -1591,6 +1731,12 @@
     {
       "type": 1,
       "value": "formName"
+    }
+  ],
+  "S5ydMY": [
+    {
+      "type": 0,
+      "value": "De geboortedatum heeft een ongeldig formaat."
     }
   ],
   "SLhFxw": [
@@ -1757,6 +1903,20 @@
       "value": "Annuleer"
     }
   ],
+  "U7YHLZ": [
+    {
+      "type": 0,
+      "value": "Selecteer "
+    },
+    {
+      "type": 1,
+      "value": "firstname"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    }
+  ],
   "UONGQo": [
     {
       "type": 0,
@@ -1905,6 +2065,38 @@
     {
       "type": 0,
       "value": "'"
+    }
+  ],
+  "ZAq+s7": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verwijder kind met BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verwijder kind met voornaam: "
+            },
+            {
+              "type": 1,
+              "value": "firstNames"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "hasFirstNames"
     }
   ],
   "ZFoN7U": [
@@ -2067,6 +2259,12 @@
       "value": "Achternaam"
     }
   ],
+  "bqbXGd": [
+    {
+      "type": 0,
+      "value": "Geen informatie verstrekt."
+    }
+  ],
   "bu0CcW": [
     {
       "type": 0,
@@ -2157,6 +2355,20 @@
       "value": "Klik om verder te tekenen"
     }
   ],
+  "dsZqad": [
+    {
+      "type": 0,
+      "value": "Het e-mailadres '"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "' is bevestigd."
+    }
+  ],
   "eAmrdi": [
     {
       "type": 0,
@@ -2211,6 +2423,12 @@
       "value": "Bevestiging"
     }
   ],
+  "fwMwqD": [
+    {
+      "type": 0,
+      "value": "Opslaan"
+    }
+  ],
   "g1jgtg": [
     {
       "type": 0,
@@ -2227,6 +2445,12 @@
     {
       "type": 0,
       "value": "Ben je zeker dat je de getekende vorm wil verwijderen?"
+    }
+  ],
+  "h7JS6y": [
+    {
+      "type": 0,
+      "value": "Kind toevoegen"
     }
   ],
   "hFqzG6": [
@@ -2251,6 +2475,12 @@
     {
       "type": 0,
       "value": "Er is iets fout gegaan bij het verzenden."
+    }
+  ],
+  "hPHLdv": [
+    {
+      "type": 0,
+      "value": "Kind bewerken"
     }
   ],
   "hWv0yN": [
@@ -2356,7 +2586,7 @@
     },
     {
       "type": 0,
-      "value": " Een betsand mag hoogstens "
+      "value": " Een bestand mag hoogstens "
     },
     {
       "children": [
@@ -2594,7 +2824,7 @@
   "lmWBQT": [
     {
       "type": 0,
-      "value": "De bevestigingscode is precies zes tekens lang en bestaat uit hoofdletters en getallen."
+      "value": "De bevestigingscode is precies 6 tekens lang en bestaat uit hoofdletters en getallen."
     }
   ],
   "lxjglE": [
@@ -2921,44 +3151,6 @@
       "value": "Log in om het formulier mede te ondertekenen"
     }
   ],
-  "qTqAIS": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " karakter"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " karakters"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "charCount"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "qyWfE+": [
     {
       "type": 0,
@@ -2997,6 +3189,12 @@
     {
       "type": 0,
       "value": "Achternaam"
+    }
+  ],
+  "r6qiY/": [
+    {
+      "type": 0,
+      "value": "Geboortedatum"
     }
   ],
   "rQ5vC9": [
@@ -3287,6 +3485,12 @@
     {
       "type": 0,
       "value": " of groter zijn."
+    }
+  ],
+  "xe7bA1": [
+    {
+      "type": 0,
+      "value": "Bevestigen"
     }
   ],
   "xh+7Vv": [

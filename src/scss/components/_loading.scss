@@ -12,6 +12,7 @@
   }
 }
 
+// deprecated - can be removed when the formio.js dependency is dropped
 .#{prefix('loading')} {
   display: flex;
   align-items: center;
@@ -49,4 +50,9 @@
     height: 20px;
     animation: spin 1s linear infinite;
   }
+}
+
+// apply vertical spacing to the new spinner component
+.openforms-loading-indicator + * {
+  margin-block-start: 20px;
 }

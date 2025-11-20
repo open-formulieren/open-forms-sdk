@@ -63,6 +63,12 @@
       "value": "Click to start drawing shape"
     }
   ],
+  "+MVbpZ": [
+    {
+      "type": 0,
+      "value": "Add child"
+    }
+  ],
   "+W79Dr": [
     {
       "type": 0,
@@ -115,6 +121,12 @@
     {
       "type": 0,
       "value": "Cancel drawing"
+    }
+  ],
+  "07h5b8": [
+    {
+      "type": 0,
+      "value": "You must provide a first name."
     }
   ],
   "0EdUXi": [
@@ -181,40 +193,6 @@
     {
       "type": 0,
       "value": "."
-    }
-  ],
-  "1TAtDi": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " character remaining."
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "remainingCharCount"
-            },
-            {
-              "type": 0,
-              "value": " characters remaining."
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "remainingCharCount"
     }
   ],
   "1hdvgS": [
@@ -299,6 +277,12 @@
       "value": "A BSN must be 9 digits."
     }
   ],
+  "3beumC": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
   "4ASssJ": [
     {
       "type": 0,
@@ -339,6 +323,36 @@
     {
       "type": 0,
       "value": "Click last point to finish line"
+    }
+  ],
+  "5TAbGN": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "1 character"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "charCount"
+            },
+            {
+              "type": 0,
+              "value": " characters"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "charCount"
     }
   ],
   "5uh2hS": [
@@ -611,6 +625,12 @@
       "value": "Log in on behalf of someone else"
     }
   ],
+  "94ZHpN": [
+    {
+      "type": 0,
+      "value": "BSN"
+    }
+  ],
   "94yVWJ": [
     {
       "type": 0,
@@ -805,6 +825,18 @@
       "value": "."
     }
   ],
+  "Bq2hIW": [
+    {
+      "type": 0,
+      "value": "You must verify this email address to continue."
+    }
+  ],
+  "BxPJLU": [
+    {
+      "type": 0,
+      "value": "First names"
+    }
+  ],
   "C7jQ09": [
     {
       "type": 0,
@@ -815,6 +847,20 @@
     {
       "type": 0,
       "value": "Number must be finite."
+    }
+  ],
+  "CTDEh6": [
+    {
+      "type": 0,
+      "value": "The BSN "
+    },
+    {
+      "type": 1,
+      "value": "bsn"
+    },
+    {
+      "type": 0,
+      "value": " is used for multiple children. Each child must have a unique BSN."
     }
   ],
   "CvRUHm": [
@@ -841,6 +887,12 @@
       "value": "Street name"
     }
   ],
+  "DGjM+p": [
+    {
+      "type": 0,
+      "value": "Firstnames"
+    }
+  ],
   "DK2ewv": [
     {
       "type": 0,
@@ -857,6 +909,12 @@
     {
       "type": 0,
       "value": "Hour must be between 0-23 and minute between 0-59"
+    }
+  ],
+  "DcLzdm": [
+    {
+      "type": 0,
+      "value": "Date of birth must be within the last 120 years."
     }
   ],
   "DrrkB0": [
@@ -1157,6 +1215,36 @@
       "value": "."
     }
   ],
+  "I2pBWg": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "1 character remaining"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "remainingCharCount"
+            },
+            {
+              "type": 0,
+              "value": " characters remaining"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "remainingCharCount"
+    }
+  ],
   "I6ok5N": [
     {
       "type": 0,
@@ -1335,6 +1423,38 @@
       "value": "Initials"
     }
   ],
+  "K4JPOy": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Edit child with BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Edit child with first name: "
+            },
+            {
+              "type": 1,
+              "value": "firstNames"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "hasFirstNames"
+    }
+  ],
   "KMs17v": [
     {
       "type": 0,
@@ -1477,6 +1597,12 @@
       "value": "Payment"
     }
   ],
+  "MrlKEu": [
+    {
+      "type": 0,
+      "value": "Date of birth cannot be in the future."
+    }
+  ],
   "N2sZnS": [
     {
       "type": 0,
@@ -1531,6 +1657,12 @@
     {
       "type": 0,
       "value": "Invalid input."
+    }
+  ],
+  "PzBahf": [
+    {
+      "type": 0,
+      "value": "Date of birth"
     }
   ],
   "Q6/Lj7": [
@@ -1609,6 +1741,12 @@
     {
       "type": 1,
       "value": "formName"
+    }
+  ],
+  "S5ydMY": [
+    {
+      "type": 0,
+      "value": "The format of the date of birth is incorrect."
     }
   ],
   "SLhFxw": [
@@ -1805,6 +1943,20 @@
       "value": "Cancel"
     }
   ],
+  "U7YHLZ": [
+    {
+      "type": 0,
+      "value": "Include "
+    },
+    {
+      "type": 1,
+      "value": "firstname"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    }
+  ],
   "UONGQo": [
     {
       "type": 0,
@@ -1953,6 +2105,38 @@
     {
       "type": 0,
       "value": "'"
+    }
+  ],
+  "ZAq+s7": [
+    {
+      "options": {
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete child with BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete child with first name: "
+            },
+            {
+              "type": 1,
+              "value": "firstNames"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "hasFirstNames"
     }
   ],
   "ZFoN7U": [
@@ -2107,6 +2291,12 @@
       "value": "Lastname"
     }
   ],
+  "bqbXGd": [
+    {
+      "type": 0,
+      "value": "No information provided"
+    }
+  ],
   "bu0CcW": [
     {
       "type": 0,
@@ -2197,6 +2387,20 @@
       "value": "Click to continue drawing shape"
     }
   ],
+  "dsZqad": [
+    {
+      "type": 0,
+      "value": "The email address '"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "' is verified."
+    }
+  ],
   "eAmrdi": [
     {
       "type": 0,
@@ -2251,6 +2455,12 @@
       "value": "Confirmation"
     }
   ],
+  "fwMwqD": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
   "g1jgtg": [
     {
       "type": 0,
@@ -2267,6 +2477,12 @@
     {
       "type": 0,
       "value": "Are you sure you want to delete your drawn shape?"
+    }
+  ],
+  "h7JS6y": [
+    {
+      "type": 0,
+      "value": "Add child"
     }
   ],
   "hFqzG6": [
@@ -2291,6 +2507,12 @@
     {
       "type": 0,
       "value": "Something went wrong while submitting the form."
+    }
+  ],
+  "hPHLdv": [
+    {
+      "type": 0,
+      "value": "Edit child"
     }
   ],
   "hWv0yN": [
@@ -2961,44 +3183,6 @@
       "value": "Log in to co-sign the form"
     }
   ],
-  "qTqAIS": [
-    {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " character"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "charCount"
-            },
-            {
-              "type": 0,
-              "value": " characters"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "charCount"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "qyWfE+": [
     {
       "type": 0,
@@ -3037,6 +3221,12 @@
     {
       "type": 0,
       "value": "Lastname"
+    }
+  ],
+  "r6qiY/": [
+    {
+      "type": 0,
+      "value": "Date of birth"
     }
   ],
   "rQ5vC9": [
@@ -3323,6 +3513,12 @@
     {
       "type": 0,
       "value": " or greater."
+    }
+  ],
+  "xe7bA1": [
+    {
+      "type": 0,
+      "value": "Verify"
     }
   ],
   "xh+7Vv": [
