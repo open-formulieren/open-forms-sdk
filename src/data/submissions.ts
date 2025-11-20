@@ -3,6 +3,7 @@ import type {JSONValue} from '@open-formulieren/types/lib/types';
 import {createState} from 'state-pool';
 
 import {get, post} from '@/api';
+import {APIError, ValidationError} from '@/errors';
 
 import type {Form, SubmissionStatementConfiguration} from './forms';
 
@@ -195,4 +196,119 @@ export const confirmCosign = async (
   const endpoint = `${baseUrl}submissions/${submissionId}/cosign`;
   const result = await post<CosignResponseData, CosignConfirmBody>(endpoint, statementValues);
   return result.data!;
+};
+
+interface LegacyOptions {
+  /**
+   * Rethrow errors instead of processing them into a result object.
+   *
+   * @deprecated Will be removed when the formio.js renderer is removed.
+   */
+  rethrowError?: boolean;
+}
+
+/**
+ * @see `#/components/schemas/EmailVerification` in the API spec.
+ */
+interface EmailVerificationCreateBody {
+  /**
+   * The API resource URL pointing to the current submission.
+   */
+  submission: string;
+  /**
+   * Key of the email component in the submission's form.
+   */
+  componentKey: string;
+  /**
+   * The email address that is being verified.
+   */
+  email: string;
+}
+
+type RequestEmailVerificationCodeResult = {success: true} | {success: false; errorMessage: string};
+
+export const requestEmailVerificationCode = async (
+  baseUrl: string,
+  submission: Submission,
+  componentKey: string,
+  email: string,
+  options?: LegacyOptions
+): Promise<RequestEmailVerificationCodeResult> => {
+  const endpoint = `${baseUrl}submissions/email-verifications`;
+  try {
+    await post<Omit<EmailVerificationCreateBody, 'submission'>, EmailVerificationCreateBody>(
+      endpoint,
+      {
+        submission: submission.url,
+        componentKey,
+        email,
+      }
+    );
+    return {success: true};
+  } catch (err: unknown) {
+    if (options?.rethrowError) throw err;
+    let errorMessage: string = 'An unknown error occurred';
+    if (err instanceof ValidationError) {
+      errorMessage = err.invalidParams.map(invalidParam => invalidParam.reason).join('\n');
+    } else if (err instanceof APIError) {
+      errorMessage = err.detail;
+    } else {
+      throw err;
+    }
+    return {success: false, errorMessage};
+  }
+};
+
+/**
+ * @see `#/components/schemas/VerifyEmail` in the API spec.
+ */
+interface EmailVerifyCodeCreateBody {
+  /**
+   * The API resource URL pointing to the current submission.
+   */
+  submission: string;
+  /**
+   * Key of the email component in the submission's form.
+   */
+  componentKey: string;
+  /**
+   * The email address that is being verified.
+   */
+  email: string;
+  /**
+   * The verification code received by email.
+   */
+  code: string;
+}
+
+type VerifyCodeResult = {success: true} | {success: false; errors: {code: string}};
+
+export const verifyEmailCode = async (
+  baseUrl: string,
+  submission: Submission,
+  componentKey: string,
+  email: string,
+  code: string,
+  options?: LegacyOptions
+): Promise<VerifyCodeResult> => {
+  const endpoint = `${baseUrl}submissions/email-verifications/verify`;
+  try {
+    await post<Omit<EmailVerifyCodeCreateBody, 'submission'>, EmailVerifyCodeCreateBody>(endpoint, {
+      submission: submission.url,
+      componentKey,
+      email: email,
+      code,
+    });
+    return {success: true};
+  } catch (err: unknown) {
+    if (options?.rethrowError) throw err;
+    if (err instanceof ValidationError) {
+      const codeError = err.asFormikProps().initialErrors.code ?? err.message;
+      return {success: false, errors: {code: codeError}};
+    } else if (err instanceof APIError) {
+      return {success: false, errors: {code: err.detail}};
+    } else {
+      throw err;
+    }
+  }
 };

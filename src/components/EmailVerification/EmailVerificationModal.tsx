@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import Body from '@/components/Body';
 import type {ModalCloseHandler} from '@/components/modals/Modal';
 import Modal from '@/components/modals/Modal';
+import type {Submission} from '@/data/submissions';
 
 import EmailVerificationForm from './EmailVerificationForm';
 
@@ -18,7 +19,7 @@ export interface EmailVerificationModalProps {
    * Invoked on ESC keypress or clicking the "X" to close the modal.
    */
   closeModal: ModalCloseHandler;
-  submissionUrl: string;
+  submission: Submission;
   componentKey: string;
   emailAddress: string;
 }
@@ -26,7 +27,7 @@ export interface EmailVerificationModalProps {
 const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
   isOpen,
   closeModal,
-  submissionUrl,
+  submission,
   componentKey,
   emailAddress,
 }) => {
@@ -50,7 +51,7 @@ const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
     >
       {!isVerified && (
         <EmailVerificationForm
-          submissionUrl={submissionUrl}
+          submission={submission}
           componentKey={componentKey}
           emailAddress={emailAddress}
           onVerified={() => setIsVerified(true)}

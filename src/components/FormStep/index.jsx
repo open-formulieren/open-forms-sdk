@@ -824,7 +824,7 @@ const FormStep = () => {
       <EmailVerificationModal
         isOpen={emailVerificationModal.isOpen}
         closeModal={() => dispatch({type: 'CLOSE_EMAIL_VERIFICATION_MODAL'})}
-        submissionUrl={submission.url}
+        submission={submission}
         componentKey={emailVerificationModal.componentKey}
         emailAddress={emailVerificationModal.emailAddress}
       />
