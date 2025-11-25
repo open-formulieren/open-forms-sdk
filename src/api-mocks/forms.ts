@@ -59,6 +59,7 @@ export const FORM_DEFAULTS = {
   paymentRequired: false,
   submissionReportDownloadLinkTitle: '',
   newRendererEnabled: false,
+  communicationPreferencesPortalUrl: '',
 } satisfies Form;
 
 /**
