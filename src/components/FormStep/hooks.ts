@@ -17,7 +17,7 @@ import {getLoginUrl} from '@/components/LoginOptions/utils';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import {createTemporaryFileUpload, destroyTemporaryFileUpload} from '@/data/file-uploads';
 import type {Form, MinimalFormStep} from '@/data/forms';
-import {autoCompleteAddress} from '@/data/geo';
+import {autoCompleteAddress, getAddressLabel, MapProvider} from '@/data/geo';
 import {type SubmissionStep, checkStepLogic} from '@/data/submission-steps';
 import {
   type NestedSubmissionStep,
@@ -27,6 +27,7 @@ import {
 } from '@/data/submissions';
 import {validateValue} from '@/data/validation';
 import useFormContext from '@/hooks/useFormContext';
+import { NearestLookupBody } from '@open-formulieren/formio-renderer/registry/map/types.js';
 
 interface ResolvedStep {
   /**
@@ -211,6 +212,14 @@ export const useFormioFormConfigurationParameters = (): Pick<
     [baseUrl, submission]
   );
 
+  const mapNearestLookup = useCallback(
+    async (lat: number, lng: number) =>
+      await getAddressLabel(baseUrl, lat, lng),
+      [baseUrl]
+  );
+
+  const searchProvider = new MapProvider({baseUrl});
+
   return {
     validatePluginCallback,
     componentParameters: {
@@ -220,6 +229,10 @@ export const useFormioFormConfigurationParameters = (): Pick<
       file: {
         upload,
         destroy: destroyTemporaryFileUpload,
+      },
+      map: {
+        mapNearestLookup,
+        searchProvider,
       },
     },
   };

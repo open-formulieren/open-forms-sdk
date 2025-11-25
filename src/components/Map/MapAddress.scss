@@ -1,9 +1,0 @@
-@use 'microscope-sass/lib/bem';
-@use '../../scss/mixins/prefix';
-
-.#{prefix.prefix('map-address')} {
-  @include bem.element('description') {
-    display: inline;
-    font-style: normal;
-  }
-}
