@@ -44,6 +44,7 @@ const FormContext = React.createContext<Form>({
     supportsMultipleProducts: null,
   },
   newRendererEnabled: false,
+  customerInteractionPortalUrl: '',
 });
 FormContext.displayName = 'FormContext';
 
