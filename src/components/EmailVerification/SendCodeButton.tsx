@@ -4,34 +4,18 @@ import {useContext, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {ConfigContext} from '@/Context';
-import {post} from '@/api';
-
-interface AdditionalVerificationProps {
-  submissionUrl: string;
-  componentKey: string;
-  emailAddress: string;
-}
-
-const createVerification = async (
-  baseUrl: string,
-  {submissionUrl, componentKey, emailAddress}: AdditionalVerificationProps
-): Promise<void> => {
-  await post(`${baseUrl}submissions/email-verifications`, {
-    submission: submissionUrl,
-    componentKey,
-    email: emailAddress,
-  });
-};
+import {requestEmailVerificationCode} from '@/data/submissions';
+import type {Submission} from '@/data/submissions';
 
 interface SendCodeButtonProps {
-  submissionUrl: string;
+  submission: Submission;
   componentKey: string;
   emailAddress: string;
   onError: (error: Error) => void;
 }
 
 const SendCodeButton: React.FC<SendCodeButtonProps> = ({
-  submissionUrl,
+  submission,
   componentKey,
   emailAddress,
   onError,
@@ -45,7 +29,9 @@ const SendCodeButton: React.FC<SendCodeButtonProps> = ({
       onClick={async () => {
         setIsSending(true);
         try {
-          await createVerification(baseUrl, {submissionUrl, componentKey, emailAddress});
+          await requestEmailVerificationCode(baseUrl, submission, componentKey, emailAddress, {
+            rethrowError: true,
+          });
         } catch (e) {
           onError(e);
         } finally {

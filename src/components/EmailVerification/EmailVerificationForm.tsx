@@ -8,34 +8,16 @@ import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 
 import {ConfigContext} from '@/Context';
-import {post} from '@/api';
 import Body from '@/components/Body';
 import {ErrorDisplay} from '@/components/Errors';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
+import type {Submission} from '@/data/submissions';
+import {verifyEmailCode} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 
 import EnterCodeButton from './EnterCodeButton';
 import ModeField from './ModeField';
 import SendCodeButton from './SendCodeButton';
-
-interface VerificationCodeData {
-  submissionUrl: string;
-  componentKey: string;
-  emailAddress: string;
-  code: string;
-}
-
-const submitVerificationCode = async (
-  baseUrl: string,
-  {submissionUrl, componentKey, emailAddress, code}: VerificationCodeData
-): Promise<void> => {
-  await post(`${baseUrl}submissions/email-verifications/verify`, {
-    submission: submissionUrl,
-    componentKey,
-    email: emailAddress,
-    code,
-  });
-};
 
 const getValidationSchema = (intl: IntlShape) =>
   z.object({
@@ -58,7 +40,7 @@ const getValidationSchema = (intl: IntlShape) =>
   });
 
 export interface EmailVerificationProps {
-  submissionUrl: string;
+  submission: Submission;
   componentKey: string;
   emailAddress: string;
   onVerified: () => void;
@@ -70,7 +52,7 @@ interface FormValues {
 }
 
 const EmailVerificationForm: React.FC<EmailVerificationProps> = ({
-  submissionUrl,
+  submission,
   componentKey,
   emailAddress,
   onVerified,
@@ -87,11 +69,8 @@ const EmailVerificationForm: React.FC<EmailVerificationProps> = ({
   const onSubmit = async (values: FormValues, helpers: FormikHelpers<FormValues>) => {
     setError(null);
     try {
-      await submitVerificationCode(baseUrl, {
-        submissionUrl,
-        componentKey,
-        emailAddress,
-        code: values.code,
+      await verifyEmailCode(baseUrl, submission, componentKey, emailAddress, values.code, {
+        rethrowError: true,
       });
       onVerified();
     } catch (e) {
@@ -180,7 +159,7 @@ const EmailVerificationForm: React.FC<EmailVerificationProps> = ({
             <ButtonGroup direction="column" className="openforms-form-navigation">
               {mode === 'sendCode' && (
                 <SendCodeButton
-                  submissionUrl={submissionUrl}
+                  submission={submission}
                   componentKey={componentKey}
                   emailAddress={emailAddress}
                   onError={(error: Error) => setError(error)}
