@@ -1,9 +1,13 @@
+import {NearestLookupBody} from '@open-formulieren/formio-renderer/registry/map/types.js';
+import {
+  SearchResult as LeafletSearchResult,
+  ParseArgument,
+} from 'leaflet-geosearch/src/providers/provider.js';
+import AbstractProvider, {ProviderOptions} from 'leaflet-geosearch/src/providers/provider.js';
+import {useAsync} from 'react-use';
+
 import {get} from '@/api';
 import {logError} from '@/components/Errors';
-import { NearestLookupBody } from '@open-formulieren/formio-renderer/registry/map/types.js';
-import { SearchResult  as LeafletSearchResult, ParseArgument } from 'leaflet-geosearch/src/providers/provider.js';
-import AbstractProvider, { ProviderOptions } from 'leaflet-geosearch/src/providers/provider.js';
-import {useAsync} from 'react-use';
 
 /**
  * @see `#/components/schemas/GetStreetNameAndCityViewResult` in the API spec.
@@ -32,11 +36,12 @@ export const autoCompleteAddress = async (
   }
 };
 
-export const getAddressLabel = async (baseUrl: string, lat: number, lng: number): Promise<NearestLookupBody | null> => {
-  const {
-    value: address = null,
-    error,
-  } = useAsync(async () => {
+export const getAddressLabel = async (
+  baseUrl: string,
+  lat: number,
+  lng: number
+): Promise<NearestLookupBody | null> => {
+  const {value: address = null, error} = useAsync(async () => {
     const data = await get<{label: string}>(`${baseUrl}geo/latlng-search`, {
       lat: lat.toString(),
       lng: lng.toString(),
@@ -51,8 +56,8 @@ export const getAddressLabel = async (baseUrl: string, lat: number, lng: number)
     return null;
   }
 
-  return address ? {label: address}: null
-}
+  return address ? {label: address} : null;
+};
 
 interface AddressSearchResult {
   label: string;
@@ -76,10 +81,10 @@ interface MapSearchResult {
 }
 
 interface MapProviderParams extends ProviderOptions {
-  baseUrl: string
+  baseUrl: string;
 }
 
-export class MapProvider extends AbstractProvider  {
+export class MapProvider extends AbstractProvider {
   private baseUrl: string;
 
   constructor(options: MapProviderParams) {
@@ -88,7 +93,7 @@ export class MapProvider extends AbstractProvider  {
   }
 
   endpoint(): string {
-    return this.baseUrl
+    return this.baseUrl;
   }
 
   parse(response: ParseArgument<AddressSearchResult[]>): LeafletSearchResult<MapSearchResult>[] {
@@ -97,7 +102,7 @@ export class MapProvider extends AbstractProvider  {
       x: location.latLng.lng,
       y: location.latLng.lat,
       raw: {label: location.label, x: location.latLng.lng, y: location.latLng.lat},
-      bounds: null
+      bounds: null,
     }));
   }
 

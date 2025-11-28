@@ -2531,8 +2531,7 @@
         {
           "options": {
             "other": {
-              "value": [
-              ]
+              "value": []
             },
             "true": {
               "value": [
@@ -2975,8 +2974,7 @@
             {
               "options": {
                 "0": {
-                  "value": [
-                  ]
+                  "value": []
                 },
                 "other": {
                   "value": [
@@ -3009,8 +3007,7 @@
       "value": " The maximum size of a single file is "
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "fileSize"
     },
@@ -4021,8 +4018,7 @@
       "value": "Nearest address: "
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "address"
     }

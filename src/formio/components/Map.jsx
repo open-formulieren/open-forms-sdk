@@ -1,7 +1,7 @@
 /**
  * A form widget to select a location on a Leaflet map.
  */
-import {LoadingIndicator, LeafletMap} from '@open-formulieren/formio-renderer';
+import {LeafletMap, LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';

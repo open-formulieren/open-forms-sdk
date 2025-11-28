@@ -3,6 +3,7 @@ import type {
   RequestVerificationCode,
   VerifyCode,
 } from '@open-formulieren/formio-renderer/registry/email/verification/types.js';
+import {NearestLookupBody} from '@open-formulieren/formio-renderer/registry/map/types.js';
 import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
 import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
@@ -17,7 +18,7 @@ import {getLoginUrl} from '@/components/LoginOptions/utils';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
 import {createTemporaryFileUpload, destroyTemporaryFileUpload} from '@/data/file-uploads';
 import type {Form, MinimalFormStep} from '@/data/forms';
-import {autoCompleteAddress, getAddressLabel, MapProvider} from '@/data/geo';
+import {MapProvider, autoCompleteAddress, getAddressLabel} from '@/data/geo';
 import {type SubmissionStep, checkStepLogic} from '@/data/submission-steps';
 import {
   type NestedSubmissionStep,
@@ -27,7 +28,6 @@ import {
 } from '@/data/submissions';
 import {validateValue} from '@/data/validation';
 import useFormContext from '@/hooks/useFormContext';
-import { NearestLookupBody } from '@open-formulieren/formio-renderer/registry/map/types.js';
 
 interface ResolvedStep {
   /**
@@ -213,12 +213,11 @@ export const useFormioFormConfigurationParameters = (): Pick<
   );
 
   const mapNearestLookup = useCallback(
-    async (lat: number, lng: number) =>
-      await getAddressLabel(baseUrl, lat, lng),
-      [baseUrl]
+    async (lat: number, lng: number) => await getAddressLabel(baseUrl, lat, lng),
+    [baseUrl]
   );
 
-  const searchProvider = useMemo(() => (new MapProvider({baseUrl})), [baseUrl]);
+  const searchProvider = useMemo(() => new MapProvider({baseUrl}), [baseUrl]);
 
   return {
     validatePluginCallback,

@@ -2461,8 +2461,7 @@
         {
           "options": {
             "other": {
-              "value": [
-              ]
+              "value": []
             },
             "true": {
               "value": [
@@ -2913,8 +2912,7 @@
             {
               "options": {
                 "0": {
-                  "value": [
-                  ]
+                  "value": []
                 },
                 "other": {
                   "value": [
@@ -2947,8 +2945,7 @@
       "value": " Een bestand mag hoogstens "
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "fileSize"
     },
@@ -3967,8 +3964,7 @@
       "value": "Adres in de buurt: "
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "address"
     }
