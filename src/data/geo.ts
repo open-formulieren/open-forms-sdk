@@ -108,8 +108,8 @@ export class MapProvider extends AbstractProvider {
     let results;
     try {
       results = await get<AddressSearchResult[]>(this.endpoint(), {q: query});
-    } catch {
-      // TODO: check if we can send this to Sentry
+    } catch (error) {
+      logError(error);
       return [];
     }
     if (!results) return [];
