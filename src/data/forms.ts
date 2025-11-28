@@ -94,4 +94,5 @@ export interface Form {
   submissionReportDownloadLinkTitle: string;
   newRendererEnabled: boolean;
   communicationPreferencesPortalUrl: string;
+  newLogicEvaluationEnabled: boolean;
 }

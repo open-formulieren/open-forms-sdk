@@ -13,11 +13,13 @@ export interface SubmissionStep {
   readonly id: string;
   readonly slug: string;
   readonly formStep: {
+    readonly uuid: string;
     readonly index: number;
     readonly configuration: {
       type?: 'form';
       components: AnyComponentSchema[];
     };
+    readonly logicRules: JSONObject[];
   };
   data: JSONObject | null;
   readonly isApplicable: boolean;

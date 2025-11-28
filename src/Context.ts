@@ -46,6 +46,7 @@ const FormContext = React.createContext<Form>({
   },
   newRendererEnabled: false,
   communicationPreferencesPortalUrl: '',
+  newLogicEvaluationEnabled: false,
 });
 FormContext.displayName = 'FormContext';
 
