@@ -5,7 +5,7 @@ import type {
 } from '@open-formulieren/formio-renderer/registry/email/verification/types.js';
 import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
-import {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useParams} from 'react-router';
 import type {AsyncState} from 'react-use/esm/useAsync';
 import useAsync from 'react-use/esm/useAsync';
@@ -218,7 +218,7 @@ export const useFormioFormConfigurationParameters = (): Pick<
       [baseUrl]
   );
 
-  const searchProvider = new MapProvider({baseUrl});
+  const searchProvider = useMemo(() => (new MapProvider({baseUrl})), [baseUrl]);
 
   return {
     validatePluginCallback,
