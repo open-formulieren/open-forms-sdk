@@ -54,7 +54,12 @@ export const RequiredFieldsErrors: Story = {
 
     await userEvent.click(canvas.getByRole('button', {name: 'Opslaan'}));
 
-    const errors = canvas.getAllByText('Required');
-    expect(errors).toHaveLength(3);
+    expect(await canvas.findByText("Het verplichte veld 'BSN' is niet ingevuld.")).toBeVisible();
+    expect(
+      await canvas.findByText("Het verplichte veld 'Achternaam' is niet ingevuld.")
+    ).toBeVisible();
+    expect(
+      await canvas.findByText("Het verplichte veld 'Geboortedatum' is niet ingevuld.")
+    ).toBeVisible();
   },
 };
