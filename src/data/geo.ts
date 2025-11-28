@@ -41,22 +41,20 @@ export const getAddressLabel = async (
   lat: number,
   lng: number
 ): Promise<NearestLookupBody | null> => {
-  const {value: address = null, error} = useAsync(async () => {
-    const data = await get<{label: string}>(`${baseUrl}geo/latlng-search`, {
+  let data: NearestLookupBody | null = null;
+
+  try {
+    const result = await get<{label: string}>(`${baseUrl}geo/latlng-search`, {
       lat: lat.toString(),
       lng: lng.toString(),
     });
-    return data ? data.label : null;
-  }, [baseUrl, lat, lng]);
 
-  // silent failure for a non-critical part
-  if (error) {
-    console.error(error);
-    // XXX: see if we can send this to Sentry
-    return null;
+    data = result ? {label: result.label} : null;
+  } catch (error) {
+    logError(error);
   }
 
-  return address ? {label: address} : null;
+  return data;
 };
 
 interface AddressSearchResult {
