@@ -22,6 +22,7 @@ import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
 
 import Progress from './Progress';
+import {useCheckStepLogicFrontend} from './frontendLogic';
 import {
   useCheckStepLogic,
   useFormioFormConfigurationParameters,
@@ -55,8 +56,22 @@ const FormStepNewRenderer: React.FC = () => {
   // values in callbacks at this component level (in the tree), while the `FormioForm`
   // component itself is responsible for managing the state.
   const valuesRef = useRef<JSONObject | null>(null);
+  const allValuesRef = useRef<JSONObject | null>(null);
+  // const stepMapRef = useRef<Record<string, SubmissionStep>>({});
   const onStepLoaded = useCallback(
     (step: SubmissionStep) => {
+      // We need to make sure we have the original form configuration here, as non-triggered rules
+      // rely on the default values of the component properties. We cannot use `state.value`
+      // directly, because logic evaluation is already performed before serialization of the step.
+      // This means the component configuration is mutated already, and we are never able to go back
+      // to the non-triggered case. An alternative is to always send the original configuration in
+      // the submission step serializer. Not sure which is better for now...
+      // This doesn't work once we have left the form step navigator, though. The step map will
+      // reset if we have reached the overview, and navigate back.
+      // if (!(step.slug in stepMapRef.current)) {
+      //   stepMapRef.current[step.slug] = step;
+      // }
+      allValuesRef.current = step.allData;
       valuesRef.current = step.data;
       setComponents(step.formStep.configuration.components);
       setDebugStepValues(step.data, true);
@@ -98,6 +113,13 @@ const FormStepNewRenderer: React.FC = () => {
     valuesRef,
     onLogicCheckResult
   );
+  const runFrontendLogic = useCheckStepLogicFrontend(
+    submission,
+    state.value,
+    allValuesRef,
+    valuesRef,
+    onLogicCheckResult
+  );
 
   if (state.error) throw state.error;
   const step = state.value;
@@ -124,7 +146,8 @@ const FormStepNewRenderer: React.FC = () => {
             values={step!.data ?? undefined}
             onChange={values => {
               valuesRef.current = values;
-              scheduleLogicCheck();
+              runFrontendLogic();
+              // scheduleLogicCheck();
               setDebugStepValues(values, false);
             }}
             onSubmit={async values => {

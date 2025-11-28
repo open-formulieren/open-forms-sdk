@@ -18,6 +18,7 @@ export interface SubmissionStep {
       type?: 'form';
       components: AnyComponentSchema[];
     };
+    readonly logicRules: JSONObject[];
   };
   data: JSONObject | null;
   readonly isApplicable: boolean;
