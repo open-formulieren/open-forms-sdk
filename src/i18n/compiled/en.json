@@ -13,6 +13,20 @@
       "value": " or less."
     }
   ],
+  "+AhGyf": [
+    {
+      "type": 0,
+      "value": "Ensure the number of items is less than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "maxLength"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "+CrcRw": [
     {
       "type": 0,
@@ -87,12 +101,6 @@
       "value": "Remove"
     }
   ],
-  "+zrboi": [
-    {
-      "type": 0,
-      "value": "Invalid IBAN"
-    }
-  ],
   "/HGnU6": [
     {
       "type": 0,
@@ -121,12 +129,6 @@
     {
       "type": 0,
       "value": "Cancel drawing"
-    }
-  ],
-  "07h5b8": [
-    {
-      "type": 0,
-      "value": "You must provide a first name."
     }
   ],
   "0EdUXi": [
@@ -237,6 +239,12 @@
       "value": "Previous year"
     }
   ],
+  "2RWk49": [
+    {
+      "type": 0,
+      "value": "Invalid Dutch license plate."
+    }
+  ],
   "33UD7T": [
     {
       "type": 0,
@@ -277,10 +285,30 @@
       "value": "A BSN must be 9 digits."
     }
   ],
+  "3aKZqi": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "3beumC": [
     {
       "type": 0,
       "value": "BSN"
+    }
+  ],
+  "46fk1B": [
+    {
+      "type": 0,
+      "value": "The required field "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": " must be filled in."
     }
   ],
   "4ASssJ": [
@@ -591,6 +619,20 @@
       "value": " is required."
     }
   ],
+  "8soi1P": [
+    {
+      "type": 0,
+      "value": "The submitted value does not match the pattern: "
+    },
+    {
+      "type": 1,
+      "value": "pattern"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "8uBESg": [
     {
       "type": 0,
@@ -773,6 +815,12 @@
     {
       "type": 0,
       "value": "Invalid."
+    }
+  ],
+  "BYKDMO": [
+    {
+      "type": 0,
+      "value": "The date must be in a valid format (e.g., 10/30/2025)."
     }
   ],
   "BboxO6": [
@@ -1597,6 +1645,12 @@
       "value": "Payment"
     }
   ],
+  "MTfsUB": [
+    {
+      "type": 0,
+      "value": "There are too many characters provided."
+    }
+  ],
   "MrlKEu": [
     {
       "type": 0,
@@ -1619,12 +1673,6 @@
     {
       "type": 0,
       "value": "Your current location cannot be accessed"
-    }
-  ],
-  "Oc3efT": [
-    {
-      "type": 0,
-      "value": "You must provide a city."
     }
   ],
   "Op4orj": [
@@ -1743,6 +1791,20 @@
       "value": "formName"
     }
   ],
+  "S2Wyuv": [
+    {
+      "type": 0,
+      "value": "The submitted value does not match the pattern: "
+    },
+    {
+      "type": 1,
+      "value": "pattern"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "S5ydMY": [
     {
       "type": 0,
@@ -1831,12 +1893,6 @@
     {
       "type": 0,
       "value": "."
-    }
-  ],
-  "TcqyzM": [
-    {
-      "type": 0,
-      "value": "You must provide a postcode."
     }
   ],
   "Tip5+d": [
@@ -1957,12 +2013,6 @@
       "value": "?"
     }
   ],
-  "UONGQo": [
-    {
-      "type": 0,
-      "value": "You must provide a house number."
-    }
-  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1979,6 +2029,20 @@
     {
       "type": 1,
       "value": "total"
+    }
+  ],
+  "V0B3pn": [
+    {
+      "type": 0,
+      "value": "The date must be later than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "min"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "VCgwM7": [
@@ -2077,6 +2141,12 @@
     {
       "type": 0,
       "value": "Choose language"
+    }
+  ],
+  "Yg2+vS": [
+    {
+      "type": 0,
+      "value": "Invalid email address."
     }
   ],
   "YpCkBs": [
@@ -2267,6 +2337,12 @@
       "value": "Contact details"
     }
   ],
+  "b4uuR7": [
+    {
+      "type": 0,
+      "value": "There are too many characters provided."
+    }
+  ],
   "bKPaUj": [
     {
       "type": 0,
@@ -2301,12 +2377,6 @@
     {
       "type": 0,
       "value": "Your payment is received and processed."
-    }
-  ],
-  "bv/J3Y": [
-    {
-      "type": 0,
-      "value": "You must provide a street name."
     }
   ],
   "c0Ry9H": [
@@ -2921,6 +2991,12 @@
       "value": "Use ctrl + scroll to zoom the map"
     }
   ],
+  "nTNZBL": [
+    {
+      "type": 0,
+      "value": "Save all rows before proceeding."
+    }
+  ],
   "nfRRDu": [
     {
       "type": 0,
@@ -2931,6 +3007,20 @@
     {
       "type": 0,
       "value": "Your session will expire soon."
+    }
+  ],
+  "o3TabP": [
+    {
+      "type": 0,
+      "value": "The date must be earlier than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "oCHirf": [
@@ -2955,12 +3045,6 @@
     {
       "type": 0,
       "value": "Add another product"
-    }
-  ],
-  "odKXcF": [
-    {
-      "type": 0,
-      "value": "You must provide a last name."
     }
   ],
   "ojU6az": [
@@ -3071,12 +3155,6 @@
     {
       "type": 0,
       "value": "Intersection results could not be merged"
-    }
-  ],
-  "ph6ljt": [
-    {
-      "type": 0,
-      "value": "Invalid input"
     }
   ],
   "psBz1n": [
@@ -3335,6 +3413,12 @@
       "value": "The email address where you received the appointment confirmation email."
     }
   ],
+  "u1vsoV": [
+    {
+      "type": 0,
+      "value": "Invalid IBAN."
+    }
+  ],
   "uGZ2tu": [
     {
       "type": 0,
@@ -3563,12 +3647,6 @@
     {
       "type": 0,
       "value": "Date of birth cannot be in the future."
-    }
-  ],
-  "z+/GrY": [
-    {
-      "type": 0,
-      "value": "Invalid Dutch license plate"
     }
   ],
   "zkdWYe": [
