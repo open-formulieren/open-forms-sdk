@@ -105,7 +105,7 @@ export class MapProvider extends AbstractProvider {
   }
 
   async search({query}: {query: string}): Promise<LeafletSearchResult<MapSearchResult>[]> {
-    let results;
+    let results: AddressSearchResult[] | null;
     try {
       results = await get<AddressSearchResult[]>(this.endpoint(), {q: query});
     } catch (error) {
