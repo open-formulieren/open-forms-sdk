@@ -1,4 +1,5 @@
 import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider.js';
+import ModalContext from '@open-formulieren/formio-renderer/components/modal/context.js';
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import type {Decorator} from '@storybook/react';
 import {Document} from '@utrecht/component-library-react';
@@ -13,7 +14,6 @@ import {LiteralsProvider} from '@/components/Literal';
 import {SubmissionStatusContext} from '@/components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
-import {ModalContext} from '@/components/modals/Modal';
 import type {Form} from '@/data/forms';
 
 import {setupGeolocationMock} from './mocks/geolocationMock';
@@ -146,12 +146,13 @@ export const withGeolocationMocking: Decorator = (Story, {parameters}) => {
   return <Story />;
 };
 
+const modalParentSelector = () => document.getElementById('storybook-root')!;
+
 export const withModalDecorator: Decorator = Story => (
   <ModalContext.Provider
     value={{
       // only for storybook integration, do not use this in real apps!
-      parentSelector: () => document.getElementById('storybook-root')!,
-      ariaHideApp: false,
+      parentSelector: modalParentSelector,
     }}
   >
     <Story />

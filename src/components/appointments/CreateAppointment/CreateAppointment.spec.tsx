@@ -1,7 +1,6 @@
 import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {IntlProvider} from 'react-intl';
-import ReactModal from 'react-modal';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
 import {ConfigContext, FormContext} from '@/Context';
@@ -61,8 +60,6 @@ const renderApp = (initialRoute: string = '/') => {
 };
 
 beforeEach(() => {
-  // silence some warnings in tests when the modal opens
-  ReactModal.setAppElement(document.documentElement);
   sessionStorage.clear();
 });
 

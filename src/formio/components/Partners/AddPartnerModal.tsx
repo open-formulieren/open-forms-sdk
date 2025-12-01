@@ -1,7 +1,6 @@
+import {Modal} from '@open-formulieren/formio-renderer';
 import type {PartnerDetails} from '@open-formulieren/types';
 import {FormattedMessage} from 'react-intl';
-
-import Modal from '@/components/modals/Modal';
 
 import AddPartnerForm from './AddPartnerForm';
 
@@ -18,12 +17,15 @@ export const AddPartnerModal: React.FC<AddPartnerModalProps> = ({
   closeModal,
   onSave,
 }) => {
+  // ensure that the child values are passed to the underlying Formik only when the modal
+  // is actually open
+  if (!isOpen) return null;
   return (
     <Modal
       title={
         <FormattedMessage description="Add partner modal title" defaultMessage="Add partner" />
       }
-      isOpen={isOpen}
+      isOpen
       closeModal={closeModal}
     >
       <AddPartnerForm

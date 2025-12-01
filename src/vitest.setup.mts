@@ -12,6 +12,11 @@ beforeAll(async () => {
     onUnhandledRequest: 'error',
   });
 
+  // jsdom does not implement the HTMLDialogElement: https://github.com/jsdom/jsdom/issues/3294
+  HTMLDialogElement.prototype.show = vi.fn();
+  HTMLDialogElement.prototype.showModal = vi.fn();
+  HTMLDialogElement.prototype.close = vi.fn();
+
   // Use our custom components by registering the custom Formio module.
   // The import must be dynamic, otherwise vi.mock fails in tests...
   const formioInit = await import('formio-init');

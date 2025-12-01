@@ -1,0 +1,12 @@
+// @import instead of @use because breakpoints are defined globally
+@import 'microscope-sass/lib/responsive';
+
+@include mobile-only {
+  .openforms-theme {
+    --of-modal-padding-block-start: 20px;
+    --of-modal-padding-block-end: 20px;
+    --of-modal-padding-inline-start: 12px;
+    --of-modal-padding-inline-end: 12px;
+    --of-modal-header-margin-inline-end: 36px;
+  }
+}

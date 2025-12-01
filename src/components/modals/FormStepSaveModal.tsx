@@ -1,7 +1,7 @@
 /**
  * Display a modal to allow the user to save the form step in it's current state.
  */
-import {Button, LoadingIndicator, TextField} from '@open-formulieren/formio-renderer';
+import {Button, LoadingIndicator, Modal, TextField} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Formik} from 'formik';
 import {useEffect, useState} from 'react';
@@ -12,7 +12,6 @@ import {toFormikValidationSchema} from 'zod-formik-adapter';
 import {post} from '@/api';
 import Body from '@/components/Body';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
-import Modal from '@/components/modals/Modal';
 
 const emailValidationSchema = z.object({
   email: z.string().email(),

@@ -1,7 +1,7 @@
 import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {useArgs} from '@storybook/preview-api';
 import type {Decorator, Meta, StoryObj} from '@storybook/react';
-import {expect, fn, userEvent, within} from '@storybook/test';
+import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {HttpResponse, http} from 'msw';
 
 import {BASE_URL} from '@/api-mocks';
@@ -25,7 +25,7 @@ const mockDestroySessionDELETE = http.delete(
 const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context) => {
   const [, updateArgs] = useArgs();
   return (
-    <>
+    <div style={{minHeight: 'calc(100dvh - 2 * 1rem)'}}>
       <PrimaryActionButton onClick={() => updateArgs({isOpen: true})}>
         Open Modal
       </PrimaryActionButton>
@@ -43,7 +43,7 @@ const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context)
           },
         }}
       />
-    </>
+    </div>
   );
 };
 
@@ -88,7 +88,7 @@ export const FormStepSaveModalWithErrors: Story = {
 
     // alternatively, set the arg `isOpen: true`
     const openModalButton = canvas.getByRole('button', {name: 'Open Modal'});
-    await expect(openModalButton).toBeVisible();
+    expect(openModalButton).toBeVisible();
     await userEvent.click(openModalButton);
 
     const modal = await canvas.findByRole('dialog');
@@ -129,11 +129,12 @@ export const FormStepSaveModalMultipleSubmits: Story = {
 
     // alternatively, set the arg `isOpen: true`
     const openModalButton = canvas.getByRole('button', {name: 'Open Modal'});
-    await expect(openModalButton).toBeVisible();
+    expect(openModalButton).toBeVisible();
     await userEvent.click(openModalButton);
 
     const modal = await canvas.findByRole('dialog');
     const emailInput = within(modal).getByLabelText('Je e-mailadres');
+    const closeModalButton = within(modal).getByRole('button', {name: 'Sluiten'});
 
     const backendErrorMsg = 'Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.';
 
@@ -146,21 +147,29 @@ export const FormStepSaveModalMultipleSubmits: Story = {
     });
 
     // close the modal
-    const closeModalButton = document.querySelector('.openforms-react-modal__close');
-    await userEvent.click(closeModalButton!);
+    await userEvent.click(closeModalButton);
+    await waitFor(() => {
+      expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
+    });
 
     // re-open the modal and try to re-submit the form
-    await expect(openModalButton).toBeVisible();
+    expect(openModalButton).toBeVisible();
     await userEvent.click(openModalButton);
 
     const modal2 = await canvas.findByRole('dialog');
-    const emailInput2 = within(modal2).getByLabelText('Je e-mailadres');
+    await waitFor(() => {
+      expect(modal2).toBeVisible();
+    });
 
+    const emailInput2 = within(modal2).getByLabelText('Je e-mailadres');
+    await waitFor(() => {
+      expect(emailInput2).toBeVisible();
+    });
     // make sure the previous backend error is not shown any more
     expect(within(modal2).queryByText(backendErrorMsg)).not.toBeInTheDocument();
 
     await step('Test we can re-submit the form', async () => {
-      expect(emailInput2).toHaveDisplayValue('');
+      await userEvent.clear(emailInput2);
       const submitButton2 = canvas.getByRole('button', {name: 'Later verdergaan'});
       await userEvent.click(submitButton2);
       const invalidErrorMessage = await within(modal2).findByText('Je e-mailadres is verplicht.');

@@ -23,6 +23,7 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @use './scss/nl-design-system-community.scss';
 
 @import './scss/settings';
+@import './scss/responsive';
 
 // TODO: eventually exclude this from production bundle
 @import './scss/components/debug-info';
@@ -60,7 +61,6 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/price';
 @import './scss/components/multi-value-row';
 @import './scss/components/multi-value-table';
-@import './scss/components/react-modal';
 @import './scss/components/co-sign';
 @import './scss/components/leaflet-map';
 @import './scss/components/signature';
