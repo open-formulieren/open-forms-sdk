@@ -23,6 +23,7 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @use './scss/nl-design-system-community.scss';
 
 @import './scss/settings';
+@import './scss/responsive';
 
 // TODO: eventually exclude this from production bundle
 @import './scss/components/debug-info';
