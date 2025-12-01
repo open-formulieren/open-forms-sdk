@@ -25,7 +25,7 @@ const mockDestroySessionDELETE = http.delete(
 const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context) => {
   const [, updateArgs] = useArgs();
   return (
-    <>
+    <div style={{minHeight: 'calc(100dvh - 2 * 1rem)'}}>
       <PrimaryActionButton onClick={() => updateArgs({isOpen: true})}>
         Open Modal
       </PrimaryActionButton>
@@ -43,7 +43,7 @@ const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context)
           },
         }}
       />
-    </>
+    </div>
   );
 };
 
