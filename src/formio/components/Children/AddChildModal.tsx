@@ -1,6 +1,5 @@
+import {Modal} from '@open-formulieren/formio-renderer';
 import {FormattedMessage} from 'react-intl';
-
-import Modal from '@/components/modals/Modal';
 
 import AddChildForm from './AddChildForm';
 import type {ChildExtendedDetails} from './types';
@@ -18,6 +17,9 @@ const AddChildModal: React.FC<AddChildrenModalProps> = ({
   closeModal,
   onSave,
 }) => {
+  // ensure that the child values are passed to the underlying Formik only when the modal
+  // is actually open
+  if (!isOpen) return null;
   return (
     <Modal
       title={
@@ -27,7 +29,7 @@ const AddChildModal: React.FC<AddChildrenModalProps> = ({
           <FormattedMessage description="Add child modal title" defaultMessage="Add child" />
         )
       }
-      isOpen={isOpen}
+      isOpen
       closeModal={closeModal}
     >
       <AddChildForm
