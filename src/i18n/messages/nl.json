@@ -489,11 +489,6 @@
     "description": "Appointments products step title",
     "originalDefault": "Select your product(s)"
   },
-  "J9svUq": {
-    "defaultMessage": "Sluiten",
-    "description": "Modal close icon title",
-    "originalDefault": "Close"
-  },
   "JB/IBw": {
     "defaultMessage": "De betaling is mislukt. Indien je de betaling afgebroken hebt, gebruik dan de betaallink in de bevestigingsmail om deze alsnog te voltooien.",
     "description": "payment failed status",

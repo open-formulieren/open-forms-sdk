@@ -14,7 +14,6 @@ import {LiteralsProvider} from '@/components/Literal';
 import {SubmissionStatusContext} from '@/components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
-import {ModalContext as LegacyModalContext} from '@/components/modals/Modal';
 import type {Form} from '@/data/forms';
 
 import {setupGeolocationMock} from './mocks/geolocationMock';
@@ -150,22 +149,14 @@ export const withGeolocationMocking: Decorator = (Story, {parameters}) => {
 const modalParentSelector = () => document.getElementById('storybook-root')!;
 
 export const withModalDecorator: Decorator = Story => (
-  <LegacyModalContext.Provider
+  <ModalContext.Provider
     value={{
       // only for storybook integration, do not use this in real apps!
       parentSelector: modalParentSelector,
-      ariaHideApp: false,
     }}
   >
-    <ModalContext.Provider
-      value={{
-        // only for storybook integration, do not use this in real apps!
-        parentSelector: modalParentSelector,
-      }}
-    >
-      <Story />
-    </ModalContext.Provider>
-  </LegacyModalContext.Provider>
+    <Story />
+  </ModalContext.Provider>
 );
 
 export type SubmissionPollInfoArgs = {

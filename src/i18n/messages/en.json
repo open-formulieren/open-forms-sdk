@@ -484,11 +484,6 @@
     "description": "Appointments products step title",
     "originalDefault": "Select your product(s)"
   },
-  "J9svUq": {
-    "defaultMessage": "Close",
-    "description": "Modal close icon title",
-    "originalDefault": "Close"
-  },
   "JB/IBw": {
     "defaultMessage": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email.",
     "description": "payment failed status",
