@@ -10,7 +10,6 @@ import lodash from 'lodash';
 import {initialize, mswLoader} from 'msw-storybook-addon';
 // @ts-expect-error formio has poor TS support
 import {Formio, Templates} from 'react-formio';
-import {setAppElement} from 'react-modal';
 import 'scss/dte-theme.scss';
 import {withThemeProvider} from 'storybook-addon-theme-provider';
 // load these AFTER the community styles, which is closer in simulating the CSS loading
@@ -40,10 +39,6 @@ initialize({
     url: './mockServiceWorker.js',
   },
 });
-
-// Added because of the warning for the react-modal
-// This is needed so screen readers don't see main content when modal is opened
-setAppElement('#storybook-root');
 
 // Use our custom Form.io components
 Formio.use(OpenFormsModule);

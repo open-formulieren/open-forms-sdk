@@ -3,7 +3,6 @@ import type {AnyComponentSchema, SupportedLocales} from '@open-formulieren/types
 import 'flatpickr';
 import React from 'react';
 import {type Root, createRoot} from 'react-dom/client';
-import ReactModal from 'react-modal';
 import {createBrowserRouter, createHashRouter, resolvePath} from 'react-router';
 import {RouterProvider} from 'react-router/dom';
 import {NonceProvider} from 'react-select';
@@ -182,8 +181,6 @@ class OpenForm {
   }
 
   public async init() {
-    ReactModal.setAppElement(this.targetNode);
-
     // Fixing an issue where browser (in particular Chrome) translations change the DOM
     // tree, causing React to lose track of DOM nodes and crashing the SDK.
     // See https://github.com/open-formulieren/open-forms/issues/5242
