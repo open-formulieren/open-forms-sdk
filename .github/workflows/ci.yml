@@ -15,9 +15,24 @@ env:
   IMAGE_NAME: openformulieren/open-forms-sdk
 
 jobs:
+  setup:
+    name: Set up the build variables
+    runs-on: ubuntu-latest
+    outputs:
+      # see https://github.com/orgs/community/discussions/26671
+      version: ${{ steps.vars.outputs.version }}
+      git_hash: ${{ steps.vars.outputs.git_hash }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract version info
+        id: vars
+        uses: maykinmedia/open-api-workflows/actions/extract-version@v6
+
   build:
     name: Create 'production' build
     runs-on: ubuntu-latest
+
+    needs: setup
 
     steps:
       - uses: actions/checkout@v5
@@ -27,23 +42,6 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: npm
-
-      - name: Extract version from git
-        id: build-args
-        run: |
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name (if present at all)
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "main" ] && VERSION=latest
-
-          # PRs result in version 'merge' -> transform that into 'latest'
-          [ "$VERSION" == "merge" ] && VERSION=latest
-
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
         run: |
@@ -58,7 +56,7 @@ jobs:
           echo "Building version $VITE_VERSION"
           VITE_VERSION=${VITE_VERSION} npm run build
         env:
-          VITE_VERSION: ${{ steps.build-args.outputs.version }}
+          VITE_VERSION: ${{ needs.setup.outputs.version }}
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Store build artifact
@@ -146,6 +144,7 @@ jobs:
     name: Publish the NPM package
     runs-on: ubuntu-latest
     needs:
+      - setup
       - build
       - tests
       - linting
@@ -189,10 +188,7 @@ jobs:
           mv README.npm.md README.md
           npm run prepare-package
 
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          case "$VERSION" in
+          case "${{ needs.setup.outputs.version }}" in
             *"-alpha."*) npm_tag=next ;;
             *"-beta."*) npm_tag=next ;;
             *"-rc."*) npm_tag=next ;;
@@ -205,28 +201,13 @@ jobs:
     name: Build (and push) Docker image
     runs-on: ubuntu-latest
 
+    needs: setup
+
     steps:
       # This will include the updated OAS (if updated) from the update-oas job.
       - uses: actions/checkout@v5
         with:
           submodules: true
-
-      - name: Determine SDK version being built
-        id: vars
-        run: |
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name (if present at all)
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "main" ] && VERSION=latest
-
-          # PRs result in version 'merge' -> transform that into 'latest'
-          [ "$VERSION" == "merge" ] && VERSION=latest
-
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build the Docker image
         run: |
@@ -234,7 +215,7 @@ jobs:
           --build-arg SDK_VERSION=${RELEASE_VERSION} \
           --tag $IMAGE_NAME:$RELEASE_VERSION
         env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.version }}
+          RELEASE_VERSION: ${{ needs.setup.outputs.version }}
 
       - name: Log into registry
         if: github.event_name == 'push' && github.repository_owner == 'open-formulieren' # Exclude PRs / forks
@@ -244,9 +225,9 @@ jobs:
 
       - name: Push the Docker image
         if: github.event_name == 'push' && github.repository_owner == 'open-formulieren' # Exclude PRs / forks
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.version }}
         run: docker push $IMAGE_NAME:$RELEASE_VERSION
+        env:
+          RELEASE_VERSION: ${{ needs.setup.outputs.version }}
 
   update-docker-readme:
     needs:
