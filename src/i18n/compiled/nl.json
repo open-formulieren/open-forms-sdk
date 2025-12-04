@@ -83,6 +83,46 @@
       "value": "Kind toevoegen"
     }
   ],
+  "+RF9ZR": [
+    {
+      "type": 0,
+      "value": "Gebruik dit "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e-mailadres"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "telefoonnummer"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " enkel voor dit formulier."
+    }
+  ],
   "+W79Dr": [
     {
       "type": 0,
@@ -201,6 +241,12 @@
     {
       "type": 0,
       "value": "Er ging iets fout bij het presenteren van de inlogopties. Neem alstublieft contact met ons op."
+    }
+  ],
+  "1pxgtB": [
+    {
+      "type": 0,
+      "value": "Minimaal één digitaal adres moet worden ingevuld."
     }
   ],
   "2/wgNH": [
@@ -441,6 +487,12 @@
     {
       "type": 0,
       "value": "mm"
+    }
+  ],
+  "6o3CZT": [
+    {
+      "type": 0,
+      "value": "E-mailadres"
     }
   ],
   "6sTcEM": [
@@ -821,6 +873,20 @@
       "value": "Ongeldig."
     }
   ],
+  "BWCtbf": [
+    {
+      "type": 0,
+      "value": "Je kan niet meerdere digitale adressen van het type "
+    },
+    {
+      "type": 1,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " invullen."
+    }
+  ],
   "BYKDMO": [
     {
       "type": 0,
@@ -863,6 +929,12 @@
     {
       "type": 0,
       "value": "Annuleren"
+    }
+  ],
+  "CGXGUq": [
+    {
+      "type": 0,
+      "value": "Pas voorkeur aan"
     }
   ],
   "COWzFp": [
@@ -987,6 +1059,50 @@
     {
       "type": 0,
       "value": "Terug naar locatie en tijdstip"
+    }
+  ],
+  "E37u5a": [
+    {
+      "type": 0,
+      "value": "(Wordt het "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurs-e-mailadres"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurs "
+            },
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurstelefoonnummer"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "E3ytti": [
@@ -1573,6 +1689,12 @@
       "value": "reference"
     }
   ],
+  "Lp2KV6": [
+    {
+      "type": 0,
+      "value": "(Voorkeur)"
+    }
+  ],
   "LsgvKh": [
     {
       "type": 0,
@@ -1695,6 +1817,46 @@
     {
       "type": 0,
       "value": "Geboortedatum"
+    }
+  ],
+  "Q4fCjD": [
+    {
+      "type": 0,
+      "value": "Je "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e-mailadres"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "telefoonnummer"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " wordt automatisch enkel voor dit formulier gebruikt. Je kunt deze voorkeur aanpassen via de knop hieronder."
     }
   ],
   "Q6/Lj7": [
@@ -2005,6 +2167,100 @@
       "value": "Kind toevoegen"
     }
   ],
+  "VSf9fx": [
+    {
+      "type": 0,
+      "value": "Geef het "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e-mailadres"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "telefoonnummer"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " op waarop je gecontacteerd wilt worden."
+    }
+  ],
+  "VTpxKE": [
+    {
+      "type": 0,
+      "value": "Er zijn meerdere "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e-mailadressen"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "telefoonnummers"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " van u bekend. Open de dropdown om ze te zien. Voor het instellen van contact voorkeuren kunt u naar het "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "portaal"
+        }
+      ],
+      "type": 8,
+      "value": "a"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "VaNtPf": [
     {
       "type": 0,
@@ -2091,6 +2347,12 @@
       "value": "Verwijder laatste punt"
     }
   ],
+  "YZpcRG": [
+    {
+      "type": 0,
+      "value": "Ongeldig telefoonnummer - je mag enkel cijfers, de + of - tekens en spaties gebruiken. Bijvoorbeeld +316 123-456-78."
+    }
+  ],
   "YcC4PD": [
     {
       "type": 0,
@@ -2101,6 +2363,12 @@
     {
       "type": 0,
       "value": "Ongeldig e-mailadres."
+    }
+  ],
+  "YnTumB": [
+    {
+      "type": 0,
+      "value": "Telefoonnummer"
     }
   ],
   "YpCkBs": [
@@ -2407,6 +2675,26 @@
       "value": " zijn."
     }
   ],
+  "d6CKAg": [
+    {
+      "type": 0,
+      "value": "Sla mijn gegevens op voor de volgende keer. U kunt deze later altijd nog wijzigen in het "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "portaal"
+        }
+      ],
+      "type": 8,
+      "value": "a"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "dFTtOX": [
     {
       "type": 0,
@@ -2563,6 +2851,12 @@
     {
       "type": 0,
       "value": "Ongeldige invoer."
+    }
+  ],
+  "i3G0QQ": [
+    {
+      "type": 0,
+      "value": "Pas uw voorkeur aan"
     }
   ],
   "ie+hkb": [
@@ -2855,6 +3149,46 @@
       "value": " zijn."
     }
   ],
+  "kpiWvx": [
+    {
+      "type": 0,
+      "value": "Voeg "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e-mailadres"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "telefoonnummer"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " toe"
+    }
+  ],
   "l/0YVO": [
     {
       "type": 0,
@@ -3119,6 +3453,12 @@
       "value": "Intersectie-resultaten kunnen niet samengevoegd worden."
     }
   ],
+  "pitnjr": [
+    {
+      "type": 0,
+      "value": "Bevestigen"
+    }
+  ],
   "psBz1n": [
     {
       "type": 0,
@@ -3297,12 +3637,6 @@
     {
       "type": 0,
       "value": "Verstuur code"
-    }
-  ],
-  "sP3xMn": [
-    {
-      "type": 0,
-      "value": "Ongeldig telefoonnummer - je mag enkel cijfers, de + of - tekens en spaties gebruiken. Bijvoorbeeld +316 123-456-78."
     }
   ],
   "sSmY1N": [
