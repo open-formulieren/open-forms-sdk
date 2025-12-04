@@ -3,7 +3,6 @@ import type {
   RequestVerificationCode,
   VerifyCode,
 } from '@open-formulieren/formio-renderer/registry/email/verification/types.js';
-import {NearestLookupBody} from '@open-formulieren/formio-renderer/registry/map/types.js';
 import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
 import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';

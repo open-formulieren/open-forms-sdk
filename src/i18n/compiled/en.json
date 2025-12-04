@@ -13,6 +13,20 @@
       "value": " or less."
     }
   ],
+  "+AhGyf": [
+    {
+      "type": 0,
+      "value": "Ensure the number of items is less than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "maxLength"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "+CrcRw": [
     {
       "type": 0,
@@ -69,6 +83,46 @@
       "value": "Add child"
     }
   ],
+  "+RF9ZR": [
+    {
+      "type": 0,
+      "value": "Use this "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " only for this form."
+    }
+  ],
   "+W79Dr": [
     {
       "type": 0,
@@ -85,12 +139,6 @@
     {
       "type": 0,
       "value": "Remove"
-    }
-  ],
-  "+zrboi": [
-    {
-      "type": 0,
-      "value": "Invalid IBAN"
     }
   ],
   "/HGnU6": [
@@ -121,12 +169,6 @@
     {
       "type": 0,
       "value": "Cancel drawing"
-    }
-  ],
-  "07h5b8": [
-    {
-      "type": 0,
-      "value": "You must provide a first name."
     }
   ],
   "0EdUXi": [
@@ -201,6 +243,12 @@
       "value": "Something went wrong while presenting the login option. Please contact the municipality."
     }
   ],
+  "1pxgtB": [
+    {
+      "type": 0,
+      "value": "At least one digital address should be provided."
+    }
+  ],
   "2/wgNH": [
     {
       "type": 0,
@@ -235,6 +283,12 @@
     {
       "type": 0,
       "value": "Previous year"
+    }
+  ],
+  "2RWk49": [
+    {
+      "type": 0,
+      "value": "Invalid Dutch license plate."
     }
   ],
   "33UD7T": [
@@ -277,10 +331,30 @@
       "value": "A BSN must be 9 digits."
     }
   ],
+  "3aKZqi": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "3beumC": [
     {
       "type": 0,
       "value": "BSN"
+    }
+  ],
+  "46fk1B": [
+    {
+      "type": 0,
+      "value": "The required field "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": " must be filled in."
     }
   ],
   "4ASssJ": [
@@ -409,6 +483,12 @@
     {
       "type": 0,
       "value": "MM"
+    }
+  ],
+  "6o3CZT": [
+    {
+      "type": 0,
+      "value": "Email"
     }
   ],
   "6sTcEM": [
@@ -589,6 +669,20 @@
     {
       "type": 0,
       "value": " is required."
+    }
+  ],
+  "8soi1P": [
+    {
+      "type": 0,
+      "value": "The submitted value does not match the pattern: "
+    },
+    {
+      "type": 1,
+      "value": "pattern"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "8uBESg": [
@@ -775,6 +869,26 @@
       "value": "Invalid."
     }
   ],
+  "BWCtbf": [
+    {
+      "type": 0,
+      "value": "You cannot submit multiple digital addresses for the type "
+    },
+    {
+      "type": 1,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "BYKDMO": [
+    {
+      "type": 0,
+      "value": "The date must be in a valid format (e.g., 10/30/2025)."
+    }
+  ],
   "BboxO6": [
     {
       "type": 0,
@@ -841,6 +955,12 @@
     {
       "type": 0,
       "value": "Cancel submission"
+    }
+  ],
+  "CGXGUq": [
+    {
+      "type": 0,
+      "value": "Update preferences"
     }
   ],
   "COWzFp": [
@@ -965,6 +1085,46 @@
     {
       "type": 0,
       "value": "Back to location and time"
+    }
+  ],
+  "E37u5a": [
+    {
+      "type": 0,
+      "value": "(Will become preferred "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "E3ytti": [
@@ -1535,6 +1695,12 @@
       "value": "reference"
     }
   ],
+  "Lp2KV6": [
+    {
+      "type": 0,
+      "value": "(Preferred)"
+    }
+  ],
   "LsgvKh": [
     {
       "type": 0,
@@ -1591,6 +1757,12 @@
       "value": "Payment"
     }
   ],
+  "MTfsUB": [
+    {
+      "type": 0,
+      "value": "There are too many characters provided."
+    }
+  ],
   "MrlKEu": [
     {
       "type": 0,
@@ -1613,12 +1785,6 @@
     {
       "type": 0,
       "value": "Your current location cannot be accessed"
-    }
-  ],
-  "Oc3efT": [
-    {
-      "type": 0,
-      "value": "You must provide a city."
     }
   ],
   "Op4orj": [
@@ -1657,6 +1823,46 @@
     {
       "type": 0,
       "value": "Date of birth"
+    }
+  ],
+  "Q4fCjD": [
+    {
+      "type": 0,
+      "value": "The "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " you provide will automatically only be used for this form. You can update your preferences using the button below."
     }
   ],
   "Q6/Lj7": [
@@ -1735,6 +1941,20 @@
     {
       "type": 1,
       "value": "formName"
+    }
+  ],
+  "S2Wyuv": [
+    {
+      "type": 0,
+      "value": "The submitted value does not match the pattern: "
+    },
+    {
+      "type": 1,
+      "value": "pattern"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "S5ydMY": [
@@ -1825,12 +2045,6 @@
     {
       "type": 0,
       "value": "."
-    }
-  ],
-  "TcqyzM": [
-    {
-      "type": 0,
-      "value": "You must provide a postcode."
     }
   ],
   "Tip5+d": [
@@ -1951,12 +2165,6 @@
       "value": "?"
     }
   ],
-  "UONGQo": [
-    {
-      "type": 0,
-      "value": "You must provide a house number."
-    }
-  ],
   "UyEKdQ": [
     {
       "type": 0,
@@ -1975,10 +2183,152 @@
       "value": "total"
     }
   ],
+  "V0B3pn": [
+    {
+      "type": 0,
+      "value": "The date must be later than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "min"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "VCgwM7": [
     {
       "type": 0,
       "value": "Add Child"
+    }
+  ],
+  "VSf9fx": [
+    {
+      "type": 0,
+      "value": "Provide the "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " on which you want to be contacted."
+    }
+  ],
+  "VTpxKE": [
+    {
+      "type": 0,
+      "value": "There are multiple "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email addresses"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone numbers"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " associated with your account. Use the dropdown to select the "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " you want to use for this form. To update your preferences, use the online "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "portal"
+        }
+      ],
+      "type": 8,
+      "value": "a"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "VaNtPf": [
@@ -2067,10 +2417,28 @@
       "value": "Remove last point"
     }
   ],
+  "YZpcRG": [
+    {
+      "type": 0,
+      "value": "Invalid phone number - a phone number may only contain digits, the + or - sign or spaces."
+    }
+  ],
   "YcC4PD": [
     {
       "type": 0,
       "value": "Choose language"
+    }
+  ],
+  "Yg2+vS": [
+    {
+      "type": 0,
+      "value": "Invalid email address."
+    }
+  ],
+  "YnTumB": [
+    {
+      "type": 0,
+      "value": "Phone number"
     }
   ],
   "YpCkBs": [
@@ -2261,6 +2629,12 @@
       "value": "Contact details"
     }
   ],
+  "b4uuR7": [
+    {
+      "type": 0,
+      "value": "There are too many characters provided."
+    }
+  ],
   "bKPaUj": [
     {
       "type": 0,
@@ -2295,12 +2669,6 @@
     {
       "type": 0,
       "value": "Your payment is received and processed."
-    }
-  ],
-  "bv/J3Y": [
-    {
-      "type": 0,
-      "value": "You must provide a street name."
     }
   ],
   "c0Ry9H": [
@@ -2363,6 +2731,26 @@
     {
       "type": 1,
       "value": "min"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "d6CKAg": [
+    {
+      "type": 0,
+      "value": "Save my data for the future forms. You can edit your preferences in the online "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "portal"
+        }
+      ],
+      "type": 8,
+      "value": "a"
     },
     {
       "type": 0,
@@ -2525,6 +2913,12 @@
     {
       "type": 0,
       "value": "Invalid input."
+    }
+  ],
+  "i3G0QQ": [
+    {
+      "type": 0,
+      "value": "Update your preferences"
     }
   ],
   "ie+hkb": [
@@ -2817,6 +3211,42 @@
       "value": "."
     }
   ],
+  "kpiWvx": [
+    {
+      "type": 0,
+      "value": "Add "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    }
+  ],
   "l/0YVO": [
     {
       "type": 0,
@@ -2915,6 +3345,12 @@
       "value": "Use ctrl + scroll to zoom the map"
     }
   ],
+  "nTNZBL": [
+    {
+      "type": 0,
+      "value": "Save all rows before proceeding."
+    }
+  ],
   "nfRRDu": [
     {
       "type": 0,
@@ -2925,6 +3361,20 @@
     {
       "type": 0,
       "value": "Your session will expire soon."
+    }
+  ],
+  "o3TabP": [
+    {
+      "type": 0,
+      "value": "The date must be earlier than or equal to "
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "oCHirf": [
@@ -2949,12 +3399,6 @@
     {
       "type": 0,
       "value": "Add another product"
-    }
-  ],
-  "odKXcF": [
-    {
-      "type": 0,
-      "value": "You must provide a last name."
     }
   ],
   "ojU6az": [
@@ -3067,10 +3511,10 @@
       "value": "Intersection results could not be merged"
     }
   ],
-  "ph6ljt": [
+  "pitnjr": [
     {
       "type": 0,
-      "value": "Invalid input"
+      "value": "Save"
     }
   ],
   "psBz1n": [
@@ -3253,12 +3697,6 @@
       "value": "Send code"
     }
   ],
-  "sP3xMn": [
-    {
-      "type": 0,
-      "value": "Invalid phone number - a phone number may only contain digits, the + or - sign or spaces"
-    }
-  ],
   "sSmY1N": [
     {
       "type": 0,
@@ -3327,6 +3765,12 @@
     {
       "type": 0,
       "value": "The email address where you received the appointment confirmation email."
+    }
+  ],
+  "u1vsoV": [
+    {
+      "type": 0,
+      "value": "Invalid IBAN."
     }
   ],
   "uGZ2tu": [
@@ -3557,12 +4001,6 @@
     {
       "type": 0,
       "value": "Date of birth cannot be in the future."
-    }
-  ],
-  "z+/GrY": [
-    {
-      "type": 0,
-      "value": "Invalid Dutch license plate"
     }
   ],
   "zkdWYe": [

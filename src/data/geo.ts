@@ -1,10 +1,10 @@
-import {NearestLookupBody} from '@open-formulieren/formio-renderer/registry/map/types.js';
-import {
+import type {NearestLookupBody} from '@open-formulieren/formio-renderer/registry/map/types.js';
+import type {
   SearchResult as LeafletSearchResult,
   ParseArgument,
+  ProviderOptions,
 } from 'leaflet-geosearch/src/providers/provider.js';
-import AbstractProvider, {ProviderOptions} from 'leaflet-geosearch/src/providers/provider.js';
-import {useAsync} from 'react-use';
+import AbstractProvider from 'leaflet-geosearch/src/providers/provider.js';
 
 import {get} from '@/api';
 import {logError} from '@/components/Errors';
