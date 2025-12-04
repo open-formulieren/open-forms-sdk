@@ -18,6 +18,80 @@ Deprecations
 * The reworked file upload component (experimental renderer) deprecates the old upload
   component design tokens. We'll provide upgrade documentation and shims for backwards
   compatibility.
+* The reworked ``LoadingIndicator`` component replaces the old one. The old design tokens
+  are deprecated, but this release is backwards compatible.
+* The reworked ``Modal`` component replaces the old one from the renderer. Any old design
+  tokens are deprecated, but we'll provide upgrade documentation and shims for backwards
+  compatibility where necessary.
+
+3.4.0-alpha.2 (2025-12-04)
+==========================
+
+Third preview release of the upcoming 3.4.0 version.
+
+Deprecations
+------------
+
+* The UMD bundle is deprecated and will be removed in Open Forms SDK 4.0. The UMD bundle
+  is currently the default export of the NPM package. In 4.0, the ESM modules will be
+  the default and the ESM **bundle** will require an updated import path.
+* The bundles have moved from ``dist/open-forms-sdk.{js,mjs,css}`` to
+  ``dist/bundles/open-forms-sdk.{js,mjs,css}``. The Docker image still supports the old
+  paths for backwards compatibility, but this is deprecated and may be removed in 4.0.
+  For bundle imports, use a base path of ``/bundles/*``.
+* The reworked file upload component (experimental renderer) deprecates the old upload
+  component design tokens. We'll provide upgrade documentation and shims for backwards
+  compatibility.
+* The reworked ``LoadingIndicator`` component replaces the old one. The old design tokens
+  are deprecated, but this release is backwards compatible.
+* The reworked ``Modal`` component replaces the old one from the renderer. Any old design
+  tokens are deprecated, but we'll provide upgrade documentation and shims for backwards
+  compatibility where necessary.
+
+New features
+------------
+
+* Updated the new renderer version. A detailed
+  `changelog is available <https://github.com/open-formulieren/formio-renderer/blob/main/CHANGELOG.md>`_.
+
+  - The following component types are now supported:
+
+    - ``map``
+    - ``children``
+
+  - The ``textfield`` component can now display the character count, and accessibility
+    is improved which was previously not possible.
+  - The email verification flow is now implemented and improved - you now have feedback
+    that the email is verified which wasn't possible before.
+  - Custom validation error messages set in the backend are now supported.
+  - Default validation error messages are improved and provide better user feedback.
+  - Validation errors for an item in a repeating group are now displayed "for the item"
+    rather than near the first field in the item, which was previously not possible.
+  - ``selectboxes`` with a maximum count of options now disable the remaining options
+    when that limit is reached.
+
+Bugfixes
+--------
+
+* Many bugs are fixed in the new renderer, see the detailed
+  `changelog <https://github.com/open-formulieren/formio-renderer/blob/main/CHANGELOG.md>`_.
+
+Project maintenance
+-------------------
+
+* Refactored button component(s) to use the components from our renderer package and
+  updated the linter rules.
+* Refactored the ``Loader`` component to use the one from our renderer package.
+* Updated to latest security fixes of dependencies:
+
+  * ``glob``
+  * ``js-yaml``
+  * ``minimatch``
+  * ``jackspeak``
+
+* Dropped the ``react-modal`` dependency in favour of the native HTML variant provided
+  by our own renderer.
+* Cleaned up CI pipelines by using our own reusable actions.
 
 3.4.0-alpha.1 (2025-11-10)
 ==========================
