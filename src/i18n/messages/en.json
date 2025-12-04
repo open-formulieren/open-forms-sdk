@@ -9,16 +9,6 @@
     "description": "Form save modal body text",
     "originalDefault": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
   },
-  "+KBbXH": {
-    "defaultMessage": "Click to start drawing shape",
-    "description": "Draw handler polygon tooltip start.",
-    "originalDefault": "Click to start drawing shape"
-  },
-  "+W79Dr": {
-    "defaultMessage": "Click to continue drawing line",
-    "description": "Draw handler polyline tooltip continue.",
-    "originalDefault": "Click to continue drawing line"
-  },
   "+uwsgF": {
     "defaultMessage": "Location and time",
     "description": "Appointments navbar title for 'location and time' step",
@@ -38,11 +28,6 @@
     "defaultMessage": "Initials",
     "description": "Label for partners initials",
     "originalDefault": "Initials"
-  },
-  "/yX9Xl": {
-    "defaultMessage": "Cancel drawing",
-    "description": "Draw toolbar cancel button tooltip.",
-    "originalDefault": "Cancel drawing"
   },
   "0j8tMq": {
     "defaultMessage": "Log out",
@@ -64,11 +49,6 @@
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
   },
-  "2D6ubj": {
-    "defaultMessage": "Line",
-    "description": "Draw toolbar polyline button tooltip.",
-    "originalDefault": "Line"
-  },
   "2HHJrq": {
     "defaultMessage": "Invalid function arguments",
     "description": "ZOD 'invalid_arguments' error message",
@@ -89,11 +69,6 @@
     "description": "Product summary on appointments contact details step heading",
     "originalDefault": "Your products"
   },
-  "4ZOmtU": {
-    "defaultMessage": "Save changes",
-    "description": "Edit toolbar save tooltip.",
-    "originalDefault": "Save changes"
-  },
   "4gPdgK": {
     "defaultMessage": "Bad",
     "description": "GovMetric rating text",
@@ -103,11 +78,6 @@
     "defaultMessage": "Verify",
     "description": "Email verification: verify code button text",
     "originalDefault": "Verify"
-  },
-  "4ui8R+": {
-    "defaultMessage": "Click last point to finish line",
-    "description": "Draw handler polyline tooltip end.",
-    "originalDefault": "Click last point to finish line"
   },
   "5uh2hS": {
     "defaultMessage": "Appointment cancellation failed",
@@ -123,11 +93,6 @@
     "defaultMessage": "Check and co-sign submission",
     "description": "Check overview and co-sign",
     "originalDefault": "Check and co-sign submission"
-  },
-  "62SBjV": {
-    "defaultMessage": "Shape (polygon)",
-    "description": "Draw toolbar polygon button tooltip.",
-    "originalDefault": "Shape (polygon)"
   },
   "6EoG3C": {
     "defaultMessage": "Save",
@@ -264,11 +229,6 @@
     "description": "Login button label",
     "originalDefault": "Login with {provider}"
   },
-  "B/W1uC": {
-    "defaultMessage": "Remove shapes",
-    "description": "Edit toolbar remove button tooltip.",
-    "originalDefault": "Remove shapes"
-  },
   "BBWisr": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments contact details step",
@@ -278,11 +238,6 @@
     "defaultMessage": "Invalid.",
     "description": "ZOD 'invalid_string' error message, regex validation",
     "originalDefault": "Invalid."
-  },
-  "BboxO6": {
-    "defaultMessage": "Use two fingers to move the map",
-    "description": "Gesturehandeling phone touch message.",
-    "originalDefault": "Use two fingers to move the map"
   },
   "C7jQ09": {
     "defaultMessage": "Cancel submission",
@@ -298,11 +253,6 @@
     "defaultMessage": "This form is currently undergoing maintenance and can not be accessed at the moment.",
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
-  },
-  "D6TdPW": {
-    "defaultMessage": "Click map to place marker",
-    "description": "Draw handler marker tooltip start.",
-    "originalDefault": "Click map to place marker"
   },
   "DEetjI": {
     "defaultMessage": "Street name",
@@ -389,11 +339,6 @@
     "description": "Open Forms service unavailable error message",
     "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
   },
-  "FWCQJu": {
-    "defaultMessage": "Current location",
-    "description": "Leaflet map: use user location button ariaLabel text.",
-    "originalDefault": "Current location"
-  },
   "FrFeZj": {
     "defaultMessage": "You haven't entered an email address yet.",
     "description": "Email verification modal: warning that no email is specified",
@@ -419,11 +364,6 @@
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
   },
-  "H4VhcO": {
-    "defaultMessage": "Current location cannot be accessed",
-    "description": "Leaflet map: use user location button disabled ariaLabel text.",
-    "originalDefault": "Current location cannot be accessed"
-  },
   "H4n86k": {
     "defaultMessage": "Summary",
     "description": "Summary page title",
@@ -444,16 +384,6 @@
     "description": "DigiD error message. MUST BE THIS EXACT STRING!",
     "originalDefault": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
   },
-  "HY6Irs": {
-    "defaultMessage": "Cancel changes",
-    "description": "Edit toolbar cancel tooltip.",
-    "originalDefault": "Cancel changes"
-  },
-  "HgLr1F": {
-    "defaultMessage": "Cancel",
-    "description": "Draw toolbar cancel button message.",
-    "originalDefault": "Cancel"
-  },
   "HhcSoc": {
     "defaultMessage": "Save and resume later",
     "description": "Form save modal title",
@@ -463,11 +393,6 @@
     "defaultMessage": "Invalid input.",
     "description": "ZOD 'too_big' error message, generic",
     "originalDefault": "Invalid input."
-  },
-  "Hkq6NE": {
-    "defaultMessage": "Finish drawing",
-    "description": "Draw toolbar finish button tooltip.",
-    "originalDefault": "Finish drawing"
   },
   "I6ok5N": {
     "defaultMessage": "Invalid {validation, select, email {email} url {url} datetime {date and time} ip {IP address} other {validation} }.",
@@ -524,11 +449,6 @@
     "description": "Label for partners affixes",
     "originalDefault": "Affixes"
   },
-  "LYjd+f": {
-    "defaultMessage": "Use my current location",
-    "description": "Leaflet map: use user location button tooltip text.",
-    "originalDefault": "Use my current location"
-  },
   "LiRh7j": {
     "defaultMessage": "Confirmation: {reference}",
     "description": "Confirmation page title",
@@ -569,25 +489,10 @@
     "description": "Payment page title",
     "originalDefault": "Payment"
   },
-  "N2sZnS": {
-    "defaultMessage": "Save",
-    "description": "Edit toolbar save message.",
-    "originalDefault": "Save"
-  },
   "N9YM+2": {
     "defaultMessage": "Add partner",
     "description": "Add partner: add partner button text",
     "originalDefault": "Add partner"
-  },
-  "NZ8rJn": {
-    "defaultMessage": "Your current location cannot be accessed",
-    "description": "Leaflet map: use user location button disabled tooltip text.",
-    "originalDefault": "Your current location cannot be accessed"
-  },
-  "Op4orj": {
-    "defaultMessage": "No shapes to remove",
-    "description": "Edit toolbar remove button disabled tooltip.",
-    "originalDefault": "No shapes to remove"
   },
   "P194bo": {
     "defaultMessage": "Invalid input: must start with \"{startsWith}\".",
@@ -603,11 +508,6 @@
     "defaultMessage": "Invalid input.",
     "description": "ZOD 'too_small' error message, generic",
     "originalDefault": "Invalid input."
-  },
-  "Q6/Lj7": {
-    "defaultMessage": "Remove last drawn point",
-    "description": "Draw toolbar undo button tooltip.",
-    "originalDefault": "Remove last drawn point"
   },
   "QtraZC": {
     "defaultMessage": "Date must be greater than or equal to {minimum}.",
@@ -664,11 +564,6 @@
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
   },
-  "U5+FHP": {
-    "defaultMessage": "Cancel",
-    "description": "Edit toolbar cancel message.",
-    "originalDefault": "Cancel"
-  },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
     "description": "Appointments: single product label/header",
@@ -709,11 +604,6 @@
     "description": "ZOD 'invalid_date' error message",
     "originalDefault": "Invalid date"
   },
-  "X/24FO": {
-    "defaultMessage": "Map component search button",
-    "description": "The leaflet map's search button areaLabel text.",
-    "originalDefault": "Map component search button"
-  },
   "X3FjL+": {
     "defaultMessage": "Location and time",
     "description": "Appointment overview: location and time step title",
@@ -728,11 +618,6 @@
     "defaultMessage": "Date must be smaller than or equal to {maximum}.",
     "description": "ZOD 'too_big' error message, for dates",
     "originalDefault": "Date must be smaller than or equal to {maximum}."
-  },
-  "Y3jHZm": {
-    "defaultMessage": "Remove last point",
-    "description": "Draw toolbar undo button message.",
-    "originalDefault": "Remove last point"
   },
   "YcC4PD": {
     "defaultMessage": "Choose language",
@@ -779,11 +664,6 @@
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
   },
-  "aUpjaY": {
-    "defaultMessage": "Sorry, that address could not be found.",
-    "description": "The leaflet map's location not found message.",
-    "originalDefault": "Sorry, that address could not be found."
-  },
   "abKEBH": {
     "defaultMessage": "No",
     "description": "'False' display",
@@ -793,11 +673,6 @@
     "defaultMessage": "Contact details",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
-  },
-  "bRtoG6": {
-    "defaultMessage": "Remove all",
-    "description": "Edit toolbar clearAll message.",
-    "originalDefault": "Remove all"
   },
   "bgfiRG": {
     "defaultMessage": "You've started the payment process.",
@@ -834,11 +709,6 @@
     "description": "return to form start link after 403",
     "originalDefault": "Back to form start"
   },
-  "dNGw+S": {
-    "defaultMessage": "Click to continue drawing shape",
-    "description": "Draw handler polygon tooltip continue.",
-    "originalDefault": "Click to continue drawing shape"
-  },
   "eEC1P4": {
     "defaultMessage": "Field ''{label}'': {error}",
     "description": "Overview page, validation error message for step field.",
@@ -853,11 +723,6 @@
     "defaultMessage": "Processing...",
     "description": "Checking background processing status title",
     "originalDefault": "Processing..."
-  },
-  "fJVa0u": {
-    "defaultMessage": "Marker",
-    "description": "Draw toolbar marker button tooltip.",
-    "originalDefault": "Marker"
   },
   "fWjfVm": {
     "defaultMessage": "Please hold on while we're processing your submission.",
@@ -878,11 +743,6 @@
     "defaultMessage": "Check and confirm",
     "description": "Summary page title",
     "originalDefault": "Check and confirm"
-  },
-  "h2LzuB": {
-    "defaultMessage": "Are you sure you want to delete your drawn shape?",
-    "description": "Leaflet map: delete drawn shape confirmation message",
-    "originalDefault": "Are you sure you want to delete your drawn shape?"
   },
   "hFqzG6": {
     "defaultMessage": "Current step in form {title}: {activeStepTitle}",
@@ -1034,11 +894,6 @@
     "description": "introduction page title",
     "originalDefault": "Introduction"
   },
-  "nLymjB": {
-    "defaultMessage": "Use ctrl + scroll to zoom the map",
-    "description": "Gesturehandeling pc scroll message.",
-    "originalDefault": "Use ctrl + scroll to zoom the map"
-  },
   "nwQjsz": {
     "defaultMessage": "Your session will expire soon.",
     "description": "Session expiry warning title (in modal)",
@@ -1073,11 +928,6 @@
     "defaultMessage": "City",
     "description": "Label for addressNL city read only result",
     "originalDefault": "City"
-  },
-  "ovI+W7": {
-    "defaultMessage": "Use ⌘ + scroll to zoom the map",
-    "description": "Gesturehandeling mac scroll message.",
-    "originalDefault": "Use ⌘ + scroll to zoom the map"
   },
   "pMkaJD": {
     "defaultMessage": "{field} must be a valid email address, like 'willem@example.com'.",
@@ -1134,16 +984,6 @@
     "description": "Email verification: send code button text",
     "originalDefault": "Send code"
   },
-  "sSmY1N": {
-    "defaultMessage": "Enter address, please",
-    "description": "The leaflet map's input fields placeholder message.",
-    "originalDefault": "Enter address, please"
-  },
-  "sYb+eZ": {
-    "defaultMessage": "Remove all shapes",
-    "description": "Edit toolbar clearAll tooltip.",
-    "originalDefault": "Remove all shapes"
-  },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
     "description": "Appointment cancellation body text",
@@ -1199,11 +1039,6 @@
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
   },
-  "vfKvuS": {
-    "defaultMessage": "Click first point to finish shape",
-    "description": "Draw handler polygon tooltip end.",
-    "originalDefault": "Click first point to finish shape"
-  },
   "wl8Ucz": {
     "defaultMessage": "Your appointment",
     "description": "Location summary on appointments contact details step heading",
@@ -1214,11 +1049,6 @@
     "description": "GovMetric snippet header",
     "originalDefault": "How do you rate this form?"
   },
-  "xh+7Vv": {
-    "defaultMessage": "Finish",
-    "description": "Draw toolbar finish button message.",
-    "originalDefault": "Finish"
-  },
   "y31iyC": {
     "defaultMessage": "Invalid literal value, expected {expected}.",
     "description": "ZOD 'invalid_literal' error message",
@@ -1228,15 +1058,5 @@
     "defaultMessage": "Return to main website",
     "description": "Back to main website link title",
     "originalDefault": "Return to main website"
-  },
-  "zpHAro": {
-    "defaultMessage": "Click to start drawing line",
-    "description": "Draw handler polyline tooltip start.",
-    "originalDefault": "Click to start drawing line"
-  },
-  "zvoXSU": {
-    "defaultMessage": "Nearest address: <address></address>",
-    "description": "Reverse geocoded address result display",
-    "originalDefault": "Nearest address: <address></address>"
   }
 }

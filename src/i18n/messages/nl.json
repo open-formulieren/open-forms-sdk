@@ -9,16 +9,6 @@
     "description": "Form save modal body text",
     "originalDefault": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for {numberOfDays, plural, one {1 day} other {{numberOfDays} days}}."
   },
-  "+KBbXH": {
-    "defaultMessage": "Klik om een veelhoek (polygoon) te tekenen",
-    "description": "Draw handler polygon tooltip start.",
-    "originalDefault": "Click to start drawing shape"
-  },
-  "+W79Dr": {
-    "defaultMessage": "Klik om verder te tekenen",
-    "description": "Draw handler polyline tooltip continue.",
-    "originalDefault": "Click to continue drawing line"
-  },
   "+uwsgF": {
     "defaultMessage": "Afspraakdetails",
     "description": "Appointments navbar title for 'location and time' step",
@@ -40,11 +30,6 @@
     "description": "Label for partners initials",
     "originalDefault": "Initials"
   },
-  "/yX9Xl": {
-    "defaultMessage": "Tekeningen annuleren",
-    "description": "Draw toolbar cancel button tooltip.",
-    "originalDefault": "Cancel drawing"
-  },
   "0j8tMq": {
     "defaultMessage": "Uitloggen",
     "description": "Log out button text",
@@ -64,11 +49,6 @@
     "defaultMessage": "Er ging iets fout bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
     "description": "Co-sign auth option not available on form",
     "originalDefault": "Something went wrong while presenting the login option. Please contact the municipality."
-  },
-  "2D6ubj": {
-    "defaultMessage": "Lijn",
-    "description": "Draw toolbar polyline button tooltip.",
-    "originalDefault": "Line"
   },
   "2HHJrq": {
     "defaultMessage": "Ongeldige functie-argumenten",
@@ -90,11 +70,6 @@
     "description": "Product summary on appointments contact details step heading",
     "originalDefault": "Your products"
   },
-  "4ZOmtU": {
-    "defaultMessage": "Wijzigingen opslaan",
-    "description": "Edit toolbar save tooltip.",
-    "originalDefault": "Save changes"
-  },
   "4gPdgK": {
     "defaultMessage": "Slecht",
     "description": "GovMetric rating text",
@@ -104,11 +79,6 @@
     "defaultMessage": "Bevestigen",
     "description": "Email verification: verify code button text",
     "originalDefault": "Verify"
-  },
-  "4ui8R+": {
-    "defaultMessage": "Klik het laatste punt om de lijn te voltooien",
-    "description": "Draw handler polyline tooltip end.",
-    "originalDefault": "Click last point to finish line"
   },
   "5uh2hS": {
     "defaultMessage": "Afspraak annuleren mislukt",
@@ -124,11 +94,6 @@
     "defaultMessage": "Controle en medeondertekenen inzending",
     "description": "Check overview and co-sign",
     "originalDefault": "Check and co-sign submission"
-  },
-  "62SBjV": {
-    "defaultMessage": "Veelhoek (polygoon)",
-    "description": "Draw toolbar polygon button tooltip.",
-    "originalDefault": "Shape (polygon)"
   },
   "6EoG3C": {
     "defaultMessage": "Opslaan",
@@ -266,11 +231,6 @@
     "description": "Login button label",
     "originalDefault": "Login with {provider}"
   },
-  "B/W1uC": {
-    "defaultMessage": "Verwijder vormen",
-    "description": "Edit toolbar remove button tooltip.",
-    "originalDefault": "Remove shapes"
-  },
   "BBWisr": {
     "defaultMessage": "{name}: {amount}x",
     "description": "Product summary on appointments contact details step",
@@ -281,11 +241,6 @@
     "defaultMessage": "Ongeldig.",
     "description": "ZOD 'invalid_string' error message, regex validation",
     "originalDefault": "Invalid."
-  },
-  "BboxO6": {
-    "defaultMessage": "Gebruik twee vingers om te navigeren in de kaart",
-    "description": "Gesturehandeling phone touch message.",
-    "originalDefault": "Use two fingers to move the map"
   },
   "C7jQ09": {
     "defaultMessage": "Annuleren",
@@ -301,11 +256,6 @@
     "defaultMessage": "Dit formulier is momenteel in onderhoud en daardoor tijdelijk niet beschikbaar.",
     "description": "Maintenance mode message",
     "originalDefault": "This form is currently undergoing maintenance and can not be accessed at the moment."
-  },
-  "D6TdPW": {
-    "defaultMessage": "Klik op de kaart om een pin/punt te plaatsen",
-    "description": "Draw handler marker tooltip start.",
-    "originalDefault": "Click map to place marker"
   },
   "DEetjI": {
     "defaultMessage": "Straatnaam",
@@ -393,11 +343,6 @@
     "description": "Open Forms service unavailable error message",
     "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
   },
-  "FWCQJu": {
-    "defaultMessage": "Huidige locatie",
-    "description": "Leaflet map: use user location button ariaLabel text.",
-    "originalDefault": "Current location"
-  },
   "FrFeZj": {
     "defaultMessage": "Je hebt nog geen e-mailadres ingevuld.",
     "description": "Email verification modal: warning that no email is specified",
@@ -423,11 +368,6 @@
     "description": "Modal saving data failed message",
     "originalDefault": "Saving the data failed, please try again later"
   },
-  "H4VhcO": {
-    "defaultMessage": "Huidige locatie kan niet bepaald worden",
-    "description": "Leaflet map: use user location button disabled ariaLabel text.",
-    "originalDefault": "Current location cannot be accessed"
-  },
   "H4n86k": {
     "defaultMessage": "Overzicht",
     "description": "Summary page title",
@@ -449,16 +389,6 @@
     "isTranslated": true,
     "originalDefault": "Inloggen bij deze organisatie is niet gelukt. Probeert u het later nog een keer. Lukt het nog steeds niet? Log in bij Mijn DigiD. Zo controleert u of uw DigiD goed werkt. Mogelijk is er een storing bij de organisatie waar u inlogt."
   },
-  "HY6Irs": {
-    "defaultMessage": "Wijzigingen annuleren",
-    "description": "Edit toolbar cancel tooltip.",
-    "originalDefault": "Cancel changes"
-  },
-  "HgLr1F": {
-    "defaultMessage": "Annuleer",
-    "description": "Draw toolbar cancel button message.",
-    "originalDefault": "Cancel"
-  },
   "HhcSoc": {
     "defaultMessage": "Opslaan en later verdergaan",
     "description": "Form save modal title",
@@ -468,11 +398,6 @@
     "defaultMessage": "Ongeldige invoer.",
     "description": "ZOD 'too_big' error message, generic",
     "originalDefault": "Invalid input."
-  },
-  "Hkq6NE": {
-    "defaultMessage": "Tekening voltooien",
-    "description": "Draw toolbar finish button tooltip.",
-    "originalDefault": "Finish drawing"
   },
   "I6ok5N": {
     "defaultMessage": "Ongeldig{validation, select, email { e-mailadres} url {e URL} datetime {e datumtijd} ip { IP address} other { validation} }.",
@@ -529,11 +454,6 @@
     "description": "Label for partners affixes",
     "originalDefault": "Affixes"
   },
-  "LYjd+f": {
-    "defaultMessage": "Gebruik mijn huidige locatie",
-    "description": "Leaflet map: use user location button tooltip text.",
-    "originalDefault": "Use my current location"
-  },
   "LiRh7j": {
     "defaultMessage": "Bevestiging: {reference}",
     "description": "Confirmation page title",
@@ -575,25 +495,10 @@
     "description": "Payment page title",
     "originalDefault": "Payment"
   },
-  "N2sZnS": {
-    "defaultMessage": "Opslaan",
-    "description": "Edit toolbar save message.",
-    "originalDefault": "Save"
-  },
   "N9YM+2": {
     "defaultMessage": "Partner toevoegen",
     "description": "Add partner: add partner button text",
     "originalDefault": "Add partner"
-  },
-  "NZ8rJn": {
-    "defaultMessage": "Je huidige locatie kan niet bepaald worden",
-    "description": "Leaflet map: use user location button disabled tooltip text.",
-    "originalDefault": "Your current location cannot be accessed"
-  },
-  "Op4orj": {
-    "defaultMessage": "Geen vormen om te verwijderen",
-    "description": "Edit toolbar remove button disabled tooltip.",
-    "originalDefault": "No shapes to remove"
   },
   "P194bo": {
     "defaultMessage": "De ingevoerde waarde moet beginnen met \"{startsWith}\".",
@@ -609,11 +514,6 @@
     "defaultMessage": "Ongeldige invoer.",
     "description": "ZOD 'too_small' error message, generic",
     "originalDefault": "Invalid input."
-  },
-  "Q6/Lj7": {
-    "defaultMessage": "Verwijder het laatst getekende punt",
-    "description": "Draw toolbar undo button tooltip.",
-    "originalDefault": "Remove last drawn point"
   },
   "QtraZC": {
     "defaultMessage": "De datum moet groter dan of gelijk aan {minimum} zijn.",
@@ -670,11 +570,6 @@
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
   },
-  "U5+FHP": {
-    "defaultMessage": "Annuleer",
-    "description": "Edit toolbar cancel message.",
-    "originalDefault": "Cancel"
-  },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
     "description": "Appointments: single product label/header",
@@ -716,11 +611,6 @@
     "description": "ZOD 'invalid_date' error message",
     "originalDefault": "Invalid date"
   },
-  "X/24FO": {
-    "defaultMessage": "Zoeken",
-    "description": "The leaflet map's search button areaLabel text.",
-    "originalDefault": "Map component search button"
-  },
   "X3FjL+": {
     "defaultMessage": "Locatie en tijdstip",
     "description": "Appointment overview: location and time step title",
@@ -735,11 +625,6 @@
     "defaultMessage": "De datum moet kleiner dan of gelijk aan {maximum} zijn.",
     "description": "ZOD 'too_big' error message, for dates",
     "originalDefault": "Date must be smaller than or equal to {maximum}."
-  },
-  "Y3jHZm": {
-    "defaultMessage": "Verwijder laatste punt",
-    "description": "Draw toolbar undo button message.",
-    "originalDefault": "Remove last point"
   },
   "YcC4PD": {
     "defaultMessage": "Taal kiezen",
@@ -787,11 +672,6 @@
     "description": "Appointment cancellation email field label",
     "originalDefault": "Your email address"
   },
-  "aUpjaY": {
-    "defaultMessage": "Sorry, dit address kan niet gevonden worden.",
-    "description": "The leaflet map's location not found message.",
-    "originalDefault": "Sorry, that address could not be found."
-  },
   "abKEBH": {
     "defaultMessage": "Nee",
     "description": "'False' display",
@@ -801,11 +681,6 @@
     "defaultMessage": "Contactgegevens",
     "description": "Appointments: contact details step title",
     "originalDefault": "Contact details"
-  },
-  "bRtoG6": {
-    "defaultMessage": "Verwijder alles",
-    "description": "Edit toolbar clearAll message.",
-    "originalDefault": "Remove all"
   },
   "bgfiRG": {
     "defaultMessage": "Je hebt de betaling gestart.",
@@ -842,11 +717,6 @@
     "description": "return to form start link after 403",
     "originalDefault": "Back to form start"
   },
-  "dNGw+S": {
-    "defaultMessage": "Klik om verder te tekenen",
-    "description": "Draw handler polygon tooltip continue.",
-    "originalDefault": "Click to continue drawing shape"
-  },
   "eEC1P4": {
     "defaultMessage": "Veld ''{label}'': {error}",
     "description": "Overview page, validation error message for step field.",
@@ -861,11 +731,6 @@
     "defaultMessage": "Bezig...",
     "description": "Checking background processing status title",
     "originalDefault": "Processing..."
-  },
-  "fJVa0u": {
-    "defaultMessage": "Pin/punt",
-    "description": "Draw toolbar marker button tooltip.",
-    "originalDefault": "Marker"
   },
   "fWjfVm": {
     "defaultMessage": "Een moment geduld alstublieft. De inzending wordt verwerkt.",
@@ -886,11 +751,6 @@
     "defaultMessage": "Controle en bevestiging",
     "description": "Summary page title",
     "originalDefault": "Check and confirm"
-  },
-  "h2LzuB": {
-    "defaultMessage": "Ben je zeker dat je de getekende vorm wil verwijderen?",
-    "description": "Leaflet map: delete drawn shape confirmation message",
-    "originalDefault": "Are you sure you want to delete your drawn shape?"
   },
   "hFqzG6": {
     "defaultMessage": "Huidige stap in formulier {title}: {activeStepTitle}",
@@ -1045,11 +905,6 @@
     "description": "introduction page title",
     "originalDefault": "Introduction"
   },
-  "nLymjB": {
-    "defaultMessage": "Gebruik CTRL + scroll om te zoomen in de kaart",
-    "description": "Gesturehandeling pc scroll message.",
-    "originalDefault": "Use ctrl + scroll to zoom the map"
-  },
   "nwQjsz": {
     "defaultMessage": "Je sessie vervalt binnenkort.",
     "description": "Session expiry warning title (in modal)",
@@ -1084,11 +939,6 @@
     "defaultMessage": "Plaats",
     "description": "Label for addressNL city read only result",
     "originalDefault": "City"
-  },
-  "ovI+W7": {
-    "defaultMessage": "Gebruik ⌘ + scroll om te zoomen in de kaart",
-    "description": "Gesturehandeling mac scroll message.",
-    "originalDefault": "Use ⌘ + scroll to zoom the map"
   },
   "pMkaJD": {
     "defaultMessage": "{field} moet een geldig e-mailadres zijn, zoals 'willem@example.com' bijvoorbeeld.",
@@ -1146,16 +996,6 @@
     "description": "Email verification: send code button text",
     "originalDefault": "Send code"
   },
-  "sSmY1N": {
-    "defaultMessage": "Zoek adres",
-    "description": "The leaflet map's input fields placeholder message.",
-    "originalDefault": "Enter address, please"
-  },
-  "sYb+eZ": {
-    "defaultMessage": "Verwijder alle vormen van de kaart",
-    "description": "Edit toolbar clearAll tooltip.",
-    "originalDefault": "Remove all shapes"
-  },
   "senRv3": {
     "defaultMessage": "Je staat op het punt je afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul je e-mailadres in ter controle.",
     "description": "Appointment cancellation body text",
@@ -1211,11 +1051,6 @@
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
   },
-  "vfKvuS": {
-    "defaultMessage": "Klik op het eerste punt, om de veelhoek te voltooien",
-    "description": "Draw handler polygon tooltip end.",
-    "originalDefault": "Click first point to finish shape"
-  },
   "wl8Ucz": {
     "defaultMessage": "Jouw afspraak",
     "description": "Location summary on appointments contact details step heading",
@@ -1226,11 +1061,6 @@
     "description": "GovMetric snippet header",
     "originalDefault": "How do you rate this form?"
   },
-  "xh+7Vv": {
-    "defaultMessage": "Voltooi",
-    "description": "Draw toolbar finish button message.",
-    "originalDefault": "Finish"
-  },
   "y31iyC": {
     "defaultMessage": "Ongeldige letterlijke waarde, verwachtte {expected}.",
     "description": "ZOD 'invalid_literal' error message",
@@ -1240,15 +1070,5 @@
     "defaultMessage": "Terug naar de website",
     "description": "Back to main website link title",
     "originalDefault": "Return to main website"
-  },
-  "zpHAro": {
-    "defaultMessage": "Klik om een lijn te tekenen",
-    "description": "Draw handler polyline tooltip start.",
-    "originalDefault": "Click to start drawing line"
-  },
-  "zvoXSU": {
-    "defaultMessage": "Adres in de buurt: <address></address>",
-    "description": "Reverse geocoded address result display",
-    "originalDefault": "Nearest address: <address></address>"
   }
 }
