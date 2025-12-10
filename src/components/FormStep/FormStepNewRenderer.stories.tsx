@@ -212,6 +212,58 @@ export const PerformServerLogicCheck: Story = {
   },
 };
 
+export const DisableStepSubmissionWithServerLogic: Story = {
+  parameters: {
+    msw: {
+      handlers: {
+        submissionStep: [
+          mockSubmissionStepGet(LOGIC_CHECK_STEP_DETAIL_BODY),
+          mockSubmissionStepPut(LOGIC_CHECK_STEP_DETAIL_BODY, 201),
+        ],
+        logicCheck: [
+          mockSubmissionCheckLogicPost(
+            DEFAULT_SUBMISSION,
+            buildSubmissionStep({
+              canSubmit: false, // Disable the step submission
+              components: [
+                {
+                  id: 'text1',
+                  type: 'textfield',
+                  key: 'text1',
+                  label: 'Simple text field',
+                  description: 'A help text for the text field',
+                },
+                {
+                  id: 'extraField',
+                  type: 'checkbox',
+                  key: 'checkbox',
+                  label: 'Field shown via logic check',
+                  hidden: true,
+                  defaultValue: true,
+                },
+              ],
+            }),
+            200
+          ),
+        ],
+      },
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const textField = await canvas.findByLabelText('Simple text field');
+    await userEvent.type(textField, 'Trigger logic evaluation');
+
+    // allow 2s for the "next" button to be finished loading
+    const nextButton = await canvas.findByRole('button', {name: 'Next'}, {timeout: 2 * 1000});
+    await waitFor(() => {
+      // Expect the "next" button to be disabled.
+      expect(nextButton).toHaveAttribute('aria-disabled', 'true');
+    });
+  },
+};
+
 const SUBMISSION_STEP_WITH_DATA_DETAIL_BODY = buildSubmissionStep({
   components: [
     {

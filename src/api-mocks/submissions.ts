@@ -89,6 +89,7 @@ export const mockSubmissionGet = (submission = buildSubmission()) =>
 interface BuildSubmissionStepOpts {
   components?: AnyComponentSchema[];
   data?: JSONObject | null;
+  canSubmit?: boolean;
 }
 
 /**
@@ -97,6 +98,7 @@ interface BuildSubmissionStepOpts {
 export const buildSubmissionStep = ({
   components = SUBMISSION_STEP_DETAILS.formStep.configuration.components,
   data = null,
+  canSubmit = true,
 }: BuildSubmissionStepOpts): SubmissionStep => {
   const formioConfiguration: SubmissionStep['formStep']['configuration'] = {
     type: 'form',
@@ -109,7 +111,7 @@ export const buildSubmissionStep = ({
     data: data,
     isApplicable: true,
     completed: false,
-    canSubmit: true,
+    canSubmit,
   } satisfies SubmissionStep;
 };
 

@@ -49,6 +49,7 @@ const FormStepNewRenderer: React.FC = () => {
   const [stepSaveModalOpen, setStepSaveModalOpen] = useState<boolean>(false);
 
   const [components, setComponents] = useState<AnyComponentSchema[]>([]);
+  const [stepSubmissionAllowed, setStepSubmissionAllowed] = useState<boolean>(true);
   const formRef = useRef<FormStateRef>(null);
   // keep track of the current values in a mutable ref to avoid re-renders when values
   // change, which take time and can produce 'lag'. We typically only need to read the
@@ -86,6 +87,11 @@ const FormStepNewRenderer: React.FC = () => {
     const newComponents = updatedStep.formStep.configuration.components;
     if (!isEqual(newComponents, components)) {
       setComponents(updatedStep.formStep.configuration.components);
+    }
+
+    // update the step submission allowed state, which may be updated by backend logic
+    if (stepSubmissionAllowed !== updatedStep.canSubmit) {
+      setStepSubmissionAllowed(updatedStep.canSubmit);
     }
 
     const updatedValues = updatedStep.data;
@@ -158,6 +164,7 @@ const FormStepNewRenderer: React.FC = () => {
               submissionAllowed={submission.submissionAllowed}
               isLastStep={isLastStep}
               isCheckingLogic={logicCheckInProgress}
+              stepSubmissionAllowed={stepSubmissionAllowed}
               onFormSave={
                 form.suspensionAllowed
                   ? event => {
@@ -199,10 +206,12 @@ interface FormStepNavigationProps
   submissionAllowed: Submission['submissionAllowed'];
   isLastStep: boolean;
   isCheckingLogic: boolean;
+  stepSubmissionAllowed: boolean;
 }
 
 const FormStepNavigation: React.FC<FormStepNavigationProps> = ({
   submissionAllowed,
+  stepSubmissionAllowed,
   isLastStep,
   isCheckingLogic,
   onFormSave,
@@ -216,7 +225,7 @@ const FormStepNavigation: React.FC<FormStepNavigationProps> = ({
       submitButton={
         <StepSubmitButton
           canSubmitForm={submissionAllowed}
-          canSubmitStep={isValid && !isValidating && !isSubmitting}
+          canSubmitStep={stepSubmissionAllowed && isValid && !isValidating && !isSubmitting}
           isLastStep={isLastStep}
           isCheckingLogic={isCheckingLogic || isSubmitting}
         />
