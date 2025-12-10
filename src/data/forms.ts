@@ -92,4 +92,5 @@ export interface Form {
   submissionStatementsConfiguration: SubmissionStatementConfiguration[];
   submissionReportDownloadLinkTitle: string;
   newRendererEnabled: boolean;
+  communicationPreferencesPortalUrl: string;
 }

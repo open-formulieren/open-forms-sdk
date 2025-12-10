@@ -15,6 +15,7 @@ import {get} from '@/api';
 import {getCosignStatus as getCosignStatus_} from '@/components/CoSign';
 import {getLoginUrl} from '@/components/LoginOptions/utils';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
+import {fetchCommunicationPreferences} from '@/data/customer-profile';
 import {createTemporaryFileUpload, destroyTemporaryFileUpload} from '@/data/file-uploads';
 import type {Form, MinimalFormStep} from '@/data/forms';
 import {autoCompleteAddress} from '@/data/geo';
@@ -191,6 +192,13 @@ export const useFormioFormConfigurationParameters = (): Pick<
     [form, submissionId]
   );
 
+  const fetchDigitalAddresses = useCallback(
+    async (componentKey: string): ReturnType<typeof fetchCommunicationPreferences> => {
+      return await fetchCommunicationPreferences(baseUrl, submissionId, componentKey);
+    },
+    [baseUrl, submissionId]
+  );
+
   const upload = useCallback(
     async (file: File): ReturnType<typeof createTemporaryFileUpload> => {
       return await createTemporaryFileUpload(baseUrl, submission, file);
@@ -216,6 +224,10 @@ export const useFormioFormConfigurationParameters = (): Pick<
     componentParameters: {
       addressNL: {addressAutoComplete},
       coSign: {getCosignStatus, getLoginOption},
+      customerProfile: {
+        fetchDigitalAddresses,
+        portalUrl: form.communicationPreferencesPortalUrl,
+      },
       email: {requestVerificationCode, verifyCode},
       file: {
         upload,
