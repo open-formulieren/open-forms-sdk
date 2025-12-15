@@ -56,10 +56,11 @@ describe('The appointment date select', () => {
     const input = screen.getByLabelText('Date');
     await waitFor(() => expect(input).not.toBeDisabled());
 
-    await user.click(input);
-    await waitForPosition();
+    const datePickerTrigger = screen.getByRole('button', {name: 'Toggle calendar'});
+    expect(datePickerTrigger).toBeVisible();
 
-    expect(input).toHaveFocus();
+    await user.click(datePickerTrigger);
+    await waitForPosition();
     expect(await screen.findByRole('dialog')).toBeVisible();
 
     expect(await screen.findByRole('button', {name: 'Monday 12 June 2023'})).toBeDisabled();
@@ -80,10 +81,12 @@ describe('The appointment date select', () => {
     const input = screen.getByLabelText('Date');
     await waitFor(() => expect(input).not.toBeDisabled());
 
-    await user.click(input);
+    const datePickerTrigger = screen.getByRole('button', {name: 'Toggle calendar'});
+    expect(datePickerTrigger).toBeVisible();
+
+    await user.click(datePickerTrigger);
     await waitForPosition();
 
-    expect(input).toHaveFocus();
     expect(await screen.findByRole('dialog')).toBeVisible();
 
     expect(await screen.findByRole('button', {name: 'Monday 12 June 2023'})).not.toBeDisabled();
