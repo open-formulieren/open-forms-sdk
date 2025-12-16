@@ -5,7 +5,7 @@ import type {
 } from '@open-formulieren/formio-renderer/registry/email/verification/types.js';
 import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
-import {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useParams} from 'react-router';
 import type {AsyncState} from 'react-use/esm/useAsync';
 import useAsync from 'react-use/esm/useAsync';
@@ -18,7 +18,7 @@ import {assertSubmission, useSubmissionContext} from '@/components/SubmissionPro
 import {fetchCommunicationPreferences} from '@/data/customer-profile';
 import {createTemporaryFileUpload, destroyTemporaryFileUpload} from '@/data/file-uploads';
 import type {Form, MinimalFormStep} from '@/data/forms';
-import {autoCompleteAddress} from '@/data/geo';
+import {MapProvider, autoCompleteAddress, getAddressLabel} from '@/data/geo';
 import {type SubmissionStep, checkStepLogic} from '@/data/submission-steps';
 import {
   type NestedSubmissionStep,
@@ -219,6 +219,13 @@ export const useFormioFormConfigurationParameters = (): Pick<
     [baseUrl, submission]
   );
 
+  const mapNearestLookup = useCallback(
+    async (lat: number, lng: number) => await getAddressLabel(baseUrl, lat, lng),
+    [baseUrl]
+  );
+
+  const searchProvider = useMemo(() => new MapProvider({baseUrl}), [baseUrl]);
+
   return {
     validatePluginCallback,
     componentParameters: {
@@ -232,6 +239,10 @@ export const useFormioFormConfigurationParameters = (): Pick<
       file: {
         upload,
         destroy: destroyTemporaryFileUpload,
+      },
+      map: {
+        mapNearestLookup,
+        searchProvider,
       },
     },
   };

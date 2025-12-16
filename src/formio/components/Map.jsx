@@ -1,17 +1,20 @@
 /**
  * A form widget to select a location on a Leaflet map.
  */
-import {LoadingIndicator} from '@open-formulieren/formio-renderer';
+import {LeafletMap, LoadingIndicator} from '@open-formulieren/formio-renderer';
+import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider.js';
 import {Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Formio} from 'react-formio';
 import {IntlProvider} from 'react-intl';
 
 import {ConfigContext} from 'Context';
-import LeafletMap from 'components/Map';
-import {DEFAULT_LAT_LNG, DEFAULT_ZOOM} from 'components/Map/constants';
+import {DEFAULT_INTERACTIONS, DEFAULT_LAT_LNG, DEFAULT_ZOOM} from 'components/Map/constants';
+import {MapProvider, getAddressLabel} from 'data/geo';
 
 const Field = Formio.Components.components.field;
+
+const NO_COMPONENTS = [];
 
 export default class Map extends Field {
   static schema(...extend) {
@@ -78,6 +81,11 @@ export default class Map extends Field {
     this.loadRefs(element, {
       mapContainer: 'single',
     });
+
+    const baseUrl = this.options.baseUrl;
+    this.mapNearestLookup = async (lat, lng) => await getAddressLabel(baseUrl, lat, lng);
+    this.searchProvider = new MapProvider({baseUrl});
+
     return super.attach(element).then(() => {
       if (this.refs.mapContainer) {
         this.reactRoot = createRoot(this.refs.mapContainer);
@@ -100,6 +108,7 @@ export default class Map extends Field {
     const [defaultLat, defaultLon] = DEFAULT_LAT_LNG;
     const {lat = defaultLat, lng = defaultLon} = this.component?.initialCenter || {};
     const defaultCenter = [lat, lng];
+    const interactions = this.component?.interactions ?? DEFAULT_INTERACTIONS;
 
     const geoJsonGeometry = this.getValue();
 
@@ -111,17 +120,27 @@ export default class Map extends Field {
     this.reactRoot.render(
       <IntlProvider {...this.options.intl}>
         <ConfigContext.Provider value={{baseUrl: this.options.baseUrl}}>
-          <Suspense fallback={<LoadingIndicator position="center" />}>
-            <LeafletMap
-              geoJsonGeometry={geoJsonGeometry || null}
-              onGeoJsonGeometrySet={this.onGeoJsonSet.bind(this)}
-              defaultCenter={defaultCenter}
-              defaultZoomLevel={zoom || DEFAULT_ZOOM}
-              interactions={this.component?.interactions}
-              tileLayerUrl={this.component.tileLayerUrl}
-              overlays={this.component?.overlays}
-            />
-          </Suspense>
+          <FormSettingsProvider
+            components={NO_COMPONENTS}
+            componentParameters={{
+              map: {
+                mapNearestLookup: this.mapNearestLookup,
+                searchProvider: this.searchProvider,
+              },
+            }}
+          >
+            <Suspense fallback={<LoadingIndicator position="center" />}>
+              <LeafletMap
+                geoJsonGeometry={geoJsonGeometry || null}
+                onGeoJsonGeometrySet={this.onGeoJsonSet.bind(this)}
+                defaultCenter={defaultCenter}
+                defaultZoomLevel={zoom || DEFAULT_ZOOM}
+                interactions={interactions}
+                tileLayerUrl={this.component.tileLayerUrl}
+                overlays={this.component?.overlays}
+              />
+            </Suspense>
+          </FormSettingsProvider>
         </ConfigContext.Provider>
       </IntlProvider>
     );
