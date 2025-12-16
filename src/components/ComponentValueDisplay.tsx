@@ -1,4 +1,4 @@
-import {LoadingIndicator} from '@open-formulieren/formio-renderer';
+import {LeafletMap, LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {
   AddressData,
   AddressNLComponentSchema,
@@ -11,6 +11,7 @@ import type {
   DateTimeComponentSchema,
   FileComponentSchema,
   FileUploadData,
+  GeoJsonGeometry,
   MapComponentSchema,
   NumberComponentSchema,
   RadioComponentSchema,
@@ -28,8 +29,6 @@ import Body from '@/components/Body';
 import CoSignOld from '@/components/CoSign';
 import Image from '@/components/Image';
 import List from '@/components/List';
-import Map from '@/components/Map';
-import type {GeoJsonGeometry} from '@/components/Map/types';
 
 export interface DisplayProps<S, V> {
   component: S;
@@ -233,9 +232,8 @@ const MapDisplay: React.FC<DisplayProps<MapComponentSchema, GeoJsonGeometry>> = 
 
   return (
     <Suspense fallback={<LoadingIndicator position="center" />}>
-      <Map
+      <LeafletMap
         geoJsonGeometry={value}
-        disabled
         tileLayerUrl={component.tileLayerUrl}
         overlays={component?.overlays}
       />

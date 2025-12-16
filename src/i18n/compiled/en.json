@@ -171,6 +171,44 @@
       "value": "Cancel drawing"
     }
   ],
+  "008V0z": [
+    {
+      "type": 0,
+      "value": "Save my preferences for the next time. "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "You can always change them again later in the "
+            },
+            {
+              "children": [
+                {
+                  "type": 0,
+                  "value": "portal"
+                }
+              ],
+              "type": 8,
+              "value": "a"
+            },
+            {
+              "type": 0,
+              "value": "."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "hasPortalUrl"
+    }
+  ],
   "0EdUXi": [
     {
       "type": 0,
@@ -1799,6 +1837,112 @@
       "value": "No shapes to remove"
     }
   ],
+  "OqrBsx": [
+    {
+      "type": 0,
+      "value": "There are multiple "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email addresses"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone numbers"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " associated with your account. Use the dropdown to select the "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": " you want to use for this form. "
+    },
+    {
+      "options": {
+        "other": {
+          "value": [
+          ]
+        },
+        "true": {
+          "value": [
+            {
+              "type": 0,
+              "value": "To update your preferences, use the "
+            },
+            {
+              "children": [
+                {
+                  "type": 0,
+                  "value": "portal"
+                }
+              ],
+              "type": 8,
+              "value": "a"
+            },
+            {
+              "type": 0,
+              "value": "."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "hasPortalUrl"
+    }
+  ],
   "P194bo": [
     {
       "type": 0,
@@ -2249,94 +2393,6 @@
       "value": " on which you want to be contacted."
     }
   ],
-  "VTpxKE": [
-    {
-      "type": 0,
-      "value": "There are multiple "
-    },
-    {
-      "options": {
-        "email": {
-          "value": [
-            {
-              "type": 0,
-              "value": "email addresses"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
-            }
-          ]
-        },
-        "phoneNumber": {
-          "value": [
-            {
-              "type": 0,
-              "value": "phone numbers"
-            }
-          ]
-        }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
-    },
-    {
-      "type": 0,
-      "value": " associated with your account. Use the dropdown to select the "
-    },
-    {
-      "options": {
-        "email": {
-          "value": [
-            {
-              "type": 0,
-              "value": "email address"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
-            }
-          ]
-        },
-        "phoneNumber": {
-          "value": [
-            {
-              "type": 0,
-              "value": "phone number"
-            }
-          ]
-        }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
-    },
-    {
-      "type": 0,
-      "value": " you want to use for this form. To update your preferences, use the online "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "portal"
-        }
-      ],
-      "type": 8,
-      "value": "a"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
   "VaNtPf": [
     {
       "type": 0,
@@ -2737,26 +2793,6 @@
     {
       "type": 1,
       "value": "min"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "d6CKAg": [
-    {
-      "type": 0,
-      "value": "Save my data for the future forms. You can edit your preferences in the online "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "portal"
-        }
-      ],
-      "type": 8,
-      "value": "a"
     },
     {
       "type": 0,
