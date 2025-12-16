@@ -73,7 +73,7 @@
   },
   "scripts": {
     "start": "npm run build:design-tokens && vite",
-    "build": "npm run build:esm && npm run build:umd && npm run build:esm-bundle",
+    "build": "npm run build:esm && npm run build:umd && npm run build:esm-bundle && python ./bin/extract_i18n_source_messages.py",
     "build:typecheck": "tsc --noEmit",
     "build:umd": "BUILD_TARGET=umd vite build",
     "build:esm": "BUILD_TARGET=esm vite build",
