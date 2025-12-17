@@ -1051,6 +1051,11 @@
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
   },
+  "wX1KpJ": {
+    "defaultMessage": "(wordt het {digitalAddressType, select, email {voorkeurs-e-mailadres} phoneNumber {voorkeurstelefoonnummer} other {voorkeurs {digitalAddressType}} })",
+    "description": "Customer profile value display address 'isNewPreferred' suffix",
+    "originalDefault": "(will become preferred {digitalAddressType, select, email {email address} phoneNumber {phone number} other {{digitalAddressType}} })"
+  },
   "wl8Ucz": {
     "defaultMessage": "Jouw afspraak",
     "description": "Location summary on appointments contact details step heading",

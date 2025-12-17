@@ -3939,6 +3939,46 @@
       "value": "Click first point to finish shape"
     }
   ],
+  "wX1KpJ": [
+    {
+      "type": 0,
+      "value": "(will become preferred "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "phone number"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "wiPGoP": [
     {
       "type": 0,
