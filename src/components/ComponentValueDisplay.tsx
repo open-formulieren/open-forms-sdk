@@ -7,6 +7,8 @@ import type {
   ContentComponentSchema,
   CosignV1ComponentSchema,
   CurrencyComponentSchema,
+  CustomerProfileComponentSchema,
+  CustomerProfileData,
   DateComponentSchema,
   DateTimeComponentSchema,
   FileComponentSchema,
@@ -205,6 +207,44 @@ const ChildrenDisplay: React.FC = () => {
   return <EmptyDisplay />;
 };
 
+const CustomerProfileDisplay: React.FC<
+  DisplayProps<CustomerProfileComponentSchema, CustomerProfileData>
+> = ({value}) => {
+  if (!value) {
+    return <EmptyDisplay />;
+  }
+
+  // Filter out empty addresses.
+  const addresses = value.filter(({address}) => address !== '');
+  if (addresses.length === 0) {
+    return <EmptyDisplay />;
+  }
+
+  return (
+    <List extraCompact withDash>
+      {addresses.map(address => (
+        <React.Fragment key={address.type}>
+          {address.address}
+          {address.preferenceUpdate === 'isNewPreferred' && (
+            <>
+              {' '}
+              <FormattedMessage
+                description="Customer profile value display address 'isNewPreferred' suffix"
+                defaultMessage={`(will become preferred {digitalAddressType, select,
+                  email {email address}
+                  phoneNumber {phone number}
+                  other {{digitalAddressType}}
+                })`}
+                values={{digitalAddressType: address.type}}
+              />
+            </>
+          )}
+        </React.Fragment>
+      ))}
+    </List>
+  );
+};
+
 const CurrencyDisplay: React.FC<DisplayProps<CurrencyComponentSchema, number>> = ({
   component,
   value,
@@ -341,6 +381,7 @@ const TYPE_TO_COMPONENT: Partial<
   fieldset: FieldsetDisplay,
   partners: PartnersDisplay,
   children: ChildrenDisplay,
+  customerProfile: CustomerProfileDisplay,
 };
 
 export default ComponentValueDisplay;

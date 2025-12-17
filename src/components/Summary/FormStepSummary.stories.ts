@@ -1,3 +1,4 @@
+import type {CustomerProfileComponentSchema} from '@open-formulieren/types';
 import type {Meta, StoryObj} from '@storybook/react';
 import {expect, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
@@ -444,6 +445,78 @@ export const WithPartnersAsSecondElement: Story = {
           label: 'BSN',
           inputMask: '999999999',
           validateOn: 'blur',
+        },
+      },
+    ],
+  },
+};
+
+export const WithCustomerProfileAsFirstElement: Story = {
+  args: {
+    data: [
+      {
+        name: 'Profile',
+        value: [
+          {
+            type: 'email',
+            address: 'test@mail.com',
+            preferenceUpdate: 'useOnlyOnce',
+          },
+          {
+            type: 'phoneNumber',
+            address: '06 12345678',
+            preferenceUpdate: 'isNewPreferred',
+          },
+        ],
+        component: {
+          id: 'component1',
+          type: 'customerProfile',
+          key: 'profile',
+          label: 'Profile',
+          shouldUpdateCustomerData: true,
+          digitalAddressTypes: ['email', 'phoneNumber'],
+        } satisfies CustomerProfileComponentSchema,
+      },
+      {
+        name: 'BSN',
+        value: 'XXXXXXXXX',
+        component: {
+          id: 'bsn',
+          type: 'bsn',
+          key: 'bsn',
+          label: 'BSN',
+          inputMask: '999999999',
+          validateOn: 'blur',
+        },
+      },
+      {
+        name: 'A repeating group',
+        value: '',
+        component: {
+          id: 'component2',
+          type: 'editgrid',
+          key: 'editgrid',
+          label: 'A repeating group',
+          groupLabel: 'Item',
+          disableAddingRemovingRows: false,
+          components: [
+            {
+              id: 'component3',
+              type: 'textfield',
+              key: 'textfield1',
+              label: 'A textfield',
+            },
+          ],
+        },
+      },
+      {
+        name: 'A textfield',
+        value: 'A value',
+        component: {
+          id: 'component4',
+          type: 'textfield',
+          key: 'textfield1',
+          label: 'A textfield',
         },
       },
     ],
