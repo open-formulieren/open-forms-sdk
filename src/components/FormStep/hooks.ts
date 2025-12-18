@@ -234,6 +234,11 @@ export const useFormioFormConfigurationParameters = (): Pick<
       customerProfile: {
         fetchDigitalAddresses,
         portalUrl: form.communicationPreferencesPortalUrl,
+        // Only users authenticated using BSN can update their communication preferences.
+        // We need an authentication identifier for the customer interaction registration
+        // plugin.
+        // @ts-expect-error updatePreferencesModalEnabled is not yet defined in the type definition
+        updatePreferencesModalEnabled: submission.isAuthenticated,
       },
       email: {requestVerificationCode, verifyCode},
       file: {
