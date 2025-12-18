@@ -1039,6 +1039,11 @@
     "description": "Appointments: product amount field label",
     "originalDefault": "Amount"
   },
+  "wX1KpJ": {
+    "defaultMessage": "(will become preferred {digitalAddressType, select, email {email address} phoneNumber {phone number} other {{digitalAddressType}} })",
+    "description": "Customer profile value display address 'isNewPreferred' suffix",
+    "originalDefault": "(will become preferred {digitalAddressType, select, email {email address} phoneNumber {phone number} other {{digitalAddressType}} })"
+  },
   "wl8Ucz": {
     "defaultMessage": "Your appointment",
     "description": "Location summary on appointments contact details step heading",

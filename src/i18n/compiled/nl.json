@@ -3885,6 +3885,50 @@
       "value": "Klik op het eerste punt, om de veelhoek te voltooien"
     }
   ],
+  "wX1KpJ": [
+    {
+      "type": 0,
+      "value": "(wordt het "
+    },
+    {
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurs-e-mailadres"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurs "
+            },
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurstelefoonnummer"
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "digitalAddressType"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "wiPGoP": [
     {
       "type": 0,
