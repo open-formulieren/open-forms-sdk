@@ -5,7 +5,7 @@ import {logError} from '@/components/Errors';
 
 export interface DigitalAddressGroup {
   type: DigitalAddressType;
-  addresses: string[];
+  options: string[];
   preferred?: string;
 }
 
