@@ -30,7 +30,7 @@ const Product: React.FC<ProductProps> = ({namePrefix, index, selectedProductIds}
         name={`${namePrefix}[${index}].amount`}
         label={intl.formatMessage(amountLabel)}
         isRequired
-        isReadonly={!supportsMultipleProducts}
+        isReadOnly={!supportsMultipleProducts}
       />
     </div>
   );

@@ -90,7 +90,7 @@ const DateSelect: React.FC<DateSelectProps> = ({products}) => {
       name="date"
       label={intl.formatMessage(fieldLabel)}
       isRequired
-      isDisabled={loading || !location}
+      isReadOnly={loading || !location}
       widget="datePicker"
       widgetProps={{minDate, maxDate, disabledDates}}
     />

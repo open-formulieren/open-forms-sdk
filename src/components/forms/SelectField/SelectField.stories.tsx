@@ -28,7 +28,7 @@ export const Static: Story = {
     name: 'select',
     label: 'Static options',
     description: 'This is a custom description for the select field',
-    isDisabled: false,
+    isReadOnly: false,
     isRequired: true,
     options: [
       {value: 'option-1', label: 'Option 1'},
@@ -81,7 +81,7 @@ export const Async: StoryObj<AsyncSelectFieldArgs> = {
     name: 'select',
     label: 'Dynamic options',
     description: 'This is a custom description for the select field',
-    isDisabled: false,
+    isReadOnly: false,
     isRequired: true,
     getOptionsDelay: 1000,
     dynamicOptions: [

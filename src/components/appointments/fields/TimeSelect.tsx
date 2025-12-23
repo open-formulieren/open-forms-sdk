@@ -75,7 +75,7 @@ const TimeSelect: React.FC<TimeSelectProps> = ({products}) => {
     <AsyncSelectField
       name="datetime"
       isRequired
-      isDisabled={!products || !products.length || !location || !date}
+      isReadOnly={!products || !products.length || !location || !date}
       label={intl.formatMessage(fieldLabel)}
       getOptions={getOptions}
       autoSelectOnlyOption

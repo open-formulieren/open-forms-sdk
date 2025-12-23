@@ -442,7 +442,7 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
                 defaultMessage="Street name"
               />
             }
-            isDisabled
+            isReadOnly
           />
           <TextField
             name="city"
@@ -452,7 +452,7 @@ const FormikAddress = ({required, setFormioValues, deriveAddress, layout}) => {
                 defaultMessage="City"
               />
             }
-            isDisabled
+            isReadOnly
           />
         </>
       )}

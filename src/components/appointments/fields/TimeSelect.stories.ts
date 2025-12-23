@@ -50,7 +50,8 @@ export const NoDateSelectedDisabled: Story = {
     const canvas = within(canvasElement);
     const dropdown = canvas.getByLabelText('Tijdstip');
     expect(dropdown.role).toBe('combobox');
-    expect(dropdown).toBeDisabled();
+    expect(dropdown).not.toBeDisabled();
+    expect(dropdown).toHaveAttribute('aria-readonly', 'true');
   },
 };
 
