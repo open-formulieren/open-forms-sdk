@@ -93,8 +93,8 @@ describe('The location and time step', () => {
     });
     expect(screen.queryByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).not.toBeInTheDocument();
 
-    expect(screen.getByLabelText('Date')).toBeDisabled();
-    expect(screen.getByLabelText('Time')).toBeDisabled();
+    expect(screen.getByLabelText('Date')).toHaveAttribute('readonly');
+    expect(screen.getByLabelText('Time')).toHaveAttribute('aria-readonly', 'true');
   });
 
   it('disables time until a location and date are selected', async () => {
@@ -108,8 +108,8 @@ describe('The location and time step', () => {
     });
 
     expect(await screen.findByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).toBeVisible();
-    expect(screen.getByLabelText('Date')).not.toBeDisabled();
-    expect(screen.getByLabelText('Time')).toBeDisabled();
+    expect(screen.getByLabelText('Date')).not.toHaveAttribute('aria-readonly', 'true');
+    expect(screen.getByLabelText('Time')).toHaveAttribute('aria-readonly', 'true');
   });
 
   it('retains focus on the date input', async () => {
@@ -151,8 +151,8 @@ describe('The location and time step', () => {
     });
 
     expect(await screen.findByText('Bahamas (Winsome Dr, 1014 EG, Nassau)')).toBeVisible();
-    expect(screen.getByLabelText('Date')).not.toBeDisabled();
-    expect(screen.getByLabelText('Time')).not.toBeDisabled();
+    expect(screen.getByLabelText('Date')).not.toHaveAttribute('aria-readonly', 'true');
+    expect(screen.getByLabelText('Time')).not.toHaveAttribute('aria-readonly', 'true');
   });
 
   it('autoselects location when there is only one option and enables the date field', async () => {
@@ -167,8 +167,8 @@ describe('The location and time step', () => {
 
     expect(await screen.findByText('Open Gem (Amsterdam)')).toBeVisible();
     await waitFor(() => {
-      expect(screen.getByLabelText('Date')).not.toBeDisabled();
+      expect(screen.getByLabelText('Date')).not.toHaveAttribute('aria-readonly', 'true');
     });
-    expect(screen.getByLabelText('Time')).toBeDisabled();
+    expect(screen.getByLabelText('Time')).toHaveAttribute('aria-readonly', 'true');
   });
 });

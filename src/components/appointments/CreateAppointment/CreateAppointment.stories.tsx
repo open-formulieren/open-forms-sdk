@@ -144,6 +144,7 @@ export const HappyFlow: Story = {
       await waitFor(async () => {
         const dateInput = await canvas.findByLabelText('Datum');
         expect(dateInput).not.toBeDisabled();
+        expect(dateInput).not.toHaveAttribute('readonly');
         // FIXME: type in non-iso format
         await userEvent.type(dateInput, tomorrow);
       });
@@ -152,6 +153,7 @@ export const HappyFlow: Story = {
       await waitFor(async () => {
         timeDropdown = await canvas.findByLabelText('Tijdstip');
         expect(timeDropdown).not.toBeDisabled();
+        expect(timeDropdown).not.toHaveAttribute('aria-readonly');
       });
       timeDropdown!.focus();
       await userEvent.keyboard('[ArrowDown]');

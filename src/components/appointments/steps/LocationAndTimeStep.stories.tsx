@@ -104,6 +104,7 @@ export const DependentFieldsReset: Story = {
     const canvas = within(canvasElement);
 
     expect(canvas.getByLabelText('Tijdstip')).not.toBeDisabled();
+    expect(canvas.getByLabelText('Tijdstip')).not.toHaveAttribute('aria-readonly');
 
     await step('Change location', async () => {
       const dropdown = canvas.getByLabelText('Locatie');
@@ -113,6 +114,7 @@ export const DependentFieldsReset: Story = {
     });
 
     expect(canvas.getByLabelText('Datum')).toHaveDisplayValue('');
-    expect(canvas.getByLabelText('Tijdstip')).toBeDisabled();
+    expect(canvas.getByLabelText('Tijdstip')).not.toBeDisabled();
+    expect(canvas.getByLabelText('Tijdstip')).toHaveAttribute('aria-readonly', 'true');
   },
 };

@@ -54,7 +54,10 @@ describe('The appointment date select', () => {
     render(<DateSelect products={products} />, '1396f17c');
 
     const input = screen.getByLabelText('Date');
-    await waitFor(() => expect(input).not.toBeDisabled());
+    await waitFor(() => {
+      expect(input).not.toBeDisabled();
+      expect(input).not.toHaveAttribute('aria-readonly');
+    });
 
     const datePickerTrigger = screen.getByRole('button', {name: 'Toggle calendar'});
     expect(datePickerTrigger).toBeVisible();
@@ -79,7 +82,10 @@ describe('The appointment date select', () => {
     render(<DateSelect products={products} />, '34000e85');
 
     const input = screen.getByLabelText('Date');
-    await waitFor(() => expect(input).not.toBeDisabled());
+    await waitFor(() => {
+      expect(input).not.toBeDisabled();
+      expect(input).not.toHaveAttribute('aria-readonly');
+    });
 
     const datePickerTrigger = screen.getByRole('button', {name: 'Toggle calendar'});
     expect(datePickerTrigger).toBeVisible();

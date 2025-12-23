@@ -56,7 +56,8 @@ export const NoLocationSelected: Story = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByLabelText('Datum')).toBeDisabled();
+    expect(canvas.getByLabelText('Datum')).not.toBeDisabled();
+    expect(canvas.getByLabelText('Datum')).toHaveAttribute('readonly');
     await userEvent.click(canvas.getByLabelText('Datum'));
     expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
   },
