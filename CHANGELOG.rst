@@ -2,8 +2,12 @@
 SDK Changelog
 =============
 
-3.4.0 (2025-12-??)
-==================
+3.4.0-rc.0 (2025-12-??)
+=======================
+
+First release candidate for the 3.4.0 SDK release.
+
+.. warning:: SDK 3.4.0 requires at least version 3.4.0 of the Open Formulieren API.
 
 Deprecations
 ------------
@@ -15,14 +19,101 @@ Deprecations
   ``dist/bundles/open-forms-sdk.{js,mjs,css}``. The Docker image still supports the old
   paths for backwards compatibility, but this is deprecated and may be removed in 4.0.
   For bundle imports, use a base path of ``/bundles/*``.
-* The reworked file upload component (experimental renderer) deprecates the old upload
-  component design tokens. We'll provide upgrade documentation and shims for backwards
-  compatibility.
-* The reworked ``LoadingIndicator`` component replaces the old one. The old design tokens
-  are deprecated, but this release is backwards compatible.
-* The reworked ``Modal`` component replaces the old one from the renderer. Any old design
-  tokens are deprecated, but we'll provide upgrade documentation and shims for backwards
-  compatibility where necessary.
+* The ``formio.js`` based renderer is deprecated in favour of our own library. Removal
+  is scheduled for Open Forms SDK 4.0. From this release on, we will only fix critical
+  issues and no new features will be added to the legacy renderer.
+* The reworked file upload component (new renderer) deprecates the old upload component
+  design tokens. The Open Forms backend implements shims for backwards compatibility,
+  and the upgrade notes in the Open Forms documentation describe in detail what's changed.
+
+  This includes the reworked ``LoadingIndicator`` and ``Modal`` components, now
+  rovided by the new renderer.
+
+New features
+------------
+
+* The new renderer library (replacing ``formio.js``) is feature complete and stable. A
+  detailed `changelog is available <https://github.com/open-formulieren/formio-renderer/blob/main/CHANGELOG.md>`_,
+  but some highlights of what wasn't possible on the legacy renderer are:
+
+  - Accessibility of the ``textfield`` and ``textarea`` components with
+    ``showCharCount: true`` is improved.
+  - In the email verificaton flow you now have feedback that the email is verified.
+  - Some custom validation error messages set in the backend are now supported.
+  - The default validation error messages are improved and provide better user feedback.
+  - Validation errors for an item in a repeating group are now displayed "for the item"
+    rather than near the first field in the item.
+  - Components that are "read only" are now marked as such in an accessible manner
+    instead of being "disabled" and removed from the accessibility tree.
+  - Applied a number of quality-of-life improvements to components that weren't possible
+    before, notably for ``addressNL`` .
+  - Added support for the new ``customerProfile`` component for interaction with Open
+    Klant 2/customer interaction services.
+  - Map component geometry validation now restricts geometries to the bounds of The
+    Netherlands.
+  - The date picker for ``date`` and ``datetime`` components is now accessible through
+    keyboard navigation and for screen reader users.
+  - Added preparations to lazy-load more functionality to improve loading times for users
+    on slow network connections.
+  - Accessibility of ``number`` components with prefix/suffix is improved.
+
+* [#445] The NPM package now includes TypeScript declaration files for the public API.
+* Appointments improvements:
+
+  - [#5694] Updated "location and time" step title to "date and time".
+  - [#5695] Added extra information to contact details step: products, date and time,
+    descriptions.
+
+* [#5548] Reduced visual clutter created by buttons to add a value to a multi-value field
+  and the button to add another item to a repeating group.
+* Build artifacts now include all the source messages used for localization/i18n.
+
+Bugfixes
+--------
+
+* Legacy renderer:
+
+  - [#5435] Fixed validation not being skipped for hidden selectboxes component.
+  - [#5728] Fixed delete buttons showing when ``disableAddingRemovingRows`` is set to
+    ``true`` in repeating groups.
+
+* New renderer:
+
+  * [#918] Fixed the "disable next step" logic action not disabling the step submit
+    button.
+
+* [#5727] Fixed map overlays not being shown in form submission summary page.
+
+Project maintenance
+-------------------
+
+* [#445] Finished the conversion of our own code to TypeScript. We will have some
+  "plain" JavaScript for the overrides/custom components used in the (legacy) formio.js
+  renderer and there are no plans to convert this to TS.
+* Replaced the ``DateField`` with the variant from the our
+  ``@open-formulieren/formio-renderer`` package.
+* Removed obsolete code, stories, documentation and tests.
+* Refactored some code to be in a more logical location and improve consistency.
+* Improved (UI) test stability/determinism.
+* Updated dev dependencies to their latest (security) fixes, amongst others:
+
+  - ``glob``
+  - ``js-yaml``
+  - ``minimatch``
+  - ``jackspeak``
+
+* Refactored button component(s) to use the components from our renderer package and
+  updated the linter rules.
+* Refactored the ``Loader`` component to use the one from our renderer package.
+* Dropped the ``react-modal`` dependency in favour of the native HTML variant provided
+  by our own renderer.
+* Replaced the ``LeafletMap`` component usage with the implementation of our own
+  renderer.
+* Cleaned up CI pipelines by using our own reusable actions.
+* [#217] Coverage reporting is now informational instead of failing builds due to the
+  peculiarities of instrumenting JS/TS code.
+* The Docker Hub description generation is now a self-contained standalone script,
+  executed with UV.
 
 3.4.0-alpha.2 (2025-12-04)
 ==========================
