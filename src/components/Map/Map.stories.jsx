@@ -227,6 +227,7 @@ export const MapWithOverlays = {
 
 export const MapWithOneInteraction = {
   args: {
+    geoJsonGeometry: undefined,
     interactions: {
       polygon: false,
       polyline: false,
@@ -248,12 +249,12 @@ export const MapWithOneInteraction = {
       expect(map).toBeVisible();
     });
 
-    await step('None of the interactions are shown', async () => {
+    await step('Only the marker interaction is shown', async () => {
       const pin = canvas.queryByTitle('Pin/punt');
       const polygon = canvas.queryByTitle('Veelhoek (polygoon)');
       const line = canvas.queryByTitle('Lijn');
 
-      expect(pin).not.toBeInTheDocument();
+      expect(pin).toBeVisible();
       expect(polygon).not.toBeInTheDocument();
       expect(line).not.toBeInTheDocument();
     });
@@ -265,6 +266,37 @@ export const MapWithOneInteraction = {
 
       // This 'button' is the placed marker on the map
       expect(await canvas.findByRole('button', {name: 'Marker'})).toBeVisible();
+      expect(args.onGeoJsonGeometrySet).toBeCalledWith({
+        type: 'Point',
+        // Expect that the coordinates array contains 2 items.
+        // We cannot pin it to specific values, because they can differentiate.
+        // To make sure that this test doesn't magically fail, just expect any 2 values
+        coordinates: [expect.anything(), expect.anything()],
+      });
+    });
+
+    // When the map has a value, we don't automatically draw shapes anymore.
+    await step('Clicking the map while it has value', async () => {
+      // This 'button' is the placed marker on the map
+      expect(await canvas.findByRole('button', {name: 'Marker'})).toBeVisible();
+
+      await userEvent.click(map, {x: 100, y: 100});
+
+      // expect `onGeoJsonGeometrySet` to not be called a second time.
+      expect(args.onGeoJsonGeometrySet).toHaveBeenCalledTimes(1);
+    });
+
+    await step('Remove drawn shape', async () => {
+      // Automatically resolve the confirmation message
+      window.confirm = () => true;
+      await userEvent.click(canvas.getByRole('link', {name: 'Verwijder vormen'}));
+    });
+
+    // When the map is emptied, we can again draw shapes without having to click the
+    // interaction buttons.
+    await step('Interact again with an empty map', async () => {
+      await userEvent.click(map, {x: 100, y: 100});
+
       expect(args.onGeoJsonGeometrySet).toBeCalledWith({
         type: 'Point',
         // Expect that the coordinates array contains 2 items.
