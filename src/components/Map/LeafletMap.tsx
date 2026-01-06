@@ -3,6 +3,7 @@ import * as Leaflet from 'leaflet';
 import type {
   Circle,
   CircleMarker,
+  Control,
   DrawEvents,
   FeatureGroup as LeafletFeatureGroup,
   Marker,
@@ -23,6 +24,7 @@ import NearestAddress from './NearestAddress';
 import {DEFAULT_INTERACTIONS, DEFAULT_LAT_LNG, DEFAULT_ZOOM} from './constants';
 import {overloadLeafletDeleteControl} from './deleteControl';
 import {overloadLeafletDrawPolylineControl} from './drawPolylineControl';
+import {overloadLeafletDrawToolbarControls} from './drawToolbarControls';
 import {CRS_RD, TILE_LAYER_RD, initialize} from './init';
 import {
   applyLeafletTranslations,
@@ -68,6 +70,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   mapContainerChild,
 }) => {
   const featureGroupRef = useRef<LeafletFeatureGroup>(null);
+  const drawControlRef = useRef<Control.Draw | null>(null);
   const intl = useIntl();
   const geoJsonCoordinates = getCoordinates(geoJsonGeometry);
 
@@ -89,6 +92,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   }, [featureGroupRef, intl]);
 
   useEffect(() => {
+    overloadLeafletDrawToolbarControls();
     overloadLeafletDrawPolylineControl();
   }, []);
 
@@ -144,16 +148,13 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
         <FeatureGroup ref={featureGroupRef}>
           {!disabled && (
             <>
-              {singleInteractionMode && (
-                <SingleInteractionMode
-                  shape={activeInteractionNames[0]}
-                  geoJsonGeometry={geoJsonGeometry}
-                />
-              )}
               <EditControl
                 position="topright"
                 onCreated={onFeatureCreate}
                 onDeleted={onFeatureDelete}
+                onMounted={(drawControl: L.Control.Draw) => {
+                  drawControlRef.current = drawControl;
+                }}
                 edit={{
                   edit: false,
                 }}
@@ -161,12 +162,19 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
                   rectangle: false,
                   circle: false,
                   // Add the draw buttons when there is more than 1 active interaction.
-                  polyline: !singleInteractionMode && !!interactions?.polyline,
-                  polygon: !singleInteractionMode && !!interactions?.polygon,
-                  marker: !singleInteractionMode && !!interactions?.marker,
+                  polyline: !!interactions?.polyline,
+                  polygon: !!interactions?.polygon,
+                  marker: !!interactions?.marker,
                   circlemarker: false,
                 }}
               />
+              {singleInteractionMode && (
+                <SingleInteractionMode
+                  shape={activeInteractionNames[0]}
+                  drawControlRef={drawControlRef}
+                  geoJsonGeometry={geoJsonGeometry}
+                />
+              )}
             </>
           )}
           <Geometry geoJsonGeometry={geoJsonGeometry} featureGroupRef={featureGroupRef} />
@@ -214,49 +222,30 @@ const EnsureTestId = () => {
 
 interface SingleInteractionModeProps {
   geoJsonGeometry?: GeoJsonGeometry;
+  drawControlRef: React.RefObject<Control.Draw>;
   shape: keyof Interactions;
 }
 
-const SingleInteractionMode: React.FC<SingleInteractionModeProps> = ({geoJsonGeometry, shape}) => {
+const SingleInteractionMode: React.FC<SingleInteractionModeProps> = ({
+  geoJsonGeometry,
+  drawControlRef,
+  shape,
+}) => {
   const map = useMap();
-  const drawHandlerRef = useRef<Leaflet.Draw.Feature | null>(null);
 
   useEffect(() => {
-    if (!map) return;
+    // If there is no map, no draw control ref, or the map already has a value, do nothing.
+    if (!map || !drawControlRef.current || !!geoJsonGeometry) return;
+    const drawControl = drawControlRef.current;
 
-    const getDrawHandler = () => {
-      switch (shape) {
-        case 'marker':
-          return new Leaflet.Draw.Marker(map as Leaflet.DrawMap);
-        case 'polygon':
-          return new Leaflet.Draw.Polygon(map as Leaflet.DrawMap);
-        case 'polyline':
-          return new Leaflet.Draw.Polyline(map as Leaflet.DrawMap);
-        default:
-          return null;
-      }
-    };
-
-    // Get draw handler
-    drawHandlerRef.current = getDrawHandler();
-
-    // Enable drawing mode
-    drawHandlerRef.current?.enable();
-
-    // Cancel drawing on 'right-click'
-    map.on('contextmenu', () => {
-      drawHandlerRef.current?.disable();
-
-      // After canceling the currect drawing, get a new handler to allow a new drawing.
-      drawHandlerRef.current = getDrawHandler();
-      drawHandlerRef.current?.enable();
-    });
+    // Enable the drawing mode for the provided shape.
+    if (drawControl.enableDrawingMode) drawControl.enableDrawingMode(shape);
 
     return () => {
-      drawHandlerRef.current?.disable();
+      // On unmounting, disable the drawing mode.
+      if (drawControl.disableDrawingMode) drawControl.disableDrawingMode(shape);
     };
-    // Re-enable drawing mode when the shape, the map, or the current geojson changes.
-  }, [geoJsonGeometry, shape, map]);
+  }, [drawControlRef, geoJsonGeometry, shape, map]);
 
   return null;
 };
