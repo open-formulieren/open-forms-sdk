@@ -9,9 +9,25 @@ import type {InvalidParam} from '@/errors';
 import {BASE_URL} from './base';
 
 const DEFAULT_PRODUCTS: Product[] = [
-  {code: 'PASAAN', identifier: '166a5c79', name: 'Paspoort aanvraag'},
-  {code: 'RIJAAN', identifier: 'e8e045ab', name: 'Rijbewijs aanvraag (Drivers license)'},
-  {code: 'LIMITED', identifier: 'ea04db83', name: 'Not available with drivers license'},
+  {
+    code: 'PASAAN',
+    identifier: '166a5c79',
+    name: 'Paspoort aanvraag',
+    description:
+      '<p>An example of extra description</p>\r\n<ul>\r\n<li>First choice</li>\r\n<li>Another choice</li>\r\n<p>Attention: some notes</p>',
+  },
+  {
+    code: 'RIJAAN',
+    identifier: 'e8e045ab',
+    name: 'Rijbewijs aanvraag (Drivers license)',
+    description: '',
+  },
+  {
+    code: 'LIMITED',
+    identifier: 'ea04db83',
+    name: 'Not available with drivers license',
+    description: '',
+  },
 ];
 
 export const mockAppointmentProductsGet = http.get(

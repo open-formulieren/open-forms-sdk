@@ -44,3 +44,17 @@ export const ProductSelect: Story = {
     expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
   },
 };
+
+export const ProductSelectExtraDescription: Story = {
+  name: 'Product with description',
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+    const dropdown = canvas.getByLabelText('Product');
+    dropdown.focus();
+
+    await userEvent.keyboard('[ArrowDown]');
+    await userEvent.keyboard('[ArrowDown]');
+    await userEvent.keyboard('[Enter]');
+    expect(await canvas.findByText('An example of extra description')).toBeVisible();
+  },
+};
