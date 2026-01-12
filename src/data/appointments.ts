@@ -12,6 +12,7 @@ export interface Product {
   code: string;
   identifier: string;
   name: string;
+  description: string;
 }
 
 /**

@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, within} from '@storybook/test';
+import {expect, userEvent, waitFor, within} from '@storybook/test';
 
 import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
 import {withFormik} from '@/sb-decorators';
@@ -42,5 +42,23 @@ export const ProductSelect: Story = {
     dropdown.focus();
     await userEvent.keyboard('[ArrowDown]');
     expect(await canvas.findByText('Paspoort aanvraag')).toBeVisible();
+  },
+};
+
+export const ProductSelectExtraDescription: Story = {
+  name: 'Product with description',
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const dropdown = canvas.getByLabelText('Product');
+    dropdown.focus();
+
+    await userEvent.click(dropdown);
+    await userEvent.keyboard('[ArrowDown]');
+    await userEvent.keyboard('[Enter]');
+
+    await waitFor(() =>
+      expect(canvas.queryByText('An example of extra description')).toBeInTheDocument()
+    );
   },
 };
