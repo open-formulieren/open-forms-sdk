@@ -64,7 +64,9 @@
     }
 
     @include bem.element('item-value') {
-      overflow-wrap: break-word;
+      overflow-wrap: anywhere;
+      // This will break long words, but will respect any soft hyphens
+      word-break: normal;
       flex-basis: 50%;
     }
 
