@@ -1,8 +1,10 @@
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Decorator, Meta, StoryObj} from '@storybook/react';
 import {expect, fn, userEvent, within} from '@storybook/test';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
-import {buildForm} from '@/api-mocks';
+import {buildForm, buildSubmission} from '@/api-mocks';
+import FormDisplay from '@/components/FormDisplay';
+import FormProgressIndicator from '@/components/FormProgressIndicator';
 import {
   PRIVACY_POLICY_ACCEPTED,
   STATEMENT_OF_TRUTH_ACCEPTED,
@@ -10,6 +12,12 @@ import {
 import {withForm, withLiterals} from '@/sb-decorators';
 
 import GenericSummary from './GenericSummary';
+
+const withProgressIndicator: Decorator = (Story, {parameters}) => (
+  <FormDisplay progressIndicator={<FormProgressIndicator submission={parameters.submission} />}>
+    <Story />
+  </FormDisplay>
+);
 
 export default {
   title: 'Private API / GenericSummary',
@@ -541,6 +549,73 @@ export const MapSummary: Story = {
                   layers: ['pand', 'verblijfsobject'],
                 },
               ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+
+export const WithProgressIndicator: Story = {
+  decorators: [withProgressIndicator],
+  parameters: {
+    submission: buildSubmission(),
+  },
+};
+
+export const WithProgressIndicatorAndLongUnbrokenValues: Story = {
+  decorators: [withProgressIndicator],
+  parameters: {
+    submission: buildSubmission(),
+  },
+  args: {
+    summaryData: [
+      {
+        slug: 'long-unbroken-values',
+        name: 'Long unbroken values',
+        data: [
+          {
+            name: 'Short text',
+            value: 'Loremipsumdolorsitamet',
+            component: {
+              id: 'text',
+              key: 'text',
+              type: 'textfield',
+              label: 'Text with soft-hypes',
+            },
+          },
+          {
+            name: 'Long text with soft-hypes',
+            value:
+              'Loremipsumdolorsitametconsetetursadipscingelitr­seddiamnonumyeirmodtemporinvidunt­utlaboreetdoloremagnaaliquyamerat­seddiamvoluptua',
+            component: {
+              id: 'text',
+              key: 'text',
+              type: 'textfield',
+              label: 'Text with soft-hypes',
+            },
+          },
+          {
+            name: 'File with long name',
+            value: {
+              url: '#',
+              size: 123,
+              originalName:
+                'Loremipsumdolorsitametconsetetursadipscingelitrseddiamnonumyeirmodtemporinviduntutlaboreetdoloremagnaaliquyameratseddiamvoluptua',
+            },
+            component: {
+              id: 'qweasd',
+              key: 'uploadFile',
+              type: 'file',
+              label: 'Upload File',
+              multiple: false,
+              webcam: false,
+              options: {withCredentials: true},
+              storage: 'url',
+              url: '#',
+              file: {name: '', type: [], allowedTypesLabels: []},
+              filePattern: '*/*',
             },
           },
         ],
