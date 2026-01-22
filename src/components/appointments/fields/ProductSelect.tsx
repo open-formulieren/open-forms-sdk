@@ -69,17 +69,21 @@ const ProductSelect: React.FC<ProductSelectProps> = ({name, selectedProductIds})
   const {baseUrl} = useContext(ConfigContext);
   const {value} = getFieldProps(name);
 
-  const getOptions = useCallback(async () => {
-    const products = await getProducts(baseUrl, selectedProductIds, value);
+  const getOptions = useCallback(
+    async () => {
+      const products = await getProducts(baseUrl, selectedProductIds, value);
 
-    // needed for accessing the description below
-    setProducts(products);
+      // needed for accessing the description below
+      setProducts(products);
 
-    return products.map(product => ({
-      value: product.identifier,
-      label: product.name,
-    }));
-  }, [baseUrl, selectedProductIds, value]);
+      return products.map(product => ({
+        value: product.identifier,
+        label: product.name,
+      }));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [baseUrl, JSON.stringify(selectedProductIds), value]
+  );
 
   const currentProduct = products?.find(p => p.identifier === value);
   const currentProductDescription = currentProduct?.description
