@@ -9,6 +9,7 @@ import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {get} from '@/api';
+import {AUTH_VISIBLE_ALL_VALUE, AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import {CSPNonce} from '@/headers';
 import {PARAM_NAME} from '@/hooks/useInitialDataReference';
@@ -49,6 +50,7 @@ class OpenForm {
   protected baseUrl: string;
   protected apiUrl: string;
   protected initialDataReference: string | null;
+  protected authAllVisible: boolean;
 
   protected lang: SupportedLocales;
   protected languageSelectorTarget: HTMLElement | null;
@@ -118,6 +120,7 @@ class OpenForm {
     this.makeRedirect();
     this.calculateClientBaseUrl();
     this.extractInitialDataReference();
+    this.getAuthAllVisible();
 
     this.baseDocumentTitle = document.title;
     this.root = null;
@@ -180,6 +183,11 @@ class OpenForm {
     this.initialDataReference = urlParams.get(PARAM_NAME);
   }
 
+  protected getAuthAllVisible() {
+    const urlParams = new URLSearchParams(window.location.search);
+    this.authAllVisible = urlParams.get(AUTH_VISIBLE_QUERY_PARAM) === AUTH_VISIBLE_ALL_VALUE;
+  }
+
   public async init() {
     // Fixing an issue where browser (in particular Chrome) translations change the DOM
     // tree, causing React to lose track of DOM nodes and crashing the SDK.
@@ -225,6 +233,7 @@ class OpenForm {
               baseTitle: this.baseDocumentTitle,
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
+              authAllVisible: this.authAllVisible,
               debug: DEBUG,
             }}
           >
