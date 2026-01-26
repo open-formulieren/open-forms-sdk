@@ -81,6 +81,7 @@ export const withConfig: Decorator = (Story, {parameters}) => {
     clientBaseUrl: '',
     baseTitle: '',
     requiredFieldsWithAsterisk: true,
+    authAllVisible: false,
     debug: false,
   };
   const overrides: Partial<ConfigContextType> = parameters?.config || {};
