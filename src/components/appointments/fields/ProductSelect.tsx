@@ -1,5 +1,7 @@
+import {HelpText} from '@open-formulieren/formio-renderer';
+import DOMPurify from 'dompurify';
 import {useFormikContext} from 'formik';
-import {useCallback, useContext} from 'react';
+import {useCallback, useContext, useState} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 
@@ -61,13 +63,19 @@ export interface ProductSelectProps {
 }
 
 const ProductSelect: React.FC<ProductSelectProps> = ({name, selectedProductIds}) => {
+  const [products, setProducts] = useState<Product[] | null>(null);
   const {getFieldProps} = useFormikContext();
   const intl = useIntl();
   const {baseUrl} = useContext(ConfigContext);
   const {value} = getFieldProps(name);
+
   const getOptions = useCallback(
     async () => {
       const products = await getProducts(baseUrl, selectedProductIds, value);
+
+      // needed for accessing the description below
+      setProducts(products);
+
       return products.map(product => ({
         value: product.identifier,
         label: product.name,
@@ -76,13 +84,26 @@ const ProductSelect: React.FC<ProductSelectProps> = ({name, selectedProductIds})
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [baseUrl, JSON.stringify(selectedProductIds), value]
   );
+
+  const currentProduct = products?.find(p => p.identifier === value);
+  const currentProductDescription = currentProduct?.description
+    ? DOMPurify.sanitize(currentProduct?.description)
+    : null;
+
   return (
-    <AsyncSelectField
-      name={name}
-      isRequired
-      label={intl.formatMessage(fieldLabel)}
-      getOptions={getOptions}
-    />
+    <div>
+      <AsyncSelectField
+        name={name}
+        isRequired
+        label={intl.formatMessage(fieldLabel)}
+        getOptions={getOptions}
+      />
+      {currentProductDescription && (
+        <HelpText>
+          <span dangerouslySetInnerHTML={{__html: currentProductDescription}} />
+        </HelpText>
+      )}
+    </div>
   );
 };
 
