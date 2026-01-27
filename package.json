@@ -56,7 +56,7 @@
     "moment": "^2.29.1",
     "proj4leaflet": "^1.0.2",
     "react-formio": "^4.3.0",
-    "react-intl": "^7.1.6",
+    "react-intl": "^7.1.14",
     "react-leaflet": "4.2.1",
     "react-leaflet-draw": "^0.20.6",
     "react-number-format": "^5.2.2",

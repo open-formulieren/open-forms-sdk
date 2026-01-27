@@ -198,11 +198,10 @@ const FormStepNewRenderer: React.FC = () => {
   );
 };
 
-interface FormStepNavigationProps
-  extends Pick<
-    FormNavigationProps,
-    'onFormSave' | 'previousPage' | 'isAuthenticated' | 'onDestroySession'
-  > {
+interface FormStepNavigationProps extends Pick<
+  FormNavigationProps,
+  'onFormSave' | 'previousPage' | 'isAuthenticated' | 'onDestroySession'
+> {
   submissionAllowed: Submission['submissionAllowed'];
   isLastStep: boolean;
   isCheckingLogic: boolean;
