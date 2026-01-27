@@ -1,7 +1,7 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
 import type {DateComponentSchema} from '@open-formulieren/types';
-import type {Meta, StoryObj} from '@storybook/react';
-import {fn} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
+import {fn} from 'storybook/test';
 
 export default {
   title: 'Private API / Formio',

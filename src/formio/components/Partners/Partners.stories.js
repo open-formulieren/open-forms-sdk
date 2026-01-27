@@ -1,4 +1,4 @@
-import {expect, fn, screen, userEvent, within} from '@storybook/test';
+import {expect, fn, screen, userEvent, within} from 'storybook/test';
 
 import {SingleFormioComponent} from '../story-util';
 

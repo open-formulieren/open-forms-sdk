@@ -1,6 +1,7 @@
 import '@gemeente-denhaag/design-tokens-components/dist/theme/index.css';
 import '@gemeente-rotterdam/design-tokens/dist/index.css';
-import type {Preview} from '@storybook/react';
+import {withThemeByClassName} from '@storybook/addon-themes';
+import type {Preview, ReactRenderer} from '@storybook/react-vite';
 import '@utrecht/design-tokens/dist/index.css';
 import 'design-token-editor/lib/css/dte.css';
 import 'design-token-editor/lib/css/root.css';
@@ -11,7 +12,6 @@ import {initialize, mswLoader} from 'msw-storybook-addon';
 // @ts-expect-error formio has poor TS support
 import {Formio, Templates} from 'react-formio';
 import 'scss/dte-theme.scss';
-import {withThemeProvider} from 'storybook-addon-theme-provider';
 // load these AFTER the community styles, which is closer in simulating the CSS loading
 // order of our own components
 import 'styles.scss';
@@ -29,7 +29,6 @@ import {
 } from './decorators';
 import {allModes} from './modes.mjs';
 import {reactIntl} from './reactIntl.mjs';
-import ThemeProvider from './theme';
 
 window._ = lodash;
 
@@ -47,7 +46,15 @@ Templates.current = OFLibrary;
 
 const preview: Preview = {
   decorators: [
-    withThemeProvider(ThemeProvider),
+    withThemeByClassName<ReactRenderer>({
+      themes: {
+        'Open Forms': 'openforms-theme',
+        'Gemeente Utrecht': 'utrecht-theme',
+        'Gemeente Den Haag': 'denhaag-theme',
+        'Gemeente Rotterdam': 'rotterdam-theme',
+      },
+      defaultTheme: 'Open Forms',
+    }),
     withClearSessionStorage,
     withModalDecorator,
     withConfig,
@@ -107,30 +114,6 @@ const preview: Preview = {
       nl: 'Nederlands',
       en: 'English',
     },
-    // themes
-    selectedTheme: 'Open Forms', // default
-    themes: [
-      {
-        name: 'Open Forms',
-        color: '#01689B',
-        themeObject: {className: 'openforms-theme'},
-      },
-      {
-        name: 'Gemeente Den Haag',
-        color: '#238541',
-        themeObject: {className: 'denhaag-theme'},
-      },
-      {
-        name: 'Gemeente Rotterdam',
-        color: '#00811F',
-        themeObject: {className: 'rotterdam-theme'},
-      },
-      {
-        name: 'Gemeente Utrecht',
-        color: '#cc0000',
-        themeObject: {className: 'utrecht-theme'},
-      },
-    ],
   },
 };
 

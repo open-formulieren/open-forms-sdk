@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, waitForElementToBeRemoved, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {expect, userEvent, waitForElementToBeRemoved, within} from 'storybook/test';
 
 import {FormContext} from '@/Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';

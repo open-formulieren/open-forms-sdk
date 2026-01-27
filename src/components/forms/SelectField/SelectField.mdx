@@ -1,4 +1,4 @@
-import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/addon-docs/blocks';
 
 import * as SelectFieldStories from './SelectField.stories';
 
@@ -47,16 +47,3 @@ All the props of `SelectField` itself are supported, and any additional props pa
 The `AsyncSelectField` requires the `getOptions` prop to populate the options.
 
 <ArgTypes of={SelectFieldStories.Async} />
-
-## Validation errors
-
-Validation errors are tracked in the Formik state and displayed if any are present.
-
-<Story of={SelectFieldStories.ValidationError} />
-
-## No asterisks
-
-The backend can be configured to treat fields as required by default and instead mark optional
-fields explicitly, through the `ConfigContext`.
-
-<Story of={SelectFieldStories.NoAsterisks} />

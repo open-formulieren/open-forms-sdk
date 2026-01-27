@@ -1,9 +1,9 @@
 import {PrimaryActionButton, TextField} from '@open-formulieren/formio-renderer';
-import type {Meta, StoryObj} from '@storybook/react';
-import {fn, userEvent, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';
+import {fn, userEvent, within} from 'storybook/test';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
 

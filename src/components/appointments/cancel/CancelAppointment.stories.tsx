@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
+import {expect, userEvent, within} from 'storybook/test';
 
 import {mockAppointmentCancelErrorPost, mockAppointmentCancelPost} from '@/api-mocks/appointments';
 import Card from '@/components/Card';

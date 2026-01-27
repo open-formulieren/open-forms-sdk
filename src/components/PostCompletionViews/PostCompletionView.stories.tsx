@@ -1,4 +1,4 @@
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import Body from '@/components/Body';
 
@@ -15,7 +15,6 @@ interface Args {
 
 export default {
   title: 'Views / Post completion views ',
-  component: PostCompletionView,
   render: ({body, ...args}) => <PostCompletionView {...args} body={<Body>{body}</Body>} />,
 } satisfies Meta<Args>;
 

@@ -1,7 +1,7 @@
 import {SelectField} from '@open-formulieren/formio-renderer';
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useCallback} from 'react';
+import {expect, userEvent, within} from 'storybook/test';
 
 import {withFormik} from '@/sb-decorators';
 import {sleep} from '@/utils';

@@ -4,7 +4,7 @@ import {
   SecondaryActionButton,
   SubtleButton,
 } from '@open-formulieren/formio-renderer';
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 // TODO: wrap and blocklist in formio-renderer for disabled state
 import {LinkButton} from '@utrecht/component-library-react';
 
