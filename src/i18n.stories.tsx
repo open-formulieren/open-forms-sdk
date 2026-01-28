@@ -77,6 +77,12 @@ export const WithError: Story = {
     </I18NErrorBoundary>
   ),
   parameters: {
-    msw: {handlers: [mockFormioTranslationsServiceUnavailable]},
+    msw: {
+      handlers: [
+        mockFormioTranslationsServiceUnavailable,
+        mockCustomStaticTranslationsNullGet('en'),
+        mockCustomStaticTranslationsNullGet('nl'),
+      ],
+    },
   },
 };

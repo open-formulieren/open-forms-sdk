@@ -1,5 +1,4 @@
-import type {SupportedLocales} from '@open-formulieren/types';
-import type {Meta, StoryObj} from '@storybook/react-vite';
+import type {Decorator, Meta, StoryObj} from '@storybook/react-vite';
 import {useEffect} from 'react';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 import {expect, fn, userEvent, waitForElementToBeRemoved, within} from 'storybook/test';
@@ -33,18 +32,14 @@ import App from './App';
 interface WrapperProps {
   form: Form;
   showExternalHeader: boolean;
-  language?: SupportedLocales;
 }
 
-const Wrapper: React.FC<WrapperProps> = ({form, showExternalHeader, language = 'nl'}) => {
+const Wrapper: React.FC<WrapperProps> = ({form, showExternalHeader}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: ['/'],
     initialIndex: 0,
     future: FUTURE_FLAGS,
   });
-  useEffect(() => {
-    setLanguage(language);
-  }, [language]);
   return (
     <FormContext.Provider value={form}>
       {showExternalHeader && (
@@ -64,6 +59,15 @@ interface Args {
   steps: MinimalFormStep[];
   showExternalHeader: boolean;
 }
+
+const ResetTranslations: Decorator<Args> = Story => {
+  useEffect(() => {
+    return () => {
+      setLanguage('nl');
+    };
+  });
+  return <Story />;
+};
 
 export default {
   title: 'Private API / App',
@@ -184,6 +188,7 @@ export const TranslationDisabled: Story = {
 
 export const WithCustomNLTranslations: Story = {
   ...Default,
+  decorators: [ResetTranslations, withPageWrapper],
   render: args => {
     const form = buildForm({
       name: args.name,
@@ -196,7 +201,7 @@ export const WithCustomNLTranslations: Story = {
     });
     return (
       <I18NManager languageSelectorTarget={null} onLanguageChangeDone={fn()}>
-        <Wrapper form={form} showExternalHeader={args.showExternalHeader} language="nl" />
+        <Wrapper form={form} showExternalHeader={args.showExternalHeader} />
       </I18NManager>
     );
   },
@@ -227,6 +232,7 @@ export const WithCustomNLTranslations: Story = {
 
 export const WithCustomENTranslations: Story = {
   ...Default,
+  decorators: [ResetTranslations, withPageWrapper],
   render: args => {
     const form = buildForm({
       name: args.name,
@@ -239,7 +245,7 @@ export const WithCustomENTranslations: Story = {
     });
     return (
       <I18NManager languageSelectorTarget={null} onLanguageChangeDone={fn()}>
-        <Wrapper form={form} showExternalHeader={args.showExternalHeader} language="en" />
+        <Wrapper form={form} showExternalHeader={args.showExternalHeader} />
       </I18NManager>
     );
   },
