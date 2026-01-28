@@ -62,6 +62,13 @@ const config = defineConfig([
       'no-restricted-syntax': ['error', {selector: 'Program', message: 'You must use Typescript.'}],
     },
   },
+  // default exports for stories meta is idiomatic
+  {
+    files: ['src/**/*.stories.{js,jsx}'],
+    rules: {
+      'import/no-anonymous-default-export': 'off',
+    },
+  },
   // Unit tests
   {
     files: ['**/*.spec.{js,jsx}', 'src/vitest.setup.mjs'],
