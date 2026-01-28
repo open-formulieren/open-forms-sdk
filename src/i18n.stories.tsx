@@ -9,6 +9,8 @@ import {
 } from '@/components/LanguageSelection/mocks';
 import {I18NErrorBoundary, I18NManager, setLanguage} from '@/i18n';
 
+import {mockCustomStaticTranslationsNullGet} from './api-mocks';
+
 export default {
   title: 'Private API / Translation manager',
   component: I18NManager,
@@ -49,6 +51,15 @@ const Debug: React.FC = () => {
 };
 
 export const Default: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        mockFormioTranslations,
+        mockCustomStaticTranslationsNullGet('en'),
+        mockCustomStaticTranslationsNullGet('nl'),
+      ],
+    },
+  },
   render: args => (
     <I18NManager {...args}>
       <Debug />

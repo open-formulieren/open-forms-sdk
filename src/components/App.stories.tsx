@@ -1,18 +1,29 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
+import {useEffect} from 'react';
 import {RouterProvider, createMemoryRouter} from 'react-router';
-import {expect, userEvent, waitForElementToBeRemoved, within} from 'storybook/test';
+import {expect, fn, userEvent, waitForElementToBeRemoved, within} from 'storybook/test';
 
 import {FormContext} from '@/Context';
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
+import {
+  BASE_URL,
+  buildForm,
+  mockAnalyticsToolConfigGet,
+  mockCustomStaticTranslationsGet,
+} from '@/api-mocks';
 import {
   mockSubmissionCheckLogicPost,
   mockSubmissionGet,
   mockSubmissionPost,
   mockSubmissionStepGet,
 } from '@/api-mocks/submissions';
-import {mockLanguageChoicePut, mockLanguageInfoGet} from '@/components/LanguageSelection/mocks';
+import {
+  mockFormioTranslations,
+  mockLanguageChoicePut,
+  mockLanguageInfoGet,
+} from '@/components/LanguageSelection/mocks';
 import type {Form, MinimalFormStep} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
+import {I18NManager, setLanguage} from '@/i18n';
 import routes, {FUTURE_FLAGS} from '@/routes';
 import {withPageWrapper} from '@/sb-decorators';
 
@@ -28,6 +39,11 @@ const Wrapper: React.FC<WrapperProps> = ({form, showExternalHeader}) => {
     initialEntries: ['/'],
     initialIndex: 0,
     future: FUTURE_FLAGS,
+  });
+  useEffect(() => {
+    return () => {
+      setLanguage('nl');
+    };
   });
   return (
     <FormContext.Provider value={form}>
@@ -163,6 +179,90 @@ export const TranslationDisabled: Story = {
     // assert there's no NL button
     const langSelector = canvas.queryByText(/^nl$/i);
     await expect(langSelector).toBeNull();
+  },
+};
+
+export const WithCustomNLTranslations: Story = {
+  ...Default,
+  render: args => {
+    const form = buildForm({
+      name: args.name,
+      translationEnabled: true,
+      explanationTemplate: '<p>Toelichtingssjabloon...</p>',
+      submissionAllowed: args['submissionAllowed'],
+      hideNonApplicableSteps: args['hideNonApplicableSteps'],
+      submissionLimitReached: args['form.submissionLimitReached'],
+      steps: args['steps'],
+    });
+    return (
+      <I18NManager languageSelectorTarget={null} onLanguageChangeDone={fn()}>
+        <Wrapper form={form} showExternalHeader={args.showExternalHeader} />
+      </I18NManager>
+    );
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        mockCustomStaticTranslationsGet('en'),
+        mockCustomStaticTranslationsGet('nl'),
+        mockFormioTranslations,
+        mockLanguageInfoGet([
+          {code: 'nl', name: 'Nederlands'},
+          {code: 'en', name: 'English'},
+        ]),
+        mockAnalyticsToolConfigGet(),
+      ],
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    setLanguage('nl');
+
+    expect(
+      await canvas.findByText('Aangepaste vertaling (nl) voor startpagina')
+    ).toBeInTheDocument();
+  },
+};
+
+export const WithCustomENTranslations: Story = {
+  ...Default,
+  render: args => {
+    const form = buildForm({
+      name: args.name,
+      translationEnabled: true,
+      explanationTemplate: '<p>Toelichtingssjabloon...</p>',
+      submissionAllowed: args['submissionAllowed'],
+      hideNonApplicableSteps: args['hideNonApplicableSteps'],
+      submissionLimitReached: args['form.submissionLimitReached'],
+      steps: args['steps'],
+    });
+    return (
+      <I18NManager languageSelectorTarget={null} onLanguageChangeDone={fn()}>
+        <Wrapper form={form} showExternalHeader={args.showExternalHeader} />
+      </I18NManager>
+    );
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        mockCustomStaticTranslationsGet('en'),
+        mockCustomStaticTranslationsGet('nl'),
+        mockFormioTranslations,
+        mockLanguageInfoGet([
+          {code: 'nl', name: 'Nederlands'},
+          {code: 'en', name: 'English'},
+        ]),
+        mockAnalyticsToolConfigGet(),
+      ],
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    setLanguage('en');
+
+    expect(await canvas.findByText('Custom translation (en) for Start page')).toBeInTheDocument();
   },
 };
 

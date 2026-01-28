@@ -1,6 +1,12 @@
 import {act, waitFor, within} from '@testing-library/react';
 
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockFormGet} from '@/api-mocks';
+import {
+  BASE_URL,
+  buildForm,
+  mockAnalyticsToolConfigGet,
+  mockCustomStaticTranslationsNullGet,
+  mockFormGet,
+} from '@/api-mocks';
 import mswServer from '@/api-mocks/msw-server';
 import type {LanguageInfo} from '@/components/LanguageSelection/LanguageSelection';
 import {mockFormioTranslations, mockLanguageInfoGet} from '@/components/LanguageSelection/mocks';
@@ -21,6 +27,8 @@ const apiMocks = [
   mockLanguageInfoGet(LANGUAGES),
   mockFormioTranslations,
   mockAnalyticsToolConfigGet(),
+  mockCustomStaticTranslationsNullGet('en'),
+  mockCustomStaticTranslationsNullGet('nl'),
 ];
 
 describe('OpenForm', () => {
@@ -96,7 +104,9 @@ describe('OpenForm', () => {
       mockFormGet(formEN, true),
       mockLanguageInfoGet(LANGUAGES),
       mockFormioTranslations,
-      mockAnalyticsToolConfigGet()
+      mockAnalyticsToolConfigGet(),
+      mockCustomStaticTranslationsNullGet('nl'),
+      mockCustomStaticTranslationsNullGet('en')
     );
 
     const form = new OpenForm(formRoot, {

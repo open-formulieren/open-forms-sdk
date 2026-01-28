@@ -28,9 +28,12 @@ const setLanguage = (langCode: SupportedLocales) => {
   currentLanguage.setValue(langCode);
 };
 
-type ReactIntlLocaleData = Record<string, MessageFormatElement[]>;
+export type ReactIntlLocaleData = Record<string, MessageFormatElement[]>;
 
-const loadLocaleData = async (locale: SupportedLocales): Promise<ReactIntlLocaleData> => {
+const loadLocaleData = async (
+  baseUrl: string,
+  locale: SupportedLocales
+): Promise<ReactIntlLocaleData> => {
   let localeToLoad: SupportedLocales;
   switch (locale) {
     case 'nl': {
@@ -45,8 +48,15 @@ const loadLocaleData = async (locale: SupportedLocales): Promise<ReactIntlLocale
       localeToLoad = 'en';
     }
   }
-  const messages = await import(`./i18n/compiled/${localeToLoad}.json`);
-  return messages.default;
+
+  const [originalMessages, customizedMessages] = await Promise.all([
+    import(`./i18n/compiled/${localeToLoad}.json`),
+    get<ReactIntlLocaleData | null>(`${baseUrl}i18n/compiled-messages/${localeToLoad}.json`),
+  ]);
+
+  const mergedMessages: ReactIntlLocaleData = {...originalMessages, ...(customizedMessages ?? {})};
+
+  return mergedMessages;
 };
 
 /*
@@ -54,8 +64,12 @@ Functionality to localize messages in a locale outside of the usual React lifecy
  */
 const cache = createIntlCache();
 
-const formatMessageForLocale = async (locale: SupportedLocales, msg: MessageDescriptor) => {
-  const messages = await loadLocaleData(locale);
+const formatMessageForLocale = async (
+  baseUrl: string,
+  locale: SupportedLocales,
+  msg: MessageDescriptor
+) => {
+  const messages = await loadLocaleData(baseUrl, locale);
   const intl = createIntl({locale, messages}, cache);
   return intl.formatMessage(msg);
 };
@@ -98,7 +112,7 @@ const I18NManager: React.FC<I18NManagerProps> = ({
   // ensure that we load the translations for the requested language
   const {loading, value, error} = useAsync(async () => {
     const promises: [Promise<ReactIntlLocaleData>, Promise<Partial<FormioTranslations>>] = [
-      loadLocaleData(languageCode),
+      loadLocaleData(baseUrl, languageCode),
       loadFormioTranslations(baseUrl, languageCode),
     ];
     const [messages, formioTranslations] = await Promise.all(promises);

@@ -4,6 +4,7 @@ import React from 'react';
 import {IntlProvider} from 'react-intl';
 import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
+import {mockCustomStaticTranslationsNullGet} from '@/api-mocks';
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import type {I18NContextType} from '@/i18n';
 import {I18NContext} from '@/i18n';
@@ -67,6 +68,15 @@ export const Functional: Story = {
   args: {
     wrapInErrorBoundary: false,
   },
+  parameters: {
+    msw: {
+      handlers: [
+        mockLanguageChoicePut,
+        mockCustomStaticTranslationsNullGet('en'),
+        mockCustomStaticTranslationsNullGet('nl'),
+      ],
+    },
+  },
   play: async ({args, canvasElement}) => {
     const canvas = within(canvasElement);
     // wait for api info call to return
@@ -91,7 +101,11 @@ export const UnavailableLanguage: Story = {
   },
   parameters: {
     msw: {
-      handlers: [mockInvalidLanguageChoicePut('fy')],
+      handlers: [
+        mockInvalidLanguageChoicePut('fy'),
+        mockCustomStaticTranslationsNullGet('en'),
+        mockCustomStaticTranslationsNullGet('nl'),
+      ],
     },
   },
   play: async ({args, canvasElement}) => {
