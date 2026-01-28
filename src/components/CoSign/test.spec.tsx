@@ -27,6 +27,7 @@ it('CoSign component constructs the right auth URL', () => {
           appearance: 'dark',
         },
         isForGemachtigde: false,
+        visible: true,
       },
     ],
   });

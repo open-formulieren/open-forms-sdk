@@ -33,6 +33,7 @@ const TEST_FORM = buildForm({
         appearance: 'dark',
       },
       isForGemachtigde: false,
+      visible: true,
     },
   ],
   cosignLoginOptions: [
@@ -47,6 +48,7 @@ const TEST_FORM = buildForm({
         appearance: 'dark',
       },
       isForGemachtigde: false,
+      visible: true,
     },
   ],
   loginRequired: true,
