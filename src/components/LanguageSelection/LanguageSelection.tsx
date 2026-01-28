@@ -68,8 +68,11 @@ const LanguageSelection: React.FC = () => {
     // do nothing if this is already the active language
     // or if an update is being processed.
     if (updatingLanguage || languageCode === locale) return;
-
-    const confirmationQuestion = await formatMessageForLocale(languageCode, changeLanguagePrompt);
+    const confirmationQuestion = await formatMessageForLocale(
+      baseUrl,
+      languageCode,
+      changeLanguagePrompt
+    );
 
     // only prompt to confirm if there is an active submission
     if (submissionState.hasSubmission && !window.confirm(confirmationQuestion)) {
