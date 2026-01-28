@@ -60,6 +60,7 @@ export default {
               appearance: 'dark',
             },
             isForGemachtigde: false,
+            visible: true,
           },
         ],
       }),

@@ -28,6 +28,7 @@ interface WrapperProps {
   currentUrl?: string;
   initialSubmission?: Submission | null;
   onSubmissionObtained?: () => void;
+  authVisible?: string;
 }
 
 const Wrap: React.FC<WrapperProps> = ({
@@ -35,6 +36,7 @@ const Wrap: React.FC<WrapperProps> = ({
   currentUrl = '/startpagina',
   initialSubmission = null,
   onSubmissionObtained = undefined,
+  authVisible = '',
 }) => {
   const parsedUrl = new URL(currentUrl, 'http://dummy');
   const routes = [
@@ -52,6 +54,7 @@ const Wrap: React.FC<WrapperProps> = ({
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
         debug: false,
+        authVisible: authVisible,
       }}
     >
       <IntlProvider locale="en" messages={messagesEN}>
@@ -110,6 +113,7 @@ test('Start form with having logged in', async () => {
           appearance: 'dark',
         },
         isForGemachtigde: false,
+        visible: true,
       },
     ],
     loginRequired: true,
@@ -152,6 +156,7 @@ test('Start form with object reference query param', async () => {
           appearance: 'dark',
         },
         isForGemachtigde: false,
+        visible: true,
       },
     ],
     loginRequired: true,
@@ -194,6 +199,7 @@ test('Start form without object reference query param', async () => {
           appearance: 'dark',
         },
         isForGemachtigde: false,
+        visible: true,
       },
     ],
     loginRequired: true,
@@ -265,4 +271,93 @@ test('Form start page does not show login buttons if an active submission is pre
   const continueButton = await screen.findByRole('button', {name: 'Continue existing submission'});
   expect(continueButton).toBeInTheDocument();
   expect(screen.getByRole('button', {name: 'Cancel submission'})).toBeInTheDocument();
+});
+
+test('Form start page does not show invisible login buttons', async () => {
+  const form = buildForm({
+    loginOptions: [
+      {
+        identifier: 'digid',
+        label: 'DigiD',
+        url: 'https://openforms.nl/auth/form-name/digid/start',
+        logo: {
+          title: 'DigiD',
+          imageSrc: 'https://openforms.nl/static/img/digid-46x46.71ea68346bbb.png',
+          href: 'https://www.digid.nl/',
+          appearance: 'dark',
+        },
+        isForGemachtigde: false,
+        visible: true,
+      },
+      {
+        identifier: 'org-oidc',
+        label: 'OpenID Connect',
+        url: '#',
+        logo: {
+          title: 'OpenID Connect',
+          imageSrc: './openid.png',
+          href: 'https://openid.net/',
+          appearance: 'light',
+        },
+        isForGemachtigde: false,
+        visible: false,
+      },
+    ],
+    loginRequired: true,
+  });
+
+  render(<Wrap form={form} />);
+  const digidLoginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
+  expect(digidLoginLink).toBeVisible();
+  expect(screen.queryAllByRole('link', {name: 'Login with OpenID Connect'})).toHaveLength(0);
+});
+
+test('Form start page does not show login buttons if an active submission is present', async () => {
+  const submission = buildSubmission({isAuthenticated: false});
+
+  render(<Wrap initialSubmission={submission} />);
+
+  const continueButton = await screen.findByRole('button', {name: 'Continue existing submission'});
+  expect(continueButton).toBeInTheDocument();
+  expect(screen.getByRole('button', {name: 'Cancel submission'})).toBeInTheDocument();
+});
+
+test('Form start page shows invisible login buttons when auth_visible=all', async () => {
+  const form = buildForm({
+    loginOptions: [
+      {
+        identifier: 'digid',
+        label: 'DigiD',
+        url: 'https://openforms.nl/auth/form-name/digid/start',
+        logo: {
+          title: 'DigiD',
+          imageSrc: 'https://openforms.nl/static/img/digid-46x46.71ea68346bbb.png',
+          href: 'https://www.digid.nl/',
+          appearance: 'dark',
+        },
+        isForGemachtigde: false,
+        visible: true,
+      },
+      {
+        identifier: 'org-oidc',
+        label: 'OpenID Connect',
+        url: '#',
+        logo: {
+          title: 'OpenID Connect',
+          imageSrc: './openid.png',
+          href: 'https://openid.net/',
+          appearance: 'light',
+        },
+        isForGemachtigde: false,
+        visible: false,
+      },
+    ],
+    loginRequired: true,
+  });
+
+  render(<Wrap form={form} authVisible="all" />);
+  const digidLoginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
+  expect(digidLoginLink).toBeVisible();
+  const oidcLoginLink = await screen.findByRole('link', {name: 'Login with OpenID Connect'});
+  expect(oidcLoginLink).toBeVisible();
 });

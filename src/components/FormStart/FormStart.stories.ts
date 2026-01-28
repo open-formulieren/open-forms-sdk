@@ -51,6 +51,7 @@ export const LoginRequired: Story = {
             },
             url: '#',
             isForGemachtigde: false,
+            visible: true,
           },
         ],
       }),

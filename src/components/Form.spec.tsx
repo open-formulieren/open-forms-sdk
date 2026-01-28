@@ -105,6 +105,7 @@ test.each([
               url: 'http://mock-digid.nl/login',
               logo: {title: 'logo', imageSrc: '', href: '', appearance: 'dark'},
               isForGemachtigde: false,
+              visible: true,
             },
           ],
           introductionPageContent: introductionPageContent,
@@ -294,4 +295,30 @@ test('Submitting form with payment requirement', async () => {
   await waitForElementToBeRemoved(loader);
 
   expect(await screen.findByText('A payment is required for this product.')).toBeVisible();
+});
+
+test('Redirect to start page or introduction page should preserve "auth_visible" param', async () => {
+  mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
+
+  render(
+    <Wrapper
+      form={buildForm({
+        loginOptions: [
+          {
+            identifier: 'digid',
+            label: 'DigiD',
+            url: 'http://mock-digid.nl/login',
+            logo: {title: 'logo', imageSrc: '', href: '', appearance: 'dark'},
+            isForGemachtigde: false,
+            visible: true,
+          },
+        ],
+        introductionPageContent: 'foo',
+      })}
+      initialEntry="/?auth_visible=all"
+    />
+  );
+
+  const loginLink = await screen.findByRole('link', {name: 'Continue'});
+  expect(loginLink).toHaveAttribute('href', '/startpagina?auth_visible=all');
 });

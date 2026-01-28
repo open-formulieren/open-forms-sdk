@@ -26,6 +26,7 @@ export default {
               appearance: 'dark',
             },
             isForGemachtigde: false,
+            visible: true,
           },
         ],
         cosignLoginOptions: [
@@ -40,6 +41,7 @@ export default {
               appearance: 'dark',
             },
             isForGemachtigde: false,
+            visible: true,
           },
         ],
       }),

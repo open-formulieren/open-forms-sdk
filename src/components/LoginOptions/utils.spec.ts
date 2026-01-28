@@ -14,6 +14,7 @@ it('Login URL contains "next" URL with "_start" parameter', () => {
       appearance: 'dark',
     },
     isForGemachtigde: false,
+    visible: true,
   };
 
   // Control the location that the test will use
@@ -45,6 +46,7 @@ it('Login URL does NOT contain "_start" parameter if coSign', () => {
       appearance: 'dark',
     },
     isForGemachtigde: false,
+    visible: true,
   };
 
   // Control the location that the test will use
