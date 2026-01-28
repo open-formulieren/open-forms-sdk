@@ -1,4 +1,3 @@
-import {expect} from '@storybook/test';
 import {screen} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import {renderForm} from 'jstests/formio/utils';

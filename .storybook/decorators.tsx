@@ -1,7 +1,7 @@
 import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider.js';
 import ModalContext from '@open-formulieren/formio-renderer/components/modal/context.js';
 import type {AnyComponentSchema} from '@open-formulieren/types';
-import type {Decorator} from '@storybook/react';
+import type {Decorator} from '@storybook/react-vite';
 import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import React from 'react';

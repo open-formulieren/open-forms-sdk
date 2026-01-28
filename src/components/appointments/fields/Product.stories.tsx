@@ -1,5 +1,5 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
+import {expect, userEvent, within} from 'storybook/test';
 
 import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
 import type {AppointmentProduct} from '@/data/appointments';
@@ -27,7 +27,6 @@ interface Args {
 
 export default {
   title: 'Private API / Appointments / Product and amount',
-  component: Product,
   decorators: [withFormik],
   parameters: {
     formik: {

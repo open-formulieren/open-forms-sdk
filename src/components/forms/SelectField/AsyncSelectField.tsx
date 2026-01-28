@@ -2,8 +2,10 @@ import {SelectField} from '@open-formulieren/formio-renderer';
 import type {Option} from '@open-formulieren/formio-renderer/components/forms/Select/Select.js';
 import {useAsync} from 'react-use';
 
-export interface AsyncSelectFieldProps<OptionT extends Option>
-  extends Omit<React.ComponentProps<typeof SelectField>, 'options'> {
+export interface AsyncSelectFieldProps<OptionT extends Option> extends Omit<
+  React.ComponentProps<typeof SelectField>,
+  'options'
+> {
   getOptions: () => Promise<OptionT[]>;
 }
 

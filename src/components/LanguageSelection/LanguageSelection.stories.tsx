@@ -1,8 +1,8 @@
-import type {Decorator, Meta, StoryObj} from '@storybook/react';
-import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
+import type {Decorator, Meta, StoryObj} from '@storybook/react-vite';
 import {getWorker} from 'msw-storybook-addon';
 import React from 'react';
 import {IntlProvider} from 'react-intl';
+import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import type {I18NContextType} from '@/i18n';

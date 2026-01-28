@@ -1,6 +1,6 @@
-import type {Decorator, Meta, StoryObj} from '@storybook/react';
-import {expect, fn, userEvent, within} from '@storybook/test';
+import type {Decorator, Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
+import {expect, fn, userEvent, within} from 'storybook/test';
 
 import {buildForm, buildSubmission} from '@/api-mocks';
 import FormDisplay from '@/components/FormDisplay';

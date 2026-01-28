@@ -1,5 +1,4 @@
-import {waitFor} from '@storybook/test';
-import {screen} from '@testing-library/dom';
+import {screen, waitFor} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import 'flatpickr';
 import {renderForm} from 'jstests/formio/utils';

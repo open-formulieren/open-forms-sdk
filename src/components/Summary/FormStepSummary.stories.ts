@@ -1,7 +1,7 @@
 import type {CustomerProfileComponentSchema} from '@open-formulieren/types';
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
+import {expect, within} from 'storybook/test';
 
 import FormStepSummary from './FormStepSummary';
 

@@ -1,5 +1,5 @@
-import {expect, userEvent, within} from '@storybook/test';
 import {getWorker} from 'msw-storybook-addon';
+import {expect, userEvent, within} from 'storybook/test';
 
 import {sleep} from 'utils';
 

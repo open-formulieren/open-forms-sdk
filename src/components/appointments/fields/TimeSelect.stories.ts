@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {addDays, formatISO} from 'date-fns';
+import {expect, within} from 'storybook/test';
 
 import {mockAppointmentTimesGet} from '@/api-mocks/appointments';
 import {withFormik} from '@/sb-decorators';

@@ -1,7 +1,7 @@
 import type {SupportedLocales} from '@open-formulieren/types';
-import type {Meta, StoryObj} from '@storybook/react';
-import {fn} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useIntl} from 'react-intl';
+import {fn} from 'storybook/test';
 
 import {
   mockFormioTranslations,

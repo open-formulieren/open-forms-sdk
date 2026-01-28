@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, fn, userEvent, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
+import {expect, fn, userEvent, within} from 'storybook/test';
 
 import {BASE_URL, buildSubmission} from '@/api-mocks';
 

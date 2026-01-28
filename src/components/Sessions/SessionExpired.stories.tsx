@@ -1,4 +1,4 @@
-import type {Decorator, Meta, StoryObj} from '@storybook/react';
+import type {Decorator, Meta, StoryObj} from '@storybook/react-vite';
 import {useEffect} from 'react';
 import {withRouter} from 'storybook-addon-remix-react-router';
 

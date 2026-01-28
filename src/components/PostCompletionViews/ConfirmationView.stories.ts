@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
+import {expect, within} from 'storybook/test';
 
 import {buildForm} from '@/api-mocks';
 import {withForm, withSubmissionPollInfo} from '@/sb-decorators';

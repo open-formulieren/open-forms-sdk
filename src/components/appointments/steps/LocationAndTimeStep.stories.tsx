@@ -1,7 +1,7 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {formatISO} from 'date-fns';
 import {withRouter} from 'storybook-addon-remix-react-router';
+import {expect, userEvent, within} from 'storybook/test';
 
 import {
   mockAppointmentDatesGet,

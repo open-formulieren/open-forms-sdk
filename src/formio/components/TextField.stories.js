@@ -1,4 +1,4 @@
-import {expect, userEvent, waitFor, within} from '@storybook/test';
+import {expect, userEvent, waitFor, within} from 'storybook/test';
 
 import {sleep} from 'utils';
 

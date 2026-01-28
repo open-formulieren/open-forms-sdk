@@ -12,10 +12,9 @@ const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    'storybook-addon-theme-provider',
+    '@storybook/addon-docs',
     'storybook-react-intl',
+    '@storybook/addon-themes',
     'storybook-addon-remix-react-router',
     '@storybook/addon-coverage',
   ],

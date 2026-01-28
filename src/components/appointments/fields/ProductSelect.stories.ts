@@ -1,5 +1,5 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, waitFor, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
+import {expect, userEvent, within} from 'storybook/test';
 
 import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
 import {withFormik} from '@/sb-decorators';
@@ -55,10 +55,11 @@ export const ProductSelectExtraDescription: Story = {
 
     await userEvent.click(dropdown);
     await userEvent.keyboard('[ArrowDown]');
-    await userEvent.keyboard('[Enter]');
 
-    await waitFor(() =>
-      expect(canvas.queryByText('An example of extra description')).toBeInTheDocument()
-    );
+    const passportOption = await canvas.findByRole('option', {name: 'Paspoort aanvraag'});
+    expect(passportOption).toBeVisible();
+    await userEvent.click(passportOption);
+
+    expect(canvas.queryByText('An example of extra description')).toBeInTheDocument();
   },
 };

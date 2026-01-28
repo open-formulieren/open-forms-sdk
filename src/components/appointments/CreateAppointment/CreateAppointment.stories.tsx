@@ -1,8 +1,8 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {expect, userEvent, waitFor, within} from '@storybook/test';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 import {addDays, format} from 'date-fns';
 import {enGB, nl} from 'date-fns/locale';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {expect, userEvent, waitFor, within} from 'storybook/test';
 
 import {FormContext} from '@/Context';
 import {buildForm} from '@/api-mocks';
@@ -92,25 +92,25 @@ export const HappyFlow: Story = {
 
     const calendarLocale = locale === 'nl' ? nl : enGB;
 
-    await step('Wait for products to load', async () => {
-      await waitFor(async () =>
-        expect(canvas.queryByRole('button', {name: 'Bevestig producten'})).not.toHaveAttribute(
-          'aria-disabled',
-          'true'
-        )
+    await step('Wait for products to load & select product', async () => {
+      // there are frequent unmounts/remounts that require this hack
+      await waitFor(
+        async () => {
+          const productDropdown = await canvas.findByRole('combobox', {name: 'Product'});
+          expect(productDropdown).toBeVisible();
+          await userEvent.click(productDropdown);
+          await userEvent.keyboard('[ArrowDown]');
+          const productOption = await canvas.findByRole('option', {name: 'Paspoort aanvraag'});
+          expect(productOption).toBeVisible();
+          await userEvent.click(productOption);
+        },
+        {timeout: 5000}
       );
-    });
 
-    await step('Select the product', async () => {
-      let productDropdown: HTMLDivElement;
-      await waitFor(async () => {
-        productDropdown = await canvas.findByRole('combobox');
-        expect(productDropdown).toBeVisible();
-      });
-      productDropdown!.focus();
-      await userEvent.keyboard('[ArrowDown]');
-      const productOption = await canvas.findByText('Paspoort aanvraag');
-      await userEvent.click(productOption);
+      expect(canvas.queryByRole('button', {name: 'Bevestig producten'})).not.toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
     });
 
     await step('Submit the product step', async () => {

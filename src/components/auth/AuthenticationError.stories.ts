@@ -1,4 +1,4 @@
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import AuthenticationError from './AuthenticationError';
 import {type AuthErrorCode, MAPPING_PARAMS_SERVICE} from './constants';

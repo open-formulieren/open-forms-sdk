@@ -1,4 +1,4 @@
-import {Meta} from '@storybook/blocks';
+import {Meta} from '@storybook/addon-docs/blocks';
 
 <Meta title="Developers / Documentation" />
 
@@ -30,7 +30,7 @@ The stories must have a default export which sets the title (and thus the locati
 component meta, decorators/parameters/argtypes relevant for all or most of the stories, e.g.:
 
 ```js
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import ExampleComponent from './ExampleComponent';
 
@@ -97,7 +97,7 @@ Typical elements in the MDX page are:
 Storybook offers some docs to build your documentation with:
 
 ```jsx
-import {ArgTypes, Canvas, Meta, Story} from '@storybook/blocks';
+import {ArgTypes, Canvas, Meta, Story} from '@storybook/addon-docs/blocks';
 
 // stories in CSF
 import MyComponent from './MyComponent';

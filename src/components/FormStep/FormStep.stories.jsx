@@ -1,8 +1,7 @@
-import {expect, fn, userEvent, waitFor, within} from '@storybook/test';
 import {produce} from 'immer';
 import {getWorker} from 'msw-storybook-addon';
 import {withRouter} from 'storybook-addon-remix-react-router';
-import {v4 as uuid4} from 'uuid';
+import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
 import {FormContext} from '@/Context';
 import {buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
@@ -60,7 +59,7 @@ const render = ({
   // force mutation/re-render by using different step URLs every time
   submission = produce(submission, draftSubmission => {
     for (const step of draftSubmission.steps) {
-      step.url = `${draftSubmission.url}/steps/${uuid4()}`;
+      step.url = `${draftSubmission.url}/steps/${window.crypto.randomUUID()}`;
     }
   });
   const submissionStepDetailBody = buildSubmissionStep({
