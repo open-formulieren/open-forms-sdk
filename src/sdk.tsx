@@ -9,7 +9,7 @@ import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {get} from '@/api';
-import {AUTH_VISIBLE_ALL_VALUE, AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
+import {AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import {CSPNonce} from '@/headers';
 import {PARAM_NAME} from '@/hooks/useInitialDataReference';
@@ -50,7 +50,7 @@ class OpenForm {
   protected baseUrl: string;
   protected apiUrl: string;
   protected initialDataReference: string | null;
-  protected authAllVisible: boolean;
+  protected authVisible: string | null;
 
   protected lang: SupportedLocales;
   protected languageSelectorTarget: HTMLElement | null;
@@ -185,7 +185,7 @@ class OpenForm {
 
   protected getAuthAllVisible() {
     const urlParams = new URLSearchParams(window.location.search);
-    this.authAllVisible = urlParams.get(AUTH_VISIBLE_QUERY_PARAM) === AUTH_VISIBLE_ALL_VALUE;
+    this.authVisible = urlParams.get(AUTH_VISIBLE_QUERY_PARAM);
   }
 
   public async init() {
@@ -233,7 +233,7 @@ class OpenForm {
               baseTitle: this.baseDocumentTitle,
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
-              authAllVisible: this.authAllVisible,
+              authVisible: this.authVisible || '',
               debug: DEBUG,
             }}
           >

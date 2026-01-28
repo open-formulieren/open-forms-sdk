@@ -57,7 +57,7 @@ export interface ConfigContextType {
    * @deprecated - use FormContext instead
    */
   requiredFieldsWithAsterisk: boolean;
-  authAllVisible: boolean;
+  authVisible: string;
   debug: boolean;
 }
 
@@ -67,7 +67,7 @@ const ConfigContext = React.createContext<ConfigContextType>({
   basePath: '',
   baseTitle: '',
   requiredFieldsWithAsterisk: true,
-  authAllVisible: false,
+  authVisible: '',
   debug: DEBUG,
 });
 ConfigContext.displayName = 'ConfigContext';
