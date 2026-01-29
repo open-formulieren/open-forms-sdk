@@ -7,13 +7,14 @@ import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
 import Link from '@/components/Link';
-import useAuthVisible from '@/hooks/useAuthVisible';
+import {AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
 import useInitialDataReference from '@/hooks/useInitialDataReference';
+import useQueryParam from '@/hooks/useQueryParam';
 
 const IntroductionPage: React.FC = () => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
   const {addInitialDataReference} = useInitialDataReference();
-  const {addToUrl: addAuthVisible} = useAuthVisible();
+  const {addToUrl: addAuthVisible} = useQueryParam(AUTH_VISIBLE_QUERY_PARAM);
 
   const startPageUrl = addAuthVisible(addInitialDataReference('startpagina'));
   if (!introductionPageContent) {
