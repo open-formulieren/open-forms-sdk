@@ -57,7 +57,7 @@ export interface ConfigContextType {
    * @deprecated - use FormContext instead
    */
   requiredFieldsWithAsterisk: boolean;
-  authVisible?: 'all';
+  authVisible?: 'all' | '';
   debug: boolean;
 }
 

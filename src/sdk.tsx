@@ -9,7 +9,7 @@ import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {get} from '@/api';
-import {AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
+import {AUTH_VISIBLE_ALL_VALUE, AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import {CSPNonce} from '@/headers';
 import {PARAM_NAME} from '@/hooks/useInitialDataReference';
@@ -50,7 +50,7 @@ class OpenForm {
   protected baseUrl: string;
   protected apiUrl: string;
   protected initialDataReference: string | null;
-  protected authVisible: string | null;
+  protected authVisible: 'all' | '';
 
   protected lang: SupportedLocales;
   protected languageSelectorTarget: HTMLElement | null;
@@ -185,7 +185,9 @@ class OpenForm {
 
   protected getAuthAllVisible() {
     const urlParams = new URLSearchParams(window.location.search);
-    this.authVisible = urlParams.get(AUTH_VISIBLE_QUERY_PARAM);
+    const authVisible: string | null = urlParams.get(AUTH_VISIBLE_QUERY_PARAM);
+    // only 'all' value is supported
+    this.authVisible = authVisible === AUTH_VISIBLE_ALL_VALUE ? authVisible : '';
   }
 
   public async init() {

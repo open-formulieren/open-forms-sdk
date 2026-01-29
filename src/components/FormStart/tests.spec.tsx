@@ -28,7 +28,7 @@ interface WrapperProps {
   currentUrl?: string;
   initialSubmission?: Submission | null;
   onSubmissionObtained?: () => void;
-  authVisible?: string;
+  authVisible?: 'all' | '';
 }
 
 const Wrap: React.FC<WrapperProps> = ({
