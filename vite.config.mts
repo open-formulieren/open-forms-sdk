@@ -223,18 +223,6 @@ export default defineConfig(({mode}) => {
           inline: ['@open-formulieren/formio-renderer'],
         },
       },
-      environment: 'jsdom',
-      environmentOptions: {
-        jsdom: {
-          url: 'http://localhost',
-        },
-      },
-      globals: true, // for compatibility with jest
-      // See https://vitest.dev/guide/migration.html#fake-timers-defaults
-      fakeTimers: {
-        toFake: ['setTimeout', 'clearTimeout', 'Date'],
-      },
-      setupFiles: ['./src/vitest.setup.mts'],
       coverage: {
         provider: 'istanbul',
         include: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -248,6 +236,27 @@ export default defineConfig(({mode}) => {
         ],
         reporter: ['text', 'cobertura', 'html'],
       },
+      projects: [
+        {
+          extends: true,
+          test: {
+            name: 'unit',
+            include: ['src/**/*.spec.{js,ts,tsx}'],
+            environment: 'jsdom',
+            environmentOptions: {
+              jsdom: {
+                url: 'http://localhost',
+              },
+            },
+            globals: true, // for compatibility with jest
+            // See https://vitest.dev/guide/migration.html#fake-timers-defaults
+            fakeTimers: {
+              toFake: ['setTimeout', 'clearTimeout', 'Date'],
+            },
+            setupFiles: ['./src/vitest.setup.mts'],
+          },
+        },
+      ],
     },
   };
 });
