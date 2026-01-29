@@ -83,31 +83,10 @@ jobs:
       - name: Set up test environment
         run: |
           npm ci
-          npx playwright install --with-deps
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v5
-        with:
-          name: github-pages
-          path: ./storybook-static
-
-      - name: Extract artifact
-        run: |
-          tar -xvf artifact.tar
-          rm artifact.tar
-        working-directory: ./storybook-static
+          npx playwright install --with-deps chromium
 
       - name: Serve storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --quiet" \
-            "npx wait-on -l http://127.0.0.1:6006 && npm run test:storybook"
-        env:
-          TZ: Europe/Amsterdam
-
-      - name: Prepare coverage for codecov
-        run: |
-          npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook
+        run: npm run test:storybook -- --coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

@@ -16,7 +16,7 @@ const config: StorybookConfig = {
     'storybook-react-intl',
     '@storybook/addon-themes',
     'storybook-addon-remix-react-router',
-    '@storybook/addon-coverage',
+    '@storybook/addon-vitest',
   ],
   framework: {
     name: '@storybook/react-vite',

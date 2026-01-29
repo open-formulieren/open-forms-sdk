@@ -2,7 +2,11 @@
 import {codecovVitePlugin} from '@codecov/vite-plugin';
 import replace from '@rollup/plugin-replace';
 import {sentryVitePlugin} from '@sentry/vite-plugin';
+import {storybookTest} from '@storybook/addon-vitest/vitest-plugin';
 import react from '@vitejs/plugin-react';
+import {playwright} from '@vitest/browser-playwright';
+import {dirname, resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import path from 'path';
 import type {OutputOptions} from 'rollup';
 import dts from 'vite-plugin-dts';
@@ -22,6 +26,8 @@ declare global {
     }
   }
 }
+
+const _OF_INTERNAL_dirname = dirname(fileURLToPath(import.meta.url));
 
 const buildTarget = process.env.BUILD_TARGET || 'umd';
 const buildTargetDefined = process.env.BUILD_TARGET !== undefined;
@@ -254,6 +260,24 @@ export default defineConfig(({mode}) => {
               toFake: ['setTimeout', 'clearTimeout', 'Date'],
             },
             setupFiles: ['./src/vitest.setup.mts'],
+          },
+        },
+        {
+          extends: true,
+          plugins: [
+            // The plugin will run tests for the stories defined in your Storybook config
+            // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+            storybookTest({configDir: resolve(_OF_INTERNAL_dirname, '.storybook')}),
+          ],
+          test: {
+            name: 'storybook',
+            setupFiles: ['./vitest.setup.ts'],
+            browser: {
+              enabled: true,
+              headless: true,
+              provider: playwright({}),
+              instances: [{browser: 'chromium'}],
+            },
           },
         },
       ],
