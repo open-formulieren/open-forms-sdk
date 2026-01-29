@@ -1,5 +1,6 @@
 import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {NuqsTestingAdapter} from 'nuqs/adapters/testing';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
@@ -48,9 +49,14 @@ afterAll(() => {
 interface WrapperProps {
   form?: Form;
   initialEntry?: string;
+  searchParams?: string;
 }
 
-const Wrapper: React.FC<WrapperProps> = ({form = buildForm(), initialEntry = '/startpagina'}) => {
+const Wrapper: React.FC<WrapperProps> = ({
+  form = buildForm(),
+  initialEntry = '/startpagina',
+  searchParams = '',
+}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialEntry],
     initialIndex: 0,
@@ -70,7 +76,9 @@ const Wrapper: React.FC<WrapperProps> = ({form = buildForm(), initialEntry = '/s
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <NuqsTestingAdapter searchParams={searchParams}>
+            <RouterProvider router={router} />
+          </NuqsTestingAdapter>
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -111,6 +119,7 @@ test.each([
           introductionPageContent: introductionPageContent,
         })}
         initialEntry="/?initial_data_reference=foo"
+        searchParams="?initial_data_reference=foo"
       />
     );
 
@@ -316,6 +325,7 @@ test('Redirect to start page or introduction page should preserve "auth_visible"
         introductionPageContent: 'foo',
       })}
       initialEntry="/?auth_visible=all"
+      searchParams="?auth_visible=all"
     />
   );
 

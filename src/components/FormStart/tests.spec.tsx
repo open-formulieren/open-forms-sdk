@@ -1,5 +1,6 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {NuqsTestingAdapter} from 'nuqs/adapters/testing';
 import {useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
@@ -29,6 +30,7 @@ interface WrapperProps {
   initialSubmission?: Submission | null;
   onSubmissionObtained?: () => void;
   authVisible?: 'all' | '';
+  searchParams?: string;
 }
 
 const Wrap: React.FC<WrapperProps> = ({
@@ -37,6 +39,7 @@ const Wrap: React.FC<WrapperProps> = ({
   initialSubmission = null,
   onSubmissionObtained = undefined,
   authVisible = '',
+  searchParams = '',
 }) => {
   const parsedUrl = new URL(currentUrl, 'http://dummy');
   const routes = [
@@ -68,7 +71,9 @@ const Wrap: React.FC<WrapperProps> = ({
             onDestroySession={async () => {}}
             removeSubmissionId={vi.fn()}
           >
-            <RouterProvider router={router} />
+            <NuqsTestingAdapter searchParams={searchParams}>
+              <RouterProvider router={router} />
+            </NuqsTestingAdapter>
           </SubmissionProvider>
         </FormContext.Provider>
       </IntlProvider>
@@ -171,12 +176,24 @@ test('Start form with object reference query param', async () => {
   });
 
   // we simulate the redirect flow by the backend
-  render(<Wrap form={form} currentUrl="/startpagina?initial_data_reference=foo" />);
+  render(
+    <Wrap
+      form={form}
+      currentUrl="/startpagina?initial_data_reference=foo"
+      searchParams="?initial_data_reference=foo"
+    />
+  );
   const digidLink = await screen.findByRole('link', {name: 'Login with DigiD'});
   const parsedDigidLink = new URL(digidLink.getAttribute('href')!);
   const nextUrl = new URL(parsedDigidLink.searchParams.get('next')!);
   expect(nextUrl).not.toBeNull();
-  render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
+  render(
+    <Wrap
+      form={form}
+      currentUrl={`${nextUrl.pathname}${nextUrl.search}`}
+      searchParams="?initial_data_reference=foo"
+    />
+  );
 
   await waitFor(() => {
     expect(startSubmissionRequest).not.toBeUndefined();

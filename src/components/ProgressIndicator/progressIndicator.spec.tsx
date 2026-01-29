@@ -1,5 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {NuqsAdapter} from 'nuqs/adapters/react-router/v7';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
@@ -30,7 +31,9 @@ const renderApp = (form: Form, initialRoute: string = '/') => {
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <NuqsAdapter>
+            <RouterProvider router={router} />
+          </NuqsAdapter>
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

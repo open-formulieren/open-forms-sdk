@@ -1,4 +1,4 @@
-import {useSearchParams} from 'react-router';
+import {createSerializer, parseAsString, useQueryState} from 'nuqs';
 
 export interface UseQueryParamResult {
   value: string | null;
@@ -10,8 +10,7 @@ export interface UseQueryParamResult {
  * @param param The name of the query parameter to track
  */
 const useQueryParam = (param: string): UseQueryParamResult => {
-  const [searchParams] = useSearchParams();
-  const value = searchParams?.get(param);
+  const [value] = useQueryState(param);
 
   return {
     value,
@@ -30,12 +29,11 @@ export const setQueryParameter = (url: string, param: string, value: string | nu
   // to the constructor. We only extract the pathname + query string again at the end.
   const base = window.location.origin;
   const parsedUrl = new URL(url, base);
-  if (value) {
-    parsedUrl.searchParams.set(param, value);
-  } else {
-    parsedUrl.searchParams.delete(param);
-  }
-  return `${parsedUrl.pathname}${parsedUrl.search}`;
+
+  const serializer = createSerializer({[param]: parseAsString});
+  const newSearch = serializer(parsedUrl.search, {[param]: value});
+
+  return `${parsedUrl.pathname}${newSearch}`;
 };
 
 export default useQueryParam;
