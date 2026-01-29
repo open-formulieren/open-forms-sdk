@@ -12,6 +12,7 @@ export interface FormLoginOption {
     appearance: 'dark' | 'light';
   };
   isForGemachtigde: boolean;
+  visible: boolean;
 }
 
 export interface ButtonText {

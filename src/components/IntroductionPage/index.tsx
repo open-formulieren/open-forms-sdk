@@ -7,13 +7,15 @@ import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
 import Link from '@/components/Link';
+import useAuthVisible from '@/hooks/useAuthVisible';
 import useInitialDataReference from '@/hooks/useInitialDataReference';
 
 const IntroductionPage: React.FC = () => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
   const {addInitialDataReference} = useInitialDataReference();
+  const {addToUrl: addAuthVisible} = useAuthVisible();
 
-  const startPageUrl = addInitialDataReference('startpagina');
+  const startPageUrl = addAuthVisible(addInitialDataReference('startpagina'));
   if (!introductionPageContent) {
     return <Navigate replace to={startPageUrl} />;
   }

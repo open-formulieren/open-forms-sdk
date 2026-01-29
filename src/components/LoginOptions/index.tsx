@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSearchParams} from 'react-router';
 
+import {ConfigContext} from '@/Context';
 import {Literal} from '@/components/Literal';
 import {getCosignLoginUrl, getLoginUrl} from '@/components/LoginOptions/utils';
+import {AUTH_VISIBLE_ALL_VALUE} from '@/components/constants';
 import type {Form} from '@/data/forms';
 
 import LoginOptionsDisplay, {type FormattedLoginOption} from './LoginOptionsDisplay';
@@ -30,6 +32,7 @@ const LoginOptions: React.FC<LoginOptionsProps> = ({
   const loginAsYourselfOptions: FormattedLoginOption[] = [];
   const loginAsGemachtigdeOptions: FormattedLoginOption[] = [];
   const cosignLoginOptions: FormattedLoginOption[] = [];
+  const {authVisible} = useContext(ConfigContext);
 
   form.loginOptions.forEach(option => {
     const formattedOption: FormattedLoginOption = {
@@ -44,10 +47,14 @@ const LoginOptions: React.FC<LoginOptionsProps> = ({
       ),
     };
 
-    if (formattedOption.isForGemachtigde) {
-      loginAsGemachtigdeOptions.push(formattedOption);
-    } else {
-      loginAsYourselfOptions.push(formattedOption);
+    // show only visible login options by default
+    // or show all login options if the query param ?authVisible=all is provided
+    if (option.visible || authVisible === AUTH_VISIBLE_ALL_VALUE) {
+      if (formattedOption.isForGemachtigde) {
+        loginAsGemachtigdeOptions.push(formattedOption);
+      } else {
+        loginAsYourselfOptions.push(formattedOption);
+      }
     }
   });
 
