@@ -8,6 +8,4 @@ import * as projectAnnotations from './.storybook/preview';
 // More info at: https://storybook.js.org/docs/api/portable-stories/portable-stories-vitest#setprojectannotations
 const annotations = setProjectAnnotations([reactIntlAnnotations, projectAnnotations]);
 
-console.log(annotations);
-
 beforeAll(annotations.beforeAll);
