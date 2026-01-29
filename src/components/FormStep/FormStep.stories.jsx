@@ -15,6 +15,7 @@ import {
   mockEmailVerificationVerifyCodePost,
 } from '@/components/EmailVerification/mocks';
 import SubmissionProvider from '@/components/SubmissionProvider';
+import {withNuqs} from '@/sb-decorators';
 import {sleep} from '@/utils';
 
 import FormStep from './index';
@@ -22,7 +23,7 @@ import FormStep from './index';
 export default {
   title: 'Private API / FormStep',
   component: FormStep,
-  decorators: [withRouter],
+  decorators: [withNuqs, withRouter],
   args: {
     onSubmissionObtained: fn(),
     onDestroySession: fn(),

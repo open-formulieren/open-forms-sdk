@@ -8,6 +8,7 @@ import {
   mockSubmissionGet,
   mockSubmissionSummaryGet,
 } from '@/api-mocks/submissions';
+import {withNuqs} from '@/sb-decorators';
 
 import CosignSummary from './CosignSummary';
 
@@ -15,7 +16,7 @@ const submission = buildSubmission();
 
 export default {
   title: 'Views / Cosign / Summary',
-  decorators: [withRouter],
+  decorators: [withNuqs, withRouter],
   component: CosignSummary,
   args: {
     form: buildForm(),

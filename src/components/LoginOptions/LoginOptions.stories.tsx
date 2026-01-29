@@ -300,7 +300,7 @@ export const VisibleByDefault: Story = {
             href: 'https://openid.net/',
             appearance: 'light',
           },
-          isForGemachtigde: true,
+          isForGemachtigde: false,
           visible: false,
         },
       ],

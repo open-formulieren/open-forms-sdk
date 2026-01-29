@@ -25,7 +25,7 @@ import type {Form, MinimalFormStep} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
 import {I18NManager, setLanguage} from '@/i18n';
 import routes, {FUTURE_FLAGS} from '@/routes';
-import {withPageWrapper} from '@/sb-decorators';
+import {withNuqs, withPageWrapper} from '@/sb-decorators';
 
 import App from './App';
 
@@ -154,7 +154,7 @@ export default {
 type Story = StoryObj<Args>;
 
 export const Default: Story = {
-  decorators: [withPageWrapper],
+  decorators: [withNuqs, withPageWrapper],
 };
 
 export const TranslationEnabled: Story = {
@@ -188,7 +188,7 @@ export const TranslationDisabled: Story = {
 
 export const WithCustomNLTranslations: Story = {
   ...Default,
-  decorators: [ResetTranslations, withPageWrapper],
+  decorators: [ResetTranslations, withPageWrapper, withNuqs],
   render: args => {
     const form = buildForm({
       name: args.name,
@@ -232,7 +232,7 @@ export const WithCustomNLTranslations: Story = {
 
 export const WithCustomENTranslations: Story = {
   ...Default,
-  decorators: [ResetTranslations, withPageWrapper],
+  decorators: [ResetTranslations, withPageWrapper, withNuqs],
   render: args => {
     const form = buildForm({
       name: args.name,
@@ -356,6 +356,7 @@ export const NonApplicableStepActiveSubmission: Story = {
 };
 
 export const SeveralStepsInMobileViewport: Story = {
+  decorators: [withNuqs],
   args: {
     showExternalHeader: true,
     name: 'A rather long form name that overflows on mobile',
@@ -527,14 +528,14 @@ export const SeveralStepsInMobileViewport: Story = {
 };
 
 export const MaximumSubmissionsReached: Story = {
-  decorators: [withPageWrapper],
+  decorators: [withPageWrapper, withNuqs],
   args: {
     'form.submissionLimitReached': true,
   },
 };
 
 export const MaximumSubmissionsNotReached: Story = {
-  decorators: [withPageWrapper],
+  decorators: [withPageWrapper, withNuqs],
   args: {
     'form.submissionLimitReached': false,
   },

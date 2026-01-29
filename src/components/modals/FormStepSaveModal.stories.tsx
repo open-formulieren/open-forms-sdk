@@ -5,6 +5,7 @@ import {useState} from 'react';
 import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
 import {BASE_URL} from '@/api-mocks';
+import {withNuqs} from '@/sb-decorators';
 import {sleep} from '@/utils';
 
 import type {FormStepSaveModalProps} from './FormStepSaveModal';
@@ -63,7 +64,7 @@ const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context)
 export default {
   title: 'Private API / FormStepSaveModal',
   component: FormStepSaveModal,
-  decorators: [withTriggerDecorator],
+  decorators: [withNuqs, withTriggerDecorator],
   args: {
     suspendFormUrl: `${BASE_URL}submissions/bb890fae-b0b1-4e61-a6a9-536edfc8a63f/_suspend`,
     onSessionDestroyed: fn(),

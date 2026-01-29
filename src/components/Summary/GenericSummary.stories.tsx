@@ -9,7 +9,7 @@ import {
   PRIVACY_POLICY_ACCEPTED,
   STATEMENT_OF_TRUTH_ACCEPTED,
 } from '@/components/SummaryConfirmation/mocks';
-import {withForm, withLiterals} from '@/sb-decorators';
+import {withForm, withLiterals, withNuqs} from '@/sb-decorators';
 
 import GenericSummary from './GenericSummary';
 
@@ -22,7 +22,7 @@ const withProgressIndicator: Decorator = (Story, {parameters}) => (
 export default {
   title: 'Private API / GenericSummary',
   component: GenericSummary,
-  decorators: [withLiterals, withRouter, withForm],
+  decorators: [withLiterals, withNuqs, withRouter, withForm],
   args: {
     title: 'Generic Summary',
     submissionAllowed: 'yes',
