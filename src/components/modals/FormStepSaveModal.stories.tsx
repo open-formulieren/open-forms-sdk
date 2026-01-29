@@ -1,7 +1,7 @@
 import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import type {Decorator, Meta, StoryObj} from '@storybook/react-vite';
 import {HttpResponse, http} from 'msw';
-import {useArgs} from 'storybook/preview-api';
+import {useState} from 'react';
 import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
 import {BASE_URL} from '@/api-mocks';
@@ -23,23 +23,22 @@ const mockDestroySessionDELETE = http.delete(
 );
 
 const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context) => {
-  const [, updateArgs] = useArgs();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <div style={{minHeight: 'calc(100dvh - 2 * 1rem)'}}>
-      <PrimaryActionButton onClick={() => updateArgs({isOpen: true})}>
-        Open Modal
-      </PrimaryActionButton>
+      <PrimaryActionButton onClick={() => setIsOpen(true)}>Open Modal</PrimaryActionButton>
       <Story
         {...context}
         args={{
           ...context.args,
+          isOpen,
           closeModal: () => {
             context.args.closeModal();
-            updateArgs({isOpen: false});
+            setIsOpen(false);
           },
           onSessionDestroyed: () => {
             context.args.onSessionDestroyed();
-            updateArgs({isOpen: false});
+            setIsOpen(false);
           },
         }}
       />
@@ -59,6 +58,7 @@ export default {
   },
   argTypes: {
     suspendFormUrl: {control: false},
+    isOpen: {control: false},
   },
   parameters: {
     msw: {

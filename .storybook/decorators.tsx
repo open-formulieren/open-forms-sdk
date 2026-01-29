@@ -146,13 +146,13 @@ export const withGeolocationMocking: Decorator = (Story, {parameters}) => {
   return <Story />;
 };
 
-const modalParentSelector = () => document.getElementById('storybook-root')!;
-
-export const withModalDecorator: Decorator = Story => (
+export const withModalDecorator: Decorator = (Story, context) => (
   <ModalContext.Provider
     value={{
       // only for storybook integration, do not use this in real apps!
-      parentSelector: modalParentSelector,
+      parentSelector: () => {
+        return context.canvasElement;
+      },
     }}
   >
     <Story />

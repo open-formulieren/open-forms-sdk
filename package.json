@@ -80,7 +80,7 @@
     "build:esm": "BUILD_TARGET=esm vite build",
     "build:esm-bundle": "BUILD_TARGET=esm-bundle vite build",
     "test": "TZ=Europe/Amsterdam vitest --project=unit",
-    "test:storybook": "TZ=Europe/Amsterdam vitest --run --project=storybook",
+    "test:storybook": "TZ=Europe/Amsterdam vitest --project=storybook",
     "prepare-package": "node bin/prepare-package.mjs",
     "makemessages-en": "formatjs extract 'src/**/*.{js,jsx,ts,tsx}' --ignore='**/*.d.ts' --format bin/i18n-formatter.mjs --out-file src/i18n/messages/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "makemessages-nl": "formatjs extract 'src/**/*.{js,jsx,ts,tsx}' --ignore='**/*.d.ts' --format bin/i18n-formatter.mjs --out-file src/i18n/messages/nl.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
