@@ -1,5 +1,7 @@
 import {expect, userEvent, waitFor, within} from 'storybook/test';
 
+import {sleep} from '@/utils';
+
 import {
   mockBAGDataGet,
   mockBAGNoDataGet,
@@ -49,6 +51,9 @@ export const ClientSideValidation = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
+    // Formio is slow and triggers re-renders...
+    await sleep(100);
+
     const postcodeInput = await canvas.findByLabelText('Postcode');
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
     const houseLetter = await canvas.findByLabelText('Huisletter');
@@ -93,6 +98,9 @@ export const NotRequired = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
+    // Formio is slow and triggers re-renders...
+    await sleep(100);
+
     const postcodeInput = await canvas.findByLabelText('Postcode');
     const houseNumberInput = await canvas.findByLabelText('Huisnummer');
 
@@ -131,6 +139,9 @@ export const WithPassingBRKValidation = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
+
+    // Formio is slow and triggers re-renders...
+    await sleep(100);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
     await userEvent.type(postcodeInput, '1234AB');
@@ -225,6 +236,9 @@ export const WithDeriveCityStreetNameWithData = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
+    // Formio is slow and triggers re-renders...
+    await sleep(100);
+
     const postcodeInput = await canvas.findByLabelText('Postcode');
     await userEvent.type(postcodeInput, '1234AB');
 
@@ -271,6 +285,9 @@ export const IncorrectPostcode = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
+    // Formio is slow and triggers re-renders...
+    await sleep(100);
+
     const postcodeInput = await canvas.findByLabelText('Postcode');
     await userEvent.type(postcodeInput, '1234 AB');
 
@@ -312,6 +329,9 @@ export const WithDeriveCityStreetNameWithDataIncorrectCity = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
+
+    // Formio is slow and triggers re-renders...
+    await sleep(100);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
     await userEvent.type(postcodeInput, '1234AB');
@@ -355,6 +375,9 @@ export const WithDeriveCityStreetNameNoData = {
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
+
+    // Formio is slow and triggers re-renders...
+    await sleep(100);
 
     const postcodeInput = await canvas.findByLabelText('Postcode');
     await userEvent.type(postcodeInput, '1234AB');

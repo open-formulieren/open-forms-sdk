@@ -352,6 +352,9 @@ export const WithLayoutComponents = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
+    // needed for formio
+    await sleep(100);
+
     // we expect the input element labels and values to be displayed
     expect(await canvas.findByText('A text field')).toBeVisible();
     expect(await canvas.findByText('Some text field value')).toBeVisible();
