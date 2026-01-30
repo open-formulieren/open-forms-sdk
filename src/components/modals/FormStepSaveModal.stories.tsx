@@ -156,23 +156,24 @@ export const FormStepSaveModalMultipleSubmits: Story = {
     expect(openModalButton).toBeVisible();
     await userEvent.click(openModalButton);
 
-    const modal2 = await canvas.findByRole('dialog');
+    let modal2: HTMLDialogElement | undefined = undefined;
     await waitFor(() => {
+      modal2 = canvas.getByRole<HTMLDialogElement>('dialog');
       expect(modal2).toBeVisible();
     });
 
-    const emailInput2 = within(modal2).getByLabelText('Je e-mailadres');
+    const emailInput2 = within(modal2!).getByLabelText('Je e-mailadres');
     await waitFor(() => {
       expect(emailInput2).toBeVisible();
     });
     // make sure the previous backend error is not shown any more
-    expect(within(modal2).queryByText(backendErrorMsg)).not.toBeInTheDocument();
+    expect(within(modal2!).queryByText(backendErrorMsg)).not.toBeInTheDocument();
 
     await step('Test we can re-submit the form', async () => {
       await userEvent.clear(emailInput2);
       const submitButton2 = canvas.getByRole('button', {name: 'Later verdergaan'});
       await userEvent.click(submitButton2);
-      const invalidErrorMessage = await within(modal2).findByText('Je e-mailadres is verplicht.');
+      const invalidErrorMessage = await within(modal2!).findByText('Je e-mailadres is verplicht.');
       expect(invalidErrorMessage).toBeVisible();
     });
   },
