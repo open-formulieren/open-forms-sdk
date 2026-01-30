@@ -111,7 +111,7 @@ export const useCheckStepLogic = (
     timerRef.current = window.setTimeout(async () => {
       setInProgress(true);
       // cancel in-flight requests
-      if (abortRef.current) abortRef.current.abort();
+      if (abortRef.current) abortRef.current.abort('debounced');
       const controller = new AbortController();
       abortRef.current = controller;
 
@@ -121,12 +121,17 @@ export const useCheckStepLogic = (
       // do nothing if there's no submission data
       if (values !== null) {
         // TODO: strip out the field values that don't pass client-side validation (!)
-        const {submission, step} = await checkStepLogic(
-          submissionStepUrl,
-          values,
-          controller.signal
-        );
-        onLogicCheckResult(submission, step);
+        try {
+          const {submission, step} = await checkStepLogic(
+            submissionStepUrl,
+            values,
+            controller.signal
+          );
+          onLogicCheckResult(submission, step);
+        } catch (err: unknown) {
+          if (err instanceof DOMException && err.name === 'AbortError') return;
+          throw err;
+        }
       }
 
       setInProgress(false);
