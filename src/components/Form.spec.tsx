@@ -1,5 +1,6 @@
 import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {useEffect} from 'react';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
@@ -17,6 +18,7 @@ import {
   mockSubmissionSummaryGet,
 } from '@/api-mocks/submissions';
 import {type Form} from '@/data/forms';
+import {flagNoActiveSubmission} from '@/data/submissions';
 import messagesEN from '@/i18n/compiled/en.json';
 import routes, {FUTURE_FLAGS} from '@/routes';
 
@@ -51,6 +53,13 @@ interface WrapperProps {
 }
 
 const Wrapper: React.FC<WrapperProps> = ({form = buildForm(), initialEntry = '/startpagina'}) => {
+  useEffect(() => {
+    flagNoActiveSubmission();
+    return () => {
+      flagNoActiveSubmission();
+    };
+  }, []);
+
   const router = createMemoryRouter(routes, {
     initialEntries: [initialEntry],
     initialIndex: 0,
