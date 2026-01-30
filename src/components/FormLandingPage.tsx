@@ -1,17 +1,18 @@
 import {Navigate} from 'react-router';
 
-import {AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
+import {AUTH_VISIBLE_QUERY_PARAM, INITIAL_DATA_PARAM} from '@/components/constants';
 import useFormContext from '@/hooks/useFormContext';
-import useInitialDataReference from '@/hooks/useInitialDataReference';
-import useQueryParam from '@/hooks/useQueryParam';
+import useQueryParams from '@/hooks/useQueryParams';
 
 const FormLandingPage: React.FC = () => {
   const {introductionPageContent = ''} = useFormContext();
-  const {addInitialDataReference} = useInitialDataReference();
-  const {addToUrl: addAuthVisible} = useQueryParam(AUTH_VISIBLE_QUERY_PARAM);
+  const {preserveQueryParams} = useQueryParams();
   const startPageUrl = introductionPageContent ? 'introductie' : 'startpagina';
 
-  const targetUrl = addAuthVisible(addInitialDataReference(startPageUrl));
+  const targetUrl = preserveQueryParams(startPageUrl, [
+    INITIAL_DATA_PARAM,
+    AUTH_VISIBLE_QUERY_PARAM,
+  ]);
   return <Navigate replace to={targetUrl} />;
 };
 

@@ -1,13 +1,13 @@
+import {useQueryState} from 'nuqs';
 import {useCallback, useContext} from 'react';
 import {useSearchParams} from 'react-router';
 import {useAsync, useSessionStorage} from 'react-use';
 
 import {ConfigContext} from '@/Context';
 import {apiCall} from '@/api';
+import {INITIAL_DATA_PARAM} from '@/components/constants';
 import {type Form} from '@/data/forms';
 import {type Submission} from '@/data/submissions';
-
-import useInitialDataReference from './useInitialDataReference';
 
 /** Recycle a submission. Checks if there is an existing submission for the current form present in
  * the session storage or the query parameters. If there is, we load this submission from the
@@ -32,7 +32,7 @@ const useRecycleSubmission = (
   // see open-formulieren/open-forms#5266 - when the user re-opens the tab/browser with
   // an initial data reference in the URL parameters, while there is still a submission
   // reference, this causes the (new) initial data reference to be ignored.
-  const {initialDataReference} = useInitialDataReference();
+  const [initialDataReference] = useQueryState(INITIAL_DATA_PARAM);
 
   const [stateSubmissionId, setSubmissionId] = useSessionStorage<string | null>(form.uuid, null);
 

@@ -10,10 +10,9 @@ import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {get} from '@/api';
-import {AUTH_VISIBLE_ALL_VALUE, AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
+import {AUTH_VISIBLE_QUERY_PARAM, INITIAL_DATA_PARAM} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import {CSPNonce} from '@/headers';
-import {PARAM_NAME} from '@/hooks/useInitialDataReference';
 import {I18NErrorBoundary, I18NManager} from '@/i18n';
 import routes, {FUTURE_FLAGS} from '@/routes';
 import initialiseSentry from '@/sentry';
@@ -182,11 +181,11 @@ class OpenForm {
     // extract query params from the path
     const urlParams = new URLSearchParams(window.location.search);
 
-    this.initialDataReference = urlParams.get(PARAM_NAME);
+    this.initialDataReference = urlParams.get(INITIAL_DATA_PARAM);
 
     const authVisible: string | null = urlParams.get(AUTH_VISIBLE_QUERY_PARAM);
     // only 'all' value is supported
-    this.authVisible = authVisible === AUTH_VISIBLE_ALL_VALUE ? authVisible : '';
+    this.authVisible = authVisible === 'all' ? authVisible : '';
   }
 
   public async init() {

@@ -7,16 +7,17 @@ import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
 import Link from '@/components/Link';
-import {AUTH_VISIBLE_QUERY_PARAM} from '@/components/constants';
-import useInitialDataReference from '@/hooks/useInitialDataReference';
-import useQueryParam from '@/hooks/useQueryParam';
+import {AUTH_VISIBLE_QUERY_PARAM, INITIAL_DATA_PARAM} from '@/components/constants';
+import useQueryParams from '@/hooks/useQueryParams';
 
 const IntroductionPage: React.FC = () => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
-  const {addInitialDataReference} = useInitialDataReference();
-  const {addToUrl: addAuthVisible} = useQueryParam(AUTH_VISIBLE_QUERY_PARAM);
+  const {preserveQueryParams} = useQueryParams();
 
-  const startPageUrl = addAuthVisible(addInitialDataReference('startpagina'));
+  const startPageUrl = preserveQueryParams('startpagina', [
+    INITIAL_DATA_PARAM,
+    AUTH_VISIBLE_QUERY_PARAM,
+  ]);
   if (!introductionPageContent) {
     return <Navigate replace to={startPageUrl} />;
   }

@@ -372,7 +372,7 @@ test('Form start page shows invisible login buttons when auth_visible=all', asyn
     loginRequired: true,
   });
 
-  render(<Wrap form={form} authVisible="all" />);
+  render(<Wrap form={form} authVisible="all" searchParams="?auth_visible=all" />);
   const digidLoginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
   expect(digidLoginLink).toBeVisible();
   const oidcLoginLink = await screen.findByRole('link', {name: 'Login with OpenID Connect'});
