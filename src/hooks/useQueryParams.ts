@@ -8,41 +8,36 @@ import {
 
 import {AUTH_VISIBLE_QUERY_PARAM, INITIAL_DATA_PARAM} from '@/components/constants';
 
+const AUTH_VISIBLE_QUERY_PARAMS = ['all', ''] as const;
+
+export type AuthVisibleParam = (typeof AUTH_VISIBLE_QUERY_PARAMS)[number];
+
 const searchParams: ParserMap = {
   [INITIAL_DATA_PARAM]: parseAsString,
-  [AUTH_VISIBLE_QUERY_PARAM]: parseAsStringLiteral(['all', '']),
+  [AUTH_VISIBLE_QUERY_PARAM]: parseAsStringLiteral(AUTH_VISIBLE_QUERY_PARAMS),
 };
 
-type PersistentParam = keyof typeof searchParams;
-
 export interface UsePreserveQueryParamsResult {
-  preserveQueryParams: (url: string, params: PersistentParam[]) => string;
+  preserveQueryParams: (url: string) => string;
 }
 /**
- * Hook that returns functions to extract query parameters and append them to URLs.
+ * Hook that returns function that appends pre-defined query params to URLs.
  */
 const useQueryParams = (): UsePreserveQueryParamsResult => {
   const [values] = useQueryStates(searchParams);
 
-  const preserve = (url: string, params: PersistentParam[]): string => {
-    const filteredParsers = params.reduce(
-      (acc, param) => ({...acc, [param]: searchParams[param]}),
-      {}
-    );
-
-    const filteredValues = params.reduce((acc, param) => ({...acc, [param]: values[param]}), {});
-
+  const preserveQueryParams = (url: string): string => {
     // URL handling in JS requires a proper base since you can't just feed `foo` or `/foo`
     // to the constructor. We only extract the pathname + query string again at the end.
     const base = window.location.origin;
     const parsedUrl = new URL(url, base);
 
-    const serialize = createSerializer(filteredParsers);
-    const newSearch = serialize(parsedUrl.search, filteredValues);
+    const serialize = createSerializer(searchParams);
+    const newSearch = serialize(parsedUrl.search, values);
     return `${parsedUrl.pathname}${newSearch}`;
   };
 
-  return {preserveQueryParams: preserve};
+  return {preserveQueryParams};
 };
 
 export default useQueryParams;
