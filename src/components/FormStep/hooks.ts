@@ -111,7 +111,7 @@ export const useCheckStepLogic = (
     timerRef.current = window.setTimeout(async () => {
       setInProgress(true);
       // cancel in-flight requests
-      if (abortRef.current) abortRef.current.abort('debounced');
+      if (abortRef.current) abortRef.current.abort();
       const controller = new AbortController();
       abortRef.current = controller;
 
