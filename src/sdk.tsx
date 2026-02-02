@@ -233,7 +233,7 @@ class OpenForm {
               baseTitle: this.baseDocumentTitle,
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
-              authVisible: this.authVisible || '',
+              authVisible: this.authVisible,
               debug: DEBUG,
             }}
           >
