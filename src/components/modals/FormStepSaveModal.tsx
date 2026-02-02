@@ -4,7 +4,7 @@
 import {Button, LoadingIndicator, Modal, TextField} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {Formik} from 'formik';
-import {useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {z} from 'zod';
 import {toFormikValidationSchema} from 'zod-formik-adapter';
@@ -65,61 +65,57 @@ const FormStepSaveModal: React.FC<FormStepSaveModalProps> = ({
   onSessionDestroyed,
   suspendFormUrl,
   suspendFormUrlLifetime,
-  ...props
 }) => {
   const intl = useIntl();
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  useEffect(() => {
-    if (!isOpen && errorMessage) {
-      setErrorMessage('');
-    }
-  }, [isOpen, errorMessage]);
+  const errorMap: z.ZodErrorMap = useCallback(
+    (issue, ctx) => {
+      const fieldLabelDefinition = FIELD_LABELS[issue.path.join('.')];
+      if (!fieldLabelDefinition) {
+        return {message: ctx.defaultError}; // use global schema as fallback
+      }
+      const fieldLabel = intl.formatMessage(fieldLabelDefinition);
 
-  const errorMap: z.ZodErrorMap = (issue, ctx) => {
-    const fieldLabelDefinition = FIELD_LABELS[issue.path.join('.')];
-    if (!fieldLabelDefinition) {
+      switch (issue.code) {
+        case z.ZodIssueCode.invalid_type: {
+          if (issue.received === z.ZodParsedType.undefined) {
+            const message = intl.formatMessage(
+              {
+                description: 'Required field error message',
+                defaultMessage: '{field} is required.',
+              },
+              {
+                field: fieldLabel,
+              }
+            );
+            return {message};
+          }
+          break;
+        }
+        case z.ZodIssueCode.invalid_string: {
+          if (issue.validation === 'email') {
+            const message = intl.formatMessage(
+              {
+                description: 'Invalid email validation error',
+                defaultMessage: "{field} must be a valid email address, like 'willem@example.com'.",
+              },
+              {
+                field: fieldLabel,
+              }
+            );
+            return {message};
+          }
+          break;
+        }
+        default: {
+          break;
+        }
+      }
       return {message: ctx.defaultError}; // use global schema as fallback
-    }
-    const fieldLabel = intl.formatMessage(fieldLabelDefinition);
-
-    switch (issue.code) {
-      case z.ZodIssueCode.invalid_type: {
-        if (issue.received === z.ZodParsedType.undefined) {
-          const message = intl.formatMessage(
-            {
-              description: 'Required field error message',
-              defaultMessage: '{field} is required.',
-            },
-            {
-              field: fieldLabel,
-            }
-          );
-          return {message};
-        }
-        break;
-      }
-      case z.ZodIssueCode.invalid_string: {
-        if (issue.validation === 'email') {
-          const message = intl.formatMessage(
-            {
-              description: 'Invalid email validation error',
-              defaultMessage: "{field} must be a valid email address, like 'willem@example.com'.",
-            },
-            {
-              field: fieldLabel,
-            }
-          );
-          return {message};
-        }
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-    return {message: ctx.defaultError}; // use global schema as fallback
-  };
+    },
+    [intl]
+  );
 
   const onSubmit = async ({email}: FormikValues) => {
     setErrorMessage('');
@@ -159,12 +155,16 @@ const FormStepSaveModal: React.FC<FormStepSaveModalProps> = ({
         />
       }
       isOpen={isOpen}
-      closeModal={closeModal}
-      {...props}
+      closeModal={(...args) => {
+        closeModal(...args);
+        setErrorMessage('');
+      }}
     >
       <Formik<FormikValues>
         initialValues={{email: ''}}
         onSubmit={onSubmit}
+        validateOnChange={false}
+        validateOnBlur
         validationSchema={toFormikValidationSchema(emailValidationSchema, {errorMap})}
       >
         {props => (
