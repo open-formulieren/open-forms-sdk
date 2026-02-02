@@ -79,7 +79,7 @@ export default class Partners extends Field {
 
   destroy() {
     const container = this.refs.partnersContainer;
-    if (!this.component?.hidden && container) this.reactRoot.unmount();
+    if (!this.component?.hidden && container && this.reactRoot) this.reactRoot.unmount();
     super.destroy();
   }
 

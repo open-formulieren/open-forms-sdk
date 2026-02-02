@@ -96,7 +96,7 @@ export default class Map extends Field {
 
   destroy() {
     const container = this.refs.mapContainer;
-    if (container) this.reactRoot.unmount();
+    if (container && this.reactRoot) this.reactRoot.unmount();
     super.destroy();
   }
 
