@@ -87,6 +87,8 @@ jobs:
 
       - name: Serve storybook and run tests
         run: npm run test:storybook -- --coverage
+        env:
+          VITE_MUTE_ERROR_BOUNDARY_LOG: '1'
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
