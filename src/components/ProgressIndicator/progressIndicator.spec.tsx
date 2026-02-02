@@ -106,6 +106,7 @@ describe('The progress indicator component', () => {
 
     expect(progressIndicatorSteps[0]).toHaveTextContent('Start page');
     expect(progressIndicatorSteps[1]).toHaveTextContent('Step 1');
-    expect(progressIndicatorSteps[2]).toHaveTextContent('Summary');
+    expect(progressIndicatorSteps[2]).toHaveTextContent('Step 2');
+    expect(progressIndicatorSteps[3]).toHaveTextContent('Summary');
   });
 });

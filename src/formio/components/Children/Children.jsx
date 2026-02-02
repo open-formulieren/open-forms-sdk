@@ -92,7 +92,7 @@ export default class Children extends Field {
 
   destroy() {
     const container = this.refs.childrenContainer;
-    if (!this.component?.hidden && container) this.reactRoot.unmount();
+    if (!this.component?.hidden && container && this.reactRoot) this.reactRoot.unmount();
     super.destroy();
   }
 

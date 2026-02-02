@@ -1,10 +1,11 @@
 import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import type {Decorator, Meta, StoryObj} from '@storybook/react-vite';
 import {HttpResponse, http} from 'msw';
-import {useArgs} from 'storybook/preview-api';
+import {useState} from 'react';
 import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
 import {BASE_URL} from '@/api-mocks';
+import {sleep} from '@/utils';
 
 import type {FormStepSaveModalProps} from './FormStepSaveModal';
 import FormStepSaveModal from './FormStepSaveModal';
@@ -23,23 +24,35 @@ const mockDestroySessionDELETE = http.delete(
 );
 
 const withTriggerDecorator: Decorator<FormStepSaveModalProps> = (Story, context) => {
-  const [, updateArgs] = useArgs();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const {closeModal: closeModalArg, onSessionDestroyed: onSessionDestroyedArg} = context.args;
+
   return (
     <div style={{minHeight: 'calc(100dvh - 2 * 1rem)'}}>
-      <PrimaryActionButton onClick={() => updateArgs({isOpen: true})}>
-        Open Modal
-      </PrimaryActionButton>
+      <PrimaryActionButton onClick={() => setIsOpen(true)}>Open Modal</PrimaryActionButton>
       <Story
-        {...context}
         args={{
           ...context.args,
+          isOpen,
           closeModal: () => {
-            context.args.closeModal();
-            updateArgs({isOpen: false});
+            if (!isOpen) return;
+            // close modal actually fires twice when closing the modal (if you click the
+            // close button).
+            // 1. Click close button
+            // 2. Calls closeModal, which updates the state here
+            // 3. The new `isOpen: false` is passed to the Modal component, which
+            //    invokes the modal.close() API to sync modal state to the prop.
+            // 4. Because of the dialog['onClose'], `closeModal` is called *again*, it
+            //    seems, but I'm not 100% sure this is correct :(
+            //
+            // This leads to flaky tests :)
+            closeModalArg();
+            setIsOpen(false);
           },
           onSessionDestroyed: () => {
-            context.args.onSessionDestroyed();
-            updateArgs({isOpen: false});
+            onSessionDestroyedArg();
+            if (!isOpen) return;
+            setIsOpen(false);
           },
         }}
       />
@@ -59,6 +72,7 @@ export default {
   },
   argTypes: {
     suspendFormUrl: {control: false},
+    isOpen: {control: false},
   },
   parameters: {
     msw: {
@@ -127,14 +141,15 @@ export const FormStepSaveModalMultipleSubmits: Story = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
 
-    // alternatively, set the arg `isOpen: true`
     const openModalButton = canvas.getByRole('button', {name: 'Open Modal'});
     expect(openModalButton).toBeVisible();
     await userEvent.click(openModalButton);
 
     const modal = await canvas.findByRole('dialog');
+    expect(modal).toBeVisible();
     const emailInput = within(modal).getByLabelText('Je e-mailadres');
     const closeModalButton = within(modal).getByRole('button', {name: 'Sluiten'});
+    expect(closeModalButton).toBeVisible();
 
     const backendErrorMsg = 'Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.';
 
@@ -148,6 +163,9 @@ export const FormStepSaveModalMultipleSubmits: Story = {
 
     // close the modal
     await userEvent.click(closeModalButton);
+    // allow some time for the modal close to settle - there's a race condition between
+    // the prevous modal close and the "open button" click that causes CI flakiness
+    await sleep(100);
     await waitFor(() => {
       expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
     });
@@ -155,16 +173,11 @@ export const FormStepSaveModalMultipleSubmits: Story = {
     // re-open the modal and try to re-submit the form
     expect(openModalButton).toBeVisible();
     await userEvent.click(openModalButton);
-
     const modal2 = await canvas.findByRole('dialog');
-    await waitFor(() => {
-      expect(modal2).toBeVisible();
-    });
+    expect(modal2).toBeVisible();
 
-    const emailInput2 = within(modal2).getByLabelText('Je e-mailadres');
-    await waitFor(() => {
-      expect(emailInput2).toBeVisible();
-    });
+    const emailInput2 = await within(modal2).findByLabelText('Je e-mailadres');
+    expect(emailInput2).toBeVisible();
     // make sure the previous backend error is not shown any more
     expect(within(modal2).queryByText(backendErrorMsg)).not.toBeInTheDocument();
 

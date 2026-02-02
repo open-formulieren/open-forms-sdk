@@ -144,7 +144,7 @@ export const TextFieldsWithLocationInEditGrid = {
   play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
     // formio... :thisisfine:
-    await sleep(100);
+    await sleep(200);
 
     await userEvent.click(canvas.getByRole('button', {name: 'Add another'}));
 

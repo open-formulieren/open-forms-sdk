@@ -117,7 +117,7 @@ export default class AddressNL extends Field {
 
   destroy() {
     const container = this.refs.addressNLContainer;
-    if (!this.component?.hidden && container) this.reactRoot.unmount();
+    if (!this.component?.hidden && container && this.reactRoot) this.reactRoot.unmount();
     super.destroy();
   }
 

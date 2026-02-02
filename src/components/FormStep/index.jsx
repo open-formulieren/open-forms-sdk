@@ -631,7 +631,6 @@ const FormStep = () => {
     const formInstance = formRef.current?.instance?.instance;
 
     if (!formInstance) {
-      console.warn('No form instance available!');
       return;
     }
 
@@ -819,7 +818,6 @@ const FormStep = () => {
         onSessionDestroyed={onDestroySession}
         suspendFormUrl={`${submission.url}/_suspend`}
         suspendFormUrlLifetime={form.resumeLinkLifetime}
-        submissionId={submission.id}
       />
       <EmailVerificationModal
         isOpen={emailVerificationModal.isOpen}

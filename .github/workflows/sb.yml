@@ -35,7 +35,8 @@ jobs:
       - name: Build Storybook docs
         run: |
           npm ci
-          npm run build:design-tokens && npm run build:storybook
+          npm run build:design-tokens
+          npm run build:storybook
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
@@ -67,8 +68,6 @@ jobs:
   tests:
     name: Run Storybook tests
     runs-on: ubuntu-latest
-    needs:
-      - storybook
 
     steps:
       - uses: actions/checkout@v5
@@ -83,31 +82,13 @@ jobs:
       - name: Set up test environment
         run: |
           npm ci
-          npx playwright install --with-deps
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v5
-        with:
-          name: github-pages
-          path: ./storybook-static
-
-      - name: Extract artifact
-        run: |
-          tar -xvf artifact.tar
-          rm artifact.tar
-        working-directory: ./storybook-static
+          npm run build:design-tokens
+          npx playwright install --with-deps chromium
 
       - name: Serve storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --quiet" \
-            "npx wait-on -l http://127.0.0.1:6006 && npm run test:storybook"
+        run: npm run test:storybook -- --coverage
         env:
-          TZ: Europe/Amsterdam
-
-      - name: Prepare coverage for codecov
-        run: |
-          npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook
+          VITE_MUTE_ERROR_BOUNDARY_LOG: '1'
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

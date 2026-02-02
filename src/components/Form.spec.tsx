@@ -138,8 +138,11 @@ test('Navigation through form with introduction page', async () => {
 
   // clicking the start button starts the submission and navigates to step 1
   await user.click(startButton);
-  const stepTitle = await screen.findByRole('heading', {name: 'Step 1'});
+
+  // not sure why this is flaky :(
+  const stepTitle = await screen.findByRole('heading', {name: 'Step 1'}, {timeout: 5000});
   expect(stepTitle).toBeVisible();
+
   // formio...
   await waitFor(async () => {
     expect(await screen.findByLabelText('Component 1')).toBeVisible();

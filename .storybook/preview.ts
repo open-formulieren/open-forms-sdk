@@ -37,6 +37,7 @@ initialize({
   serviceWorker: {
     url: './mockServiceWorker.js',
   },
+  quiet: true, // don't output logs
 });
 
 // Use our custom Form.io components
