@@ -1,4 +1,5 @@
 import {render, screen} from '@testing-library/react';
+import {NuqsAdapter} from 'nuqs/adapters/react-router/v7';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
@@ -33,6 +34,7 @@ const TEST_FORM = buildForm({
         appearance: 'dark',
       },
       isForGemachtigde: false,
+      visible: true,
     },
   ],
   cosignLoginOptions: [
@@ -47,6 +49,7 @@ const TEST_FORM = buildForm({
         appearance: 'dark',
       },
       isForGemachtigde: false,
+      visible: true,
     },
   ],
   loginRequired: true,
@@ -87,7 +90,9 @@ const Wrapper: React.FC<WrapperProps> = ({relativeUrl}) => {
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={TEST_FORM}>
-          <RouterProvider router={router} />
+          <NuqsAdapter>
+            <RouterProvider router={router} />
+          </NuqsAdapter>
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>

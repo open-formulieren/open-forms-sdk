@@ -1,5 +1,6 @@
 import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {NuqsTestingAdapter} from 'nuqs/adapters/testing';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
 
@@ -48,9 +49,14 @@ afterAll(() => {
 interface WrapperProps {
   form?: Form;
   initialEntry?: string;
+  searchParams?: string;
 }
 
-const Wrapper: React.FC<WrapperProps> = ({form = buildForm(), initialEntry = '/startpagina'}) => {
+const Wrapper: React.FC<WrapperProps> = ({
+  form = buildForm(),
+  initialEntry = '/startpagina',
+  searchParams = '',
+}) => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialEntry],
     initialIndex: 0,
@@ -70,7 +76,9 @@ const Wrapper: React.FC<WrapperProps> = ({form = buildForm(), initialEntry = '/s
     >
       <IntlProvider locale="en" messages={messagesEN}>
         <FormContext.Provider value={form}>
-          <RouterProvider router={router} />
+          <NuqsTestingAdapter searchParams={searchParams}>
+            <RouterProvider router={router} />
+          </NuqsTestingAdapter>
         </FormContext.Provider>
       </IntlProvider>
     </ConfigContext.Provider>
@@ -105,11 +113,13 @@ test.each([
               url: 'http://mock-digid.nl/login',
               logo: {title: 'logo', imageSrc: '', href: '', appearance: 'dark'},
               isForGemachtigde: false,
+              visible: true,
             },
           ],
           introductionPageContent: introductionPageContent,
         })}
         initialEntry="/?initial_data_reference=foo"
+        searchParams="?initial_data_reference=foo"
       />
     );
 
@@ -294,4 +304,31 @@ test('Submitting form with payment requirement', async () => {
   await waitForElementToBeRemoved(loader);
 
   expect(await screen.findByText('A payment is required for this product.')).toBeVisible();
+});
+
+test('Redirect to start page or introduction page should preserve "auth_visible" param', async () => {
+  mswServer.use(mockAnalyticsToolConfigGet(), mockSubmissionPost(), mockSubmissionStepGet());
+
+  render(
+    <Wrapper
+      form={buildForm({
+        loginOptions: [
+          {
+            identifier: 'digid',
+            label: 'DigiD',
+            url: 'http://mock-digid.nl/login',
+            logo: {title: 'logo', imageSrc: '', href: '', appearance: 'dark'},
+            isForGemachtigde: false,
+            visible: true,
+          },
+        ],
+        introductionPageContent: 'foo',
+      })}
+      initialEntry="/?auth_visible=all"
+      searchParams="?auth_visible=all"
+    />
+  );
+
+  const loginLink = await screen.findByRole('link', {name: 'Continue'});
+  expect(loginLink).toHaveAttribute('href', '/startpagina?auth_visible=all');
 });

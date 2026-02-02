@@ -2,13 +2,13 @@ import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
 
 import {buildForm} from '@/api-mocks';
-import {withForm} from '@/sb-decorators';
+import {withForm, withNuqs} from '@/sb-decorators';
 
 import FormStart from './index';
 
 export default {
   title: 'Private API / FormStart',
-  decorators: [withForm, withRouter],
+  decorators: [withForm, withNuqs, withRouter],
   component: FormStart,
   parameters: {
     formContext: {
@@ -51,6 +51,7 @@ export const LoginRequired: Story = {
             },
             url: '#',
             isForGemachtigde: false,
+            visible: true,
           },
         ],
       }),

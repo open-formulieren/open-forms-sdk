@@ -2,6 +2,7 @@ import React from 'react';
 
 import type {Form} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
+import type {AuthVisibleParam} from '@/hooks/useQueryParams';
 import {DEBUG} from '@/utils';
 
 const FormContext = React.createContext<Form>({
@@ -57,6 +58,7 @@ export interface ConfigContextType {
    * @deprecated - use FormContext instead
    */
   requiredFieldsWithAsterisk: boolean;
+  authVisible?: AuthVisibleParam;
   debug: boolean;
 }
 
@@ -66,6 +68,7 @@ const ConfigContext = React.createContext<ConfigContextType>({
   basePath: '',
   baseTitle: '',
   requiredFieldsWithAsterisk: true,
+  authVisible: '',
   debug: DEBUG,
 });
 ConfigContext.displayName = 'ConfigContext';

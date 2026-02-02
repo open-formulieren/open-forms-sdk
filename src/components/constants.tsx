@@ -31,4 +31,14 @@ const PI_TITLE = (
   <FormattedMessage description="Title of progress indicator" defaultMessage="Progress" />
 );
 
-export {START_FORM_QUERY_PARAM, SUBMISSION_UUID_QUERY_PARAM, STEP_LABELS, PI_TITLE};
+const INITIAL_DATA_PARAM = 'initial_data_reference';
+const AUTH_VISIBLE_QUERY_PARAM = 'auth_visible';
+
+export {
+  START_FORM_QUERY_PARAM,
+  SUBMISSION_UUID_QUERY_PARAM,
+  STEP_LABELS,
+  PI_TITLE,
+  AUTH_VISIBLE_QUERY_PARAM,
+  INITIAL_DATA_PARAM,
+};

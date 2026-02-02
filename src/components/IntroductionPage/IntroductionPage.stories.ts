@@ -3,7 +3,7 @@ import {withRouter} from 'storybook-addon-remix-react-router';
 import {expect, within} from 'storybook/test';
 
 import {buildForm} from '@/api-mocks';
-import {withForm} from '@/sb-decorators';
+import {withForm, withNuqs} from '@/sb-decorators';
 
 import IntroductionPage from './index';
 
@@ -41,7 +41,7 @@ const DEFAULT_CONTENT = `
 export default {
   title: 'Views / IntroductionPage',
   component: IntroductionPage,
-  decorators: [withForm, withRouter],
+  decorators: [withForm, withNuqs, withRouter],
   parameters: {
     formContext: {
       form: buildForm({introductionPageContent: DEFAULT_CONTENT}),
@@ -63,6 +63,7 @@ export const IntroductionPageWithInitialDataReference: Story = {
         searchParams: {initial_data_reference: '1234'},
       },
     },
+    nuqs: {searchParams: '?initial_data_reference=1234'},
   },
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);

@@ -11,6 +11,7 @@ export default {
       identifier: 'digid',
       url: '',
       isForGemachtigde: false,
+      visible: true,
     },
   },
 } satisfies Meta<typeof AuthenticationOutage>;

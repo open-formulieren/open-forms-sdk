@@ -10,6 +10,7 @@ import {ConfigContext, FormContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
 import Card from '@/components/Card';
+import { NuqsTestingAdapter } from 'nuqs/adapters/testing';
 import {LiteralsProvider} from '@/components/Literal';
 import {SubmissionStatusContext} from '@/components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
@@ -81,6 +82,7 @@ export const withConfig: Decorator = (Story, {parameters}) => {
     clientBaseUrl: '',
     baseTitle: '',
     requiredFieldsWithAsterisk: true,
+    authVisible: 'all',
     debug: false,
   };
   const overrides: Partial<ConfigContextType> = parameters?.config || {};
@@ -232,5 +234,19 @@ export const withFormik: Decorator = (Story, context) => {
         <Story />
       </Wrapper>
     </Formik>
+  );
+};
+
+/**
+ * Wrap the Story in a nuqs context so that useQueryState can be used.
+ *
+ * Behaviour can be customized through story `parameters.nuqs`.
+ */
+export const withNuqs: Decorator = (Story, context) => {
+  const searchParams = context.parameters?.nuqs?.searchParams || '';
+  return (
+    <NuqsTestingAdapter searchParams={searchParams}>
+      <Story />
+    </NuqsTestingAdapter>
   );
 };

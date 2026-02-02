@@ -1,4 +1,5 @@
 import {LoadingIndicator} from '@open-formulieren/formio-renderer';
+import {useQueryState} from 'nuqs';
 import {useCallback, useContext, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router';
@@ -17,11 +18,11 @@ import {AuthenticationError, useDetectAuthErrorMessage} from '@/components/auth'
 import AuthenticationOutage, {
   useDetectAuthenticationOutage,
 } from '@/components/auth/AuthenticationOutage';
+import {INITIAL_DATA_PARAM} from '@/components/constants';
 import {createSubmission} from '@/data/submissions';
 import {UnprocessableEntity} from '@/errors';
 import {IsFormDesigner} from '@/headers';
 import useFormContext from '@/hooks/useFormContext';
-import useInitialDataReference from '@/hooks/useInitialDataReference';
 import useStartSubmission from '@/hooks/useStartSubmission';
 import useTitle from '@/hooks/useTitle';
 
@@ -33,7 +34,7 @@ import useTitle from '@/hooks/useTitle';
  */
 const FormStart: React.FC = () => {
   const {baseUrl, clientBaseUrl} = useContext(ConfigContext);
-  const {initialDataReference} = useInitialDataReference();
+  const [initialDataReference] = useQueryState(INITIAL_DATA_PARAM);
   const navigate = useNavigate();
 
   const form = useFormContext();

@@ -1,6 +1,7 @@
 import FormSettingsProvider from '@open-formulieren/formio-renderer/components/FormSettingsProvider.js';
 import type {AnyComponentSchema, SupportedLocales} from '@open-formulieren/types';
 import 'flatpickr';
+import {NuqsAdapter} from 'nuqs/adapters/react-router/v7';
 import React from 'react';
 import {type Root, createRoot} from 'react-dom/client';
 import {createBrowserRouter, createHashRouter, resolvePath} from 'react-router';
@@ -9,9 +10,9 @@ import {NonceProvider} from 'react-select';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {get} from '@/api';
+import {AUTH_VISIBLE_QUERY_PARAM, INITIAL_DATA_PARAM} from '@/components/constants';
 import type {Form} from '@/data/forms';
 import {CSPNonce} from '@/headers';
-import {PARAM_NAME} from '@/hooks/useInitialDataReference';
 import {I18NErrorBoundary, I18NManager} from '@/i18n';
 import routes, {FUTURE_FLAGS} from '@/routes';
 import initialiseSentry from '@/sentry';
@@ -49,6 +50,7 @@ class OpenForm {
   protected baseUrl: string;
   protected apiUrl: string;
   protected initialDataReference: string | null;
+  protected authVisible: 'all' | '';
 
   protected lang: SupportedLocales;
   protected languageSelectorTarget: HTMLElement | null;
@@ -117,7 +119,7 @@ class OpenForm {
     this.browserBasePath = this.useHashRouting ? window.location.pathname : pathname;
     this.makeRedirect();
     this.calculateClientBaseUrl();
-    this.extractInitialDataReference();
+    this.processQueryParams();
 
     this.baseDocumentTitle = document.title;
     this.root = null;
@@ -175,9 +177,15 @@ class OpenForm {
     ).href;
   }
 
-  protected extractInitialDataReference() {
+  protected processQueryParams() {
+    // extract query params from the path
     const urlParams = new URLSearchParams(window.location.search);
-    this.initialDataReference = urlParams.get(PARAM_NAME);
+
+    this.initialDataReference = urlParams.get(INITIAL_DATA_PARAM);
+
+    const authVisible: string | null = urlParams.get(AUTH_VISIBLE_QUERY_PARAM);
+    // only 'all' value is supported
+    this.authVisible = authVisible === 'all' ? authVisible : '';
   }
 
   public async init() {
@@ -225,6 +233,7 @@ class OpenForm {
               baseTitle: this.baseDocumentTitle,
               // XXX: deprecate and refactor usage to use useFormContext?
               requiredFieldsWithAsterisk: this.formObject.requiredFieldsWithAsterisk,
+              authVisible: this.authVisible,
               debug: DEBUG,
             }}
           >
@@ -238,7 +247,9 @@ class OpenForm {
                     languageSelectorTarget={this.languageSelectorTarget}
                     onLanguageChangeDone={this.onLanguageChangeDone.bind(this)}
                   >
-                    <RouterProvider router={router} />
+                    <NuqsAdapter>
+                      <RouterProvider router={router} />
+                    </NuqsAdapter>
                   </I18NManager>
                 </I18NErrorBoundary>
               </NonceProvider>

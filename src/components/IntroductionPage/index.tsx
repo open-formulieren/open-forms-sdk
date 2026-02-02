@@ -7,13 +7,13 @@ import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
 import Link from '@/components/Link';
-import useInitialDataReference from '@/hooks/useInitialDataReference';
+import useQueryParams from '@/hooks/useQueryParams';
 
 const IntroductionPage: React.FC = () => {
   const {name, introductionPageContent = ''} = useContext(FormContext);
-  const {addInitialDataReference} = useInitialDataReference();
+  const {preserveQueryParams} = useQueryParams();
 
-  const startPageUrl = addInitialDataReference('startpagina');
+  const startPageUrl = preserveQueryParams('startpagina');
   if (!introductionPageContent) {
     return <Navigate replace to={startPageUrl} />;
   }

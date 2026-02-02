@@ -126,6 +126,7 @@ export const Functional: Story = {
             appearance: 'dark',
           },
           isForGemachtigde: false,
+          visible: true,
         },
         {
           identifier: 'eherkenning',
@@ -138,6 +139,7 @@ export const Functional: Story = {
             appearance: 'light',
           },
           isForGemachtigde: false,
+          visible: true,
         },
         {
           identifier: 'eidas',
@@ -150,6 +152,7 @@ export const Functional: Story = {
             appearance: 'light',
           },
           isForGemachtigde: false,
+          visible: true,
         },
         {
           identifier: 'digid_machtigen',
@@ -162,6 +165,7 @@ export const Functional: Story = {
             appearance: 'dark',
           },
           isForGemachtigde: true,
+          visible: true,
         },
         {
           identifier: 'eherkenning_bewindvoering',
@@ -174,6 +178,7 @@ export const Functional: Story = {
             appearance: 'light',
           },
           isForGemachtigde: true,
+          visible: true,
         },
       ],
       cosignLoginOptions: [],
@@ -209,6 +214,7 @@ export const NoMachtigenOptions: Story = {
             appearance: 'dark',
           },
           isForGemachtigde: false,
+          visible: true,
         },
       ],
       cosignLoginOptions: [],
@@ -238,6 +244,7 @@ export const WithCoSignOption: Story = {
             appearance: 'dark',
           },
           isForGemachtigde: false,
+          visible: true,
         },
       ],
       cosignLoginOptions: [
@@ -252,6 +259,7 @@ export const WithCoSignOption: Story = {
             appearance: 'dark',
           },
           isForGemachtigde: false,
+          visible: true,
         },
       ],
     }),
@@ -259,6 +267,87 @@ export const WithCoSignOption: Story = {
   parameters: {
     literals: {
       beginText: '(anonymous)',
+    },
+  },
+};
+
+export const VisibleByDefault: Story = {
+  name: 'Visible by default',
+  args: {
+    form: buildForm({
+      loginRequired: true,
+      loginOptions: [
+        {
+          identifier: 'digid',
+          label: 'DigiD',
+          url: '#',
+          logo: {
+            title: 'DigiD simulatie',
+            imageSrc: './digid.png',
+            href: 'https://www.digid.nl/',
+            appearance: 'dark',
+          },
+          isForGemachtigde: false,
+          visible: true,
+        },
+        {
+          identifier: 'org-oidc',
+          label: 'Organization via OpenID Connect',
+          url: '#',
+          logo: {
+            title: 'OpenID Connect',
+            imageSrc: './openid.png',
+            href: 'https://openid.net/',
+            appearance: 'light',
+          },
+          isForGemachtigde: false,
+          visible: false,
+        },
+      ],
+      cosignLoginOptions: [],
+    }),
+  },
+};
+
+export const VisibleWithAuthVisible: Story = {
+  name: 'Visible with authVisible=all query param',
+  args: {
+    form: buildForm({
+      loginRequired: true,
+      loginOptions: [
+        {
+          identifier: 'digid',
+          label: 'DigiD',
+          url: '#',
+          logo: {
+            title: 'DigiD simulatie',
+            imageSrc: './digid.png',
+            href: 'https://www.digid.nl/',
+            appearance: 'dark',
+          },
+          isForGemachtigde: false,
+          visible: true,
+        },
+        {
+          identifier: 'org-oidc',
+          label: 'OpenID Connect',
+          url: '#',
+          logo: {
+            title: 'OpenID Connect',
+            imageSrc: './openid.png',
+            href: 'https://openid.net/',
+            appearance: 'light',
+          },
+          isForGemachtigde: false,
+          visible: false,
+        },
+      ],
+      cosignLoginOptions: [],
+    }),
+  },
+  parameters: {
+    config: {
+      authAllVisible: true,
     },
   },
 };
