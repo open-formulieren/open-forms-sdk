@@ -46,6 +46,18 @@ export const FORM_DEFAULTS = {
       },
       url: `${BASE_URL}forms/mock/steps/9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5`,
     },
+    {
+      uuid: '98980oi8-e5a4-4abf-b64a-76j3j3ki897',
+      slug: 'step-2',
+      formDefinition: 'Step 2',
+      index: 1,
+      literals: {
+        previousText: {resolved: 'Previous', value: ''},
+        saveText: {resolved: 'Save', value: ''},
+        nextText: {resolved: 'Next', value: ''},
+      },
+      url: `${BASE_URL}forms/mock/steps/98980oi8-e5a4-4abf-b64a-76j3j3ki897`,
+    },
   ],
   introductionPageContent: '',
   explanationTemplate: '',
