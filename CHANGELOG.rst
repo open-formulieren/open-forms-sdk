@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+3.4.1 (2026-02-03)
+==================
+
+Regular bugfix release.
+
+* [#5819] Fixed not being able to place a pin in the map component after removing the
+  previous pin.
+
 3.4.0 (2025-12-31)
 ==================
 
