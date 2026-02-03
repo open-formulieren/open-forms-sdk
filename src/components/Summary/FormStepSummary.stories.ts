@@ -342,8 +342,6 @@ export const WithPartnersAsFirstElement: Story = {
           type: 'bsn',
           key: 'bsn',
           label: 'BSN',
-          inputMask: '999999999',
-          validateOn: 'blur',
         },
       },
       {
@@ -443,8 +441,6 @@ export const WithPartnersAsSecondElement: Story = {
           type: 'bsn',
           key: 'bsn',
           label: 'BSN',
-          inputMask: '999999999',
-          validateOn: 'blur',
         },
       },
     ],
@@ -485,8 +481,6 @@ export const WithCustomerProfileAsFirstElement: Story = {
           type: 'bsn',
           key: 'bsn',
           label: 'BSN',
-          inputMask: '999999999',
-          validateOn: 'blur',
         },
       },
       {

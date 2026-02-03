@@ -1,6 +1,7 @@
 import {FormioForm} from '@open-formulieren/formio-renderer';
 import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
-import type {AnyComponentSchema, PartnerDetails} from '@open-formulieren/types';
+import type {AnyComponentSchema} from '@open-formulieren/types';
+import type {PartnerDetails} from '@open-formulieren/types/dist/components/partners';
 import {ButtonGroup} from '@utrecht/button-group-react';
 import {useContext, useMemo} from 'react';
 import {useIntl} from 'react-intl';

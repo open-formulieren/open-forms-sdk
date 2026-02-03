@@ -1,4 +1,4 @@
-import type {JSONValue} from '@open-formulieren/types/lib/types';
+import type {JSONValue} from '@open-formulieren/types';
 
 import {post} from '@/api';
 

@@ -50,8 +50,6 @@ test('Multi-value select field displayed properly', () => {
     type: 'select',
     label: 'Select pets',
     multiple: true,
-    dataSrc: 'values',
-    dataType: 'string',
     openForms: {translations: {}, dataSrc: 'manual'},
     data: {
       values: [

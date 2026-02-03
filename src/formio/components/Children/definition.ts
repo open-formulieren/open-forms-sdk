@@ -20,8 +20,6 @@ const CHILDREN_COMPONENTS = [
     key: 'bsn' as const,
     label: defineMessage({description: 'Label for children BSN', defaultMessage: 'BSN'}),
     validate: {required: true},
-    validateOn: 'blur',
-    inputMask: '999999999',
   } satisfies withLocalizedLabel<BsnComponentSchema>,
   {
     id: 'firstNames',
@@ -47,14 +45,6 @@ const CHILDREN_COMPONENTS = [
     datePicker: {
       minDate: subYears(today, 120).toISOString(),
       maxDate: subDays(today, 1).toISOString(),
-      // ignored, but required in the type defs
-      showWeeks: false,
-      startingDay: 0,
-      initDate: '',
-      minMode: 'day',
-      maxMode: 'year',
-      yearRows: 1,
-      yearColumns: 1,
     },
     openForms: {
       widget: 'inputGroup',

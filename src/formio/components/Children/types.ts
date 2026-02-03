@@ -1,4 +1,4 @@
-import type {ChildDetails} from '@open-formulieren/types';
+import type {ChildDetails} from '@open-formulieren/types/dist/components/children';
 import type {UUID} from 'crypto';
 
 export interface ChildExtendedDetails extends ChildDetails {
@@ -7,6 +7,4 @@ export interface ChildExtendedDetails extends ChildDetails {
   // the children
   __addedManually?: boolean;
   __id: UUID;
-  // distinguish a child selected by the user (checkbox) - this is used in the backend too
-  selected?: boolean;
 }

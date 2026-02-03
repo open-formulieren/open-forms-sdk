@@ -1,6 +1,6 @@
 import {LeafletMap, LoadingIndicator} from '@open-formulieren/formio-renderer';
+import type {CustomerProfileData} from '@open-formulieren/formio-renderer/registry/customerProfile/types.js';
 import type {
-  AddressData,
   AddressNLComponentSchema,
   AnyComponentSchema,
   CheckboxComponentSchema,
@@ -8,12 +8,10 @@ import type {
   CosignV1ComponentSchema,
   CurrencyComponentSchema,
   CustomerProfileComponentSchema,
-  CustomerProfileData,
   DateComponentSchema,
   DateTimeComponentSchema,
   FileComponentSchema,
-  FileUploadData,
-  GeoJsonGeometry,
+  JSONValue,
   MapComponentSchema,
   NumberComponentSchema,
   RadioComponentSchema,
@@ -22,7 +20,9 @@ import type {
   SignatureComponentSchema,
   TimeComponentSchema,
 } from '@open-formulieren/types';
-import type {JSONValue} from '@open-formulieren/types/lib/types';
+import type {AddressData} from '@open-formulieren/types/dist/components/addressNL';
+import type {FileUploadData} from '@open-formulieren/types/dist/components/file';
+import type {GeoJsonGeometry} from '@open-formulieren/types/dist/components/map';
 import React, {Suspense} from 'react';
 import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime} from 'react-intl';
 

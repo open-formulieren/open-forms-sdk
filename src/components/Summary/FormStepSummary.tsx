@@ -1,5 +1,5 @@
 import type {AnyComponentSchema} from '@open-formulieren/types';
-import type {JSONValue} from '@open-formulieren/types/lib/types';
+import type {JSONValue} from '@open-formulieren/types';
 import {
   DataList,
   DataListItem,

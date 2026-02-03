@@ -1,4 +1,4 @@
-import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {JSONObject} from '@open-formulieren/types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {FormattedDate, FormattedRelativeTime, useIntl} from 'react-intl';
 import {useMatch} from 'react-router';

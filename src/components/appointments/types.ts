@@ -1,4 +1,4 @@
-import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {JSONObject} from '@open-formulieren/types';
 import type {FormikErrors, FormikTouched} from 'formik';
 
 import type {AppointmentProduct} from '@/data/appointments';

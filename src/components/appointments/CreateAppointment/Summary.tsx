@@ -1,6 +1,5 @@
 import {LoadingIndicator} from '@open-formulieren/formio-renderer';
-import type {AnyComponentSchema} from '@open-formulieren/types';
-import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {AnyComponentSchema, JSONObject} from '@open-formulieren/types';
 import type {FormikErrors} from 'formik';
 import {Form, Formik} from 'formik';
 import {useContext, useState} from 'react';
@@ -187,9 +186,6 @@ const Summary: React.FC = () => {
         type: 'time',
         key: 'time',
         label: '',
-        inputType: 'text',
-        validateOn: 'blur',
-        format: 'HH:mm',
       },
     },
   ];

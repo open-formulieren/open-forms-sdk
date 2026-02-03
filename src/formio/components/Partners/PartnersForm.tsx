@@ -1,5 +1,5 @@
 import {SecondaryActionButton} from '@open-formulieren/formio-renderer';
-import type {PartnerDetails} from '@open-formulieren/types';
+import type {PartnerDetails} from '@open-formulieren/types/dist/components/partners';
 import {DataList, DataListItem, DataListKey, DataListValue} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 

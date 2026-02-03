@@ -254,8 +254,6 @@ export const mockAppointmentCustomerFieldsGet = http.get(
         validate: {
           required: true,
         },
-        validateOn: 'blur',
-        inputMask: '999999999',
       },
       {
         id: 'gender',
