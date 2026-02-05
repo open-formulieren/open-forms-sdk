@@ -1,4 +1,5 @@
 import {EditGrid} from '@open-formulieren/formio-renderer';
+import {Heading3} from '@utrecht/component-library-react';
 import {Form, Formik} from 'formik';
 import {produce} from 'immer';
 import {useContext} from 'react';
@@ -136,6 +137,12 @@ const ChooseProductStep: React.FC<ChooseProductStepProps> = ({navigateTo = null}
         headingType="subtitle"
         padded
       />
+      <Heading3 className="utrecht-heading-3--distanced">
+        <FormattedMessage
+          description="Appointment reason question"
+          defaultMessage="What do you want to make an appointment for?"
+        />
+      </Heading3>
       <Formik<ProductStepValues>
         initialValues={{...initialValues, ...stepData}}
         initialErrors={initialErrors}
