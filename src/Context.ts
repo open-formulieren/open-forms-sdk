@@ -73,7 +73,7 @@ const ConfigContext = React.createContext<ConfigContextType>({
 });
 ConfigContext.displayName = 'ConfigContext';
 
-type LanguageCode = string;
+export type LanguageCode = string;
 
 export interface FormioTranslationsContext {
   i18n: Record<LanguageCode, Record<string, string>>;
