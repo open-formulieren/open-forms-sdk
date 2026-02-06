@@ -2,6 +2,38 @@
 SDK Changelog
 =============
 
+3.5.0-alpha.0 (2026-02-06)
+==========================
+
+First preview release of the upcoming 3.5.0 version.
+
+.. warning:: SDK 3.5.0 requires the backend API version 3.5.0 or newer.
+
+New features
+------------
+
+* [#5820] We now support retrieving custom static translation assets from the backend.
+* [#5319] Login option for organizations with OpenID Connect can now be dynamically
+  displayed depending on the ``auth_visible`` query param.
+* [#5691] Added a reason question for the appointment.
+
+Bugfixes
+--------
+
+* [#5690] Fixed display of the product description in the appointments.
+* [#5884] Fixed long filenames overflowing under the progress indicator in the submission summary.
+
+Project maintenance
+-------------------
+
+* [#936] Upgraded to storybook 10.2.1 and switched storybook testing to the vitest addon.
+* Changed npm configuration, making it more secure.
+
+Project maintenance
+-------------------
+
+* [#936] Upgraded to storybook 10.2.1 and switched storybook testing to the vitest addon.
+
 3.4.1 (2026-02-03)
 ==================
 
