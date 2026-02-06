@@ -9,6 +9,7 @@ import {createSearchParams, useHref, useLocation, useNavigate} from 'react-route
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from '@/Context';
+import {FormioTranslations} from '@/Context';
 import {CardTitle} from '@/components/Card';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 import {Literal} from '@/components/Literal';
@@ -60,6 +61,8 @@ const Summary: React.FC = () => {
   const {appointmentData, submission, setErrors} = useCreateAppointmentContext();
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const {language} = useContext(FormioTranslations);
+
   useTitle(
     intl.formatMessage({
       description: 'Summary page title',
@@ -89,7 +92,7 @@ const Summary: React.FC = () => {
     const promises: [Promise<Product[]>, Promise<Location[]>, Promise<AnyComponentSchema[]>] = [
       getAllProducts(baseUrl),
       getLocations(baseUrl, productIds),
-      getContactDetailsFields(baseUrl, productIds),
+      getContactDetailsFields(baseUrl, productIds, language),
     ];
     return await Promise.all(promises);
   }, [baseUrl, JSON.stringify(productIds)]);
