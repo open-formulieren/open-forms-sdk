@@ -264,6 +264,37 @@ export const DisableStepSubmissionWithServerLogic: Story = {
   },
 };
 
+export const NextButtonDisabledInitially: Story = {
+  parameters: {
+    msw: {
+      handlers: {
+        submissionStep: [
+          mockSubmissionStepGet(
+            buildSubmissionStep({
+              canSubmit: false,
+              components: [
+                {
+                  id: 'text',
+                  type: 'textfield',
+                  key: 'text',
+                  label: 'Simple text field',
+                  description: 'A help text for the text field',
+                },
+              ],
+            })
+          ),
+        ],
+      },
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const nextButton = await canvas.findByRole('button', {name: 'Next'});
+    expect(nextButton).toHaveAttribute('aria-disabled', 'true');
+  },
+};
+
 const SUBMISSION_STEP_WITH_DATA_DETAIL_BODY = buildSubmissionStep({
   components: [
     {
