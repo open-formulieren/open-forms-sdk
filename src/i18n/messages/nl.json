@@ -778,7 +778,7 @@
     "originalDefault": "Invalid input."
   },
   "iGrGBE": {
-    "defaultMessage": "What do you want to make an appointment for?",
+    "defaultMessage": "Waarvoor wil je een afspraak maken?",
     "description": "Appointment reason question",
     "originalDefault": "What do you want to make an appointment for?"
   },
