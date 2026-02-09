@@ -60,6 +60,7 @@ const FormStepNewRenderer: React.FC = () => {
     (step: SubmissionStep) => {
       valuesRef.current = step.data;
       setComponents(step.formStep.configuration.components);
+      setStepSubmissionAllowed(step.canSubmit);
       setDebugStepValues(step.data, true);
     },
     [setDebugStepValues]
