@@ -10,7 +10,6 @@ import {
   TableRow,
 } from '@utrecht/component-library-react';
 import '@utrecht/table-css';
-import type {UUID} from 'crypto';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import FAIcon from '@/components/FAIcon';
@@ -25,7 +24,7 @@ export interface ChildrenComponentProps {
   onAddChild: () => void;
   onEditChild: (child: ChildExtendedDetails) => void;
   onRemoveChild: (child: ChildExtendedDetails) => void;
-  toggleChildSelection: (childId: UUID) => void;
+  toggleChildSelection: (childId: string) => void;
 }
 
 /**
@@ -67,7 +66,7 @@ export interface DisplayChildrenProps {
   enableSelection: boolean;
   onEditChild: (child: ChildExtendedDetails) => void;
   onRemoveChild: (child: ChildExtendedDetails) => void;
-  toggleChildSelection: (childId: UUID) => void;
+  toggleChildSelection: (childId: string) => void;
 }
 
 export const DisplayChildren: React.FC<DisplayChildrenProps> = ({
