@@ -2,6 +2,22 @@
 SDK Changelog
 =============
 
+3.5.0-alpha.1 (2026-02-12)
+==========================
+
+Second preview release of the upcoming 3.5.0 version.
+
+Bugfixes
+--------
+
+* [#5923] Fixed "Next" button not being disabled when it should be.
+* Fixed missing translations for the AddressNL component.
+
+Project maintenance
+-------------------
+
+* Removed usage of types from ``crypto`` module, since it's not available in browser.
+
 3.5.0-alpha.0 (2026-02-06)
 ==========================
 
@@ -28,11 +44,6 @@ Project maintenance
 
 * [#936] Upgraded to storybook 10.2.1 and switched storybook testing to the vitest addon.
 * Changed npm configuration, making it more secure.
-
-Project maintenance
--------------------
-
-* [#936] Upgraded to storybook 10.2.1 and switched storybook testing to the vitest addon.
 
 3.4.1 (2026-02-03)
 ==================
