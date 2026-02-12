@@ -49,12 +49,17 @@ const loadLocaleData = async (
     }
   }
 
-  const [originalMessages, customizedMessages] = await Promise.all([
+  const [originalMessages, customizedMessages] = await Promise.all<
+    [Promise<{default: ReactIntlLocaleData}>, Promise<ReactIntlLocaleData | null>]
+  >([
     import(`./i18n/compiled/${localeToLoad}.json`),
     get<ReactIntlLocaleData | null>(`${baseUrl}i18n/compiled-messages/${localeToLoad}.json`),
   ]);
 
-  const mergedMessages: ReactIntlLocaleData = {...originalMessages, ...(customizedMessages ?? {})};
+  const mergedMessages: ReactIntlLocaleData = {
+    ...originalMessages.default,
+    ...(customizedMessages ?? {}),
+  };
 
   return mergedMessages;
 };
