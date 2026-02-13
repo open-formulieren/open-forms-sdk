@@ -6,7 +6,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate, useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
-import {ConfigContext} from '@/Context';
+import {ConfigContext, FormioTranslations, type LanguageCode} from '@/Context';
 import {get} from '@/api';
 import {getCached, setCached} from '@/cache';
 import {CardTitle} from '@/components/Card';
@@ -22,9 +22,10 @@ const CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
 
 export const getContactDetailsFields = async (
   baseUrl: string,
-  productIds: string[]
+  productIds: string[],
+  language: LanguageCode
 ): Promise<AnyComponentSchema[]> => {
-  const fullKey = `${CACHED_CONTACT_DETAILS_FIELDS_KEY}:${productIds.join(';')}`;
+  const fullKey = `${CACHED_CONTACT_DETAILS_FIELDS_KEY}_${language}:${productIds.join(';')}`;
   let components: AnyComponentSchema[] | null = getCached<AnyComponentSchema[]>(
     fullKey,
     CACHED_CONTACT_DETAILS_FIELDS_MAX_AGE_MS
@@ -48,6 +49,7 @@ export interface ContactDetailsStepProps {
 const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}) => {
   const intl = useIntl();
   const {baseUrl, requiredFieldsWithAsterisk} = useContext(ConfigContext);
+  const {language} = useContext(FormioTranslations);
   const {
     submitStep,
     appointmentData,
@@ -75,7 +77,7 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}
     error,
   } = useAsync(async () => {
     if (!productIds.length) return [];
-    return await getContactDetailsFields(baseUrl, productIds);
+    return await getContactDetailsFields(baseUrl, productIds, language);
   }, [baseUrl, JSON.stringify(productIds)]);
   if (error) throw error;
 
