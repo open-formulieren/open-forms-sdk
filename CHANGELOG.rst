@@ -2,6 +2,16 @@
 SDK Changelog
 =============
 
+3.5.0-alpha.2 (2026-02-27)
+==========================
+
+Third preview release of the upcoming 3.5.0 version.
+
+Bugfixes
+--------
+
+* Fixed contact details cache key in appointments not taking the language into account.
+
 3.5.0-alpha.1 (2026-02-12)
 ==========================
 
