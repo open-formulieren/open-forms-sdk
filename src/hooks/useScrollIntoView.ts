@@ -1,17 +1,20 @@
 import {useEffect, useRef} from 'react';
 
+const DEFAULT_OPTIONS: ScrollIntoViewOptions = {behavior: 'smooth'};
+
 const useScrollIntoView = <T extends HTMLElement = HTMLElement>(
-  options: ScrollIntoViewOptions = {behavior: 'smooth'}
+  disable: boolean = false,
+  options: ScrollIntoViewOptions = DEFAULT_OPTIONS
 ): React.MutableRefObject<T | null> => {
   const ref = useRef<T | null>(null);
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || disable) return;
     // scrollIntoView is not available in jest-dom, and this can cause to crashing/infinitely
     // loading (integration) tests because ErrorMessage uses this hook, which is used
     // in the usual ErrorBoundary component... So, be very conservative here with the
     // scrollIntoView behaviour/expectations!
     ref.current.scrollIntoView?.(options);
-  }, [ref, options]);
+  }, [ref, options, disable]);
   return ref;
 };
 

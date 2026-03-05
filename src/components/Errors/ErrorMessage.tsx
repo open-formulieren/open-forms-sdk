@@ -26,10 +26,15 @@ const ARIA_TAGS: Record<
 export interface ErrorMessageProps {
   children?: React.ReactNode;
   level?: ErrorMessageLevel;
+  noScrollIntoView?: boolean;
 }
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({children, level = 'error'}) => {
-  const errorRef = useScrollIntoView<HTMLDivElement>();
+const ErrorMessage: React.FC<ErrorMessageProps> = ({
+  children,
+  level = 'error',
+  noScrollIntoView = false,
+}) => {
+  const errorRef = useScrollIntoView<HTMLDivElement>(noScrollIntoView);
   if (!children) return null;
   return (
     <Alert type={level} icon={ICONS[level]} ref={errorRef} {...ARIA_TAGS[level]}>

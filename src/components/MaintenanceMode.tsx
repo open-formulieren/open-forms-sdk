@@ -22,9 +22,9 @@ const MESSAGE_FOR_FORM_DESIGNER = (
 );
 
 const MaintenanceModeAlert: React.FC = () => {
-  const userIsFormDesigner = IsFormDesigner.getValue();
+  const userIsFormDesigner = !!IsFormDesigner.getValue();
   return (
-    <ErrorMessage level="info">
+    <ErrorMessage level="info" noScrollIntoView={userIsFormDesigner}>
       {userIsFormDesigner ? MESSAGE_FOR_FORM_DESIGNER : GENERIC_MESSAGE}
     </ErrorMessage>
   );
