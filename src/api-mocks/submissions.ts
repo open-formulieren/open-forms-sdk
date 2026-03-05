@@ -1,5 +1,4 @@
-import type {AnyComponentSchema} from '@open-formulieren/types';
-import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {AnyComponentSchema, JSONObject} from '@open-formulieren/types';
 import {HttpResponse, http} from 'msw';
 
 import type {SubmissionStep} from '@/data/submission-steps';

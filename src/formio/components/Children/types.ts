@@ -1,4 +1,4 @@
-import type {ChildDetails} from '@open-formulieren/types';
+import type {ChildDetails} from '@open-formulieren/types/dist/components/children';
 
 export interface ChildExtendedDetails extends ChildDetails {
   // distinguish a child added manually by the user (when no data was retreived from the
@@ -6,6 +6,4 @@ export interface ChildExtendedDetails extends ChildDetails {
   // the children
   __addedManually?: boolean;
   __id: string;
-  // distinguish a child selected by the user (checkbox) - this is used in the backend too
-  selected?: boolean;
 }

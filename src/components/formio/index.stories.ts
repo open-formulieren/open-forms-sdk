@@ -41,7 +41,6 @@ export const EmailField: Story = {
         validate: {
           required: true,
         },
-        validateOn: 'blur',
       },
     ],
   },

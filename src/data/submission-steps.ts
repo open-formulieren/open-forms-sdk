@@ -1,5 +1,4 @@
-import type {AnyComponentSchema} from '@open-formulieren/types';
-import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {AnyComponentSchema, JSONObject} from '@open-formulieren/types';
 
 import {post, put} from '@/api';
 import {type InvalidParam, ValidationError} from '@/errors';

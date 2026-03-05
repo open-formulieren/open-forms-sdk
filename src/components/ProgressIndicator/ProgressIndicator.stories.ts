@@ -70,7 +70,7 @@ export const MobileViewport: Story = {
       modes: {
         desktop: {disable: true},
       },
-    }
+    },
   },
 
   play: async ({canvasElement}) => {
@@ -86,7 +86,7 @@ export const MobileViewport: Story = {
   globals: {
     viewport: {
       value: 'smallMobile',
-      isRotated: false
-    }
-  }
+      isRotated: false,
+    },
+  },
 };

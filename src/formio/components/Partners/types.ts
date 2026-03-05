@@ -1,4 +1,4 @@
-import type {PartnerDetails} from '@open-formulieren/types';
+import type {PartnerDetails} from '@open-formulieren/types/dist/components/partners';
 
 export interface PartnerManuallyAdded extends PartnerDetails {
   // this is added only for the SDK and helps us to distinguish a partner who is added

@@ -1,4 +1,4 @@
-import type {DigitalAddressType} from '@open-formulieren/types';
+import type {DigitalAddressType} from '@open-formulieren/types/dist/components/customerProfile';
 
 import {get} from '@/api';
 import {logError} from '@/components/Errors';

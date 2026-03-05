@@ -1,5 +1,5 @@
 import {LoadingIndicator, PrimaryActionButton} from '@open-formulieren/formio-renderer';
-import type {PartnerDetails} from '@open-formulieren/types';
+import type {PartnerDetails} from '@open-formulieren/types/dist/components/partners';
 import {useFormikContext} from 'formik';
 import {FormattedMessage} from 'react-intl';
 

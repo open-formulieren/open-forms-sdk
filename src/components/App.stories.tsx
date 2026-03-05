@@ -523,15 +523,15 @@ export const SeveralStepsInMobileViewport: Story = {
 
   parameters: {
     // removes padding in canvas
-    layout: 'fullscreen'
+    layout: 'fullscreen',
   },
 
   globals: {
     viewport: {
       value: 'mobile1',
-      isRotated: false
-    }
-  }
+      isRotated: false,
+    },
+  },
 };
 
 export const MaximumSubmissionsReached: Story = {

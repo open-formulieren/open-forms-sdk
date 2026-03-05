@@ -1,4 +1,4 @@
-import type {JSONObject} from '@open-formulieren/types/lib/types';
+import type {JSONObject} from '@open-formulieren/types';
 import {UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import type {FormikErrors} from 'formik';
 import {FormattedMessage, useIntl} from 'react-intl';
