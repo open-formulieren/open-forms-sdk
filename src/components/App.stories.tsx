@@ -357,6 +357,7 @@ export const NonApplicableStepActiveSubmission: Story = {
 
 export const SeveralStepsInMobileViewport: Story = {
   decorators: [withNuqs],
+
   args: {
     showExternalHeader: true,
     name: 'A rather long form name that overflows on mobile',
@@ -519,12 +520,18 @@ export const SeveralStepsInMobileViewport: Story = {
       },
     ],
   },
+
   parameters: {
-    layout: 'fullscreen', // removes padding in canvas
-    viewport: {
-      defaultViewport: 'mobile1',
-    },
+    // removes padding in canvas
+    layout: 'fullscreen'
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile1',
+      isRotated: false
+    }
+  }
 };
 
 export const MaximumSubmissionsReached: Story = {

@@ -64,8 +64,7 @@ const preview: Preview = {
   ],
   parameters: {
     viewport: {
-      // These are the viewports that are shown in Storybook
-      viewports: {
+      options: {
         smallMobile: {name: 'Small mobile', styles: {width: '320px', height: '568px'}},
         largeMobile: {name: 'Large mobile', styles: {width: '414px', height: '896px'}},
         tablet: {name: 'Tablet', styles: {width: '834px', height: '1112px'}},

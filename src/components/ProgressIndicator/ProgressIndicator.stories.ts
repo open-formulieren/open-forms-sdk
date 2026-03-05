@@ -64,16 +64,15 @@ export const Default: Story = {};
 
 export const MobileViewport: Story = {
   name: 'Mobile version',
+
   parameters: {
-    viewport: {
-      defaultViewport: 'smallMobile',
-    },
     chromatic: {
       modes: {
         desktop: {disable: true},
       },
-    },
+    }
   },
+
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
@@ -81,5 +80,13 @@ export const MobileViewport: Story = {
     await expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
     await userEvent.click(toggleButton);
   },
+
   tags: ['!test'],
+
+  globals: {
+    viewport: {
+      value: 'smallMobile',
+      isRotated: false
+    }
+  }
 };
