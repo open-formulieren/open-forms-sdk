@@ -1,5 +1,5 @@
 import {Modal} from '@open-formulieren/formio-renderer';
-import type {PartnerDetails} from '@open-formulieren/types';
+import type {PartnerDetails} from '@open-formulieren/types/dist/components/partners';
 import {FormattedMessage} from 'react-intl';
 
 import AddPartnerForm from './AddPartnerForm';
