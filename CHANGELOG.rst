@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+3.4.2 (2026-03-09)
+==================
+
+Regular bugfix release.
+
+* Upgraded to ``@open-formulieren/formio-renderer`` to 1.1.1 bugfix release.
+* Upgraded a number of dependencies, reported via @dependabot alerts.
+
 3.4.1 (2026-02-03)
 ==================
 
