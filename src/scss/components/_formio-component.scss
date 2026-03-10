@@ -1,7 +1,7 @@
 @use 'microscope-sass/lib/bem';
 
-@use '@utrecht/components/form-field/src/mixin' as form-field;
-@use '@utrecht/components/form-fieldset/src/mixin' as form-fieldset;
+@use '@utrecht/form-field-css/src/forward' as form-field;
+@use '@utrecht/form-fieldset-css/src/forward' as form-fieldset;
 
 @import 'microscope-sass/lib/typography';
 
