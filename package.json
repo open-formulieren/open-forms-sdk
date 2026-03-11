@@ -48,6 +48,7 @@
     "formik": "^2.2.9",
     "ibantools": "^4.5.1",
     "immer": "^10.1.1",
+    "json-logic-engine": "^5.0.6",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^4.2.0",
