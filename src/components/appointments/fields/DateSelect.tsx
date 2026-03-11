@@ -92,7 +92,13 @@ const DateSelect: React.FC<DateSelectProps> = ({products}) => {
       isRequired
       isReadOnly={loading || !location}
       widget="datePicker"
-      widgetProps={{minDate, maxDate, disabledDates}}
+      widgetProps={{
+        minDate,
+        maxDate,
+        disabledDates,
+        displayWeekend: false,
+        displayYearNavigation: false,
+      }}
     />
   );
 };
