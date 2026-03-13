@@ -28,12 +28,14 @@ import {
   customStrictEquals,
   customSubtraction,
   jsonLogicDateTime,
+  jsonLogicDuration,
   jsonLogicRelativeDelta,
 } from './extensions';
 
 const engine = new LogicEngine();
 engine.addMethod('datetime', jsonLogicDateTime, {deterministic: true});
 engine.addMethod('rdelta', jsonLogicRelativeDelta, {deterministic: true});
+engine.addMethod('duration', jsonLogicDuration, {deterministic: true});
 
 // overrides to handle our own data types
 // reference of logic builtins: https://json-logic.github.io/json-logic-engine/docs/logic

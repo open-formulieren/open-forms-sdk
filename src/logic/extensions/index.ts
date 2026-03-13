@@ -1,5 +1,3 @@
-export {jsonLogicDateTime} from './datetime';
-export {jsonLogicRelativeDelta} from './rdelta';
 export {
   customGreaterThan,
   customGreaterThanEquals,
@@ -10,4 +8,7 @@ export {
   customNotEquals,
   customNotStrictEquals,
 } from './comparators';
+export {jsonLogicDateTime} from './datetime';
+export {jsonLogicDuration} from './duration';
 export {customAddition, customSubtraction, customMaximum, customMinimum} from './math';
+export {jsonLogicRelativeDelta} from './rdelta';
