@@ -14,7 +14,31 @@
 import type {JSONValue} from '@open-formulieren/types';
 import {LogicEngine} from 'json-logic-engine';
 
+import {
+  customEquals,
+  customGreaterThan,
+  customGreaterThanEquals,
+  customLessThan,
+  customLessThanEquals,
+  customNotEquals,
+  customNotStrictEquals,
+  customStrictEquals,
+  jsonLogicDateTime,
+} from './extensions';
+
 const engine = new LogicEngine();
+engine.addMethod('datetime', jsonLogicDateTime, {deterministic: true});
+
+// overrides to handle our own data types
+// reference of logic builtins: https://json-logic.github.io/json-logic-engine/docs/logic
+engine.addMethod('>', customGreaterThan);
+engine.addMethod('>=', customGreaterThanEquals);
+engine.addMethod('<', customLessThan);
+engine.addMethod('<=', customLessThanEquals);
+engine.addMethod('==', customEquals);
+engine.addMethod('===', customStrictEquals);
+engine.addMethod('!=', customNotEquals);
+engine.addMethod('!==', customNotStrictEquals);
 
 interface EvaluationOptions {
   /**
