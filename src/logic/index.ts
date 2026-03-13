@@ -15,19 +15,25 @@ import type {JSONValue} from '@open-formulieren/types';
 import {LogicEngine} from 'json-logic-engine';
 
 import {
+  customAddition,
   customEquals,
   customGreaterThan,
   customGreaterThanEquals,
   customLessThan,
   customLessThanEquals,
+  customMaximum,
+  customMinimum,
   customNotEquals,
   customNotStrictEquals,
   customStrictEquals,
+  customSubtraction,
   jsonLogicDateTime,
+  jsonLogicRelativeDelta,
 } from './extensions';
 
 const engine = new LogicEngine();
 engine.addMethod('datetime', jsonLogicDateTime, {deterministic: true});
+engine.addMethod('rdelta', jsonLogicRelativeDelta, {deterministic: true});
 
 // overrides to handle our own data types
 // reference of logic builtins: https://json-logic.github.io/json-logic-engine/docs/logic
@@ -39,6 +45,11 @@ engine.addMethod('==', customEquals);
 engine.addMethod('===', customStrictEquals);
 engine.addMethod('!=', customNotEquals);
 engine.addMethod('!==', customNotStrictEquals);
+// reference of math builtins: https://json-logic.github.io/json-logic-engine/docs/math
+engine.addMethod('+', customAddition);
+engine.addMethod('-', customSubtraction);
+engine.addMethod('max', customMaximum);
+engine.addMethod('min', customMinimum);
 
 interface EvaluationOptions {
   /**
