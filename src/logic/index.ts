@@ -51,6 +51,21 @@ engine.addMethod('-', customSubtraction);
 engine.addMethod('max', customMaximum);
 engine.addMethod('min', customMinimum);
 
+// remove methods that are either syntactic sugar or extensions from json-logic-js, to
+// prevent people accidentally using them while we don't support them in the backend.
+// See https://jsonlogic.com/operations.html for the original reference.
+delete engine.methods['not'];
+delete engine.methods['??'];
+delete engine.methods['?:'];
+delete engine.methods['length'];
+delete engine.methods['get'];
+delete engine.methods['preserve'];
+delete engine.methods['keys'];
+delete engine.methods['val'];
+delete engine.methods['exists'];
+delete engine.methods['every'];
+delete engine.methods['eachKey'];
+
 interface EvaluationOptions {
   /**
    * Flag to opt-out of non-JSON datatype serialization.
