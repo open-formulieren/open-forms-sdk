@@ -48,6 +48,7 @@
     "formik": "^2.2.9",
     "ibantools": "^4.5.1",
     "immer": "^10.1.1",
+    "json-logic-engine": "^5.0.6",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^4.2.0",
@@ -64,6 +65,7 @@
     "react-select": "^5.7.3",
     "react-use": "^17.2.4",
     "state-pool": "^0.10.1",
+    "tinyduration": "^3.4.1",
     "use-immer": "^0.11.0",
     "zod": "^3.21.4",
     "zod-formik-adapter": "^1.2.0"
