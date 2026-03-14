@@ -83,6 +83,7 @@ const preview: Preview = {
         method: 'alphabetical',
         order: [
           'Introduction',
+          'Playground',
           'Developers',
           'Pure React components',
           'Composites',
