@@ -181,7 +181,9 @@ export const HappyFlow: Story = {
       expect(await canvas.findByText('Jouw product(en)')).toBeVisible();
       expect(await canvas.findByText('Paspoort aanvraag: 1x')).toBeVisible();
       expect(await canvas.findByText('Jouw afspraak')).toBeVisible();
-      expect(await canvas.findByText(`Open Gem, Amsterdam, ${tomorrow}, 07:00`)).toBeVisible();
+      // we allow for a one hour difference due to daylight savings time
+      const appointmentDetailsPattern = new RegExp(`Open Gem, Amsterdam, ${tomorrow}, 0(7|8):00`);
+      expect(await canvas.findByText(appointmentDetailsPattern)).toBeVisible();
 
       await waitFor(async () => {
         expect(canvas.getByRole('link', {name: 'Terug naar locatie en tijdstip'})).toBeVisible();
