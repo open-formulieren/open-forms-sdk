@@ -77,3 +77,11 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/govmetric_snippet';
 // TODO: obsolete when the new renderer goes live
 @import './scss/components/soft-required-errors';
+
+// Backports / workarounds
+.utrecht-form-field.utrecht-form-field--openforms.utrecht-form-field--checkbox {
+  .utrecht-custom-checkbox,
+  .utrecht-checkbox--custom {
+    z-index: 0;
+  }
+}
