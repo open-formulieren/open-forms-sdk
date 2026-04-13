@@ -1763,3 +1763,77 @@ describe('backend regression tests', () => {
     expect(dataUpdates).toEqual({textfield: 'foo'});
   });
 });
+
+test('does not crash when editgrid has default hidden component inside and backend logic rule affecting visibility', () => {
+  const components: AnyComponentSchema[] = [
+    {
+      type: 'checkbox',
+      key: 'checkbox',
+      id: 'checkbox',
+      label: 'Checkbox',
+    },
+    {
+      key: 'editgrid',
+      id: 'editgrid',
+      type: 'editgrid',
+      label: 'Editgrid',
+      clearOnHide: true,
+      disableAddingRemovingRows: false,
+      groupLabel: 'Group',
+      components: [
+        {
+          type: 'textfield',
+          key: 'textfield',
+          id: 'textfield',
+          label: 'Textfield',
+        },
+        {
+          type: 'currency',
+          key: 'currency',
+          id: 'currency',
+          label: 'Currency',
+          currency: 'EUR',
+          hidden: true,
+        },
+      ],
+    },
+  ];
+
+  const rules: LogicRule[] = [
+    {
+      jsonLogicTrigger: {'==': [{var: 'checkbox'}, true]},
+      actions: [
+        {
+          component: 'editgrid',
+          action: {
+            type: 'property',
+            property: {
+              type: 'bool',
+              value: 'hidden',
+            },
+            state: true,
+          },
+        },
+      ],
+    },
+  ];
+  const submission = buildSubmission();
+  const step: SubmissionStep = {
+    ...buildSubmissionStep({components}),
+    defaultConfiguration: {components},
+  };
+  let dataUpdates: JSONObject | null = {};
+
+  evaluateBackendRules({
+    submission,
+    step,
+    rules,
+    inputData: {checkbox: false, editgrid: [{textfield: 'foo'}, {textfield: 'bar'}]},
+    components: step.defaultConfiguration!.components ?? [],
+    onLogicCheckResult: (_, step) => {
+      dataUpdates = step.data;
+    },
+  });
+  // Rule was not triggered, so no updates expected.
+  expect(dataUpdates).toEqual({});
+});
