@@ -1,4 +1,5 @@
-import {act, waitFor, within} from '@testing-library/react';
+import {afterEach, describe, expect, test, vi} from 'vitest';
+import {page} from 'vitest/browser';
 
 import {
   BASE_URL,
@@ -7,15 +8,11 @@ import {
   mockCustomStaticTranslationsNullGet,
   mockFormGet,
 } from '@/api-mocks';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import type {LanguageInfo} from '@/components/LanguageSelection/LanguageSelection';
 import {mockLanguageInfoGet} from '@/components/LanguageSelection/mocks';
 
 import {OpenForm} from './sdk';
-
-// scrollIntoView is not supported in jest-dom
-const scrollIntoViewMock = vi.fn();
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const LANGUAGES: LanguageInfo['languages'] = [
   {code: 'nl', name: 'Nederlands'},
@@ -30,11 +27,18 @@ const apiMocks = [
   mockCustomStaticTranslationsNullGet('nl'),
 ];
 
+afterEach(() => {
+  document.body.innerHTML = '';
+});
+
 describe('OpenForm', () => {
-  it('should accept a DOM node as languageSelectorTarget', async () => {
-    mswServer.use(...apiMocks);
+  test('should accept a DOM node as languageSelectorTarget', async () => {
+    mswWorker.use(...apiMocks);
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     const target = document.createElement('div');
+    document.body.appendChild(formRoot);
+    document.body.appendChild(target);
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,
       basePath: '',
@@ -43,22 +47,21 @@ describe('OpenForm', () => {
       lang: 'nl',
     });
 
-    await act(async () => await form.init());
+    await form.init();
 
     // wait for the loader to be removed when all network requests have completed
-    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
-
-    expect(target).not.toBeEmptyDOMElement();
+    await expect.element(page.getByRole('status')).not.toBeInTheDocument();
+    await expect.poll(() => target).not.toBeEmptyDOMElement();
   });
 
-  it('should accept a target selector string as languageSelectorTarget', async () => {
+  test('should accept a target selector string as languageSelectorTarget', async () => {
     document.body.innerHTML = `
       <div id="my-languages-element"></div>
       <div id="root"></div>
     `;
     const formRoot = document.getElementById('root')!;
     const target = document.getElementById('my-languages-element');
-    mswServer.use(...apiMocks);
+    mswWorker.use(...apiMocks);
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,
       basePath: '',
@@ -67,17 +70,17 @@ describe('OpenForm', () => {
       lang: 'nl',
     });
 
-    await act(async () => await form.init());
+    await form.init();
 
     // wait for the loader to be removed when all network requests have completed
-    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
-
-    expect(target).not.toBeEmptyDOMElement();
+    await expect.element(page.getByRole('status')).not.toBeInTheDocument();
+    await expect.poll(() => target).not.toBeEmptyDOMElement();
   });
 
-  it('should render the form on init', async () => {
+  test('should render the form on init', async () => {
     const formRoot = document.createElement('div');
-    mswServer.use(...apiMocks);
+    document.body.appendChild(formRoot);
+    mswWorker.use(...apiMocks);
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,
       basePath: '',
@@ -85,20 +88,20 @@ describe('OpenForm', () => {
       lang: 'nl',
     });
 
-    await act(async () => await form.init());
+    await form.init();
 
     // wait for the loader to be removed when all network requests have completed
-    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
-
-    expect(formRoot.textContent).not.toContain('Loading');
+    await expect.element(page.getByRole('status')).not.toBeInTheDocument();
+    await expect.poll(() => formRoot).not.toHaveTextContent('Loading');
   });
 
-  it('should re-fetch the form to get new literals after language change', async () => {
+  test('should re-fetch the form to get new literals after language change', async () => {
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     // first we load NL variant, second time we load the form in NL
     const formNL = buildForm({translationEnabled: true, name: 'Nederlandse versie'});
     const formEN = buildForm({translationEnabled: true, name: 'English version'});
-    mswServer.use(
+    mswWorker.use(
       mockFormGet(formNL, true),
       mockFormGet(formEN, true),
       mockLanguageInfoGet(LANGUAGES),
@@ -114,25 +117,24 @@ describe('OpenForm', () => {
       lang: 'nl',
     });
 
-    await act(async () => await form.init());
+    await form.init();
 
     // wait for the loader to be removed when all network requests have completed
-    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+    await expect.element(page.getByRole('status')).not.toBeInTheDocument();
+    await expect.element(page.getByRole('heading', {name: 'Nederlandse versie'})).toBeVisible();
 
-    expect(within(formRoot).getAllByText('Nederlandse versie').length).toBeGreaterThan(0);
+    // @ts-expect-error we're calling a private method here
+    await form.onLanguageChangeDone('en');
 
-    await act(async () => {
-      // @ts-expect-error we're calling a private method here
-      await form.onLanguageChangeDone('en');
-    });
-
-    expect(within(formRoot).getAllByText('English version').length).toBeGreaterThan(0);
+    await expect.element(page.getByRole('heading', {name: 'English version'})).toBeVisible();
   });
 
-  it('should call the onLanguageChange callback on language change', async () => {
-    mswServer.use(...apiMocks);
+  test('should call the onLanguageChange callback on language change', async () => {
+    mswWorker.use(...apiMocks);
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     const target = document.createElement('div');
+    document.body.appendChild(target);
     const onLanguageChangeMock = vi.fn();
 
     const form = new OpenForm(formRoot, {
@@ -144,27 +146,26 @@ describe('OpenForm', () => {
       onLanguageChange: onLanguageChangeMock,
     });
 
-    await act(async () => await form.init());
+    await form.init();
 
     // wait for the loader to be removed when all network requests have completed
-    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+    await expect.element(page.getByRole('status')).not.toBeInTheDocument();
+    await expect.poll(() => target).not.toBeEmptyDOMElement();
 
-    expect(target).not.toBeEmptyDOMElement();
-
-    await act(async () => {
-      // @ts-expect-error we're calling a private method here
-      await form.onLanguageChangeDone('en');
-    });
+    // @ts-expect-error we're calling a private method here
+    await form.onLanguageChangeDone('en');
 
     // Second argument is the initialDataReference, which is null in this case
-    expect(onLanguageChangeMock).toBeCalledWith('en', null);
+    await expect.poll(() => onLanguageChangeMock).toHaveBeenCalledWith('en', null);
   });
 
-  it('should call the onLanguageChange callback with initial data reference', async () => {
-    mswServer.use(...apiMocks);
+  test('should call the onLanguageChange callback with initial data reference', async () => {
+    mswWorker.use(...apiMocks);
     window.history.pushState({}, '', '?initial_data_reference=foo');
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     const target = document.createElement('div');
+    document.body.appendChild(target);
     const onLanguageChangeMock = vi.fn();
 
     const form = new OpenForm(formRoot, {
@@ -176,28 +177,26 @@ describe('OpenForm', () => {
       onLanguageChange: onLanguageChangeMock,
     });
 
-    await act(async () => await form.init());
+    await form.init();
 
     // wait for the loader to be removed when all network requests have completed
-    await waitFor(() => expect(within(formRoot).queryByRole('status')).toBeNull());
+    await expect.element(page.getByRole('status')).not.toBeInTheDocument();
+    await expect.poll(() => target).not.toBeEmptyDOMElement();
 
-    expect(target).not.toBeEmptyDOMElement();
-
-    await act(async () => {
-      // @ts-expect-error we're calling a private method here
-      await form.onLanguageChangeDone('en');
-    });
+    // @ts-expect-error we're calling a private method here
+    await form.onLanguageChangeDone('en');
 
     // Ensure the data reference is kept when a language change happens
-    expect(onLanguageChangeMock).toBeCalledWith('en', 'foo');
+    await expect.poll(() => onLanguageChangeMock).toHaveBeenCalledWith('en', 'foo');
 
     // Remove query param to ensure other tests don't fail
     window.history.pushState({}, '', window.location.pathname);
   });
 
-  it('should correctly set the formUrl', () => {
-    mswServer.use(...apiMocks);
+  test('should correctly set the formUrl', () => {
+    mswWorker.use(...apiMocks);
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,
       basePath: '/some-subpath/',
@@ -205,13 +204,16 @@ describe('OpenForm', () => {
     });
 
     // @ts-expect-error accessing a protected property here
-    expect(form.clientBaseUrl).toEqual('http://localhost/some-subpath');
+    const clientBaseUrl = new URL(form.clientBaseUrl);
+    expect(clientBaseUrl.host).toEqual(window.location.host);
+    expect(clientBaseUrl.pathname).toEqual('/some-subpath');
   });
 
-  it("shouldn't take basepath into account (hash based routing)", () => {
-    mswServer.use(...apiMocks);
+  test("shouldn't take basepath into account (hash based routing)", () => {
+    mswWorker.use(...apiMocks);
     window.history.pushState({}, '', '/some-path');
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,
       basePath: '/i-must-be-ignored',
@@ -220,13 +222,16 @@ describe('OpenForm', () => {
     });
 
     // @ts-expect-error accessing a protected property here
-    expect(form.clientBaseUrl).toEqual('http://localhost/some-path');
+    const clientBaseUrl = new URL(form.clientBaseUrl);
+    expect(clientBaseUrl.host).toEqual(window.location.host);
+    expect(clientBaseUrl.pathname).toEqual('/some-path');
   });
 
-  it('must retain query string parameters with hash based routing', () => {
-    mswServer.use(...apiMocks);
+  test('must retain query string parameters with hash based routing', () => {
+    mswWorker.use(...apiMocks);
     window.history.pushState({}, '', '/some-path?someQuery=foo');
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     const form = new OpenForm(formRoot, {
       baseUrl: BASE_URL,
       basePath: '/i-must-be-ignored',
@@ -235,32 +240,39 @@ describe('OpenForm', () => {
     });
 
     // @ts-expect-error accessing a protected property here
-    expect(form.clientBaseUrl).toEqual('http://localhost/some-path?someQuery=foo');
+    const clientBaseUrl = new URL(form.clientBaseUrl);
+    expect(clientBaseUrl.host).toEqual(window.location.host);
+    expect(clientBaseUrl.pathname).toEqual('/some-path');
+    expect(clientBaseUrl.searchParams.get('someQuery')).toEqual('foo');
   });
 
-  it.each([
+  test.each([
     [
       `/some-subpath?_of_action=afspraak-annuleren&_of_action_params=${encodeURIComponent(
         JSON.stringify({time: '2021-07-21T12:00:00+00:00'})
       )}`,
-      'http://localhost/some-subpath/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00',
+      `http://${window.location.host}/some-subpath/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00`,
     ],
-    ['/some-subpath?_of_action=afspraak-maken', 'http://localhost/some-subpath/afspraak-maken'],
+    [
+      '/some-subpath?_of_action=afspraak-maken',
+      `http://${window.location.host}/some-subpath/afspraak-maken`,
+    ],
     [
       `/some-subpath?_of_action=cosign&_of_action_params=${encodeURIComponent(
         JSON.stringify({submission_uuid: 'abc'})
       )}`,
-      'http://localhost/some-subpath/cosign/check?submission_uuid=abc',
+      `http://${window.location.host}/some-subpath/cosign/check?submission_uuid=abc`,
     ],
     [
       `/some-subpath?_of_action=resume&_of_action_params=${encodeURIComponent(
         JSON.stringify({step_slug: 'step-1', submission_uuid: 'abc'})
       )}`,
-      'http://localhost/some-subpath/stap/step-1?submission_uuid=abc',
+      `http://${window.location.host}/some-subpath/stap/step-1?submission_uuid=abc`,
     ],
   ])('should handle action redirects correctly', async (initialUrl, expected) => {
-    mswServer.use(...apiMocks);
+    mswWorker.use(...apiMocks);
     const formRoot = document.createElement('div');
+    document.body.appendChild(formRoot);
     window.history.pushState(null, '', initialUrl);
     new OpenForm(formRoot, {
       baseUrl: BASE_URL,
@@ -273,36 +285,36 @@ describe('OpenForm', () => {
     expect(location.href).toEqual(expected);
   });
 
-  it.each([
+  test.each([
     // With a base path:
     [
       // Omitting submission_uuid for simplicity
       `/base-path/?_of_action=afspraak-annuleren&unrelated_q=1&_of_action_params=${encodeURIComponent(
         JSON.stringify({time: '2021-07-21T12:00:00+00:00'})
       )}`,
-      'http://localhost/base-path/?unrelated_q=1#/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00',
+      `http://${window.location.host}/base-path/?unrelated_q=1#/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00`,
     ],
     [
       '/base-path/?_of_action=afspraak-maken&unrelated_q=1',
-      'http://localhost/base-path/?unrelated_q=1#/afspraak-maken',
+      `http://${window.location.host}/base-path/?unrelated_q=1#/afspraak-maken`,
     ],
     [
       `/base-path/?_of_action=cosign&_of_action_params=${encodeURIComponent(
         JSON.stringify({submission_uuid: 'abc'})
       )}&unrelated_q=1`,
-      'http://localhost/base-path/?unrelated_q=1#/cosign/check?submission_uuid=abc',
+      `http://${window.location.host}/base-path/?unrelated_q=1#/cosign/check?submission_uuid=abc`,
     ],
     [
       `/base-path/?_of_action=resume&_of_action_params=${encodeURIComponent(
         JSON.stringify({step_slug: 'step-1', submission_uuid: 'abc'})
       )}&unrelated_q=1`,
-      'http://localhost/base-path/?unrelated_q=1#/stap/step-1?submission_uuid=abc',
+      `http://${window.location.host}/base-path/?unrelated_q=1#/stap/step-1?submission_uuid=abc`,
     ],
     [
       `/base-path/?_of_action=payment&_of_action_params=${encodeURIComponent(
         JSON.stringify({of_payment_status: 'completed'})
       )}&unrelated_q=1`,
-      'http://localhost/base-path/?unrelated_q=1#/betalen?of_payment_status=completed',
+      `http://${window.location.host}/base-path/?unrelated_q=1#/betalen?of_payment_status=completed`,
     ],
     // Without a base path:
     [
@@ -310,35 +322,36 @@ describe('OpenForm', () => {
       `/?_of_action=afspraak-annuleren&unrelated_q=1&_of_action_params=${encodeURIComponent(
         JSON.stringify({time: '2021-07-21T12:00:00+00:00'})
       )}`,
-      'http://localhost/?unrelated_q=1#/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00',
+      `http://${window.location.host}/?unrelated_q=1#/afspraak-annuleren?time=2021-07-21T12%3A00%3A00%2B00%3A00`,
     ],
     [
       '/?_of_action=afspraak-maken&unrelated_q=1',
-      'http://localhost/?unrelated_q=1#/afspraak-maken',
+      `http://${window.location.host}/?unrelated_q=1#/afspraak-maken`,
     ],
     [
       `/?_of_action=cosign&_of_action_params=${encodeURIComponent(
         JSON.stringify({submission_uuid: 'abc'})
       )}&unrelated_q=1`,
-      'http://localhost/?unrelated_q=1#/cosign/check?submission_uuid=abc',
+      `http://${window.location.host}/?unrelated_q=1#/cosign/check?submission_uuid=abc`,
     ],
     [
       `/?_of_action=resume&_of_action_params=${encodeURIComponent(
         JSON.stringify({step_slug: 'step-1', submission_uuid: 'abc'})
       )}&unrelated_q=1`,
-      'http://localhost/?unrelated_q=1#/stap/step-1?submission_uuid=abc',
+      `http://${window.location.host}/?unrelated_q=1#/stap/step-1?submission_uuid=abc`,
     ],
     [
       `/?_of_action=payment&_of_action_params=${encodeURIComponent(
         JSON.stringify({of_payment_status: 'completed'})
       )}&unrelated_q=1`,
-      'http://localhost/?unrelated_q=1#/betalen?of_payment_status=completed',
+      `http://${window.location.host}/?unrelated_q=1#/betalen?of_payment_status=completed`,
     ],
   ])(
     'should handle action redirects correctly (hash based routing)',
     async (initialUrl, expected) => {
-      mswServer.use(...apiMocks);
+      mswWorker.use(...apiMocks);
       const formRoot = document.createElement('div');
+      document.body.appendChild(formRoot);
       window.history.pushState(null, '', initialUrl);
       new OpenForm(formRoot, {
         baseUrl: BASE_URL,

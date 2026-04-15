@@ -1,23 +1,21 @@
-import {act, render as realRender, screen, waitFor} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {Formik} from 'formik';
 import {IntlProvider} from 'react-intl';
+import {beforeEach, describe, expect, test, vi} from 'vitest';
+import {render as realRender} from 'vitest-browser-react';
 
 import {ConfigContext} from '@/Context';
 import {BASE_URL} from '@/api-mocks';
 import {mockAppointmentDatesGet} from '@/api-mocks/appointments';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import type {AppointmentProduct} from '@/data/appointments';
 import messagesEN from '@/i18n/compiled/en.json';
 
 import DateSelect from './DateSelect';
 
-const waitForPosition = () => act(async () => {});
-
 const products: AppointmentProduct[] = [{productId: 'e8e045ab', amount: 1, amountLimit: 0}];
 
-const render = (children: React.ReactNode, locationId: string) =>
-  realRender(
+const render = async (children: React.ReactNode, locationId: string) =>
+  await realRender(
     <ConfigContext.Provider
       value={{
         baseUrl: BASE_URL,
@@ -47,60 +45,75 @@ beforeEach(() => {
 });
 
 describe('The appointment date select', () => {
-  it('disables dates before and after the available dates range', async () => {
-    const user = userEvent.setup();
-    mswServer.use(mockAppointmentDatesGet);
+  test('disables dates before and after the available dates range', async () => {
+    mswWorker.use(mockAppointmentDatesGet);
 
-    render(<DateSelect products={products} />, '1396f17c');
+    const screen = await render(<DateSelect products={products} />, '1396f17c');
 
     const input = screen.getByLabelText('Date');
-    await waitFor(() => {
-      expect(input).not.toBeDisabled();
-      expect(input).not.toHaveAttribute('aria-readonly');
-    });
+    await expect.element(input).not.toBeDisabled();
+    await expect.element(input).not.toHaveAttribute('aria-readonly');
 
     const datePickerTrigger = screen.getByRole('button', {name: 'Toggle calendar'});
-    expect(datePickerTrigger).toBeVisible();
+    await expect.element(datePickerTrigger).toBeVisible();
 
-    await user.click(datePickerTrigger);
-    await waitForPosition();
-    expect(await screen.findByRole('dialog')).toBeVisible();
+    await datePickerTrigger.click();
+    await expect.element(screen.getByRole('dialog')).toBeVisible();
 
-    expect(await screen.findByRole('button', {name: 'Monday 12 June 2023'})).toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Tuesday 13 June 2023'})).not.toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Wednesday 14 June 2023'})).not.toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Thursday 15 June 2023'})).not.toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Friday 16 June 2023'})).not.toBeDisabled();
-    expect(screen.queryByRole('button', {name: 'Saturday 17 June 2023'})).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', {name: 'Sunday 18 June 2023'})).not.toBeInTheDocument();
+    await expect.element(screen.getByRole('button', {name: 'Monday 12 June 2023'})).toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Tuesday 13 June 2023'}))
+      .not.toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Wednesday 14 June 2023'}))
+      .not.toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Thursday 15 June 2023'}))
+      .not.toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Friday 16 June 2023'}))
+      .not.toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Saturday 17 June 2023'}))
+      .not.toBeInTheDocument();
+    await expect
+      .element(screen.getByRole('button', {name: 'Sunday 18 June 2023'}))
+      .not.toBeInTheDocument();
   });
 
-  it('disables missing dates within the available dates range', async () => {
-    const user = userEvent.setup({delay: null});
-    mswServer.use(mockAppointmentDatesGet);
+  test('disables missing dates within the available dates range', async () => {
+    mswWorker.use(mockAppointmentDatesGet);
 
-    render(<DateSelect products={products} />, '34000e85');
+    const screen = await render(<DateSelect products={products} />, '34000e85');
 
     const input = screen.getByLabelText('Date');
-    await waitFor(() => {
-      expect(input).not.toBeDisabled();
-      expect(input).not.toHaveAttribute('aria-readonly');
-    });
+    await expect.element(input).not.toBeDisabled();
+    await expect.element(input).not.toHaveAttribute('aria-readonly');
 
     const datePickerTrigger = screen.getByRole('button', {name: 'Toggle calendar'});
-    expect(datePickerTrigger).toBeVisible();
+    await expect.element(datePickerTrigger).toBeVisible();
 
-    await user.click(datePickerTrigger);
-    await waitForPosition();
+    await datePickerTrigger.click();
 
-    expect(await screen.findByRole('dialog')).toBeVisible();
-
-    expect(await screen.findByRole('button', {name: 'Monday 12 June 2023'})).not.toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Tuesday 13 June 2023'})).toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Wednesday 14 June 2023'})).toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Thursday 15 June 2023'})).not.toBeDisabled();
-    expect(screen.getByRole('button', {name: 'Friday 16 June 2023'})).not.toBeDisabled();
-    expect(screen.queryByRole('button', {name: 'Saturday 17 June 2023'})).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', {name: 'Sunday 18 June 2023'})).not.toBeInTheDocument();
+    await expect.element(screen.getByRole('dialog')).toBeVisible();
+    await expect
+      .element(screen.getByRole('button', {name: 'Monday 12 June 2023'}))
+      .not.toBeDisabled();
+    await expect.element(screen.getByRole('button', {name: 'Tuesday 13 June 2023'})).toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Wednesday 14 June 2023'}))
+      .toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Thursday 15 June 2023'}))
+      .not.toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Friday 16 June 2023'}))
+      .not.toBeDisabled();
+    await expect
+      .element(screen.getByRole('button', {name: 'Saturday 17 June 2023'}))
+      .not.toBeInTheDocument();
+    await expect
+      .element(screen.getByRole('button', {name: 'Sunday 18 June 2023'}))
+      .not.toBeInTheDocument();
   });
 });

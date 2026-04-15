@@ -1,6 +1,7 @@
-import {render, screen} from '@testing-library/react';
 import {Formik} from 'formik';
 import {MemoryRouter} from 'react-router';
+import {expect, test, vi} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {LiteralsProvider} from '@/components/Literal';
 import type {Form} from '@/data/forms';
@@ -27,8 +28,8 @@ const Wrapper: React.FC<React.PropsWithChildren> = ({children}) => (
   </MemoryRouter>
 );
 
-it('Summary of non-submittable form, button is NOT present', () => {
-  render(
+test('Summary of non-submittable form, button is NOT present', async () => {
+  const screen = await render(
     <Wrapper>
       <SummaryConfirmation
         submissionAllowed="no_with_overview"
@@ -38,20 +39,19 @@ it('Summary of non-submittable form, button is NOT present', () => {
     </Wrapper>
   );
 
-  const buttons = screen.queryByRole('button');
+  const button = screen.getByRole('button');
 
-  expect(buttons).toBeNull();
+  await expect.element(button).not.toBeInTheDocument();
 });
 
-it('Summary of submittable form, button IS present', () => {
-  render(
+test('Summary of submittable form, button IS present', async () => {
+  const screen = await render(
     <Wrapper>
       <SummaryConfirmation submissionAllowed="yes" prevPage="some-page" hideAbortButton />
     </Wrapper>
   );
 
-  const button = screen.getByRole('button');
+  const button = screen.getByRole('button', {name: 'Submit form'});
 
-  expect(button).toBeDefined();
-  expect(button.textContent).toEqual('Submit form');
+  await expect.element(button).toBeVisible();
 });

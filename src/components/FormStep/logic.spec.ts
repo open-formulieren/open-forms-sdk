@@ -4,6 +4,7 @@ import type {
   JSONValue,
   TextFieldComponentSchema,
 } from '@open-formulieren/types';
+import {describe, expect, test} from 'vitest';
 
 import {buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import type {LogicRule} from '@/data/logic';

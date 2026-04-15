@@ -23,11 +23,12 @@
       "@/*": ["./*"],
       "@/sb-decorators": ["../.storybook/decorators.tsx"]
     },
-    "types": [
-      "vite/client",
-      "vitest/globals"
-    ]
+    "types": ["vite/client"],
   },
-  "include": ["src/**/*", ".storybook/**/*"],
+  "include": [
+    "src/**/*",
+    ".storybook/**/*",
+    "vitest-*.setup.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

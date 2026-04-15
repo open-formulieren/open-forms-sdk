@@ -1,5 +1,6 @@
 import type {JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import {createIntl, createIntlCache} from 'react-intl';
+import {describe, expect, test} from 'vitest';
 import {z} from 'zod';
 
 import messagesEN from '@/i18n/compiled/en.json';
@@ -263,7 +264,7 @@ const TEST_CASES: TestCase[] = [
 describe('Localized global zod error map (EN)', () => {
   const errorMap = makeZodErrorMap(intlEN);
 
-  it.each(TEST_CASES)(
+  test.each(TEST_CASES)(
     "correctly displays the '$label' error message",
     ({schema, value, message}) => {
       const result = schema.safeParse(value, {errorMap});
@@ -275,7 +276,7 @@ describe('Localized global zod error map (EN)', () => {
     }
   );
 
-  it("correctly displays the 'invalid_arguments' error message", () => {
+  test("correctly displays the 'invalid_arguments' error message", () => {
     const strIdentity = z
       .function()
       .args(z.string())
@@ -290,7 +291,7 @@ describe('Localized global zod error map (EN)', () => {
     }
   });
 
-  it("correctly displays the 'invalid_return_type' error message", () => {
+  test("correctly displays the 'invalid_return_type' error message", () => {
     const strIdentity = z
       .function()
       .args(z.string())
@@ -309,7 +310,7 @@ describe('Localized global zod error map (EN)', () => {
 describe('Localized global zod error map (NL)', () => {
   const errorMap = makeZodErrorMap(intlNL);
 
-  it.each(TEST_CASES)("does not crash on translations ('$label')", ({schema, value}) => {
+  test.each(TEST_CASES)("does not crash on translations ('$label')", ({schema, value}) => {
     const result = schema.safeParse(value, {errorMap});
 
     expect(result.success).toBe(false);
@@ -318,7 +319,7 @@ describe('Localized global zod error map (NL)', () => {
     expect(error.length).toBeGreaterThan(0);
   });
 
-  it("does not crash on translations ('invalid_arguments')", () => {
+  test("does not crash on translations ('invalid_arguments')", () => {
     const strIdentity = z
       .function()
       .args(z.string())
@@ -333,7 +334,7 @@ describe('Localized global zod error map (NL)', () => {
     }
   });
 
-  it("does not crash on translations ('invalid_return_type')", () => {
+  test("does not crash on translations ('invalid_return_type')", () => {
     const strIdentity = z
       .function()
       .args(z.string())

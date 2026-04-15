@@ -32,7 +32,7 @@ const getDates = async (
     multiParams
   );
   const results = datesList!.map(item => item.date);
-  // Array.prototype.toSorted is too new, jest tests can't handle it yet
+  // Array.prototype.toSorted is too new, requires ES2023 target
   return results.sort();
 };
 

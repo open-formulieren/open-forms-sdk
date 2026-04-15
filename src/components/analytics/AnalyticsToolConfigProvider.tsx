@@ -34,7 +34,7 @@ const AnalyticsToolsConfigProvider: React.FC<AnalyticsToolsConfigProviderProps> 
   const {baseUrl} = useContext(ConfigContext);
 
   // we deliberately don't handle the loading or error state - these are non fatal situations.
-  const {value = defaultConfig} = useAsync(async () => {
+  const {value = defaultConfig, loading} = useAsync(async () => {
     const config = await get<AnalyticsToolsConfig>(
       `${baseUrl}analytics/analytics-tools-config-info`
     );
@@ -44,6 +44,7 @@ const AnalyticsToolsConfigProvider: React.FC<AnalyticsToolsConfigProviderProps> 
   return (
     <AnalyticsToolsConfigContext.Provider value={value}>
       {children}
+      {!loading && <span data-testid="analytics-config-loaded" />}
     </AnalyticsToolsConfigContext.Provider>
   );
 };

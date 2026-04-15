@@ -1,11 +1,12 @@
-import {render, screen} from '@testing-library/react';
 import {NuqsAdapter} from 'nuqs/adapters/react-router/v7';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {afterEach, beforeEach, expect, test} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from '@/api-mocks/submissions';
 import messagesEN from '@/i18n/compiled/en.json';
 import {FUTURE_FLAGS} from '@/routes';
@@ -100,18 +101,22 @@ const Wrapper: React.FC<WrapperProps> = ({relativeUrl}) => {
 };
 
 test('Cosign start route renders start/login page', async () => {
-  render(<Wrapper relativeUrl="start" />);
+  const screen = await render(<Wrapper relativeUrl="start" />);
 
-  expect(await screen.findByRole('link', {name: 'Login with DigiD Cosign'})).toBeVisible();
+  await expect.element(screen.getByRole('link', {name: 'Login with DigiD Cosign'})).toBeVisible();
 });
 
 test('Load submission summary after backend authentication', async () => {
-  mswServer.use(mockSubmissionGet(), mockSubmissionSummaryGet());
+  mswWorker.use(mockSubmissionGet(), mockSubmissionSummaryGet());
 
   // the submission ID is taken from the query params
-  render(<Wrapper relativeUrl="check?submission_uuid=458b29ae-5baa-4132-a0d7-8c7071b8152a" />);
+  const screen = await render(
+    <Wrapper relativeUrl="check?submission_uuid=458b29ae-5baa-4132-a0d7-8c7071b8152a" />
+  );
 
-  await screen.findByRole('heading', {name: 'Check and co-sign submission', level: 1});
+  await expect
+    .element(screen.getByRole('heading', {name: 'Check and co-sign submission', level: 1}))
+    .toBeVisible();
   // wait for summary to load from the backend
-  await screen.findByText('Component 1 value');
+  await expect.element(screen.getByText('Component 1 value')).toBeVisible();
 });

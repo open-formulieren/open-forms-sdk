@@ -1,13 +1,13 @@
-import {render, screen, waitFor} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {NuqsTestingAdapter} from 'nuqs/adapters/testing';
 import {useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {afterAll, expect, test, vi} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import {mockSubmissionPost} from '@/api-mocks/submissions';
 import SubmissionProvider from '@/components/SubmissionProvider';
 import type {Form} from '@/data/forms';
@@ -16,9 +16,6 @@ import messagesEN from '@/i18n/compiled/en.json';
 import {FUTURE_FLAGS} from '@/routes';
 
 import FormStart from './index';
-
-const scrollIntoViewMock = vi.fn();
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 afterAll(() => {
   vi.clearAllMocks();
@@ -82,10 +79,9 @@ const Wrap: React.FC<WrapperProps> = ({
 };
 
 test('Start form without having logged in', async () => {
-  const user = userEvent.setup();
-  mswServer.use(mockSubmissionPost());
-  let startSubmissionRequest;
-  mswServer.events.on('request:match', async ({request}) => {
+  mswWorker.use(mockSubmissionPost());
+  let startSubmissionRequest: Request | undefined;
+  mswWorker.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
       startSubmissionRequest = request;
@@ -94,12 +90,12 @@ test('Start form without having logged in', async () => {
   // form with only anonymous login option
   const form = buildForm({loginOptions: [], loginRequired: false});
 
-  render(<Wrap form={form} />);
+  const screen = await render(<Wrap form={form} />);
 
   const startButton = screen.getByRole('button', {name: 'Begin'});
-  await user.click(startButton);
+  await startButton.click();
 
-  expect(startSubmissionRequest).not.toBeUndefined();
+  await expect.poll(() => startSubmissionRequest).not.toBeUndefined();
   const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.anonymous).toBe(true);
 });
@@ -123,9 +119,9 @@ test('Start form with having logged in', async () => {
     ],
     loginRequired: true,
   });
-  mswServer.use(mockSubmissionPost());
-  let startSubmissionRequest: Request;
-  mswServer.events.on('request:match', async ({request}) => {
+  mswWorker.use(mockSubmissionPost());
+  let startSubmissionRequest: Request | undefined;
+  mswWorker.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
       startSubmissionRequest = request;
@@ -133,16 +129,17 @@ test('Start form with having logged in', async () => {
   });
 
   // we simulate the redirect flow by the backend
-  render(<Wrap form={form} />);
-  const digidLink = await screen.findByRole<HTMLAnchorElement>('link', {name: 'Login with DigiD'});
+  const screen = await render(<Wrap form={form} />);
+  const digidLinkLocator = screen.getByRole('link', {name: 'Login with DigiD'});
+  await expect.element(digidLinkLocator).toBeVisible();
+  const digidLink = digidLinkLocator.element();
+
   const parsedDigidLink = new URL(digidLink.getAttribute('href')!);
   const nextUrl = new URL(parsedDigidLink.searchParams.get('next')!);
   expect(nextUrl).not.toBeNull();
-  render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
+  await render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
 
-  await waitFor(() => {
-    expect(startSubmissionRequest).not.toBeUndefined();
-  });
+  await expect.poll(() => startSubmissionRequest).not.toBeUndefined();
   const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.anonymous).toBe(false);
 });
@@ -166,9 +163,9 @@ test('Start form with object reference query param', async () => {
     ],
     loginRequired: true,
   });
-  mswServer.use(mockSubmissionPost());
-  let startSubmissionRequest: Request;
-  mswServer.events.on('request:match', async ({request}) => {
+  mswWorker.use(mockSubmissionPost());
+  let startSubmissionRequest: Request | undefined;
+  mswWorker.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
       startSubmissionRequest = request;
@@ -176,18 +173,20 @@ test('Start form with object reference query param', async () => {
   });
 
   // we simulate the redirect flow by the backend
-  render(
+  const screen = await render(
     <Wrap
       form={form}
       currentUrl="/startpagina?initial_data_reference=foo"
       searchParams="?initial_data_reference=foo"
     />
   );
-  const digidLink = await screen.findByRole('link', {name: 'Login with DigiD'});
+  const digidLinkLocator = screen.getByRole('link', {name: 'Login with DigiD'});
+  await expect.element(digidLinkLocator).toBeVisible();
+  const digidLink = digidLinkLocator.element();
   const parsedDigidLink = new URL(digidLink.getAttribute('href')!);
   const nextUrl = new URL(parsedDigidLink.searchParams.get('next')!);
   expect(nextUrl).not.toBeNull();
-  render(
+  await render(
     <Wrap
       form={form}
       currentUrl={`${nextUrl.pathname}${nextUrl.search}`}
@@ -195,9 +194,7 @@ test('Start form with object reference query param', async () => {
     />
   );
 
-  await waitFor(() => {
-    expect(startSubmissionRequest).not.toBeUndefined();
-  });
+  await expect.poll(() => startSubmissionRequest).not.toBeUndefined();
   const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.initialDataReference).toBe('foo');
 });
@@ -221,9 +218,9 @@ test('Start form without object reference query param', async () => {
     ],
     loginRequired: true,
   });
-  mswServer.use(mockSubmissionPost());
-  let startSubmissionRequest: Request;
-  mswServer.events.on('request:match', async ({request}) => {
+  mswWorker.use(mockSubmissionPost());
+  let startSubmissionRequest: Request | undefined;
+  mswWorker.events.on('request:match', async ({request}) => {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname.endsWith('/api/v2/submissions')) {
       startSubmissionRequest = request;
@@ -231,16 +228,16 @@ test('Start form without object reference query param', async () => {
   });
 
   // we simulate the redirect flow by the backend
-  render(<Wrap form={form} currentUrl="/startpagina" />);
-  const digidLink = await screen.findByRole('link', {name: 'Login with DigiD'});
+  const screen = await render(<Wrap form={form} currentUrl="/startpagina" />);
+  const digidLinkLocator = screen.getByRole('link', {name: 'Login with DigiD'});
+  await expect.element(digidLinkLocator).toBeVisible();
+  const digidLink = digidLinkLocator.element();
   const parsedDigidLink = new URL(digidLink.getAttribute('href')!);
   const nextUrl = new URL(parsedDigidLink.searchParams.get('next')!);
   expect(nextUrl).not.toBeNull();
-  render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
+  await render(<Wrap form={form} currentUrl={`${nextUrl.pathname}${nextUrl.search}`} />);
 
-  await waitFor(() => {
-    expect(startSubmissionRequest).not.toBeUndefined();
-  });
+  await expect.poll(() => startSubmissionRequest).not.toBeUndefined();
   const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.initialDataReference).toBeUndefined();
 });
@@ -262,19 +259,19 @@ test.each([
   'Form start does not start if there are auth errors / %s',
   async (testQuery, expectedMessage) => {
     let requestsMade = false;
-    mswServer.events.on('request:start', async () => {
+    mswWorker.events.on('request:start', async () => {
       requestsMade = true;
     });
     const onSubmissionObtained = vi.fn();
 
-    render(
+    const screen = await render(
       <Wrap
         currentUrl={`/startpagina?_start=1&${testQuery}`}
         onSubmissionObtained={onSubmissionObtained}
       />
     );
 
-    expect(await screen.findByText(expectedMessage)).toBeVisible();
+    await expect.element(screen.getByText(expectedMessage)).toBeVisible();
     expect(requestsMade).toBe(false);
     expect(onSubmissionObtained).not.toHaveBeenCalled();
   }
@@ -283,11 +280,11 @@ test.each([
 test('Form start page does not show login buttons if an active submission is present', async () => {
   const submission = buildSubmission({isAuthenticated: false});
 
-  render(<Wrap initialSubmission={submission} />);
+  const screen = await render(<Wrap initialSubmission={submission} />);
 
-  const continueButton = await screen.findByRole('button', {name: 'Continue existing submission'});
-  expect(continueButton).toBeInTheDocument();
-  expect(screen.getByRole('button', {name: 'Cancel submission'})).toBeInTheDocument();
+  const continueButton = screen.getByRole('button', {name: 'Continue existing submission'});
+  await expect.element(continueButton).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Cancel submission'})).toBeVisible();
 });
 
 test('Form start page does not show invisible login buttons', async () => {
@@ -323,20 +320,20 @@ test('Form start page does not show invisible login buttons', async () => {
     loginRequired: true,
   });
 
-  render(<Wrap form={form} />);
-  const digidLoginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
-  expect(digidLoginLink).toBeVisible();
-  expect(screen.queryAllByRole('link', {name: 'Login with OpenID Connect'})).toHaveLength(0);
+  const screen = await render(<Wrap form={form} />);
+  const digidLoginLink = screen.getByRole('link', {name: 'Login with DigiD'});
+  await expect.element(digidLoginLink).toBeVisible();
+  expect(screen.getByRole('link', {name: 'Login with OpenID Connect'}).all()).toHaveLength(0);
 });
 
 test('Form start page does not show login buttons if an active submission is present', async () => {
   const submission = buildSubmission({isAuthenticated: false});
 
-  render(<Wrap initialSubmission={submission} />);
+  const screen = await render(<Wrap initialSubmission={submission} />);
 
-  const continueButton = await screen.findByRole('button', {name: 'Continue existing submission'});
-  expect(continueButton).toBeInTheDocument();
-  expect(screen.getByRole('button', {name: 'Cancel submission'})).toBeInTheDocument();
+  const continueButton = screen.getByRole('button', {name: 'Continue existing submission'});
+  await expect.element(continueButton).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Cancel submission'})).toBeVisible();
 });
 
 test('Form start page shows invisible login buttons when auth_visible=all', async () => {
@@ -372,9 +369,11 @@ test('Form start page shows invisible login buttons when auth_visible=all', asyn
     loginRequired: true,
   });
 
-  render(<Wrap form={form} authVisible="all" searchParams="?auth_visible=all" />);
-  const digidLoginLink = await screen.findByRole('link', {name: 'Login with DigiD'});
-  expect(digidLoginLink).toBeVisible();
-  const oidcLoginLink = await screen.findByRole('link', {name: 'Login with OpenID Connect'});
-  expect(oidcLoginLink).toBeVisible();
+  const screen = await render(
+    <Wrap form={form} authVisible="all" searchParams="?auth_visible=all" />
+  );
+  const digidLoginLink = screen.getByRole('link', {name: 'Login with DigiD'});
+  await expect.element(digidLoginLink).toBeVisible();
+  const oidcLoginLink = screen.getByRole('link', {name: 'Login with OpenID Connect'});
+  await expect.element(oidcLoginLink).toBeVisible();
 });

@@ -1,7 +1,7 @@
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {expect, test, vi} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {buildForm} from '@/api-mocks';
 import {LiteralsProvider} from '@/components/Literal';
@@ -37,24 +37,23 @@ const Wrapper: React.FC<WrapperProps> = ({form, onFormStart, currentUrl = '/'}) 
   );
 };
 
-it('Login not required, options wrapped in form tag', async () => {
-  const user = userEvent.setup();
+test('Login not required, options wrapped in form tag', async () => {
   const form = buildForm({loginRequired: false, loginOptions: [], cosignLoginOptions: []});
   const onFormStart = vi.fn();
 
-  render(<Wrapper form={form} onFormStart={onFormStart} />);
+  const screen = await render(<Wrapper form={form} onFormStart={onFormStart} />);
 
-  expect(await screen.findByTestId('start-form')).toBeInTheDocument();
+  await expect.element(screen.getByTestId('start-form')).toBeInTheDocument();
 
   const anonymousStartButton = screen.getByRole('button', {name: 'Begin Form'});
-  expect(anonymousStartButton).toBeVisible();
+  await expect.element(anonymousStartButton).toBeVisible();
 
-  await user.click(anonymousStartButton);
+  await anonymousStartButton.click();
 
-  expect(onFormStart).toHaveBeenCalledWith({isAnonymous: true});
+  await expect.poll(() => onFormStart).toHaveBeenCalledWith({isAnonymous: true});
 });
 
-it('Login required, options not wrapped in form tag', async () => {
+test('Login required, options not wrapped in form tag', async () => {
   const form = buildForm({
     loginRequired: true,
     loginOptions: [
@@ -76,13 +75,11 @@ it('Login required, options not wrapped in form tag', async () => {
   });
   const onFormStart = vi.fn();
 
-  render(<Wrapper form={form} onFormStart={onFormStart} />);
+  const screen = await render(<Wrapper form={form} onFormStart={onFormStart} />);
 
-  const digidLoginLink = await screen.findByRole<HTMLAnchorElement>('link', {
-    name: 'Inloggen met DigiD',
-  });
-  expect(digidLoginLink).toBeVisible();
-  const loginHref = new URL(digidLoginLink.getAttribute('href')!);
+  const digidLoginLink = screen.getByRole('link', {name: 'Inloggen met DigiD'});
+  await expect.element(digidLoginLink).toBeVisible();
+  const loginHref = new URL(digidLoginLink.element().getAttribute('href')!);
   expect(loginHref.origin).toBe('https://open-forms.nl');
   expect(loginHref.pathname).toBe('/auth/form-slug/digid/start');
 
@@ -90,11 +87,11 @@ it('Login required, options not wrapped in form tag', async () => {
   expect(nextUrl.pathname).toBe('/');
   expect(nextUrl.searchParams.get(START_FORM_QUERY_PARAM)).not.toBeNull();
 
-  expect(screen.queryByTestId('start-form')).not.toBeInTheDocument();
-  expect(screen.queryAllByRole('button')).toHaveLength(0);
+  await expect.element(screen.getByTestId('start-form')).not.toBeInTheDocument();
+  expect(screen.getByRole('button').all()).toHaveLength(0);
 });
 
-it('Login button has the right URL after cancelling log in', async () => {
+test('Login button has the right URL after cancelling log in', async () => {
   const form = buildForm({
     loginRequired: true,
     loginOptions: [
@@ -116,7 +113,7 @@ it('Login button has the right URL after cancelling log in', async () => {
   });
   const onFormStart = vi.fn();
 
-  render(
+  const screen = await render(
     <Wrapper
       form={form}
       onFormStart={onFormStart}
@@ -124,13 +121,11 @@ it('Login button has the right URL after cancelling log in', async () => {
     />
   );
 
+  const digidLoginLink = screen.getByRole('link', {name: 'Inloggen met DigiD'});
+  await expect.element(digidLoginLink).toBeVisible();
   expect(onFormStart).not.toHaveBeenCalled();
 
-  const digidLoginLink = await screen.findByRole<HTMLAnchorElement>('link', {
-    name: 'Inloggen met DigiD',
-  });
-  expect(digidLoginLink).toBeVisible();
-  const loginHref = new URL(digidLoginLink.getAttribute('href')!);
+  const loginHref = new URL(digidLoginLink.element().getAttribute('href')!);
   expect(loginHref.origin).toBe('https://open-forms.nl');
   expect(loginHref.pathname).toBe('/auth/form-slug/digid/start');
 

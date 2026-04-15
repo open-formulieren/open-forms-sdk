@@ -1,6 +1,7 @@
-import {render, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {describe, expect, test} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
@@ -42,14 +43,12 @@ const Wrapper = () => {
 };
 
 describe('Cancelling an appointment', () => {
-  it('renders the correct page for a cancel route', async () => {
-    render(<Wrapper />);
+  test('renders the correct page for a cancel route', async () => {
+    const screen = await render(<Wrapper />);
 
-    const textbox = await screen.findByRole<HTMLInputElement>('textbox', {
-      name: 'Your email address',
-    });
-    expect(textbox).toBeVisible();
-    expect(textbox.name).toBe('email');
-    expect(screen.getByRole('button')).toBeVisible();
+    const textbox = screen.getByRole('textbox', {name: 'Your email address'});
+    await expect.element(textbox).toBeVisible();
+    await expect.element(textbox).toHaveAttribute('name', 'email');
+    await expect.element(screen.getByRole('button')).toBeVisible();
   });
 });

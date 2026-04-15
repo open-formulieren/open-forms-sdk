@@ -6,7 +6,7 @@
     "dist",
     "**/*.stories.*",
     "**/*.spec.*",
-    "src/vitest.setup.mts",
     "src/api-mocks/**/*",
+    "vitest-*.setup.ts",
   ]
 }

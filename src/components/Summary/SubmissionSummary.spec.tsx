@@ -1,10 +1,11 @@
-import {render, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {expect, test, vi} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import {mockSubmissionGet, mockSubmissionSummaryGet} from '@/api-mocks/submissions';
 import SubmissionProvider from '@/components/SubmissionProvider';
 import type {Form} from '@/data/forms';
@@ -67,12 +68,12 @@ test.each([true, false])(
       submissionAllowed: 'yes',
       isAuthenticated: true,
     });
-    mswServer.use(mockSubmissionGet(submissionIsAuthenticated), mockSubmissionSummaryGet());
+    mswWorker.use(mockSubmissionGet(submissionIsAuthenticated), mockSubmissionSummaryGet());
 
-    render(<Wrapper form={form} submission={submissionIsAuthenticated} />);
+    const screen = await render(<Wrapper form={form} submission={submissionIsAuthenticated} />);
 
-    const logoutButton = await screen.findByRole('button', {name: 'Uitloggen'});
-    expect(logoutButton).toBeVisible();
+    const logoutButton = screen.getByRole('button', {name: 'Uitloggen'});
+    await expect.element(logoutButton).toBeVisible();
   }
 );
 
@@ -82,13 +83,13 @@ test('Summary when isAuthenticated and loginRequired are false', async () => {
     submissionAllowed: 'yes',
     isAuthenticated: false,
   });
-  mswServer.use(mockSubmissionGet(submissionNotAuthenticated), mockSubmissionSummaryGet());
+  mswWorker.use(mockSubmissionGet(submissionNotAuthenticated), mockSubmissionSummaryGet());
 
-  render(<Wrapper form={form} submission={submissionNotAuthenticated} />);
+  const screen = await render(<Wrapper form={form} submission={submissionNotAuthenticated} />);
 
   // we expect an abort button instead of log out
-  const cancelButton = await screen.findByRole('button', {name: 'Annuleren'});
-  expect(cancelButton).toBeVisible();
-  const logoutButton = screen.queryByRole('button', {name: 'Uitloggen'});
-  expect(logoutButton).toBeNull();
+  const cancelButton = screen.getByRole('button', {name: 'Annuleren'});
+  await expect.element(cancelButton).toBeVisible();
+  const logoutButton = screen.getByRole('button', {name: 'Uitloggen'});
+  await expect.element(logoutButton).not.toBeInTheDocument();
 });

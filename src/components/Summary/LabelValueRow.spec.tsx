@@ -6,16 +6,17 @@ import type {
   NumberComponentSchema,
   SelectComponentSchema,
 } from '@open-formulieren/types';
-import {render as realRender, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router';
+import {expect, test} from 'vitest';
+import {render as realRender} from 'vitest-browser-react';
 
 import messagesNL from '@/i18n/compiled/nl.json';
 
 import {LabelValueRow} from './FormStepSummary';
 
-const render = (ui: React.ReactNode) =>
-  realRender(
+const render = async (ui: React.ReactNode) =>
+  await realRender(
     <IntlProvider locale="nl" messages={messagesNL}>
       <MemoryRouter>{ui}</MemoryRouter>
     </IntlProvider>
@@ -30,7 +31,7 @@ const render = (ui: React.ReactNode) =>
 //
 // MDN: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/structural_roles#structural_roles_with_html_equivalents
 
-test('Unfilled dates displayed properly', () => {
+test('Unfilled dates displayed properly', async () => {
   const dateComponent: DateComponentSchema = {
     id: 'dateOfBirth',
     key: 'dateOfBirth',
@@ -38,12 +39,14 @@ test('Unfilled dates displayed properly', () => {
     label: 'Date of birth',
   };
 
-  render(<LabelValueRow name="Date of birth" value="" component={dateComponent} />);
+  const screen = await render(
+    <LabelValueRow name="Date of birth" value="" component={dateComponent} />
+  );
 
-  expect(screen.getByRole('definition')).toHaveTextContent('');
+  await expect.element(screen.getByRole('definition')).toHaveTextContent('');
 });
 
-test('Multi-value select field displayed properly', () => {
+test('Multi-value select field displayed properly', async () => {
   const selectComponent: SelectComponentSchema = {
     id: 'selectPets',
     key: 'selectPets',
@@ -69,12 +72,14 @@ test('Multi-value select field displayed properly', () => {
     },
   };
 
-  render(<LabelValueRow name="Select Pets" value={['dog', 'fish']} component={selectComponent} />);
+  const screen = await render(
+    <LabelValueRow name="Select Pets" value={['dog', 'fish']} component={selectComponent} />
+  );
 
-  expect(screen.getByRole('definition')).toHaveTextContent('Dog; Fish');
+  await expect.element(screen.getByRole('definition')).toHaveTextContent('Dog; Fish');
 });
 
-test('Columns without labels are not rendered', () => {
+test('Columns without labels are not rendered', async () => {
   const columnComponent: ColumnsComponentSchema = {
     id: 'columns',
     key: 'columns',
@@ -82,24 +87,26 @@ test('Columns without labels are not rendered', () => {
     columns: [],
   };
 
-  render(<LabelValueRow name="" value={null} component={columnComponent} />);
+  const screen = await render(<LabelValueRow name="" value={null} component={columnComponent} />);
 
-  expect(screen.queryByRole('definition')).not.toBeInTheDocument();
-  expect(screen.queryByRole('term')).not.toBeInTheDocument();
+  await expect.element(screen.getByRole('definition')).not.toBeInTheDocument();
+  await expect.element(screen.getByRole('term')).not.toBeInTheDocument();
 });
 
-test('Number fields with zero values are displayed', () => {
+test('Number fields with zero values are displayed', async () => {
   const numberComponent: NumberComponentSchema = {
     id: 'numberComponent',
     key: 'numberComponent',
     type: 'number',
     label: 'Number',
   };
-  render(<LabelValueRow name="Number zero" value={0} component={numberComponent} />);
-  expect(screen.getByRole('definition')).toHaveTextContent('0');
+  const screen = await render(
+    <LabelValueRow name="Number zero" value={0} component={numberComponent} />
+  );
+  await expect.element(screen.getByRole('definition')).toHaveTextContent('0');
 });
 
-test('Currency fields with zero values are displayed', () => {
+test('Currency fields with zero values are displayed', async () => {
   const currencyComponent: CurrencyComponentSchema = {
     id: 'currencyComponent',
     key: 'currencyComponent',
@@ -107,15 +114,17 @@ test('Currency fields with zero values are displayed', () => {
     label: 'Currency',
     currency: 'EUR',
   };
-  render(<LabelValueRow name="Currency zero" value={0} component={currencyComponent} />);
+  const screen = await render(
+    <LabelValueRow name="Currency zero" value={0} component={currencyComponent} />
+  );
 
-  expect(screen.getByRole('definition')).toHaveTextContent('€ 0,00');
+  await expect.element(screen.getByRole('definition')).toHaveTextContent('€ 0,00');
 });
 
 test.each([
   [true, 'Ja'],
   [false, 'Nee'],
-])("Checkboxes are capitalised (value '%s' -> %s)", (value, text) => {
+])("Checkboxes are capitalised (value '%s' -> %s)", async (value, text) => {
   const checkbox: CheckboxComponentSchema = {
     id: 'checkbox',
     key: 'checkbox',
@@ -124,7 +133,7 @@ test.each([
     defaultValue: false,
   };
 
-  render(<LabelValueRow name="Checkbox" value={value} component={checkbox} />);
+  const screen = await render(<LabelValueRow name="Checkbox" value={value} component={checkbox} />);
 
-  expect(screen.getByRole('definition')).toHaveTextContent(text);
+  await expect.element(screen.getByRole('definition')).toHaveTextContent(text);
 });

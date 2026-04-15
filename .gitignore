@@ -15,6 +15,8 @@
 /coverage
 /.nyc_output
 .eslintcache
+src/**/__screenshots__/**
+.vitest-attachments
 
 # production
 /storybook-static

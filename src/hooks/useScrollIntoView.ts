@@ -9,10 +9,8 @@ const useScrollIntoView = <T extends HTMLElement = HTMLElement>(
   const ref = useRef<T | null>(null);
   useEffect(() => {
     if (!ref.current || disable) return;
-    // scrollIntoView is not available in jest-dom, and this can cause to crashing/infinitely
-    // loading (integration) tests because ErrorMessage uses this hook, which is used
-    // in the usual ErrorBoundary component... So, be very conservative here with the
-    // scrollIntoView behaviour/expectations!
+    // scrollIntoView is not available in jest-dom. While we no longer use it, we remain
+    // very conservative with the scrollIntoView behaviour/expectations!
     ref.current.scrollIntoView?.(options);
   }, [ref, options, disable]);
   return ref;

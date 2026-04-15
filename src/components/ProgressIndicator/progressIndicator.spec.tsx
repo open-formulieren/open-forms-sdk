@@ -1,24 +1,24 @@
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {NuqsAdapter} from 'nuqs/adapters/react-router/v7';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {afterEach, beforeEach, describe, expect, test} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import {buildSubmission, mockSubmissionPost} from '@/api-mocks/submissions';
 import type {Form} from '@/data/forms';
 import messagesEN from '@/i18n/compiled/en.json';
 import routes, {FUTURE_FLAGS} from '@/routes';
 
-const renderApp = (form: Form, initialRoute: string = '/') => {
+const renderApp = async (form: Form, initialRoute: string = '/') => {
   const router = createMemoryRouter(routes, {
     initialEntries: [initialRoute],
     initialIndex: 0,
     future: FUTURE_FLAGS,
   });
-  render(
+  return await render(
     <ConfigContext.Provider
       value={{
         baseUrl: BASE_URL,
@@ -51,65 +51,62 @@ afterEach(() => {
 });
 
 describe('The progress indicator component', () => {
-  it('displays the available submission/form steps and hardcoded steps (without payment)', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
-    const user = userEvent.setup({delay: null});
+  test('displays the available submission/form steps and hardcoded steps (without payment)', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
     const form = buildForm();
 
-    renderApp(form);
+    const screen = await renderApp(form);
 
-    const startFormLink = await screen.findByRole('link', {name: 'Start page'});
-    user.click(startFormLink);
+    const startFormLink = screen.getByRole('link', {name: 'Start page'});
+    await startFormLink.click();
 
-    const progressIndicator = await screen.findByText('Progress');
-    expect(progressIndicator).toBeVisible();
+    const progressIndicator = screen.getByText('Progress');
+    await expect.element(progressIndicator).toBeVisible();
 
-    const startPageItem = await screen.findByText('Start page');
-    expect(startPageItem).toBeVisible();
-    const stepPageItem = await screen.findByText('Step 1');
-    expect(stepPageItem).toBeVisible();
-    const summaryPageItem = await screen.findByText('Summary');
-    expect(summaryPageItem).toBeVisible();
+    const startPageItem = screen.getByText('Start page');
+    await expect.element(startPageItem).toBeVisible();
+    const stepPageItem = screen.getByText('Step 1');
+    await expect.element(stepPageItem).toBeVisible();
+    const summaryPageItem = screen.getByText('Summary');
+    await expect.element(summaryPageItem).toBeVisible();
   });
 
-  it('displays the available submission/form steps and hardcoded steps (with payment)', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
-    const user = userEvent.setup({delay: null});
+  test('displays the available submission/form steps and hardcoded steps (with payment)', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
     const form = buildForm({paymentRequired: true});
 
-    renderApp(form);
+    const screen = await renderApp(form);
 
-    const startFormLink = await screen.findByRole('link', {name: 'Start page'});
-    await user.click(startFormLink);
+    const startFormLink = screen.getByRole('link', {name: 'Start page'});
+    await startFormLink.click();
 
-    const progressIndicator = await screen.findByText('Progress');
-    expect(progressIndicator).toBeVisible();
+    const progressIndicator = screen.getByText('Progress');
+    await expect.element(progressIndicator).toBeVisible();
 
-    const startPageItem = await screen.findByText('Start page');
-    expect(startPageItem).toBeVisible();
-    const stepPageItem = await screen.findByText('Step 1');
-    expect(stepPageItem).toBeVisible();
-    const summaryPageItem = await screen.findByText('Summary');
-    expect(summaryPageItem).toBeVisible();
-    const paymentPageItem = await screen.findByText('Payment');
-    expect(paymentPageItem).toBeVisible();
+    const startPageItem = screen.getByText('Start page');
+    await expect.element(startPageItem).toBeVisible();
+    const stepPageItem = screen.getByText('Step 1');
+    await expect.element(stepPageItem).toBeVisible();
+    const summaryPageItem = screen.getByText('Summary');
+    await expect.element(summaryPageItem).toBeVisible();
+    const paymentPageItem = screen.getByText('Payment');
+    await expect.element(paymentPageItem).toBeVisible();
   });
 
-  it('renders steps in the correct order', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
-    const user = userEvent.setup({delay: null});
+  test('renders steps in the correct order', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission()), mockAnalyticsToolConfigGet());
     const form = buildForm();
 
-    renderApp(form);
+    const screen = await renderApp(form);
 
-    const startFormLink = await screen.findByRole('link', {name: 'Start page'});
-    await user.click(startFormLink);
+    const startFormLink = screen.getByRole('link', {name: 'Start page'});
+    await startFormLink.click();
 
-    const progressIndicatorSteps = screen.getAllByRole('listitem');
+    const progressIndicatorSteps = screen.getByRole('listitem').all();
 
-    expect(progressIndicatorSteps[0]).toHaveTextContent('Start page');
-    expect(progressIndicatorSteps[1]).toHaveTextContent('Step 1');
-    expect(progressIndicatorSteps[2]).toHaveTextContent('Step 2');
-    expect(progressIndicatorSteps[3]).toHaveTextContent('Summary');
+    await expect.element(progressIndicatorSteps[0]).toHaveTextContent('Start page');
+    await expect.element(progressIndicatorSteps[1]).toHaveTextContent('Step 1');
+    await expect.element(progressIndicatorSteps[2]).toHaveTextContent('Step 2');
+    await expect.element(progressIndicatorSteps[3]).toHaveTextContent('Summary');
   });
 });

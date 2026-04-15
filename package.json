@@ -180,6 +180,7 @@
     "vite-plugin-svgr": "^4.5.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.18",
+    "vitest-browser-react": "^2.2.0",
     "yargs": "^18.0.0"
   },
   "babel": {
