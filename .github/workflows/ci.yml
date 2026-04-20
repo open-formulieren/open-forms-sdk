@@ -80,7 +80,10 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm run build:design-tokens
+          npx playwright install --with-deps
 
       - name: Run tests
         run: |
@@ -89,7 +92,7 @@ jobs:
           CI: 'true'
 
       - name: Publish coverage report
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: vitest
