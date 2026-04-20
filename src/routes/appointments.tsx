@@ -12,6 +12,7 @@ const createAppointmentRoutes: RouteObject[] = [
       const url = new URL(request.url);
       return redirect(`producten${url.search}`);
     },
+    hydrateFallbackElement: <></>,
   },
   {
     path: 'producten',
@@ -19,6 +20,7 @@ const createAppointmentRoutes: RouteObject[] = [
       const {ChooseProductStep} = await import('@/components/appointments');
       return {element: <ChooseProductStep navigateTo="../kalender" />};
     },
+    hydrateFallbackElement: <></>,
   },
   {
     path: 'kalender',
@@ -26,6 +28,7 @@ const createAppointmentRoutes: RouteObject[] = [
       const {LocationAndTimeStep} = await import('@/components/appointments');
       return {element: <LocationAndTimeStep navigateTo="../contactgegevens" />};
     },
+    hydrateFallbackElement: <></>,
   },
   {
     path: 'contactgegevens',
@@ -33,6 +36,7 @@ const createAppointmentRoutes: RouteObject[] = [
       const {ContactDetailsStep} = await import('@/components/appointments');
       return {element: <ContactDetailsStep navigateTo="../overzicht" />};
     },
+    hydrateFallbackElement: <></>,
   },
   {
     path: 'overzicht',
@@ -40,6 +44,7 @@ const createAppointmentRoutes: RouteObject[] = [
       const {Summary} = await import('@/components/appointments');
       return {element: <Summary />};
     },
+    hydrateFallbackElement: <></>,
   },
   {
     path: 'bevestiging',
@@ -47,6 +52,7 @@ const createAppointmentRoutes: RouteObject[] = [
       const {Confirmation} = await import('@/components/appointments');
       return {element: <Confirmation />};
     },
+    hydrateFallbackElement: <></>,
   },
 ];
 
@@ -63,6 +69,7 @@ const manageAppointmentRoutes = [
         ),
       };
     },
+    hydrateFallbackElement: <></>,
   },
   {
     path: 'succes',
@@ -70,6 +77,7 @@ const manageAppointmentRoutes = [
       const {CancelAppointmentSuccess} = await import('@/components/appointments');
       return {element: <CancelAppointmentSuccess />};
     },
+    hydrateFallbackElement: <></>,
   },
 ];
 
@@ -93,6 +101,7 @@ const appointmentRoutes = [
           const {CreateAppointment} = await import('@/components/appointments');
           return {element: <CreateAppointment />};
         },
+        hydrateFallbackElement: <></>,
       },
     ],
   },
