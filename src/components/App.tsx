@@ -16,7 +16,7 @@ const App: React.FC = () => {
   // register localized error messages in the default zod error map
   useZodErrorMap();
 
-  const isAppointment = form.appointmentOptions?.isAppointment ?? false;
+  const isAppointment = form.type === 'appointment';
   if (isAppointment && !appointmentMatch && !appointmentCancelMatch && !isSessionExpiryMatch) {
     return (
       <Navigate

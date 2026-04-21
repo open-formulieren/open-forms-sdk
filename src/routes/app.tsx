@@ -9,6 +9,7 @@ import SessionExpired from '@/components/Sessions/SessionExpired';
 import appointmentRoutes from './appointments';
 import cosignRoutes from './cosign';
 import formRoutes from './form';
+import singlePageRoutes from './single-page-form';
 
 /**
  * Main app entrypoint routes.
@@ -33,6 +34,11 @@ const routes: RouteObject[] = [
             <SessionExpired />
           </ErrorBoundary>
         ),
+      },
+      // single page form
+      {
+        path: 'sp/*',
+        children: singlePageRoutes,
       },
       // appointments splat
       {

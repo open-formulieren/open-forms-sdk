@@ -56,13 +56,13 @@ export interface SubmissionStatementConfiguration {
 export interface Form {
   uuid: string;
   name: string;
+  type: 'regular' | 'appointment' | 'single_page';
   loginRequired: boolean;
   translationEnabled: boolean;
   loginOptions: FormLoginOption[];
   autoLoginAuthenticationBackend: string;
   paymentRequired: boolean;
   appointmentOptions: null | {
-    isAppointment: boolean;
     supportsMultipleProducts: null | boolean;
   };
   literals: {

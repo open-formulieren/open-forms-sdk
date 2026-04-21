@@ -26,8 +26,8 @@ import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAp
 
 const renderApp = async (initialRoute: string = '/') => {
   const form = buildForm({
+    type: 'appointment',
     appointmentOptions: {
-      isAppointment: true,
       supportsMultipleProducts: true,
     },
   });
