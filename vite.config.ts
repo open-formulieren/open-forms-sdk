@@ -1,4 +1,5 @@
-// https://vitejs.dev/config/
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="vitest/config" />
 import {codecovVitePlugin} from '@codecov/vite-plugin';
 import replace from '@rollup/plugin-replace';
 import {sentryVitePlugin} from '@sentry/vite-plugin';
@@ -9,10 +10,11 @@ import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import path from 'path';
 import type {OutputOptions} from 'rollup';
+import {defineConfig} from 'vite';
 import dts from 'vite-plugin-dts';
 import eslint from 'vite-plugin-eslint2';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import {coverageConfigDefaults, defineConfig} from 'vitest/config';
+import {coverageConfigDefaults} from 'vitest/config';
 
 import {cjsTokens} from './build/plugins.mjs';
 import {packageRegexes} from './build/utils.mjs';
@@ -212,6 +214,8 @@ export default defineConfig(({mode}) => {
       },
     },
     test: {
+      environment: 'node',
+
       server: {
         deps: {
           inline: ['@open-formulieren/formio-renderer'],
@@ -230,24 +234,27 @@ export default defineConfig(({mode}) => {
         ],
         reporter: ['text', 'cobertura', 'html'],
       },
+      browser: {
+        enabled: true,
+        headless: true,
+        provider: playwright({}),
+        instances: [
+          {
+            browser: 'chromium',
+            viewport: {
+              width: 800,
+              height: 600,
+            },
+          },
+        ],
+      },
       projects: [
         {
           extends: true,
           test: {
             name: 'unit',
-            include: ['src/**/*.spec.{js,ts,tsx}'],
-            environment: 'jsdom',
-            environmentOptions: {
-              jsdom: {
-                url: 'http://localhost',
-              },
-            },
-            globals: true, // for compatibility with jest
-            // See https://vitest.dev/guide/migration.html#fake-timers-defaults
-            fakeTimers: {
-              toFake: ['setTimeout', 'clearTimeout', 'Date'],
-            },
-            setupFiles: ['./src/vitest.setup.mts'],
+            setupFiles: ['./vitest-unit.setup.ts'],
+            include: ['src/**/*.spec.{ts,tsx}'],
           },
         },
         {
@@ -259,13 +266,7 @@ export default defineConfig(({mode}) => {
           ],
           test: {
             name: 'storybook',
-            setupFiles: ['./vitest.setup.ts'],
-            browser: {
-              enabled: true,
-              headless: true,
-              provider: playwright({}),
-              instances: [{browser: 'chromium'}],
-            },
+            setupFiles: ['./vitest-storybook.setup.ts'],
           },
         },
       ],

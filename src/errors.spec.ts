@@ -1,8 +1,10 @@
+import {describe, expect, test} from 'vitest';
+
 import {ValidationError} from '@/errors';
 import type {Http400ResponseBody} from '@/errors';
 
 describe('ValidationError', () => {
-  it('can expose the validation errors in a format for Formik', () => {
+  test('can expose the validation errors in a format for Formik', () => {
     const responseData: Http400ResponseBody = {
       code: 'nope',
       title: 'Nope',

@@ -1,8 +1,8 @@
-import {render as realRender, screen, waitFor} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {IntlProvider} from 'react-intl';
 import type {RouteObject} from 'react-router';
 import {Outlet, RouterProvider, createMemoryRouter} from 'react-router';
+import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
+import {render as realRender} from 'vitest-browser-react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
@@ -13,7 +13,7 @@ import {
   mockAppointmentPost,
   mockAppointmentProductsGet,
 } from '@/api-mocks/appointments';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import {LiteralsProvider} from '@/components/Literal';
 import messagesEN from '@/i18n/compiled/en.json';
 import {FUTURE_FLAGS} from '@/routes';
@@ -23,7 +23,7 @@ import type {AppointmentDataByStep} from '../types';
 import {buildContextValue} from './CreateAppointmentState';
 import Summary from './Summary';
 
-const renderSummary = (
+const renderSummary = async (
   errorHandler?: Parameters<typeof buildContextValue>[0]['setAppointmentErrors']
 ) => {
   const appointmentData: AppointmentDataByStep = {
@@ -104,7 +104,7 @@ const renderSummary = (
     initialIndex: 0,
     future: FUTURE_FLAGS,
   });
-  realRender(
+  return await realRender(
     <FormContext.Provider value={form}>
       <RouterProvider router={router} />
     </FormContext.Provider>
@@ -113,7 +113,7 @@ const renderSummary = (
 
 beforeEach(() => {
   window.sessionStorage.clear();
-  mswServer.use(
+  mswWorker.use(
     mockAppointmentProductsGet,
     mockAppointmentLocationsGet,
     mockAppointmentCustomerFieldsGet
@@ -125,80 +125,78 @@ afterEach(() => {
 });
 
 describe('The appointment summary', () => {
-  it('displays the human readable data', async () => {
-    renderSummary();
+  test('displays the human readable data', async () => {
+    const screen = await renderSummary();
 
-    await screen.findByText('Paspoort aanvraag');
-    await screen.findByText('Open Gem');
-    await screen.findByText('7/12/2023');
-    await screen.findByText('10:00 AM');
-    await screen.findByText('Kundera');
-    await screen.findByText('4/1/1929');
-    await screen.findByText('milan@kundera.cz');
-    await screen.findByText('12345678');
-    await screen.findByText('123456782');
-    await screen.findByText('Male');
+    await expect.element(screen.getByText('Paspoort aanvraag', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('Open Gem', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('7/12/2023', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('10:00 AM', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('Kundera', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('4/1/1929', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('milan@kundera.cz', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('12345678', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('123456782', {exact: true})).toBeVisible();
+    await expect.element(screen.getByText('Male', {exact: true})).toBeVisible();
   });
 
-  it('disables the submit button when the privacy policy needs to be accepted', async () => {
-    renderSummary();
+  test('disables the submit button when the privacy policy needs to be accepted', async () => {
+    const screen = await renderSummary();
 
-    await screen.findByText('Paspoort aanvraag');
-    const checkbox = await screen.findByLabelText(
+    await expect.element(screen.getByText('Paspoort aanvraag')).toBeVisible();
+    const checkbox = screen.getByLabelText(
       'I accept the privacy policy and consent to the processing of my personal data.'
     );
-    expect(checkbox).not.toBeChecked();
+    await expect.element(checkbox).not.toBeChecked();
     const submitButton = screen.getByRole('button', {name: 'Confirm'});
-    expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+    await expect.element(submitButton).toHaveAttribute('aria-disabled', 'true');
   });
 
-  it('enables the submit button when the privacy policy is accepted', async () => {
-    mswServer.use(mockAppointmentPost);
-    const user = userEvent.setup({delay: null});
+  test('enables the submit button when the privacy policy is accepted', async () => {
+    mswWorker.use(mockAppointmentPost);
 
-    renderSummary();
+    const screen = await renderSummary();
 
     // enable the submit button
-    await screen.findByText('Paspoort aanvraag');
-    const checkbox = await screen.findByLabelText(
+    await expect.element(screen.getByText('Paspoort aanvraag')).toBeVisible();
+    const checkbox = screen.getByLabelText(
       'I accept the privacy policy and consent to the processing of my personal data.'
     );
-    await user.click(checkbox);
+    await checkbox.click();
     const submitButton = screen.getByRole('button', {name: 'Confirm'});
-    expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+    await expect.element(submitButton).not.toHaveAttribute('aria-disabled', 'true');
 
     // submit the form -> this creates the appointment and redirects to the confirmation
     // page.
-    await user.click(submitButton);
+    await submitButton.click();
 
-    await screen.findByText('Everyone likes confirmation.');
+    await expect.element(screen.getByText('Everyone likes confirmation.')).toBeVisible();
   });
 
-  it('processes backend validation errors', async () => {
-    mswServer.use(mockAppointmentErrorPost);
-    const user = userEvent.setup({delay: null});
+  test('processes backend validation errors', async () => {
+    mswWorker.use(mockAppointmentErrorPost);
     const errorHandler = vi.fn();
 
-    renderSummary(errorHandler);
+    const screen = await renderSummary(errorHandler);
 
-    const checkbox = await screen.findByLabelText(
+    const checkbox = screen.getByLabelText(
       'I accept the privacy policy and consent to the processing of my personal data.'
     );
-    await user.click(checkbox);
+    await checkbox.click();
     const submitButton = screen.getByRole('button', {name: 'Confirm'});
-    expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
-    await user.click(submitButton);
+    await expect.element(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+    await submitButton.click();
 
-    await waitFor(() => {
-      expect(errorHandler).toBeCalledWith({
-        initialTouched: {
-          contactDetails: {dateOfBirth: true},
-        },
-        initialErrors: {
-          contactDetails: {dateOfBirth: 'You cannot be born in the future.'},
-        },
-      });
+    await expect.poll(() => errorHandler.mock.calls).toHaveLength(1);
+    expect(errorHandler).toHaveBeenCalledWith({
+      initialTouched: {
+        contactDetails: {dateOfBirth: true},
+      },
+      initialErrors: {
+        contactDetails: {dateOfBirth: 'You cannot be born in the future.'},
+      },
     });
-    await screen.findByText('Back to contact details.');
+
+    await expect.element(screen.getByText('Back to contact details.')).toBeVisible();
   });
 });

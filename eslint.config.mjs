@@ -56,7 +56,7 @@ const config = defineConfig([
   },
   // Unit tests
   {
-    files: ['**/*.spec.{ts,tsx}', 'src/vitest.setup.mts'],
+    files: ['**/*.spec.{ts,tsx}', './vitest-*.setup.ts'],
     languageOptions: {
       globals: {
         ...globals.browser,

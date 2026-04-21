@@ -1,7 +1,8 @@
-import {act, render, screen, waitFor} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {afterEach, beforeEach, describe, expect, test} from 'vitest';
+import {render} from 'vitest-browser-react';
+import {userEvent} from 'vitest/browser';
 
 import {ConfigContext, FormContext} from '@/Context';
 import {updateSessionExpiry} from '@/api';
@@ -14,7 +15,7 @@ import {
   mockAppointmentProductsGet,
   mockAppointmentTimesGet,
 } from '@/api-mocks/appointments';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import {mockSubmissionPost, mockSubmissionProcessingStatusErrorGet} from '@/api-mocks/submissions';
 import {SESSION_STORAGE_KEY as SUBMISSION_SESSION_STORAGE_KEY} from '@/hooks/useGetOrCreateSubmission';
 import messagesEN from '@/i18n/compiled/en.json';
@@ -23,11 +24,7 @@ import routes, {FUTURE_FLAGS} from '@/routes';
 import type {AppointmentDataByStep} from '../types';
 import {SESSION_STORAGE_KEY as APPOINTMENT_SESSION_STORAGE_KEY} from './CreateAppointmentState';
 
-// scrollIntoView is not not supported in jest-dom
-const scrollIntoViewMock = vi.fn();
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
-
-const renderApp = (initialRoute: string = '/') => {
+const renderApp = async (initialRoute: string = '/') => {
   const form = buildForm({
     appointmentOptions: {
       isAppointment: true,
@@ -39,7 +36,7 @@ const renderApp = (initialRoute: string = '/') => {
     initialIndex: 0,
     future: FUTURE_FLAGS,
   });
-  render(
+  return await render(
     <ConfigContext.Provider
       value={{
         baseUrl: BASE_URL,
@@ -68,9 +65,8 @@ afterEach(() => {
 });
 
 describe('Create appointment session expiration', () => {
-  it('resets the session storage/local state', {timeout: 15_000}, async () => {
-    const user = userEvent.setup({delay: null});
-    mswServer.use(
+  test('resets the session storage/local state', {timeout: 15_000}, async () => {
+    mswWorker.use(
       mockSubmissionPost(buildSubmission({steps: []})),
       mockAppointmentProductsGet,
       mockAppointmentLocationsGet,
@@ -78,62 +74,62 @@ describe('Create appointment session expiration', () => {
       mockAppointmentTimesGet
     );
     // initially render the app
-    renderApp();
+    const screen = await renderApp();
 
     // wait for submission to be created and recorded in the local storage
-    await waitFor(() => {
-      const submission = sessionStorage.getItem('appointment|submission');
-      expect(submission).not.toBe('null');
-    });
+    await expect.poll(() => sessionStorage.getItem('appointment|submission')).not.toBe('null');
 
     // select a product
-    const dropdowns = await screen.findAllByRole('combobox', undefined, {timeout: 10_000});
-    expect(dropdowns).toHaveLength(1);
-    await user.click(dropdowns[0]);
-    await user.keyboard('[ArrowDown]');
-    const product = await screen.findByText('Paspoort aanvraag');
-    expect(product).toBeVisible();
-    await user.click(product);
+    await expect.poll(() => screen.getByRole('combobox').all()).toHaveLength(1);
+    await screen.getByRole('combobox').click();
+
+    await userEvent.keyboard('[ArrowDown]');
+    const product = screen.getByText('Paspoort aanvraag');
+    await expect.element(product).toBeVisible();
+    await product.click();
 
     // submit and navigate to the next page
-    await user.click(screen.getByRole('button', {name: 'Confirm products'}));
+    await screen.getByRole('button', {name: 'Confirm products'}).click();
 
     // and wait until locations etc. are loaded
-    await screen.findByLabelText('Location');
+    await expect.element(screen.getByLabelText('Location', {exact: true})).toBeVisible();
 
     // now finally let the session timeout in 1s
-    act(() => updateSessionExpiry(1));
-    await screen.findByText('Your session has expired', undefined, {timeout: 2000});
+    updateSessionExpiry(1);
+
+    await expect
+      .element(screen.getByRole('heading', {name: 'Your session has expired'}))
+      .toBeVisible();
 
     // and click the link to restart...
-    const restartLink = await screen.findByRole('link', {name: 'Click here to restart'});
-    await user.click(restartLink);
+    const restartLink = screen.getByRole('link', {name: 'Click here to restart'});
+    await restartLink.click();
 
     // Here, take this if you need to figure out which keys are present
     // console.log(Object.entries(sessionStorage));
 
     // introspect session storage
-    await waitFor(() => {
-      const formData = sessionStorage.getItem('appointment|formData');
-      expect(formData).toBe('{}');
-    });
-    await screen.findByText('Select your product(s)');
+    await expect.poll(() => sessionStorage.getItem('appointment|formData')).toBe('{}');
+    await expect.element(screen.getByText('Select your product(s)')).toBeVisible();
 
     const productDropdown = screen.getByRole('combobox');
-    expect(productDropdown).toHaveDisplayValue('');
+    await expect.element(productDropdown).toHaveDisplayValue('');
+
+    // wait for submission to be created and recorded in the local storage, as this confirms
+    // there are no more pending requests
+    await expect.poll(() => sessionStorage.getItem('appointment|submission')).not.toBe('null');
   });
 });
 
 describe('Create appointment status checking', () => {
-  it('displays error status message on summary page', async () => {
-    mswServer.use(
+  test('displays error status message on summary page', async () => {
+    mswWorker.use(
       mockAppointmentProductsGet,
       mockAppointmentLocationsGet,
       mockAppointmentCustomerFieldsGet,
       mockAppointmentPost,
       mockSubmissionProcessingStatusErrorGet
     );
-    const user = userEvent.setup({delay: null});
     // set the appointment data in sessionStorage
     const submission = buildSubmission({steps: []});
     const appointmentData: AppointmentDataByStep = {
@@ -150,109 +146,125 @@ describe('Create appointment status checking', () => {
     sessionStorage.setItem(SUBMISSION_SESSION_STORAGE_KEY, JSON.stringify(submission));
     sessionStorage.setItem(APPOINTMENT_SESSION_STORAGE_KEY, JSON.stringify(appointmentData));
 
-    renderApp('/afspraak-maken/overzicht');
+    const screen = await renderApp('/afspraak-maken/overzicht');
 
-    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
+    await expect.element(screen.getByText('Paspoort aanvraag')).toBeVisible();
     // check all checkboxes
-    for (const checkbox of await screen.findAllByRole('checkbox')) {
-      await user.click(checkbox);
+    for (const checkbox of screen.getByRole('checkbox').all()) {
+      await checkbox.click();
     }
     const submitButton = screen.getByRole('button', {name: 'Confirm'});
-    expect(submitButton).toHaveAttribute('aria-disabled', 'false');
+    await expect.element(submitButton).toHaveAttribute('aria-disabled', 'false');
+    await submitButton.click();
 
-    await user.click(submitButton);
-    await screen.findByText(/Processing/);
+    await expect.poll(() => screen.getByText(/Processing/)).toBeVisible();
     // wait for summary page to be rendered again
-    await screen.findByText('Check and confirm', undefined, {timeout: 2000});
-    expect(screen.getByText('Computer says no.')).toBeVisible();
+    await expect.element(screen.getByRole('heading', {name: 'Check and confirm'})).toBeVisible();
+    await expect.element(screen.getByText('Computer says no.')).toBeVisible();
 
     // submitting again causes error message to vanish
-    for (const checkbox of screen.getAllByRole('checkbox')) {
-      await user.click(checkbox);
+    for (const checkbox of screen.getByRole('checkbox').all()) {
+      await checkbox.click();
     }
     const submitButton2 = screen.getByRole('button', {name: 'Confirm'});
-    await user.click(submitButton2);
-    await waitFor(() => {
-      expect(screen.queryByText('Computer says no.')).toBeNull();
-    });
+    await submitButton2.click();
+
+    await expect.element(screen.getByText('Computer says no.')).not.toBeInTheDocument();
+
+    // wait for network IO to settle again
+    await expect.element(screen.getByText('Computer says no.')).toBeVisible();
   });
 });
 
 describe('The create appointment wrapper', () => {
-  it('prevents the ./kalender nested route from being accessed directly', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+  test('prevents the ./kalender nested route from being accessed directly', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
 
-    renderApp('/afspraak-maken/kalender');
+    const screen = await renderApp('/afspraak-maken/kalender');
 
-    expect(await screen.findByRole('heading', {name: 'Select your product(s)'})).toBeVisible();
-    expect(screen.queryByRole('heading', {name: 'Location and time'})).not.toBeInTheDocument();
+    await expect
+      .element(screen.getByRole('heading', {name: 'Select your product(s)'}))
+      .toBeVisible();
+    await expect
+      .element(screen.getByRole('heading', {name: 'Location and time'}))
+      .not.toBeInTheDocument();
   });
 
-  it('prevents the ./contactgegevens nested route from being accessed directly', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+  test('prevents the ./contactgegevens nested route from being accessed directly', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
 
-    renderApp('/afspraak-maken/contactgegevens');
+    const screen = await renderApp('/afspraak-maken/contactgegevens');
 
-    expect(await screen.findByRole('heading', {name: 'Select your product(s)'})).toBeVisible();
-    expect(screen.queryByRole('heading', {name: 'Contact details'})).not.toBeInTheDocument();
+    await expect
+      .element(screen.getByRole('heading', {name: 'Select your product(s)'}))
+      .toBeVisible();
+    await expect
+      .element(screen.getByRole('heading', {name: 'Contact details'}))
+      .not.toBeInTheDocument();
   });
 });
 
 describe('Preselecting a product via querystring', () => {
-  it('displays the preselected product in the dropdown', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
+  test('displays the preselected product in the dropdown', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
 
-    renderApp('/?product=166a5c79');
+    const screen = await renderApp('/?product=166a5c79');
 
-    const productDropdown = await screen.findByRole('combobox');
-    expect(productDropdown).toBeVisible();
+    const productDropdown = screen.getByRole('combobox');
+    await expect.element(productDropdown).toBeVisible();
     // and the product should be auto selected
-    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
+    await expect.element(screen.getByText('Paspoort aanvraag')).toBeVisible();
   });
 
-  it('does not crash on invalid product IDs', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
-    const user = userEvent.setup({delay: null});
+  test('does not crash on invalid product IDs', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
 
-    renderApp('/?product=bb72a36b-b791');
+    const screen = await renderApp('/?product=bb72a36b-b791');
 
-    const productDropdown = await screen.findByRole('combobox');
-    expect(productDropdown).toBeVisible();
+    const productDropdown = screen.getByRole('combobox');
+    await expect.element(productDropdown).toBeVisible();
     // nothing should be selected
-    expect(screen.queryByText('Paspoort aanvraag')).not.toBeInTheDocument();
-    expect(screen.queryByText('Rijbewijs aanvraag (Drivers license)')).not.toBeInTheDocument();
-    expect(screen.queryByText('Not available with drivers license')).not.toBeInTheDocument();
+    await expect.element(screen.getByText('Paspoort aanvraag')).not.toBeInTheDocument();
+    await expect
+      .element(screen.getByText('Rijbewijs aanvraag (Drivers license)'))
+      .not.toBeInTheDocument();
+    await expect
+      .element(screen.getByText('Not available with drivers license'))
+      .not.toBeInTheDocument();
 
     // now open the dropdown and select a product
-    await user.click(productDropdown);
-    await user.keyboard('[ArrowDown]');
-    const option = await screen.findByText('Paspoort aanvraag');
-    expect(option).toBeVisible();
-    await user.click(option);
-    expect(screen.queryByText('Rijbewijs aanvraag (Drivers license)')).not.toBeInTheDocument();
-    expect(screen.queryByText('Not available with drivers license')).not.toBeInTheDocument();
-    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
+    await productDropdown.click();
+    await userEvent.keyboard('[ArrowDown]');
+    const option = screen.getByRole('option', {name: 'Paspoort aanvraag'});
+    await expect.element(option).toBeVisible();
+    await option.click();
+    await expect
+      .element(screen.getByText('Rijbewijs aanvraag (Drivers license)'))
+      .not.toBeInTheDocument();
+    await expect
+      .element(screen.getByText('Not available with drivers license'))
+      .not.toBeInTheDocument();
+    await expect.element(screen.getByText('Paspoort aanvraag', {exact: true})).toBeVisible();
   });
 });
 
 describe('Changing the product amounts', () => {
   // regression test for https://github.com/open-formulieren/open-forms/issues/3536
-  it('does not crash when clearing the amount field to enter a value', async () => {
-    mswServer.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
-    const user = userEvent.setup({delay: null});
+  test('does not crash when clearing the amount field to enter a value', async () => {
+    mswWorker.use(mockSubmissionPost(buildSubmission({steps: []})), mockAppointmentProductsGet);
 
-    renderApp();
+    const screen = await renderApp();
 
-    const productDropdown = await screen.findByRole('combobox');
-    expect(productDropdown).toBeVisible();
+    const productDropdown = screen.getByRole('combobox');
+    await expect.element(productDropdown).toBeVisible();
 
     const amountInput = screen.getByLabelText('Amount');
-    expect(amountInput).toBeVisible();
-    expect(amountInput).toHaveDisplayValue('1');
+    await expect.element(amountInput).toBeVisible();
+    await expect.element(amountInput).toHaveDisplayValue('1');
 
     // clear the field value to enter a different value
-    await user.clear(amountInput);
-    await user.type(amountInput, '3');
-    expect(amountInput).toHaveDisplayValue('3');
+    await userEvent.clear(amountInput);
+    await amountInput.fill('3');
+    await expect.element(amountInput).toHaveDisplayValue('3');
   });
 });

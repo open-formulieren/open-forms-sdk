@@ -1,6 +1,7 @@
-import {render, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router';
+import {expect, test} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import type {StepSummaryData} from '@/data/submissions';
 import messagesNL from '@/i18n/compiled/nl.json';
@@ -115,8 +116,8 @@ const EMPTY_FIELDS: StepSummaryData['data'] = [
   },
 ];
 
-test.each(EMPTY_FIELDS)('Empty fields (%s)', dataEntry => {
-  render(
+test.each(EMPTY_FIELDS)('Empty fields (%s)', async dataEntry => {
+  const screen = await render(
     <Wrap>
       <FormStepSummary
         name="Form Step 1"
@@ -127,5 +128,5 @@ test.each(EMPTY_FIELDS)('Empty fields (%s)', dataEntry => {
     </Wrap>
   );
 
-  expect(screen.getByRole('definition')).toHaveTextContent('');
+  await expect.element(screen.getByRole('definition')).toHaveTextContent('');
 });

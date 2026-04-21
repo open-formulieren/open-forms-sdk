@@ -1,4 +1,5 @@
 import type {JSONObject, JSONValue} from '@open-formulieren/types';
+import {describe, expect, test} from 'vitest';
 
 import evaluate from '.';
 import sharedTests from '../../../org-dotgithub/json-logic/custom-operators.json';

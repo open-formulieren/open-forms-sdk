@@ -1,19 +1,13 @@
-import {render, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
+import {expect, test} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {buildForm} from '@/api-mocks';
 import messagesNL from '@/i18n/compiled/nl.json';
 
 import {CoSignAuthentication} from './CoSignOld';
 
-it('CoSign component constructs the right auth URL', () => {
-  // Control the location that the test will use
-  const mockedLocation: Location = {
-    ...window.location,
-    href: 'https://openforms.nl/form-name/step/step-name',
-  };
-  const spy = vi.spyOn(window, 'location', 'get').mockReturnValue(mockedLocation);
-
+test('CoSign component constructs the right auth URL', async () => {
   const form = buildForm({
     loginOptions: [
       {
@@ -32,22 +26,19 @@ it('CoSign component constructs the right auth URL', () => {
     ],
   });
 
-  render(
+  const screen = await render(
     <IntlProvider locale="nl" messages={messagesNL}>
       <CoSignAuthentication form={form} submissionUuid="111-222-333" authPlugin="digid" />
     </IntlProvider>
   );
 
-  // Reset location
-  spy.mockRestore();
+  const loginButton = screen.getByRole('link', {name: 'Inloggen met DigiD'});
+  await expect.element(loginButton).toBeVisible();
 
-  const loginButton = screen.getByRole<HTMLAnchorElement>('link', {name: 'Inloggen met DigiD'});
-  expect(loginButton).toBeVisible();
+  const loginButtonElement = loginButton.element();
+  if (!(loginButtonElement instanceof HTMLAnchorElement)) throw new Error('Expected anchor');
+  const loginUrl = new URL(loginButtonElement.href);
 
-  const loginUrl = new URL(loginButton.href);
-
-  expect(loginUrl.searchParams.get('next')).toEqual(
-    'https://openforms.nl/form-name/step/step-name'
-  );
+  expect(loginUrl.searchParams.get('next')).toEqual(`http://${window.location.host}/`);
   expect(loginUrl.searchParams.get('coSignSubmission')).toEqual('111-222-333');
 });

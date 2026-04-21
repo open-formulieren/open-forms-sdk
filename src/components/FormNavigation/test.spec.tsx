@@ -1,6 +1,7 @@
-import {render, screen} from '@testing-library/react';
 import {IntlProvider} from 'react-intl';
 import {MemoryRouter} from 'react-router';
+import {expect, test, vi} from 'vitest';
+import {render} from 'vitest-browser-react';
 
 import {LiteralsProvider} from '@/components/Literal';
 import messagesNL from '@/i18n/compiled/nl.json';
@@ -21,10 +22,10 @@ const Wrap: React.FC<React.PropsWithChildren> = ({children}) => (
   </IntlProvider>
 );
 
-it('Last step of submittable form, button is present', () => {
+test('Last step of submittable form, button is present', async () => {
   const mockFunction = vi.fn();
 
-  render(
+  const screen = await render(
     <Wrap>
       <FormNavigation
         submitButton={
@@ -38,16 +39,16 @@ it('Last step of submittable form, button is present', () => {
     </Wrap>
   );
 
-  expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
+  await expect.element(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
-it('Last step of non-submittable form with overview, button is present', () => {
+test('Last step of non-submittable form with overview, button is present', async () => {
   const mockFunction = vi.fn();
 
-  render(
+  const screen = await render(
     <Wrap>
       <FormNavigation
         submitButton={
@@ -66,16 +67,16 @@ it('Last step of non-submittable form with overview, button is present', () => {
     </Wrap>
   );
 
-  expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
+  await expect.element(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
-it('Last step of non-submittable form without overview, button is NOT present', () => {
+test('Last step of non-submittable form without overview, button is NOT present', async () => {
   const mockFunction = vi.fn();
 
-  render(
+  const screen = await render(
     <Wrap>
       <FormNavigation
         submitButton={
@@ -94,16 +95,16 @@ it('Last step of non-submittable form without overview, button is NOT present', 
     </Wrap>
   );
 
-  expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
-  expect(screen.queryByRole('button', {name: 'Next step'})).not.toBeInTheDocument();
-  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
+  await expect.element(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Next step'})).not.toBeInTheDocument();
+  await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
-it('Non-last step of non-submittable form without overview, button IS present', () => {
+test('Non-last step of non-submittable form without overview, button IS present', async () => {
   const mockFunction = vi.fn();
 
-  render(
+  const screen = await render(
     <Wrap>
       <FormNavigation
         submitButton={
@@ -122,16 +123,16 @@ it('Non-last step of non-submittable form without overview, button IS present', 
     </Wrap>
   );
 
-  expect(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
-  expect(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
+  await expect.element(screen.getByRole('link', {name: 'Previous step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Save step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Next step'})).toBeVisible();
+  await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeVisible();
 });
 
-it('Suspending form allowed, button is present', () => {
+test('Suspending form allowed, button is present', async () => {
   const mockFunction = vi.fn();
 
-  render(
+  const screen = await render(
     <Wrap>
       <FormNavigation
         submitButton={
@@ -145,13 +146,13 @@ it('Suspending form allowed, button is present', () => {
     </Wrap>
   );
 
-  expect(screen.queryByText('Save step')).toBeInTheDocument();
+  await expect.element(screen.getByText('Save step')).toBeVisible();
 });
 
-it('Suspending form not allowed, button is NOT present', () => {
+test('Suspending form not allowed, button is NOT present', async () => {
   const mockFunction = vi.fn();
 
-  render(
+  const screen = await render(
     <Wrap>
       <FormNavigation
         submitButton={
@@ -165,5 +166,5 @@ it('Suspending form not allowed, button is NOT present', () => {
     </Wrap>
   );
 
-  expect(screen.queryByText('Save step')).not.toBeInTheDocument();
+  await expect.element(screen.getByText('Save step')).not.toBeInTheDocument();
 });

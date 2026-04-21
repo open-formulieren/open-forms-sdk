@@ -50,7 +50,7 @@ const TimeSelect: React.FC<TimeSelectProps> = ({products}) => {
   const getOptions = useCallback(
     async () => {
       const results = await getDatetimes(baseUrl, productIds, location, date);
-      // Array.prototype.toSorted is too new, jest tests can't handle it yet
+      // Array.prototype.toSorted is too new, requires ES2023 target
       return results
         .map(datetime => {
           const parsed = parseISO(datetime);

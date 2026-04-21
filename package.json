@@ -112,10 +112,6 @@
     "@storybook/addon-themes": "10.2.15",
     "@storybook/addon-vitest": "10.2.15",
     "@storybook/react-vite": "10.2.15",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^14.6.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/google.maps": "^3.58.1",
     "@types/leaflet": "^1.9.16",
@@ -156,7 +152,6 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-storybook": "10.2.15",
     "globals": "^16.0.0",
-    "jsdom": "^26.0.0",
     "microscope-sass": "^2.0.0",
     "msw": "^2.7.6",
     "msw-storybook-addon": "^2.0.4",
@@ -179,6 +174,7 @@
     "vite-plugin-svgr": "^4.5.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.18",
+    "vitest-browser-react": "^2.2.0",
     "yargs": "^18.0.0"
   },
   "babel": {

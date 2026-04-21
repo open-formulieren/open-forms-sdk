@@ -1,4 +1,5 @@
 import {createIntl, createIntlCache} from 'react-intl';
+import {describe, expect, test} from 'vitest';
 
 import {buildSubmission} from '@/api-mocks/submissions';
 import type {Form} from '@/data/forms';
@@ -26,7 +27,7 @@ const formSteps: Form['steps'] = [
 ];
 
 describe('Transforming form steps and injecting fixed steps', () => {
-  it('prepends start page and appends summary and payment steps', () => {
+  test('prepends start page and appends summary and payment steps', () => {
     const submission = buildSubmission();
     const updatedSteps = getStepsInfo(formSteps, submission, '/stap/step-1');
     const stepsToRender = addFixedSteps(intl, updatedSteps, submission, '/stap/step-1', true, true);
@@ -45,7 +46,7 @@ describe('Transforming form steps and injecting fixed steps', () => {
     expect(stepsToRender[3].to).toEqual('../betalen');
   });
 
-  it('accepts parameters to not append summary or payment', () => {
+  test('accepts parameters to not append summary or payment', () => {
     const submission = buildSubmission();
     const updatedSteps = getStepsInfo(formSteps, submission, '/stap/step-1');
     const stepsToRender = addFixedSteps(

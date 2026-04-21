@@ -1,12 +1,13 @@
-import {render as realRender, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
+import {afterEach, describe, expect, test} from 'vitest';
+import {render as realRender} from 'vitest-browser-react';
+import {userEvent} from 'vitest/browser';
 
 import {ConfigContext} from '@/Context';
 import {BASE_URL, buildSubmission} from '@/api-mocks';
 import {mockAppointmentProductsGet} from '@/api-mocks/appointments';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 import messagesEN from '@/i18n/compiled/en.json';
 import {FUTURE_FLAGS} from '@/routes';
 
@@ -14,7 +15,7 @@ import {CreateAppointmentContext} from '../Context';
 import {buildContextValue} from '../CreateAppointment/CreateAppointmentState';
 import ChooseProductStep from './ChooseProductStep';
 
-const render = () => {
+const render = async () => {
   const appointmentContext = buildContextValue({
     submission: buildSubmission(),
     currentStep: 'producten',
@@ -48,7 +49,7 @@ const render = () => {
     initialIndex: 0,
     future: FUTURE_FLAGS,
   });
-  realRender(<RouterProvider router={router} />);
+  return await realRender(<RouterProvider router={router} />);
 };
 
 afterEach(() => {
@@ -56,42 +57,42 @@ afterEach(() => {
 });
 
 describe('The product selection step', () => {
-  it('initially displays the full list of products', async () => {
-    const user = userEvent.setup({delay: null});
-    mswServer.use(mockAppointmentProductsGet);
+  test('initially displays the full list of products', async () => {
+    mswWorker.use(mockAppointmentProductsGet);
 
-    render();
+    const screen = await render();
 
-    const dropdowns = screen.getAllByRole('combobox');
+    const dropdowns = screen.getByRole('combobox').all();
     expect(dropdowns).toHaveLength(1);
-    await user.click(dropdowns[0]);
-    await user.keyboard('[ArrowDown]');
-    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
-    expect(await screen.findByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
+    await dropdowns[0].click();
+    await userEvent.keyboard('[ArrowDown]');
+    await expect.element(screen.getByText('Paspoort aanvraag')).toBeVisible();
+    await expect.element(screen.getByText('Rijbewijs aanvraag (Drivers license)')).toBeVisible();
   });
 
-  it('limits the second product choices based on first choosen product', async () => {
-    const user = userEvent.setup({delay: null});
-    mswServer.use(mockAppointmentProductsGet);
+  test('limits the second product choices based on first choosen product', async () => {
+    mswWorker.use(mockAppointmentProductsGet);
 
-    render();
+    const screen = await render();
 
     // select the first product which limits the choices for the second
-    const dropdowns = screen.getAllByRole('combobox');
+    const dropdowns = screen.getByRole('combobox').all();
     expect(dropdowns).toHaveLength(1);
-    await user.click(dropdowns[0]);
-    await user.keyboard('[ArrowDown]');
-    await user.click(await screen.findByText('Rijbewijs aanvraag (Drivers license)'));
+    await dropdowns[0].click();
+    await userEvent.keyboard('[ArrowDown]');
+    await screen.getByText('Rijbewijs aanvraag (Drivers license)').click();
 
     const addButton = screen.getByRole('button', {name: 'Add another product'});
-    await user.click(addButton);
+    await addButton.click();
 
-    const updatedDropdowns = await screen.findAllByRole('combobox');
+    const updatedDropdowns = screen.getByRole('combobox').all();
     expect(updatedDropdowns).toHaveLength(2);
     const secondDropdown = updatedDropdowns[1];
-    await user.click(secondDropdown);
-    await user.keyboard('[ArrowDown]');
-    expect(await screen.findByText('Paspoort aanvraag')).toBeVisible();
-    expect(screen.queryByText('Not available with drivers license')).not.toBeInTheDocument();
+    await secondDropdown.click();
+    await userEvent.keyboard('[ArrowDown]');
+    await expect.element(screen.getByText('Paspoort aanvraag')).toBeVisible();
+    await expect
+      .element(screen.getByText('Not available with drivers license'))
+      .not.toBeInTheDocument();
   });
 });

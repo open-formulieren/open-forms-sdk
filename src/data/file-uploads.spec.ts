@@ -1,4 +1,4 @@
-import {File as NodeFile} from 'undici';
+import {expect, test} from 'vitest';
 
 import {BASE_URL, buildSubmission} from '@/api-mocks';
 import {
@@ -6,16 +6,14 @@ import {
   mockFileUploadErrorPost,
   mockFileUploadPost,
 } from '@/api-mocks/file-uploads';
-import mswServer from '@/api-mocks/msw-server';
+import mswWorker from '@/api-mocks/msw-worker';
 
 import {createTemporaryFileUpload} from './file-uploads';
 
 test('uploading valid data returns success response', async () => {
-  mswServer.use(mockFileUploadPost);
+  mswWorker.use(mockFileUploadPost);
   const submission = buildSubmission();
-  // More info: https://mswjs.io/docs/faq#requestresponsetextencoder-is-not-defined-jest
-  // @ts-expect-error we use a different File implementation because jsdom mock suck
-  const file: File = new NodeFile(['filedata'], 'file.txt', {type: 'text/plain'});
+  const file: File = new File(['filedata'], 'file.txt', {type: 'text/plain'});
 
   const result = await createTemporaryFileUpload(BASE_URL, submission, file);
 
@@ -25,11 +23,9 @@ test('uploading valid data returns success response', async () => {
 });
 
 test('uploading invalid data returns 400 error response', async () => {
-  mswServer.use(mockFileUploadErrorPost(['Simulated backend error.', 'Other error.']));
+  mswWorker.use(mockFileUploadErrorPost(['Simulated backend error.', 'Other error.']));
   const submission = buildSubmission();
-  // More info: https://mswjs.io/docs/faq#requestresponsetextencoder-is-not-defined-jest
-  // @ts-expect-error we use a different File implementation because jsdom mock suck
-  const file: File = new NodeFile(['filedata'], 'file.txt', {type: 'text/plain'});
+  const file: File = new File(['filedata'], 'file.txt', {type: 'text/plain'});
 
   const result = await createTemporaryFileUpload(BASE_URL, submission, file);
 
@@ -39,11 +35,9 @@ test('uploading invalid data returns 400 error response', async () => {
 });
 
 test('uploading invalid data returns 413 error response', async () => {
-  mswServer.use(mockFileUpload413Post);
+  mswWorker.use(mockFileUpload413Post);
   const submission = buildSubmission();
-  // More info: https://mswjs.io/docs/faq#requestresponsetextencoder-is-not-defined-jest
-  // @ts-expect-error we use a different File implementation because jsdom mock suck
-  const file: File = new NodeFile(['filedata'], 'file.txt', {type: 'text/plain'});
+  const file: File = new File(['filedata'], 'file.txt', {type: 'text/plain'});
 
   const result = await createTemporaryFileUpload(BASE_URL, submission, file);
 

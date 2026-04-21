@@ -1,4 +1,5 @@
 import type {JSONObject} from '@open-formulieren/types';
+import {afterEach, expect, test, vi} from 'vitest';
 
 import {DateWithoutTime} from './extensions/date';
 import evaluate from './index';

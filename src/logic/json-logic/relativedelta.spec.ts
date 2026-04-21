@@ -1,4 +1,5 @@
 import type {JSONObject} from '@open-formulieren/types';
+import {describe, expect, test} from 'vitest';
 
 import {TYPE} from './extensions/constants';
 import evaluate from './index';
