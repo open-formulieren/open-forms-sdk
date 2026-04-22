@@ -2,10 +2,11 @@
   "name": "@open-formulieren/sdk",
   "version": "3.5.0",
   "private": true,
-  "main": "dist/open-forms-sdk.js",
+  "main": "dist/open-forms-sdk.mjs",
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/bundles/open-forms-sdk.js",
+      "import": "./dist/bundles/open-forms-sdk.mjs",
       "types": "./dist/bundles/index.d.ts"
     },
     "./open-forms-sdk.mjs": "./dist/bundles/open-forms-sdk.mjs",
@@ -72,9 +73,8 @@
   },
   "scripts": {
     "start": "npm run build:design-tokens && vite",
-    "build": "npm run build:esm && npm run build:umd && npm run build:esm-bundle && python ./bin/extract_i18n_source_messages.py",
+    "build": "npm run build:esm && npm run build:esm-bundle && python ./bin/extract_i18n_source_messages.py",
     "build:typecheck": "tsc --noEmit",
-    "build:umd": "BUILD_TARGET=umd vite build",
     "build:esm": "BUILD_TARGET=esm vite build",
     "build:esm-bundle": "BUILD_TARGET=esm-bundle vite build",
     "test": "TZ=Europe/Amsterdam vitest --project=unit",
@@ -105,7 +105,6 @@
     "@maykinmedia/eslint-config": "^3.0.0",
     "@open-formulieren/monaco-json-editor": "^0.2.0",
     "@open-formulieren/types": "^1.0.1",
-    "@rollup/plugin-replace": "^6.0.2",
     "@sentry/vite-plugin": "^4.6.0",
     "@storybook/addon-docs": "10.3.5",
     "@storybook/addon-links": "10.3.5",

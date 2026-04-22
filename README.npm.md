@@ -21,7 +21,7 @@ and visual regression testing.
 The package exports two ways to use the library:
 
 1. Importing and composing the invididual modules (ESM, recommended)
-2. Importing the library as a whole (ESM or UMD bundle)
+2. Importing the library as a whole (ESM bundle)
 
 The former approach allows more fine-grained control and should exclude code/dependencies that
 aren't used and result in smaller builds, while the latter gives you the public API as it would be
