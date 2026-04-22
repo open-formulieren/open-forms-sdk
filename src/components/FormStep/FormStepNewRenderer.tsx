@@ -145,6 +145,7 @@ const FormStepNewRenderer: React.FC = () => {
     if (requireBackendEvaluation) {
       scheduleLogicCheck();
     } else {
+      console.log(valuesRef.current);
       evaluateBackendRules({
         submission,
         step: step,

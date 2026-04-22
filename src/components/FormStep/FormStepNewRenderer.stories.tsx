@@ -333,7 +333,7 @@ export const DisableStepSubmissionWithFrontendLogic: Story = {
     // This ensures (frontend) logic was invoked upon loading the step, because a step can be
     // submitted by default, but the is checked by default causing the rule to be triggered.
     const nextButton = await canvas.findByRole('button', {name: 'Next'});
-    waitFor(() => {
+    await waitFor(() => {
       expect(nextButton).toHaveAttribute('aria-disabled', 'true');
     });
 
