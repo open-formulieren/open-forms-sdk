@@ -39,6 +39,10 @@ interface EvaluateArgs {
   /**
    * The current submission data to use as input. Value mutations are tracked throughout
    * the evaluation and have immediate effect.
+   *
+   * If this is an empty object literal (happens at the beginning of a form step when no
+   * data has been submitted yet), we instead use the extracted initial values from the
+   * components (see #6099).
    */
   inputData: JSONObject;
   /**
@@ -83,13 +87,21 @@ export const evaluateBackendRules = ({
   const initialValues = extractInitialValues(components, getRegistryEntry);
   const originalInitialValues = deepMergeValues(initialValues, inputData);
 
+  // empty input data can in principle never happen, unless there's a form definition
+  // without any data components *or* the step was initially loaded and no data has been
+  // persisted yet. Most of the time, this is okay, but if components have non-empty
+  // default values, this can trip up the logic evaluation because there's no change
+  // event that fires from the formio-renderer for the Formik initial data setting, only
+  // when an actual data change happens this event fires.
+  const isEmptyInputData = isEqual(inputData, {});
+
   // Set up the evaluation state to pass through all rules and actions. It will be
   // mutated throughout the evaluation process.
   let evaluationState: LogicEvaluationState = {
     ruleIsTriggered: false, // will be overriden for each rule
     currentStepUuid: step.formStepUuid,
     componentsMap,
-    data: inputData,
+    data: isEmptyInputData ? initialValues : inputData,
     initialValues: originalInitialValues,
     initialValuesForClearOnHide: initialValues,
     errorsToClear: [],

@@ -222,7 +222,7 @@ export default defineConfig(({mode}) => {
         },
       },
       coverage: {
-        provider: 'istanbul',
+        provider: 'v8',
         include: ['src/**/*.{ts,tsx}'],
         exclude: [
           'src/**/*.d.ts',
