@@ -56,7 +56,7 @@ export interface SubmissionStatementConfiguration {
 export interface Form {
   uuid: string;
   name: string;
-  type: 'regular' | 'appointment' | 'single_page';
+  type: 'regular' | 'appointment' | 'single_step';
   loginRequired: boolean;
   translationEnabled: boolean;
   loginOptions: FormLoginOption[];

@@ -8,7 +8,7 @@ const FormLandingPage: React.FC = () => {
   const {preserveQueryParams} = useQueryParams();
 
   let startPageUrl: string;
-  if (type === 'single_page') {
+  if (type === 'single_step') {
     startPageUrl = 'sp';
   } else {
     startPageUrl = introductionPageContent ? 'introductie' : 'startpagina';
