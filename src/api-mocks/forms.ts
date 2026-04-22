@@ -10,6 +10,7 @@ export const FORM_DEFAULTS = {
   uuid: 'e450890a-4166-410e-8d64-0a54ad30ba01',
   name: 'Mock form',
   slug: 'mock',
+  type: 'regular',
   url: `${BASE_URL}forms/mock`,
   loginRequired: false,
   loginOptions: [],
@@ -24,7 +25,6 @@ export const FORM_DEFAULTS = {
   displayMainWebsiteLink: true,
   submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED],
   appointmentOptions: {
-    isAppointment: false,
     supportsMultipleProducts: null,
   },
   literals: {

@@ -10,8 +10,8 @@ import routes, {FUTURE_FLAGS} from '@/routes';
 
 const Wrapper = () => {
   const form = buildForm({
+    type: 'appointment',
     appointmentOptions: {
-      isAppointment: true,
       supportsMultipleProducts: true,
     },
   });

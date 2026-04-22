@@ -20,6 +20,7 @@ const FormContext = React.createContext<Form>({
     previousText: {resolved: 'Previous'},
   },
   slug: '',
+  type: 'regular',
   url: '',
   steps: [],
   showProgressIndicator: true,
@@ -40,10 +41,7 @@ const FormContext = React.createContext<Form>({
   cosignHasLinkInEmail: true,
   submissionStatementsConfiguration: [],
   submissionReportDownloadLinkTitle: '',
-  appointmentOptions: {
-    isAppointment: false,
-    supportsMultipleProducts: null,
-  },
+  appointmentOptions: {supportsMultipleProducts: null},
   communicationPreferencesPortalUrl: '',
   newLogicEvaluationEnabled: false,
 });

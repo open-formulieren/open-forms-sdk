@@ -66,8 +66,8 @@ export default {
     const form = buildForm({
       showProgressIndicator,
       name,
+      type: 'appointment',
       appointmentOptions: {
-        isAppointment: true,
         supportsMultipleProducts,
       },
     });

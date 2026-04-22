@@ -4,9 +4,15 @@ import useFormContext from '@/hooks/useFormContext';
 import useQueryParams from '@/hooks/useQueryParams';
 
 const FormLandingPage: React.FC = () => {
-  const {introductionPageContent = ''} = useFormContext();
+  const {introductionPageContent = '', type} = useFormContext();
   const {preserveQueryParams} = useQueryParams();
-  const startPageUrl = introductionPageContent ? 'introductie' : 'startpagina';
+
+  let startPageUrl: string;
+  if (type === 'single_step') {
+    startPageUrl = 'sp';
+  } else {
+    startPageUrl = introductionPageContent ? 'introductie' : 'startpagina';
+  }
 
   const targetUrl = preserveQueryParams(startPageUrl);
   return <Navigate replace to={targetUrl} />;
