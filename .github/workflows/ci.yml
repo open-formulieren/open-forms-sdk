@@ -54,7 +54,7 @@ jobs:
       - name: Build Javascript
         run: |
           echo "Building version $VITE_VERSION"
-          VITE_VERSION=${VITE_VERSION} npm run build
+          npm run build
         env:
           VITE_VERSION: ${{ needs.setup.outputs.version }}
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
