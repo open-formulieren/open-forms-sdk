@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="vitest/config" />
 import {codecovVitePlugin} from '@codecov/vite-plugin';
-import replace from '@rollup/plugin-replace';
 import {sentryVitePlugin} from '@sentry/vite-plugin';
 import {storybookTest} from '@storybook/addon-vitest/vitest-plugin';
 import react from '@vitejs/plugin-react';
@@ -24,42 +23,21 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv {
-      BUILD_TARGET: 'umd' | 'esm' | 'esm-bundle' | undefined;
+      BUILD_TARGET: 'esm' | 'esm-bundle' | undefined;
     }
   }
 }
 
 const _OF_INTERNAL_dirname = dirname(fileURLToPath(import.meta.url));
 
-const buildTarget = process.env.BUILD_TARGET || 'umd';
-const buildTargetDefined = process.env.BUILD_TARGET !== undefined;
+const buildTarget = process.env.BUILD_TARGET || 'esm-bundle';
 
 const getOutput = (buildTarget: typeof process.env.BUILD_TARGET): OutputOptions => {
   switch (buildTarget) {
-    case 'esm-bundle': {
-      return {
-        dir: `dist/bundles/`,
-        format: 'esm',
-        preserveModules: false,
-        entryFileNames: 'open-forms-sdk.mjs',
-        assetFileNames: ({name}) => {
-          if (name === 'style.css') {
-            return 'open-forms-sdk.css';
-          }
-          return 'static/media/[name].[hash:8].[ext]';
-        },
-        inlineDynamicImports: false,
-      } satisfies OutputOptions;
-    }
     case 'esm': {
       /**
        * Rollup output options for ESM build, which is what we package in the NPM package
        * under the 'esm' subdirectory.
-       *
-       * The ESM package is experimental. Known issues:
-       * @fixme
-       *
-       * - the react-intl translations are not distributed yet (also broken in CRA/babel build!)
        */
       return {
         dir: 'dist/',
@@ -75,28 +53,21 @@ const getOutput = (buildTarget: typeof process.env.BUILD_TARGET): OutputOptions 
         },
       } satisfies OutputOptions;
     }
-    case 'umd':
+    // esm-bundle is the default, and it's what gets emitted into the docker image
+    case 'esm-bundle':
     default: {
-      /**
-       * Rollup output options for UMD bundle, included in the NPM package but
-       * the primary distribution mechanism is in a Docker image.
-       *
-       * @deprecated - it's better to use the ESM bundle which has separate chunks.
-       */
       return {
         dir: `dist/bundles/`,
-        format: 'umd',
-        exports: 'named',
-        name: 'OpenForms',
-        generatedCode: 'es2015',
-        entryFileNames: 'open-forms-sdk.js',
+        format: 'esm',
+        preserveModules: false,
+        entryFileNames: 'open-forms-sdk.mjs',
         assetFileNames: ({name}) => {
           if (name === 'style.css') {
             return 'open-forms-sdk.css';
           }
           return 'static/media/[name].[hash:8].[ext]';
         },
-        inlineDynamicImports: true,
+        inlineDynamicImports: false,
       } satisfies OutputOptions;
     }
   }
@@ -110,11 +81,11 @@ export default defineConfig(({mode}) => {
       port: 3000,
     },
     plugins: [
-      // BIG DISCLAIMER - Vite only processes files with the .jsx or .tsx extension with
+      // BIG DISCLAIMER - Vite only processes files with the .tsx extension with
       // babel, and changing this configuration is... cumbersome and comes with a performance
-      // penalty. This manifests if you're using react-intl in .js/.mjs/.ts files etc., as
+      // penalty. This manifests if you're using react-intl in .(m)ts files etc., as
       // they don't get transformed to inject the message ID. The solution is to rename the
-      // file extension to .jsx/.tsx
+      // file extension to .tsx
       react({babel: {babelrc: true}}),
       tsconfigPaths(),
       eslint({
@@ -134,22 +105,6 @@ export default defineConfig(({mode}) => {
             rollupTypes: true,
             outDir: `dist/bundles`,
           }),
-      /**
-       * Plugin to ignore (S)CSS when bundling to UMD bundle target, since we use the ESM
-       * bundle to generate these.
-       *
-       * @todo Remove this when we drop the UMD bundle entirely (in 4.0?)
-       */
-      {
-        name: 'ignore-styles-esm-bundle',
-        transform(code, id) {
-          if (!buildTargetDefined) return;
-          if (buildTarget === 'umd' && (id.endsWith('.css') || id.endsWith('scss'))) {
-            // skip processing
-            return {code: '', map: null};
-          }
-        },
-      },
       sentryVitePlugin({
         silent: mode === 'development',
         release: {
@@ -196,7 +151,7 @@ export default defineConfig(({mode}) => {
       emptyOutDir: buildTarget !== 'esm-bundle',
       rollupOptions: {
         input: 'src/sdk.tsx',
-        // do not externalize anything in UMD build - bundle everything
+        // do not externalize anything in bundle build - bundle everything
         external: buildTarget === 'esm' ? packageRegexes : undefined,
         output: getOutput(buildTarget),
         preserveEntrySignatures: 'strict',

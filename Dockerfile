@@ -28,9 +28,7 @@ RUN npm run build:design-tokens \
 # set up symlinks to mimick the old dist/ layout
 WORKDIR /app/dist
 RUN \
-  ln -s "./bundles/open-forms-sdk.js" "./open-forms-sdk.js" \
-  && ln -s "./bundles/open-forms-sdk.js.map" "./open-forms-sdk.js.map" \
-  && ln -s "./bundles/open-forms-sdk.mjs" "./open-forms-sdk.mjs" \
+  ln -s "./bundles/open-forms-sdk.mjs" "./open-forms-sdk.mjs" \
   && ln -s "./bundles/open-forms-sdk.mjs.map" "./open-forms-sdk.mjs.map" \
   && ln -s "./bundles/assets" "./assets" \
   && ln -s "./bundles/open-forms-sdk.css" "./open-forms-sdk.css" \

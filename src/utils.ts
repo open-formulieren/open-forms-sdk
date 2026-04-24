@@ -1,11 +1,9 @@
 import {clsx} from 'clsx';
 import type {IntlShape} from 'react-intl';
 
-import {getEnv} from './env';
-
 export {DEBUG} from './env';
 
-const VERSION = getEnv('VERSION');
+const VERSION = import.meta.env.VITE_VERSION;
 
 export const PREFIX = 'openforms';
 
