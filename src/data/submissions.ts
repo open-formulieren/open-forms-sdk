@@ -253,6 +253,7 @@ export const requestEmailVerificationCode = async (
     return {success: true};
   } catch (err: unknown) {
     if (options?.rethrowError) throw err;
+    // eslint-disable-next-line no-useless-assignment
     let errorMessage: string = 'An unknown error occurred';
     if (err instanceof ValidationError) {
       errorMessage = err.invalidParams.map(invalidParam => invalidParam.reason).join('\n');
