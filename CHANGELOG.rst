@@ -2,6 +2,27 @@
 SDK Changelog
 =============
 
+3.5.1 (2026-04-28)
+==================
+
+Regular bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.5.3 bugfix release, which fixes:
+
+  - [#6185] Fixed soft-required file component inside a conditionally visible editgrid
+    causing a form crash.
+  - [#6190] Fixed the anchor ``target`` attribute being stripped out by DOMPurify.
+  - [#6192] Fixed missing textfield ``autocomplete`` attribute support.
+  - [#6181] Fixed empty-ish comparison against file components not working as expected.
+  - [#6163] Fixed UX of date(time) validation not applying consistently.
+  - [#6125] Fixed a crash in ``addressNL`` when conditionally displaying it.
+
+* [#6099] Fixed component initial values not being taken into account for the first
+  logic evaluation call if there's no step submission data yet.
+* [#6183] Fixed a crash in the new logic evaluation when there's a default hidden
+  component inside an editgrid.
+* Upgraded dependencies to latest available security fixes.
+
 3.4.3 (2026-04-28)
 ==================
 
