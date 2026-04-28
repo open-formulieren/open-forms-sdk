@@ -5,6 +5,8 @@ SDK Changelog
 3.5.1 (2026-04-28)
 ==================
 
+Regular bugfix release.
+
 * Upgraded ``@open-formulieren/formio-renderer`` to 1.5.3 bugfix release, which fixes:
 
   - [#6185] Fixed soft-required file component inside a conditionally visible editgrid
