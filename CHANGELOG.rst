@@ -2,6 +2,25 @@
 SDK Changelog
 =============
 
+3.4.3 (2026-04-28)
+==================
+
+Regular bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.1.2 bugfix release, which fixes:
+
+  - [#6185] Fixed soft-required file component inside a conditionally visible editgrid
+    causing a form crash.
+  - [#6190] Fixed the anchor ``target`` attribute being stripped out by DOMPurify.
+  - [#6192] Fixed missing textfield ``autocomplete`` attribute support.
+  - [#6181] Fixed empty-ish comparison against file components not working as expected.
+  - [#6163] Fixed UX of date(time) validation not applying consistently.
+  - [#6125] Fixed a crash in ``addressNL`` when conditionally displaying it.
+
+* [#5944] Fixed checkbox input not being clickable on iOS 18.
+* Backported fix for test failure due to daylight savings time.
+* Fixed NPM tag derivation during package publishing.
+
 3.5.0 (2026-04-10)
 ==================
 
