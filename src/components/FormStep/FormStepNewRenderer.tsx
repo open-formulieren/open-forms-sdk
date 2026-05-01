@@ -21,6 +21,7 @@ import type {Submission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
 
+import AddressAutoFillObservers from './AddressAutoFillObservers';
 import Progress from './Progress';
 import {
   useCheckBackendStepLogic,
@@ -220,6 +221,7 @@ const FormStepNewRenderer: React.FC = () => {
             requiredFieldsWithAsterisk={form.requiredFieldsWithAsterisk}
             {...configParams}
           >
+            <AddressAutoFillObservers components={components} />
             <FormStepNavigation
               submissionAllowed={submission.submissionAllowed}
               isLastStep={isLastStep}
