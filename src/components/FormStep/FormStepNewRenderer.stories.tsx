@@ -305,7 +305,6 @@ export const DisableStepSubmissionWithFrontendLogic: Story = {
     },
     formContext: {
       form: buildForm({
-        newLogicEvaluationEnabled: true,
         steps: [
           {
             uuid: '9e6eb3c5-e5a4-4abf-b64a-73d3243f2bf5',

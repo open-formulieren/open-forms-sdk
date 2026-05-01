@@ -93,5 +93,4 @@ export interface Form {
   submissionStatementsConfiguration: SubmissionStatementConfiguration[];
   submissionReportDownloadLinkTitle: string;
   communicationPreferencesPortalUrl: string;
-  newLogicEvaluationEnabled: boolean;
 }

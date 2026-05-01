@@ -61,7 +61,6 @@ const FORM = buildForm({
     },
   ],
   showProgressIndicator: true,
-  newLogicEvaluationEnabled: true,
 });
 
 const SUBMISSION = buildSubmission({

@@ -43,7 +43,6 @@ const FormContext = React.createContext<Form>({
   submissionReportDownloadLinkTitle: '',
   appointmentOptions: {supportsMultipleProducts: null},
   communicationPreferencesPortalUrl: '',
-  newLogicEvaluationEnabled: false,
 });
 FormContext.displayName = 'FormContext';
 

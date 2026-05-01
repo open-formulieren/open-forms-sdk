@@ -142,8 +142,7 @@ const FormStepNewRenderer: React.FC = () => {
   // When frontend logic is enabled, the step state will not be refreshed and these
   // references will effectively be stable and won't trigger re-renders.
   const rules = step?.logicRules ?? [];
-  const requireBackendEvaluation =
-    !form.newLogicEvaluationEnabled || (step?.requireBackendLogicEvaluation ?? true);
+  const requireBackendEvaluation = step?.requireBackendLogicEvaluation ?? true;
 
   // Schedule logic check when step is loaded
   useEffect(() => {
