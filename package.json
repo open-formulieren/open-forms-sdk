@@ -98,7 +98,7 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
-    "@codecov/vite-plugin": "^1.9.1",
+    "@codecov/vite-plugin": "^2.0.1",
     "@formatjs/cli": "^6.6.1",
     "@gemeente-denhaag/design-tokens-components": "^2.0.0",
     "@gemeente-rotterdam/design-tokens": "1.0.0-alpha.51",
