@@ -28,8 +28,6 @@ export interface SubmissionStep {
   /**
    * The 'initial' formio configuration of the step *before* server-side logic rule
    * mutations are applied.
-   *
-   * Only relevant when the form has `newLogicEvaluationEnabled` set to `true`.
    */
   readonly defaultConfiguration: FormioConfiguration | null;
   /**
@@ -43,9 +41,8 @@ export interface SubmissionStep {
   /**
    * Collection of relevant logic rules to test and execute on this step.
    *
-   * Only relevant when the form has `newLogicEvaluationEnabled` set to `true`. The
-   * backend only returns rules that can be evaluated in the frontend. If backend
-   * evaluation is required, `logicRules` is an empty array.
+   * The backend only returns rules that can be evaluated in the frontend.
+   * If backend evaluation is required, `logicRules` is an empty array.
    */
   readonly logicRules: LogicRule[];
   /**

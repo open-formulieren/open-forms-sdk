@@ -71,7 +71,6 @@ export const FORM_DEFAULTS = {
   paymentRequired: false,
   submissionReportDownloadLinkTitle: '',
   communicationPreferencesPortalUrl: '',
-  newLogicEvaluationEnabled: false,
 } satisfies Form;
 
 /**
