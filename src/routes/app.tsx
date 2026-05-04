@@ -5,6 +5,7 @@ import {Cosign} from '@/components/CoSign';
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import Form from '@/components/Form';
 import SessionExpired from '@/components/Sessions/SessionExpired';
+import SingleStepForm from '@/components/SingleStepForm';
 
 import appointmentRoutes from './appointments';
 import cosignRoutes from './cosign';
@@ -38,6 +39,11 @@ const routes: RouteObject[] = [
       // single page form
       {
         path: 'sp/*',
+        element: (
+          <ErrorBoundary useCard>
+            <SingleStepForm />
+          </ErrorBoundary>
+        ),
         children: singlePageRoutes,
       },
       // appointments splat

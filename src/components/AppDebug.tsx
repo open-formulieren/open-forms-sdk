@@ -4,6 +4,7 @@ import {FormattedDate, FormattedRelativeTime, useIntl} from 'react-intl';
 import {useMatch} from 'react-router';
 import {useState as useGlobalState} from 'state-pool';
 
+import {FormContext} from '@/Context';
 import {sessionExpiresAt} from '@/api';
 import type {LogicRule} from '@/data/logic';
 import {getVersion} from '@/utils';
@@ -28,13 +29,20 @@ const DebugContext = React.createContext<DebugContextType>({
 DebugContext.displayName = 'DebugContext';
 
 export const DebugContextProvider: React.FC<React.PropsWithChildren> = ({children}) => {
+  const {type} = useContext(FormContext);
   const [stepValues, setStepValues] = useState<JSONObject | null>(null);
   const [requiresBackendLogic, setRequiresBackendLogic] = useState<boolean | null>(null);
   const [logicRules, setLogicRules] = useState<LogicRule[] | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
   const stepMatch = useMatch('stap/:slug');
 
-  if (!stepMatch && (stepValues !== null || requiresBackendLogic !== null || logicRules !== null)) {
+  const isSingleStep = type === 'single_step';
+
+  if (
+    !isSingleStep &&
+    !stepMatch &&
+    (stepValues !== null || requiresBackendLogic !== null || logicRules !== null)
+  ) {
     setStepValues(null);
     setRequiresBackendLogic(null);
     setLogicRules(null);

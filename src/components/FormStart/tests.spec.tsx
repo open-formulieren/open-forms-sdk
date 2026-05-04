@@ -2,7 +2,7 @@ import {NuqsTestingAdapter} from 'nuqs/adapters/testing';
 import {useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import {RouterProvider, createMemoryRouter} from 'react-router';
-import {afterAll, expect, test, vi} from 'vitest';
+import {afterEach, expect, test, vi} from 'vitest';
 import {render} from 'vitest-browser-react';
 
 import {ConfigContext, FormContext} from '@/Context';
@@ -17,7 +17,7 @@ import {FUTURE_FLAGS} from '@/routes';
 
 import FormStart from './index';
 
-afterAll(() => {
+afterEach(() => {
   vi.clearAllMocks();
 });
 
