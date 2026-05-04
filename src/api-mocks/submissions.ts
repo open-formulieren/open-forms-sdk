@@ -47,7 +47,34 @@ const SUBMISSION_DETAILS = {
   },
 } satisfies Submission;
 
-const DEFAULT_FORMIO_CONFIGURATION: FormioConfiguration = {
+export const SINGLE_STEP_SUBMISSION_DETAILS = {
+  id: '8aa254e2-49ec-4ad0-b58f-5c1e743b2796',
+  url: `${BASE_URL}submissions/8aa254e2-49ec-4ad0-b58f-5c1e743b2796`,
+  form: `${BASE_URL}forms/mock`,
+  formUrl: 'http://localhost:3000/mock',
+  initialDataReference: '',
+  steps: [
+    {
+      id: '9cceb61c-9626-4a54-8168-b0199d48b512',
+      name: 'Step 1',
+      url: `${BASE_URL}submissions/8aa254e2-49ec-4ad0-b58f-5c1e743b2796/steps/9cceb61c-9626-4a54-8168-b0199d48b512`,
+      formStep: `${BASE_URL}forms/mock/steps/3ad1734b-d095-4da0-8b7e-9f6900ffda17`,
+      defaultIsApplicable: true,
+      isApplicable: true,
+      completed: false,
+      canSubmit: true,
+    },
+  ],
+  submissionAllowed: 'yes',
+  isAuthenticated: false,
+  payment: {
+    isRequired: false,
+    amount: null,
+    hasPaid: false,
+  },
+} satisfies Submission;
+
+export const DEFAULT_FORMIO_CONFIGURATION: FormioConfiguration = {
   type: 'form',
   components: [
     {
@@ -59,11 +86,24 @@ const DEFAULT_FORMIO_CONFIGURATION: FormioConfiguration = {
   ],
 };
 
-// mock for /api/v2/submissions/{submission_uuid}/steps/{step_uuid}
+// mock for /api/v2/submissions/{submission_uuid}/steps/{step_uuid} in regular form
 const SUBMISSION_STEP_DETAILS = {
   id: '58aad9c3-29c7-4568-9047-3ac7ceb0f0ff',
   slug: 'step-1',
   formStepUuid: 'f31e0bbb-0ad9-4dde-bb2c-9360c606f980',
+  configuration: DEFAULT_FORMIO_CONFIGURATION,
+  defaultConfiguration: null,
+  requireBackendLogicEvaluation: true,
+  logicRules: [],
+  data: null,
+  canSubmit: true,
+} satisfies SubmissionStep;
+
+// mock for /api/v2/submissions/{submission_uuid}/steps/{step_uuid} in single step form
+export const SINGLE_STEP_SUBMISSION_STEP_DETAILS = {
+  id: '9cceb61c-9626-4a54-8168-b0199d48b512',
+  slug: 'step-1',
+  formStepUuid: '3ad1734b-d095-4da0-8b7e-9f6900ffda17',
   configuration: DEFAULT_FORMIO_CONFIGURATION,
   defaultConfiguration: null,
   requireBackendLogicEvaluation: true,
@@ -203,10 +243,10 @@ export const mockSubmissionSummaryGet = () =>
     );
   });
 
-export const mockSubmissionCompletePost = () =>
+export const mockSubmissionCompletePost = (submissionDetails = SUBMISSION_DETAILS) =>
   http.post(`${BASE_URL}submissions/:uuid/_complete`, () =>
     HttpResponse.json({
-      statusUrl: `${BASE_URL}submissions/${SUBMISSION_DETAILS.id}/super-random-token/status`,
+      statusUrl: `${BASE_URL}submissions/${submissionDetails.id}/super-random-token/status`,
     })
   );
 
