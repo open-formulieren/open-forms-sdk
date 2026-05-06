@@ -153,7 +153,6 @@ const DATES: DateConfig[] = [
 export const mockAppointmentDatesGet = http.get(`${BASE_URL}appointments/dates`, ({request}) => {
   const url = new URL(request.url);
   const locationId = url.searchParams.get('location_id');
-  // eslint-disable-next-line no-useless-assignment
   let result: {date: string}[] = [];
   switch (locationId) {
     case 'no-date': {
