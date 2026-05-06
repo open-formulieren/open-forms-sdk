@@ -2,6 +2,14 @@
 SDK Changelog
 =============
 
+3.5.2 (2026-05-06)
+==================
+
+Regular bugfix release.
+
+* Fixed address derivation configuration in textfields not being supported in the new
+  renderer.
+
 3.5.1 (2026-04-28)
 ==================
 
