@@ -1,11 +1,11 @@
 import SummaryProgress from '@/components/SummaryProgress';
-import type {Form, MinimalFormStep} from '@/data/forms';
+import type {Form} from '@/data/forms';
 import type {NestedSubmissionStep, Submission} from '@/data/submissions';
 
 export interface ProgressProps {
   form: Form;
   submission: Submission | null;
-  currentStep: NestedSubmissionStep | MinimalFormStep;
+  currentStep: NestedSubmissionStep;
 }
 
 /**
@@ -13,14 +13,13 @@ export interface ProgressProps {
  * current submission.
  */
 const Progress: React.FC<ProgressProps> = ({form, submission, currentStep}) => {
-  if (!form.showSummaryProgress) return null;
+  // single step forms do not have a submission at this point and the have only one step
+  if (submission === null || !form.showSummaryProgress) return null;
 
   // single page forms do not use submission (we create the submission when the form is
   // submitted) and have only one step
-  const applicableSteps = submission
-    ? submission.steps.filter(step => step.isApplicable)
-    : [currentStep];
-  const currentSubmissionStepIndex = submission ? applicableSteps.indexOf(currentStep) : 0;
+  const applicableSteps = submission.steps.filter(step => step.isApplicable);
+  const currentSubmissionStepIndex = applicableSteps.indexOf(currentStep);
 
   return (
     <SummaryProgress current={currentSubmissionStepIndex + 1} total={applicableSteps.length} />

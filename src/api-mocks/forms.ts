@@ -79,7 +79,7 @@ export const SINGLE_STEP_FORM_DEFAULTS = {
   name: 'Mock single step form',
   slug: 'mock-single-step',
   type: 'single_step',
-  url: `${BASE_URL}forms/mock-single-step`,
+  url: `${BASE_URL}forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff`,
   loginRequired: false,
   loginOptions: [],
   showProgressIndicator: false,
@@ -103,7 +103,7 @@ export const SINGLE_STEP_FORM_DEFAULTS = {
   },
   steps: [
     {
-      uuid: '8ae216fc-53d9-4e22-b803-54773b5f9b0c',
+      uuid: '3ad1734b-d095-4da0-8b7e-9f6900ffda17',
       slug: 'step-1',
       formDefinition: 'Step 1',
       index: 0,
@@ -112,7 +112,7 @@ export const SINGLE_STEP_FORM_DEFAULTS = {
         saveText: {resolved: 'Save', value: ''},
         nextText: {resolved: 'Next', value: ''},
       },
-      url: `${BASE_URL}forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff/steps/8ae216fc-53d9-4e22-b803-54773b5f9b0c`,
+      url: `${BASE_URL}forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff/steps/3ad1734b-d095-4da0-8b7e-9f6900ffda17`,
     },
   ],
   introductionPageContent: '',
@@ -136,11 +136,9 @@ const FORM_STEP_DETAILS_DEFAULT = {
   configuration: DEFAULT_FORMIO_CONFIGURATION,
   formDefinition: `${BASE_URL}/form-definitions/65e2a836-cd31-45b0-adfd-5fc68afe2038`,
   name: 'Single step',
-  internalName: '',
-  url: `${BASE_URL}/forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff/steps/8ae216fc-53d9-4e22-b803-54773b5f9b0c`,
+  url: `${BASE_URL}/forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff/steps/3ad1734b-d095-4da0-8b7e-9f6900ffda17`,
   isApplicable: true,
   loginRequired: false,
-  isReusable: false,
   literals: {
     previousText: {
       resolved: 'Previous page',
@@ -198,10 +196,7 @@ export const mockFormGet = (formDetail = buildForm(), once = false) =>
     {once: once}
   );
 
-export const mockFormStepGet = (
-  formStepDetails: FormStep = FORM_STEP_DETAILS_DEFAULT,
-  status: 200 | 201 = 200
-) =>
+export const mockFormStepGet = (formStepDetails: FormStep = FORM_STEP_DETAILS_DEFAULT) =>
   http.get(`${BASE_URL}forms/:uuid/steps/:stepUuid`, () => {
-    return HttpResponse.json(formStepDetails, {status: status});
+    return HttpResponse.json(formStepDetails, {status: 200});
   });

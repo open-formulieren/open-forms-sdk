@@ -1,4 +1,4 @@
-import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import type {JSONObject} from '@open-formulieren/types';
 import {useFormikContext} from 'formik';
 
 import FormNavigation, {StepSubmitButton} from '@/components/FormNavigation';

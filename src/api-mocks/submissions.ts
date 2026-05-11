@@ -243,10 +243,10 @@ export const mockSubmissionSummaryGet = () =>
     );
   });
 
-export const mockSubmissionCompletePost = (submissionDetails = SUBMISSION_DETAILS) =>
+export const mockSubmissionCompletePost = (submissionId = SUBMISSION_DETAILS.id) =>
   http.post(`${BASE_URL}submissions/:uuid/_complete`, () =>
     HttpResponse.json({
-      statusUrl: `${BASE_URL}submissions/${submissionDetails.id}/super-random-token/status`,
+      statusUrl: `${BASE_URL}submissions/${submissionId}/super-random-token/status`,
     })
   );
 

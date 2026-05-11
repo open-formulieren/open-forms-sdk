@@ -4,6 +4,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router';
 import {expect, within} from 'storybook/test';
 
 import {buildForm, buildSubmission} from '@/api-mocks';
+import {mockAnalyticsToolConfigGet} from '@/api-mocks';
 import {SINGLE_STEP_FORM_DEFAULTS, mockFormStepGet} from '@/api-mocks/forms';
 import {
   SINGLE_STEP_SUBMISSION_DETAILS,
@@ -52,7 +53,7 @@ export default {
         submission: [
           mockSubmissionGet(DEFAULT_SUBMISSION),
           mockSubmissionPost(buildSubmission(SINGLE_STEP_SUBMISSION_DETAILS)),
-          mockSubmissionCompletePost(SINGLE_STEP_SUBMISSION_DETAILS),
+          mockSubmissionCompletePost(SINGLE_STEP_SUBMISSION_DETAILS.id),
           mockSubmissionProcessingStatusGet,
         ],
         submissionStep: [

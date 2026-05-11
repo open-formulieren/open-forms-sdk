@@ -49,19 +49,14 @@ export interface FormStep {
   configuration: FormioConfiguration;
   formDefinition: string;
   name: string;
-  internalName?: string;
   url: string;
-  isApplicable: boolean;
+  isApplicable?: boolean;
   loginRequired: boolean;
-  isReusable: boolean;
-  literals: {
+  literals?: {
     previousText: ButtonText;
     saveText: ButtonText;
     nextText: ButtonText;
   };
-  // TODO
-  // fix type
-  translations: object;
 }
 
 export interface SubmissionStatementConfiguration {

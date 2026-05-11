@@ -1,4 +1,4 @@
-import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
+import type {JSONObject} from '@open-formulieren/types';
 import {type FormikErrors, type FormikTouched, getIn, setIn} from 'formik';
 
 // See https://stackoverflow.com/a/43595110 and https://stackoverflow.com/a/32749533
