@@ -1,7 +1,6 @@
 import {FormioForm, LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {FormStateRef} from '@open-formulieren/formio-renderer/components/FormioForm.js';
-import type {JSONObject} from '@open-formulieren/types';
-import type {AnyComponentSchema} from '@open-formulieren/types';
+import type {AnyComponentSchema, JSONObject} from '@open-formulieren/types';
 import isEqual from 'fast-deep-equal';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useNavigate, useNavigation} from 'react-router';

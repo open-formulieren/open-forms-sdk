@@ -61,6 +61,7 @@ const SingleFormStepNewRenderer: React.FC = () => {
   const [submissionState, setSubmissionState] = useState<Submission | null>(null);
   const [submitErrors, setSubmitErrors] = useState<string | FormikErrors<JSONObject> | null>(null);
   const [showStatementWarnings, setShowStatementWarnings] = useState<boolean>(false);
+  const [stepCanBesubmitted, setStepCanBesubmitted] = useState<boolean>(false);
   const [statementValues, setStatementValues] = useState<SubmissionCompleteBody>({
     privacyPolicyAccepted: false,
     statementOfTruthAccepted: false,
@@ -84,14 +85,23 @@ const SingleFormStepNewRenderer: React.FC = () => {
   const isLoading = formStepLoading || navigationState !== 'idle';
   const components = formStepData?.configuration.components ?? [];
 
+  const validateStatementsInStep = (values: SubmissionCompleteBody) => {
+    const hasInvalidRequired = form.submissionStatementsConfiguration.some(
+      info => info.validate?.required && values[info.key] === false
+    );
+
+    setStepCanBesubmitted(!hasInvalidRequired);
+  };
+
   const onSubmitHandler = async (values: FormikValues) => {
     // single step form should be anonymous
     if (form.loginOptions.length !== 0) {
       throw new Error('Login on single step forms is not supported.');
     }
 
+    let currentSubmission = submissionState;
     // create the submission if it doesn't exist
-    if (submissionState === null) {
+    if (currentSubmission === null) {
       const newSubmission = await createSubmission(
         baseUrl,
         form,
@@ -103,42 +113,42 @@ const SingleFormStepNewRenderer: React.FC = () => {
 
       assertSubmission(newSubmission);
       setSubmissionState(newSubmission);
-    } else {
-      // the submission exists, move to the next steps
+      currentSubmission = newSubmission;
+    }
 
-      // create the submission step
-      try {
-        await saveStepData(submissionState.steps[0].url, values, {skipValidation: false});
-      } catch (error: unknown) {
-        // rethrow what we can't handle
-        if (!(error instanceof ValidationError)) {
-          throw error;
-        }
-        const {initialErrors: serverErrors} = error.asFormikProps();
-        formRef.current?.updateErrors(serverErrors);
+    // the submission exists, move to the next steps
+    // create the submission step
+    try {
+      await saveStepData(currentSubmission.steps[0].url, values, {skipValidation: true});
+    } catch (error: unknown) {
+      // rethrow what we can't handle
+      if (!(error instanceof ValidationError)) {
+        throw error;
       }
+      const {initialErrors: serverErrors} = error.asFormikProps();
+      formRef.current?.updateErrors(serverErrors);
+    }
 
-      // complete the submission
-      let statusUrl = undefined;
-      try {
-        statusUrl = (await completeSubmission(baseUrl, submissionState.id, statementValues))
-          .statusUrl;
-      } catch (e) {
-        if (e instanceof ValidationError) {
-          const {initialErrors} = e.asFormikProps();
-          setSubmitErrors(initialErrors);
-        } else {
-          setSubmitErrors(e.message as string);
-        }
-        return;
+    // complete the submission
+    let statusUrl = undefined;
+    try {
+      statusUrl = (await completeSubmission(baseUrl, currentSubmission.id, statementValues))
+        .statusUrl;
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        const {initialErrors} = e.asFormikProps();
+        setSubmitErrors(initialErrors);
+      } else {
+        setSubmitErrors(e.message as string);
       }
+      return;
+    }
 
-      // navigate to the confirmation page
-      if (statusUrl) {
-        navigate('/bevestiging', {
-          state: {statusUrl: statusUrl, submission: submissionState},
-        });
-      }
+    // navigate to the confirmation page
+    if (statusUrl) {
+      navigate('/bevestiging', {
+        state: {statusUrl: statusUrl, submission: currentSubmission},
+      });
     }
   };
 
@@ -199,27 +209,31 @@ const SingleFormStepNewRenderer: React.FC = () => {
                 statementOfTruthAccepted: values.statementOfTruthAccepted as boolean,
               };
 
-              setStatementValues(updatedStatementValues);
-
               valuesRef.current = {
                 ...values,
                 ...updatedStatementValues,
               };
 
+              setStatementValues(updatedStatementValues);
+              validateStatementsInStep(updatedStatementValues);
               setDebugStepValues(values, false);
             }}
             onSubmit={async values => {
-              onSubmitHandler(values);
               setShowStatementWarnings(true);
+              onSubmitHandler(values);
             }}
             requiredFieldsWithAsterisk={form.requiredFieldsWithAsterisk}
           >
-            <div className="openforms-statement-checkboxes">
+            <div className="openforms-statement-checkboxes openforms-statement-checkboxes--single-step-form">
               {form.submissionStatementsConfiguration.map((info, index) => (
                 <StatementCheckbox
                   key={`${index}-${info.key}`}
                   configuration={info}
-                  showWarning={showStatementWarnings}
+                  showWarning={
+                    showStatementWarnings && info.validate?.required
+                      ? statementValues[info.key] === false
+                      : false
+                  }
                 />
               ))}
             </div>
@@ -227,8 +241,8 @@ const SingleFormStepNewRenderer: React.FC = () => {
             <FormStepNavigation
               submissionAllowed="yes"
               isLastStep
-              stepSubmissionAllowed
               hideAbortButton
+              stepSubmissionAllowed={stepCanBesubmitted}
               // for now the logic call is not made, see if there is a case where this
               // would be needed
               isCheckingLogic={false}

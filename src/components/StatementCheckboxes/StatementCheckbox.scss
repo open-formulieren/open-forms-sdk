@@ -12,4 +12,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--of-privacy-checkbox-spacing, 8px);
+
+  &--single-step-form {
+    margin-block-start: var(--of-form-field-container-gap, 24px);
+  }
 }

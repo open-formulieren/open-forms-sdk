@@ -106,7 +106,7 @@ export const SINGLE_STEP_SUBMISSION_STEP_DETAILS = {
   formStepUuid: '3ad1734b-d095-4da0-8b7e-9f6900ffda17',
   configuration: DEFAULT_FORMIO_CONFIGURATION,
   defaultConfiguration: null,
-  requireBackendLogicEvaluation: true,
+  requireBackendLogicEvaluation: false,
   logicRules: [],
   data: null,
   canSubmit: true,
