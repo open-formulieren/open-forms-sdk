@@ -2,6 +2,64 @@
 SDK Changelog
 =============
 
+4.0.0-alpha.0 (2026-05-26)
+==========================
+
+First preview release of the upcoming 4.0.0 version.
+
+Breaking changes
+----------------
+
+* The UMD bundle has been removed and the ESM modules have been made the default export
+  of the NPM package. To use the ESM **bundle**, an updated import path is required.
+* [#6164] Removal of deprecated functionalities:
+
+  - Dropped Formiojs dependency.
+  - Dropped support for the old form renderer.
+  - Removed legacy logic evaluation.
+  - Dropped UMD bundle support.
+
+New features
+------------
+
+* [#6175] Added support for "single step"" forms, a simplified form type that allows you
+  to immediately fill out the form fields without logging in or explicitly starting the
+  form.
+
+Bugfixes
+--------
+
+* [#6245] Fixed address derivation configuration in textfields not being supported in the
+  new renderer.
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.5.3 bugfix release, which fixes:
+
+  - [#6185] Fixed soft-required file component inside a conditionally visible editgrid
+    causing a form crash.
+  - [#6190] Fixed the anchor ``target`` attribute being stripped out by DOMPurify.
+  - [#6192] Fixed missing textfield ``autocomplete`` attribute support.
+  - [#6181] Fixed empty-ish comparison against file components not working as expected.
+  - [#6163] Fixed UX of date(time) validation not applying consistently.
+  - [#6125] Fixed a crash in ``addressNL`` when conditionally displaying it.
+
+* [#6099] Fixed component initial values not being taken into account for the first
+  logic evaluation call if there's no step submission data yet.
+* [#6183] Fixed a crash in the new logic evaluation when there's a default hidden
+  component inside an editgrid.
+
+Project maintenance
+-------------------
+
+* Updated dependencies:
+
+  - Upgraded @codecov/vite-plugin to 2.0.1.
+  - Upgraded @utrecht/component-library-react to 14.0.0.
+
+* [#926] Upgraded build tooling:
+
+  - Upgraded to NodeJS 24.14.
+  - Upgraded to ESLint 9.39.4.
+  - Replaced jsdom/testing-library with vitest browser mode.
+
 3.5.2 (2026-05-06)
 ==================
 
