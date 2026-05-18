@@ -1,3 +1,5 @@
+import type {FormioConfiguration} from './formio';
+
 /**
  * @see `#/components/schemas/LoginOption` in the API spec.
  */
@@ -35,6 +37,26 @@ export interface MinimalFormStep {
   };
   url: string;
   isApplicable?: boolean;
+}
+
+/**
+ * @see `#/components/schemas/MinimalFormStep` in the API spec.
+ */
+export interface FormStep {
+  uuid: string;
+  index: number;
+  slug?: string | null;
+  configuration: FormioConfiguration;
+  formDefinition: string;
+  name: string;
+  url: string;
+  isApplicable?: boolean;
+  loginRequired: boolean;
+  literals?: {
+    previousText: ButtonText;
+    saveText: ButtonText;
+    nextText: ButtonText;
+  };
 }
 
 export interface SubmissionStatementConfiguration {

@@ -2,9 +2,10 @@ import {produce} from 'immer';
 import {HttpResponse, http} from 'msw';
 
 import {PRIVACY_POLICY_ACCEPTED} from '@/components/SummaryConfirmation/mocks';
-import type {Form} from '@/data/forms';
+import type {Form, FormStep} from '@/data/forms';
 
 import {BASE_URL, getDefaultFactory} from './base';
+import {DEFAULT_FORMIO_CONFIGURATION} from './submissions';
 
 export const FORM_DEFAULTS = {
   uuid: 'e450890a-4166-410e-8d64-0a54ad30ba01',
@@ -73,6 +74,99 @@ export const FORM_DEFAULTS = {
   communicationPreferencesPortalUrl: '',
 } satisfies Form;
 
+export const SINGLE_STEP_FORM_DEFAULTS = {
+  uuid: '05c6e422-7f39-4366-ae7a-1da642e1f5ff',
+  name: 'Mock single step form',
+  slug: 'mock-single-step',
+  type: 'single_step',
+  url: `${BASE_URL}forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff`,
+  loginRequired: false,
+  loginOptions: [],
+  showProgressIndicator: false,
+  showSummaryProgress: false,
+  maintenanceMode: false,
+  active: true,
+  submissionAllowed: 'yes',
+  submissionLimitReached: false,
+  suspensionAllowed: false,
+  sendConfirmationEmail: true,
+  displayMainWebsiteLink: true,
+  submissionStatementsConfiguration: [PRIVACY_POLICY_ACCEPTED],
+  appointmentOptions: {
+    supportsMultipleProducts: null,
+  },
+  literals: {
+    beginText: {resolved: 'Begin', value: ''},
+    changeText: {resolved: 'Change', value: ''},
+    confirmText: {resolved: 'Confirm', value: ''},
+    previousText: {resolved: 'Previous', value: ''},
+  },
+  steps: [
+    {
+      uuid: '3ad1734b-d095-4da0-8b7e-9f6900ffda17',
+      slug: 'step-1',
+      formDefinition: 'Step 1',
+      index: 0,
+      literals: {
+        previousText: {resolved: 'Previous', value: ''},
+        saveText: {resolved: 'Save', value: ''},
+        nextText: {resolved: 'Next', value: ''},
+      },
+      url: `${BASE_URL}forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff/steps/3ad1734b-d095-4da0-8b7e-9f6900ffda17`,
+    },
+  ],
+  introductionPageContent: '',
+  explanationTemplate: '',
+  requiredFieldsWithAsterisk: true,
+  resumeLinkLifetime: 7,
+  autoLoginAuthenticationBackend: '',
+  translationEnabled: false,
+  hideNonApplicableSteps: false,
+  cosignLoginOptions: [],
+  cosignHasLinkInEmail: false,
+  paymentRequired: false,
+  submissionReportDownloadLinkTitle: '',
+  communicationPreferencesPortalUrl: '',
+} satisfies Form;
+
+const FORM_STEP_DETAILS_DEFAULT = {
+  uuid: '3ad1734b-d095-4da0-8b7e-9f6900ffda17',
+  index: 0,
+  slug: 'single-step',
+  configuration: DEFAULT_FORMIO_CONFIGURATION,
+  formDefinition: `${BASE_URL}/form-definitions/65e2a836-cd31-45b0-adfd-5fc68afe2038`,
+  name: 'Single step',
+  url: `${BASE_URL}/forms/05c6e422-7f39-4366-ae7a-1da642e1f5ff/steps/3ad1734b-d095-4da0-8b7e-9f6900ffda17`,
+  isApplicable: true,
+  loginRequired: false,
+  literals: {
+    previousText: {
+      resolved: 'Previous page',
+      value: '',
+    },
+    saveText: {
+      resolved: 'Save current information',
+      value: '',
+    },
+    nextText: {
+      resolved: 'Next',
+      value: '',
+    },
+  },
+  translations: {
+    nl: {
+      previousText: '',
+      saveText: '',
+      nextText: '',
+    },
+    en: {
+      previousText: '',
+      saveText: '',
+      nextText: '',
+    },
+  },
+};
+
 /**
  * Return a form object as if it would be returned from the form detail API endpoint.
  * @param  overrides Key-value mapping with overrides from the defaults. These
@@ -101,3 +195,8 @@ export const mockFormGet = (formDetail = buildForm(), once = false) =>
     },
     {once: once}
   );
+
+export const mockFormStepGet = (formStepDetails: FormStep = FORM_STEP_DETAILS_DEFAULT) =>
+  http.get(`${BASE_URL}forms/:uuid/steps/:stepUuid`, () => {
+    return HttpResponse.json(formStepDetails, {status: 200});
+  });

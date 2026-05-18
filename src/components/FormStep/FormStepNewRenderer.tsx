@@ -1,17 +1,13 @@
 import {FormioForm, LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {FormStateRef} from '@open-formulieren/formio-renderer/components/FormioForm.js';
-import type {JSONObject} from '@open-formulieren/formio-renderer/types.js';
-import type {AnyComponentSchema} from '@open-formulieren/types';
+import type {AnyComponentSchema, JSONObject} from '@open-formulieren/types';
 import isEqual from 'fast-deep-equal';
-import {useFormikContext} from 'formik';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useNavigate, useNavigation} from 'react-router';
 
 import {get} from '@/api';
 import {useDebugContext} from '@/components/AppDebug';
 import Card, {CardTitle} from '@/components/Card';
-import FormNavigation, {StepSubmitButton} from '@/components/FormNavigation';
-import type {FormNavigationProps} from '@/components/FormNavigation/FormNavigation';
 import {LiteralsProvider} from '@/components/Literal';
 import PreviousLink from '@/components/PreviousLink';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
@@ -22,6 +18,7 @@ import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
 
 import AddressAutoFillObservers from './AddressAutoFillObservers';
+import FormStepNavigation from './FormStepNavigation';
 import Progress from './Progress';
 import {
   useCheckBackendStepLogic,
@@ -257,45 +254,6 @@ const FormStepNewRenderer: React.FC = () => {
         suspendFormUrlLifetime={form.resumeLinkLifetime}
       />
     </LiteralsProvider>
-  );
-};
-
-interface FormStepNavigationProps extends Pick<
-  FormNavigationProps,
-  'onFormSave' | 'previousPage' | 'isAuthenticated' | 'onDestroySession'
-> {
-  submissionAllowed: Submission['submissionAllowed'];
-  isLastStep: boolean;
-  isCheckingLogic: boolean;
-  stepSubmissionAllowed: boolean;
-}
-
-const FormStepNavigation: React.FC<FormStepNavigationProps> = ({
-  submissionAllowed,
-  stepSubmissionAllowed,
-  isLastStep,
-  isCheckingLogic,
-  onFormSave,
-  previousPage,
-  isAuthenticated,
-  onDestroySession,
-}) => {
-  const {isValid, isValidating, isSubmitting} = useFormikContext<JSONObject>();
-  return (
-    <FormNavigation
-      submitButton={
-        <StepSubmitButton
-          canSubmitForm={submissionAllowed}
-          canSubmitStep={stepSubmissionAllowed && isValid && !isValidating && !isSubmitting}
-          isLastStep={isLastStep}
-          isCheckingLogic={isCheckingLogic || isSubmitting}
-        />
-      }
-      onFormSave={onFormSave}
-      previousPage={previousPage}
-      isAuthenticated={isAuthenticated}
-      onDestroySession={onDestroySession}
-    />
   );
 };
 

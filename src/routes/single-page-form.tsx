@@ -1,17 +1,15 @@
 import type {RouteObject} from 'react-router';
 
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
+import SingleFormStepNewRenderer from '@/components/FormStep/SingleFormStepNewRenderer';
 import {ConfirmationView} from '@/components/PostCompletionViews';
-import {SessionTrackerModal} from '@/components/Sessions';
 
 const singlePageRoutes: RouteObject[] = [
   {
     index: true,
     element: (
       <ErrorBoundary useCard>
-        <SessionTrackerModal>
-          <></>
-        </SessionTrackerModal>
+        <SingleFormStepNewRenderer />
       </ErrorBoundary>
     ),
   },
@@ -19,7 +17,7 @@ const singlePageRoutes: RouteObject[] = [
     path: 'bevestiging',
     element: (
       <ErrorBoundary useCard>
-        <ConfirmationView onFailureNavigateTo="/:step" />
+        <ConfirmationView onFailureNavigateTo="/sp" />
       </ErrorBoundary>
     ),
   },

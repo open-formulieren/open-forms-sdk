@@ -161,7 +161,9 @@ export const loadSummaryData = async (
  *
  * @see `#/components/schemas/SubmissionCompletion` in the API spec.
  */
-type SubmissionCompleteBody = Partial<Record<SubmissionStatementConfiguration['key'], boolean>>;
+export type SubmissionCompleteBody = Partial<
+  Record<SubmissionStatementConfiguration['key'], boolean>
+>;
 
 /**
  * The shape of the submission step summary data, for a single step.

@@ -1,6 +1,7 @@
 /**
- * Temporary workaround until we refactor more to NL Design System components.
- */
+* Temporary workaround until we refactor more to NL Design System components.
+*/
+@use 'microscope-sass/lib/bem';
 
 .openforms-privacy-checkbox {
   display: flex;
@@ -12,4 +13,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--of-privacy-checkbox-spacing, 8px);
+
+  @include bem.modifier('single-step-form') {
+    margin-block-start: var(--of-form-field-container-gap, 240px);
+  }
 }
