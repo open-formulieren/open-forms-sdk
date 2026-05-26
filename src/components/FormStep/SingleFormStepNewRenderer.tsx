@@ -119,7 +119,7 @@ const SingleFormStepNewRenderer: React.FC = () => {
     // the submission exists, move to the next steps
     // create the submission step
     try {
-      await saveStepData(currentSubmission.steps[0].url, values, {skipValidation: true});
+      await saveStepData(currentSubmission.steps[0].url, values);
     } catch (error: unknown) {
       // rethrow what we can't handle
       if (!(error instanceof ValidationError)) {

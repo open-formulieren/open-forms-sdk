@@ -98,18 +98,6 @@ export const checkStepLogic = async (
 
 type SubmissionStepCreateOrUpdateBody = Pick<SubmissionStep, 'data'>;
 
-interface SaveStepDataOptions {
-  /**
-   * Optionally skip calling the validate endpoint.
-   *
-   * In certain situations, the (potentially) invalid data can be submitted to continue
-   * at a later time. This does not affect the validation of the submission at the end
-   * of the process. If not skipped, the step validate endpoint will be called and any
-   * validation errors will be thrown in a `ValidationError` instance.
-   */
-  skipValidation?: boolean;
-}
-
 export const saveStepData = async (
   /**
    * API endpoint pointing to the step within its submission.
@@ -122,32 +110,28 @@ export const saveStepData = async (
    * Nesting can occur here, if a key like `foo.bar` is set, it creates a parent object
    * for the key `foo` with a child property `bar`.
    */
-  data: SubmissionStep['data'],
-  options?: SaveStepDataOptions
+  data: SubmissionStep['data']
 ): Promise<void> => {
-  if (!options?.skipValidation) {
-    // if data is not valid, this throws a `ValidationError` with the `asFormikProps`
-    // method, which contains the errors in the suitable format for the formio-renderer.
-    try {
-      await post<null, SubmissionStepCreateOrUpdateBody>(`${resourceUrl}/validate`, {data});
-    } catch (error: unknown) {
-      // strip out the `data` prefix, the API details are encapsulated from the caller
-      if (error instanceof ValidationError) {
-        const processedInvalidParams: InvalidParam[] = [];
-        error.invalidParams.forEach(param => {
-          if (!param.name.startsWith('data.')) return;
-          processedInvalidParams.push({
-            ...param,
-            name: param.name.replace('data.', ''),
-          } satisfies InvalidParam);
-        });
-        error.invalidParams = processedInvalidParams;
-        throw error;
-      } else {
-        // otherwise simply rethrow
-        throw error;
-      }
+  // if data is not valid, this throws a `ValidationError` with the `asFormikProps`
+  // method, which contains the errors in the suitable format for the formio-renderer.
+  try {
+    await put<SubmissionStep, SubmissionStepCreateOrUpdateBody>(resourceUrl, {data});
+  } catch (error: unknown) {
+    // strip out the `data` prefix, the API details are encapsulated from the caller
+    if (error instanceof ValidationError) {
+      const processedInvalidParams: InvalidParam[] = [];
+      error.invalidParams.forEach(param => {
+        if (!param.name.startsWith('data.')) return;
+        processedInvalidParams.push({
+          ...param,
+          name: param.name.replace('data.', ''),
+        } satisfies InvalidParam);
+      });
+      error.invalidParams = processedInvalidParams;
+      throw error;
+    } else {
+      // otherwise simply rethrow
+      throw error;
     }
   }
-  await put<SubmissionStep, SubmissionStepCreateOrUpdateBody>(resourceUrl, {data});
 };
