@@ -178,36 +178,30 @@ export const mockSubmissionStepGet = (
     }
   );
 
-export const mockSubmissionStepValidatePost = (
-  errors: Record<string, string> | undefined = undefined
-) =>
-  http.post(`${BASE_URL}submissions/:uuid/steps/:stepUuid/validate`, () => {
-    if (!errors) {
-      return new HttpResponse(null, {status: 204});
-    }
-
-    const invalidParams: InvalidParam[] = Object.entries(errors).map(([name, error]) => ({
-      name: `data.${name}`,
-      code: 'invalid',
-      reason: error,
-    }));
-    const body = {
-      type: 'http://localhost:8000/fouten/ValidationError/',
-      code: 'invalid',
-      title: 'Invalid input.',
-      status: 400,
-      detail: '',
-      instance: 'urn:uuid:a3a9701b-3fa6-444b-a777-bcb43960440a',
-      invalidParams: invalidParams,
-    };
-    return HttpResponse.json(body, {status: 400});
-  });
-
 export const mockSubmissionStepPut = (
   stepDetails: SubmissionStep = SUBMISSION_STEP_DETAILS,
+  errors: Record<string, string> | undefined = undefined,
   status: 200 | 201 = 200
 ) =>
   http.put(`${BASE_URL}submissions/:uuid/steps/:stepUuid`, () => {
+    if (errors) {
+      const invalidParams: InvalidParam[] = Object.entries(errors).map(([name, error]) => ({
+        name: `data.${name}`,
+        code: 'invalid',
+        reason: error,
+      }));
+      const body = {
+        type: 'http://localhost:8000/fouten/ValidationError/',
+        code: 'invalid',
+        title: 'Invalid input.',
+        status: 400,
+        detail: '',
+        instance: 'urn:uuid:a3a9701b-3fa6-444b-a777-bcb43960440a',
+        invalidParams: invalidParams,
+      };
+      return HttpResponse.json(body, {status: 400});
+    }
+
     return HttpResponse.json(stepDetails, {status: status});
   });
 

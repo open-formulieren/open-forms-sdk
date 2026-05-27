@@ -70,7 +70,7 @@ test('Single step form happy flow', async () => {
     mockAnalyticsToolConfigGet(),
     mockFormStepGet(),
     mockSubmissionPost(buildSubmission(SINGLE_STEP_SUBMISSION_DETAILS)),
-    mockSubmissionStepPut(SINGLE_STEP_SUBMISSION_STEP_DETAILS, 201),
+    mockSubmissionStepPut(SINGLE_STEP_SUBMISSION_STEP_DETAILS, undefined, 201),
     mockSubmissionCompletePost(SINGLE_STEP_SUBMISSION_DETAILS.id),
     mockSubmissionProcessingStatusGet
   );

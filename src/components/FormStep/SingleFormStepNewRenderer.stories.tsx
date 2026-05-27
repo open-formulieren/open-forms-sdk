@@ -14,7 +14,6 @@ import {
   mockSubmissionProcessingStatusGet,
   mockSubmissionStepGet,
   mockSubmissionStepPut,
-  mockSubmissionStepValidatePost,
 } from '@/api-mocks/submissions';
 import routes, {FUTURE_FLAGS} from '@/routes';
 import {withForm, withNuqs} from '@/sb-decorators';
@@ -57,9 +56,8 @@ export default {
         ],
         submissionStep: [
           mockSubmissionStepGet(SINGLE_STEP_SUBMISSION_STEP_DETAILS),
-          mockSubmissionStepPut(SINGLE_STEP_SUBMISSION_STEP_DETAILS, 201),
+          mockSubmissionStepPut(SINGLE_STEP_SUBMISSION_STEP_DETAILS, undefined, 201),
         ],
-        validate: [mockSubmissionStepValidatePost(undefined)],
         formStep: [mockFormStepGet()],
       },
     },

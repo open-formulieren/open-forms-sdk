@@ -9,7 +9,6 @@ import {
   mockSubmissionGet,
   mockSubmissionStepGet,
   mockSubmissionStepPut,
-  mockSubmissionStepValidatePost,
 } from '@/api-mocks/submissions';
 import {
   mockEmailVerificationPost,
@@ -72,7 +71,7 @@ export default {
         submission: [mockSubmissionGet(DEFAULT_SUBMISSION)],
         submissionStep: [
           mockSubmissionStepGet(DEFAULT_SUBMISSION_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(DEFAULT_SUBMISSION_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(DEFAULT_SUBMISSION_STEP_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(
@@ -81,8 +80,6 @@ export default {
             400
           ),
         ],
-        // no validation errors by default
-        validate: [mockSubmissionStepValidatePost(undefined)],
         emailVerification: [mockEmailVerificationPost, mockEmailVerificationVerifyCodePost],
       },
     },
@@ -163,7 +160,7 @@ export const PerformServerLogicCheck: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(LOGIC_CHECK_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(LOGIC_CHECK_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(LOGIC_CHECK_STEP_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(
@@ -221,7 +218,7 @@ export const DisableStepSubmissionWithServerLogic: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(LOGIC_CHECK_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(LOGIC_CHECK_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(LOGIC_CHECK_STEP_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(
@@ -297,7 +294,7 @@ export const DisableStepSubmissionWithFrontendLogic: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(FRONTEND_LOGIC_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(FRONTEND_LOGIC_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(FRONTEND_LOGIC_STEP_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           // @ts-expect-error Return nonsense data on purpose, to make sure a crash will occur if
@@ -397,7 +394,7 @@ export const DisplayDataLoadedFromBackend: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(SUBMISSION_STEP_WITH_DATA_DETAIL_BODY),
-          mockSubmissionStepPut(SUBMISSION_STEP_WITH_DATA_DETAIL_BODY, 201),
+          mockSubmissionStepPut(SUBMISSION_STEP_WITH_DATA_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(
@@ -434,15 +431,14 @@ export const BackendValidationError: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(VALIDATION_ERRORS_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(VALIDATION_ERRORS_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(
+            VALIDATION_ERRORS_STEP_DETAIL_BODY,
+            {text1: 'Server side validation error'},
+            201
+          ),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(DEFAULT_SUBMISSION, VALIDATION_ERRORS_STEP_DETAIL_BODY, 200),
-        ],
-        validate: [
-          mockSubmissionStepValidatePost({
-            text1: 'Server side validation error',
-          }),
         ],
       },
     },
@@ -582,7 +578,7 @@ export const LocationDerivation: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(
@@ -618,7 +614,7 @@ export const LocationDerivationDoesNotOverwriteValues: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(
@@ -665,7 +661,7 @@ export const LocationDerivationInRepeatingGroup: Story = {
       handlers: {
         submissionStep: [
           mockSubmissionStepGet(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY),
-          mockSubmissionStepPut(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY, 201),
+          mockSubmissionStepPut(LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY, undefined, 201),
         ],
         logicCheck: [
           mockSubmissionCheckLogicPost(

@@ -193,9 +193,7 @@ const FormStepNewRenderer: React.FC = () => {
             }}
             onSubmit={async values => {
               try {
-                // XXX: do we still need the validate endpoint? Perhaps this could use
-                // a header for the PUT endpoint instead?
-                await saveStepData(sparseStep.url, values, {skipValidation: false});
+                await saveStepData(sparseStep.url, values);
               } catch (error: unknown) {
                 // rethrow what we can't handle
                 if (!(error instanceof ValidationError)) {
@@ -247,7 +245,7 @@ const FormStepNewRenderer: React.FC = () => {
           const values = valuesRef.current;
           if (values === null) throw new Error('Cannot save non-existent values');
           // XXX: check what happens if invalidly shaped data is submitted during save!
-          await saveStepData(sparseStep.url, values, {skipValidation: true});
+          await saveStepData(sparseStep.url, values);
         }}
         onSessionDestroyed={onDestroySession}
         suspendFormUrl={`${submission.url}/_suspend`}
