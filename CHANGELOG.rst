@@ -2,6 +2,22 @@
 SDK Changelog
 =============
 
+3.3.3 (2026-06-02)
+==================
+
+Regular bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.6.0 release, which fixes:
+
+  - Accesibility for screenreaders when a fieldset label is visually hidden.
+  - Interaction bugs with the ``addressNL`` component, among others: clearing of
+    validation errors, displaying an error if address derivation yields no results,
+    custom error messages not being used...
+  - Date field maximum date validation being off by one day.
+  - Datetime (picker) validation triggering too early.
+  - Submissions sometimes not being submittable when there are ``.``'s in the component
+    key.
+
 3.5.2 (2026-05-06)
 ==================
 
