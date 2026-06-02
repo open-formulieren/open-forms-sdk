@@ -3959,6 +3959,12 @@
       "value": "Click first point to finish shape"
     }
   ],
+  "w4culW": [
+    {
+      "type": 0,
+      "value": "The entered postcode and number don't result into a known address."
+    }
+  ],
   "wX1KpJ": [
     {
       "type": 0,
