@@ -96,7 +96,14 @@ export const checkStepLogic = async (
   return result.data!;
 };
 
-type SubmissionStepCreateOrUpdateBody = Pick<SubmissionStep, 'data'>;
+type SubmissionStepCreateOrUpdateBody = Pick<SubmissionStep, 'data'> & {
+  /**
+   * Flag to indicate whether the step is going to be saved via a form being suspended or
+   * a regular submit of the step.
+   */
+
+  fromSuspension: boolean;
+};
 
 export const saveStepData = async (
   /**
@@ -110,12 +117,16 @@ export const saveStepData = async (
    * Nesting can occur here, if a key like `foo.bar` is set, it creates a parent object
    * for the key `foo` with a child property `bar`.
    */
-  data: SubmissionStep['data']
+  data: SubmissionStep['data'],
+  fromSuspension = false
 ): Promise<void> => {
   // if data is not valid, this throws a `ValidationError` with the `asFormikProps`
   // method, which contains the errors in the suitable format for the formio-renderer.
   try {
-    await put<SubmissionStep, SubmissionStepCreateOrUpdateBody>(resourceUrl, {data});
+    await put<SubmissionStep, SubmissionStepCreateOrUpdateBody>(resourceUrl, {
+      data,
+      fromSuspension,
+    });
   } catch (error: unknown) {
     // strip out the `data` prefix, the API details are encapsulated from the caller
     if (error instanceof ValidationError) {

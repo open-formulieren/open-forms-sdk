@@ -245,7 +245,7 @@ const FormStepNewRenderer: React.FC = () => {
           const values = valuesRef.current;
           if (values === null) throw new Error('Cannot save non-existent values');
           // XXX: check what happens if invalidly shaped data is submitted during save!
-          await saveStepData(sparseStep.url, values);
+          await saveStepData(sparseStep.url, values, true);
         }}
         onSessionDestroyed={onDestroySession}
         suspendFormUrl={`${submission.url}/_suspend`}
