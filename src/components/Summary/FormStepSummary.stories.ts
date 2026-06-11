@@ -516,3 +516,43 @@ export const WithCustomerProfileAsFirstElement: Story = {
     ],
   },
 };
+
+export const WithCustomerProfileAsSecondElement: Story = {
+  args: {
+    data: [
+      {
+        name: 'textfield',
+        value: 'first value',
+        component: {
+          id: 'component1',
+          type: 'textfield',
+          key: 'textfield',
+          label: 'Textfield',
+        },
+      },
+      {
+        name: 'Profile',
+        value: [
+          {
+            type: 'email',
+            address: 'test@mail.com',
+            preferenceUpdate: 'useOnlyOnce',
+          },
+          {
+            type: 'phoneNumber',
+            address: '06 12345678',
+            preferenceUpdate: 'isNewPreferred',
+          },
+        ],
+        component: {
+          id: 'component2',
+          type: 'customerProfile',
+          key: 'profile',
+          label: 'Profile',
+          shouldUpdateCustomerData: true,
+          digitalAddressTypes: ['email', 'phoneNumber'],
+        } satisfies CustomerProfileComponentSchema,
+      },
+    ],
+  },
+};
