@@ -556,3 +556,115 @@ export const WithCustomerProfileAsSecondElement: Story = {
     ],
   },
 };
+
+export const WithMultipleValues: Story = {
+  args: {
+    data: [
+      {
+        name: 'textfield',
+        value: ['first', 'second'],
+        component: {
+          id: 'textfield',
+          type: 'textfield',
+          key: 'textfield',
+          label: 'Textfield',
+          multiple: true,
+        },
+      },
+      {
+        name: 'BSN',
+        value: ['XXXXXXXXX', 'XXXXXXXXX'],
+        component: {
+          id: 'bsn',
+          type: 'bsn',
+          key: 'bsn',
+          label: 'BSN',
+          multiple: true,
+        },
+      },
+      {
+        name: 'Date',
+        value: ['2026-01-01', '2026-02-02'],
+        component: {
+          id: 'date',
+          type: 'date',
+          key: 'date',
+          label: 'Date',
+          multiple: true,
+        },
+      },
+      {
+        name: 'Email',
+        value: ['first@example.org', 'second@example.org'],
+        component: {
+          id: 'email',
+          type: 'email',
+          key: 'email',
+          label: 'Email',
+          multiple: true,
+        },
+      },
+      {
+        name: 'Phone number',
+        value: ['0612345678', '+3187654321'],
+        component: {
+          id: 'phoneNumber',
+          type: 'phoneNumber',
+          key: 'phoneNumber',
+          label: 'Phone number',
+          multiple: true,
+        },
+      },
+      {
+        name: 'Select',
+        value: ['Option 1', 'Option 2'],
+        component: {
+          id: 'select',
+          type: 'select',
+          key: 'select',
+          label: 'Select',
+          multiple: true,
+          data: {
+            values: [
+              {
+                value: 'option-1',
+                label: 'Option 1',
+              },
+              {
+                value: 'option-2',
+                label: 'Option 2',
+              },
+            ],
+          },
+          openForms: {
+            dataSrc: 'manual',
+          },
+        },
+      },
+      {
+        name: 'File',
+        value: [
+          {
+            url: '#',
+            size: 123,
+            originalName: 'file1',
+          },
+          {
+            url: '#',
+            size: 2560,
+            originalName: 'file2',
+          },
+        ],
+        component: {
+          id: 'file',
+          type: 'file',
+          key: 'file',
+          label: 'File',
+          multiple: true,
+          file: {name: '', type: [], allowedTypesLabels: []},
+          filePattern: '*/*',
+        },
+      },
+    ],
+  },
+};
