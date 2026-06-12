@@ -222,7 +222,7 @@ const CustomerProfileDisplay: React.FC<
   }
 
   return (
-    <UnorderedList>
+    <UnorderedList className={'.utrecht-unordered-list--level-1'}>
       {addresses.map(address => (
         <UnorderedListItem key={address.type}>
           {address.address}
