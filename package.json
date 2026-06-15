@@ -124,7 +124,7 @@
     "@typescript-eslint/parser": "^8.58.2",
     "@utrecht/alternate-lang-nav-css": "^2.0.1",
     "@utrecht/button-group-react": "1.1.3",
-    "@utrecht/component-library-react": "14.0.0",
+    "@utrecht/component-library-react": "14.0.1",
     "@utrecht/design-tokens": "^2.5.0",
     "@utrecht/document-css": "^2.0.1",
     "@utrecht/form-field-css": "^2.0.2",

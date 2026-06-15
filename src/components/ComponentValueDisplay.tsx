@@ -222,7 +222,13 @@ const CustomerProfileDisplay: React.FC<
   }
 
   return (
-    <UnorderedList className={'.utrecht-unordered-list--level-1'}>
+    <UnorderedList
+      className="utrecht-unordered-list--level-1"
+      style={{
+        // backportable fix without needing to upgrade our design tokens now
+        '--utrecht-unordered-list-level-1-list-style-type': '"-"',
+      }}
+    >
       {addresses.map(address => (
         <UnorderedListItem key={address.type}>
           {address.address}
