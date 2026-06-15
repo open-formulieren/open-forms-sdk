@@ -2,6 +2,50 @@
 SDK Changelog
 =============
 
+4.0.0-alpha.1 (2026-06-22)
+==========================
+
+Second preview release of the upcoming 4.0.0 version.
+
+Bugfixes
+--------
+
+* [#6279] Fixed profile summary data font-size being too big.
+* [#6354] Fixed too many network calls being made in address lookups.
+* [#3535] Fixed bug where pausing a form allowed users to go to the next step, even when
+  progressing was blocked.
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.6.2 release, which fixes:
+
+  - Accessibility for screenreaders when a fieldset label is visually hidden.
+  - Interaction bugs with the ``addressNL`` component, among others: clearing of
+    validation errors, displaying an error if address derivation yields no results,
+    custom error messages not being used...
+  - Date field maximum date validation being off by one day.
+  - Datetime (picker) validation triggering too early.
+  - Submissions sometimes not being submittable when there are ``.``'s in the component
+    key.
+  - [#6076] Fixed not being able to place pins, lines or polygons in the ``map`` component.
+  - [#6279] Fixed multiple version of the same CSS packages being installed/bundled.
+  - [#6356] Fixed displaying time values that only have the hours and minutes parts.
+  - [#6375] Fixed scrolling the first component with validation errors into the viewport
+    on submit.
+  - [#6354] Fixed data-retrieval callbacks being called excessively despite no data
+    being changed.
+  - [#6075] Fixed the asterisk/label suffix display for required map components.
+  - [#6371] Fixed the children component data not being updated properly when prefill
+    data is used.
+
+Project maintenance
+-------------------
+
+* Updated dependencies:
+
+  - Upgraded playwright to 1.60.
+  - Upgraded vitest to 4.1.8.
+  - Upgraded storybook to 10.4.2.
+
+* Removed obsoleted API endpoint calls for the submission step validation.
+
 3.5.4 (2026-06-19)
 ==================
 
@@ -9,7 +53,7 @@ Regular bugfix release.
 
 * Upgraded ``@open-formulieren/formio-renderer`` to 1.6.2 release, which fixes:
 
-  - [#6076] Fixed not being able to place pins, lines or polygons in the `map` component.
+  - [#6076] Fixed not being able to place pins, lines or polygons in the ``map`` component.
   - [#6279] Fixed multiple version of the same CSS packages being installed/bundled.
   - [#6356] Fixed displaying time values that only have the hours and minutes parts.
   - [#6375] Fixed scrolling the first component with validation errors into the viewport
@@ -31,7 +75,7 @@ Regular bugfix release.
 * Upgraded ``@open-formulieren/formio-renderer`` to 1.1.4 bugfix release, which fixes:
 
   - [#6313] Fixed datetime validation triggering too early.
-  - [#6076] Fixed not being able to place pins, lines or polygons in the `map` component.
+  - [#6076] Fixed not being able to place pins, lines or polygons in the ``map`` component.
   - [#6356] Fixed displaying time values that only have the hours and minutes parts.
   - [#6354] Fixed data-retrieval callbacks being called excessively despite no data
     being changed.
