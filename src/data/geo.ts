@@ -7,6 +7,7 @@ import type {
 import AbstractProvider from 'leaflet-geosearch/src/providers/provider.js';
 
 import {get} from '@/api';
+import {getCached, setCached} from '@/cache';
 import {logError} from '@/components/Errors';
 
 /**
@@ -18,18 +19,25 @@ export interface AutoCompleteResult {
   secretStreetCity: string;
 }
 
+const AUTOCOMPLETE_CACHE_TTL = 15 * 60 * 1000; // 15 minutes
+
 export const autoCompleteAddress = async (
   baseUrl: string,
   postcode: string,
   houseNumber: string
 ): Promise<AutoCompleteResult | null> => {
+  const cacheKey = `${postcode.replace(' ', '')}|${houseNumber}`;
+  const cacheResult = getCached<AutoCompleteResult>(cacheKey, AUTOCOMPLETE_CACHE_TTL);
+  if (cacheResult !== null) return cacheResult;
+
   const params: Record<string, string> = {
     postcode: postcode,
     house_number: houseNumber,
   };
   try {
-    const result = await get<AutoCompleteResult>(`${baseUrl}geo/address-autocomplete`, params);
-    return result!;
+    const result = (await get<AutoCompleteResult>(`${baseUrl}geo/address-autocomplete`, params))!;
+    setCached(cacheKey, result);
+    return result;
   } catch (error) {
     logError(error);
     return null;
