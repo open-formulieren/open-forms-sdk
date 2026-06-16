@@ -19,7 +19,7 @@ export interface AutoCompleteResult {
   secretStreetCity: string;
 }
 
-const AUTOCOMPLETE_CACHE_TTL = 15 * 60 * 1000; // 15 minutes
+const GEO_CACHE_TTL = 15 * 60 * 1000; // 15 minutes
 
 export const autoCompleteAddress = async (
   baseUrl: string,
@@ -27,7 +27,7 @@ export const autoCompleteAddress = async (
   houseNumber: string
 ): Promise<AutoCompleteResult | null> => {
   const cacheKey = `${postcode.replace(' ', '')}|${houseNumber}`;
-  const cacheResult = getCached<AutoCompleteResult>(cacheKey, AUTOCOMPLETE_CACHE_TTL);
+  const cacheResult = getCached<AutoCompleteResult>(cacheKey, GEO_CACHE_TTL);
   if (cacheResult !== null) return cacheResult;
 
   const params: Record<string, string> = {
@@ -50,6 +50,9 @@ export const getAddressLabel = async (
   lng: number
 ): Promise<NearestLookupBody | null> => {
   let data: NearestLookupBody | null = null;
+  const cacheKey = `${lat}|${lng}`;
+  const cacheResult = getCached<NearestLookupBody>(cacheKey, GEO_CACHE_TTL);
+  if (cacheResult !== null) return cacheResult;
 
   try {
     const result = await get<{label: string}>(`${baseUrl}geo/latlng-search`, {
@@ -58,6 +61,7 @@ export const getAddressLabel = async (
     });
 
     data = result ? {label: result.label} : null;
+    if (data) setCached(cacheKey, data);
   } catch (error) {
     logError(error);
   }
