@@ -9,6 +9,7 @@ import {describe, expect, test} from 'vitest';
 import {buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import type {LogicRule} from '@/data/logic';
 import type {SubmissionStep} from '@/data/submission-steps';
+import {UNDEFINED_VALUE} from '@/logic/json-logic/extensions/context';
 
 import {evaluateBackendRules, getComponentEmptyValue} from './logic';
 
@@ -233,6 +234,117 @@ test('clearOnHide behaviour is applied', () => {
   // default value already matches with what the update would be
   expect(dataUpdates).toEqual({
     textfield: '',
+  });
+});
+
+test('clearOnHide behaviour with missing var (undefined) is applied', () => {
+  const rules: LogicRule[] = [
+    // mark textfield as hidden when checkbox is checked, which will eventually clear
+    // its value because the renderer detects it's hidden and clears it. The textfield1
+    // takes the value of the textfield, which is null (has been cleared)
+    {
+      jsonLogicTrigger: {
+        '==': [
+          {
+            var: ['checkbox'],
+          },
+          true,
+        ],
+      },
+      actions: [
+        {
+          component: 'textField',
+          action: {
+            type: 'property',
+            property: {
+              value: 'hidden',
+              type: 'bool',
+            },
+            state: true,
+          },
+        },
+        {
+          component: '',
+          variable: 'textField1',
+          action: {
+            type: 'variable',
+            value: {
+              var: ['nonExisting'],
+            },
+          },
+        },
+      ],
+    },
+  ];
+
+  const submission = buildSubmission();
+  const components: AnyComponentSchema[] = [
+    {
+      type: 'checkbox',
+      id: 'checkbox',
+      key: 'checkbox',
+      label: 'Checkbox',
+    },
+    {
+      type: 'textfield',
+      id: 'textField',
+      key: 'textField',
+      label: 'Textfield',
+      hidden: false,
+      clearOnHide: true,
+    },
+    {
+      type: 'textfield',
+      id: 'textField1',
+      key: 'textField1',
+      label: 'Textfield1',
+      hidden: false,
+    },
+  ];
+  const step: SubmissionStep = {
+    ...buildSubmissionStep({components}),
+    defaultConfiguration: {components},
+  };
+  let updatedComponents: AnyComponentSchema[] = [];
+  let dataUpdates: JSONObject | null = {};
+
+  evaluateBackendRules({
+    submission,
+    step,
+    rules,
+    inputData: {checkbox: true},
+    components: step.defaultConfiguration!.components ?? [],
+    onLogicCheckResult: (_, step) => {
+      updatedComponents = step.configuration.components;
+      dataUpdates = step.data;
+    },
+  });
+  expect(updatedComponents).toEqual([
+    {
+      type: 'checkbox',
+      id: 'checkbox',
+      key: 'checkbox',
+      label: 'Checkbox',
+    },
+    {
+      type: 'textfield',
+      id: 'textField',
+      key: 'textField',
+      label: 'Textfield',
+      hidden: true,
+      clearOnHide: true,
+    },
+    {
+      type: 'textfield',
+      id: 'textField1',
+      key: 'textField1',
+      label: 'Textfield1',
+      hidden: false,
+    },
+  ]);
+
+  expect(dataUpdates).toEqual({
+    textField1: UNDEFINED_VALUE,
   });
 });
 

@@ -14,7 +14,7 @@ const JsonLogicPlayground: React.FC = () => {
   const [inputData, setInputData] = useState<JSONValue>({});
 
   const _evaluate = () => evaluate(expression, inputData);
-  const [result, setResult] = useState<JSONValue>(_evaluate);
+  const [result, setResult] = useState<JSONValue | symbol>(_evaluate);
   const [numResultRows, setNumResultRows] = useState(1);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
