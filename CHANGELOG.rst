@@ -2,6 +2,27 @@
 SDK Changelog
 =============
 
+3.5.4 (2026-06-19)
+==================
+
+Regular bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.6.2 release, which fixes:
+
+  - [#6076] Fixed not being able to place pins, lines or polygons in the `map` component.
+  - [#6279] Fixed multiple version of the same CSS packages being installed/bundled.
+  - [#6356] Fixed displaying time values that only have the hours and minutes parts.
+  - [#6375] Fixed scrolling the first component with validation errors into the viewport
+    on submit.
+  - [#6354] Fixed data-retrieval callbacks being called excessively despite no data
+    being changed.
+  - [#6075] Fixed the asterisk/label suffix display for required map components.
+  - [#6371] Fixed the children component data not being updated properly when prefill
+    data is used.
+
+* [#6279] Fixed profile summary data font-size being too big.
+* [#6354] Fixed too many network calls being made in address lookups.
+
 3.5.3 (2026-06-02)
 ==================
 
