@@ -1,7 +1,7 @@
 import {getComponentsMap} from '@open-formulieren/formio-renderer/formio.js';
 import {useFormSettings} from '@open-formulieren/formio-renderer/hooks.js';
 import type {AnyComponentSchema} from '@open-formulieren/types';
-import {useFormikContext} from 'formik';
+import {getIn, useFormikContext} from 'formik';
 import {useEffect, useMemo, useRef} from 'react';
 
 import type {AutoCompleteResult} from '@/data/geo';
@@ -9,7 +9,7 @@ import type {AutoCompleteResult} from '@/data/geo';
 const POSTCODE_REGEX = /^[0-9]{4}\s?[a-zA-Z]{2}$/;
 const HOUSE_NUMBER_REGEX = /^\d+$/;
 
-export const LOCATION_AUTOCOMPLETE_DEBOUNCE = 200;
+export const LOCATION_AUTOCOMPLETE_DEBOUNCE = 300;
 
 interface AddressAutoCompleteGroup {
   postcodeKey: string;
@@ -123,18 +123,36 @@ const AddressAutoFillObserver: React.FC<AddressAutoFillObserverProps> = ({
   group,
   getAddressAutoComplete,
 }) => {
-  const timerRef = useRef<number | null>(null);
+  const {setFieldValue, values} = useFormikContext();
 
-  const {setFieldValue, getFieldMeta} = useFormikContext();
-  const postcode = getFieldMeta<string>(group.postcodeKey).value;
-  const houseNumber = String(getFieldMeta<number | string>(group.houseNumberKey).value);
+  const timerRef = useRef<number | null>(null);
+  const updateableTargetsRef = useRef<typeof group.targets>(group.targets);
+
+  const postcode: string = getIn(values, group.postcodeKey);
+  const houseNumber = String(getIn(values, group.houseNumberKey));
+
+  // derive the subset of targets that can be updated in a useEffect hook - this
+  // collection changes based on the form values (a value has been set) or the readOnly
+  // state, so it depends on the group & formik values.
+  // Uses a mutable ref that doesn't trigger re-renders when it changes, otherwise we
+  // end up in infinite loops because the autocomplete updates the formik values and
+  // changes this collection by definition :)
+  useEffect(() => {
+    updateableTargetsRef.current = group.targets.filter(({key, isReadOnly}) => {
+      const currentValue: string = getIn(values, key);
+      const canAssignValue = isReadOnly || !currentValue;
+      return canAssignValue;
+    });
+  }, [group, values]);
 
   useEffect(() => {
     let isMounted = true;
+    const updateableTargets = updateableTargetsRef.current;
 
     const isValidPostcode = POSTCODE_REGEX.test(postcode);
     const isValidHouseNumber = HOUSE_NUMBER_REGEX.test(houseNumber);
-    if (isValidHouseNumber && isValidPostcode) {
+
+    if (isValidHouseNumber && isValidPostcode && updateableTargets.length) {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
         timerRef.current = null;
@@ -152,10 +170,7 @@ const AddressAutoFillObserver: React.FC<AddressAutoFillObserverProps> = ({
         };
         const {streetName, city} = result;
         if (!isMounted) return;
-        for (const {key, type, isReadOnly} of group.targets) {
-          const currentValue = getFieldMeta<string>(key).value;
-          const canAssignValue = isReadOnly || !currentValue;
-          if (!canAssignValue) continue;
+        for (const {key, type} of updateableTargets) {
           const newValue = type === 'streetName' ? streetName : city;
           setFieldValue(key, newValue);
         }
@@ -170,7 +185,7 @@ const AddressAutoFillObserver: React.FC<AddressAutoFillObserverProps> = ({
       }
       isMounted = false;
     };
-  }, [getFieldMeta, setFieldValue, group.targets, getAddressAutoComplete, postcode, houseNumber]);
+  }, [setFieldValue, getAddressAutoComplete, postcode, houseNumber]);
 
   return null;
 };
