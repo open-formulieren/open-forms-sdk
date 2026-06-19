@@ -1,3 +1,4 @@
+import {Paragraph} from '@utrecht/component-library-react';
 import {useContext, useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 
@@ -36,13 +37,15 @@ const SessionExpired: React.FC = () => {
         }
       >
         <ErrorMessage>
-          <FormattedMessage
-            description="Session expired error message"
-            defaultMessage="Your session has expired. <link>Click here to restart</link>."
-            values={{
-              link: chunks => <Link to="/">{chunks}</Link>,
-            }}
-          />
+          <Paragraph>
+            <FormattedMessage
+              description="Session expired error message"
+              defaultMessage="Your session has expired. <link>Click here to restart</link>."
+              values={{
+                link: chunks => <Link to="/">{chunks}</Link>,
+              }}
+            />
+          </Paragraph>
         </ErrorMessage>
       </Card>
       {config.debug && <AppDebug />}

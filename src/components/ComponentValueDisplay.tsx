@@ -23,6 +23,7 @@ import type {
 import type {AddressData} from '@open-formulieren/types/dist/components/addressNL';
 import type {FileUploadData} from '@open-formulieren/types/dist/components/file';
 import type {GeoJsonGeometry} from '@open-formulieren/types/dist/components/map';
+import {UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
 import React, {Suspense} from 'react';
 import {FormattedDate, FormattedMessage, FormattedNumber, FormattedTime} from 'react-intl';
 
@@ -221,9 +222,15 @@ const CustomerProfileDisplay: React.FC<
   }
 
   return (
-    <List extraCompact withDash>
+    <UnorderedList
+      className="utrecht-unordered-list--level-1"
+      style={{
+        // backportable fix without needing to upgrade our design tokens now
+        '--utrecht-unordered-list-level-1-list-style-type': '"-"',
+      }}
+    >
       {addresses.map(address => (
-        <React.Fragment key={address.type}>
+        <UnorderedListItem key={address.type}>
           {address.address}
           {address.preferenceUpdate === 'isNewPreferred' && (
             <>
@@ -239,9 +246,9 @@ const CustomerProfileDisplay: React.FC<
               />
             </>
           )}
-        </React.Fragment>
+        </UnorderedListItem>
       ))}
-    </List>
+    </UnorderedList>
   );
 };
 
