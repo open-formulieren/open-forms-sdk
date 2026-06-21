@@ -1,6 +1,7 @@
 import type {JSONObject} from '@open-formulieren/types';
 import {expect, test} from 'vitest';
 
+import {UNDEFINED_VALUE} from './extensions/context';
 import evaluate from './index';
 
 // smoke test for the public interface
@@ -35,6 +36,34 @@ test('evaluate returns serialized results by default', () => {
   const result = evaluate({var: 'someVar'}, input);
 
   expect(typeof result).toBe('string');
+});
+
+test('evaluate returns undefined for missing variable in the context', () => {
+  // @ts-expect-error someVar is not a JSON type, but we're testing the passthrough
+  // behaviour here - it's not realistics input data for real usage
+  const input: JSONObject = {someVar: new Date()};
+
+  const result = evaluate({var: 'anotherVar'}, input);
+
+  expect(result).toBe(UNDEFINED_VALUE);
+});
+
+test('evaluate returns undefined for empty context', () => {
+  const input: JSONObject = {};
+
+  const result = evaluate({var: 'anotherVar'}, input);
+
+  expect(result).toBe(UNDEFINED_VALUE);
+});
+
+test('evaluate returns undefined for missing nested variable in the context', () => {
+  // @ts-expect-error someVar is not a JSON type, but we're testing the passthrough
+  // behaviour here - it's not realistics input data for real usage
+  const input: JSONObject = {someVar: new Date()};
+
+  const result = evaluate({var: 'someVar.anotherVar'}, input);
+
+  expect(result).toBe(UNDEFINED_VALUE);
 });
 
 test('evaluate with data that also includes a valid json logic operator', () => {

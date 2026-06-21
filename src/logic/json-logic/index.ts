@@ -39,6 +39,7 @@ import {
   jsonLogicToday,
 } from './extensions';
 import {TYPE} from './extensions/constants';
+import {UNDEFINED_VALUE} from './extensions/context';
 
 class LogicEngine extends LogicEngine_ {
   isData = (data: Record<string, JSONValue>, key: string) => {
@@ -118,7 +119,7 @@ const evaluate = (
   expression: JSONValue,
   data: JSONValue,
   {serializeResult = true}: EvaluationOptions = {}
-): JSONValue => {
+): JSONValue | symbol => {
   // use the .run variant instead of .build & call, as this has a built-in optimizer,
   // which is well-suited to our case where we'll probably evaluate the same rule
   // multiple times.
@@ -126,13 +127,14 @@ const evaluate = (
   return serializeResult ? serialize(result) : result;
 };
 
-const serialize = (value: unknown): JSONValue => {
+const serialize = (value: unknown): JSONValue | symbol => {
   // avoid round trip if it's already a primitive
   if (
     typeof value == 'string' ||
     typeof value == 'boolean' ||
     typeof value == 'number' ||
-    value === null
+    value === null ||
+    value === UNDEFINED_VALUE
   ) {
     return value;
   }

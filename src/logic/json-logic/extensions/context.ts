@@ -8,6 +8,9 @@ import {defaultMethods} from 'json-logic-engine';
 
 import type {JsonLogicEngineMethod} from './types';
 
+// used to treat null values as undefined, which adheres to the backend behaviour
+export const UNDEFINED_VALUE = Symbol('undefined');
+
 const originalVar = defaultMethods['var'].method;
 export const customVar: JsonLogicEngineMethod = (key, context, above, engine) => {
   let fallback: unknown;
@@ -21,5 +24,10 @@ export const customVar: JsonLogicEngineMethod = (key, context, above, engine) =>
     if (resolved === null) return fallback;
   }
 
-  return originalVar(key, context, above, engine);
+  const result = originalVar(key, context, above, engine);
+  if (result === null) {
+    return UNDEFINED_VALUE;
+  }
+
+  return result;
 };

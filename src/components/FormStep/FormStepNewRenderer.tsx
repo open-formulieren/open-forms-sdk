@@ -1,6 +1,6 @@
 import {FormioForm, LoadingIndicator} from '@open-formulieren/formio-renderer';
 import type {FormStateRef} from '@open-formulieren/formio-renderer/components/FormioForm.js';
-import type {AnyComponentSchema, JSONObject} from '@open-formulieren/types';
+import type {AnyComponentSchema, JSONObject, JSONValue} from '@open-formulieren/types';
 import isEqual from 'fast-deep-equal';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useNavigate, useNavigation} from 'react-router';
@@ -16,6 +16,7 @@ import {type SubmissionStep, saveStepData} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
+import {UNDEFINED_VALUE} from '@/logic/json-logic/extensions/context';
 
 import AddressAutoFillObservers from './AddressAutoFillObservers';
 import FormStepNavigation from './FormStepNavigation';
@@ -190,6 +191,22 @@ const FormStepNewRenderer: React.FC = () => {
                 });
               }
               setDebugStepValues(values, false);
+
+              // missing values (undefined-UNDEFINED_VALUE) for variable action in logic
+              // should not be part of the submitted data (following the behaviour of the
+              // backend logic)
+              if (rules) {
+                for (const [componentKey, componentValue] of Object.entries(
+                  values as Record<string, JSONValue | typeof UNDEFINED_VALUE>
+                )) {
+                  if (componentValue === UNDEFINED_VALUE) {
+                    delete values[componentKey];
+                  }
+                }
+
+                // update once more the values according to the logic results
+                valuesRef.current = values;
+              }
             }}
             onSubmit={async values => {
               try {
