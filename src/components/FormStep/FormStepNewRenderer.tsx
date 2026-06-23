@@ -20,6 +20,7 @@ import {type SubmissionStep, saveStepData} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
+import useTitle from '@/hooks/useTitle';
 
 import AddressAutoFillObservers from './AddressAutoFillObservers';
 import Progress from './Progress';
@@ -69,6 +70,7 @@ const FormStepNewRenderer: React.FC = () => {
   );
 
   const {formStep, submissionStep: sparseStep} = useResolveStepUrl(form, submission);
+  useTitle(formStep.formDefinition, form.name);
   const state = useLoadStep(sparseStep.url, onStepLoaded);
 
   const configParams = useFormioFormConfigurationParameters();
