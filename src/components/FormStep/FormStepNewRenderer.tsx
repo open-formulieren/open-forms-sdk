@@ -7,7 +7,8 @@ import {useNavigate, useNavigation} from 'react-router';
 
 import {get} from '@/api';
 import {useDebugContext} from '@/components/AppDebug';
-import Card, {CardTitle} from '@/components/Card';
+import {CardTitle} from '@/components/Card';
+import FormContainer from '@/components/FormContainer';
 import {LiteralsProvider} from '@/components/Literal';
 import PreviousLink from '@/components/PreviousLink';
 import {assertSubmission, useSubmissionContext} from '@/components/SubmissionProvider';
@@ -164,7 +165,7 @@ const FormStepNewRenderer: React.FC = () => {
 
   return (
     <LiteralsProvider literals={formStep.literals}>
-      <Card title={form.name} mobileHeaderHidden>
+      <FormContainer mobileHeaderHidden>
         <PreviousLink to={previousTo} position="start" />
         <Progress form={form} submission={submission} currentStep={sparseStep} />
         <CardTitle title={sparseStep.name} headingType="subtitle" padded />
@@ -238,7 +239,7 @@ const FormStepNewRenderer: React.FC = () => {
             />
           </FormioForm>
         )}
-      </Card>
+      </FormContainer>
 
       <FormStepSaveModal
         isOpen={stepSaveModalOpen}

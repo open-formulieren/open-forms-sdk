@@ -65,6 +65,7 @@ const renderSummary = async (
             <ConfigContext.Provider
               value={{
                 baseUrl: BASE_URL,
+                showFormTitle: true,
                 basePath: '',
                 clientBaseUrl: '',
                 baseTitle: '',

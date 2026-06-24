@@ -20,6 +20,7 @@ const render = async (children: React.ReactNode, locationId: string) =>
     <ConfigContext.Provider
       value={{
         baseUrl: BASE_URL,
+        showFormTitle: true,
         basePath: '',
         clientBaseUrl: '',
         baseTitle: '',

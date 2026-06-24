@@ -44,6 +44,7 @@ const Wrap: React.FC<WrapperProps> = ({form, currentUrl = '/startpagina', search
         basePath: '',
         baseTitle: '',
         requiredFieldsWithAsterisk: true,
+        showFormTitle: true,
         debug: false,
       }}
     >

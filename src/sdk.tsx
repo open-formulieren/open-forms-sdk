@@ -25,6 +25,7 @@ const VERSION = getVersion();
 export interface SDKOptions {
   baseUrl: string;
   formId: string; // UUID or slug
+  showFormTitle?: boolean;
   basePath?: string;
   CSPNonce?: string;
   lang?: SupportedLocales;
@@ -43,6 +44,7 @@ const NO_COMPONENTS: AnyComponentSchema[] = [] as const;
 class OpenForm {
   protected targetNode: HTMLElement;
   protected baseUrl: string;
+  protected showFormTitle: boolean;
   protected apiUrl: string;
   protected initialDataReference: string | null;
   protected authVisible: 'all' | '';
@@ -67,6 +69,7 @@ class OpenForm {
       baseUrl,
       basePath,
       formId,
+      showFormTitle = true,
       CSPNonce: CSPNonceValue = '',
       lang = 'nl',
       sentryDSN = '',
@@ -78,6 +81,7 @@ class OpenForm {
 
     this.targetNode = targetNode;
     this.baseUrl = baseUrl;
+    this.showFormTitle = showFormTitle;
     this.formObject = null;
     this.lang = lang;
     this.useHashRouting = useHashRouting;
@@ -223,6 +227,7 @@ class OpenForm {
           <ConfigContext.Provider
             value={{
               baseUrl: this.baseUrl,
+              showFormTitle: this.showFormTitle,
               clientBaseUrl: this.clientBaseUrl,
               basePath: this.routerBasePath,
               baseTitle: this.baseDocumentTitle,

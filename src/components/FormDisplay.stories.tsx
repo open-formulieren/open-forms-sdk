@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 
 import Body from '@/components/Body';
-import Card from '@/components/Card';
+import FormContainer from '@/components/FormContainer';
 import {withPageWrapper} from '@/sb-decorators';
 
 import FormDisplay from './FormDisplay';
@@ -18,16 +18,16 @@ export default {
     <FormDisplay
       progressIndicator={
         args.showProgressIndicator ? (
-          <Card>
+          <FormContainer>
             <Body>Progress indicator</Body>
-          </Card>
+          </FormContainer>
         ) : null
       }
       {...args}
     >
-      <Card>
+      <FormContainer>
         <Body>Body for relevant route(s)</Body>
-      </Card>
+      </FormContainer>
     </FormDisplay>
   ),
   argTypes: {
