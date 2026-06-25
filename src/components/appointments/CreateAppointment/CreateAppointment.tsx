@@ -1,8 +1,9 @@
 import {LoadingIndicator} from '@open-formulieren/formio-renderer';
 import {Outlet, useLocation} from 'react-router';
 
-import Card from '@/components/Card';
+import type Card from '@/components/Card';
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
+import FormContainer from '@/components/FormContainer';
 import FormDisplay from '@/components/FormDisplay';
 import {LiteralsProvider} from '@/components/Literal';
 import {SessionTrackerModal} from '@/components/Sessions';
@@ -85,9 +86,9 @@ const Wrapper: React.FC<WrapperProps> = ({children, ...props}) => {
   const isConfirmation = useIsConfirmation();
   if (isConfirmation) return <>{children}</>;
   return (
-    <Card mobileHeaderHidden {...props}>
+    <FormContainer mobileHeaderHidden {...props}>
       {children}
-    </Card>
+    </FormContainer>
   );
 };
 

@@ -10,6 +10,7 @@ import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FormMaximumSubmissionsError from '@/components/Errors/FormMaximumSubmissionsError';
 import ExistingSubmissionOptions from '@/components/ExistingSubmissionOptions';
+import FormContainer from '@/components/FormContainer';
 import {LiteralsProvider} from '@/components/Literal';
 import LoginOptions, {type OnFormStartOptions} from '@/components/LoginOptions';
 import MaintenanceMode from '@/components/MaintenanceMode';
@@ -120,14 +121,14 @@ const FormStart: React.FC = () => {
 
   const userIsFormDesigner = IsFormDesigner.getValue();
   if (!userIsFormDesigner && form.maintenanceMode) {
-    return <MaintenanceMode title={form.name} />;
+    return <MaintenanceMode />;
   }
 
   if (outagePluginId) {
     const loginOption = form.loginOptions.find(option => option.identifier === outagePluginId);
     if (!loginOption) throw new Error('Unknown login plugin identifier');
     return (
-      <Card
+      <FormContainer
         title={
           <FormattedMessage
             description="Form start outage title"
@@ -137,7 +138,7 @@ const FormStart: React.FC = () => {
         }
       >
         <AuthenticationOutage loginOption={loginOption} />
-      </Card>
+      </FormContainer>
     );
   }
 
@@ -147,7 +148,7 @@ const FormStart: React.FC = () => {
 
   return (
     <LiteralsProvider literals={form.literals}>
-      <Card title={form.name}>
+      <FormContainer>
         {form.submissionLimitReached && <FormMaximumSubmissionsError />}
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
@@ -178,7 +179,7 @@ const FormStart: React.FC = () => {
             extraNextParams={extraNextParams}
           />
         )}
-      </Card>
+      </FormContainer>
     </LiteralsProvider>
   );
 };

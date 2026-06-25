@@ -1,7 +1,7 @@
 import {FormattedMessage} from 'react-intl';
 
 import Body from '@/components/Body';
-import Card from '@/components/Card';
+import FormContainer from '@/components/FormContainer';
 import {LiteralsProvider} from '@/components/Literal';
 import LoginOptions from '@/components/LoginOptions';
 import MaintenanceMode from '@/components/MaintenanceMode';
@@ -25,7 +25,7 @@ const CosignStart: React.FC = () => {
 
   const userIsFormDesigner = IsFormDesigner.getValue();
   if (!userIsFormDesigner && form.maintenanceMode) {
-    return <MaintenanceMode title={form.name} />;
+    return <MaintenanceMode />;
   }
 
   if (outagePluginId) {
@@ -34,7 +34,7 @@ const CosignStart: React.FC = () => {
     );
     if (!loginOption) throw new Error('Unknown login plugin identifier');
     return (
-      <Card
+      <FormContainer
         title={
           <FormattedMessage
             description="Form start outage title"
@@ -44,13 +44,13 @@ const CosignStart: React.FC = () => {
         }
       >
         <AuthenticationOutage loginOption={loginOption} />
-      </Card>
+      </FormContainer>
     );
   }
 
   return (
     <LiteralsProvider literals={form.literals}>
-      <Card title={form.name}>
+      <FormContainer>
         {userIsFormDesigner && form.maintenanceMode && <MaintenanceMode asToast />}
 
         {authError && <AuthenticationError parameter={authError[0]} errorCode={authError[1]} />}
@@ -71,7 +71,7 @@ const CosignStart: React.FC = () => {
           onFormStart={() => {}}
           isolateCosignOptions={false}
         />
-      </Card>
+      </FormContainer>
     </LiteralsProvider>
   );
 };

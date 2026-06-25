@@ -4,13 +4,13 @@ import type {AnyComponentSchema} from '@open-formulieren/types';
 import type {Decorator} from '@storybook/react-vite';
 import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
+import {NuqsTestingAdapter} from 'nuqs/adapters/testing';
 import React from 'react';
 
 import {ConfigContext, FormContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
 import {BASE_URL, buildForm} from '@/api-mocks';
 import Card from '@/components/Card';
-import { NuqsTestingAdapter } from 'nuqs/adapters/testing';
 import {LiteralsProvider} from '@/components/Literal';
 import {SubmissionStatusContext} from '@/components/PostCompletionViews';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
@@ -78,6 +78,7 @@ export const withConfig: Decorator = (Story, {parameters}) => {
   // General configuration
   const DEFAULTS: ConfigContextType = {
     baseUrl: BASE_URL,
+    showFormTitle: true,
     basePath: '',
     clientBaseUrl: '',
     baseTitle: '',

@@ -44,6 +44,7 @@ const Wrap: React.FC<WrapperProps> = ({form, currentUrl = '/sp', searchParams = 
     <ConfigContext.Provider
       value={{
         baseUrl: BASE_URL,
+        showFormTitle: true,
         clientBaseUrl: 'http://localhost/',
         basePath: '',
         baseTitle: '',

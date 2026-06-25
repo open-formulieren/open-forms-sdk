@@ -48,6 +48,7 @@ FormContext.displayName = 'FormContext';
 
 export interface ConfigContextType {
   baseUrl: string;
+  showFormTitle: boolean;
   clientBaseUrl: string;
   basePath: string;
   baseTitle: string;
@@ -61,6 +62,7 @@ export interface ConfigContextType {
 
 const ConfigContext = React.createContext<ConfigContextType>({
   baseUrl: '',
+  showFormTitle: true,
   clientBaseUrl: window.location.href,
   basePath: '',
   baseTitle: '',

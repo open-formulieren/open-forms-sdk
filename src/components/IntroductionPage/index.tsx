@@ -4,13 +4,13 @@ import {Navigate} from 'react-router';
 
 import {FormContext} from '@/Context';
 import Body from '@/components/Body';
-import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
+import FormContainer from '@/components/FormContainer';
 import Link from '@/components/Link';
 import useQueryParams from '@/hooks/useQueryParams';
 
 const IntroductionPage: React.FC = () => {
-  const {name, introductionPageContent = ''} = useContext(FormContext);
+  const {introductionPageContent = ''} = useContext(FormContext);
   const {preserveQueryParams} = useQueryParams();
 
   const startPageUrl = preserveQueryParams('startpagina');
@@ -19,7 +19,7 @@ const IntroductionPage: React.FC = () => {
   }
 
   return (
-    <Card title={name}>
+    <FormContainer>
       <Body
         modifiers={['wysiwyg']}
         component="div"
@@ -38,7 +38,7 @@ const IntroductionPage: React.FC = () => {
         />
         <FAIcon icon="arrow-right-long" />
       </Link>
-    </Card>
+    </FormContainer>
   );
 };
 
