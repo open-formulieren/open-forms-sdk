@@ -1,10 +1,7 @@
 import {getRegistryEntry} from '@open-formulieren/formio-renderer';
 import {processVisibility} from '@open-formulieren/formio-renderer/visibility.js';
-import type {JSONObject, JSONValue} from '@open-formulieren/types';
-import {getIn, setIn} from 'formik';
 import {set} from 'lodash';
 
-import {getComponentEmptyValue} from '@/components/FormStep/logic';
 import type {LogicAction, PropertyAction} from '@/data/logic';
 
 import type {LogicEvaluationState} from './types';
@@ -66,38 +63,17 @@ export const applyPropertyAction = (
       // access to the Formik state and can't even pass the errors.
       {},
       {
-        emulateBackend: true,
         // for proper intuitive semantics, this would take into account the visibility
-        // state of the parent(s) via hasHiddenParent(targetComponent, logicState),
-        // but because of the `clearValueCallback` to match the backend behaviour, this
-        // is currently not relevan/correct. See
-        // https://github.com/open-formulieren/open-forms/issues/6121.
+        // state of the parent(s) via hasHiddenParent(targetComponent, logicState).
+        // This is relevant if there are multiple logic rules (or a combination of logic rules and
+        // simple conditionals) targeting a layout component and a child of this layout component in
+        // an opposite way. For example, the first rule marks a fieldset as hidden, and the second
+        // marks a child textfield as visible. In the current situation, the textfield would be
+        // added to the data, even though the fieldset is hidden.
         parentHidden: false,
         initialValues: logicState.initialValues,
         getRegistryEntry,
         componentsMap,
-        // Ensure we restore the default value OR empty value when clearing the
-        // value so that we match the backend behaviour. The formio-renderer will take
-        // care of properly removing the key from the submission data.
-        // See https://github.com/open-formulieren/open-forms/issues/6121
-        clearValueCallback: (values: JSONObject, key: string): JSONObject => {
-          const component = componentsMap[key];
-          if (
-            ['fieldset', 'columns', 'content', 'softRequiredErrors', 'coSign'].includes(
-              component.type
-            )
-          ) {
-            return values;
-          }
-
-          const initialValue: JSONValue | undefined = getIn(
-            logicState.initialValuesForClearOnHide,
-            key
-          );
-          const clearedValue: JSONValue =
-            initialValue !== undefined ? initialValue : getComponentEmptyValue(component);
-          return setIn(values, key, clearedValue);
-        },
       }
     );
     logicState.data = updatedValues;
