@@ -532,6 +532,230 @@ test('clearOnHide excludes data updates for child components', () => {
   expect(dataUpdates).toEqual({});
 });
 
+test('layout component with child and two visibility actions doing the opposite', () => {
+  const components: AnyComponentSchema[] = [
+    {
+      type: 'checkbox',
+      id: 'showFieldset',
+      key: 'showFieldset',
+      label: 'Show fieldset',
+    },
+    {
+      type: 'fieldset',
+      id: 'fieldset',
+      key: 'fieldset',
+      label: 'fieldset',
+      hidden: true,
+      hideHeader: false,
+      components: [
+        {
+          type: 'radio',
+          id: 'showTextfield',
+          key: 'showTextfield',
+          label: 'Show textfield',
+          values: [
+            {label: 'Yes', value: 'yes'},
+            {label: 'No', value: 'no'},
+            {label: 'Maybe', value: 'maybe'},
+          ],
+          openForms: {dataSrc: 'manual'},
+        },
+        {
+          type: 'textfield',
+          id: 'textfield',
+          key: 'textfield',
+          label: 'Textfield',
+          hidden: true,
+          clearOnHide: true,
+        },
+      ],
+    },
+    {
+      type: 'textfield',
+      id: 'observer',
+      key: 'observer',
+      label: 'Observer',
+      validate: {required: false},
+    },
+  ];
+
+  const rules: LogicRule[] = [
+    {
+      jsonLogicTrigger: {'==': [{var: 'showFieldset'}, true]},
+      actions: [
+        {
+          component: 'fieldset',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: false,
+          },
+        },
+      ],
+    },
+    // Expected to trigger, because showTextfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: ['showTextfield', 'no']}, 'no']},
+      actions: [
+        {
+          component: 'textfield',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: false,
+          },
+        },
+      ],
+    },
+    // Expected to trigger, because textfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: ['textfield', 'not-in-context']}, 'not-in-context']},
+      actions: [
+        {
+          component: 'observer',
+          action: {
+            type: 'property',
+            property: {value: 'validate.required', type: 'bool'},
+            state: true,
+          },
+        },
+      ],
+    },
+  ];
+  const submission = buildSubmission();
+
+  const step: SubmissionStep = {
+    ...buildSubmissionStep({components}),
+    defaultConfiguration: {components},
+  };
+  let dataUpdates: JSONObject | null = {};
+  let updatedComponents: AnyComponentSchema[] = [];
+
+  evaluateBackendRules({
+    submission,
+    step,
+    rules,
+    inputData: {showFieldset: false},
+    components: step.defaultConfiguration!.components,
+    onLogicCheckResult: (_, step) => {
+      dataUpdates = step.data;
+      updatedComponents = step.configuration.components;
+    },
+  });
+
+  expect(dataUpdates).toEqual({});
+  expect((updatedComponents[2] as TextFieldComponentSchema).validate!.required).toEqual(true);
+});
+
+test('layout component with child and two visibility actions doing the opposite (untriggered case)', () => {
+  const components: AnyComponentSchema[] = [
+    {
+      type: 'checkbox',
+      id: 'showFieldset',
+      key: 'showFieldset',
+      label: 'Show fieldset',
+    },
+    {
+      type: 'fieldset',
+      id: 'fieldset',
+      key: 'fieldset',
+      label: 'fieldset',
+      hidden: true,
+      hideHeader: false,
+      components: [
+        {
+          type: 'checkbox',
+          id: 'hideTextfield',
+          key: 'hideTextfield',
+          label: 'Hide textfield',
+        },
+        {
+          type: 'textfield',
+          id: 'textfield',
+          key: 'textfield',
+          label: 'Textfield',
+          hidden: false,
+          clearOnHide: true,
+        },
+      ],
+    },
+    {
+      type: 'textfield',
+      id: 'observer',
+      key: 'observer',
+      label: 'Observer',
+      validate: {required: false},
+    },
+  ];
+
+  const rules: LogicRule[] = [
+    {
+      jsonLogicTrigger: {'==': [{var: 'showFieldset'}, true]},
+      actions: [
+        {
+          component: 'fieldset',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: false,
+          },
+        },
+      ],
+    },
+    // Not expected to trigger, because hideTextfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: 'hideTextfield'}, true]},
+      actions: [
+        {
+          component: 'textfield',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: true,
+          },
+        },
+      ],
+    },
+    // Expected to trigger, because textfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: ['textfield', 'not-in-context']}, 'not-in-context']},
+      actions: [
+        {
+          component: 'observer',
+          action: {
+            type: 'property',
+            property: {value: 'validate.required', type: 'bool'},
+            state: true,
+          },
+        },
+      ],
+    },
+  ];
+  const submission = buildSubmission();
+
+  const step: SubmissionStep = {
+    ...buildSubmissionStep({components}),
+    defaultConfiguration: {components},
+  };
+  let dataUpdates: JSONObject | null = {};
+  let updatedComponents: AnyComponentSchema[] = [];
+
+  evaluateBackendRules({
+    submission,
+    step,
+    rules,
+    inputData: {showFieldset: false},
+    components: step.defaultConfiguration!.components,
+    onLogicCheckResult: (_, step) => {
+      dataUpdates = step.data;
+      updatedComponents = step.configuration.components;
+    },
+  });
+
+  expect(dataUpdates).toEqual({});
+  expect((updatedComponents[2] as TextFieldComponentSchema).validate!.required).toEqual(true);
+});
+
 // Collection of backend bugs that were encountered, mimick the regression tests to avoid
 // introducing the same problem.
 describe('backend regression tests', () => {
