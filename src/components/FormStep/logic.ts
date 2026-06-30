@@ -103,7 +103,6 @@ export const evaluateBackendRules = ({
     componentsMap,
     data: isEmptyInputData ? initialValues : inputData,
     initialValues: originalInitialValues,
-    initialValuesForClearOnHide: initialValues,
     errorsToClear: [],
     disableNext: false,
     stepsApplicableUpdates: {},
@@ -185,94 +184,4 @@ const evaluateRule = (
     }
   }
   return ruleScopedState;
-};
-
-type DataType = 'string' | 'boolean' | 'object' | 'array' | 'number' | 'datetime' | 'date' | 'time';
-
-const DATA_TYPE_TO_EMPTY_VALUE: Record<DataType, JSONValue> = {
-  string: '',
-  boolean: false,
-  object: {},
-  array: [],
-  number: null,
-  datetime: '',
-  date: '',
-  time: '',
-};
-
-type DataComponentType = Exclude<
-  AnyComponentSchema['type'],
-  'fieldset' | 'columns' | 'content' | 'softRequiredErrors' | 'coSign' | 'npFamilyMembers'
->;
-
-const COMPONENT_TYPE_TO_DATATYPE: Record<DataComponentType, DataType> = {
-  textfield: 'string',
-  email: 'string',
-  date: 'string',
-  datetime: 'string',
-  time: 'string',
-  phoneNumber: 'string',
-  postcode: 'string',
-  file: 'array',
-  textarea: 'string',
-  number: 'number',
-  checkbox: 'boolean',
-  selectboxes: 'object',
-  select: 'string',
-  currency: 'number',
-  radio: 'string',
-  iban: 'string',
-  licenseplate: 'string',
-  bsn: 'string',
-  cosign: 'string',
-  map: 'object',
-  editgrid: 'array',
-  addressNL: 'string',
-  partners: 'array',
-  children: 'array',
-  customerProfile: 'array',
-  signature: 'string',
-};
-
-/**
- * Determine what the 'empty value' is for the given component configuration.
- *
- * This is the counterpart of `openforms.formio.service.get_component_empty_value` in
- * the backend, and exists only to match the backend logic evaluation behaviour.
- * See {@Link https://github.com/open-formulieren/open-forms/issues/6121} for more
- * details.
- *
- * Each component has an intrinsic value type, and the `multiple` flag also has an
- * impact on it.
- */
-export const getComponentEmptyValue = (component: AnyComponentSchema): JSONValue => {
-  // get the special cases out of the way
-  switch (component.type) {
-    case 'selectboxes': {
-      const defaultValue = component.defaultValue ?? {};
-      if (Object.keys(defaultValue).length > 0) return defaultValue;
-      const values = component.values;
-      if (values.length === 1 && values[0].label === '') return {};
-      return Object.fromEntries(values.map(option => [option.value, false]));
-    }
-    case 'map': {
-      // backend accesses `defaultValue`, but that doesn't exist according to the type :-)
-      return null;
-    }
-  }
-
-  // base this on the component data type, but keep in mind that multi-value components
-  // must return arrays -> use empty array.
-  if ('multiple' in component && component.multiple) {
-    return [];
-  }
-
-  const dataType: DataType =
-    component.type in COMPONENT_TYPE_TO_DATATYPE
-      ? // typecast necessary because the check above doesn't narrow the `component.type`
-        // union
-        COMPONENT_TYPE_TO_DATATYPE[component.type as DataComponentType]
-      : 'string';
-
-  return DATA_TYPE_TO_EMPTY_VALUE[dataType];
 };
