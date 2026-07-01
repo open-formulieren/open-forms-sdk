@@ -29,6 +29,9 @@ export const ExplanationTemplate: Story = {
         explanationTemplate: `
           <h2>Important!</h2>
           <p>A WYSIWYG explanation text set by form builders</p>
+          <ul>
+            <li>It can have unordered lists too</li>
+          </ul>
         `,
       }),
     },
