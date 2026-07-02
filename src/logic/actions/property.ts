@@ -1,5 +1,7 @@
 import {getRegistryEntry} from '@open-formulieren/formio-renderer';
+import {isHidden} from '@open-formulieren/formio-renderer/formio.js';
 import {processVisibility} from '@open-formulieren/formio-renderer/visibility.js';
+import type {AnyComponentSchema} from '@open-formulieren/types';
 import {set} from 'lodash';
 
 import type {LogicAction, PropertyAction} from '@/data/logic';
@@ -63,14 +65,7 @@ export const applyPropertyAction = (
       // access to the Formik state and can't even pass the errors.
       {},
       {
-        // for proper intuitive semantics, this would take into account the visibility
-        // state of the parent(s) via hasHiddenParent(targetComponent, logicState).
-        // This is relevant if there are multiple logic rules (or a combination of logic rules and
-        // simple conditionals) targeting a layout component and a child of this layout component in
-        // an opposite way. For example, the first rule marks a fieldset as hidden, and the second
-        // marks a child textfield as visible. In the current situation, the textfield would be
-        // added to the data, even though the fieldset is hidden.
-        parentHidden: false,
+        parentHidden: hasHiddenParent(targetComponent, logicState),
         initialValues: logicState.initialValues,
         getRegistryEntry,
         componentsMap,
@@ -84,4 +79,20 @@ export const applyPropertyAction = (
   if (becameOptional) {
     logicState.errorsToClear.push(componentKey);
   }
+};
+
+const hasHiddenParent = (
+  component: AnyComponentSchema,
+  logicState: LogicEvaluationState
+): boolean => {
+  const parentKey: string | undefined = logicState.componentParentLinks[component.key];
+  // not present in lookup map -> it doesn't have any parents
+  if (!parentKey) return false;
+  // test the parent - if it's visible, recurse as there may be hidden grand parent(s)
+  const parent = logicState.componentsMap[parentKey];
+  // `isHidden` considers the `conditional` and `hidden` properties.
+  if (isHidden(parent, logicState.data, getRegistryEntry, logicState.componentsMap)) {
+    return true;
+  }
+  return hasHiddenParent(parent, logicState);
 };

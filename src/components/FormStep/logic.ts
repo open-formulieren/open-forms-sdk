@@ -83,7 +83,8 @@ export const evaluateBackendRules = ({
   // create a deep copy that we can mutate without unexpected side-effects & derive the
   // components map from it.
   const updatedComponents = window.structuredClone(components);
-  const componentsMap = getComponentsMap(updatedComponents);
+  const parentLinks: Record<string, string> = {};
+  const componentsMap = getComponentsMap(updatedComponents, parentLinks);
   const initialValues = extractInitialValues(components, getRegistryEntry);
   const originalInitialValues = deepMergeValues(initialValues, inputData);
 
@@ -101,6 +102,7 @@ export const evaluateBackendRules = ({
     ruleIsTriggered: false, // will be overriden for each rule
     currentStepUuid: step.formStepUuid,
     componentsMap,
+    componentParentLinks: parentLinks,
     data: isEmptyInputData ? initialValues : inputData,
     initialValues: originalInitialValues,
     errorsToClear: [],

@@ -23,6 +23,11 @@ export interface LogicEvaluationState {
    */
   componentsMap: Record<string, AnyComponentSchema>;
   /**
+   * Mapping of child component key to its parent component key, if it has a parent.
+   * Root components are not present.
+   */
+  readonly componentParentLinks: Record<string, string>;
+  /**
    * The (input) data, used as context/state for the rule and action evaluations.
    *
    * Actions can mutate this directly so that the result is used in the next rule and/or
