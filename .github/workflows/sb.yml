@@ -13,6 +13,8 @@ on:
       - ready_for_review
   workflow_dispatch:
 
+permissions: {}
+
 # Allow one concurrent deployment
 concurrency:
   group: 'pages-${{ github.ref_name }}' # unique builds for branch/tag name
@@ -61,10 +63,10 @@ jobs:
     steps:
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
 
   tests:
     name: Run Storybook tests
@@ -127,7 +129,7 @@ jobs:
         working-directory: ./storybook-static
 
       - name: Publish to Chromatic for visual regression tests
-        uses: chromaui/action@latest
+        uses: chromaui/action@94713c544284a14195de3b50ef24301579f1877e  # v18.0.1
         if: github.event.pull_request.draft == false || github.event.push
         with:
           autoAcceptChanges: main
