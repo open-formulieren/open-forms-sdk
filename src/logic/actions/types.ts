@@ -23,6 +23,11 @@ export interface LogicEvaluationState {
    */
   componentsMap: Record<string, AnyComponentSchema>;
   /**
+   * Mapping of child component key to its parent component key, if it has a parent.
+   * Root components are not present.
+   */
+  readonly componentParentLinks: Record<string, string>;
+  /**
    * The (input) data, used as context/state for the rule and action evaluations.
    *
    * Actions can mutate this directly so that the result is used in the next rule and/or
@@ -38,12 +43,6 @@ export interface LogicEvaluationState {
    * Value updates from logic rule actions can this object.
    */
   initialValues: JSONObject;
-  /**
-   * The begin state of component values without user input data, used to populate the
-   * data for components that become hidden. Equal to the component default value
-   * or the component-specific empty value (in that order).
-   */
-  readonly initialValuesForClearOnHide: JSONObject;
   /**
    * List of keys/dotted paths to components for which the validation errors must be
    * cleared. The formio-renderer automatically takes care of managing validation errors

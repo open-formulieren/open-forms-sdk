@@ -1,10 +1,9 @@
 import {getRegistryEntry} from '@open-formulieren/formio-renderer';
+import {isHidden} from '@open-formulieren/formio-renderer/formio.js';
 import {processVisibility} from '@open-formulieren/formio-renderer/visibility.js';
-import type {JSONObject, JSONValue} from '@open-formulieren/types';
-import {getIn, setIn} from 'formik';
+import type {AnyComponentSchema} from '@open-formulieren/types';
 import {set} from 'lodash';
 
-import {getComponentEmptyValue} from '@/components/FormStep/logic';
 import type {LogicAction, PropertyAction} from '@/data/logic';
 
 import type {LogicEvaluationState} from './types';
@@ -66,38 +65,10 @@ export const applyPropertyAction = (
       // access to the Formik state and can't even pass the errors.
       {},
       {
-        emulateBackend: true,
-        // for proper intuitive semantics, this would take into account the visibility
-        // state of the parent(s) via hasHiddenParent(targetComponent, logicState),
-        // but because of the `clearValueCallback` to match the backend behaviour, this
-        // is currently not relevan/correct. See
-        // https://github.com/open-formulieren/open-forms/issues/6121.
-        parentHidden: false,
+        parentHidden: hasHiddenParent(targetComponent, logicState),
         initialValues: logicState.initialValues,
         getRegistryEntry,
         componentsMap,
-        // Ensure we restore the default value OR empty value when clearing the
-        // value so that we match the backend behaviour. The formio-renderer will take
-        // care of properly removing the key from the submission data.
-        // See https://github.com/open-formulieren/open-forms/issues/6121
-        clearValueCallback: (values: JSONObject, key: string): JSONObject => {
-          const component = componentsMap[key];
-          if (
-            ['fieldset', 'columns', 'content', 'softRequiredErrors', 'coSign'].includes(
-              component.type
-            )
-          ) {
-            return values;
-          }
-
-          const initialValue: JSONValue | undefined = getIn(
-            logicState.initialValuesForClearOnHide,
-            key
-          );
-          const clearedValue: JSONValue =
-            initialValue !== undefined ? initialValue : getComponentEmptyValue(component);
-          return setIn(values, key, clearedValue);
-        },
       }
     );
     logicState.data = updatedValues;
@@ -108,4 +79,20 @@ export const applyPropertyAction = (
   if (becameOptional) {
     logicState.errorsToClear.push(componentKey);
   }
+};
+
+const hasHiddenParent = (
+  component: AnyComponentSchema,
+  logicState: LogicEvaluationState
+): boolean => {
+  const parentKey: string | undefined = logicState.componentParentLinks[component.key];
+  // not present in lookup map -> it doesn't have any parents
+  if (!parentKey) return false;
+  // test the parent - if it's visible, recurse as there may be hidden grand parent(s)
+  const parent = logicState.componentsMap[parentKey];
+  // `isHidden` considers the `conditional` and `hidden` properties.
+  if (isHidden(parent, logicState.data, getRegistryEntry, logicState.componentsMap)) {
+    return true;
+  }
+  return hasHiddenParent(parent, logicState);
 };

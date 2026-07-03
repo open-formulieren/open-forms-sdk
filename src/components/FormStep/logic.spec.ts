@@ -1,7 +1,6 @@
 import type {
   AnyComponentSchema,
   JSONObject,
-  JSONValue,
   TextFieldComponentSchema,
 } from '@open-formulieren/types';
 import {describe, expect, test} from 'vitest';
@@ -10,7 +9,7 @@ import {buildSubmission, buildSubmissionStep} from '@/api-mocks';
 import type {LogicRule} from '@/data/logic';
 import type {SubmissionStep} from '@/data/submission-steps';
 
-import {evaluateBackendRules, getComponentEmptyValue} from './logic';
+import {evaluateBackendRules} from './logic';
 
 // if a second rule depens on the mutated value of a field, this must be reflected
 // immediately
@@ -146,9 +145,9 @@ test('clearOnHide behaviour is applied', () => {
         },
       ],
     },
-    // show number input when textfield is empty.
+    // show number input when textfield is not in the context.
     {
-      jsonLogicTrigger: {'!': [{var: 'textfield'}]},
+      jsonLogicTrigger: {'==': [{var: ['textfield', 'not-in-context']}, 'not-in-context']},
       actions: [
         {
           action: {
@@ -229,14 +228,10 @@ test('clearOnHide behaviour is applied', () => {
       defaultValue: 67,
     },
   ]);
-  // the textfield is to be cleared, and the number field doesn't change because the
-  // default value already matches with what the update would be
-  expect(dataUpdates).toEqual({
-    textfield: '',
-  });
+  expect(dataUpdates).toEqual({});
 });
 
-test('clearOnHide behaviour with hidden parent', () => {
+test('clearOnHide behaviour with hidden parent (already hidden before rule evaluation)', () => {
   const components: AnyComponentSchema[] = [
     {
       type: 'checkbox',
@@ -290,7 +285,7 @@ test('clearOnHide behaviour with hidden parent', () => {
     submission,
     step,
     rules,
-    // because the parent is hidden, the renderer has remove the `textfield` from the
+    // because the parent is hidden, the renderer has removed the `textfield` from the
     // input data due to its clearOnHide, leaving only the checkbox as input data
     inputData: {trigger: true},
     components: step.defaultConfiguration!.components ?? [],
@@ -324,22 +319,10 @@ test('clearOnHide behaviour with hidden parent', () => {
       ],
     },
   ]);
-  // we don't expect any data updates to textfield, because that would trigger infinite
-  // render cycles, despite it being hidden and getting the empty value assigned for
-  // evaluation during/between backend rules
   expect(dataUpdates).toEqual({});
 });
 
-// The frontend evaluation of backend logic rules must exactly match the backend
-// behaviour, which includes *not* removing hidden component values from default values
-// for children of parents that become hidden. Eventually it does end up in that
-// situation, but that's entirely because of the *next* render cycle of the renderer.
-// See https://github.com/open-formulieren/open-forms/issues/6121 for the novella about
-// why this is necessary.
-test('clearOnHide behaviour when hiding a parent (match backend behaviour)', () => {
-  // set up a component definition without frontend (formio-renderer) logic, which
-  // establishes the actual begin state. The nested textfield displays the non-intuitive
-  // behaviour.
+test('clearOnHide behaviour when hiding a parent (not hidden before rule evaluation)', () => {
   const components: AnyComponentSchema[] = [
     {
       type: 'checkbox',
@@ -355,8 +338,6 @@ test('clearOnHide behaviour when hiding a parent (match backend behaviour)', () 
       hidden: false,
       hideHeader: false,
       components: [
-        // despite being hidden (because the parent becomes hidden), the default value
-        // will be used as evaluation input.
         {
           type: 'textfield',
           id: 'textfield',
@@ -409,10 +390,8 @@ test('clearOnHide behaviour when hiding a parent (match backend behaviour)', () 
         },
       ],
     },
-    // broken but current behaviour in backend: this triggers because the textfield being
-    // hidden does not remove the input data from the context/submission data. See #6121.
     {
-      jsonLogicTrigger: {'==': [{var: 'textfield'}, 'default']},
+      jsonLogicTrigger: {'==': [{var: ['textfield', 'not-in-context']}, 'not-in-context']},
       actions: [
         {
           action: {type: 'variable', value: true},
@@ -471,10 +450,7 @@ test('clearOnHide behaviour when hiding a parent (match backend behaviour)', () 
       defaultValue: false,
     },
   ]);
-  expect(dataUpdates).toEqual({
-    textfield: 'default',
-    observer: true,
-  });
+  expect(dataUpdates).toEqual({observer: true});
 });
 
 test('clearOnHide excludes data updates for child components', () => {
@@ -556,459 +532,229 @@ test('clearOnHide excludes data updates for child components', () => {
   expect(dataUpdates).toEqual({});
 });
 
-test.each([
-  [
-    {
-      type: 'textfield',
-      id: 'textfield',
-      key: 'textfield',
-      label: '',
-      defaultValue: 'ignored',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'textfield',
-      id: 'textfield',
-      key: 'textfield',
-      label: '',
-      defaultValue: ['ignored'],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'email',
-      id: 'email',
-      key: 'email',
-      label: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'email',
-      id: 'email',
-      key: 'email',
-      label: '',
-      defaultValue: [],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'date',
-      id: 'date',
-      key: 'date',
-      label: '',
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'date',
-      id: 'date',
-      key: 'date',
-      label: '',
-      defaultValue: [''],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'datetime',
-      id: 'datetime',
-      key: 'datetime',
-      label: '',
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'datetime',
-      id: 'datetime',
-      key: 'datetime',
-      label: '',
-      defaultValue: [''],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'time',
-      id: 'time',
-      key: 'time',
-      label: '',
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'time',
-      id: 'time',
-      key: 'time',
-      label: '',
-      defaultValue: [''],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'phoneNumber',
-      id: 'phoneNumber',
-      key: 'phoneNumber',
-      label: '',
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'phoneNumber',
-      id: 'phoneNumber',
-      key: 'phoneNumber',
-      label: '',
-      defaultValue: [''],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'postcode',
-      id: 'postcode',
-      key: 'postcode',
-      label: '',
-      defaultValue: '',
-      validate: {
-        pattern: '^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$',
-      },
-    },
-    '',
-  ],
-  [
-    {
-      type: 'postcode',
-      id: 'postcode',
-      key: 'postcode',
-      label: '',
-      defaultValue: [''],
-      validate: {
-        pattern: '^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[a-zA-Z]{2}$',
-      },
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'file',
-      id: 'file',
-      key: 'file',
-      label: '',
-      file: {
-        name: '',
-        type: [],
-        allowedTypesLabels: [],
-      },
-      filePattern: '',
-    },
-    [],
-  ],
-  [
-    {
-      type: 'file',
-      id: 'file',
-      key: 'file',
-      label: '',
-      file: {
-        name: '',
-        type: [],
-        allowedTypesLabels: [],
-      },
-      filePattern: '',
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'textarea',
-      id: 'textarea',
-      key: 'textarea',
-      label: '',
-      defaultValue: '',
-      autoExpand: false,
-    },
-    '',
-  ],
-  [
-    {
-      type: 'textarea',
-      id: 'textarea',
-      key: 'textarea',
-      label: '',
-      defaultValue: [''],
-      autoExpand: false,
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'number',
-      id: 'number',
-      key: 'number',
-      label: '',
-      defaultValue: 0,
-    },
-    null,
-  ],
-  [
+test('layout component with child and two visibility actions doing the opposite', () => {
+  const components: AnyComponentSchema[] = [
     {
       type: 'checkbox',
-      id: 'checkbox',
-      key: 'checkbox',
-      label: '',
-      defaultValue: true,
+      id: 'showFieldset',
+      key: 'showFieldset',
+      label: 'Show fieldset',
     },
-    false,
-  ],
-  [
     {
-      type: 'selectboxes',
-      id: 'selectboxes',
-      key: 'selectboxes',
-      label: '',
-      values: [{value: 'a', label: 'A'}],
-      openForms: {dataSrc: 'manual'},
+      type: 'fieldset',
+      id: 'fieldset',
+      key: 'fieldset',
+      label: 'fieldset',
+      hidden: true,
+      hideHeader: false,
+      components: [
+        {
+          type: 'radio',
+          id: 'showTextfield',
+          key: 'showTextfield',
+          label: 'Show textfield',
+          values: [
+            {label: 'Yes', value: 'yes'},
+            {label: 'No', value: 'no'},
+            {label: 'Maybe', value: 'maybe'},
+          ],
+          openForms: {dataSrc: 'manual'},
+        },
+        {
+          type: 'textfield',
+          id: 'textfield',
+          key: 'textfield',
+          label: 'Textfield',
+          hidden: true,
+          clearOnHide: true,
+        },
+      ],
     },
-    {a: false},
-  ],
-  [
     {
-      type: 'selectboxes',
-      id: 'selectboxes',
-      key: 'selectboxes',
-      label: '',
-      values: [{value: '', label: ''}],
-      openForms: {dataSrc: 'manual'},
+      type: 'textfield',
+      id: 'observer',
+      key: 'observer',
+      label: 'Observer',
+      validate: {required: false},
     },
-    {},
-  ],
-  [
-    {
-      type: 'select',
-      id: 'select',
-      key: 'select',
-      label: '',
-      defaultValue: '',
-      openForms: {dataSrc: 'manual'},
-      data: {values: []},
-    },
-    '',
-  ],
-  [
-    {
-      type: 'select',
-      id: 'select',
-      key: 'select',
-      label: '',
-      defaultValue: [''],
-      openForms: {dataSrc: 'manual'},
-      data: {values: []},
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'currency',
-      id: 'currency',
-      key: 'currency',
-      label: '',
-      currency: 'EUR',
-      defaultValue: 0,
-    },
-    null,
-  ],
-  [
-    {
-      type: 'radio',
-      id: 'radio',
-      key: 'radio',
-      label: '',
-      values: [{value: 'a', label: 'A'}],
-      openForms: {dataSrc: 'manual'},
-      defaultValue: null,
-    },
-    '',
-  ],
-  [
-    {
-      type: 'iban',
-      id: 'iban',
-      key: 'iban',
-      label: '',
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'iban',
-      id: 'iban',
-      key: 'iban',
-      label: '',
-      defaultValue: [''],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'licenseplate',
-      id: 'licenseplate',
-      key: 'licenseplate',
-      label: '',
-      validate: {pattern: '^[a-zA-Z0-9]{1,3}\\-[a-zA-Z0-9]{1,3}\\-[a-zA-Z0-9]{1,3}$'},
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'licenseplate',
-      id: 'licenseplate',
-      key: 'licenseplate',
-      label: '',
-      validate: {pattern: '^[a-zA-Z0-9]{1,3}\\-[a-zA-Z0-9]{1,3}\\-[a-zA-Z0-9]{1,3}$'},
-      defaultValue: [''],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'bsn',
-      id: 'bsn',
-      key: 'bsn',
-      label: '',
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'bsn',
-      id: 'bsn',
-      key: 'bsn',
-      label: '',
-      defaultValue: [''],
-      multiple: true,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'signature',
-      id: 'signature',
-      key: 'signature',
-      label: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'cosign',
-      id: 'cosign',
-      key: 'cosign',
-      label: '',
-      defaultValue: '',
-    },
-    '',
-  ],
-  [
-    {
-      type: 'map',
-      id: 'map',
-      key: 'map',
-      label: '',
-    },
-    null,
-  ],
-  [
-    {
-      type: 'editgrid',
-      id: 'editgrid',
-      key: 'editgrid',
-      label: '',
-      groupLabel: '',
-      disableAddingRemovingRows: false,
-      components: [],
-    },
-    [],
-  ],
-  [
-    {
-      type: 'addressNL',
-      id: 'addressNL',
-      key: 'addressNL',
-      label: '',
-      layout: 'singleColumn',
-      deriveAddress: false,
-    },
-    // this does not make sense, but it's what the backend spits out. See
-    // https://github.com/open-formulieren/open-forms/issues/6125
-    '',
-  ],
-  [
-    {
-      type: 'partners',
-      id: 'partners',
-      key: 'partners',
-      label: '',
-    },
-    [],
-  ],
-  [
-    {
-      type: 'children',
-      id: 'children',
-      key: 'children',
-      label: '',
-      enableSelection: false,
-    },
-    [],
-  ],
-  [
-    {
-      type: 'customerProfile',
-      id: 'customerProfile',
-      key: 'customerProfile',
-      label: '',
-      shouldUpdateCustomerData: false,
-      digitalAddressTypes: [],
-    },
-    [],
-  ],
-] satisfies [AnyComponentSchema, JSONValue][])(
-  'component empty value is correctly determined (%o)',
-  (component: AnyComponentSchema, expectedValue: JSONValue) => {
-    const emptyValue = getComponentEmptyValue(component);
+  ];
 
-    expect(emptyValue).toEqual(expectedValue);
-  }
-);
+  const rules: LogicRule[] = [
+    {
+      jsonLogicTrigger: {'==': [{var: 'showFieldset'}, true]},
+      actions: [
+        {
+          component: 'fieldset',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: false,
+          },
+        },
+      ],
+    },
+    // Expected to trigger, because showTextfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: ['showTextfield', 'no']}, 'no']},
+      actions: [
+        {
+          component: 'textfield',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: false,
+          },
+        },
+      ],
+    },
+    // Expected to trigger, because textfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: ['textfield', 'not-in-context']}, 'not-in-context']},
+      actions: [
+        {
+          component: 'observer',
+          action: {
+            type: 'property',
+            property: {value: 'validate.required', type: 'bool'},
+            state: true,
+          },
+        },
+      ],
+    },
+  ];
+  const submission = buildSubmission();
+
+  const step: SubmissionStep = {
+    ...buildSubmissionStep({components}),
+    defaultConfiguration: {components},
+  };
+  let dataUpdates: JSONObject | null = {};
+  let updatedComponents: AnyComponentSchema[] = [];
+
+  evaluateBackendRules({
+    submission,
+    step,
+    rules,
+    inputData: {showFieldset: false},
+    components: step.defaultConfiguration!.components,
+    onLogicCheckResult: (_, step) => {
+      dataUpdates = step.data;
+      updatedComponents = step.configuration.components;
+    },
+  });
+
+  expect(dataUpdates).toEqual({});
+  expect((updatedComponents[2] as TextFieldComponentSchema).validate!.required).toEqual(true);
+});
+
+test('layout component with child and two visibility actions doing the opposite (untriggered case)', () => {
+  const components: AnyComponentSchema[] = [
+    {
+      type: 'checkbox',
+      id: 'showFieldset',
+      key: 'showFieldset',
+      label: 'Show fieldset',
+    },
+    {
+      type: 'fieldset',
+      id: 'fieldset',
+      key: 'fieldset',
+      label: 'fieldset',
+      hidden: true,
+      hideHeader: false,
+      components: [
+        {
+          type: 'checkbox',
+          id: 'hideTextfield',
+          key: 'hideTextfield',
+          label: 'Hide textfield',
+        },
+        {
+          type: 'textfield',
+          id: 'textfield',
+          key: 'textfield',
+          label: 'Textfield',
+          hidden: false,
+          clearOnHide: true,
+        },
+      ],
+    },
+    {
+      type: 'textfield',
+      id: 'observer',
+      key: 'observer',
+      label: 'Observer',
+      validate: {required: false},
+    },
+  ];
+
+  const rules: LogicRule[] = [
+    {
+      jsonLogicTrigger: {'==': [{var: 'showFieldset'}, true]},
+      actions: [
+        {
+          component: 'fieldset',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: false,
+          },
+        },
+      ],
+    },
+    // Not expected to trigger, because hideTextfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: 'hideTextfield'}, true]},
+      actions: [
+        {
+          component: 'textfield',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: true,
+          },
+        },
+      ],
+    },
+    // Expected to trigger, because textfield should not have a value
+    {
+      jsonLogicTrigger: {'==': [{var: ['textfield', 'not-in-context']}, 'not-in-context']},
+      actions: [
+        {
+          component: 'observer',
+          action: {
+            type: 'property',
+            property: {value: 'validate.required', type: 'bool'},
+            state: true,
+          },
+        },
+      ],
+    },
+  ];
+  const submission = buildSubmission();
+
+  const step: SubmissionStep = {
+    ...buildSubmissionStep({components}),
+    defaultConfiguration: {components},
+  };
+  let dataUpdates: JSONObject | null = {};
+  let updatedComponents: AnyComponentSchema[] = [];
+
+  evaluateBackendRules({
+    submission,
+    step,
+    rules,
+    inputData: {showFieldset: false},
+    components: step.defaultConfiguration!.components,
+    onLogicCheckResult: (_, step) => {
+      dataUpdates = step.data;
+      updatedComponents = step.configuration.components;
+    },
+  });
+
+  expect(dataUpdates).toEqual({});
+  expect((updatedComponents[2] as TextFieldComponentSchema).validate!.required).toEqual(true);
+});
 
 // Collection of backend bugs that were encountered, mimick the regression tests to avoid
 // introducing the same problem.
@@ -1130,6 +876,12 @@ describe('backend regression tests', () => {
         clearOnHide: true,
         hidden: true,
       },
+      {
+        type: 'textfield',
+        key: 'observer',
+        id: 'observer',
+        label: 'Observer',
+      },
     ];
 
     const rules: LogicRule[] = [
@@ -1146,6 +898,15 @@ describe('backend regression tests', () => {
           },
         ],
       },
+      {
+        jsonLogicTrigger: {'==': [{var: ['textfield', 'not-in-context']}, 'not-in-context']},
+        actions: [
+          {
+            variable: 'observer',
+            action: {type: 'variable', value: 'foo'},
+          },
+        ],
+      },
     ];
     const submission = buildSubmission();
     const step: SubmissionStep = {
@@ -1154,7 +915,7 @@ describe('backend regression tests', () => {
     };
     let dataUpdates: JSONObject | null = {};
     // Initial logic call with data `{checkbox: true}` causing the textfield to be visible
-    const inputData = {checkbox: false, textfield: 'user_input'};
+    const inputData = {checkbox: false, textfield: 'user_input', observer: ''};
 
     evaluateBackendRules({
       submission,
@@ -1167,7 +928,7 @@ describe('backend regression tests', () => {
       },
     });
 
-    expect(dataUpdates).toEqual({textfield: ''});
+    expect(dataUpdates).toEqual({observer: 'foo'});
   });
 
   test('#6005 - rule 1 triggers rule 2 does not, must not clear value', () => {
@@ -1189,6 +950,12 @@ describe('backend regression tests', () => {
         id: 'show-when-a',
         label: '',
         hidden: true,
+      },
+      {
+        type: 'textfield',
+        key: 'observer',
+        id: 'observer',
+        label: 'Observer',
       },
     ];
     const rules: LogicRule[] = [
@@ -1218,6 +985,15 @@ describe('backend regression tests', () => {
           },
         ],
       },
+      {
+        jsonLogicTrigger: {'==': [{var: 'show-when-a'}, 'do-not-clear-me']},
+        actions: [
+          {
+            action: {type: 'variable', value: 'foo'},
+            variable: 'observer',
+          },
+        ],
+      },
     ];
     const submission = buildSubmission();
     const step: SubmissionStep = {
@@ -1231,7 +1007,7 @@ describe('backend regression tests', () => {
       submission,
       step,
       rules,
-      inputData: {radio: 'a', 'show-when-a': 'do-not-clear-me'},
+      inputData: {radio: 'a', 'show-when-a': 'do-not-clear-me', observer: ''},
       components: step.defaultConfiguration!.components ?? [],
       onLogicCheckResult: (_, step) => {
         updatedComponents = step.configuration.components;
@@ -1239,7 +1015,7 @@ describe('backend regression tests', () => {
       },
     });
 
-    expect(dataUpdates).toEqual({});
+    expect(dataUpdates).toEqual({observer: 'foo'});
     expect((updatedComponents[1] as TextFieldComponentSchema).hidden).toBe(false);
   });
 
@@ -1263,6 +1039,12 @@ describe('backend regression tests', () => {
         label: '',
         hidden: true,
       },
+      {
+        type: 'textfield',
+        key: 'observer',
+        id: 'observer',
+        label: 'Observer',
+      },
     ];
     const rules: LogicRule[] = [
       {
@@ -1291,6 +1073,15 @@ describe('backend regression tests', () => {
           },
         ],
       },
+      {
+        jsonLogicTrigger: {'==': [{var: 'show-when-a'}, 'do-not-clear-me']},
+        actions: [
+          {
+            action: {type: 'variable', value: 'foo'},
+            variable: 'observer',
+          },
+        ],
+      },
     ];
     const submission = buildSubmission();
     const step: SubmissionStep = {
@@ -1304,7 +1095,7 @@ describe('backend regression tests', () => {
       submission,
       step,
       rules,
-      inputData: {radio: 'a', 'show-when-a': 'do-not-clear-me'},
+      inputData: {radio: 'a', 'show-when-a': 'do-not-clear-me', observer: ''},
       components: step.defaultConfiguration!.components ?? [],
       onLogicCheckResult: (_, step) => {
         updatedComponents = step.configuration.components;
@@ -1312,7 +1103,7 @@ describe('backend regression tests', () => {
       },
     });
 
-    expect(dataUpdates).toEqual({});
+    expect(dataUpdates).toEqual({observer: 'foo'});
     expect((updatedComponents[1] as TextFieldComponentSchema).hidden).toBe(false);
   });
 
@@ -1393,7 +1184,12 @@ describe('backend regression tests', () => {
       // Expected to trigger: the value of the textfield gets cleared because of the
       // above rule.
       {
-        jsonLogicTrigger: {'==': [{var: 'hide-when-a-but-show-when-checkbox-checked'}, '']},
+        jsonLogicTrigger: {
+          '==': [
+            {var: ['hide-when-a-but-show-when-checkbox-checked', 'not-in-context']},
+            'not-in-context',
+          ],
+        },
         actions: [
           {
             action: {
@@ -1427,6 +1223,17 @@ describe('backend regression tests', () => {
           },
         ],
       },
+      {
+        jsonLogicTrigger: {
+          '==': [{var: 'hide-when-a-but-show-when-checkbox-checked'}, 'do-not-clear-me'],
+        },
+        actions: [
+          {
+            action: {type: 'variable', value: 'foo'},
+            variable: 'observer',
+          },
+        ],
+      },
     ];
     const submission = buildSubmission();
     const step: SubmissionStep = {
@@ -1445,6 +1252,7 @@ describe('backend regression tests', () => {
         checkbox: true,
         'hide-when-a-but-show-when-checkbox-checked': 'do-not-clear-me',
         nestedTextfield: 'do-not-clear-me',
+        observer: '',
       },
       components: step.defaultConfiguration!.components ?? [],
       onLogicCheckResult: (_, step) => {
@@ -1503,7 +1311,7 @@ describe('backend regression tests', () => {
         validate: {required: true},
       },
     ]);
-    expect(dataUpdates).toEqual({});
+    expect(dataUpdates).toEqual({observer: 'foo'});
   });
 
   test('#6005 - rules flip from hidden to visible state must not clear value inverse', () => {
@@ -1583,7 +1391,12 @@ describe('backend regression tests', () => {
       // Expected to trigger: the value of the textfield gets cleared because of the
       // above rule.
       {
-        jsonLogicTrigger: {'==': [{var: 'hide-when-a-but-show-when-checkbox-checked'}, '']},
+        jsonLogicTrigger: {
+          '==': [
+            {var: ['hide-when-a-but-show-when-checkbox-checked', 'not-in-context']},
+            'not-in-context',
+          ],
+        },
         actions: [
           {
             action: {
@@ -1617,6 +1430,17 @@ describe('backend regression tests', () => {
           },
         ],
       },
+      {
+        jsonLogicTrigger: {
+          '==': [{var: 'hide-when-a-but-show-when-checkbox-checked'}, 'do-not-clear-me'],
+        },
+        actions: [
+          {
+            action: {type: 'variable', value: 'foo'},
+            variable: 'observer',
+          },
+        ],
+      },
     ];
     const submission = buildSubmission();
     const step: SubmissionStep = {
@@ -1635,6 +1459,7 @@ describe('backend regression tests', () => {
         checkbox: true,
         'hide-when-a-but-show-when-checkbox-checked': 'do-not-clear-me',
         nestedTextfield: 'do-not-clear-me',
+        observer: '',
       },
       components: step.defaultConfiguration!.components ?? [],
       onLogicCheckResult: (_, step) => {
@@ -1693,7 +1518,7 @@ describe('backend regression tests', () => {
         validate: {required: true},
       },
     ]);
-    expect(dataUpdates).toEqual({});
+    expect(dataUpdates).toEqual({observer: 'foo'});
   });
 
   test('#6046 - variable action with non-triggered and property action', () => {
