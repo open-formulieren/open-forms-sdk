@@ -143,7 +143,7 @@
     "@utrecht/heading-1-css": "^2.0.2",
     "@utrecht/heading-3-css": "^2.0.2",
     "@utrecht/img-css": "^2.0.1",
-    "@utrecht/link-button-css": "^2.0.1",
+    "@utrecht/link-button-css": "^3.0.1",
     "@utrecht/link-css": "^2.0.1",
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/browser-playwright": "^4.0.18",
