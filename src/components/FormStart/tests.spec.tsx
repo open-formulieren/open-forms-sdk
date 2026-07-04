@@ -260,8 +260,10 @@ test.each([
   'Form start does not start if there are auth errors / %s',
   async (testQuery, expectedMessage) => {
     let requestsMade = false;
-    mswWorker.events.on('request:start', async () => {
-      requestsMade = true;
+    mswWorker.events.on('request:start', async ({request}) => {
+      if (request.url.startsWith(BASE_URL)) {
+        requestsMade = true;
+      }
     });
     const onSubmissionObtained = vi.fn();
 
