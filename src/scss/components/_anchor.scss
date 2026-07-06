@@ -8,7 +8,6 @@
  * :active states for some variants.
  */
 @use 'microscope-sass/lib/bem';
-@use '@utrecht/link-button-css';
 // FIXME: this should be removable, but the styles are distributed via the formio-render
 // and removing this line breaks the @extend below.
 @use '@utrecht/link-css'; // emits the .utrecht-link {...} styles

@@ -20,6 +20,7 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 
 @use './scss/nl-design-system-community.scss';
 
+@import './scss/fixes';
 @import './scss/settings';
 @import './scss/responsive';
 

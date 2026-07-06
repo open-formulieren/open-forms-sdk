@@ -1,0 +1,9 @@
+// Patches for upstream bugs
+
+// utrecht-link-button uses the wrong design token compared to the button component:
+// https://github.com/nl-design-system/utrecht/issues/3188
+.utrecht-link-button {
+  // use the *wrong* token first, in case this is defined in a custom theme so that we
+  // don't break other content on the same page when the SDK is embedded
+  gap: var(--utrecht-button-icon-gap, var(--utrecht-button-column-gap));
+}
