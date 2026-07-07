@@ -1,0 +1,5 @@
+// backported fixes - normally this would go in the design tokens, but 0.67+ contains
+// breaking changes for 4.0
+.openforms-theme {
+  --utrecht-alert-message-row-gap: 8px;
+}

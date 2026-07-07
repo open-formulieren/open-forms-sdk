@@ -3,6 +3,7 @@
 @import 'microscope-sass/lib/typography';
 
 .openforms-soft-required-errors {
+  --utrecht-alert-message-row-gap: 0;
   // apply all wysiwyg styling
   // TODO: parametrize this with design tokens -> check with NL DS how to approach this
   @include wysiwyg;

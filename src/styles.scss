@@ -32,6 +32,7 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 @import './scss/components/fa-icon';
 
 @import './scss/components/app';
+@import './scss/components/alert';
 @import './scss/components/anchor';
 @import './scss/components/abort-button';
 @import './scss/components/button-group';
