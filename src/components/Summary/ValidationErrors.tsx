@@ -56,7 +56,7 @@ const StepValidationErrors: React.FC<StepValidationErrorsProps> = ({errors, name
         defaultMessage="Problems in form step ''{name}''"
         values={{name}}
       />
-      <UnorderedList className="utrecht-unordered-list--distanced">
+      <UnorderedList>
         {allErrorMessages.map(error => (
           <UnorderedListItem key={error}>{error}</UnorderedListItem>
         ))}
@@ -85,7 +85,7 @@ const ValidationErrors: React.FC<ValidationErrorsProps> = ({errors, summaryData}
   const {steps = []} = errors;
   if (steps.length === 0) return null;
   return (
-    <UnorderedList className="utrecht-unordered-list--distanced">
+    <UnorderedList>
       {steps.map((stepErrors, index) => (
         <UnorderedListItem key={summaryData[index].slug}>
           <StepValidationErrors
