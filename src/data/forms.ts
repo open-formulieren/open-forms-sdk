@@ -115,4 +115,7 @@ export interface Form {
   submissionStatementsConfiguration: SubmissionStatementConfiguration[];
   submissionReportDownloadLinkTitle: string;
   communicationPreferencesPortalUrl: string;
+  helpCalloutPageDisplay: 'before_start_page' | 'after_start_page' | 'never';
+  helpCalloutPageContent: string;
+  helpCalloutPageImage: string;
 }
