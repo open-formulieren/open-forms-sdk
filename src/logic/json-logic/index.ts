@@ -17,6 +17,7 @@ import {LogicEngine as LogicEngine_} from 'json-logic-engine';
 
 import {
   customAddition,
+  customCat,
   customDivision,
   customEquals,
   customGreaterThan,
@@ -30,6 +31,7 @@ import {
   customNotEquals,
   customNotStrictEquals,
   customStrictEquals,
+  customSubstr,
   customSubtraction,
   customVar,
   jsonLogicDate,
@@ -39,6 +41,7 @@ import {
   jsonLogicToday,
 } from './extensions';
 import {TYPE} from './extensions/constants';
+import {UNDEFINED_VALUE} from './extensions/context';
 
 class LogicEngine extends LogicEngine_ {
   isData = (data: Record<string, JSONValue>, key: string) => {
@@ -73,6 +76,8 @@ engine.addMethod('max', customMaximum);
 engine.addMethod('min', customMinimum);
 // overrides to match backend behaviour
 engine.addMethod('var', customVar);
+engine.addMethod('cat', customCat);
+engine.addMethod('substr', customSubstr);
 
 // remove methods that are either syntactic sugar or extensions from json-logic-js, to
 // prevent people accidentally using them while we don't support them in the backend.
@@ -127,6 +132,10 @@ const evaluate = (
 };
 
 const serialize = (value: unknown): JSONValue => {
+  if (value === UNDEFINED_VALUE) {
+    return UNDEFINED_VALUE;
+  }
+
   // avoid round trip if it's already a primitive
   if (
     typeof value == 'string' ||
@@ -140,7 +149,7 @@ const serialize = (value: unknown): JSONValue => {
   // otherwise do a roundtrip to JSON serialize and parse it - builtins have a toJSON
   // method that gets called in this process
   const serializedJsonString = JSON.stringify(value, (_, value) => {
-    if (typeof value === 'object' && TYPE in value && value[TYPE] === 'relativedelta') {
+    if (typeof value === 'object' && value && TYPE in value && value[TYPE] === 'relativedelta') {
       return formatISODuration(value);
     }
     return value;

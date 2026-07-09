@@ -5,6 +5,7 @@ import {isEqual} from 'lodash';
 import type {LogicAction, VariableAction} from '@/data/logic';
 import evaluateJsonLogic from '@/logic/json-logic';
 
+import {UNDEFINED_VALUE} from '../json-logic/extensions/context';
 import type {LogicEvaluationState} from './types';
 
 export const isVariableAction = (action: LogicAction): action is VariableAction => {
@@ -35,6 +36,13 @@ export const applyVariableAction = (
   // isEqual is necessary for deep equality checks with Arrays and Objects
   if (isEqual(currentValue, targetValue)) return;
 
-  logicState.data = setIn(updatedData, componentKey, targetValue);
-  logicState.initialValues = setIn(logicState.initialValues, componentKey, targetValue);
+  if (targetValue === UNDEFINED_VALUE) {
+    // when the variable is not present we do not want to have null but the specific
+    // UNDEFINED_VALUE which means we have to populate the variable with its initial
+    // value
+    logicState.data = setIn(updatedData, componentKey, logicState.initialValues[componentKey]);
+  } else {
+    logicState.data = setIn(updatedData, componentKey, targetValue);
+    logicState.initialValues = setIn(logicState.initialValues, componentKey, targetValue);
+  }
 };

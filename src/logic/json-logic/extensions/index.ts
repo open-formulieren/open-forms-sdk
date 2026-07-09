@@ -8,7 +8,7 @@ export {
   customNotEquals,
   customNotStrictEquals,
 } from './comparators';
-export {customVar} from './context';
+export {customVar, customCat, customSubstr} from './context';
 export {jsonLogicDate} from './date';
 export {jsonLogicDateTime} from './datetime';
 export {jsonLogicDuration} from './duration';

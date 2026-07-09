@@ -37,6 +37,44 @@ test('evaluate returns serialized results by default', () => {
   expect(typeof result).toBe('string');
 });
 
+// combination of var-cat operators
+test('evaluate returns empty string when a variable is undefined in cat operation', () => {
+  const input: JSONObject = {varA: 'foo'};
+  const result = evaluate(
+    {
+      cat: [{var: 'varA'}, ' - ', {var: 'varB'}],
+    },
+    input
+  );
+
+  expect(result).toBe('foo - ');
+});
+
+// combination of var-substr operators
+test('evaluate returns null when a substr variable is null', () => {
+  const input: JSONObject = {varA: null};
+  const result = evaluate(
+    {
+      substr: [{var: 'varA'}, 0, 3],
+    },
+    input
+  );
+
+  expect(result).toBeNull();
+});
+
+test('evaluate returns null when a substr variable is missing', () => {
+  const input: JSONObject = {};
+  const result = evaluate(
+    {
+      substr: [{var: 'varA'}, 0, 3],
+    },
+    input
+  );
+
+  expect(result).toBeNull();
+});
+
 test('evaluate with data that also includes a valid json logic operator', () => {
   const expression = {
     '==': [[{var: 'foo', some: 'data'}, 'a'], []],

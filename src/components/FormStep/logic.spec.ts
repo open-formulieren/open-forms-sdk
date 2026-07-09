@@ -231,6 +231,101 @@ test('clearOnHide behaviour is applied', () => {
   expect(dataUpdates).toEqual({});
 });
 
+test('clearOnHide behaviour with missing var (undefined) is applied', () => {
+  const rules: LogicRule[] = [
+    // mark textField as hidden when checkbox is checked, which will eventually clear
+    // its value because the renderer detects it's hidden and clears it.
+    {
+      jsonLogicTrigger: {'==': [{var: 'checkbox'}, true]},
+      actions: [
+        {
+          component: 'textField',
+          action: {
+            type: 'property',
+            property: {value: 'hidden', type: 'bool'},
+            state: true,
+          },
+        },
+        {
+          component: '',
+          variable: 'textField1',
+          action: {type: 'variable', value: {var: 'textField'}},
+        },
+      ],
+    },
+  ];
+
+  const submission = buildSubmission();
+  const components: AnyComponentSchema[] = [
+    {
+      type: 'textfield',
+      id: 'textField',
+      key: 'textField',
+      label: 'TextField',
+      hidden: false,
+      clearOnHide: true,
+    },
+    {
+      type: 'checkbox',
+      id: 'checkbox',
+      key: 'checkbox',
+      label: 'Checkbox',
+    },
+    {
+      type: 'textfield',
+      id: 'textField1',
+      key: 'textField1',
+      label: 'TextField1',
+      hidden: false,
+      clearOnHide: false,
+    },
+  ];
+  const step: SubmissionStep = {
+    ...buildSubmissionStep({components}),
+    defaultConfiguration: {components},
+  };
+  let updatedComponents: AnyComponentSchema[] = [];
+  let dataUpdates: JSONObject | null = {};
+
+  evaluateBackendRules({
+    submission,
+    step,
+    rules,
+    inputData: {checkbox: true, textField1: ''},
+    components: step.defaultConfiguration!.components ?? [],
+    onLogicCheckResult: (_, step) => {
+      updatedComponents = step.configuration.components;
+      dataUpdates = step.data;
+    },
+  });
+  expect(updatedComponents).toEqual([
+    {
+      type: 'textfield',
+      id: 'textField',
+      key: 'textField',
+      label: 'TextField',
+      hidden: true,
+      clearOnHide: true,
+    },
+    {
+      type: 'checkbox',
+      id: 'checkbox',
+      key: 'checkbox',
+      label: 'Checkbox',
+    },
+    {
+      type: 'textfield',
+      id: 'textField1',
+      key: 'textField1',
+      label: 'TextField1',
+      hidden: false,
+      clearOnHide: false,
+    },
+  ]);
+
+  expect(dataUpdates).toEqual({});
+});
+
 test('clearOnHide behaviour with hidden parent (already hidden before rule evaluation)', () => {
   const components: AnyComponentSchema[] = [
     {
