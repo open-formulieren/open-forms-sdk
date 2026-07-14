@@ -247,7 +247,6 @@ test('clearOnHide behaviour with missing var (undefined) is applied', () => {
           },
         },
         {
-          component: '',
           variable: 'textField1',
           action: {type: 'variable', value: {var: 'textField'}},
         },
@@ -291,7 +290,7 @@ test('clearOnHide behaviour with missing var (undefined) is applied', () => {
     submission,
     step,
     rules,
-    inputData: {checkbox: true, textField1: ''},
+    inputData: {textField: '', checkbox: true, textField1: ''},
     components: step.defaultConfiguration!.components ?? [],
     onLogicCheckResult: (_, step) => {
       updatedComponents = step.configuration.components;

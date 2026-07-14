@@ -7,65 +7,62 @@
 import {defaultMethods} from 'json-logic-engine';
 
 import type {JsonLogicEngineMethod} from './types';
-import {isInPath} from './utils';
 
-// Object for treating null values (missing) in a more specific way.
-// Symbol would not work in our situation because it would evaluate to [Object Object]
-export const UNDEFINED_VALUE = Object.freeze({
-  __jsonLogicUndefinedValue: true,
-});
-
-const originalVar = defaultMethods['var'].method;
 const originalCat = defaultMethods['cat'].method;
 const originalSubstr = defaultMethods['substr'] as (args: unknown[]) => unknown;
 
-/** The following combinations are taken into account (input, rule, result):
- *
- * {someVar: null}    { var: "someVar" }	              null
- * {someVar: null}	  { var: ["someVar", "default"] }   "default"
- * {}	                {var: "someVar"}                  UNDEFINED_VALUE
- * {}                 { var: ["someVar", "default"] }   "default"
- */
-export const customVar: JsonLogicEngineMethod = (key, context, above, engine) => {
-  if (Array.isArray(key) && typeof key[0] === 'string') {
-    const varName = key[0];
+// json logic concerning the var operator is tricky, so we impelement this from scratch
+// and not using the original var function from json-logic-engine (mimic the json-logic-py
+// library in the backend)
+export const customVar: JsonLogicEngineMethod = (key, context) => {
+  let varName = undefined;
+  let notFound = undefined;
+  let hasDefault = false;
 
-    // has default value
+  if (Array.isArray(key)) {
+    varName = key[0];
+
     if (key.length > 1) {
-      const fallback = key[1];
-      const result = originalVar([varName], context, above, engine);
-      if (result === null) {
-        return fallback;
-      }
-      return result;
+      hasDefault = true;
+      notFound = key[1];
     }
-
-    // no default: preserve null, but detect missing
-    const result = originalVar([varName], context, above, engine);
-    if (result === null) {
-      // lookup without default and use original, if it comes back as `null` it was either
-      // present with `null` or was absent in the context
-      if (isInPath(context, varName)) {
-        return null;
-      }
-
-      return UNDEFINED_VALUE;
-    }
-
-    return result;
+  } else {
+    varName = key;
   }
 
-  const result = originalVar(key, context, above, engine);
+  if (!varName) {
+    return context;
+  }
 
-  return result === null ? UNDEFINED_VALUE : result;
+  let data = context;
+
+  for (const segment of String(varName).split('.')) {
+    if (data == null) {
+      return hasDefault ? notFound : undefined;
+    }
+
+    const obj = Object(data);
+
+    if (!(segment in obj)) {
+      return hasDefault ? notFound : undefined;
+    }
+
+    data = obj[segment];
+  }
+
+  if (data === null && hasDefault) {
+    return notFound;
+  }
+
+  return data;
 };
 
 export const customCat: JsonLogicEngineMethod = key => {
   if (!Array.isArray(key)) {
-    return originalCat(key === UNDEFINED_VALUE ? null : key);
+    return originalCat(key === undefined ? null : key);
   }
 
-  return originalCat(key.map(value => (value === UNDEFINED_VALUE ? null : value)));
+  return originalCat(key.map(value => (value === undefined ? null : value)));
 };
 
 export const customSubstr: JsonLogicEngineMethod = key => {
@@ -73,7 +70,7 @@ export const customSubstr: JsonLogicEngineMethod = key => {
     return originalSubstr(key);
   }
 
-  const normalized = key.map(value => (value === UNDEFINED_VALUE ? null : value));
+  const normalized = key.map(value => (value === undefined ? null : value));
   if (normalized[0] === null) {
     return null;
   }
