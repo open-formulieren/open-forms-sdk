@@ -75,6 +75,20 @@ test('evaluate returns null when a substr variable is missing', () => {
   expect(result).toBeNull();
 });
 
+test('evaluate returns null when a substr variable is undefined', () => {
+  // @ts-expect-error varA is not a JSON type, but we're testing the passthrough
+  // behaviour here
+  const input: JSONObject = {varA: undefined};
+  const result = evaluate(
+    {
+      substr: [{var: 'varA'}, 0, 3],
+    },
+    input
+  );
+
+  expect(result).toBeNull();
+});
+
 test('evaluate with data that also includes a valid json logic operator', () => {
   const expression = {
     '==': [[{var: 'foo', some: 'data'}, 'a'], []],
