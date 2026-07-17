@@ -13,6 +13,8 @@ on:
       - ready_for_review
   workflow_dispatch:
 
+permissions: {}
+
 # Allow one concurrent deployment
 concurrency:
   group: 'pages-${{ github.ref_name }}' # unique builds for branch/tag name
@@ -24,10 +26,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           submodules: true
-      - uses: actions/setup-node@v5
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -38,7 +41,7 @@ jobs:
           npm run build:design-tokens && npm run build:storybook
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           path: ./storybook-static
 
@@ -59,10 +62,10 @@ jobs:
     steps:
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
 
   tests:
     name: Run Storybook tests
@@ -71,10 +74,11 @@ jobs:
       - storybook
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           submodules: true
-      - uses: actions/setup-node@v5
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -86,7 +90,7 @@ jobs:
           npx playwright install --with-deps
 
       - name: Download build artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
           name: github-pages
           path: ./storybook-static
@@ -110,7 +114,7 @@ jobs:
           npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: storybook
@@ -126,12 +130,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           fetch-depth: 0 # 👈 Required to retrieve git history
+          persist-credentials: false
 
       - name: Download build artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
           name: github-pages
           path: ./storybook-static
@@ -143,7 +148,7 @@ jobs:
         working-directory: ./storybook-static
 
       - name: Publish to Chromatic for visual regression tests
-        uses: chromaui/action@latest
+        uses: chromaui/action@94713c544284a14195de3b50ef24301579f1877e  # v18.0.1
         if: github.event.pull_request.draft == false || github.event.push
         with:
           autoAcceptChanges: main
