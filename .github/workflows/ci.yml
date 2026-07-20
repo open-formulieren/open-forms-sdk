@@ -200,7 +200,7 @@ jobs:
       - name: Install dependencies
         run: |
           # update npm
-          npm install --global npm@latest
+          npm install --global npm@^11.18.0
           npm ci
 
       - name: Download build artifact
