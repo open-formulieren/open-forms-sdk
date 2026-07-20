@@ -2,6 +2,60 @@
 SDK Changelog
 =============
 
+4.0.0-alpha.2 (2026-07-21)
+==========================
+
+Third preview release of the upcoming 4.0.0 version.
+
+Breaking changes
+----------------
+
+* [#6408] Value clearing when a component is hidden now completely removes the value from the logic
+  evaluation context rather than assigning the "empty" value.
+
+New features
+------------
+
+* [#6350] Added option to hide the form title.
+
+Bugfixes
+--------
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.8.1 release, which fixes:
+
+  - [#6434] Fixed ``map`` component stealing focus. Note that this fix is a bit of a
+    workaround that may affect the UX of components that only have a single interaction
+    mode - we're still looking into a better fix.
+  - [#6423] Fixed file uploads in editgrids (repeating groups) not being added to the
+    item data.
+  - [#6420] Fixed dynamically updated options in `selectboxes` components not being
+    processed in the submission data correctly.
+  - [#6434] Fixed interactions with a map component triggering form validation for
+    untouched fields.
+  - [#6449] Fixed dates not being properly displayed in validation errors messages.
+  - [#6410] Fixed unordered lists styling regression.
+  - [#6403] Fixed initial/default date in date picker calendars when the field has a
+    minimum value in the future or maximum value in the past.
+
+* [#6410] Fixed unordered lists styling.
+* [#6359] Fixed page title not being updated correctly when navigating.
+
+Project maintenance
+-------------------
+
+* Updated dependencies:
+
+  - Upgraded undici to 6.27.0.
+  - Upgraded various ``@utrecht`` css dependencies.
+  - Upgraded ``@utrecht/design-tokens`` to 6.2.1.
+  - Upgraded ``@utrecht/component-library-react`` to 14.0.2.
+  - Upgraded ``@open-formulieren/design-tokens`` to 0.68.1.
+  - Upgraded ``@open-formulieren/types`` to 1.4.2.
+
+* Fixed CI setup for storybook.
+* Fixed test flakiness.
+* [#6126] Hardened CI workflows to protect against supply chain attacks.
+
 3.5.5 (2026-07-20)
 ==================
 
