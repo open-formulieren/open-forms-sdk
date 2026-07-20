@@ -11,6 +11,8 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions: {}
+
 env:
   IMAGE_NAME: openformulieren/open-forms-sdk
 
@@ -23,10 +25,12 @@ jobs:
       version: ${{ steps.vars.outputs.version }}
       git_hash: ${{ steps.vars.outputs.git_hash }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
       - name: Extract version info
         id: vars
-        uses: maykinmedia/open-api-workflows/actions/extract-version@v6
+        uses: maykinmedia/open-api-workflows/actions/extract-version@79102b911003d75203ca2fed7df01ad79d9b6bba # v6
 
   build:
     name: Create 'production' build
@@ -35,13 +39,14 @@ jobs:
     needs: setup
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           submodules: true
-      - uses: actions/setup-node@v5
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version-file: '.nvmrc'
-          cache: npm
+          package-manager-cache: false
 
       - name: Install dependencies
         run: |
@@ -60,7 +65,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Store build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: sdk-build
           path: dist/
@@ -71,13 +76,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           submodules: true
-      - uses: actions/setup-node@v5
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version-file: '.nvmrc'
-          cache: npm
+          package-manager-cache: false
 
       - name: Install dependencies
         run: npm ci
@@ -89,7 +95,7 @@ jobs:
           CI: 'true'
 
       - name: Publish coverage report
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: vitest
@@ -108,13 +114,14 @@ jobs:
             script: lint
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           submodules: true
-      - uses: actions/setup-node@v5
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version-file: '.nvmrc'
-          cache: npm
+          package-manager-cache: false
 
       - name: Install dependencies
         run: npm ci
@@ -127,15 +134,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
-      - uses: open-formulieren/actions/check-message-extraction@v1
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          persist-credentials: false
+      - uses: open-formulieren/actions/check-message-extraction@c3a381fb81dde99084eaeeb861bb95a433b1a535 # v1.1
         with:
           paths: src/i18n/{compiled,messages}
           extraction-command: npm run makemessages
           compilation-command: ./bin/compilemessages.sh
 
       # Only actually does anything in release/* branches or for pushed tags
-      - uses: open-formulieren/actions/check-missing-translations@v1
+      - uses: open-formulieren/actions/check-missing-translations@c3a381fb81dde99084eaeeb861bb95a433b1a535 # v1.1
         with:
           messages-path: src/i18n/messages
           locales: nl
@@ -161,13 +170,14 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           submodules: true
-      - uses: actions/setup-node@v5
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version-file: '.nvmrc'
-          cache: npm
+          package-manager-cache: false
           registry-url: 'https://registry.npmjs.org'
           scope: '@open-formulieren'
 
@@ -178,7 +188,7 @@ jobs:
           npm ci
 
       - name: Download build artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
           name: sdk-build
           path: dist/
@@ -188,7 +198,7 @@ jobs:
           mv README.npm.md README.md
           npm run prepare-package
 
-          case "${{ needs.setup.outputs.version }}" in
+          case "${NEEDS_SETUP_OUTPUTS_VERSION}" in
             *"-alpha."*) npm_tag=next ;;
             *"-beta."*) npm_tag=next ;;
             *"-rc."*) npm_tag=next ;;
@@ -197,6 +207,8 @@ jobs:
           esac
 
           npm publish --access public --tag="$npm_tag"
+        env:
+          NEEDS_SETUP_OUTPUTS_VERSION: ${{ needs.setup.outputs.version }}
 
   docker:
     name: Build (and push) Docker image
@@ -206,9 +218,10 @@ jobs:
 
     steps:
       # This will include the updated OAS (if updated) from the update-oas job.
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           submodules: true
+          persist-credentials: false
 
       - name: Build the Docker image
         run: |

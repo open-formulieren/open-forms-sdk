@@ -2,6 +2,28 @@
 SDK Changelog
 =============
 
+3.4.5 (2026-07-20)
+==================
+
+Regular bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.1.6 bugfix release, which fixes:
+
+  - [#6410] Fixed unordered lists styling regression.
+  - [#6403] Fixed initial/default date in date picker calendars when the field has a
+    minimum value in the future or maximum value in the past.
+  - [#6423] Fixed file uploads in editgrids (repeating groups) not being added to the
+    item data.
+  - [#6420] Fixed dynamically updated options in `selectboxes` components not being
+    processed in the submission data correctly.
+  - [#6434] Fixed interactions with a map component triggering form validation for
+    untouched fields.
+  - [#6434] Fixed map component stealing focus and skipping over other fields.
+  - [#6449] Fixed dates not being properly displayed in validation errors messages.
+
+* [#6359] Fixed missing browser title update in the new renderer when navigating between
+  steps.
+
 3.4.4 (2026-06-19)
 ==================
 
