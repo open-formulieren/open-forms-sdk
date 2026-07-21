@@ -41,6 +41,7 @@ const Wrap: React.FC<WrapperProps> = ({
   const parsedUrl = new URL(currentUrl, 'http://dummy');
   const routes = [
     {path: parsedUrl.pathname, element: <FormStart />},
+    {path: '/hulp', element: <p>Help callout page</p>},
     {path: '/stap/:slug', element: <h1>Step page</h1>},
   ];
   const router = createMemoryRouter(routes, {initialEntries: [currentUrl], future: FUTURE_FLAGS});
@@ -99,6 +100,7 @@ test('Start form without having logged in', async () => {
   await expect.poll(() => startSubmissionRequest).not.toBeUndefined();
   const requestBody = await startSubmissionRequest!.json();
   expect(requestBody.anonymous).toBe(true);
+  await expect.element(screen.getByText('Step page')).toBeVisible();
 });
 
 test('Start form with having logged in', async () => {
@@ -379,4 +381,66 @@ test('Form start page shows invisible login buttons when auth_visible=all', asyn
   await expect.element(digidLoginLink).toBeVisible();
   const oidcLoginLink = screen.getByRole('link', {name: 'Login with OpenID Connect'});
   await expect.element(oidcLoginLink).toBeVisible();
+});
+
+test('With help callout page content shown after the start page', async () => {
+  mswWorker.use(mockSubmissionPost());
+  const form = buildForm({
+    helpCalloutPageDisplay: 'after_start_page',
+    helpCalloutPageContent: '<p>Some content</p>',
+  });
+
+  const screen = await render(<Wrap form={form} />);
+  await screen.getByRole('button', {name: 'Begin'}).click();
+  await expect.element(screen.getByText('Help callout page')).toBeVisible();
+});
+
+test('With help callout page content before the start page', async () => {
+  mswWorker.use(mockSubmissionPost());
+  const form = buildForm({
+    helpCalloutPageDisplay: 'before_start_page',
+    helpCalloutPageContent: '<p>Some content</p>',
+  });
+
+  const screen = await render(<Wrap form={form} />);
+  await screen.getByRole('button', {name: 'Begin'}).click();
+  await expect.element(screen.getByText('Step page')).toBeVisible();
+});
+
+test('Without help callout page content', async () => {
+  mswWorker.use(mockSubmissionPost());
+  const form = buildForm({
+    helpCalloutPageDisplay: 'after_start_page',
+    helpCalloutPageContent: '',
+  });
+
+  const screen = await render(<Wrap form={form} />);
+  await screen.getByRole('button', {name: 'Begin'}).click();
+  await expect.element(screen.getByText('Step page')).toBeVisible();
+});
+
+test('With help callout page content shown after the start page and initial submission', async () => {
+  mswWorker.use(mockSubmissionPost());
+  const form = buildForm({
+    helpCalloutPageDisplay: 'after_start_page',
+    helpCalloutPageContent: '<p>Some content</p>',
+  });
+  const submission = buildSubmission();
+
+  const screen = await render(<Wrap form={form} initialSubmission={submission} />);
+  await screen.getByRole('button', {name: 'Continue existing submission'}).click();
+  await expect.element(screen.getByText('Help callout page')).toBeVisible();
+});
+
+test('Without help callout page and initial submission', async () => {
+  mswWorker.use(mockSubmissionPost());
+  const form = buildForm({
+    helpCalloutPageDisplay: 'never',
+    helpCalloutPageContent: '<p>Some content</p>',
+  });
+  const submission = buildSubmission();
+
+  const screen = await render(<Wrap form={form} initialSubmission={submission} />);
+  await screen.getByRole('button', {name: 'Continue existing submission'}).click();
+  await expect.element(screen.getByText('Step page')).toBeVisible();
 });

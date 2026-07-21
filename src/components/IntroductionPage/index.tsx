@@ -10,12 +10,21 @@ import Link from '@/components/Link';
 import useQueryParams from '@/hooks/useQueryParams';
 
 const IntroductionPage: React.FC = () => {
-  const {introductionPageContent = ''} = useContext(FormContext);
+  const {
+    introductionPageContent = '',
+    helpCalloutPageContent,
+    helpCalloutPageDisplay,
+  } = useContext(FormContext);
   const {preserveQueryParams} = useQueryParams();
 
-  const startPageUrl = preserveQueryParams('startpagina');
+  const nextPageUrl: string = preserveQueryParams(
+    helpCalloutPageContent && helpCalloutPageDisplay === 'before_start_page'
+      ? 'hulp'
+      : 'startpagina'
+  );
+
   if (!introductionPageContent) {
-    return <Navigate replace to={startPageUrl} />;
+    return <Navigate replace to={nextPageUrl} />;
   }
 
   return (
@@ -27,7 +36,7 @@ const IntroductionPage: React.FC = () => {
       />
 
       <Link
-        to={startPageUrl}
+        to={nextPageUrl}
         as="button-link"
         appearance="primary-action-button"
         className="openforms-start-link"
