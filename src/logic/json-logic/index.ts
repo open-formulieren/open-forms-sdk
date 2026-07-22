@@ -17,6 +17,7 @@ import {LogicEngine as LogicEngine_} from 'json-logic-engine';
 
 import {
   customAddition,
+  customCat,
   customDivision,
   customEquals,
   customGreaterThan,
@@ -30,6 +31,7 @@ import {
   customNotEquals,
   customNotStrictEquals,
   customStrictEquals,
+  customSubstr,
   customSubtraction,
   customVar,
   jsonLogicDate,
@@ -73,6 +75,8 @@ engine.addMethod('max', customMaximum);
 engine.addMethod('min', customMinimum);
 // overrides to match backend behaviour
 engine.addMethod('var', customVar);
+engine.addMethod('cat', customCat);
+engine.addMethod('substr', customSubstr);
 
 // remove methods that are either syntactic sugar or extensions from json-logic-js, to
 // prevent people accidentally using them while we don't support them in the backend.
@@ -118,7 +122,7 @@ const evaluate = (
   expression: JSONValue,
   data: JSONValue,
   {serializeResult = true}: EvaluationOptions = {}
-): JSONValue => {
+): JSONValue | undefined => {
   // use the .run variant instead of .build & call, as this has a built-in optimizer,
   // which is well-suited to our case where we'll probably evaluate the same rule
   // multiple times.
@@ -126,7 +130,11 @@ const evaluate = (
   return serializeResult ? serialize(result) : result;
 };
 
-const serialize = (value: unknown): JSONValue => {
+const serialize = (value: unknown): JSONValue | undefined => {
+  if (value === undefined) {
+    return undefined;
+  }
+
   // avoid round trip if it's already a primitive
   if (
     typeof value == 'string' ||
@@ -140,7 +148,7 @@ const serialize = (value: unknown): JSONValue => {
   // otherwise do a roundtrip to JSON serialize and parse it - builtins have a toJSON
   // method that gets called in this process
   const serializedJsonString = JSON.stringify(value, (_, value) => {
-    if (typeof value === 'object' && TYPE in value && value[TYPE] === 'relativedelta') {
+    if (typeof value === 'object' && value && TYPE in value && value[TYPE] === 'relativedelta') {
       return formatISODuration(value);
     }
     return value;

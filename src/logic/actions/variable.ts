@@ -35,6 +35,8 @@ export const applyVariableAction = (
   // isEqual is necessary for deep equality checks with Arrays and Objects
   if (isEqual(currentValue, targetValue)) return;
 
-  logicState.data = setIn(updatedData, componentKey, targetValue);
-  logicState.initialValues = setIn(logicState.initialValues, componentKey, targetValue);
+  if (targetValue !== undefined) {
+    logicState.data = setIn(updatedData, componentKey, targetValue);
+    logicState.initialValues = setIn(logicState.initialValues, componentKey, targetValue);
+  }
 };
