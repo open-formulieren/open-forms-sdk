@@ -12,5 +12,9 @@ export const jsonLogicDateTime: JsonLogicEngineMethod = ([dateTimeStr]) => {
   // faulty logic can be submitted or we may already have a `Date` instance - pass through
   // anything that isn't a string.
   if (typeof dateTimeStr !== 'string') return dateTimeStr;
+
+  if (dateTimeStr === '') {
+    return null;
+  }
   return parseISO(dateTimeStr);
 };
