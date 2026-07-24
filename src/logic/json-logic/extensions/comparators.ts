@@ -22,6 +22,11 @@ const comparatorOverrideFactory = (original: JsonLogicEngineMethod): JsonLogicEn
       }
       return originalArg;
     });
+
+    if (args.some(arg => arg === null || arg === undefined)) {
+      return null;
+    }
+
     return original(modifiedArgs, context, above, engine);
   };
 };
