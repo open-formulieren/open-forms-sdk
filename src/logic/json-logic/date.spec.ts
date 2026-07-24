@@ -18,6 +18,24 @@ test('accepts ISO-8601 datetime string but truncates to date', () => {
   expect(result).toBe('2026-03-12');
 });
 
+test('greater-than comparison with empty string', () => {
+  const expression: JSONObject = {
+    '>': [{date: ''}, {date: '2026-03-01'}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
+test('greater-than without date operator', () => {
+  const expression: JSONObject = {
+    '>': [{date: '2000-10-10'}, '2000-01-01'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
+});
+
 test('greater-than comparison with ISO-8601 date strings', () => {
   const expression: JSONObject = {
     '>': [{date: '2026-03-01'}, {date: '2026-03-01'}],
@@ -38,6 +56,24 @@ test('greater-than-equals comparison with ISO-8601 date strings', () => {
   expect(result).toBe(true);
 });
 
+test('greater-than-equals comparison with empty string', () => {
+  const expression: JSONObject = {
+    '>=': [{date: ''}, {date: '2026-03-01'}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
+test('greater-than-equals without date operator', () => {
+  const expression: JSONObject = {
+    '>=': [{date: '2000-10-10'}, '2000-01-01'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
+});
+
 test('less-than comparison with ISO-8601 date strings', () => {
   const expression: JSONObject = {
     '<': [{date: '2026-03-01'}, {date: '2026-03-01'}],
@@ -48,6 +84,24 @@ test('less-than comparison with ISO-8601 date strings', () => {
   expect(result).toBe(false);
 });
 
+test('less-than comparison with empty string', () => {
+  const expression: JSONObject = {
+    '<': [{date: ''}, {date: '2026-03-01'}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
+test('less-than without date operator', () => {
+  const expression: JSONObject = {
+    '<': [{date: '2000-10-10'}, '2000-01-01'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
+});
+
 test('less-than-equals comparison with ISO-8601 date strings', () => {
   const expression: JSONObject = {
     '<=': [{date: '2026-03-01'}, {date: '2026-03-01'}],
@@ -56,6 +110,23 @@ test('less-than-equals comparison with ISO-8601 date strings', () => {
   const result = evaluate(expression, {});
 
   expect(result).toBe(true);
+});
+
+test('less-than-equals comparison with empty string', () => {
+  const expression: JSONObject = {
+    '<=': [{date: ''}, {date: '2026-03-01'}],
+  };
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
+test('less-than-equals without date operator', () => {
+  const expression: JSONObject = {
+    '>': [{date: '2000-10-10'}, '2000-01-01'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
 });
 
 test('not unary operator', () => {
@@ -117,6 +188,17 @@ test.each(['!=', '!=='])(
     expect(result).toBe(true);
   }
 );
+
+test('test undefined value', () => {
+  const expression: JSONObject = {
+    // @ts-expect-error just for testing purposes
+    '>': [{date: '2026-03-01T11:00:01+00:00'}, {date: undefined}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
 
 /**
  * Test the behavour of math operations on datetime operator results.

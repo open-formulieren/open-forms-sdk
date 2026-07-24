@@ -27,6 +27,24 @@ test('greater-than comparison with ISO-8601 datetime strings with different time
   expect(result).toBe(true);
 });
 
+test('greater-than comparison without datetime operator', () => {
+  const expression: JSONObject = {
+    '>': [{datetime: '2026-03-01T11:00:01+00:00'}, '2025-03-01T11:00:01+00:00'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
+});
+
+test('greater-than comparison with empty string', () => {
+  const expression: JSONObject = {
+    '>': [{datetime: '2026-03-01T11:00:01+00:00'}, {datetime: ''}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
 test('greater-than-equals comparison with ISO-8601 datetime strings with different timezone offsets', () => {
   const expression: JSONObject = {
     '>=': [{datetime: {var: 'someDatetime'}}, {datetime: '2026-03-01T12:00:00+01:00'}],
@@ -36,6 +54,24 @@ test('greater-than-equals comparison with ISO-8601 datetime strings with differe
   const result = evaluate(expression, data);
 
   expect(result).toBe(true);
+});
+
+test('greater-than-equals comparison without datetime operator', () => {
+  const expression: JSONObject = {
+    '>=': [{datetime: '2026-03-01T11:00:01+00:00'}, '2025-03-01T11:00:01+00:00'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
+});
+
+test('greater-than-equals comparison with empty string', () => {
+  const expression: JSONObject = {
+    '>=': [{datetime: '2026-03-01T11:00:01+00:00'}, {datetime: ''}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
 });
 
 test('less-than comparison with ISO-8601 datetime strings with different timezone offsets', () => {
@@ -49,6 +85,24 @@ test('less-than comparison with ISO-8601 datetime strings with different timezon
   expect(result).toBe(false);
 });
 
+test('less-than comparison without datetime operator', () => {
+  const expression: JSONObject = {
+    '<': [{datetime: '2026-03-01T11:00:01+00:00'}, '2025-03-01T11:00:01+00:00'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
+});
+
+test('less-than comparison with empty string', () => {
+  const expression: JSONObject = {
+    '<': [{datetime: '2026-03-01T11:00:01+00:00'}, {datetime: ''}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
 test('less-than-equals comparison with ISO-8601 datetime strings with different timezone offsets', () => {
   const expression: JSONObject = {
     '<=': [{datetime: {var: 'someDatetime'}}, {datetime: '2026-03-01T12:00:00+01:00'}],
@@ -58,6 +112,24 @@ test('less-than-equals comparison with ISO-8601 datetime strings with different 
   const result = evaluate(expression, data);
 
   expect(result).toBe(true);
+});
+
+test('less-than-equals comparison without datetime operator', () => {
+  const expression: JSONObject = {
+    '<=': [{datetime: '2026-03-01T11:00:01+00:00'}, '2025-03-01T11:00:01+00:00'],
+  };
+
+  expect(() => evaluate(expression, {})).toThrow();
+});
+
+test('less-than-equals comparison with empty string', () => {
+  const expression: JSONObject = {
+    '<=': [{datetime: '2026-03-01T11:00:01+00:00'}, {datetime: ''}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
 });
 
 test('not unary operator', () => {
@@ -126,6 +198,17 @@ test.each(['!=', '!=='])(
     expect(result).toBe(false);
   }
 );
+
+test('test undefined value', () => {
+  const expression: JSONObject = {
+    // @ts-expect-error just for testing purposes
+    '>': [{datetime: '2026-03-01T11:00:01+00:00'}, {datetime: undefined}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
 
 /**
  * Test the behavour of math operations on datetime operator results.

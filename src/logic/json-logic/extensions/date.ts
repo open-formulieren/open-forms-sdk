@@ -25,6 +25,10 @@ export const jsonLogicDate: JsonLogicEngineMethod = ([dateString]) => {
   // anything that isn't a string.
   if (typeof dateString !== 'string') return dateString;
 
+  if (dateString === '') {
+    return null;
+  }
+
   let _dateString: string = dateString;
   // to match backend behaviour, timezone-aware datetimes are converted by looking only
   // at the (naive) date part, without converting to UTC/local timezone. So, we strip
