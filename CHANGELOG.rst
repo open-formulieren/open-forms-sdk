@@ -2,6 +2,21 @@
 SDK Changelog
 =============
 
+3.4.6 (2026-07-27)
+==================
+
+Regular bugfix release.
+
+* [formio-renderer#357] Upgraded ``@open-formulieren/formio-renderer`` to 1.1.7 release,
+  which fixes 3 bugs when ``selectboxes`` components are used inside ``editgrid``
+  components:
+
+  - Fixed infinite render loop when using a selectboxes ``conditional`` inside an editgrid.
+  - Fixed item value updates due to visibility processing being persisted in the editgrid
+    state itself *before* the "Save" button was clicked.
+  - Fixed incorrect determination of the "touched" state of a ``selectboxes`` field when
+    it's inside an ``editgrid``.
+
 3.4.5 (2026-07-20)
 ==================
 
