@@ -4,10 +4,7 @@
 export type AuthErrorCode = 'login-cancelled' | 'error';
 
 export type MessageParamName =
-  | '_digid-message'
-  | '_eherkenning-message'
-  | '_eidas-message'
-  | '_yivi-message';
+  '_digid-message' | '_eherkenning-message' | '_eidas-message' | '_yivi-message';
 
 // Uses a list of tuples instead of a mapping for type safety in the consuming code,
 // as otherwise the union information is lost through Object.keys|entries
