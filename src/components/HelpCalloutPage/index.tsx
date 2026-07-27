@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useLayoutEffect, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Navigate} from 'react-router';
 
@@ -18,6 +18,26 @@ const HelpCalloutPage: React.FC = () => {
   const {submission} = useSubmissionContext();
   const {preserveQueryParams} = useQueryParams();
   const intl = useIntl();
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+  const [triangleOffset, setTriangleOffset] = useState<number>(0);
+
+  useLayoutEffect(() => {
+    if (!buttonRef.current || !buttonRef.current.parentElement) return;
+
+    const updateTriangleOffset = () => {
+      const buttonBox = buttonRef.current!.getBoundingClientRect();
+      const parentBox = buttonRef.current!.parentElement!.getBoundingClientRect();
+      // Calculate relative horizontal position of the button center.
+      setTriangleOffset(buttonBox.left - parentBox.left + buttonBox.width / 2);
+    };
+
+    updateTriangleOffset();
+
+    // Subscribe to resize event, to make sure we always have an accurate position of the button.
+    window.addEventListener('resize', updateTriangleOffset);
+    return () => window.removeEventListener('resize', updateTriangleOffset);
+  }, [buttonRef, setTriangleOffset]);
 
   if (!helpCalloutPageContent || helpCalloutPageDisplay === 'never')
     // In case a user tries to navigate to this page manually when it shouldn't be visible, just
@@ -37,25 +57,34 @@ const HelpCalloutPage: React.FC = () => {
   return (
     <FormContainer>
       <div>
-        <HelpButton />
+        <div className="openforms-help-callout-page-button-container">
+          <HelpButton ref={buttonRef} />
+        </div>
 
-        <div>
-          <Body
-            modifiers={['wysiwyg']}
-            component="div"
-            dangerouslySetInnerHTML={{__html: helpCalloutPageContent}}
-          />
+        <div className="openforms-help-callout-page-dialog">
+          <div
+            className="openforms-help-callout-page-dialog__triangle"
+            style={{left: triangleOffset}}
+          ></div>
+          <div className="openforms-help-callout-page-dialog__container">
+            {helpCalloutPageImage && (
+              <Image
+                src={helpCalloutPageImage}
+                alt={intl.formatMessage({
+                  description: 'Help callout page image alt text',
+                  defaultMessage: 'Help callout page image',
+                })}
+                className="openforms-help-callout-page-dialog__image"
+                aria-hidden="true"
+              />
+            )}
 
-          {helpCalloutPageImage && (
-            <Image
-              src={helpCalloutPageImage}
-              alt={intl.formatMessage({
-                description: 'Help callout page image alt text',
-                defaultMessage: 'Help callout page image',
-              })}
-              aria-hidden="true"
+            <Body
+              modifiers={['wysiwyg']}
+              component="div"
+              dangerouslySetInnerHTML={{__html: helpCalloutPageContent}}
             />
-          )}
+          </div>
         </div>
       </div>
 

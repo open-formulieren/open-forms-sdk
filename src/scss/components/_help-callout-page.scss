@@ -1,0 +1,54 @@
+@use 'microscope-sass/lib/bem';
+
+$triangle-size: var(--of-help-callout-page-dialog-triangle-size, 35px);
+$dialog-background-color: var(--of-help-callout-page-dialog-color, var(--of-color-secondary));
+
+.openforms-help-callout-page-dialog {
+  margin-top: var(--of-help-callout-page-dialog-margin-top, 1em);
+  margin-bottom: var(--of-help-callout-page-dialog-margin-botton, 2em);
+
+  @include bem.element('triangle') {
+    width: 0;
+    height: 0;
+    border-left: $triangle-size solid transparent;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: $triangle-size solid $dialog-background-color;
+    position: relative;
+    // Ensures the right side of the triangle is defined as the "0" point, which means we can
+    // control the location of the right side with the `left` property.
+    transform: translateX(-100%);
+  }
+
+  @include bem.element('container') {
+    background: $dialog-background-color;
+    padding: var(--of-help-callout-page-dialog-padding, 3em);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--of-help-callout-page-dialog-column-gap, 3em);
+    justify-content: flex-start;
+    align-content: space-around;
+
+    @include mobile-only {
+      padding: var(--of-help-callout-page-mobile-dialog-padding, 2em);
+      flex-direction: column;
+      row-gap: var(--of-help-callout-page-mobile-dialog-row-gap, 2em);
+    }
+  }
+
+  @include bem.element('image') {
+    --of-image-max-inline-size: var(--of-help-callout-page-image-max-inline-size);
+
+    @include mobile-only {
+      max-width: 100%;
+      flex-shrink: 1;
+    }
+  }
+}
+
+.openforms-help-callout-page-button-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}
