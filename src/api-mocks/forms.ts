@@ -72,9 +72,11 @@ export const FORM_DEFAULTS = {
   paymentRequired: false,
   submissionReportDownloadLinkTitle: '',
   communicationPreferencesPortalUrl: '',
-  helpCalloutPageDisplay: 'never',
-  helpCalloutPageContent: '',
-  helpCalloutPageImage: '',
+  helpCalloutPage: {
+    display: 'never',
+    content: '',
+    image: null,
+  },
 } satisfies Form;
 
 export const SINGLE_STEP_FORM_DEFAULTS = {
@@ -130,9 +132,11 @@ export const SINGLE_STEP_FORM_DEFAULTS = {
   paymentRequired: false,
   submissionReportDownloadLinkTitle: '',
   communicationPreferencesPortalUrl: '',
-  helpCalloutPageDisplay: 'never',
-  helpCalloutPageContent: '',
-  helpCalloutPageImage: '',
+  helpCalloutPage: {
+    display: 'never',
+    content: '',
+    image: null,
+  },
 } satisfies Form;
 
 const FORM_STEP_DETAILS_DEFAULT = {

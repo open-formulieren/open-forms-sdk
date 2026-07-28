@@ -71,8 +71,7 @@ test('With introduction page content', async () => {
 
 test('With help callout page content before start page', async () => {
   const form = buildForm({
-    helpCalloutPageContent: HELP_CALLOUT_CONTENT,
-    helpCalloutPageDisplay: 'before_start_page',
+    helpCalloutPage: {display: 'before_start_page', content: HELP_CALLOUT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -81,8 +80,7 @@ test('With help callout page content before start page', async () => {
 
 test('With help callout page content after start page', async () => {
   const form = buildForm({
-    helpCalloutPageContent: HELP_CALLOUT_CONTENT,
-    helpCalloutPageDisplay: 'after_start_page',
+    helpCalloutPage: {display: 'after_start_page', content: HELP_CALLOUT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -91,8 +89,7 @@ test('With help callout page content after start page', async () => {
 
 test('Without help callout page content', async () => {
   const form = buildForm({
-    helpCalloutPageContent: '',
-    helpCalloutPageDisplay: 'before_start_page',
+    helpCalloutPage: {display: 'before_start_page', content: '', image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -101,8 +98,7 @@ test('Without help callout page content', async () => {
 
 test('With help callout page content but never display', async () => {
   const form = buildForm({
-    helpCalloutPageContent: HELP_CALLOUT_CONTENT,
-    helpCalloutPageDisplay: 'never',
+    helpCalloutPage: {display: 'never', content: HELP_CALLOUT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);

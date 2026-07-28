@@ -57,7 +57,7 @@ const FormStart: React.FC = () => {
   useTitle(form.name);
 
   const nextPageUrl: string =
-    form.helpCalloutPageContent && form.helpCalloutPageDisplay === 'after_start_page'
+    form.helpCalloutPage.content && form.helpCalloutPage.display === 'after_start_page'
       ? '/hulp'
       : `/stap/${form.steps[0].slug}`;
 

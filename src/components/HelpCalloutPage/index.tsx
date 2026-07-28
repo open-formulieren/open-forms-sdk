@@ -13,8 +13,7 @@ import useFormContext from '@/hooks/useFormContext';
 import useQueryParams from '@/hooks/useQueryParams';
 
 const HelpCalloutPage: React.FC = () => {
-  const {steps, helpCalloutPageContent, helpCalloutPageDisplay, helpCalloutPageImage} =
-    useFormContext();
+  const {steps, helpCalloutPage} = useFormContext();
   const {submission} = useSubmissionContext();
   const {preserveQueryParams} = useQueryParams();
   const intl = useIntl();
@@ -39,13 +38,13 @@ const HelpCalloutPage: React.FC = () => {
     return () => window.removeEventListener('resize', updateTriangleOffset);
   }, [buttonRef, setTriangleOffset]);
 
-  if (!helpCalloutPageContent || helpCalloutPageDisplay === 'never')
+  if (!helpCalloutPage.content || helpCalloutPage.display === 'never')
     // In case a user tries to navigate to this page manually when it shouldn't be visible, just
     // redirect to the start page directly.
     return <Navigate replace to={preserveQueryParams('startpagina')} />;
 
   let nextPageUrl: string;
-  if (helpCalloutPageDisplay === 'before_start_page')
+  if (helpCalloutPage.display === 'before_start_page')
     nextPageUrl = preserveQueryParams('startpagina');
   else {
     // Sanity check
@@ -67,9 +66,9 @@ const HelpCalloutPage: React.FC = () => {
             style={{left: triangleOffset}}
           ></div>
           <div className="openforms-help-callout-page-dialog__container">
-            {helpCalloutPageImage && (
+            {helpCalloutPage.image && (
               <Image
-                src={helpCalloutPageImage}
+                src={helpCalloutPage.image}
                 alt={intl.formatMessage({
                   description: 'Help callout page image alt text',
                   defaultMessage: 'Help callout page image',
@@ -82,7 +81,7 @@ const HelpCalloutPage: React.FC = () => {
             <Body
               modifiers={['wysiwyg']}
               component="div"
-              dangerouslySetInnerHTML={{__html: helpCalloutPageContent}}
+              dangerouslySetInnerHTML={{__html: helpCalloutPage.content}}
             />
           </div>
         </div>

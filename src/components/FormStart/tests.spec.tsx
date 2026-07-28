@@ -386,8 +386,7 @@ test('Form start page shows invisible login buttons when auth_visible=all', asyn
 test('With help callout page content shown after the start page', async () => {
   mswWorker.use(mockSubmissionPost());
   const form = buildForm({
-    helpCalloutPageDisplay: 'after_start_page',
-    helpCalloutPageContent: '<p>Some content</p>',
+    helpCalloutPage: {display: 'after_start_page', content: '<p>Some content</p>', image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -398,8 +397,7 @@ test('With help callout page content shown after the start page', async () => {
 test('With help callout page content before the start page', async () => {
   mswWorker.use(mockSubmissionPost());
   const form = buildForm({
-    helpCalloutPageDisplay: 'before_start_page',
-    helpCalloutPageContent: '<p>Some content</p>',
+    helpCalloutPage: {display: 'before_start_page', content: '<p>Some content</p>', image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -410,8 +408,7 @@ test('With help callout page content before the start page', async () => {
 test('Without help callout page content', async () => {
   mswWorker.use(mockSubmissionPost());
   const form = buildForm({
-    helpCalloutPageDisplay: 'after_start_page',
-    helpCalloutPageContent: '',
+    helpCalloutPage: {display: 'after_start_page', content: '', image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -422,8 +419,7 @@ test('Without help callout page content', async () => {
 test('With help callout page content shown after the start page and initial submission', async () => {
   mswWorker.use(mockSubmissionPost());
   const form = buildForm({
-    helpCalloutPageDisplay: 'after_start_page',
-    helpCalloutPageContent: '<p>Some content</p>',
+    helpCalloutPage: {display: 'after_start_page', content: '<p>Some content</p>', image: null},
   });
   const submission = buildSubmission();
 
@@ -435,8 +431,7 @@ test('With help callout page content shown after the start page and initial subm
 test('Without help callout page and initial submission', async () => {
   mswWorker.use(mockSubmissionPost());
   const form = buildForm({
-    helpCalloutPageDisplay: 'never',
-    helpCalloutPageContent: '<p>Some content</p>',
+    helpCalloutPage: {display: 'never', content: '<p>Some content</p>', image: null},
   });
   const submission = buildSubmission();
 

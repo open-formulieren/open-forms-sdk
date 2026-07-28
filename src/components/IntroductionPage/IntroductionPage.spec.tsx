@@ -61,8 +61,7 @@ test('No introduction page content', async () => {
 test('Help callout before start page', async () => {
   const form = buildForm({
     introductionPageContent: INTRODUCTION_CONTENT,
-    helpCalloutPageDisplay: 'before_start_page',
-    helpCalloutPageContent: HELP_CALLOUT_CONTENT,
+    helpCalloutPage: {display: 'before_start_page', content: HELP_CALLOUT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -73,8 +72,7 @@ test('Help callout before start page', async () => {
 test('Help callout before start page with query parameter', async () => {
   const form = buildForm({
     introductionPageContent: INTRODUCTION_CONTENT,
-    helpCalloutPageDisplay: 'before_start_page',
-    helpCalloutPageContent: HELP_CALLOUT_CONTENT,
+    helpCalloutPage: {display: 'before_start_page', content: HELP_CALLOUT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} searchParams="?initial_data_reference=foo" />);
@@ -85,8 +83,7 @@ test('Help callout before start page with query parameter', async () => {
 test('Help callout after start page', async () => {
   const form = buildForm({
     introductionPageContent: INTRODUCTION_CONTENT,
-    helpCalloutPageDisplay: 'after_start_page',
-    helpCalloutPageContent: HELP_CALLOUT_CONTENT,
+    helpCalloutPage: {display: 'after_start_page', content: HELP_CALLOUT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -97,8 +94,7 @@ test('Help callout after start page', async () => {
 test('No content for help callout', async () => {
   const form = buildForm({
     introductionPageContent: INTRODUCTION_CONTENT,
-    helpCalloutPageDisplay: 'after_start_page',
-    helpCalloutPageContent: '',
+    helpCalloutPage: {display: 'after_start_page', content: '', image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -109,8 +105,7 @@ test('No content for help callout', async () => {
 test('No help callout display', async () => {
   const form = buildForm({
     introductionPageContent: INTRODUCTION_CONTENT,
-    helpCalloutPageDisplay: 'never',
-    helpCalloutPageContent: HELP_CALLOUT_CONTENT,
+    helpCalloutPage: {display: 'never', content: HELP_CALLOUT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);

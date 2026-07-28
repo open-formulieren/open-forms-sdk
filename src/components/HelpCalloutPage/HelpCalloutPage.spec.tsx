@@ -68,8 +68,7 @@ const Wrap: React.FC<WrapperProps> = ({form = buildForm(), searchParams = ''}) =
 
 test('Before start page', async () => {
   const form = buildForm({
-    helpCalloutPageDisplay: 'before_start_page',
-    helpCalloutPageContent: DEFAULT_CONTENT,
+    helpCalloutPage: {display: 'before_start_page', content: DEFAULT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -79,8 +78,7 @@ test('Before start page', async () => {
 
 test('Before start page with query param', async () => {
   const form = buildForm({
-    helpCalloutPageDisplay: 'before_start_page',
-    helpCalloutPageContent: DEFAULT_CONTENT,
+    helpCalloutPage: {display: 'before_start_page', content: DEFAULT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap searchParams="?initial_data_reference=foo" form={form} />);
@@ -92,8 +90,7 @@ test('Before start page with query param', async () => {
 
 test('After start page', async () => {
   const form = buildForm({
-    helpCalloutPageDisplay: 'after_start_page',
-    helpCalloutPageContent: DEFAULT_CONTENT,
+    helpCalloutPage: {display: 'after_start_page', content: DEFAULT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -103,8 +100,7 @@ test('After start page', async () => {
 
 test('No content configured', async () => {
   const form = buildForm({
-    helpCalloutPageDisplay: 'after_start_page',
-    helpCalloutPageContent: '',
+    helpCalloutPage: {display: 'after_start_page', content: '', image: null},
   });
 
   const screen = await render(<Wrap form={form} />);
@@ -113,8 +109,7 @@ test('No content configured', async () => {
 
 test('Callout page should not be displayed', async () => {
   const form = buildForm({
-    helpCalloutPageDisplay: 'never',
-    helpCalloutPageContent: DEFAULT_CONTENT,
+    helpCalloutPage: {display: 'never', content: DEFAULT_CONTENT, image: null},
   });
 
   const screen = await render(<Wrap form={form} />);

@@ -10,15 +10,11 @@ import Link from '@/components/Link';
 import useQueryParams from '@/hooks/useQueryParams';
 
 const IntroductionPage: React.FC = () => {
-  const {
-    introductionPageContent = '',
-    helpCalloutPageContent,
-    helpCalloutPageDisplay,
-  } = useContext(FormContext);
+  const {introductionPageContent = '', helpCalloutPage} = useContext(FormContext);
   const {preserveQueryParams} = useQueryParams();
 
   const nextPageUrl: string = preserveQueryParams(
-    helpCalloutPageContent && helpCalloutPageDisplay === 'before_start_page'
+    helpCalloutPage.content && helpCalloutPage.display === 'before_start_page'
       ? 'hulp'
       : 'startpagina'
   );
