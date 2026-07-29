@@ -1,5 +1,5 @@
 import type {JSONObject} from '@open-formulieren/types';
-import {expect, test} from 'vitest';
+import {describe, expect, test} from 'vitest';
 
 import evaluate from './index';
 
@@ -18,16 +18,20 @@ test.each([null, undefined])(
   }
 );
 
-test.each([
-  [{'+': [null, 5]}],
-  [{'-': [null, 5]}],
-  [{'*': [null, 5]}],
-  [{'/': [null, 5]}],
-  [{'%': [null, 5]}],
-  [{min: [null, 5]}],
-  [{max: [null, 5]}],
-])('math with null-ish values short-circuits, expression: %o', (expression: JSONObject) => {
-  const result = evaluate(expression, {});
+describe.each(['>', '>=', '<', '<=', '+', '-', '*', '/', '%', 'min', 'max'])(
+  '%s operator',
+  operator => {
+    test.each([
+      ['undefined', undefined],
+      ['null', null],
+    ])('returns null with %s', (_, value: null | undefined) => {
+      // @ts-expect-error undefined is not part of the JSONObject type, but we're testing
+      // the behaviour here
+      const expression: JSONObject = {
+        [operator]: [value, 8],
+      };
 
-  expect(result).toBe(null);
-});
+      expect(evaluate(expression, {})).toBeNull();
+    });
+  }
+);
