@@ -1,13 +1,12 @@
 import {useLayoutEffect, useRef, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {Navigate} from 'react-router';
 
 import Body from '@/components/Body';
-import FAIcon from '@/components/FAIcon';
 import FormContainer from '@/components/FormContainer';
 import HelpButton from '@/components/HelpButton';
 import Image from '@/components/Image';
-import Link from '@/components/Link';
+import NextLink from '@/components/NextLink';
 import {useSubmissionContext} from '@/components/SubmissionProvider';
 import useFormContext from '@/hooks/useFormContext';
 import useQueryParams from '@/hooks/useQueryParams';
@@ -87,18 +86,7 @@ const HelpCalloutPage: React.FC = () => {
         </div>
       </div>
 
-      <Link
-        to={nextPageUrl}
-        as="button-link"
-        appearance="primary-action-button"
-        className="openforms-start-link"
-      >
-        <FormattedMessage
-          description="Button text for link to continue from introduction page to start page"
-          defaultMessage="Continue"
-        />
-        <FAIcon icon="arrow-right-long" />
-      </Link>
+      <NextLink url={nextPageUrl} />
     </FormContainer>
   );
 };
