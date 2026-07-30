@@ -1,0 +1,41 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+import * as HelpCalloutPage from './HelpCalloutPage.stories.ts';
+
+<Meta of={HelpCalloutPage} name="Docs & Design tokens" />
+
+# Help callout page
+
+The help callout page is an optional step in a form that can be shown before or after the start
+page. It can be used as an explanation of the step help dialog.
+
+## Available design tokens
+
+There are a number of design tokens available to customize the appearance of this page.
+
+A complete example is shown below:
+
+```json
+{
+  "of": {
+    "help-callout-page": {
+      "dialog": {
+        "triangle-size": {"value": "35px"},
+        "margin-top": {"value":  "1em"},
+        "margin-bottom": {"value": "2em"},
+        "padding": {"value":  "3em"},
+        "column-gap": {"value":  "3em"}
+      },
+      "mobile": {
+        "dialog": {
+          "padding": {"value": "2em"},
+          "row-gap": {"value": "2em"}
+        }
+      },
+      "image": {
+        "max-inline-size": {"value": "350px"}
+      }
+    }
+  }
+}
+```
