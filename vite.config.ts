@@ -164,7 +164,7 @@ export default defineConfig(({mode}) => {
           charset: false,
           quietDeps: true,
           api: 'modern',
-          silenceDeprecations: ['import', 'mixed-decls'],
+          silenceDeprecations: ['import'],
         },
       },
     },
