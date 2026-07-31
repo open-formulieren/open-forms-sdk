@@ -1,0 +1,53 @@
+@use 'microscope-sass/lib/bem';
+
+// @import instead of @use because breakpoints are defined globally
+@import 'microscope-sass/lib/responsive';
+
+.openforms-form-help-button {
+  --utrecht-button-background-color: var(--of-form-help-button-background-color, #d3e3ec);
+  --utrecht-button-font-size: var(--of-form-help-button-font-size, 1rem);
+  --utrecht-button-border-color: var(--of-form-help-button-border-color, transparent);
+  --utrecht-button-border-radius: var(--of-form-help-button-border-radius, 10px);
+  --utrecht-button-border-width: var(--of-form-help-button-border-width, 0);
+  --utrecht-button-column-gap: var(--of-form-help-button-column-gap, 4px);
+  --utrecht-button-padding-block-end: var(--of-form-help-button-padding-block-end, 4px);
+  --utrecht-button-padding-block-start: var(--of-form-help-button-padding-block-start, 4px);
+  --utrecht-button-padding-inline-end: var(--of-form-help-button-padding-inline-end, 8px);
+  --utrecht-button-padding-inline-start: var(--of-form-help-button-padding-inline-start, 8px);
+
+  margin-inline-start: auto;
+
+  // Render the disabled state closely to the normal state, but allow themes to
+  // customize this if necessary
+  &.utrecht-button.utrecht-button--disabled {
+    --utrecht-button-disabled-background-color: var(
+      --of-form-help-button-disabled-background-color,
+      var(--of-form-help-button-background-color)
+    );
+    --utrecht-button-disabled-border-color: var(
+      --of-form-help-button-disabled-border-color,
+      var(--of-form-help-button-border-color)
+    );
+    --utrecht-button-disabled-color: var(
+      --of-form-help-button-disabled-color,
+      var(--of-form-help-button-color)
+    );
+    --utrecht-action-disabled-cursor: var(--of-form-help-button-disabled-cursor, help);
+  }
+
+  @include bem.element('icon') {
+    font-size: var(--of-form-help-button-icon-font-size, 0.5em);
+    position: relative;
+    inset-block-start: var(--of-form-help-button-icon-inset-block-start, -2px);
+
+    .fa-message {
+      font-size: var(--of-form-help-button-icon-message-font-size, 2.5em);
+    }
+
+    .fa-question {
+      position: relative;
+      font-size: var(--of-form-help-button-icon-question-font-size, 1.1em);
+      inset-block-start: var(--of-form-help-button-icon-question-inset-block-start, 0);
+    }
+  }
+}
