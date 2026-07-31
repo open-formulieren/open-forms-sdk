@@ -1,4 +1,4 @@
-@use 'microscope-sass/lib/bem';
+@use '@bbt/bem';
 
 .openforms-summary-progress {
   padding-block-start: var(--of-summary-progress-padding-block-start, 0px);

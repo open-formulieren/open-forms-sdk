@@ -7,7 +7,7 @@
  * TODO: there are probably some gains in implementing/overriding :visited, :hover and/or
  * :active states for some variants.
  */
-@use 'microscope-sass/lib/bem';
+@use '@bbt/bem';
 // FIXME: this should be removable, but the styles are distributed via the formio-render
 // and removing this line breaks the @extend below.
 @use '@utrecht/link-css'; // emits the .utrecht-link {...} styles

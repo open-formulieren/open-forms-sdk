@@ -1,7 +1,7 @@
 /**
 * Temporary workaround until we refactor more to NL Design System components.
 */
-@use 'microscope-sass/lib/bem';
+@use '@bbt/bem';
 
 .openforms-privacy-checkbox {
   display: flex;
