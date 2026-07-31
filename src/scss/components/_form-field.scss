@@ -1,4 +1,4 @@
-@use 'microscope-sass/lib/bem';
+@use '@bbt/bem';
 
 // Needs to be repeated so that it's output *after* the utrecht-paragraph styles. The
 // previously included stylesheets have competing rules in .utrecht-paragraph and
