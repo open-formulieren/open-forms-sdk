@@ -1,9 +1,10 @@
 import {useIntl} from 'react-intl';
 import {Navigate} from 'react-router';
 
-import Body from '@/components/Body';
 import FormContainer from '@/components/FormContainer';
-import HelpButton from '@/components/HelpButton';
+import {FormHelpButton} from '@/components/FormHelpButton';
+import {FormHelpContent} from '@/components/FormHelpContent';
+import FormStepTopNav from '@/components/FormStep/FormStepTopNav';
 import Image from '@/components/Image';
 import NextLink from '@/components/NextLink';
 import {useSubmissionContext} from '@/components/SubmissionProvider';
@@ -34,9 +35,9 @@ const HelpCalloutPage: React.FC = () => {
   return (
     <FormContainer>
       <div>
-        <div className="openforms-help-callout-page-button-container">
-          <HelpButton />
-        </div>
+        <FormStepTopNav>
+          <FormHelpButton disabled />
+        </FormStepTopNav>
 
         <div className="openforms-help-callout-page-dialog">
           <div className="openforms-help-callout-page-dialog__triangle"></div>
@@ -53,11 +54,7 @@ const HelpCalloutPage: React.FC = () => {
               />
             )}
 
-            <Body
-              modifiers={['wysiwyg']}
-              component="div"
-              dangerouslySetInnerHTML={{__html: helpCalloutPage.content}}
-            />
+            <FormHelpContent content={helpCalloutPage.content} />
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ $dialog-background-color: var(--of-help-callout-page-dialog-color, var(--of-colo
     border-bottom: $triangle-size solid $dialog-background-color;
     position: relative;
     margin-left: auto;
-    margin-right: var(--of-help-callout-page-dialog-triangle-margin-right, 25px);
+    margin-right: var(--of-help-callout-page-dialog-triangle-margin-right, 35px);
   }
 
   @include bem.element('container') {
@@ -44,10 +44,4 @@ $dialog-background-color: var(--of-help-callout-page-dialog-color, var(--of-colo
       flex-shrink: 1;
     }
   }
-}
-
-.openforms-help-callout-page-button-container {
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: row;
 }

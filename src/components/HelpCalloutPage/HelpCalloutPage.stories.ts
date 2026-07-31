@@ -1,5 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
+import {expect} from 'storybook/test';
 
 import {buildForm} from '@/api-mocks';
 import {withForm, withNuqs} from '@/sb-decorators';
@@ -18,6 +19,8 @@ const DEFAULT_CONTENT = `
       <li>Bar</li>
     </ul>
   </p>
+
+  <dialog>En een illegaal element</dialog>
 `;
 
 export default {
@@ -41,6 +44,9 @@ type Story = StoryObj<typeof HelpCalloutPage>;
 
 export const Default: Story = {
   name: 'HelpCalloutPage',
+  play: async ({canvas}) => {
+    expect(canvas.getByRole('button', {name: 'Hulp'})).toHaveAttribute('aria-disabled');
+  },
 };
 
 export const WithoutImage: Story = {
