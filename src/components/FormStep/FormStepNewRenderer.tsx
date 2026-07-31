@@ -21,6 +21,7 @@ import useTitle from '@/hooks/useTitle';
 
 import AddressAutoFillObservers from './AddressAutoFillObservers';
 import FormStepNavigation from './FormStepNavigation';
+import FormStepTopNav from './FormStepTopNav';
 import Progress from './Progress';
 import {
   useCheckBackendStepLogic,
@@ -166,7 +167,10 @@ const FormStepNewRenderer: React.FC = () => {
   return (
     <LiteralsProvider literals={formStep.literals}>
       <FormContainer mobileHeaderHidden>
-        <PreviousLink to={previousTo} position="start" />
+        <FormStepTopNav>
+          <PreviousLink to={previousTo} position="start" />
+        </FormStepTopNav>
+
         <Progress form={form} submission={submission} currentStep={sparseStep} />
         <CardTitle title={sparseStep.name} headingType="subtitle" padded />
 
