@@ -1,0 +1,22 @@
+.openforms-step-topnav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  // NOTE: usually block elements should not define margins, but this is done deliberately
+  // See https://github.com/open-formulieren/open-forms-sdk/pull/718#discussion_r1791617060 for
+  // more discussion context.
+  margin-block-end: var(--of-openforms-step-topnav-margin-block-end, 20px);
+
+  // with the above margin remark in mind, we must control whether the top nav is
+  // displayed or not to prevent margins from pushing down content while there's no
+  // previous link visible and no help dialog icon. So, tie the visibility of this
+  // element to the visibility of the previous link *and* the presence of the button.
+  // We use the inverted variant here, in case users are on a browser that doesn't
+  // support :has yet - the content will then be visible but margins will be too much -
+  // which is a better option than not being able to access the help function.
+  &:not(:has(.openforms-form-help-button)) {
+    display: var(--of-previous-link-display-start, none);
+  }
+}
