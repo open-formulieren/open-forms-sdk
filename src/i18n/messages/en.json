@@ -804,6 +804,11 @@
     "description": "ZOD 'too_big' error message, for BigInt",
     "originalDefault": "BigInt must be {exact, select, true {exactly equal to} other {{inclusive, select, true {less than or equal to} other {less than}}} } {maximum}."
   },
+  "ov99qz": {
+    "defaultMessage": "Help",
+    "description": "Help dialog button label text",
+    "originalDefault": "Help"
+  },
   "pMkaJD": {
     "defaultMessage": "{field} must be a valid email address, like 'willem@example.com'.",
     "description": "Invalid email validation error",

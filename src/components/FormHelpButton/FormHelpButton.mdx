@@ -1,0 +1,50 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+import * as FormHelpButton from './FormHelpButton.stories';
+
+<Meta of={FormHelpButton} name="Design tokens" />
+
+# Form help button
+
+The form help button can be interactive on a form step page to trigger the help dialog, or it can be
+disabled when its functionality is being described.
+
+## Available design tokens
+
+There are a number of design tokens available to customize the appearance of the help button. For
+example:
+
+```json
+{
+  "of": {
+    // the help trigger button - other tokens are inherited from utrecht-button
+    "form-help-button": {
+      "background-color": {"value": "#d3e3ec"},
+      "font-size": {"value": "1rem"},
+      "border-color": {"value": "transparent"},
+      "border-radius": {"value": "10px"},
+      "border-width": {"value": "0"},
+      "column-gap": {"value": "4px"},
+      "padding-block-end": {"value": "4px"},
+      "padding-block-start": {"value": "4px"},
+      "padding-inline-end": {"value": "8px"},
+      "padding-inline-start": {"value": "8px"},
+      // styling specific to the icon(s) inside the button
+      "icon": {
+        // shrink icons because of the stacking styling making them bigger
+        "font-size": {"value": "0.5em"},
+        "inset-block-start": {"value": "-2px"}, // vertical alignment
+        // the speech bubble icon specifically
+        "message": {
+          "font-size": {"value": "2.5em"}
+        },
+        // the question mark icon inside the speech bubble
+        "question": {
+          "font-size": {"value": "1.1em"},
+          "inset-block-start": {"value": "0"} // vertical alignment
+        }
+      }
+    }
+  }
+}
+```
