@@ -1,3 +1,3 @@
 .openforms-image {
-  max-inline-size: 350px;
+  max-inline-size: var(--of-image-max-inline-size, 350px);
 }
