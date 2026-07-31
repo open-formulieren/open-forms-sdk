@@ -33,14 +33,15 @@ export interface FAIconProps {
 // not all icons need to be seen by assistive technologies.
 const FAIcon: React.FC<FAIconProps & React.ComponentProps<'i'>> = ({
   icon,
-  className: extraClassName,
+  className: extraClassName = '',
   inline,
   small,
   normal,
   noAriaHidden,
   ...props
 }) => {
-  const className = clsx('fa', 'fas', 'fa-icon', extraClassName, {
+  const className = clsx('fa', 'fa-icon', extraClassName, {
+    fas: !extraClassName.includes('fa-regular'),
     [`fa-${icon}`]: icon,
     'fa-icon--inline': inline,
     'fa-icon--small': small,
