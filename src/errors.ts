@@ -6,7 +6,9 @@ class ExtendableError extends Error {
   public constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
-    if (typeof Error.captureStackTrace === 'function') {
+    // Works in the browser, but NodeJS types trip over this when extracting library
+    // types with vite-plugin-dts
+    if ('captureStackTrace' in Error && typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(this, this.constructor);
     } else {
       this.stack = new Error(message).stack;
