@@ -1,0 +1,57 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+import * as FormStepHelpDialog from './FormStepHelpDialog.stories';
+
+<Meta of={FormStepHelpDialog} name="Docs & Design tokens" />
+
+# Form step help dialog
+
+The form step help dialog is an interactive help function for the end-user when they get stuck
+filling out a form. It is available on form steps that require form fields to be filled out (so not
+on the start page, overview/summary...).
+
+The content is configured on an individual form basis. When the (rich text) content is set up, a
+button will be displayed in the top right. Clicking this button will open the bottom sheet / dialog
+to display the content.
+
+## Available design tokens
+
+There are a number of design tokens available to customize the appearance of the bottom sheet /
+dialog. You may also be interested in the `FormHelpButton` component design tokens.
+
+```json
+{
+  "of": {
+    // the (content) of the dialog/bottom sheet itself
+    "step-help-dialog": {
+      "row-gap": {"value": "20px"}, // spacing between content and image
+      "image": {
+        "align-self": {"value": "start"},
+        // for images wider than the viewport, you want to limit this to prevent
+        // scrollbars
+        "max-inline-size": {"value": "100%"}
+      }
+    }
+  }
+}
+```
+
+## Suggested CSS overrides
+
+Not everything can be done in design tokens, most notably responsive overrides typically require
+some additional CSS to be added to your theme. For example:
+
+```css
+@media (max-width: 767px) {
+  .my-theme {
+    --of-modal-sheet-inline-size: 100dvw;
+    --of-step-help-dialog-image-align-self: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .my-theme {
+    --of-modal-sheet-inline-size: 50dvw;
+  }
+}
+```

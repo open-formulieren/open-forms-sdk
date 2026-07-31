@@ -1,0 +1,15 @@
+@use '@bbt/bem';
+
+// @import instead of @use because breakpoints are defined globally
+@import 'microscope-sass/lib/responsive';
+
+.openforms-step-help-dialog {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--of-step-help-dialog-row-gap, 20px);
+
+  @include bem.element('image') {
+    --of-image-max-inline-size: var(--of-step-help-dialog-image-max-inline-size, 100%);
+    align-self: var(--of-step-help-dialog-image-align-self, start);
+  }
+}
