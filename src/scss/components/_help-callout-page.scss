@@ -15,9 +15,8 @@ $dialog-background-color: var(--of-help-callout-page-dialog-color, var(--of-colo
     border-top: 0;
     border-bottom: $triangle-size solid $dialog-background-color;
     position: relative;
-    // Ensures the right side of the triangle is defined as the "0" point, which means we can
-    // control the location of the right side with the `left` property.
-    transform: translateX(-100%);
+    margin-left: auto;
+    margin-right: var(--of-help-callout-page-dialog-triangle-margin-right, 25px);
   }
 
   @include bem.element('container') {

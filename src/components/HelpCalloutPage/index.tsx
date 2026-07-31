@@ -1,4 +1,3 @@
-import {useLayoutEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {Navigate} from 'react-router';
 
@@ -16,26 +15,6 @@ const HelpCalloutPage: React.FC = () => {
   const {submission} = useSubmissionContext();
   const {preserveQueryParams} = useQueryParams();
   const intl = useIntl();
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
-
-  const [triangleOffset, setTriangleOffset] = useState<number>(0);
-
-  useLayoutEffect(() => {
-    if (!buttonRef.current || !buttonRef.current.parentElement) return;
-
-    const updateTriangleOffset = () => {
-      const buttonBox = buttonRef.current!.getBoundingClientRect();
-      const parentBox = buttonRef.current!.parentElement!.getBoundingClientRect();
-      // Calculate relative horizontal position of the button center.
-      setTriangleOffset(buttonBox.left - parentBox.left + buttonBox.width / 2);
-    };
-
-    updateTriangleOffset();
-
-    // Subscribe to resize event, to make sure we always have an accurate position of the button.
-    window.addEventListener('resize', updateTriangleOffset);
-    return () => window.removeEventListener('resize', updateTriangleOffset);
-  }, [buttonRef, setTriangleOffset]);
 
   if (!helpCalloutPage.content || helpCalloutPage.display === 'never')
     // In case a user tries to navigate to this page manually when it shouldn't be visible, just
@@ -56,14 +35,11 @@ const HelpCalloutPage: React.FC = () => {
     <FormContainer>
       <div>
         <div className="openforms-help-callout-page-button-container">
-          <HelpButton ref={buttonRef} />
+          <HelpButton />
         </div>
 
         <div className="openforms-help-callout-page-dialog">
-          <div
-            className="openforms-help-callout-page-dialog__triangle"
-            style={{left: triangleOffset}}
-          ></div>
+          <div className="openforms-help-callout-page-dialog__triangle"></div>
           <div className="openforms-help-callout-page-dialog__container">
             {helpCalloutPage.image && (
               <Image
