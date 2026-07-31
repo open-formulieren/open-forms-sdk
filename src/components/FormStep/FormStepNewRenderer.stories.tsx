@@ -111,6 +111,10 @@ export default {
             url: `${BASE_URL}forms/mock/steps/98980oi8-e5a4-4abf-b64a-76j3j3ki897`,
           },
         ],
+        helpDialog: {
+          content: '',
+          image: 'https://example.com/ignore-me.png',
+        },
       }),
     },
     submissionContext: {
@@ -688,5 +692,72 @@ export const LocationDerivationInRepeatingGroup: Story = {
     await userEvent.tab();
 
     await userEvent.click(await canvas.findByRole('button', {name: 'Opslaan'}));
+  },
+};
+
+export const HelpDialogEnabled: Story = {
+  parameters: {
+    formContext: {
+      form: buildForm({
+        helpDialog: {
+          content: `
+            <p>
+              A paragraph, content will already be escaped (like &gt;).
+              It can contain <a href="#" target="_blank">links</a>.
+            </p>
+            <p>
+              It <strong>supports</strong> some <b>markup</b>, <em>like</em>
+              text that's <i>italic</i>.
+            </p>
+            <ul>
+              <li>And bullets</li>
+            </ul>
+            <ol>
+              <li>but also</li>
+              <li>ordered lists</li>
+            </ol>
+          `,
+          image: '',
+        },
+      }),
+    },
+  },
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const helpButton = canvas.getByRole('button', {name: 'Hulp'});
+    expect(helpButton).toBeVisible();
+
+    await userEvent.click(helpButton);
+
+    expect(await canvas.findByText(/A paragraph, content will already be escaped/)).toBeVisible();
+  },
+};
+
+export const HelpDialogEnabledWithImage: Story = {
+  parameters: {
+    formContext: {
+      form: buildForm({
+        helpDialog: {
+          content: `
+            <p>
+              A paragraph, content will already be escaped (like &gt;).
+              It can contain <a href="#" target="_blank">links</a>.
+            </p>
+          `,
+          image: './eidas.png',
+        },
+      }),
+    },
+  },
+
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const helpButton = canvas.getByRole('button', {name: 'Hulp'});
+    expect(helpButton).toBeVisible();
+
+    await userEvent.click(helpButton);
   },
 };

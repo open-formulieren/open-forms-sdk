@@ -20,6 +20,7 @@ import useFormContext from '@/hooks/useFormContext';
 import useTitle from '@/hooks/useTitle';
 
 import AddressAutoFillObservers from './AddressAutoFillObservers';
+import FormStepHelpDialog from './FormStepHelpDialog';
 import FormStepNavigation from './FormStepNavigation';
 import FormStepTopNav from './FormStepTopNav';
 import Progress from './Progress';
@@ -169,6 +170,12 @@ const FormStepNewRenderer: React.FC = () => {
       <FormContainer mobileHeaderHidden>
         <FormStepTopNav>
           <PreviousLink to={previousTo} position="start" />
+          {form.helpDialog?.content && (
+            <FormStepHelpDialog
+              content={form.helpDialog.content}
+              image={form.helpDialog.image ?? ''}
+            />
+          )}
         </FormStepTopNav>
 
         <Progress form={form} submission={submission} currentStep={sparseStep} />
