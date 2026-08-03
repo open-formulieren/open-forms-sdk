@@ -96,6 +96,8 @@ test('After start page', async () => {
   const screen = await render(<Wrap form={form} />);
   const continueButton = screen.getByRole('link', {name: 'Continue'});
   await expect.element(continueButton).toHaveAttribute('href', `/stap/${form.steps[0].slug}`);
+  const previousButton = screen.getByRole('link', {name: 'Previous'});
+  await expect.element(previousButton).toHaveAttribute('href', '/startpagina');
 });
 
 test('No content configured', async () => {

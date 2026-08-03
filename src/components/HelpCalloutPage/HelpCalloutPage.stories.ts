@@ -1,9 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
-import {expect} from 'storybook/test';
+import {expect, within} from 'storybook/test';
 
 import {buildForm} from '@/api-mocks';
-import {withForm, withNuqs} from '@/sb-decorators';
+import {withForm, withNuqs, withSubmission} from '@/sb-decorators';
 
 import HelpCalloutPage from './index';
 
@@ -43,13 +43,13 @@ export default {
 type Story = StoryObj<typeof HelpCalloutPage>;
 
 export const Default: Story = {
-  name: 'HelpCalloutPage',
+  name: 'Before start page',
   play: async ({canvas}) => {
     expect(canvas.getByRole('button', {name: 'Hulp'})).toHaveAttribute('aria-disabled');
   },
 };
 
-export const WithoutImage: Story = {
+export const BeforeStartPageWithoutImage: Story = {
   parameters: {
     formContext: {
       form: buildForm({
@@ -60,5 +60,25 @@ export const WithoutImage: Story = {
         },
       }),
     },
+  },
+};
+
+export const AfterStartPage: Story = {
+  decorators: [withSubmission],
+  parameters: {
+    formContext: {
+      form: buildForm({
+        helpCalloutPage: {
+          display: 'after_start_page',
+          content: DEFAULT_CONTENT,
+          image: null,
+        },
+      }),
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.getByRole('link', {name: 'Previous'})).toBeVisible();
   },
 };

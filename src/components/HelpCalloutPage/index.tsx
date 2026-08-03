@@ -1,3 +1,4 @@
+import {ButtonGroup} from '@utrecht/button-group-react';
 import {useIntl} from 'react-intl';
 import {Navigate} from 'react-router';
 
@@ -7,6 +8,7 @@ import {FormHelpContent} from '@/components/FormHelpContent';
 import FormStepTopNav from '@/components/FormStep/FormStepTopNav';
 import Image from '@/components/Image';
 import NextLink from '@/components/NextLink';
+import PreviousLink from '@/components/PreviousLink';
 import {useSubmissionContext} from '@/components/SubmissionProvider';
 import useFormContext from '@/hooks/useFormContext';
 import useQueryParams from '@/hooks/useQueryParams';
@@ -23,6 +25,8 @@ const HelpCalloutPage: React.FC = () => {
     return <Navigate replace to={preserveQueryParams('startpagina')} />;
 
   let nextPageUrl: string;
+  let previousPageUrl: string | undefined = undefined;
+  let previousLinkText: string | undefined = undefined;
   if (helpCalloutPage.display === 'before_start_page')
     nextPageUrl = preserveQueryParams('startpagina');
   else {
@@ -30,12 +34,20 @@ const HelpCalloutPage: React.FC = () => {
     if (!submission) throw new Error('Submission should already have been created');
     // No need to preserve query parameters, because the submission was already created.
     nextPageUrl = `/stap/${steps[0].slug}`;
+    previousPageUrl = '/startpagina';
+    previousLinkText = intl.formatMessage({
+      description: 'Help callout page previous link text',
+      defaultMessage: 'Previous',
+    });
   }
 
   return (
     <FormContainer>
       <div>
         <FormStepTopNav>
+          {previousPageUrl !== undefined && (
+            <PreviousLink to={previousPageUrl!} linkText={previousLinkText} position="start" />
+          )}
           <FormHelpButton disabled />
         </FormStepTopNav>
 
@@ -59,7 +71,12 @@ const HelpCalloutPage: React.FC = () => {
         </div>
       </div>
 
-      <NextLink url={nextPageUrl} />
+      <ButtonGroup className="openforms-form-navigation" direction="column">
+        <NextLink url={nextPageUrl} />
+        {previousPageUrl !== undefined && (
+          <PreviousLink to={previousPageUrl!} linkText={previousLinkText} />
+        )}
+      </ButtonGroup>
     </FormContainer>
   );
 };
