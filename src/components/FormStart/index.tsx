@@ -56,6 +56,11 @@ const FormStart: React.FC = () => {
 
   useTitle(form.name);
 
+  const nextPageUrl: string =
+    form.helpCalloutPage.content && form.helpCalloutPage.display === 'after_start_page'
+      ? '/hulp'
+      : `/stap/${form.steps[0].slug}`;
+
   /**
    * Callback invoked when a form submission must be started.
    *
@@ -82,11 +87,19 @@ const FormStart: React.FC = () => {
       );
 
       onSubmissionObtained(newSubmission);
-
-      const firstStepRoute = `/stap/${form.steps[0].slug}`;
-      navigate(firstStepRoute);
+      // No need to preserve query parameters, because the submission was already created.
+      navigate(nextPageUrl);
     },
-    [submission, baseUrl, form, clientBaseUrl, initialDataReference, onSubmissionObtained, navigate]
+    [
+      submission,
+      baseUrl,
+      form,
+      clientBaseUrl,
+      initialDataReference,
+      onSubmissionObtained,
+      navigate,
+      nextPageUrl,
+    ]
   );
 
   const {error} = useAsync(async () => {
@@ -164,7 +177,7 @@ const FormStart: React.FC = () => {
 
         {hasActiveSubmission && (
           <ExistingSubmissionOptions
-            form={form}
+            nextPageUrl={nextPageUrl}
             onDestroySession={onDestroySession}
             isAuthenticated={isAuthenticated}
           />

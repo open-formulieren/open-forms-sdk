@@ -6,13 +6,15 @@ import {Document} from '@utrecht/component-library-react';
 import {Formik} from 'formik';
 import {NuqsTestingAdapter} from 'nuqs/adapters/testing';
 import React from 'react';
+import {fn} from 'storybook/test';
 
 import {ConfigContext, FormContext} from '@/Context';
 import type {ConfigContextType} from '@/Context';
-import {BASE_URL, buildForm} from '@/api-mocks';
+import {BASE_URL, buildForm, buildSubmission} from '@/api-mocks';
 import Card from '@/components/Card';
 import {LiteralsProvider} from '@/components/Literal';
 import {SubmissionStatusContext} from '@/components/PostCompletionViews';
+import SubmissionProvider from '@/components/SubmissionProvider';
 import {AnalyticsToolsConfigContext} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {AnalyticsToolsConfig} from '@/components/analytics/AnalyticsToolConfigProvider';
 import type {Form} from '@/data/forms';
@@ -249,5 +251,23 @@ export const withNuqs: Decorator = (Story, context) => {
     <NuqsTestingAdapter searchParams={searchParams}>
       <Story />
     </NuqsTestingAdapter>
+  );
+};
+
+/**
+ * Wrap the Story in a submission context.
+ *
+ * Behaviour can be customized through story `parameters.submissionContext`.
+ */
+export const withSubmission: Decorator = (Story, context) => {
+  return (
+    <SubmissionProvider
+      submission={context.parameters?.submissionContext?.submission || buildSubmission()}
+      onSubmissionObtained={context.parameters?.submissionContext?.onSubmissionObtained || fn()}
+      onDestroySession={context.parameters?.submissionContext?.onDestroySession || fn()}
+      removeSubmissionId={context.parameters?.submissionContext?.removeSubmissionId || fn()}
+    >
+      <Story />
+    </SubmissionProvider>
   );
 };

@@ -4,6 +4,7 @@ import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import FormLandingPage from '@/components/FormLandingPage';
 import FormStart from '@/components/FormStart';
 import FormStepNewRenderer from '@/components/FormStep/FormStepNewRenderer';
+import HelpCalloutPage from '@/components/HelpCalloutPage';
 import IntroductionPage from '@/components/IntroductionPage';
 import {ConfirmationView, StartPaymentView} from '@/components/PostCompletionViews';
 import RequireSubmission from '@/components/RequireSubmission';
@@ -26,6 +27,10 @@ const routes: RouteObject[] = [
         <FormStart />
       </ErrorBoundary>
     ),
+  },
+  {
+    path: 'hulp',
+    element: <HelpCalloutPage />,
   },
   {
     path: 'stap/:step',

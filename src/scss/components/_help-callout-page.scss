@@ -1,0 +1,40 @@
+@use '@bbt/bem';
+
+$triangle-size: var(--of-help-callout-page-dialog-triangle-size, 35px);
+$dialog-background-color: var(--of-help-callout-page-dialog-color, #d3e3ec);
+
+.openforms-help-callout-page-dialog {
+  margin-block-start: var(--of-help-callout-page-dialog-margin-block-start, 1em);
+  margin-block-end: var(--of-help-callout-page-dialog-margin-block-end, 1em);
+
+  @include bem.element('triangle') {
+    width: 0;
+    height: 0;
+    border-block-end: $triangle-size solid $dialog-background-color;
+    border-block-start: 0;
+    border-inline-end: 0;
+    border-inline-start: $triangle-size solid transparent;
+    position: relative;
+    margin-inline-start: auto;
+    margin-inline-end: var(--of-help-callout-page-dialog-triangle-inline-offset, 35px);
+  }
+
+  @include bem.element('container') {
+    background: $dialog-background-color;
+    padding-block-end: var(--of-help-callout-page-dialog-padding-block-end, 3em);
+    padding-block-start: var(--of-help-callout-page-dialog-padding-block-start, 3em);
+    padding-inline-end: var(--of-help-callout-page-dialog-padding-inline-end, 3em);
+    padding-inline-start: var(--of-help-callout-page-dialog-padding-inline-start, 3em);
+    display: flex;
+    flex-direction: var(--of-help-callout-page-dialog-flex-direction, row);
+    align-items: center;
+    column-gap: var(--of-help-callout-page-dialog-column-gap, 3em);
+    row-gap: var(--of-help-callout-page-dialog-row-gap, 2em);
+    justify-content: flex-start;
+    align-content: space-between;
+  }
+
+  @include bem.element('image') {
+    --of-image-max-inline-size: var(--of-help-callout-page-dialog-image-max-inline-size, 100%);
+  }
+}

@@ -297,6 +297,11 @@
     "description": "Appointments location and time step: previous step text",
     "originalDefault": "Back to products"
   },
+  "GkSqGH": {
+    "defaultMessage": "Help callout page image",
+    "description": "Help callout page image alt text",
+    "originalDefault": "Help callout page image"
+  },
   "GnxsaY": {
     "defaultMessage": "Het getal moet een veelvoud zijn van {multipleOf}.",
     "description": "ZOD 'not_multiple_of' error message",
@@ -569,6 +574,11 @@
     "description": "DigiD/EHerkenning cancellation message. MUST BE THIS EXACT STRING!",
     "isTranslated": true,
     "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
+  },
+  "Zr/t0x": {
+    "defaultMessage": "Previous",
+    "description": "Help callout page previous link text",
+    "originalDefault": "Previous"
   },
   "a8QRYP": {
     "defaultMessage": "Je e-mailadres",

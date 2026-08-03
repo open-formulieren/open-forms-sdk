@@ -1,21 +1,24 @@
 import {useContext} from 'react';
-import {FormattedMessage} from 'react-intl';
 import {Navigate} from 'react-router';
 
 import {FormContext} from '@/Context';
 import Body from '@/components/Body';
-import FAIcon from '@/components/FAIcon';
 import FormContainer from '@/components/FormContainer';
-import Link from '@/components/Link';
+import NextLink from '@/components/NextLink';
 import useQueryParams from '@/hooks/useQueryParams';
 
 const IntroductionPage: React.FC = () => {
-  const {introductionPageContent = ''} = useContext(FormContext);
+  const {introductionPageContent = '', helpCalloutPage} = useContext(FormContext);
   const {preserveQueryParams} = useQueryParams();
 
-  const startPageUrl = preserveQueryParams('startpagina');
+  const nextPageUrl: string = preserveQueryParams(
+    helpCalloutPage.content && helpCalloutPage.display === 'before_start_page'
+      ? 'hulp'
+      : 'startpagina'
+  );
+
   if (!introductionPageContent) {
-    return <Navigate replace to={startPageUrl} />;
+    return <Navigate replace to={nextPageUrl} />;
   }
 
   return (
@@ -25,19 +28,7 @@ const IntroductionPage: React.FC = () => {
         component="div"
         dangerouslySetInnerHTML={{__html: introductionPageContent}}
       />
-
-      <Link
-        to={startPageUrl}
-        as="button-link"
-        appearance="primary-action-button"
-        className="openforms-start-link"
-      >
-        <FormattedMessage
-          description="Button text for link to continue from introduction page to start page"
-          defaultMessage="Continue"
-        />
-        <FAIcon icon="arrow-right-long" />
-      </Link>
+      <NextLink url={nextPageUrl} />
     </FormContainer>
   );
 };

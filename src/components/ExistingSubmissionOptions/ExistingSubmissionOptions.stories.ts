@@ -2,20 +2,12 @@ import type {Meta, StoryObj} from '@storybook/react-vite';
 import {withRouter} from 'storybook-addon-remix-react-router';
 import {expect, within} from 'storybook/test';
 
-import {buildForm} from '@/api-mocks';
-
 import ExistingSubmissionOptions from './ExistingSubmissionOptions';
 
 export default {
   title: 'Private API / Existing Submission Options',
   component: ExistingSubmissionOptions,
   decorators: [withRouter],
-  args: {
-    form: buildForm(),
-  },
-  argTypes: {
-    form: {control: false},
-  },
 } satisfies Meta<typeof ExistingSubmissionOptions>;
 
 type Story = StoryObj<typeof ExistingSubmissionOptions>;
