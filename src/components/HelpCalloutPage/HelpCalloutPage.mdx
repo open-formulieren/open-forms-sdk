@@ -20,25 +20,47 @@ A complete example is shown below:
   "of": {
     "help-callout-page": {
       "dialog": {
+        "margin-block-end": {"value": "1em"},
+        "margin-block-start": {"value": "1em"},
+        "padding-block-end": {"value": "3em"},
+        "padding-block-start": {"value": "3em"},
+        "padding-inline-end": {"value": "3em"},
+        "padding-inline-start": {"value": "3em"},
+        "column-gap": {"value": "3em"},
+        "row-gap": {"value": "2em"},
+        "flex-direction": {"value": "row"},
         "triangle": {
           "size": {"value": "35px"},
-          "margin-right": {"value": "35px"}
+          "inline-offset": {"value": "35px"}
         },
-        "margin-top": {"value": "1em"},
-        "margin-bottom": {"value": "2em"},
-        "padding": {"value": "3em"},
-        "column-gap": {"value": "3em"}
-      },
-      "mobile": {
-        "dialog": {
-          "padding": {"value": "2em"},
-          "row-gap": {"value": "2em"}
+        "image": {
+          "max-inline-size": {"value": "100%"}
         }
-      },
-      "image": {
-        "max-inline-size": {"value": "350px"}
       }
     }
+  }
+}
+```
+
+## Suggested CSS overrides
+
+Not everything can be done in design tokens, most notably responsive overrides typically require
+some additional CSS to be added to your theme. For example:
+
+```css
+@media (max-width: 767px) {
+  .my-theme {
+    --of-help-callout-page-dialog-flex-direction: column;
+    --of-help-callout-page-dialog-padding-block-end: 2em;
+    --of-help-callout-page-dialog-padding-block-start: 2em;
+    --of-help-callout-page-dialog-padding-inline-end: 2em;
+    --of-help-callout-page-dialog-padding-inline-start: 2em;
+  }
+}
+
+@media (min-width: 768px) {
+  .my-theme {
+    --of-help-callout-page-dialog-image-max-inline-size: 350px;
   }
 }
 ```
