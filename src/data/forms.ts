@@ -117,7 +117,30 @@ export interface Form {
   communicationPreferencesPortalUrl: string;
   helpCalloutPage: {
     display: 'before_start_page' | 'after_start_page' | 'never';
+    /**
+     * Rich text describing where to find help instructions.
+     *
+     * @note Only paragraphs, anchors, lists, bold and italic formatting are allowed.
+     */
     content: string;
     image: string | null;
+  };
+  /**
+   * Help dialog configuration.
+   *
+   * When the nested content field is not empty, the SDK should render help controls to
+   * assist the user filling out the form.
+   */
+  helpDialog?: {
+    /**
+     * Rich text describing help instructions for the end-user.
+     *
+     * @note Only paragraphs, anchors, lists, bold and italic formatting are allowed.
+     */
+    content: string;
+    /**
+     * Image URL to display below the content.
+     */
+    image?: string | null;
   };
 }

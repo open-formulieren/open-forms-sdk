@@ -1,4 +1,4 @@
-@use 'microscope-sass/lib/bem';
+@use '@bbt/bem';
 
 // @import instead of @use because breakpoints are defined globally
 @import 'microscope-sass/lib/responsive';

@@ -363,6 +363,11 @@
     "description": "payment failed status",
     "originalDefault": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
   },
+  "JCDVcG": {
+    "defaultMessage": "Heb je hulp nodig?",
+    "description": "Help dialog title text",
+    "originalDefault": "Do you need help?"
+  },
   "Jrb2Iv": {
     "defaultMessage": "Je e-mailadres",
     "description": "Form save modal email field label",

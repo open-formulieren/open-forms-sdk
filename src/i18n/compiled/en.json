@@ -1549,6 +1549,12 @@
       "value": "The payment has failed. If you aborted the payment, please complete payment from the confirmation email."
     }
   ],
+  "JCDVcG": [
+    {
+      "type": 0,
+      "value": "Do you need help?"
+    }
+  ],
   "Jrb2Iv": [
     {
       "type": 0,
