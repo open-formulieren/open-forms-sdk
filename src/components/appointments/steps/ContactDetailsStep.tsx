@@ -95,7 +95,6 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({navigateTo = ''}
             defaultMessage="Contact details"
           />
         }
-        headingType="subtitle"
         padded
       />
 

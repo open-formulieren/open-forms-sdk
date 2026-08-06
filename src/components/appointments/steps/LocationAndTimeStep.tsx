@@ -111,7 +111,6 @@ const LocationAndTimeStep: React.FC<LocationAndTimeStepProps> = ({navigateTo = '
             defaultMessage="Date and time"
           />
         }
-        headingType="subtitle"
         padded
       />
 

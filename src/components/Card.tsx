@@ -1,10 +1,6 @@
 import {Heading} from '@utrecht/component-library-react';
 import {clsx} from 'clsx';
 
-import {getBEMClassName} from '@/utils';
-
-export type HeadingType = 'title' | 'subtitle';
-
 export interface CardTitleProps {
   title: React.ReactNode;
   /**
@@ -14,36 +10,22 @@ export interface CardTitleProps {
    * itself defaults it to level 1.
    */
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
-  headingType?: HeadingType;
   padded?: boolean;
 }
 
-const CardTitle: React.FC<CardTitleProps> = ({
-  title,
-  headingLevel = 2,
-  headingType = 'title',
-  padded = false,
-}) => {
-  const modifiers = [];
-  if (padded) modifiers.push('padded');
-  return (
-    <header className={getBEMClassName('card__header', modifiers)}>
-      <Heading level={headingLevel} className={getBEMClassName(headingType)}>
-        {title}
-      </Heading>
-    </header>
-  );
-};
+const CardTitle: React.FC<CardTitleProps> = ({title, headingLevel = 2, padded = false}) => (
+  <header className={clsx('openforms-card__header', {'openforms-card__header--padded': padded})}>
+    <Heading level={headingLevel} className="openforms-title">
+      {title}
+    </Heading>
+  </header>
+);
 
 export interface CardProps {
   /**
    * Title of the card, displayed in separate header.
    */
   title?: React.ReactNode;
-  /**
-   * Title heading type, controls appearance.
-   */
-  titleHeadingType?: HeadingType;
   /**
    * The card body content.
    */
@@ -58,7 +40,6 @@ export interface CardProps {
 const Card: React.FC<CardProps & Omit<React.ComponentPropsWithoutRef<'div'>, 'title'>> = ({
   title,
   children,
-  titleHeadingType = 'title',
   mobileHeaderHidden = false,
   variant,
   ...restProps
@@ -74,7 +55,7 @@ const Card: React.FC<CardProps & Omit<React.ComponentPropsWithoutRef<'div'>, 'ti
   return (
     <div className={className} {...restProps}>
       {/* Emit header/title only if there is one */}
-      {title && <CardTitle title={title} headingLevel={1} headingType={titleHeadingType} />}
+      {title && <CardTitle title={title} headingLevel={1} />}
       {title ? <div className="openforms-card__body"> {children} </div> : children}
     </div>
   );

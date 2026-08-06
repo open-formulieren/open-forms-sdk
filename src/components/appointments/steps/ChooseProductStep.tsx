@@ -186,7 +186,6 @@ const ChooseProductStep: React.FC<ChooseProductStepProps> = ({navigateTo = null}
             defaultMessage="Select your product(s)"
           />
         }
-        headingType="subtitle"
         padded
       />
       <Heading3 className="utrecht-heading-3--distanced">
