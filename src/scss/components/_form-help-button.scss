@@ -1,8 +1,5 @@
 @use '@bbt/bem';
 
-// @import instead of @use because breakpoints are defined globally
-@import 'microscope-sass/lib/responsive';
-
 .openforms-form-help-button {
   --utrecht-button-background-color: var(--of-form-help-button-background-color, #d3e3ec);
   --utrecht-button-border-color: var(--of-form-help-button-border-color, transparent);

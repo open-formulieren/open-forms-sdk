@@ -1,7 +1,5 @@
 @use '@bbt/bem';
 
-@import 'microscope-sass/lib/responsive';
-
 @mixin component-type-overrides($component-type) {
   .utrecht-data-list__item-key {
     font-size: var(--of-utrecht-data-list-item-key-#{$component-type}-font-size, 0.875rem);
@@ -70,7 +68,8 @@
       flex-basis: 50%;
     }
 
-    @include laptop {
+    // TODO: phase out these design tokens tied to breakpoints
+    @media screen and (min-width: 992px) {
       @include bem.element('item') {
         display: var(--of-utrecht-data-list-laptop-display, block);
       }
