@@ -1,7 +1,7 @@
 // Open Forms SDK styles
 // TODO: we should see if we can re-use even smaller bits to shed dead weight and
 // reduce the bundle size
-$fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
+$fa-font-path: '../webfonts/' !default; // vite.config.ts overrides this
 @use '@fortawesome/fontawesome-free/scss/fontawesome';
 @use '@fortawesome/fontawesome-free/scss/brands' with (
   $fa-font-path: $fa-font-path
@@ -17,6 +17,7 @@ $fa-font-path: '../webfonts/' !default; // vite.config.mts overrides this
 
 // output the design tokens under the .openforms-theme classname
 @use '@open-formulieren/design-tokens/dist/index';
+@use './scss/theme';
 
 @use './scss/nl-design-system-community.scss';
 
