@@ -1,4 +1,7 @@
 // Styles specific to the openforms-theme
+@use '@open-formulieren/design-tokens/dist/index';
+@use '@open-formulieren/formio-renderer/scss/theme-overrides';
+
 @font-face {
   font-family: 'Fira Sans';
   font-style: normal;

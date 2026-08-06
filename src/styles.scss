@@ -15,8 +15,6 @@ $fa-font-path: '../webfonts/' !default; // vite.config.ts overrides this
 @use 'leaflet/dist/leaflet';
 @use '@open-formulieren/formio-renderer/formio-renderer.css';
 
-// output the design tokens under the .openforms-theme classname
-@use '@open-formulieren/design-tokens/dist/index';
 @use './scss/theme';
 
 @use './scss/nl-design-system-community.scss';
