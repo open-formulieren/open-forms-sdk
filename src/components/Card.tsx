@@ -1,4 +1,5 @@
 import {Heading} from '@utrecht/component-library-react';
+import {clsx} from 'clsx';
 
 import {getBEMClassName} from '@/utils';
 
@@ -51,6 +52,7 @@ export interface CardProps {
    * If enabled, the header is hidden on mobile viewports.
    */
   mobileHeaderHidden?: boolean;
+  variant?: 'spaced-children';
 }
 
 const Card: React.FC<CardProps & Omit<React.ComponentPropsWithoutRef<'div'>, 'title'>> = ({
@@ -58,17 +60,22 @@ const Card: React.FC<CardProps & Omit<React.ComponentPropsWithoutRef<'div'>, 'ti
   children,
   titleHeadingType = 'title',
   mobileHeaderHidden = false,
+  variant,
   ...restProps
 }) => {
   const modifiers = [];
   if (mobileHeaderHidden) modifiers.push('mobile-header-hidden');
 
-  const className = getBEMClassName('card', modifiers);
+  const className = clsx(
+    'openforms-card',
+    modifiers.map(mod => `openforms-card--${mod}`),
+    variant && `openforms-card--${variant}`
+  );
   return (
     <div className={className} {...restProps}>
       {/* Emit header/title only if there is one */}
       {title && <CardTitle title={title} headingLevel={1} headingType={titleHeadingType} />}
-      {title ? <div className={getBEMClassName('card__body')}> {children} </div> : children}
+      {title ? <div className="openforms-card__body"> {children} </div> : children}
     </div>
   );
 };

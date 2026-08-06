@@ -1,6 +1,6 @@
 import {clsx} from 'clsx';
 
-export const VARIANTS = ['big', 'muted', 'small', 'wysiwyg'] as const;
+export const VARIANTS = ['big', 'muted', 'small'] as const;
 export type Variant = (typeof VARIANTS)[number];
 
 export type BodyProps<T extends React.ElementType = 'p'> = {
@@ -9,6 +9,10 @@ export type BodyProps<T extends React.ElementType = 'p'> = {
   modifiers?: Variant[];
 } & React.ComponentPropsWithoutRef<T>;
 
+/**
+ * @deprecated Use the Utrecht `HTMLContent` component instead for WYSIWYG content, or
+ * build up the UI using `Paragraph` and friends.
+ */
 const Body = <T extends React.ElementType = 'p'>({
   modifiers = [],
   component,

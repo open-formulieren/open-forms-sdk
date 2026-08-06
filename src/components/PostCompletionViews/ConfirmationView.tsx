@@ -4,6 +4,7 @@ import {useLocation, useSearchParams} from 'react-router';
 
 import Body from '@/components/Body';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
+import RichText from '@/components/RichText';
 import {GovMetricSnippet} from '@/components/analytics';
 import useFormContext from '@/hooks/useFormContext';
 import {DEBUG} from '@/utils';
@@ -84,11 +85,7 @@ const ConfirmationViewDisplay: React.FC<ConfirmationViewDisplayProps> = ({downlo
               <Wrapper>{intl.formatMessage(STATUS_MESSAGES[paymentStatus])}</Wrapper>
             </Body>
           )}
-          <Body
-            component="div"
-            modifiers={['wysiwyg']}
-            dangerouslySetInnerHTML={{__html: confirmationPageContent}}
-          />
+          {confirmationPageContent && <RichText content={confirmationPageContent} />}
         </>
       }
       mainWebsiteUrl={mainWebsiteUrl}

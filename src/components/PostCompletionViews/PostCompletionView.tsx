@@ -1,8 +1,8 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
+import {Paragraph} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 
 import Anchor from '@/components/Anchor';
-import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
 import useTitle from '@/hooks/useTitle';
@@ -33,20 +33,20 @@ const PostCompletionView: React.FC<PostCompletionViewProps> = ({
   );
 
   return (
-    <Card title={header}>
+    <Card title={header} variant="spaced-children">
       {body}
 
-      <Body>
+      <Paragraph>
         <FAIcon icon="download" inline />
         <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
           {linkTitle}
         </Anchor>
-      </Body>
+      </Paragraph>
 
       {extraBody}
 
       {mainWebsiteUrl ? (
-        <ButtonGroup className="utrecht-button-group--distanced" direction="column">
+        <ButtonGroup direction="column">
           <Anchor
             as="button-link"
             href={mainWebsiteUrl}

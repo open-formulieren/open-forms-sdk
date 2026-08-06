@@ -51,4 +51,12 @@
       margin-block-end: 20px;
     }
   }
+
+  @include bem.modifier('spaced-children') {
+    @include bem.element('body') {
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--of-card-spaced-children-body-row-gap, 20px);
+    }
+  }
 }

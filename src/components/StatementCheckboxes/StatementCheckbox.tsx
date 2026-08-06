@@ -1,9 +1,9 @@
 import {Checkbox} from '@open-formulieren/formio-renderer';
 import type {CheckboxComponentSchema} from '@open-formulieren/types';
+import DOMPurify from 'dompurify';
 import {useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import Body from '@/components/Body';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 
 import './StatementCheckbox.scss';
@@ -44,13 +44,7 @@ const StatementCheckbox: React.FC<StatementCheckboxProps> = ({
     <div className="openforms-privacy-checkbox">
       <Checkbox
         name={key}
-        label={
-          <Body
-            component="span"
-            modifiers={['wysiwyg']}
-            dangerouslySetInnerHTML={{__html: rewrittenLabel}}
-          />
-        }
+        label={<span className="utrecht-html" dangerouslySetInnerHTML={{__html: rewrittenLabel}} />}
         isRequired
       />
       {showWarning && (
@@ -76,7 +70,8 @@ const rewriteLabelHTML = (html: string): string => {
   const doc = parser.parseFromString(html, 'text/html');
   const paragraphs = doc.querySelectorAll('p');
   if (!paragraphs.length) return html;
-  return [...paragraphs].map(p => p.innerHTML).join('<br><br>');
+  const rewritten = [...paragraphs].map(p => p.innerHTML).join('<br><br>');
+  return DOMPurify.sanitize(rewritten, {USE_PROFILES: {html: true}});
 };
 
 export default StatementCheckbox;
