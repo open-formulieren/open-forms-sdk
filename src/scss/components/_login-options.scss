@@ -10,8 +10,7 @@
   }
 
   @include bem.element('caption') {
-    @include h2;
-    @include margin(auto);
+    margin-block-end: var(--of-login-options-caption-margin-block-end, 20px);
   }
 
   @include bem.element('cosign') {

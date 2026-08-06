@@ -9,10 +9,6 @@
   overflow-wrap: anywhere;
 }
 
-.openforms-caption {
-  @include h2(auto);
-}
-
 .openforms-content {
   @include bem.modifier('bold') {
     font-weight: 700;

@@ -1,12 +1,6 @@
 @use '@bbt/bem';
 @use './card';
 
-@mixin nested($classname) {
-  .openforms-#{$classname} {
-    @content;
-  }
-}
-
 /**
  * Desktop and mobile styling for the progress indicator element.
  *
@@ -111,9 +105,8 @@
       display: none;
     }
 
-    // Bit of a BEM violation, but the captions are due a refactor to NL DS at some
-    // point too.
-    @include nested('caption') {
+    // Bit of a BEM violation...
+    .utrecht-heading-2 {
       display: none;
     }
 
