@@ -1,19 +1,28 @@
 @use '@bbt/bem';
 
-@import 'microscope-sass/lib/grid';
-@import 'microscope-sass/lib/typography';
-
 .openforms-title {
   // This will break long words, but will respect any soft hyphens
   word-break: normal;
   overflow-wrap: anywhere;
 }
 
+// TODO: replace with equivalent NL DS components
 .openforms-body {
-  @include body(auto);
-  clear: both;
+  color: var(--utrecht-document-color, var(--of-color-fg));
+  font-family: var(
+    --utrecht-document-font-family,
+    var(--of-typography-sans-serif-font-family, inherit)
+  );
+  font-size: var(--utrecht-document-font-size, 1rem);
+  line-height: 1.5;
+  margin: 0;
 
-  @include bem.modifier(big) {
-    @include body--big;
+  &:not(:last-child) {
+    margin-block-end: 20px;
+  }
+
+  @include bem.modifier('big') {
+    font-size: 1.125rem;
+    line-height: 1.333;
   }
 }
