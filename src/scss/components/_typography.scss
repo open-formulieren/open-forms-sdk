@@ -9,12 +9,6 @@
   overflow-wrap: anywhere;
 }
 
-.openforms-content {
-  @include bem.modifier('bold') {
-    font-weight: 700;
-  }
-}
-
 .openforms-body {
   @include body(auto);
   clear: both;
