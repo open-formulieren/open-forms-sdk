@@ -12,7 +12,6 @@ $fa-font-path: '../webfonts/' !default; // vite.config.ts overrides this
 @use '@fortawesome/fontawesome-free/scss/solid' with (
   $fa-font-path: $fa-font-path
 );
-@use 'leaflet/dist/leaflet';
 @use '@open-formulieren/formio-renderer/formio-renderer.css';
 
 @use './scss/theme';
