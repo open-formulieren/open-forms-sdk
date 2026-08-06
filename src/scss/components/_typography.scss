@@ -13,15 +13,7 @@
   @include body(auto);
   clear: both;
 
-  @include bem.modifier(small) {
-    @include body--small;
-  }
-
   @include bem.modifier(big) {
     @include body--big;
-  }
-
-  @include bem.modifier(muted) {
-    color: var(--of-color-fg-muted);
   }
 }

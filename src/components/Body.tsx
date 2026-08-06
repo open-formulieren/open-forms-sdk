@@ -1,6 +1,6 @@
 import {clsx} from 'clsx';
 
-export const VARIANTS = ['big', 'muted', 'small'] as const;
+export const VARIANTS = ['big'] as const;
 export type Variant = (typeof VARIANTS)[number];
 
 export type BodyProps<T extends React.ElementType = 'p'> = {
