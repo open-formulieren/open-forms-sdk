@@ -5,15 +5,22 @@
 
 .openforms-form-help-button {
   --utrecht-button-background-color: var(--of-form-help-button-background-color, #d3e3ec);
-  --utrecht-button-font-size: var(--of-form-help-button-font-size, 1rem);
   --utrecht-button-border-color: var(--of-form-help-button-border-color, transparent);
   --utrecht-button-border-radius: var(--of-form-help-button-border-radius, 10px);
   --utrecht-button-border-width: var(--of-form-help-button-border-width, 0);
+  --utrecht-button-color: var(--of-form-help-button-color, var(--utrecht-document-color, inherit));
   --utrecht-button-column-gap: var(--of-form-help-button-column-gap, 4px);
+  --utrecht-button-font-size: var(--of-form-help-button-font-size, 1rem);
+  --utrecht-button-hover-background-color: var(
+    --of-form-help-button-hover-background-color,
+    var(--of-form-help-button-background-color, #d3e3ec)
+  );
+  --utrecht-button-min-block-size: var(--of-form-help-button-min-block-size, 0);
   --utrecht-button-padding-block-end: var(--of-form-help-button-padding-block-end, 4px);
   --utrecht-button-padding-block-start: var(--of-form-help-button-padding-block-start, 4px);
   --utrecht-button-padding-inline-end: var(--of-form-help-button-padding-inline-end, 8px);
   --utrecht-button-padding-inline-start: var(--of-form-help-button-padding-inline-start, 8px);
+  --utrecht-icon-size: var(--of-form-help-button-icon-size, auto);
 
   margin-inline-start: auto;
 
