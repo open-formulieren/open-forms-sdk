@@ -3,6 +3,10 @@ import {reactRouterParameters, withRouter} from 'storybook-addon-remix-react-rou
 import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
 import {BASE_URL, buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
+import {
+  mockEmailVerificationPost,
+  mockEmailVerificationVerifyCodePost,
+} from '@/api-mocks/email-verification';
 import {mockAddressAutoComplete} from '@/api-mocks/geo';
 import {
   mockSubmissionCheckLogicPost,
@@ -10,10 +14,6 @@ import {
   mockSubmissionStepGet,
   mockSubmissionStepPut,
 } from '@/api-mocks/submissions';
-import {
-  mockEmailVerificationPost,
-  mockEmailVerificationVerifyCodePost,
-} from '@/components/EmailVerification/mocks';
 import SubmissionProvider, {type SubmissionContextType} from '@/components/SubmissionProvider';
 import {withForm} from '@/sb-decorators';
 import {sleep} from '@/utils';

@@ -19,11 +19,6 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
-  "1+Q55M": {
-    "defaultMessage": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it.",
-    "description": "Email verification modal body text",
-    "originalDefault": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it."
-  },
   "1hdvgS": {
     "defaultMessage": "Something went wrong while presenting the login option. Please contact the municipality.",
     "description": "Co-sign auth option not available on form",
@@ -53,11 +48,6 @@
     "defaultMessage": "Bad",
     "description": "GovMetric rating text",
     "originalDefault": "Bad"
-  },
-  "4tPKAs": {
-    "defaultMessage": "Verify",
-    "description": "Email verification: verify code button text",
-    "originalDefault": "Verify"
   },
   "5uh2hS": {
     "defaultMessage": "Appointment cancellation failed",
@@ -229,11 +219,6 @@
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
   },
-  "Dvt0Fv": {
-    "defaultMessage": "The email address has now been verified. You can close this window and continue with the rest of the form.",
-    "description": "Text displayed after successful email verification",
-    "originalDefault": "The email address has now been verified. You can close this window and continue with the rest of the form."
-  },
   "DxbUkA": {
     "defaultMessage": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
     "description": "Auth error message",
@@ -269,25 +254,10 @@
     "description": "Feedback face title - Good",
     "originalDefault": "Rate this form as 'Good'"
   },
-  "EZ7myd": {
-    "defaultMessage": "Email address verification",
-    "description": "Email verification modal title",
-    "originalDefault": "Email address verification"
-  },
-  "FDy8nr": {
-    "defaultMessage": "The verification code may only contain letters (A-Z) and numbers (0-9).",
-    "description": "Validation error message for verification code pattern",
-    "originalDefault": "The verification code may only contain letters (A-Z) and numbers (0-9)."
-  },
   "FKWQuw": {
     "defaultMessage": "Unfortunately, this form is currently unavailable due to an outage. Please try again later.",
     "description": "Open Forms service unavailable error message",
     "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
-  },
-  "FrFeZj": {
-    "defaultMessage": "You haven't entered an email address yet.",
-    "description": "Email verification modal: warning that no email is specified",
-    "originalDefault": "You haven't entered an email address yet."
   },
   "GiRKAS": {
     "defaultMessage": "Back to products",
@@ -454,11 +424,6 @@
     "description": "Cosign done page title",
     "originalDefault": "Cosign confirmation"
   },
-  "R7k4JC": {
-    "defaultMessage": "Enter the six-character code",
-    "description": "Email verification: code input field label",
-    "originalDefault": "Enter the six-character code"
-  },
   "RJ+0F/": {
     "defaultMessage": "Yes",
     "description": "'True' display",
@@ -604,11 +569,6 @@
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
-  "c0Ry9H": {
-    "defaultMessage": "The verification code must contain exactly six characters.",
-    "description": "Validation error message for verification codes with length != 6",
-    "originalDefault": "The verification code must contain exactly six characters."
-  },
   "cxDC/G": {
     "defaultMessage": "The required field is not filled out.",
     "description": "ZOD 'required' error message",
@@ -704,11 +664,6 @@
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
-  "ixMIBJ": {
-    "defaultMessage": "What would you like to do?",
-    "description": "Email verification mode selection label",
-    "originalDefault": "What would you like to do?"
-  },
   "jAZped": {
     "defaultMessage": "Sorry - this form is no longer available",
     "description": "'Deactivated form' error title",
@@ -759,20 +714,10 @@
     "description": "Appoinments: product select label",
     "originalDefault": "Product"
   },
-  "lQY+Zm": {
-    "defaultMessage": "Enter the verification code",
-    "description": "Email verification mode selection: enter code label",
-    "originalDefault": "Enter the verification code"
-  },
   "lY+Mza": {
     "defaultMessage": "Product",
     "description": "Appointments products step page title",
     "originalDefault": "Product"
-  },
-  "lmWBQT": {
-    "defaultMessage": "The code is exactly six characters long and consists of only uppercase letters and numbers.",
-    "description": "Email verification: code input field description",
-    "originalDefault": "The code is exactly six characters long and consists of only uppercase letters and numbers."
   },
   "lxjglE": {
     "defaultMessage": "Continue existing submission",
@@ -844,11 +789,6 @@
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
   },
-  "qyWfE+": {
-    "defaultMessage": "Receive a verification code",
-    "description": "Email verification mode selection: send code label",
-    "originalDefault": "Receive a verification code"
-  },
   "r1L6Zj": {
     "defaultMessage": "Suspending the form failed, please try again later",
     "description": "Modal suspending form failed message",
@@ -858,11 +798,6 @@
     "defaultMessage": "Form unavailable",
     "description": "Open Forms service unavailable error title",
     "originalDefault": "Form unavailable"
-  },
-  "riuSfc": {
-    "defaultMessage": "Send code",
-    "description": "Email verification: send code button text",
-    "originalDefault": "Send code"
   },
   "senRv3": {
     "defaultMessage": "You're about to cancel your appointment on <b>{date}</b> at <b>{time}</b>. Please fill out your email address for verification purposes.",
