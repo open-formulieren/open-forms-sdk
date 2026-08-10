@@ -268,7 +268,7 @@
     "originalDefault": "Back to products"
   },
   "GkSqGH": {
-    "defaultMessage": "Help callout page image",
+    "defaultMessage": "Afbeelding ter illustratie van de hulppagina",
     "description": "Help callout page image alt text",
     "originalDefault": "Help callout page image"
   },
@@ -546,7 +546,7 @@
     "originalDefault": "Je hebt het inloggen met {service} geannuleerd."
   },
   "Zr/t0x": {
-    "defaultMessage": "Previous",
+    "defaultMessage": "Vorige stap",
     "description": "Help callout page previous link text",
     "originalDefault": "Previous"
   },
