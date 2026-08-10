@@ -19,11 +19,6 @@
     "description": "Log out button text",
     "originalDefault": "Log out"
   },
-  "1+Q55M": {
-    "defaultMessage": "Om door te gaan moet je jouw e-mailadres <link>{emailAddress}</link> bevestigen. We sturen je eerst een bevestigingscode naar dit e-mailadres. Vervolgens moet je deze bevestigingscode hier invoeren.",
-    "description": "Email verification modal body text",
-    "originalDefault": "You are verifying the email address <link>{emailAddress}</link>. First, we need to send you a verification code on this email address. Then, you need to enter the code to confirm it."
-  },
   "1hdvgS": {
     "defaultMessage": "Er ging iets fout bij het presenteren van de inlogopties. Neem alstublieft contact met ons op.",
     "description": "Co-sign auth option not available on form",
@@ -53,11 +48,6 @@
     "defaultMessage": "Slecht",
     "description": "GovMetric rating text",
     "originalDefault": "Bad"
-  },
-  "4tPKAs": {
-    "defaultMessage": "Bevestigen",
-    "description": "Email verification: verify code button text",
-    "originalDefault": "Verify"
   },
   "5uh2hS": {
     "defaultMessage": "Afspraak annuleren mislukt",
@@ -231,11 +221,6 @@
     "description": "log out confirmation prompt",
     "originalDefault": "Are you sure that you want to logout?"
   },
-  "Dvt0Fv": {
-    "defaultMessage": "Je e-mailadres is bevestigd. Je kan dit bericht sluiten en doorgaan met de rest van het formulier.",
-    "description": "Text displayed after successful email verification",
-    "originalDefault": "The email address has now been verified. You can close this window and continue with the rest of the form."
-  },
   "DxbUkA": {
     "defaultMessage": "Er is een fout opgetreden bij het inloggen met {service}. Probeer het later opnieuw.",
     "description": "Auth error message",
@@ -272,25 +257,10 @@
     "description": "Feedback face title - Good",
     "originalDefault": "Rate this form as 'Good'"
   },
-  "EZ7myd": {
-    "defaultMessage": "E-mailadres bevestigen",
-    "description": "Email verification modal title",
-    "originalDefault": "Email address verification"
-  },
-  "FDy8nr": {
-    "defaultMessage": "De bevestigingscode bestaat uit hoofdletters (A-Z) en getallen (0-9).",
-    "description": "Validation error message for verification code pattern",
-    "originalDefault": "The verification code may only contain letters (A-Z) and numbers (0-9)."
-  },
   "FKWQuw": {
     "defaultMessage": "Helaas is dit formulier momenteel niet beschikbaar door een storing. Probeer het later nog eens.",
     "description": "Open Forms service unavailable error message",
     "originalDefault": "Unfortunately, this form is currently unavailable due to an outage. Please try again later."
-  },
-  "FrFeZj": {
-    "defaultMessage": "Je hebt nog geen e-mailadres ingevuld.",
-    "description": "Email verification modal: warning that no email is specified",
-    "originalDefault": "You haven't entered an email address yet."
   },
   "GiRKAS": {
     "defaultMessage": "Terug naar producten",
@@ -458,11 +428,6 @@
     "description": "Cosign done page title",
     "originalDefault": "Cosign confirmation"
   },
-  "R7k4JC": {
-    "defaultMessage": "Voer de bevestigingscode in",
-    "description": "Email verification: code input field label",
-    "originalDefault": "Enter the six-character code"
-  },
   "RJ+0F/": {
     "defaultMessage": "Ja",
     "description": "'True' display",
@@ -610,11 +575,6 @@
     "description": "payment registered status",
     "originalDefault": "Your payment is received and processed."
   },
-  "c0Ry9H": {
-    "defaultMessage": "De bevestigingscode moet precies zes tekens lang zijn.",
-    "description": "Validation error message for verification codes with length != 6",
-    "originalDefault": "The verification code must contain exactly six characters."
-  },
   "cxDC/G": {
     "defaultMessage": "Het verplichte veld is niet ingevuld.",
     "description": "ZOD 'required' error message",
@@ -710,11 +670,6 @@
     "description": "Form save modal email field help text",
     "originalDefault": "The email address where you will receive the resume link."
   },
-  "ixMIBJ": {
-    "defaultMessage": "Wat wil je doen?",
-    "description": "Email verification mode selection label",
-    "originalDefault": "What would you like to do?"
-  },
   "jAZped": {
     "defaultMessage": "Onze excuses - dit formulier is niet langer beschikbaar",
     "description": "'Deactivated form' error title",
@@ -767,21 +722,11 @@
     "isTranslated": true,
     "originalDefault": "Product"
   },
-  "lQY+Zm": {
-    "defaultMessage": "Een bevestigingscode invullen",
-    "description": "Email verification mode selection: enter code label",
-    "originalDefault": "Enter the verification code"
-  },
   "lY+Mza": {
     "defaultMessage": "Product",
     "description": "Appointments products step page title",
     "isTranslated": true,
     "originalDefault": "Product"
-  },
-  "lmWBQT": {
-    "defaultMessage": "De bevestigingscode is precies 6 tekens lang en bestaat uit hoofdletters en getallen.",
-    "description": "Email verification: code input field description",
-    "originalDefault": "The code is exactly six characters long and consists of only uppercase letters and numbers."
   },
   "lxjglE": {
     "defaultMessage": "Doorgaan met bestaande formuliergegevens",
@@ -853,11 +798,6 @@
     "description": "Log in to co-sign the form title",
     "originalDefault": "Log in to co-sign the form"
   },
-  "qyWfE+": {
-    "defaultMessage": "Een bevestigingscode ontvangen",
-    "description": "Email verification mode selection: send code label",
-    "originalDefault": "Receive a verification code"
-  },
   "r1L6Zj": {
     "defaultMessage": "Het pauzeren van het formulier is mislukt. Probeer het later opnieuw.",
     "description": "Modal suspending form failed message",
@@ -867,11 +807,6 @@
     "defaultMessage": "Formulier niet beschikbaar",
     "description": "Open Forms service unavailable error title",
     "originalDefault": "Form unavailable"
-  },
-  "riuSfc": {
-    "defaultMessage": "Verstuur code",
-    "description": "Email verification: send code button text",
-    "originalDefault": "Send code"
   },
   "senRv3": {
     "defaultMessage": "Je staat op het punt je afspraak op <b>{date}</b> om <b>{time}</b> te annuleren. Vul je e-mailadres in ter controle.",

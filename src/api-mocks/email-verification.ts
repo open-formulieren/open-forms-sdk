@@ -1,6 +1,6 @@
 import {HttpResponse, http} from 'msw';
 
-import {BASE_URL} from '@/api-mocks';
+import {BASE_URL} from './base';
 
 interface EmailVerificationResponse {
   componentKey: string;
