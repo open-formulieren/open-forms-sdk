@@ -79,6 +79,6 @@ export const AfterStartPage: Story = {
   play: async ({canvasElement}) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.getByRole('link', {name: 'Previous'})).toBeVisible();
+    expect(canvas.getByRole('link', {name: 'Vorige stap'})).toBeVisible();
   },
 };
