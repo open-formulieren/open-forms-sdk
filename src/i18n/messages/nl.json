@@ -734,7 +734,7 @@
     "originalDefault": "Continue existing submission"
   },
   "m1nQlh": {
-    "defaultMessage": "Je referentie nummer is: {reference}",
+    "defaultMessage": "Je referentienummer is: {reference}",
     "description": "Submission reference text",
     "originalDefault": "Your reference number is: {reference}"
   },
