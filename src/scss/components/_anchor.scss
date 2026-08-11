@@ -8,9 +8,6 @@
  * :active states for some variants.
  */
 @use '@bbt/bem';
-// FIXME: this should be removable, but the styles are distributed via the formio-render
-// and removing this line breaks the @extend below.
-@use '@utrecht/link-css'; // emits the .utrecht-link {...} styles
 
 /**
  * Extensions of the utrecht-link component with OF-specific styles.
@@ -39,16 +36,5 @@
     &:hover {
       color: inherit;
     }
-  }
-}
-
-/**
- * Apply the standard link styles (without modifiers) to the anchor tags.
-
- * For WYSIWYG-like content where classnames cannot be controlled.
- */
-@mixin extend-utrecht-link() {
-  a {
-    @extend .utrecht-link, .utrecht-link--openforms;
   }
 }
