@@ -160,7 +160,6 @@ export default defineConfig(({mode}) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `$fa-font-path: '@fortawesome/fontawesome-free/webfonts/';`,
           charset: false,
           quietDeps: true,
           api: 'modern',
