@@ -1,0 +1,29 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Developers / Upgrade notes / 4.0.0" />
+
+# Upgrading to 4.0.x
+
+In the Open Forms SDK 4.0.0 release cycle we've substantially updated the markup and CSS for various
+components that we use - both external (third party, NL Design System community) and internal
+components are affected.
+
+## Renderer components
+
+The Open Forms SDK uses the _renderer_ library, which is built on top of NL Design System community
+components. The layout of the components has been updated to follow best practices and improve
+accessibility: the description and error messages are now placed between the label and input field.
+
+The impact of this and upgrade notes are
+[documented](https://open-formulieren.github.io/formio-renderer/?path=/docs/upgrade-notes-v2-0-0--docs)
+in the renderer.
+
+## SDK components
+
+### Card component
+
+The card body now sets spacing between elements by default. Some elements inside this body also had
+some spacing set, for which we've updated the defaults. However, if you set explicit design tokens
+in your theme, we recommend to update the following:
+
+- `--of-summary-progress-padding-block-end`: change to `0`.
