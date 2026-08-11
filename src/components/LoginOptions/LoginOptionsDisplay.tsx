@@ -37,12 +37,12 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
     )}
     {loginAsGemachtigdeOptions.length > 0 && (
       <>
-        <h2 className={getBEMClassName('login-options__caption')}>
+        <Heading level={2} className="openforms-login-options__caption">
           <FormattedMessage
             description="Log in on behalf of someone else title"
             defaultMessage="Log in on behalf of someone else"
           />
-        </h2>
+        </Heading>
 
         <div className={getBEMClassName('login-options__list')}>
           {loginAsGemachtigdeOptions.map(option => (
@@ -51,17 +51,16 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
         </div>
       </>
     )}
-
     {cosignLoginOptions.length > 0 && (
       <div className={isolateCosignOptions ? getBEMClassName('login-options__cosign') : undefined}>
         {isolateCosignOptions && (
           <>
-            <h2 className={getBEMClassName('login-options__caption')}>
+            <Heading level={2} className="openforms-login-options__caption">
               <FormattedMessage
                 description="Log in to co-sign the form title"
                 defaultMessage="Log in to co-sign the form"
               />
-            </h2>
+            </Heading>
             <Paragraph>
               <FormattedMessage
                 description="Cosign start explanation message"

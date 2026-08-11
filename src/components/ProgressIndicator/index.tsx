@@ -1,8 +1,8 @@
+import {Heading} from '@utrecht/component-library-react';
 import {clsx} from 'clsx';
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router';
 
-import Caption from '@/components/Caption';
 import List from '@/components/List';
 import useWindowResize from '@/hooks/useWindowResize';
 
@@ -82,9 +82,9 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
         className="openforms-progress-indicator__nav"
         aria-labelledby="ca10ead3-1537-41dc-b3b4-a4593740ecd9"
       >
-        <Caption component="h2" id="ca10ead3-1537-41dc-b3b4-a4593740ecd9">
+        <Heading level={2} id="ca10ead3-1537-41dc-b3b4-a4593740ecd9">
           {title}
-        </Caption>
+        </Heading>
         <List ordered>
           {steps.map((step, index) => (
             <ProgressIndicatorItem
