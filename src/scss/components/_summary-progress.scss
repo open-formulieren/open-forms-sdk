@@ -2,10 +2,10 @@
 
 .openforms-summary-progress {
   padding-block-start: var(--of-summary-progress-padding-block-start, 0px);
-  padding-block-end: var(--of-summary-progress-padding-block-end, 20px);
+  padding-block-end: var(--of-summary-progress-padding-block-end);
 
   @include mobile-only {
     padding-block-start: var(--of-summary-progress-mobile-padding-block-start, 0px);
-    padding-block-end: var(--of-summary-progress-mobile-padding-block-end, 20px);
+    padding-block-end: var(--of-summary-progress-mobile-padding-block-end);
   }
 }

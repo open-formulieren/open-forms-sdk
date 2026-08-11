@@ -1,9 +1,9 @@
 import {LoadingIndicator} from '@open-formulieren/formio-renderer';
+import {Paragraph} from '@utrecht/component-library-react';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, useNavigate} from 'react-router';
 
-import Body from '@/components/Body';
 import Card from '@/components/Card';
 import type {SubmissionProcessingStatus} from '@/data/submission-status';
 import usePoll from '@/hooks/usePoll';
@@ -91,12 +91,12 @@ const StatusUrlPoller: React.FC<StatusUrlPollerProps> = ({
         }
       >
         <LoadingIndicator position="center" />
-        <Body>
+        <Paragraph>
           <FormattedMessage
             description="Checking background processing status body"
             defaultMessage="Please hold on while we're processing your submission."
           />
-        </Body>
+        </Paragraph>
       </Card>
     );
   }
