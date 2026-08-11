@@ -25,11 +25,6 @@
     flex-direction: column;
     row-gap: var(--of-card-body-row-gap, 20px);
     margin-block-start: var(--of-card-body-margin-block-start, 40px);
-
-    // override of SDK styles to avoid double spacing
-    > .openforms-loading-indicator + * {
-      margin-block-start: 0;
-    }
   }
 
   @include bem.element('alert') {
@@ -49,22 +44,10 @@
 
 @include responsive.mobile-only {
   .openforms-card {
-    padding: 15px;
-
-    @include bem.element('header') {
-      @include bem.modifier('padded') {
-        padding-block-end: 12px;
-      }
-    }
-
     // If there are cards with multiple headers inside, we should not necessarily hide all nested headers,
     // so we only hide the first child
     &--mobile-header-hidden > &__header {
       display: none;
-    }
-
-    @include bem.element('body') {
-      margin-block-start: 0;
     }
   }
 }

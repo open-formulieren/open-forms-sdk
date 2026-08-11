@@ -49,4 +49,8 @@
 // TODO: move to design-tokens repo
 .openforms-theme {
   --of-summary-progress-padding-block-end: 0;
+
+  .openforms-card__body > .utrecht-html > :last-child {
+    margin-block-end: 0;
+  }
 }

@@ -1,0 +1,27 @@
+@use '@open-formulieren/formio-renderer/scss/responsive';
+
+:root {
+}
+
+// TODO: needs to be cleaned up at some point. The original component code was removed
+// as part of the formio.js removal.
+.openforms-loading-indicator + * {
+  margin-block-start: 20px;
+
+  .openforms-card__body & {
+    margin-block-start: 0;
+  }
+}
+
+@include responsive.mobile-only {
+  :root {
+    --of-card-body-row-gap: 20px;
+    --of-card-header-padded-padding-block-end: 0;
+    --of-card-body-margin-block-start: 0;
+
+    --of-card-padding-block-end: 15px;
+    --of-card-padding-block-start: 15px;
+    --of-card-padding-inline-end: 15px;
+    --of-card-padding-inline-start: 15px;
+  }
+}

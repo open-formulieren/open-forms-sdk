@@ -33,7 +33,7 @@ const PostCompletionView: React.FC<PostCompletionViewProps> = ({
   );
 
   return (
-    <Card title={header} variant="spaced-children">
+    <Card title={header}>
       {body}
 
       <Paragraph>

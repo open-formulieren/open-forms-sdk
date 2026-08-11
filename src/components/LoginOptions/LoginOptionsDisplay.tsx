@@ -29,12 +29,13 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
   isolateCosignOptions = true,
 }) => (
   <div className={getBEMClassName('login-options')}>
-    <div className={getBEMClassName('login-options__list')}>
-      {loginAsYourselfOptions.map(option => (
-        <LoginButton key={option.identifier} option={option} />
-      ))}
-    </div>
-
+    {loginAsYourselfOptions.length > 0 && (
+      <div className={getBEMClassName('login-options__list')}>
+        {loginAsYourselfOptions.map(option => (
+          <LoginButton key={option.identifier} option={option} />
+        ))}
+      </div>
+    )}
     {loginAsGemachtigdeOptions.length > 0 && (
       <>
         <Heading level={2} className="openforms-login-options__caption">
@@ -51,7 +52,6 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
         </div>
       </>
     )}
-
     {cosignLoginOptions.length > 0 && (
       <div className={isolateCosignOptions ? getBEMClassName('login-options__cosign') : undefined}>
         {isolateCosignOptions && (

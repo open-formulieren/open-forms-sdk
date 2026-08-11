@@ -20,6 +20,12 @@ in the renderer.
 
 ## SDK components
 
+## Deprecations
+
+A number of hardcoded styling rules have been replaced with design tokens, and we're using the old
+hardcoded values as defaults for backwards compatibility. We also provide backwards compatible shims
+for the responsive aspects - these will be removed in Open Forms 5.0.
+
 ### Card component
 
 The card body now sets spacing between elements by default. Some elements inside this body also had
@@ -27,3 +33,7 @@ some spacing set, for which we've updated the defaults. However, if you set expl
 in your theme, we recommend to update the following:
 
 - `--of-summary-progress-padding-block-end`: change to `0`.
+
+The `spaced-children` variant is removed, which obsoletes the following design tokens:
+
+- `--of-card-spaced-children-body-row-gap`, now `--of-card-body-row-gap` is always used.
