@@ -1,8 +1,8 @@
+import {Paragraph} from '@utrecht/component-library-react';
 import {useContext} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation} from 'react-router';
 
-import Body from '@/components/Body';
 import ErrorBoundary from '@/components/Errors/ErrorBoundary';
 import useFormContext from '@/hooks/useFormContext';
 import {DEBUG} from '@/utils';
@@ -33,24 +33,26 @@ const StartPaymentViewDisplay: React.FC<StartPaymentViewDisplayProps> = ({downlo
       }
       body={
         <>
-          <Body>
+          <Paragraph>
             <FormattedMessage
               description="Submission reference text"
               defaultMessage="Your reference number is: {reference}"
               values={{reference: publicReference}}
             />
-          </Body>
+          </Paragraph>
 
-          <Body component="div">
-            <FormattedMessage
-              description="Payment request text"
-              defaultMessage="A payment is required for this product."
-            />
+          <div>
+            <Paragraph>
+              <FormattedMessage
+                description="Payment request text"
+                defaultMessage="A payment is required for this product."
+              />
+            </Paragraph>
 
             <ErrorBoundary>
               <StartPayment startUrl={paymentUrl} />
             </ErrorBoundary>
-          </Body>
+          </div>
         </>
       }
       reportDownloadUrl={reportDownloadUrl}

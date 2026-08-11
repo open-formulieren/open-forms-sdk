@@ -3,7 +3,6 @@ import type {CheckboxComponentSchema} from '@open-formulieren/types';
 import {useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import Body from '@/components/Body';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 
 import './StatementCheckbox.scss';
@@ -44,13 +43,7 @@ const StatementCheckbox: React.FC<StatementCheckboxProps> = ({
     <div className="openforms-privacy-checkbox">
       <Checkbox
         name={key}
-        label={
-          <Body
-            component="span"
-            modifiers={['wysiwyg']}
-            dangerouslySetInnerHTML={{__html: rewrittenLabel}}
-          />
-        }
+        label={<span className="utrecht-html" dangerouslySetInnerHTML={{__html: rewrittenLabel}} />}
         isRequired
       />
       {showWarning && (

@@ -2,7 +2,6 @@ import {Paragraph} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 
 import Anchor from '@/components/Anchor';
-import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FAIcon from '@/components/FAIcon';
 import useFormContext from '@/hooks/useFormContext';
@@ -23,7 +22,7 @@ const CosignDone: React.FC = () => {
       }
     >
       {/* TODO Make text configurable */}
-      <Body component="div" modifiers={['wysiwyg']}>
+      <div className="utrecht-html">
         <FormattedMessage
           description="Cosign confirmation page body"
           defaultMessage={`<p>Thank you for cosigning. We have received your "{formName}"
@@ -39,17 +38,17 @@ const CosignDone: React.FC = () => {
             confirmationEmailEnabled: sendConfirmationEmail,
           }}
         />
-      </Body>
 
-      <Body>
-        <FAIcon icon="download" inline />
-        <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
-          <FormattedMessage
-            description="Download report PDF link title"
-            defaultMessage="Download PDF report of the submission"
-          />
-        </Anchor>
-      </Body>
+        <Paragraph>
+          <FAIcon icon="download" inline />
+          <Anchor href={reportDownloadUrl} target="_blank" rel="noopener noreferrer">
+            <FormattedMessage
+              description="Download report PDF link title"
+              defaultMessage="Download PDF report of the submission"
+            />
+          </Anchor>
+        </Paragraph>
+      </div>
 
       {/* TODO Add link to main website */}
     </Card>

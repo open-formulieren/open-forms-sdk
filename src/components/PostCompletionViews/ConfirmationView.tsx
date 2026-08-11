@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
+import {Paragraph} from '@utrecht/component-library-react';
+import {useContext} from 'react';
 import {FormattedMessage, type MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useLocation, useSearchParams} from 'react-router';
 
-import Body from '@/components/Body';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
+import RichText from '@/components/RichText';
 import {GovMetricSnippet} from '@/components/analytics';
 import useFormContext from '@/hooks/useFormContext';
 import {DEBUG} from '@/utils';
@@ -59,7 +60,13 @@ const ConfirmationViewDisplay: React.FC<ConfirmationViewDisplayProps> = ({downlo
     throw new Error('Unknown payment status');
   }
 
-  const Wrapper = paymentStatus === 'failed' ? ErrorMessage : React.Fragment;
+  const paymentMessage = paymentStatus ? intl.formatMessage(STATUS_MESSAGES[paymentStatus]) : null;
+  const paymentMessageNode =
+    paymentStatus === 'failed' ? (
+      <ErrorMessage>{paymentMessage}</ErrorMessage>
+    ) : (
+      paymentMessage && <Paragraph>{paymentMessage}</Paragraph>
+    );
 
   return (
     <PostCompletionView
@@ -79,16 +86,8 @@ const ConfirmationViewDisplay: React.FC<ConfirmationViewDisplayProps> = ({downlo
       }
       body={
         <>
-          {paymentStatus && (
-            <Body component="div">
-              <Wrapper>{intl.formatMessage(STATUS_MESSAGES[paymentStatus])}</Wrapper>
-            </Body>
-          )}
-          <Body
-            component="div"
-            modifiers={['wysiwyg']}
-            dangerouslySetInnerHTML={{__html: confirmationPageContent}}
-          />
+          {paymentMessageNode}
+          {confirmationPageContent && <RichText content={confirmationPageContent} />}
         </>
       }
       mainWebsiteUrl={mainWebsiteUrl}

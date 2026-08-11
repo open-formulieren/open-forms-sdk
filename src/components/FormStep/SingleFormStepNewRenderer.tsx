@@ -11,12 +11,12 @@ import {useAsync} from 'react-use';
 import {ConfigContext} from '@/Context';
 import {destroy, get} from '@/api';
 import {useDebugContext} from '@/components/AppDebug';
-import Body from '@/components/Body';
 import Card, {CardTitle} from '@/components/Card';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
 import FormMaximumSubmissionsError from '@/components/Errors/FormMaximumSubmissionsError';
 import FormStepNavigation from '@/components/FormStep/FormStepNavigation';
 import {LiteralsProvider} from '@/components/Literal';
+import RichText from '@/components/RichText';
 import StatementCheckbox from '@/components/StatementCheckboxes/StatementCheckbox';
 import {assertSubmission} from '@/components/SubmissionProvider';
 import ValidationErrors from '@/components/Summary/ValidationErrors';
@@ -182,13 +182,7 @@ const SingleFormStepNewRenderer: React.FC = () => {
     <LiteralsProvider literals={formStep.literals}>
       <Card title={form.name} mobileHeaderHidden>
         {form.submissionLimitReached && <FormMaximumSubmissionsError />}
-        {form.explanationTemplate && (
-          <Body
-            component="div"
-            modifiers={['wysiwyg']}
-            dangerouslySetInnerHTML={{__html: form.explanationTemplate}}
-          />
-        )}
+        {form.explanationTemplate && <RichText content={form.explanationTemplate} />}
         <CardTitle title={formStepData?.name || ''} headingType="subtitle" padded />
         {isLoading && <LoadingIndicator position="center" />}
 

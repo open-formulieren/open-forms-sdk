@@ -1,6 +1,6 @@
+import {Paragraph} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 
-import Body from '@/components/Body';
 import FormContainer from '@/components/FormContainer';
 import {LiteralsProvider} from '@/components/Literal';
 import LoginOptions from '@/components/LoginOptions';
@@ -55,13 +55,13 @@ const CosignStart: React.FC = () => {
 
         {authError && <AuthenticationError parameter={authError[0]} errorCode={authError[1]} />}
 
-        <Body>
+        <Paragraph>
           <FormattedMessage
             description="Cosign start explanation message"
             defaultMessage={`Did you receive an email with a request to cosign?
             Start the cosigning by logging in.`}
           />
-        </Body>
+        </Paragraph>
 
         <LoginOptions
           // hide the normal login options, and only display the cosign login options

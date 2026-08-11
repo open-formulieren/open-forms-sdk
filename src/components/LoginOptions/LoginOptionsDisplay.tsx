@@ -1,6 +1,6 @@
+import {Heading, Paragraph} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 
-import Body from '@/components/Body';
 import type {FormLoginOption} from '@/data/forms';
 import {getBEMClassName} from '@/utils';
 
@@ -61,13 +61,13 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
                 defaultMessage="Log in to co-sign the form"
               />
             </h2>
-            <Body>
+            <Paragraph>
               <FormattedMessage
                 description="Cosign start explanation message"
                 defaultMessage={`Did you receive an email with a request to cosign?
                 Start the cosigning by logging in.`}
               />
-            </Body>
+            </Paragraph>
           </>
         )}
 
