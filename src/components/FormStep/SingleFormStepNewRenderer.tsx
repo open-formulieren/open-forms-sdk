@@ -183,7 +183,7 @@ const SingleFormStepNewRenderer: React.FC = () => {
       <Card title={form.name} mobileHeaderHidden>
         {form.submissionLimitReached && <FormMaximumSubmissionsError />}
         {form.explanationTemplate && <RichText content={form.explanationTemplate} />}
-        <CardTitle title={formStepData?.name || ''} headingType="subtitle" padded />
+        <CardTitle title={formStepData?.name || ''} padded />
         {isLoading && <LoadingIndicator position="center" />}
 
         {errorMessages.map((error, index) => (

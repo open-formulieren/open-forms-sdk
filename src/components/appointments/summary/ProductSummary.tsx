@@ -31,13 +31,13 @@ export const ProductSummary: React.FC<ProductSummaryProps> = ({products}) => {
 
   return (
     <>
-      <Heading3 className="utrecht-heading-3--distanced">
+      <Heading3>
         <FormattedMessage
           description="Product summary on appointments contact details step heading"
           defaultMessage="Your products"
         />
       </Heading3>
-      <UnorderedList className="utrecht-unordered-list--distanced">
+      <UnorderedList>
         {products.map(({productId, amount}, index) => (
           <UnorderedListItem key={`${productId}-${index}`}>
             <FormattedMessage

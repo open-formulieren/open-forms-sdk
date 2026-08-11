@@ -179,7 +179,7 @@ const FormStepNewRenderer: React.FC = () => {
         </FormStepTopNav>
 
         <Progress form={form} submission={submission} currentStep={sparseStep} />
-        <CardTitle title={sparseStep.name} headingType="subtitle" padded />
+        <CardTitle title={sparseStep.name} padded />
 
         {isLoading && <LoadingIndicator position="center" />}
 

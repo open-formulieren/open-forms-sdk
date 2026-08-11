@@ -48,8 +48,4 @@
 @import './scss/components/authentication-errors';
 @import './scss/components/govmetric_snippet';
 
-// TODO: needs to be cleaned up at some point. The original component code was removed
-// as part of the formio.js removal.
-.openforms-loading-indicator + * {
-  margin-block-start: 20px;
-}
+@import './scss/shims';

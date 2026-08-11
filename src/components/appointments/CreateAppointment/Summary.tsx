@@ -254,7 +254,6 @@ const Summary: React.FC = () => {
           />
         }
         headingLevel={2}
-        headingType="subtitle"
         padded
       />
 
