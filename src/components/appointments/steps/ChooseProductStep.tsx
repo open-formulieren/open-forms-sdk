@@ -188,7 +188,7 @@ const ChooseProductStep: React.FC<ChooseProductStepProps> = ({navigateTo = null}
         }
         padded
       />
-      <Heading3 className="utrecht-heading-3--distanced">
+      <Heading3>
         <FormattedMessage
           description="Appointment reason question"
           defaultMessage="What do you want to make an appointment for?"

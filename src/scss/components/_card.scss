@@ -27,12 +27,6 @@
     margin-block-start: var(--of-card-body-margin-block-start, 40px);
   }
 
-  @include bem.element('alert') {
-    &:not(:last-child) {
-      margin-block-end: 20px;
-    }
-  }
-
   @include bem.modifier('spaced-children') {
     @include bem.element('body') {
       display: flex;
