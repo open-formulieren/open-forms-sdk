@@ -1,19 +1,19 @@
 @use 'sass:math';
-
-@import 'microscope-sass/lib/grid';
-@import 'microscope-sass/lib/responsive';
+@use '@open-formulieren/formio-renderer/scss/responsive';
 
 .openforms-login-button {
   display: flex;
   align-items: center;
-  gap: math.div($grid-container-margin-base, 2);
+  gap: 8px;
 
-  @include margin(auto, margin-bottom, math.div($grid-container-margin-base, 2));
+  &:not(:last-child) {
+    margin-block-end: 8px;
+  }
 }
 
 .openforms-theme {
   .openforms-login-button {
-    @include mobile-only {
+    @include responsive.mobile-only {
       gap: 0;
       .utrecht-button,
       .utrecht-button-link {

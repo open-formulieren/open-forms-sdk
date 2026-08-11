@@ -1,6 +1,5 @@
 @use '@bbt/bem';
-
-@import 'microscope-sass/lib/responsive';
+@use '@open-formulieren/formio-renderer/scss/responsive';
 
 /**
  * Open Forms extension for summary page context.
@@ -42,7 +41,7 @@
 
   // Responsive styling - try to keep the "edit" link inline, if the form label is too
   // long -> wrap onto the next line.
-  @include mobile-only {
+  @include responsive.mobile-only {
     @include bem.element('header') {
       flex-wrap: wrap;
       row-gap: var(--of-summary-step-name-header-mobile-row-gap);

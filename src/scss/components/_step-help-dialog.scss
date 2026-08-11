@@ -1,8 +1,5 @@
 @use '@bbt/bem';
 
-// @import instead of @use because breakpoints are defined globally
-@import 'microscope-sass/lib/responsive';
-
 .openforms-step-help-dialog {
   display: flex;
   flex-direction: column;

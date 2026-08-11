@@ -1,7 +1,5 @@
 @use '@bbt/bem';
-
-// @import instead of @use because breakpoints are defined globally
-@import 'microscope-sass/lib/responsive';
+@use '@open-formulieren/formio-renderer/scss/responsive';
 
 /**
  * Custom component to manage our form layout. This is the outermost element managed
@@ -56,7 +54,7 @@
   }
 
   // Responsive styles - switch to a column layout and re-order elements.
-  @include mobile-only {
+  @include responsive.mobile-only {
     // https://stackoverflow.com/a/63609468 just 1fr doesn't work, but minmax does?
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
