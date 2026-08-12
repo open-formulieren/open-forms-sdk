@@ -1,4 +1,5 @@
 import {ButtonGroup} from '@utrecht/button-group-react';
+import {useId} from 'react';
 import {useIntl} from 'react-intl';
 import {Navigate} from 'react-router';
 
@@ -18,6 +19,7 @@ const HelpCalloutPage: React.FC = () => {
   const {submission} = useSubmissionContext();
   const {preserveQueryParams} = useQueryParams();
   const intl = useIntl();
+  const descriptionId = useId();
 
   if (!helpCalloutPage.content || helpCalloutPage.display === 'never')
     // In case a user tries to navigate to this page manually when it shouldn't be visible, just
@@ -48,12 +50,12 @@ const HelpCalloutPage: React.FC = () => {
           {previousPageUrl !== undefined && (
             <PreviousLink to={previousPageUrl!} linkText={previousLinkText} position="start" />
           )}
-          <FormHelpButton disabled />
+          <FormHelpButton disabled aria-describedby={descriptionId} />
         </FormStepTopNav>
 
         <div className="openforms-help-callout-page-dialog">
           <div className="openforms-help-callout-page-dialog__triangle"></div>
-          <div className="openforms-help-callout-page-dialog__container">
+          <div className="openforms-help-callout-page-dialog__container" id={descriptionId}>
             {helpCalloutPage.image && (
               <Image
                 src={helpCalloutPage.image}
