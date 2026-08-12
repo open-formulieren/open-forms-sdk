@@ -32,21 +32,3 @@ export const Default: Story = {
     modifiers: [],
   },
 };
-
-export const WYSIWYG: Story = {
-  render: ({children, modifiers}) => (
-    <Body
-      modifiers={modifiers}
-      component="div"
-      dangerouslySetInnerHTML={{__html: children as string}}
-    />
-  ),
-  args: {
-    children:
-      '<p>Lorem ipsum with a <a href="https://example.com" target="_blank" rel="noopener nofollower">clickable</a> link...<p>',
-    modifiers: ['wysiwyg'],
-  },
-  argTypes: {
-    component: {table: {disable: true}},
-  },
-};

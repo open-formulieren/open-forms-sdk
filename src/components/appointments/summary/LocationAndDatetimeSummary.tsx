@@ -39,7 +39,7 @@ export const LocationAndDateTimeSummary: React.FC<LocationAndDateTimeSummaryProp
 
   return (
     <>
-      <Heading3 className="utrecht-heading-3--distanced">
+      <Heading3>
         <FormattedMessage
           description="Location summary on appointments contact details step heading"
           defaultMessage="Your appointment"
@@ -47,7 +47,7 @@ export const LocationAndDateTimeSummary: React.FC<LocationAndDateTimeSummaryProp
       </Heading3>
 
       {/* A list is not really needed here but we keep it consistent with the products */}
-      <UnorderedList className="utrecht-unordered-list--distanced">
+      <UnorderedList>
         <UnorderedListItem key={selectedLocationIdentifier}>
           {[
             selectedLocation?.name,

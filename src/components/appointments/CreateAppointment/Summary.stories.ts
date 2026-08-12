@@ -43,6 +43,7 @@ export default {
         },
       },
     },
+    card: {title: 'Make an appointment', mobileHeaderHidden: true},
     msw: {
       handlers: [
         mockAppointmentProductsGet,

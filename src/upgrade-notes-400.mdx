@@ -1,0 +1,69 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Developers / Upgrade notes / 4.0.0" />
+
+# Upgrading to 4.0.x
+
+In the Open Forms SDK 4.0.0 release cycle we've substantially updated the markup and CSS for various
+components that we use - both external (third party, NL Design System community) and internal
+components are affected.
+
+## Renderer components
+
+The Open Forms SDK uses the _renderer_ library, which is built on top of NL Design System community
+components. The layout of the components has been updated to follow best practices and improve
+accessibility: the description and error messages are now placed between the label and input field.
+
+The impact of this and upgrade notes are
+[documented](https://open-formulieren.github.io/formio-renderer/?path=/docs/upgrade-notes-v2-0-0--docs)
+in the renderer.
+
+## SDK components
+
+### Body component
+
+Internally, the `Body` component was used for a lot of copy text, with a hardcoded line-height of
+`1.5`. This has (in most places) been replaced with the `utrecht-paragraph` component, which has a
+design token for the line height. You may want to set this token if you aren't doing so yet:
+
+- `--utrecht-paragraph-line-height: 1.5`
+
+### Card component
+
+The card body now sets spacing between elements by default. Some elements inside this body also had
+some spacing set, for which we've updated the defaults. However, if you set explicit design tokens
+in your theme, we recommend to update the following:
+
+- `--of-summary-progress-padding-block-end`: change to `0`.
+- `--of-summary-progress-mobile-padding-block-end`: change to `0`.
+
+### Label component
+
+(Hyper)links in form field labels are no longer supported. The primary reason is that they break
+accessibility, see the
+[NL Design System](https://www.nldesignsystem.nl/richtlijnen/formulieren/labels/alleen-tekst/)
+documentation about this topic. They create issues for screen readers and activation via voice
+recognition.
+
+Additionally, for protection against injection attacks, label content is escaped by default - with
+the new renderer this would require additional development efforts to support too. We never
+intentionally supported this "feature".
+
+## Deprecations
+
+A number of hardcoded styling rules have been replaced with design tokens, and we're using the old
+hardcoded values as defaults for backwards compatibility. We also provide backwards compatible shims
+for the responsive aspects - these will be removed in Open Forms 5.0.
+
+It's recommended you explicitly set the following design tokens for the viewports up until (and not
+including) 768px width (the mobile breakpoint):
+
+**Card**
+
+- `--of-card-body-margin-block-start`
+- `--of-card-body-row-gap`
+- `--of-card-header-padded-padding-block-end`
+- `--of-card-padding-block-end`
+- `--of-card-padding-block-start`
+- `--of-card-padding-inline-end`
+- `--of-card-padding-inline-start`

@@ -1,8 +1,4 @@
 @use '@bbt/bem';
-@use './anchor';
-
-@import 'microscope-sass/lib/grid';
-@import 'microscope-sass/lib/typography';
 
 .openforms-title {
   // This will break long words, but will respect any soft hyphens
@@ -10,81 +6,23 @@
   overflow-wrap: anywhere;
 }
 
-.openforms-subtitle {
-  @include h2(auto);
-}
-
-.openforms-caption {
-  @include h2(auto);
-}
-
-.openforms-content {
-  @include bem.modifier('bold') {
-    font-weight: 700;
-  }
-}
-
+// TODO: replace with equivalent NL DS components
 .openforms-body {
-  @include body(auto);
-  clear: both;
+  color: var(--utrecht-document-color, var(--of-color-fg));
+  font-family: var(
+    --utrecht-document-font-family,
+    var(--of-typography-sans-serif-font-family, inherit)
+  );
+  font-size: var(--utrecht-document-font-size, 1rem);
+  line-height: 1.5;
+  margin: 0;
 
-  @include bem.modifier(small) {
-    @include body--small;
+  &:not(:last-child) {
+    margin-block-end: 20px;
   }
 
-  @include bem.modifier(big) {
-    @include body--big;
-  }
-
-  @include bem.modifier(wysiwyg) {
-    // TODO: remove this in favour of extending NL DS components, but that will be
-    // breaking changes...
-    @include wysiwyg;
-    @include anchor.extend-utrecht-link;
-
-    h2 {
-      @extend .utrecht-heading-2;
-    }
-
-    h3 {
-      @extend .utrecht-heading-3;
-    }
-
-    p {
-      @extend .utrecht-paragraph, .utrecht-paragraph--distanced;
-      // TODO: copied over from utrecht-paragraph because @include wyiwyg overrides stuff.
-      font-size: var(--utrecht-paragraph-font-size, var(--utrecht-document-font-size, inherit));
-      font-weight: var(--utrecht-paragraph-font-weight, inherit);
-      line-height: var(
-        --utrecht-paragraph-line-height,
-        var(--utrecht-document-line-height, inherit)
-      );
-    }
-
-    ul {
-      @extend .utrecht-unordered-list, .utrecht-unordered-list--distanced;
-
-      li {
-        // TODO: later, breaking change
-        // @extend .utrecht-unordered-list__item;
-        margin-block-end: var(--utrecht-unordered-list-item-margin-block-end);
-        margin-block-start: var(--utrecht-unordered-list-item-margin-block-start);
-      }
-    }
-
-    ol {
-      @extend .utrecht-ordered-list, .utrecht-ordered-list--distanced;
-
-      li {
-        // TODO: later, breaking change
-        // @extend .utrecht-ordered-list__item;
-        margin-block-end: var(--utrecht-ordered-list-item-margin-block-end);
-        margin-block-start: var(--utrecht-ordered-list-item-margin-block-start);
-      }
-    }
-  }
-
-  @include bem.modifier(muted) {
-    color: var(--of-color-fg-muted);
+  @include bem.modifier('big') {
+    font-size: 1.125rem;
+    line-height: 1.333;
   }
 }

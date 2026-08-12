@@ -1,7 +1,5 @@
 @use '@bbt/bem';
-
-@import 'microscope-sass/lib/grid';
-@import 'microscope-sass/lib/typography';
+@use '@open-formulieren/formio-renderer/scss/responsive';
 
 @mixin card($block: 'card') {
   background-color: var(--of-#{$block}-background-color, var(--of-color-bg));
@@ -18,37 +16,24 @@
 
   @include bem.element('header') {
     @include bem.modifier('padded') {
-      @include rows(1, padding-bottom);
-    }
-  }
-
-  @include mobile-only {
-    @include container-margin($properties: padding);
-
-    @include bem.element('header') {
-      @include bem.modifier('padded') {
-        padding-bottom: $grid-margin-2;
-      }
-    }
-
-    // If there are cards with multiple headers inside, we should not necessarily hide all nested headers,
-    // so we only hide the first child
-    &--mobile-header-hidden > &__header {
-      display: none;
+      padding-block-end: var(--of-card-header-padded-padding-block-end, 20px);
     }
   }
 
   @include bem.element('body') {
-    @include rows(1, margin-top);
-
-    @include mobile-only {
-      @include rows(0, margin-top);
-    }
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--of-card-body-row-gap, 20px);
+    margin-block-start: var(--of-card-body-margin-block-start, 40px);
   }
+}
 
-  @include bem.element('alert') {
-    &:not(:last-child) {
-      margin-block-end: 20px;
+@include responsive.mobile-only {
+  .openforms-card {
+    // If there are cards with multiple headers inside, we should not necessarily hide all nested headers,
+    // so we only hide the first child
+    &--mobile-header-hidden > &__header {
+      display: none;
     }
   }
 }

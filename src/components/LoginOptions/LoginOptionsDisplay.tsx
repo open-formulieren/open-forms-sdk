@@ -1,6 +1,6 @@
+import {Heading, Paragraph} from '@utrecht/component-library-react';
 import {FormattedMessage} from 'react-intl';
 
-import Body from '@/components/Body';
 import type {FormLoginOption} from '@/data/forms';
 import {getBEMClassName} from '@/utils';
 
@@ -28,20 +28,21 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
   isolateCosignOptions = true,
 }) => (
   <div className={getBEMClassName('login-options')}>
-    <div className={getBEMClassName('login-options__list')}>
-      {loginAsYourselfOptions.map(option => (
-        <LoginButton key={option.identifier} option={option} />
-      ))}
-    </div>
-
+    {loginAsYourselfOptions.length > 0 && (
+      <div className={getBEMClassName('login-options__list')}>
+        {loginAsYourselfOptions.map(option => (
+          <LoginButton key={option.identifier} option={option} />
+        ))}
+      </div>
+    )}
     {loginAsGemachtigdeOptions.length > 0 && (
       <>
-        <h2 className={getBEMClassName('login-options__caption')}>
+        <Heading level={2} className="openforms-login-options__caption">
           <FormattedMessage
             description="Log in on behalf of someone else title"
             defaultMessage="Log in on behalf of someone else"
           />
-        </h2>
+        </Heading>
 
         <div className={getBEMClassName('login-options__list')}>
           {loginAsGemachtigdeOptions.map(option => (
@@ -50,24 +51,23 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
         </div>
       </>
     )}
-
     {cosignLoginOptions.length > 0 && (
       <div className={isolateCosignOptions ? getBEMClassName('login-options__cosign') : undefined}>
         {isolateCosignOptions && (
           <>
-            <h2 className={getBEMClassName('login-options__caption')}>
+            <Heading level={2} className="openforms-login-options__caption">
               <FormattedMessage
                 description="Log in to co-sign the form title"
                 defaultMessage="Log in to co-sign the form"
               />
-            </h2>
-            <Body>
+            </Heading>
+            <Paragraph>
               <FormattedMessage
                 description="Cosign start explanation message"
                 defaultMessage={`Did you receive an email with a request to cosign?
                 Start the cosigning by logging in.`}
               />
-            </Body>
+            </Paragraph>
           </>
         )}
 

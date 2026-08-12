@@ -34,6 +34,7 @@ export default {
         },
       } satisfies Partial<AppointmentDataByStep>,
     },
+    card: {title: 'Make an appointment', mobileHeaderHidden: true},
     msw: {
       handlers: [
         mockAppointmentProductsGet,

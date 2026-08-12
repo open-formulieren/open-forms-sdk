@@ -1,7 +1,6 @@
-// @import instead of @use because breakpoints are defined globally
-@import 'microscope-sass/lib/responsive';
+@use '@open-formulieren/formio-renderer/scss/responsive';
 
-@include mobile-only {
+@include responsive.mobile-only {
   .openforms-theme {
     --of-modal-padding-block-start: 20px;
     --of-modal-padding-block-end: 20px;
@@ -25,11 +24,5 @@
       justify-content: var(--utrecht-button-justify-content, center);
       text-align: unset;
     }
-  }
-}
-
-@include tablet {
-  .openforms-theme {
-    --of-modal-sheet-inline-size: 50dvw;
   }
 }

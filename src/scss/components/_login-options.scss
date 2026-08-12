@@ -3,18 +3,14 @@
 @import 'microscope-sass/lib/typography';
 
 .openforms-login-options {
-  @include body;
-
-  @include bem.element('list') {
-    @include margin(auto);
-  }
-
-  @include bem.element('caption') {
-    @include h2;
-    @include margin(auto);
-  }
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--of-login-options-row-gap, 20px);
 
   @include bem.element('cosign') {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--of-login-options-cosign-row-gap, 20px);
     padding-block: var(--of-login-options-cosign-padding-block);
     padding-inline: var(--of-login-options-cosign-padding-inline);
     background-color: var(--of-login-options-cosign-background-color);

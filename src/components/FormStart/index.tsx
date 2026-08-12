@@ -6,7 +6,6 @@ import {useNavigate} from 'react-router';
 import {useAsync} from 'react-use';
 
 import {ConfigContext} from '@/Context';
-import Body from '@/components/Body';
 import Card from '@/components/Card';
 import FormMaximumSubmissionsError from '@/components/Errors/FormMaximumSubmissionsError';
 import ExistingSubmissionOptions from '@/components/ExistingSubmissionOptions';
@@ -14,6 +13,7 @@ import FormContainer from '@/components/FormContainer';
 import {LiteralsProvider} from '@/components/Literal';
 import LoginOptions, {type OnFormStartOptions} from '@/components/LoginOptions';
 import MaintenanceMode from '@/components/MaintenanceMode';
+import RichText from '@/components/RichText';
 import {useSubmissionContext} from '@/components/SubmissionProvider';
 import {AuthenticationError, useDetectAuthErrorMessage} from '@/components/auth';
 import AuthenticationOutage, {
@@ -167,13 +167,7 @@ const FormStart: React.FC = () => {
 
         {authError && <AuthenticationError parameter={authError[0]} errorCode={authError[1]} />}
 
-        {form.explanationTemplate && (
-          <Body
-            component="div"
-            modifiers={['wysiwyg']}
-            dangerouslySetInnerHTML={{__html: form.explanationTemplate}}
-          />
-        )}
+        {form.explanationTemplate && <RichText content={form.explanationTemplate} />}
 
         {hasActiveSubmission && (
           <ExistingSubmissionOptions

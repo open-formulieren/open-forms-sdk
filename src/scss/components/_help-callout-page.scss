@@ -5,7 +5,7 @@ $dialog-background-color: var(--of-help-callout-page-dialog-color, #d3e3ec);
 
 .openforms-help-callout-page-dialog {
   margin-block-start: var(--of-help-callout-page-dialog-margin-block-start, 1em);
-  margin-block-end: var(--of-help-callout-page-dialog-margin-block-end, 1em);
+  margin-block-end: var(--of-help-callout-page-dialog-margin-block-end);
 
   @include bem.element('triangle') {
     width: 0;

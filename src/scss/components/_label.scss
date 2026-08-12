@@ -1,8 +1,0 @@
-@use '@bbt/bem';
-@use './anchor';
-
-.utrecht-form-label {
-  @include bem.modifier('openforms') {
-    @include anchor.extend-utrecht-link;
-  }
-}
