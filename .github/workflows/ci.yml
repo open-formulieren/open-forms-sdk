@@ -217,7 +217,7 @@ jobs:
           mv README.npm.md README.md
           npm run prepare-package
 
-          case "${{ needs.setup.outputs.version }}" in
+          case "${NEEDS_SETUP_OUTPUTS_VERSION}" in
             *"-alpha."*) npm_tag=next ;;
             *"-beta."*) npm_tag=next ;;
             *"-rc."*) npm_tag=next ;;
@@ -226,6 +226,8 @@ jobs:
           esac
 
           npm publish --access public --tag="$npm_tag"
+        env:
+          NEEDS_SETUP_OUTPUTS_VERSION: ${{ needs.setup.outputs.version }}
 
   docker:
     name: Build (and push) Docker image
