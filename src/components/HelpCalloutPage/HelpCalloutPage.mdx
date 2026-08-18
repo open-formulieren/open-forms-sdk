@@ -34,7 +34,7 @@ A complete example is shown below:
           "inline-offset": {"value": "35px"}
         },
         "image": {
-          "max-inline-size": {"value": "100%"}
+          "max-inline-size": {"value": "50%"}
         }
       }
     }
@@ -50,7 +50,9 @@ some additional CSS to be added to your theme. For example:
 ```css
 @media (max-width: 767px) {
   .my-theme {
+    --of-help-callout-page-dialog-align-items: start;
     --of-help-callout-page-dialog-flex-direction: column;
+    --of-help-callout-page-dialog-image-max-inline-size: 100%;
     --of-help-callout-page-dialog-padding-block-end: 2em;
     --of-help-callout-page-dialog-padding-block-start: 2em;
     --of-help-callout-page-dialog-padding-inline-end: 2em;

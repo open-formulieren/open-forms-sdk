@@ -47,6 +47,8 @@
 }
 
 .openforms-theme {
+  --of-help-callout-page-dialog-image-max-inline-size: 50%;
+
   .openforms-card__body > .utrecht-html > :last-child {
     margin-block-end: 0;
   }

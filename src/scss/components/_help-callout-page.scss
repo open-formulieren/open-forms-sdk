@@ -27,11 +27,15 @@ $dialog-background-color: var(--of-help-callout-page-dialog-color, #d3e3ec);
     padding-inline-start: var(--of-help-callout-page-dialog-padding-inline-start, 3em);
     display: flex;
     flex-direction: var(--of-help-callout-page-dialog-flex-direction, row);
-    align-items: center;
+    align-items: var(--of-help-callout-page-dialog-align-items, center);
     column-gap: var(--of-help-callout-page-dialog-column-gap, 3em);
     row-gap: var(--of-help-callout-page-dialog-row-gap, 2em);
     justify-content: flex-start;
     align-content: space-between;
+
+    .utrecht-html {
+      flex-grow: 1;
+    }
   }
 
   @include bem.element('image') {
