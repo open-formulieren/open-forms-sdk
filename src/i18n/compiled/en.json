@@ -1685,12 +1685,6 @@
       "value": "Total"
     }
   ],
-  "M+pwu8": [
-    {
-      "type": 0,
-      "value": "Rate this form as 'average'"
-    }
-  ],
   "M/8TYr": [
     {
       "type": 0,
@@ -2241,6 +2235,12 @@
     {
       "type": 0,
       "value": "?"
+    }
+  ],
+  "Ux/D+q": [
+    {
+      "type": 0,
+      "value": "Neutral"
     }
   ],
   "UyEKdQ": [
@@ -2865,12 +2865,6 @@
       "value": "What do you want to make an appointment for?"
     }
   ],
-  "ie+hkb": [
-    {
-      "type": 0,
-      "value": "Average"
-    }
-  ],
   "iey7IL": [
     {
       "type": 0,
@@ -3235,6 +3229,12 @@
     {
       "type": 1,
       "value": "reference"
+    }
+  ],
+  "m8Sooz": [
+    {
+      "type": 0,
+      "value": "Rate this form as 'neutral'"
     }
   ],
   "mMYAWl": [

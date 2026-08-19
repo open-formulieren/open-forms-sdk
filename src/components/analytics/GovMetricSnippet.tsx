@@ -60,8 +60,8 @@ const GovMetricSnippet: React.FC = () => {
             href={govMetricURLWithRating(govmetricUrl, '2')}
             className="gm_sidebar_anchor"
             title={intl.formatMessage({
-              description: 'Feedback face title - Average',
-              defaultMessage: "Rate this form as 'average'",
+              description: 'Feedback face title - Neutral',
+              defaultMessage: "Rate this form as 'neutral'",
             })}
             target="_blank"
             rel="nofollow noreferrer"
@@ -76,7 +76,7 @@ const GovMetricSnippet: React.FC = () => {
             />
           </a>
           <strong>
-            <FormattedMessage defaultMessage="Average" description="GovMetric rating text" />
+            <FormattedMessage defaultMessage="Neutral" description="GovMetric rating text" />
           </strong>
         </li>
         <li className="govmetric_snippet__face kif_col">

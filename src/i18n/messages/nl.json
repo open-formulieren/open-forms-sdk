@@ -378,11 +378,6 @@
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
   },
-  "M+pwu8": {
-    "defaultMessage": "Beoordeel dit formulier als 'matig'",
-    "description": "Feedback face title - Average",
-    "originalDefault": "Rate this form as 'average'"
-  },
   "M/8TYr": {
     "defaultMessage": "Later verdergaan",
     "description": "Form save modal submit button",
@@ -462,6 +457,11 @@
     "defaultMessage": "De tekst moet {exact, select, true {exact} other {{inclusive, select, true {minstens} other {meer dan}}} } {minimum, plural, one {{minimum} karakter} other {{minimum} karakters}} lang zijn.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
+  },
+  "Ux/D+q": {
+    "defaultMessage": "Neutraal",
+    "description": "GovMetric rating text",
+    "originalDefault": "Neutral"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -645,11 +645,6 @@
     "description": "Appointment reason question",
     "originalDefault": "What do you want to make an appointment for?"
   },
-  "ie+hkb": {
-    "defaultMessage": "Matig",
-    "description": "GovMetric rating text",
-    "originalDefault": "Average"
-  },
   "iey7IL": {
     "defaultMessage": "Ongeldige invoer.",
     "description": "ZOD 'invalid_union' error message",
@@ -737,6 +732,11 @@
     "defaultMessage": "Je referentienummer is: {reference}",
     "description": "Submission reference text",
     "originalDefault": "Your reference number is: {reference}"
+  },
+  "m8Sooz": {
+    "defaultMessage": "Beoordeel dit formulier als 'neutraal'",
+    "description": "Feedback face title - Neutral",
+    "originalDefault": "Rate this form as 'neutral'"
   },
   "mMYAWl": {
     "defaultMessage": "Je sessie staat op het punt om te vervallen {delta}. Verleng de sessie indien je door wenst te gaan.",
