@@ -2,6 +2,61 @@
 SDK Changelog
 =============
 
+4.0.0-beta.0 (2026-08-19)
+=========================
+
+Beta release for the upcoming 4.0.0 release.
+
+The stable version is scheduled to be released at the end of August.
+
+Breaking changes
+----------------
+
+See the 4.0 upgrade notes in `storybook <https://open-formulieren.github.io/open-forms-sdk/?path=/docs/developers-upgrade-notes-4-0-0--docs>`_
+for details.
+
+* Removed a bunch of CSS and components in favour of NL Design System community
+  components.
+* [#6182] The position of validation errors and field descriptions has been changed to
+  be between the field label and field input, conform the NL Design System standards.
+  This required a large number of markup and CSS changes that custom themes may have been
+  relying on.
+* A bunch of design-tokens have been updated or removed, which might cause unexpected
+  visual changes.
+
+New features
+------------
+
+* [#5787] Added a help dialog which provides users assistance with filling out a form:
+
+  - [#6318] Added a "Help" button that displays the dialog when clicked.
+  - [#6317] Added a callout page that is shown before users start filling out the form.
+    This page explains the purpose of the "Help" button and makes users aware that
+    additional assistance is available.
+
+* [#6277] Implemented ``cat`` and ``substr`` frontend logic evaluation rules.
+
+Bugfixes
+--------
+
+* [#6458] Fixed frontend logic evaluation for invalid date and datetime values.
+
+Project maintenance
+-------------------
+
+* Hardened CI configuration to protect against supply chain attacks.
+* Removed some dead code.
+* Fixed minor build warnings.
+* Updated Dutch translations.
+* Replaced ``microscope-sass/lib/bem`` with ``@bbt/bem``.
+* [#6487] Extending test coverage for frontend logic evaluation.
+* Updated dependencies:
+
+  - Upgraded ``vitest`` to 4.1.10.
+  - Upgraded ``@open-formulieren/design-tokens`` to 1.1.0.
+  - Upgraded ``@open-formulieren/formio-renderer`` to 2.0.0.
+  - Upgraded ``storybook`` to 10.5.4.
+
 3.5.6 (2026-07-27)
 ==================
 
