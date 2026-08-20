@@ -1679,12 +1679,6 @@
       "value": "Totaal"
     }
   ],
-  "M+pwu8": [
-    {
-      "type": 0,
-      "value": "Beoordeel dit formulier als 'matig'"
-    }
-  ],
   "M/8TYr": [
     {
       "type": 0,
@@ -2171,6 +2165,12 @@
     {
       "type": 0,
       "value": "?"
+    }
+  ],
+  "Ux/D+q": [
+    {
+      "type": 0,
+      "value": "Neutraal"
     }
   ],
   "UyEKdQ": [
@@ -2803,12 +2803,6 @@
       "value": "Waarvoor wil je een afspraak maken?"
     }
   ],
-  "ie+hkb": [
-    {
-      "type": 0,
-      "value": "Matig"
-    }
-  ],
   "iey7IL": [
     {
       "type": 0,
@@ -3177,6 +3171,12 @@
     {
       "type": 1,
       "value": "reference"
+    }
+  ],
+  "m8Sooz": [
+    {
+      "type": 0,
+      "value": "Beoordeel dit formulier als 'neutraal'"
     }
   ],
   "mMYAWl": [

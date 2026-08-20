@@ -374,11 +374,6 @@
     "description": "Label for the total price to pay",
     "originalDefault": "Total"
   },
-  "M+pwu8": {
-    "defaultMessage": "Rate this form as 'average'",
-    "description": "Feedback face title - Average",
-    "originalDefault": "Rate this form as 'average'"
-  },
   "M/8TYr": {
     "defaultMessage": "Continue later",
     "description": "Form save modal submit button",
@@ -458,6 +453,11 @@
     "defaultMessage": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.",
     "description": "ZOD 'too_small' error message, for strings",
     "originalDefault": "String must contain {exact, select, true {exactly} other {{inclusive, select, true {at least} other {more than}}} } {minimum, plural, one {{minimum} character} other {{minimum} characters}}."
+  },
+  "Ux/D+q": {
+    "defaultMessage": "Neutral",
+    "description": "GovMetric rating text",
+    "originalDefault": "Neutral"
   },
   "UyEKdQ": {
     "defaultMessage": "Product {number}/{total}",
@@ -639,11 +639,6 @@
     "description": "Appointment reason question",
     "originalDefault": "What do you want to make an appointment for?"
   },
-  "ie+hkb": {
-    "defaultMessage": "Average",
-    "description": "GovMetric rating text",
-    "originalDefault": "Average"
-  },
   "iey7IL": {
     "defaultMessage": "Invalid input.",
     "description": "ZOD 'invalid_union' error message",
@@ -728,6 +723,11 @@
     "defaultMessage": "Your reference number is: {reference}",
     "description": "Submission reference text",
     "originalDefault": "Your reference number is: {reference}"
+  },
+  "m8Sooz": {
+    "defaultMessage": "Rate this form as 'neutral'",
+    "description": "Feedback face title - Neutral",
+    "originalDefault": "Rate this form as 'neutral'"
   },
   "mMYAWl": {
     "defaultMessage": "Your session is about to expire {delta}. Extend your session if you wish to continue.",

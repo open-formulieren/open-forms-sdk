@@ -1,9 +1,9 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import useFormContext from '@/hooks/useFormContext';
-import govmetricAverageImg from '@/img/govmetric/average.png';
-import govmetricGoodImg from '@/img/govmetric/good.png';
-import govmetricPoorImg from '@/img/govmetric/poor.png';
+import govmetricGoodImg from '@/img/govmetric/smiley-dark-green.svg?no-inline';
+import govmetricPoorImg from '@/img/govmetric/smiley-dark-red.svg?no-inline';
+import govmetricNeutralImg from '@/img/govmetric/smiley-orange.svg?no-inline';
 
 import {useAnalyticsToolsConfig} from './AnalyticsToolConfigProvider';
 import {buildGovMetricUrl, govMetricURLWithRating} from './utils';
@@ -60,14 +60,14 @@ const GovMetricSnippet: React.FC = () => {
             href={govMetricURLWithRating(govmetricUrl, '2')}
             className="gm_sidebar_anchor"
             title={intl.formatMessage({
-              description: 'Feedback face title - Average',
-              defaultMessage: "Rate this form as 'average'",
+              description: 'Feedback face title - Neutral',
+              defaultMessage: "Rate this form as 'neutral'",
             })}
             target="_blank"
             rel="nofollow noreferrer"
           >
             <img
-              src={govmetricAverageImg}
+              src={govmetricNeutralImg}
               width="50px"
               alt={intl.formatMessage({
                 description: 'GovMetric orange face alt text',
@@ -76,7 +76,7 @@ const GovMetricSnippet: React.FC = () => {
             />
           </a>
           <strong>
-            <FormattedMessage defaultMessage="Average" description="GovMetric rating text" />
+            <FormattedMessage defaultMessage="Neutral" description="GovMetric rating text" />
           </strong>
         </li>
         <li className="govmetric_snippet__face kif_col">
