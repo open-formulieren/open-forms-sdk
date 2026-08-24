@@ -2,6 +2,22 @@
 SDK Changelog
 =============
 
+3.5.7 (2026-08-24)
+==================
+
+Regular bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 1.8.3 release, fixing 4 bugs:
+
+  - Fixed pending file upload state validation errors not being cleared on upload
+    completion.
+  - Fixed the "add another" button not being removed when the editgrid item limit is
+    reached.
+  - Fixed the `softRequiredErrors` component displaying the fieldset label despite the
+    component being configured not to show the header/label.
+  - Fixed customer profile validation errors not being cleared properly when entering
+    the missing email or phone number.
+
 3.5.6 (2026-07-27)
 ==================
 
