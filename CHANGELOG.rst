@@ -2,6 +2,118 @@
 SDK Changelog
 =============
 
+4.0.0 (2026-08-27)
+==================
+
+Feature release with breaking changes.
+
+There are additional changes compared to the alpha and beta versions. Continue reading for the full
+changelog, which includes the alpha and beta versions release notes.
+
+.. warning:: SDK 4.0.0 requires the backend API version 4.0.0 or newer.
+
+Breaking changes
+----------------
+
+See the 4.0 upgrade notes in `storybook <https://open-formulieren.github.io/open-forms-sdk/?path=/docs/developers-upgrade-notes-4-0-0--docs>`_
+for details.
+
+* Removed a bunch of CSS and components in favour of NL Design System community
+  components.
+* [#6182] The position of validation errors and field descriptions has been changed to
+  be between the field label and field input, conform the NL Design System standards.
+  This required a large number of markup and CSS changes that custom themes may have been
+  relying on.
+* A bunch of design-tokens have been updated or removed, which might cause unexpected
+  visual changes.
+* [#6408] Value clearing when a component is hidden now completely removes the value from the logic
+  evaluation context rather than assigning the "empty" value.
+* The UMD bundle has been removed and the ESM modules have been made the default export
+  of the NPM package. To use the ESM **bundle**, an updated import path is required.
+* [#6164] Removal of deprecated functionalities:
+
+  - Dropped Formiojs dependency.
+  - Dropped support for the old form renderer.
+  - Removed legacy logic evaluation.
+  - Dropped UMD bundle support.
+
+New features
+------------
+
+* [#6541] Update GovMetric smiley assets.
+* [#5787] Added a help dialog which provides users assistance with filling out a form:
+
+  - [#6318] Added a "Help" button that displays the dialog when clicked.
+  - [#6317] Added a callout page that is shown before users start filling out the form.
+    This page explains the purpose of the "Help" button and makes users aware that
+    additional assistance is available.
+
+* [#6277] Implemented ``cat`` and ``substr`` frontend logic evaluation rules.
+* [#6350] Added option to hide the form title.
+* [#6175] Added support for "single step" forms, a simplified form type that allows you
+  to immediately fill out the form fields without logging in or explicitly starting the
+  form.
+
+Bugfixes
+--------
+
+* [#6458] Fixed frontend logic evaluation for invalid date and datetime values.
+* [#6410] Fixed unordered lists styling.
+* [#6359] Fixed page title not being updated correctly when navigating.
+* [#6279] Fixed profile summary data font-size being too big.
+* [#6354] Fixed too many network calls being made in address lookups.
+* [#3535] Fixed bug where pausing a form allowed users to go to the next step, even when
+  progressing was blocked.
+* [#6245] Fixed address derivation configuration in textfields not being supported in the
+  new renderer.
+* Upgraded ``@open-formulieren/formio-renderer`` to 2.0.1 bugfix release, which fixes:
+
+  - [#6499] Fixed pending file upload state validation errors not being cleared on upload
+    completion.
+  - [#6548] Fixed the "add another" button not being removed when the editgrid item limit
+    is reached.
+  - [#6501] Fixed the ``softRequiredErrors`` component displaying the fieldset label
+    despite the component being configured not to show the header/label.
+  - [#6558] Fixed customer profile validation errors not being cleared properly when
+    entering the missing email or phone number.
+
+* [#6099] Fixed component initial values not being taken into account for the first
+  logic evaluation call if there's no step submission data yet.
+* [#6183] Fixed a crash in the new logic evaluation when there's a default hidden
+  component inside an editgrid.
+
+Project maintenance
+-------------------
+
+* Removed some dead code.
+* Fixed minor build warnings.
+* Updated Dutch translations.
+* [#6487] Extending test coverage for frontend logic evaluation.
+* Fixed CI setup for storybook.
+* Fixed test flakiness.
+* [#6126] Hardened CI workflows to protect against supply chain attacks.
+* Removed obsoleted API endpoint calls for the submission step validation.
+* Updated dependencies:
+
+  - Upgraded ``@codecov/vite-plugin`` to 2.0.1.
+  - Upgraded ``@open-formulieren/design-tokens`` to 1.1.0.
+  - Upgraded ``@open-formulieren/formio-renderer`` to 2.0.1.
+  - Upgraded ``@open-formulieren/types`` to 1.4.2.
+  - Upgraded ``@utrecht/component-library-react`` to 14.0.2.
+  - Upgraded ``@utrecht/design-tokens`` to 6.2.1.
+  - Upgraded various ``@utrecht`` css dependencies.
+  - Upgraded ``playwright`` to 1.60.
+  - Upgraded ``storybook`` to 10.5.4.
+  - Upgraded ``undici`` to 6.27.0.
+  - Upgraded ``vitest`` to 4.1.10.
+  - Replaced ``microscope-sass/lib/bem`` with ``@bbt/bem``.
+
+* [#926] Upgraded build tooling:
+
+  - Upgraded ``NodeJS`` to 24.14.
+  - Upgraded ``ESLint`` to 9.39.4.
+  - Replaced ``jsdom/testing-library`` with vitest browser mode.
+
 3.5.7 (2026-08-24)
 ==================
 
