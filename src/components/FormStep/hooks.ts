@@ -2,7 +2,7 @@ import type {FormioForm} from '@open-formulieren/formio-renderer';
 import type {
   RequestVerificationCode,
   VerifyCode,
-} from '@open-formulieren/formio-renderer/registry/email/verification/types.js';
+} from '@open-formulieren/formio-renderer/components/forms/Verification/types.js';
 import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
 import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
@@ -243,6 +243,8 @@ export const useFormioFormConfigurationParameters = (): Pick<
         // We need an authentication identifier for the customer interaction registration
         // plugin.
         updatePreferencesModalEnabled: submission.isAuthenticated,
+        requestVerificationCode,
+        verifyCode,
       },
       email: {requestVerificationCode, verifyCode},
       file: {
