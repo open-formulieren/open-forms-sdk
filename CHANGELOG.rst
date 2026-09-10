@@ -18,7 +18,7 @@ Bugfixes
     would be extremely sluggish and/or crashed.
 
 Project maintenance
-----------------
+-------------------
 
 * Updated configuration regarding supported/maintained versions.
 
