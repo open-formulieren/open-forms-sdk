@@ -2,6 +2,26 @@
 SDK Changelog
 =============
 
+4.1.0-alpha.0 (2026-09-10)
+==========================
+
+First preview release of the upcoming 4.1.0 version.
+
+Bugfixes
+--------
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 2.0.2 bugfix release, which fixes:
+
+  - Fixed a crash when an ``editgrid`` component with ``validate.maxLength`` set is
+    initially hidden and becomes visible.
+  - Worked around an issue where the selectboxes component for the ``npFamilyMembers``
+    would be extremely sluggish and/or crashed.
+
+Project maintenance
+----------------
+
+* Updated configuration regarding supported/maintained versions.
+
 4.0.1 (2026-08-31)
 ==================
 
