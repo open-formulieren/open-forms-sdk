@@ -39,7 +39,8 @@
       "value": "Enter your email address to get an email to resume the form at a later date. This can be done on any device where you open the link. The link remains valid for "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numberOfDays",
       "options": {
         "one": {
           "value": [
@@ -62,9 +63,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numberOfDays"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -89,20 +89,14 @@
       "value": "Use this "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email address"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -113,10 +107,16 @@
               "value": "phone number"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -159,11 +159,9 @@
       "value": "Save my preferences for the next time. "
     },
     {
+      "type": 5,
+      "value": "hasPortalUrl",
       "options": {
-        "other": {
-          "value": [
-          ]
-        },
         "true": {
           "value": [
             {
@@ -171,24 +169,25 @@
               "value": "You can always change them again later in the "
             },
             {
+              "type": 8,
+              "value": "a",
               "children": [
                 {
                   "type": 0,
                   "value": "portal"
                 }
-              ],
-              "type": 8,
-              "value": "a"
+              ]
             },
             {
               "type": 0,
               "value": "."
             }
           ]
+        },
+        "other": {
+          "value": []
         }
-      },
-      "type": 5,
-      "value": "hasPortalUrl"
+      }
     }
   ],
   "0EdUXi": [
@@ -223,14 +222,14 @@
       "value": "You are verifying the email address "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 1,
           "value": "emailAddress"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -305,15 +304,9 @@
   ],
   "3C29X9": [
     {
+      "type": 5,
+      "value": "addNotRequiredSuffix",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "label"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -325,10 +318,16 @@
               "value": " (not required)"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "addNotRequiredSuffix"
+      }
     }
   ],
   "3DaLqN": [
@@ -407,7 +406,8 @@
   ],
   "5TAbGN": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "charCount",
       "options": {
         "one": {
           "value": [
@@ -430,9 +430,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "charCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "5uh2hS": [
@@ -543,14 +542,14 @@
       "value": "Your session has expired. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Click here to restart"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -563,33 +562,9 @@
       "value": "Array must contain "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "less than"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "at most"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -597,17 +572,42 @@
               "value": "exactly"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "at most"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "less than"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "maximum",
       "options": {
         "one": {
           "value": [
@@ -634,9 +634,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maximum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -889,14 +888,15 @@
       "value": "You must select at least "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "minSelectedCount",
       "options": {
         "one": {
           "value": [
             {
-              "style": null,
               "type": 2,
-              "value": "minSelectedCount"
+              "value": "minSelectedCount",
+              "style": null
             },
             {
               "type": 0,
@@ -907,9 +907,9 @@
         "other": {
           "value": [
             {
-              "style": null,
               "type": 2,
-              "value": "minSelectedCount"
+              "value": "minSelectedCount",
+              "style": null
             },
             {
               "type": 0,
@@ -918,9 +918,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "minSelectedCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -1069,20 +1068,14 @@
       "value": "(Will become preferred "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email address"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -1093,10 +1086,16 @@
               "value": "phone number"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -1105,7 +1104,8 @@
   ],
   "E3ytti": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numProducts",
       "options": {
         "one": {
           "value": [
@@ -1124,9 +1124,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numProducts"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "E4h5vK": [
@@ -1297,7 +1296,8 @@
       "value": "Too many files uploaded. You can upload "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "maxNumberOfFiles",
       "options": {
         "one": {
           "value": [
@@ -1324,9 +1324,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maxNumberOfFiles"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -1335,7 +1334,8 @@
   ],
   "I2pBWg": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "remainingCharCount",
       "options": {
         "one": {
           "value": [
@@ -1358,9 +1358,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "remainingCharCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "I6ok5N": [
@@ -1369,20 +1368,30 @@
       "value": "Invalid "
     },
     {
+      "type": 5,
+      "value": "validation",
       "options": {
-        "datetime": {
-          "value": [
-            {
-              "type": 0,
-              "value": "date and time"
-            }
-          ]
-        },
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email"
+            }
+          ]
+        },
+        "url": {
+          "value": [
+            {
+              "type": 0,
+              "value": "url"
+            }
+          ]
+        },
+        "datetime": {
+          "value": [
+            {
+              "type": 0,
+              "value": "date and time"
             }
           ]
         },
@@ -1401,18 +1410,8 @@
               "value": "validation"
             }
           ]
-        },
-        "url": {
-          "value": [
-            {
-              "type": 0,
-              "value": "url"
-            }
-          ]
         }
-      },
-      "type": 5,
-      "value": "validation"
+      }
     },
     {
       "type": 0,
@@ -1425,33 +1424,9 @@
       "value": "Array must contain "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "more than"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "at least"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -1459,17 +1434,42 @@
               "value": "exactly"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "at least"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "more than"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "minimum",
       "options": {
         "one": {
           "value": [
@@ -1496,9 +1496,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "minimum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -1563,19 +1562,9 @@
   ],
   "K4JPOy": [
     {
+      "type": 5,
+      "value": "hasFirstNames",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Edit child with BSN: "
-            },
-            {
-              "type": 1,
-              "value": "bsn"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -1587,10 +1576,20 @@
               "value": "firstNames"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Edit child with BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "hasFirstNames"
+      }
     }
   ],
   "KMs17v": [
@@ -1619,6 +1618,8 @@
   ],
   "LEeGSv": [
     {
+      "type": 5,
+      "value": "isApplicable",
       "options": {
         "false": {
           "value": [
@@ -1640,9 +1641,7 @@
             }
           ]
         }
-      },
-      "type": 5,
-      "value": "isApplicable"
+      }
     }
   ],
   "LSB7FE": [
@@ -1771,20 +1770,14 @@
       "value": "There are multiple "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email addresses"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -1795,30 +1788,30 @@
               "value": "phone numbers"
             }
           ]
-        }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
-    },
-    {
-      "type": 0,
-      "value": " associated with your account. Use the dropdown to select the "
-    },
-    {
-      "options": {
-        "email": {
-          "value": [
-            {
-              "type": 0,
-              "value": "email address"
-            }
-          ]
         },
         "other": {
           "value": [
             {
               "type": 1,
               "value": "digitalAddressType"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": 0,
+      "value": " associated with your account. Use the dropdown to select the "
+    },
+    {
+      "type": 5,
+      "value": "digitalAddressType",
+      "options": {
+        "email": {
+          "value": [
+            {
+              "type": 0,
+              "value": "email address"
             }
           ]
         },
@@ -1829,21 +1822,25 @@
               "value": "phone number"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
       "value": " you want to use for this form. "
     },
     {
+      "type": 5,
+      "value": "hasPortalUrl",
       "options": {
-        "other": {
-          "value": [
-          ]
-        },
         "true": {
           "value": [
             {
@@ -1851,24 +1848,25 @@
               "value": "To update your preferences, use the "
             },
             {
+              "type": 8,
+              "value": "a",
               "children": [
                 {
                   "type": 0,
                   "value": "portal"
                 }
-              ],
-              "type": 8,
-              "value": "a"
+              ]
             },
             {
               "type": 0,
               "value": "."
             }
           ]
+        },
+        "other": {
+          "value": []
         }
-      },
-      "type": 5,
-      "value": "hasPortalUrl"
+      }
     }
   ],
   "P194bo": [
@@ -1909,20 +1907,14 @@
       "value": "The "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email address"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -1933,10 +1925,16 @@
               "value": "phone number"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -2087,14 +2085,15 @@
       "value": "You can only select up to "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "maxSelectedCount",
       "options": {
         "one": {
           "value": [
             {
-              "style": null,
               "type": 2,
-              "value": "maxSelectedCount"
+              "value": "maxSelectedCount",
+              "style": null
             },
             {
               "type": 0,
@@ -2105,9 +2104,9 @@
         "other": {
           "value": [
             {
-              "style": null,
               "type": 2,
-              "value": "maxSelectedCount"
+              "value": "maxSelectedCount",
+              "style": null
             },
             {
               "type": 0,
@@ -2116,9 +2115,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maxSelectedCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -2143,33 +2141,9 @@
       "value": "String must contain "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "more than"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "at least"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -2177,17 +2151,42 @@
               "value": "exactly"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "at least"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "more than"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "minimum",
       "options": {
         "one": {
           "value": [
@@ -2214,9 +2213,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "minimum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -2287,20 +2285,14 @@
       "value": "Provide the "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email address"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -2311,10 +2303,16 @@
               "value": "phone number"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -2449,19 +2447,9 @@
   ],
   "ZAq+s7": [
     {
+      "type": 5,
+      "value": "hasFirstNames",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Delete child with BSN: "
-            },
-            {
-              "type": 1,
-              "value": "bsn"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -2473,10 +2461,20 @@
               "value": "firstNames"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete child with BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "hasFirstNames"
+      }
     }
   ],
   "ZFoN7U": [
@@ -2493,6 +2491,8 @@
   ],
   "ZJoaby": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
@@ -2507,11 +2507,9 @@
           "value": "\" submission. "
         },
         {
+          "type": 5,
+          "value": "confirmationEmailEnabled",
           "options": {
-            "other": {
-              "value": [
-              ]
-            },
             "true": {
               "value": [
                 {
@@ -2519,28 +2517,27 @@
                   "value": "You will receive a confirmation email."
                 }
               ]
+            },
+            "other": {
+              "value": []
             }
-          },
-          "type": 5,
-          "value": "confirmationEmailEnabled"
+          }
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": "Do not forget to download your summary, we do not send it via email."
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "ZL5313": [
@@ -2901,6 +2898,8 @@
   ],
   "iiVLgn": [
     {
+      "type": 5,
+      "value": "multiple",
       "options": {
         "false": {
           "value": [
@@ -2917,10 +2916,11 @@
               "value": "Drop, or click to select "
             },
             {
+              "type": 5,
+              "value": "limit",
               "options": {
                 "0": {
-                  "value": [
-                  ]
+                  "value": []
                 },
                 "other": {
                   "value": [
@@ -2934,9 +2934,7 @@
                     }
                   ]
                 }
-              },
-              "type": 5,
-              "value": "limit"
+              }
             },
             {
               "type": 0,
@@ -2944,19 +2942,16 @@
             }
           ]
         }
-      },
-      "type": 5,
-      "value": "multiple"
+      }
     },
     {
       "type": 0,
       "value": " The maximum size of a single file is "
     },
     {
-      "children": [
-      ],
       "type": 8,
-      "value": "fileSize"
+      "value": "fileSize",
+      "children": []
     },
     {
       "type": 0,
@@ -3103,33 +3098,9 @@
       "value": "Number must be "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "greater than"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "greater than or equal to"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3137,10 +3108,34 @@
               "value": "exactly equal to"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "greater than or equal to"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "greater than"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
@@ -3161,20 +3156,14 @@
       "value": "Add "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email address"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -3185,10 +3174,16 @@
               "value": "phone number"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     }
   ],
   "l/0YVO": [
@@ -3351,33 +3346,9 @@
       "value": "BigInt must be "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "less than"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "less than or equal to"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3385,10 +3356,34 @@
               "value": "exactly equal to"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "less than or equal to"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "less than"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
@@ -3473,33 +3468,9 @@
       "value": "String must contain "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "under"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "at most"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3507,17 +3478,42 @@
               "value": "exactly"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "at most"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "under"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "maximum",
       "options": {
         "one": {
           "value": [
@@ -3544,9 +3540,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maximum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3641,28 +3636,28 @@
       "value": "You're about to cancel your appointment on "
     },
     {
+      "type": 8,
+      "value": "b",
       "children": [
         {
           "type": 1,
           "value": "date"
         }
-      ],
-      "type": 8,
-      "value": "b"
+      ]
     },
     {
       "type": 0,
       "value": " at "
     },
     {
+      "type": 8,
+      "value": "b",
       "children": [
         {
           "type": 1,
           "value": "time"
         }
-      ],
-      "type": 8,
-      "value": "b"
+      ]
     },
     {
       "type": 0,
@@ -3717,33 +3712,9 @@
       "value": "Number must be "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "less than"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "less than or equal to"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3751,10 +3722,34 @@
               "value": "exactly equal to"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "less than or equal to"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "less than"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
@@ -3829,20 +3824,14 @@
       "value": "(will become preferred "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "email address"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -3853,10 +3842,16 @@
               "value": "phone number"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -3883,15 +3878,9 @@
   ],
   "x/mWt2": [
     {
+      "type": 5,
+      "value": "single",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Uploaded files"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3899,10 +3888,16 @@
               "value": "Uploaded file"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Uploaded files"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "single"
+      }
     }
   ],
   "xHVrv5": [
@@ -3987,10 +3982,9 @@
       "value": "Nearest address: "
     },
     {
-      "children": [
-      ],
       "type": 8,
-      "value": "address"
+      "value": "address",
+      "children": []
     }
   ]
 }

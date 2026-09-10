@@ -39,7 +39,8 @@
       "value": "Vul hieronder je e-mailadres in. Je krijgt dan een mail met link om het formulier verder in te vullen. Dit kan op elk apparaat waar je de link opent. De link blijft maximaal "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numberOfDays",
       "options": {
         "one": {
           "value": [
@@ -62,9 +63,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numberOfDays"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -89,20 +89,14 @@
       "value": "Gebruik dit "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "e-mailadres"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -113,10 +107,16 @@
               "value": "telefoonnummer"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -159,11 +159,9 @@
       "value": "Sla mijn gegevens op voor de volgende keer. "
     },
     {
+      "type": 5,
+      "value": "hasPortalUrl",
       "options": {
-        "other": {
-          "value": [
-          ]
-        },
         "true": {
           "value": [
             {
@@ -171,24 +169,25 @@
               "value": "U kunt deze later altijd nog wijzigen in het "
             },
             {
+              "type": 8,
+              "value": "a",
               "children": [
                 {
                   "type": 0,
                   "value": "portaal"
                 }
-              ],
-              "type": 8,
-              "value": "a"
+              ]
             },
             {
               "type": 0,
               "value": "."
             }
           ]
+        },
+        "other": {
+          "value": []
         }
-      },
-      "type": 5,
-      "value": "hasPortalUrl"
+      }
     }
   ],
   "0EdUXi": [
@@ -223,14 +222,14 @@
       "value": "Om door te gaan moet je jouw e-mailadres "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 1,
           "value": "emailAddress"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -305,15 +304,9 @@
   ],
   "3C29X9": [
     {
+      "type": 5,
+      "value": "addNotRequiredSuffix",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "label"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -325,10 +318,16 @@
               "value": " (niet verplicht)"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "label"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "addNotRequiredSuffix"
+      }
     }
   ],
   "3DaLqN": [
@@ -407,7 +406,8 @@
   ],
   "5TAbGN": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "charCount",
       "options": {
         "one": {
           "value": [
@@ -434,9 +434,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "charCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "5uh2hS": [
@@ -547,14 +546,14 @@
       "value": "Je sessie is verlopen. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Klik hier om opnieuw te beginnen"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -567,33 +566,9 @@
       "value": "Er mogen "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "minder dan"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "maximaal"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -601,17 +576,42 @@
               "value": "precies"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "maximaal"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "maximum",
       "options": {
         "one": {
           "value": [
@@ -638,9 +638,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maximum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -1043,12 +1042,22 @@
       "value": "(Wordt het "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "voorkeurs-e-mailadres"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurstelefoonnummer"
             }
           ]
         },
@@ -1063,18 +1072,8 @@
               "value": "digitalAddressType"
             }
           ]
-        },
-        "phoneNumber": {
-          "value": [
-            {
-              "type": 0,
-              "value": "voorkeurstelefoonnummer"
-            }
-          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -1083,7 +1082,8 @@
   ],
   "E3ytti": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numProducts",
       "options": {
         "one": {
           "value": [
@@ -1102,9 +1102,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numProducts"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "E4h5vK": [
@@ -1279,7 +1278,8 @@
       "value": "Te veel bestanden toegevoegd. Het "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "maxNumberOfFiles",
       "options": {
         "one": {
           "value": [
@@ -1306,9 +1306,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maxNumberOfFiles"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -1317,7 +1316,8 @@
   ],
   "I2pBWg": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "remainingCharCount",
       "options": {
         "one": {
           "value": [
@@ -1352,9 +1352,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "remainingCharCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "I6ok5N": [
@@ -1363,20 +1362,30 @@
       "value": "Ongeldig"
     },
     {
+      "type": 5,
+      "value": "validation",
       "options": {
-        "datetime": {
-          "value": [
-            {
-              "type": 0,
-              "value": "e datumtijd"
-            }
-          ]
-        },
         "email": {
           "value": [
             {
               "type": 0,
               "value": " e-mailadres"
+            }
+          ]
+        },
+        "url": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e URL"
+            }
+          ]
+        },
+        "datetime": {
+          "value": [
+            {
+              "type": 0,
+              "value": "e datumtijd"
             }
           ]
         },
@@ -1395,18 +1404,8 @@
               "value": " validation"
             }
           ]
-        },
-        "url": {
-          "value": [
-            {
-              "type": 0,
-              "value": "e URL"
-            }
-          ]
         }
-      },
-      "type": 5,
-      "value": "validation"
+      }
     },
     {
       "type": 0,
@@ -1419,33 +1418,9 @@
       "value": "Er moeten "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "meer dan"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "minimaal"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -1453,17 +1428,42 @@
               "value": "precies"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minimaal"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "meer dan"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "minimum",
       "options": {
         "one": {
           "value": [
@@ -1490,9 +1490,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "minimum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -1557,19 +1556,9 @@
   ],
   "K4JPOy": [
     {
+      "type": 5,
+      "value": "hasFirstNames",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Bewerk kind met BSN: "
-            },
-            {
-              "type": 1,
-              "value": "bsn"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -1581,10 +1570,20 @@
               "value": "firstNames"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Bewerk kind met BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "hasFirstNames"
+      }
     }
   ],
   "KMs17v": [
@@ -1613,6 +1612,8 @@
   ],
   "LEeGSv": [
     {
+      "type": 5,
+      "value": "isApplicable",
       "options": {
         "false": {
           "value": [
@@ -1634,9 +1635,7 @@
             }
           ]
         }
-      },
-      "type": 5,
-      "value": "isApplicable"
+      }
     }
   ],
   "LSB7FE": [
@@ -1765,20 +1764,14 @@
       "value": "Er zijn meerdere "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "e-mailadressen"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -1789,21 +1782,25 @@
               "value": "telefoonnummers"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
       "value": " van u bekend. Open de dropdown om ze te zien. "
     },
     {
+      "type": 5,
+      "value": "hasPortalUrl",
       "options": {
-        "other": {
-          "value": [
-          ]
-        },
         "true": {
           "value": [
             {
@@ -1811,24 +1808,25 @@
               "value": "Voor het instellen van contact voorkeuren kunt u naar het "
             },
             {
+              "type": 8,
+              "value": "a",
               "children": [
                 {
                   "type": 0,
                   "value": "portaal"
                 }
-              ],
-              "type": 8,
-              "value": "a"
+              ]
             },
             {
               "type": 0,
               "value": "."
             }
           ]
+        },
+        "other": {
+          "value": []
         }
-      },
-      "type": 5,
-      "value": "hasPortalUrl"
+      }
     }
   ],
   "P194bo": [
@@ -1869,20 +1867,14 @@
       "value": "Je "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "e-mailadres"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -1893,10 +1885,16 @@
               "value": "telefoonnummer"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -2073,33 +2071,9 @@
       "value": "De tekst moet "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "meer dan"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "minstens"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -2107,17 +2081,42 @@
               "value": "exact"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minstens"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "meer dan"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "minimum",
       "options": {
         "one": {
           "value": [
@@ -2144,9 +2143,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "minimum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -2217,20 +2215,14 @@
       "value": "Geef het "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "e-mailadres"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -2241,10 +2233,16 @@
               "value": "telefoonnummer"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -2379,19 +2377,9 @@
   ],
   "ZAq+s7": [
     {
+      "type": 5,
+      "value": "hasFirstNames",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Verwijder kind met BSN: "
-            },
-            {
-              "type": 1,
-              "value": "bsn"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -2403,10 +2391,20 @@
               "value": "firstNames"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verwijder kind met BSN: "
+            },
+            {
+              "type": 1,
+              "value": "bsn"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "hasFirstNames"
+      }
     }
   ],
   "ZFoN7U": [
@@ -2423,6 +2421,8 @@
   ],
   "ZJoaby": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
@@ -2437,11 +2437,9 @@
           "value": "\" ontvangen. "
         },
         {
+          "type": 5,
+          "value": "confirmationEmailEnabled",
           "options": {
-            "other": {
-              "value": [
-              ]
-            },
             "true": {
               "value": [
                 {
@@ -2449,28 +2447,27 @@
                   "value": "Je ontvangt per mail een bevestiging."
                 }
               ]
+            },
+            "other": {
+              "value": []
             }
-          },
-          "type": 5,
-          "value": "confirmationEmailEnabled"
+          }
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": "Vergeet niet je aanvraag te downloaden, deze versturen wij niet per mail."
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "ZL5313": [
@@ -2839,6 +2836,8 @@
   ],
   "iiVLgn": [
     {
+      "type": 5,
+      "value": "multiple",
       "options": {
         "false": {
           "value": [
@@ -2855,10 +2854,11 @@
               "value": "Sleep bestanden of klik om "
             },
             {
+              "type": 5,
+              "value": "limit",
               "options": {
                 "0": {
-                  "value": [
-                  ]
+                  "value": []
                 },
                 "other": {
                   "value": [
@@ -2872,9 +2872,7 @@
                     }
                   ]
                 }
-              },
-              "type": 5,
-              "value": "limit"
+              }
             },
             {
               "type": 0,
@@ -2882,19 +2880,16 @@
             }
           ]
         }
-      },
-      "type": 5,
-      "value": "multiple"
+      }
     },
     {
       "type": 0,
       "value": " Een bestand mag hoogstens "
     },
     {
-      "children": [
-      ],
       "type": 8,
-      "value": "fileSize"
+      "value": "fileSize",
+      "children": []
     },
     {
       "type": 0,
@@ -3041,33 +3036,9 @@
       "value": "Het getal moet "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "groter dan"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "groter dan of gelijk aan"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3075,10 +3046,34 @@
               "value": "exact gelijk aan"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "groter dan of gelijk aan"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "groter dan"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
@@ -3099,20 +3094,14 @@
       "value": "Voeg "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "e-mailadres"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "digitalAddressType"
             }
           ]
         },
@@ -3123,10 +3112,16 @@
               "value": "telefoonnummer"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "digitalAddressType"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -3293,33 +3288,9 @@
       "value": "BigInt moet "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "kleiner dan"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "kleiner dan of gelijk aan"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3327,10 +3298,34 @@
               "value": "exact gelijk aan"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "kleiner dan of gelijk aan"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "kleiner dan"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
@@ -3415,33 +3410,9 @@
       "value": "De tekst moet "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "minder dan"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "maximaal"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3449,17 +3420,42 @@
               "value": "exact"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "maximaal"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
       "value": " "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "maximum",
       "options": {
         "one": {
           "value": [
@@ -3486,9 +3482,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "maximum"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3583,28 +3578,28 @@
       "value": "Je staat op het punt je afspraak op "
     },
     {
+      "type": 8,
+      "value": "b",
       "children": [
         {
           "type": 1,
           "value": "date"
         }
-      ],
-      "type": 8,
-      "value": "b"
+      ]
     },
     {
       "type": 0,
       "value": " om "
     },
     {
+      "type": 8,
+      "value": "b",
       "children": [
         {
           "type": 1,
           "value": "time"
         }
-      ],
-      "type": 8,
-      "value": "b"
+      ]
     },
     {
       "type": 0,
@@ -3659,33 +3654,9 @@
       "value": "Het getal moet "
     },
     {
+      "type": 5,
+      "value": "exact",
       "options": {
-        "other": {
-          "value": [
-            {
-              "options": {
-                "other": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "minder dan"
-                    }
-                  ]
-                },
-                "true": {
-                  "value": [
-                    {
-                      "type": 0,
-                      "value": "minder dan of gelijk aan"
-                    }
-                  ]
-                }
-              },
-              "type": 5,
-              "value": "inclusive"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3693,10 +3664,34 @@
               "value": "exact gelijk aan"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 5,
+              "value": "inclusive",
+              "options": {
+                "true": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan of gelijk aan"
+                    }
+                  ]
+                },
+                "other": {
+                  "value": [
+                    {
+                      "type": 0,
+                      "value": "minder dan"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "exact"
+      }
     },
     {
       "type": 0,
@@ -3775,12 +3770,22 @@
       "value": "(wordt het "
     },
     {
+      "type": 5,
+      "value": "digitalAddressType",
       "options": {
         "email": {
           "value": [
             {
               "type": 0,
               "value": "voorkeurs-e-mailadres"
+            }
+          ]
+        },
+        "phoneNumber": {
+          "value": [
+            {
+              "type": 0,
+              "value": "voorkeurstelefoonnummer"
             }
           ]
         },
@@ -3795,18 +3800,8 @@
               "value": "digitalAddressType"
             }
           ]
-        },
-        "phoneNumber": {
-          "value": [
-            {
-              "type": 0,
-              "value": "voorkeurstelefoonnummer"
-            }
-          ]
         }
-      },
-      "type": 5,
-      "value": "digitalAddressType"
+      }
     },
     {
       "type": 0,
@@ -3833,15 +3828,9 @@
   ],
   "x/mWt2": [
     {
+      "type": 5,
+      "value": "single",
       "options": {
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Toegevoegde bestanden"
-            }
-          ]
-        },
         "true": {
           "value": [
             {
@@ -3849,10 +3838,16 @@
               "value": "Toegevoegd bestand"
             }
           ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Toegevoegde bestanden"
+            }
+          ]
         }
-      },
-      "type": 5,
-      "value": "single"
+      }
     }
   ],
   "xHVrv5": [
@@ -3937,10 +3932,9 @@
       "value": "Adres in de buurt: "
     },
     {
-      "children": [
-      ],
       "type": 8,
-      "value": "address"
+      "value": "address",
+      "children": []
     }
   ]
 }
