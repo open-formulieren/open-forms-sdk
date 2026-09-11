@@ -1,10 +1,21 @@
 import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
-import {JSONEditor} from '@open-formulieren/monaco-json-editor';
+import '@open-formulieren/monaco-json-editor/style.css';
 import type {JSONObject, JSONValue} from '@open-formulieren/types';
 import {CodeBlock, Heading2, Heading3} from '@utrecht/component-library-react';
-import {useState} from 'react';
+import {Suspense, lazy, useState} from 'react';
 
 import evaluate from '.';
+
+const LazyJSONEditor = lazy(async () => {
+  const monacoJsonEditor = await import('@open-formulieren/monaco-json-editor');
+  return {default: monacoJsonEditor.JSONEditor};
+});
+
+const JSONEditor: React.FC<React.ComponentProps<typeof LazyJSONEditor>> = props => (
+  <Suspense fallback="Loading...">
+    <LazyJSONEditor {...props} />
+  </Suspense>
+);
 
 const JsonLogicPlayground: React.FC = () => {
   const [numExpressionRows, setNumExpressionRows] = useState(3);

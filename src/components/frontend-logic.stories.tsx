@@ -1,7 +1,7 @@
 import type {AnyComponentSchema} from '@open-formulieren/types';
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {RouterProvider, createMemoryRouter} from 'react-router';
-import {expect, userEvent, within} from 'storybook/test';
+import {expect, userEvent, waitFor, within} from 'storybook/test';
 
 import {FormContext} from '@/Context';
 import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
@@ -575,7 +575,9 @@ export const FrontendLogicRuleEvaluation: Story = {
 
       // hide it via logic
       await userEvent.click(canvas.getByRole('checkbox', {name: 'Toggle fieldset visibility'}));
-      expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+      await waitFor(() => {
+        expect(submitButton).not.toHaveAttribute('aria-disabled', 'true');
+      });
     });
   },
 };

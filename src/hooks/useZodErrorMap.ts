@@ -179,7 +179,6 @@ export const makeZodErrorMap = (intl: IntlShape): z.ZodErrorMap => {
                 } {minimum, plural, one {{minimum} item} other {{minimum} items}}.`,
             },
             {
-              // @ts-expect-error requires intl-messageformat 11+
               minimum: issue.minimum,
               exact: issue.exact,
               inclusive: issue.inclusive,
@@ -196,7 +195,6 @@ export const makeZodErrorMap = (intl: IntlShape): z.ZodErrorMap => {
                 } {minimum, plural, one {{minimum} character} other {{minimum} characters}}.`,
             },
             {
-              // @ts-expect-error requires intl-messageformat 11+
               minimum: issue.minimum,
               exact: issue.exact,
               inclusive: issue.inclusive,
@@ -247,7 +245,6 @@ export const makeZodErrorMap = (intl: IntlShape): z.ZodErrorMap => {
                 } {maximum, plural, one {{maximum} item} other {{maximum} items}}.`,
             },
             {
-              // @ts-expect-error requires intl-messageformat 11+
               maximum: issue.maximum,
               exact: issue.exact,
               inclusive: issue.inclusive,
@@ -264,7 +261,6 @@ export const makeZodErrorMap = (intl: IntlShape): z.ZodErrorMap => {
                 } {maximum, plural, one {{maximum} character} other {{maximum} characters}}.`,
             },
             {
-              // @ts-expect-error requires intl-messageformat 11+
               maximum: issue.maximum,
               exact: issue.exact,
               inclusive: issue.inclusive,
