@@ -2,6 +2,24 @@
 SDK Changelog
 =============
 
+4.0.2 (2026-09-14)
+==================
+
+Regular bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to 2.0.4 bugfix release, which fixes:
+
+  - Fixed ``editgrid`` items showing the 'You must save all rows' error too soon.
+  - Fixed the ``select`` component placeholder not being translated.
+  - Fixed tooltips with long content overflowing the page.
+  - Fixed components with async plugin validation making excessive API calls.
+  - Fixed long ``editgrid`` item content overflowing the container.
+  - Fixed ``selectboxes`` with (large) integer-like option values degrading the
+    performance, usually experienced as broken ``npFamilyMembers`` components.
+  - Fixed ``editgrid`` crash when it has ``validate.maxLength`` set and becomes
+    visible through logic.
+  - Fixed compatibility with ``react-intl`` 10+.
+
 4.0.1 (2026-08-31)
 ==================
 
