@@ -10,6 +10,7 @@ declare global {
     gtag?: (ev: 'event', event: string, opts: object) => void;
     _sz?: Array<['trackdynamic', object]>;
     _paq?: Array<[string, string?]>;
+    silktide?: (event: string, properties?: Record<string, unknown>) => void;
   }
 }
 
@@ -49,6 +50,13 @@ const ANALYTICS_PROVIDERS: Record<string, AnayticsProvider> = {
         title: document.title,
       },
     ]),
+  silktide: async () => {
+    /* Silktide
+    Docs: https://help.silktide.com/en/articles/9834301-using-silktide-analytics-with-client-side-rendering
+    */
+    if (!window.silktide) return;
+    window.silktide('page_load');
+  },
   matomoOrPiwik: async (location, previousLocation) => {
     /* Matomo, Piwik and Piwik PRO are all supported
     Matomo: https://developer.matomo.org/guides/spa-tracking
