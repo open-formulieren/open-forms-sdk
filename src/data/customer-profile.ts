@@ -3,12 +3,17 @@ import type {DigitalAddressType} from '@open-formulieren/types/dist/components/c
 import {get} from '@/api';
 import {logError} from '@/components/Errors';
 
+export interface CommunicationPreference {
+  address: string;
+  verificationDate: string | null;
+}
+
 /**
  * @see `#/components/schemas/CommunicationPreferences` in the API spec.
  */
 export interface CommunicationPreferences {
   type: DigitalAddressType;
-  options: string[];
+  options: CommunicationPreference[];
   preferred: string | null;
 }
 
