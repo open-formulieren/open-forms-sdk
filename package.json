@@ -105,7 +105,7 @@
     "@gemeente-rotterdam/design-tokens": "1.0.0-alpha.51",
     "@maykinmedia/eslint-config": "^3.0.0",
     "@open-formulieren/monaco-json-editor": "^0.3.0",
-    "@open-formulieren/types": "^1.4.2",
+    "@open-formulieren/types": "^1.6.0",
     "@sentry/vite-plugin": "^4.6.0",
     "@storybook/addon-docs": "10.6.0",
     "@storybook/addon-links": "10.6.0",
