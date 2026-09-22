@@ -167,7 +167,9 @@ describe('Create appointment status checking', () => {
     for (const checkbox of screen.getByRole('checkbox').all()) {
       await checkbox.click();
     }
+
     const submitButton2 = screen.getByRole('button', {name: 'Confirm'});
+    await expect.element(submitButton2).not.toHaveAttribute('aria-disabled', 'true');
     await submitButton2.click();
 
     await expect.element(screen.getByText('Computer says no.')).not.toBeInTheDocument();
