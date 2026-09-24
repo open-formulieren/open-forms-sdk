@@ -5,7 +5,7 @@ import {logError} from '@/components/Errors';
 
 export interface CommunicationPreference {
   address: string;
-  verificationDate: string | null;
+  isVerified: boolean;
 }
 
 /**
