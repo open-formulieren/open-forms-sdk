@@ -158,7 +158,7 @@ export const useCheckBackendStepLogic = (
  */
 export const useFormioFormConfigurationParameters = (): Pick<
   React.ComponentProps<typeof FormioForm>,
-  'componentParameters' | 'validatePluginCallback'
+  'componentParameters' | 'validatePluginCallback' | 'emailVerificationParameters'
 > => {
   const {baseUrl} = useContext(ConfigContext);
   const form = useFormContext();
@@ -233,6 +233,10 @@ export const useFormioFormConfigurationParameters = (): Pick<
 
   return {
     validatePluginCallback,
+    emailVerificationParameters: {
+      requestVerificationCode,
+      verifyCode,
+    },
     componentParameters: {
       addressNL: {addressAutoComplete},
       coSign: {getCosignStatus, getLoginOption},
@@ -243,10 +247,7 @@ export const useFormioFormConfigurationParameters = (): Pick<
         // We need an authentication identifier for the customer interaction registration
         // plugin.
         updatePreferencesModalEnabled: submission.isAuthenticated,
-        requestVerificationCode,
-        verifyCode,
       },
-      email: {requestVerificationCode, verifyCode},
       file: {
         upload,
         destroy: destroyTemporaryFileUpload,
