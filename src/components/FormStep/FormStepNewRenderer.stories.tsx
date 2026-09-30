@@ -137,6 +137,14 @@ export const Default: Story = {
   },
 };
 
+export const NoShowFormTitle: Story = {
+  parameters: {
+    config: {
+      showFormTitle: false,
+    },
+  },
+};
+
 const LOGIC_CHECK_STEP_DETAIL_BODY = buildSubmissionStep({
   components: [
     {

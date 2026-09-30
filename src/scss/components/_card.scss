@@ -29,11 +29,19 @@
 }
 
 @include responsive.mobile-only {
-  .openforms-card {
-    // If there are cards with multiple headers inside, we should not necessarily hide all nested headers,
-    // so we only hide the first child
-    &--mobile-header-hidden > &__header {
-      display: none;
+  .openforms-card.openforms-card--mobile-header-hidden {
+    &:has(.openforms-card__body) {
+      // If there are cards with multiple headers inside, we should not necessarily hide all nested headers,
+      // so we only hide the first child
+      & > .openforms-card__header {
+        display: none;
+      }
+    }
+
+    &:not(:has(.openforms-card__body)) {
+      & > .openforms-card__header {
+        margin-block-end: var(--of-card-body-row-gap, 20px);
+      }
     }
   }
 }
