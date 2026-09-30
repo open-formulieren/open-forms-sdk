@@ -530,6 +530,7 @@ const LOCATION_DERIVATION_SUBMISSION_STEP_DETAIL_BODY = buildSubmissionStep({
       deriveStreetName: true,
       derivePostcode: 'postcode',
       deriveHouseNumber: 'houseNumber',
+      validate: {required: true},
     },
     {
       id: 'city',
@@ -605,8 +606,19 @@ export const LocationDerivation: Story = {
       },
     },
   },
-  play: async ({canvasElement}) => {
+  play: async ({canvasElement, step}) => {
     const canvas = within(canvasElement);
+
+    // regression test for gh-6718
+    const validationErrorMsg = 'Het verplichte veld Street is niet ingevuld.';
+    await step('Trigger validation error that should be cleared', async () => {
+      const street = await canvas.findByLabelText('Street');
+      await userEvent.click(street);
+      expect(street).toHaveFocus();
+      await userEvent.keyboard('{Tab}');
+      expect(street).not.toHaveFocus();
+      expect(await canvas.findByText(validationErrorMsg)).toBeVisible();
+    });
 
     const postcode = await canvas.findByLabelText('Postcode');
     await userEvent.type(postcode, '1234 AB');
@@ -617,6 +629,8 @@ export const LocationDerivation: Story = {
       expect(canvas.getByLabelText('Street')).toHaveDisplayValue('Kingsfordweg');
       expect(canvas.getByLabelText('City')).toHaveDisplayValue('Amsterdam');
     });
+
+    expect(canvas.queryByText(validationErrorMsg)).not.toBeInTheDocument();
   },
 };
 
