@@ -57,7 +57,7 @@ const SingleFormStepNewRenderer: React.FC = () => {
   const form = useFormContext();
   const {setStepValues: setDebugStepValues} = useDebugContext();
   const [initialDataReference] = useQueryState(INITIAL_DATA_PARAM);
-  const {baseUrl, clientBaseUrl} = useContext(ConfigContext);
+  const {baseUrl, clientBaseUrl, showFormTitle} = useContext(ConfigContext);
   const [submissionState, setSubmissionState] = useState<Submission | null>(null);
   const [submitErrors, setSubmitErrors] = useState<string | FormikErrors<JSONObject> | null>(null);
   const [showStatementWarnings, setShowStatementWarnings] = useState<boolean>(false);
@@ -180,7 +180,7 @@ const SingleFormStepNewRenderer: React.FC = () => {
 
   return (
     <LiteralsProvider literals={formStep.literals}>
-      <Card title={form.name} mobileHeaderHidden>
+      <Card title={showFormTitle ? form.name : undefined} mobileHeaderHidden>
         {form.submissionLimitReached && <FormMaximumSubmissionsError />}
         {form.explanationTemplate && <RichText content={form.explanationTemplate} />}
         <CardTitle title={formStepData?.name || ''} padded />
