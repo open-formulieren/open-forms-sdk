@@ -37,4 +37,5 @@ export const applyVariableAction = (
 
   logicState.data = setIn(updatedData, componentKey, targetValue);
   logicState.initialValues = setIn(logicState.initialValues, componentKey, targetValue);
+  logicState.errorsToClear.push(componentKey);
 };

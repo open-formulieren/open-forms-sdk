@@ -76,6 +76,43 @@ export const useLoadStep = (
   return state;
 };
 
+const getDataKeys = (data: JSONObject | JSONValue[]): string[] => {
+  const keys: string[] = [];
+
+  // handle arrays, which may be present when recursing through the top-level object
+  if (Array.isArray(data)) {
+    // recurse - arrays either contain primitives or nested objects
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
+      if (Array.isArray(item)) throw new Error('Nested arrays are an invalid data structure.');
+      if (typeof item === 'object') {
+        const nestedKeys = item ? getDataKeys(item) : [];
+        keys.push(...nestedKeys.map(nestedKey => `${i}.${nestedKey}`));
+      } else {
+        // leaf node
+        keys.push(`${i}`);
+      }
+    }
+    return keys;
+  }
+
+  for (const [key, value] of Object.entries(data)) {
+    // typeof value === 'object' applies here, so get it out of the way first
+    if (value === null) {
+      keys.push(key);
+    } else if (typeof value === 'object') {
+      // covers both objects and arrays
+      // nested object, recurse :)
+      const nestedKeys = getDataKeys(value);
+      keys.push(...nestedKeys.map(nestedKey => `${key}.${nestedKey}`));
+    } else {
+      // primitive, no recursion needed
+      keys.push(key);
+    }
+  }
+  return keys;
+};
+
 interface CheckBackendStepLogic {
   scheduleLogicCheck: () => void;
   inProgress: boolean;
@@ -93,7 +130,11 @@ interface CheckBackendStepLogic {
 export const useCheckBackendStepLogic = (
   submissionStepUrl: string,
   valuesRef: React.MutableRefObject<JSONObject | null>,
-  onLogicCheckResult: (submission: Submission, step: SubmissionStep) => void,
+  onLogicCheckResult: (
+    submission: Submission,
+    step: SubmissionStep,
+    errorsToClear: string[]
+  ) => void,
   debounce_ms: number = 500
 ): CheckBackendStepLogic => {
   const timerRef = useRef<number | null>(null);
@@ -127,7 +168,8 @@ export const useCheckBackendStepLogic = (
             values,
             controller.signal
           );
-          onLogicCheckResult(submission, step);
+          const errorsToClear = step.data ? getDataKeys(step.data) : [];
+          onLogicCheckResult(submission, step, errorsToClear);
         } catch (err: unknown) {
           if (err instanceof DOMException && err.name === 'AbortError') return;
           throw err;
