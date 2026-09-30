@@ -77,3 +77,11 @@ export const Default: Story = {
     expect(nextButton).toBeVisible();
   },
 };
+
+export const NoShowFormTitle: Story = {
+  parameters: {
+    config: {
+      showFormTitle: false,
+    },
+  },
+};

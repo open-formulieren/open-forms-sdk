@@ -15,6 +15,6 @@
   gap: var(--of-privacy-checkbox-spacing, 8px);
 
   @include bem.modifier('single-step-form') {
-    margin-block-start: var(--of-form-field-container-gap, 240px);
+    margin-block-start: var(--of-form-field-container-gap, 24px);
   }
 }
