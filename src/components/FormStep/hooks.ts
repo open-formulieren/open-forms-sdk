@@ -2,7 +2,7 @@ import type {FormioForm} from '@open-formulieren/formio-renderer';
 import type {
   RequestVerificationCode,
   VerifyCode,
-} from '@open-formulieren/formio-renderer/registry/email/verification/types.js';
+} from '@open-formulieren/formio-renderer/components/forms/Verification/types.js';
 import type {JSONObject, JSONValue} from '@open-formulieren/formio-renderer/types.js';
 import type {ValidatePluginCallback} from '@open-formulieren/formio-renderer/validationSchema.js';
 import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
@@ -158,7 +158,7 @@ export const useCheckBackendStepLogic = (
  */
 export const useFormioFormConfigurationParameters = (): Pick<
   React.ComponentProps<typeof FormioForm>,
-  'componentParameters' | 'validatePluginCallback'
+  'componentParameters' | 'validatePluginCallback' | 'emailVerificationParameters'
 > => {
   const {baseUrl} = useContext(ConfigContext);
   const form = useFormContext();
@@ -233,6 +233,10 @@ export const useFormioFormConfigurationParameters = (): Pick<
 
   return {
     validatePluginCallback,
+    emailVerificationParameters: {
+      requestVerificationCode,
+      verifyCode,
+    },
     componentParameters: {
       addressNL: {addressAutoComplete},
       coSign: {getCosignStatus, getLoginOption},
@@ -244,7 +248,6 @@ export const useFormioFormConfigurationParameters = (): Pick<
         // plugin.
         updatePreferencesModalEnabled: submission.isAuthenticated,
       },
-      email: {requestVerificationCode, verifyCode},
       file: {
         upload,
         destroy: destroyTemporaryFileUpload,
