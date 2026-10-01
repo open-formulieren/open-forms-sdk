@@ -123,7 +123,7 @@ const AddressAutoFillObserver: React.FC<AddressAutoFillObserverProps> = ({
   group,
   getAddressAutoComplete,
 }) => {
-  const {setFieldValue, values} = useFormikContext();
+  const {setFieldValue, setFieldError, values} = useFormikContext();
 
   const timerRef = useRef<number | null>(null);
   const updateableTargetsRef = useRef<typeof group.targets>(group.targets);
@@ -173,6 +173,7 @@ const AddressAutoFillObserver: React.FC<AddressAutoFillObserverProps> = ({
         for (const {key, type} of updateableTargets) {
           const newValue = type === 'streetName' ? streetName : city;
           setFieldValue(key, newValue);
+          setFieldError(key, undefined); // clear any possible validation errors
         }
       }, LOCATION_AUTOCOMPLETE_DEBOUNCE);
     }
@@ -185,7 +186,7 @@ const AddressAutoFillObserver: React.FC<AddressAutoFillObserverProps> = ({
       }
       isMounted = false;
     };
-  }, [setFieldValue, getAddressAutoComplete, postcode, houseNumber]);
+  }, [setFieldValue, setFieldError, getAddressAutoComplete, postcode, houseNumber]);
 
   return null;
 };
