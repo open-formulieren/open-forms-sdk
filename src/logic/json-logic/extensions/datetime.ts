@@ -1,4 +1,4 @@
-import {parseISO} from 'date-fns';
+import {isValid, parseISO} from 'date-fns';
 
 import type {JsonLogicEngineMethod} from './types';
 
@@ -16,5 +16,9 @@ export const jsonLogicDateTime: JsonLogicEngineMethod = ([dateTimeStr]) => {
   if (dateTimeStr === '') {
     return null;
   }
-  return parseISO(dateTimeStr);
+  const parsedDate = parseISO(dateTimeStr);
+  // manual input in date fields can lead to incomplete date strings, which won't parse
+  // to valid dates and otherwise cause logic engine crashes
+  if (!isValid(parsedDate)) return null;
+  return parsedDate;
 };

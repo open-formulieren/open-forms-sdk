@@ -46,7 +46,7 @@ test('greater-than comparison with empty string', () => {
   expect(result).toBeNull();
 });
 
-test('greater-than-equals comparison with partial datestring', () => {
+test('greater-than-equals comparison with partial datetimestring', () => {
   const expression: JSONObject = {
     '>=': [{datetime: '21-1-'}, {datetime: '2026-03-01T11:00:01+00:00'}],
   };
