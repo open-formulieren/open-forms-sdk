@@ -46,6 +46,16 @@ test('greater-than comparison with empty string', () => {
   expect(result).toBeNull();
 });
 
+test('greater-than-equals comparison with partial datestring', () => {
+  const expression: JSONObject = {
+    '>=': [{datetime: '21-1-'}, {datetime: '2026-03-01T11:00:01+00:00'}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
 test('greater-than-equals comparison with ISO-8601 datetime strings with different timezone offsets', () => {
   const expression: JSONObject = {
     '>=': [{datetime: {var: 'someDatetime'}}, {datetime: '2026-03-01T12:00:00+01:00'}],
