@@ -1,4 +1,4 @@
-import {parseISO} from 'date-fns';
+import {isValid, parseISO} from 'date-fns';
 
 import type {JsonLogicEngineMethod} from './types';
 
@@ -40,5 +40,8 @@ export const jsonLogicDate: JsonLogicEngineMethod = ([dateString]) => {
   // add the time information to force UTC midnight on the specified (naive) date
   _dateString = `${_dateString}T00:00:00Z`;
   const parsedDate = parseISO(_dateString);
+  // manual input in date fields can lead to incomplete date strings, which won't parse
+  // to valid dates and otherwise cause logic engine crashes
+  if (!isValid(parsedDate)) return null;
   return DateWithoutTime.createFrom(parsedDate);
 };

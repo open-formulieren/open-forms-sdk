@@ -67,6 +67,16 @@ test('greater-than-equals comparison with empty string', () => {
   expect(result).toBeNull();
 });
 
+test('greater-than-equals comparison with partial datestring', () => {
+  const expression: JSONObject = {
+    '>=': [{date: '21-1-'}, {date: '2026-03-01'}],
+  };
+
+  const result = evaluate(expression, {});
+
+  expect(result).toBeNull();
+});
+
 test('greater-than-equals without date operator', () => {
   const expression: JSONObject = {
     '>=': [{date: '2000-10-10'}, '2000-01-01'],
