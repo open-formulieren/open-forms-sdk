@@ -1,16 +1,33 @@
-import type {JSONObject} from '@open-formulieren/types';
 import {UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
-import type {FormikErrors} from 'formik';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import type {StepSummaryData} from '@/data/submissions';
+
+/**
+ * Error objects are complex datastructures with possibly multiple levels of nesting.
+ * This type describes the leaf nodes in such an object, i.e. the nodes that don't have
+ * any more children themselves.
+ *
+ * This corresponds to a simple string for a single-value field error, or a list of
+ * error messages for a single-value field, or a list of error messages for a
+ * multi-value field (which has an intrinsic array type for the value).
+ */
+type ErrorLeafNode = string | string[];
+
+/**
+ * Some data/field error can be leaf node, or complex nesting may apply due to dots
+ * used in the data key, which creates a nested structure. Additionally, some component
+ * types have an intrinsic array value type, which may contain nested objects (customer
+ * profile, editgrid...)
+ */
+type FieldError = ErrorLeafNode | {[k: string]: FieldError} | FieldError[];
 
 const normalizeError = (error: string | string[]): string[] =>
   Array.isArray(error) ? error : [error];
 
 interface StepErrors {
   nonFieldErrors?: string[];
-  data?: FormikErrors<JSONObject>;
+  data?: {[k: string]: FieldError};
 }
 
 export interface StepValidationErrorsProps {

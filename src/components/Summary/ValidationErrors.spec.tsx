@@ -14,8 +14,6 @@ test('render validation errors for customer profile validation errors', async ()
       steps: [
         {
           nonFieldErrors: [],
-          // @ts-expect-error doesn't fit the FormikErrors type because of the array
-          // data / nested error object. It's a known Formik TS limitation.
           data: {profile: [{address: 'Invalid address format.'}]},
         },
       ],
