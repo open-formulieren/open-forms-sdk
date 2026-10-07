@@ -1,16 +1,45 @@
-import type {JSONObject} from '@open-formulieren/types';
 import {UnorderedList, UnorderedListItem} from '@utrecht/component-library-react';
-import type {FormikErrors} from 'formik';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import type {StepSummaryData} from '@/data/submissions';
 
-const normalizeError = (error: string | string[]): string[] =>
-  Array.isArray(error) ? error : [error];
+/**
+ * Error objects are complex datastructures with possibly multiple levels of nesting.
+ * This type describes the leaf nodes in such an object, i.e. the nodes that don't have
+ * any more children themselves.
+ *
+ * This corresponds to a simple string for a single-value field error, or a list of
+ * error messages for a single-value field, or a list of error messages for a
+ * multi-value field (which has an intrinsic array type for the value).
+ */
+type ErrorLeafNode = string | string[];
+
+/**
+ * Some data/field error can be leaf node, or complex nesting may apply due to dots
+ * used in the data key, which creates a nested structure. Additionally, some component
+ * types have an intrinsic array value type, which may contain nested objects (customer
+ * profile, editgrid...)
+ */
+type FieldError = ErrorLeafNode | {[k: string]: FieldError} | FieldError[];
+
+const normalizeError = (error: FieldError): string[] => {
+  if (typeof error === 'string') {
+    return [error];
+  }
+
+  // recurse for nested arrays/objects.
+  // Note that we knowingly discard key/sub field information here, since we can't properly
+  // display it in the right context anyway - that would need a component registry and
+  // component-specific handling of the validation error shape :/
+  const nestedErrors = Array.isArray(error) ? error : Object.values(error);
+  return nestedErrors
+    .map(nestedError => normalizeError(nestedError))
+    .reduce((acc, errs) => acc.concat(errs), []);
+};
 
 interface StepErrors {
   nonFieldErrors?: string[];
-  data?: FormikErrors<JSONObject>;
+  data?: {[k: string]: FieldError};
 }
 
 export interface StepValidationErrorsProps {
@@ -29,7 +58,7 @@ const StepValidationErrors: React.FC<StepValidationErrorsProps> = ({errors, name
   Object.entries(data).map(([key, errorMessage]) => {
     // errorMessage cannot be undefined, since that is not serialiable in JSON from the
     // backend
-    const normalizedErrorMessage = normalizeError(errorMessage!);
+    const normalizedErrorMessage = normalizeError(errorMessage);
     const stepDataItem = stepData.find(item => item.component.key === key);
 
     for (const error of normalizedErrorMessage) {
