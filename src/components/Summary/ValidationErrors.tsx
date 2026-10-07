@@ -22,8 +22,20 @@ type ErrorLeafNode = string | string[];
  */
 type FieldError = ErrorLeafNode | {[k: string]: FieldError} | FieldError[];
 
-const normalizeError = (error: string | string[]): string[] =>
-  Array.isArray(error) ? error : [error];
+const normalizeError = (error: FieldError): string[] => {
+  if (typeof error === 'string') {
+    return [error];
+  }
+
+  // recurse for nested arrays/objects.
+  // Note that we knowingly discard key/sub field information here, since we can't properly
+  // display it in the right context anyway - that would need a component registry and
+  // component-specific handling of the validation error shape :/
+  const nestedErrors = Array.isArray(error) ? error : Object.values(error);
+  return nestedErrors
+    .map(nestedError => normalizeError(nestedError))
+    .reduce((acc, errs) => acc.concat(errs), []);
+};
 
 interface StepErrors {
   nonFieldErrors?: string[];
@@ -46,7 +58,7 @@ const StepValidationErrors: React.FC<StepValidationErrorsProps> = ({errors, name
   Object.entries(data).map(([key, errorMessage]) => {
     // errorMessage cannot be undefined, since that is not serialiable in JSON from the
     // backend
-    const normalizedErrorMessage = normalizeError(errorMessage!);
+    const normalizedErrorMessage = normalizeError(errorMessage);
     const stepDataItem = stepData.find(item => item.component.key === key);
 
     for (const error of normalizedErrorMessage) {
