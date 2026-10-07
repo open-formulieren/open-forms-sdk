@@ -51,3 +51,42 @@ test('render validation errors for customer profile validation errors', async ()
 
   await expect.element(screen.getByText('Invalid address format.')).toBeVisible();
 });
+
+test('render validation errors for components with dots in their keys', async () => {
+  const props: ValidationErrorsProps = {
+    errors: {
+      steps: [
+        {
+          nonFieldErrors: [],
+          data: {parent: {child: 'A problem reported by the backend!'}},
+        },
+      ],
+    },
+    summaryData: [
+      {
+        name: 'Step 1',
+        slug: 'step-1',
+        data: [
+          {
+            name: 'Text',
+            component: {
+              id: '123',
+              type: 'textfield',
+              key: 'parent.child',
+              label: 'Text',
+            },
+            value: 'Invalid value according to the backend',
+          },
+        ],
+      },
+    ],
+  };
+
+  const screen = await render(
+    <IntlProvider locale="en" messages={messagesEN}>
+      <ValidationErrors {...props} />
+    </IntlProvider>
+  );
+
+  await expect.element(screen.getByText('A problem reported by the backend!')).toBeVisible();
+});
