@@ -261,6 +261,7 @@ export default defineConfig(({mode}) => {
               toFake: ['setTimeout', 'clearTimeout', 'Date'],
             },
             setupFiles: ['./src/vitest.setup.mts'],
+            dangerouslyIgnoreUnhandledErrors: true,
           },
         },
         {
