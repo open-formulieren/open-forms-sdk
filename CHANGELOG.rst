@@ -2,6 +2,32 @@
 SDK Changelog
 =============
 
+4.0.3 (2026-10-08)
+==================
+
+Bugix and feature backport release.
+
+.. warning:: Normally we don't backport features. Due to external factors we backported
+   the email verification feature in the ``customerProfile`` component. If you use this
+   component, we recommend that you extensively test these forms before updating
+   production.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to the 2.0.5 bugfix release, fixing:
+
+  - Backported the email verification feature in the customer profile component.
+  - Fixed incorrect address field "(not required)" suffix being shown on
+    ``customerProfile`` components that are required when the "use asterisks for
+    required fields" option is disabled.
+
+* [#6721] Fixed ``showFormTitle`` option being ignored in single step forms.
+* [#6718] Fixed validation errors not being cleared when values are assigned
+  programmatically.
+* [#6760] Fixed a logic evaluation crash for logic rules targetting ``date``/``datetime``
+  variables that may have incomplete input.
+* [#6755] Fixed a crash on the confirmation page when displaying validation errors for
+  complex error object structures (like for ``customerProfile`` or ``editgrid``
+  components).
+
 4.0.2 (2026-09-14)
 ==================
 
