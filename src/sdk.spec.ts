@@ -13,9 +13,11 @@ import {mockFormioTranslations, mockLanguageInfoGet} from '@/components/Language
 
 import {OpenForm} from './sdk';
 
-// scrollIntoView is not supported in jest-dom
-const scrollIntoViewMock = vi.fn();
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+beforeAll(() => {
+  // scrollIntoView is not supported in jest-dom
+  const scrollIntoViewMock = vi.fn();
+  window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+});
 
 const LANGUAGES: LanguageInfo['languages'] = [
   {code: 'nl', name: 'Nederlands'},
