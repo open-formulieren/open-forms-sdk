@@ -2,6 +2,48 @@
 SDK Changelog
 =============
 
+4.1.0-alpha.1 (2026-10-09)
+==========================
+
+Second preview release of the upcoming 4.1.0 version.
+
+New features
+------------
+
+* [#6652] Added support for Silktide (analytics) page view tracking.
+* Upgraded ``@open-formulieren/formio-renderer`` to a 3.0.0 preview release:
+  
+  - Date-like component types now use ``null`` for empty values.
+  - Added email verification to the customer profile component.
+  - Fixed incorrect address field "(not required)" suffix being shown on
+    ``customerProfile`` components that are required when the "use asterisks for
+    required fields" option is disabled.
+
+Bugfixes
+--------
+
+* [#6721] Fixed ``showFormTitle`` option being ignored in single step forms.
+* [#6718] Fixed validation errors not being cleared when values are assigned
+  programmatically.
+* [#6760] Fixed a logic evaluation crash for logic rules targetting ``date``/``datetime``
+  variables that may have incomplete input.
+* [#6755] Fixed a crash on the confirmation page when displaying validation errors for
+  complex error object structures (like for ``customerProfile`` or ``editgrid``
+  components).
+
+Project maintenance
+-------------------
+
+* Upgraded ``@open-formulieren/formio-renderer`` to the 2.0.5 bugfix release, fixing:
+
+  - Backported the email verification feature in the customer profile component.
+  - Fixed incorrect address field "(not required)" suffix being shown on
+    ``customerProfile`` components that are required when the "use asterisks for
+    required fields" option is disabled.
+
+* Upgraded ``monaco-editor`` to install safe ``dompurify`` 3.4.15 dependency.
+* Upgraded to React 19.
+
 4.0.3 (2026-10-08)
 ==================
 
