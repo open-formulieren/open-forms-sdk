@@ -5,6 +5,7 @@ import {useSearchParams} from 'react-router';
 import {ConfigContext} from '@/Context';
 import {Literal} from '@/components/Literal';
 import {getCosignLoginUrl, getLoginUrl} from '@/components/LoginOptions/utils';
+import type {LoginUrlExtraParams} from '@/components/LoginOptions/utils';
 import type {Form} from '@/data/forms';
 
 import LoginOptionsDisplay, {type FormattedLoginOption} from './LoginOptionsDisplay';
@@ -33,10 +34,14 @@ const LoginOptions: React.FC<LoginOptionsProps> = ({
   const cosignLoginOptions: FormattedLoginOption[] = [];
   const {authVisible} = useContext(ConfigContext);
 
+  const extraParams: LoginUrlExtraParams = {};
+  const representeeRef = params.get('representee_ref');
+  if (representeeRef) extraParams.representeeRef = representeeRef;
+
   form.loginOptions.forEach(option => {
     const formattedOption: FormattedLoginOption = {
       ...option,
-      url: getLoginUrl(option, {}, extraNextParams),
+      url: getLoginUrl(option, extraParams, extraNextParams),
       label: (
         <FormattedMessage
           description="Login button label"
