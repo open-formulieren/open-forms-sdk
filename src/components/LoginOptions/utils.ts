@@ -1,7 +1,12 @@
 import {START_FORM_QUERY_PARAM} from '@/components/constants';
 import type {FormLoginOption} from '@/data/forms';
 
-interface LoginUrlExtraParams {
+export interface LoginUrlExtraParams {
+  /**
+   * UUID reference to initial data holding representee information, for flows where the
+   * employee fills out forms on behalf of a customer.
+   */
+  representeeRef?: string;
   /**
    * Submission ID to cosign, used in legacy cosign.
    *

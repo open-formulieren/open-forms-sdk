@@ -134,3 +134,29 @@ test('Login button has the right URL after cancelling log in', async () => {
   expect(nextUrl.searchParams.get(START_FORM_QUERY_PARAM)).not.toBeNull();
   expect(nextUrl.searchParams.get('_digid-message')).toBeNull();
 });
+
+test('Login URL contains representeeRef parameter', async () => {
+  const form = buildForm({
+    loginRequired: true,
+    loginOptions: [
+      {
+        identifier: 'org-oidc',
+        label: 'Organisation login',
+        url: 'https://open-forms.nl/auth/form-slug/org-oidc/start',
+        isForGemachtigde: false,
+        visible: true,
+      },
+    ],
+    cosignLoginOptions: [],
+  });
+  const onFormStart = vi.fn();
+
+  const screen = await render(
+    <Wrapper form={form} onFormStart={onFormStart} currentUrl="/?representee_ref=foo" />
+  );
+
+  const loginLink = screen.getByRole('link', {name: 'Organisation login'});
+  await expect.element(loginLink).toBeVisible();
+  const loginUrl = new URL(loginLink.element().getAttribute('href')!);
+  expect(loginUrl.searchParams.get('representeeRef')).toBe('foo');
+});

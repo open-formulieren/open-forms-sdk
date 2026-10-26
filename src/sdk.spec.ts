@@ -269,6 +269,12 @@ describe('OpenForm', () => {
       )}`,
       `http://${window.location.host}/some-subpath/stap/step-1?submission_uuid=abc`,
     ],
+    [
+      `/some-subpath?_of_action=init&_of_action_params=${encodeURIComponent(
+        JSON.stringify({representee_ref: '8874cda7-de7d-4bfe-88c2-64180d250d13'})
+      )}`,
+      `http://${window.location.host}/some-subpath/startpagina?representee_ref=8874cda7-de7d-4bfe-88c2-64180d250d13&auth_visible=all`,
+    ],
   ])('should handle action redirects correctly', async (initialUrl, expected) => {
     mswWorker.use(...apiMocks);
     const formRoot = document.createElement('div');
