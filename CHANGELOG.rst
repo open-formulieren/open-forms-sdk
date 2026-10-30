@@ -2,6 +2,42 @@
 SDK Changelog
 =============
 
+4.0.4 (2026-10-30)
+==================
+
+Bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to the 2.0.7 release, fixing:
+
+  - Fixed ``checkbox``/``radio`` interaction not retriggering validation immediately,
+    which could lead to confusing disabled submit button states.
+  - Fixed ``selectboxes`` accidentally displaying parts of the error message when
+    numeric-looking option values are used.
+  - Fixed the ``softRequiredErrors`` component displaying for hidden fields inside
+    ``editgrid`` components.
+  - Fixed the file upload component rejecting file types that match media types
+    with a wildcard.
+
+* Applied available security patches in our dependencies.
+
+3.5.10 (2026-10-30)
+===================
+
+Bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to the 1.8.8 release, fixing:
+
+  - Fixed ``checkbox``/``radio`` interaction not retriggering validation immediately,
+    which could lead to confusing disabled submit button states.
+  - Fixed ``selectboxes`` accidentally displaying parts of the error message when
+    numeric-looking option values are used.
+  - Fixed the ``softRequiredErrors`` component displaying for hidden fields inside
+    ``editgrid`` components.
+  - Fixed the file upload component rejecting file types that match media types
+    with a wildcard.
+
+* Applied available security patches in our dependencies.
+
 4.1.0-alpha.1 (2026-10-09)
 ==========================
 
