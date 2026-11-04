@@ -2,6 +2,8 @@ import {HTMLContent} from '@utrecht/component-library-react';
 import DOMPurify from 'dompurify';
 import {useMemo} from 'react';
 
+import {isAttributeAllowedOnElement} from '@/sanitize';
+
 export interface FormHelpDialoContent {
   content: string;
 }
@@ -13,7 +15,8 @@ const FormHelpContent: React.FC<FormHelpDialoContent> = ({content}) => {
   const sanitizedContent = useMemo(() => {
     return DOMPurify.sanitize(content, {
       ALLOWED_TAGS: ['b', 'strong', 'i', 'em', 'ul', 'ol', 'li', 'p', 'a'],
-      ALLOWED_ATTR: ['href', 'target', 'rel'],
+      ALLOWED_ATTR: [],
+      ADD_ATTR: (attributeName, tagName) => isAttributeAllowedOnElement(attributeName, tagName),
     });
   }, [content]);
   if (!content) throw new Error('You must pass non-empty content when rendering this components');
