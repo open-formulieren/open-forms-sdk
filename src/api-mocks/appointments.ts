@@ -15,7 +15,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     name: 'Paspoort aanvraag',
     amountLimit: 0,
     description:
-      '<p>An example of extra description</p>\r\n<ul>\r\n<li>First choice</li>\r\n<li>Another choice</li>\r\n<p>Attention: some notes</p>',
+      '<p>An example of extra description</p>\r\n<ul>\r\n<li>First choice</li>\r\n<li>Another choice</li>\r\n<p>Attention: some notes <a href="https://github.com/cure53/DOMPurify" target="_blank">and a link</a></p>',
   },
   {
     code: 'RIJAAN',
