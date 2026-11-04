@@ -6,7 +6,7 @@ import {render} from 'vitest-browser-react';
 import {userEvent} from 'vitest/browser';
 
 import {ConfigContext, FormContext} from '@/Context';
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockPingGet} from '@/api-mocks';
 import {FORM_DEFAULTS} from '@/api-mocks/forms';
 import mswWorker from '@/api-mocks/msw-worker';
 import {
@@ -130,6 +130,7 @@ test('form field value assignment through logic resets validation errors', async
   });
   mswWorker.use(
     mockAnalyticsToolConfigGet(),
+    mockPingGet(),
     mockSubmissionPost(
       buildSubmission({
         steps: [
@@ -220,6 +221,7 @@ test('form field value assignment from backend logic resets validation errors', 
 
   mswWorker.use(
     mockAnalyticsToolConfigGet(),
+    mockPingGet(),
     mockSubmissionPost(submission),
     mockSubmissionGet(submission),
     mockSubmissionStepGet(submissionStep),

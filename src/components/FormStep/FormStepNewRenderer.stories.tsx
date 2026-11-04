@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-vite';
 import {reactRouterParameters, withRouter} from 'storybook-addon-remix-react-router';
 import {expect, fn, userEvent, waitFor, within} from 'storybook/test';
 
-import {BASE_URL, buildForm, buildSubmission, buildSubmissionStep} from '@/api-mocks';
+import {BASE_URL, buildForm, buildSubmission, buildSubmissionStep, mockPingGet} from '@/api-mocks';
 import {
   mockEmailVerificationPost,
   mockEmailVerificationVerifyCodePost,
@@ -68,6 +68,7 @@ export default {
     }),
     msw: {
       handlers: {
+        ping: [mockPingGet()],
         submission: [mockSubmissionGet(DEFAULT_SUBMISSION)],
         submissionStep: [
           mockSubmissionStepGet(DEFAULT_SUBMISSION_STEP_DETAIL_BODY),
