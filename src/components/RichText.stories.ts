@@ -1,4 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
+import {expect, within} from 'storybook/test';
 
 import RichText from './RichText';
 
@@ -17,9 +18,16 @@ export const SimpleHTML: Story = {
     content: `
       <article>
         <h2>Hello</h2>
-        <p>This is <em>harmless</em> rich text with <a href="https://github.com/cure53/DOMPurify">a link</a>.</p>
+        <p>This is <em>harmless</em> rich text with <a href="https://github.com/cure53/DOMPurify" target="_blank">a link</a>.</p>
       </article>
     `,
+  },
+  play: ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    // #6890 - Validate that the target attribute is present
+    const link = canvas.getByRole('link');
+    expect(link).toHaveAttribute('target', '_blank');
   },
 };
 
