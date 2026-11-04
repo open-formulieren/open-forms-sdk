@@ -12,7 +12,12 @@ export interface RichTextProps {
  */
 const RichText: React.FC<RichTextProps> = ({content}) => {
   const sanitizedContent = useMemo(
-    () => DOMPurify.sanitize(content, {USE_PROFILES: {html: true}, FORCE_BODY: true}),
+    () =>
+      DOMPurify.sanitize(content, {
+        USE_PROFILES: {html: true},
+        FORCE_BODY: true,
+        ADD_ATTR: ['target'],
+      }),
     [content]
   );
   if (!content) throw new Error('You must pass non-empty content when rendering this components');

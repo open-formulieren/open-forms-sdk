@@ -71,7 +71,7 @@ const rewriteLabelHTML = (html: string): string => {
   const paragraphs = doc.querySelectorAll('p');
   if (!paragraphs.length) return html;
   const rewritten = [...paragraphs].map(p => p.innerHTML).join('<br><br>');
-  return DOMPurify.sanitize(rewritten, {USE_PROFILES: {html: true}});
+  return DOMPurify.sanitize(rewritten, {USE_PROFILES: {html: true}, ADD_ATTR: ['target']});
 };
 
 export default StatementCheckbox;
