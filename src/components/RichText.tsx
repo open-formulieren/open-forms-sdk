@@ -1,6 +1,7 @@
 import {HTMLContent} from '@utrecht/component-library-react';
-import DOMPurify from 'dompurify';
 import {useMemo} from 'react';
+
+import {HTMlSanitize} from '@/sanitize';
 
 export interface RichTextProps {
   content: string;
@@ -11,10 +12,7 @@ export interface RichTextProps {
  * processor in the backend).
  */
 const RichText: React.FC<RichTextProps> = ({content}) => {
-  const sanitizedContent = useMemo(
-    () => DOMPurify.sanitize(content, {USE_PROFILES: {html: true}, FORCE_BODY: true}),
-    [content]
-  );
+  const sanitizedContent = useMemo(() => HTMlSanitize(content, true), [content]);
   if (!content) throw new Error('You must pass non-empty content when rendering this components');
   return <HTMLContent dangerouslySetInnerHTML={{__html: sanitizedContent}} />;
 };
