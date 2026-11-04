@@ -5,6 +5,7 @@ import {defineMessages, useIntl} from 'react-intl';
 
 import Body from '@/components/Body';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {HTMlSanitize} from '@/sanitize';
 
 import './StatementCheckbox.scss';
 
@@ -76,7 +77,8 @@ const rewriteLabelHTML = (html: string): string => {
   const doc = parser.parseFromString(html, 'text/html');
   const paragraphs = doc.querySelectorAll('p');
   if (!paragraphs.length) return html;
-  return [...paragraphs].map(p => p.innerHTML).join('<br><br>');
+  const rewritten = [...paragraphs].map(p => p.innerHTML).join('<br><br>');
+  return HTMlSanitize(rewritten);
 };
 
 export default StatementCheckbox;

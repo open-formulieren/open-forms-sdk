@@ -1,5 +1,4 @@
 import {HelpText} from '@open-formulieren/formio-renderer';
-import DOMPurify from 'dompurify';
 import {useFormikContext} from 'formik';
 import {useCallback, useContext, useState} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
@@ -10,6 +9,7 @@ import {get} from '@/api';
 import {getCached, setCached} from '@/cache';
 import AsyncSelectField from '@/components/forms/SelectField/AsyncSelectField';
 import type {Product} from '@/data/appointments';
+import {HTMlSanitize} from '@/sanitize';
 
 const CACHED_PRODUCTS_KEY = 'appointment|all-products';
 const CACHED_PRODUCTS_MAX_AGE_MS = 15 * 60 * 1000; // 15 minutes
@@ -87,7 +87,7 @@ const ProductSelect: React.FC<ProductSelectProps> = ({name, selectedProductIds})
 
   const currentProduct = products?.find(p => p.identifier === value);
   const currentProductDescription = currentProduct?.description
-    ? DOMPurify.sanitize(currentProduct?.description)
+    ? HTMlSanitize(currentProduct?.description)
     : null;
 
   return (
