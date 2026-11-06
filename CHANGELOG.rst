@@ -2,6 +2,25 @@
 SDK Changelog
 =============
 
+4.1.0-alpha.2 (2026-11-09)
+==========================
+
+Third preview release of the upcoming 4.1.0 version.
+
+New features
+------------
+
+* [#5374] Added support for the representee reference parameter needed in the backend to
+  pre-load the authentication details.
+
+Project maintenance
+-------------------
+
+* Removed unused momentjs dependency.
+* Upgraded vite to latest patch release.
+* Upgraded storybook to latest patch release.
+* Upgraded ``@open-formulieren/formio-renderer`` to the 3.0.0-alpha.6 release.
+
 4.0.4 (2026-10-30)
 ==================
 
