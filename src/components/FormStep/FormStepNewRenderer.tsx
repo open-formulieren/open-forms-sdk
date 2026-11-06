@@ -17,6 +17,8 @@ import {type SubmissionStep, saveStepData} from '@/data/submission-steps';
 import type {Submission} from '@/data/submissions';
 import {ValidationError} from '@/errors';
 import useFormContext from '@/hooks/useFormContext';
+import {useSession} from '@/hooks/useSession';
+import {useThrottledCallback} from '@/hooks/useThrottle';
 import useTitle from '@/hooks/useTitle';
 
 import AddressAutoFillObservers from './AddressAutoFillObservers';
@@ -43,6 +45,7 @@ import {StepState} from './utils';
  */
 const FormStepNewRenderer: React.FC = () => {
   const {state: navigationState} = useNavigation();
+  const {sendPing} = useSession();
   const navigate = useNavigate();
   const form = useFormContext();
   const {
@@ -80,6 +83,9 @@ const FormStepNewRenderer: React.FC = () => {
   const state = useLoadStep(sparseStep.url, onStepLoaded);
 
   const configParams = useFormioFormConfigurationParameters();
+
+  // After sending the ping message, wait 1 minute before sending the next
+  const sendThrottledPing = useThrottledCallback(sendPing, 60 * 1000);
 
   /**
    * Process the logic check result.
@@ -203,6 +209,7 @@ const FormStepNewRenderer: React.FC = () => {
                   onLogicCheckResult,
                 });
               }
+              sendThrottledPing();
               setDebugStepValues(values, false);
             }}
             onSubmit={async values => {

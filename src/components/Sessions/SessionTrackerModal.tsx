@@ -1,12 +1,11 @@
 import {Modal, PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {ButtonGroup} from '@utrecht/button-group-react';
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
 import {useTimeout, useTimeoutFn} from 'react-use';
 
-import {ConfigContext} from '@/Context';
-import {apiCall} from '@/api';
 import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {useSession} from '@/hooks/useSession';
 import useSessionTimeout from '@/hooks/useSessionTimeout';
 
 const WARN_SESSION_TIMEOUT_FACTOR: number = 0.9; // once 90% of the session expiry time has passed, show a warning
@@ -114,7 +113,7 @@ const ExpiryModal: React.FC<ExpiryModalProps> = ({
   secondsToExpiry,
   setWarningDismissed,
 }) => {
-  const {baseUrl} = useContext(ConfigContext);
+  const {sendPing} = useSession();
   return (
     <Modal
       title={
@@ -142,7 +141,7 @@ const ExpiryModal: React.FC<ExpiryModalProps> = ({
           type="submit"
           onClick={async event => {
             event.preventDefault();
-            await apiCall(`${baseUrl}ping`);
+            await sendPing();
           }}
         >
           <FormattedMessage

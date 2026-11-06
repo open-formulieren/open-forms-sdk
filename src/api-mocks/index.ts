@@ -7,3 +7,4 @@ export {
   mockCustomStaticTranslationsNullGet,
   mockCustomStaticTranslationsGetServiceUnavailable,
 } from './custom-translations';
+export {mockPingGet} from './ping';

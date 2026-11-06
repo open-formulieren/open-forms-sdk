@@ -4,7 +4,7 @@ import {RouterProvider, createMemoryRouter} from 'react-router';
 import {expect, userEvent, waitFor, within} from 'storybook/test';
 
 import {FormContext} from '@/Context';
-import {BASE_URL, buildForm, mockAnalyticsToolConfigGet} from '@/api-mocks';
+import {BASE_URL, buildForm, mockAnalyticsToolConfigGet, mockPingGet} from '@/api-mocks';
 import {
   buildSubmission,
   mockSubmissionCheckLogicPost,
@@ -430,6 +430,7 @@ export default {
     msw: {
       handlers: {
         analytics: [mockAnalyticsToolConfigGet()],
+        ping: [mockPingGet()],
         submission: [mockSubmissionPost(SUBMISSION)],
         submissionStep: [mockSubmissionStepGet(undefined, STEP_DETAILS_MAP)],
         // requires the endpoint to be wired up for the initial fetch on submission step
