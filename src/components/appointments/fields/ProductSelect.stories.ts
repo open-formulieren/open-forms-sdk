@@ -61,5 +61,9 @@ export const ProductSelectExtraDescription: Story = {
     await userEvent.click(passportOption);
 
     expect(canvas.queryByText('An example of extra description')).toBeInTheDocument();
+
+    // #6890 - Validate that the target attribute is present
+    const link = canvas.getByRole('link');
+    expect(link).toHaveAttribute('target', '_blank');
   },
 };

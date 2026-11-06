@@ -87,7 +87,10 @@ const ProductSelect: React.FC<ProductSelectProps> = ({name, selectedProductIds})
 
   const currentProduct = products?.find(p => p.identifier === value);
   const currentProductDescription = currentProduct?.description
-    ? DOMPurify.sanitize(currentProduct?.description)
+    ? DOMPurify.sanitize(currentProduct?.description, {
+        USE_PROFILES: {html: true},
+        ADD_ATTR: ['target'],
+      })
     : null;
 
   return (
