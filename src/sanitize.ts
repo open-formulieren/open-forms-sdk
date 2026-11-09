@@ -1,6 +1,13 @@
 import DOMPurify from 'dompurify';
 
 /**
+ * Dict of HTML elements and their allowed attributes.
+ */
+const HTML_ATTRIBUTES_ALLOWLIST: {[key: string]: string[]} = {
+  a: ['href', 'rel', 'target'],
+};
+
+/**
  * Sanitize HTML content using DOMPurify.sanitize.
  *
  * @param htmlContent The HTML content to sanitize.
@@ -11,20 +18,19 @@ import DOMPurify from 'dompurify';
  * @return Sanitized HTML content.
  */
 export const HTMlSanitize = (htmlContent: string, forceBody?: boolean): string => {
-  /**
-   * Dict of HTML elements and their allowed attributes.
-   */
-  const allowlist: {[key: string]: string[]} = {
-    a: ['target'],
-  };
-
   return DOMPurify.sanitize(htmlContent, {
     USE_PROFILES: {html: true},
-    ADD_ATTR: (attributeName, tagName) => {
-      // In addition to the profile configuration, we allow specific attributes per HTML
-      // element.
-      return allowlist[tagName]?.includes(attributeName) || false;
-    },
+    ADD_ATTR: (attributeName, tagName) => isAttributeAllowedOnElement(attributeName, tagName),
     ...(forceBody ? {FORCE_BODY: true} : undefined),
   });
+};
+
+/**
+ * Check if the combination of HTML element and attribute is present in the allowlist.
+ *
+ * @param attributeName Name of the HTML attribute.
+ * @param tagName Name of the HTML element.
+ */
+export const isAttributeAllowedOnElement = (attributeName: string, tagName: string): boolean => {
+  return HTML_ATTRIBUTES_ALLOWLIST[tagName]?.includes(attributeName) || false;
 };
