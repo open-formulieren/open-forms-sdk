@@ -19,7 +19,7 @@ env:
 jobs:
   setup:
     name: Set up the build variables
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       # see https://github.com/orgs/community/discussions/26671
       version: ${{ steps.vars.outputs.version }}
@@ -34,7 +34,7 @@ jobs:
 
   build:
     name: Create 'production' build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     needs: setup
 
@@ -73,7 +73,7 @@ jobs:
 
   tests:
     name: Run Javascript tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -105,7 +105,7 @@ jobs:
 
   linting:
     name: Lint code (${{ matrix.tool.name }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
@@ -134,7 +134,7 @@ jobs:
 
   i18n-check:
     name: Check i18n messages extracted
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -154,7 +154,7 @@ jobs:
 
   zizmor:
     name: GitHub Actions Security Analysis with zizmor 🌈
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       security-events: write
       contents: read
@@ -170,7 +170,7 @@ jobs:
 
   publish:
     name: Publish the NPM package
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - setup
       - build
@@ -228,7 +228,7 @@ jobs:
 
   docker:
     name: Build (and push) Docker image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     needs: setup
 

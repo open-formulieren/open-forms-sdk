@@ -23,7 +23,7 @@ concurrency:
 jobs:
   storybook:
     name: Create storybook build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -57,7 +57,7 @@ jobs:
       pages: write
       id-token: write
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Exclude PRs
     needs: storybook
     steps:
@@ -70,7 +70,7 @@ jobs:
 
   tests:
     name: Run Storybook tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -102,7 +102,7 @@ jobs:
 
   chromatic:
     name: Visual regression test with Chromatic
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - storybook
 
