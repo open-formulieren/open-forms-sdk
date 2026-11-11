@@ -1,10 +1,10 @@
 import {Checkbox} from '@open-formulieren/formio-renderer';
 import type {CheckboxComponentSchema} from '@open-formulieren/types';
-import DOMPurify from 'dompurify';
 import {useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import ErrorMessage from '@/components/Errors/ErrorMessage';
+import {HTMlSanitize} from '@/sanitize';
 
 import './StatementCheckbox.scss';
 
@@ -71,7 +71,7 @@ const rewriteLabelHTML = (html: string): string => {
   const paragraphs = doc.querySelectorAll('p');
   if (!paragraphs.length) return html;
   const rewritten = [...paragraphs].map(p => p.innerHTML).join('<br><br>');
-  return DOMPurify.sanitize(rewritten, {USE_PROFILES: {html: true}});
+  return HTMlSanitize(rewritten);
 };
 
 export default StatementCheckbox;

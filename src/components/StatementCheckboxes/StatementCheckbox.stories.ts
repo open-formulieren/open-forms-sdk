@@ -38,6 +38,10 @@ export const Default: Story = {
     expect(checkbox).not.toBeChecked();
     await userEvent.click(checkbox);
     expect(checkbox).toBeChecked();
+
+    // #6890 - Validate that the target attribute is present
+    const link = canvas.getByRole('link');
+    expect(link).toHaveAttribute('target', '_blank');
   },
 };
 
