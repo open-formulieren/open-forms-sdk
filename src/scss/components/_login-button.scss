@@ -19,6 +19,9 @@
       .utrecht-button-link {
         inline-size: 75%;
         justify-content: flex-start;
+        // <button> elements center their text by default (unlike links), which
+        // shows when a long label wraps over multiple lines.
+        text-align: start;
       }
     }
   }
