@@ -31,6 +31,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
       disabled={isDisabled}
       className="openforms-form-navigation__next-button"
       onClick={onClick}
+      data-testid="form-submit-button"
     >
       <Literal name="confirmText" />
       <Icon>

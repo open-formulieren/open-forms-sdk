@@ -237,16 +237,24 @@ export const mockSubmissionSummaryGet = () =>
     );
   });
 
-export const mockSubmissionCompletePost = (submissionId = SUBMISSION_DETAILS.id) =>
-  http.post(`${BASE_URL}submissions/:uuid/_complete`, () =>
-    HttpResponse.json({
+export const mockSubmissionCompletePost = (
+  submissionId = SUBMISSION_DETAILS.id,
+  delay: number = 0
+) =>
+  http.post(`${BASE_URL}submissions/:uuid/_complete`, async () => {
+    await sleep(delay);
+    return HttpResponse.json({
       statusUrl: `${BASE_URL}submissions/${submissionId}/super-random-token/status`,
-    })
-  );
+    });
+  });
 
-export const mockSubmissionCompleteInvalidPost = (invalidParams: InvalidParam[]) =>
-  http.post(`${BASE_URL}submissions/:uuid/_complete`, () =>
-    HttpResponse.json(
+export const mockSubmissionCompleteInvalidPost = (
+  invalidParams: InvalidParam[],
+  delay: number = 0
+) =>
+  http.post(`${BASE_URL}submissions/:uuid/_complete`, async () => {
+    await sleep(delay);
+    return HttpResponse.json(
       {
         type: 'http://localhost:8000/fouten/ValidationError/',
         code: 'invalid',
@@ -257,8 +265,8 @@ export const mockSubmissionCompleteInvalidPost = (invalidParams: InvalidParam[])
         invalidParams,
       },
       {status: 400}
-    )
-  );
+    );
+  });
 
 /**
  * Simulate a successful backend processing status without payment.
