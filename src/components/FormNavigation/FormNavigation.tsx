@@ -14,6 +14,7 @@ export interface FormNavigationProps {
   hideAbortButton?: boolean;
   isAuthenticated: boolean;
   onDestroySession: () => Promise<void>;
+  isDisabled?: boolean;
 }
 
 const FormNavigation: React.FC<FormNavigationProps> = ({
@@ -24,17 +25,26 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
   onFormSave,
   previousPage,
   onDestroySession,
+  isDisabled = false,
 }) => (
   <ButtonGroup className="openforms-form-navigation" direction="column">
     {submitButton}
 
-    {previousPage && <PreviousLink to={previousPage} onClick={onNavigatePrevPage} position="end" />}
+    {previousPage && (
+      <PreviousLink
+        to={previousPage}
+        onClick={onNavigatePrevPage}
+        position="end"
+        isPlaceholder={isDisabled}
+      />
+    )}
 
     {onFormSave && (
       <LinkButton
         name="save"
         onClick={onFormSave}
         className="openforms-form-navigation__save-button"
+        disabled={isDisabled}
       >
         <Icon>
           <FAIcon icon="" className="fa-fw" />
@@ -44,7 +54,11 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
     )}
 
     {!hideAbortButton && (
-      <AbortButton isAuthenticated={isAuthenticated} onDestroySession={onDestroySession} />
+      <AbortButton
+        isAuthenticated={isAuthenticated}
+        onDestroySession={onDestroySession}
+        isDisabled={isDisabled}
+      />
     )}
   </ButtonGroup>
 );
