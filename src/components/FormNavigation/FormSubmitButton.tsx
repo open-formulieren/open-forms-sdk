@@ -1,4 +1,4 @@
-import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
+import {LoadingIndicator, PrimaryActionButton} from '@open-formulieren/formio-renderer';
 import {Icon} from '@utrecht/component-library-react';
 
 import FAIcon from '@/components/FAIcon';
@@ -9,6 +9,7 @@ export interface FormSubmitButtonProps {
   isDisabled: boolean;
   canSubmitForm: Submission['submissionAllowed'];
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  isSubmitting: boolean;
 }
 
 /**
@@ -22,20 +23,28 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   isDisabled,
   canSubmitForm,
   onClick,
+  isSubmitting,
 }) => {
   if (canSubmitForm !== 'yes') return null;
   return (
     <PrimaryActionButton
       type="submit"
       name="next"
-      disabled={isDisabled}
+      disabled={isDisabled || isSubmitting}
       className="openforms-form-navigation__next-button"
       onClick={onClick}
+      data-testid="form-submit-button"
     >
-      <Literal name="confirmText" />
-      <Icon>
-        <FAIcon icon="" className="fa-fw" />
-      </Icon>
+      {isSubmitting ? (
+        <LoadingIndicator position="center" size="small" color="muted" />
+      ) : (
+        <>
+          <Literal name="confirmText" />
+          <Icon>
+            <FAIcon icon="" className="fa-fw" />
+          </Icon>
+        </>
+      )}
     </PrimaryActionButton>
   );
 };

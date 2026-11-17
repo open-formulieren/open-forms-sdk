@@ -70,14 +70,31 @@ export const LastStepNoOverview: Story = {
 
 export const SubmittableConfirmation: Story = {
   args: {
-    submitButton: <FormSubmitButton canSubmitForm="yes" isDisabled={false} onClick={fn()} />,
+    submitButton: (
+      <FormSubmitButton
+        canSubmitForm="yes"
+        isDisabled={false}
+        onClick={fn()}
+        isSubmitting={false}
+      />
+    ),
     onFormSave: undefined,
   },
 };
 
 export const UnsubmittableConfirmation: Story = {
   args: {
-    submitButton: <FormSubmitButton canSubmitForm="no_with_overview" isDisabled={false} />,
+    submitButton: (
+      <FormSubmitButton canSubmitForm="no_with_overview" isDisabled={false} isSubmitting={false} />
+    ),
     onFormSave: undefined,
+  },
+};
+
+export const DuringSubmitting: Story = {
+  args: {
+    submitButton: <FormSubmitButton canSubmitForm="yes" isDisabled={false} isSubmitting />,
+    onFormSave: undefined,
+    isDisabled: true,
   },
 };
