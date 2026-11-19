@@ -9,9 +9,10 @@ import useFormContext from '@/hooks/useFormContext';
 export interface AbortButtonProps {
   isAuthenticated: boolean;
   onDestroySession: () => Promise<void>;
+  disabled?: boolean;
 }
 
-const AbortButton: React.FC<AbortButtonProps> = ({isAuthenticated, onDestroySession}) => {
+const AbortButton: React.FC<AbortButtonProps> = ({isAuthenticated, onDestroySession, disabled}) => {
   const intl = useIntl();
   const analyticsToolsConfig = useAnalyticsToolsConfig();
   const form = useFormContext();
@@ -55,7 +56,12 @@ const AbortButton: React.FC<AbortButtonProps> = ({isAuthenticated, onDestroySess
   );
 
   return (
-    <LinkButton name="abort" onClick={callback} className="openforms-abort-button">
+    <LinkButton
+      name="abort"
+      onClick={callback}
+      className="openforms-abort-button"
+      disabled={disabled}
+    >
       <Icon>
         <FAIcon icon="" className="fa-fw" />
       </Icon>

@@ -59,6 +59,7 @@ const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
         onDestroySession={onDestroySession}
         hideAbortButton={hideAbortButton}
         previousPage={prevPage}
+        isDisabled={isSubmitting}
       />
     </>
   );
