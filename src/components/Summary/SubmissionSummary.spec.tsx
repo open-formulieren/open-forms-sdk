@@ -111,7 +111,7 @@ test('Long submission completion API call', async () => {
   mswWorker.use(
     mockSubmissionGet(submission),
     mockSubmissionSummaryGet(),
-    mockSubmissionCompletePost(submission.id, 100)
+    mockSubmissionCompletePost(submission.id, 1000)
   );
 
   const screen = await render(<Wrapper form={form} submission={submission} />);
@@ -120,9 +120,11 @@ test('Long submission completion API call', async () => {
   const confirmButton = screen.getByTestId('form-submit-button');
   await expect.element(confirmButton).toBeEnabled();
 
-  // Button should be disabled during the completion call
+  // Form navigation should be disabled during the completion call
   await confirmButton.click();
   await expect.element(confirmButton).toBeDisabled();
+  await expect.element(screen.getByRole('link', {name: 'Previous'})).toBeDisabled();
+  await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeDisabled();
 
   // After which the confirmation screen should be visible
   await sleep(100);
@@ -147,8 +149,12 @@ test('Long submission completion API call with error', async () => {
   // Button should be disabled during the completion call
   await confirmButton.click();
   await expect.element(confirmButton).toBeDisabled();
+  await expect.element(screen.getByRole('link', {name: 'Previous'})).toBeDisabled();
+  await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeDisabled();
 
   // After which is should be enabled again
   await sleep(100);
   await expect.element(confirmButton).toBeEnabled();
+  await expect.element(screen.getByRole('link', {name: 'Previous'})).toBeEnabled();
+  await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeEnabled();
 });

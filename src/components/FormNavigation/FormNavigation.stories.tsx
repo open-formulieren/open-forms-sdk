@@ -95,5 +95,6 @@ export const DuringSubmitting: Story = {
   args: {
     submitButton: <FormSubmitButton canSubmitForm="yes" isDisabled={false} isSubmitting={true} />,
     onFormSave: undefined,
+    isDisabled: true,
   },
 };
