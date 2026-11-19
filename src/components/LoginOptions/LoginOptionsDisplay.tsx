@@ -19,6 +19,7 @@ export interface LoginOptionsDisplayProps {
   loginAsGemachtigdeOptions: FormattedLoginOption[];
   cosignLoginOptions?: FormattedLoginOption[];
   isolateCosignOptions?: boolean;
+  isStarting?: boolean;
 }
 
 const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
@@ -26,12 +27,13 @@ const LoginOptionsDisplay: React.FC<LoginOptionsDisplayProps> = ({
   loginAsGemachtigdeOptions,
   cosignLoginOptions = [],
   isolateCosignOptions = true,
+  isStarting = false,
 }) => (
   <div className={getBEMClassName('login-options')}>
     {loginAsYourselfOptions.length > 0 && (
       <div className={getBEMClassName('login-options__list')}>
         {loginAsYourselfOptions.map(option => (
-          <LoginButton key={option.identifier} option={option} />
+          <LoginButton key={option.identifier} option={option} isStarting={isStarting} />
         ))}
       </div>
     )}

@@ -1,22 +1,34 @@
-import {PrimaryActionButton} from '@open-formulieren/formio-renderer';
-import {ButtonLink} from '@utrecht/component-library-react';
+import {LoadingIndicator, PrimaryActionButton} from '@open-formulieren/formio-renderer';
 
+import Anchor from '@/components/Anchor';
 import type {FormattedLoginOption} from '@/components/LoginOptions/LoginOptionsDisplay';
 
 import LoginButtonIcon from './LoginButtonIcon';
 
 export interface LoginButtonProps {
   option: FormattedLoginOption;
+  isStarting?: boolean;
 }
 
-const LoginButton: React.FC<LoginButtonProps> = ({option}) => (
+const LoginButton: React.FC<LoginButtonProps> = ({option, isStarting}) => (
   <div className="openforms-login-button">
     {option.url !== undefined ? (
-      <ButtonLink appearance="primary-action-button" href={option.url}>
+      <Anchor
+        as="button-link"
+        appearance="primary-action-button"
+        href={option.url}
+        placeholder={isStarting}
+      >
         {option.label}
-      </ButtonLink>
+      </Anchor>
     ) : (
-      <PrimaryActionButton type="submit">{option.label}</PrimaryActionButton>
+      <PrimaryActionButton type="submit" disabled={isStarting}>
+        {isStarting ? (
+          <LoadingIndicator position="center" size="small" color="muted" />
+        ) : (
+          option.label
+        )}
+      </PrimaryActionButton>
     )}
     <LoginButtonIcon identifier={option.identifier} logo={option.logo} />
   </div>
