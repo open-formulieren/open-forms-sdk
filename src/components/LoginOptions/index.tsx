@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSearchParams} from 'react-router';
 
@@ -19,6 +19,7 @@ export interface LoginOptionsProps {
   onFormStart: (opts: OnFormStartOptions) => Promise<void> | void;
   extraNextParams?: Record<string, string>;
   isolateCosignOptions?: boolean;
+  // isStarting?: boolean;
 }
 
 const LoginOptions: React.FC<LoginOptionsProps> = ({
@@ -26,6 +27,7 @@ const LoginOptions: React.FC<LoginOptionsProps> = ({
   onFormStart,
   extraNextParams = {},
   isolateCosignOptions = true,
+  // isStarting = false,
 }) => {
   const [params] = useSearchParams();
 
@@ -33,6 +35,7 @@ const LoginOptions: React.FC<LoginOptionsProps> = ({
   const loginAsGemachtigdeOptions: FormattedLoginOption[] = [];
   const cosignLoginOptions: FormattedLoginOption[] = [];
   const {authVisible} = useContext(ConfigContext);
+  const [isStarting, setIsStarting] = useState<boolean>(false);
 
   const extraParams: LoginUrlExtraParams = {};
   const representeeRef = params.get('representee_ref');
@@ -93,7 +96,9 @@ const LoginOptions: React.FC<LoginOptionsProps> = ({
     : {
         onSubmit: async (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
+          setIsStarting(true);
           await onFormStart({isAnonymous: true});
+          setIsStarting(false);
         },
         'data-testid': 'start-form',
       };
@@ -105,6 +110,7 @@ const LoginOptions: React.FC<LoginOptionsProps> = ({
         loginAsGemachtigdeOptions={loginAsGemachtigdeOptions}
         cosignLoginOptions={cosignLoginOptions}
         isolateCosignOptions={isolateCosignOptions}
+        isStarting={isStarting}
       />
     </Container>
   );
