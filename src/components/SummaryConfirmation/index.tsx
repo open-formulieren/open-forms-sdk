@@ -33,7 +33,7 @@ const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
 }) => {
   const {submissionStatementsConfiguration = []} = useFormContext();
   const canSubmit = submissionAllowed === 'yes';
-  const {values: formikValues} = useFormikContext<Record<string, boolean>>();
+  const {values: formikValues, isSubmitting} = useFormikContext<Record<string, boolean>>();
   const [showStatementWarnings, setShowStatementWarnings] = useState<boolean>(false);
 
   const submitEnabled = isSubmitEnabled(submissionStatementsConfiguration, formikValues);
@@ -52,12 +52,14 @@ const SummaryConfirmation: React.FC<SummaryConfirmationProps> = ({
             canSubmitForm={submissionAllowed}
             isDisabled={!submitEnabled}
             onClick={() => setShowStatementWarnings(true)}
+            isSubmitting={isSubmitting}
           />
         }
         isAuthenticated={isAuthenticated}
         onDestroySession={onDestroySession}
         hideAbortButton={hideAbortButton}
         previousPage={prevPage}
+        isDisabled={isSubmitting}
       />
     </>
   );
