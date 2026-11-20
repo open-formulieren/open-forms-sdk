@@ -12,12 +12,7 @@ export interface PreviousLinkProps {
   isPlaceholder?: boolean;
 }
 
-const PreviousLink: React.FC<PreviousLinkProps> = ({
-  to,
-  onClick,
-  position,
-  isPlaceholder,
-}) => {
+const PreviousLink: React.FC<PreviousLinkProps> = ({to, onClick, position, isPlaceholder}) => {
   const className = clsx('openforms-previous-link', {
     [`openforms-previous-link--${position}`]: position,
   });
