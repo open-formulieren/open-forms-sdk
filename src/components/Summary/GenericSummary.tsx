@@ -84,10 +84,7 @@ const GenericSummary: React.FC<GenericSummaryProps> = ({
       ))}
       <Formik<FormValues>
         initialValues={{privacyPolicyAccepted: false, statementOfTruthAccepted: false}}
-        onSubmit={async (values, actions) => {
-          await onSubmit(values);
-          actions.setSubmitting(false);
-        }}
+        onSubmit={onSubmit}
       >
         <Wrapper>
           {summaryData.map((step, index) => {

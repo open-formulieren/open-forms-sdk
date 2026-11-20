@@ -35,7 +35,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
         to={previousPage}
         onClick={onNavigatePrevPage}
         position="end"
-        placeholder={isDisabled}
+        isPlaceholder={isDisabled}
       />
     )}
 
@@ -57,7 +57,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
       <AbortButton
         isAuthenticated={isAuthenticated}
         onDestroySession={onDestroySession}
-        disabled={isDisabled}
+        isDisabled={isDisabled}
       />
     )}
   </ButtonGroup>

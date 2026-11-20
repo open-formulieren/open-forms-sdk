@@ -93,7 +93,7 @@ export const UnsubmittableConfirmation: Story = {
 
 export const DuringSubmitting: Story = {
   args: {
-    submitButton: <FormSubmitButton canSubmitForm="yes" isDisabled={false} isSubmitting={true} />,
+    submitButton: <FormSubmitButton canSubmitForm="yes" isDisabled={false} isSubmitting />,
     onFormSave: undefined,
     isDisabled: true,
   },

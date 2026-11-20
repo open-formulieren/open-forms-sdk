@@ -17,7 +17,6 @@ import type {Form} from '@/data/forms';
 import type {Submission} from '@/data/submissions';
 import messagesNL from '@/i18n/compiled/nl.json';
 import {FUTURE_FLAGS} from '@/routes';
-import {sleep} from '@/utils';
 
 import SubmissionSummary from './SubmissionSummary';
 
@@ -111,7 +110,7 @@ test('Long submission completion API call', async () => {
   mswWorker.use(
     mockSubmissionGet(submission),
     mockSubmissionSummaryGet(),
-    mockSubmissionCompletePost(submission.id, 1000)
+    mockSubmissionCompletePost(submission.id, 200)
   );
 
   const screen = await render(<Wrapper form={form} submission={submission} />);
@@ -127,7 +126,6 @@ test('Long submission completion API call', async () => {
   await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeDisabled();
 
   // After which the confirmation screen should be visible
-  await sleep(100);
   await expect.element(screen.getByText('Confirmation')).toBeVisible();
 });
 
@@ -137,7 +135,7 @@ test('Long submission completion API call with error', async () => {
   mswWorker.use(
     mockSubmissionGet(submission),
     mockSubmissionSummaryGet(),
-    mockSubmissionCompleteInvalidPost([], 100)
+    mockSubmissionCompleteInvalidPost([], 200)
   );
 
   const screen = await render(<Wrapper form={form} submission={submission} />);
@@ -153,7 +151,6 @@ test('Long submission completion API call with error', async () => {
   await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeDisabled();
 
   // After which is should be enabled again
-  await sleep(100);
   await expect.element(confirmButton).toBeEnabled();
   await expect.element(screen.getByRole('link', {name: 'Previous'})).toBeEnabled();
   await expect.element(screen.getByRole('button', {name: 'Annuleren'})).toBeEnabled();

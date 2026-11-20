@@ -10,7 +10,7 @@ export interface PreviousLinkProps {
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void | Promise<void>;
   position?: 'start' | 'end';
   linkText?: string;
-  placeholder?: boolean;
+  isPlaceholder?: boolean;
 }
 
 const PreviousLink: React.FC<PreviousLinkProps> = ({
@@ -18,13 +18,13 @@ const PreviousLink: React.FC<PreviousLinkProps> = ({
   onClick,
   position,
   linkText,
-  placeholder,
+  isPlaceholder,
 }) => {
   const className = clsx('openforms-previous-link', {
     [`openforms-previous-link--${position}`]: position,
   });
   return (
-    <Link to={to} onClick={onClick} className={className} placeholder={placeholder}>
+    <Link to={to} onClick={onClick} className={className} placeholder={isPlaceholder}>
       <Icon>
         <FAIcon icon="" className="fa-fw" />
       </Icon>
