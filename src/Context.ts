@@ -48,6 +48,7 @@ const FormContext = React.createContext<Form>({
     content: '',
     image: null,
   },
+  showProductDetails: true,
 });
 FormContext.displayName = 'FormContext';
 
