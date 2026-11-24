@@ -129,6 +129,12 @@
       "value": "Click to continue drawing line"
     }
   ],
+  "+gcuZO": [
+    {
+      "type": 0,
+      "value": "The uploaded file is empty."
+    }
+  ],
   "+uwsgF": [
     {
       "type": 0,
