@@ -2,6 +2,22 @@
 SDK Changelog
 =============
 
+4.0.5 (2026-11-24)
+==================
+
+Bugfix release.
+
+* Upgraded ``@open-formulieren/formio-renderer`` to the 2.0.8 release, fixing:
+
+  - Fixed confusing validation error messages for empty/too small files.
+
+* [#6919] Fixed being able to complete a submission multiple times and use form
+  navigation buttons during submission completion, which could lead to the same
+  submission being registerd multiple times.
+* [#6890] Fixed links to external pages in WYSIWYG content not opening in another
+  tab/window.
+* [#6903] Fixed broken CI builds due to Github's new Ubuntu version rollout.
+
 4.0.4 (2026-10-30)
 ==================
 
