@@ -3,6 +3,7 @@ import {withRouter} from 'storybook-addon-remix-react-router';
 import {expect, within} from 'storybook/test';
 
 import {buildForm} from '@/api-mocks';
+import {mockFormProductDetails} from '@/api-mocks/form-product-details';
 import {withForm, withNuqs} from '@/sb-decorators';
 
 import FormStart from './index';
@@ -93,5 +94,29 @@ export const WithHiddenFormTitle: Story = {
     const canvas = within(canvasElement);
 
     expect(canvas.queryByText('Mock form')).not.toBeInTheDocument();
+  },
+};
+
+export const WithProductDetails: Story = {
+  parameters: {
+    formContext: {
+      form: buildForm({
+        showProductDetails: true,
+      }),
+    },
+    msw: {
+      handlers: [mockFormProductDetails('e450890a-4166-410e-8d64-0a54ad30ba01')],
+    },
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement);
+
+    const productName = await canvas.findByText('A product name');
+    const productContent = await canvas.findByText(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    );
+
+    await expect(productName).toBeInTheDocument();
+    await expect(productContent).toBeInTheDocument();
   },
 };

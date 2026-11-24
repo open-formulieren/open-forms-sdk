@@ -77,6 +77,7 @@ export const FORM_DEFAULTS = {
     content: '',
     image: null,
   },
+  showProductDetails: false,
 } satisfies Form;
 
 export const SINGLE_STEP_FORM_DEFAULTS = {
@@ -137,6 +138,7 @@ export const SINGLE_STEP_FORM_DEFAULTS = {
     content: '',
     image: null,
   },
+  showProductDetails: false,
 } satisfies Form;
 
 const FORM_STEP_DETAILS_DEFAULT = {

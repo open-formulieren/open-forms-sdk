@@ -143,4 +143,5 @@ export interface Form {
      */
     image?: string | null;
   };
+  showProductDetails: boolean;
 }

@@ -1,4 +1,5 @@
 import {LoadingIndicator} from '@open-formulieren/formio-renderer';
+import FormProductDetails from 'components/FormProductDetails';
 import {useQueryState} from 'nuqs';
 import {useCallback, useContext, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -169,6 +170,7 @@ const FormStart: React.FC = () => {
 
         {form.explanationTemplate && <RichText content={form.explanationTemplate} />}
 
+        {form.showProductDetails && <FormProductDetails />}
         {hasActiveSubmission && (
           <ExistingSubmissionOptions
             nextPageUrl={nextPageUrl}
